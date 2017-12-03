@@ -418,7 +418,7 @@ sub load_base_schema {
                 file       => "$self->{source_dir}/on_load/$fname",
                 log_stdout => ($args{log} || "${log}_stdout"),
                 log_stderr => ($args{errlog} || "${log}_stderr")
-                ) if -f "sql/on_load/$fname";
+                ) if -f "$self->{source_dir}/on_load/$fname";
         }
         closedir(LOADDIR);
     }
@@ -484,14 +484,14 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-        file         => "sql/coa/$args->{country}/chart/$args->{chart}",
+        file         => "$self->{source_dir}/coa/$args->{country}/chart/$args->{chart}",
         log_stdout   => $log,
         log_stderr   => $log,
         );
     if (defined $args->{coa_lc}
-        && -f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+        && -f "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
-            file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+            file        => "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}",
             log_stdout  => $log,
             log_stderr  => $log,
             );
