@@ -32,13 +32,9 @@ if ($run_tests){
 }
 
 my $db = LedgerSMB::Database->new({
-         countrycode  => $ENV{LSMB_COUNTRY_CODE},
-         chart_name   => $ENV{LSMB_LOAD_COA},
-         chart_gifi   => $ENV{LSMB_LOAD_GIFI},
          dbname       => $ENV{LSMB_NEW_DB},
          username     => $ENV{PGUSER},
          password     => $ENV{PGPASSWORD},
-         source_dir   => $ENV{LSMB_SOURCE_DIR}
 });
 
 # Manual tests
