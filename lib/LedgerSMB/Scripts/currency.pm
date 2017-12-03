@@ -56,8 +56,8 @@ sub list_currencies {
     };
     my $column_heading = $template->column_heading($column_names);
     my $rows = [];
-    my $rowcount = "0";
-    my $base_url = "currency.pl?action=delete_currency";
+    my $rowcount = '0';
+    my $base_url = 'currency.pl?action=delete_currency';
     for my $s (@currencies) {
         $s->{i} = $rowcount % 2;
         if ($s->{curr} eq $default_curr) {
@@ -141,8 +141,8 @@ sub list_exchangerate_types {
     };
     my $column_heading = $template->column_heading($column_names);
     my $rows = [];
-    my $rowcount = "0";
-    my $base_url = "currency.pl?action=delete_exchangerate_type";
+    my $rowcount = '0';
+    my $base_url = 'currency.pl?action=delete_exchangerate_type';
     for my $s (@exchangerate_types) {
         $s->{i} = $rowcount % 2;
         $s->{drop} = {
@@ -243,8 +243,8 @@ sub _list_exchangerates {
     };
     my $column_heading = $template->column_heading($column_names);
     my $rows = [];
-    my $rowcount = "0";
-    my $base_url = "currency.pl?action=delete_exchangerate";
+    my $rowcount = '0';
+    my $base_url = 'currency.pl?action=delete_exchangerate';
     for my $s (@$exchangerates) {
         $s->{i} = $rowcount % 2;
         $s->{rate} = $s->{rate}->to_output();
@@ -319,7 +319,7 @@ sub upload_exchangerates {
     my ($request) = @_;
 
     my $csv = Text::CSV->new()
-        or $request->error("Can't use CSV parser: " . Text::CSV->error_diag());
+        or $request->error(q{Can't use CSV parser: } . Text::CSV->error_diag());
     my $file = $request->{_request}->upload('import_file');
     my $provided_cols;
     my @rows;
@@ -328,9 +328,9 @@ sub upload_exchangerates {
         my @fields = @$row;
 
         unless ($provided_cols) {
-            my $msg = "Columns provided in upload (" . join(',',@fields)
-                . ") don't match required columns ("
-                . join(',',@csv_upload_fields) . ")";
+            my $msg = 'Columns provided in upload (' . join(',',@fields)
+                . q{) don't match required columns (}
+                . join(',',@csv_upload_fields) . ')';
 
             $request->error($msg)
                 unless scalar(@fields) == scalar(@csv_upload_fields);
