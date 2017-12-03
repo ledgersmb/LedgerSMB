@@ -35,6 +35,7 @@ use DateTime;
 use DBI;
 use Log::Log4perl;
 use Moose;
+use namespace::autoclean;
 
 extends 'PGObject::Util::DBAdmin';
 
@@ -630,5 +631,7 @@ the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;
