@@ -20,23 +20,27 @@ This module wraps both DBI and the PostgreSQL commandline tools.
 LedgerSMB::Database provides methods for database creation and management
 as well as database version detection (for upgrades) and more.
 
+For the lower level database management routines, it inherits from
+C<PGObject::Util::DBAdmin>.
+
 =cut
 
-# Methods are documented inline.
 
 package LedgerSMB::Database;
 
 use strict;
 use warnings;
 
+use DateTime;
 use DBI;
-use base qw(PGObject::Util::DBAdmin);
+use Log::Log4perl;
+use Moose;
+
+extends 'PGObject::Util::DBAdmin';
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
 
-use DateTime;
-use Log::Log4perl;
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
@@ -45,6 +49,28 @@ our $VERSION = '1.1';
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
+
+
+=head1 PROPERTIES
+
+=over
+
+=item source_dir
+
+Indicates the path to the directory which holds the 'Pg-database.sql' file
+and the associated changes, charts and gifi files.
+
+The default value is relative to the current directory, which is assumed
+to be the root of the LedgerSMB source tree.
+
+=cut
+
+has source_dir => (is => 'ro', default => 'sql/');
+
+=back
+
+=cut
+
 
 =head1 METHODS
 
