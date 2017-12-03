@@ -395,6 +395,21 @@ sub load_base_schema {
         log_stdout => ($args{log} || "${log}_stdout"),
         log_stderr => ($args{errlog} || "${log}_stderr")
     );
+    my $dbh = $self->connect({ AutoCommit => 1 });
+    my $sth = $dbh->prepare(
+        qq|select true
+                from pg_class cls
+                join pg_namespace nsp
+                  on nsp.oid = cls.relnamespace
+               where cls.relname = 'defaults'
+                 and nsp.nspname = 'public'
+             |);
+    $sth->execute();
+    my ($success) = $sth->fetchrow_array();
+    $sth->finish();
+
+    die "Base schema failed to load"
+        if ! $success;
 
     if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {

@@ -87,9 +87,6 @@ throws_ok { $db->create } 'help me',
 #  Database creation fails when the defaults table does not exist
 #
 
- TODO: {
-     local $TODO = q{Creation of defaults table not verified since 1.5};
-
 # We'll load a schema without a defaults table to simulate the failure
 
 $admin_dbh->do(q{DROP DATABASE IF EXISTS lsmbtest_database});
@@ -99,10 +96,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/no-defaults-table'
                                });
-throws_ok { $db->create } 'help me',
+throws_ok { $db->create_and_load } qr/Base schema failed to load/,
     'Database creation fails on missing defaults table';
 
-}; # end of TODO
 
 
 #
@@ -111,9 +107,6 @@ throws_ok { $db->create } 'help me',
 #  Database creation fails when the schema file fails to load
 #
 
- TODO: {
-     local $TODO = q{Creation of defaults table not verified since 1.5};
-
 $admin_dbh->do(q{DROP DATABASE IF EXISTS lsmbtest_database});
 $db = LedgerSMB::Database->new({
     dbname     => 'lsmbtest_database',
@@ -121,10 +114,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/schema-failure'
                                });
-throws_ok { $db->create } 'help me',
-    'Database creation fails on missing defaults table';
+throws_ok { $db->create_and_load } qr/ERROR:\s*relation "defal" does not exist/,
+    'Database creation fails on base schema load failure';
 
-}; # end of TODO
 
 
 #
