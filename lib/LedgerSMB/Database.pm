@@ -44,7 +44,7 @@ use LedgerSMB::Database::Loadorder;
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
-our $VERSION = '1.1';
+our $VERSION = '1.2';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
