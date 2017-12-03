@@ -65,7 +65,7 @@ to be the root of the LedgerSMB source tree.
 
 =cut
 
-has source_dir => (is => 'ro', default => 'sql/');
+has source_dir => (is => 'ro', default => './sql');
 
 =back
 
@@ -389,12 +389,9 @@ sub load_base_schema {
     my ($self, %args) = @_;
     my $log = loader_log_filename();
 
-    $self->{source_dir} = './'
-        unless $self->{source_dir};
-
     $self->run_file(
 
-        file       => "$self->{source_dir}sql/Pg-database.sql",
+        file       => "$self->{source_dir}/Pg-database.sql",
         log_stdout => ($args{log} || "${log}_stdout"),
         log_stderr => ($args{errlog} || "${log}_stderr")
     );
@@ -402,7 +399,7 @@ sub load_base_schema {
     if (opendir(LOADDIR, 'sql/on_load')) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
-                file       => "$self->{source_dir}sql/on_load/$fname",
+                file       => "$self->{source_dir}/on_load/$fname",
                 log_stdout => ($args{log} || "${log}_stdout"),
                 log_stderr => ($args{errlog} || "${log}_stderr")
                 ) if -f "sql/on_load/$fname";
@@ -424,8 +421,7 @@ sub load_modules {
     my ($self, $loadorder, $args) = @_;
     my $log = loader_log_filename();
 
-    $self->{source_dir} ||= '';
-    my $filename = "$self->{source_dir}sql/modules/$loadorder";
+    my $filename = "$self->{source_dir}/modules/$loadorder";
     open my $fh, '<', $filename
         or die "Failed to open $filename : $!";
 
@@ -435,7 +431,7 @@ sub load_modules {
         next unless $mod;
 
         $self->run_file(
-            file       => "$self->{source_dir}sql/modules/$mod",
+            file       => "$self->{source_dir}/modules/$mod",
             log_stdout => $args->{log}    || "${log}_stdout",
             log_stderr => $args->{errlog} || "${log}_stderr"
         );
