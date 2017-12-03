@@ -343,7 +343,7 @@ sub load_base_schema {
 
     $self->run_file(
 
-        file       => "$self->{source_dir}sql/Pg-database.sql",
+        file       => "$self->{source_dir}/Pg-database.sql",
         log_stdout => ($args->{log} || "${log}_stdout"),
         log_stderr => ($args->{errlog} || "${log}_stderr")
     );
@@ -366,10 +366,10 @@ sub load_base_schema {
     if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
-                file       => "$self->{source_dir}sql/on_load/$fname",
+                file       => "$self->{source_dir}/on_load/$fname",
                 log_stdout => ($args->{log} || "${log}_stdout"),
                 log_stderr => ($args->{errlog} || "${log}_stderr")
-                ) if -f "sql/on_load/$fname";
+                ) if -f "$self->{source_dir}/on_load/$fname";
         }
         closedir(LOADDIR);
     }
@@ -404,7 +404,7 @@ sub load_modules {
             or die $dbh->errstr;
 
         $self->run_file(
-                       file       => "$self->{source_dir}sql/modules/$mod",
+                       file       => "$self->{source_dir}/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
                log_stderr  => $args->{errlog} || "${log}_stderr"
         );
@@ -434,14 +434,14 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-        file         => "sql/coa/$args->{country}/chart/$args->{chart}",
+        file         => "$self->{source_dir}/coa/$args->{country}/chart/$args->{chart}",
         log_stdout   => $log,
         log_stderr   => $log,
         );
     if (defined $args->{coa_lc}
-        && -f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+        && -f "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
-            file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+            file        => "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}",
             log_stdout  => $log,
             log_stderr  => $log,
             );
