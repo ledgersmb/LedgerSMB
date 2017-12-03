@@ -51,10 +51,10 @@ my %style_table;    # hash table for created styles
 
 # SC: Subtract 8 from the attribute to get the index
 #     http://search.cpan.org/src/JMCNAMARA/Spreadsheet-WriteExcel-2.11/doc/palette.html
-my @colour = (odfColor(0, 0, 0), odfColor(255, 255, 255),
-    odfColor(255, 0, 0), odfColor(0, 255, 0),
-    odfColor(0, 0, 255), odfColor(255, 255, 0),
-    odfColor(255, 0, 255), odfColor(0, 255, 255),
+my @colour = (odfColor(0, 0, 0), odfColor(255, 255, 255),  ## no critic (ProhibitMagicNumbers) sniff
+    odfColor(255, 0, 0), odfColor(0, 255, 0),  ## no critic (ProhibitMagicNumbers) sniff
+    odfColor(0, 0, 255), odfColor(255, 255, 0),  ## no critic (ProhibitMagicNumbers) sniff
+    odfColor(255, 0, 255), odfColor(0, 255, 255),  ## no critic (ProhibitMagicNumbers) sniff
     odfColor(128, 0, 0), odfColor(0, 128, 0),
     odfColor(0, 0, 128), odfColor(128, 128, 0),
     odfColor(128, 0, 128), odfColor(0, 128, 128),

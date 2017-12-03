@@ -669,14 +669,14 @@ sub get_name {
     $query = qq|SELECT * FROM eca__list_contacts(?)
                       WHERE class_id BETWEEN 12 AND ?
                       ORDER BY class_id DESC;|;
-    my %id_map = ( 12 => 'email',
-               13 => 'cc',
-               14 => 'bcc',
-               15 => 'email',
-               16 => 'cc',
-               17 => 'bcc' );
+    my %id_map = ( 12 => 'email',  ## no critic (ProhibitMagicNumbers) sniff
+               13 => 'cc',  ## no critic (ProhibitMagicNumbers) sniff
+               14 => 'bcc',  ## no critic (ProhibitMagicNumbers) sniff
+               15 => 'email',  ## no critic (ProhibitMagicNumbers) sniff
+               16 => 'cc',  ## no critic (ProhibitMagicNumbers) sniff
+               17 => 'bcc' );  ## no critic (ProhibitMagicNumbers) sniff
     $sth = $dbh->prepare($query);
-    $sth->execute( $form->{eca_id}, 17) || $form->dberror( $query );
+    $sth->execute( $form->{eca_id}, 17) || $form->dberror( $query );  ## no critic (ProhibitMagicNumbers) sniff
 
     my $ctype;
     my $billing_email = 0;
@@ -691,13 +691,13 @@ sub get_name {
         $ctype = $ref->{class_id};
         $ctype = $id_map{$ctype};
         $billing_email = 1
-        if $ref->{class_id} == 15;
+        if $ref->{class_id} == 15;  ## no critic (ProhibitMagicNumbers) sniff
 
         # If there's an explicit billing email, don't use
         # the standard email addresses; otherwise fall back to standard
         $form->{$ctype} .= ($form->{$ctype} ? ", " : "") . $ref->{contact}
-        if (($ref->{class_id} < 15 && ! $billing_email)
-            || $ref->{class_id} >= 15);
+        if (($ref->{class_id} < 15 && ! $billing_email)  ## no critic (ProhibitMagicNumbers) sniff
+            || $ref->{class_id} >= 15);  ## no critic (ProhibitMagicNumbers) sniff
     }
     $sth->finish;
 

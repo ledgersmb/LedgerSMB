@@ -188,7 +188,9 @@ DECLARE
 Begin
         INSERT INTO gl (reference, description, transdate, approved)
         SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
-                report_date, false
+                report_date,
+                coalesce((select value::boolean from defaults
+                           where setting_key = 'debug_fixed_assets'), true)
         FROM asset_report
         JOIN asset_report_line
                 ON (asset_report.id = asset_report_line.report_id)
@@ -223,7 +225,8 @@ COMMENT ON FUNCTION asset_report__generate_gl
 (in_report_id int, in_accum_account_id int) IS
 $$ Generates a GL transaction when the Asset report is approved.
 
-Currently this creates GL drafts, not approved transctions
+Create approved transactions, unless the value of the setting_key
+'debug_fixed_assets' evaluates to false
 $$;
 
 CREATE OR REPLACE FUNCTION asset_class__get (in_id int) RETURNS asset_class AS

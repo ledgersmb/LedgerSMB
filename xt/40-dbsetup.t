@@ -27,18 +27,14 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
 }
 
 if ($run_tests){
-	plan tests => 12;
-	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+        plan tests => 20;
+        $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
 my $db = LedgerSMB::Database->new({
-         countrycode  => $ENV{LSMB_COUNTRY_CODE},
-         chart_name   => $ENV{LSMB_LOAD_COA},
-         chart_gifi   => $ENV{LSMB_LOAD_GIFI},
          dbname       => $ENV{LSMB_NEW_DB},
          username     => $ENV{PGUSER},
          password     => $ENV{PGPASSWORD},
-         source_dir   => $ENV{LSMB_SOURCE_DIR}
 });
 
 # Manual tests
@@ -52,6 +48,59 @@ if (!$ENV{LSMB_INSTALL_DB}){
     open (DBLOCK, '>', "$temp/LSMB_TEST_DB");
     print DBLOCK $ENV{LSMB_NEW_DB};
     close (DBLOCK);
+}
+
+# Validate that we can copy the database
+my $copy = $db->copy($ENV{LSMB_NEW_DB} . '_copy');
+ok($copy, 'Copy database');
+my $copy_dbh = (LedgerSMB::Database->new(
+                    dbname       => $ENV{LSMB_NEW_DB} . '_copy',
+                    username     => $ENV{PGUSER},
+                    password     => $ENV{PGPASSWORD},
+                ))->connect;
+ok($copy_dbh, 'Connect to copy database');
+my $copy_sth =
+    $copy_dbh->prepare(q|select value from defaults
+                          where setting_key='role_prefix'|);
+ok($copy_sth, 'Prepare validation statement');
+$copy_sth->execute();
+my ($role_prefix) =
+    @{$copy_sth->fetchrow_arrayref()};
+is($role_prefix, "lsmb_$ENV{LSMB_NEW_DB}__",
+   'Correct role prefix on copy-database');
+$copy_sth->finish;
+$copy_dbh->disconnect;
+
+# Validate that a database which already has a role prefix
+# maintains that role prefix
+my $copy_copy = (LedgerSMB::Database->new(
+                     dbname       => $ENV{LSMB_NEW_DB} . '_copy',
+                     username     => $ENV{PGUSER},
+                     password     => $ENV{PGPASSWORD},
+                 ))->copy($ENV{LSMB_NEW_DB} . '_copy_copy');
+ok($copy_copy, 'Copy copy-database');
+$copy_dbh = (LedgerSMB::Database->new(
+                 dbname       => $ENV{LSMB_NEW_DB} . '_copy_copy',
+                 username     => $ENV{PGUSER},
+                 password     => $ENV{PGPASSWORD},
+             ))->connect;
+ok($copy_dbh, 'Connect to copy copy-database');
+$copy_sth =
+    $copy_dbh->prepare(q|select value from defaults
+                          where setting_key='role_prefix'|);
+ok($copy_sth, 'Prepare validation statement');
+$copy_sth->execute();
+($role_prefix) =
+    @{$copy_sth->fetchrow_arrayref()};
+is($role_prefix, "lsmb_$ENV{LSMB_NEW_DB}__",
+   'Correct role prefix on copy of copy-database');
+$copy_sth->finish;
+$copy_dbh->disconnect;
+
+{
+    my $dbh = $db->connect;
+    $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy"|);
+    $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy_copy"|);
 }
 
 #Changed the COA and GIFI loading to use this, and move admin user to 

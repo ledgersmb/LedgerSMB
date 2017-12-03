@@ -100,8 +100,6 @@ nextsub, path, script, and login are filtered to remove some dangerous values.
 $form->error may be called to deny access on some attribute values.
 
 =cut
-# Set this Globally so we only need to do it once
-my $dojo_location = ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js';
 
 sub new {
 
@@ -146,6 +144,7 @@ sub new {
     }
     $self->{action} = "" unless defined $self->{action};
     $self->{dojo_theme} = $dojo_theme;
+    $self->{dojo_location} = $LedgerSMB::Sysconfig::dojo_location;
 
     if($self->{header}) {
      delete $self->{header};
@@ -301,7 +300,7 @@ sub escape {
         ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
         && !$beenthere
     ) {
-        $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;
+        $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;  ## no critic (ProhibitMagicNumbers) sniff
     }
 
     utf8::encode($str);
@@ -453,9 +452,7 @@ sub info {
 
         $msg =~ s/\n/<br>/g;
 
-        delete $self->{pre};
-
-        if ( !$self->{header} ) {
+    if (!$self->{header}) {
             $self->header;
             print qq| <body>|;
             $self->{header} = 1;
@@ -515,16 +512,8 @@ sub isblank {
 
 Outputs HTML and HTTP headers and sets $form->{header} to indicate that headers
 have been output.  If called with $form->{header} set or in a non-CGI
-environment, does not output anything.  $init is ignored.  $headeradd is data
-to be added to the <head> portion of the output headers.  $form->{stylesheet},
-$form->{title}, $form->{titlebar}, and $form->{pre} all affect the output of
-this function.
-
-If the stylesheet indicated by $form->{stylesheet} exists, output a link tag
-to reference it.  If $form->{title} is false, the title text is the value of
-$form->{titlebar}.  If $form->{title} is true, the title text takes the form of
-"$form->{title} - $form->{titlebar}".  The value of $form->{pre} is output
-immediately after the closing of <head>.
+environment, does not output anything.  $init is ignored.  $headeradd is
+ignored.
 
 =cut
 
@@ -544,69 +533,9 @@ sub header {
     }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
-    my ( $stylesheet, $charset );
 
-    my $dojo_theme = $self->{dojo_theme};
-    $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
-    $self->{dojo_theme} = $dojo_theme; # Needed for theming of old screens
-        if ( $self->{stylesheet} && ( -f "UI/css/$self->{stylesheet}" ) ) {
-            $stylesheet =
-qq|<link rel="stylesheet" href="$LedgerSMB::Sysconfig::cssdir| .
-qq|$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
-        }
-
-        $self->{charset} ||= "utf-8";
-        $charset =
-qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
-
-        $self->{titlebar} =
-          ( $self->{title} )
-          ? "$self->{title} - $self->{titlebar}"
-          : $self->{titlebar};
-        if ($self->{warn_expire}){
-            $headeradd .= qq|
-        <script type="text/javascript" language="JavaScript">
-        window.alert('Warning:  Your password will expire in $self->{pw_expires}');
-    </script>|;
-        }
-        my $dformat = $LedgerSMB::App_State::User->{dateformat};
-
-        print qq|Content-Type: text/html; charset=utf-8\n\n
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>$self->{titlebar}</title> |;
-
-        if (!$cache){
-            print qq|
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Cache-Control" content="must-revalidate" />
-    <meta http-equiv="Expires" content="-1" /> |;
-        }
-
-        print qq|
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    $stylesheet
-    $charset
-    <link rel="stylesheet" href="$dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-    <link rel="stylesheet" href="$dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
-    <script type="text/javascript" language="JavaScript">
-      var dojoConfig = {
-           async: 1,
-           parseOnLoad: 0,
-           packages: [{"name":"lsmb","location":"../lsmb"}]
-       }
-       var lsmbConfig = {dateformat: '$dformat'};
-    </script>
-    <script type="text/javascript" language="JavaScript" src="$dojo_location/dojo/dojo.js"></script>
-    <script type="text/javascript" language="JavaScript" src="$dojo_location/lsmb/main.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-    $headeradd
-</head>
-
-        $self->{pre} \n|;
-
+    print qq|Content-Type: text/html; charset=utf-8\n\n|;
+    # We're not sending HTML HEAD, because the client doesn't look at it...
     $self->{header} = 1;
 }
 
@@ -946,7 +875,7 @@ sub db_parse_numeric {
     my @names = @{$sth->{NAME_lc}};
     for (0 .. $#names){
         #   numeric            float4/real
-        if ($types[$_] == 3 or $types[$_] ==2) {
+        if ($types[$_] == 3 or $types[$_] ==2) {  ## no critic (ProhibitMagicNumbers) sniff
             $arrayref->[$_] ||= 0 if defined $arrayref;
             $hashref->{$names[$_]} ||=0 if defined $hashref;
             $arrayref->[$_] = LedgerSMB::PGNumber->new($arrayref->[$_])
@@ -1041,10 +970,10 @@ sub datetonum {
 
         $dd *= 1;
         $mm *= 1;
-        $yy += 2000 if length $yy == 2;
+        $yy += 2000 if length $yy == 2;  ## no critic (ProhibitMagicNumbers) sniff
 
-        $dd = substr( "0$dd", -2 );
-        $mm = substr( "0$mm", -2 );
+        $dd = substr("0$dd", -2);  ## no critic (ProhibitMagicNumbers) sniff
+        $mm = substr("0$mm", -2);  ## no critic (ProhibitMagicNumbers) sniff
         $date = "$yy$mm$dd";
     }
 
@@ -1096,20 +1025,20 @@ sub add_date {
         }
 
         if ( $unit eq 'days' ) {
-            $diff = $repeat * 86400;
+            $diff = $repeat * 86400;  ## no critic (ProhibitMagicNumbers) sniff
         }
         elsif ( $unit eq 'weeks' ) {
-            $diff = $repeat * 604800;
+            $diff = $repeat * 604800;  ## no critic (ProhibitMagicNumbers) sniff
         }
         elsif ( $unit eq 'months' ) {
             $diff = $mm + $repeat;
 
-            my $whole = int( $diff / 12 );
+            my $whole = int( $diff / 12 );  ## no critic (ProhibitMagicNumbers) sniff
             $yy += $whole;
 
-            $mm = ( $diff % 12 );
+            $mm = ( $diff % 12 );  ## no critic (ProhibitMagicNumbers) sniff
             $mm = '12' if $mm == 0;
-            $yy-- if $mm == 12;
+            $yy-- if $mm == 12;  ## no critic (ProhibitMagicNumbers) sniff
             $diff = 0;
         }
         elsif ( $unit eq 'years' ) {

@@ -161,13 +161,11 @@ ok($form->{header}, 'hide_form: header flag not cleared');
 ## $form->info checks
 $form = new Form;
 $ENV{GATEWAY_INTERFACE} = 'yes';
-$form->{pre} = 'Blah';
 $form->{header} = 'Blah';
 
 @r = trap{$form->info('hello world')};
 like($trap->stdout, qr|<b>hello world</b>|,
         'info: CGI, pre-set header content');
-ok(!$form->{pre}, 'info: CGI, removed $self->{pre}');
 
 delete $form->{header};
 $ENV{LSMB_NOHEAD} = 0;

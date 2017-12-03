@@ -46,32 +46,48 @@ use Plack::Builder;
 #use Plack::Middleware::TemplateToolkit;
 
 # Development specific
-use Plack::Middleware::Debug::Log4perl;
-#use Plack::Middleware::InteractiveDebugger;
-#use Plack::Middleware::Debug::TemplateToolkit;
+sub check_config_option {
+    my ($name,$module) = @_;
+    return 0 if !eval "\$LedgerSMB::Sysconfig::$name";
+    return 1 if !defined $module;
+    unless (eval "require $module") {
+        warn "$name requires $module";
+        return 0;
+    }
+    return 1;
+}
 #TODO: Explore https://github.com/elindsey/Devel-hdb
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 builder {
 
-    enable 'InteractiveDebugger';
+    enable 'InteractiveDebugger'
+        if check_config_option('InteractiveDebugger','Plack::Middleware::InteractiveDebugger');
 
-#    enable 'ContentLength';
-
-    enable 'Debug',  panels => [
-            qw(Parameters Environment Response Log4perl Session Timer Memory ModuleVersions PerlConfig),
-              [ 'DBITrace', level => 2 ],
-              [ 'Profiler::NYTProf', exclude => [qw(.*\.css .*\.png .*\.ico .*\.js .*\.gif .*\.html)], minimal => 1 ],
-#           qw/Dancer::Settings Dancer::Logger Dancer::Version/
-    ] if $ENV{PLACK_ENV} =~ "development";
-
-#    enable 'Debug::TemplateToolkit';    # enable debug panel
-    enable 'Log4perl', category => 'plack';
-
-#    enable 'TemplateToolkit',
-#        INCLUDE_PATH => 'UI',     # required
-#        pass_through => 1;        # delegate missing templates to $app
+    if ( $ENV{PLACK_ENV} =~ "development" ) {
+        enable 'Debug', panels => [] ;
+        for ( qw(Parameters Environment Response Session Timer Memory ModuleVersions PerlConfig)) {
+            if ( check_config_option($_)) {
+                enable "Debug::$_";
+            }
+        }
+        for (qw(LazyLoadModules W3CValidate)) {
+            enable "Debug::$_"
+                if check_config_option("$_","Plack::Middleware::Debug::$_");
+        }
+        enable 'Debug::Log4perl', method => $LedgerSMB::Sysconfig::Log4perl_method
+            if check_config_option('Log4perl','Plack::Middleware::Debug::Log4perl');
+        enable 'Debug::DBIProfile', profile => $LedgerSMB::Sysconfig::DBIProfile_profile
+            if check_config_option('DBIProfile','Plack::Middleware::Debug::DBIProfile');
+        enable 'Debug::DBITrace', level => $LedgerSMB::Sysconfig::DBITrace_level
+            if check_config_option('DBITrace','Plack::Middleware::Debug::DBITrace');
+        enable 'Debug::TraceENV', method => $LedgerSMB::Sysconfig::TraceENV_method
+            if check_config_option('TraceENV','Plack::Middleware::Debug::TraceENV');
+        enable 'Debug::Profiler::NYTProf', exclude => [$LedgerSMB::Sysconfig::NYTProf_exclude]
+            if check_config_option('NYTProf','Plack::Middleware::Debug::Profiler::NYTProf');
+    }
+#   qw/Dancer::Settings Dancer::Logger Dancer::Version/
 
     LedgerSMB::PSGI::setup_url_space(
             development => ($ENV{PLACK_ENV} eq 'development'),

@@ -280,8 +280,8 @@ sub prepare_invoice {
             my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
             my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
-            $form->{"precision_$i"} ||= $dec;
             $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
+            $form->{"precision_$i"} = $decimalplaces;
 
             $form->{"sellprice_$i"} =
               $form->format_amount( \%myconfig, $form->{"sellprice_$i"},

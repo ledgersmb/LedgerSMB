@@ -291,7 +291,7 @@ push @tests, __PACKAGE__->new(
    test_query => q{SELECT * FROM employee
                    WHERE not name ~ '[[:alnum:]_]'::text},
          name => 'minimal_employee_name_requirements',
- display_name => marktext("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),    ## no critic (ProhibitInterpolationOfLiteral )
+ display_name => marktext('Employee name doesn\'t meet minimal requirements (e.g. non-empty, alphanumeric)'),
  instructions => marktext(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
@@ -373,51 +373,6 @@ database, or delete the offending rows through PgAdmin III or psql'),
 );
 
 push @tests, __PACKAGE__->new(
-       test_query => q{-- Select transactions without charts where removing them would unbalance tha transaction
-                                            WITH ac1 AS (
-                                            SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
-                                                    FROM acc_trans
-                                                    WHERE trans_id IN (
-                                                            SELECT trans_id FROM (
-                                                                    SELECT trans_id, SUM(amount) as amount from acc_trans
-                                                                    WHERE chart_id IS NULL
-                                                                    GROUP BY trans_id) as a
-                                                            WHERE a.amount <> 0)
-                                                    AND chart_id IS NULL
-                                                    GROUP BY trans_id, chart_id
-                                                    ORDER BY trans_id, transdate
-                                    ),
-                                    -- Hint the user about the type of the remaining entries
-                                    ac2 AS (
-                                            SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
-                                            FROM acc_trans ac
-                                            JOIN chart c ON chart_id = c.id
-                                            WHERE trans_id IN ( SELECT trans_id FROM ac1)
-                                            AND c.link ~ 'amount'
-                                    )
-                                    -- Present data
-                                    SELECT * from ac1
-                                    LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
-                                    ORDER BY ac1.trans_id},
-     display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
-             name => 'no_unbalanced_ac_transactions',
-     display_cols => ['trans_id', 'type', 'chart_id', 'transdate', 'amount'],
-     instructions => $LedgerSMB::App_State::Locale->text(
-                       'The following transactions have unassigned amounts'),
-            table => 'acc_trans',
-selectable_values => { chart_id => q{SELECT concat(accno,' -- ',description) AS text, id as value
-                                    FROM chart
-                                    WHERE charttype = 'A'
-                                    ORDER BY id} },
-          columns => ['chart_id'],
-        id_column => 'trans_id',
-         id_where => 'chart_id IS NULL AND trans_id',
-      appname => 'sql-ledger',
-  min_version => '2.7',
-  max_version => '3.0'
-);
-
-push @tests, __PACKAGE__->new(
    test_query => 'select *, eca.id as id  from entity_credit_account eca
                      join entity_class ec on eca.entity_class = ec.id
                      join entity e on eca.entity_id = e.id
@@ -442,7 +397,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\\s*\$'},
+                         and gifi_accno !~ '^\s*$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -459,7 +414,8 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\\s*\$'},
+                         and charttype <> 'H'
+                         and gifi_accno !~ '^\s*$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'accno', 'description' ],
@@ -480,7 +436,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = account.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\\s*\$'},
+                         and gifi_accno !~ '^\s*$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],

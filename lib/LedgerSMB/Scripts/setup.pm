@@ -326,14 +326,7 @@ sub copy_db {
 
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
-    my $dbh = LedgerSMB::Database->new(
-           +{%$database, (company_name => $request->{new_name})}
-    )->connect({ PrintError => 0, AutoCommit => 0 });
-    $dbh->prepare(q{SELECT setting__set('role_prefix',
-                               coalesce((setting_get('role_prefix')).value, ?))}
-    )->execute("lsmb_$database->{company_name}__");
-    $dbh->commit;
-    $dbh->disconnect;
+
     return complete($request);
 }
 
@@ -1085,6 +1078,7 @@ sub save_user {
     try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
+           $request->{dbh}->rollback;
            $request->{notice} = $request->{_locale}->text(
                        'User already exists. Import?'
             );
@@ -1111,7 +1105,10 @@ sub save_user {
            die $_;
        }
     };
-    return $duplicate if $duplicate;
+    if ( $duplicate ) {
+        $request->{dbh}->rollback;
+        return $duplicate;
+    }
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(funcname => 'admin__get_roles')
@@ -1437,10 +1434,6 @@ sub rebuild_modules {
     my ($request, $database) = @_;
     $database //= _init_db($request);
 
-    # The order is important here:
-    #  New modules should be able to depend on the latest changes
-    #  e.g. table definitions, etc.
-    $database->apply_changes;
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
     return complete($request);

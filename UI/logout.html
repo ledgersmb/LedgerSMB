@@ -1,5 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?>
+<body class="lsmb <?lsmb dojo_theme ?>">
 <!--
   I am inlining the Javascript to clear credentials here.  Normally we try to
   separate this out into different files, one file per language but in this
@@ -20,7 +21,6 @@ if (agt.indexOf("msie") == -1) {
         xhre.send("");
 }
 </script>
-<body class="lsmb <?lsmb dojo_theme ?>">
 <h1 class="info">
    <?lsmb IF reason == 'timeout';
             text('Logged out due to inactivity');

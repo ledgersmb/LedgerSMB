@@ -112,6 +112,14 @@ END; ?>
                                           class=COL.class
                                           name=PFX _ COL.col_id _ '_' _ ROW.row_id
                                           value=ROW.${COL.col_id} } ?>
+         <?lsmb- ELSIF TYPE == 'password';
+                 PROCESS input element_data = {
+                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          type="password"
+                                          "data-dojo-type" = COL.data_dojo_type
+                                          class=COL.class
+                                          name=PFX _ COL.col_id _ '_' _ ROW.row_id
+                                          value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSIF TYPE == 'checkbox';
                    IF ROW.${COL.col_id};
                       CHECKED = "checked";
