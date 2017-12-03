@@ -353,19 +353,33 @@ sub load_modules {
     my ($self, $loadorder, $args) = @_;
     my $log = loader_log_filename();
 
-    $self->{source_dir} ||= '';
-    open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
+    open (LOADORDER, '<', "$self->{source_dir}/modules/$loadorder");
+    my $dbh = $self->connect({ AutoCommit => 1 });
     for my $mod (<LOADORDER>) {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
         no warnings 'uninitialized';
+
+        $dbh->do(q{delete from defaults where setting_key = 'module_load_ok'})
+            or die $dbh->errstr;
+        $dbh->do(q{insert into defaults (setting_key, value)
+                    values ('module_load_ok', 'no') })
+            or die $dbh->errstr;
+
         $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
                log_stderr  => $args->{errlog} || "${log}_stderr"
         );
 
+        my $sth = $dbh->prepare(q{select value from defaults
+                                   where setting_key = 'module_load_ok'});
+        $sth->execute;
+        my ($value) = $sth->fetchrow_array();
+        $sth->finish;
+        die "Module $mod failed to load"
+            if not $value or $value ne 'yes';
     }
     close (LOADORDER); ### return failure to execute the script?
     return 1;
