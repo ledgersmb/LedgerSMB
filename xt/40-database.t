@@ -48,9 +48,6 @@ for my $key (keys %options) {
 #    doesn't exist
 #
 
- TODO: {
-     local $TODO = q{PGObject::Util::DBAdmin used incorrectly:
-resulting in unchecked errors.};
 
 #
 # missing schema file
@@ -62,7 +59,7 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data'
                                });
-throws_ok { $db->create } 'help me',
+throws_ok { $db->create_and_load } qr/APPLICATION ERROR/,
     'Database creation fails on missing schema';
 
 #
@@ -75,10 +72,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/missing-directory'
                                });
-throws_ok { $db->create } 'help me',
+throws_ok { $db->create_and_load } qr/APPLICATION ERROR/,
      'Database creation fails on missing schema';
 
-}; # end of TODO
 
 
 #
