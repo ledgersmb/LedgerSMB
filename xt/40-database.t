@@ -133,10 +133,6 @@ throws_ok { $db->create } 'help me',
 #  Database creation fails when a module fails to load
 #
 
- TODO: {
-     local $TODO = q{The module creation success reporting protocol
-isn't checked since 1.5};
-
 
 $admin_dbh->do(q{DROP DATABASE IF EXISTS lsmbtest_database});
 $db = LedgerSMB::Database->new({
@@ -145,15 +141,10 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/module-failure-1'
                                });
-throws_ok { $db->create } 'help me',
-    'Database creation fails on missing defaults table';
-
-}; # end of TODO
+throws_ok { $db->create_and_load } qr/Module FaultyModule.sql failed to load/,
+    'Database creation fails when a module fails to load (empty module)';
 
 
- TODO: {
-     local $TODO = q{The module creation success reporting protocol
-isn't checked since 1.5};
 
 $admin_dbh->do(q{DROP DATABASE IF EXISTS lsmbtest_database});
 $db = LedgerSMB::Database->new({
@@ -162,11 +153,13 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/module-failure-2'
                                });
-throws_ok { $db->create } 'help me',
-    'Database creation fails on missing defaults table';
+throws_ok { $db->create_and_load }
+        qr/ERROR:\s*function "fail_me" already exists/,
+    'Database creation fails when a module fails to load (syntax error)';
 
-}; # end of TODO
 
 
+
+# No need to test full database loading: that happens in xt/40-dbsetup.t
 
 done_testing;

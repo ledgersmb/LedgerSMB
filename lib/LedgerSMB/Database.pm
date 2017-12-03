@@ -425,10 +425,17 @@ sub load_modules {
     open my $fh, '<', $filename
         or die "Failed to open $filename : $!";
 
+    my $dbh = $self->connect({ AutoCommit => 1 });
     for my $mod (<$fh>) {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
+
+        $dbh->do(q{delete from defaults where setting_key = 'module_load_ok'})
+            or die $dbh->errstr;
+        $dbh->do(q{insert into defaults (setting_key, value)
+                    values ('module_load_ok', 'no') })
+            or die $dbh->errstr;
 
         $self->run_file(
             file       => "$self->{source_dir}/modules/$mod",
@@ -436,6 +443,13 @@ sub load_modules {
             log_stderr => $args->{errlog} || "${log}_stderr"
         );
 
+        my $sth = $dbh->prepare(q{select value from defaults
+                                   where setting_key = 'module_load_ok'});
+        $sth->execute;
+        my ($value) = $sth->fetchrow_array();
+        $sth->finish;
+        die "Module $mod failed to load"
+            if not $value or $value ne 'yes';
     }
     close $fh or die "Cannot close $filename";
     return 1;
