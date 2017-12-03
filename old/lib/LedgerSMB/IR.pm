@@ -953,56 +953,6 @@ sub retrieve_item {
 
 }
 
-sub exchangerate_defaults {
-    my ( $dbh, $form ) = @_;
-
-    my $var;
-
-    # get default currencies
-    my $query = qq|
-        SELECT substr(value,1,3), value FROM defaults
-         WHERE setting_key = 'curr'|;
-    my $eth = $dbh->prepare($query) || $form->dberror($query);
-    $eth->execute;
-    ( $form->{defaultcurrency}, $form->{currencies} ) = $eth->fetchrow_array;
-    $eth->finish;
-
-    $query = qq|
-        SELECT sell
-          FROM exchangerate
-         WHERE curr = ?
-               AND transdate = ?|;
-    my $eth1 = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq/
-        SELECT max(transdate || ' ' || sell || ' ' || curr)
-          FROM exchangerate
-         WHERE curr = ?/;
-    my $eth2 = $dbh->prepare($query) || $form->dberror($query);
-
-    # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
-        $eth1->execute( $var, $form->{transdate} );
-        @array = $eth1->fetchrow_array;
-    $form->db_parse_numeric(sth=> $eth1, arrayref=>\@array);
-        $form->{$var} = shift @array;
-        if ( !$form->{$var} ) {
-            $eth2->execute($var);
-
-            ( $form->{$var} ) = $eth2->fetchrow_array;
-            ( $null, $form->{$var} ) = split / /, $form->{$var};
-            $form->{$var} = 1 unless $form->{$var};
-            $eth2->finish;
-        }
-        $eth1->finish;
-    }
-
-    $form->{ $form->{currency} } = $form->{exchangerate}
-      if $form->{exchangerate};
-    $form->{ $form->{currency} } ||= 1;
-    $form->{ $form->{defaultcurrency} } = 1;
-
-}
 
 sub vendor_details {
     my ( $self, $myconfig, $form ) = @_;
