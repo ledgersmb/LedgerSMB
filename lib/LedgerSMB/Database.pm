@@ -52,6 +52,24 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 
+=head1 PROPERTIES
+
+=over
+
+=item source_dir
+
+Indicates the path to the directory which holds the 'Pg-database.sql' file
+and the associated changes, charts and gifi files.
+
+The default value is relative to the current directory, which is assumed
+to be the root of the LedgerSMB source tree.
+
+=cut
+
+has source_dir => (is => 'ro', default => './sql');
+
+=back
+
 =head1 METHODS
 
 =head2 loader_log_filename
