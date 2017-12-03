@@ -31,15 +31,18 @@ package LedgerSMB::Database;
 use strict;
 use warnings;
 
-use LedgerSMB::Auth;
+use DateTime;
 use DBI;
-use base qw(PGObject::Util::DBAdmin);
+use Log::Log4perl;
+use Moose;
+use namespace::autoclean;
 
+extends 'PGObject::Util::DBAdmin';
+
+use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
 
-use DateTime;
-use Log::Log4perl;
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
@@ -546,5 +549,15 @@ sub stats {
 
     return $results;
 }
+
+=head1 COPYRIGHT
+
+This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
+the GNU General Public License (GPL) version 2, or at your option, any later
+version.  See the COPYRIGHT and LICENSE files for more information.
+
+=cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;
