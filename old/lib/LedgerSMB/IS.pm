@@ -47,6 +47,9 @@ use LedgerSMB::Num2text;
 use LedgerSMB::IIAA;
 use Log::Log4perl;
 
+use LedgerSMB::IS qw(BC_SALES_INVOICE);
+
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
 
 
@@ -221,7 +224,7 @@ sub invoice_details {
 
     # sort the whole thing by project and group
 
-    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
+    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff
 
     my $runningnumber = 1;
     my $sameitem      = "";
@@ -1031,7 +1034,7 @@ sub post_invoice {
                 $sth = $dbh->prepare(
                    'INSERT INTO voucher (batch_id, trans_id, batch_class)
                     VALUES (?, ?, ?)');
-                $sth->execute($form->{batch_id}, $form->{id}, 8);
+                $sth->execute($form->{batch_id}, $form->{id}, BC_SALES_INVOICE);
             }
 
             for my $cls(@{$form->{bu_class}}){
@@ -1566,7 +1569,6 @@ sub retrieve_item {
 
 }
 
-
 =pod
 
 =cut
@@ -1740,7 +1742,7 @@ sub construct_types
     while(my $ref = $sth->fetchrow_hashref(NAME_lc))
     {
 
-      $returnvalue.=qq|<option value="$ref->{id} ">|.substr($ref->{class},0,3).qq|</option>|;
+      $returnvalue.=qq|<option value="$ref->{id} ">|.substr($ref->{class},0,3).qq|</option>|;  ## no critic (ProhibitMagicNumbers) sniff
 
     }
 
@@ -1766,7 +1768,7 @@ sub createlocation
 
    $sth->execute($form->{"customer_id"},
          undef,
-         3,
+         3,  ## no critic (ProhibitMagicNumbers) sniff
          $form->{"shiptoaddress1_new"},
          $form->{"shiptoaddress2_new"},
          $form->{"shiptoaddress3_new"},

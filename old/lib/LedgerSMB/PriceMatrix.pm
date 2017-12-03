@@ -135,7 +135,7 @@ sub price_matrix {
             }
        } elsif ($form->{vendor_id}){
             $sellprice = $mref->{lastcost} || $ref->{sellprice};
-            die $sellprice;
+            $ref->{sellprice} = $sellprice;
        }
     }
 }

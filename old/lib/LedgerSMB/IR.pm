@@ -46,6 +46,8 @@ use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::IIAA;
 
+use LedgerSMB::Magic qw(BC_VENDOR_INVOICE);
+
 =over
 
 =item get_files
@@ -593,7 +595,7 @@ sub post_invoice {
         $sth = $dbh->prepare(
            'INSERT INTO voucher (batch_id, trans_id, batch_class)
             VALUES (?, ?, ?)');
-        $sth->execute($form->{batch_id}, $form->{id}, 9);
+        $sth->execute($form->{batch_id}, $form->{id}, BC_VENDOR_INVOICE);
     }
 
     # add shipto

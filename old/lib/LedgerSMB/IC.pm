@@ -505,10 +505,10 @@ sub save {
     }
 
     @a = localtime;
-    $a[5] += 1900;
-    $a[4]++;
-    $a[4] = substr( "0$a[4]", -2 );
-    $a[3] = substr( "0$a[3]", -2 );
+    $a[5] += 1900;  ## no critic (ProhibitMagicNumbers) sniff
+    $a[4]++;  ## no critic (ProhibitMagicNumbers) sniff
+    $a[4] = substr( "0$a[4]", -2 );  ## no critic (ProhibitMagicNumbers) sniff
+    $a[3] = substr( "0$a[3]", -2 );  ## no critic (ProhibitMagicNumbers) sniff
     my $shippingdate = "$a[5]$a[4]$a[3]";
 
     ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;

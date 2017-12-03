@@ -46,9 +46,9 @@ sub add_entry {
 sub slurp{
     local (*ARGV, $/);
     @ARGV = shift;
-    open SOURCE, "<:encoding(UTF-8)", $_
+    open my $fh, "<:encoding(UTF-8)", $_
         or die "Can't open '$_'; error: $!";
-    readline(SOURCE);
+    readline($fh);
 }
 
 while (<>) {

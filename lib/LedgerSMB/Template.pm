@@ -322,6 +322,7 @@ use File::Copy 'cp';
 use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
+use Scalar::Util qw(reftype);
 use Try::Tiny;
 
 use parent qw( Exporter );
@@ -411,6 +412,7 @@ sub new_UI {
     my $UI_vars = {
         dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
         dojo_built => $LedgerSMB::Sysconfig::dojo_built,
+        dojo_location => $LedgerSMB::Sysconfig::dojo_location,
     };
 
     return $class->new(
@@ -433,23 +435,22 @@ sub preprocess {
         $rawvars = $rawvars->to_output;
     }
     my $type = ref $rawvars;
+    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
     my $vars;
-    if ( $type eq 'ARRAY' ) {
+    if ( $reftype and $reftype eq 'ARRAY' ) {
         $vars = [];
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_, $escape );
         }
     } elsif (!$type) {
         return $escape->($rawvars);
-    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+    } elsif ($reftype eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return $escape->($$rawvars);
-    } elsif ($type eq 'CODE'){ # a code reference makes no sense
+    } elsif ($reftype eq 'CODE'){ # a code reference makes no sense
         return $rawvars;
-    } elsif ($type eq 'IO::File'){
-        return undef;
-    } else { # Hashes and objects
+    } elsif ($reftype eq 'HASH') { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
             # don't encode the object's internals; TT won't forward anyway...
@@ -459,6 +460,7 @@ sub preprocess {
             $vars->{preprocess($_, $escape)} = preprocess( $rawvars->{$_}, $escape );
         }
     }
+    # return undef for GLOB references (includes IO::File objects)
     return $vars;
 }
 
@@ -644,23 +646,6 @@ sub render_to_psgi {
         'Content-Type' => "$self->{mimetype}$charset",
         (@{$args{extra_headers} // []})
         ];
-
-    my $disabled_back;
-    try {
-        # This is a hack due to the fact that we don't distinguish
-        # between database connections and application instances.
-
-        # The reason we need to protect this bit of code is that
-        # setup.pl invokes templates with a database connection
-        # for non-LedgerSMB 1.3+ databases (LedgerSMB 1.2 or SQL Ledger)
-        $disabled_back = $LedgerSMB::App_State::DBH
-            && LedgerSMB::Setting->get('disable_back');
-    };
-    push @$headers, (
-        'Cache-Control' =>
-          'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, false',
-        'Pragma' => 'no-cache'
-        ) if !defined $disabled_back || $disabled_back;
 
     my $body;
     if ($self->{output}) {

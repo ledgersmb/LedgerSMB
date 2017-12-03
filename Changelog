@@ -44,6 +44,28 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.14
+* Post (instead of save) transaction on depreciation approval (Erik H)
+* Fix role prefix set on copied databases from setup.pl (Erik H, #3219)
+* Fix argument names due to move to PGObject::Util::DBAdmin (Erik H)
+* Fix posting of vendor invoice fails with vendor-price in parts (Erik H, #3081)
+* Fix example Apache config file's SSLRequireSSL directive (Erik H, #3272)
+* Fix invoice shows fewer $decimalplaces than configured (Erik H, #3271)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.13
+* Fix setup.pl showing [_1] instead of the LedgerSMB version (Erik H)
+* Fix contacts with attachments being inaccessible (Erik H, #3228)
+* Fix AR/AP Aging report failing to be generated (Erik H, #3243)
+* Upgrade Dojo from 1.10.8 to 1.10.9 (Erik H)
+* Fix HTML aging statement download not popping up 'Save' dialog (Erik H)
+* Fix date format 'dd/mm/yyyy' being parsed incorrectly (Erik H, #3223)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.12
 * Fix depreciation method listing incorrect stored procedure (Erik H)
 * Fix failure to select business type details from business list (Erik H, #3154)

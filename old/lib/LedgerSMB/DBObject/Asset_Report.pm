@@ -136,7 +136,7 @@ sub get {
         @{$self->{report_lines}} = $self->call_dbmethod(
                                   funcname => 'asset_report__get_disposal'
         );
-    } elsif ($self->{report_class} == 4) {
+    } elsif ($self->{report_class} == 4) {  ## no critic (ProhibitMagicNumbers) sniff
        @{$self->{report_lines}} = $self->call_dbmethod(
                                    funcname => 'asset_report_partial_disposal_details'
        );
