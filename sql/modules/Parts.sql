@@ -10,7 +10,7 @@ RETURNS SETOF parts AS
 $$
 SELECT *
   FROM parts
- WHERE ($1 IS NULL OR (partnumber ilike $1 || '%'))
+ WHERE ($1 IS NULL OR (partnumber ilike '%' || $1 || '%'))
        AND ($2 IS NULL
             OR description ilike '%' || $2 || '%'
             OR plainto_tsquery(get_default_lang()::regconfig, $2)
