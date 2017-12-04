@@ -1062,7 +1062,7 @@ SELECT lsmb__create_role('template_edit');
 SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
 SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
-  FROM unnest(array[29,30,31,32,33,90, 99, 159,160,161,162,163,164,165,
+  FROM unnest(array[90, 99, 159,160,161,162,163,164,165,
                     166,167,168,169,170,171,173,174,175,176,177,178,179,180,
                     181,182,183,184,185,186,187,241,242]) id;
 
