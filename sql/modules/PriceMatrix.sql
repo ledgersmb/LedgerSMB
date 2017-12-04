@@ -40,4 +40,6 @@ LEFT JOIN pricegroup pg ON eca.pricegroup_id = pg.id
 
 $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

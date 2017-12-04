@@ -38,7 +38,6 @@ my $db = LedgerSMB::Database->new({
          dbname       => $ENV{LSMB_NEW_DB},
          username     => $ENV{PGUSER},
          password     => $ENV{PGPASSWORD},
-         source_dir   => $ENV{LSMB_SOURCE_DIR}
 });
 
 # Manual tests

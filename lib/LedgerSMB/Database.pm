@@ -31,15 +31,18 @@ package LedgerSMB::Database;
 use strict;
 use warnings;
 
-use LedgerSMB::Auth;
+use DateTime;
 use DBI;
-use base qw(PGObject::Util::DBAdmin);
+use Log::Log4perl;
+use Moose;
+use namespace::autoclean;
 
+extends 'PGObject::Util::DBAdmin';
+
+use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
 
-use DateTime;
-use Log::Log4perl;
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
@@ -48,6 +51,24 @@ our $VERSION = '1.1';
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
+
+=head1 PROPERTIES
+
+=over
+
+=item source_dir
+
+Indicates the path to the directory which holds the 'Pg-database.sql' file
+and the associated changes, charts and gifi files.
+
+The default value is relative to the current directory, which is assumed
+to be the root of the LedgerSMB source tree.
+
+=cut
+
+has source_dir => (is => 'ro', default => './sql');
+
+=back
 
 =head1 METHODS
 
@@ -314,26 +335,37 @@ Loads the base schema definition file Pg-database.sql.
 
 sub load_base_schema {
     my ($self, $args) = @_;
-    my $success;
     my $log = loader_log_filename();
-
-    $self->{source_dir} = './'
-        unless $self->{source_dir};
 
     $self->run_file(
 
-        file       => "$self->{source_dir}sql/Pg-database.sql",
+        file       => "$self->{source_dir}/Pg-database.sql",
         log_stdout => ($args->{log} || "${log}_stdout"),
         log_stderr => ($args->{errlog} || "${log}_stderr")
     );
+    my $dbh = $self->connect({ AutoCommit => 1 });
+    my $sth = $dbh->prepare(
+        q|select true
+                from pg_class cls
+                join pg_namespace nsp
+                  on nsp.oid = cls.relnamespace
+               where cls.relname = 'defaults'
+                 and nsp.nspname = 'public'
+             |);
+    $sth->execute();
+    my ($success) = $sth->fetchrow_array();
+    $sth->finish();
 
-    if (opendir(LOADDIR, 'sql/on_load')) {
+    die 'Base schema failed to load'
+        if ! $success;
+
+    if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
-                file       => "$self->{source_dir}sql/on_load/$fname",
+                file       => "$self->{source_dir}/on_load/$fname",
                 log_stdout => ($args->{log} || "${log}_stdout"),
                 log_stderr => ($args->{errlog} || "${log}_stderr")
-                ) if -f "sql/on_load/$fname";
+                ) if -f "$self->{source_dir}/on_load/$fname";
         }
         closedir(LOADDIR);
     }
@@ -353,19 +385,33 @@ sub load_modules {
     my ($self, $loadorder, $args) = @_;
     my $log = loader_log_filename();
 
-    $self->{source_dir} ||= '';
-    open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
+    open (LOADORDER, '<', "$self->{source_dir}/modules/$loadorder");
+    my $dbh = $self->connect({ AutoCommit => 1 });
     for my $mod (<LOADORDER>) {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
         no warnings 'uninitialized';
+
+        $dbh->do(q{delete from defaults where setting_key = 'module_load_ok'})
+            or die $dbh->errstr;
+        $dbh->do(q{insert into defaults (setting_key, value)
+                    values ('module_load_ok', 'no') })
+            or die $dbh->errstr;
+
         $self->run_file(
-                       file       => "$self->{source_dir}sql/modules/$mod",
+                       file       => "$self->{source_dir}/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
                log_stderr  => $args->{errlog} || "${log}_stderr"
         );
 
+        my $sth = $dbh->prepare(q{select value from defaults
+                                   where setting_key = 'module_load_ok'});
+        $sth->execute;
+        my ($value) = $sth->fetchrow_array();
+        $sth->finish;
+        die "Module $mod failed to load"
+            if not $value or $value ne 'yes';
     }
     close (LOADORDER); ### return failure to execute the script?
     return 1;
@@ -384,14 +430,14 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-        file         => "sql/coa/$args->{country}/chart/$args->{chart}",
+        file         => "$self->{source_dir}/coa/$args->{country}/chart/$args->{chart}",
         log_stdout   => $log,
         log_stderr   => $log,
         );
     if (defined $args->{coa_lc}
-        && -f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+        && -f "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
-            file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+            file        => "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}",
             log_stdout  => $log,
             log_stderr  => $log,
             );
@@ -462,7 +508,8 @@ sub apply_changes {
         pg_server_prepare => 0});
     $dbh->do("set client_min_messages = 'warning'");
     my $loadorder =
-        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
+        LedgerSMB::Database::Loadorder->new(
+            "$self->{source_dir}/changes/LOADORDER");
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
     $dbh->disconnect;
@@ -516,5 +563,15 @@ sub stats {
 
     return $results;
 }
+
+=head1 COPYRIGHT
+
+This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
+the GNU General Public License (GPL) version 2, or at your option, any later
+version.  See the COPYRIGHT and LICENSE files for more information.
+
+=cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;
