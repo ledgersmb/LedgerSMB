@@ -30,10 +30,10 @@
 1.4/business_unit_class_id_seq-fix.sql
 #1.5 changes
 !1.5/invoice-tbl-cogs-constraint.sql
-1.5/trial_balance_cleanup.sql
+!1.5/trial_balance_cleanup.sql
 1.5/templates-last-modified.sql
 1.5/parts_fkeys.sql
-1.5/open_forms_callers.sql
+!1.5/open_forms_callers.sql
 1.5/robot_entity.sql
 1.5/cleanup_invoice_id.sql
 1.5/invoice_id_fkey.sql
