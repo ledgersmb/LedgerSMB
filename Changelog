@@ -2,6 +2,26 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.14
+* Post (instead of save) transaction on depreciation approval (Erik H)
+* Fix role prefix set on copied databases from setup.pl (Erik H, #3219)
+* Fix argument names due to move to PGObject::Util::DBAdmin (Erik H)
+* Fix posting of vendor invoice fails with vendor-price in parts (Erik H, #3081)
+* Fix example Apache config file's SSLRequireSSL directive (Erik H, #3272)
+* Fix invoice shows fewer $decimalplaces than configured (Erik H, #3271)
+* Fix upgrade code using db transactions incorrectly (Erik H, #3289)
+* Improve 'in progress' feedback by fading submitted content (Erik H, #3283)
+* Add visual feedback to form input validation in setup.pl (Erik H)
+* Implement checks for correct loading of sql/modules/ files (Erik H)
+* Correct Roles.sql and PriceMatrix.sql loading errors (Erik H)
+* Fix 'uninitialized variable' warnings on database creation (Erik H, #3266)
+* Find part number on invoice/order by substring; was prefix (Erik H, #3266)
+* Find part description on invoice/order by substring; was 'full text' (Erik H)
+* Change part search on invoice/order to be case insensitive (Erik H, #3266)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.13
 * Fix setup.pl showing [_1] instead of the LedgerSMB version (Erik H)
 * Fix contacts with attachments being inaccessible (Erik H, #3228)
