@@ -51,6 +51,15 @@ Changelog for 1.5.14
 * Fix posting of vendor invoice fails with vendor-price in parts (Erik H, #3081)
 * Fix example Apache config file's SSLRequireSSL directive (Erik H, #3272)
 * Fix invoice shows fewer $decimalplaces than configured (Erik H, #3271)
+* Fix upgrade code using db transactions incorrectly (Erik H, #3289)
+* Improve 'in progress' feedback by fading submitted content (Erik H, #3283)
+* Add visual feedback to form input validation in setup.pl (Erik H)
+* Implement checks for correct loading of sql/modules/ files (Erik H)
+* Correct Roles.sql and PriceMatrix.sql loading errors (Erik H)
+* Fix 'uninitialized variable' warnings on database creation (Erik H, #3266)
+* Find part number on invoice/order by substring; was prefix (Erik H, #3266)
+* Find part description on invoice/order by substring; was 'full text' (Erik H)
+* Change part search on invoice/order to be case insensitive (Erik H, #3266)
 
 Erik H is Erik Huelsmann
 
