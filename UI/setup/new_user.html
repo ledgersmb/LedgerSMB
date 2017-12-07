@@ -1,7 +1,7 @@
 <?lsmb INCLUDE "ui-header.html"
-                stylesheet="ledgersmb.css"
-                include_stylesheet=["setup/stylesheet.css"];
-       PROCESS elements.html ?>
+stylesheet="ledgersmb.css"
+include_stylesheet=["setup/stylesheet.css"] ?>
+<?lsmb PROCESS elements.html ?>
 <body id="setup-new-user" class="lsmb <?lsmb dojo_theme ?>">
 <div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
@@ -13,11 +13,11 @@
     type = 'hidden'
    value = database
 };
-INCLUDE input element_data = {
-        name = 'country_dateformat'
-        type = 'hidden'
-       value = country_dateformat
-} ?>
+ INCLUDE input element_data = {
+        name = 'dojo_dateformat'
+         type = 'hidden'
+       value = dojo_dateformat
+ } ?>
 <div data-dojo-id="country_store" data-dojo-type="dojo/store/Memory"
     data-dojo-props='idProperty: "id", data: <?lsmb USE JSON; countries.json; ?>'>
 </div>
@@ -138,28 +138,16 @@ required = 'required'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb
-INCLUDE select element_data = {
-           labelAttr = 'name'
-                name = 'country_id'
-               label = text('Country')
-            required = 'true'
-    "data-dojo-type" = "lsmb/PublishSelect"
-   "data-dojo-props" = "value:'" _ country_id _ "', " _
-                       "store: country_store, topic:'ui/setup/country' "
-} ?>
-</div>
-<div class="input_row">
 <?lsmb INCLUDE input element_data = {
-                name = 'dob'
-               class = 'date'
-                type = 'text'
-                size = '10'
-               label = text('Date of Birth') #'
-               value = dob
-            required = 'true'
+    name = 'dob'
+   class = 'date'
+    type = 'text'
+    size = '10'
+   label = text('Date of Birth') #'
+   value = dob
+required = 'required'
     "data-dojo-type" = "lsmb/setup/SetupDateformat",
-   "data-dojo-props" = "country_dateformat:" _ country_dateformat _ ", " _
+   "data-dojo-props" = "dojo_dateformat:" _ dojo_dateformat _ ", " _
                        "store: country_store, topic:'ui/setup/country'"
 } ?>
 </div>
@@ -172,6 +160,18 @@ INCLUDE select element_data = {
    label = text('Tax ID/SSN') #'
    value = ssn
 required = 'required'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb
+INCLUDE select element_data = {
+           labelAttr = 'name'
+                name = 'country_id'
+               label = text('Country')
+            required = 'required'
+    "data-dojo-type" = "lsmb/PublishSelect"
+   "data-dojo-props" = "value:'" _ country_id _ "', " _
+                       "store: country_store, topic:'ui/setup/country' "
 } ?>
 </div>
 <div class="input_row">

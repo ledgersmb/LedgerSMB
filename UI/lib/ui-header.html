@@ -1,4 +1,3 @@
-<?lsmb# HTML Snippet, for import only ?>
 <?lsmb
    # This helper should be included in files which will be served as
    # top-level responses (i.e. documents on their own); this includes
@@ -17,6 +16,7 @@
             <meta http-equiv="refresh" content="<?lsmb refresh.delay ?>; <?lsmb refresh.url ?>">
         <?lsmb END -?>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <?lsmb# HTML Snippet, for import only ?>
         <?lsmb
             # source comment only!
             #
@@ -36,9 +36,9 @@
             <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb IF warn_expire ?>
-            <script type="text/javascript">
-            window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
-            </script>
+        <script type="text/javascript">
+        window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
+        </script>
         <?lsmb END ?>
         <script type="text/javascript">
             var dojoConfig = {

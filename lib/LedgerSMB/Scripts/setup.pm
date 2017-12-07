@@ -935,12 +935,13 @@ coa_lc not set:  Select the coa location code
 =cut
 
 sub select_coa {
+    use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
 
-    if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
-        die $request->{_locale}->text('Access Denied');
-    }
+      if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
+          die $request->{_locale}->text('Access Denied');
+      }
 
     if ($request->{coa_lc}){
         if ($request->{chart}){
@@ -1040,20 +1041,19 @@ sub _render_new_user {
     # mapping going. --CT
 
 
-    _init_db($request) unless $request->{dbh};
+    _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}}
-        = $request->call_procedure(funcname => 'person__list_salutations' );
+    = $request->call_procedure(funcname => 'person__list_salutations' );
 
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
+    @{$request->{countries}}
+    = $request->call_procedure(funcname => 'location_list_country' );
     if ( $request->{coa_lc} ) {
         LedgerSMB::Setting->set('default_country',$request->{coa_lc});
     }
     $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
-    $request->{country_dateformat} = $LedgerSMB::Sysconfig::country_dateformat;
+    $request->{dojo_dateformat} = $LedgerSMB::Sysconfig::dojo_dateformat;
 
     my $locale = $request->{_locale};
 
@@ -1066,9 +1066,6 @@ sub _render_new_user {
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/new_user',
-        hiddens => { database           => $request->{database},
-                     country_id         => $request->{country_id}
-                   }
         );
 
     return $template->render_to_psgi($request);
@@ -1117,7 +1114,7 @@ sub save_user {
               = $request->call_procedure(funcname => 'location_list_country' );
 
            $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
-           $request->{country_dateformat} = $LedgerSMB::Sysconfig::country_dateformat;
+           $request->{dojo_dateformat} = $LedgerSMB::Sysconfig::dojo_dateformat;
 
            my $locale = $request->{_locale};
 
@@ -1128,9 +1125,6 @@ sub save_user {
            my $template = LedgerSMB::Template->new_UI(
                $request,
                template => 'setup/new_user',
-               hiddens => { database           => $request->{database},
-                            country_id         => $request->{country_id}
-                          }
            );
            $duplicate = $template->render_to_psgi($request);
        } else {

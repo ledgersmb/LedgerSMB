@@ -211,7 +211,7 @@
         <?lsmb value_attr = 'value' ?>
     <?lsmb END ?>
     <?lsmb IF element_data.defined('default_values') ?>
-      <?lsmb # Undef items must be removed, or they choke in the options defaults check later.
+            <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
         i = 0;
         FOREACH select_default IN element_data.default_values;
           UNLESS select_default.defined;

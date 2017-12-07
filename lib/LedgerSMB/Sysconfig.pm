@@ -340,10 +340,10 @@ def 'cache_templates',
 
 ### SECTION  ---   setup
 
-def 'country_dateformat',
+def 'dojo_dateformat',
     section => 'setup',
     default => 1,
-    doc => q{Date formats are inferred by country. Set to off to use ISO8601};
+    doc => q{Date formats are inferred by Dojo locale. Set to off to use ISO8601};
 
 ### SECTION  ---   paths
 

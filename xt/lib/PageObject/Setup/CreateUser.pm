@@ -20,7 +20,7 @@ __PACKAGE__->self_register(
 
 my @fields = ("Username", "Password", "Create new user", "Import existing user",
               "Salutation", "First Name", "Last name", "Employee Number",
-              "Country", "Date of Birth", "Tax ID/SSN", "Assign Permissions");
+              "Date of Birth", "Tax ID/SSN", "Country", "Assign Permissions");
 
 
 sub _verify {
