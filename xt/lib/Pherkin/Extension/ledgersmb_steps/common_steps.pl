@@ -231,7 +231,8 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
 
         IR->post_invoice({}, $form);
     }
-    S->{ext_lsmb}->admin_dbh->commit;
+    S->{ext_lsmb}->admin_dbh->commit
+        if ! S->{ext_lsmb}->admin_dbh->{AutoCommit};
 };
 
 
