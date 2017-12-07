@@ -196,7 +196,7 @@ sub create_template {
 
     $dbh->do("INSERT INTO defaults
                      VALUES ('role_prefix', 'lsmb_${template}__')");
-    $dbh->commit;
+    $dbh->commit if ! $dbh->{AutoCommit};
     $dbh->disconnect;
 
     $self->template_created(1);
