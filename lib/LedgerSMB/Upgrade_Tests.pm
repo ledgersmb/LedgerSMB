@@ -245,9 +245,9 @@ sub _get_tests {
     my @tests;
 
 push @tests, __PACKAGE__->new(
-    test_query => "SELECT * FROM pg_settings
+    test_query => q(SELECT * FROM pg_settings
                     WHERE name = 'client_encoding'
-                      AND setting <> 'UTF8'",
+                      AND setting <> 'UTF8'),
     display_name => marktext('Client encoding must be UTF8'),
     name => 'client_encoding',
     display_cols => ['name','setting','unit','category','short_desc','extra_desc','context','vartype','source','min_val','max_val','enumvals','boot_val','reset_val','sourcefile','sourceline'],
@@ -442,53 +442,53 @@ database, or delete the offending rows through PgAdmin III or psql'),
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select *, eca.id as id  from entity_credit_account eca
+   test_query => 'select *, eca.id as id  from entity_credit_account eca
                      join entity_class ec on eca.entity_class = ec.id
                      join entity e on eca.entity_id = e.id
                    where meta_number in
                        (select meta_number from entity_credit_account
                         group by meta_number having count(*) > 1)
-                   order by meta_number",
+                   order by meta_number',
  display_name => marktext('No duplicate meta_numbers'),
          name => 'no_meta_number_dupes',
  display_cols => [ 'meta_number', 'class', 'description', 'name' ],
       columns => ['meta_number'],
         table => 'entity_credit_account',
- instructions => marktext("Make sure all meta numbers are unique."),
+ instructions => marktext('Make sure all meta numbers are unique.'),
       appname => 'ledgersmb',
   min_version => '1.3',
   max_version => '1.4'
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select distinct gifi_accno from chart
+   test_query => q(select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\\s*\$'",
+                         and gifi_accno !~ '^\\s*\$'),
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
         table => 'chart',
- instructions => marktext("Please use the 1.2 UI to add the GIFI accounts"),
+ instructions => marktext('Please use the 1.2 UI to add the GIFI accounts'),
       appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select distinct gifi_accno from account
+   test_query => q(select distinct gifi_accno from account
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = account.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\\s*\$'",
+                         and gifi_accno !~ '^\\s*\$'),
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
         table => 'account',
- instructions => marktext("Please use the 1.3/1.4 UI to add the GIFI accounts"),
+ instructions => marktext('Please use the 1.3/1.4 UI to add the GIFI accounts'),
       appname => 'ledgersmb',
   min_version => '1.3',
   max_version => '1.4'
@@ -501,7 +501,7 @@ push @tests, __PACKAGE__->new(
     push @tests, __PACKAGE__->new(
         # Add a unique key to allow editing
         # Make the test serially reusable and protect against triggers
-        test_query => "ALTER TABLE acc_trans DISABLE TRIGGER USER;
+        test_query => 'ALTER TABLE acc_trans DISABLE TRIGGER USER;
                        ALTER TABLE acc_trans DROP COLUMN IF EXISTS i_key;
                       CREATE TABLE acc_trans1 (LIKE acc_trans INCLUDING ALL);
                        ALTER TABLE acc_trans1 DISABLE TRIGGER USER;
@@ -512,7 +512,7 @@ push @tests, __PACKAGE__->new(
                        ALTER TABLE acc_trans ENABLE TRIGGER USER;
                       SELECT trans_id
                         FROM acc_trans
-                       WHERE i_key IS NULL",
+                       WHERE i_key IS NULL',
       display_name => marktext('Transactions unique key'),
               name => 'add_unique_acc_trans_key',
       display_cols => ['trans_id'],
@@ -520,7 +520,7 @@ push @tests, __PACKAGE__->new(
         id_columns => ['i_key'],
           id_where => 'i_key IS NULL AND ',
       instructions => marktext(
-                       "This should never show. We added a unique key to acc_trans"),
+                       'This should never show. We added a unique key to acc_trans'),
            buttons => ['Save and Retry', 'Cancel'],
              table => 'acc_trans',
            appname => 'sql-ledger',
@@ -1294,33 +1294,33 @@ push @tests, __PACKAGE__->new(
     push @tests, __PACKAGE__->new(
         # Add a unique key to allow editing
         # Make the test serially reusable and protect against triggers
-        test_query => "SELECT ac.i_key, ac.trans_id, ac.id, ac.memo, ac.amount, xx.description, 
-                              ch.accno, ch.link, ch.charttype, ch.category, ac.cleared, approved
-                         FROM acc_trans ac 
+        test_query => q(SELECT ac.i_key, ac.trans_id, ac.id, ac.memo, ac.amount, xx.description,
+                              ch.description as account, ch.accno, ch.link, ch.charttype, ch.category, ac.cleared, approved
+                         FROM acc_trans ac
                          JOIN (
                                    SELECT g.id, g.description FROM gl g
                              UNION SELECT a.id, n.name        FROM ar a JOIN customer n ON n.id = a.customer_id
                              UNION SELECT a.id, n.name        FROM ap a JOIN vendor n   ON n.id = a.vendor_id
                          ) xx ON xx.id = ac.trans_id
                          JOIN chart ch ON (ac.chart_id = ch.id)
-                        WHERE ( ch.category NOT IN ( 'A', 'L', 'Q' ) 
-                             OR ch.link NOT LIKE '%paid' ) 
-                          AND ac.cleared IS NOT NULL 
+                        WHERE ( ch.category NOT IN ( 'A', 'L', 'Q' )
+                             OR ch.link NOT LIKE '%paid' )
+                          AND ac.cleared IS NOT NULL
                           AND ac.approved
-                     ORDER BY accno, transdate, ac.id",
-      display_name => marktext('Reconciliations on non-bank accounts'),
-              name => 'reconciliation_on_non_bank_accounts',
+                     ORDER BY accno, transdate, ac.id),
+      display_name => marktext('Unneeded Reconciliations'),
+              name => 'reconciliation_on_unrelated_accounts',
       display_cols => ['i_key', 'trans_id', 'id', 'memo', 'amount', 'description',
-                       'accno', 'link', 'charttype', 'category', 'cleared', 'approved'],
+                       'accno', 'account', 'category', 'cleared', 'approved'],
            columns => ['cleared'],
         id_columns => ['i_key'],
           id_where => 'approved and cleared IS NOT NULL AND ',
       instructions => marktext(
-                       "There shouldn't be reconciliations on non-bank accounts.<br>
-Please review the dates in the original application"),
-           buttons => ['Save and Retry', 'Cancel', 'Force'],
+                       'Reconciliations should be on asset, liability or equity accounts only.<br>
+Please review the dates and categories in the original application if needed'),
+           buttons => ['Save and Retry', 'Cancel', 'Force', 'Skip'],
           tooltips => {
-               'Force' => marktext('This will <b>ignore</b> the non-necessary reconciliations'),
+               'Force' => marktext('This will <b>keep</b> the transactions but will <b>ignore</b> the non-necessary reconciliations'),
                'Skip'  => marktext('This will <b>skip</b> this test <b><u>without doing any correction</u></b>')
           },
      force_queries => [q(UPDATE acc_trans ac SET cleared = NULL
