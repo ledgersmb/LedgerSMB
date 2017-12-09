@@ -49,8 +49,6 @@ our $VERSION = '1.2';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
-my $temp = $LedgerSMB::Sysconfig::tempdir;
-
 
 =head1 PROPERTIES
 
@@ -84,7 +82,7 @@ This creates a log file for the specific upgrade attempt.
 sub loader_log_filename {
     my $dt = DateTime->now();
     $dt =~ s/://g; # strip out disallowed Windows characters
-    return $temp . "/dblog_${dt}_$$";
+    return LedgerSMB::Sysconfig::tempdir() . "/dblog_${dt}_$$";
 }
 
 
