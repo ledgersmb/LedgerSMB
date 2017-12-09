@@ -647,17 +647,22 @@ sub render_to_psgi {
         (@{$args{extra_headers} // []})
         ];
 
+    # Use the same Content-Disposition criteria as _http_output()
+    my $name = $self->{output_options}{filename};
+    if ($name) {
+        $name =~ s#^.*/##;
+        push @$headers,
+            ( 'Content-Disposition' =>
+              qq{attachment; filename="$name"} );
+        $logger->debug("Adding disposition attachment header for: $name");
+    }
+
     my $body;
     if ($self->{output}) {
         $body = $self->{output};
         utf8::encode($body)
             if utf8::is_utf8($body);
         $body = [ $body ];
-        my $ext = lc($self->{format_options}{filetype} // $self->{format});
-        push @$headers,
-            ( 'Content-Disposition' =>
-                  'attachment; filename="Report.' . $ext . '"'
-            ) if $self->{format} && 'html' ne lc $self->{format};
     }
     elsif ($self->{outputfile}) {
         open $body, '<:raw', $self->{outputfile}
