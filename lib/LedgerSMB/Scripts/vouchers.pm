@@ -27,7 +27,7 @@ use LedgerSMB::Template;
 
 use LedgerSMB::old_code qw(dispatch);
 
-
+use File::Temp;
 use HTTP::Status qw( HTTP_OK);
 
 
@@ -454,8 +454,11 @@ sub print_batch {
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(%$request);
     $request->{format} = 'pdf';
     $request->{media} = 'zip';
-    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{batch_id}-" . time;
-    mkdir $dirname;
+
+    # Make sure we have a temporary directory which gets cleaned up
+    # after exiting this routine
+    my $dir = File::Temp->newdir( CLEANUP => 1);
+    my $dirname = $dir->dirname;
 
     # zipdir gets consumed by io.pl and arapprn.pl
     $request->{zipdir} = $dirname;
@@ -491,7 +494,6 @@ sub print_batch {
         binmode $zip, ':bytes';
         unlink $file_path;
 
-        # TODO: clean up the temp dir!!
         return [
             HTTP_OK,
             [
@@ -504,7 +506,6 @@ sub print_batch {
         ];
     }
     else {
-        # TODO: clean up the temp dir!!
         return $report->render_to_psgi($request);
     }
 }
