@@ -514,7 +514,7 @@ sub get_template_args {
         $arghash->{COMPILE_EXT} = '.lttc';
         $arghash->{COMPILE_DIR} =
            File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
-                                $LedgerSMB::Sysconfig::tempdir );
+                                File::Spec->tmpdir );
     }
     $self->{binmode} = $binmode;
     return $arghash;

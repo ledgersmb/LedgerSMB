@@ -33,6 +33,7 @@ use warnings;
 
 use DateTime;
 use DBI;
+use File::Spec;
 use Log::Log4perl;
 use Moose;
 use namespace::autoclean;
@@ -48,8 +49,6 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 our $VERSION = '1.2';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
-
-my $temp = $LedgerSMB::Sysconfig::tempdir;
 
 
 =head1 PROPERTIES
@@ -84,7 +83,7 @@ This creates a log file for the specific upgrade attempt.
 sub loader_log_filename {
     my $dt = DateTime->now();
     $dt =~ s/://g; # strip out disallowed Windows characters
-    return $temp . "/dblog_${dt}_$$";
+    return File::Spec->tmpdir . "/dblog_${dt}_$$";
 }
 
 
