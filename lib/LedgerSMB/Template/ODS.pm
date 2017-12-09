@@ -747,11 +747,12 @@ sub _format_cleanup_handler {
 
 sub _ods_process {
     my ($output, $template) = @_;
+    my $workdir = File::Temp->newdir;
     my $fn;
     my $fh; # if we need to use a temp file, we need to keep the object
             # in scope, because when it goes out of scope, the file is removed
     if (ref $output) {
-        $fh = File::Temp->new( DIR => LedgerSMB::Sysconfig::tempdir());
+        $fh = File::Temp->new( DIR => $workdir );
         $fn = $fh->filename;
     }
     else {
@@ -759,7 +760,7 @@ sub _ods_process {
     }
     $ods = ooDocument(file => $fn,
                       create => 'spreadsheet',
-                      work_dir => LedgerSMB::Sysconfig::tempdir());
+                      work_dir => $workdir );
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
