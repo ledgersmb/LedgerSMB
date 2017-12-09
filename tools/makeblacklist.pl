@@ -28,8 +28,8 @@ for my $mod (<$order>) {
     $mod =~ s/(\s+|#.*)//g;
     next unless $mod; # skipping comment-only, whitespace-only, and blank lines
     %func = (%func, process_mod($mod));
-    write_blacklist(sort keys %func); 
 }
+write_blacklist(sort keys %func);
 close ($order); ### return failure to execute the script?
 close ($out);
 

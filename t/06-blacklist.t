@@ -9,13 +9,16 @@ use FindBin;
 my $sqldir = "$FindBin::Bin/../sql/modules";
 
 open my $blist, '<', "$sqldir/BLACKLIST";
-my $contents = join "", map { $a = $_; chomp $a; $a } <$blist>;
+local $/ = undef;
+my $contents = <$blist>;
+$contents =~ s/\n//g;
 close $blist;
 
 ok($contents, "Got contents from original blacklist");
 
 my $contents2 = `perl $FindBin::Bin/../tools/makeblacklist.pl`;
-ok($contents, "Got contents from new blacklist");
+$contents2 =~ s/\n//g;
+ok($contents2, "Got contents from new blacklist");
 
 is(sha512_base64($contents2),
    sha512_base64($contents),
