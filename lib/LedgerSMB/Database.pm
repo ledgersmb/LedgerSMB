@@ -33,6 +33,7 @@ use warnings;
 
 use DateTime;
 use DBI;
+use File::Spec;
 use Log::Log4perl;
 use Moose;
 use namespace::autoclean;
@@ -82,7 +83,7 @@ This creates a log file for the specific upgrade attempt.
 sub loader_log_filename {
     my $dt = DateTime->now();
     $dt =~ s/://g; # strip out disallowed Windows characters
-    return LedgerSMB::Sysconfig::tempdir() . "/dblog_${dt}_$$";
+    return File::Spec->tmpdir . "/dblog_${dt}_$$";
 }
 
 
