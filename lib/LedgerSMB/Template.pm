@@ -664,7 +664,7 @@ sub output {
     if ('email' eq lc $method) {
         $self->_email_output;
     } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-        open my $fh, ">", $args{OUT}
+        open my $fh, '>', $args{OUT}
            or die "Can't write to file $args{OUT}";
         binmode $fh, ':raw';
         print $fh $self->{output}

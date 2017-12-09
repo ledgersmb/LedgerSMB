@@ -83,15 +83,13 @@ is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
 $myconfig = {'templates' => 't/data'};
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de',
-        'path' => 't/data', 'output_file' => 'test', 'format' => 'HTML');
+        'path' => 't/data', 'format' => 'HTML');
 ok(defined $template,
         'Template, new: Object creation with valid language and path');
 isa_ok($template, 'LedgerSMB::Template',
         'Template, new: Object creation with valid language and path');
 is($template->{include_path}, 't/data',
         'Template, new: Object creation with valid path overrides language');
-is($template->{outputfile}, "$temp/test",
-        'Template, new: Object creation with filename is correct');
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
@@ -299,13 +297,11 @@ my $payment_template =  LedgerSMB::Template->new(
         template        => 'payments_detail',
         format          => 'HTML',
         no_auto_output  => 1,
-        output_file     => 'payment_test1'
 );
 
 $payment_template->render({ request => { script => '' },
                             payment => $payment });
-my @output =  get_output_line_array($payment_template);
-#cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
+my @output =  split "\n", $payment_template->{output};
 is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
 is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
@@ -327,15 +323,3 @@ SKIP: {
 
     like($line1, qr/^%PDF/, 'output file is pdf');
 }
-# Functions
-sub get_output_line_array {
-        my $FH;
-        my ($template) = @_;
-        open($FH, '<:bytes', $template->{outputfile}) or
-                die 'Unable to open rendered file';
-        my @lines = <$FH>;
-        close $FH;
-        unlink $template->{outputfile};
-        return @lines;
-}
-
