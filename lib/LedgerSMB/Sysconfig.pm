@@ -598,21 +598,6 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
 }
 
 sub check_permissions {
-    use English qw(-no_match_vars);
-
-    if($EUID == 0){
-        die_pretty(
-            'Running a Web Service as root is a security problem',
-            'If you are starting LedgerSMB as a system service',
-            'please make sure that you drop privlidges as per README.md',
-            'and the example files in conf/',
-            'This makes it difficult to run on a privlidged port (<1024)',
-            'In theory you can pass the --user argument to starman,',
-            'However starman drops privlidges too late, starting us as root.'
-        )
-    }
-
-
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
     # commit 6978b88 added this line to resolve issues if HOME isn't set
     $ENV{HOME} = $tempdir;    ## no critic   # sniff
