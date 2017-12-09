@@ -1177,7 +1177,7 @@ sub process_and_run_upgrade_script {
 
     $dbtemplate->render($request);
     $database->run_file(
-        file =>  $dbtemplate->{outputfile},
+        file => $tempfile,
         log => $temp . '_stdout',
         errlog => $temp . '_stderr'
         );
