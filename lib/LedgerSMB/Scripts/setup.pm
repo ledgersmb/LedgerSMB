@@ -1170,8 +1170,10 @@ sub process_and_run_upgrade_script {
         format_options => {extension => 'sql'},
         format => 'TXT' );
     my $tempfile = File::Temp->new();
-    print $tempfile $dbtemplate->{output};
-    close $tempfile;
+    print $tempfile $dbtemplate->{output}
+       or die q{Failed to create upgrade instructions to be sent to 'psql'};
+    close $tempfile
+       or warn 'Failed to close temporary file';
 
     $dbtemplate->render($request);
     $database->run_file(
