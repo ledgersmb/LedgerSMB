@@ -326,17 +326,6 @@ sub _render {
     # Rendering
 
     $self->format('html') unless defined $self->format;
-    my $name = $self->name || '';
-    $name =~ s/ /_/g;
-    $name = $name . '_' . $self->from_date->to_output
-            if $self->can('from_date')
-               and defined $self->from_date
-               and defined $self->from_date->to_output;
-    $name = $name . '-' . $self->to_date->to_output
-            if $self->can('to_date')
-               and defined $self->to_date
-               and defined $self->to_date->to_output;
-    $name = undef unless $request->{format};
     my $columns = $self->show_cols($request);
 
     for my $col (@$columns){
@@ -368,7 +357,6 @@ sub _render {
         locale => $self->locale,
         path => 'UI',
         template => $template,
-        output_file => $name,
         format => uc($request->{format} || 'HTML'),
     );
     my $render = $template->can($args{renderer});

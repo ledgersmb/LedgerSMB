@@ -24,6 +24,7 @@ use strict;
 use warnings;
 
 use Digest::MD5 qw(md5_hex);
+use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use Try::Tiny;
@@ -1167,11 +1168,16 @@ sub process_and_run_upgrade_script {
         template => $template,
         no_auto_output => 1,
         format_options => {extension => 'sql'},
-        output_file => 'upgrade.sql',
         format => 'TXT' );
+    my $tempfile = File::Temp->new();
+    print $tempfile $dbtemplate->{output}
+       or die q{Failed to create upgrade instructions to be sent to 'psql'};
+    close $tempfile
+       or warn 'Failed to close temporary file';
+
     $dbtemplate->render($request);
     $database->run_file(
-        file =>  $LedgerSMB::Sysconfig::tempdir . '/upgrade.sql',
+        file =>  $dbtemplate->{outputfile},
         log => $temp . '_stdout',
         errlog => $temp . '_stderr'
         );
