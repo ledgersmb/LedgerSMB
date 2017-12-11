@@ -50,7 +50,7 @@ BEGIN;
 
     \set report_end1 '''2001-02-03'''
     \set report_end2 '''2001-03-04'''
-    
+
     --TODO: Do we still need this?
     PREPARE test AS SELECT count(*) = 1
                       FROM defaults
@@ -153,16 +153,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[13],'Correct number of report lines');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT SUM(crl.our_balance) - cr.their_total
-                    FROM cr_report_line crl
-                    JOIN cr_report cr ON cr.id = crl.report_id
-                    WHERE cr.id = currval('cr_report_id_seq')::int
-                    GROUP BY cr.their_total;
+    PREPARE test AS SELECT reconciliation__check_balanced(currval('cr_report_id_seq')::int);
     SELECT results_eq('test',ARRAY[-20::numeric],'Report not balanced (should not be submittable)');
     DEALLOCATE test;
 
     PREPARE test AS WITH rows AS (
-                        UPDATE cr_report_line SET cleared = 't', clear_time = '1501-02-03'
+                        UPDATE cr_report_line SET cleared = 't', clear_time = '1501-02-03',
+                               their_balance = our_balance
                         WHERE report_id = currval('cr_report_id_seq')::int
                         RETURNING 1
                     )
@@ -171,14 +168,14 @@ BEGIN;
     SELECT results_eq('test',ARRAY[13],'Clear transactions');
     DEALLOCATE test;
 
---    PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int),:report_end1);
---    SELECT throws_ok(
---        'test',
---        'P0001',
---        'Unbalanced report by -20.00',
---        'We should get a unique violation for an unbalanced report'
---    );
---    DEALLOCATE test;
+    PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int),:report_end1);
+    SELECT throws_ok(
+        'test',
+        'P0001',
+        'Unbalanced report by -20.00',
+        'We should get a unique violation for an unbalanced report'
+    );
+    DEALLOCATE test;
 
     PREPARE test AS WITH rows AS (
                         UPDATE cr_report
@@ -197,6 +194,7 @@ BEGIN;
         'We should not get a unique violation for an unbalanced report on submit'
     );
     DEALLOCATE test;
+
     PREPARE test AS SELECT reconciliation__report_approve(currval('cr_report_id_seq')::int);
     SELECT results_eq('test',ARRAY[1],'1 Report Approved');
     DEALLOCATE test;
@@ -258,8 +256,8 @@ BEGIN;
     );
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) IS NULL;
-    SELECT results_eq('test',ARRAY[true],'1 Cleared balance pre-approval is empty');
+    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) = 0;
+    SELECT results_eq('test',ARRAY[true],'1 Cleared balance pre-approval is zero');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__report_approve(currval('cr_report_id_seq')::int) = 1;
@@ -274,8 +272,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[16],'1 Transactions open');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) IS NULL;
-    SELECT results_eq('test',ARRAY[true],'1 Cleared balance post-approval is empty');
+    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) = 0;
+    SELECT results_eq('test',ARRAY[true],'1 Cleared balance post-approval is 0');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 120, :report_end2, false);
@@ -309,8 +307,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[130.],'Their Balance Updated');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) IS null;
-    SELECT results_eq('test',ARRAY[true],'Cleared balance pre-approval is empty');
+    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) = 0;
+    SELECT results_eq('test',ARRAY[true],'Cleared balance pre-approval is 0');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__report_approve(currval('cr_report_id_seq')::int) = 1;
@@ -318,8 +316,12 @@ BEGIN;
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__delete_my_report(currval('cr_report_id_seq')::int) IS NULL;
-    -- Should we thrown an exception?
-    SELECT results_eq('test',ARRAY[true],'Cannot Delete Approved Recon Report');
+    SELECT throws_ok(
+        'test',
+        'P0001',
+        'Cannot Delete Approved Recon Report'
+        'We should get a unique violation for an already approved report'
+    );
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int

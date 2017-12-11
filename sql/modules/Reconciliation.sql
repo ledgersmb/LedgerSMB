@@ -32,11 +32,17 @@ CREATE OR REPLACE FUNCTION reconciliation__submit_set(
         in_report_id int, in_line_ids int[], in_end_date date
       ) RETURNS bool AS
 $$
+DECLARE
+        result NUMERIC;
 BEGIN
-        UPDATE cr_report set submitted = true where id = in_report_id;
-        PERFORM reconciliation__save_set(in_report_id, in_line_ids, in_end_date);
-
-        RETURN FOUND;
+        result = reconciliation__check_balanced(in_report_id);
+        IF result = 0 THEN
+            UPDATE cr_report set submitted = true where id = in_report_id;
+            PERFORM reconciliation__save_set(in_report_id, in_line_ids, in_end_date);
+            RETURN FOUND;
+        ELSE
+            RAISE EXCEPTION 'Unbalanced report by %', result::NUMERIC(4,2);
+        END IF;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -45,6 +51,23 @@ COMMENT ON FUNCTION reconciliation__submit_set(
 $$Submits a reconciliation report for approval.
 in_line_ids is used to specify which report lines are cleared, finalizing the report.
 in_end_date is used to specify the clearing date. Defaults to now.$$;
+
+CREATE OR REPLACE FUNCTION reconciliation__check_balanced(in_report_id int
+      ) RETURNS NUMERIC AS
+$$
+DECLARE
+        result NUMERIC;
+BEGIN
+        SELECT SUM(crl.our_balance) - cr.their_total INTO result
+        FROM cr_report_line crl
+        JOIN cr_report cr ON cr.id = crl.report_id
+        WHERE cr.id = in_report_id
+        GROUP BY cr.their_total;
+
+        RETURN result;
+END;
+$$ LANGUAGE PLPGSQL;
+
 
 CREATE OR REPLACE FUNCTION reconciliation__check(in_end_date date, in_chart_id int)
 RETURNS SETOF defaults
@@ -96,12 +119,32 @@ COMMENT ON FUNCTION reconciliation__save_set(
 $$Sets which lines of the report are cleared.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__delete_my_report(in_report_id int)
-RETURNS BOOL AS
-$$
-    -- Make sure that transactions present on this report do not have a cleared_on date
-    -- or they won't be accessible anymore.
-    -- Double check to make sure we do not set cleared_on before submitting
-    -- YL
+RETURNS BOOL AS $$
+
+DECLARE
+    failed BOOL;
+BEGIN
+    SELECT approved INTO failed FROM cr_report
+    WHERE id = in_report_id AND approved;
+    IF failed THEN
+        RAISE EXCEPTION 'Cannot delete approved report';
+        RETURN FALSE;
+    END IF;
+
+    -- Make sure that transactions present on this report do not have a
+    -- cleared_on date or they won't ever be accessible anymore.
+    SELECT count(*) > 0 INTO failed
+    FROM cr_report_line rl
+    JOIN acc_trans ac ON rl.ledger_id = ac.entry_id
+    WHERE report_id = in_report_id
+      AND cleared_on IS NOT NULL;
+
+    IF failed THEN
+        RAISE EXCEPTION 'Transactions already cleared on this report';
+        RETURN FALSE;
+    END IF;
+
+    --TODO: Why can't we cascade DELETE with a TRIGGER to prevent?
     DELETE FROM cr_report_line
      WHERE report_id = in_report_id
            AND report_id IN (SELECT id FROM cr_report
@@ -112,7 +155,8 @@ $$
      WHERE id = in_report_id AND entered_username = SESSION_USER
            AND submitted IS NOT TRUE AND approved IS NOT TRUE
     RETURNING TRUE;
-$$ LANGUAGE SQL SECURITY DEFINER;
+END;
+$$ language 'plpgsql' security definer;
 
 -- Granting execute permission to public because everyone has an ability to
 -- delete their own reconciliation reports provided they have not been
@@ -234,34 +278,28 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         END IF;
 
         WITH current_rows AS (
-          SELECT compound_array(entries) AS entries FROM (
-            SELECT as_array(ac.entry_id) as entries
+            SELECT ac.entry_id
               FROM acc_trans ac
               JOIN transactions t ON t.id = ac.trans_id
-              JOIN (     select id, entity_credit_account::text as ref, 'ar' as table FROM ar
-                   UNION select id, entity_credit_account::text,        'ap' as table FROM ap
-                   UNION select id, reference,                          'gl' as table FROM gl
+              JOIN (     SELECT id, entity_credit_account::text as ref, 'ar' as table FROM ar
+                   UNION SELECT id, entity_credit_account::text,        'ap' as table FROM ap
+                   UNION SELECT id, reference,                          'gl' as table FROM gl
               ) xx ON xx.table = t.table_name AND xx.id = t.id
               LEFT JOIN cr_report_line rl
                      ON rl.report_id = in_report_id
                     AND (   ac.voucher_id IS NULL AND rl.ledger_id = ac.entry_id
                          OR ac.voucher_id = rl.voucher_id)
-                    AND rl.cleared
+                    AND rl.cleared IS TRUE
               WHERE (ac.cleared IS FALSE OR ac.cleared_on IS NULL)
-                AND ac.chart_id = (select chart_id from cr_report where id = rl.report_id)
+                AND ac.chart_id = (SELECT chart_id from cr_report where id = rl.report_id)
            GROUP BY xx.ref, ac.source, ac.transdate,
                     ac.memo, ac.voucher_id, xx.table, ac.entry_id
              HAVING count(rl.report_id) > 0
-        ) a
       )
       UPDATE acc_trans
          SET cleared = TRUE, cleared_on = clear_time, reconciled_on = now()
         FROM cr_report_line
-       WHERE ledger_id = entry_id
-         AND report_id = in_report_id
-         AND (SELECT entries FROM current_rows
-              WHERE entries = entry_id
-             ) IS NOT NULL;
+       WHERE entry_id in (select * from current_rows);
 
       return 1;
     END;
