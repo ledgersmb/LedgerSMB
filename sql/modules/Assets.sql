@@ -92,7 +92,7 @@ $$
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
-  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id)
+  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
       WHERE ai.id = ANY($1)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
@@ -127,7 +127,7 @@ $$
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
-  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id)
+  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
       WHERE ai.id = ANY($1)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
@@ -168,7 +168,7 @@ $$
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
-  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id)
+  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
       WHERE ai.id = ANY($1)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
