@@ -319,8 +319,7 @@ BEGIN;
     SELECT throws_ok(
         'test',
         'P0001',
-        'Cannot Delete Approved Recon Report'
-        'We should get a unique violation for an already approved report'
+        'Cannot delete approved recon report'
     );
     DEALLOCATE test;
 

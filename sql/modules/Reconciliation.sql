@@ -126,14 +126,14 @@ DECLARE
 BEGIN
     SELECT approved INTO failed FROM cr_report
     WHERE id = in_report_id AND approved;
-    IF failed THEN
-        RAISE EXCEPTION 'Cannot delete approved report';
+    IF FOUND THEN
+        RAISE EXCEPTION 'Cannot delete approved recon report';
         RETURN FALSE;
     END IF;
 
     -- Make sure that transactions present on this report do not have a
     -- cleared_on date or they won't ever be accessible anymore.
-    SELECT count(*) > 0 INTO failed
+    SELECT COUNT(*)>0 INTO failed
     FROM cr_report_line rl
     JOIN acc_trans ac ON rl.ledger_id = ac.entry_id
     WHERE report_id = in_report_id
@@ -153,10 +153,10 @@ BEGIN
                                     and approved IS NOT TRUE);
     DELETE FROM cr_report
      WHERE id = in_report_id AND entered_username = SESSION_USER
-           AND submitted IS NOT TRUE AND approved IS NOT TRUE
-    RETURNING TRUE;
+           AND submitted IS NOT TRUE AND approved IS NOT TRUE;
+    RETURN FOUND;
 END;
-$$ language 'plpgsql' security definer;
+$$ language PLPGSQL security definer;
 
 -- Granting execute permission to public because everyone has an ability to
 -- delete their own reconciliation reports provided they have not been
