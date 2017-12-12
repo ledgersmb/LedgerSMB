@@ -26,6 +26,7 @@ use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 use File::MimeInfo;
+use File::Temp;
 use Log::Log4perl;
 use PGObject::Type::ByteString;
 use LedgerSMB::Magic qw( FC_PART );
@@ -142,12 +143,18 @@ has src_class => (is => 'rw', isa => 'Maybe[Int]');
 
 =item file_path
 
-Path, relative to $LedgerSMB::tempdir, where file data is stored (for LaTeX use
-of attached images).
+Path where file data is stored (for LaTeX use of attached images).
+
+The path is a temporary path which is cleaned up as soon as this
+instance goes out of scope.
 
 =cut
 
-has file_path => (is => 'rw', isa => 'Maybe[Str]');
+has file_path => (is => 'rw', isa => 'Maybe[Str]',
+                  lazy => 1,
+                  default => sub {
+                      return File::Temp->newdir( CLEANUP => 1 );
+                  } );
 
 =item sizex
 
@@ -240,13 +247,12 @@ sub get {
 =item get_for_template({ref_key => int, file_class => int})
 
 Returns file data for invoices for embedded images, except that content is set
-to a directive relative to tempdir where these files are stored.
+to a directory relative to C<file_path> where these files are stored.
 
 =cut
 
 sub get_for_template{
     my ($self, $args) = @_;
-    warn 'entering get_for_template';
 
     my @results = $self->call_procedure(
         funcname => 'file__get_for_template',
@@ -255,12 +261,6 @@ sub get_for_template{
             $args->{file_class},
         ],
     );
-
-    #TODO use File::Temp here and in cleanup for temp directory
-    my $dir = $LedgerSMB::Sysconfig::tempdir . '/' . $$;
-    if ( -d $dir){
-        die "Failed to create temporary directory $dir - it already exists : $!";
-    }
 
     for my $result (@results) {
         $result->{file_name} =~ s/\_//g;
@@ -289,25 +289,6 @@ sub get_for_template{
         }
     }
     return @results;
-}
-
-=item DEMOLISH
-
-This is called by Moose on destruction of the object.  We just clean up any
-files we have left around.
-
-=cut
-
-sub DEMOLISH {
-   my ($self) = @_;
-   return unless $self->{file_path}; # nothing to do
-   opendir(TMP, $self->{file_path}) || return 1;
-   for my $file (readdir(TMP)){
-       unlink $self->{file_path} . '/' . $file;
-   }
-   closedir (TMP);
-   rmdir $self->{file_path};
-   return;
 }
 
 =item list({ref_key => int, file_class => int})

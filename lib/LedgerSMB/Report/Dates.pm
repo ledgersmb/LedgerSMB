@@ -199,7 +199,7 @@ sub _build_comparisons {
 sub _get_from_date {
     my ($self) = @_;
     if ($self->from_month and $self->from_year){
-        my $date_string = $self->from_year . "-" .  $self->from_month . '-01';
+        my $date_string = $self->from_year . '-' .  $self->from_month . '-01';
         return LedgerSMB::PGDate->from_db($date_string, 'date');
     } else {
         return LedgerSMB::PGDate->from_db();

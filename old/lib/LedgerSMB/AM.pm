@@ -56,6 +56,7 @@ package AM;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
+use LedgerSMB::Magic qw( DAYS_PER_WEEK );
 
 my $logger = Log::Log4perl->get_logger('AM');
 
@@ -315,8 +316,8 @@ sub get_business {
           FROM business
          WHERE id = ?|;
 
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} );
+    $sth = $dbh->prepare($query) || $form->dberror($query);
+    $sth->execute( $form->{id} ) || $from->dberror($query);
     ( $form->{description}, $form->{discount} ) = $sth->fetchrow_array();
 
 }
@@ -773,9 +774,9 @@ sub recurring_transactions {
             $ref->{unit} = 'months';
             $ref->{repeat} = $ref->{months};
         }
-        elsif ( $ref->{days} && ( $ref->{days} % 7 == 0 )) {
+        elsif ( $ref->{days} && ( $ref->{days} % DAYS_PER_WEEK == 0 )) {
             $ref->{unit} = 'weeks';
-            $ref->{repeat} = $ref->{days} / 7;
+            $ref->{repeat} = $ref->{days} / DAYS_PER_WEEK;
         }
         elsif ( $ref->{days} ) {
             $ref->{unit} = 'days';

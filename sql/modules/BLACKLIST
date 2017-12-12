@@ -155,7 +155,6 @@ journal__make_invoice
 journal__search
 journal__validate_entry
 leap_days
-location__deactivate
 location_list_class
 location_list_country
 lsmb__create_role

@@ -256,19 +256,19 @@ sub verify_session {
     my ($self) = @_;
 
     if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
-        $logger->error("Session did not check");
+        $logger->error('Session did not check');
         return 0;
     }
-    $logger->debug("session_check completed OK");
+    $logger->debug('session_check completed OK');
     return 1;
 }
 
 sub initialize_with_db {
     my ($self) = @_;
 
-    my $sth = $self->{dbh}->prepare("
+    my $sth = $self->{dbh}->prepare(q{
             SELECT value FROM defaults
-             WHERE setting_key = 'role_prefix'");
+             WHERE setting_key = 'role_prefix'});
     $sth->execute;
 
 
@@ -285,11 +285,11 @@ sub initialize_with_db {
     }
 
 
-    my $query = "SELECT t.extends,
+    my $query = q{SELECT t.extends,
             coalesce (t.table_name, 'custom_' || extends)
             || ':' || f.field_name as field_def
         FROM custom_table_catalog t
-        JOIN custom_field_catalog f USING (table_id)";
+        JOIN custom_field_catalog f USING (table_id)};
     $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
@@ -372,11 +372,11 @@ sub upload {
     my ($self, $name) = @_;
 
     if (! defined $name) {
-        return map { $_->basename } @{$self->{_uploads}};
+        return map { $_->basename } $self->{_uploads}->values;
     }
 
     my $tmpfname = $self->{_uploads}->get_one($name)->path;
-    open my $fh, "<", $tmpfname
+    open my $fh, '<', $tmpfname
         or die "Can't open uploaded temporary file $tmpfname: $!";
 
     return $fh;
@@ -445,14 +445,14 @@ sub dberror{
             'P0001' => $locale->text('Error from Function:') . "\n" .
                     $dbh->errstr,
    };
-   $logger->error("Logging SQL State ".$dbh->state.", error ".
-           $dbh->err . ", string " .$dbh->errstr);
+   $logger->error("Logging SQL State $dbh->state, error $dbh->err, string $dbh->errstr");
+
    if (defined $state_error->{$dbh->state}){
        die $state_error->{$dbh->state}
            . "\n" .
           $locale->text('More information has been reported in the error logs');
    }
-   die $dbh->state . ":" . $dbh->errstr;
+   die $dbh->state . ':' . $dbh->errstr;
 }
 
 sub merge {
@@ -495,7 +495,7 @@ sub merge {
         }
         elsif ( !defined $dst_arg && !defined $src->{$arg} )
         {
-            $logger->trace("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is undefined");
+            $logger->trace('LedgerSMB.pm: merge setting $dst_arg is undefined $src->{$arg} is undefined');
         }
         $self->{$dst_arg} = $src->{$arg};
     }

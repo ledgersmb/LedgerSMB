@@ -17,6 +17,7 @@ our @EXPORT_OK = qw(
     BC_VENDOR_INVOICE
     CENTURY_START_YEAR
     DEFAULT_NUM_PREC
+    DAYS_PER_WEEK
     EC_COLD_LEAD
     EC_CONTACT
     EC_CUSTOMER
@@ -26,6 +27,7 @@ our @EXPORT_OK = qw(
     EC_REFERRAL
     EC_VENDOR
     EDI_PATHNAME_MAX
+    EDIT_BUDGET_ROWS
     FC_ECA
     FC_ENTITY
     FC_INCOMING
@@ -55,13 +57,13 @@ our @EXPORT_OK = qw(
     OEC_RFQ
     OEC_SALES_ORDER
     PERL_TIME_EPOCH
-    RATIO_TO_PERCENT
     RC_DEPRECIATION
     RC_DISPOSAL
     RC_IMPORT
     RC_PARTIAL_DISPOSAL
     SATURDAY
     SEC_PER_HOUR
+    NEW_BUDGET_ROWS 
     SUNDAY
     YEARS_PER_CENTURY
 );
@@ -85,6 +87,16 @@ I<LedgerSMB::Magic> is a library of constants used by the
 LedgerSMB system.  Mostly, these are peculiar to LedgerSMB,
 but where a small part of of a published code is used, the
 constants may be found here rather than separate modules.
+
+=head1  ACCEPTED NUMERIC LITERALS
+
+Numeric literal values that are not considered magical in LedgerSMB code.
+
+    -1  for use as a fat minus or array index
+     0
+     1
+     2
+     100 for use finding percentages or shifting monetary values
 
 =head1 CONSTANTS
 
@@ -240,10 +252,12 @@ use constant RC_PARTIAL_DISPOSAL => 4;
     YEARS_PER_CENTURY    100
     SUNDAY                 0    Unixy numeric for day of week.
     SATURDAY               6
+    DAYS_PER_WEEK          7
 
 =cut
 
 use constant CENTURY_START_YEAR => 2000;
+use constant DAYS_PER_WEEK      => 7;
 use constant DEFAULT_NUM_PREC   => 5;
 use constant FUTURE_YEARS_LIMIT => 20;
 use constant SEC_PER_HOUR       => 3600;
@@ -260,12 +274,18 @@ use constant SATURDAY           => 6;
 =head3  LedgerSMB miscellaneous contants
 
     MONEY_EPSILON       0.001
-    RATIO_TO_PERCENT  100
+
+    EDIT_BUDGET_ROWS     5
+    NEW_BUDGET_ROWS     25
+
+    Display lines to allocate for a user to start or add to
+a budget.
 
 =cut
 
-use constant MONEY_EPSILON => 0.001;
-use constant RATIO_TO_PERCENT => 100;
+use constant MONEY_EPSILON      => 0.001;
+use constant EDIT_BUDGET_ROWS => 5;
+use constant NEW_BUDGET_ROWS  => 25;
 
 =head3 External codes.
 
@@ -291,16 +311,6 @@ use constant EDI_PATHNAME_MAX => 180;    # TODO possible fencepost error
 
 use constant HTTP_454 => 454;
 
-
-=head1  NOTE
-
-Numeric literal values that are not considered magical in LedgerSMB code.
-
-    -1  for use as a fat minus or array index
-     0
-     1
-     2
-     100 for use finding percentages or shifting monetary values
 
 =head1 BUGS
 

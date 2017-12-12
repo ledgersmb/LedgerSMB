@@ -73,6 +73,12 @@
     "data-dojo-type" = "dijit/form/Select"
   }
 
+  #multiselect
+  multiselect_defaults = {
+    "data-dojo-type" = "dijit/form/MultiSelect"
+    "multiple" = "true"
+  }
+
   #toggle
   toggle_defaults = {
     type = 'submit',
@@ -223,8 +229,11 @@
           ?>
           <?lsmb PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
-            attribute_defaults = select_defaults
-            # Attributes that apply to selects.
+            attribute_defaults =
+                (element_data.type.defined() && element_data.type == "multiselect")
+                ? multiselect_defaults
+                : select_defaults
+            # Attributes that apply to selects and multiselect.
             element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
             'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
           ?>
@@ -292,9 +301,10 @@
           <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
           <?lsmb IF element_data.tooltip.msg;
                 INCLUDE tooltip element_data = {
-                id => element_data.tooltip.id,
+                id       => element_data.tooltip.id,
+                ref_id   => element_data.id,
                 position => element_data.tooltip.position,
-                msg => element_data.tooltip.msg };
+                msg      => element_data.tooltip.msg };
           END ?>
   <?lsmb END ?>
 <?lsmb END ?>
@@ -432,7 +442,7 @@ END ?>
 
 <?lsmb BLOCK tooltip;
   IF element_data && element_data.id.defined() && element_data.msg.defined();
-     props="connectId:'" _ element_data.id _ "'";
+     props="\"connectId:'" _ element_data.ref_id _ "'";
      IF element_data.position.defined();
         positions = [];
         FOREACH position IN element_data.position
@@ -440,7 +450,9 @@ END ?>
             positions.push("'$position'");
         END;
         props = props _ ',position:[' _ positions.join(',') _ ']';
-    END; ?>
+    END;
+    props = props _ '"';
+    ?>
     <div data-dojo-type="dijit/Tooltip" data-dojo-props=<?lsmb props ?>  >
          <?lsmb INCLUDE decorated_text element_data = {
                 msg => element_data.msg };

@@ -188,7 +188,7 @@ sub run_report {
     my @rows = $self->call_dbmethod(funcname => 'timecard__report');
     for my $row (@rows){
         $row->{"day$row->{weekday}"} = $row->{qty};
-        $row->{"row_id"} = $row->{id};
+        $row->{'row_id'} = $row->{id};
     }
     return $self->rows(\@rows);
 }

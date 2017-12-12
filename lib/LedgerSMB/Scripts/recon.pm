@@ -124,7 +124,7 @@ sub submit_recon_set {
                 template => 'reconciliation/submitted',
                 locale => $request->{_locale},
                 format => 'HTML',
-                path=>"UI");
+                path=>'UI');
         return $template->render_to_psgi($recon);
     }
     return _display_report($recon, $request);
@@ -221,7 +221,7 @@ sub _display_report {
         template => 'reconciliation/report',
         locale => $recon->{_locale},
         format=>'HTML',
-        path=>"UI"
+        path=>'UI'
     );
     $recon->{sort_options} = [
             {id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
@@ -359,7 +359,7 @@ sub start_report {
             template => 'reconciliation/upload',
             locale => $recon->{_locale},
             format => 'HTML',
-            path => "UI"
+            path => 'UI'
             );
         return $template->render_to_psgi($recon);
     }
@@ -411,7 +411,7 @@ sub approve {
 
     return [ HTTP_BAD_REQUEST,
              [ 'Content-Type' => 'text/plain; charset=utf-8' ],
-             [ "'report_id' parameter missing" ]
+             [ q{'report_id' parameter missing} ]
         ] if ! $request->{report_id};
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new(
@@ -425,7 +425,7 @@ sub approve {
         template => $template,
         locale => $recon->{_locale},
         format => 'HTML',
-        path=>"UI",
+        path=>'UI',
         )->render_to_psgi($recon);
 }
 
@@ -450,7 +450,7 @@ sub pending {
         template=>'reconciliation/pending',
         locale => $request->{_locale},
         format=>'HTML',
-        path=>"UI"
+        path=>'UI'
     );
     return $template->render_to_psgi();
 }

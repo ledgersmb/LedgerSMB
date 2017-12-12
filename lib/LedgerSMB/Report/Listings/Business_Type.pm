@@ -19,7 +19,7 @@ None
 =cut
 
 package LedgerSMB::Report::Listings::Business_Type;
-use LedgerSMB::Magic qw(RATIO_TO_PERCENT);
+
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -89,8 +89,8 @@ sub run_report {
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'business_type__list');
     for my $ref(@rows){
-        $ref->{id} = $ref->{id};
-        $ref->{discount} *= RATIO_TO_PERCENT;
+        $ref->{row_id} = $ref->{id};
+        $ref->{discount} *= 100;
     }
     return $self->rows(\@rows);
 }

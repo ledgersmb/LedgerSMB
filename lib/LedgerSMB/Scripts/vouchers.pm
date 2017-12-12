@@ -14,18 +14,23 @@ LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 
 package LedgerSMB::Scripts::vouchers;
 
+use strict;
+use warnings;
+
 use LedgerSMB::Batch;
-use LedgerSMB::Template;
-use HTTP::Status qw( HTTP_OK);
+use LedgerSMB::Magic qw(BC_AR BC_SALES_INVOICE BC_VENDOR_INVOICE);
 use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
-
-use strict;
-use warnings;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Template;
 
 use LedgerSMB::old_code qw(dispatch);
+
+use File::Temp;
+use HTTP::Status qw( HTTP_OK);
+
 
 our $VERSION = '0.1';
 our $custom_batch_types = {};
@@ -62,8 +67,8 @@ sub create_batch {
     my ($request) = @_;
     $request->open_form;
     $request->{hidden} = [
-        {name => "batch_type", value => $request->{batch_type}},
-        {name => "form_id",   value => $request->{form_id}},
+        {name => 'batch_type', value => $request->{batch_type}},
+        {name => 'form_id',   value => $request->{form_id}},
         {name => 'overpayment', value => $request->{overpayment}},
     ];
 
@@ -102,7 +107,7 @@ sub create_vouchers {
         return add_vouchers($batch);
     } else {
         $request->{notice} =
-            $request->{_locale}->text("Error creating batch.  Please try again.");
+            $request->{_locale}->text('Error creating batch.  Please try again.');
         return create_batch($request);
     }
 }
@@ -314,7 +319,7 @@ sub batch_approve {
 
     my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
-        next unless $batch->{"select_" . $count};
+        next unless $batch->{'select_' . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->post;
     }
@@ -337,7 +342,7 @@ sub batch_unlock {
        $batch->unlock($request->{batch_id});
     } else {
         for my $count (1 .. $batch->{rowcount_}){
-            next unless $batch->{"select_" . $count};
+            next unless $batch->{'select_' . $count};
             $batch->{batch_id} = $batch->{"row_$count"};
             $batch->unlock($request->{"row_$count"});
         }
@@ -362,7 +367,7 @@ sub batch_delete {
 
     my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
-        next unless $batch->{"select_" . $count};
+        next unless $batch->{'select_' . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->delete;
     }
@@ -395,44 +400,47 @@ sub reverse_overpayment {
 }
 
 my %print_dispatch = (
-   BC_AR => { script => 'ar.pl',
-          entrypoint => sub {
-               my ($voucher, $request) = @_;
-               $lsmb_legacy::form->{ARAP} = 'AR';
-               $lsmb_legacy::form->{arap} = 'ar';
-               $lsmb_legacy::form->{vc} = 'customer';
-               $lsmb_legacy::form->{id} = $voucher->{transaction_id}
-                    if ref $voucher;
-               $lsmb_legacy::form->{formname} = 'ar_transaction';
+   BC_AR() => {
+       script => 'ar.pl',
+       entrypoint => sub {
+           my ($voucher, $request) = @_;
+           $lsmb_legacy::form->{ARAP} = 'AR';
+           $lsmb_legacy::form->{arap} = 'ar';
+           $lsmb_legacy::form->{vc} = 'customer';
+           $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+                if ref $voucher;
+           $lsmb_legacy::form->{formname} = 'ar_transaction';
 
-               lsmb_legacy::create_links();
-               $lsmb_legacy::form->{media} = $request->{media};
-               lsmb_legacy::print();
-          }
-        },
-   BC_SALES_INVOICE => { script => 'is.pl',
-          entrypoint => sub {
-               my ($voucher, $request) = @_;
-               $lsmb_legacy::form->{formname} = 'invoice';
-               $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+           lsmb_legacy::create_links();
+           $lsmb_legacy::form->{media} = $request->{media};
+           lsmb_legacy::print();
+       }
+    },
+    BC_SALES_INVOICE() => {
+        script => 'is.pl',
+        entrypoint => sub {
+            my ($voucher, $request) = @_;
+            $lsmb_legacy::form->{formname} = 'invoice';
+            $lsmb_legacy::form->{id} = $voucher->{transaction_id}
                                if ref $voucher;
 
-               lsmb_legacy::create_links();
-               $lsmb_legacy::form->{media} = $request->{media};
-               lsmb_legacy::print();
-          }
-        },
-   BC_VENDOR_INVOICE => { script => 'is.pl',
-          entrypoint => sub {
-               my ($voucher, $request) = @_;
-               $lsmb_legacy::form->{formname} = 'product_receipt';
-               $lsmb_legacy::form->{id} = $voucher->{transaction_id}
-                               if ref $voucher;
+            lsmb_legacy::create_links();
+            $lsmb_legacy::form->{media} = $request->{media};
+            lsmb_legacy::print();
+        }
+    },
+   BC_VENDOR_INVOICE() => {
+       script => 'is.pl',
+       entrypoint => sub {
+           my ($voucher, $request) = @_;
+           $lsmb_legacy::form->{formname} = 'product_receipt';
+           $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+                if ref $voucher;
 
-               lsmb_legacy::create_links();
-               lsmb_legacy::print();
-          }
-        },
+           lsmb_legacy::create_links();
+           lsmb_legacy::print();
+       }
+    },
     );
 
 =item print_batch
@@ -447,8 +455,11 @@ sub print_batch {
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(%$request);
     $request->{format} = 'pdf';
     $request->{media} = 'zip';
-    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{batch_id}-" . time;
-    mkdir $dirname;
+
+    # Make sure we have a temporary directory which gets cleaned up
+    # after exiting this routine
+    my $dir = File::Temp->newdir( CLEANUP => 1);
+    my $dirname = $dir->dirname;
 
     # zipdir gets consumed by io.pl and arapprn.pl
     $request->{zipdir} = $dirname;
@@ -484,7 +495,6 @@ sub print_batch {
         binmode $zip, ':bytes';
         unlink $file_path;
 
-        # TODO: clean up the temp dir!!
         return [
             HTTP_OK,
             [
@@ -497,7 +507,6 @@ sub print_batch {
         ];
     }
     else {
-        # TODO: clean up the temp dir!!
         return $report->render_to_psgi($request);
     }
 }

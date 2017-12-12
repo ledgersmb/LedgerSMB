@@ -69,7 +69,7 @@ END ;
    END;
  ?>
 <tr <?lsmb class; IF report.rheads.ids.$row.props.account_number;
-                     'data-lsmb-account="';
+                     ' data-lsmb-account="';
                      report.rheads.ids.$row.props.account_number;
                      '"';
                   END ?>>
@@ -109,7 +109,6 @@ END ;
 -->
 </tbody>
 </table>
-</div>
 
 <?lsmb IF FORMATS.grep('PDF').size() ?>
 <div class="export-links">
@@ -119,5 +118,7 @@ END ;
        href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
 </div>
 <?lsmb END ?>
+</div>
+
 </body>
 </html>

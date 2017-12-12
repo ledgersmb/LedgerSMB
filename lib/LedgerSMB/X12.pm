@@ -32,10 +32,10 @@ use Moose;
 use namespace::autoclean;
 use X12::Parser;
 use LedgerSMB::Magic qw( EDI_PATHNAME_MAX );
-use LedgerSMB::Sysconfig;
 use DateTime;
+use File::Temp;
 
-my $counter = 1000; #for 997 generation
+my $counter = 1000; #for 997 generation  ## no critic (ProhibitMagicNumbers) sniff
 my $dt = DateTime->now;
 my $date = sprintf('%04d%02d%02d', $dt->year, $dt->month, $dt->day);
 my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
@@ -110,11 +110,7 @@ sub _ISA {
 
     my $isa = {};
 
-    my @keys;
-
-    push @keys, sprintf('ISA%02d', $_) for (1 .. 16);
-
-    for my $key (@keys){
+    for my $key ( 'ISA01' .. 'ISA16' ){
        $isa->{$key} = shift @segments;
     }
     return $isa;
@@ -163,11 +159,9 @@ sub parse {
     my $file;
     my $parser = $self->parser;
     if (!$self->is_message_file){
-        $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
-        open my $fh, '>', $file
-            or die "Failed to open temporary output file $file : $!";
-        print $fh $self->message or die "Cannot print to file $file";;
-        close $fh or die "Cannot close file $file";;
+        $file = File::Temp->new();
+        print $file $self->message or die "Cannot print to file $file";;
+        close $file or die "Cannot close file $file";;
     }
     else {
         $file = $self->message;

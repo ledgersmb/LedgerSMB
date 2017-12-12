@@ -11,7 +11,7 @@
       <?lsmb FOREACH ITEM IN GROUP.items ?>
       <tr>
         <th align="right"><?lsmb ITEM.label ?></th>
-        <td colspan=<?lsmb ITEM.info ? "1" : "2" ?> style='white-space:nowrap'>
+        <td colspan="<?lsmb ITEM.info ? 1 : 2 ?>" style='white-space:nowrap'>
           <?lsmb
              IF ITEM.type == 'YES_NO';
                IF form.${ITEM.name};

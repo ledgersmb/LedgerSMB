@@ -4,12 +4,7 @@
         include_script = [ 'login.js' ]
 ?>
 <?lsmb
-   PROCESS elements.html ;
-   IF dojo_built == 0;
-      DOJO_LOCATION = "js-src";
-   ELSE;
-      DOJO_LOCATION = "js";
-   END -?>
+   PROCESS elements.html -?>
 <body class="login, <?lsmb dojo_theme ?>"
       id="app-login">
   <br /><br />
@@ -37,7 +32,7 @@
             <div id="loading" style="z-index:100;position:absolute;top:0;left:0;width:100%;height:100%;background:white">
               <img
                  style="display: block; margin: auto auto; font-family: "
-                 src="<?lsmb DOJO_LOCATION ?>/dijit/icons/images/loadingAnimation.gif"
+                 src="<?lsmb dojo_location ?>/dijit/icons/images/loadingAnimation.gif"
                  alt="If this text is showing, there's most likely a problem with the Dojo setup"
                  title="Loading ..."
                  width="20"
@@ -45,7 +40,7 @@
             </div>
           <div style="z-index:10; position:absolute; top:0; left:0; width:100%; height:100%;">
           <h1 class="login" align="center">
-            <?lsmb text("LedgerSMB [_1]", VERSION) ?>
+            LedgerSMB <?lsmb VERSION ?>
           </h1>
           <div align="center">
             <div id="company_div"
@@ -106,8 +101,6 @@
       </div>
     </form>
   </center>
-</body>
-</html>
 <script>
   require(['dojo/dom', 'dojo/dom-style', 'dojo/ready'],
   function(dom, style, ready) {
@@ -116,3 +109,5 @@
   });
   });
 </script>
+</body>
+</html>

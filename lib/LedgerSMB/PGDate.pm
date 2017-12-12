@@ -101,10 +101,10 @@ my $regexes = {
                         fields => [ 'day', 'month', 'year' ] },
                     ],
     'DD/MM/YYYY' => [ { regex => qr/^(\d\d)\/(\d\d)\/(\d{4,4})$/,
-                        fields => [ 'month', 'day', 'year' ] },
+                        fields => [ 'day', 'month', 'year' ] },
                       { regex => qr/^(\d\d)\/(\d\d)\/(\d\d)$/,
                         short_year => 1,
-                        fields => [ 'month', 'day', 'year' ] },
+                        fields => [ 'day', 'month', 'year' ] },
                     ],
     'MM-DD-YYYY' => [ { regex => qr/^(\d\d)\-(\d\d)\-(\d{4,4})$/,
                         fields => [ 'month', 'day', 'year' ] },
@@ -300,7 +300,7 @@ sub to_output {
             on_error => 'croak',
     );
     my $date = $formatter->format_datetime($self);
-    if ($date =~ /\:/ and not $self->is_time()) { die "to_output"; }
+    if ($date =~ /\:/ and not $self->is_time()) { die 'to_output'; }
     return $date;
 }
 

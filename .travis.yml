@@ -161,7 +161,7 @@ script:
 
 after_success:
   - >
-    if [ "$COVERAGE" != "0" ] ; then
+    if [ "$COVERAGE" == "1" ] ; then
        curl http://localhost:5001/stop.pl ;
        while [ -n "$(jobs -r | grep starman.psgi)" ] ; do sleep 1; echo -n "." ; done ;
        echo "" ;

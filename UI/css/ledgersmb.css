@@ -425,3 +425,7 @@ span.indicator {
    text-decoration: none;
 }
 
+#plDebug .plDebugPanelContent {
+   left: 207px;
+   right: 207px;
+}

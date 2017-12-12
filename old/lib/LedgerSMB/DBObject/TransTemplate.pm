@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use Log::Log4perl;
 
+use LedgerSMB::Magic qw(JRNL_GJ JRNL_AR JRNL_AP EC_CUSTOMER EC_VENDOR);
+
 =head1 NAME
 
 LedgerSMB::DBObject::TransTemplate -- Template transactions for LedgerSMB
@@ -36,9 +38,11 @@ sub save {
 
    $self->{is_template} = '1';
    $self->{approved} = 0;
-   $self->{journal} = 1; # default gl
-   $self->{journal} = 2 if $self->{entity_class} == 2;
-   $self->{journal} = 3 if $self->{entity_class} == 1;
+   $self->{journal} = JRNL_GJ;
+   $self->{journal} = JRNL_AR
+       if $self->{entity_class} == EC_CUSTOMER;
+   $self->{journal} = JRNL_AP
+       if $self->{entity_class} == EC_VENDOR;
    if (not defined $self->{curr}){
       my ($curr) = $self->call_dbmethod(funcname => 'defaults_get_defaultcurrency');
       ($self->{curr}) = values(%$curr);

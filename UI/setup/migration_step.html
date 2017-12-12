@@ -1,0 +1,35 @@
+<?lsmb INCLUDE "ui-header.html"
+       stylesheet="ledgersmb.css";
+       PROCESS elements.html;
+       PROCESS 'dynatable-old.html' ?>
+
+<body id="setup-migration_step" class="lsmb <?lsmb dojo_theme?>">
+  <div class="setupconsole">
+    <h1 style="font-weight: bold; margin-bottom: 1em; text-align: center">
+        <?lsmb text('Database Management Console') ?>
+    </h1>
+    <?lsmb # We cannot use form-dynatable, for it requires lsmb/Form and maindiv ?>
+    <form data-dojo-type="lsmb/SimpleForm"
+          method="post"
+          action="<?lsmb form.script ?>"
+          id="migration-step-dynatable">
+    <?lsmb FOREACH header IN headers ?><div class="listtop">
+             <?lsmb INCLUDE decorated_text element_data = {
+                    msg => header };
+             ?></div>
+    <?lsmb END ?>
+
+    <?lsmb PROCESS 'dynatable' ?>
+    <br />
+
+    <?lsmb FOREACH hidden IN hiddens.keys;
+        PROCESS input element_data={
+            type => 'hidden',
+            name => hidden,
+            value => hiddens.item(hidden)
+            }; END ?>
+    <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+    </form>
+  </div>
+</body>
+</html>

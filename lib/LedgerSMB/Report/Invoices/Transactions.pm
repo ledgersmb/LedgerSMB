@@ -261,7 +261,7 @@ sub columns {
            type => 'text'},
        { col_id => 'entity_name',
            name => $entity_name_label,
-       href_base =>"contact.pl?action=get&entity_class=".$self->entity_class,
+       href_base =>'contact.pl?action=get&entity_class='.$self->entity_class,
            type => 'href', },
        { col_id => 'invnumber',
            name => LedgerSMB::Report::text('Invoice'),

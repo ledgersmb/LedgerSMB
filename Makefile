@@ -1,5 +1,5 @@
 
-DIST_VER=$(shell utils/release/build-id)
+DIST_VER=$(shell utils/install/build-id)
 DIST_DIR=/tmp
 ifeq ($(DIST_VER),travis)
 DIST_DEPS=cached_dojo

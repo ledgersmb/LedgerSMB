@@ -82,8 +82,8 @@ sub _retrieve_template_data {
 
     my $rv;
     foreach my $lang (@langs) {
-        $logger->info("Retrieving template for ($name, " . ( $lang // "-undef-" ) . ", "
-                      . $self->format . ")");
+        $logger->info("Retrieving template for ($name, " . ( $lang // '-undef-' ) . ', '
+                      . $self->format . ')');
         $rv = $self->call_procedure(
             funcname => 'template__get',
             args => [
@@ -98,7 +98,7 @@ sub _retrieve_template_data {
         unless defined $rv->{template};
     return undef unless defined $rv->{template};
 
-    $logger->info("Match found");
+    $logger->info('Match found');
     $rv->{last_modified} = PGObject::Type::DateTime->from_db(
         $rv->{last_modified}
     );

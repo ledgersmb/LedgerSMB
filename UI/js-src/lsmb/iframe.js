@@ -26,12 +26,13 @@ define([
     'dojo/dom-construct',
     'dojo/cookie',
     'dojo/_base/window',
+    'dojo/NodeList-manipulate',
     'dojo/NodeList-dom'/*=====,
                        '../request',
                        '../_base/declare' =====*/
 ], function(module, require, watch, util, handlers,
             lang, ioQuery, query, has, dom, domConstruct, cookie, win
-            /*=====, NodeList, request, declare =====*/){
+            /*=====, NodeList, NodeList, request, declare =====*/){
     var mid = module.id.replace(/[\/\.\-]/g, '_'),
         onload = mid + '_onload',
         downloadCookie = 'request-download.'+(new Date()).getTime();
@@ -197,10 +198,11 @@ define([
                                 createInput(x, val[i]);
                             }
                         }else{
-                            if(!formNode[x]){
+                            var n = query("input[name='"+x+"']", formNode);
+                            if(n.indexOf() == -1){
                                 createInput(x, val);
                             }else{
-                                formNode[x].value = val;
+                                n.val(val);
                             }
                         }
                     }

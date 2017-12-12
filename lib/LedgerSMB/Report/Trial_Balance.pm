@@ -233,10 +233,10 @@ sub run_report {
         next if ! $self->all_accounts
                 && (($ref->{starting_balance} == 0)
                     and ($ref->{credits} == 0) and ($ref->{debits} == 0));
-        my $href_suffix = "&accno=" . $ref->{account_number};
-        $href_suffix .= "&from_date=" . $self->from_date->to_db
+        my $href_suffix = '&accno=' . $ref->{account_number};
+        $href_suffix .= '&from_date=' . $self->from_date->to_db
               if defined $self->from_date;
-        $href_suffix .= "&to_date=" . $self->to_date->to_db
+        $href_suffix .= '&to_date=' . $self->to_date->to_db
               if defined $self->to_date;
 
         $total_debits += $ref->{debits};
