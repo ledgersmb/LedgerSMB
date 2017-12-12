@@ -69,6 +69,10 @@ my @exception_modules =
      # Exclude because tested conditionally on XML::Twig way below
      'LedgerSMB::Template::ODS',
 
+     # Exclude because tested conditionally on Excel::Writer::XLSX
+     # and Spreadsheet::WriteExcel
+     'LedgerSMB::Template::XLSX',
+
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
 
@@ -103,6 +107,17 @@ SKIP: {
     skip 'Template::Latex not installed', 1;
 
     my $f = 'LedgerSMB::Template::LaTeX';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require Excel::Writer::XLSX };
+    skip 'Excel::Writer::XLSX not installed', 1 if $@;
+
+    eval { require Spreadsheet::WriteExcel };
+    skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
+
+    my $f = 'LedgerSMB::Template::XLSX';
     pod_coverage_ok($f, { also_private => $also_private{$f} });
 }
 
