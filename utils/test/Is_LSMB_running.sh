@@ -13,6 +13,20 @@ if [[ -z $EX_NOHOST ]]; then
     exit 99;
 fi
 
+
+# base url for lsmb defaults to http://localhost:5001
+# this can be overriden by setting environment variable $LSMB_BASE_URL
+lsmb_base_url=${LSMB_BASE_URL:-http://localhost:5001}
+
+# We check Starman is running on a specific port
+url_without_port=${lsmb_base_url%:[[:digit:]]*}
+lsmb_port=${lsmb_base_url#$url_without_port}
+lsmb_port=${lsmb_port#:}  # strip colon
+
+# Default to port 5001
+lsmb_port=${lsmb_port:-5001}
+
+
 # You can add to either of these two variables to skip this test during travis setup.
 # If it's skipped during this early run, it should also be run later in xt/60 which will never be skipped.
 Repo_early_skip_list+=('https://github.com/ylavoie/LedgerSMB.git');
@@ -55,8 +69,10 @@ HELP() {
 	                     and 't/data/Is_LSMB_running.html' may differ by
 	                   This should always be a number greater than 1 to allow for
 	                     variations in the list of available db admin users
-	
-	
+
+	ENVIRONMENT VARIABLES
+	    LSMB_BASE_URL : Sets the base url used to check lsmb
+	                    default: http://localhost:5001
 	EOF
     exit $E;
 }
@@ -116,7 +132,7 @@ WaitForPlackup() {
     local httpdrunning=false;
     while (( i++ < 100 )); do # wait up to 10 seconds for plack or starman process to start
         pgrep -f 'plackup' >/dev/null && { processrunning=true; echo "plackup started after $i * 0.1 seconds"; break; }
-        pgrep -f 'starman.*8080' >/dev/null && { processrunning=true; echo "starman started after $i * 0.1 seconds"; break; }
+        pgrep -f "starman.*$lsmb_port" >/dev/null && { processrunning=true; echo "starman started after $i * 0.1 seconds"; break; }
         sleep 0.1;
     done
     if ! $processrunning; then
@@ -126,7 +142,7 @@ WaitForPlackup() {
     i=0;
     while (( i++ < 100 )); do # wait up to 10 seconds for plack or starman server to respond to a curl
         pgrep -f 'plackup' >/dev/null
-        curl --max-time 60 --connect-timeout 60 --fail --silent localhost:5001/setup.pl 2>&1 >/dev/null && {
+        curl --max-time 60 --connect-timeout 60 --fail --silent $lsmb_base_url/setup.pl 2>&1 >/dev/null && {
             httpdrunning=true;
             echo "starman/plackup responded after $i * 0.1 seconds"; 
             break;
@@ -143,7 +159,7 @@ SkipEarly
 WaitForPlackup || DIE $EX_NOHOST "ERROR: plackup or starman didn't start for some reason" "Check these logs for more info"
 
 
-if curl --max-time 60 --connect-timeout 60 --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
+if curl --max-time 60 --connect-timeout 60 --progress-bar $lsmb_base_url/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
 else    # fail early if starman is not running
     E=$?;
