@@ -1180,7 +1180,7 @@ sub process_and_run_upgrade_script {
 
     $database->run_file(
         file => $tempfile,
-        log => $temp . '_stdout',
+        stdout_log => $temp . '_stdout',
         errlog => $temp . '_stderr'
         );
 
