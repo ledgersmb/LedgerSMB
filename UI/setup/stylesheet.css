@@ -12,7 +12,7 @@ div#loading {
     background: white;
 }
 
-div#setupconsole {
+div.setupconsole {
     background-color: white;
     margin-right: auto;
     margin-left: auto;
