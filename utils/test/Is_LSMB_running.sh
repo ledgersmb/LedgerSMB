@@ -14,17 +14,21 @@ if [[ -z $EX_NOHOST ]]; then
 fi
 
 
-# base url for lsmb defaults to http://localhost:5001
-# this can be overriden by setting environment variable $LSMB_BASE_URL
-lsmb_base_url=${LSMB_BASE_URL:-http://localhost:5001}
+# This script tests the plack/Starman application server.
+# By default this is assumed to listen on http://localhost:5001,
+# but can be overridden with the $PSGI_BASE_URL environment variable.
+#
+# Note that this may be different to the address used to serve users,
+# which is often provided by a proxy and specified as $LSMB_BASE_URL.
+psgi_base_url=${PSGI_BASE_URL:-http://localhost:5001}
 
-# We check Starman is running on a specific port
-url_without_port=${lsmb_base_url%:[[:digit:]]*}
-lsmb_port=${lsmb_base_url#$url_without_port}
-lsmb_port=${lsmb_port#:}  # strip colon
+# Extract the port to check Starman
+url_without_port=${psgi_base_url%:[[:digit:]]*}
+psgi_port=${psgi_base_url#$url_without_port}
+psgi_port=${psgi_port#:}  # strip colon
 
 # Default to port 5001
-lsmb_port=${lsmb_port:-5001}
+psgi_port=${psgi_port:-5001}
 
 
 # You can add to either of these two variables to skip this test during travis setup.
@@ -71,7 +75,7 @@ HELP() {
 	                     variations in the list of available db admin users
 
 	ENVIRONMENT VARIABLES
-	    LSMB_BASE_URL : Sets the base url used to check lsmb
+	    PSGI_BASE_URL : Sets the base url used to check lsmb
 	                    default: http://localhost:5001
 	EOF
     exit $E;
@@ -132,7 +136,7 @@ WaitForPlackup() {
     local httpdrunning=false;
     while (( i++ < 100 )); do # wait up to 10 seconds for plack or starman process to start
         pgrep -f 'plackup' >/dev/null && { processrunning=true; echo "plackup started after $i * 0.1 seconds"; break; }
-        pgrep -f "starman.*$lsmb_port" >/dev/null && { processrunning=true; echo "starman started after $i * 0.1 seconds"; break; }
+        pgrep -f "starman.*$psgi_port" >/dev/null && { processrunning=true; echo "starman started after $i * 0.1 seconds"; break; }
         sleep 0.1;
     done
     if ! $processrunning; then
@@ -142,7 +146,7 @@ WaitForPlackup() {
     i=0;
     while (( i++ < 100 )); do # wait up to 10 seconds for plack or starman server to respond to a curl
         pgrep -f 'plackup' >/dev/null
-        curl --max-time 60 --connect-timeout 60 --fail --silent $lsmb_base_url/setup.pl 2>&1 >/dev/null && {
+        curl --max-time 60 --connect-timeout 60 --fail --silent $psgi_base_url/setup.pl 2>&1 >/dev/null && {
             httpdrunning=true;
             echo "starman/plackup responded after $i * 0.1 seconds"; 
             break;
@@ -159,7 +163,7 @@ SkipEarly
 WaitForPlackup || DIE $EX_NOHOST "ERROR: plackup or starman didn't start for some reason" "Check these logs for more info"
 
 
-if curl --max-time 60 --connect-timeout 60 --progress-bar $lsmb_base_url/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
+if curl --max-time 60 --connect-timeout 60 --progress-bar $psgi_base_url/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
 else    # fail early if starman is not running
     E=$?;
