@@ -12,8 +12,6 @@ use Test::More; # plan automatically generated below
 use File::Find;
 use File::Util;
 
-plan skip_all => "POD_TESTING missing" if ! $ENV{POD_TESTING};
-
 my @on_disk;
 
 
