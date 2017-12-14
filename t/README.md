@@ -15,7 +15,7 @@ PhantomJS and Starman configurations:
 ```sh
  $ PGUSER=postgres PGPASSWORD=password \
      LSMB_BASE_URL=http://localhost:5762 \
-     PSGI_BASE_URL=http://localhost:5752 \
+     PSGI_BASE_URL=http://localhost:5762 \
      prove -r t/ xt/
 ```
 
