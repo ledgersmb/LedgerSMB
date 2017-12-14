@@ -18,6 +18,13 @@ env:
 notifications:
   webhooks: https://ledgersmb.org/webhook/travis_ci_notifications
 
+
+# POD_TESTING=1 can be set as an environment variable to enable pod tests,
+# but these only work with perl versions >= 5.20. Earlier versions of perl
+# handle constants in a way which causes Test::Pod::Coverage to consider
+# them as naked subroutines.
+
+
 matrix:
   include:
     - perl: '5.26'
@@ -122,10 +129,6 @@ before_install:
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
   - cpan-install --coverage
-  - if [ "${POD_TESTING}" != "" ]; then
-       cpanm --quiet --notest Test::Pod ;
-       cpanm --quiet --notest Test::Pod::Coverage ;
-    fi
 
 before_script:
   - make dist DIST_VER=travis DIST_DIR=${HOME}/built-dist/tar-output
