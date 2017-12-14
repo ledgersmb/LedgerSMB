@@ -24,7 +24,9 @@ they can be run separately as well, using the 'pherkin' test runner
 which comes with Test:BDD::Cucumber:
 
 ```sh
- $ PGUSER=postgres PGPASSWORD=password LSMB_BASE_URL="http://localhost:5000" \
+ $ PGUSER=postgres PGPASSWORD=password \
+     LSMB_BASE_URL="http://localhost:5000" \
+     PSGI_BASE_URL="http://localhost:5000" \
      pherkin t/66-cucumber/*/
 ```
 
