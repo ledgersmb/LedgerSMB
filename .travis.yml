@@ -28,6 +28,7 @@ matrix:
           packages:
             - nginx postgresql-9.6-pgtap
       env:
+        - POD_TESTING=1
     - perl: '5.24'
       addons:
         postgresql: '9.5'
@@ -121,6 +122,10 @@ before_install:
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
   - cpan-install --coverage
+  - if [ "${POD_TESTING}" != "" ]; then
+       cpanm --quiet --notest Test::Pod ;
+       cpanm --quiet --notest Test::Pod::Coverage ;
+    fi
 
 before_script:
   - make dist DIST_VER=travis DIST_DIR=${HOME}/built-dist/tar-output
