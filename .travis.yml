@@ -155,6 +155,7 @@ script:
      PGUSER=postgres PGPASSWORD=test
      LSMB_TEST_DB=1 LSMB_NEW_DB=lsmbinstalltest
      LSMB_BASE_URL="http://127.0.0.1:5000"
+     PSGI_BASE_URL="http://127.0.0.1:5001"
      HARNESS_RULESFILE="t/testrules.yml"
     prove -j9 -r
           --pgtap-option dbname=lsmbinstalltest
