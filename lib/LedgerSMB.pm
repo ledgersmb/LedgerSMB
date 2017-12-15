@@ -375,7 +375,11 @@ sub upload {
         return map { $_->basename } $self->{_uploads}->values;
     }
 
-    my $tmpfname = $self->{_uploads}->get_one($name)->path;
+    # Hash::MultiValue croaks when the key doesn't exist;
+    # we want it to return C<undef> instead.
+    my $tmpfname = eval { $self->{_uploads}->get_one($name)->path };
+    return undef unless defined $tmpfname;
+
     open my $fh, '<', $tmpfname
         or die "Can't open uploaded temporary file $tmpfname: $!";
 
