@@ -50,6 +50,11 @@ form#loginform {
     padding-left: 4ex;
 }
 
+/* Prevent inheritance of the above */
+.inputrow * {
+    padding: initial;
+}
+
 div {
     overflow: auto;
 }
