@@ -68,7 +68,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-
 CREATE OR REPLACE FUNCTION reconciliation__check(in_end_date date, in_chart_id int)
 RETURNS SETOF defaults
 LANGUAGE SQL AS
@@ -156,7 +155,7 @@ BEGIN
            AND submitted IS NOT TRUE AND approved IS NOT TRUE;
     RETURN FOUND;
 END;
-$$ language PLPGSQL security definer;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
 -- Granting execute permission to public because everyone has an ability to
 -- delete their own reconciliation reports provided they have not been
@@ -555,18 +554,17 @@ $$
                      transdate, 'gl' as table
                 FROM gl WHERE approved) gl
                 ON (gl.table = t.table_name AND gl.id = t.id)
-        LEFT JOIN cr_report_line rl
-               ON rl.report_id = in_report_id
+        LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
                 AND (rl.ledger_id = ac.entry_id
                      AND ac.voucher_id IS NULL
-                      OR ac.voucher_id = rl.voucher_id)
+                      OR rl.voucher_id = ac.voucher_id))
         LEFT JOIN cr_report r ON r.id = in_report_id
         LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
         WHERE (ac.cleared IS FALSE OR ac.cleared_on IS NULL)
-          AND ac.approved
+          AND ac.approved IS TRUE
           AND ac.chart_id = t_chart_id
           AND ac.transdate <= t_end_date
-          AND (  t_recon_fx IS NOT TRUE AND ac.fx_transaction IS NOT TRUE
+          AND (t_recon_fx is not true AND ac.fx_transaction IS NOT TRUE
               OR t_recon_fx AND (gl.table <> 'gl' OR ac.fx_transaction IS TRUE))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table,
