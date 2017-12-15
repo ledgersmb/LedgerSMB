@@ -730,12 +730,21 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 --     SELECT entity_id, login FROM :slschema.employee em
 --      WHERE login IS NOT NULL;
 
+-- No manager-managee information in :slschema
+--INSERT
+--  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
+--       employeenumber, dob, manager_id)
+--SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+--       employeenumber, dob,
+--       (select entity_id from :slschema.employee where id = em.managerid)
+--  FROM :slschema.employee em
+--LEFT JOIN :slschema.acsrole r on em.acsrole_id = r.id;
+
 INSERT
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, r.description, ssn, sales,
-       employeenumber, dob,
-       (select entity_id from :slschema.employee where id = em.acsrole_id)
+       employeenumber, dob, 0
   FROM :slschema.employee em
 LEFT JOIN :slschema.acsrole r on em.acsrole_id = r.id;
 

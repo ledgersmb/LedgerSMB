@@ -456,6 +456,10 @@ SELECT name, 'C-' || customernumber, 2,
 FROM :slschema.customer
 GROUP BY name, customernumber;
 
+INSERT INTO entity (name, control_code, entity_class, country_id)
+SELECT 'Migrator', 'R-1', 10, (select id from country
+         where lower(short_name)  =  lower(:default_country));
+
 UPDATE :slschema.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
 UPDATE :slschema.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
@@ -714,6 +718,11 @@ UPDATE :slschema.employee set entity_id =
 
 INSERT INTO person (first_name, last_name, entity_id)
 SELECT name, name, entity_id FROM :slschema.employee;
+
+INSERT INTO robot  (first_name, last_name, entity_id)
+SELECT '', name, id
+FROM entity
+WHERE entity_class = 10 AND control_code = 'R-1';
 
 -- users in SL2.8 have to be re-created using the 1.4 user interface
 -- Intentionally do *not* migrate the users table to prevent later conflicts
@@ -1134,6 +1143,14 @@ FROM (
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;
+
+-- Patch their_total, now that we have all the data in cr_report_line
+UPDATE cr_report SET their_total=reconciliation__get_cleared_balance(cr.chart_id,cr.end_date)
+FROM (
+    SELECT id, chart_id, end_date
+    FROM cr_report
+) cr WHERE cr_report.id = cr.id;
+
 -- Patch for suspect clear dates
 -- The UI should reflect this
 -- Unsubmit the suspect report to allow easy edition
