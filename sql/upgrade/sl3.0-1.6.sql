@@ -421,8 +421,8 @@ SELECT id, accno, description
   FROM sl30.chart WHERE charttype = 'H';
 
 SELECT pg_temp.account__save(id, accno, description, category,
-                     case when gifi_accno ~ '^[\s\t]*$' then NULL
-                          else gifi_accno end, NULL::int,
+                    CASE WHEN gifi_accno ~ '^[\s\t]*$' THEN NULL
+                    ELSE gifi_accno END, NULL::int,
                     contra,
                     CASE WHEN link like '%tax%' THEN true ELSE false END,
                     string_to_array(link,':'), 'f', 'f')
@@ -725,12 +725,21 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 --     SELECT entity_id, login FROM sl30.employee em
 --      WHERE login IS NOT NULL;
 
+-- No manager-managee information in SL30
+--INSERT
+--  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
+--       employeenumber, dob, manager_id)
+--SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+--       employeenumber, dob,
+--       (select entity_id from sl30.employee where id = em.managerid)
+--  FROM sl30.employee em
+--LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
+
 INSERT
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, r.description, ssn, sales,
-       employeenumber, dob,
-       (select entity_id from sl30.employee where id = em.acsrole_id)
+       employeenumber, dob, 0
   FROM sl30.employee em
 LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
 
@@ -968,7 +977,7 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount, transdate,
         memo, approved, cleared, vr_id, invoice.id
    FROM sl30.acc_trans
 LEFT JOIN sl30.invoice ON acc_trans.id = invoice.id
-                          AND acc_trans.trans_id = invoice.trans_id
+                      AND acc_trans.trans_id = invoice.trans_id
   WHERE chart_id IS NOT NULL
     AND acc_trans.trans_id IN (SELECT id FROM transactions);
 
@@ -1031,7 +1040,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-SELECT payment_migrate(p.id, p.trans_id, cast(p.exchangerate as numeric), p.paymentmethod_id)
+PERFORM payment_migrate(p.id, p.trans_id, cast(p.exchangerate as numeric), p.paymentmethod_id)
 FROM sl30.payment p;
 
 -- Reconciliations
@@ -1057,16 +1066,15 @@ $$
   SELECT (date_trunc('MONTH', $1) + INTERVAL '1 MONTH - 1 day')::DATE;
 $$ LANGUAGE 'sql' IMMUTABLE STRICT;
 
-CREATE OR REPLACE FUNCTION PG_TEMP.is_cleared(clear_time DATE,end_date DATE) RETURNS BOOLEAN LANGUAGE PLPGSQL IMMUTABLE AS $$
+CREATE OR REPLACE FUNCTION PG_TEMP.is_date(S DATE) RETURNS BOOLEAN LANGUAGE PLPGSQL IMMUTABLE AS $$
 BEGIN
-  RETURN CASE WHEN $1::DATE IS NOT NULL AND $1 <= $2 THEN TRUE ELSE FALSE END;
+  RETURN CASE WHEN $1::DATE IS NULL THEN FALSE ELSE TRUE END;
 EXCEPTION WHEN OTHERS THEN
   RETURN FALSE;
 END;$$;
 
--- The computation of their_total is wrong at this time
-INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, entered_by, entered_username)
-  SELECT coa.id, 0, TRUE,
+INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, entered_by, entered_username)
+  SELECT coa.id, SUM(SUM(-amount)) OVER (ORDER BY coa.id, a.end_date), TRUE,
             a.end_date,max(a.updated),
             (SELECT entity_id FROM robot WHERE last_name = 'Migrator'),
             'Migrator'
@@ -1096,7 +1104,7 @@ INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, enter
 -- The ID and matching post_date are entered in a temp table to pull the back into cr_report_line immediately after.
 -- Temp table will be dropped automatically at the end of the transaction.
 WITH cr_entry AS (
-SELECT cr.id::INT, cr.end_date, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
+SELECT cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
     FROM sl30.acc_trans a
     JOIN sl30.chart s ON chart_id=s.id
     JOIN pg_temp.reconciliation__account_list() coa ON coa.accno=s.accno
@@ -1116,28 +1124,20 @@ SELECT cr.id::INT, cr.end_date, a.source, n.type, a.cleared::TIMESTAMP, a.amount
     ) n ON n.trans_id = a.trans_id
     ORDER BY post_date,cr.id,n.type,a.source ASC NULLS LAST,a.amount
 )
-SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_entry.end_date, cr_entry.post_date, cr_entry.lsmb_entry_id
+SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_entry.post_date, cr_entry.lsmb_entry_id
 INTO TEMPORARY _cr_report_line
 FROM cr_entry;
 
 UPDATE cr_report_line cr SET post_date = cr1.post_date,
                              ledger_id = cr1.lsmb_entry_id,
-                             cleared = pg_temp.is_cleared(clear_time,cr1.end_date),
+                             cleared = pg_temp.is_date(clear_time),
                              insert_time = date_trunc('second',cr1.post_date),
                              our_balance = their_balance
 FROM (
-  SELECT id,post_date,end_date,lsmb_entry_id
+  SELECT id,post_date,lsmb_entry_id
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;
-
--- Patch their_total, now that we have all the data in cr_report_line
-UPDATE cr_report SET their_total=reconciliation__get_cleared_balance(cr.chart_id,cr.end_date)
-FROM (
-    SELECT id, chart_id, end_date
-    FROM cr_report
-) cr WHERE cr_report.id = cr.id;
-
 -- Patch for suspect clear dates
 -- The UI should reflect this
 -- Unsubmit the suspect report to allow easy edition
