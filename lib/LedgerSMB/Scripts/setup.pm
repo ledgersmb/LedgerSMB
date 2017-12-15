@@ -133,16 +133,19 @@ sub get_dispatch_table {
 
     return ( { appname => 'sql-ledger',
         version => '2.7',
+        slschema => 'sl27',
         message => $sl_detect,
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '2.8',
+        slschema => 'sl28',
         message => $sl_detect,
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '3.0',
+        slschema => 'sl30',
         message => $request->{_locale}->text(
                      'SQL-Ledger 3.0 database detected.'
                    ),
@@ -217,10 +220,9 @@ sub login {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
-                foreach my $field (qw|operation message next_action|) {
+                foreach my $field (qw|operation message next_action slschema|) {
                     $request->{$field} = $dispatch_entry->{$field};
                 }
-
                 last;
             }
         }
@@ -583,7 +585,8 @@ my %info_applicable_for_upgrade = (
     'default_ap' => [ 'ledgersmb/1.2',
                       'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -652,6 +655,11 @@ sub upgrade_info {
             );
     }
 
+    if (applicable_for_upgrade('slschema', $upgrade_type)) {
+        $retval++;
+        $request->{slschema} = 'sl' . $dbinfo->{version};
+        $request->{slschema} =~ s/\.//;
+    }
     return $retval;
 }
 
