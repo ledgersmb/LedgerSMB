@@ -50,6 +50,7 @@ requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
 requires 'Text::CSV';
+requires 'Version::Compare';
 requires 'XML::Simple';
 requires 'namespace::autoclean';
 

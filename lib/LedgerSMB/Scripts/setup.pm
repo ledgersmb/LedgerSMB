@@ -28,6 +28,7 @@ use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use Try::Tiny;
+use Version::Compare;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
@@ -718,7 +719,7 @@ sub upgrade {
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
-        return $template->render_to_psgi($request);
+        return $template->render_to_psgi($request, VERSION_COMPARE => \&Version::Compare::version_compare);
     } else {
         $request->{dbh}->rollback();
 

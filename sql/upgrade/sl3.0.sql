@@ -912,7 +912,7 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 insert into ar
 (entity_credit_account, person_id,
         id, invnumber, transdate, taxincluded, amount, netamount,
-<?lsmb IF lsmbversion <= '1.5'; ?>
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
@@ -922,7 +922,7 @@ SELECT
         customer.credit_id,
         (select entity_id from :slschema.employee WHERE id = ar.employee_id),
         ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
-<?lsmb IF lsmbversion <= '1.5'; ?>
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
         duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
@@ -939,7 +939,7 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 insert into ap
 (entity_credit_account, person_id,
         id, invnumber, transdate, taxincluded, amount, netamount,
-<?lsmb IF lsmbversion <= '1.5'; ?>
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
@@ -950,7 +950,7 @@ SELECT
         (select entity_id from :slschema.employee
                 WHERE id = ap.employee_id),
         ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
-<?lsmb IF lsmbversion <= '1.5'; ?>
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
         duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
