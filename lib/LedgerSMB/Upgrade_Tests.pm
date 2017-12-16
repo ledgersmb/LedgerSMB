@@ -237,6 +237,49 @@ sub _get_tests {
 
 push @tests, __PACKAGE__->new(
         test_query =>
+           q{select count(*) as customer_count
+              from customer
+             where (select count(*)
+                      from chart
+                     where 'AR' = ANY(string_to_array(link,':'))) > 0
+            having count(*) > 0},
+ display_name => marktext('AR account available when customers defined'),
+ instructions => marktext(
+                   q(When customers are defined, an AR account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
+         name => 'customers_require_ar',
+ display_cols => [],
+      columns => [],
+        table => 'customer',
+      appname => 'ledgersmb',
+  min_version => '1.2',
+  max_version => '1.2'
+);
+
+push @tests, __PACKAGE__->new(
+        test_query =>
+           q{select count(*) as vendor_count
+              from vendor
+             where (select count(*)
+                      from chart
+                     where 'AP' = ANY(string_to_array(link,':'))) > 0
+            having count(*) > 0},
+ display_name => marktext('AP account available when vendors defined'),
+ instructions => marktext(
+                   q(When vendors are defined, an AP account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
+         name => 'vendors_require_ap',
+ display_cols => [],
+      columns => [],
+        table => 'vendor',
+      appname => 'ledgersmb',
+  min_version => '1.2',
+  max_version => '1.2'
+);
+
+
+push @tests, __PACKAGE__->new(
+        test_query =>
            'select id, customernumber, name, address1, city, state, zipcode
                    from customer where customernumber in
                     (SELECT customernumber from customer
@@ -406,7 +449,51 @@ push @tests, __PACKAGE__->new(
       appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
+    );
+
+push @tests, __PACKAGE__->new(
+        test_query =>
+           q{select count(*) as customer_count
+              from customer
+             where (select count(*)
+                      from chart
+                     where 'AR' = ANY(string_to_array(link,':'))) > 0
+            having count(*) > 0},
+ display_name => marktext('AR account available when customers defined'),
+ instructions => marktext(
+                   q(When customers are defined, an AR account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
+         name => 'customers_require_ar',
+ display_cols => [],
+      columns => [],
+        table => 'customer',
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
 );
+
+push @tests, __PACKAGE__->new(
+        test_query =>
+           q{select count(*) as vendor_count
+              from vendor
+             where (select count(*)
+                      from chart
+                     where 'AP' = ANY(string_to_array(link,':'))) > 0
+            having count(*) > 0},
+ display_name => marktext('AP account available when vendors defined'),
+ instructions => marktext(
+                   q(When vendors are defined, an AP account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
+         name => 'vendors_require_ap',
+ display_cols => [],
+      columns => [],
+        table => 'vendor',
+      appname => 'ledgersmb',
+  min_version => '2.7',
+  max_version => '3.0'
+);
+
+
 
 push @tests, __PACKAGE__->new(
    test_query => q{select distinct gifi_accno as accno from chart
@@ -428,7 +515,6 @@ push @tests, __PACKAGE__->new(
   min_version => '2.7',
   max_version => '3.0'
 );
-
 
 push @tests, __PACKAGE__->new(
    test_query => q{select distinct gifi_accno from account

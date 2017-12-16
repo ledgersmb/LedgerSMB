@@ -614,36 +614,44 @@ sub upgrade_info {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-
+    my $retval = 0;
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-    @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-    unshift @{$request->{ar_accounts}}, {}
-            unless scalar(@{$request->{ar_accounts}}) == 1;
+        @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
+        if (scalar(@{$request->{ar_accounts}}) > 1) {
+            unshift @{$request->{ar_accounts}}, {};
+            $retval++;
+        }
+        else {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ar} =
+                (pop @{$request->{ar_accounts}}) // 'null';
+        }
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-    @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-    unshift @{$request->{ap_accounts}}, {}
-            unless scalar(@{$request->{ap_accounts}}) == 1;
+        @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
+        if (scalar(@{$request->{ap_accounts}}) > 1) {
+            unshift @{$request->{ap_accounts}}, {};
+            $retval++;
+        }
+        else {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ap} =
+                (pop @{$request->{ap_accounts}}) // 'null';
+        }
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {
-    @{$request->{countries}} = ();
-    foreach my $iso2 (all_country_codes()) {
-        push @{$request->{countries}}, { code    => uc($iso2),
-                         country => code2country($iso2) };
-    }
-    @{$request->{countries}} =
-        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
-    unshift @{$request->{countries}}, {};
+        $retval++;
+        @{$request->{countries}} = (
+            {}, # empty initial row
+            sort { $a->{country} cmp $b->{country} }
+               map { { code    => uc($_),
+                       country => code2country($_) } } all_country_codes()
+            );
     }
 
-    my $retval = 0;
-    foreach my $key (keys %info_applicable_for_upgrade) {
-        $retval++
-            if applicable_for_upgrade($key, $upgrade_type);
-    }
     return $retval;
 }
 
