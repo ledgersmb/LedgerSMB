@@ -46,8 +46,12 @@
                 locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
-            var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
-        </script>
+            var lsmbConfig = {
+                <?lsmb IF USER.dateformat ?>
+                 "dateformat": '<?lsmb USER.dateformat ?>'
+                 <?lsmb END ?>
+            };
+       </script>
         <script type="text/javascript" src="<?lsmb dojo_location ?>/dojo/dojo.js"></script>
         <script type="text/javascript" src="<?lsmb dojo_location ?>/lsmb/main.js"></script>
         <?lsmb FOREACH s = include_script ?>

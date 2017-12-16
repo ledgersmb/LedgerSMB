@@ -313,6 +313,15 @@ def 'language',
     default => 'en',
     doc => q{};
 
+def 'date_format',
+    section => 'main',
+    default => 'yyyy-mm-dd',
+    dock => q{Specifies the date format to be used for the database
+admin application (setup.pl).
+
+Note that the browser locale (language) will be used when this value isn't set.
+The default is to use the iso date format (yyyy-mm-dd).};
+
 def 'log_level',
     section => 'main',
     default => 'ERROR',
