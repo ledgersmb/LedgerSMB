@@ -245,8 +245,8 @@ push @tests, __PACKAGE__->new(
             having count(*) > 0},
  display_name => marktext('AR account available when customers defined'),
  instructions => marktext(
-                   q{When customers are defined, an AR account must be defined,
- however, your setup doesn't. Please go back and define one.}),
+                   q(When customers are defined, an AR account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
          name => 'customers_require_ar',
  display_cols => [],
       columns => [],
@@ -266,8 +266,8 @@ push @tests, __PACKAGE__->new(
             having count(*) > 0},
  display_name => marktext('AP account available when vendors defined'),
  instructions => marktext(
-                   q{When vendors are defined, an AP account must be defined,
- however, your setup doesn't. Please go back and define one.}),
+                   q(When vendors are defined, an AP account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
          name => 'vendors_require_ap',
  display_cols => [],
       columns => [],
@@ -461,8 +461,8 @@ push @tests, __PACKAGE__->new(
             having count(*) > 0},
  display_name => marktext('AR account available when customers defined'),
  instructions => marktext(
-                   q{When customers are defined, an AR account must be defined,
- however, your setup doesn't. Please go back and define one.}),
+                   q(When customers are defined, an AR account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
          name => 'customers_require_ar',
  display_cols => [],
       columns => [],
@@ -482,8 +482,8 @@ push @tests, __PACKAGE__->new(
             having count(*) > 0},
  display_name => marktext('AP account available when vendors defined'),
  instructions => marktext(
-                   q{When vendors are defined, an AP account must be defined,
- however, your setup doesn't. Please go back and define one.}),
+                   q(When vendors are defined, an AP account must be defined,
+ however, your setup doesn't. Please go back and define one.)),
          name => 'vendors_require_ap',
  display_cols => [],
       columns => [],
