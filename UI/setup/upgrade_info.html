@@ -9,6 +9,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <form data-dojo-type="lsmb/SimpleForm"
       action="setup.pl" method="POST"
       name="upgrade_info">
+<?lsmb upgrade_allowed = 1 ?>
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
@@ -20,7 +21,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
   you will need to set as part of the upgrade process.
 </p>
 <p>
-  In addition to these new defaults LedgerSMB 1.3 adds stricter
+  In addition to these new defaults LedgerSMB adds stricter
   checks on data validity in the database. Because of these stricter checks
   it's no longer valid to leave companies without a country or customers
   without accounts receivable reference. The defaults you choose below will
@@ -34,14 +35,27 @@ include_stylesheet=["setup/stylesheet.css"] ?>
                             name  = 'default_country'
                            label  = text('Default Country') #'
                             class = 'country'
+                         required = 1
 } ?>
 </div>
 <div class="input_row">
 <p>
-  LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts
-per company. One of those must be the system default. Please select
-your default below in case of multiple. If the list below is empty,
-your database is in an inconsistent state and needs to be fixed first.
+  LedgerSMB supports multiple <em>Accounts receivable (AR) </em> accounts
+per company.
+<?lsmb IF ar_accounts.size > 1 ?>
+    <span>One of those must be the system default. Please select
+your default below.</span>
+<?lsmb ELSE; ?>
+    <span>Your AR account has been selected to be the
+    system default. Please review.</span>
+<?lsmb END ?>
+<?lsmb AR_DISABLED = "";
+IF ar_accounts.size <= 1 && !ar_accounts.0.id && lsmb_info.ar > 0; ?>
+    <span style='font-weight:bold'>
+          No <em>AR</em> account available, your database is
+          in an inconsistent state and needs to be fixed first.
+    </span>
+  <?lsmb AR_DISABLED = "disabled"; END ?>
 </p>
 <?lsmb INCLUDE select element_data = {
                             name  = 'default_ar'
@@ -50,14 +64,28 @@ your database is in an inconsistent state and needs to be fixed first.
                             options = ar_accounts
                             value_attr = 'accno'
                             text_attr = 'desc'
+                            required = 1
+                            disabled = AR_DISABLED
 } ?>
 </div>
 <div class="input_row">
 <p>
-  LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts
-per company. One of those must be the system default. Please select
-your default below in case of multiple. If the list below is empty,
-your database is in an inconsistent state and needs to be fixed first.
+  LedgerSMB supports multiple <em>Accounts payable (AP) </em> accounts
+per company.
+  <?lsmb IF ap_accounts.size > 1 ?>
+    <span>One of those must be the system default.
+   Please select your default below.</span>
+  <?lsmb ELSE; ?>
+    <span>Your AP account has been selected to be the
+    system default. Please review.</span>
+  <?lsmb END ?>
+  <?lsmb AP_DISABLED = "";
+    IF ap_accounts.size <= 1 && !ap_accounts.0.id && lsmb_info.ap > 0; ?>
+    <span style='font-weight:bold'>
+          No <em>AP</em> account available, your database is
+          in an inconsistent state and needs to be fixed first.
+    </span>
+  <?lsmb AP_DISABLED = "disabled"; END ?>
 </p>
 <?lsmb INCLUDE select element_data = {
                             name  = 'default_ap'
@@ -66,18 +94,28 @@ your database is in an inconsistent state and needs to be fixed first.
                             options = ap_accounts
                             value_attr = 'accno'
                             text_attr = 'desc'
+                             required = 1
+                            disabled = AP_DISABLED
 } ?>
 </div>
-<div class="input_row">
-<p>
-  Note that the process invoked by hitting the button below might
-  take long to complete as it will run the upgrade process and will
-  copy all data from the 1.2 tables into the 1.3 tables.
-</p>
+    <div class="input_row">
+        <p>
+          Note that the process invoked by hitting the button below might
+          take long to complete as it will run the upgrade process and will
+          copy all data from the original tables into the newer tables.
+        </p>
 <?lsmb INCLUDE button element_data = {
-    text = text('Upgrade')
+      id = 'button-upgrade-action'
+        text = text('Upgrade')
+        name = 'action'
+       value = upgrade_action
+        type = 'submit'
+       class = 'submit'
+    };
+INCLUDE button element_data = {
+    text = text('Cancel')
     name = 'action'
-   value = upgrade_action
+   value = cancel
     type = 'submit'
    class = 'submit'
 } ?>
