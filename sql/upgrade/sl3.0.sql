@@ -842,7 +842,9 @@ SELECT pg_temp.f_insert_count('sqnumber');
 SELECT pg_temp.f_insert_count('vendornumber');
 SELECT pg_temp.f_insert_count('vinumber');
 
-INSERT INTO defaults(setting_key,value) SELECT 'curr',curr FROM :slschema.curr WHERE rn=1;
+INSERT INTO defaults(setting_key,value)
+    SELECT 'curr',array_to_string(array_agg(curr),':')
+    FROM :slschema.curr;
 
 CREATE OR REPLACE FUNCTION pg_temp.f_insert_account(skey varchar(20)) RETURNS VOID AS
 $$
