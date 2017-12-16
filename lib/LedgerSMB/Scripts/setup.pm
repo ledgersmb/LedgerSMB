@@ -1283,8 +1283,7 @@ sub run_sl28_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, 'sl28',
-                   "sl3.0");
+    process_and_run_upgrade_script($request, $database, 'sl28', 'sl3.0');
 
     return create_initial_user($request);
 }
@@ -1303,8 +1302,7 @@ sub run_sl30_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, 'sl30',
-                                   "sl3.0");
+    process_and_run_upgrade_script($request, $database, 'sl30', 'sl3.0');
 
     return create_initial_user($request);
 }
