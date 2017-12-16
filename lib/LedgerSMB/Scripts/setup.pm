@@ -617,26 +617,26 @@ sub upgrade_info {
 
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-    @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-    unshift @{$request->{ar_accounts}}, {}
+        @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
+        unshift @{$request->{ar_accounts}}, {}
             unless scalar(@{$request->{ar_accounts}}) == 1;
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-    @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-    unshift @{$request->{ap_accounts}}, {}
+        @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
+        unshift @{$request->{ap_accounts}}, {}
             unless scalar(@{$request->{ap_accounts}}) == 1;
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {
-    @{$request->{countries}} = ();
-    foreach my $iso2 (all_country_codes()) {
-        push @{$request->{countries}}, { code    => uc($iso2),
-                         country => code2country($iso2) };
-    }
-    @{$request->{countries}} =
-        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
-    unshift @{$request->{countries}}, {};
+        @{$request->{countries}} = ();
+        foreach my $iso2 (all_country_codes()) {
+            push @{$request->{countries}}, { code    => uc($iso2),
+                                             country => code2country($iso2) };
+        }
+        @{$request->{countries}} =
+            sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
+        unshift @{$request->{countries}}, {};
     }
 
     my $retval = 0;
