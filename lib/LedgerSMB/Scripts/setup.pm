@@ -619,13 +619,13 @@ sub upgrade_info {
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
         @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
         unshift @{$request->{ar_accounts}}, {}
-            unless scalar(@{$request->{ar_accounts}}) == 1;
+            if scalar(@{$request->{ar_accounts}}) > 1;
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
         @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
         unshift @{$request->{ap_accounts}}, {}
-            unless scalar(@{$request->{ap_accounts}}) == 1;
+            if scalar(@{$request->{ap_accounts}}) > 1;
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {
