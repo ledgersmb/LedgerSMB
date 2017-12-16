@@ -1283,7 +1283,7 @@ sub run_sl28_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, 'sl28',
-                   "sl2.8-$CURRENT_MINOR_VERSION");
+                   "sl3.0-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
 }
