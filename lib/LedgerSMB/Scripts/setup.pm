@@ -629,14 +629,12 @@ sub upgrade_info {
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {
-        @{$request->{countries}} = ();
-        foreach my $iso2 (all_country_codes()) {
-            push @{$request->{countries}}, { code    => uc($iso2),
-                                             country => code2country($iso2) };
-        }
-        @{$request->{countries}} =
-            sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
-        unshift @{$request->{countries}}, {};
+        @{$request->{countries}} = (
+            {}, # empty initial row
+            sort { $a->{country} cmp $b->{country} }
+               map { { code    => uc($iso2),
+                       country => code2country($iso2) } } all_country_codes()
+            );
     }
 
     my $retval = 0;
