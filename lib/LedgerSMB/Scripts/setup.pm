@@ -617,17 +617,29 @@ sub upgrade_info {
     my $retval = 0;
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-        $retval++;
         @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-        unshift @{$request->{ar_accounts}}, {}
-            if scalar(@{$request->{ar_accounts}}) > 1;
+        if (scalar(@{$request->{ar_accounts}}) > 1) {
+            unshift @{$request->{ar_accounts}}, {}
+            $retval++;
+        }
+        else {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ar} =
+                (pop @{$request->{ar_accounts}}) // 'null';
+        }
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-        $retval++;
         @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-        unshift @{$request->{ap_accounts}}, {}
-            if scalar(@{$request->{ap_accounts}}) > 1;
+        if (scalar(@{$request->{ap_accounts}}) > 1) {
+            unshift @{$request->{ap_accounts}}, {}
+            $retval++;
+        }
+        else {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ap} =
+                (pop @{$request->{ap_accounts}}) // 'null';
+        }
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {

@@ -36,6 +36,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
                             class = 'country'
 } ?>
 </div>
+<?lsmb IF ar_accounts.size > 1; ?>
 <div class="input_row">
 <p>
   LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts
@@ -52,6 +53,8 @@ your database is in an inconsistent state and needs to be fixed first.
                             text_attr = 'desc'
 } ?>
 </div>
+<?lsmb END ?>
+<?lsmb IF ap_accounts.size > 1; ?>
 <div class="input_row">
 <p>
   LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts
@@ -68,6 +71,7 @@ your database is in an inconsistent state and needs to be fixed first.
                             text_attr = 'desc'
 } ?>
 </div>
+<?lsmb END ?>
 <div class="input_row">
 <p>
   Note that the process invoked by hitting the button below might
