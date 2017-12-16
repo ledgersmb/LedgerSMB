@@ -619,7 +619,7 @@ sub upgrade_info {
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
         @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
         if (scalar(@{$request->{ar_accounts}}) > 1) {
-            unshift @{$request->{ar_accounts}}, {}
+            unshift @{$request->{ar_accounts}}, {};
             $retval++;
         }
         else {
@@ -632,7 +632,7 @@ sub upgrade_info {
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
         @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
         if (scalar(@{$request->{ap_accounts}}) > 1) {
-            unshift @{$request->{ap_accounts}}, {}
+            unshift @{$request->{ap_accounts}}, {};
             $retval++;
         }
         else {
@@ -647,8 +647,8 @@ sub upgrade_info {
         @{$request->{countries}} = (
             {}, # empty initial row
             sort { $a->{country} cmp $b->{country} }
-               map { { code    => uc($iso2),
-                       country => code2country($iso2) } } all_country_codes()
+               map { { code    => uc($_),
+                       country => code2country($_) } } all_country_codes()
             );
     }
 
