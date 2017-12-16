@@ -614,21 +614,24 @@ sub upgrade_info {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-
+    my $retval = 0;
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
+        $retval++;
         @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
         unshift @{$request->{ar_accounts}}, {}
             if scalar(@{$request->{ar_accounts}}) > 1;
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
+        $retval++;
         @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
         unshift @{$request->{ap_accounts}}, {}
             if scalar(@{$request->{ap_accounts}}) > 1;
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {
+        $retval++;
         @{$request->{countries}} = (
             {}, # empty initial row
             sort { $a->{country} cmp $b->{country} }
@@ -637,11 +640,6 @@ sub upgrade_info {
             );
     }
 
-    my $retval = 0;
-    foreach my $key (keys %info_applicable_for_upgrade) {
-        $retval++
-            if applicable_for_upgrade($key, $upgrade_type);
-    }
     return $retval;
 }
 
