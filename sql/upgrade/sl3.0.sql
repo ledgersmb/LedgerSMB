@@ -1,5 +1,9 @@
 --Setup
 
+-- With help of a few conditional statements handled by the Template toolkit,
+-- this migration file handles migration from all SQL-Ledger version up to 3.0
+-- to all Ledgersmb up to 1.6
+
 -- When moved to an interface, these will all be specified and preprocessed.
 \set default_country '''<?lsmb default_country ?>'''
 \set ar '''<?lsmb default_ar ?>'''
@@ -9,6 +13,7 @@
          for those. Elsewhere we will use :slschema for lisibility
  */
 \set slschema '<?lsmb slschema ?>'
+\set lsmbversion '<?lsmb lsmbversion ?>'
 
 BEGIN;
 
@@ -904,15 +909,21 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
 insert into ar
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount, netamount, paid,
-        datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        id, invnumber, transdate, taxincluded, amount, netamount,
+<?lsmb IF lsmbversion <= '1.5'; ?>
+        paid, datepaid,
+<?lsmb END; ?>
+        duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
 SELECT
         customer.credit_id,
         (select entity_id from :slschema.employee WHERE id = ar.employee_id),
-        ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid,
-        datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
+        ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
+<?lsmb IF lsmbversion <= '1.5'; ?>
+        paid, datepaid,
+<?lsmb END; ?>
+        duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
         intnotes,
         shipvia, ar.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
@@ -925,16 +936,22 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
 insert into ap
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount, netamount, paid,
-        datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        id, invnumber, transdate, taxincluded, amount, netamount,
+<?lsmb IF lsmbversion <= '1.5'; ?>
+        paid, datepaid,
+<?lsmb END; ?>
+        duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
 SELECT
         vendor.credit_id,
         (select entity_id from :slschema.employee
                 WHERE id = ap.employee_id),
-        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid,
-        datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
+        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
+<?lsmb IF lsmbversion <= '1.5'; ?>
+        paid, datepaid,
+<?lsmb END; ?>
+        duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
         intnotes,
         shipvia, ap.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,

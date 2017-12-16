@@ -660,6 +660,7 @@ sub upgrade_info {
         $request->{slschema} = 'sl' . $dbinfo->{version};
         $request->{slschema} =~ s/\.//;
     }
+    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
     return $retval;
 }
 
@@ -1283,7 +1284,7 @@ sub run_sl28_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, 'sl28',
-                   "sl3.0-$CURRENT_MINOR_VERSION");
+                   "sl3.0");
 
     return create_initial_user($request);
 }
@@ -1303,7 +1304,7 @@ sub run_sl30_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, 'sl30',
-                                   "sl3.0-$CURRENT_MINOR_VERSION");
+                                   "sl3.0");
 
     return create_initial_user($request);
 }
