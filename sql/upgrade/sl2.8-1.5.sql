@@ -730,23 +730,13 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 --     SELECT entity_id, login FROM :slschema.employee em
 --      WHERE login IS NOT NULL;
 
--- No manager-managee information in :slschema
---INSERT
---  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
---       employeenumber, dob, manager_id)
---SELECT entity_id, startdate, enddate, r.description, ssn, sales,
---       employeenumber, dob,
---       (select entity_id from :slschema.employee where id = em.managerid)
---  FROM :slschema.employee em
---LEFT JOIN :slschema.acsrole r on em.acsrole_id = r.id;
-
-INSERT
-  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
-       employeenumber, dob, manager_id)
-SELECT entity_id, startdate, enddate, role, ssn, sales,
-        employeenumber, dob,
-       (select entity_id from :slschema.employee where id = em.managerid)
-  FROM :slschema.employee em;
+INSERT INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
+            employeenumber, dob, manager_id)
+    SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+       employeenumber, dob,
+       (SELECT entity_id FROM :slschema.employee WHERE id = em.acsrole_id)
+    FROM :slschema.employee em
+    LEFT JOIN :slschema.acsrole r ON em.acsrole_id = r.id;
 
 -- must rebuild this table due to changes since 1.2
 
@@ -1071,15 +1061,16 @@ $$
   SELECT (date_trunc('MONTH', $1) + INTERVAL '1 MONTH - 1 day')::DATE;
 $$ LANGUAGE 'sql' IMMUTABLE STRICT;
 
-CREATE OR REPLACE FUNCTION PG_TEMP.is_date(S DATE) RETURNS BOOLEAN LANGUAGE PLPGSQL IMMUTABLE AS $$
+CREATE OR REPLACE FUNCTION PG_TEMP.is_cleared(clear_time DATE,end_date DATE) RETURNS BOOLEAN LANGUAGE PLPGSQL IMMUTABLE AS $$
 BEGIN
-  RETURN CASE WHEN $1::DATE IS NULL THEN FALSE ELSE TRUE END;
+  RETURN CASE WHEN $1::DATE IS NOT NULL AND $1 <= $2 THEN TRUE ELSE FALSE END;
 EXCEPTION WHEN OTHERS THEN
   RETURN FALSE;
 END;$$;
 
-INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, entered_by, entered_username)
-  SELECT coa.id, SUM(SUM(-amount)) OVER (ORDER BY coa.id, a.end_date), TRUE,
+-- The computation of their_total is wrong at this time
+INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, entered_by, entered_username)
+  SELECT coa.id, 0, TRUE,
             a.end_date,max(a.updated),
             (SELECT entity_id FROM robot WHERE last_name = 'Migrator'),
             'Migrator'
@@ -1135,11 +1126,11 @@ FROM cr_entry;
 
 UPDATE cr_report_line cr SET post_date = cr1.post_date,
                              ledger_id = cr1.lsmb_entry_id,
-                             cleared = pg_temp.is_date(clear_time),
+                             cleared = pg_temp.is_cleared(clear_time,cr1.end_date),
                              insert_time = date_trunc('second',cr1.post_date),
                              our_balance = their_balance
 FROM (
-  SELECT id,post_date,lsmb_entry_id
+  SELECT id,post_date,end_date,lsmb_entry_id
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;

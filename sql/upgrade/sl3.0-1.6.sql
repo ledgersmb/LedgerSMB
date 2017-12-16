@@ -730,23 +730,13 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 --     SELECT entity_id, login FROM :slschema.employee em
 --      WHERE login IS NOT NULL;
 
--- No manager-managee information in :slschema
---INSERT
---  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
---       employeenumber, dob, manager_id)
---SELECT entity_id, startdate, enddate, r.description, ssn, sales,
---       employeenumber, dob,
---       (select entity_id from :slschema.employee where id = em.managerid)
---  FROM :slschema.employee em
---LEFT JOIN :slschema.acsrole r on em.acsrole_id = r.id;
-
-INSERT
-  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
-       employeenumber, dob, manager_id)
-SELECT entity_id, startdate, enddate, r.description, ssn, sales,
-       employeenumber, dob, 0
-  FROM :slschema.employee em
-LEFT JOIN :slschema.acsrole r on em.acsrole_id = r.id;
+INSERT INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
+            employeenumber, dob, manager_id)
+    SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+       employeenumber, dob,
+       (SELECT entity_id FROM :slschema.employee WHERE id = em.acsrole_id)
+    FROM :slschema.employee em
+    LEFT JOIN :slschema.acsrole r ON em.acsrole_id = r.id;
 
 -- must rebuild this table due to changes since 1.2
 
@@ -1114,8 +1104,8 @@ SELECT cr.id::INT, cr.end_date, a.source, n.type, a.cleared::TIMESTAMP, a.amount
     FROM :slschema.acc_trans a
     JOIN :slschema.chart s ON chart_id=s.id
     JOIN pg_temp.reconciliation__account_list() coa ON coa.accno=s.accno
-    JOIN public.cr_report cr
-    ON s.id = a.chart_id
+    JOIN account c on c.accno=s.accno
+    JOIN public.cr_report cr ON c.id = cr.chart_id
     AND date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
     AND date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE
     AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM :slschema.acc_trans))
