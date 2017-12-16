@@ -12,7 +12,15 @@ include_stylesheet=["setup/stylesheet.css"] ?>
     name = 'database'
     type = 'hidden'
    value = database
-} ?>
+};
+ INCLUDE input element_data = {
+        name = 'dojo_dateformat'
+         type = 'hidden'
+       value = dojo_dateformat
+ } ?>
+<div data-dojo-id="country_store" data-dojo-type="dojo/store/Memory"
+    data-dojo-props='idProperty: "id", data: <?lsmb USE JSON; countries.json; ?>'>
+</div>
 <div class="form">
 <div class="input_row">
 <?lsmb INCLUDE input element_data = {
@@ -66,22 +74,22 @@ text('Password') ?></label>
   <div data-dojo-type="dijit/Tooltip"
        data-dojo-props="connectId:'pls-import-1',position:['below']">
     <div style="width:30em">
-      <b>Import an existing user (from another database)</b><br /><br />
-      This username exists because it is being used with another database;
-      using it with the current database requires it to be <em>imported</em>.
+      <b><?lsmb text("Import an existing user (from another database)")?></b><br /><br />
+      <?lsmb text("This username exists because it is being used with another database; " _
+      "using it with the current database requires it to be <em>imported</em>.")?>
       <br /><br />
-      Note that technically any existing PostgreSQL &quot;role&quot; that is to
-      be used as a username needs to be imported this way, regardless of whether
-      it is a username in a different database.
+      <?lsmb text("Note that technically any existing PostgreSQL 'role' that is to " _
+      "be used as a username needs to be imported this way, regardless of whether " _
+      "it is a username in a different database.")?>
     </div>
   </div>
   <div data-dojo-type="dijit/Tooltip"
        data-dojo-props="connectId:'pls-import-0'">
     <div style="width:30em">
-      <b>Creates a new user</b><br />
-      This username <em>must not</em> be used by any of the other databases. If
-      you want to use a username that is already used with another database,
-      you can do so by selecting the <b>Import</b> option.
+      <b><?lsmb text("Creates a new user")?></b><br />
+      <?lsmb text("This username <em>must not</em> be used by any of the other databases. If " _
+      "you want to use a username that is already used with another database, " _
+      "you can do so by selecting the <b>Import</b> option.")?>
     </div>
   </div>
 </div>
@@ -138,6 +146,9 @@ required = 'required'
    label = text('Date of Birth') #'
    value = dob
 required = 'required'
+    "data-dojo-type" = "lsmb/setup/SetupDateformat",
+   "data-dojo-props" = "dojo_dateformat:" _ dojo_dateformat _ ", " _
+                       "store: country_store, topic:'ui/setup/country'"
 } ?>
 </div>
 <div class="input_row">
@@ -152,16 +163,15 @@ required = 'required'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb  countries.unshift({});
+<?lsmb
 INCLUDE select element_data = {
-          options = countries
-        text_attr = 'name'
-       value_attr = 'id'
-    default_blank = 1
-   default_values = [country_id]
-             name = 'country_id'
-            label = 'Country'
-         required = 'required'
+           labelAttr = 'name'
+                name = 'country_id'
+               label = text('Country')
+            required = 'required'
+    "data-dojo-type" = "lsmb/PublishSelect"
+   "data-dojo-props" = "value:'" _ country_id _ "', " _
+                       "store: country_store, topic:'ui/setup/country' "
 } ?>
 </div>
 <div class="input_row">

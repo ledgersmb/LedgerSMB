@@ -18,6 +18,7 @@ use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Setting;
+use HTTP::AcceptLanguage;
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
    HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
@@ -121,6 +122,7 @@ sub psgi_app {
     $LedgerSMB::App_State::Locale = $locale;
 
     $request->{_script_handle} = $module;
+    @{ $request->{languages} } = HTTP::AcceptLanguage->new($env->{HTTP_ACCEPT_LANGUAGE})->languages;
 
     return _internal_server_error('No workflow module specified!')
         unless $module;

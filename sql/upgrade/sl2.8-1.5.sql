@@ -724,6 +724,7 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
  SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
 
+INSERT INTO defaults(setting_key,value) VALUES('default_country', :default_country);
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;

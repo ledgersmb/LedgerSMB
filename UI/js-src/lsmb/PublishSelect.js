@@ -17,6 +17,11 @@ define(["dojo/_base/declare",
                               self.publish(targetValue);
                           })
                    );
+               },
+               startup: function() {
+                   var self = this;
+                   this.inherited(arguments);
+                   this.publish(this.value);
                }
            });
        });

@@ -1005,6 +1005,27 @@ sub skip_coa {
 }
 
 
+=item _get_country_id
+
+Get the country id from country short name.
+
+This is only to set the original value of the date format. Changes to selected
+country will be handled by the UI
+
+=cut
+
+sub _get_country_id {
+    my ($request,$country) = @_;
+    die 'missing country' unless $country;
+    $country = uc($country);
+    $request->{country_id} = 0;
+    for (@{$request->{countries}}){
+        if ($_->{short_name} eq $country){
+           return $_->{id};
+        }
+    }
+}
+
 =item _render_new_user
 
 Renders the new user screen. Common functionality to both the
@@ -1036,18 +1057,19 @@ sub _render_new_user {
 
     @{$request->{countries}}
     = $request->call_procedure(funcname => 'location_list_country' );
-    for my $country (@{$request->{countries}}){
-        last unless defined $request->{coa_lc};
-        if (lc($request->{coa_lc}) eq lc($country->{short_name})){
-           $request->{country_id} = $country->{id};
-        }
+    if ( $request->{coa_lc} ) {
+        LedgerSMB::Setting->set('default_country',$request->{coa_lc});
     }
+    $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
+    $request->{dojo_dateformat} = $LedgerSMB::Sysconfig::dojo_dateformat;
+
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (
         {id => '0', label => $locale->text('Manage Users')},
         {id => '1', label => $locale->text('Full Permissions')},
-        );
+        {id => '-1', label => $locale->text('No changes')},
+    );
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
@@ -1098,6 +1120,9 @@ sub save_user {
 
            @{$request->{countries}}
               = $request->call_procedure(funcname => 'location_list_country' );
+
+           $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
+           $request->{dojo_dateformat} = $LedgerSMB::Sysconfig::dojo_dateformat;
 
            my $locale = $request->{_locale};
 
@@ -1307,28 +1332,7 @@ sub run_sl30_migration {
 
 sub create_initial_user {
     my ($request) = @_;
-
-    _init_db($request) unless $request->{dbh};
-    @{$request->{salutations}} = $request->call_procedure(
-        funcname => 'person__list_salutations'
-    );
-
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
-
-    my $locale = $request->{_locale};
-
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        {id => '-1', label => $locale->text('No changes')},
-    );
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/new_user',
-    );
-    return $template->render_to_psgi($request);
+    return _render_new_user($request);
 }
 
 =item edit_user_roles

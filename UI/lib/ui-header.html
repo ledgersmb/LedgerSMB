@@ -43,7 +43,7 @@
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
-                locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
+                locale: '<?lsmb USER.language ? USER.language.lower().replace('_','-') : undef ?>',
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };

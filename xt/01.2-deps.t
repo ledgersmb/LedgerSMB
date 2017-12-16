@@ -34,8 +34,10 @@ find(\&collect, 'lib/', 'old/bin/', 'old/lib/');
 
 push @on_disk, 'tools/starman.psgi';
 
+#TODO: Implement Template plugins <?lsmb USE plugin ?>
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
                 ignores => [ 'Image::Size', 'LaTeX::Driver',
+                             'Template::Plugin::JSON',
                              'Starman', 'TeX::Encode::charmap'] );
 

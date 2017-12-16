@@ -24,8 +24,6 @@ define([
                params.placeholder = lsmbConfig.dateformat;
             }
             // end of 'old code' support block
-
-            this.inherited(arguments);
           },
           postMixInProperties: function() {
             this.inherited(arguments);
