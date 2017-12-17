@@ -48,7 +48,6 @@ define([
                params.placeholder =
                   params.placeholder.replace(/M/g, 'm').replace(/y/g, 'yy');
             }
-            this.inherited(arguments);
           },
           postMixInProperties: function() {
             this.inherited(arguments);
