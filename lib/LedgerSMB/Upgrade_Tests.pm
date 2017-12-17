@@ -1174,7 +1174,7 @@ push @tests, __PACKAGE__->new(
         table => 'ap',
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '3.0'
+  max_version => '2.9'
 );
 
 

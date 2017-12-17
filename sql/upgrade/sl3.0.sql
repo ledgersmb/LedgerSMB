@@ -1,9 +1,19 @@
 --Setup
 
+-- With help of a few conditional statements handled by the Template toolkit,
+-- this migration file handles migration from all SQL-Ledger version up to 3.0
+-- to all Ledgersmb up to 1.6
+
 -- When moved to an interface, these will all be specified and preprocessed.
 \set default_country '''<?lsmb default_country ?>'''
 \set ar '''<?lsmb default_ar ?>'''
 \set ap '''<?lsmb default_ap ?>'''
+/* NOTE: PostgreSQL doesn't allow variable interpolation within $$ blocks
+         so we will need to rely on the Template to substitude the proper schema
+         for those. Elsewhere we will use :slschema for lisibility
+ */
+\set slschema '<?lsmb slschema ?>'
+\set lsmbversion '<?lsmb lsmbversion ?>'
 
 BEGIN;
 
@@ -401,39 +411,39 @@ $$ LANGUAGE SQL;
 
 -- adding mapping info for import.
 
-ALTER TABLE sl30.vendor ADD COLUMN entity_id int;
-ALTER TABLE sl30.vendor ADD COLUMN company_id int;
-ALTER TABLE sl30.vendor ADD COLUMN credit_id int;
+ALTER TABLE :slschema.vendor ADD COLUMN entity_id int;
+ALTER TABLE :slschema.vendor ADD COLUMN company_id int;
+ALTER TABLE :slschema.vendor ADD COLUMN credit_id int;
 
-ALTER TABLE sl30.customer ADD COLUMN entity_id int;
-ALTER TABLE sl30.customer ADD COLUMN company_id int;
-ALTER TABLE sl30.customer ADD COLUMN credit_id int;
+ALTER TABLE :slschema.customer ADD COLUMN entity_id int;
+ALTER TABLE :slschema.customer ADD COLUMN company_id int;
+ALTER TABLE :slschema.customer ADD COLUMN credit_id int;
 
 --Accounts
 
 INSERT INTO gifi
-SELECT * FROM sl30.gifi;
+SELECT * FROM :slschema.gifi;
 
 insert into account_link_description values ('CT_tax', false, false);
 
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
-  FROM sl30.chart WHERE charttype = 'H';
+  FROM :slschema.chart WHERE charttype = 'H';
 
 SELECT pg_temp.account__save(id, accno, description, category,
-                     case when gifi_accno ~ '^[\s\t]*$' then NULL
-                          else gifi_accno end, NULL::int,
+                    CASE WHEN gifi_accno ~ '^[\s\t]*$' THEN NULL
+                    ELSE gifi_accno END, NULL::int,
                     contra,
                     CASE WHEN link like '%tax%' THEN true ELSE false END,
                     string_to_array(link,':'), 'f', 'f')
-  FROM sl30.chart
+  FROM :slschema.chart
  WHERE charttype = 'A';
 
 delete from account_link where description = 'CT_tax';
 
 -- Business
 
-INSERT INTO business SELECT * FROM sl30.business;
+INSERT INTO business SELECT * FROM :slschema.business;
 
 --Entity
 
@@ -441,64 +451,64 @@ INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT name, 'V-' || vendornumber, 1,
        (select id from country
          where lower(short_name)  = lower(:default_country))
-FROM sl30.vendor
+FROM :slschema.vendor
 GROUP BY name, vendornumber;
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT name, 'C-' || customernumber, 2,
        (select id from country
          where lower(short_name)  =  lower(:default_country))
-FROM sl30.customer
+FROM :slschema.customer
 GROUP BY name, customernumber;
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT 'Migrator', 'R-1', 10, (select id from country
          where lower(short_name)  =  lower(:default_country));
 
-UPDATE sl30.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
+UPDATE :slschema.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
-UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
+UPDATE :slschema.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
 
 --Entity Credit Account
 
-UPDATE sl30.vendor SET business_id = NULL WHERE business_id = 0;
+UPDATE :slschema.vendor SET business_id = NULL WHERE business_id = 0;
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
         cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id
           from account
-         where accno = coalesce((select accno from sl30.chart
+         where accno = coalesce((select accno from :slschema.chart
                                   where id = arap_accno_id) ,:ap)),
         (select id
            from account
-           where accno = (select accno from sl30.chart
+           where accno = (select accno from :slschema.chart
                            where id = payment_accno_id)),
          startdate, enddate, threshold, 1
-FROM sl30.vendor WHERE entity_id IS NOT NULL;
+FROM :slschema.vendor WHERE entity_id IS NOT NULL;
 
-UPDATE sl30.vendor SET credit_id =
+UPDATE :slschema.vendor SET credit_id =
         (SELECT id FROM entity_credit_account e
         WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
-UPDATE sl30.customer SET business_id = NULL WHERE business_id = 0;
+UPDATE :slschema.customer SET business_id = NULL WHERE business_id = 0;
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
         cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id
           from account
-         where accno = coalesce((select accno from sl30.chart
+         where accno = coalesce((select accno from :slschema.chart
                                   where id = arap_accno_id) ,:ar)),
         (select id
            from account
-           where accno = (select accno from sl30.chart
+           where accno = (select accno from :slschema.chart
                            where id = payment_accno_id)),
         startdate, enddate, threshold, 2
-FROM sl30.customer WHERE entity_id IS NOT NULL;
+FROM :slschema.customer WHERE entity_id IS NOT NULL;
 
-UPDATE sl30.customer SET credit_id =
+UPDATE :slschema.customer SET credit_id =
         (SELECT id FROM entity_credit_account e
         WHERE e.meta_number = customernumber and entity_class = 2
         and e.entity_id = customer.entity_id);
@@ -506,79 +516,79 @@ UPDATE sl30.customer SET credit_id =
 --Company
 
 INSERT INTO company (entity_id, legal_name, tax_id)
-SELECT entity_id, name, max(taxnumber) FROM sl30.vendor
+SELECT entity_id, name, max(taxnumber) FROM :slschema.vendor
 WHERE entity_id IS NOT NULL AND entity_id IN (select id from entity) GROUP BY entity_id, name;
 
-UPDATE sl30.vendor SET company_id = (select id from company c where entity_id = vendor.entity_id);
+UPDATE :slschema.vendor SET company_id = (select id from company c where entity_id = vendor.entity_id);
 
 INSERT INTO company (entity_id, legal_name, tax_id)
-SELECT entity_id, name, max(taxnumber) FROM sl30.customer
+SELECT entity_id, name, max(taxnumber) FROM :slschema.customer
 WHERE entity_id IS NOT NULL AND entity_id IN (select id from entity) GROUP BY entity_id, name;
 
-UPDATE sl30.customer SET company_id = (select id from company c where entity_id = customer.entity_id);
+UPDATE :slschema.customer SET company_id = (select id from company c where entity_id = customer.entity_id);
 
 -- Contact
 
 insert into eca_to_contact (credit_id, contact_class_id, contact,description)
 select v.credit_id, 1, v.phone, 'Primary phone: '||max(v.contact) as description
-from sl30.vendor v
+from :slschema.vendor v
 where v.company_id is not null and v.phone is not null
        and v.phone ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.phone
 UNION
 select v.credit_id, 12, v.email,
        'email address: '||max(v.contact) as description
-from sl30.vendor v
+from :slschema.vendor v
 where v.company_id is not null and v.email is not null
        and v.email ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.email
 UNION
 select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description
-from sl30.vendor v
+from :slschema.vendor v
 where v.company_id is not null and v.cc is not null
       and v.cc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.cc
 UNION
 select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description
-from sl30.vendor v
+from :slschema.vendor v
 where v.company_id is not null and v.bcc is not null
        and v.bcc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.bcc
 UNION
     select v.credit_id, 9, v.fax, 'Fax number' as description
-from sl30.vendor v
+from :slschema.vendor v
 where v.company_id is not null and v.fax is not null
       and v.fax ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.fax;
 
 insert into eca_to_contact (credit_id, contact_class_id, contact,description)
 select v.credit_id, 1, v.phone, 'Primary phone: '||max(v.contact) as description
-from sl30.customer v
+from :slschema.customer v
 where v.company_id is not null and v.phone is not null
        and v.phone ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.phone
 UNION
 select v.credit_id, 12, v.email,
        'email address: '||max(v.contact) as description
-from sl30.customer v
+from :slschema.customer v
 where v.company_id is not null and v.email is not null
        and v.email ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.email
 UNION
 select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description
-from sl30.customer v
+from :slschema.customer v
 where v.company_id is not null and v.cc is not null
       and v.cc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.cc
 UNION
 select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description
-from sl30.customer v
+from :slschema.customer v
 where v.company_id is not null and v.bcc is not null
        and v.bcc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.bcc
 UNION
     select v.credit_id, 9, v.fax, 'Fax number' as description
-from sl30.customer v
+from :slschema.customer v
 where v.company_id is not null and v.fax is not null
       and v.fax ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.fax;
@@ -618,15 +628,15 @@ SELECT eca.id, 1,
     ))
 FROM country c
 RIGHT OUTER JOIN
-     sl30.address oa
+     :slschema.address oa
 ON
     lower(trim(both ' ' from c.name)) = lower( trim(both ' ' from oa.country))
 OR
 
     lower(trim(both ' ' from c.short_name)) = lower( trim(both ' ' from oa.country))
-JOIN (select credit_id, id from sl30.vendor
+JOIN (select credit_id, id from :slschema.vendor
           union
-           select credit_id, id from sl30.customer) v ON oa.trans_id = v.id
+           select credit_id, id from :slschema.customer) v ON oa.trans_id = v.id
 JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
@@ -662,24 +672,24 @@ SELECT eca.id, 2,
     ))
 FROM country c
 RIGHT OUTER JOIN
-     sl30.shipto oa
+     :slschema.shipto oa
 ON
     lower(trim(both ' ' from c.name)) = lower( trim(both ' ' from oa.shiptocountry))
 OR
 
     lower(trim(both ' ' from c.short_name)) = lower( trim(both ' ' from oa.shiptocountry))
-JOIN (select credit_id, id from sl30.vendor
+JOIN (select credit_id, id from :slschema.vendor
           union
-           select credit_id, id from sl30.customer) v ON oa.trans_id = v.id
+           select credit_id, id from :slschema.customer) v ON oa.trans_id = v.id
 JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
-SELECT 3, credit_id, notes, '' FROM sl30.vendor
+SELECT 3, credit_id, notes, '' FROM :slschema.vendor
 WHERE notes IS NOT NULL AND credit_id IS NOT NULL;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
-SELECT 3, credit_id, notes, '' FROM sl30.customer
+SELECT 3, credit_id, notes, '' FROM :slschema.customer
 WHERE notes IS NOT NULL AND credit_id IS NOT NULL;
 
 UPDATE entity SET country_id =
@@ -699,20 +709,20 @@ WHERE id IN
        aND l.country_id > -1);
 
 INSERT INTO pricegroup
-SELECT * FROM sl30.pricegroup;
+SELECT * FROM :slschema.pricegroup;
 
-ALTER TABLE sl30.employee ADD entity_id int;
+ALTER TABLE :slschema.employee ADD entity_id int;
 
 INSERT INTO entity(control_code, entity_class, name, country_id)
 select 'E-' || employeenumber, 3, name,
         (select id from country where lower(short_name) = lower(:default_country))
-FROM sl30.employee;
+FROM :slschema.employee;
 
-UPDATE sl30.employee set entity_id =
+UPDATE :slschema.employee set entity_id =
        (select id from entity where 'E-'||employeenumber = control_code);
 
 INSERT INTO person (first_name, last_name, entity_id)
-SELECT name, name, entity_id FROM sl30.employee;
+SELECT name, name, entity_id FROM :slschema.employee;
 
 INSERT INTO robot  (first_name, last_name, entity_id)
 SELECT '', name, id
@@ -722,21 +732,20 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 -- users in SL2.8 have to be re-created using the 1.4 user interface
 -- Intentionally do *not* migrate the users table to prevent later conflicts
 --INSERT INTO users (entity_id, username)
---     SELECT entity_id, login FROM sl30.employee em
+--     SELECT entity_id, login FROM :slschema.employee em
 --      WHERE login IS NOT NULL;
 
-INSERT
-  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
-       employeenumber, dob, manager_id)
-SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+INSERT INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
+            employeenumber, dob, manager_id)
+    SELECT entity_id, startdate, enddate, r.description, ssn, sales,
        employeenumber, dob,
-       (select entity_id from sl30.employee where id = em.acsrole_id)
-  FROM sl30.employee em
-LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
+       (SELECT entity_id FROM :slschema.employee WHERE id = em.acsrole_id)
+    FROM :slschema.employee em
+    LEFT JOIN :slschema.acsrole r ON em.acsrole_id = r.id;
 
 -- must rebuild this table due to changes since 1.2
 
-INSERT INTO partsgroup (id, partsgroup) SELECT id, partsgroup FROM sl30.partsgroup;
+INSERT INTO partsgroup (id, partsgroup) SELECT id, partsgroup FROM :slschema.partsgroup;
 
 INSERT INTO parts (id, partnumber, description, unit,
 listprice, sellprice, lastcost, priceupdate, weight, onhand, notes,
@@ -747,21 +756,21 @@ drawing, microfiche, partsgroup_id, avgcost)
 listprice, sellprice, lastcost, priceupdate, weight, onhand, notes,
 makemodel, assembly, alternate, rop, (select id
           from public.account
-         where accno = (select accno from sl30.chart
+         where accno = (select accno from :slschema.chart
                          where id = inventory_accno_id)),
 (select id
           from public.account
-         where accno = (select accno from sl30.chart
+         where accno = (select accno from :slschema.chart
                          where id = income_accno_id)), (select id
           from public.account
-         where accno = (select accno from sl30.chart
+         where accno = (select accno from :slschema.chart
                          where id = expense_accno_id)),
  bin, obsolete, bom, image,
-drawing, microfiche, partsgroup_id, avgcost FROM sl30.parts;
+drawing, microfiche, partsgroup_id, avgcost FROM :slschema.parts;
 
 
 INSERT INTO makemodel (parts_id, make, model)
-SELECT parts_id, make, model FROM sl30.makemodel;
+SELECT parts_id, make, model FROM :slschema.makemodel;
 
 /* TODO -- can't be solved this easily: a freshly created defaults
 table contains 30 keys, one after having saved the System->Defaults
@@ -772,9 +781,9 @@ To watch out for: keys which are semantically the same, but have
 different names
 
 UPDATE defaults
-   SET value = (select fldvalue from sl30.defaults src
+   SET value = (select fldvalue from :slschema.defaults src
                  WHERE src.fldname = defaults.setting_key)
- WHERE setting_key IN (select fldvalue FROM sl30.defaults
+ WHERE setting_key IN (select fldvalue FROM :slschema.defaults
                         where );
 */
 /* May have to move this downward*/
@@ -783,13 +792,13 @@ CREATE OR REPLACE FUNCTION pg_temp.f_insert_default(skey varchar(20),slname varc
 $$
 BEGIN
     UPDATE defaults SET value = (
-        SELECT fldvalue FROM sl30.defaults AS sl30def
-        WHERE sl30def.fldname = slname
+        SELECT fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        WHERE def.fldname = slname
     )
     WHERE setting_key = skey AND value IS NULL;
     INSERT INTO defaults (setting_key, value)
-        SELECT skey,fldvalue FROM sl30.defaults AS sl30def
-        WHERE sl30def.fldname = slname
+        SELECT skey,fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        WHERE def.fldname = slname
         AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = skey);
 END
 $$
@@ -808,13 +817,13 @@ CREATE OR REPLACE FUNCTION pg_temp.f_insert_count(slname varchar(20)) RETURNS VO
 $$
 BEGIN
     UPDATE defaults SET value = (
-        SELECT fldvalue FROM sl30.defaults AS sl30def
-        WHERE sl30def.fldname = slname
+        SELECT fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        WHERE def.fldname = slname
     )
     WHERE setting_key = slname AND (value IS NULL OR value = '1');
     INSERT INTO defaults (setting_key, value)
-        SELECT fldname,fldvalue FROM sl30.defaults AS sl30def
-        WHERE sl30def.fldname = slname
+        SELECT fldname,fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        WHERE def.fldname = slname
         AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = slname);
 END
 $$
@@ -833,7 +842,9 @@ SELECT pg_temp.f_insert_count('sqnumber');
 SELECT pg_temp.f_insert_count('vendornumber');
 SELECT pg_temp.f_insert_count('vinumber');
 
-INSERT INTO defaults(setting_key,value) SELECT 'curr',curr FROM sl30.curr WHERE rn=1;
+INSERT INTO defaults(setting_key,value)
+    SELECT 'curr',array_to_string(array_agg(curr),':')
+    FROM :slschema.curr;
 
 CREATE OR REPLACE FUNCTION pg_temp.f_insert_account(skey varchar(20)) RETURNS VOID AS
 $$
@@ -841,15 +852,15 @@ BEGIN
     UPDATE defaults SET value = (
         SELECT id FROM account
         WHERE account.accno IN (
-            SELECT accno FROM sl30.chart
-            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM sl30.defaults WHERE fldname = skey ))
+            SELECT accno FROM "<?lsmb slschema ?>".chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM "<?lsmb slschema ?>".defaults WHERE fldname = skey ))
     )
     WHERE setting_key = skey AND value IS NULL;
     INSERT INTO defaults (setting_key, value)
         SELECT skey,id FROM account
         WHERE account.accno IN (
-            SELECT accno FROM sl30.chart
-            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM sl30.defaults WHERE fldname = skey ))
+            SELECT accno FROM "<?lsmb slschema ?>".chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM "<?lsmb slschema ?>".defaults WHERE fldname = skey ))
         AND NOT EXISTS ( SELECT value FROM defaults WHERE setting_key = skey);
 END
 $$
@@ -860,38 +871,38 @@ SELECT pg_temp.f_insert_account('income_accno_id');
 SELECT pg_temp.f_insert_account('expense_accno_id');
 SELECT pg_temp.f_insert_account('fxgain_accno_id');
 SELECT pg_temp.f_insert_account('fxloss_accno_id');
--- = "sl30.cashovershort_accno_id" ?
+-- = ":slschema.cashovershort_accno_id" ?
 -- "earn_id" = ?
 
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
-SELECT id, parts_id, qty, bom, adj  FROM sl30.assembly;
+SELECT id, parts_id, qty, bom, adj  FROM :slschema.assembly;
 
 ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 
 INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, id, description
-  FROM sl30.department;
+  FROM :slschema.department;
 UPDATE business_unit_class
    SET active = true
  WHERE id = 1
-   AND EXISTS (select 1 from sl30.department);
+   AND EXISTS (select 1 from :slschema.department);
 
 INSERT INTO business_unit (id, class_id, control_code, description,
        start_date, end_date, credit_id)
 SELECT 1000+id, 2, projectnumber, description, startdate, enddate,
        (select credit_id
-          from sl30.customer c
+          from :slschema.customer c
          where c.id = p.customer_id)
-  FROM sl30.project p;
+  FROM :slschema.project p;
 UPDATE business_unit_class
    SET active = true
  WHERE id = 2
-   AND EXISTS (select 1 from sl30.project);
+   AND EXISTS (select 1 from :slschema.project);
 
 INSERT INTO gl(id, reference, description, transdate, person_id, notes)
     SELECT gl.id, reference, description, transdate, p.id, gl.notes
-      FROM sl30.gl
- LEFT JOIN sl30.employee em ON gl.employee_id = em.id
+      FROM :slschema.gl
+ LEFT JOIN :slschema.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
 
 ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
@@ -901,19 +912,25 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 insert into ar
 (entity_credit_account, person_id,
         id, invnumber, transdate, taxincluded, amount, netamount,
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+        paid, datepaid,
+<?lsmb END; ?>
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
 SELECT
         customer.credit_id,
-        (select entity_id from sl30.employee WHERE id = ar.employee_id),
+        (select entity_id from :slschema.employee WHERE id = ar.employee_id),
         ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+        paid, datepaid,
+<?lsmb END; ?>
         duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
         intnotes,
         shipvia, ar.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
         ar.terms, description
-FROM sl30.ar JOIN sl30.customer ON (ar.customer_id = customer.id) ;
+FROM :slschema.ar JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
 
 ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
@@ -922,27 +939,31 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 insert into ap
 (entity_credit_account, person_id,
         id, invnumber, transdate, taxincluded, amount, netamount,
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+        paid, datepaid,
+<?lsmb END; ?>
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
 SELECT
         vendor.credit_id,
-        (select entity_id from sl30.employee
+        (select entity_id from :slschema.employee
                 WHERE id = ap.employee_id),
         ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
+<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+        paid, datepaid,
+<?lsmb END; ?>
         duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
         intnotes,
         shipvia, ap.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
         ap.terms, description
-FROM sl30.ap JOIN sl30.vendor ON (ap.vendor_id = vendor.id) ;
+FROM :slschema.ap JOIN :slschema.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 -- ### TODO: there used to be projects here!
 -- ### Move those to business_units
-
-ALTER TABLE sl30.acc_trans ADD COLUMN lsmb_entry_id integer;
 
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit,
@@ -950,9 +971,11 @@ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
     SELECT  id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber
-       FROM sl30.invoice;
+       FROM :slschema.invoice;
 
-update sl30.acc_trans
+ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
+
+update :slschema.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
 INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount, transdate,
@@ -961,14 +984,14 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount, transdate,
  SELECT lsmb_entry_id, acc_trans.trans_id, (select id
                     from account
                    where accno = (select accno
-                                    from sl30.chart
+                                    from :slschema.chart
                                    where chart.id = acc_trans.chart_id)),
                                     amount, transdate, source,
         CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
         memo, approved, cleared, vr_id, invoice.id
-   FROM sl30.acc_trans
-LEFT JOIN sl30.invoice ON acc_trans.id = invoice.id
-                          AND acc_trans.trans_id = invoice.trans_id
+   FROM :slschema.acc_trans
+LEFT JOIN :slschema.invoice ON acc_trans.id = invoice.id
+                      AND acc_trans.trans_id = invoice.trans_id
   WHERE chart_id IS NOT NULL
     AND acc_trans.trans_id IN (SELECT id FROM transactions);
 
@@ -1003,18 +1026,18 @@ BEGIN
     JOIN person p ON (u.entity_id=p.entity_id)
     WHERE username = SESSION_USER LIMIT 1;
 
-    SELECT sl30_ac.transdate, sl30_ac.source, sl30_ac.lsmb_entry_id,
+    SELECT sl_ac.transdate, sl_ac.source, sl_ac.lsmb_entry_id,
            ap.entity_credit_account
     INTO var_datepaid, var_notes, var_lsmb_entry_id,
          var_entity_credit_account
-    FROM sl30.payment sl30_p
-    JOIN sl30.acc_trans sl30_ac ON (sl30_p.trans_id = sl30_ac.trans_id AND sl30_p.id=sl30_ac.id)
-    JOIN sl30.chart sl30_c on (sl30_c.id = sl30_ac.chart_id)
-    JOIN acc_trans ac ON ac.entry_id = sl30_ac.lsmb_entry_id
+    FROM <?lsmb slschema ?>.payment sl_p
+    JOIN <?lsmb slschema ?>.acc_trans sl_ac ON (sl_p.trans_id = sl_ac.trans_id AND sl_p.id=sl_ac.id)
+    JOIN <?lsmb slschema ?>.chart sl_c on (sl_c.id = sl_ac.chart_id)
+    JOIN acc_trans ac ON ac.entry_id = sl_ac.lsmb_entry_id
     JOIN ap ON ap.id=ac.trans_id
-    WHERE sl30_c.link ~ 'AP' AND link ~ 'paid'
-    AND sl30_ac.trans_id=in_trans_id
-    AND sl30_ac.id=in_id;
+    WHERE sl_c.link ~ 'AP' AND link ~ 'paid'
+    AND sl_ac.trans_id=in_trans_id
+    AND sl_ac.id=in_id;
 
     -- Handle regular transaction
     INSERT INTO payment (reference, payment_class, payment_date,
@@ -1032,13 +1055,13 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 SELECT payment_migrate(p.id, p.trans_id, cast(p.exchangerate as numeric), p.paymentmethod_id)
-FROM sl30.payment p;
+FROM :slschema.payment p;
 
 -- Reconciliations
 -- Serially reuseable
 INSERT INTO cr_coa_to_account(chart_id, account)
-SELECT DISTINCT pc.id, c.description FROM sl30.acc_trans ac
-JOIN sl30.chart c ON ac.chart_id = c.id
+SELECT DISTINCT pc.id, c.description FROM :slschema.acc_trans ac
+JOIN :slschema.chart c ON ac.chart_id = c.id
 JOIN public.account pc on pc.accno = c.accno
 WHERE ac.cleared IS NOT NULL
 AND c.link ~ 'paid'
@@ -1074,20 +1097,20 @@ INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, enter
           SELECT chart_id,
                  cleared,fx_transaction,approved,transdate,pg_temp.last_day(transdate) as end_date,
                  coalesce(cleared,transdate) as updated, amount
-          FROM sl30.acc_trans
+          FROM :slschema.acc_trans
           WHERE (
             cleared IS NOT NULL
             AND chart_id IN (
-              SELECT DISTINCT chart_id FROM sl30.acc_trans ac
-              JOIN sl30.chart c ON ac.chart_id = c.id
+              SELECT DISTINCT chart_id FROM :slschema.acc_trans ac
+              JOIN :slschema.chart c ON ac.chart_id = c.id
               WHERE ac.cleared IS NOT NULL
               AND c.link ~ 'paid'
             ) OR transdate > (
-              SELECT MAX(cleared) FROM sl30.acc_trans
+              SELECT MAX(cleared) FROM :slschema.acc_trans
             )
           )
         ) a
-        JOIN sl30.chart s ON chart_id=s.id
+        JOIN :slschema.chart s ON chart_id=s.id
         JOIN pg_temp.reconciliation__account_list() coa ON coa.accno=s.accno
         GROUP BY coa.id, a.end_date
         ORDER BY coa.id, a.end_date;
@@ -1097,20 +1120,20 @@ INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, enter
 -- Temp table will be dropped automatically at the end of the transaction.
 WITH cr_entry AS (
 SELECT cr.id::INT, cr.end_date, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
-    FROM sl30.acc_trans a
-    JOIN sl30.chart s ON chart_id=s.id
+    FROM :slschema.acc_trans a
+    JOIN :slschema.chart s ON chart_id=s.id
     JOIN pg_temp.reconciliation__account_list() coa ON coa.accno=s.accno
-    JOIN public.cr_report cr
-    ON s.id = a.chart_id
+    JOIN account c on c.accno=s.accno
+    JOIN public.cr_report cr ON c.id = cr.chart_id
     AND date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
     AND date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE
-    AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM sl30.acc_trans))
+    AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM :slschema.acc_trans))
     JOIN (
-        WITH types AS ( SELECT id,'AP' AS type FROM sl30.ap
-                  UNION SELECT id,'AR'         FROM sl30.ar
-                  UNION SELECT id,'GL'         FROM sl30.gl)
+        WITH types AS ( SELECT id,'AP' AS type FROM :slschema.ap
+                  UNION SELECT id,'AR'         FROM :slschema.ar
+                  UNION SELECT id,'GL'         FROM :slschema.gl)
         SELECT DISTINCT ac.trans_id, types.type
-        FROM sl30.acc_trans ac
+        FROM :slschema.acc_trans ac
         JOIN types ON ac.trans_id = types.id
         ORDER BY ac.trans_id
     ) n ON n.trans_id = a.trans_id
@@ -1157,55 +1180,55 @@ WHERE username = 'Migrator';
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
   FROM acc_trans ac
-  JOIN (SELECT id, department_id FROM sl30.ar UNION ALL
-        SELECT id, department_id FROM sl30.ap UNION ALL
-        SELECT id, department_id FROM sl30.gl) gl ON gl.id = ac.trans_id
+  JOIN (SELECT id, department_id FROM :slschema.ar UNION ALL
+        SELECT id, department_id FROM :slschema.ap UNION ALL
+        SELECT id, department_id FROM :slschema.gl) gl ON gl.id = ac.trans_id
  WHERE department_id > 0;
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 2, slac.project_id+1000
   FROM acc_trans ac
-  JOIN sl30.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id
+  JOIN :slschema.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id
  WHERE project_id > 0;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT inv.id, 1, gl.department_id
   FROM invoice inv
-  JOIN (SELECT id, department_id FROM sl30.ar UNION ALL
-        SELECT id, department_id FROM sl30.ap UNION ALL
-        SELECT id, department_id FROM sl30.gl) gl ON gl.id = inv.trans_id
+  JOIN (SELECT id, department_id FROM :slschema.ar UNION ALL
+        SELECT id, department_id FROM :slschema.ap UNION ALL
+        SELECT id, department_id FROM :slschema.gl) gl ON gl.id = inv.trans_id
  WHERE department_id > 0;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
-SELECT id, 2, project_id + 1000 FROM sl30.invoice
- WHERE project_id > 0 and  project_id in (select id from sl30.project);
+SELECT id, 2, project_id + 1000 FROM :slschema.invoice
+ WHERE project_id > 0 and  project_id in (select id from :slschema.project);
 
 INSERT INTO partstax (parts_id, chart_id)
      SELECT parts_id, a.id
-       FROM sl30.partstax pt
-       JOIN sl30.chart ON chart.id = pt.chart_id
+       FROM :slschema.partstax pt
+       JOIN :slschema.chart ON chart.id = pt.chart_id
        JOIN account a ON chart.accno = a.accno;
 
 INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
      SELECT a.id, t.rate, t.taxnumber,
             coalesce(t.validto::timestamp, 'infinity'), 1, 1
-       FROM sl30.tax t
-       JOIN sl30.chart c ON (t.chart_id = c.id)
+       FROM :slschema.tax t
+       JOIN :slschema.chart c ON (t.chart_id = c.id)
        JOIN account a ON (a.accno = c.accno);
 
 INSERT INTO eca_tax (eca_id, chart_id)
   SELECT c.credit_id, (select id from account
-                      where accno = (select accno from sl30.chart sc
+                      where accno = (select accno from :slschema.chart sc
                                       where sc.id = ct.chart_id))
-   FROM sl30.customertax ct
-   JOIN sl30.customer c
+   FROM :slschema.customertax ct
+   JOIN :slschema.customer c
      ON ct.customer_id = c.id
   UNION
   SELECT v.credit_id, (select id from account
-                      where accno = (select accno from sl30.chart sc
+                      where accno = (select accno from :slschema.chart sc
                                       where sc.id = vt.chart_id))
-   FROM sl30.vendortax vt
-   JOIN sl30.vendor v
+   FROM :slschema.vendortax vt
+   JOIN :slschema.vendor v
      ON vt.vendor_id = v.id;
 
 INSERT
@@ -1223,62 +1246,63 @@ SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
            when c.id is not null and quotation is true THEN 3
            WHEN v.id is not null and quotation is true THEN 4
        end
-  FROM sl30.oe
-  LEFT JOIN sl30.customer c ON c.id = oe.customer_id
-  LEFT JOIN sl30.vendor v ON v.id = oe.vendor_id
-  LEFT JOIN sl30.employee e ON oe.employee_id = e.id
+  FROM :slschema.oe
+  LEFT JOIN :slschema.customer c ON c.id = oe.customer_id
+  LEFT JOIN :slschema.vendor v ON v.id = oe.vendor_id
+  LEFT JOIN :slschema.employee e ON oe.employee_id = e.id
   LEFT JOIN person p ON e.entity_id = p.id;
 
 INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
             discount, unit, reqdate, ship, serialnumber)
      SELECT id, trans_id, parts_id, description, qty, sellprice,
             discount, unit, reqdate, ship, serialnumber
-       FROM sl30.orderitems;
+       FROM :slschema.orderitems;
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
 SELECT oi.id, 1, oe.department_id
   FROM orderitems oi
-  JOIN sl30.oe ON oi.trans_id = oe.id AND department_id > 0;
+  JOIN :slschema.oe ON oi.trans_id = oe.id AND department_id > 0;
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
-SELECT id, 2, project_id + 1000 FROM sl30.orderitems
- WHERE project_id > 0  and  project_id in (select id from sl30.project);
+SELECT id, 2, project_id + 1000 FROM :slschema.orderitems
+ WHERE project_id > 0  and  project_id in (select id from :slschema.project);
 
-INSERT INTO exchangerate select * from sl30.exchangerate;
+INSERT INTO exchangerate select * from :slschema.exchangerate;
 
-INSERT INTO status SELECT * FROM sl30.status; -- may need to comment this one out sometimes
+INSERT INTO status SELECT * FROM :slschema.status; -- may need to comment this one out sometimes
 
-INSERT INTO sic SELECT * FROM sl30.sic;
+INSERT INTO sic SELECT * FROM :slschema.sic;
 
-INSERT INTO warehouse SELECT * FROM sl30.warehouse;
+INSERT INTO warehouse SELECT * FROM :slschema.warehouse;
 
 INSERT INTO warehouse_inventory(entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate)
      SELECT e.entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate
-       FROM sl30.inventory i
-       JOIN sl30.employee e ON i.employee_id = e.id;
+       FROM :slschema.inventory i
+       JOIN :slschema.employee e ON i.employee_id = e.id;
 
-INSERT INTO yearend (trans_id, transdate) SELECT * FROM sl30.yearend
-WHERE sl30.yearend.trans_id IN (SELECT id FROM gl);
+INSERT INTO yearend (trans_id, transdate)
+  SELECT * FROM :slschema.yearend
+   WHERE :slschema.yearend.trans_id IN (SELECT id FROM gl);
 
 INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
             curr)
      SELECT v.credit_id, parts_id, partnumber, leadtime, lastcost,
             pv.curr
-       FROM sl30.partsvendor pv
-       JOIN sl30.vendor v ON v.id = pv.vendor_id;
+       FROM :slschema.partsvendor pv
+       JOIN :slschema.vendor v ON v.id = pv.vendor_id;
 
 INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
             sellprice, validfrom, validto, curr)
      SELECT parts_id, credit_id, pv.pricegroup_id, pricebreak,
             sellprice, validfrom, validto, pv.curr
-       FROM sl30.partscustomer pv
-       JOIN sl30.customer v ON v.id = pv.customer_id
+       FROM :slschema.partscustomer pv
+       JOIN :slschema.customer v ON v.id = pv.customer_id
       WHERE pv.pricegroup_id <> 0;
 
 INSERT INTO language
-SELECT OVERLAY(code PLACING LOWER(SUBSTRING(code FROM '^..')) FROM 1 FOR 2 ) AS code,description FROM sl30.language sllang
+SELECT OVERLAY(code PLACING LOWER(SUBSTRING(code FROM '^..')) FROM 1 FOR 2 ) AS code,description FROM :slschema.language sllang
  WHERE NOT EXISTS (SELECT 1
                      FROM language l WHERE l.code = OVERLAY(sllang.code PLACING LOWER(SUBSTRING(sllang.code FROM '^..')) FROM 1 FOR 2 ));
 
@@ -1286,8 +1310,8 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
             transdate, person_id)
      SELECT trans_id, tablename, reference, formname, action,
             transdate, p.entity_id
-       FROM sl30.audittrail a
-       JOIN sl30.employee e ON a.employee_id = e.id
+       FROM :slschema.audittrail a
+       JOIN :slschema.employee e ON a.employee_id = e.id
        JOIN person p on e.entity_id = p.entity_id;
 
 INSERT INTO user_preference(id)
@@ -1298,11 +1322,11 @@ INSERT INTO recurring(id, reference, startdate, nextdate, enddate,
      SELECT id, reference, startdate, nextdate, enddate,
             (repeat || ' ' || unit)::interval,
             howmany, payment
-       FROM sl30.recurring;
+       FROM :slschema.recurring;
 
-INSERT INTO recurringemail SELECT * FROM sl30.recurringemail;
+INSERT INTO recurringemail SELECT * FROM :slschema.recurringemail;
 
-INSERT INTO recurringprint SELECT * FROM sl30.recurringprint;
+INSERT INTO recurringprint SELECT * FROM :slschema.recurringprint;
 
 INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
@@ -1312,21 +1336,21 @@ INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             p.id, j.notes, j.project_id+1000, 1,
             CASE WHEN curr IS NOT NULL
                                  THEN curr
-                                 ELSE (SELECT curr FROM sl30.curr WHERE rn=1)
+                                 ELSE (SELECT curr FROM :slschema.curr WHERE rn=1)
                         END
-       FROM sl30.jcitems j
-       JOIN sl30.employee e ON j.employee_id = e.id
+       FROM :slschema.jcitems j
+       JOIN :slschema.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id
-           LEFT JOIN sl30.project pr on (pr.id = j.project_id)
-           LEFT JOIN sl30.customer c on (c.id = pr.customer_id);
+  LEFT JOIN :slschema.project pr on (pr.id = j.project_id)
+  LEFT JOIN :slschema.customer c on (c.id = pr.customer_id);
 
-INSERT INTO parts_translation SELECT * FROM sl30.translation where trans_id in (select id from parts);
+INSERT INTO parts_translation SELECT * FROM :slschema.translation where trans_id in (select id from parts);
 
-INSERT INTO partsgroup_translation SELECT * FROM sl30.translation where trans_id in
+INSERT INTO partsgroup_translation SELECT * FROM :slschema.translation where trans_id in
  (select id from partsgroup);
 
 --  ### TODO: To translate to business_units
--- INSERT INTO project_translation SELECT * FROM sl30.translation where trans_id in
+-- INSERT INTO project_translation SELECT * FROM :slschema.translation where trans_id in
 --  (select id from project);
 
 SELECT setval('id', max(id)) FROM transactions;
@@ -1387,15 +1411,15 @@ SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
 SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
 
 --UPDATE defaults SET value = (
---    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM :slschema.??? WHERE ???number ~ '^[0-9]+$'
 --) WHERE setting_key = 'rcptnumber';
 
 --UPDATE defaults SET value = (
---    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM :slschema.??? WHERE ???number ~ '^[0-9]+$'
 --) WHERE setting_key = 'rfqnumber';
 
 --UPDATE defaults SET value = (
---    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM :slschema.??? WHERE ???number ~ '^[0-9]+$'
 --) WHERE setting_key = 'paynumber';
 
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';

@@ -28,6 +28,7 @@ use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use Try::Tiny;
+use Version::Compare;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
@@ -133,16 +134,19 @@ sub get_dispatch_table {
 
     return ( { appname => 'sql-ledger',
         version => '2.7',
+        slschema => 'sl27',
         message => $sl_detect,
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '2.8',
+        slschema => 'sl28',
         message => $sl_detect,
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '3.0',
+        slschema => 'sl30',
         message => $request->{_locale}->text(
                      'SQL-Ledger 3.0 database detected.'
                    ),
@@ -217,10 +221,9 @@ sub login {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
-                foreach my $field (qw|operation message next_action|) {
+                foreach my $field (qw|operation message next_action slschema|) {
                     $request->{$field} = $dispatch_entry->{$field};
                 }
-
                 last;
             }
         }
@@ -583,7 +586,8 @@ my %info_applicable_for_upgrade = (
     'default_ap' => [ 'ledgersmb/1.2',
                       'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -652,6 +656,12 @@ sub upgrade_info {
             );
     }
 
+    if (applicable_for_upgrade('slschema', $upgrade_type)) {
+        $retval++;
+        $request->{slschema} = 'sl' . $dbinfo->{version};
+        $request->{slschema} =~ s/\.//;
+    }
+    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
     return $retval;
 }
 
@@ -709,7 +719,7 @@ sub upgrade {
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
-        return $template->render_to_psgi($request);
+        return $template->render_to_psgi($request, VERSION_COMPARE => \&Version::Compare::version_compare);
     } else {
         $request->{dbh}->rollback();
 
@@ -1274,8 +1284,7 @@ sub run_sl28_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, 'sl28',
-                   "sl2.8-$CURRENT_MINOR_VERSION");
+    process_and_run_upgrade_script($request, $database, 'sl28', 'sl3.0');
 
     return create_initial_user($request);
 }
@@ -1294,8 +1303,7 @@ sub run_sl30_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, 'sl30',
-                                   "sl3.0-$CURRENT_MINOR_VERSION");
+    process_and_run_upgrade_script($request, $database, 'sl30', 'sl3.0');
 
     return create_initial_user($request);
 }
