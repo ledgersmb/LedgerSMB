@@ -622,27 +622,36 @@ sub upgrade_info {
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
         @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-        if (scalar(@{$request->{ar_accounts}}) > 1) {
+        my $n = scalar(@{$request->{ar_accounts}});
+        if ($n > 1) {
             unshift @{$request->{ar_accounts}}, {};
             $retval++;
         }
-        else {
+        elsif ($n == 1) {
             # If there's only 1 (or none at all), don't ask the question
             $request->{default_ar} =
-                (pop @{$request->{ar_accounts}}) // 'null';
+                (pop @{$request->{ar_accounts}})->{accno};
+        }
+        else {
+            $request->{default_ar} = 'null';
         }
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
         @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-        if (scalar(@{$request->{ap_accounts}}) > 1) {
+        my $n = scalar(@{$request->{ap_accounts}});
+        if ($n > 1) {
             unshift @{$request->{ap_accounts}}, {};
             $retval++;
         }
-        else {
+        elsif ($n == 1) {
             # If there's only 1 (or none at all), don't ask the question
             $request->{default_ap} =
-                (pop @{$request->{ap_accounts}}) // 'null';
+                (pop @{$request->{ap_accounts}})->{accno};
+        }
+        else {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ap} = 'null';
         }
     }
 

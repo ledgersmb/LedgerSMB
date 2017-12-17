@@ -63,7 +63,13 @@ your database is in an inconsistent state and needs to be fixed first.
                             text_attr = 'desc'
 } ?>
 </div>
-<?lsmb END ?>
+<?lsmb ELSE;
+INCLUDE input element_data = {
+    name = 'default_ar'
+    type = 'hidden'
+   value = default_ar
+};
+END ?>
 <?lsmb IF ap_accounts.size > 1; ?>
 <div class="input_row">
 <p>
@@ -81,7 +87,13 @@ your database is in an inconsistent state and needs to be fixed first.
                             text_attr = 'desc'
 } ?>
 </div>
-<?lsmb END ?>
+<?lsmb ELSE;
+INCLUDE input element_data = {
+    name = 'default_ap'
+    type = 'hidden'
+   value = default_ap
+};
+END ?>
 <div class="input_row">
 <p>
   Note that the process invoked by hitting the button below might
