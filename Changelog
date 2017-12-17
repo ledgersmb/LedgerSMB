@@ -9,9 +9,11 @@ Installation & Administration
 * Added 'System Information' page to setup.pl for problem diagnosis (Erik H)
 * Numerous improvements for the migrations and infrastructure (Yves L/Erik H)
 * Better detection of incorrect @INC paths (David G)
+* Automatic date format selection using browser locale (Yves L/Erik H)
+* No more warnings from database creation and upgrade (Erik H)
 
 Performance
-* PSGI responses no longer written to file but from memory (Erik H/Yves L)
+* PSGI responses no longer written to file but kept in memory (Erik H/Yves L)
 
 Rewritten inventory tracking and adjustments
 * Removed the need for the ill-understood 'Inventory Entity' (Erik H)
@@ -22,6 +24,7 @@ Code cleanup
 * Removed code duplication in
   - Template handling framework (Yves L)
 * Remove unused variables and unreachable code (Nick P)
+* Remove fragments of REST framework never fully implemented (Erik H)
 * Authentication handling centralized in request dispatch code (Erik H)
 * Cleaned up handling of uploaded files in request handling (Erik H)
 * Moved to Plack::Request (from CGI::Simple & LedgerSMB) (Erik H)
@@ -29,6 +32,9 @@ Code cleanup
 * Template handling code cleanup (Erik H)
 * Unreferenced UI templates deleted (Erik H)
 * Centralized and more robust entry point for code in old/ (Erik H)
+* Merge of SQL-Ledger 2.8 and 3.0 migration code; improved consistency (Yves L)
+* Improved cleanup of temp files and dirs after use (Erik H)
+* Improved HTML structure (balanced closing/opening tags, etc) (Yves L)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
