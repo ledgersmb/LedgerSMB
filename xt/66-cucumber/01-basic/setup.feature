@@ -29,7 +29,7 @@ Scenario: Create a company *with* CoA
       | First Name         | A                |
       | Last name          | Dmin             |
       | Employee Number    | 00000001         |
-      | Date of Birth      | 09/01/2006       |
+      | Date of Birth      | 2006-01-09       |
       | Tax ID/SSN         | 00000002         |
       | Country            | United States    |
       | Assign Permissions | Full Permissions |
@@ -85,7 +85,7 @@ Scenario: Add user to a company
       | First Name         | Common           |
       | Last name          | User             |
       | Employee Number    | 00000010         |
-      | Date of Birth      | 09/06/2006       |
+      | Date of Birth      | 2006-09-06       |
       | Tax ID/SSN         | 00000003         |
       | Country            | United States    |
       | Assign Permissions | No changes       |
@@ -116,7 +116,7 @@ Scenario: Add a 'manage users' admin to a company
       | First Name         | User             |
       | Last name          | Admin            |
       | Employee Number    | 00000011         |
-      | Date of Birth      | 09/07/2006       |
+      | Date of Birth      | 2006-09-07       |
       | Tax ID/SSN         | 00000004         |
       | Country            | United States    |
       | Assign Permissions | Manage Users     |
@@ -171,7 +171,7 @@ Scenario: Create database with ampersand in the name
       | First Name         | A                |
       | Last name          | Dmin             |
       | Employee Number    | 00000001         |
-      | Date of Birth      | 09/01/2006       |
+      | Date of Birth      | 2006-09-01       |
       | Tax ID/SSN         | 00000002         |
       | Country            | United States    |
       | Assign Permissions | Full Permissions |
