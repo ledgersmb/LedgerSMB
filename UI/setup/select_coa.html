@@ -24,11 +24,19 @@ END ?>
            label = text('Chart of accounts')
     };
 ELSE;
+    lang = '';
+    IF languages;
+        lang = languages.pop;
+        IF lang.search('-');
+            lang = lang.split('-').1;
+        END;
+    END;
     INCLUDE select element_data = {
          options = coa_lcs
             name = 'coa_lc'
        text_attr = 'code'
       value_attr = 'code'
+  default_values = lang
            label = text('Country Code') #'
     };
 END ?>

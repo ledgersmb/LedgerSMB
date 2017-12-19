@@ -18,6 +18,7 @@ use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Setting;
+use HTTP::AcceptLanguage;
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
    HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
@@ -111,12 +112,14 @@ sub psgi_app {
     my $module = "LedgerSMB::Scripts::$1";
     my $script = "$1.pl";
 
+    my @languages = HTTP::AcceptLanguage->new($env->{HTTP_ACCEPT_LANGUAGE})->languages;
     my $psgi_req = Plack::Request->new($env);
     my $request = LedgerSMB->new($psgi_req->parameters, $script,
                                  $env->{QUERY_STRING},
                                  $psgi_req->uploads, $psgi_req->cookies,
                                  $auth);
     $request->{action} ||= '__default';
+    @{ $request->{languages} } = @languages;
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
 
