@@ -13,6 +13,9 @@ include_stylesheet=["setup/stylesheet.css"] ?>
     type = 'hidden'
    value = database
 } ?>
+<div data-dojo-id="country_store" data-dojo-type="dojo/store/Memory"
+    data-dojo-props='idProperty: "id", data: <?lsmb USE JSON; countries.json; ?>'>
+</div>
 <div class="form">
 <div class="input_row">
 <?lsmb INCLUDE input element_data = {
@@ -152,16 +155,15 @@ required = 'required'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb  countries.unshift({});
+<?lsmb
 INCLUDE select element_data = {
-          options = countries
-        text_attr = 'name'
-       value_attr = 'id'
-    default_blank = 1
-   default_values = [country_id]
-             name = 'country_id'
-            label = 'Country'
-         required = 'required'
+           labelAttr = 'name'
+                name = 'country_id'
+               label = text('Country')
+            required = 'required'
+    "data-dojo-type" = "lsmb/PublishSelect"
+   "data-dojo-props" = "value:'" _ country_id _ "', " _
+                       "store: country_store, topic:'ui/setup/country' "
 } ?>
 </div>
 <div class="input_row">

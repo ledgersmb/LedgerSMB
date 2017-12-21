@@ -8,6 +8,11 @@
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="post">
 <div class="listtop"><?lsmb text('Select Templates to Load') ?></div>
 <?lsmb
+INCLUDE input element_data = {
+        name = 'coa_lc'
+        type = 'hidden'
+       value = coa_lc
+   } ;
 PROCESS input element_data = {
     type = "hidden"
     name = "database"

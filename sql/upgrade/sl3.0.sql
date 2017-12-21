@@ -1422,6 +1422,7 @@ SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
 --    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM :slschema.??? WHERE ???number ~ '^[0-9]+$'
 --) WHERE setting_key = 'paynumber';
 
+INSERT INTO defaults(setting_key,value) VALUES('default_country', :default_country);
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;

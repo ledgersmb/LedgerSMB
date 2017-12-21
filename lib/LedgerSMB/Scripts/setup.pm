@@ -1024,6 +1024,62 @@ sub skip_coa {
 }
 
 
+=item _get_country_id
+
+Get the country id from country short name.
+
+This is only to set the original value of the date format. Changes to selected
+country will be handled by the UI
+
+=cut
+
+sub _get_country_id {
+    my ($request,$country) = @_;
+    die 'missing country' unless $country;
+    $country = uc($country);
+    $request->{country_id} = 0;
+    for (@{$request->{countries}}){
+        if ($_->{short_name} eq $country){
+           return $_->{id};
+        }
+    }
+}
+
+=item _render_user
+
+Renders the new user screen. Common functionality to both the
+select_coa and skip_coa functions.
+
+=cut
+
+sub _render_user {
+    my ($request) = @_;
+
+    @{$request->{salutations}} = $request->call_procedure(
+        funcname => 'person__list_salutations'
+    );
+
+    @{$request->{countries}} = $request->call_procedure(
+        funcname => 'location_list_country'
+    );
+    $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
+
+    my $locale = $request->{_locale};
+
+    @{$request->{perm_sets}} = (
+        {id => '0', label => $locale->text('Manage Users')},
+        {id => '1', label => $locale->text('Full Permissions')},
+        {id => '-1', label => $locale->text('No changes')},
+        );
+
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/new_user',
+        );
+
+    return $template->render_to_psgi($request);
+}
+
 =item _render_new_user
 
 Renders the new user screen. Common functionality to both the
@@ -1050,30 +1106,11 @@ sub _render_new_user {
     _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
-    @{$request->{salutations}}
-    = $request->call_procedure(funcname => 'person__list_salutations' );
-
-    @{$request->{countries}}
-    = $request->call_procedure(funcname => 'location_list_country' );
-    for my $country (@{$request->{countries}}){
-        last unless defined $request->{coa_lc};
-        if (lc($request->{coa_lc}) eq lc($country->{short_name})){
-           $request->{country_id} = $country->{id};
-        }
+    if ( $request->{coa_lc} ) {
+        LedgerSMB::Setting->set('default_country',$request->{coa_lc});
     }
-    my $locale = $request->{_locale};
-
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        );
-
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/new_user',
-        );
-
-    return $template->render_to_psgi($request);
+    $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
+    return _render_user($request);
 }
 
 
@@ -1112,31 +1149,14 @@ sub save_user {
             );
            $request->{pls_import} = 1;
 
-           @{$request->{salutations}}
-            = $request->call_procedure(funcname => 'person__list_salutations' );
+           $duplicate = _render_user($request);
 
-           @{$request->{countries}}
-              = $request->call_procedure(funcname => 'location_list_country' );
-
-           my $locale = $request->{_locale};
-
-           @{$request->{perm_sets}} = (
-               {id => '0', label => $locale->text('Manage Users')},
-               {id => '1', label => $locale->text('Full Permissions')},
-           );
-           my $template = LedgerSMB::Template->new_UI(
-               $request,
-               template => 'setup/new_user',
-           );
-           $duplicate = $template->render_to_psgi($request);
+           return $duplicate
+               if $duplicate;
        } else {
            die $_;
        }
     };
-    if ( $duplicate ) {
-        $request->{dbh}->rollback;
-        return $duplicate;
-    }
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(funcname => 'admin__get_roles')
@@ -1324,28 +1344,7 @@ sub run_sl30_migration {
 
 sub create_initial_user {
     my ($request) = @_;
-
-    _init_db($request) unless $request->{dbh};
-    @{$request->{salutations}} = $request->call_procedure(
-        funcname => 'person__list_salutations'
-    );
-
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
-
-    my $locale = $request->{_locale};
-
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        {id => '-1', label => $locale->text('No changes')},
-    );
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/new_user',
-    );
-    return $template->render_to_psgi($request);
+    return _render_new_user($request);
 }
 
 =item edit_user_roles
