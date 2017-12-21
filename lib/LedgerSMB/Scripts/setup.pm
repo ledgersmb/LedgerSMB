@@ -1115,7 +1115,6 @@ sub save_user {
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
-    my $duplicate = 0;
     try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
@@ -1125,10 +1124,7 @@ sub save_user {
             );
            $request->{pls_import} = 1;
 
-           $duplicate = _render_user($request);
-
-           return $duplicate
-               if $duplicate;
+           return _render_user($request);
        } else {
            die $_;
        }
