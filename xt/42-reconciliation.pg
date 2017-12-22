@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(56);
+    SELECT plan(58);
 
     -- Add data
 
@@ -28,23 +28,25 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('reconciliation__get_cleared_balance');
-    SELECT has_function('reconciliation__submit_set');
-    SELECT has_function('reconciliation__check');
-    SELECT has_function('reconciliation__reject_set');
-    SELECT has_function('reconciliation__save_set');
-    SELECT has_function('reconciliation__delete_my_report');
-    SELECT has_function('reconciliation__delete_unapproved');
     SELECT has_function('cr_report_block_changing_approved');
-    SELECT has_function('reconciliation__report_approve');
-    SELECT has_function('reconciliation__new_report_id');
-    SELECT has_function('reconciliation__add_entry');
-    SELECT has_function('reconciliation__new_report_id');
-    SELECT has_function('reconciliation__report_details');
-    SELECT has_function('reconciliation__report_summary');
-    SELECT has_function('reconciliation__search');
-    SELECT has_function('reconciliation__get_current_balance');
-    SELECT has_function('reconciliation__report_details_payee');
+    SELECT has_function('reconciliation__account_list');
+    SELECT has_function('reconciliation__add_entry',array['integer', 'text', 'text', 'timestamp without time zone', 'numeric']);
+    SELECT has_function('reconciliation__check',array['date', 'integer']);
+    SELECT has_function('reconciliation__delete_my_report',array['integer']);
+    SELECT has_function('reconciliation__delete_unapproved',array['integer']);
+    SELECT has_function('reconciliation__get_cleared_balance',array['integer', 'date']);
+    SELECT has_function('reconciliation__get_current_balance',array['integer', 'date']);
+    SELECT has_function('reconciliation__new_report_id',array['integer', 'numeric', 'date', 'boolean']);
+    SELECT has_function('reconciliation__pending_transactions',array['integer', 'numeric']);
+    SELECT has_function('reconciliation__reject_set',array['integer']);
+    SELECT has_function('reconciliation__report_approve',array['integer']);
+    SELECT has_function('reconciliation__report_details',array['integer']);
+    SELECT has_function('reconciliation__report_details_payee',array['integer']);
+    SELECT has_function('reconciliation__report_details_payee_with_days',array['integer', 'date']);
+    SELECT has_function('reconciliation__report_summary',array['integer']);
+    SELECT has_function('reconciliation__save_set',array['integer', 'integer[]']);
+    SELECT has_function('reconciliation__search',array['date', 'date', 'numeric', 'numeric', 'integer', 'boolean', 'boolean']);
+    SELECT has_function('reconciliation__submit_set',array['integer', 'integer[]']);
 
     -- Run tests
 
