@@ -1,0 +1,34 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(5);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('location_list_class',ARRAY['']);
+    SELECT has_function('location_list_country',ARRAY['']);
+    SELECT has_function('location_save',ARRAY['integer','text','text','text','text','text','text','integer']);
+    SELECT has_function('location__get',ARRAY['integer']);
+    SELECT has_function('location_delete',ARRAY['integer']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

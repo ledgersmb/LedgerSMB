@@ -16,7 +16,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('business_type__list');
+    SELECT has_function('business_type__list',ARRAY['']);
 
     -- Run tests
 

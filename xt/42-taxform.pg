@@ -58,13 +58,13 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('tax_form__get');
-    SELECT has_function('tax_form__list_all');
-    SELECT has_function('tax_form__list_ext');
-    SELECT has_function('tax_form__save');
+    SELECT has_function('tax_form__get',ARRAY['integer']);
+    SELECT has_function('tax_form__list_all',ARRAY['']);
+    SELECT has_function('tax_form__list_ext',ARRAY['']);
+    SELECT has_function('tax_form__save',ARRAY['integer','integer','text','boolean','boolean']);
 
     -- Basic setup
-    
+
     INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion');
     INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'L', -255);
     INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'L', -255);

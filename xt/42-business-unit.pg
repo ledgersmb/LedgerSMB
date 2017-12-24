@@ -1,0 +1,42 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(11);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('business_unit__get',ARRAY['integer']);
+    SELECT has_function('business_unit__get_tree_for',ARRAY['integer']);
+    SELECT has_function('business_unit__list_by_class',ARRAY['integer','date','integer','boolean']);
+    SELECT has_function('business_unit__list_classes',ARRAY['boolean','text']);
+    SELECT has_function('business_unit__save',ARRAY['integer','integer','text','text','date','date','integer','integer']);
+    SELECT has_function('business_unit_class__get_modules',ARRAY['integer']);
+    SELECT has_function('business_unit_class__save',ARRAY['integer','text','boolean','integer']);
+    SELECT has_function('business_unit_class__save_modules',ARRAY['integer','integer[]']);
+    SELECT has_function('business_unit_get',ARRAY['integer']);
+    SELECT has_function('eca_bu_trigger',ARRAY['']);
+
+    -- Run tests
+
+--    INSERT INTO business (description) values ('testing');
+
+--    PREPARE test AS SELECT count(*) > 0 from business_type__list()
+--                    WHERE description = 'testing';
+--    SELECT results_eq('test',ARRAY[true],'Business Class Inserted');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

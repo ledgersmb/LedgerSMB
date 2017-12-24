@@ -28,8 +28,8 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('cr_report_block_changing_approved');
-    SELECT has_function('reconciliation__account_list');
+    SELECT has_function('cr_report_block_changing_approved',ARRAY['']);
+    SELECT has_function('reconciliation__account_list',ARRAY['']);
     SELECT has_function('reconciliation__add_entry',array['integer', 'text', 'text', 'timestamp without time zone', 'numeric']);
     SELECT has_function('reconciliation__check',array['date', 'integer']);
     SELECT has_function('reconciliation__delete_my_report',array['integer']);

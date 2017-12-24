@@ -16,17 +16,17 @@ BEGIN;
 
     -- Validate required functions
 
---    SELECT has_function('business_type__list');
-    SELECT has_function('report__aa_outstanding');
-    SELECT has_function('report__aa_outstanding_details');
-    SELECT has_function('report__aa_transactions');
-    SELECT has_function('report__balance_sheet');
-    SELECT has_function('report__cash_summary');
-    SELECT has_function('report__general_balance');
-    SELECT has_function('report__gl');
-    SELECT has_function('report__incoming_cogs_line');
-    SELECT has_function('report__invoice_aging_detail');
-    SELECT has_function('report__invoice_aging_summary');
+--    SELECT has_function('business_type__list',ARRAY['']);
+    SELECT has_function('report__aa_outstanding',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
+    SELECT has_function('report__aa_outstanding_details',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
+    SELECT has_function('report__aa_transactions',ARRAY['integer','integer','text','text','integer','integer','text','text','text','text','text','text','text','date','date','boolean','boolean','integer','boolean','boolean','boolean','text']);
+    SELECT has_function('report__balance_sheet',ARRAY['date','text']);
+    SELECT has_function('report__cash_summary',ARRAY['date','date','text','text']);
+    SELECT has_function('report__general_balance',ARRAY['date','date']);
+    SELECT has_function('report__gl',ARRAY['text','text','character','text','text','text','date','date','boolean','numeric','numeric','integer[]']);
+    SELECT has_function('report__incoming_cogs_line',ARRAY['date','date','text','text']);
+    SELECT has_function('report__invoice_aging_detail',ARRAY['integer','integer','text','date','integer[]','boolean','text']);
+    SELECT has_function('report__invoice_aging_summary',ARRAY['integer','integer','text','date','integer[]','boolean','text']);
 
     -- Set specific data
 
@@ -42,7 +42,7 @@ COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin 
 
     -- Run tests
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
         running_balance = 100
      FROM report__gl(NULL, -- reference
                      (select accno from account where id = -1000),
@@ -57,7 +57,7 @@ COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin 
     SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (with pre-posting start-date)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
         running_balance = 100
      FROM report__gl(NULL, -- reference
                      (select accno from account where id = -1000),
@@ -72,7 +72,7 @@ COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin 
     SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (NULL start-date)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
         running_balance = 100
      FROM report__gl(NULL, -- reference
                      (select accno from account where id = -1000),
@@ -87,7 +87,7 @@ COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin 
     SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (start-date matches transdate)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
         running_balance = 200
      FROM report__gl(NULL, -- reference
                      (select accno from account where id = -1000),
