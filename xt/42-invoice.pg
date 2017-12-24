@@ -1,0 +1,39 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(8);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT todo('Invoice not completed nor even compiling properly', 8);
+
+    SELECT has_function('invoice__start_ap',ARRAY['text','date','boolean','numeric','numeric','numeric','date','date','boolean','character','integer','character varying','integer','boolean','integer','text']);
+    SELECT has_function('invoice__start_ar',ARRAY['text','date','boolean','numeric','numeric','numeric','date','date','boolean','character','integer','character varying','integer','boolean','integer','text']);
+    SELECT has_function('invoice__add_item_ap',ARRAY['integer','integer','numeric','numeric','text','numeric']);
+    SELECT has_function('invoice__add_item_ar',ARRAY['integer','integer','numeric','numeric','text','numeric']);
+    SELECT has_function('invoice__add_payment_ar',ARRAY['integer','text','text','date','text','text','numeric']);
+    SELECT has_function('invoice__add_payment_ap',ARRAY['integer','text','text','date','text','text','numeric']);
+    SELECT has_function('invoice__finalize_ap',ARRAY['integer']);
+    SELECT has_function('invoice__finalize_ar',ARRAY['integer']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

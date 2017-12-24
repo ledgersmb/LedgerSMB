@@ -23,12 +23,12 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('cogs__add_for_ap');
-    SELECT has_function('cogs__add_for_ap_line');
-    SELECT has_function('cogs__add_for_ar');
-    SELECT has_function('cogs__add_for_ar_line');
-    SELECT has_function('cogs__reverse_ap');
-    SELECT has_function('cogs__reverse_ar');
+    SELECT has_function('cogs__add_for_ap',ARRAY['integer','numeric','numeric']);
+    SELECT has_function('cogs__add_for_ap_line',ARRAY['integer']);
+    SELECT has_function('cogs__add_for_ar',ARRAY['integer','numeric']);
+    SELECT has_function('cogs__add_for_ar_line',ARRAY['integer']);
+    SELECT has_function('cogs__reverse_ap',ARRAY['integer','numeric']);
+    SELECT has_function('cogs__reverse_ar',ARRAY['integer','numeric']);
 
     -- Set specific data
 
@@ -145,14 +145,14 @@ BEGIN;
     DEALLOCATE test;
 
     --duplicate to check against reversals
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
                        sum(amount) = -37.5
                       from acc_trans
                      where trans_id = -1201 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS still 37.50, (invoice 1, series 1)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
                         sum(amount) = 0
                       from acc_trans
                      where trans_id = -1203 and chart_id = -1102;
@@ -531,13 +531,13 @@ BEGIN;
 
     SELECT cogs__add_for_ap_line(-3204);
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
            allocated = 100
       FROM invoice WHERE id = -3201;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 100 post-AR run (invoice 1 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             allocated = -75
       FROM invoice WHERE id = -3202;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 75 post-AR run (invoice 2 series 3)');
@@ -572,13 +572,13 @@ BEGIN;
 
     SELECT cogs__add_for_ar_line(-3205);
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
            allocated = 100
       FROM invoice WHERE id = -3201;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 100 post-AR run (invoice 1 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             allocated = -75
       FROM invoice WHERE id = -3202;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 75 post-AR run (invoice 2 series 3)');
@@ -589,7 +589,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 75 post-AR run (invoice 3 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
            allocated = 100
       FROM invoice WHERE id = -3204;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 100 post-AR run (invoice 4 series 3)');
@@ -837,27 +837,27 @@ BEGIN;
 
     PREPARE test AS select count(*) = 26
   from goods__history(null, null, null, null, null, false, false, false, false, true, true);
-    select results_eq('test', array[true], 'get correct count of ar and ap lines from inv. history (26)');
+    select results_eq('test', ARRAY[true], 'get correct count of ar and ap lines from inv. history (26)');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 14
   from goods__history(null, null, null, null, null, false, false, false, false, true, false);
-    select results_eq('test', array[true], 'get correct count of ar lines from inv. history');
+    select results_eq('test', ARRAY[true], 'get correct count of ar lines from inv. history');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 12
   from goods__history(null, null, null, null, null, false, false, false, false, false, true);
-    select results_eq('test', array[true], 'get correct count (12) of ap lines from inv. history');
+    select results_eq('test', ARRAY[true], 'get correct count (12) of ap lines from inv. history');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 0
   from goods__history(null, null, null, null, null, false, false, false, false, false, false);
-    select results_eq('test', array[true], 'get correct count (0) of ap lines from inv. history with all exclused');
+    select results_eq('test', ARRAY[true], 'get correct count (0) of ap lines from inv. history with all exclused');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 26
   from goods__history(null, null, null, null, null, null, null, null, null, null, null);
-    select results_eq('test', array[true], 'get correct count (26) of ap lines from inv. history with all default');
+    select results_eq('test', ARRAY[true], 'get correct count (26) of ap lines from inv. history with all default');
      DEALLOCATE test;
 
     -- Finish the tests and clean up.

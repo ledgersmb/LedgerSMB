@@ -22,9 +22,9 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('draft_approve');
-    SELECT has_function('draft_delete');
-    SELECT has_function('draft__search');
+    SELECT has_function('draft__search',ARRAY['text','text','date','date','numeric','numeric']);
+    SELECT has_function('draft_approve',ARRAY['integer']);
+    SELECT has_function('draft_delete',ARRAY['integer']);
 
     -- Set specific data
 

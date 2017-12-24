@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(43);
+    SELECT plan(42);
 
     -- Add data
 
@@ -21,33 +21,32 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('business_type__list');
-    SELECT has_function('currency_get_exchangerate');
-    SELECT has_function('overpayment__reverse');
-    SELECT has_function('payment_bulk_post');
-    SELECT has_function('payment_gather_header_info');
-    SELECT has_function('payment_gather_line_info');
-    SELECT has_function('payment_get_all_accounts');
-    SELECT has_function('payment_get_all_contact_invoices');
-    SELECT has_function('payment_get_available_overpayment_amount');
-    SELECT has_function('payment_get_entity_account_payment_info');
-    SELECT has_function('payment_get_entity_accounts');
-    SELECT has_function('payment__get_gl');
-    SELECT has_function('payment_get_open_accounts');
-    SELECT has_function('payment_get_open_invoice');
-    SELECT has_function('payment_get_open_invoices');
-    SELECT has_function('payment_get_open_overpayment_entities');
-    SELECT has_function('payment_get_unused_overpayment');
-    SELECT has_function('payment_get_unused_overpayment');
-    SELECT has_function('payment_get_vc_info');
-    SELECT has_function('payment__overpayments_list');
-    SELECT has_function('payment_post');
-    SELECT has_function('payment__reverse');
-    SELECT has_function('payment__search');
-    SELECT has_function('payments_get_open_currencies');
-    SELECT has_function('payments_set_exchangerate');
-    SELECT has_function('payment_type__get_label');
-    SELECT has_function('payment_type__list');
+    SELECT has_function('business_type__list',ARRAY['']);
+    SELECT has_function('currency_get_exchangerate',ARRAY['character','date','integer']);
+    SELECT has_function('overpayment__reverse',ARRAY['integer','date','integer','integer','numeric','character']);
+    SELECT has_function('payment_bulk_post',ARRAY['numeric[]','integer','text','numeric','text','text','date','integer','numeric','text']);
+    SELECT has_function('payment_gather_header_info',ARRAY['integer','integer']);
+    SELECT has_function('payment_gather_line_info',ARRAY['integer','integer']);
+    SELECT has_function('payment_get_all_accounts',ARRAY['integer']);
+    SELECT has_function('payment_get_all_contact_invoices',ARRAY['integer','integer','character','date','date','integer','text','text']);
+    SELECT has_function('payment_get_available_overpayment_amount',ARRAY['integer','integer']);
+    SELECT has_function('payment_get_entity_account_payment_info',ARRAY['integer']);
+    SELECT has_function('payment_get_entity_accounts',ARRAY['integer','text','text','date','date']);
+    SELECT has_function('payment__get_gl',ARRAY['integer']);
+    SELECT has_function('payment_get_open_accounts',ARRAY['integer','date','date']);
+    SELECT has_function('payment_get_open_invoice',ARRAY['integer','integer','character','date','date','numeric','numeric','text']);
+    SELECT has_function('payment_get_open_invoices',ARRAY['integer','integer','character','date','date','numeric','numeric']);
+    SELECT has_function('payment_get_open_overpayment_entities',ARRAY['integer']);
+    SELECT has_function('payment_get_unused_overpayment',ARRAY['integer','integer','integer']);
+    SELECT has_function('payment_get_vc_info',ARRAY['integer','integer']);
+    SELECT has_function('payment__overpayments_list',ARRAY['date','date','text','text','text']);
+    SELECT has_function('payment_post',ARRAY['date','integer','integer','character','text','text','integer[]','numeric[]','boolean[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
+    SELECT has_function('payment__reverse',ARRAY['text','date','integer','text','date','integer','integer','integer','numeric','character']);
+    SELECT has_function('payment__search',ARRAY['text','date','date','integer','text','integer','character','text']);
+    SELECT has_function('payments_get_open_currencies',ARRAY['integer']);
+    SELECT has_function('payments_set_exchangerate',ARRAY['integer','numeric','character','date']);
+    SELECT has_function('payment_type__get_label',ARRAY['integer']);
+    SELECT has_function('payment_type__list',ARRAY['']);
 
     -- Add specific data
 

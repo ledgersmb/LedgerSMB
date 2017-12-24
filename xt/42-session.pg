@@ -27,13 +27,13 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('check_expiration');
-    SELECT has_function('form_check');
-    SELECT has_function('form_close');
-    SELECT has_function('form_open');
-    SELECT has_function('session_check');
-    SELECT has_function('unlock_all');
-    SELECT has_function('unlock');
+    SELECT has_function('check_expiration',ARRAY['']);
+    SELECT has_function('form_check',ARRAY['integer','integer']);
+    SELECT has_function('form_close',ARRAY['integer','integer']);
+    SELECT has_function('form_open',ARRAY['integer']);
+    SELECT has_function('session_check',ARRAY['integer','text']);
+    SELECT has_function('unlock',ARRAY['integer']);
+    SELECT has_function('unlock_all',ARRAY['']);
 
     -- Run tests
 

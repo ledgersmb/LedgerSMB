@@ -1,0 +1,37 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(8);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('employee__save',ARRAY['integer','date','date','date','text','text','boolean','integer','text','boolean']);
+    SELECT has_function('employee__get_user',ARRAY['integer']);
+    SELECT has_function('employee__all_managers',ARRAY['']);
+    SELECT has_function('employee__get',ARRAY['integer']);
+    SELECT has_function('employee__search',ARRAY['text','date','date','text','text','text','text','boolean']);
+    SELECT has_function('employee__list_managers',ARRAY['integer']);
+    SELECT has_function('employee_search',ARRAY['date','date','character varying','text','date','date','boolean']);
+    SELECT has_function('employee__all_salespeople',ARRAY['']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
