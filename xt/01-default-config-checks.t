@@ -21,7 +21,7 @@ is(
         $unbuilt_dojo_config,
         sub {
             # Line comparison function
-	    $_[0] eq $_[1] and return 0;
+            $_[0] eq $_[1] and return 0;
             $_[0] =~ m/^#dojo_built = 1$/ && $_[1] =~ m/^dojo_built = 0$/ and return 0;
             return 1; # no match
         }
