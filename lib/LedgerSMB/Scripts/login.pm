@@ -62,22 +62,6 @@ Displays the login screen.
 sub __default {
     my ($request) = @_;
 
-    if ($request->{cookie} && $request->{cookie} ne 'Login') {
-        if (! $request->_db_init()) {
-            return [ HTTP_UNAUTHORIZED,
-                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-                       'Content-Type' => 'text/plain; charset=utf-8' ],
-                     [ 'Please provide your credentials.' ]];
-        }
-        if (! $request->verify_session()) {
-            return [ HTTP_SEE_OTHER,
-                     [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
-                     [ '<html><body><h1>Session expired</h1></body></html>' ] ];
-        }
-        $request->initialize_with_db();
-        return LedgerSMB::Scripts::menu::root_doc($request);
-    }
-
     $request->{_new_session_cookie_value} =
         qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
     $request->{stylesheet} = 'ledgersmb.css';
