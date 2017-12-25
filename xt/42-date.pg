@@ -1,0 +1,39 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(10);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('date_get_all_years',ARRAY['']);
+    SELECT has_function('is_leapyear',ARRAY['date']);
+    SELECT has_function('leap_days',ARRAY['integer','integer']);
+    SELECT has_function('next_leap_year_calc',ARRAY['date','boolean']);
+    SELECT has_function('get_fractional_year',ARRAY['date','date']);
+    SELECT has_function('days_in_month',ARRAY['date']);
+    SELECT has_function('is_same_year',ARRAY['date','date']);
+    SELECT has_function('is_same_month',ARRAY['date','date']);
+    SELECT has_function('get_fractional_month',ARRAY['date','date']);
+    SELECT has_function('periods_get',ARRAY['']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

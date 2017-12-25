@@ -24,7 +24,7 @@ BEGIN;
 
     -- Validate required functions
 
---    SELECT has_function('business_type__list');
+--    SELECT has_function('business_type__list',ARRAY['']);
 
     --- COMMON SETUP
 
@@ -86,7 +86,7 @@ BEGIN;
                          and chart_id = (select id from account where accno = '00001');
     SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid');
     DEALLOCATE test;
-    
+
     PREPARE test AS SELECT sum(amount) = 0
                         from acc_trans
                        where trans_id = -11

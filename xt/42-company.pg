@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(60);
+    SELECT plan(58);
 
     -- Add data
 
@@ -17,63 +17,61 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('account__all_headings');
-    SELECT has_function('company__get_all_accounts');
-    SELECT has_function('company_get_billing_info');
-    SELECT has_function('company__get_by_cc');
-    SELECT has_function('company__get');
-    SELECT has_function('company__next_id');
-    SELECT has_function('company__save');
-    SELECT has_function('contact_class__list');
-    SELECT has_function('contact__search');
-    SELECT has_function('eca__delete_contact');
-    SELECT has_function('eca__delete_location');
-    SELECT has_function('eca__delete_pricematrix');
-    SELECT has_function('eca__delete_pricematrix');
-    SELECT has_function('eca__get_by_meta_number');
-    SELECT has_function('eca__get_pricematrix_by_pricegroup');
-    SELECT has_function('eca__get_pricematrix');
-    SELECT has_function('eca__get_taxes');
-    SELECT has_function('eca__history');
-    SELECT has_function('eca__history_summary');
-    SELECT has_function('eca__list_contacts');
-    SELECT has_function('eca__list_locations');
-    SELECT has_function('eca__list_notes');
-    SELECT has_function('eca__save');
-    SELECT has_function('eca__save_contact');
-    SELECT has_function('eca__save_notes');
-    SELECT has_function('eca__save_pricematrix');
-    SELECT has_function('eca__set_taxes');
-    SELECT has_function('entity_credit_get_id');
-    SELECT has_function('entity_credit_get_id_by_meta_number');
-    SELECT has_function('entity_credit__get');
-    SELECT has_function('entity__delete_contact');
-    SELECT has_function('entity__delete_location');
-    SELECT has_function('entity__list_bank_account');
-    SELECT has_function('entity__list_contacts');
-    SELECT has_function('entity__list_credit');
-    SELECT has_function('entity__list_locations');
-    SELECT has_function('entity__list_notes');
-    SELECT has_function('entity__location_save');
-    SELECT has_function('entity__save_bank_account');
-    SELECT has_function('entity__save_contact');
-    SELECT has_function('entity__save_notes');
-    SELECT has_function('list_taxforms');
-    SELECT has_function('pricegroup__list');
-    SELECT has_function('pricelist__delete');
-    SELECT has_function('pricelist__save');
-    SELECT has_function('sic__list');
+    SELECT has_function('account__all_headings',ARRAY['']);
+    SELECT has_function('company__get_all_accounts',ARRAY['integer','integer']);
+    SELECT has_function('company_get_billing_info',ARRAY['integer']);
+    SELECT has_function('company__get_by_cc',ARRAY['text']);
+    SELECT has_function('company__get',ARRAY['integer']);
+    SELECT has_function('company__next_id',ARRAY['']);
+    SELECT has_function('company__save',ARRAY['text','integer','text','text','integer','text','integer','text','text']);
+    SELECT has_function('contact_class__list',ARRAY['']);
+    SELECT has_function('contact__search',ARRAY['integer','text','text[]','text','text','text','text','text','text','date','date','integer','text','text','text','boolean']);
+    SELECT has_function('eca__delete_contact',ARRAY['integer','integer','text']);
+    SELECT has_function('eca__delete_location',ARRAY['integer','integer','integer']);
+    SELECT has_function('eca__delete_pricematrix',ARRAY['integer','integer']);
+    SELECT has_function('eca__get_by_meta_number',ARRAY['text','integer']);
+    SELECT has_function('eca__get_pricematrix_by_pricegroup',ARRAY['integer']);
+    SELECT has_function('eca__get_pricematrix',ARRAY['integer']);
+    SELECT has_function('eca__get_taxes',ARRAY['integer']);
+    SELECT has_function('eca__history',ARRAY['text','text','text','text','text','text','text','text','text','integer','date','date','character','date','date','integer','boolean','boolean']);
+    SELECT has_function('eca__history_summary',ARRAY['text','text','text','text','text','text','text','text','text','integer','date','date','character','date','date','integer','boolean','boolean']);
+    SELECT has_function('eca__list_contacts',ARRAY['integer']);
+    SELECT has_function('eca__list_locations',ARRAY['integer']);
+    SELECT has_function('eca__list_notes',ARRAY['integer']);
+    SELECT has_function('eca__save',ARRAY['integer','integer','integer','text','numeric','boolean','numeric','integer','integer','character varying','integer','character varying','integer','character','date','date','numeric','integer','integer','text','integer','integer']);
+    SELECT has_function('eca__save_contact',ARRAY['integer','integer','text','text','text','integer']);
+    SELECT has_function('eca__save_notes',ARRAY['integer','text','text']);
+    SELECT has_function('eca__save_pricematrix',ARRAY['integer','integer','numeric','numeric','smallint','text','date','date','character','integer']);
+    SELECT has_function('eca__set_taxes',ARRAY['integer','integer[]']);
+    SELECT has_function('entity_credit__get',ARRAY['integer']);
+    SELECT has_function('entity_credit_get_id',ARRAY['integer','integer','text']);
+    SELECT has_function('entity_credit_get_id_by_meta_number',ARRAY['text','integer']);
+    SELECT has_function('entity__delete_contact',ARRAY['integer','integer','text']);
+    SELECT has_function('entity__delete_location',ARRAY['integer','integer','integer']);
+    SELECT has_function('entity__list_bank_account',ARRAY['integer']);
+    SELECT has_function('entity__list_contacts',ARRAY['integer']);
+    SELECT has_function('entity__list_credit',ARRAY['integer','integer']);
+    SELECT has_function('entity__list_locations',ARRAY['integer']);
+    SELECT has_function('entity__list_notes',ARRAY['integer']);
+    SELECT has_function('_entity_location_save',ARRAY['integer','integer','integer','text','text','text','text','text','text','integer']);
+    SELECT has_function('entity__location_save',ARRAY['integer','integer','integer','text','text','text','text','text','integer','date']);
+    SELECT has_function('entity__save_bank_account',ARRAY['integer','integer','text','text','text','integer']);
+    SELECT has_function('entity__save_contact',ARRAY['integer','integer','text','text','text','integer']);
+    SELECT has_function('entity__save_notes',ARRAY['integer','text','text']);
+    SELECT has_function('list_taxforms',ARRAY['integer']);
+    SELECT has_function('pricegroup__list',ARRAY['']);
+    SELECT has_function('sic__list',ARRAY['']);
 
     -- Run tests
 
-    PREPARE test AS SELECT 
-        company__save ('TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 
+    PREPARE test AS SELECT
+        company__save ('TESTING...', 1,'TESTING', 'TESTING', NULL, '1234',
                         232, 'st-123', 'ubi-123-456-789')
                 IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'Saving Company');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
         eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
                 0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD',
                 now()::date, now()::date,
@@ -82,19 +80,19 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Saving Credit Acct');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
-        eca__location_save(currval('entity_credit_account_id_seq')::int, 
+    PREPARE test AS SELECT
+        eca__location_save(currval('entity_credit_account_id_seq')::int,
                 NULL, 2, 'Test', 'Test',
                 NULL, 'Test', 'Test', '12345', 25, NULL)
         IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'eca_location_save');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
-        eca__location_save(currval('entity_credit_account_id_seq')::int, 
+    PREPARE test AS SELECT
+        eca__location_save(currval('entity_credit_account_id_seq')::int,
                 NULL, 1, 'Test2', 'Test',
                 '', 'Test', 'Test123', '12345', 25, NULL) =
-        eca__location_save(currval('entity_credit_account_id_seq')::int, 
+        eca__location_save(currval('entity_credit_account_id_seq')::int,
                 NULL, 3, 'Test2', 'Test',
                 '', 'Test', 'Test123', '12345', 25, NULL);
     SELECT results_eq('test',ARRAY[true],'eca_location_save returns same id with same args and no in_location_id');
@@ -105,7 +103,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'list_locations');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
         eca__save_contact(currval('entity_credit_account_id_seq')::int,
                 1, 'test_d', 'test_c', NULL, NULL) IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'saving eca contact');
@@ -125,24 +123,24 @@ BEGIN;
 
     -- Note tests --
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
        entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) is not null;
     SELECT results_eq('test',ARRAY[true],'entity__save_notes');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
        CASE WHEN subject = 'Test note subject' THEN 't'::bool ELSE 'f'::bool END
        FROM entity_note
        WHERE id = currval('note_id_seq');
     SELECT results_eq('test',ARRAY[true],'entity__save_note subject record');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
            eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) is not null;
     SELECT results_eq('test',ARRAY[true],'eca_save_notes');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
            CASE WHEN subject = 'ECA test note subject' THEN 't'::bool ELSE 'f'::bool END
            FROM eca_note
            WHERE id = currval('note_id_seq');

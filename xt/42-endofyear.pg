@@ -17,15 +17,15 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('account__obtain_balance');
-    SELECT has_function('account__obtain_starting_balance');
-    SELECT has_function('eoy_close_books');
-    SELECT has_function('eoy_create_checkpoint');
-    SELECT has_function('eoy_earnings_accounts');
-    SELECT has_function('eoy__latest_checkpoint');
-    SELECT has_function('eoy__reopen_books_at');
-    SELECT has_function('eoy_reopen_books');
-    SELECT has_function('eoy_zero_accounts');
+    SELECT has_function('account__obtain_balance',ARRAY['date','integer']);
+    SELECT has_function('account__obtain_starting_balance',ARRAY['date','integer']);
+    SELECT has_function('eoy__latest_checkpoint',ARRAY['']);
+    SELECT has_function('eoy__reopen_books_at',ARRAY['date']);
+    SELECT has_function('eoy_close_books',ARRAY['date','text','text','integer']);
+    SELECT has_function('eoy_create_checkpoint',ARRAY['date']);
+    SELECT has_function('eoy_earnings_accounts',ARRAY['']);
+    SELECT has_function('eoy_reopen_books',ARRAY['date']);
+    SELECT has_function('eoy_zero_accounts',ARRAY['date','text','text','integer']);
 
     -- Set specific data
 
@@ -65,7 +65,7 @@ BEGIN;
     DEALLOCATE test;
 
     PREPARE test as SELECT amount = 10000
-                    FROM account_checkpoint 
+                    FROM account_checkpoint
                     WHERE end_date = '1520-05-01' AND account_id = -1000;
     SELECT results_eq('test',ARRAY[true],'Account checkpoint added');
     DEALLOCATE test;

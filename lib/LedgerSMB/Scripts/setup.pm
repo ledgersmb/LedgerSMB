@@ -28,6 +28,7 @@ use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use Try::Tiny;
+use Version::Compare;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
@@ -133,16 +134,19 @@ sub get_dispatch_table {
 
     return ( { appname => 'sql-ledger',
         version => '2.7',
+        slschema => 'sl27',
         message => $sl_detect,
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '2.8',
+        slschema => 'sl28',
         message => $sl_detect,
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '3.0',
+        slschema => 'sl30',
         message => $request->{_locale}->text(
                      'SQL-Ledger 3.0 database detected.'
                    ),
@@ -217,10 +221,9 @@ sub login {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
-                foreach my $field (qw|operation message next_action|) {
+                foreach my $field (qw|operation message next_action slschema|) {
                     $request->{$field} = $dispatch_entry->{$field};
                 }
-
                 last;
             }
         }
@@ -583,7 +586,8 @@ my %info_applicable_for_upgrade = (
     'default_ap' => [ 'ledgersmb/1.2',
                       'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -614,36 +618,59 @@ sub upgrade_info {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-
+    my $retval = 0;
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-    @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-    unshift @{$request->{ar_accounts}}, {}
-            unless scalar(@{$request->{ar_accounts}}) == 1;
+        @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
+        my $n = scalar(@{$request->{ar_accounts}});
+        if ($n > 1) {
+            unshift @{$request->{ar_accounts}}, {};
+            $retval++;
+        }
+        elsif ($n == 1) {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ar} =
+                (pop @{$request->{ar_accounts}})->{accno};
+        }
+        else {
+            $request->{default_ar} = 'null';
+        }
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-    @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-    unshift @{$request->{ap_accounts}}, {}
-            unless scalar(@{$request->{ap_accounts}}) == 1;
+        @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
+        my $n = scalar(@{$request->{ap_accounts}});
+        if ($n > 1) {
+            unshift @{$request->{ap_accounts}}, {};
+            $retval++;
+        }
+        elsif ($n == 1) {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ap} =
+                (pop @{$request->{ap_accounts}})->{accno};
+        }
+        else {
+            # If there's only 1 (or none at all), don't ask the question
+            $request->{default_ap} = 'null';
+        }
     }
 
     if (applicable_for_upgrade('default_country', $upgrade_type)) {
-    @{$request->{countries}} = ();
-    foreach my $iso2 (all_country_codes()) {
-        push @{$request->{countries}}, { code    => uc($iso2),
-                         country => code2country($iso2) };
-    }
-    @{$request->{countries}} =
-        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
-    unshift @{$request->{countries}}, {};
+        $retval++;
+        @{$request->{countries}} = (
+            {}, # empty initial row
+            sort { $a->{country} cmp $b->{country} }
+               map { { code    => uc($_),
+                       country => code2country($_) } } all_country_codes()
+            );
     }
 
-    my $retval = 0;
-    foreach my $key (keys %info_applicable_for_upgrade) {
-        $retval++
-            if applicable_for_upgrade($key, $upgrade_type);
+    if (applicable_for_upgrade('slschema', $upgrade_type)) {
+        $retval++;
+        $request->{slschema} = 'sl' . $dbinfo->{version};
+        $request->{slschema} =~ s/\.//;
     }
+    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
     return $retval;
 }
 
@@ -701,7 +728,7 @@ sub upgrade {
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
-        return $template->render_to_psgi($request);
+        return $template->render_to_psgi($request, VERSION_COMPARE => \&Version::Compare::version_compare);
     } else {
         $request->{dbh}->rollback();
 
@@ -997,6 +1024,39 @@ sub skip_coa {
 }
 
 
+=item _render_user
+
+Renders the new user screen. Common functionality to both the
+select_coa and skip_coa functions.
+
+=cut
+
+sub _render_user {
+    my ($request) = @_;
+
+    @{$request->{salutations}} = $request->call_procedure(
+        funcname => 'person__list_salutations'
+    );
+
+    @{$request->{countries}} = $request->call_procedure(
+        funcname => 'location_list_country'
+    );
+    my $locale = $request->{_locale};
+
+    @{$request->{perm_sets}} = (
+        {id => '0', label => $locale->text('Manage Users')},
+        {id => '1', label => $locale->text('Full Permissions')},
+        {id => '-1', label => $locale->text('No changes')},
+        );
+
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/new_user',
+        );
+
+    return $template->render_to_psgi($request);
+}
+
 =item _render_new_user
 
 Renders the new user screen. Common functionality to both the
@@ -1023,30 +1083,10 @@ sub _render_new_user {
     _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
-    @{$request->{salutations}}
-    = $request->call_procedure(funcname => 'person__list_salutations' );
-
-    @{$request->{countries}}
-    = $request->call_procedure(funcname => 'location_list_country' );
-    for my $country (@{$request->{countries}}){
-        last unless defined $request->{coa_lc};
-        if (lc($request->{coa_lc}) eq lc($country->{short_name})){
-           $request->{country_id} = $country->{id};
-        }
+    if ( $request->{coa_lc} ) {
+        LedgerSMB::Setting->set('default_country',$request->{coa_lc});
     }
-    my $locale = $request->{_locale};
-
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        );
-
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/new_user',
-        );
-
-    return $template->render_to_psgi($request);
+    return _render_user($request);
 }
 
 
@@ -1075,7 +1115,6 @@ sub save_user {
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
-    my $duplicate = 0;
     try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
@@ -1085,31 +1124,11 @@ sub save_user {
             );
            $request->{pls_import} = 1;
 
-           @{$request->{salutations}}
-            = $request->call_procedure(funcname => 'person__list_salutations' );
-
-           @{$request->{countries}}
-              = $request->call_procedure(funcname => 'location_list_country' );
-
-           my $locale = $request->{_locale};
-
-           @{$request->{perm_sets}} = (
-               {id => '0', label => $locale->text('Manage Users')},
-               {id => '1', label => $locale->text('Full Permissions')},
-           );
-           my $template = LedgerSMB::Template->new_UI(
-               $request,
-               template => 'setup/new_user',
-           );
-           $duplicate = $template->render_to_psgi($request);
+           return _render_user($request);
        } else {
            die $_;
        }
     };
-    if ( $duplicate ) {
-        $request->{dbh}->rollback;
-        return $duplicate;
-    }
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(funcname => 'admin__get_roles')
@@ -1180,7 +1199,7 @@ sub process_and_run_upgrade_script {
 
     $database->run_file(
         file => $tempfile,
-        log => $temp . '_stdout',
+        stdout_log => $temp . '_stdout',
         errlog => $temp . '_stderr'
         );
 
@@ -1266,8 +1285,7 @@ sub run_sl28_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, 'sl28',
-                   "sl2.8-$CURRENT_MINOR_VERSION");
+    process_and_run_upgrade_script($request, $database, 'sl28', 'sl3.0');
 
     return create_initial_user($request);
 }
@@ -1286,8 +1304,7 @@ sub run_sl30_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, 'sl30',
-                                   "sl3.0-$CURRENT_MINOR_VERSION");
+    process_and_run_upgrade_script($request, $database, 'sl30', 'sl3.0');
 
     return create_initial_user($request);
 }
@@ -1299,28 +1316,7 @@ sub run_sl30_migration {
 
 sub create_initial_user {
     my ($request) = @_;
-
-    _init_db($request) unless $request->{dbh};
-    @{$request->{salutations}} = $request->call_procedure(
-        funcname => 'person__list_salutations'
-    );
-
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
-
-    my $locale = $request->{_locale};
-
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        {id => '-1', label => $locale->text('No changes')},
-    );
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/new_user',
-    );
-    return $template->render_to_psgi($request);
+    return _render_new_user($request);
 }
 
 =item edit_user_roles

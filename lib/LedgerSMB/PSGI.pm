@@ -167,6 +167,12 @@ sub psgi_app {
                 $request->initialize_with_db();
             }
         }
+        else {
+            # Some default settings as we run without a user
+            $request->{_user} = {
+                dateformat => LedgerSMB::Sysconfig::date_format(),
+            };
+        }
 
         my $input_dbh = $LedgerSMB::App_State::DBH = $request->{dbh};
         ($status, $headers, $body) = @{&$action($request)};

@@ -28,11 +28,11 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('pnl__customer');
-    SELECT has_function('pnl__income_statement_accrual');
-    SELECT has_function('pnl__income_statement_cash');
-    SELECT has_function('pnl__invoice');
-    SELECT has_function('pnl__product');
+    SELECT has_function('pnl__customer',ARRAY['integer','date','date','text']);
+    SELECT has_function('pnl__income_statement_accrual',ARRAY['date','date','text','integer[]','text']);
+    SELECT has_function('pnl__income_statement_cash',ARRAY['date','date','text','integer[]','text']);
+    SELECT has_function('pnl__invoice',ARRAY['integer','text']);
+    SELECT has_function('pnl__product',ARRAY['date','date','integer','integer[]','text']);
 
     -- Basic setup
 

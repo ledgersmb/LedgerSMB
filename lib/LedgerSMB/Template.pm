@@ -363,7 +363,7 @@ sub new {
         for (qw( template format language no_escape debug locale method
                  format_options output_options no_auto_output
                  additional_vars ));
-    $self->{myconfig} = $args{user};
+    $self->{user} = $args{user};
     $self->{include_path} = $args{path};
     $self->{method} ||= $args{media};
     if ($self->{language}){ # Language takes precedence over locale
@@ -541,8 +541,7 @@ sub _render {
     my $vars = shift;
     $vars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $vars->{ENVARS} = \%ENV;
-    $vars->{USER} = $LedgerSMB::App_State::User;
-    $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
+    $vars->{USER} = $self->{user};
     $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {

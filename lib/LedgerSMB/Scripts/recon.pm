@@ -205,14 +205,17 @@ sub _display_report {
 
     my $contents = '';
     {
+        my $handle = eval { $request->upload('csv_file') };
+
         local $/ = undef;
-        my $handle = $request->upload('csv_file');
-        $contents = <$handle>
-            if defined $handle;
+        $contents = <$handle> if defined $handle;
     }
 
+    # An empty string is recognized by the entry-importer (ISO20022)
+    # as a file name (due to absense of '<' and '>'); only call it
+    # when there's actual content to handle.
     $recon->add_entries($recon->import_file($contents))
-        if !$recon->{submitted};
+        if $contents && !$recon->{submitted};
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     $recon->get();
     $recon->{form_id} = $request->{form_id};

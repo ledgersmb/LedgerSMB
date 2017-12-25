@@ -18,15 +18,15 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('lsmb__create_role');
-    SELECT has_function('lsmb__grant_exec');
-    SELECT has_function('lsmb__grant_menu');
-    SELECT has_function('lsmb__grant_perms');
-    SELECT has_function('lsmb__grant_perms');
-    SELECT has_function('lsmb__grant_role');
-    SELECT has_function('lsmb__is_allowed_role');
-    SELECT has_function('quote_ident_array');
-    SELECT has_function('tg_enforce_perms_eclass');
+    SELECT has_function('lsmb__create_role',ARRAY['text']);
+    SELECT has_function('lsmb__grant_exec',ARRAY['text','text']);
+    SELECT has_function('lsmb__grant_menu',ARRAY['text','integer','text']);
+    SELECT has_function('lsmb__grant_perms',ARRAY['text','text','text','text[]']);
+    SELECT has_function('lsmb__grant_perms',ARRAY['text','text','text']);
+    SELECT has_function('lsmb__grant_role',ARRAY['text','text']);
+    SELECT has_function('lsmb__is_allowed_role',ARRAY['text[]']);
+    SELECT has_function('quote_ident_array',ARRAY['text[]']);
+    SELECT has_function('tg_enforce_perms_eclass',ARRAY['']);
 
     -- This function is vulnerable to SQL injection but it is transient for the
     -- purposes of these test cases. In particular it is intended only to ensure
@@ -51,37 +51,37 @@ BEGIN;
     $$;
 
     -- READ PERMISSIONS
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
                  test__has_select_permission('budget_view', 'budget_info');
     SELECT results_eq('test',ARRAY[true],'budget_view can read budget_info');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
                  test__has_select_permission('budget_view', 'budget_line');
     SELECT results_eq('test',ARRAY[true],'budget_view can read budget_info');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             test__has_select_permission('file_read', 'file_base');
     SELECT results_eq('test',ARRAY[true],'file_read can read file_base');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             test__has_select_permission('file_read', 'file_links');
     SELECT results_eq('test',ARRAY[true],'file_read can read file_links');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             test__has_select_permission('file_read', 'file_secondary_attachment');
     SELECT results_eq('test',ARRAY[true],'file_read can read file_secondary_transaction');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             test__has_select_permission('file_read', 'file_order');
     SELECT results_eq('test',ARRAY[true],'file_read can read file_order');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             test__has_select_permission('file_read', 'file_part');
     SELECT results_eq('test',ARRAY[true],'file_read can read file_part');
     DEALLOCATE test;
