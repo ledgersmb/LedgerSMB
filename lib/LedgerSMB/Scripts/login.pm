@@ -85,43 +85,27 @@ or a HTTP_454 error if the database does not exist.
 
 sub authenticate {
     my ($request) = @_;
-    if (!$request->{dbh}){
-        if (!$request->{company}){
-             $request->{company} = $LedgerSMB::Sysconfig::default_db;
-        }
-        if (! $request->_db_init) {
-            return [ HTTP_UNAUTHORIZED,
-                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-                       'Content-Type' => 'text/plain; charset=utf-8' ],
-                     [ 'Please provide your credentials.' ]];
-        }
+
+    $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
+
+
+    return [ HTTP_UNAUTHORIZED,
+             [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+               'Content-Type' => 'text/plain; charset=utf-8' ],
+             [ 'Please provide your credentials.' ] ]
+                 if ! $request->_db_init;
+
+    if (!$request->{dbonly}
+        && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
+        return [ HTTP_UNAUTHORIZED,
+                 [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+                   'Content-Type' => 'text/plain; charset=utf-8' ],
+                 [ 'Please provide your credentials.' ] ];
     }
 
-    if ($request->{dbh} and not $request->{log_out}){
-        if (!$request->{dbonly}
-            && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
-            return [ HTTP_UNAUTHORIZED,
-                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-                       'Content-Type' => 'text/plain; charset=utf-8' ],
-                     [ 'Please provide your credentials.' ] ];
-        }
-        return [ HTTP_OK,
-                 [ 'Content-Type' => 'text/plain; charset=utf-8' ],
-                 [ 'Success' ] ];
-    }
-    else {
-        if (($request->{_auth_error} )
-            && ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i)) {
-            return [ '454 Database Does Not Exist',
-                     [ 'Content-Type' => 'text/plain; charset=utf-8' ],
-                     [ 'Database does not exist' ] ];
-        } else {
-            return [ HTTP_UNAUTHORIZED,
-                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-                       'Content-Type' => 'text/plain; charset=utf-8' ],
-                     [ 'Please enter your credentials.' ] ];
-        }
-    }
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'text/plain; charset=utf-8' ],
+             [ 'Success' ] ];
 }
 
 =item login
