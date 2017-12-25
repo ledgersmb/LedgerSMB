@@ -40,6 +40,10 @@ cache_templates = 0
 # Set language for login and admin pages
 language =
 
+# Set the date format for the admin pages
+#  (default: yyyy-mm-dd; unset means detected from the browser)
+date_format = yyyy-mm-dd
+
 # todo
 log_level = ERROR
 
