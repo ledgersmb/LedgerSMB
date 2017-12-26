@@ -38,7 +38,7 @@ my $db = LedgerSMB::Database->new({
 });
 
 # Manual tests
-ok($db->create, 'Database Created') 
+ok($db->create, 'Database Created')
   || BAIL_OUT('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
 ok($db->apply_changes, 'applied changes');
@@ -103,12 +103,12 @@ $copy_dbh->disconnect;
     $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy_copy"|);
 }
 
-#Changed the COA and GIFI loading to use this, and move admin user to 
+#Changed the COA and GIFI loading to use this, and move admin user to
 #Database.pm --CT
 
 SKIP: {
      skip 'No admin info', 5
-           if (!defined $ENV{LSMB_ADMIN_USERNAME} 
+           if (!defined $ENV{LSMB_ADMIN_USERNAME}
                 or !defined $ENV{LSMB_ADMIN_PASSWORD}
                 or !defined $ENV{LSMB_COUNTRY_CODE}
                 or !defined $ENV{LSMB_ADMIN_FNAME}
@@ -117,7 +117,7 @@ SKIP: {
      my $lsmb = new LedgerSMB;
      ok(defined $lsmb, '$lsmb defined');
      isa_ok($lsmb, 'LedgerSMB');
-     $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
+     $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
                                        undef, undef, { AutoCommit => 0 });
      my $dbh = $lsmb->{dbh};
      ok($dbh, 'Connected to new database');
@@ -136,7 +136,7 @@ SKIP: {
       ok($user->save_user, 'User saved');
       $sth = $dbh->prepare("SELECT admin__add_user_to_role(?, ?)");
       my $rolename = "lsmb_" . $ENV{PGDATABASE} . "__users_manage";
-      ok($sth->execute($ENV{LSMB_ADMIN_USERNAME}, $rolename), 
+      ok($sth->execute($ENV{LSMB_ADMIN_USERNAME}, $rolename),
             'Admin user assigned rights');
       $sth->finish;
       $dbh->commit;
@@ -154,8 +154,8 @@ is($passed_no_errs, 1, 'No rollbacks in db scripts');
 
 SKIP: {
      skip 'No COA specified', 1 if !defined $ENV{LSMB_LOAD_COA};
-     is($db->exec_script({script => 'sql/coa/' 
-                                     . lc($ENV{LSMB_COUNTRY_CODE}) 
+     is($db->exec_script({script => 'sql/coa/'
+                                     . lc($ENV{LSMB_COUNTRY_CODE})
                                      ."/chart/$ENV{LSMB_LOAD_COA}.sql"
                          }), 0,
         'Ran Chart of Accounts Script');
@@ -163,8 +163,8 @@ SKIP: {
 
 SKIP: {
      skip 'No GIFI specified', 1 if !defined $ENV{LSMB_LOAD_GIFI};
-     is($db->exec_script({script => 'sql/coa/' 
-                                   . lc($ENV{LSMB_COUNTRY_CODE}) 
+     is($db->exec_script({script => 'sql/coa/'
+                                   . lc($ENV{LSMB_COUNTRY_CODE})
                                     ."/gifi/$ENV{LSMB_LOAD_GIFI}.sql"
                          }), 0,
         'Ran GIFI Script');

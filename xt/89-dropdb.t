@@ -1,7 +1,7 @@
 use Test::More;
 use strict;
 use DBI;
-    
+
 my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 6;
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
@@ -35,8 +35,8 @@ my $dbh = DBI->connect("dbi:Pg:dbname=template1",
                                        undef, undef, { AutoCommit => 0 });
 
 my $sth_getroles = $dbh->prepare(
-                           "select quote_ident(rolname) as role 
-                              FROM pg_roles 
+                           "select quote_ident(rolname) as role
+                              FROM pg_roles
                              WHERE rolname LIKE ?");
 
 $sth_getroles->execute("lsmb_$ENV{LSMB_NEW_DB}__%");
@@ -49,4 +49,3 @@ while (my $ref = $sth_getroles->fetchrow_hashref('NAME_lc')){
 $dbh->commit;
 
 is($rc, 0, 'Roles dropped');
-
