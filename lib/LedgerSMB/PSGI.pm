@@ -94,6 +94,7 @@ sub psgi_app {
                                  $env->{QUERY_STRING},
                                  $psgi_req->uploads, $psgi_req->cookies,
                                  $auth, $env->{'lsmb.db'});
+
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
     $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
@@ -116,15 +117,7 @@ sub psgi_app {
             };
         }
 
-        my $input_dbh = $LedgerSMB::App_State::DBH = $request->{dbh};
         ($status, $headers, $body) = @{&$action($request)};
-        push @$headers, (
-            'Cache-Control' => join(', ',
-                                    qw| no-store  no-cache  must-revalidate
-                                        post-check=0 pre-check=0 false|),
-            'Pragma' => 'no-cache'
-        ) if $input_dbh && LedgerSMB::Setting->get('disable_back');
-
         my $content_type = Plack::Util::header_get($headers, 'content-type');
         push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
             if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
@@ -221,6 +214,7 @@ sub setup_url_space {
         mount "/$_" => builder {
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
+            enable '+LedgerSMB::Middleware::DisableBackButton';
             $psgi_app;
         }
         for  (@LedgerSMB::Sysconfig::newscripts);
