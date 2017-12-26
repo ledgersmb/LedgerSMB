@@ -16,8 +16,8 @@ if ($ENV{LSMB_INSTALL_DB}){
 }
 
 if ($run_tests){
-	plan tests => $run_tests;
-	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+    plan tests => $run_tests;
+    $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
 my $lock_file = "$temp/LSMB_TEST_DB";
