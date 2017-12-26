@@ -142,7 +142,7 @@ SKIP: {
       $dbh->commit;
 };
 
-open  my $log, "< $LedgerSMB::Sysconfig::tempdir/dblog";
+open  my $log, '<', "$LedgerSMB::Sysconfig::tempdir/dblog";
 
 my $passed_no_errs = 1;
 while (my $line = <$log>){
