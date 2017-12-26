@@ -88,9 +88,6 @@ sub check {
    if (($cookie eq 'Login') or ($cookie =~ /^::/) or (!$cookie)){
         return _create($form);
     }
-    my $timeout;
-
-
     my $dbh = $form->{dbh};
 
     my $checkQuery = $dbh->prepare(
@@ -106,13 +103,6 @@ sub check {
     $sessionID = int $sessionID;
 
 
-    if ( !$form->{timeout} ) {
-        $timeout = "1 day";
-    }
-    else {
-        $timeout = "$form->{timeout} seconds";
-    }
-
     $checkQuery->execute( $sessionID, $token)
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
@@ -121,12 +111,6 @@ sub check {
     $sessionValid = $sessionValid->{session_id};
 
     if ($sessionValid) {
-
-
-
-        my $login = $form->{login};
-
-        $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
         if (( $session_ref ))
         {
 
@@ -235,9 +219,6 @@ Destroys a session and removes it from the db.
 
 sub destroy {
     my ($form) = @_;
-
-    my $login = $form->{login};
-    $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     # use the central database handle
     my $dbh = $form->{dbh};
