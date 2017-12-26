@@ -57,6 +57,18 @@ sub no_db {
     return 1;
 }
 
+=item clear_session_actions
+
+Returns an array of actions which should have the session
+(cookie) cleared before verifying the session and being
+dispatched to.
+
+=cut
+
+sub clear_session_actions {
+    return qw(__default);
+}
+
 
 sub __default {
 

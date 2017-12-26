@@ -60,7 +60,10 @@ sub call {
             $env->{'lsmb.company'} ||= LedgerSMB::Sysconfig::default_db;
         }
         else {
-            return LedgerSMB::PSGI::Util::unauthorized();
+            # Only return unauthorized when we actually want
+            # an authenticated session.
+            return LedgerSMB::PSGI::Util::unauthorized()
+                if $env->{'lsmb.want_db'};
         }
     }
 
