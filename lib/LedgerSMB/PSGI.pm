@@ -95,8 +95,7 @@ sub psgi_app {
                                  $psgi_req->uploads, $psgi_req->cookies,
                                  $auth, $env->{'lsmb.db'});
 
-    my $locale = $request->{_locale};
-    $LedgerSMB::App_State::Locale = $locale;
+    $LedgerSMB::App_State::Locale = $request->{_locale};
     $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     $LedgerSMB::App_State::DBName = $env->{'lsmb.company'};
 
