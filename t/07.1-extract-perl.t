@@ -69,10 +69,10 @@ my @tests = (
 for my $test (@tests) {
 
     # Set the source file
-    open(SOURCE, '>', $testfile)
+    open(my $SOURCE, '>', $testfile)
          or die "Could not open file '$testfile' $!";
-    print SOURCE $test->{statement} . "\n";
-    close SOURCE;
+    print $SOURCE $test->{statement} . "\n";
+    close $SOURCE;
 
     # Produce a PO file
     my ($stderr,$exit) = capture_stderr {

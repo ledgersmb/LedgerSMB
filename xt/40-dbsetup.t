@@ -45,9 +45,9 @@ ok($db->apply_changes, 'applied changes');
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){
-    open (DBLOCK, '>', "$temp/LSMB_TEST_DB");
-    print DBLOCK $ENV{LSMB_NEW_DB};
-    close (DBLOCK);
+    open (my $DBLOCK, '>', "$temp/LSMB_TEST_DB");
+    print $DBLOCK $ENV{LSMB_NEW_DB};
+    close ($DBLOCK);
 }
 
 # Validate that we can copy the database

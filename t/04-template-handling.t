@@ -317,9 +317,9 @@ SKIP: {
     $template->render({media => 'test'});
     $template->output(media => 'test');
 
-    ok (open (LPR_TEST, '<', "$temp/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
+    ok (open (my $LPR_TEST, '<', "$temp/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
 
-    my $line1 = <LPR_TEST>;
+    my $line1 = <$LPR_TEST>;
 
     like($line1, qr/^%PDF/, 'output file is pdf');
 }
