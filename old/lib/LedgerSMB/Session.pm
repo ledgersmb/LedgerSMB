@@ -106,27 +106,15 @@ sub check {
     $checkQuery->execute( $sessionID, $token)
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
-    my $sessionValid = $checkQuery->fetchrow_hashref('NAME_lc');
-    my ($session_ref) = $sessionValid;
-    $sessionValid = $sessionValid->{session_id};
+    my $session_ref = $checkQuery->fetchrow_hashref('NAME_lc');
 
-    if ($sessionValid) {
-        if (( $session_ref ))
-        {
+    if ($session_ref && $session_ref->{session_id}) {
+        my $newCookieValue =
+            $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
 
-
-
-
-            my $newCookieValue =
-              $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
-
-            $form->{_new_session_cookie_value} =
+        $form->{_new_session_cookie_value} =
                 qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
-            return 1;
-        }
-        else {
-            return 0;
-        }
+        return 1;
     }
     else {
         #cookie is not valid
