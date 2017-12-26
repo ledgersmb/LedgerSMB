@@ -34,7 +34,7 @@ pager = less
 [ControlStructures::ProhibitMutatingListFunctions]
     set_themes = lsmb lsmb_new lsmb_tests
 [ControlStructures::ProhibitUnreachableCode]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::ProhibitBarewordFileHandles]
     set_themes = lsmb lsmb_new
 [InputOutput::ProhibitInteractiveTest]
