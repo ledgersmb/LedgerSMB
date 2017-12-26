@@ -31,6 +31,7 @@ use parent qw ( Plack::Middleware );
 use Plack::Request;
 use Plack::Util;
 
+use LedgerSMB::Auth;
 use LedgerSMB::DBH;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
