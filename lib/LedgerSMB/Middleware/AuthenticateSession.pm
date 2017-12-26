@@ -76,9 +76,10 @@ sub call {
         # if the environment also has 'want_cleared_cookie',
         # we have a problem which we probably should be logging somewhere:
         # with a clear session cookie, we have no company name to log into!
-        $env->{'lsmb.db'} = LedgerSMB::DBH->connect($env->{'lsmb.company'},
-                                                    $creds->{login},
-                                                    $creds->{password})
+        my $dbh = $env->{'lsmb.db'} =
+            LedgerSMB::DBH->connect($env->{'lsmb.company'},
+                                    $creds->{login},
+                                    $creds->{password})
             or return LedgerSMB::PSGI::Util::unauthorized();
 
         my $extended_cookie = _verify_cookie($env->{'lsmb.db'},
@@ -90,6 +91,8 @@ sub call {
             if ! $extended_cookie;
 
         my $res = $self->app->($env);
+        $dbh->rollback;
+        $dbh->disconnect;
 
         my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
         my $path = $env->{SCRIPT_NAME};

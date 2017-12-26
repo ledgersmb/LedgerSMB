@@ -96,39 +96,34 @@ sub psgi_app {
                                  $auth, $env->{'lsmb.db'},
                                  $env->{'lsmb.company'});
 
-    $LedgerSMB::App_State::Locale = $request->{_locale};
-    $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
-    $LedgerSMB::App_State::DBName = $env->{'lsmb.company'};
-
     $request->{action} = $env->{'lsmb.action_name'};
-    my $action = $env->{'lsmb.action'};
     my ($status, $headers, $body);
     try {
-        if ($env->{'lsmb.want_db'}) {
-            $request->initialize_with_db();
-        }
-        else {
-            # Some default settings as we run without a user
-            $request->{_user} = {
-                dateformat => LedgerSMB::Sysconfig::date_format(),
-            };
-        }
+        LedgerSMB::App_State::run_with_state sub {
+            if ($env->{'lsmb.want_db'}) {
+                $request->initialize_with_db();
+            }
+            else {
+                # Some default settings as we run without a user
+                $request->{_user} = {
+                    dateformat => LedgerSMB::Sysconfig::date_format(),
+                };
+            }
 
-        ($status, $headers, $body) = @{&$action($request)};
+            ($status, $headers, $body) = @{$env->{'lsmb.action'}->($request)};
+        }, DBH     => $env->{'lsmb.db'},
+           DBName  => $env->{'lsmb.company'},
+           Locale  => $request->{_locale};
+
         my $content_type = Plack::Util::header_get($headers, 'content-type');
         push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
             if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
 
         $request->{dbh}->commit if defined $request->{dbh};
-        LedgerSMB::App_State->cleanup();
     }
     catch {
+        # The database setup middleware will roll back before disconnecting
         my $error = $_;
-        eval {
-            $LedgerSMB::App_State::DBH->rollback
-                if ($LedgerSMB::App_State::DBH && $_ eq 'Died');
-        };
-        eval { LedgerSMB::App_State->cleanup(); };
         if ($error !~ /^Died at/) {
             ($status, $headers, $body) =
                 @{LedgerSMB::PSGI::Util::internal_server_error(
