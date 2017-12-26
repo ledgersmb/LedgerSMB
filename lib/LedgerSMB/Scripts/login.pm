@@ -96,6 +96,7 @@ sub authenticate {
                  if ! $request->_db_init;
 
     if (!$request->{dbonly}
+        # This call to ::check() is in practice a call to ::_create()
         && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
         return [ HTTP_UNAUTHORIZED,
                  [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',

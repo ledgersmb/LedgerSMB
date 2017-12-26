@@ -93,9 +93,11 @@ sub psgi_app {
     my $request = LedgerSMB->new($psgi_req->parameters, $env->{'lsmb.script'},
                                  $env->{QUERY_STRING},
                                  $psgi_req->uploads, $psgi_req->cookies,
-                                 $auth);
+                                 $auth, $env->{'lsmb.db'});
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
+    $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
+    $LedgerSMB::App_State::DBName = $env->{'lsmb.company'};
 
     $request->{action} = $env->{'lsmb.action_name'};
     my $action = $env->{'lsmb.action'};
@@ -105,22 +107,6 @@ sub psgi_app {
             if $env->{'lsmb.want_cleared_session'};
 
         if ($env->{'lsmb.want_db'}) {
-            if (! $request->_db_init()) {
-                ($status, $headers, $body) =
-                    ( HTTP_UNAUTHORIZED,
-                      [ 'Content-Type' => 'text/plain; charset=utf-8',
-                        'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
-                      [ 'Please enter your credentials' ]
-                    );
-                return; # exit 'try' scope
-            }
-            if (! $request->verify_session()) {
-                ($status, $headers, $body) =
-                    ( HTTP_SEE_OTHER,
-                      [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
-                      [] );
-                return; # exit 'try' scope
-            }
             $request->initialize_with_db();
         }
         else {
@@ -168,7 +154,9 @@ sub psgi_app {
     push @$headers,
          ( 'Set-Cookie' =>
            qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
-        if $request->{'request.download-cookie'};
+             if $request->{'request.download-cookie'};
+
+    # Need to set auth cookie when one is created in login.pl::authenticate()
     push @$headers,
          ( 'Set-Cookie' =>
            qq|$request->{_new_session_cookie_value}; path=$path$secure| )
@@ -232,6 +220,7 @@ sub setup_url_space {
 
         mount "/$_" => builder {
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::AuthenticateSession';
             $psgi_app;
         }
         for  (@LedgerSMB::Sysconfig::newscripts);
