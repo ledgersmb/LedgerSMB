@@ -23,7 +23,8 @@ This module implements the C<Plack::Middleware> protocol.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_INTERNAL_SERVER_ERROR );
+use HTTP::Status qw( HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
+ HTTP_UNAUTHORIZED );
 
 =head1 FUNCTIONS
 
@@ -50,6 +51,34 @@ sub internal_server_error {
              [ 'Content-Type' => 'text/html; charset=UTF-8' ],
              \@body_lines ];
 }
+
+
+=head2 unauthorized()
+
+Returns a standard error representation for HTTP status 401
+
+=cut
+
+sub unauthorized {
+    return [ HTTP_UNAUTHORIZED,
+             [ 'Content-Type' => 'text/plain; charset=utf-8',
+               'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
+             [ 'Please enter your credentials' ]
+        ];
+}
+
+=head2 session_timed_out()
+
+Returns a standard error representation for 'LedgerSMB session timed out'
+
+=cut
+
+sub session_timed_out {
+    return [ HTTP_SEE_OTHER,
+             [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
+             [] ];
+}
+
 
 =head1 COPYRIGHT
 

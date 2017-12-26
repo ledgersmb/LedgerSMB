@@ -19,10 +19,13 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
-use HTTP::Status qw( HTTP_UNAUTHORIZED HTTP_SEE_OTHER HTTP_OK ) ;
-use LedgerSMB::User;
+use HTTP::Status qw( HTTP_OK ) ;
+
+use LedgerSMB::PSGI::Util;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::User;
+
 use Try::Tiny;
 
 use strict;
@@ -89,19 +92,13 @@ sub authenticate {
     $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
 
 
-    return [ HTTP_UNAUTHORIZED,
-             [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-               'Content-Type' => 'text/plain; charset=utf-8' ],
-             [ 'Please provide your credentials.' ] ]
-                 if ! $request->_db_init;
+    return LedgerSMB::PSGI::Util::unauthorized()
+        if ! $request->_db_init;
 
     if (!$request->{dbonly}
         # This call to ::check() is in practice a call to ::_create()
         && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
-        return [ HTTP_UNAUTHORIZED,
-                 [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-                   'Content-Type' => 'text/plain; charset=utf-8' ],
-                 [ 'Please provide your credentials.' ] ];
+        return LedgerSMB::PSGI::Util::unauthorized();
     }
 
     return [ HTTP_OK,
@@ -159,12 +156,9 @@ requiring only bogus credentials (logout:logout).
 sub logout_js {
     my $request = shift @_;
     my $creds = $request->{_auth}->get_credentials;
-    return [ HTTP_UNAUTHORIZED,
-             [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
-               'Content-Type' => 'text/plain; charset=utf-8' ],
-             [ 'Please enter your credentials.' ] ]
-                 unless (($creds->{password} eq 'logout')
-                         and ($creds->{login} eq 'logout'));
+    return LedgerSMB::PSGI::Util::unauthorized()
+        unless (($creds->{password} eq 'logout')
+                and ($creds->{login} eq 'logout'));
     return logout($request);
 }
 

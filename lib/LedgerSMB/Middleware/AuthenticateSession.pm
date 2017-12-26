@@ -28,11 +28,11 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use Data::Dumper;
-use HTTP::Status qw{ HTTP_SEE_OTHER HTTP_UNAUTHORIZED };
 use Plack::Request;
 use Plack::Util;
 
+use LedgerSMB::DBH;
+use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
 
 =head1 METHODS
@@ -59,7 +59,7 @@ sub call {
             $env->{'lsmb.company'} ||= LedgerSMB::Sysconfig::default_db;
         }
         else {
-            return _unauthorized();
+            return LedgerSMB::PSGI::Util::unauthorized();
         }
     }
 
@@ -75,14 +75,14 @@ sub call {
         $env->{'lsmb.db'} = LedgerSMB::DBH->connect($env->{'lsmb.company'},
                                                     $creds->{login},
                                                     $creds->{password})
-            or return _unauthorized();
+            or return LedgerSMB::PSGI::Util::unauthorized();
 
         my $extended_cookie = _verify_cookie($env->{'lsmb.db'},
                                              $creds->{login},
                                              $creds->{password},
                                              $env->{'lsmb.company'},
                                              $session_cookie);
-        return _session_timed_out()
+        return LedgerSMB::PSGI::Util::session_timed_out()
             if ! $extended_cookie;
 
         my $res = $self->app->($env);
@@ -104,19 +104,6 @@ sub call {
     return $self->app->($env);
 }
 
-sub _unauthorized {
-    return [ HTTP_UNAUTHORIZED,
-             [ 'Content-Type' => 'text/plain; charset=utf-8',
-               'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
-             [ 'Please enter your credentials' ]
-        ];
-}
-
-sub _session_timed_out {
-    return [ HTTP_SEE_OTHER,
-             [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
-             [] ];
-}
 
 sub _verify_cookie {
     my ($dbh, $login, $password, $company, $cookie) = @_;

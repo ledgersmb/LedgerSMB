@@ -19,7 +19,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
-use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER HTTP_UNAUTHORIZED HTTP_FOUND);
+use HTTP::Status qw( HTTP_FOUND );
 
 use CGI::Emulate::PSGI;
 use Try::Tiny;
