@@ -26,7 +26,7 @@ pager = less
 [ValuesAndExpressions::ProhibitInterpolationOfLiterals]
     set_themes = lsmb lsmb_new
 [BuiltinFunctions::ProhibitStringySplit]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [BuiltinFunctions::ProhibitUniversalCan]
     set_themes = lsmb lsmb_new
 [ClassHierarchies::ProhibitExplicitISA]

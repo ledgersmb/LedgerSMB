@@ -301,7 +301,7 @@ my $payment_template =  LedgerSMB::Template->new(
 
 $payment_template->render({ request => { script => '' },
                             payment => $payment });
-my @output =  split "\n", $payment_template->{output};
+my @output =  split /\n/, $payment_template->{output};
 is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
 is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
