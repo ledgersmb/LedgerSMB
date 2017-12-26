@@ -93,7 +93,8 @@ sub psgi_app {
     my $request = LedgerSMB->new($psgi_req->parameters, $env->{'lsmb.script'},
                                  $env->{QUERY_STRING},
                                  $psgi_req->uploads, $psgi_req->cookies,
-                                 $auth, $env->{'lsmb.db'});
+                                 $auth, $env->{'lsmb.db'},
+                                 $env->{'lsmb.company'});
 
     $LedgerSMB::App_State::Locale = $request->{_locale};
     $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
@@ -103,9 +104,6 @@ sub psgi_app {
     my $action = $env->{'lsmb.action'};
     my ($status, $headers, $body);
     try {
-        $request->clear_session
-            if $env->{'lsmb.want_cleared_session'};
-
         if ($env->{'lsmb.want_db'}) {
             $request->initialize_with_db();
         }

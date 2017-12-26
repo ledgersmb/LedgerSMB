@@ -97,7 +97,7 @@ sub authenticate {
 
     if (!$request->{dbonly}
         # This call to ::check() is in practice a call to ::_create()
-        && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
+        && ! LedgerSMB::Session::check('', $request)) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
 

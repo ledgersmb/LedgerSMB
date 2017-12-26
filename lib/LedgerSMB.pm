@@ -93,14 +93,6 @@ Loads user configuration info from LedgerSMB::User
 
 Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
 
-=item clear_session()
-
-Clears the session cookie. Only has effect before verification.
-
-=item verify_session()
-
-This verifies the validity of the session cookie.
-
 =item initialize_with_db
 
 This function sets up the db handle for the request
@@ -185,7 +177,7 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 sub new {
     my ($class, $cgi_args, $script_name, $query_string,
-        $uploads, $cookies, $auth, $db) = @_;
+        $uploads, $cookies, $auth, $db, $company) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -206,10 +198,10 @@ sub new {
     $self->{_auth} = $auth;
     $self->{script} = $script_name;
     $self->{dbh} = $db;
+    $self->{company} = $company;
 
     $self->_process_args($cgi_args);
     $self->_set_default_locale();
-    $self->_process_cookies();
 
     return $self;
 }
@@ -243,25 +235,6 @@ sub close_form {
     );
     delete $self->{form_id};
     return $vars[0]->{form_close};
-}
-
-sub clear_session {
-    my ($self) = @_;
-
-    $self->{cookie} = '';
-
-    return undef;
-}
-
-sub verify_session {
-    my ($self) = @_;
-
-    if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
-        $logger->error('Session did not check');
-        return 0;
-    }
-    $logger->debug('session_check completed OK');
-    return 1;
 }
 
 sub initialize_with_db {
@@ -343,21 +316,6 @@ sub _process_args {
         next if ! @values;
 
         $self->{$key} = (@values == 1) ? $values[0] : \@values;
-    }
-    return;
-}
-
-sub _process_cookies {
-    my ($self) = @_;
-
-    $self->{cookie} =
-        $self->{_cookies}->{$LedgerSMB::Sysconfig::cookie_name};
-
-    if (! $self->{company} && $self->{cookie}) {
-        my $ccookie = $self->{cookie};
-        $ccookie =~ s/.*:([^:]*)$/$1/;
-        $self->{company} = $ccookie
-            unless $ccookie eq 'Login';
     }
     return;
 }
