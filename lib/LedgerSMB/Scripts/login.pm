@@ -150,7 +150,7 @@ sub login {
     my ($request) = @_;
 
     if (!$request->{_user}){
-        __default($request);
+        return __default($request);
     }
 
     return LedgerSMB::Scripts::menu::root_doc($request);
