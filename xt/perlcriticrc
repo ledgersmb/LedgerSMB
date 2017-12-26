@@ -26,13 +26,13 @@ pager = less
 [ValuesAndExpressions::ProhibitInterpolationOfLiterals]
     set_themes = lsmb lsmb_new
 [BuiltinFunctions::ProhibitStringySplit]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [BuiltinFunctions::ProhibitUniversalCan]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [ClassHierarchies::ProhibitExplicitISA]
-    set_themes = lsmb lsmb_new lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
 [ControlStructures::ProhibitMutatingListFunctions]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [ControlStructures::ProhibitUnreachableCode]
     set_themes = lsmb lsmb_new
 [InputOutput::ProhibitBarewordFileHandles]
