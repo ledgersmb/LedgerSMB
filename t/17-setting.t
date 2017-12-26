@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
 {
-  no strict 'refs'; # avoiding addming more dependencies 
+  no strict 'refs'; # avoiding addming more dependencies
                     # so doing mocking by hand
 
   no warnings 'redefine';
@@ -21,4 +21,4 @@ use warnings;
   is(LedgerSMB::Setting->dbh(), 'db', 'got mocked db return');
   is(LedgerSMB::Setting->get('database'), '123', 'got mocked value back');
 
-} 
+}

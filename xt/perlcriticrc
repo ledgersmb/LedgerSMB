@@ -4,7 +4,8 @@
 
 #  lsmb         -- includes all themes we want to use 
 #  lsmb_new     -- themes enforced on 'new' code
-#  lsmb_old     --  themes enforced on 'old' code; subset of lsmb_new
+#  lsmb_old     -- themes enforced on 'old' code; subset of lsmb_new
+#  lsmb_tests   -- themes enforced on tests
 #  lsmb_wip     -- themes we are trying to use on 'new' code 
 #  lsmb_old_wip -- themes we are trying to use on 'old' code, subset of lsmb_wip
 
@@ -75,10 +76,10 @@ pager = less
 
 
 [CodeLayout::ProhibitTrailingWhitespace]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
     
 [CodeLayout::ProhibitHardTabs]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
     allow_leading_tabs = 0
 
 
