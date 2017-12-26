@@ -28,22 +28,26 @@ sub test_files {
 }
 
 sub collect {
-    return if $File::Find::name !~ m/\.(pm|pl)$/;
+    return if $File::Find::name !~ m/\.(pm|pl|t)$/;
 
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'lib/', 'old/');
+find(\&collect, 'lib/', 'old/', 't/', 'xt/');
 
 my @on_disk_oldcode =
     grep { m#^old/#  }
     @on_disk;
 
-@on_disk =
-    grep { ! m#^old/# }
+my @on_disk_tests =
+    grep { m#^(t|xt)/# }
     @on_disk;
 
-plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
+@on_disk =
+    grep { ! m#^(old|t|xt)/# }
+    @on_disk;
+
+plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode) + scalar(@on_disk_tests);
 
 test_files(
     Perl::Critic->new(
@@ -65,5 +69,13 @@ test_files(
     \@on_disk_oldcode
 );
 
-
+test_files(
+    Perl::Critic->new(
+        -only => 1,
+        -profile => 'xt/perlcriticrc',
+        -severity => 1,
+        -theme => 'lsmb_tests',
+    ),
+    \@on_disk_tests
+);
 
