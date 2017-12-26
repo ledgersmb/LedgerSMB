@@ -38,7 +38,7 @@ my %caps = (
           remote_server_addr => $remote_server_addr
 );
 
-my $driver = new Selenium::Remote::Driver(%caps)
+my $driver = Selenium::Remote::Driver->new(%caps)
           || die "Unable to connect to remote browser";
 
 $driver->set_implicit_wait_timeout(30000); # 30s

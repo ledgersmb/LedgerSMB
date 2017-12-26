@@ -114,7 +114,7 @@ SKIP: {
                 or !defined $ENV{LSMB_ADMIN_FNAME}
                 or !defined $ENV{LSMB_ADMIN_LNAME});
      # Move to LedgerSMB::DBObject::Admin calls.
-     my $lsmb = new LedgerSMB;
+     my $lsmb = LedgerSMB->new;
      ok(defined $lsmb, '$lsmb defined');
      isa_ok($lsmb, 'LedgerSMB');
      $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",

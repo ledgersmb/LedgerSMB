@@ -30,11 +30,11 @@ $skipdbtests = 0 if $LedgerSMB::App_State::DBH;
 my $no_format_message = qr/LedgerSMB::PGNumber No Format Set/;
 my $nan_message       = qr/LedgerSMB::PGNumber Invalid Number/;
 my @r;
-my $form = new Form;
+my $form = Form->new;
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new;
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 
