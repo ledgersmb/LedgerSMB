@@ -7,39 +7,48 @@
 # LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf
 
 [main]
+
+# Designate the authentication module in the LedgerSMB::Auth:: namespace
+# to be loaded to handle authentication.  LedgerSMB comes with only the
+# DB authentication module included.
 auth = DB
-logging  = 0
-# Be aware of tempdir setting. If client_browser and server_apache on same 
-# machine, sharing tmp-dir , problems 'Permission denied' if server tries to 
+
+# Be aware of tempdir setting. If client_browser and server_apache on same
+# machine, sharing tmp-dir , problems 'Permission denied' if server tries to
 # write temp-file which already exists as client-owned
 #
-# Note tempdir is used as the basename of the dir, the real dirname is equivalent to....
+# Note tempdir is used as the basename of the dir, the real dirname is
+# equivalent to....
 #    /tmp/ledgersmb-$EUID/
-#  If you specify a different dir to /tmp/ledgersmb ensure it's parent is writable by the running user.
+# If you specify a different dir to /tmp/ledgersmb ensure it's parent is
+# writable by the running user.
 tempdir = /tmp/ledgersmb
 
-# This is the logical CSS directory.  I.e. it is what comes before the 
-# ledgersmb.css in the url.  Example might be /my_css_dir/ or 
+# This is the logical CSS directory.  I.e. it is what comes before the
+# ledgersmb.css in the url.  Example might be /my_css_dir/ or
 # http://localhost/other_css_dir/
 cssdir = css/
 
-# THis is the location on the file system where the css files are, for editing 
+# This is the location on the file system where the css files are, for editing
 # and selection.  An example might be /var/www/ledgersmb_css/
 fs_cssdir = css/
 
-# If set to a true value this caches templates.  Typically it will be set to 0 
+# If set to a true value this caches templates.  Typically it will be set to 0
 # to disable or 1 to enable.
-
 cache_templates = 0
 
 # Set language for login and admin pages
-language = 
+language =
 
+# Set the date format for the admin pages
+#  (default: yyyy-mm-dd; unset means detected from the browser)
+date_format = yyyy-mm-dd
+
+# todo
 log_level = ERROR
+
 #DBI_TRACE = 1=/tmp/dbi.trace
 DBI_TRACE = 0
-# For Windows, uncomment the pathsep line=
-# pathsep = ;
 
 # Maximum POST size to prevent DoS (4MB default)
 max_post_size = 4194304
@@ -80,6 +89,12 @@ backupdir = /tmp/ledgersmb-backups
 
 localepath = locale/po
 
+# location where compiled templates are stored
+#
+# When relative, appended to the directory specified in the 'tempdir' variable
+#
+#templates_cache = lsmb_templates
+
 [programs]
 # program to use for file compression
 gzip       = gzip -S .gz
@@ -89,7 +104,7 @@ gzip       = gzip -S .gz
 # other than vanilla latex and pdflatex, such as the xe varieties of either one,
 # if unicode is required.
 #
-# If these are not set, the package defaults (set when you installed 
+# If these are not set, the package defaults (set when you installed
 # Template::Latex) will be used
 #
 # pdflatex = /usr/bin/pdflatex
@@ -98,18 +113,21 @@ gzip       = gzip -S .gz
 #
 
 [mail]
-### How to send mail.  The sendmail command is used unless smtphost is set.
+# The sendmail command is used to send mail unless smtphost is set.
 sendmail   = /usr/bin/sendmail
+
+#
 # smtphost = 127.0.0.1
 # smtptimeout = 60
 # backup_email_from = backups@lsmb_hosting.com
 
 [printers]
 # Available printers
-Laser      = lpr -Plaser
-Epson      = lpr -PEpson
+#Laser      = lpr -Plaser
+#Epson      = lpr -PEpson
 
 [database]
+
 # Sets database connection parameters.  Note that default_db can be left blank
 # if you want to force people to enter a company name at login.
 port = 5432
@@ -124,12 +142,21 @@ sslmode = prefer
 # This is the boolean indicating if dojo's compacted output ("built output")
 # should be used or the development version [1 = 'true' ==> 'built version']
 #
-# this should be used in versions you download from packages, but should 
-# NOT be used when running directly from version control software because 
+# this should be used in versions you download from packages, but should
+# NOT be used when running directly from version control software because
 # you cannot guarantee you are running the correct versions of dojo
 # widgets with your aplication in that case.
 #
 dojo_built = 0
+
+[template_format]
+# This is the file format allowed to export reports
+# Allowed values are 1, 0 or disabled. The values will be checked at
+# load time against module availability and loadability if not disabled.
+template_latex = 0
+template_xls = 0
+template_xlsx = 0
+template_ods = 0
 
 
 [log4perl_config_modules_loglevel]
