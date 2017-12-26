@@ -69,7 +69,7 @@ pager = less
 [Variables::ProhibitPerl4PackageNames]
     set_themes = lsmb lsmb_new lsmb_tests
 [Variables::ProhibitUnusedVariables]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Variables::ProtectPrivateVars]
     set_themes = lsmb lsmb_new lsmb_tests
 [Variables::RequireLexicalLoopIterators]
