@@ -599,7 +599,7 @@ sub _get_linked_accounts {
 }
 
 
-=item upgrade_settigs
+=item upgrade_settings
 
 =cut
 
@@ -735,9 +735,12 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (_applicable_upgrade_tests($dbinfo)) {
+        next if $check->skip ne 'Disabled'
+             && defined $request->{"skip_$request->{check}"}
+             && $request->{"skip_$request->{check}"} eq 'On';
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->name;
+            or die 'Failed to execute pre-migration check ' . $check->name . ', ' . $sth->errstr;
         if ($sth->rows > 0){ # Check failed --CT
              return _failed_check($request, $check, $sth);
         }
@@ -779,72 +782,66 @@ sub _failed_check {
     my $hiddens = {
        check => $check->name,
 verify_check => md5_hex($check->test_query),
-    database => $request->{database}
+    database => $request->{database},
     };
+    my @skip_keys = grep /^skip_/, keys %$request;
+    $hiddens->{@skip_keys} = $request->{@skip_keys};
+    warn np $hiddens;
 
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-      my $id = $row->{$check->{id_column}};
+      my $count = 1+scalar(@$rows);
+      #TODO: A '' will fail with invalid input syntax in fix_tests - YL
+      my $id = join(',',map { $row->{$_} // '' } @{$check->id_columns});
       for my $column (@{$check->columns // []}) {
         my $selectable_value = $selectable_values{$column};
+        my $name = $column . '_' . $count;
         $row->{$column} =
            ( defined $selectable_value && @$selectable_value )
            ? { select => {
-                   name => $column . "_$id",
-                   id => $id,
+                   name => $name,
+                   id => $count,
                    options => $selectable_value,
                    default_blank => ( 1 != @$selectable_value )
            } }
            : { input => {
-                   name => $column . "_$id",
+                   name => $name,
                    value => $row->{$column} // '',
                    type => 'text',
                    size => 15,
           } };
       };
+      $hiddens->{"id_$count"} = $id;
       push @$rows, $row;
-      my $count = scalar(@$rows);
-      $hiddens->{"id_$count"} = $row->{$check->id_column};
     }
     $hiddens->{count} = scalar(@$rows);
     $sth->finish();
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
-    my %buttons = map { $_ => 1 } @{$check->buttons};
+    my %buttons_set = map { $_ => 1 } @{$check->buttons};
     my $buttons;
-    push @$buttons,
-           { type => 'submit',
-             name => 'action',
-            value => 'fix_tests',
-          tooltip => { id => 'action-fix-tests',
-                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Save and Retry'}),
-                       position => 'above'
-                     },
-             text => $request->{_locale}->text('Save and Retry'),
-            class => 'submit' }
-        if $check->columns;
-    push @$buttons,
-           { type => 'submit',
-             name => 'action',
-            value => 'cancel',
-          tooltip => { id => 'action-cancel',
-                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Cancel'}),
-                       position => 'above'
-                     },
-             text => $request->{_locale}->text('Cancel'),
-            class => 'submit' }
-        if $buttons{Cancel} or scalar($check->columns) == 0;
-    push @$buttons,
-           { type => 'submit',
-             name => 'action',
-            value => 'force',
-          tooltip => { id => 'action-force',
-                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Force'}),
-                       position => 'above'
-                     },
-             text => $request->{_locale}->text('Force'),
-            class => 'submit' }
-        if $buttons{Force} && $check->{force_queries};
+    for (
+        { value => 'fix_tests', label => 'Save and Retry', cond => defined($check->{columns})},
+        { value => 'cancel',    label => 'Cancel',         cond => 1                         },
+        { value => 'force',     label => 'Force',          cond => $check->{force_queries}   },
+        { value => 'skip',      label => 'Skip',           cond => $check->skip eq 'Off'     }
+    ) {
+        if ( $buttons_set{$_->{label}} && $_->{cond}) {
+            push @$buttons, {
+                 type => 'submit',
+                 name => 'action',
+                value => $_->{value},
+              tooltip => { id => 'action-' . $_->{value},
+                           msg => $check->{tooltips}->{$_->{label}}
+                                ? $request->{_locale}->maketext($check->{tooltips}->{$_->{label}})
+                                : undef,
+                           position => 'above'
+                         },
+                 text => $request->{_locale}->maketext($_->{label}),
+                class => 'submit'
+            }
+        }
+    }
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
@@ -896,41 +893,45 @@ sub fix_tests{
 
 
     my $table = $check->table;
-    my $where = $check->id_where;
     my @edits = @{$check->columns};
     # If we are inserting and id is displayed, we want to insert
     # at this exact location
+    my $id_columns = join('|',@{$check->id_columns});
     my $id_displayed = $check->{insert}
-                and grep( /^$check->{id_column}$/, @{$check->display_cols} );
+                and grep( /^($id_columns)$/, @{$check->display_cols} );
 
     my $query;
     if ($check->{insert}) {
         my @_edits = @edits;
-        unshift @_edits, $check->{id_column} if $id_displayed;
+        unshift @_edits, @{$check->id_columns} if $id_displayed;
         my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
         my $values = join(', ', map { '?' } @_edits);
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
     }
     else {
+        my $where = $check->id_where;
         my $setters =
             join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @edits);
-        $query = "UPDATE $table SET $setters WHERE $where = ?";
+        $query = "UPDATE $table SET $setters WHERE $where "
+               . join(' AND ',map {"$_ = ? "} @{$check->id_columns});
     }
     my $sth = $dbh->prepare($query);
 
     for my $count (1 .. $request->{count}){
-        my $id = $request->{"id_$count"};
         my @values;
-        push @values, $id
+        push @values, split(/,/,@{$check->id_columns})
             if $id_displayed;
         for my $edit (@edits) {
-          push @values, $request->{"${edit}_$id"};
+          push @values, $request->{"${edit}_$count"};
         }
-        push @values, $request->{"id_$count"}
+        push @values, split(/,/,$request->{"id_$count"})
            if ! $check->{insert};
 
-        $sth->execute(@values) ||
+        my $rv = $sth->execute(@values) ||
             $request->error($sth->errstr);
+        #TODO: We should abort gracefully
+        die "$rv rows affected instead of only 1"
+            if $rv > 1;
     }
     $sth->finish();
     $dbh->commit;
@@ -1436,15 +1437,30 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 sub force{
     my ($request) = @_;
     my $database = _init_db($request);
+    my $dbinfo = $database->get_info();
 
-    my %test = map { $_->name => $_ } LedgerSMB::Upgrade_Tests->get_tests();
-    my $force_queries = $test{$request->{check}}->{force_queries};
+    my %checks = map { $_->name => $_ } @{$info_applicable_for_upgrade{$dbinfo}};
+    my $check = $checks{$request->{check}};
+    my $force_queries = $check->{force_queries};
 
     for my $force_query ( @$force_queries ) {
         my $dbh = $request->{dbh};
         $dbh->do($force_query);
         $dbh->commit;
     }
+    return upgrade($request);
+}
+
+=item skip
+
+Mark the test to be skipped
+
+=cut
+
+sub skip {
+    my ($request) = @_;
+
+    $request->{"skip_$request->{check}"} = 'On';
     return upgrade($request);
 }
 
