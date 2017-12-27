@@ -177,7 +177,7 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 sub new {
     my ($class, $cgi_args, $script_name, $query_string,
-        $uploads, $cookies, $auth, $db, $company) = @_;
+        $uploads, $cookies, $auth, $db, $company, $create_session_cb) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -199,6 +199,7 @@ sub new {
     $self->{script} = $script_name;
     $self->{dbh} = $db;
     $self->{company} = $company;
+    $self->{_create_session} = $create_session_cb;
 
     $self->_process_args($cgi_args);
     $self->_set_default_locale();

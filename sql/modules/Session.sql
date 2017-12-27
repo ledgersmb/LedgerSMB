@@ -134,6 +134,34 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION session_check(int, text) IS
 $$ Returns a session row.  If no session exists, it returns null$$;
 
+CREATE OR REPLACE FUNCTION session_create()
+RETURNS session AS
+$$
+DECLARE
+    out_row session%ROWTYPE;
+    user_id int;
+BEGIN
+    SELECT id INTO user_id
+      FROM users WHERE username = SESSION_USER;
+
+    IF NOT FOUND THEN
+       RETURN out_row;
+    END IF;
+
+    INSERT INTO session (user_id, token, last_used)
+    VALUES (user_id, md5(random()::text), now())
+    RETURNING * INTO out_row;
+
+    RETURN out_row;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION session_create() IS
+$$ Creates a session for the current session user and returns it.
+
+When no user is found by name of the session user,
+ returns a row with NULL values.$$;
+
 CREATE OR REPLACE FUNCTION unlock_all() RETURNS BOOL AS
 $$
 BEGIN

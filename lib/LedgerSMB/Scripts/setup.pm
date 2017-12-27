@@ -53,8 +53,16 @@ pre-connected to the database.
 
 =cut
 
-sub no_db {
+sub dbonly {
     return 1;
+}
+
+=item no_db_actions
+
+=cut
+
+sub no_db_actions {
+    return qw(__default);
 }
 
 =item clear_session_actions

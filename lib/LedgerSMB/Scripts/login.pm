@@ -41,8 +41,20 @@ a request object /not/ connected to the database.
 =cut
 
 sub no_db_actions {
-    return qw(logout authenticate __default logout_js);
+    return qw(logout __default logout_js);
 }
+
+=item dbonly_actions
+
+Returns an array of actions which should not receive
+a request object /not/ connected to the database.
+
+=cut
+
+sub dbonly_actions {
+    return qw(authenticate);
+}
+
 
 =item clear_session_actions
 
@@ -92,12 +104,9 @@ sub authenticate {
     $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
 
 
-    return LedgerSMB::PSGI::Util::unauthorized()
-        if ! $request->_db_init;
-
     if (!$request->{dbonly}
         # This call to ::check() is in practice a call to ::_create()
-        && ! LedgerSMB::Session::check('', $request)) {
+        && ! $request->{_create_session}->()) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
 

@@ -94,13 +94,14 @@ sub psgi_app {
                                  $env->{QUERY_STRING},
                                  $psgi_req->uploads, $psgi_req->cookies,
                                  $auth, $env->{'lsmb.db'},
-                                 $env->{'lsmb.company'});
+                                 $env->{'lsmb.company'},
+                                 $env->{'lsmb.create_session_cb'});
 
     $request->{action} = $env->{'lsmb.action_name'};
     my ($status, $headers, $body);
     try {
         LedgerSMB::App_State::run_with_state sub {
-            if ($env->{'lsmb.want_db'}) {
+            if ($env->{'lsmb.want_db'} && !$env->{'lsmb.dbonly'}) {
                 $request->initialize_with_db();
             }
             else {
