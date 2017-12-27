@@ -116,7 +116,7 @@ sub _verify_cookie {
     my ($dbh, $login, $password, $company, $cookie) = @_;
     my ($session_id, $token, $cookie_company) = split(/:/, $cookie, 3);
     my ($extended_session) = $dbh->selectall_array(
-        qq{SELECT * FROM session_check(?, ?)}, { Slice => {} },
+        q{SELECT * FROM session_check(?, ?)}, { Slice => {} },
         $session_id, $token);
     $dbh->commit if $extended_session->{session_id};
 
