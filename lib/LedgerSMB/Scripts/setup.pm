@@ -53,7 +53,10 @@ pre-connected to the database.
 
 =cut
 
-sub dbonly {
+sub no_db {
+    # if we switch our entrypoints to 'dbonly',
+    # there are problems with the case where
+    # a new database must be created.
     return 1;
 }
 
