@@ -21,12 +21,10 @@ use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
-my @r;
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 my $form;
 my $myconfig;
 my $template;
-my $FH;
 my $locale;
 
 $locale = LedgerSMB::Locale->get_handle('fr');
@@ -316,10 +314,10 @@ SKIP: {
         'template' => '04-template', 'locale' => $locale, no_auto_output => 1);
     $template->render({media => 'test'});
     $template->output(media => 'test');
+    my $LPR_TEST;
+    ok(open ($LPR_TEST, '<', "$temp/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
 
-    ok (open (LPR_TEST, '<', "$temp/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
-
-    my $line1 = <LPR_TEST>;
+    my $line1 = <$LPR_TEST>;
 
     like($line1, qr/^%PDF/, 'output file is pdf');
 }

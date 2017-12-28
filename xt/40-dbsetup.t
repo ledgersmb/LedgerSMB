@@ -45,9 +45,9 @@ ok($db->apply_changes, 'applied changes');
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){
-    open (DBLOCK, '>', "$temp/LSMB_TEST_DB");
-    print DBLOCK $ENV{LSMB_NEW_DB};
-    close (DBLOCK);
+    open (my $DBLOCK, '>', "$temp/LSMB_TEST_DB");
+    print $DBLOCK $ENV{LSMB_NEW_DB};
+    close ($DBLOCK);
 }
 
 # Validate that we can copy the database
@@ -142,7 +142,7 @@ SKIP: {
       $dbh->commit;
 };
 
-open  my $log, "< $LedgerSMB::Sysconfig::tempdir/dblog";
+open  my $log, '<', "$LedgerSMB::Sysconfig::tempdir/dblog";
 
 my $passed_no_errs = 1;
 while (my $line = <$log>){
