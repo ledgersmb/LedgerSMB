@@ -46,10 +46,6 @@ specified, only those keys are used.  Otherwise all keys are merged.
 If an index is specified, the merged keys are given a form of
 "$key" . "_$index", otherwise the key is used on both sides.
 
-=item set (@attrs)
-
-Copies the given key=>vars to $self. Allows for finer control of
-merging hashes into self.
 
 =item get_relative_url
 
@@ -88,10 +84,6 @@ Returns HTML errors in LedgerSMB. Needs refactored into a general Error class.
 =item get_user_info()
 
 Loads user configuration info from LedgerSMB::User
-
-=item sanitize_for_display()
-
-Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
 
 =item initialize_with_db
 
@@ -375,24 +367,6 @@ sub error {
 
 # Database routines used throughout
 
-sub _db_init {
-    my $self     = shift @_;
-    my %args     = @_;
-    (my $package,my $filename,my $line)=caller;
-    if (!$self->{company}){
-        $self->{company} = $LedgerSMB::Sysconfig::default_db;
-    }
-    if (!($self->{dbh} = LedgerSMB::App_State::DBH)){
-        my $creds = $self->{_auth}->get_credentials;
-        $self->{dbh} = LedgerSMB::DBH->connect($self->{company},
-            $creds->{login}, $creds->{password})
-            || return 0;
-    }
-    LedgerSMB::App_State::set_DBH($self->{dbh});
-    LedgerSMB::App_State::set_DBName($self->{company});
-    return 1;
-}
-
 sub dberror{
    my $self = shift @_;
    my $state_error = {};
@@ -467,18 +441,6 @@ sub merge {
     }
     $logger->debug("end caller \$filename=$filename \$line=$line");
     return;
-}
-
-sub set {
-
-    my $self = shift @_;
-    my %args = @_;
-
-    for my $arg (keys(%args)) {
-        $self->{$arg} = $args{$arg};
-    }
-    return 1;
-
 }
 
 sub to_json {
