@@ -143,11 +143,6 @@ sub psgi_app {
            qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
              if $request->{'request.download-cookie'};
 
-    # Need to set auth cookie when one is created in login.pl::authenticate()
-    push @$headers,
-         ( 'Set-Cookie' =>
-           qq|$request->{_new_session_cookie_value}; path=$path$secure| )
-        if $request->{_new_session_cookie_value};
     return [ $status, $headers, $body ];
 }
 

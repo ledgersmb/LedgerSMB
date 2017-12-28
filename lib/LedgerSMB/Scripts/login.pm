@@ -77,8 +77,6 @@ Displays the login screen.
 sub __default {
     my ($request) = @_;
 
-    $request->{_new_session_cookie_value} =
-        qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
     $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
     my $template = LedgerSMB::Template->new_UI(
