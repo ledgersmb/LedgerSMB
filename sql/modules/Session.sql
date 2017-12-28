@@ -139,17 +139,17 @@ RETURNS session AS
 $$
 DECLARE
     out_row session%ROWTYPE;
-    user_id int;
+    users_id int;
 BEGIN
-    SELECT id INTO user_id
+    SELECT id INTO users_id
       FROM users WHERE username = SESSION_USER;
 
     IF NOT FOUND THEN
        RETURN out_row;
     END IF;
 
-    INSERT INTO session (user_id, token, last_used)
-    VALUES (user_id, md5(random()::text), now())
+    INSERT INTO session (users_id, token, last_used)
+    VALUES (users_id, md5(random()::text), now())
     RETURNING * INTO out_row;
 
     RETURN out_row;
@@ -161,6 +161,25 @@ $$ Creates a session for the current session user and returns it.
 
 When no user is found by name of the session user,
  returns a row with NULL values.$$;
+
+CREATE OR REPLACE FUNCTION session_delete(in_session_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+   DELETE FROM session
+     WHERE session_id = in_session_id
+       AND users_id = (select id from users
+                       where username = SESSION_USER);
+
+   RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION session_delete(int) IS
+$$ Removes the session with the id given in the argument.
+Returns TRUE on success.
+
+Note: only users owning a session may delete that session. $$;
 
 CREATE OR REPLACE FUNCTION unlock_all() RETURNS BOOL AS
 $$

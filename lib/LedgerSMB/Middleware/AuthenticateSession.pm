@@ -101,17 +101,29 @@ sub call {
     if ($env->{'lsmb.want_db'}) {
         my $auth = LedgerSMB::Auth::factory($env);
         my $creds = $auth->get_credentials;
-
         if (! $env->{'lsmb.dbonly'}) {
             $env->{'lsmb.company'} = $1
                 if $session_cookie =~ m/.*:([^:]*)$/ && $1 ne 'Login';
         }
         else {
+            my ($unused_id, $unused_token, $cookie_company) =
+                split(/:/, $session_cookie // '', 3);
+
             $env->{'lsmb.company'} ||=
                 eval { $req->parameters->get_one('company') } ||
                 # temporarily accept a 'database' parameter too,
                 # while we cut over 'setup.pl' in a later commit.
                 eval { $req->parameters->get_one('database') } ||
+                # we fall back to what the cookie has to offer before
+                # falling back to using the default database, because
+                # login.pl::logout() does not require a valid session
+                # and is therefor marked 'dbonly'; it does however require
+                # a session cookie in order to be able to delete the
+                # session from the database indicated by the cookie.
+                $cookie_company ||
+                ###TODO: falling back generally seems like a good idea,
+                # but in case of login.pl::logout() it would seem better
+                # just to report an error...
                 LedgerSMB::Sysconfig::default_db;
         }
         return LedgerSMB::PSGI::Util::unauthorized()
@@ -130,7 +142,13 @@ sub call {
                                                $session_cookie);
             return LedgerSMB::PSGI::Util::session_timed_out()
                 if ! $extended_cookie;
+
             # create a session invalidation callback here.
+            $env->{'lsmb.invalidate_session_cb'} = sub {
+                $extended_cookie = _delete_session($dbh, $extended_cookie);
+
+                return $extended_cookie;
+            };
         }
         else {
             # we don't have a session, but the route may want to create one
@@ -140,7 +158,16 @@ sub call {
 
                 return $extended_cookie;
             };
+            # we don't have a validated session, but the route may want
+            # to invalidate one if we have one anyway.
+            # create a session invalidation callback here.
+            $env->{'lsmb.invalidate_session_cb'} = sub {
+                $extended_cookie = _delete_session($dbh, $session_cookie);
+
+                return $extended_cookie;
+            };
         }
+
         my $res = $self->app->($env);
         $dbh->rollback;
         $dbh->disconnect;
@@ -184,6 +211,16 @@ sub _create_session {
     $dbh->commit if $created_session->{session_id};
 
     return _session_to_cookie_value($created_session, $company);
+}
+
+sub _delete_session {
+    my ($dbh, $cookie) = @_;
+    my ($session_id, $token, $cookie_company) = split(/:/, $cookie, 3);
+
+    $dbh->selectall_array(q{SELECT session_delete(?)}, {}, $session_id)
+        or die $dbh->errstr;
+
+    return 'Login';
 }
 
 sub _session_to_cookie_value {

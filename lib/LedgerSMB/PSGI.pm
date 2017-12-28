@@ -95,7 +95,8 @@ sub psgi_app {
                                  $psgi_req->uploads, $psgi_req->cookies,
                                  $auth, $env->{'lsmb.db'},
                                  $env->{'lsmb.company'},
-                                 $env->{'lsmb.create_session_cb'});
+                                 $env->{'lsmb.create_session_cb'},
+                                 $env->{'lsmb.invalidate_session_cb'});
 
     $request->{action} = $env->{'lsmb.action_name'};
     my ($status, $headers, $body);

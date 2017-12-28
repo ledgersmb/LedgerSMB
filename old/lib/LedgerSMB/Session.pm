@@ -123,34 +123,6 @@ sub check {
     }
 }
 
-=item destroy
-
-Destroys a session and removes it from the db.
-
-=cut
-
-sub destroy {
-    my ($form) = @_;
-
-    # use the central database handle
-    my $dbh = $form->{dbh};
-
-    my $deleteExisting = $dbh->prepare( "
-        DELETE FROM session
-               WHERE session_id = ?
-    " );
-
-    $deleteExisting->execute($form->{session_id})
-      || $form->dberror(
-        __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
-
-    #delete the cookie in the browser
-    $form->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=Login|;
-    $dbh->commit; # called before anything else on the page, make sure the
-                  # session is really gone.  -CT
-}
-
 1;
 
 

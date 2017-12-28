@@ -41,7 +41,7 @@ a request object /not/ connected to the database.
 =cut
 
 sub no_db_actions {
-    return qw(logout __default logout_js);
+    return qw(__default logout_js);
 }
 
 =item dbonly_actions
@@ -52,7 +52,7 @@ a request object /not/ connected to the database.
 =cut
 
 sub dbonly_actions {
-    return qw(authenticate);
+    return qw(logout authenticate);
 }
 
 
@@ -105,7 +105,6 @@ sub authenticate {
 
 
     if (!$request->{dbonly}
-        # This call to ::check() is in practice a call to ::_create()
         && ! $request->{_create_session}->()) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
@@ -142,12 +141,8 @@ Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
 sub logout {
     my ($request) = @_;
     $request->{callback}   = '';
-    $request->{endsession} = 1;
 
-    try { # failure only means we clear out the session later
-        $request->_db_init();
-        LedgerSMB::Session::destroy($request);
-    };
+    $request->{_logout}->();
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'logout',
