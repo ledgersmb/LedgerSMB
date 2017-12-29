@@ -232,7 +232,6 @@ sub get_info {
     full_version => undef,
           status => undef,
     };
-    local $@ = undef;
 
     my $dbh = eval { $self->connect({PrintError => 0, AutoCommit => 0}) };
     if (!$dbh){ # Could not connect, try to validate existance by connecting

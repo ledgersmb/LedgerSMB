@@ -52,7 +52,6 @@ sub wait_for_page {
         sub {
 
             if ($ref) {
-                local $@;
                 # if there's a reference element,
                 # wait for it to go stale (raise an exception)
                 eval {

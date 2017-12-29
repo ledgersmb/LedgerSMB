@@ -347,7 +347,6 @@ Returns true if the tracking system needs to be initialized
 
 sub needs_init {
     my ($dbh) = @_;
-    local $@ = undef;
     my $rows = eval { $dbh->prepare(
        'select 1 from db_patches'
     )->execute(); };

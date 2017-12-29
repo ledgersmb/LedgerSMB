@@ -50,9 +50,6 @@ if ($EUID == 0) {
         );
 }
 
-
-
-local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 
 =head1 FUNCTIONS

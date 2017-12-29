@@ -270,16 +270,15 @@ sub get_for_template{
         binmode $fh, ':bytes';
         print $fh $result->{content} or die "Cannot print to file $full_path";;
         close $fh or die "Cannot close file $full_path";
-        { #pre-5.14 compatibility block
-            local $@ = undef; # pre-5.14, do not die() in this block
-            eval { # Block used so that Image::Size is optional
-                require Image::Size;
-                my ($x, $y);
-                ($x, $y) = imgsize(\{$result->{content}});
-                $result->{sizex} = $x;
-                $result->{sizey} = $y;
-            };
-        }
+
+        eval { # Block used so that Image::Size is optional
+            require Image::Size;
+            my ($x, $y);
+            ($x, $y) = imgsize(\{$result->{content}});
+            $result->{sizex} = $x;
+            $result->{sizey} = $y;
+        };
+
         if ($result->{file_class} == FC_PART){
            $result->{ref_key} = $result->{file_name};
            $result->{ref_key} =~ s/-.*//;
