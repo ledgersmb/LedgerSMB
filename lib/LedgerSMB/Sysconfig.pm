@@ -638,10 +638,13 @@ sub check_permissions {
 }
 
 # if you have latex installed set to 1
+###TODO-LOCALIZE-DOLLAR-AT
 our $latex = 0;
 
 
 sub override_defaults {
+
+    local $@ = undef; # protect existing $@
 
     # Check Latex
     $latex = eval {require Template::Plugin::Latex; 1;};

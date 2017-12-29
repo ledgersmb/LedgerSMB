@@ -4,6 +4,7 @@ use Module::CPANfile;
 use File::Find;
 
 BEGIN {
+ local $@;
   eval {
    require Test::Dependencies;
    if ($Test::Dependencies::VERSION < 0.20) {

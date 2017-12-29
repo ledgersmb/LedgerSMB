@@ -228,7 +228,7 @@ sub send {
     #     header set.  This ensures that MIME::Lite will not rewrite
     #     it during the preparation of the message.
     $self->{_message}->replace( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
-
+    local $@ = undef;
     eval {
         if ( $LedgerSMB::Sysconfig::smtphost ) {
             $self->{_message}->send(

@@ -228,9 +228,10 @@ Parses this from an input string according to the user's dateformat
 
 sub from_input{
     my ($self, $input) = @_;
-
-    return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
-
+    {
+        local $@ = undef;
+        return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
+    }
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
 
