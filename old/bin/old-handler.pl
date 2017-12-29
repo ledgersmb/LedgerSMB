@@ -99,6 +99,10 @@ $locale->encoding('UTF-8');
 
 try {
     $form->db_init( \%myconfig );
+    print 'Set-Cookie: '
+        . LedgerSMB::Sysconfig::cookie_name . '='
+        . $form->{_new_session_cookie_value} . "\n"
+        if $form->{_new_session_cookie_value};
 
     # we get rid of myconfig and use User as a real object
     %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };

@@ -90,13 +90,12 @@ sub psgi_app {
     my $auth = LedgerSMB::Auth::factory($env);
 
     my $psgi_req = Plack::Request->new($env);
-    my $request = LedgerSMB->new($psgi_req->parameters, $env->{'lsmb.script'},
-                                 $env->{QUERY_STRING},
-                                 $psgi_req->uploads, $psgi_req->cookies,
-                                 $auth, $env->{'lsmb.db'},
-                                 $env->{'lsmb.company'},
-                                 $env->{'lsmb.create_session_cb'},
-                                 $env->{'lsmb.invalidate_session_cb'});
+    my $request = LedgerSMB->new(
+        $psgi_req->parameters, $env->{'lsmb.script'}, $env->{QUERY_STRING},
+        $psgi_req->uploads, $psgi_req->cookies, $auth, $env->{'lsmb.db'},
+        $env->{'lsmb.company'},
+        $env->{'lsmb.session_id'}, $env->{'lsmb.create_session_cb'},
+        $env->{'lsmb.invalidate_session_cb'});
 
     $request->{action} = $env->{'lsmb.action_name'};
     my ($status, $headers, $body);
@@ -134,15 +133,6 @@ sub psgi_app {
         }
     };
 
-
-    my $path = $env->{SCRIPT_NAME};
-    $path =~ s|[^/]*$||g;
-    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
-    push @$headers,
-         ( 'Set-Cookie' =>
-           qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
-             if $request->{'request.download-cookie'};
-
     return [ $status, $headers, $body ];
 }
 
@@ -165,7 +155,7 @@ sub _run_old {
             }
         };
 
-       exit;
+        exit;
     }
     return;
 }
@@ -204,6 +194,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
         for  (@LedgerSMB::Sysconfig::newscripts);

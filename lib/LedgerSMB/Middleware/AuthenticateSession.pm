@@ -102,11 +102,16 @@ sub call {
         my $auth = LedgerSMB::Auth::factory($env);
         my $creds = $auth->get_credentials;
         if (! $env->{'lsmb.dbonly'}) {
-            $env->{'lsmb.company'} = $1
-                if $session_cookie =~ m/.*:([^:]*)$/ && $1 ne 'Login';
+           my ($unused_token, $cookie_company);
+           ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
+               split(/:/, $session_cookie // '', 3);
+
+            $env->{'lsmb.company'} = $cookie_company
+                if $cookie_company && $cookie_company ne 'Login';
         }
         else {
-            my ($unused_id, $unused_token, $cookie_company) =
+            my ($unused_token, $cookie_company);
+            ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
                 split(/:/, $session_cookie // '', 3);
 
             $env->{'lsmb.company'} ||=

@@ -183,7 +183,7 @@ sub cleanup {
 =head2 run_with_state($state, &block)
 
 Runs the block with the App_State parameters passed in C<$state>,
-resetting the state after the block exists.
+resetting the state after the block exits.
 
 =cut
 
