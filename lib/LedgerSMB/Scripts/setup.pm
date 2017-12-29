@@ -54,7 +54,30 @@ pre-connected to the database.
 =cut
 
 sub no_db {
+    # if we switch our entrypoints to 'dbonly',
+    # there are problems with the case where
+    # a new database must be created.
     return 1;
+}
+
+=item no_db_actions
+
+=cut
+
+sub no_db_actions {
+    return qw(__default);
+}
+
+=item clear_session_actions
+
+Returns an array of actions which should have the session
+(cookie) cleared before verifying the session and being
+dispatched to.
+
+=cut
+
+sub clear_session_actions {
+    return qw(__default);
 }
 
 

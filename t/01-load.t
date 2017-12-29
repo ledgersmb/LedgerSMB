@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 202;
+use Test::More tests => 206;
 use File::Find;
 
 my @on_disk;
@@ -91,10 +91,13 @@ my @modules =
           'LedgerSMB::File::Transaction',
           'LedgerSMB::Inventory::Adjust',
           'LedgerSMB::Inventory::Adjust_Line',
+          'LedgerSMB::Middleware::AuthenticateSession',
+          'LedgerSMB::Middleware::DisableBackButton',
+          'LedgerSMB::Middleware::DynamicLoadWorkflow',
           'LedgerSMB::old_code', 'LedgerSMB::Part',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
-          'LedgerSMB::PSGI::Preloads',
+          'LedgerSMB::PSGI::Preloads', 'LedgerSMB::PSGI::Util',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
           'LedgerSMB::FileFormats::ISO20022::CAMT053',

@@ -180,6 +180,29 @@ sub cleanup {
     return;
 }
 
+=head2 run_with_state($state, &block)
+
+Runs the block with the App_State parameters passed in C<$state>,
+resetting the state after the block exists.
+
+=cut
+
+sub run_with_state {
+    my $block = shift;
+    my $state = { @_ };
+
+    local ($DBH, $DBName, $User, $Company_Settings,
+           $Locale, $ENV{LSMB_ALWAYS_MONEY})
+        = ($state->{DBH} // $DBH,
+           $state->{DBName} // $DBName,
+           $state->{User} // $User,
+           $state->{Company_Settings} // $Company_Settings,
+           $state->{Locale} // $Locale,
+           $ENV{LSMB_ALWAYS_MONEY});
+
+    return $block->();
+}
+
 =head2 all_periods(is_short $bool)
 
 Returns hashref of localized date data with following members:

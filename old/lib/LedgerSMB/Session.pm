@@ -86,7 +86,7 @@ sub check {
     my ( $cookie, $form ) = @_;
 
    if (($cookie eq 'Login') or ($cookie =~ /^::/) or (!$cookie)){
-        return _create($form);
+       return 0;
     }
     my $dbh = $form->{dbh};
 
@@ -121,110 +121,6 @@ sub check {
         destroy($form);
         return 0;
     }
-}
-
-=item _create
-
-Creates a new session, sets $lsmb->{session_id} to that session, sets cookies,
-etc.
-
-=cut
-
-sub _create {
-    my ($lsmb) = @_;
-    my $dbh = $lsmb->{dbh};
-    my $login = $lsmb->{login};
-    if (!$login) {
-        croak "Missing login data from input\n";
-    }
-
-
-    my $fetchUserID = $dbh->prepare(
-        "SELECT id
-            FROM users
-            WHERE username = ?;"
-    );
-
-    my $seedRandom = $dbh->prepare("SELECT setseed(?);");
-
-    my $fetchSequence =
-      $dbh->prepare("SELECT nextval('session_session_id_seq'), md5(random()::text);");
-
-    my $createNew = $dbh->prepare(
-        "INSERT INTO session (session_id, users_id, token)
-                                        VALUES(?, (SELECT id
-                                                     FROM users
-                                                    WHERE username = SESSION_USER), ?);"
-    );
-
-# Fail early if the user isn't in the users table
-    $fetchUserID->execute($login)
-      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ': Fetch login id: ' );
-    my ( $userID ) = $fetchUserID->fetchrow_array;
-    unless($userID) {
-        $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
-        return 0;
-    }
-
-#doing the random stuff in the db so that LedgerSMB won't
-#require a good random generator - maybe this should be reviewed,
-#pgsql's isn't great either  -CM
-#
-#I think we should be OK.  The random number generator is only a small part
-#of the credentials in 1.3.x, and for people that need greater security, there
-#is always Kerberos....  -- CT
-    $fetchSequence->execute()
-      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ': Fetch sequence id: ' );
-    my ( $newSessionID, $newToken ) = $fetchSequence->fetchrow_array;
-
-    #create a new session
-    $createNew->execute( $newSessionID, $newToken )
-        || return 0;
-    $lsmb->{session_id} = $newSessionID;
-
-    #reseed the random number generator
-    my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );  ## no critic (ProhibitMagicNumbers) sniff
-
-    $seedRandom->execute($randomSeed)
-      || $lsmb->dberror(
-        __FILE__ . ':' . __LINE__ . ': Reseed random generator: ' );
-
-
-    my $newCookieValue = $newSessionID . ':' . $newToken . ':'
-    . $lsmb->{company};
-
-    $lsmb->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
-    $lsmb->{LedgerSMB} = $newCookieValue;
-    return 1;
-}
-
-=item destroy
-
-Destroys a session and removes it from the db.
-
-=cut
-
-sub destroy {
-    my ($form) = @_;
-
-    # use the central database handle
-    my $dbh = $form->{dbh};
-
-    my $deleteExisting = $dbh->prepare( "
-        DELETE FROM session
-               WHERE session_id = ?
-    " );
-
-    $deleteExisting->execute($form->{session_id})
-      || $form->dberror(
-        __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
-
-    #delete the cookie in the browser
-    $form->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=Login|;
-    $dbh->commit; # called before anything else on the page, make sure the
-                  # session is really gone.  -CT
 }
 
 1;

@@ -46,10 +46,6 @@ specified, only those keys are used.  Otherwise all keys are merged.
 If an index is specified, the merged keys are given a form of
 "$key" . "_$index", otherwise the key is used on both sides.
 
-=item set (@attrs)
-
-Copies the given key=>vars to $self. Allows for finer control of
-merging hashes into self.
 
 =item get_relative_url
 
@@ -88,18 +84,6 @@ Returns HTML errors in LedgerSMB. Needs refactored into a general Error class.
 =item get_user_info()
 
 Loads user configuration info from LedgerSMB::User
-
-=item sanitize_for_display()
-
-Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
-
-=item clear_session()
-
-Clears the session cookie. Only has effect before verification.
-
-=item verify_session()
-
-This verifies the validity of the session cookie.
 
 =item initialize_with_db
 
@@ -185,7 +169,8 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 sub new {
     my ($class, $cgi_args, $script_name, $query_string,
-        $uploads, $cookies, $auth) = @_;
+        $uploads, $cookies, $auth, $db, $company, $create_session_cb,
+        $invalidate_session_cb) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -205,10 +190,13 @@ sub new {
     $self->{query_string} = $query_string if defined $query_string;
     $self->{_auth} = $auth;
     $self->{script} = $script_name;
+    $self->{dbh} = $db;
+    $self->{company} = $company;
+    $self->{_create_session} = $create_session_cb;
+    $self->{_logout} = $invalidate_session_cb;
 
     $self->_process_args($cgi_args);
     $self->_set_default_locale();
-    $self->_process_cookies();
 
     return $self;
 }
@@ -242,25 +230,6 @@ sub close_form {
     );
     delete $self->{form_id};
     return $vars[0]->{form_close};
-}
-
-sub clear_session {
-    my ($self) = @_;
-
-    $self->{cookie} = '';
-
-    return undef;
-}
-
-sub verify_session {
-    my ($self) = @_;
-
-    if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
-        $logger->error('Session did not check');
-        return 0;
-    }
-    $logger->debug('session_check completed OK');
-    return 1;
 }
 
 sub initialize_with_db {
@@ -346,21 +315,6 @@ sub _process_args {
     return;
 }
 
-sub _process_cookies {
-    my ($self) = @_;
-
-    $self->{cookie} =
-        $self->{_cookies}->{$LedgerSMB::Sysconfig::cookie_name};
-
-    if (! $self->{company} && $self->{cookie}) {
-        my $ccookie = $self->{cookie};
-        $ccookie =~ s/.*:([^:]*)$/$1/;
-        $self->{company} = $ccookie
-            unless $ccookie eq 'Login';
-    }
-    return;
-}
-
 sub get_relative_url {
     my ($self) = @_;
 
@@ -412,24 +366,6 @@ sub error {
 
 
 # Database routines used throughout
-
-sub _db_init {
-    my $self     = shift @_;
-    my %args     = @_;
-    (my $package,my $filename,my $line)=caller;
-    if (!$self->{company}){
-        $self->{company} = $LedgerSMB::Sysconfig::default_db;
-    }
-    if (!($self->{dbh} = LedgerSMB::App_State::DBH)){
-        my $creds = $self->{_auth}->get_credentials;
-        $self->{dbh} = LedgerSMB::DBH->connect($self->{company},
-            $creds->{login}, $creds->{password})
-            || return 0;
-    }
-    LedgerSMB::App_State::set_DBH($self->{dbh});
-    LedgerSMB::App_State::set_DBName($self->{company});
-    return 1;
-}
 
 sub dberror{
    my $self = shift @_;
@@ -505,18 +441,6 @@ sub merge {
     }
     $logger->debug("end caller \$filename=$filename \$line=$line");
     return;
-}
-
-sub set {
-
-    my $self = shift @_;
-    my %args = @_;
-
-    for my $arg (keys(%args)) {
-        $self->{$arg} = $args{$arg};
-    }
-    return 1;
-
 }
 
 sub to_json {
