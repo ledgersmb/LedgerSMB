@@ -53,7 +53,7 @@ pager = less
 [Modules::RequireEndWithOne]
     set_themes = lsmb lsmb_new  lsmb_old
 [Objects::ProhibitIndirectSyntax]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Subroutines::ProhibitReturnSort]
     set_themes = lsmb lsmb_new lsmb_tests
 [Subroutines::ProhibitSubroutinePrototypes]

@@ -17,13 +17,13 @@ $ENV{REQUEST_METHOD} = 'GET';
 
 
 
-my $lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new;
 ok(defined $lsmb, 'lsmb: defined');
 isa_ok($lsmb, 'LedgerSMB', 'lsmb: correct type');
 ok(defined $lsmb->{version}, 'lsmb: version set');
 ok(defined $lsmb->{dbversion}, 'lsmb: dbversion set');
 
-my $form = new Form;
+my $form = Form->new;
 ok(defined $form, 'form: defined');
 isa_ok($form, 'Form', 'form: correct type');
 ok(defined $form->{version}, 'form: version set');
