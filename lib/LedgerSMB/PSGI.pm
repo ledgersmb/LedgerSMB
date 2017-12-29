@@ -133,15 +133,6 @@ sub psgi_app {
         }
     };
 
-
-    my $path = $env->{SCRIPT_NAME};
-    $path =~ s|[^/]*$||g;
-    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
-    push @$headers,
-         ( 'Set-Cookie' =>
-           qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
-             if $request->{'request.download-cookie'};
-
     return [ $status, $headers, $body ];
 }
 
@@ -203,6 +194,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
         for  (@LedgerSMB::Sysconfig::newscripts);
