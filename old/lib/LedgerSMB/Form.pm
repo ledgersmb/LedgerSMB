@@ -528,7 +528,7 @@ sub header {
     }
     elsif ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.  Let's see about caching.
-        local ($@); # pre-5.14, do not die() in this block
+        local $@;
         $cache = 0 if eval { LedgerSMB::Setting->get('disable_back')};
     }
 
@@ -817,10 +817,8 @@ Calls $form->error if the value is NaN.
 sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
-    }
+    local $@;
+    return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
 
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
         $amount = '0';
@@ -1926,10 +1924,8 @@ $form->all_business_units, and $form->all_taxaccounts are all run.
 sub get_regular_metadata {
     my ($self, $myconfig, $vc, $transdate, $job) = @_;
     my $dbh = $self->{dbh};
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
-    }
+    local $@;
+    $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
     $self->all_business_units( $myconfig, $dbh, $transdate, $job );
