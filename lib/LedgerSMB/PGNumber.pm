@@ -137,10 +137,10 @@ The input is formatted.
 sub from_input {
     my $self = shift;
     my $string = shift;
-    { # pre-5.14 compatibility block
-        local $@ = undef; # pre-5.14, do not die() in this block
-        return $string if eval { $string->isa(__PACKAGE__) };
-    }
+
+    local $@ = undef;
+    return $string if eval { $string->isa(__PACKAGE__) };
+
     #tshvr4 avoid 'Use of uninitialized value $string in string eq'
     if (!defined $string || $string eq '') {
         return undef;
