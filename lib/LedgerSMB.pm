@@ -168,8 +168,8 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 sub new {
     my ($class, $cgi_args, $script_name, $query_string,
-        $uploads, $cookies, $auth, $db, $company, $create_session_cb,
-        $invalidate_session_cb) = @_;
+        $uploads, $cookies, $auth, $db, $company, $session_id,
+        $create_session_cb, $invalidate_session_cb) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -191,6 +191,7 @@ sub new {
     $self->{script} = $script_name;
     $self->{dbh} = $db;
     $self->{company} = $company;
+    $self->{_session_id} = $session_id;
     $self->{_create_session} = $create_session_cb;
     $self->{_logout} = $invalidate_session_cb;
 
@@ -204,7 +205,7 @@ sub open_form {
     my ($self, $args) = @_;
     my $i = 1;
     my @vars = $self->call_procedure(procname => 'form_open',
-                              args => [$self->{session_id}],
+                              args => [$self->{_session_id}],
                               continue_on_error => 1
     );
     if ($args->{commit}){
@@ -217,7 +218,7 @@ sub open_form {
 sub check_form {
     my ($self) = @_;
     my @vars = $self->call_procedure(funcname => 'form_check',
-                              args => [$self->{session_id}, $self->{form_id}]
+                              args => [$self->{_session_id}, $self->{form_id}]
     );
     return $vars[0]->{form_check};
 }
@@ -225,7 +226,7 @@ sub check_form {
 sub close_form {
     my ($self) = @_;
     my @vars = $self->call_procedure(funcname => 'form_close',
-                              args => [$self->{session_id}, $self->{form_id}]
+                              args => [$self->{_session_id}, $self->{form_id}]
     );
     delete $self->{form_id};
     return $vars[0]->{form_close};

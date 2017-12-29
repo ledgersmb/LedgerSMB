@@ -176,9 +176,9 @@ sub new {
             $cookie{$name} = $value;
         }
         $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
-        $self->{cookie} =~ m/.*:([^:]*)$/;
-        $self->{company} = $1
-            if ! $self->{company};
+        my $unused;
+        ($self->{session_id}, $unused, $self->{company}) =
+            split(/:/, $self->{cookie});
     }
 
     $self->{version}   = "1.6.0-dev";
