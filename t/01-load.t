@@ -51,7 +51,7 @@ my @modules =
     (
           'LedgerSMB::App_State',
           'LedgerSMB::DBH', 'LedgerSMB::I18N',
-          'LedgerSMB::Locale', 'LedgerSMB::Mailer', 'LedgerSMB::Session',
+          'LedgerSMB::Locale', 'LedgerSMB::Mailer',
           'LedgerSMB::User', 'LedgerSMB::Entity',
           'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
           'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
@@ -92,6 +92,7 @@ my @modules =
           'LedgerSMB::Inventory::Adjust',
           'LedgerSMB::Inventory::Adjust_Line',
           'LedgerSMB::Middleware::AuthenticateSession',
+          'LedgerSMB::Middleware::ClearDownloadCookie',
           'LedgerSMB::Middleware::DisableBackButton',
           'LedgerSMB::Middleware::DynamicLoadWorkflow',
           'LedgerSMB::old_code', 'LedgerSMB::Part',
