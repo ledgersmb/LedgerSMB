@@ -139,7 +139,6 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
-use LedgerSMB::Session;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use HTTP::Status qw( HTTP_OK) ;
