@@ -1,8 +1,8 @@
-@weasel
+@wip @weasel
 Feature: Check correct operation of Change Password screen
 
 Background:
-  Given a logged-in user named "Admin" with a password "a6m1n"
+  Given a logged in user with a password "a6m1n"
 
 
 Scenario: Error when "Old Password" field is empty
