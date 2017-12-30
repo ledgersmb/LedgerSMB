@@ -332,7 +332,7 @@ sub display_form
                 format => 'HTML',
                     );
 
-  $template->render({
+  $template->legacy_render({
             form => \%$form,
             buttons => \@buttons,
             hiddens => \%hiddens,

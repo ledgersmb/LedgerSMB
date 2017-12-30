@@ -128,6 +128,10 @@ Preprocess for rendering.
 
 =item render($hashref)
 
+TODO
+
+=item legacy_render($hashref)
+
 This command renders the template.  If no_auto_output was not specified during
 instantiation, this also writes the result to standard output and exits.
 Otherwise it returns the name of the output file if a file was created.  When
@@ -593,6 +597,13 @@ sub _render {
 }
 
 sub render {
+    my $self = shift @_;
+    my $vars = shift @_;
+
+    return $self->_render($vars);
+}
+
+sub legacy_render {
     my $self = shift @_;
     my $vars = shift @_;
 

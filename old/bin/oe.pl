@@ -1259,7 +1259,7 @@ sub save {
            template => 'oe-save_warn',
        );
 
-       return $template->render({
+       return $template->legacy_render({
           hiddens => $form
        });
     }

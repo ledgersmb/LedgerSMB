@@ -225,7 +225,7 @@ sub print {
                             . '.' . lc($request->{format} || 'HTML') . '"' ]);
     }
     else {
-        $template->render($request);
+        $template->legacy_render($request);
         $template->output(%$request);
 
         return display($request);

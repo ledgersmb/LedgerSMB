@@ -1212,7 +1212,7 @@ sub process_and_run_upgrade_script {
         format_options => {extension => 'sql'},
         format => 'TXT' );
 
-    $dbtemplate->render($request);
+    $dbtemplate->legacy_render($request);
 
     my $tempfile = File::Temp->new();
     print $tempfile $dbtemplate->{output}

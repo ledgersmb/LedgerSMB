@@ -1087,7 +1087,7 @@ sub e_mail {
         $form,
         template => 'io-email',
         );
-    $template->render({
+    $template->legacy_render({
         form => $form,
         print => $print_options,
         hiddens => \%hiddens,
@@ -1533,7 +1533,7 @@ sub print_form {
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         );
-    $template->render($form);
+    $template->legacy_render($form);
 
     # if we got back here restore the previous form
     if ( %$old_form ) {

@@ -225,6 +225,19 @@ sub render {
     return $self->_render($request, renderer => 'render');
 }
 
+=item legacy_render
+
+This takes no arguments and simply renders the report as is.
+
+=cut
+
+sub legacy_render {
+    my $self = shift;
+    my $request = shift;
+
+    return $self->_render($request, renderer => 'legacy_render');
+}
+
 =item render_to_psgi
 
 As C<render>, but returns a psgi triplet, instead of printing the result

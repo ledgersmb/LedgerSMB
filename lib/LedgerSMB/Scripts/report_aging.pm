@@ -139,7 +139,7 @@ sub generate_statement {
                            'attachment; filename="aging-report.'
                                  . lc($request->{print_format}) . '"' ]);
     } else {
-        $template->render({statements => \@statements});
+        $template->legacy_render({statements => \@statements});
         $request->{module_name}='gl';
         $request->{report_type}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);

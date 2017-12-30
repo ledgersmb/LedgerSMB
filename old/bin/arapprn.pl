@@ -318,7 +318,7 @@ sub print_transaction {
         locale => $locale,
         output_options => \%output_options,
         format => uc $form->{format} );
-    $template->render($form);
+    $template->legacy_render($form);
 
     if (%$old_form) {
         $old_form->{invnumber} = $form->{invnumber};

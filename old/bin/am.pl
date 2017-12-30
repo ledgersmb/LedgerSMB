@@ -111,7 +111,7 @@ sub add_gifi {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-gifi-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -136,7 +136,7 @@ sub edit_gifi {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-gifi-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -228,7 +228,7 @@ sub add_business {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-business-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -252,7 +252,7 @@ sub edit_business {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-business-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -307,7 +307,7 @@ sub add_sic {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-sic-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         heading => $checked,
         buttons => \@buttons,
@@ -334,7 +334,7 @@ sub edit_sic {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-sic-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         heading => $checked,
         buttons => \@buttons,
@@ -393,7 +393,7 @@ sub add_language {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-language-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -421,7 +421,7 @@ sub edit_language {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-language-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -471,7 +471,7 @@ sub delete_language {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'form-confirmation');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -568,7 +568,7 @@ sub display_taxes {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-taxes');
-    $template->render({
+    $template->legacy_render({
         form => $form,
     hiddens => \%hiddens,
     selects => \%selects,
@@ -673,7 +673,7 @@ sub add_warehouse {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-warehouse-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         row_count => $rows,
         buttons => \@buttons,
@@ -696,7 +696,7 @@ sub edit_warehouse {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-warehouse-form');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         row_count => $rows,
         buttons => \@buttons,
@@ -926,7 +926,7 @@ sub recurring_transactions {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-list-recurring');
-    $template->render({
+    $template->legacy_render({
         form => $form,
         buttons => \@buttons,
         columns => \@column_index,
