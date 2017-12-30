@@ -165,6 +165,8 @@ journal__validate_entry
 leap_days
 location_list_class
 location_list_country
+lsmb__backup_roles
+lsmb__clear_role_backup
 lsmb__create_role
 lsmb__global_role
 lsmb__grant_exec
@@ -172,6 +174,7 @@ lsmb__grant_role
 lsmb__is_allowed_role
 lsmb__max_date
 lsmb__min_date
+lsmb__restore_roles
 lsmb__role
 lsmb__role_prefix
 lsmb_module__get
@@ -245,6 +248,8 @@ sequence__increment
 sequence__list
 sequence__list_by_key
 session_check
+session_create
+session_delete
 setting__increment_base
 sic__list
 tax_form__get

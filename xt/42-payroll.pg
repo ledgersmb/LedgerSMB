@@ -1,0 +1,41 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(12);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('wage__list_for_entity',ARRAY['integer']);
+    SELECT has_function('wage__list_types',ARRAY['integer']);
+    SELECT has_function('wage__save',ARRAY['numeric','integer','integer']);
+    SELECT has_function('deduction__list_for_entity',ARRAY['integer']);
+    SELECT has_function('deduction__list_types',ARRAY['integer']);
+    SELECT has_function('deduction__save',ARRAY['numeric','integer','integer']);
+    SELECT has_function('payroll_income_type__get',ARRAY['integer']);
+    SELECT has_function('payroll_income_category__list',ARRAY['']);
+    SELECT has_function('payroll_income_class__for_country',ARRAY['integer']);
+    SELECT has_function('payroll_income_type__save',ARRAY['integer','integer','integer','integer','text','text','numeric']);
+    SELECT has_function('payroll_income_type__search',ARRAY['integer','integer','integer','text','text']);
+    SELECT has_function('payroll_deduction_type__search',ARRAY['integer','integer','integer','text','text']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

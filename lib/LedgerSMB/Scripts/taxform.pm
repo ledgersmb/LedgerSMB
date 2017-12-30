@@ -77,7 +77,7 @@ sub _taxform_screen
         template => 'taxform/add_taxform',
         format => 'HTML'
     );
-    return $template->render_to_psgi($taxform);
+    return $template->render($taxform);
 }
 
 sub add_taxform {
@@ -141,7 +141,7 @@ sub generate_report {
     die $LedgerSMB::App_State::Locale->text('No tax form selected')
         unless $request->{tax_form_id};
     my $report = _generate_report($request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item save
@@ -200,7 +200,7 @@ sub print {
           template => 'taxform/summary_report',
           format => 'PDF',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item list_all
@@ -212,7 +212,7 @@ Lists all tax forms.
 sub list_all {
     my $request= shift;
     my $report = LedgerSMB::Report::Taxform::List->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =back

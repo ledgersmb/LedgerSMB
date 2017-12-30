@@ -51,7 +51,7 @@ sub show_income_type {
         template => 'income',
         format   => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item save_income_type
@@ -98,7 +98,7 @@ sub search_income_type {
         path     => 'UI/payroll',
         template => 'income_search',
         format   => 'HTML'
-    )->render_to_psgi($request);
+    )->render($request);
 }
 
 =item income_type_results
@@ -110,7 +110,8 @@ Displays income type search results
 sub income_type_results {
     my ($request) = @_;
     use LedgerSMB::Report::Payroll::Income_Types;
-    return LedgerSMB::Report::Payroll::Income_Types->new(%$request)->render($request);
+    return LedgerSMB::Report::Payroll::Income_Types
+        ->new(%$request)->render($request);
 }
 
 =back

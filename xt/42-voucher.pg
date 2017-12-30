@@ -16,25 +16,25 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('batch_create');
-    SELECT has_function('batch_delete');
-    SELECT has_function('batch_get_class_id');
-    SELECT has_function('batch_get_users');
-    SELECT has_function('batch_list_classes');
-    SELECT has_function('batch__lock_for_update');
-    SELECT has_function('batch__lock');
-    SELECT has_function('batch__search');
-    SELECT has_function('batch_post');
-    SELECT has_function('batch_search_mini');
-    SELECT has_function('batch_search_empty');
-    SELECT has_function('batch__unlock');
-    SELECT has_function('voucher__delete');
-    SELECT has_function('voucher_get_batch');
-    SELECT has_function('voucher__list');
+    SELECT has_function('batch__lock',ARRAY['integer']);
+    SELECT has_function('batch__lock_for_update',ARRAY['integer']);
+    SELECT has_function('batch__search',ARRAY['integer','text','integer','date','date','numeric','numeric','boolean']);
+    SELECT has_function('batch__unlock',ARRAY['integer']);
+    SELECT has_function('batch_create',ARRAY['text','text','text','date']);
+    SELECT has_function('batch_delete',ARRAY['integer']);
+    SELECT has_function('batch_get_class_id',ARRAY['text']);
+    SELECT has_function('batch_get_users',ARRAY['']);
+    SELECT has_function('batch_list_classes',ARRAY['']);
+    SELECT has_function('batch_post',ARRAY['integer']);
+    SELECT has_function('batch_search_empty',ARRAY['integer','text','integer','numeric','numeric','boolean']);
+    SELECT has_function('batch_search_mini',ARRAY['integer','text','integer','boolean']);
+    SELECT has_function('voucher__delete',ARRAY['integer']);
+    SELECT has_function('voucher__list',ARRAY['integer']);
+    SELECT has_function('voucher_get_batch',ARRAY['integer']);
 
     -- Set specific data
 
-    PREPARE test AS SELECT 
+    PREPARE test AS SELECT
             batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'Batch Created');
     DEALLOCATE test;
@@ -101,7 +101,7 @@ BEGIN;
 
     -- Adding the test for empty batch sproc
 
-    PREPARE test AS SELECT batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST', 
+    PREPARE test AS SELECT batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST',
                                         'ap', '2008-01-01')
                     IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'creating batch 2');

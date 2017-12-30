@@ -4,7 +4,8 @@
 
 #  lsmb         -- includes all themes we want to use 
 #  lsmb_new     -- themes enforced on 'new' code
-#  lsmb_old     --  themes enforced on 'old' code; subset of lsmb_new
+#  lsmb_old     -- themes enforced on 'old' code; subset of lsmb_new
+#  lsmb_tests   -- themes enforced on tests
 #  lsmb_wip     -- themes we are trying to use on 'new' code 
 #  lsmb_old_wip -- themes we are trying to use on 'old' code, subset of lsmb_wip
 
@@ -25,66 +26,66 @@ pager = less
 [ValuesAndExpressions::ProhibitInterpolationOfLiterals]
     set_themes = lsmb lsmb_new
 [BuiltinFunctions::ProhibitStringySplit]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [BuiltinFunctions::ProhibitUniversalCan]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [ClassHierarchies::ProhibitExplicitISA]
-    set_themes = lsmb lsmb_new lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
 [ControlStructures::ProhibitMutatingListFunctions]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [ControlStructures::ProhibitUnreachableCode]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::ProhibitBarewordFileHandles]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::ProhibitInteractiveTest]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::ProhibitOneArgSelect]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::ProhibitTwoArgOpen]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::RequireCheckedOpen]
     set_themes = lsmb lsmb_new
 [Miscellanea::ProhibitFormats]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Modules::ProhibitEvilModules]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
     modules_file = xt/prohibited_modules
 [Modules::RequireEndWithOne]
     set_themes = lsmb lsmb_new  lsmb_old
 [Objects::ProhibitIndirectSyntax]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Subroutines::ProhibitReturnSort]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Subroutines::ProhibitSubroutinePrototypes]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [TestingAndDebugging::ProhibitProlongedStrictureOverride]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [TestingAndDebugging::RequireUseStrict]
     set_themes = lsmb lsmb_new
 [TestingAndDebugging::RequireUseWarnings]
     set_themes = lsmb lsmb_new
 [ValuesAndExpressions::ProhibitLeadingZeros]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Variables::ProhibitPerl4PackageNames]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Variables::ProhibitUnusedVariables]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Variables::ProtectPrivateVars]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Variables::RequireLexicalLoopIterators]
 
 
 [CodeLayout::ProhibitTrailingWhitespace]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
 
 [CodeLayout::ProhibitHardTabs]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
     allow_leading_tabs = 0
 
 [Modules::ProhibitAutomaticExportation]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
 [Modules::ProhibitConditionalUseStatements]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
 [Modules::ProhibitEvilModules]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::ProhibitExcessMainComplexity]
@@ -100,9 +101,9 @@ pager = less
 [Modules::RequireExplicitPackage]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireFilenameMatchesPackage]
-    set_themes = lsmb lsmb_new lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
 [Modules::RequireNoMatchVarsWithUseEnglish]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
 
 
 [Moose::RequireMakeImmutable]
@@ -127,12 +128,12 @@ pager = less
 [InputOutput::RequireEncodingWithUTF8Layer]
     set_themes = lsmb lsmb_new lsmb_old_wip
 [Subroutines::ProhibitExplicitReturnUndef]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_wip lsmb_old_wip lsmb_tests
 
 [BuiltinFunctions::ProhibitBooleanGrep]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 [BuiltinFunctions::ProhibitUniversalIsa]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_wip lsmb_old_wip lsmb_tests
 [InputOutput::RequireCheckedClose]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 [InputOutput::RequireCheckedSyscalls]
@@ -146,7 +147,7 @@ pager = less
 [Subroutines::RequireFinalReturn]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 [ValuesAndExpressions::ProhibitCommaSeparatedStatements]
-    set_themes = lsmb lsmb_new lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
 [ValuesAndExpressions::ProhibitMismatchedOperators]
     set_themes = lsmb lsmb_new lsmb_old_wip
 [ValuesAndExpressions::ProhibitMixedBooleanOperators]

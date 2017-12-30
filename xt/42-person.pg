@@ -1,0 +1,42 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(13);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('person__get_my_entity_id',ARRAY['']);
+    SELECT has_function('person__get_my_id',ARRAY['']);
+    SELECT has_function('person__list_languages',ARRAY['']);
+    SELECT has_function('person__list_salutations',ARRAY['']);
+    SELECT has_function('person__save',ARRAY['integer','integer','text','text','text','integer','date','text']);
+    SELECT has_function('person__list_locations',ARRAY['integer']);
+    SELECT has_function('person__list_contacts',ARRAY['integer']);
+    SELECT has_function('person__delete_contact',ARRAY['integer','integer','text']);
+    SELECT has_function('person__save_contact',ARRAY['integer','integer','text','text','text','integer']);
+    SELECT has_function('person__list_bank_account',ARRAY['integer']);
+    SELECT has_function('person__list_notes',ARRAY['integer']);
+    SELECT has_function('person__delete_location',ARRAY['integer','integer','integer']);
+    SELECT has_function('person__save_location',ARRAY['integer','integer','integer','text','text','text','text','text','text','integer','integer']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(55);
+    SELECT plan(58);
 
     -- Add data
 
@@ -28,23 +28,25 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('reconciliation__get_cleared_balance');
-    SELECT has_function('reconciliation__submit_set');
-    SELECT has_function('reconciliation__check');
-    SELECT has_function('reconciliation__reject_set');
-    SELECT has_function('reconciliation__save_set');
-    SELECT has_function('reconciliation__delete_my_report');
-    SELECT has_function('reconciliation__delete_unapproved');
-    SELECT has_function('cr_report_block_changing_approved');
-    SELECT has_function('reconciliation__report_approve');
-    SELECT has_function('reconciliation__new_report_id');
-    SELECT has_function('reconciliation__add_entry');
-    SELECT has_function('reconciliation__new_report_id');
-    SELECT has_function('reconciliation__report_details');
-    SELECT has_function('reconciliation__report_summary');
-    SELECT has_function('reconciliation__search');
-    SELECT has_function('reconciliation__get_current_balance');
-    SELECT has_function('reconciliation__report_details_payee');
+    SELECT has_function('cr_report_block_changing_approved',ARRAY['']);
+    SELECT has_function('reconciliation__account_list',ARRAY['']);
+    SELECT has_function('reconciliation__add_entry',array['integer', 'text', 'text', 'timestamp without time zone', 'numeric']);
+    SELECT has_function('reconciliation__check',array['date', 'integer']);
+    SELECT has_function('reconciliation__delete_my_report',array['integer']);
+    SELECT has_function('reconciliation__delete_unapproved',array['integer']);
+    SELECT has_function('reconciliation__get_cleared_balance',array['integer', 'date']);
+    SELECT has_function('reconciliation__get_current_balance',array['integer', 'date']);
+    SELECT has_function('reconciliation__new_report_id',array['integer', 'numeric', 'date', 'boolean']);
+    SELECT has_function('reconciliation__pending_transactions',array['integer', 'numeric']);
+    SELECT has_function('reconciliation__reject_set',array['integer']);
+    SELECT has_function('reconciliation__report_approve',array['integer']);
+    SELECT has_function('reconciliation__report_details',array['integer']);
+    SELECT has_function('reconciliation__report_details_payee',array['integer']);
+    SELECT has_function('reconciliation__report_details_payee_with_days',array['integer', 'date']);
+    SELECT has_function('reconciliation__report_summary',array['integer']);
+    SELECT has_function('reconciliation__save_set',array['integer', 'integer[]']);
+    SELECT has_function('reconciliation__search',array['date', 'date', 'numeric', 'numeric', 'integer', 'boolean', 'boolean']);
+    SELECT has_function('reconciliation__submit_set',array['integer', 'integer[]']);
 
     -- Run tests
 
@@ -57,8 +59,17 @@ BEGIN;
 --    SET value = 'Recon gl test '
 --    WHERE setting_key = 'check_prefix';
 
+    CREATE TEMPORARY TABLE test_parameters (id int);
+    INSERT INTO test_parameters(id) VALUES(nextval('cr_report_id_seq'));
+
+    PREPARE test AS SELECT COUNT(*)::INT FROM acc_trans
+                    WHERE cleared
+                    AND entry_id NOT IN (SELECT ledger_id FROM cr_report_line);
+    SELECT results_eq('test', Array[4], 'Transactions that should be in cr_report');
+    DEALLOCATE test;
+
     PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date, false);
-    SELECT results_eq('test',ARRAY[1],'Create Recon Report');
+    SELECT results_eq('test', $$ SELECT id+1 FROM test_parameters $$, 'Create Recon Report');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__delete_my_report(currval('cr_report_id_seq')::int);
@@ -66,30 +77,30 @@ BEGIN;
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date, false);
-    SELECT results_eq('test',ARRAY[2],'Create Recon Report');
+    SELECT results_eq('test', $$ SELECT id+2 FROM test_parameters $$, 'Create Recon Report');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
     SELECT results_eq('test',ARRAY[true],'Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 10
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',Array[true],'Correct number of transactions 1');
+    SELECT results_eq('test',Array[10],'Correct number of transactions 1');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 3
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE scn LIKE '% gl %'
                       AND report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'Correct number of GL groups');
+    SELECT results_eq('test', ARRAY[3], 'Correct number of GL groups');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 10
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'Correct number of report lines');
+    SELECT results_eq('test',ARRAY[10],'Correct number of report lines');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int));
@@ -104,12 +115,12 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'1 Report Approved');
     DEALLOCATE test;
 
-    PREPARE test as SELECT count(*) = 2
+    PREPARE test as SELECT count(*)::int
                       FROM acc_trans
                       JOIN account a ON (acc_trans.chart_id = a.id)
                       WHERE a.accno = '-11111'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[true],'1 Transactions closed');
+    SELECT results_eq('test',ARRAY[2],'1 Transactions closed');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false) > 0;
@@ -120,33 +131,33 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'1 Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 10
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'Correct number of transactions 2');
+    SELECT results_eq('test',ARRAY[10],'Correct number of transactions 2');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
-    SELECT results_eq('test',ARRAY[true],'1 Pending Transactions Ran');
+    PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110);
+    SELECT results_eq('test',$$ SELECT id+3 FROM test_parameters $$,'1 Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 10
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'Correct number of transactions 3');
+    SELECT results_eq('test',ARRAY[10],'Correct number of transactions 3');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 3
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE scn like '% gl %'
                       AND report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'1 Correct number of GL groups');
+    SELECT results_eq('test',ARRAY[3],'1 Correct number of GL groups');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 10
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'1 Correct number of report lines');
+    SELECT results_eq('test',ARRAY[10],'1 Correct number of report lines');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, '{}');
@@ -161,30 +172,30 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'1 Report Approved');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 14
+    PREPARE test AS SELECT count(*)::int
                       FROM acc_trans
                       JOIN account ON (acc_trans.chart_id = account.id)
                       WHERE accno = '-11112'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[true],'1 Transactions open');
+    SELECT results_eq('test',ARRAY[14],'1 Transactions open');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) = -10;
     SELECT results_eq('test',ARRAY[true],'1 Cleared balance post-approval is 10');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false)>0;
-    SELECT results_eq('test',ARRAY[true],'1 Create Recon Report');
+    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false);
+    SELECT results_eq('test',$$ SELECT id+4 FROM test_parameters $$,'1 Create Recon Report');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
-    SELECT results_eq('test',ARRAY[true],'1 Pending Transactions Ran');
+    PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110);
+    SELECT results_eq('test',$$ SELECT id+4 FROM test_parameters $$,'1 Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 10
+    PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[true],'Correct number of transactions 4');
+    SELECT results_eq('test',ARRAY[10],'Correct number of transactions 4');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int)
@@ -193,9 +204,9 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Report Submitted');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT their_total = 110
+    PREPARE test AS SELECT their_total::int
                       FROM reconciliation__report_summary(currval('cr_report_id_seq')::int);
-    SELECT results_eq('test',ARRAY[true],'Their Balance Updated');
+    SELECT results_eq('test',ARRAY[110],'Their Balance Updated');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'))= -10;
@@ -211,18 +222,19 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Cannot Delete Approved Recon Report');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*) = 2
+    PREPARE test AS SELECT count(*)::int
                       FROM acc_trans
                       JOIN account a ON (acc_trans.chart_id = a.id)
                       WHERE accno = '-11112'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[true],'Transactions closed');
+    SELECT results_eq('test',ARRAY[2],'Transactions closed');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'))= -130;
-    SELECT results_eq('test',ARRAY[true],'Cleared balance post-approval is 130');
+    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'));
+    SELECT results_eq('test',ARRAY[-130.],'Cleared balance post-approval is 130');
     DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
+
 ROLLBACK;

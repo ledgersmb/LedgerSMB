@@ -12,7 +12,7 @@ div#loading {
     background: white;
 }
 
-div#setupconsole {
+div.setupconsole {
     background-color: white;
     margin-right: auto;
     margin-left: auto;
@@ -48,6 +48,11 @@ form#loginform {
     padding-top: 3px;
     padding-bottom: 2px;
     padding-left: 4ex;
+}
+
+/* Prevent inheritance of the above */
+.inputrow * {
+    padding: initial;
 }
 
 div {

@@ -13,7 +13,10 @@ To run the '66' tests, the following works with the right PostgreSQL,
 PhantomJS and Starman configurations:
 
 ```sh
- $ PGUSER=postgres PGPASSWORD=password LSMB_BASE_URL=http://localhost:5000 prove
+ $ PGUSER=postgres PGPASSWORD=password \
+     LSMB_BASE_URL=http://localhost:5762 \
+     PSGI_BASE_URL=http://localhost:5762 \
+     prove -r t/ xt/
 ```
 
 Note that the '66' tests may be run at a much smaller granularity
@@ -60,6 +63,9 @@ PGUSER              username for logging in in PostgreSQL
 PGPASSWORD          password for above username
 LSMB_NEW_DB         database to test against (will be created in test 40)
 PGDATABASE          database to test against, if LSMB_NEW_DB not provided
+LSMB_INSTALL_DB     if set, database will NOT be removed after tests are run
+LSMB_BASE_URL       address used for requests to lsmb (may be a proxy)
+PSGI_BASE_URL       address used to test if plack/starman server is running
 ````
 
 ### Admin user creation

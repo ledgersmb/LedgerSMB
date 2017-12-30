@@ -71,7 +71,7 @@ sub generate_income_statement {
             $rpt->add_comparison($cmp);
         }
     }
-    return $rpt->render_to_psgi($request);
+    return $rpt->render($request);
 }
 
 =back

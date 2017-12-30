@@ -4,15 +4,19 @@ use FindBin;
 use strict;
 use warnings;
 use lib "$FindBin::Bin/../lib";
+use File::Temp;
 use 5.010; # say makes things easier
 no lib '.'; # can run from anywhere
 
 use LedgerSMB::Sysconfig;
 
-my $tempdir = $LedgerSMB::Sysconfig::tempdir;
-my $outputfile = ( defined $ARGV[1] && $ARGV[1] eq '--regenerate')
-               ? "$FindBin::Bin/../sql/modules/BLACKLIST"
-               : "$tempdir/BLACKLIST";
+my $out;
+if ( defined $ARGV[1] && $ARGV[1] eq '--regenerate') {
+    open $out, ">", "$FindBin::Bin/../sql/modules/BLACKLIST";
+}
+else {
+    $out = \*STDOUT;
+}
 
 my %func = (); # set of functions as keys
 
@@ -24,9 +28,10 @@ for my $mod (<$order>) {
     $mod =~ s/(\s+|#.*)//g;
     next unless $mod; # skipping comment-only, whitespace-only, and blank lines
     %func = (%func, process_mod($mod));
-    write_blacklist(sort keys %func); 
 }
+write_blacklist(sort keys %func);
 close ($order); ### return failure to execute the script?
+close ($out);
 
 sub process_mod {
     my ($mod) = @_;
@@ -39,8 +44,5 @@ sub process_mod {
 
 sub write_blacklist {
     my @funcs = @_;
-    open my $bl, '>', $outputfile
-        or die "Cannot write BLACKLIST";
-    say $bl $_ for @funcs;
-    close $bl;
+    say $out $_ for @funcs;
 }

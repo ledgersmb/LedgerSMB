@@ -10,7 +10,7 @@
 <p><?lsmb text('LedgerSMB has detected the following system components'); ?></p>
 
 <table>
-  <caption>Database component</caption>
+  <caption><?lsmb text('Database component') ?></caption>
   <tbody>
     <?lsmb FOR item IN info.db.keys.sort ?>
     <tr>
@@ -21,7 +21,7 @@
 </table>
 
 <table>
-  <caption>Base system</caption>
+  <caption><?lsmb text('Base system') ?></caption>
   <tbody>
     <?lsmb FOR item IN info.system.keys.sort ?>
     <tr>
@@ -32,7 +32,7 @@
 </table>
 
 <table>
-  <caption>Environment</caption>
+  <caption><?lsmb text('Environment') ?></caption>
   <tbody>
     <?lsmb FOR item IN info.environment.keys.sort ?>
     <tr>

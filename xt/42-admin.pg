@@ -26,33 +26,33 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('admin__add_function_to_group');
-    SELECT has_function('admin__add_group_to_role');
-    SELECT has_function('admin__add_user_to_role');
-    SELECT has_function('admin__create_group');
-    SELECT has_function('admin__delete_group');
-    SELECT has_function('admin__delete_user');
-    SELECT has_function('admin__drop_session');
-    SELECT has_function('admin__get_roles_for_user_by_entity');
-    SELECT has_function('admin__get_roles_for_user');
-    SELECT has_function('admin__get_roles');
-    SELECT has_function('admin__get_user_by_entity');
-    SELECT has_function('admin__get_user');
-    SELECT has_function('admin__is_group');
-    SELECT has_function('admin__is_user');
-    SELECT has_function('admin__list_group_grants');
-    SELECT has_function('admin__list_sessions');
-    SELECT has_function('admin__remove_function_from_group');
-    SELECT has_function('admin__remove_group_from_role');
-    SELECT has_function('admin__remove_user_from_role');
-    SELECT has_function('admin__save_user');
-    SELECT has_function('admin__search_users');
-    SELECT has_function('user__change_password');
-    SELECT has_function('user__check_my_expiration');
-    SELECT has_function('user__expires_soon');
-    SELECT has_function('user__get_all_users');
-    SELECT has_function('user__get_preferences');
-    SELECT has_function('user__save_preferences');
+    SELECT has_function('admin__add_function_to_group',ARRAY['text','text']);
+    SELECT has_function('admin__add_group_to_role',ARRAY['text','text']);
+    SELECT has_function('admin__add_user_to_role',ARRAY['text','text']);
+    SELECT has_function('admin__create_group',ARRAY['text']);
+    SELECT has_function('admin__delete_group',ARRAY['text']);
+    SELECT has_function('admin__delete_user',ARRAY['text','boolean']);
+    SELECT has_function('admin__drop_session',ARRAY['integer']);
+    SELECT has_function('admin__get_roles',ARRAY['']);
+    SELECT has_function('admin__get_roles_for_user',ARRAY['integer']);
+    SELECT has_function('admin__get_roles_for_user_by_entity',ARRAY['integer']);
+    SELECT has_function('admin__get_user',ARRAY['integer']);
+    SELECT has_function('admin__get_user_by_entity',ARRAY['integer']);
+    SELECT has_function('admin__is_group',ARRAY['text']);
+    SELECT has_function('admin__is_user',ARRAY['text']);
+    SELECT has_function('admin__list_group_grants',ARRAY['text']);
+    SELECT has_function('admin__list_sessions',ARRAY['']);
+    SELECT has_function('admin__remove_function_from_group',ARRAY['text','text']);
+    SELECT has_function('admin__remove_group_from_role',ARRAY['text','text']);
+    SELECT has_function('admin__remove_user_from_role',ARRAY['text','text']);
+    SELECT has_function('admin__save_user',ARRAY['integer','integer','text','text','boolean']);
+    SELECT has_function('admin__search_users',ARRAY['text','text','text','text','date']);
+    SELECT has_function('user__change_password',ARRAY['text']);
+    SELECT has_function('user__check_my_expiration',ARRAY['']);
+    SELECT has_function('user__expires_soon',ARRAY['']);
+    SELECT has_function('user__get_all_users',ARRAY['']);
+    SELECT has_function('user__get_preferences',ARRAY['integer']);
+    SELECT has_function('user__save_preferences',ARRAY['text','text','text','text','text']);
 
     -- Run tests
 

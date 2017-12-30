@@ -21,13 +21,13 @@ $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies
 
 
-my $form = new Form;
+my $form = Form->new;
 my $locale_en = LedgerSMB::Locale->get_handle('en_CA');
 my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new;
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 

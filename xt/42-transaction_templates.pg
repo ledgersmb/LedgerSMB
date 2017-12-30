@@ -1,0 +1,41 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(10);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('journal__add',ARRAY['text','text','integer','date','boolean','boolean','text']);
+    SELECT has_function('journal__add_line',ARRAY['integer','integer','numeric','boolean','text','integer[]']);
+    SELECT has_function('journal__delete',ARRAY['integer']);
+    SELECT has_function('journal__get_entry',ARRAY['integer']);
+    SELECT has_function('journal__get_invoice',ARRAY['integer']);
+    SELECT has_function('journal__lines',ARRAY['integer']);
+    SELECT has_function('journal__make_invoice',ARRAY['integer','integer','boolean','boolean','integer','character varying']);
+--  SELECT has_function('journal__save_recurring',ARRAY['text','date','interval','integer','integer']);
+    SELECT has_function('journal__save_recurring_print',ARRAY['integer','text','text']);
+--  SELECT has_function('journal__increment_recurring',ARRAY['integer','date']);
+    SELECT has_function('journal__search',ARRAY['text','text','integer','date','boolean','integer','boolean','text','integer','boolean']);
+    SELECT has_function('journal__validate_entry',ARRAY['integer']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

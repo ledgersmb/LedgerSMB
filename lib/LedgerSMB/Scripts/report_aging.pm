@@ -43,7 +43,7 @@ sub run_report{
     }
     my $report = LedgerSMB::Report::Aging->new(%$request);
     $report->run_report;
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 
@@ -125,7 +125,9 @@ sub generate_statement {
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
         method => $request->{media},
-        no_auto_output => 1,
+        output_options => {
+          filename => 'aging-report.' . lc($request->{print_format})
+        }
     );
     if ($request->{media} eq 'email'){
 
@@ -133,13 +135,9 @@ sub generate_statement {
        return;
 
     } elsif ($request->{media} eq 'screen'){
-        return $template->render_to_psgi({statements => \@statements},
-                  extra_headers => [
-                     'Content-Disposition' =>
-                           'attachment; filename="aging-report.'
-                                 . lc($request->{print_format}) . '"' ]);
+        return $template->render({statements => \@statements});
     } else {
-        $template->render({statements => \@statements});
+        $template->legacy_render({statements => \@statements});
         $request->{module_name}='gl';
         $request->{report_type}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);

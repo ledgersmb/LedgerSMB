@@ -143,7 +143,7 @@ sub _render_screen {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
-    return $template->render_to_psgi($budget);
+    return $template->render($budget);
 }
 
 =item update

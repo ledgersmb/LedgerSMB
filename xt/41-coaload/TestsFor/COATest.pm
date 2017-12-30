@@ -77,7 +77,7 @@ sub test_constructor {
     my $db = $coatest->test_db;
 
     my $returnstring = `psql '$db' -c "SELECT 1 FROM pg_database WHERE datname='$db'"`;
-    my $testval = grep { /^ +1$/ } split("\n", $returnstring);
+    my $testval = grep { /^ +1$/ } split /\n/, $returnstring;
     ok($testval, "DB created for $sqlfile testing");
 
     $! = undef; # reset if system failed
@@ -86,7 +86,7 @@ sub test_constructor {
 
     $returnstring = `psql '$db' -c "SELECT COUNT(*), 'TESTRESULT' from account"`;
     if ( $returnstring ) {
-        $testval = grep { /TESTRESULT/ } split("\n", $returnstring);
+        $testval = grep { /TESTRESULT/ } split /\n/, $returnstring;
         $testval =~ s/\D//g;
     }
     ok($testval, "Got rows back for account, for $sqlfile");
