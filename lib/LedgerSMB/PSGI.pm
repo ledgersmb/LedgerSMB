@@ -24,6 +24,7 @@ use HTTP::Status qw( HTTP_FOUND );
 use CGI::Emulate::PSGI;
 use Try::Tiny;
 use List::Util qw{  none };
+use Scalar::Util qw{ reftype };
 
 # To build the URL space
 use Plack;
@@ -112,6 +113,12 @@ sub psgi_app {
             }
 
             ($status, $headers, $body) = @{$env->{'lsmb.action'}->($request)};
+
+            if (ref $status && reftype $status eq 'LedgerSMB::Template') {
+                # We got an evaluated template instead of a PSGI tiplet...
+                ($status, $headers, $body) =
+                    LedgerSMB::PSGI::Util::template_to_psgi($status);
+            }
         }, DBH     => $env->{'lsmb.db'},
            DBName  => $env->{'lsmb.company'},
            Locale  => $request->{_locale};
