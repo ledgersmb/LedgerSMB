@@ -41,6 +41,8 @@
 
 package lsmb_legacy;
 use Try::Tiny;
+
+use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
 use LedgerSMB::Company_Config;
 
@@ -318,7 +320,7 @@ sub print_transaction {
         locale => $locale,
         output_options => \%output_options,
         format => uc $form->{format} );
-    $template->render($form);
+    LedgerSMB::Legacy_Util::render_template($template, $form);
 
     if (%$old_form) {
         $old_form->{invnumber} = $form->{invnumber};

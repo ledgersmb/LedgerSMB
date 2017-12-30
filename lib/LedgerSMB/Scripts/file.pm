@@ -89,7 +89,7 @@ sub show_attachment_screen {
         template => 'attachment_screen',
         format   => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item attach_file

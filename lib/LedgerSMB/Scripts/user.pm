@@ -58,7 +58,7 @@ sub preference_screen {
     my $creds = $request->{_auth}->get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        user => $user });
 }
 

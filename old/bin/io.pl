@@ -44,6 +44,7 @@ use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
+use LedgerSMB::Legacy_Util;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
@@ -1087,7 +1088,7 @@ sub e_mail {
         $form,
         template => 'io-email',
         );
-    $template->render({
+    LedgerSMB::Legacy_Util::render_template($template, {
         form => $form,
         print => $print_options,
         hiddens => \%hiddens,
@@ -1533,7 +1534,7 @@ sub print_form {
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         );
-    $template->render($form);
+    LedgerSMB::Legacy_Util::render_template($template, $form);
 
     # if we got back here restore the previous form
     if ( %$old_form ) {

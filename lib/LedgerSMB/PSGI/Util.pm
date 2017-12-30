@@ -23,7 +23,7 @@ This module implements the C<Plack::Middleware> protocol.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
+use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
  HTTP_UNAUTHORIZED );
 
 =head1 FUNCTIONS
@@ -77,6 +77,51 @@ sub session_timed_out {
     return [ HTTP_SEE_OTHER,
              [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
              [] ];
+}
+
+
+=head2 template_to_psgi($template, %args)
+
+Returns a PSGI return value triplet (status, headers and body).
+
+Note that the only guarantee here is that the triplet can
+be used as a PSGI return value which means that the body
+is *not* restricted to being an array of strings.
+
+When C<extra_headers> is specified in the C<%args> hash, these are
+included in the headers part of returned triplet.
+
+=cut
+
+
+sub template_to_psgi {
+    my $self = shift @_;
+    my %args = ( @_ );
+
+    my $charset = '';
+    $charset = '; charset=utf-8'
+        if $self->{mimetype} =~ m!^text/!;
+
+    # $self->{mimetype} set by format
+    my $headers = [
+        'Content-Type' => "$self->{mimetype}$charset",
+        (@{$args{extra_headers} // []})
+        ];
+
+    # Use the same Content-Disposition criteria as _http_output()
+    my $name = $self->{output_options}{filename};
+    if ($name) {
+        $name =~ s#^.*/##;
+        push @$headers,
+            ( 'Content-Disposition' =>
+              qq{attachment; filename="$name"} );
+    }
+
+    my $body = $self->{output};
+    utf8::encode($body)
+        if utf8::is_utf8($body);
+
+    return [ HTTP_OK, $headers, [ $body ] ];
 }
 
 

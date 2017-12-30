@@ -225,20 +225,6 @@ sub render {
     return $self->_render($request, renderer => 'render');
 }
 
-=item render_to_psgi
-
-As C<render>, but returns a psgi triplet, instead of printing the result
-to standard output.
-
-=cut
-
-sub render_to_psgi {
-    my $self = shift;
-    my $request = shift;
-
-    return $self->_render($request, renderer => 'render_to_psgi');
-}
-
 sub _render {
     my ($self, $request) = @_;
     my $template;

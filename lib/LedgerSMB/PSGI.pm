@@ -24,6 +24,7 @@ use HTTP::Status qw( HTTP_FOUND );
 use CGI::Emulate::PSGI;
 use Try::Tiny;
 use List::Util qw{  none };
+use Scalar::Util qw{ reftype };
 
 # To build the URL space
 use Plack;
@@ -111,7 +112,16 @@ sub psgi_app {
                 };
             }
 
-            ($status, $headers, $body) = @{$env->{'lsmb.action'}->($request)};
+            my $res = $env->{'lsmb.action'}->($request);
+
+            if (ref $res && ref $res eq 'LedgerSMB::Template') {
+                # We got an evaluated template instead of a PSGI triplet...
+                ($status, $headers, $body) =
+                    @{LedgerSMB::PSGI::Util::template_to_psgi($res)};
+            }
+            else {
+                ($status, $headers, $body) = @$res;
+            }
         }, DBH     => $env->{'lsmb.db'},
            DBName  => $env->{'lsmb.company'},
            Locale  => $request->{_locale};

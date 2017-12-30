@@ -198,7 +198,7 @@ sub _display_account_screen {
         format => 'HTML',
         path   => 'UI',
         template => 'accounts/edit');
-    return $template->render_to_psgi({
+    return $template->render({
         form => $form,
         checked => $checked,
         buttons => $buttons,
@@ -221,7 +221,7 @@ sub yearend_info {
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'accounts/yearend');
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        eoy => $eoy});
 }
 
@@ -245,7 +245,7 @@ sub post_yearend {
         $request,
         template => 'accounts/yearend_complete'
     );
-    return $template->render_to_psgi($eoy);
+    return $template->render($eoy);
 }
 
 =item close_period
