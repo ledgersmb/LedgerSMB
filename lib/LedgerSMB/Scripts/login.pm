@@ -83,7 +83,7 @@ sub __default {
         $request,
         template => 'login',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item authenticate
@@ -145,7 +145,7 @@ sub logout {
         $request,
         template => 'logout',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item logout_js

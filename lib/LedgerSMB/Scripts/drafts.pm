@@ -142,7 +142,7 @@ sub list_drafts {
     my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
     $request->open_form;
     $report->run_report;
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 

@@ -125,7 +125,7 @@ sub submit_recon_set {
                 locale => $request->{_locale},
                 format => 'HTML',
                 path=>'UI');
-        return $template->render_to_psgi($recon);
+        return $template->render($recon);
     }
     return _display_report($recon, $request);
 }
@@ -157,7 +157,7 @@ Displays the search results
 sub get_results {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item search
@@ -307,7 +307,7 @@ sub _display_report {
         $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
-    return $template->render_to_psgi($recon);
+    return $template->render($recon);
 }
 
 
@@ -332,7 +332,7 @@ sub new_report {
         format => 'HTML',
         path => 'UI',
     );
-    return $template->render_to_psgi($recon);
+    return $template->render($recon);
 }
 
 =item start_report($request)
@@ -364,7 +364,7 @@ sub start_report {
             format => 'HTML',
             path => 'UI'
             );
-        return $template->render_to_psgi($recon);
+        return $template->render($recon);
     }
     return _display_report($recon, $request);
 }
@@ -429,7 +429,7 @@ sub approve {
         locale => $recon->{_locale},
         format => 'HTML',
         path=>'UI',
-        )->render_to_psgi($recon);
+        )->render($recon);
 }
 
 =item pending ($self, $request, $user)
@@ -455,7 +455,7 @@ sub pending {
         format=>'HTML',
         path=>'UI'
     );
-    return $template->render_to_psgi();
+    return $template->render();
 }
 
 {

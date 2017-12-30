@@ -43,7 +43,7 @@ sub run_report{
     }
     my $report = LedgerSMB::Report::Aging->new(%$request);
     $report->run_report;
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 
@@ -135,7 +135,7 @@ sub generate_statement {
        return;
 
     } elsif ($request->{media} eq 'screen'){
-        return $template->render_to_psgi({statements => \@statements});
+        return $template->render({statements => \@statements});
     } else {
         $template->legacy_render({statements => \@statements});
         $request->{module_name}='gl';

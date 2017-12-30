@@ -71,7 +71,7 @@ sub invoices_outstanding {
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';
     my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item invoice_search
@@ -88,7 +88,7 @@ sub  invoice_search{
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';
     my $report = LedgerSMB::Report::Invoices::Transactions->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =back

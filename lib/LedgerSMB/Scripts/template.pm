@@ -35,7 +35,7 @@ Lists the templates.
 sub list {
     my ($request) = @_;
     return LedgerSMB::Report::Listing::Templates->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =head2 display($request)
@@ -60,7 +60,7 @@ sub display {
         path     => 'UI/templates',
         template => 'preview',
         format   => 'HTML'
-    )->render_to_psgi({ request => $request,
+    )->render({ request => $request,
                 template => $dbtemp,
                 %$dbtemp });
 }
@@ -95,7 +95,7 @@ sub edit {
         path     => 'UI/templates',
         template => 'edit',
         format   => 'HTML'
-    )->render_to_psgi({ request => $request,
+    )->render({ request => $request,
                         to_edit => $dbtemp });
 }
 

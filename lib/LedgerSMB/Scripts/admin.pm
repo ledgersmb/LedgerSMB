@@ -73,7 +73,7 @@ sub list_sessions {
         ++$rowcount;
     }
     $admin->{title} = $request->{_locale}->text('Active Sessions');
-    return $template->render_to_psgi({
+    return $template->render({
        form    => $admin,
        columns => $columns,
        heading => $column_heading,

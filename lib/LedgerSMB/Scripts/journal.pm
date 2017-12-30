@@ -67,7 +67,7 @@ sub chart_of_accounts {
     }
     my $report = LedgerSMB::Report::COA->new(%$request);
     $report->run_report();
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item delete_account
@@ -102,7 +102,7 @@ sub search {
                if $request->{"business_unit_$count"};
     }
     #tshvr4 trying to mix in period from_month from_year interval
-    return LedgerSMB::Report::GL->new(%$request)->render_to_psgi($request);
+    return LedgerSMB::Report::GL->new(%$request)->render($request);
 }
 
 =item search_purchases
@@ -121,7 +121,7 @@ sub search_purchases {
     }
     my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
     $report->run_report;
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =back

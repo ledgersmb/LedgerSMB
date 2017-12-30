@@ -51,7 +51,7 @@ sub show_income_type {
         template => 'income',
         format   => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item save_income_type
@@ -98,7 +98,7 @@ sub search_income_type {
         path     => 'UI/payroll',
         template => 'income_search',
         format   => 'HTML'
-    )->render_to_psgi($request);
+    )->render($request);
 }
 
 =item income_type_results

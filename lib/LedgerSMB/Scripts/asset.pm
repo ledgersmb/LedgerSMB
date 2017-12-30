@@ -52,7 +52,7 @@ sub begin_depreciation_all {
         template => 'begin_depreciation_all',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request });
+    return $template->render({ request => $request });
 }
 
 =item depreciate_all
@@ -84,7 +84,7 @@ sub depreciate_all {
         template => 'info',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request });
+    return $template->render({ request => $request });
 }
 
 =item asset_category_screen
@@ -114,7 +114,7 @@ sub asset_category_screen {
         template => 'edit_class',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        asset_class => $ac });
 }
 
@@ -150,7 +150,7 @@ sub asset_category_search {
     );
     my $ac = LedgerSMB::DBObject::Asset_Class->new();
     $ac->get_metadata;
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        asset_class => $ac });
 }
 
@@ -163,7 +163,7 @@ Displays a list of all asset classes.  No inputs required.
 sub asset_category_results {
     my ($request) = @_;
     return LedgerSMB::Report::Listings::Asset_Class->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item edit_asset_class
@@ -219,7 +219,7 @@ sub asset_screen {
         template => 'edit_asset',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        asset => $asset });
 }
 
@@ -247,7 +247,7 @@ sub asset_search {
         template => 'search_asset',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        asset => $asset });
 }
 
@@ -263,7 +263,7 @@ be set.
 sub asset_results {
     my ($request) = @_;
     return LedgerSMB::Report::Listings::Asset->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item asset_save
@@ -316,7 +316,7 @@ sub new_report {
         template => 'begin_report',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        report => $report });
 }
 
@@ -480,7 +480,7 @@ sub display_report {
         template => 'form-dynatable',
         format => 'HTML'
     );
-    return $template->render_to_psgi({
+    return $template->render({
                         form => $request,
                      columns => $cols,
                      heading => $heading,
@@ -513,7 +513,7 @@ sub search_reports {
         template => 'begin_approval',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        asset_report => $ar });
 }
 
@@ -606,7 +606,7 @@ sub report_results {
         template => 'form-dynatable',
         format => 'HTML'
     );
-    return $template->render_to_psgi({
+    return $template->render({
          form    => $ar,
          heading => $header,
          rows    => $rows,
@@ -675,7 +675,7 @@ sub report_details {
                    value => 'report_details_approve'
                    },
     ];
-    return $template->render_to_psgi({
+    return $template->render({
                        form => $report,
                     columns => \@cols,
                     heading => $header,
@@ -744,7 +744,7 @@ sub partial_disposal_details {
                    value => 'disposal_details_approve'
                    },
     ];
-    return $template->render_to_psgi({
+    return $template->render({
                        form => $report,
                     columns => \@cols,
                     heading => $header,
@@ -812,7 +812,7 @@ sub disposal_details {
                    value => 'disposal_details_approve'
                    },
     ];
-    return $template->render_to_psgi({
+    return $template->render({
                        form => $report,
                     columns => \@cols,
                     heading => $header,
@@ -893,7 +893,7 @@ No inputs required or used.
 sub display_nbv {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Assets::Net_Book_Value->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item begin_import
@@ -913,7 +913,7 @@ sub begin_import {
         template => 'import_asset',
         format => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item run_import

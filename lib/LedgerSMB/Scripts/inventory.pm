@@ -43,7 +43,7 @@ sub begin_adjust {
     path => 'UI/inventory',
         format => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item enter_adjust
@@ -61,7 +61,7 @@ sub enter_adjust {
     path => 'UI/inventory',
         format => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 
@@ -134,7 +134,7 @@ sub adjustment_save {
 sub adjustment_list {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Inventory::Adjustments->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item adjustment_approve

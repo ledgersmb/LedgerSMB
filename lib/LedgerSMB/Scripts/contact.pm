@@ -342,7 +342,7 @@ sub _main_screen {
     my $roles;
     $roles = $user->list_roles if $user;
 
-    return $template->render_to_psgi({
+    return $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
              entity_class => $entity_class,
@@ -838,7 +838,7 @@ sub get_pricelist {
                 format => uc($request->{format} || 'HTML'),
                 locale => $request->{_locale},
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 

@@ -33,7 +33,7 @@ sub search_adj{
     my ($request) = @_;
     my $rpt = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
     $rpt->run_report;
-    return $rpt->render_to_psgi($request);
+    return $rpt->render($request);
 }
 
 =item adj_detail
@@ -47,7 +47,7 @@ sub adj_detail {
     $request->{hiddens} = { id => $request->{id}};
     my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
     $rpt->run_report;
-    return $rpt->render_to_psgi($request);
+    return $rpt->render($request);
 }
 
 =item approve
