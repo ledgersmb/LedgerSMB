@@ -10,7 +10,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [method => $string], [no_escape => $bool], [debug => $bool] );
 
 This command instantiates a new template:
 
@@ -56,10 +56,6 @@ Overrides the template directory.
 The special value 'DB' enforces reading of the template from the
 current database.  Resolving the template takes the 'language' and
 'format' values into account.
-
-=item no_auto_output (optional)
-
-Disables the automatic output of rendered templates.
 
 =item no_escape (optional)
 
@@ -132,10 +128,8 @@ TODO
 
 =item legacy_render($hashref)
 
-This command renders the template.  If no_auto_output was not specified during
-instantiation, this also writes the result to standard output and exits.
-Otherwise it returns the name of the output file if a file was created.  When
-no output file is created, the output is held in $self->{output}.
+This command renders the template and writes the result to standard output
+and exits.
 
 Currently email and server-side printing are not supported.
 
@@ -343,8 +337,7 @@ sub new {
 
     $self->{$_} = $args{$_}
         for (qw( template format language no_escape debug locale method
-                 format_options output_options no_auto_output
-                 additional_vars ));
+                 format_options output_options additional_vars ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
     $self->{method} ||= $args{media};
@@ -396,7 +389,6 @@ sub new_UI {
 
     return $class->new(
         @_,
-        no_auto_ouput => 0,
         format => 'HTML' ,
         path => 'UI',
         user => $request->{_user},
@@ -597,12 +589,9 @@ sub legacy_render {
 
     my $post = $self->_render($vars);
 
-    if (!$self->{no_auto_output}) {
-        # Clean up
-        $logger->debug('before self output');
-        $self->output;
-        $logger->debug('after self output');
-    }
+    $logger->debug('before self output');
+    $self->output;
+    $logger->debug('after self output');
 
     return $post;
 }
