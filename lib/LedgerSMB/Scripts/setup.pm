@@ -751,7 +751,7 @@ sub upgrade {
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
-        return $template->render($request, VERSION_COMPARE => \&Version::Compare::version_compare);
+        return $template->render($request);
     } else {
         $request->{dbh}->rollback();
 
@@ -1210,7 +1210,8 @@ sub process_and_run_upgrade_script {
         template => $template,
         format_options => {extension => 'sql'},
         format => 'TXT' );
-    $dbtemplate->render($request);
+
+    $dbtemplate->render($request, VERSION_COMPARE => \&Version::Compare::version_compare);
 
     my $tempfile = File::Temp->new();
     print $tempfile $dbtemplate->{output}
