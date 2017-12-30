@@ -427,10 +427,9 @@ sub print {
             user => $payment->{_user},
             template => 'check_multiple',
             format => uc $payment->{'format'},
-            no_auto_output => 1,
             output_args => $payment,
         );
-        $template->legacy_render($payment);
+        $template->render($payment);
         $template->output(%$payment);
         $request->{action} = 'update_payments';
         return display_payments(@_);

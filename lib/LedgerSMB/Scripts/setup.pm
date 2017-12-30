@@ -1208,11 +1208,9 @@ sub process_and_run_upgrade_script {
         user => {},
         path => 'sql/upgrade',
         template => $template,
-        no_auto_output => 1,
         format_options => {extension => 'sql'},
         format => 'TXT' );
-
-    $dbtemplate->legacy_render($request);
+    $dbtemplate->render($request);
 
     my $tempfile = File::Temp->new();
     print $tempfile $dbtemplate->{output}

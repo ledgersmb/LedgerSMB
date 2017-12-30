@@ -214,7 +214,6 @@ sub print {
         locale   => $request->{_locale},
         path     => $LedgerSMB::Company_Config::settings->{templates},
         template => 'timecard',
-        no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
 
@@ -225,7 +224,7 @@ sub print {
                             . '.' . lc($request->{format} || 'HTML') . '"' ]);
     }
     else {
-        $template->legacy_render($request);
+        $template->render($request);
         $template->output(%$request);
 
         return display($request);
