@@ -51,6 +51,7 @@ use LedgerSMB::PE;
 use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Legacy_Util;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
@@ -332,7 +333,7 @@ sub display_form
                 format => 'HTML',
                     );
 
-  $template->legacy_render({
+  LedgerSMB::Legacy_Util::render_template($template, {
             form => \%$form,
             buttons => \@buttons,
             hiddens => \%hiddens,

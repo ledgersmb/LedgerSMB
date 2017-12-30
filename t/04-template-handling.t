@@ -193,7 +193,7 @@ ok(defined $template,
         'Template, new (TXT): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template',
        'Template, new (TXT): Object creation with format and template');
-$template->render;
+$template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&bar.",
         'Template, render (TXT): Simple TXT template, correct output');
 
@@ -204,7 +204,7 @@ ok(defined $template,
         'Template, new (HTML): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template',
        'Template, new (HTML): Object creation with format and template');
-$template->render;
+$template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
         'Template, render (HTML): Simple HTML template, correct output');
 
