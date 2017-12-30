@@ -125,7 +125,6 @@ sub generate_statement {
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
         method => $request->{media},
-        no_auto_output => 1,
     );
     if ($request->{media} eq 'email'){
 
