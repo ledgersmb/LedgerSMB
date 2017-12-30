@@ -139,7 +139,7 @@ no output file is created, the output is held in $self->{output}.
 
 Currently email and server-side printing are not supported.
 
-=item render_to_psgi( $variables, extra_headers => \@headers)
+=item render_to_psgi( $variables)
 
 Like C<render>, but instead of printing to STDOUT, returns
 a PSGI return value triplet (status, headers and body).
@@ -147,10 +147,6 @@ a PSGI return value triplet (status, headers and body).
 Note that the only guarantee here is that the triplet can
 be used as a PSGI return value which means that the body
 is *not* restricted to being an array of strings.
-
-When C<extra_headers> is specified, these are included in
-the headers part of returned triplet.
-
 
 =item output
 
@@ -600,7 +596,8 @@ sub render {
     my $self = shift @_;
     my $vars = shift @_;
 
-    return $self->_render($vars);
+    $self->_render($vars);
+    return $self;
 }
 
 sub legacy_render {
@@ -633,7 +630,6 @@ sub render_to_psgi {
     # $self->{mimetype} set by format
     my $headers = [
         'Content-Type' => "$self->{mimetype}$charset",
-        (@{$args{extra_headers} // []})
         ];
 
     # Use the same Content-Disposition criteria as _http_output()

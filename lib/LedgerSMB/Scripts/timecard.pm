@@ -214,14 +214,15 @@ sub print {
         locale   => $request->{_locale},
         path     => $LedgerSMB::Company_Config::settings->{templates},
         template => 'timecard',
-        format   => $request->{format} || 'HTML'
+        format   => $request->{format} || 'HTML',
+        output_options => {
+           filename => 'timecard-' . $request->{id}
+                            . '.' . lc($request->{format} || 'HTML')
+        }
     );
 
     if (lc($request->{media}) eq 'screen') {
-        return $template->render_to_psgi($request,
-            extra_headers => [ 'Content-Disposition' =>
-                  'attachment; filename="timecard-' . $request->{id}
-                            . '.' . lc($request->{format} || 'HTML') . '"' ]);
+        return $template->render_to_psgi($request);
     }
     else {
         $template->render($request);

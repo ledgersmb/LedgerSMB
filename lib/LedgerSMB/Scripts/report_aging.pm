@@ -125,6 +125,9 @@ sub generate_statement {
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
         method => $request->{media},
+        output_options => {
+          filename => 'aging-report.' . lc($request->{print_format})
+        }
     );
     if ($request->{media} eq 'email'){
 
@@ -132,11 +135,7 @@ sub generate_statement {
        return;
 
     } elsif ($request->{media} eq 'screen'){
-        return $template->render_to_psgi({statements => \@statements},
-                  extra_headers => [
-                     'Content-Disposition' =>
-                           'attachment; filename="aging-report.'
-                                 . lc($request->{print_format}) . '"' ]);
+        return $template->render_to_psgi({statements => \@statements});
     } else {
         $template->legacy_render({statements => \@statements});
         $request->{module_name}='gl';
