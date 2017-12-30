@@ -139,15 +139,6 @@ no output file is created, the output is held in $self->{output}.
 
 Currently email and server-side printing are not supported.
 
-=item render_to_psgi( $variables)
-
-Like C<render>, but instead of printing to STDOUT, returns
-a PSGI return value triplet (status, headers and body).
-
-Note that the only guarantee here is that the triplet can
-be used as a PSGI return value which means that the body
-is *not* restricted to being an array of strings.
-
 =item output
 
 This function outputs the rendered file in an appropriate manner.
@@ -614,39 +605,6 @@ sub legacy_render {
     }
 
     return $post;
-}
-
-sub render_to_psgi {
-    my $self = shift @_;
-    my $vars = shift @_;
-    my %args = ( @_ );
-
-    $self->_render($vars);
-
-    my $charset = '';
-    $charset = '; charset=utf-8'
-        if $self->{mimetype} =~ m!^text/!;
-
-    # $self->{mimetype} set by format
-    my $headers = [
-        'Content-Type' => "$self->{mimetype}$charset",
-        ];
-
-    # Use the same Content-Disposition criteria as _http_output()
-    my $name = $self->{output_options}{filename};
-    if ($name) {
-        $name =~ s#^.*/##;
-        push @$headers,
-            ( 'Content-Disposition' =>
-              qq{attachment; filename="$name"} );
-        $logger->debug("Adding disposition attachment header for: $name");
-    }
-
-    my $body = $self->{output};
-    utf8::encode($body)
-        if utf8::is_utf8($body);
-
-    return [ HTTP_OK, $headers, [ $body ] ];
 }
 
 sub output {
