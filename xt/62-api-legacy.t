@@ -40,7 +40,7 @@ if (defined $ENV{LSMB_TEST_DB}){
 
 @test_request_data = do { 'xt/data/62-request-data' } ; # Import test case hashes
 
-for (qw(        drafts     login      payment      
+for (qw(        drafts     login      payment
                 menu       contact
                 inventory  vouchers recon)
     ){
@@ -65,19 +65,19 @@ for my $test (@$test_request_data){
             if ( ( defined $key ) && ( $key =~ /_\$GLOBAL\$:(.*)$/ ) ) {
                 my $newkey = $GLOBAL{$1};
                 $key = $newkey;
-            }   
+            }
             if ( ( defined $key ) &&  ( defined $test->{$key} ) && ( $test->{$key} =~ /_\$GLOBAL\$:(.*)$/ ) ) {
                 my $val = $GLOBAL{$1};
                 $test->{$key} = $val;
-            }   
+            }
             if ( ( defined $key ) && ( $key eq 'module' ) ){
                 $module = $test->{"$key"}
-            }   
+            }
             elsif ( ( defined $test->{"$key"} ) && ( defined $key ) && ( $key !~ /^\_/ ) ){
                 $argstr .= "&" . "$key=".$test->{"$key"};
 
-            }   
-        }  
+            }
+        }
 
         if (ref $test->{'_pre_test_sub'} eq 'CODE'){
                 $test->{'_pre_test_sub'}();
@@ -90,7 +90,7 @@ for my $test (@$test_request_data){
                 #for $key (keys(%$test)){
                         #if ($key !~ /^_/){
                                 #$qstring .= qq|$key=$test->{"$key"}&|;
-                        #}      
+                        #}
                 #}
                 #$qstring =~ s/&$//;
                 #$old_code_test::form = Form->new($qstring);
@@ -111,7 +111,7 @@ for my $test (@$test_request_data){
                         $request->{_test_cases} = $test->{_api_test};
                 }
                 $script =~ s/\.pl$//;
-                is(ref "LedgerSMB::Scripts::$script"->can($request->{action}), 
+                is(ref "LedgerSMB::Scripts::$script"->can($request->{action}),
                         'CODE',
                         "$test->{_test_id}: Action ($request->{action}) Defined");
                 ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
@@ -134,10 +134,10 @@ sub render {
                 $data->{_test_cases}($data);
         }
         if ($data->{_error_test}){
-                cmp_ok($data->{_died}, '==', '1', 
+                cmp_ok($data->{_died}, '==', '1',
                         "$data->{_test_id} died as expected");
         } else {
-                ok(!defined $data->{_died}, 
+                ok(!defined $data->{_died},
                         "$data->{_test_id} did not error");
         }
         return 1;
@@ -147,7 +147,7 @@ sub _http_output {
         return 1;
 }
 package old_code_test;
-# Keeps old code isolated in a different namespace, and provides for reasonable 
+# Keeps old code isolated in a different namespace, and provides for reasonable
 # reload facilities.
 our $form;
 
