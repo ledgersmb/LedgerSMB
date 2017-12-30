@@ -10,7 +10,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale] [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
 
 This command instantiates a new template:
 
@@ -151,15 +151,6 @@ the headers part of returned triplet.
 =item output
 
 This function outputs the rendered file in an appropriate manner.
-
-=item my $bool = _valid_language()
-
-This command checks for valid langages.  Returns 1 if the language is valid,
-0 if it is not.
-
-=item column_heading()
-
-Apply locale settings to column headings and add sort urls if necessary.
 
 =item my $source = get_template_source($get_template)
 
