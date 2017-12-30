@@ -21,7 +21,6 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('business_type__list',ARRAY['']);
-    SELECT has_function('currency_get_exchangerate',ARRAY['character','date','integer']);
     SELECT has_function('overpayment__reverse',ARRAY['integer','date','integer','integer','numeric','character']);
     SELECT has_function('payment_bulk_post',ARRAY['numeric[]','integer','text','numeric','text','text','date','integer','numeric','text']);
     SELECT has_function('payment_gather_header_info',ARRAY['integer','integer']);
@@ -39,11 +38,10 @@ BEGIN;
     SELECT has_function('payment_get_unused_overpayment',ARRAY['integer','integer','integer']);
     SELECT has_function('payment_get_vc_info',ARRAY['integer','integer']);
     SELECT has_function('payment__overpayments_list',ARRAY['date','date','text','text','text']);
-    SELECT has_function('payment_post',ARRAY['date','integer','integer','character','text','text','integer[]','numeric[]','boolean[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
+    SELECT has_function('payment_post',ARRAY['date','integer','integer','char(3)','text','text','integer[]','numeric[]','boolean[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
     SELECT has_function('payment__reverse',ARRAY['text','date','integer','text','date','integer','integer','integer','numeric','character']);
     SELECT has_function('payment__search',ARRAY['text','date','date','integer','text','integer','character','text']);
     SELECT has_function('payments_get_open_currencies',ARRAY['integer']);
-    SELECT has_function('payments_set_exchangerate',ARRAY['integer','numeric','character','date']);
     SELECT has_function('payment_type__get_label',ARRAY['integer']);
     SELECT has_function('payment_type__list',ARRAY['']);
 

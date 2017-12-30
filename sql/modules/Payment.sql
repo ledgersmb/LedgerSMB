@@ -678,7 +678,7 @@ is the amount for that transaction.  $$;
 DROP FUNCTION IF EXISTS payment_post
 (in_datepaid                      date,
  in_account_class                 int,
- in_entity_credit_id                     int,
+ in_entity_credit_id              int,
  in_curr                          char(3),
  in_notes                         text,
  in_gl_description                text,
