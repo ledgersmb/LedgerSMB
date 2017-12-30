@@ -35,6 +35,8 @@ Code cleanup
 * Merge of SQL-Ledger 2.8 and 3.0 migration code; improved consistency (Yves L)
 * Improved cleanup of temp files and dirs after use (Erik H)
 * Improved HTML structure (balanced closing/opening tags, etc) (Yves L)
+* Factored HTTP response responsibility out of LedgerSMB::Template (Erik H)
+* Moved request pre- and post-processing into custom Plack Middlewares (Erik H)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
