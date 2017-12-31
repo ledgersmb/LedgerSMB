@@ -18,6 +18,6 @@ consideration. Please:
    in the future
  * Our code base uses a maximum line-width of 80 characters.
 
-For more coding standards and community guideliness, please consult the
+For more coding standards and community guidelines, please consult the
 links presented above this PR form.
 
