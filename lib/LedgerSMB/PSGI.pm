@@ -126,10 +126,6 @@ sub psgi_app {
            DBName  => $env->{'lsmb.company'},
            Locale  => $request->{_locale};
 
-        my $content_type = Plack::Util::header_get($headers, 'content-type');
-        push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
-            if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
-
         $request->{dbh}->commit if defined $request->{dbh};
     }
     catch {
