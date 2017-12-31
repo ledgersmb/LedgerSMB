@@ -4,7 +4,6 @@ use FindBin;
 use strict;
 use warnings;
 use lib "$FindBin::Bin/../lib";
-use File::Temp;
 use 5.010; # say makes things easier
 no lib '.'; # can run from anywhere
 
