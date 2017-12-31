@@ -10,7 +10,7 @@ no lib '.'; # can run from anywhere
 use LedgerSMB::Sysconfig;
 
 my $out;
-if ( defined $ARGV[1] && $ARGV[1] eq '--regenerate') {
+if ( defined $ARGV[0] && $ARGV[0] eq '--regenerate') {
     my $out_file = "$FindBin::Bin/../sql/modules/BLACKLIST";
     open $out, ">", $out_file
         or die "failed to open $out_file for writing $!";
