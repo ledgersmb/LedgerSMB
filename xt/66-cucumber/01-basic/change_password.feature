@@ -38,5 +38,5 @@ Scenario: Successfully change password
    And I enter "a6m1n" into "Old Password"
    And I enter "a new password" into "New password"
    And I enter "a new password" into "Verify"
-  Then I should see an error message "Password Changed"
+  Then I should see a message "Password Changed"
 
