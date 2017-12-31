@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(42);
+    SELECT plan(40);
 
     -- Add data
 
@@ -38,7 +38,7 @@ BEGIN;
     SELECT has_function('payment_get_unused_overpayment',ARRAY['integer','integer','integer']);
     SELECT has_function('payment_get_vc_info',ARRAY['integer','integer']);
     SELECT has_function('payment__overpayments_list',ARRAY['date','date','text','text','text']);
-    SELECT has_function('payment_post',ARRAY['date','integer','integer','char(3)','text','text','integer[]','numeric[]','boolean[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
+    SELECT has_function('payment_post',ARRAY['date','integer','integer','character','numeric','text','text','integer[]','numeric[]','boolean[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
     SELECT has_function('payment__reverse',ARRAY['text','date','integer','text','date','integer','integer','integer','numeric','character']);
     SELECT has_function('payment__search',ARRAY['text','date','date','integer','text','integer','character','text']);
     SELECT has_function('payments_get_open_currencies',ARRAY['integer']);
