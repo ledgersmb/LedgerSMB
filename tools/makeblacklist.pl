@@ -9,8 +9,11 @@ no lib '.'; # can run from anywhere
 
 my %func = (); # set of functions as keys
 
+my $order_file = "$FindBin::Bin/../sql/modules/LOADORDER";
 my $order;
-open ($order, '<', "$FindBin::Bin/../sql/modules/LOADORDER");
+open ($order, '<', $order_file)
+    or die "failed to open $order_file $!";
+
 for my $mod (<$order>) {
     chomp($mod);
     $mod =~ s/(\s+|#.*)//g;
@@ -22,7 +25,9 @@ close ($order); ### return failure to execute the script?
 
 sub process_mod {
     my ($mod) = @_;
-    open my $mod_h, '<', "$FindBin::Bin/../sql/modules/$mod";
+    my $mod_file = "$FindBin::Bin/../sql/modules/$mod";
+    open my $mod_h, '<', $mod_file
+        or die "failed to open $mod_file $!";
     my %func =  map { /FUNCTION (\w+)\(/i; ($1 => 1) }
                 grep { /CREATE (OR REPLACE )?FUNCTION \w+\(/i }  <$mod_h>;
     close $mod_h;
@@ -31,7 +36,9 @@ sub process_mod {
 
 sub write_blacklist {
     my @funcs = @_;
-    open my $bl, '>', "$FindBin::Bin/../sql/modules/BLACKLIST";
+    my $bl_file = "$FindBin::Bin/../sql/modules/BLACKLIST";
+    open my $bl, '>', $bl_file
+        or die "Failed to open $bl_file $!";
     say $bl $_ for @funcs;
-    close $bl;
+    close $bl or die "failed to close $bl_file after writing $!";
 }
