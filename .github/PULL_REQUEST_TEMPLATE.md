@@ -18,6 +18,10 @@ consideration. Please:
    in the future
  * Our code base uses a maximum line-width of 80 characters.
 
+By default, all PRs will be tested using Travis CI. For documentation changes,
+these tests may be skipped by putting `[skip ci]` somewhere in the commit
+message.
+
 For more coding standards and community guidelines, please consult the
 links presented above this PR form.
 
