@@ -45,9 +45,9 @@ ok($db->apply_changes, 'applied changes');
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){
-    open (DBLOCK, '>', "$temp/LSMB_TEST_DB");
-    print DBLOCK $ENV{LSMB_NEW_DB};
-    close (DBLOCK);
+    open (my $DBLOCK, '>', "$temp/LSMB_TEST_DB");
+    print $DBLOCK $ENV{LSMB_NEW_DB};
+    close ($DBLOCK);
 }
 
 # Validate that we can copy the database
@@ -114,7 +114,7 @@ SKIP: {
                 or !defined $ENV{LSMB_ADMIN_FNAME}
                 or !defined $ENV{LSMB_ADMIN_LNAME});
      # Move to LedgerSMB::DBObject::Admin calls.
-     my $lsmb = new LedgerSMB;
+     my $lsmb = LedgerSMB->new;
      ok(defined $lsmb, '$lsmb defined');
      isa_ok($lsmb, 'LedgerSMB');
      $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
@@ -142,7 +142,7 @@ SKIP: {
       $dbh->commit;
 };
 
-open  my $log, "< $LedgerSMB::Sysconfig::tempdir/dblog";
+open  my $log, '<', "$LedgerSMB::Sysconfig::tempdir/dblog";
 
 my $passed_no_errs = 1;
 while (my $line = <$log>){

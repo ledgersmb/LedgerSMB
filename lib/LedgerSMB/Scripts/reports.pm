@@ -114,7 +114,7 @@ sub start_report {
         template => $request->{report_name},
         format => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
                                  # request not used for script;
                                  # forms submit to other URLs than back to here
 }
@@ -128,7 +128,7 @@ Lists the business types.  No inputs expected or used.
 sub list_business_types {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item list_gifi
@@ -140,7 +140,7 @@ List the gifi entries.  No inputs expected or used.
 sub list_gifi {
     my ($request) = @_;
     return LedgerSMB::Report::Listings::GIFI->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item list_warehouse
@@ -151,7 +151,7 @@ List the warehouse entries.  No inputs expected or used.
 
 sub list_warehouse {
     return LedgerSMB::Report::Listings::Warehouse->new(%{$_[0]})
-        ->render_to_psgi($_[0]);
+        ->render($_[0]);
 }
 
 =item list_language
@@ -163,7 +163,7 @@ List language entries.  No inputs expected or used.
 sub list_language {
     my ($request) = @_;
     return LedgerSMB::Report::Listings::Language->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item list_sic
@@ -175,7 +175,7 @@ Lists sic codes
 sub list_sic {
     my ($request) = @_;
     return LedgerSMB::Report::Listings::SIC->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item generate_balance_sheet
@@ -206,7 +206,7 @@ sub generate_balance_sheet {
         $cmp->run_report;
         $rpt->add_comparison($cmp);
     }
-    return $rpt->render_to_psgi($request);
+    return $rpt->render($request);
 }
 
 =item search_overpayments
@@ -222,7 +222,7 @@ sub search_overpayments {
                                         post_date batch_class account_class);
     $request->{hiddens} = $hiddens;
     return LedgerSMB::Report::Listings::Overpayments->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item reverse_overpayment

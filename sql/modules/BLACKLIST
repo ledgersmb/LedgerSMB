@@ -241,6 +241,8 @@ sequence__increment
 sequence__list
 sequence__list_by_key
 session_check
+session_create
+session_delete
 setting__get_currencies
 setting__increment_base
 sic__list

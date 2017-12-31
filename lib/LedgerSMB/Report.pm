@@ -225,20 +225,6 @@ sub render {
     return $self->_render($request, renderer => 'render');
 }
 
-=item render_to_psgi
-
-As C<render>, but returns a psgi triplet, instead of printing the result
-to standard output.
-
-=cut
-
-sub render_to_psgi {
-    my $self = shift;
-    my $request = shift;
-
-    return $self->_render($request, renderer => 'render_to_psgi');
-}
-
 sub _render {
     my ($self, $request) = @_;
     my $template;
@@ -274,13 +260,13 @@ sub _render {
     @$rows = sort {
                    my $srt_a = $a->{$self->order_by};
                    my $srt_b = $b->{$self->order_by};
-                   { # pre-5.14 compatibility block
-                       local $@ = undef; # pre-5.14, do not die() in this block
-                       $srt_a = $srt_a->to_sort
-                           if eval { $srt_a->can('to_sort') };
-                       $srt_b = $srt_b->to_sort
-                           if eval { $srt_b->can('to_sort') };
-                   }
+
+                   local $@ = undef;
+                   $srt_a = $srt_a->to_sort
+                       if eval { $srt_a->can('to_sort') };
+                   $srt_b = $srt_b->to_sort
+                       if eval { $srt_b->can('to_sort') };
+
                    no warnings 'numeric'; ## no critic ( ProhibitNoWarnings )
                    $srt_a <=> $srt_b or $srt_a cmp $srt_b;
               } @$rows
@@ -298,14 +284,12 @@ sub _render {
     for my $r (@{$self->rows}){
         for my $k (keys %$r){
             next if $exclude->{$k};
-            { # pre-5.14 compatibility block
-                local $@ = undef; # pre-5.14, do not die() in this block
-                if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
-                    $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
-                    $total_row->{$k}->badd($r->{$k});
-                }
-            }
 
+            local $@ = undef;
+            if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
+                $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
+                $total_row->{$k}->badd($r->{$k});
+            }
         }
         if ($self->show_subtotals and defined $col_val and
             ($col_val ne $r->{$self->order_by})
@@ -332,12 +316,10 @@ sub _render {
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
-                { # pre-5.14 compatibility block
-                    local $@ = undef; # pre-5.14, do not die() in this block
-                    if ( eval {$row->{$col->{col_id}}->can('to_output')}){
-                        $row->{$col->{col_id}} =
-                            $row->{$col->{col_id}}->to_output(money => 1);
-                    }
+                local $@ = undef;
+                if ( eval {$row->{$col->{col_id}}->can('to_output')}){
+                    $row->{$col->{col_id}} =
+                        $row->{$col->{col_id}}->to_output(money => 1);
                 }
             }
         }

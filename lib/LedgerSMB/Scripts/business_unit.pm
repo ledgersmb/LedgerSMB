@@ -44,7 +44,7 @@ sub list_classes {
         template => 'list_classes',
         format => 'HTML'
     );
-    return $template->render_to_psgi({request => $request});
+    return $template->render({request => $request});
 }
 
 =item add
@@ -98,7 +98,7 @@ sub _display {
         template => 'edit',
         format => 'HTML'
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 
 }
 
@@ -133,7 +133,7 @@ If set, excludes those which are not associated with customers/vendors.
 sub list {
     my ($request) = @_;
     return LedgerSMB::Report::Listings::Business_Unit->new(%$request)
-        ->render_to_psgi($request);
+        ->render($request);
 }
 
 =item delete

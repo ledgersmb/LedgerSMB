@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 202;
+use Test::More tests => 207;
 use File::Find;
 
 my @on_disk;
@@ -51,15 +51,15 @@ my @modules =
     (
           'LedgerSMB::App_State',
           'LedgerSMB::DBH', 'LedgerSMB::I18N',
-          'LedgerSMB::Locale', 'LedgerSMB::Mailer', 'LedgerSMB::Session',
+          'LedgerSMB::Locale', 'LedgerSMB::Mailer',
           'LedgerSMB::User', 'LedgerSMB::Entity',
           'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
           'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
           'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
           'LedgerSMB::File', 'LedgerSMB::Report',
-          'LedgerSMB::Template', 'LedgerSMB::Company_Config',
-          'LedgerSMB::Database',
+          'LedgerSMB::Template', 'LedgerSMB::Legacy_Util',
+          'LedgerSMB::Company_Config', 'LedgerSMB::Database',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
@@ -91,10 +91,14 @@ my @modules =
           'LedgerSMB::File::Transaction',
           'LedgerSMB::Inventory::Adjust',
           'LedgerSMB::Inventory::Adjust_Line',
+          'LedgerSMB::Middleware::AuthenticateSession',
+          'LedgerSMB::Middleware::ClearDownloadCookie',
+          'LedgerSMB::Middleware::DisableBackButton',
+          'LedgerSMB::Middleware::DynamicLoadWorkflow',
           'LedgerSMB::old_code', 'LedgerSMB::Part',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
-          'LedgerSMB::PSGI::Preloads',
+          'LedgerSMB::PSGI::Preloads', 'LedgerSMB::PSGI::Util',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
           'LedgerSMB::FileFormats::ISO20022::CAMT053',

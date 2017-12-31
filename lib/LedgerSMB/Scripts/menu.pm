@@ -69,7 +69,7 @@ sub root_doc {
         $request,
         template => 'main',
     );
-    return $template->render_to_psgi($menu);
+    return $template->render($menu);
 }
 
 =pod

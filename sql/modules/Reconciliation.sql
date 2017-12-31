@@ -38,6 +38,12 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION reconciliation__submit_set(
+        in_report_id int, in_line_ids int[]) IS
+$$Submits a reconciliation report for approval.
+in_line_ids is used to specify which report lines are cleared, finalizing the
+report.$$;
+
 CREATE OR REPLACE FUNCTION reconciliation__check(in_end_date date, in_chart_id int)
 RETURNS SETOF defaults
 LANGUAGE SQL AS
@@ -68,12 +74,6 @@ RETURNS bool language sql as $$
 $$ SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION reconciliation__reject_set(in_report_id int) FROM public;
-
-COMMENT ON FUNCTION reconciliation__submit_set(
-        in_report_id int, in_line_ids int[]) IS
-$$Submits a reconciliation report for approval.
-in_line_ids is used to specify which report lines are cleared, finalizing the
-report.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
         in_report_id int, in_line_ids int[]) RETURNS bool AS

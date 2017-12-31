@@ -85,7 +85,7 @@ sub create_batch {
         template => 'create_batch',
         format => 'HTML'
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                         batch => $batch });
 }
 
@@ -207,7 +207,7 @@ sub list_batches {
     my ($request) = @_;
     $request->open_form;
     return LedgerSMB::Report::Unapproved::Batch_Overview->new(
-                 %$request)->render_to_psgi($request);
+                 %$request)->render($request);
 }
 
 =item get_batch
@@ -225,7 +225,7 @@ sub get_batch {
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
     return LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request)->render_to_psgi($request);
+                 %$request)->render($request);
 }
 
 =item single_batch_approve
@@ -507,7 +507,7 @@ sub print_batch {
         ];
     }
     else {
-        return $report->render_to_psgi($request);
+        return $report->render($request);
     }
 }
 

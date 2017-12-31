@@ -21,13 +21,13 @@ if ($run_tests){
 }
 
 my $lock_file = "$temp/LSMB_TEST_DB";
-ok(open (DBLOCK, '<', $lock_file), 'Opened db lock file')
+ok(open (my $DBLOCK, '<', $lock_file), 'Opened db lock file')
   || BAIL_OUT("could not open lock file $lock_file: \$!=$!, \$@=$@");
-my $db = <DBLOCK>;
+my $db = <$DBLOCK>;
 chomp($db);
 cmp_ok($db, 'eq', $ENV{LSMB_NEW_DB}, 'Got expected db name out') &&
 ok(!system ("dropdb $ENV{LSMB_NEW_DB}"), 'dropped db');
-ok(close (DBLOCK), 'Closed db lock file');
+ok(close ($DBLOCK), 'Closed db lock file');
 ok(unlink ("$temp/LSMB_TEST_DB"), 'Removed test db lockfile');
 
 

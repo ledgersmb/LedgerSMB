@@ -60,7 +60,6 @@ package Form;
 use strict;
 
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Session;
 use List::Util qw(first);
 use Time::Local;
 use Cwd;
@@ -70,6 +69,7 @@ use LedgerSMB::PGNumber;
 use Log::Log4perl;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
+use LedgerSMB::Middleware::AuthenticateSession;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 use Try::Tiny;
@@ -176,9 +176,9 @@ sub new {
             $cookie{$name} = $value;
         }
         $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
-        $self->{cookie} =~ m/.*:([^:]*)$/;
-        $self->{company} = $1
-            if ! $self->{company};
+        my $unused;
+        ($self->{session_id}, $unused, $self->{company}) =
+            split(/:/, $self->{cookie});
     }
 
     $self->{version}   = "1.6.0-dev";
@@ -528,7 +528,7 @@ sub header {
     }
     elsif ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.  Let's see about caching.
-        local ($@); # pre-5.14, do not die() in this block
+        local $@;
         $cache = 0 if eval { LedgerSMB::Setting->get('disable_back')};
     }
 
@@ -817,10 +817,8 @@ Calls $form->error if the value is NaN.
 sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
-    }
+    local $@;
+    return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
 
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
         $amount = '0';
@@ -1300,6 +1298,18 @@ is populated.  The connection initiated has autocommit disabled.
 
 =cut
 
+
+sub _credential_prompt{
+    print qq|Status: 401
+Content-Type: text/plain; charset=utf-8
+WWW-Authenticate: Basic realm=LedgerSMB
+
+Please enter your credentials
+|;
+    die;
+}
+
+
 sub db_init {
     my ( $self, $myconfig ) = @_;
     $logger->trace("begin");
@@ -1314,15 +1324,17 @@ sub db_init {
                                              $creds->{login},
                                              $creds->{password});
 
-    LedgerSMB::Session::credential_prompt unless $self->{dbh};
+    _credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
 
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
-    if (! LedgerSMB::Session::check( $self->{cookie}, $self, $path)) {
-        LedgerSMB::Session::credential_prompt;
-    }
+    $self->{_new_session_cookie_value} =
+        LedgerSMB::Middleware::AuthenticateSession::_verify_session(
+            $dbh, $dbname, $self->{cookie});
+
+    _credential_prompt if ! $self->{_new_session_cookie_value};
 
     LedgerSMB::App_State::set_DBH($dbh);
     LedgerSMB::DBH->set_datestyle;
@@ -1926,10 +1938,8 @@ $form->all_business_units, and $form->all_taxaccounts are all run.
 sub get_regular_metadata {
     my ($self, $myconfig, $vc, $transdate, $job) = @_;
     my $dbh = $self->{dbh};
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
-    }
+    local $@;
+    $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
     $self->all_business_units( $myconfig, $dbh, $transdate, $job );

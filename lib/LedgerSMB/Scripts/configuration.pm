@@ -285,7 +285,7 @@ sub defaults_screen{
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'Configuration/settings');
-    return $template->render_to_psgi({
+    return $template->render({
         form => $request,
         # hiddens => \%hiddens,
         selects => \%selects,
@@ -318,7 +318,7 @@ sub sequence_screen {
     return LedgerSMB::Template->new_UI(
         $request,
         template => 'Configuration/sequence'
-        )->render_to_psgi($request);
+        )->render($request);
 }
 
 =item save_defaults

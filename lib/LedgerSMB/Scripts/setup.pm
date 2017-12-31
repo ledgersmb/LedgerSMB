@@ -54,7 +54,30 @@ pre-connected to the database.
 =cut
 
 sub no_db {
+    # if we switch our entrypoints to 'dbonly',
+    # there are problems with the case where
+    # a new database must be created.
     return 1;
+}
+
+=item no_db_actions
+
+=cut
+
+sub no_db_actions {
+    return qw(__default);
+}
+
+=item clear_session_actions
+
+Returns an array of actions which should have the session
+(cookie) cleared before verifying the session and being
+dispatched to.
+
+=cut
+
+sub clear_session_actions {
+    return qw(__default);
 }
 
 
@@ -65,7 +88,7 @@ sub __default {
         $request,
         template => 'setup/credentials',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 sub _get_database {
@@ -256,7 +279,7 @@ sub login {
         $request,
         template => 'setup/confirm_operation',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item sanity_checks
@@ -293,7 +316,7 @@ sub list_databases {
         $request,
         template => 'setup/list_databases',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item list_users
@@ -314,7 +337,7 @@ sub list_users {
         $request,
         template => 'setup/list_users',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item copy_db
@@ -366,7 +389,7 @@ sub _begin_backup {
         $request,
         template => 'setup/begin_backup',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 };
 
 
@@ -431,7 +454,7 @@ sub run_backup {
             $request,
             template => 'setup/complete',
         );
-        return $template->render_to_psgi($request);
+        return $template->render($request);
     }
     elsif ($request->{backup_type} eq 'browser') {
         my $bak;
@@ -482,7 +505,7 @@ sub revert_migration {
         template => 'setup/complete_migration_revert',
         );
 
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item _get_template_directories
@@ -520,7 +543,7 @@ sub template_screen {
     return LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/template_info',
-    )->render_to_psgi($request);
+    )->render($request);
 }
 
 =item load_templates
@@ -728,7 +751,7 @@ sub upgrade {
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
-        return $template->render_to_psgi($request, VERSION_COMPARE => \&Version::Compare::version_compare);
+        return $template->render($request);
     } else {
         $request->{dbh}->rollback();
 
@@ -828,7 +851,7 @@ verify_check => md5_hex($check->test_query),
         template => 'setup/migration_step'
     );
 
-    return $template->render_to_psgi({
+    return $template->render({
            form               => $request,
            heading            => $heading,
            headers            => [$request->{_locale}->maketext($check->display_name),
@@ -940,7 +963,7 @@ sub create_db {
             $request,
             template => 'setup/confirm_operation',
         );
-        return $template->render_to_psgi($request);
+        return $template->render($request);
     }
 
     $rc=$database->create_and_load();
@@ -1002,7 +1025,7 @@ sub select_coa {
         $request,
         template => 'setup/select_coa',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 
@@ -1054,7 +1077,7 @@ sub _render_user {
         template => 'setup/new_user',
         );
 
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item _render_new_user
@@ -1185,11 +1208,10 @@ sub process_and_run_upgrade_script {
         user => {},
         path => 'sql/upgrade',
         template => $template,
-        no_auto_output => 1,
         format_options => {extension => 'sql'},
         format => 'TXT' );
 
-    $dbtemplate->render($request);
+    $dbtemplate->render($request, VERSION_COMPARE => \&Version::Compare::version_compare);
 
     my $tempfile = File::Temp->new();
     print $tempfile $dbtemplate->{output}
@@ -1355,7 +1377,7 @@ sub edit_user_roles {
                           roles => $all_roles,
             };
 
-    return $template->render_to_psgi($template_data);
+    return $template->render($template_data);
 }
 
 =item save_user_roles
@@ -1458,7 +1480,7 @@ sub complete {
         $request,
         template => 'setup/complete',
     );
-    return $template->render_to_psgi($request);
+    return $template->render($request);
 }
 
 =item system_info
@@ -1483,7 +1505,7 @@ sub system_info {
     return LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/system_info',
-        )->render_to_psgi($request);
+        )->render($request);
 }
 
 

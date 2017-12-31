@@ -12,7 +12,7 @@ if (@missing) {
     my $passwd = $ENV{SAUCE_ACCESS_KEY};
     my $host = "$user:$passwd\@localhost";
 
-    my $driver = new Selenium::Remote::Driver(
+    my $driver = Selenium::Remote::Driver->new(
                           'remote_server_addr' => $host,
                           'port' => 4445,
                           'browser_name' => "chrome",

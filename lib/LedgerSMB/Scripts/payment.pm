@@ -96,7 +96,7 @@ sub payments {
         format   => 'HTML',
     );
 
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        payment => $payment });
 }
 
@@ -224,7 +224,7 @@ sub pre_bulk_post_report {
         class => 'submit',
     }];
     $request->{action} = 'p';
-    return $template->render_to_psgi({
+    return $template->render({
         form => $request,
         hiddens => $request,
         columns => $cols,
@@ -283,7 +283,7 @@ sub get_search_results {
     exchangerate => $request->{exchangerate},
    date_reversed => $request->{date_reversed},
     };
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item reverse_payments
@@ -427,7 +427,6 @@ sub print {
             user => $payment->{_user},
             template => 'check_multiple',
             format => uc $payment->{'format'},
-            no_auto_output => 1,
             output_args => $payment,
         );
         $template->render($payment);
@@ -556,7 +555,7 @@ sub display_payments {
         template => 'payments_detail',
         format   => 'HTML',
     );
-    return $template->render_to_psgi({ request => $request,
+    return $template->render({ request => $request,
                                        payment => $payment });
 }
 
@@ -633,7 +632,7 @@ my $select = {
      path     => 'UI/payments',
      template => 'payment1',
      format   => 'HTML' );
-     return $template->render_to_psgi($select);
+     return $template->render($select);
 }
 
 
@@ -698,7 +697,7 @@ if ($#array_options == -1) {
      path     => 'UI/payments',
      template => 'payment1_5',
      format   => 'HTML' );
-    return $template->render_to_psgi($select);
+    return $template->render($select);
  }
 
 }
@@ -1093,7 +1092,7 @@ sub payment2 {
         path     => 'UI/payments',
         template => 'payment2',
         format => 'HTML' );
-    return $template->render_to_psgi($select);
+    return $template->render($select);
 }
 
 =item post_payment
@@ -1305,7 +1304,7 @@ sub print_payment {
       path     => $Payment->{templates_path},
       template => 'printPayment',
       format => 'HTML' );
-  return $template->render_to_psgi($select); ###TODO: psgi-render-to-attachment
+  return $template->render($select); ###TODO: psgi-render-to-attachment
 }
 
 =item post_and_print_payment
@@ -1370,7 +1369,7 @@ my $template = LedgerSMB::Template->new(
   path     => 'UI/payments',
   template => 'use_overpayment1',
   format => 'HTML' );
-return $template->render_to_psgi($ui);
+return $template->render($ui);
 }
 
 
@@ -1662,7 +1661,7 @@ my $template =    LedgerSMB::Template->new(
           format => 'HTML' );
 
 
-return $template->render_to_psgi($ui);
+return $template->render($ui);
 }
 
 =item post_overpayment
