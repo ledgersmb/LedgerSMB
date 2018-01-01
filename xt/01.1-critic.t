@@ -51,9 +51,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode) + scalar(@on_disk_test
 
 test_files(
     Perl::Critic->new(
-        -only => 1,
         -profile => 'xt/perlcriticrc',
-        -severity => 1,
         -theme => 'lsmb_new',
     ),
     \@on_disk
@@ -61,9 +59,7 @@ test_files(
 
 test_files(
     Perl::Critic->new(
-        -only => 1,
         -profile => 'xt/perlcriticrc',
-        -severity => 1,
         -theme => 'lsmb_old',
     ),
     \@on_disk_oldcode
@@ -71,9 +67,7 @@ test_files(
 
 test_files(
     Perl::Critic->new(
-        -only => 1,
         -profile => 'xt/perlcriticrc',
-        -severity => 1,
         -theme => 'lsmb_tests',
     ),
     \@on_disk_tests

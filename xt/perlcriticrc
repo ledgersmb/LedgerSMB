@@ -13,12 +13,22 @@
 #  lsmb_consider -- themes we are confused about using
 
 theme = lsmb_wip
+
+# Run just the policies listed in this configuration
 only = 1
+
+# Fail if listed policy modules are not available
+profile-strictness = fatal
+
+# 1 is the most strict setting, which is the
+# default when only == 1
 severity = 1
+
 verbose =%s %p %f   %l\n
 #verbose =%f %p   %l  (%s)\n
 color =  0
 pager = less
+
 
 [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = -1 0 1 2 100
