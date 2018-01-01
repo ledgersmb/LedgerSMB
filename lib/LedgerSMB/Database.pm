@@ -33,6 +33,7 @@ use warnings;
 
 use DateTime;
 use DBI;
+use File::Spec;
 use Log::Log4perl;
 use Moose;
 use namespace::autoclean;
@@ -48,8 +49,6 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 our $VERSION = '1.2';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
-
-my $temp = $LedgerSMB::Sysconfig::tempdir;
 
 
 =head1 PROPERTIES
@@ -84,7 +83,7 @@ This creates a log file for the specific upgrade attempt.
 sub loader_log_filename {
     my $dt = DateTime->now();
     $dt =~ s/://g; # strip out disallowed Windows characters
-    return $temp . "/dblog_${dt}_$$";
+    return File::Spec->tmpdir . "/dblog_${dt}_$$";
 }
 
 
@@ -418,7 +417,7 @@ sub load_base_schema {
                 file       => "$self->{source_dir}/on_load/$fname",
                 log_stdout => ($args{log} || "${log}_stdout"),
                 log_stderr => ($args{errlog} || "${log}_stderr")
-                ) if -f "sql/on_load/$fname";
+                ) if -f "$self->{source_dir}/on_load/$fname";
         }
         closedir(LOADDIR);
     }
@@ -484,14 +483,14 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-        file         => "sql/coa/$args->{country}/chart/$args->{chart}",
+        file         => "$self->{source_dir}/coa/$args->{country}/chart/$args->{chart}",
         log_stdout   => $log,
         log_stderr   => $log,
         );
     if (defined $args->{coa_lc}
-        && -f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+        && -f "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
-            file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+            file        => "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}",
             log_stdout  => $log,
             log_stderr  => $log,
             );

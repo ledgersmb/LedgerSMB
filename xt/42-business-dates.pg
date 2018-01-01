@@ -1,0 +1,44 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(13);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT todo('Business Dates not even completed nor compiling properly', 13);
+
+    SELECT has_function('lsmb__closest_business_day',ARRAY['date', 'integer', 'integer']);
+    SELECT has_function('lsmb__daycount_30e_360',ARRAY['date', 'date']);
+    SELECT has_function('lsmb__daycount_30e_360_isda',ARRAY['date', 'date', 'date']);
+    SELECT has_function('lsmb__daycount_act_act_isda',ARRAY['date', 'date']);
+    SELECT has_function('lsmb__daycount_act_365fixed',ARRAY['date', 'date']);
+    SELECT has_function('lsmb__daycount_act_360',ARRAY['date', 'date']);
+    SELECT has_function('lsmb__daycount_act_364',ARRAY['date', 'date']);
+    SELECT has_function('lsmb__daycount_factor',ARRAY['text', 'date', 'date', 'date']);
+    SELECT has_function('lsmb__is_workday',ARRAY['date', 'integer']);
+    SELECT has_function('lsmb__is_holiday',ARRAY['date', 'integer']);
+    SELECT has_function('lsmb__next_business_day',ARRAY['date', 'integer', 'integer']);
+    SELECT has_function('lsmb__next_business_day_modified',ARRAY['date', 'integer', 'integer']);
+    SELECT has_function('lsmb__next_interval_date',ARRAY['date', 'integer', 'interval', 'boolean']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

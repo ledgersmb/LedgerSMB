@@ -123,7 +123,7 @@ sub search {
            value => 'generate',
         }]);
     }
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item combine

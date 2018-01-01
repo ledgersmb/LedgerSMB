@@ -58,7 +58,7 @@ sub new {
         path     => 'UI/timecards',
         template => 'entry_filter',
         format   => 'HTML'
-    )->render_to_psgi($request);
+    )->render($request);
 }
 
 =item display
@@ -94,7 +94,7 @@ sub display {
          template => 'timecard',
          format   => 'HTML'
      );
-     return $template->render_to_psgi($request);
+     return $template->render($request);
 }
 
 =item timecard_screen
@@ -131,7 +131,7 @@ sub timecard_screen {
              template => 'timecard-week',
              format   => 'HTML'
          );
-         return $template->render_to_psgi($request);
+         return $template->render($request);
     }
 }
 
@@ -213,15 +213,15 @@ sub print {
         locale   => $request->{_locale},
         path     => $LedgerSMB::Company_Config::settings->{templates},
         template => 'timecard',
-        no_auto_output => 1,
-        format   => $request->{format} || 'HTML'
+        format   => $request->{format} || 'HTML',
+        output_options => {
+           filename => 'timecard-' . $request->{id}
+                            . '.' . lc($request->{format} || 'HTML')
+        }
     );
 
     if (lc($request->{media}) eq 'screen') {
-        return $template->render_to_psgi($request,
-            extra_headers => [ 'Content-Disposition' =>
-                  'attachment; filename="timecard-' . $request->{id}
-                            . '.' . lc($request->{format} || 'HTML') . '"' ]);
+        return $template->render($request);
     }
     else {
         $template->render($request);
@@ -240,7 +240,7 @@ This generates a report of timecards.
 sub timecard_report{
     my ($request) = @_;
     my $report = LedgerSMB::Report::Timecards->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render($request);
 }
 
 =item generate_order

@@ -1,0 +1,71 @@
+
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(14);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    SELECT has_table('parts');
+
+    -- Validate required functions
+
+    SELECT has_function('parts__search_lite',ARRAY['text','text']);
+    SELECT has_function('parts__get_by_id',ARRAY['integer']);
+    SELECT has_function('parts__get_by_partnumber',ARRAY['text']);
+    SELECT has_function('pricegroups__list',ARRAY['']);
+
+    -- Basic setup
+
+    INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion');
+    INSERT INTO account (id, accno, category, heading )
+                 VALUES (-255, '-billion', 'L', -255);
+
+    INSERT INTO parts (id, partnumber, description)
+               values (-255, 'FlatWasher_3mm', '3mm Flat Washer SS');
+
+
+
+
+    SELECT results_eq(
+       'SELECT count(*) FROM parts',
+       ARRAY[1::bigint],
+       'Verify that there is one part in the parts table');
+
+   -- Matching non-lexemes
+   SELECT results_eq(
+              'SELECT count(*)
+                 FROM parts__search_lite(null, ''' || x || ''')',
+               ARRAY[1::bigint],
+               'Parts description search "' || x || '"')
+     FROM (select unnest(ARRAY['flat', 'washer', '3', '3mm',
+                               'mm', 'ss']::text[]) as x) g;
+   -- Non-matching non-lexemes
+   SELECT results_eq(
+              'SELECT count(*)
+                 FROM parts__search_lite(null, ''' || x || ''')',
+               ARRAY[0::bigint],
+               'Parts description search "' || x || '"')
+     FROM (select unnest(ARRAY['qq']::text[]) as x) g;
+
+   -- Matching, reverse order lexemes
+   SELECT results_eq(
+              'SELECT count(*)
+                 FROM parts__search_lite(null, ''' || x || ''')',
+               ARRAY[1::bigint],
+               'Parts description search "' || x || '"')
+     FROM (select unnest(ARRAY['washer flat']::text[]) as x) g;
+
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
+

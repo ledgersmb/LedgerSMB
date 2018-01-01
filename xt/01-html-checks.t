@@ -39,7 +39,7 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
-    open $fh, "<$filename";
+    open $fh, '<', $filename;
     $is_snippet = 1
         if ($filename !~ m#(log(in|out))|main|setup/#
             || $filename =~ m#setup/ui-db-credentials#);

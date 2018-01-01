@@ -1,0 +1,41 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(12);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('budget__get_info',ARRAY['integer']);
+    SELECT has_function('budget__get_business_units',ARRAY['integer']);
+    SELECT has_function('budget__search',ARRAY['date', 'date' , 'date', 'text', 'text', 'integer', 'integer', 'integer', 'integer[]', 'boolean', 'boolean']);
+    SELECT has_function('budget__save_info',ARRAY['integer', 'date', 'date', 'text', 'text', 'integer[]']);
+    SELECT has_function('budget__save_details',ARRAY['integer', 'text[]']);
+    SELECT has_function('budget__get_details',ARRAY['integer']);
+    SELECT has_function('budget__get_notes',ARRAY['integer']);
+    SELECT has_function('budget__save_note',ARRAY['integer', 'text', 'text']);
+    SELECT has_function('budget__get_notes',ARRAY['integer']);
+    SELECT has_function('budget__variance_report',ARRAY['integer']);
+    SELECT has_function('budget__mark_obsolete',ARRAY['integer']);
+    SELECT has_function('budget__reject',ARRAY['integer']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

@@ -1,0 +1,42 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(13);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('file__get_mime_type',ARRAY['integer','text']);
+    SELECT has_function('file__attach_to_tx',ARRAY['bytea','integer','text','text','integer','integer','integer']);
+    SELECT has_function('file__attach_to_part',ARRAY['bytea','integer','text','text','integer','integer','integer']);
+    SELECT has_function('file__attach_to_entity',ARRAY['bytea','integer','text','text','integer','integer','integer']);
+    SELECT has_function('file__attach_to_eca',ARRAY['bytea','integer','text','text','integer','integer','integer']);
+    SELECT has_function('file__attach_to_order',ARRAY['bytea','integer','text','text','integer','integer','integer']);
+    SELECT has_function('file__save_incoming',ARRAY['bytea','integer','text','text']);
+    SELECT has_function('file__save_internal',ARRAY['bytea','integer','text','text']);
+    SELECT has_function('file__get_for_template',ARRAY['integer','integer']);
+    SELECT has_function('file__list_by',ARRAY['integer','integer']);
+    SELECT has_function('file__get',ARRAY['integer','integer']);
+    SELECT has_function('file_links_vrebuild',ARRAY['']);
+    SELECT has_function('file__list_links',ARRAY['integer','integer']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

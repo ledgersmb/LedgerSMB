@@ -33,7 +33,6 @@ sub lsmb_error_func {
 
 
 $lsmb = LedgerSMB->new();
-my %myconfig;
 my $utfstr;
 my @r;
 

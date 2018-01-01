@@ -17,13 +17,13 @@ $ENV{REQUEST_METHOD} = 'GET';
 
 
 
-my $lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new;
 ok(defined $lsmb, 'lsmb: defined');
 isa_ok($lsmb, 'LedgerSMB', 'lsmb: correct type');
 ok(defined $lsmb->{version}, 'lsmb: version set');
 ok(defined $lsmb->{dbversion}, 'lsmb: dbversion set');
 
-my $form = new Form;
+my $form = Form->new;
 ok(defined $form, 'form: defined');
 isa_ok($form, 'Form', 'form: correct type');
 ok(defined $form->{version}, 'form: version set');
@@ -36,44 +36,44 @@ my @dparts;
 my @lparts;
 my $age;
 SKIP: {
-	skip 'LedgerSMB is trunk', 1 if $lsmb->{version} =~ /trunk$/i;
-        $lsmb->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
-        $lsmb->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
-	@dparts = split /\./, $lsmb->{dbversion};
-	@lparts = split /\./, $lsmb->{version};
-	$age = 0;
-	foreach my $dpart (@dparts) {
-		my $lpart = shift @lparts;
-		if (!defined $lpart) {
-			$age = 1;
-			last;
-		} elsif ($lpart > $dpart) {
-			last;
-		} elsif ($dpart > $lpart) {
-			$age = 1;
-			last;
-		}
-	}
-	ok($age == 0, 'lsmb: version >= dbversion');
+    skip 'LedgerSMB is trunk', 1 if $lsmb->{version} =~ /trunk$/i;
+    $lsmb->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
+    $lsmb->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
+    @dparts = split /\./, $lsmb->{dbversion};
+    @lparts = split /\./, $lsmb->{version};
+    $age = 0;
+    foreach my $dpart (@dparts) {
+        my $lpart = shift @lparts;
+        if (!defined $lpart) {
+            $age = 1;
+            last;
+        } elsif ($lpart > $dpart) {
+            last;
+        } elsif ($dpart > $lpart) {
+            $age = 1;
+            last;
+        }
+    }
+    ok($age == 0, 'lsmb: version >= dbversion');
 }
 SKIP: {
-	skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
-        $form->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
-        $form->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
-	@dparts = split /\./, $form->{dbversion};
-	@lparts = split /\./, $form->{version};
-	$age = 0;
-	foreach my $dpart (@dparts) {
-		my $lpart = shift @lparts;
-		if (!defined $lpart) {
-			$age = 1;
-			last;
-		} elsif ($lpart > $dpart) {
-			last;
-		} elsif ($dpart > $lpart) {
-			$age = 1;
-			last;
-		}
-	}
-	ok($age == 0, 'form: version >= dbversion');
+    skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
+    $form->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
+    $form->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
+    @dparts = split /\./, $form->{dbversion};
+    @lparts = split /\./, $form->{version};
+    $age = 0;
+    foreach my $dpart (@dparts) {
+        my $lpart = shift @lparts;
+        if (!defined $lpart) {
+            $age = 1;
+            last;
+        } elsif ($lpart > $dpart) {
+            last;
+        } elsif ($dpart > $lpart) {
+            $age = 1;
+            last;
+        }
+    }
+    ok($age == 0, 'form: version >= dbversion');
 }

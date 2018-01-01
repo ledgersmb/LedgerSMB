@@ -10,7 +10,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale] [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool], [output_file => $string] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [method => $string], [no_escape => $bool], [debug => $bool] );
 
 This command instantiates a new template:
 
@@ -56,10 +56,6 @@ Overrides the template directory.
 The special value 'DB' enforces reading of the template from the
 current database.  Resolving the template takes the 'language' and
 'format' values into account.
-
-=item no_auto_output (optional)
-
-Disables the automatic output of rendered templates.
 
 =item no_escape (optional)
 
@@ -128,38 +124,11 @@ Preprocess for rendering.
 
 =item render($hashref)
 
-This command renders the template.  If no_auto_output was not specified during
-instantiation, this also writes the result to standard output and exits.
-Otherwise it returns the name of the output file if a file was created.  When
-no output file is created, the output is held in $self->{output}.
-
-Currently email and server-side printing are not supported.
-
-=item render_to_psgi( $variables, extra_headers => \@headers)
-
-Like C<render>, but instead of printing to STDOUT, returns
-a PSGI return value triplet (status, headers and body).
-
-Note that the only guarantee here is that the triplet can
-be used as a PSGI return value which means that the body
-is *not* restricted to being an array of strings.
-
-When C<extra_headers> is specified, these are included in
-the headers part of returned triplet.
-
+TODO
 
 =item output
 
 This function outputs the rendered file in an appropriate manner.
-
-=item my $bool = _valid_language()
-
-This command checks for valid langages.  Returns 1 if the language is valid,
-0 if it is not.
-
-=item column_heading()
-
-Apply locale settings to column headings and add sort urls if necessary.
 
 =item my $source = get_template_source($get_template)
 
@@ -361,12 +330,8 @@ sub new {
 
     $self->{$_} = $args{$_}
         for (qw( template format language no_escape debug locale method
-                 format_options output_options no_auto_output
-                 additional_vars ));
-    $self->{myconfig} = $args{user};
-    $self->{outputfile} =
-        "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
-        $args{output_file};
+                 format_options output_options additional_vars ));
+    $self->{user} = $args{user};
     $self->{include_path} = $args{path};
     $self->{method} ||= $args{media};
     if ($self->{language}){ # Language takes precedence over locale
@@ -417,7 +382,6 @@ sub new_UI {
 
     return $class->new(
         @_,
-        no_auto_ouput => 0,
         format => 'HTML' ,
         path => 'UI',
         user => $request->{_user},
@@ -517,7 +481,7 @@ sub get_template_args {
         $arghash->{COMPILE_EXT} = '.lttc';
         $arghash->{COMPILE_DIR} =
            File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
-                                $LedgerSMB::Sysconfig::tempdir );
+                                File::Spec->tmpdir );
     }
     $self->{binmode} = $binmode;
     return $arghash;
@@ -544,8 +508,7 @@ sub _render {
     my $vars = shift;
     $vars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $vars->{ENVARS} = \%ENV;
-    $vars->{USER} = $LedgerSMB::App_State::User;
-    $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
+    $vars->{USER} = $self->{user};
     $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
@@ -575,14 +538,9 @@ sub _render {
         for (keys %{$self->{additional_vars}});
 
     my $output;
-    if ($self->{outputfile}) {
-        $output = $self->{outputfile};
-    } else {
-        $output = \$self->{output};
-    }
-
     my $config;
-    ($output, $config) = $format->can('setup')->($self, $cleanvars, $output);
+    ($output, $config) = $format->can('setup')->($self, $cleanvars,
+                                                 \$self->{output});
 
     my $arghash = $self->get_template_args(
         $config->{input_extension},
@@ -607,232 +565,16 @@ sub _render {
         return undef;
     }
     $format->can('postprocess')->($self, $output, $config);
-    return $self->{outputfile};
+    return;
 }
 
 sub render {
     my $self = shift @_;
     my $vars = shift @_;
 
-    my $post = $self->_render($vars);
-
-    if (!$self->{no_auto_output}) {
-        # Clean up
-        $logger->debug('before self output');
-        $self->output;
-        $logger->debug('after self output');
-        if ($self->{outputfile}) {
-            unlink($self->{outputfile});
-        }
-    }
-
-    return $post;
-}
-
-sub render_to_psgi {
-    my $self = shift @_;
-    my $vars = shift @_;
-    my %args = ( @_ );
-
-    $self->{outputfile} = undef;
     $self->_render($vars);
-
-    my $charset = '';
-    $charset = '; charset=utf-8'
-        if $self->{mimetype} =~ m!^text/!;
-
-    # $self->{mimetype} set by format
-    my $headers = [
-        'Content-Type' => "$self->{mimetype}$charset",
-        (@{$args{extra_headers} // []})
-        ];
-
-    my $body;
-    if ($self->{output}) {
-        $body = $self->{output};
-        utf8::encode($body)
-            if utf8::is_utf8($body);
-        $body = [ $body ];
-        my $ext = lc($self->{format_options}{filetype} // $self->{format});
-        push @$headers,
-            ( 'Content-Disposition' =>
-                  'attachment; filename="Report.' . $ext . '"'
-            ) if $self->{format} && 'html' ne lc $self->{format};
-    }
-    elsif ($self->{outputfile}) {
-        open $body, '<:raw', $self->{outputfile}
-            or die "Failed to open rendered file $self->{outputfile} : $!";
-        # as we don't support Windows anyway: unlinking an open file works!
-        unlink $self->{outputfile};
-    }
-
-    return [ HTTP_OK, $headers, $body ];
+    return $self;
 }
 
-sub output {
-    my $self = shift;
-    my %args = @_;
-
-    for ( keys %args ) { $self->{output_options}->{$_} = $args{$_}; };
-
-    my $method = $self->{method} || $args{method} || $args{media};
-    $method = '' if !defined $method;
-
-    if ('email' eq lc $method) {
-        $self->_email_output;
-    } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-        cp($self->{outputfile}, $args{OUT});
-        return if 'zip' eq lc($method);
-    } elsif ('print' eq lc $method) {
-        $self->_lpr_output;
-    } elsif (lc $method eq 'screen') {
-        $self->_http_output;
-    } elsif (defined $method and $method ne '' ) {
-        $self->_lpr_output;
-    } else {
-        $self->_http_output;
-    }
-    return;
-}
-
-sub _http_output {
-    my ($self) = @_;
-    my $data = $self->{output};
-    my $cache = 1; # default
-
-    $logger->trace('Entering _http_output()');
-    # the sub below is a performance optimization: we don't want to
-    # concatenate the keys for every request when not logging.
-    $logger->trace(sub {
-        return 'output_options keys: ' . join '|', keys %{$self->{output_options}};
-    });
-    if ($LedgerSMB::App_State::DBH){
-        # we have a db connection, so are logged in.
-        # Let's see about caching.
-        $cache = 0 if LedgerSMB::Setting->get('disable_back');
-    }
-    # clean up after getting the (last) setting
-    LedgerSMB::App_State::cleanup();
-
-    if (not defined $data and defined $self->{outputfile}) {
-        local $/ = undef;
-        open(my $fh, '<:bytes', $self->{outputfile}) or
-            die 'Unable to open rendered file';
-        $data = <$fh>;
-        close($fh) or warn 'Unable to close rendered file';
-
-        unlink($self->{outputfile}) or
-            die 'Unable to delete output file';
-    }
-
-    my $disposition = '';
-    my $name = $self->{output_options}{filename};
-    if ($name) {
-        $name =~ s#^.*/##;
-        $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
-        $logger->debug("Adding disposition header: $disposition");
-    }
-    if (!$ENV{LSMB_NOHEAD}){
-        if (!$cache){
-            print "Cache-Control: no-store, no-cache, must-revalidate\n"
-                . "Cache-Control: post-check=0, pre-check=0, false\n"
-                . "Pragma: no-cache\n"
-                or die 'Cannot print to STDOUT';
-        }
-        if ($self->{mimetype} =~ /^text/) {
-            print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n"
-                or die 'Cannot print to STDOUT';
-        } else {
-            print "Content-Type: $self->{mimetype}$disposition\n\n"
-                or die 'Cannot print to STDOUT';
-        }
-    }
-    binmode STDOUT, $self->{binmode};
-    print $data or die 'Cannot print to STDOUT';
-    # change global resource back asap
-    binmode STDOUT, 'encoding(:UTF-8)';
-    $logger->trace('end print to STDOUT');
-    return;
-}
-
-sub _email_output {
-    my $self = shift;
-    my $args = $self->{output_options};
-    my @mailmime;
-
-    if (not $self->{outputfile} and not $args->{attach}) {
-        $args->{message} .= $self->{output};
-        @mailmime = ('contenttype', $self->{mimetype});
-    }
-
-    # User default for email from
-    $args->{from} ||= $self->{user}->{email};
-
-    # Default addresses
-    my $csettings = $LedgerSMB::Company_Config::settings;
-    $args->{from} ||= $csettings->{default_email_from};
-    $args->{to} ||= $csettings->{default_email_to};
-    $args->{cc} ||= $csettings->{default_email_cc};
-    $args->{bcc} ||= $csettings->{default_email_bcc};
-
-
-    # Mailer stuff
-    my $mail = LedgerSMB::Mailer->new(
-        from => $args->{from},
-        to => $args->{to},
-        cc => $args->{cc},
-        bcc => $args->{bcc},
-        subject => $args->{subject},
-        notify => $args->{notify},
-        message => $args->{message},
-        @mailmime,
-    );
-    if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{outputfile}) {
-        my @attachment;
-        my $name = $args->{filename};
-
-        if ($self->{outputfile}) {
-            @attachment = ('file', $self->{outputfile});
-        }
-        else {
-            @attachment = ('data', $self->{output});
-        }
-
-        $mail->attach(
-            mimetype => $self->{mimetype},
-            filename => $name,
-            strip => $$,
-            @attachment,
-        );
-    }
-    $mail->send;
-    return;
-}
-
-sub _lpr_output {
-    my ($self, $in_args) = shift;
-    my $args = $self->{output_options};
-    if ($self->{format} ne 'LaTeX') {
-        die 'Invalid Format';
-    }
-    my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
-
-    open my $pipe, '|-', $lpr
-        or die "Failed to open lpr pipe $lpr : $!";
-
-    # Output is not defined here.  In the future we should consider
-    # changing this to use the system command and hit the file as an arg.
-    #  -- CT
-    open my $file, '<', "$self->{outputfile}"
-        or die "Failed to open rendered file $self->{outputfile} : $!";
-
-    while (my $line = <$file>) {
-        print $pipe $line or die "Cannot print to $lpr";
-    }
-
-    close $pipe or die "Cannot close pipe to $lpr";
-    close $file or die "Cannot close file $self->{rendered}";
-    return;
-}
 
 1;

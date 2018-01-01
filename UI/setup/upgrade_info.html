@@ -13,18 +13,28 @@ include_stylesheet=["setup/stylesheet.css"] ?>
     name = 'database'
     type = 'hidden'
    value = database
+};
+INCLUDE input element_data = {
+    name = 'slschema'
+    type = 'hidden'
+   value = slschema
+};
+INCLUDE input element_data = {
+    name = 'lsmbversion'
+    type = 'hidden'
+   value = lsmbversion
 } ?>
 <div class="form">
 <p>
-  LedgerSMB has introduced three new system wide default values which
-  you will need to set as part of the upgrade process.
+  <?lsmb text('LedgerSMB has introduced three new system wide default values which ' _
+              'you will need to set as part of the upgrade process.') ?>
 </p>
 <p>
-  In addition to these new defaults LedgerSMB 1.3 adds stricter
-  checks on data validity in the database. Because of these stricter checks
-  it's no longer valid to leave companies without a country or customers
-  without accounts receivable reference. The defaults you choose below will
-  be used to add values where these are currently missing but required.
+  <?lsmb text('In addition to these new defaults LedgerSMB 1.3 adds stricter ' _
+              'checks on data validity in the database. Because of these stricter checks ' _
+              'it''s no longer valid to leave companies without a country or customers ' _
+              'without accounts receivable reference. The defaults you choose below will ' _
+              'be used to add values where these are currently missing but required.') ?>
 </p>
 <div class="input_row">
 <?lsmb INCLUDE select element_data = {
@@ -36,12 +46,13 @@ include_stylesheet=["setup/stylesheet.css"] ?>
                             class = 'country'
 } ?>
 </div>
+<?lsmb IF ar_accounts.size > 1; ?>
 <div class="input_row">
 <p>
-  LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts
-per company. One of those must be the system default. Please select
-your default below in case of multiple. If the list below is empty,
-your database is in an inconsistent state and needs to be fixed first.
+  <?lsmb text('LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts ' _
+              'per company. One of those must be the system default. Please select ' _
+              'your default below in case of multiple. If the list below is empty, ' _
+              'your database is in an inconsistent state and needs to be fixed first.') ?>
 </p>
 <?lsmb INCLUDE select element_data = {
                             name  = 'default_ar'
@@ -52,12 +63,20 @@ your database is in an inconsistent state and needs to be fixed first.
                             text_attr = 'desc'
 } ?>
 </div>
+<?lsmb ELSE;
+INCLUDE input element_data = {
+    name = 'default_ar'
+    type = 'hidden'
+   value = default_ar
+};
+END ?>
+<?lsmb IF ap_accounts.size > 1; ?>
 <div class="input_row">
 <p>
-  LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts
-per company. One of those must be the system default. Please select
-your default below in case of multiple. If the list below is empty,
-your database is in an inconsistent state and needs to be fixed first.
+  <?lsmb text('LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts ' _
+              'per company. One of those must be the system default. Please select ' _
+              'your default below in case of multiple. If the list below is empty, ' _
+              'your database is in an inconsistent state and needs to be fixed first.') ?>
 </p>
 <?lsmb INCLUDE select element_data = {
                             name  = 'default_ap'
@@ -68,11 +87,18 @@ your database is in an inconsistent state and needs to be fixed first.
                             text_attr = 'desc'
 } ?>
 </div>
+<?lsmb ELSE;
+INCLUDE input element_data = {
+    name = 'default_ap'
+    type = 'hidden'
+   value = default_ap
+};
+END ?>
 <div class="input_row">
 <p>
-  Note that the process invoked by hitting the button below might
-  take long to complete as it will run the upgrade process and will
-  copy all data from the 1.2 tables into the 1.3 tables.
+  <?lsmb text('Note that the process invoked by hitting the button below might ' _
+              'take long to complete as it will run the upgrade process and will ' _
+              'copy all data from the 1.2 tables into the 1.3 tables.') ?>
 </p>
 <?lsmb INCLUDE button element_data = {
     text = text('Upgrade')

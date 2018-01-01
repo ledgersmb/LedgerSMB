@@ -1,0 +1,31 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(2);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT has_function('pricematrix__for_vendor',ARRAY['integer','integer']);
+    SELECT has_function('pricematrix__for_customer',ARRAY['integer','integer','date','numeric','text']);
+
+    -- Run tests
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

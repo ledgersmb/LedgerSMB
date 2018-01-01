@@ -17,14 +17,14 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
+use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
-use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
-   HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
+use HTTP::Status qw( HTTP_FOUND );
 
 use CGI::Emulate::PSGI;
-use Module::Runtime qw/ use_module /;
 use Try::Tiny;
 use List::Util qw{  none };
+use Scalar::Util qw{ reftype };
 
 # To build the URL space
 use Plack;
@@ -35,6 +35,22 @@ use Plack::Middleware::ConditionalGET;
 use Plack::Middleware::ReverseProxy;
 use Plack::Builder::Conditionals;
 use Plack::Util;
+
+
+use English qw(-no_match_vars);
+if ($EUID == 0) {
+    die join("\n",
+        'Running a Web Service as root is a security problem',
+        'If you are starting LedgerSMB as a system service',
+        'please make sure that you drop privlidges as per README.md',
+        'and the example files in conf/',
+        'This makes it difficult to run on a privlidged port (<1024)',
+        'In theory you can pass the --user argument to starman,',
+        'However starman drops privlidges too late, starting us as root.'
+        );
+}
+
+
 
 local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -68,133 +84,65 @@ in LedgerSMB::Scripts::*.
 
 =cut
 
-sub _internal_server_error {
-    my ($msg, $title, $company, $dbversion) = @_;
-
-    $title //= 'Error!';
-    my @body_lines = ( '<html><body>',
-                       q{<h2 class="error">Error!</h2>},
-                       "<p><b>$msg</b></p>" );
-    push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
-        if $company || $dbversion;
-
-    push @body_lines, '</body></html>';
-
-    return [ HTTP_INTERNAL_SERVER_ERROR,
-             [ 'Content-Type' => 'text/html; charset=UTF-8' ],
-             \@body_lines ];
-}
-
 
 sub psgi_app {
     my $env = shift;
 
     my $auth = LedgerSMB::Auth::factory($env);
-    my $script_name = $env->{SCRIPT_NAME};
-    $script_name =~ m/([^\/\\\?]*)\.pl$/;
-    my $module = "LedgerSMB::Scripts::$1";
-    my $script = "$1.pl";
 
     my $psgi_req = Plack::Request->new($env);
-    my $request = LedgerSMB->new($psgi_req->parameters, $script,
-                                 $env->{QUERY_STRING},
-                                 $psgi_req->uploads, $psgi_req->cookies,
-                                 $auth);
-    $request->{action} ||= '__default';
-    my $locale = $request->{_locale};
-    $LedgerSMB::App_State::Locale = $locale;
+    my $request = LedgerSMB->new(
+        $psgi_req->parameters, $env->{'lsmb.script'}, $env->{QUERY_STRING},
+        $psgi_req->uploads, $psgi_req->cookies, $auth, $env->{'lsmb.db'},
+        $env->{'lsmb.company'},
+        $env->{'lsmb.session_id'}, $env->{'lsmb.create_session_cb'},
+        $env->{'lsmb.invalidate_session_cb'});
 
-    $request->{_script_handle} = $module;
-
-    return _internal_server_error('No workflow module specified!')
-        unless $module;
-
-    return _internal_server_error("Unable to open module $module : $! : $@")
-        unless use_module($module);
-
-    my $action = $module->can($request->{action});
-    return _internal_server_error("Action Not Defined: $request->{action}")
-        unless $action;
-
+    $request->{action} = $env->{'lsmb.action_name'};
     my ($status, $headers, $body);
     try {
-        my $clear_session_actions =
-            $module->can('clear_session_actions');
-
-        if ($clear_session_actions
-            && ( !none{ $_ eq $request->{action} }
-                    $clear_session_actions->() )
-        ) {
-            $request->clear_session;
-        }
-        if (! $module->can('no_db')) {
-            my $no_db = $module->can('no_db_actions');
-
-            if (!$no_db
-                || ( $no_db && none { $_ eq $request->{action} } $no_db->())) {
-                if (! $request->_db_init()) {
-                    ($status, $headers, $body) =
-                        ( HTTP_UNAUTHORIZED,
-                          [ 'Content-Type' => 'text/plain; charset=utf-8',
-                            'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
-                          [ 'Please enter your credentials' ]
-                        );
-                    return; # exit 'try' scope
-                }
-                if (! $request->verify_session()) {
-                    ($status, $headers, $body) =
-                        ( HTTP_SEE_OTHER,
-                          [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
-                          [] );
-                    return; # exit 'try' scope
-                }
+        LedgerSMB::App_State::run_with_state sub {
+            if ($env->{'lsmb.want_db'} && !$env->{'lsmb.dbonly'}) {
                 $request->initialize_with_db();
             }
-        }
+            else {
+                # Some default settings as we run without a user
+                $request->{_user} = {
+                    dateformat => LedgerSMB::Sysconfig::date_format(),
+                };
+            }
 
-        my $input_dbh = $LedgerSMB::App_State::DBH = $request->{dbh};
-        ($status, $headers, $body) = @{&$action($request)};
-        push @$headers, (
-            'Cache-Control' => join(', ',
-                                    qw| no-store  no-cache  must-revalidate
-                                        post-check=0 pre-check=0 false|),
-            'Pragma' => 'no-cache'
-        ) if $input_dbh && LedgerSMB::Setting->get('disable_back');
+            my $res = $env->{'lsmb.action'}->($request);
+
+            if (ref $res && ref $res eq 'LedgerSMB::Template') {
+                # We got an evaluated template instead of a PSGI triplet...
+                ($status, $headers, $body) =
+                    @{LedgerSMB::PSGI::Util::template_to_psgi($res)};
+            }
+            else {
+                ($status, $headers, $body) = @$res;
+            }
+        }, DBH     => $env->{'lsmb.db'},
+           DBName  => $env->{'lsmb.company'},
+           Locale  => $request->{_locale};
 
         my $content_type = Plack::Util::header_get($headers, 'content-type');
         push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
             if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
 
         $request->{dbh}->commit if defined $request->{dbh};
-        LedgerSMB::App_State->cleanup();
     }
     catch {
+        # The database setup middleware will roll back before disconnecting
         my $error = $_;
-        eval {
-            $LedgerSMB::App_State::DBH->rollback
-                if ($LedgerSMB::App_State::DBH && $_ eq 'Died');
-        };
-        eval { LedgerSMB::App_State->cleanup(); };
         if ($error !~ /^Died at/) {
             ($status, $headers, $body) =
-                @{_internal_server_error($_, 'Error!',
-                                         $request->{dbversion},
-                                         $request->{company})};
+                @{LedgerSMB::PSGI::Util::internal_server_error(
+                      $_, 'Error!',
+                      $request->{dbversion}, $request->{company})};
         }
     };
 
-
-    my $path = $env->{SCRIPT_NAME};
-    $path =~ s|[^/]*$||g;
-    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
-    push @$headers,
-         ( 'Set-Cookie' =>
-           qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
-        if $request->{'request.download-cookie'};
-    push @$headers,
-         ( 'Set-Cookie' =>
-           qq|$request->{_new_session_cookie_value}; path=$path$secure| )
-        if $request->{_new_session_cookie_value};
     return [ $status, $headers, $body ];
 }
 
@@ -217,7 +165,7 @@ sub _run_old {
             }
         };
 
-       exit;
+        exit;
     }
     return;
 }
@@ -252,8 +200,14 @@ sub setup_url_space {
         mount "/$_.pl" => $old_app
             for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
-        mount "/$_" => $psgi_app
-            for  (@LedgerSMB::Sysconfig::newscripts);
+        mount "/$_" => builder {
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::AuthenticateSession';
+            enable '+LedgerSMB::Middleware::DisableBackButton';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
+            $psgi_app;
+        }
+        for  (@LedgerSMB::Sysconfig::newscripts);
 
         mount '/stop.pl' => sub { exit; }
             if $coverage;

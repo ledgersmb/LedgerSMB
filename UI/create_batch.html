@@ -1,0 +1,89 @@
+<?lsmb INCLUDE "ui-header.html"
+        titlebar = text('Create Batch') # '
+        stylesheet = stylesheet
+        include_stylesheet = [
+                "css/scripts/create_batch.css"
+        ];
+       PROCESS elements.html;
+       PROCESS dynatable.html;
+?>
+<body class="lsmb <?lsmb dojo_theme ?>">
+<div class="listtop"><?lsmb text('Create New Batch') ?></div>
+<form data-dojo-type="lsmb/Form" name="create_batch" method="post" action="<?lsmb request.script ?>">
+<div class="labelledinput">
+  <div class="inputgroup">
+    <?lsmb text("Batch Number") ?>
+  </div>
+  <div class="value">
+    <?lsmb PROCESS input element_data = {
+           name = "batch_number"
+           type = "text"
+           value = batch.batch_number } ?>
+  </div>
+</div>
+<div class="labelledinput">
+  <div class="label">
+    <?lsmb text("Description") ?>
+  </div>
+  <div class="inputgroup">
+    <?lsmb PROCESS input element_data = {
+           name = "description"
+           type = "text"
+           value = batch.batch_number } ?>
+  </div>
+</div>
+<div class="labelledinput">
+  <div class="label">
+     <?lsmb text("Batch Date") ?>
+  </div>
+  <div class="inputgroup">
+     <?lsmb PROCESS input element_data = {
+            type = "date"
+            class = "date"
+            name = "batch_date"
+            value = batch.batch_date } ?>
+  </div>
+</div>
+<div id="buttons">
+<?lsmb PROCESS button element_data = {
+       value = "create_vouchers"
+       type = "submit"
+       class = "submit"
+       name = "action"
+       text = text('Continue') } ?>
+</div>
+<?lsmb
+hidden_url_base = '';
+FOREACH item = batch.hidden;
+  IF item.value;
+      hidden_url_base = hidden_url_base _ '&' _ item.name _ '=' _ item.value;
+  END;
+   ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden"
+       name = item.name
+       value = item.value  } ?>
+<?lsmb END ?>
+</form>
+<div class="listtop"><?lsmb text('Or Add To Batch') ?></div>
+<?lsmb
+
+FOREACH row IN batch.search_results;
+     row.row_id = row.id _ "&post_date=" _ row.default_date;
+END;
+
+PROCESS dynatable
+               attributes = {id = 'batch_list'}
+               tbody = {rows = batch.search_results}
+               columns = [
+        { col_id='control_code', type='href', name=text('Control Number'), #'
+       href_base="vouchers.pl?action=add_vouchers" _
+                   hidden_url_base _ "&id=" }
+        { col_id='description', type='text', name = text('Description') }
+        { col_id='created_by', type='text', name = text('Created By') } #'
+        { col_id='created_on', type='text', name = text('Created On') } #'
+         { col_id='default_date', type='text', name = text('Post Date') } #'
+       ];
+?>
+</body>
+</html>

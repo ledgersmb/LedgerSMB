@@ -1,0 +1,37 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(6);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+    SELECT todo('Journal not completed nor even compiling properly', 6);
+
+    SELECT has_function('je_get',ARRAY['integer']);
+    SELECT has_function('je_approve',ARRAY['integer']);
+    SELECT has_function('je_delete_unapproved',ARRAY['integer']);
+    SELECT has_function('je_modify_and_approve',ARRAY['integer','text','text','date','character','date','date','journal_line[]']);
+    SELECT has_function('je_add',ARRAY['text','text','integer','date','bool','character','date','date','journal_line[]']);
+    SELECT has_function('je_reverse',ARRAY['integer','text','date']);
+
+    -- Run tests1
+
+--    PREPARE test AS select ...;
+--    SELECT results_eq('test',result,'Description');
+--    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;

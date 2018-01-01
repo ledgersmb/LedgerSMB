@@ -48,6 +48,7 @@ use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
+use LedgerSMB::Legacy_Util;
 use LedgerSMB::Locale;
 
 require "old/bin/arap.pl";
@@ -1247,7 +1248,7 @@ sub save {
         template => 'oe-save_warn',
        );
 
-       return $template->render({
+       return LedgerSMB::Legacy_Util::render_template($template, {
           hiddens => $form
        });
     }

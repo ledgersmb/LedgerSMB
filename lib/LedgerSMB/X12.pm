@@ -32,8 +32,8 @@ use Moose;
 use namespace::autoclean;
 use X12::Parser;
 use LedgerSMB::Magic qw( EDI_PATHNAME_MAX );
-use LedgerSMB::Sysconfig;
 use DateTime;
+use File::Temp;
 
 my $counter = 1000; #for 997 generation  ## no critic (ProhibitMagicNumbers) sniff
 my $dt = DateTime->now;
@@ -159,11 +159,9 @@ sub parse {
     my $file;
     my $parser = $self->parser;
     if (!$self->is_message_file){
-        $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
-        open my $fh, '>', $file
-            or die "Failed to open temporary output file $file : $!";
-        print $fh $self->message or die "Cannot print to file $file";;
-        close $fh or die "Cannot close file $file";;
+        $file = File::Temp->new();
+        print $file $self->message or die "Cannot print to file $file";;
+        close $file or die "Cannot close file $file";;
     }
     else {
         $file = $self->message;
