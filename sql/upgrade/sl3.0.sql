@@ -974,14 +974,14 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
         CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END,
         memo, approved, cleared, vr_id, invoice.id
    FROM :slschema.acc_trans ac
-	JOIN (
+   JOIN (
                     SELECT id,curr
                     FROM (      SELECT id,curr FROM sl30.ap
                           UNION SELECT id,curr FROM sl30.ar
                           UNION SELECT id,curr FROM sl30.gl) xx
-	) xx ON xx.id=ac.trans_id
-LEFT JOIN :slschema.invoice ON ac.id = invoice.id
-                           AND ac.trans_id = invoice.trans_id
+   ) xx ON xx.id=ac.trans_id
+   LEFT JOIN :slschema.invoice ON ac.id = invoice.id
+                              AND ac.trans_id = invoice.trans_id
   WHERE chart_id IS NOT NULL
     AND ac.trans_id IN (SELECT id FROM transactions);
 
