@@ -20,7 +20,8 @@ sub content_test {
     my ($filename) = @_;
 
     my ($fh, @tab_lines, @trailing_space_lines);
-    open $fh, '<', $filename;
+    open $fh, '<', $filename
+        or BAIL_OUT("failed to open $filename $!");
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;
         push @trailing_space_lines, ($.) if / $/;
