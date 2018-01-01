@@ -735,7 +735,7 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (_applicable_upgrade_tests($dbinfo)) {
-        next if $check->skip ne 'Disabled'
+        next if $check->skipable
              && defined $request->{"skip_$request->{check}"}
              && $request->{"skip_$request->{check}"} eq 'On';
         my $sth = $request->{dbh}->prepare($check->test_query);
@@ -786,7 +786,6 @@ verify_check => md5_hex($check->test_query),
     };
     my @skip_keys = grep /^skip_/, keys %$request;
     $hiddens->{@skip_keys} = $request->{@skip_keys};
-    warn np $hiddens;
 
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
@@ -824,7 +823,7 @@ verify_check => md5_hex($check->test_query),
         { value => 'fix_tests', label => 'Save and Retry', cond => defined($check->{columns})},
         { value => 'cancel',    label => 'Cancel',         cond => 1                         },
         { value => 'force',     label => 'Force',          cond => $check->{force_queries}   },
-        { value => 'skip',      label => 'Skip',           cond => $check->skip eq 'Off'     }
+        { value => 'skip',      label => 'Skip',           cond => $check->skipable          }
     ) {
         if ( $buttons_set{$_->{label}} && $_->{cond}) {
             push @$buttons, {

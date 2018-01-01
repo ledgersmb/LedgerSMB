@@ -18,6 +18,8 @@ use warnings;
 use Moose;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
+use List::Util qw( first );
+
 use LedgerSMB::Locale qw(marktext);
 
 =head1 FUNCTIONS
@@ -44,8 +46,7 @@ Returns the test object with the name.
 
 sub get_by_name {
     my ($self, $name) = @_;
-    my %tests = map { $_->name => $_ } $self->_get_tests;
-    return $tests{$name};
+    return first { $_->name eq $name } $self->_get_tests;
 }
 
 =back
@@ -106,6 +107,21 @@ Repair query table to run once per result.
 
 has table => (is => 'ro', isa => 'Str', required => 0);
 
+=item _validate_displayed_key
+
+Utility function to validate that selectable values are displayed, so the
+user can correct them.
+
+=cut
+
+sub _validate_displayed_key {
+    my ($self,@keys) = @_;
+    for my $key (@keys) {
+        die "'$key' not displayed in test '$self->{name}'"
+            if not grep( $key, $self->{display_cols});
+    }
+};
+
 =item selectable_values
 
 Hash specifying for each column (identified by the key) which
@@ -118,20 +134,6 @@ C<text> is the textual value to be presented in the UI.
 =cut
 
 has selectable_values => (is => 'ro', isa => 'HashRef', required => 0);
-
-sub _displayed_key {
-    my ($self,@keys) = @_;
-    for my $key (@keys) {
-        die "'$key' not displayed in test '$self->{name}'"
-            if not grep( $key, $self->{display_cols});
-    }
-};
-
-after 'selectable_values' => sub {
-    my $self = shift;
-    $self->_displayed_key(keys %{$self->{selectable_values}})
-        if $self->{selectable_values};
-};
 
 =item force_queries
 
@@ -179,12 +181,6 @@ Repair query columns to run once per result
 =cut
 
 has columns => (is => 'ro', isa => 'ArrayRef[Str]', required => 0);
-
-after 'columns' => sub {
-    my $self = shift;
-    $self->_displayed_key($self->{columns})
-        if $self->{columns};
-};
 
 =item display_cols
 
@@ -235,33 +231,44 @@ has tooltips => (is => 'ro',
     default => undef,   # Force initializer call
     initializer => sub {
         my ( $self, $value, $writer_sub_ref, $attribute_meta ) = @_;
-        for ($value) {
-            die LedgerSMB::I18N::text(q(No button '[_1]' in test '[_2]'),$_,$self->{name})
-                if not grep( /^$_$/, @{$self->{buttons}});
+        $value //= {};
+        for my $btn (keys $value) {
+            die "No button '$btn' in test '$self->{name}'"
+                if not grep( /^$btn$/, @{$self->{buttons}});
         }
         my %defaults = ('Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
                                 'Cancel' => marktext('Cancel the <b>whole migration</b>'));
-        for (keys %defaults) {
-            $value->{$_} = $defaults{$_}
-                if not $value->{$_};
-        }
+        %$value = (%defaults,%$value);
         $writer_sub_ref->($value);
     }
 );
 
-=item skip
+=item skipable
 
-Skip this test
+Can this test be skipped
 
 =cut
 
-enum SkipValues => [qw/ Disabled Off On /];
-has skip => (is =>'ro', isa => 'SkipValues',
-             default => sub { grep(/^Skip$/, @{$_[0]->{buttons}})
-                                   ? 'Off'
-                                   : 'Disabled'
-                        }
+has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
+                 default =>  sub {
+                    return grep(/^Skip$/, @{$_[0]->{buttons}}) == 1;
+                 }
 );
+
+=head1 Validate the object
+
+=cut
+
+use Data::Printer;
+sub BUILD {
+    warn np @_;
+    my $self = shift;
+    $self->_validate_displayed_key(keys %{$self->{selectable_values}})
+        if $self->{selectable_values};
+
+    $self->_validate_displayed_key($self->{columns})
+        if $self->{columns};
+};
 
 =back
 
@@ -549,7 +556,7 @@ push @tests, __PACKAGE__->new(
  display_cols => [ 'accno', 'description' ],
         table => 'gifi',
       columns => ['description'],
-    id_column => 'accno',
+   id_columns => ['accno'],
      id_where => 'description IS NULL AND accno',
  instructions => marktext('Please add the missing GIFI accounts'),
       appname => 'sql-ledger',
