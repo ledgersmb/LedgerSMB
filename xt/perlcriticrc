@@ -54,7 +54,7 @@ pager = less
 [InputOutput::ProhibitTwoArgOpen]
     set_themes = lsmb lsmb_new lsmb_tests
 [InputOutput::RequireCheckedOpen]
-    set_themes = lsmb lsmb_new
+    set_themes = lsmb lsmb_new lsmb_tests
 [Miscellanea::ProhibitFormats]
     set_themes = lsmb lsmb_new lsmb_tests
 [Modules::ProhibitEvilModules]

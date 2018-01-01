@@ -43,9 +43,13 @@ ok($db->apply_changes, 'applied changes');
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){
-    open (my $DBLOCK, '>', "$temp/LSMB_TEST_DB");
-    print $DBLOCK $ENV{LSMB_NEW_DB};
-    close ($DBLOCK);
+    my $dblock_file = "$temp/LSMB_TEST_DB";
+    open (my $DBLOCK, '>', $dblock_file)
+        or BAIL_OUT("failed to open $dblock_file for writing : $!");
+    print $DBLOCK $ENV{LSMB_NEW_DB}
+        or BAIL_OUT("failed writing to $dblock_file : $!");
+    close ($DBLOCK)
+        or BAIL_OUT("failed to close $dblock_file after writing $!");
 }
 
 # Validate that we can copy the database
