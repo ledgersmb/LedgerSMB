@@ -16,9 +16,7 @@ HINT:  Set LSMB_NEW_DB environment variable and try running again.');
 
 my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 1;
-for my $log (qw(dblog dblog_stderr dblog_stdout)){
-    unlink "$LedgerSMB::Sysconfig::tempdir/$log";
-}
+
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
   if (!defined $ENV{$evar}){
       $run_tests = 0;
@@ -142,15 +140,6 @@ SKIP: {
       $dbh->commit;
 };
 
-open  my $log, '<', "$LedgerSMB::Sysconfig::tempdir/dblog";
-
-my $passed_no_errs = 1;
-while (my $line = <$log>){
-    last if $line =~ /Fixes/i; # Fixes roll back!
-    $passed_no_errs = 0 if $line =~ /Rollback/i;
-}
-
-is($passed_no_errs, 1, 'No rollbacks in db scripts');
 
 SKIP: {
      skip 'No COA specified', 1 if !defined $ENV{LSMB_LOAD_COA};
