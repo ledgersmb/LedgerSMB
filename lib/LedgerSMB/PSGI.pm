@@ -193,10 +193,14 @@ sub setup_url_space {
                  if $development;
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
-        mount "/$_.pl" => $old_app
-            for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
+        mount "/$_.pl" => builder {
+            enable 'AccessLog';
+            $old_app
+        }
+        for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
+            enable 'AccessLog';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
