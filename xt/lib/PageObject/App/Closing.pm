@@ -8,6 +8,7 @@ use PageObject;
 
 use PageObject::App::ClosingConfirm;
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 __PACKAGE__->self_register(

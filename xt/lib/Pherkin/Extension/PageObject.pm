@@ -24,6 +24,7 @@ use PageObject::Loader;
 use Test::BDD::Cucumber::Extension;
 
 use Moose;
+use namespace::autoclean;
 extends 'Test::BDD::Cucumber::Extension';
 
 

@@ -7,6 +7,7 @@ use PageObject;
 
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 

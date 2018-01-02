@@ -7,6 +7,7 @@ use Carp;
 use PageObject;
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 use PageObject::App::Parts::Adjust;
