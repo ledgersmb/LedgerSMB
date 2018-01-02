@@ -17,7 +17,7 @@ ok(
 local $/ = undef;
 my $contents = <$blist>;
 $contents =~ s/\n//g;
-close $blist;
+close $blist or diag("error closing $blacklist_file $!");
 
 ok($contents, "Got contents from original blacklist");
 

@@ -50,7 +50,7 @@ sub content_test {
         $ui_header_used = 1 if /ui-header\.html/;
         $text .= $_;
     }
-    close $fh;
+    close $fh or diag("failed to close $filename : $!");
 
     #Fix source text. Template statements have to be removed for now.
     #IF/ELSE/END branches will clash though. - YL
