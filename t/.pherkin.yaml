@@ -13,7 +13,7 @@ default:
            post-step: 0
          sessions:
            selenium:
-             base_url: http://localhost:5000
+             base_url: ${LSMB_BASE_URL}
              page_class: PageObject::Root
              driver:
                 drv_name: Weasel::Driver::Selenium2
@@ -21,5 +21,6 @@ default:
                 window_size:  1024x1280
                 caps:
                   port: 4422
+                  remote_server_addr: ${REMOTE_SERVER_ADDR}
       Pherkin::Extension::PageObject:
          dummy: 1
