@@ -109,13 +109,13 @@ find(\&collect, 'sql/changes/');
 
 for my $change (@changes) {
     open $fh, "<:encoding(UTF-8)", $change
-        or die "Can't open: $change ($!, $@)";
+        or BAIL_OUT("Can't open: $change ($!, $@)");
     my $content;
     {
         local $/;
         $content = <$fh>;
     }
-    close $fh;
+    close $fh or diag("error closing $change $!");
 
     $test1->{_content} = $content;
     $test1->{properties}->{no_transactions} = 1;

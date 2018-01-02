@@ -148,7 +148,7 @@ pager = less
 [InputOutput::RequireCheckedClose]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 [InputOutput::RequireCheckedSyscalls]
-    set_themes = lsmb lsmb_new lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
     functions = open close 
 
 [RegularExpressions::ProhibitCaptureWithoutTest]
