@@ -41,7 +41,7 @@ sub internal_server_error {
     $title //= 'Error!';
     my @body_lines = ( '<html><body>',
                        q{<h2 class="error">Error!</h2>},
-                       "<p><b>$msg</b></p>" );
+                       "<p><b><pre>$msg</pre></b></p>" );
     push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
         if $company || $dbversion;
 
