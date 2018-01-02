@@ -222,7 +222,9 @@ has buttons => (is => 'ro', isa => 'ArrayRef[button]',
 
 =item tooltips
 
-Tooltip for each button
+Tooltip for each button.
+Validate that buttons are enabled for each tooltip, then prepend defaults
+and override with test specific labeling.
 
 =cut
 
@@ -259,9 +261,7 @@ has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
 
 =cut
 
-use Data::Printer;
 sub BUILD {
-    warn np @_;
     my $self = shift;
     $self->_validate_displayed_key(keys %{$self->{selectable_values}})
         if $self->{selectable_values};

@@ -817,16 +817,16 @@ verify_check => md5_hex($check->test_query),
     $sth->finish();
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
-    my %buttons_set = map { $_ => 1 } @{$check->buttons};
-    my $buttons;
+    my %buttons = map { $_ => 1 } @{$check->buttons};
+    my $enabled_buttons;
     for (
         { value => 'fix_tests', label => 'Save and Retry', cond => defined($check->{columns})},
         { value => 'cancel',    label => 'Cancel',         cond => 1                         },
         { value => 'force',     label => 'Force',          cond => $check->{force_queries}   },
         { value => 'skip',      label => 'Skip',           cond => $check->skipable          }
     ) {
-        if ( $buttons_set{$_->{label}} && $_->{cond}) {
-            push @$buttons, {
+        if ( $buttons{$_->{label}} && $_->{cond}) {
+            push @$enabled_buttons, {
                  type => 'submit',
                  name => 'action',
                 value => $_->{value},
@@ -855,7 +855,7 @@ verify_check => md5_hex($check->test_query),
            columns            => $check->display_cols,
            rows               => $rows,
            hiddens            => $hiddens,
-           buttons            => $buttons,
+           buttons            => $enabled_buttons,
            include_stylesheet => 'setup/stylesheet.css',
     });
 }
@@ -918,7 +918,7 @@ sub fix_tests{
 
     for my $count (1 .. $request->{count}){
         my @values;
-        push @values, split(/,/,@{$check->id_columns})
+        push @values, @{$check->id_columns}
             if $id_displayed;
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$count"};
