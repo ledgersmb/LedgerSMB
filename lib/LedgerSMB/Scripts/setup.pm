@@ -599,7 +599,7 @@ sub _get_linked_accounts {
 }
 
 
-=item upgrade_settings
+=item upgrade_settigs
 
 =cut
 
@@ -782,7 +782,7 @@ sub _failed_check {
     my $hiddens = {
        check => $check->name,
 verify_check => md5_hex($check->test_query),
-    database => $request->{database},
+    database => $request->{database}
     };
     my @skip_keys = grep /^skip_/, keys %$request;
     $hiddens->{@skip_keys} = $request->{@skip_keys};
