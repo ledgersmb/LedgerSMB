@@ -234,7 +234,7 @@ has tooltips => (is => 'ro',
     initializer => sub {
         my ( $self, $value, $writer_sub_ref, $attribute_meta ) = @_;
         $value //= {};
-        for my $btn (keys $value) {
+        for my $btn (keys %$value) {
             die "No button '$btn' in test '$self->{name}'"
                 if not grep( /^$btn$/, @{$self->{buttons}});
         }
@@ -257,6 +257,8 @@ has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
                  }
 );
 
+=back
+
 =head1 Validate the object
 
 =cut
@@ -269,8 +271,6 @@ sub BUILD {
     $self->_validate_displayed_key($self->{columns})
         if $self->{columns};
 };
-
-=back
 
 =head1 Methods
 
