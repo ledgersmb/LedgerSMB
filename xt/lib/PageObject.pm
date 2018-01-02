@@ -7,6 +7,7 @@ use Carp;
 use Module::Runtime qw(use_module);
 
 use Moose;
+use namespace::autoclean;
 extends 'Weasel::Element';
 
 use Weasel::FindExpanders qw/ register_find_expander /;

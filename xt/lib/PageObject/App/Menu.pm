@@ -11,6 +11,7 @@ use Test::More;
 use Module::Runtime qw(use_module);
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 __PACKAGE__->self_register(

@@ -1,5 +1,6 @@
 package COATest;
 use Moose;
+use namespace::autoclean;
 
 has 'sqlfile' => (
     is => 'rw',

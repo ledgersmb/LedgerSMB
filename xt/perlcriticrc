@@ -120,7 +120,7 @@ pager = less
 [Moose::RequireMakeImmutable]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
 [Moose::RequireCleanNamespace]
-    set_themes = lsmb lsmb_new lsmb_old
+    set_themes = lsmb lsmb_new lsmb_old lsmb_tests
 
 
 [TestingAndDebugging::ProhibitNoStrict]

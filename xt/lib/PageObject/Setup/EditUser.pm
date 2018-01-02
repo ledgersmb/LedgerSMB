@@ -5,6 +5,7 @@ use warnings;
 
 use Carp;
 use Moose;
+use namespace::autoclean;
 use PageObject;
 extends 'PageObject';
 

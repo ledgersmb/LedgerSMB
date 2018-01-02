@@ -7,6 +7,7 @@ use PageObject;
 use Try::Tiny;
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 
