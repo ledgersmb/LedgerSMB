@@ -19,7 +19,7 @@ sub test_files {
 
         ok(scalar(@findings) == 0, "Critique for $file");
         for my $finding (@findings) {
-            diag($finding->description);
+            diag($finding);
         }
     }
 
