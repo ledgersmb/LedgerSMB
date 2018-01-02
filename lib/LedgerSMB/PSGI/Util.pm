@@ -39,9 +39,10 @@ sub internal_server_error {
     my ($msg, $title, $company, $dbversion) = @_;
 
     $title //= 'Error!';
+    $msg =~ s/\n/<br>/g;
     my @body_lines = ( '<html><body>',
                        q{<h2 class="error">Error!</h2>},
-                       "<p><b><pre>$msg</pre></b></p>" );
+                       "<p><b>$msg</b></p>" );
     push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
         if $company || $dbversion;
 
