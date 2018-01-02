@@ -48,4 +48,5 @@ sub wait_for_body {
     return $self->body;
 }
 
+__PACKAGE__->meta->make_immutable;
 1;

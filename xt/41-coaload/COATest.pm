@@ -32,4 +32,5 @@ sub _build_test_db {
           . "_$self->{name}";
 }
 
+__PACKAGE__->meta->make_immutable;
 1;
