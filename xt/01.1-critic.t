@@ -12,12 +12,14 @@ my @on_disk;
 sub test_files {
     my ($critic, $files) = @_;
 
+    Perl::Critic::Violation::set_format( 'S%s %p %f: %l\n');
+
     for my $file (@$files) {
         my @findings = $critic->critique($file);
 
         ok(scalar(@findings) == 0, "Critique for $file");
         for my $finding (@findings) {
-            diag($finding->description);
+            diag($finding);
         }
     }
 
@@ -46,60 +48,19 @@ my @on_disk_oldcode =
 
 plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
 
-&test_files(Perl::Critic->new(
-                -profile => 't/perlcriticrc',
-                -severity => 5,
-                -theme => '',
-                -exclude => [ 'BuiltinFunctions',
-                              'ClassHierarchies',
-                              'ControlStructures',
-                              'Documentation',
-                              'ErrorHandling',
-                              'InputOutput',
-                              'Miscelenea',
-                              'Modules::RequireVersionVar',
-                              'NamingConventions::Capitalization',
-                              'Objects',
-                              'RegularExpressions',
-                              'Subroutines',
-                              'TestingAndDebugging::ProhibitNoStrict',
-                              'TestingAndDebugging::ProhibitNoWarnings',
-                              'ValuesAndExpressions',
-                              'Variables'
-                ],
-                -include => [ 'ProhibitTrailingWhitespace',
-                              'ProhibitHardTabs',
-                              'Modules',
-                              'TestingAndDebugging',
-                              'ProhibitPuncutationVars',
-                ]),
-            \@on_disk);
+&test_files(
+    Perl::Critic->new(
+        -profile => 't/perlcriticrc',
+        -theme => 'lsmb_new',
+    ),
+    \@on_disk
+);
 
-&test_files(Perl::Critic->new(
-                -profile => 't/perlcriticrc',
-                -severity => 5,
-                -theme => '',
-                -exclude => [ 'BuiltinFunctions',
-                              'ClassHierarchies',
-                              'ControlStructures',
-                              'Documentation',
-                              'ErrorHandling',
-                              'InputOutput',
-                              'Miscelenea',
-                              'Modules',
-                              'NamingConventions::Capitalization',
-                              'Objects',
-                              'RegularExpressions',
-                              'Subroutines',
-                              'TestingAndDebugging',
-                              'ValuesAndExpressions',
-                              'Variables'
-                ],
-                -include => [ 'ProhibitTrailingWhitespace',
-                              'ProhibitHardTabs',
-                              'ProhibitPuncutationVars',
-                ]),
-            \@on_disk_oldcode);
-
-
+&test_files(
+    Perl::Critic->new(
+        -profile => 't/perlcriticrc',
+        -theme => 'lsmb_old',
+    ),
+    \@on_disk_oldcode
+);
 

@@ -3,6 +3,13 @@ Changelog for 1.5 Series
 Released 2016-12-24
 
 Changelog for 1.5.14
+* Be explicit about which Perl::Critic policies to apply in tests (Nick P)
+* Check for file errors when blacklist test (Nick P)
+
+Nick P is Nick Prater
+
+
+Changelog for 1.5.14
 * Post (instead of save) transaction on depreciation approval (Erik H)
 * Fix role prefix set on copied databases from setup.pl (Erik H, #3219)
 * Fix argument names due to move to PGObject::Util::DBAdmin (Erik H)

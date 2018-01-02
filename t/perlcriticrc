@@ -1,4 +1,46 @@
-[Modules::ProhibitEvilModules]
-modules = Carp::Always Data::Dumper
-    [CodeLayout::ProhibitHardTabs]
+# LedgerSMB 1.5 perlcriticrc file
+
+# Use these themes:
+# lsmb_new -- themes enforced on 'new' code
+# lsmb_old -- themes enforced on 'old' code
+
+# Run only the policies listed in this configuration
+only = 1
+
+# Fail if listed policy modules are not available
+profile-strictness = fatal
+
+[CodeLayout::ProhibitHardTabs]
     allow_leading_tabs = 0
+    set_themes = lsmb_new lsmb_old
+[CodeLayout::ProhibitTrailingWhitespace]
+    set_themes = lsmb_new lsmb_old
+[Modules::ProhibitAutomaticExportation]
+    set_themes = lsmb_new
+[Modules::ProhibitConditionalUseStatements]
+    set_themes = lsmb_new
+[Modules::ProhibitEvilModules]
+    modules = Carp::Always Data::Dumper
+    set_themes = lsmb_new
+[Modules::ProhibitExcessMainComplexity]
+    set_themes = lsmb_new
+[Modules::ProhibitMultiplePackages]
+    set_themes = lsmb_new
+[Modules::RequireBarewordIncludes]
+    set_themes = lsmb_new
+[Modules::RequireEndWithOne]
+    set_themes = lsmb_new
+[Modules::RequireExplicitPackage]
+    set_themes = lsmb_new
+[Modules::RequireFilenameMatchesPackage]
+    set_themes = lsmb_new
+[Modules::RequireNoMatchVarsWithUseEnglish]
+    set_themes = lsmb_new
+[TestingAndDebugging::ProhibitProlongedStrictureOverride]
+    set_themes = lsmb_new
+[TestingAndDebugging::RequireTestLabels]
+    set_themes = lsmb_new
+[TestingAndDebugging::RequireUseStrict]
+    set_themes = lsmb_new
+[TestingAndDebugging::RequireUseWarnings]
+    set_themes = lsmb_new
