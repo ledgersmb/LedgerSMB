@@ -261,6 +261,12 @@ has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
 
 =head1 Validate the object
 
+=over
+
+=item BUILD
+
+Called after object building. Ideal to validate object fields for coherence
+
 =cut
 
 sub BUILD {
@@ -271,6 +277,8 @@ sub BUILD {
     $self->_validate_displayed_key($self->{columns})
         if $self->{columns};
 };
+
+=back
 
 =head1 Methods
 
