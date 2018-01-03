@@ -7,7 +7,7 @@ requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
-requires 'DBI';
+requires 'DBI', '1.635';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
