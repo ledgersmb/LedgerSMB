@@ -800,6 +800,7 @@ verify_check => md5_hex($check->test_query),
            ( defined $selectable_value && @$selectable_value )
            ? { select => {
                    name => $name,
+                   default_values => $row->{$column} // '',
                    id => $count,
                    options => $selectable_value,
                    default_blank => ( 1 != @$selectable_value )
