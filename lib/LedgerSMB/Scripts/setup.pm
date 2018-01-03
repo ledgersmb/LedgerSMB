@@ -26,6 +26,7 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
+use List::Util qw( first );
 use Locale::Country;
 use Try::Tiny;
 use Version::Compare;
@@ -1436,13 +1437,11 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 sub force{
     my ($request) = @_;
     my $database = _init_db($request);
-    my $dbinfo = $database->get_info();
 
-    my %checks = map { $_->name => $_ } @{$info_applicable_for_upgrade{$dbinfo}};
-    my $check = $checks{$request->{check}};
-    my $force_queries = $check->{force_queries};
+    my $test = first { $_->name eq $request->{check} }
+                    LedgerSMB::Upgrade_Tests->get_tests();
 
-    for my $force_query ( @$force_queries ) {
+    for my $force_query ( @{$test->{force_queries}}) {
         my $dbh = $request->{dbh};
         $dbh->do($force_query);
         $dbh->commit;
