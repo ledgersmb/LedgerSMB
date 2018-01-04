@@ -21,6 +21,8 @@ use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
+use Log::Log4perl::Layout::PatternLayout;
+use LedgerSMB::Middleware::RequestID;
 
 require Plack::Middleware::Pod
     if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
@@ -37,7 +39,11 @@ if ( $LedgerSMB::Sysconfig::dojo_built) {
     print "Starting Worker on PID $$ Using Dojo Source\n";
 }
 
+Log::Log4perl::Layout::PatternLayout::add_global_cspec(
+    'Z',
+    sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
 
 LedgerSMB::PSGI::setup_url_space(
         development => ($ENV{PLACK_ENV} eq 'development'),
