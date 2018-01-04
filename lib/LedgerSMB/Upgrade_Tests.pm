@@ -234,13 +234,12 @@ has tooltips => (is => 'ro',
     initializer => sub {
         my ( $self, $value, $writer_sub_ref, $attribute_meta ) = @_;
         $value //= {};
-        for my $btn (keys %$value) {
-            die "No button '$btn' in test '$self->{name}'"
-                if not grep( /^$btn$/, @{$self->{buttons}});
-        }
         my %defaults = ('Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
                                 'Cancel' => marktext('Cancel the <b>whole migration</b>'));
-        %$value = (%defaults,%$value);
+        for my $tooltip (keys %defaults) {
+            $value->{$tooltip} //= $defaults{$tooltip}
+                if grep( /^$tooltip/, @{$self->{buttons}});
+        }
         $writer_sub_ref->($value);
     }
 );
@@ -256,27 +255,6 @@ has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
                     return grep(/^Skip$/, @{$_[0]->{buttons}}) == 1;
                  }
 );
-
-=back
-
-=head1 Validate the object
-
-=over
-
-=item BUILD
-
-Called after object building. Ideal to validate object fields for coherence
-
-=cut
-
-sub BUILD {
-    my $self = shift;
-    $self->_validate_displayed_key(keys %{$self->{selectable_values}})
-        if $self->{selectable_values};
-
-    $self->_validate_displayed_key($self->{columns})
-        if $self->{columns};
-};
 
 =back
 
