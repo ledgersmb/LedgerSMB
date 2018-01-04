@@ -198,14 +198,14 @@ sub setup_url_space {
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => builder {
             enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog', format => "Req:%{Request-Id}i %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"";
+            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             $old_app
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
             enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog', format => "Req:%{Request-Id}i %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"";
+            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::AuthenticateSession';

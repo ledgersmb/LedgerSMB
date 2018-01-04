@@ -21,6 +21,7 @@ recommends 'Cpanel::JSON::XS';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
+requires 'Log::Log4perl::Layout::PatternLayout';
 requires 'LWP::Simple';
 requires 'MIME::Lite';
 requires 'Module::Runtime';

@@ -95,6 +95,8 @@ my @modules =
           'LedgerSMB::Middleware::ClearDownloadCookie',
           'LedgerSMB::Middleware::DisableBackButton',
           'LedgerSMB::Middleware::DynamicLoadWorkflow',
+          'LedgerSMB::Middleware::Log4perl',
+          'LedgerSMB::Middleware::RequestID',
           'LedgerSMB::old_code', 'LedgerSMB::Part',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
