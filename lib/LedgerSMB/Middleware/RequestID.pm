@@ -3,7 +3,7 @@ package LedgerSMB::Middleware::RequestID;
 
 =head1 NAME
 
-LedgerSMB::Middleware::DisableBackButton - Disables back button
+LedgerSMB::Middleware::RequestID - Generate a unique ID per request
 
 =head1 SYNOPSIS
 
@@ -14,12 +14,14 @@ LedgerSMB::Middleware::DisableBackButton - Disables back button
 
 =head1 DESCRIPTION
 
-LedgerSMB::Middleware::DisableBackButton sets extremely strict cache
-control policies, effectively rendering the back button useless as a
-means of leaking information (no way to "back button back into the
-ledger" after logging out).
+LedgerSMB::Middleware::RequestID sets the variable HTTP_REQUEST_ID
+in the PSGI environment to a (practically unique) value to identify
+a specific request. This request ID can be used to identify log output
+lines belonging to the trace of a single request.
 
-The policy kicks in when so configured in the company database.
+Note that the variable is strictly not an HTTP variable, but the name
+has been chosen to allow the C<AccessLog> module to use the C<%{Request-Id}i>
+syntax for inclusion in log messages.
 
 =cut
 

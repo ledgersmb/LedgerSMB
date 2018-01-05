@@ -3,7 +3,7 @@ package LedgerSMB::Middleware::Log4perl;
 
 =head1 NAME
 
-LedgerSMB::Middleware::DisableBackButton - Disables back button
+LedgerSMB::Middleware::Log4perl - Sets up Log4perl logging environment
 
 =head1 SYNOPSIS
 
@@ -14,12 +14,15 @@ LedgerSMB::Middleware::DisableBackButton - Disables back button
 
 =head1 DESCRIPTION
 
-LedgerSMB::Middleware::DisableBackButton sets extremely strict cache
-control policies, effectively rendering the back button useless as a
-means of leaking information (no way to "back button back into the
-ledger" after logging out).
+LedgerSMB::Middleware::Log4perl sets up the 'psgix.logger' PSGI environment
+variable with a Log4perl category of 'lsmb.<script_name>.<entrypoint>' where
+<script_name> excludes the script's extension and <entrypoint> is the
+sub routine name of the entrypoint being invoked. E.g. the category
+for the authentication entrypoint is 'lsmb.login.authenticate'.
 
-The policy kicks in when so configured in the company database.
+This middleware depends on the PSGI environment variables 'lsmb.script_name'
+and 'lsmb.action_name' to exist. These variables are set up by the
+middleware C<DynamicLoadWorkflow>.
 
 =cut
 
@@ -43,7 +46,7 @@ sub call {
     my ($env) = @_;
 
     my $logger = Log::Log4perl->get_logger('LedgerSMB.'
-                                           . $env->{'lsmb.script'}
+                                           . $env->{'lsmb.script_name'}
                                            . '.' . $env->{'lsmb.action_name'});
     $env->{'psgix.logger'} = sub {
         my $args = shift;
