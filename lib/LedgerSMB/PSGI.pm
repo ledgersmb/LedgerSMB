@@ -132,6 +132,9 @@ sub psgi_app {
         # The database setup middleware will roll back before disconnecting
         my $error = $_;
         if ($error !~ /^Died at/) {
+            $env->{'psgix.logger'}->({
+                level => 'error',
+                message => $_ });
             ($status, $headers, $body) =
                 @{LedgerSMB::PSGI::Util::internal_server_error(
                       $_, 'Error!',
@@ -194,14 +197,17 @@ sub setup_url_space {
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => builder {
-            enable 'AccessLog';
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             $old_app
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
-            enable 'AccessLog';
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';

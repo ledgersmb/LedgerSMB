@@ -556,7 +556,8 @@ our $log4perl_config = qq(
     .
     q(
     log4perl.appender.Screen = Log::Log4perl::Appender::Screen
-    log4perl.appender.Screen.layout = SimpleLayout
+    log4perl.appender.Screen.layout = PatternLayout
+    log4perl.appender.Screen.layout.ConversionPattern = Req:%Z %p - %m%n
     # Filter for debug level
     log4perl.filter.MatchDebug = Log::Log4perl::Filter::LevelMatch
     log4perl.filter.MatchDebug.LevelToMatch = INFO
@@ -570,21 +571,22 @@ our $log4perl_config = qq(
     # layout for DEBUG,TRACE messages
     log4perl.appender.Debug = Log::Log4perl::Appender::Screen
     log4perl.appender.Debug.layout = PatternLayout
-    log4perl.appender.Debug.layout.ConversionPattern = %d - %p - %l -- %m%n
+    log4perl.appender.Debug.layout.ConversionPattern = Req:%Z %d - %p - %l -- %m%n
     log4perl.appender.Debug.Filter = MatchDebug
 
     # layout for non-DEBUG messages
     log4perl.appender.Basic = Log::Log4perl::Appender::Screen
     log4perl.appender.Basic.layout = PatternLayout
-    log4perl.appender.Basic.layout.ConversionPattern = %d - %p - %M -- %m%n
+    log4perl.appender.Basic.layout.ConversionPattern = Req:%Z %d - %p - %M -- %m%n
     log4perl.appender.Basic.Filter = MatchRest
 
     log4perl.appender.DebugPanel              = Log::Log4perl::Appender::TestBuffer
     log4perl.appender.DebugPanel.name         = psgi_debug_panel
     log4perl.appender.DebugPanel.mode         = append
     log4perl.appender.DebugPanel.layout       = PatternLayout
-    log4perl.appender.DebugPanel.layout.ConversionPattern = %r >> %p >> %m >> %c >> at %F line %L%n
+    log4perl.appender.DebugPanel.layout.ConversionPattern = %i %r >> %p >> %m >> %c >> at %F line %L%n
     log4perl.appender.DebugPanel.Threshold = TRACE
+
     );
 #some examples of loglevel setting for modules
 #FATAL, ERROR, WARN, INFO, DEBUG, TRACE

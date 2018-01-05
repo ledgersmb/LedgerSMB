@@ -46,6 +46,7 @@ sub call {
     my $script_name = $env->{SCRIPT_NAME};
     $script_name =~ m/([^\/\\\?]*)\.pl$/;
     my $module = "LedgerSMB::Scripts::$1";
+    my $script_name = $1;
     my $script = "$1.pl";
 
     return LedgerSMB::PSGI::Util::internal_server_error(
@@ -91,6 +92,7 @@ sub call {
 
     $env->{'lsmb.module'} = $module;
     $env->{'lsmb.script'} = $script;
+    $env->{'lsmb.script_name'} = $script_name;
     $env->{'lsmb.action'} = $action;
     $env->{'lsmb.action_name'} = $action_name;
     return $self->app->($env);
