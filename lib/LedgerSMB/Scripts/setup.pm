@@ -28,6 +28,7 @@ use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use List::Util qw( first );
 use Locale::Country;
+use MIME::Base64;
 use Try::Tiny;
 use Version::Compare;
 
@@ -791,8 +792,7 @@ verify_check => md5_hex($check->test_query),
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $count = 1+scalar(@$rows);
-      #TODO: A '' will fail with invalid input syntax in fix_tests - YL
-      my $id = join(',',map { $row->{$_} // '' } @{$check->id_columns});
+
       for my $column (@{$check->columns // []}) {
         my $selectable_value = $selectable_values{$column};
         my $name = $column . '_' . $count;
@@ -812,7 +812,8 @@ verify_check => md5_hex($check->test_query),
                    size => 15,
           } };
       };
-      $hiddens->{"id_$count"} = $id;
+      #TODO: A '' will fail with invalid input syntax in fix_tests - YL
+      $hiddens->{"id_$count"} = join(',',map { MIME::Base64::encode(($row->{$_} // ''), '')} @{$check->id_columns});
       push @$rows, $row;
     }
     $hiddens->{count} = scalar(@$rows);
@@ -925,7 +926,7 @@ sub fix_tests{
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$count"};
         }
-        push @values, split(/,/,$request->{"id_$count"})
+        push @values, map { MIME::Base64::decode($_)} split(/,/,$request->{"id_$count"})
            if ! $check->{insert};
 
         my $rv = $sth->execute(@values) ||
