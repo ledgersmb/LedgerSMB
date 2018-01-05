@@ -159,7 +159,8 @@ has insert => (is => 'ro', isa => 'Bool', required => 0, default => 0);
 
 =item id_where
 
-Repair query key to set the values if we can repair
+Repair query key to set the values if we can repair. This and id_colomns should
+not be both empty to repair.
 
 =cut
 
@@ -167,7 +168,7 @@ has id_where => (is => 'ro', isa => 'Str', required => 0, default => '');
 
 =item id_columns
 
-Repair column to use as id
+Repair columns to use as ids
 
 =cut
 
