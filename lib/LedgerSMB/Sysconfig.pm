@@ -549,7 +549,7 @@ for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
 }
 # Log4perl configuration
 our $log4perl_config = qq(
-    log4perl.rootlogger = $LedgerSMB::Sysconfig::log_level, Basic, Debug
+    log4perl.rootlogger = $LedgerSMB::Sysconfig::log_level, Basic, Debug, DebugPanel
     )
     .
     $modules_loglevel_overrides
@@ -585,7 +585,7 @@ our $log4perl_config = qq(
     log4perl.appender.DebugPanel.mode         = append
     log4perl.appender.DebugPanel.layout       = PatternLayout
     log4perl.appender.DebugPanel.layout.ConversionPattern = %i %r >> %p >> %m >> %c >> at %F line %L%n
-    log4perl.appender.DebugPanel.Threshold = TRACE
+    #log4perl.appender.DebugPanel.Threshold = TRACE
 
     );
 #some examples of loglevel setting for modules
