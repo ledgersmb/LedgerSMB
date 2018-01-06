@@ -35,6 +35,8 @@ my $old_app = LedgerSMB::PSGI::old_app();
 my $new_app = LedgerSMB::PSGI::new_app();
 
 builder {
+    # do not enable access logging for all accesses: It'll flood us
+    # with logging for static assets
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
         'ConditionalGET';
 
@@ -47,13 +49,18 @@ builder {
     mount '/rest/' => LedgerSMB::PSGI::rest_app();
 
     # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
-    mount "/$_" => $old_app
-        for ('aa.pl', 'am.pl', 'ap.pl',
-             'ar.pl', 'gl.pl', 'ic.pl', 'ir.pl',
-             'is.pl', 'oe.pl', 'pe.pl');
+    mount "/$_" => builder {
+        enable 'AccessLog';
+        $old_app;
+    }
+    for ('aa.pl', 'am.pl', 'ap.pl', 'ar.pl', 'gl.pl', 'ic.pl', 'ir.pl',
+         'is.pl', 'oe.pl', 'pe.pl');
 
-    mount "/$_" => $new_app
-        for  (@LedgerSMB::Sysconfig::newscripts);
+    mount "/$_" => builder {
+        enable 'AccessLog';
+        $new_app;
+    }
+    for  (@LedgerSMB::Sysconfig::newscripts);
 
     mount '/stop.pl' => sub { exit; }
         if $ENV{COVERAGE};
