@@ -51,15 +51,18 @@ sub call {
     $env->{'psgix.logger'} = sub {
         my $args = shift;
         my $level = $args->{level};
+        my $msg = $args->{msg};
+
         local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
-        $args->{message} =~ s/\n/\\n/g;
-        $logger->$level($args->{message});
+        $msg =~ s/\n/\\n/g;
+        $logger->$level($msg);
     };
     local $SIG{__WARN__} = sub {
         my $msg = shift;
 
+        local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
         $msg =~ s/\n/\\n/g;
-        $logger->warn($_);
+        $logger->warn($msg);
     };
 
     return $self->app->($env);
