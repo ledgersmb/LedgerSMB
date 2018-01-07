@@ -47,7 +47,7 @@ matrix:
             - nginx postgresql-9.5-pgtap
             - texlive-latex-recommended
             - texlive-xetex
-     env:
+      env:
         # - TEST_SAUCE=1
         - DOJO_BUILT=0
     - perl: '5.22'
@@ -58,7 +58,7 @@ matrix:
              - nginx postgresql-9.4-pgtap
              - texlive-latex-recommended
              - texlive-xetex
-     env:
+      env:
         - COVERAGE=1
     - perl: '5.20'
       addons:
@@ -68,7 +68,7 @@ matrix:
             - nginx postgresql-9.4-pgtap
             - texlive-latex-recommended
             - texlive-xetex
-    env:
+      env:
         - COA_TESTING=1
     - perl: '5.18'
       addons:
@@ -78,7 +78,7 @@ matrix:
             - nginx postgresql-9.3-pgtap
             - texlive-latex-recommended
             - texlive-xetex
-    env:
+      env:
         - DB_TESTING=1
     - perl: '5.16'
       addons:
@@ -88,7 +88,7 @@ matrix:
             - nginx postgresql-9.2-pgtap
             - texlive-latex-recommended
             - texlive-xetex
-     env:
+      env:
         - DB_TESTING=1
     - perl: '5.14'
       addons:
@@ -98,7 +98,7 @@ matrix:
             - nginx postgresql-9.2-pgtap
             - texlive-latex-recommended
             - texlive-xetex
-     env:
+      env:
         - DB_TESTING=1
 
 before_cache:
