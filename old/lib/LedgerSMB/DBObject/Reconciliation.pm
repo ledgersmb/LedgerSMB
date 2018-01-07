@@ -386,9 +386,7 @@ sub get {
     $self->{account_info} = $ref;
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
                                 args => { chart_id => $ref->{id},
-                                          report_date => $self->{end_date}->clone
-                                                            ->truncate(to => 'month')
-                                                            ->add_interval('second',-1)
+                                          report_date => $self->{end_date}
                                         });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
