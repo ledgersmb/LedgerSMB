@@ -82,6 +82,7 @@ our $logger=Log::Log4perl->get_logger("lsmb.$script_module.$form->{action}");
 local $SIG{__WARN__} = sub {
     my $msg = shift;
 
+    local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
     $msg =~ s/\n/\\n/g;
     $logger->warn($msg);
 };
