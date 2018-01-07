@@ -34,6 +34,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.6-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - POD_TESTING=1
     - perl: '5.24'
@@ -43,6 +45,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.5-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         # - TEST_SAUCE=1
         - DOJO_BUILT=0
@@ -51,7 +55,9 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx postgresql-9.4-pgtap
+             - nginx postgresql-9.4-pgtap
+             - texlive-latex-recommended
+             - texlive-xetex
       env:
         - COVERAGE=1
     - perl: '5.20'
@@ -60,6 +66,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.4-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - COA_TESTING=1
     - perl: '5.18'
@@ -68,6 +76,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.3-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - DB_TESTING=1
     - perl: '5.16'
@@ -76,6 +86,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.2-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - DB_TESTING=1
     - perl: '5.14'
@@ -84,6 +96,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.2-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - DB_TESTING=1
 
@@ -127,7 +141,7 @@ before_install:
   - npm install uglify-js@">=2.0 <3.0"
 
 install:
-  - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
+  - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-images --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 
 before_script:
