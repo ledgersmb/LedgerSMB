@@ -2,16 +2,6 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
-Changelog for 1.5.14
-* Be explicit about which Perl::Critic policies to apply in tests (Nick P)
-* Check for file errors when blacklist test (Nick P)
-
-Nick P is Nick Prater
-
-
-Changelog for 1.5 Series
-Released 2016-12-24
-
 Changelog for 1.5.15
 * Generate access logs on standard output by default (Erik H)
 * Fix cli scripts; block running as root in PSGI instead of Sysconfig (Erik H)
