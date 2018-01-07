@@ -584,7 +584,7 @@ our $log4perl_config = qq(
     log4perl.appender.DebugPanel.name         = psgi_debug_panel
     log4perl.appender.DebugPanel.mode         = append
     log4perl.appender.DebugPanel.layout       = PatternLayout
-    log4perl.appender.DebugPanel.layout.ConversionPattern = %i %r >> %p >> %m >> %c >> at %F line %L%n
+    log4perl.appender.DebugPanel.layout.ConversionPattern = %r >> %p >> %m >> %c >> at %F line %L%n
     #log4perl.appender.DebugPanel.Threshold = TRACE
 
     );
