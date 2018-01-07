@@ -8,7 +8,7 @@ LedgerSMB::Middleware::Log4perl - Sets up Log4perl logging environment
 =head1 SYNOPSIS
 
  builder {
-   enable "+LedgerSMB::Middleware::DisableBackButton";
+   enable "+LedgerSMB::Middleware::Log4perl";
    $app;
  }
 
