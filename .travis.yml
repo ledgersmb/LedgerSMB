@@ -34,6 +34,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.6-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - POD_TESTING=1
     - perl: '5.24'
@@ -43,7 +45,9 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.5-pgtap
-      env:
+            - texlive-latex-recommended
+            - texlive-xetex
+     env:
         # - TEST_SAUCE=1
         - DOJO_BUILT=0
     - perl: '5.22'
@@ -51,8 +55,10 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx postgresql-9.4-pgtap
-      env:
+             - nginx postgresql-9.4-pgtap
+             - texlive-latex-recommended
+             - texlive-xetex
+     env:
         - COVERAGE=1
     - perl: '5.20'
       addons:
@@ -60,7 +66,9 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.4-pgtap
-      env:
+            - texlive-latex-recommended
+            - texlive-xetex
+    env:
         - COA_TESTING=1
     - perl: '5.18'
       addons:
@@ -68,7 +76,9 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.3-pgtap
-      env:
+            - texlive-latex-recommended
+            - texlive-xetex
+    env:
         - DB_TESTING=1
     - perl: '5.16'
       addons:
@@ -76,7 +86,9 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.2-pgtap
-      env:
+            - texlive-latex-recommended
+            - texlive-xetex
+     env:
         - DB_TESTING=1
     - perl: '5.14'
       addons:
@@ -84,7 +96,9 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.2-pgtap
-      env:
+            - texlive-latex-recommended
+            - texlive-xetex
+     env:
         - DB_TESTING=1
 
 before_cache:
