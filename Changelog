@@ -3,6 +3,7 @@ Changelog for 1.6 Series
 Forthcoming
 
 User Interface
+* Reports and search results exportable to XLS(X) (Yves L)
 * Left menu replaced by a (faster) Dojo-based version (Yves L/Erik H)
 
 Installation & Administration
