@@ -37,6 +37,7 @@ use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use LedgerSMB::PSGI::Util;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
@@ -812,8 +813,9 @@ verify_check => md5_hex($check->test_query),
                    size => 15,
           } };
       };
-      #TODO: A '' will fail with invalid input syntax in fix_tests - YL
-      $hiddens->{"id_$count"} = join(',',map { MIME::Base64::encode(($row->{$_} // ''), '')} @{$check->id_columns});
+      $hiddens->{"id_$count"} =
+          join(',', map { MIME::Base64::encode(($row->{$_} // ''), '')}
+                    @{$check->id_columns});
       push @$rows, $row;
     }
     $hiddens->{count} = scalar(@$rows);
@@ -823,10 +825,14 @@ verify_check => md5_hex($check->test_query),
     my %buttons = map { $_ => 1 } @{$check->buttons};
     my $enabled_buttons;
     for (
-        { value => 'fix_tests', label => 'Save and Retry', cond => defined($check->{columns})},
-        { value => 'cancel',    label => 'Cancel',         cond => 1                         },
-        { value => 'force',     label => 'Force',          cond => $check->{force_queries}   },
-        { value => 'skip',      label => 'Skip',           cond => $check->skipable          }
+        { value => 'fix_tests', label => 'Save and Retry',
+          cond => defined($check->{columns})},
+        { value => 'cancel',    label => 'Cancel',
+          cond => 1                         },
+        { value => 'force',     label => 'Force',
+          cond => $check->{force_queries}   },
+        { value => 'skip',      label => 'Skip',
+          cond => $check->skipable          }
     ) {
         if ( $buttons{$_->{label}} && $_->{cond}) {
             push @$enabled_buttons, {
@@ -911,10 +917,9 @@ sub fix_tests{
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
     }
     else {
-        my $where = $check->id_where;
         my $setters =
             join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @edits);
-        $query = "UPDATE $table SET $setters WHERE $where "
+        $query = "UPDATE $table SET $setters WHERE "
                . join(' AND ',map {"$_ = ? "} @{$check->id_columns});
     }
     my $sth = $dbh->prepare($query);
@@ -931,8 +936,9 @@ sub fix_tests{
 
         my $rv = $sth->execute(@values) ||
             $request->error($sth->errstr);
-        #TODO: We should abort gracefully
-        die "$rv rows affected instead of only 1"
+        return LedgerSMB::PSGI::Util::internal_server_error(
+            qq{Upgrade query affected $rv rows, while only a single row
+was expected})
             if $rv > 1;
     }
     $sth->finish();

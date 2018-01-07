@@ -107,21 +107,6 @@ Repair query table to run once per result.
 
 has table => (is => 'ro', isa => 'Str', required => 0);
 
-=item _validate_displayed_key
-
-Utility function to validate that selectable values are displayed, so the
-user can correct them.
-
-=cut
-
-sub _validate_displayed_key {
-    my ($self,@keys) = @_;
-    for my $key (@keys) {
-        die "'$key' not displayed in test '$self->{name}'"
-            if not grep( $key, $self->{display_cols});
-    }
-};
-
 =item selectable_values
 
 Hash specifying for each column (identified by the key) which
@@ -156,15 +141,6 @@ LedgerSMB.
 =cut
 
 has insert => (is => 'ro', isa => 'Bool', required => 0, default => 0);
-
-=item id_where
-
-Repair query key to set the values if we can repair. This and id_colomns should
-not be both empty to repair.
-
-=cut
-
-has id_where => (is => 'ro', isa => 'Str', required => 0, default => '');
 
 =item id_columns
 
@@ -544,7 +520,6 @@ push @tests, __PACKAGE__->new(
         table => 'gifi',
       columns => ['description'],
    id_columns => ['accno'],
-     id_where => 'description IS NULL AND accno',
  instructions => marktext('Please add the missing GIFI accounts'),
       appname => 'sql-ledger',
   min_version => '2.7',
