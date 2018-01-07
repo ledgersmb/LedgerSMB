@@ -26,7 +26,9 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
+use List::Util qw( first );
 use Locale::Country;
+use MIME::Base64;
 use Try::Tiny;
 use Version::Compare;
 
@@ -35,6 +37,7 @@ use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use LedgerSMB::PSGI::Util;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
@@ -735,9 +738,12 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (_applicable_upgrade_tests($dbinfo)) {
+        next if $check->skipable
+             && defined $request->{"skip_$request->{check}"}
+             && $request->{"skip_$request->{check}"} eq 'On';
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->name;
+            or die 'Failed to execute pre-migration check ' . $check->name . ', ' . $sth->errstr;
         if ($sth->rows > 0){ # Check failed --CT
              return _failed_check($request, $check, $sth);
         }
@@ -781,70 +787,69 @@ sub _failed_check {
 verify_check => md5_hex($check->test_query),
     database => $request->{database}
     };
+    my @skip_keys = grep /^skip_/, keys %$request;
+    $hiddens->{@skip_keys} = $request->{@skip_keys};
 
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-      my $id = $row->{$check->{id_column}};
+      my $count = 1+scalar(@$rows);
+
       for my $column (@{$check->columns // []}) {
         my $selectable_value = $selectable_values{$column};
+        my $name = $column . '_' . $count;
         $row->{$column} =
            ( defined $selectable_value && @$selectable_value )
            ? { select => {
-                   name => $column . "_$id",
-                   id => $id,
+                   name => $name,
+                   default_values => $row->{$column} // '',
+                   id => $count,
                    options => $selectable_value,
                    default_blank => ( 1 != @$selectable_value )
            } }
            : { input => {
-                   name => $column . "_$id",
+                   name => $name,
                    value => $row->{$column} // '',
                    type => 'text',
                    size => 15,
           } };
       };
+      $hiddens->{"id_$count"} =
+          join(',', map { MIME::Base64::encode(($row->{$_} // ''), '')}
+                    @{$check->id_columns});
       push @$rows, $row;
-      my $count = scalar(@$rows);
-      $hiddens->{"id_$count"} = $row->{$check->id_column};
     }
     $hiddens->{count} = scalar(@$rows);
     $sth->finish();
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my %buttons = map { $_ => 1 } @{$check->buttons};
-    my $buttons;
-    push @$buttons,
-           { type => 'submit',
-             name => 'action',
-            value => 'fix_tests',
-          tooltip => { id => 'action-fix-tests',
-                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Save and Retry'}),
-                       position => 'above'
-                     },
-             text => $request->{_locale}->text('Save and Retry'),
-            class => 'submit' }
-        if $check->columns;
-    push @$buttons,
-           { type => 'submit',
-             name => 'action',
-            value => 'cancel',
-          tooltip => { id => 'action-cancel',
-                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Cancel'}),
-                       position => 'above'
-                     },
-             text => $request->{_locale}->text('Cancel'),
-            class => 'submit' }
-        if $buttons{Cancel} or scalar($check->columns) == 0;
-    push @$buttons,
-           { type => 'submit',
-             name => 'action',
-            value => 'force',
-          tooltip => { id => 'action-force',
-                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Force'}),
-                       position => 'above'
-                     },
-             text => $request->{_locale}->text('Force'),
-            class => 'submit' }
-        if $buttons{Force} && $check->{force_queries};
+    my $enabled_buttons;
+    for (
+        { value => 'fix_tests', label => 'Save and Retry',
+          cond => defined($check->{columns})},
+        { value => 'cancel',    label => 'Cancel',
+          cond => 1                         },
+        { value => 'force',     label => 'Force',
+          cond => $check->{force_queries}   },
+        { value => 'skip',      label => 'Skip',
+          cond => $check->skipable          }
+    ) {
+        if ( $buttons{$_->{label}} && $_->{cond}) {
+            push @$enabled_buttons, {
+                 type => 'submit',
+                 name => 'action',
+                value => $_->{value},
+              tooltip => { id => 'action-' . $_->{value},
+                           msg => $check->{tooltips}->{$_->{label}}
+                                ? $request->{_locale}->maketext($check->{tooltips}->{$_->{label}})
+                                : undef,
+                           position => 'above'
+                         },
+                 text => $request->{_locale}->maketext($_->{label}),
+                class => 'submit'
+            }
+        }
+    }
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
@@ -859,7 +864,7 @@ verify_check => md5_hex($check->test_query),
            columns            => $check->display_cols,
            rows               => $rows,
            hiddens            => $hiddens,
-           buttons            => $buttons,
+           buttons            => $enabled_buttons,
            include_stylesheet => 'setup/stylesheet.css',
     });
 }
@@ -896,17 +901,17 @@ sub fix_tests{
 
 
     my $table = $check->table;
-    my $where = $check->id_where;
     my @edits = @{$check->columns};
     # If we are inserting and id is displayed, we want to insert
     # at this exact location
+    my $id_columns = join('|',@{$check->id_columns});
     my $id_displayed = $check->{insert}
-                and grep( /^$check->{id_column}$/, @{$check->display_cols} );
+                and grep( /^($id_columns)$/, @{$check->display_cols} );
 
     my $query;
     if ($check->{insert}) {
         my @_edits = @edits;
-        unshift @_edits, $check->{id_column} if $id_displayed;
+        unshift @_edits, @{$check->id_columns} if $id_displayed;
         my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
         my $values = join(', ', map { '?' } @_edits);
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
@@ -914,23 +919,27 @@ sub fix_tests{
     else {
         my $setters =
             join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @edits);
-        $query = "UPDATE $table SET $setters WHERE $where = ?";
+        $query = "UPDATE $table SET $setters WHERE "
+               . join(' AND ',map {"$_ = ? "} @{$check->id_columns});
     }
     my $sth = $dbh->prepare($query);
 
     for my $count (1 .. $request->{count}){
-        my $id = $request->{"id_$count"};
         my @values;
-        push @values, $id
+        push @values, @{$check->id_columns}
             if $id_displayed;
         for my $edit (@edits) {
-          push @values, $request->{"${edit}_$id"};
+          push @values, $request->{"${edit}_$count"};
         }
-        push @values, $request->{"id_$count"}
+        push @values, map { MIME::Base64::decode($_)} split(/,/,$request->{"id_$count"})
            if ! $check->{insert};
 
-        $sth->execute(@values) ||
+        my $rv = $sth->execute(@values) ||
             $request->error($sth->errstr);
+        return LedgerSMB::PSGI::Util::internal_server_error(
+            qq{Upgrade query affected $rv rows, while only a single row
+was expected})
+            if $rv > 1;
     }
     $sth->finish();
     $dbh->commit;
@@ -1437,14 +1446,27 @@ sub force{
     my ($request) = @_;
     my $database = _init_db($request);
 
-    my %test = map { $_->name => $_ } LedgerSMB::Upgrade_Tests->get_tests();
-    my $force_queries = $test{$request->{check}}->{force_queries};
+    my $test = first { $_->name eq $request->{check} }
+                    LedgerSMB::Upgrade_Tests->get_tests();
 
-    for my $force_query ( @$force_queries ) {
+    for my $force_query ( @{$test->{force_queries}}) {
         my $dbh = $request->{dbh};
         $dbh->do($force_query);
         $dbh->commit;
     }
+    return upgrade($request);
+}
+
+=item skip
+
+Mark the test to be skipped
+
+=cut
+
+sub skip {
+    my ($request) = @_;
+
+    $request->{"skip_$request->{check}"} = 'On';
     return upgrade($request);
 }
 
