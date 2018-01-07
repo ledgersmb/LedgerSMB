@@ -26,6 +26,9 @@ data is in t/data/loadorder
 =item scripts all have correct paths
 
 =item scripts all have correct properties
+
+=back
+
 =cut
 
 my $loadorder = LedgerSMB::Database::Loadorder->new('t/data/loadorder/LOADORDER');

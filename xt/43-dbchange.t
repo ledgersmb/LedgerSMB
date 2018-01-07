@@ -80,10 +80,6 @@ $chg_db->do(q{SELECT count(*) FROM test2;});
 like $chg_db->errstr, qr/relation "test2" does not exist/,
     'Correctly failed to create the table';
 
-=back
-
-=cut
-
 $chg_db->disconnect;
 
 $dbh->do(qq{DROP DATABASE  "$ENV{LSMB_NEW_DB}_41_dbchange"});
