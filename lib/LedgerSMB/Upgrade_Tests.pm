@@ -320,7 +320,7 @@ push @tests, __PACKAGE__->new(
                    'Please make all vendor numbers unique'),
          name => 'unique_vendornumber',
  display_cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
-      columns => ['customernumber'],
+      columns => ['vendornumber'],
         table => 'customer',
       appname => 'ledgersmb',
   min_version => '1.2',
