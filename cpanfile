@@ -114,7 +114,7 @@ feature 'debug', "Debug pane" =>
 on 'develop' => sub {
     requires 'App::Prove', '3.36';
     requires 'File::Util';
-    requires 'HTML::Lint';
+    requires 'HTML::Lint', '<=2.26'; # YLA 2018-01-08 - 2.28 cannot parse url?param1=2&param2=1
     requires 'HTML::Lint::Parser', '2.26';
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
