@@ -10,7 +10,6 @@ LedgerSMB::Scripts::configuration->can('action')->($request);
 package LedgerSMB::Scripts::configuration;
 use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::AM; # To be removed, only for template directories right now
 use LedgerSMB::App_State;
 use strict;
 use warnings;
