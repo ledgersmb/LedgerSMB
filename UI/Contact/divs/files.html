@@ -19,7 +19,7 @@ columns = [{ col_id = 'file_name', name = text('File name'), #'
 <?lsmb
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
-            COL.href_base='file.pl?action=get&amp;file_class=&amp;id=';
+            COL.href_base='file.pl?action=get&amp;file_class=4&amp;id=';
             COL.href_target='_download';
          END;
   END;
