@@ -78,12 +78,12 @@ builder {
                 enable "Debug::$_";
             }
         }
-        for (qw(LazyLoadModules W3CValidate)) {
+        for (qw(LazyLoadModules Log4perl)) {
             enable "Debug::$_"
                 if check_config_option("$_","Plack::Middleware::Debug::$_");
         }
-        enable 'Debug::Log4perl'
-            if check_config_option('Log4perl','Plack::Middleware::Debug::Log4perl');
+        enable 'Debug::W3CValidate', validator_uri => $LedgerSMB::Sysconfig::W3CValidate_uri
+            if check_config_option('Log4perl','Plack::Middleware::Debug::W3CValidate');
         enable 'Debug::DBIProfile', profile => $LedgerSMB::Sysconfig::DBIProfile_profile
             if check_config_option('DBIProfile','Plack::Middleware::Debug::DBIProfile');
         enable 'Debug::DBITrace', level => $LedgerSMB::Sysconfig::DBITrace_level
