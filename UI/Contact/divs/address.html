@@ -51,11 +51,11 @@
         END;
         LOC.edit = '[' _ text('Edit') _ ']';
         LOC.delete= '[' _ text('Delete') _ ']';
-        base_suffix = "$request.script?entity_id=$entity_id&location_id=$LOC.id" _
-               "&credit_id=$credit_act.id&is_for_credit=$LOC.is_for_credit&target_div=address_div" _
-               "&location_class=$LOC.location_class";
-        LOC.edit_href_suffix= base_suffix _ '&action=edit';
-        LOC.delete_href_suffix= base_suffix _ '&action=delete_location';
+        base_suffix = "$request.script?entity_id=$entity_id&amp;location_id=$LOC.id" _
+               "&amp;credit_id=$credit_act.id&amp;is_for_credit=$LOC.is_for_credit&amp;target_div=address_div" _
+               "&amp;location_class=$LOC.location_class";
+        LOC.edit_href_suffix= base_suffix _ '&amp;action=edit';
+        LOC.delete_href_suffix= base_suffix _ '&amp;action=delete_location';
         IF LOC.id == request.location_id && request.action == 'edit';
              DISPLAY = LOC;
         END;
