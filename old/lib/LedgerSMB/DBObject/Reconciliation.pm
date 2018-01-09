@@ -384,12 +384,20 @@ sub get {
         $neg = -1;
     }
     $self->{account_info} = $ref;
+
+    my ($previous) = $self->call_dbmethod(funcname=>'reconciliation__previous_report_date',
+                                args => { in_chart_id => $self->{chart_id},
+                                          in_end_date => $self->{end_date}
+                                        });
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
                                 args => { chart_id => $ref->{id},
-                                          report_date => $self->{end_date}
+                                          report_date => $previous->{end_date}
                                         });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
+    warn "$previous->{their_total} should always equal $our_balance"
+        if $previous->{their_total} != $our_balance;
+
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
