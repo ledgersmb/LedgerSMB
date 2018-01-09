@@ -58,7 +58,7 @@ sub call {
         $logger->$level($msg);
     };
     local $SIG{__WARN__} = sub {
-        my $msg = shift;
+        my $msg = shift // '';
 
         local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
         $msg =~ s/\n/\\n/g;
