@@ -59,8 +59,8 @@ checking a price deal for a customer.
                   {col_id = 'delete',
                      name = '&nbsp;',
                      type = 'href',
-                href_base = script _ '?action=delete_pricelist&credit_id='
-                            _ id _ '&entry_id=' }
+                href_base = script _ '?action=delete_pricelist&amp;credit_id='
+                            _ id _ '&amp;entry_id=' }
      );
      FOREACH pm IN pricematrix;
          pm.delete = '[' _ text('Delete') _ ']';
@@ -97,30 +97,30 @@ checking a price deal for a customer.
 
 FORMATS = LIST_FORMATS();
 
-IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=PDF&credit_id=<?lsmb
-             credit_id ?>&entity_id=<?lsmb entity_id
+IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=PDF&amp;credit_id=<?lsmb
+             credit_id ?>&amp;entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('PDF') ?>]</a>
 <?lsmb END;
 
 IF FORMATS.grep('XLS').size()
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLS&credit_id=<?lsmb
-             credit_id ?>&entity_id=<?lsmb entity_id
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=XLS&amp;credit_id=<?lsmb
+             credit_id ?>&amp;entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('XLS') ?>]</a>
 <?lsmb END;
 
 IF FORMATS.grep('XLSX').size()
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLSX&credit_id=<?lsmb
-             credit_id ?>&entity_id=<?lsmb entity_id
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=XLSX&amp;credit_id=<?lsmb
+             credit_id ?>&amp;entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('XLSX') ?>]</a>
 <?lsmb END;
 
 IF FORMATS.grep('ODS').size()
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb
-             credit_id ?>&entity_id=<?lsmb entity_id
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=ODS&amp;credit_id=<?lsmb
+             credit_id ?>&amp;entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('ODS') ?>]</a>
 <?lsmb END ?>
- <a href="<?lsmb request.script ?>?action=get_pricelist&format=CSV&credit_id=<?lsmb
-             credit_id ?>&entity_id=<?lsmb entity_id
+ <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=CSV&amp;credit_id=<?lsmb
+             credit_id ?>&amp;entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('CSV') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
      PROCESS dynatable

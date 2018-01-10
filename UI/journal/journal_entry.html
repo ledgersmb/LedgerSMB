@@ -319,8 +319,8 @@
 </tr>
 <?lsmb FOREACH file IN form.files ?>
 <tr>
-<td><a href="file.pl?action=get&file_class=1&ref_key=<?lsmb form.id
-            ?>&id=<?lsmb file.id ?>" target="_download"
+<td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=<?lsmb form.id
+            ?>&amp;id=<?lsmb file.id ?>" target="_download"
             ><?lsmb file.file_name ?></a></td>
 <td><?lsmb file.mime_type ?></td>
 <td><?lsmb file.uploaded_at ?></td>
@@ -355,9 +355,9 @@ FOREACH link IN form.file_links;
 </tr>
 <?lsmb END # FOREACH ?>
 </table>
-<?lsmb callback = "gl.pl?action=edit&id=" _ form.id -?>
-<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb form.id
-   ?>&file_class=1&callback=<?lsmb tt_url(callback) ?>">[<?lsmb text('Attach') ?>]</a>
+<?lsmb callback = "gl.pl?action=edit&amp;id=" _ form.id -?>
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb form.id
+   ?>&amp;file_class=1&amp;callback=<?lsmb tt_url(callback) ?>">[<?lsmb text('Attach') ?>]</a>
 <?lsmb END # IF for<?lsmb INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved ?>
 </form>
 <?lsmb INCLUDE CLOSE_STATUS_DIV ?>
