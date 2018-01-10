@@ -60,10 +60,7 @@ sub _default_settings {
                 label => $locale->text('Disable Back Button'),
                 type => 'YES_NO', },
               { name => 'password_duration',
-                label => (
-                    $locale->text('Password Duration') .
-                    ' (' . $locale->text('days') . ')'
-                )
+                label => $locale->text('Password Duration (days)')
               },
               { name => 'session_timeout',
         label => $locale->text('Session Timeout'), },
