@@ -4,7 +4,7 @@
 -- Bad values are replaced with NULL, which sets
 -- 'infinity' as the password expiry for future
 -- password changes.
--- 
+--
 -- There is no benefit in retaining the old, bad
 -- values as they do nothing other than prevent
 -- passwords being changed.
