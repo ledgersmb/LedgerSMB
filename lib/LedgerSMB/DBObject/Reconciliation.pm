@@ -377,9 +377,14 @@ sub get {
         $neg = -1;
     }
     $self->{account_info} = $ref;
+
+    my ($previous) = $self->call_dbmethod(funcname=>'reconciliation__previous_report_date',
+                                args => { in_chart_id => $self->{chart_id},
+                                          in_end_date => $self->{end_date}
+                                        });
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
                                 args => { chart_id => $ref->{id},
-                                          report_date => $self->{end_date}->clone->add_interval('month',-1) });
+                                          report_date => $previous->{end_date} });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;
