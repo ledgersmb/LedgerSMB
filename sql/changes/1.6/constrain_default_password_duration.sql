@@ -1,11 +1,13 @@
-/* Clear an invalid password_duration settings,
- * which effectively sets 'infinity' as the password
- * expiry.
+/* Clear an invalid password_duration setting,
+ * which prevents user passwords from being changed.
+ *
+ * Bad values are replaced with NULL, which sets
+ * 'infinity' as the password expiry for future
+ * password changes.
  * 
- * if current password_duration value is invalid, it
- * will do nothing other than prevent passwords
- * being changed on the system. There is therefore
- * no benefit in retaining the old value.
+ * There is no benefit in retaining the old, bad
+ * values as they do nothing other than prevent
+ * passwords being changed.
  */
 UPDATE defaults
 SET value = NULL
