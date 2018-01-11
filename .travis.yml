@@ -22,7 +22,7 @@ matrix:
         postgresql: "9.6"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.6-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.24'
@@ -30,7 +30,7 @@ matrix:
         postgresql: "9.5"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.5-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.22'
@@ -39,7 +39,7 @@ matrix:
         sauce_connect: true
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.4-pgtap
       env:
         - TEST_SAUCE=1
     - perl: '5.20'
@@ -47,7 +47,7 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.4-pgtap
       env:
         - COVERAGE=1
     - perl: '5.18'
@@ -55,7 +55,7 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.4-pgtap
       env:
         - COA_TESTING=1
     - perl: '5.16'
@@ -63,7 +63,7 @@ matrix:
         postgresql: "9.3"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.3-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.14'
@@ -71,7 +71,7 @@ matrix:
         postgresql: "9.2"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.12'
@@ -79,7 +79,7 @@ matrix:
         postgresql: "9.2"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.10'
@@ -87,7 +87,7 @@ matrix:
         postgresql: "9.3"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.3-pgtap
 
 before_cache:
   - mkdir -p $HOME/dojo_archive
@@ -126,6 +126,7 @@ before_script:
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
   - cp conf/ledgersmb.conf.default ledgersmb.conf
+  - cp t/.proverc ./
   - coverage-setup 2>/dev/null
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
@@ -143,7 +144,9 @@ script:
     LSMB_TEST_DB=1
     LSMB_NEW_DB=lsmb13installtest
     LSMB_BASE_URL="http://127.0.0.1:5000"
-      prove t xt
+      prove --pgtap-option dbname=lsmb13installtest
+            --pgtap-option username=postgres
+            t xt
 
 after_success:
   - >
