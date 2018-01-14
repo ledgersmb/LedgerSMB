@@ -507,6 +507,23 @@ push @tests, __PACKAGE__->new(
 
 
 push @tests, __PACKAGE__->new(
+   test_query => q{select accno,description from gifi
+                   where description is null},
+ display_name => marktext('GIFI accounts without descriptions'),
+         name => 'missing_gifi_descriptions',
+ display_cols => [ 'accno' ],
+        table => 'gifi',
+      columns => ['description'],
+   id_columns => ['accno'],
+ instructions => marktext('Please fill in the missing GIFI descriptions.<br>
+ Note that GIFI originate from taxation authorities and that codes and descriptions
+ are most likely prescribed'),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+);
+
+push @tests, __PACKAGE__->new(
    test_query => q{select distinct gifi_accno as accno from chart
                    where not exists (select 1
                                        from gifi
