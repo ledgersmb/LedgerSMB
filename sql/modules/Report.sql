@@ -45,25 +45,25 @@ $$;
 DROP TYPE IF EXISTS report_aging_item CASCADE;
 
 CREATE TYPE report_aging_item AS (
-	entity_id int,
-	account_number varchar(24),
-	name text,
-	contact_name text,
-	invnumber text,
-	transdate date,
-	till varchar(20),
-	ordnumber text,
-	ponumber text,
-	notes text,
-	c0 numeric,
-	c30 numeric,
-	c60 numeric,
-	c90 numeric,
-	duedate date,
-	id int,
-	curr varchar(3),
-	exchangerate numeric,
-	line_items text[][],
+        entity_id int,
+        account_number varchar(24),
+        name text,
+        contact_name text,
+        invnumber text,
+        transdate date,
+        till varchar(20),
+        ordnumber text,
+        ponumber text,
+        notes text,
+        c0 numeric,
+        c30 numeric,
+        c60 numeric,
+        c90 numeric,
+        duedate date,
+        id int,
+        curr varchar(3),
+        exchangerate numeric,
+        line_items text[][],
         age int
 );
 
@@ -78,9 +78,9 @@ RETURNS SETOF report_aging_item
 AS
 $$
 DECLARE
-	item report_aging_item;
+        item report_aging_item;
 BEGIN
-	FOR item IN
+        FOR item IN
                   WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, id::text AS path
                   FROM business_unit
@@ -91,38 +91,38 @@ BEGIN
                   FROM business_unit bu
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
-		SELECT c.entity_id, c.meta_number, e.name,
-		       e.name as contact_name,
-	               a.invnumber, a.transdate, a.till, a.ordnumber,
-		       a.ponumber, a.notes,
-		       CASE WHEN a.age/30 = 0
-		                 THEN (a.sign * sum(ac.amount))
+                SELECT c.entity_id, c.meta_number, e.name,
+                       e.name as contact_name,
+                       a.invnumber, a.transdate, a.till, a.ordnumber,
+                       a.ponumber, a.notes,
+                       CASE WHEN a.age/30 = 0
+                                 THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
-		            as c0,
-		       CASE WHEN a.age/30 = 1
-		                 THEN (a.sign * sum(ac.amount))
+                            as c0,
+                       CASE WHEN a.age/30 = 1
+                                 THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
-		            as c30,
-		       CASE WHEN a.age/30 = 2
-		            THEN (a.sign * sum(ac.amount))
+                            as c30,
+                       CASE WHEN a.age/30 = 2
+                            THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
-		            as c60,
-		       CASE WHEN a.age/30 > 2
-		            THEN (a.sign * sum(ac.amount))
+                            as c60,
+                       CASE WHEN a.age/30 > 2
+                            THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
-		            as c90,
-		       a.duedate, a.id, a.curr,
-		       COALESCE((SELECT sell FROM exchangerate ex
-		         WHERE a.curr = ex.curr
-		              AND ex.transdate = a.transdate), 1)
-		       AS exchangerate,
-			(SELECT compound_array(ARRAY[[p.partnumber,
-					i.description, i.qty::text]])
-				FROM parts p
-				JOIN invoice i ON (i.parts_id = p.id)
-				WHERE i.trans_id = a.id) AS line_items,
+                            as c90,
+                       a.duedate, a.id, a.curr,
+                       COALESCE((SELECT sell FROM exchangerate ex
+                         WHERE a.curr = ex.curr
+                              AND ex.transdate = a.transdate), 1)
+                       AS exchangerate,
+                        (SELECT compound_array(ARRAY[[p.partnumber,
+                                        i.description, i.qty::text]])
+                                FROM parts p
+                                JOIN invoice i ON (i.parts_id = p.id)
+                                WHERE i.trans_id = a.id) AS line_items,
                    (coalesce(in_to_date, now())::date - a.transdate) as age
-		  FROM (select id, invnumber, till, ordnumber, amount, duedate,
+                  FROM (select id, invnumber, till, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                -1 AS sign, transdate, force_closed,
                                CASE WHEN in_use_duedate
@@ -152,16 +152,16 @@ BEGIN
                               AND acl.description = 'AP')
                            OR (in_entity_class = 2
                               AND acl.description = 'AR'))
-		  JOIN entity_credit_account c
+                  JOIN entity_credit_account c
                        ON a.entity_credit_account = c.id
-		  JOIN entity e ON (e.id = c.entity_id)
+                  JOIN entity e ON (e.id = c.entity_id)
              LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
              LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
-	     LEFT JOIN entity_to_location e2l
+             LEFT JOIN entity_to_location e2l
                        ON e.id = e2l.entity_id
                        AND e2l.location_class = 3
              LEFT JOIN location l ON l.id = e2l.location_id
-	     LEFT JOIN country ON (country.id = l.country_id)
+             LEFT JOIN country ON (country.id = l.country_id)
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
                        AND (in_accno IS NULL or acc.accno = in_accno)
                        AND a.force_closed IS NOT TRUE
@@ -177,9 +177,9 @@ BEGIN
                        <@ compound_array(string_to_array(bu_tree.path,
                                          ',')::int[]))
                        AND sum(ac.amount::numeric(20,2)) <> 0
-	      ORDER BY entity_id, curr, transdate, invnumber
-	LOOP
-		return next item;
+              ORDER BY entity_id, curr, transdate, invnumber
+        LOOP
+                return next item;
         END LOOP;
 END;
 $$ language plpgsql;
@@ -441,7 +441,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}' as business_units -- TODO
-  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes,
+  FROM (select id, transdate, invnumber, curr, amount, netamount, duedate, notes,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
