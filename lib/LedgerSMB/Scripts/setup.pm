@@ -1248,6 +1248,7 @@ sub process_and_run_upgrade_script {
     if ! $success;
 
     $dbh->do(q{delete from defaults where setting_key like 'migration_%'});
+    $dbh->commit;
 
     # the schema was left incomplete when we created it, in order to provide
     # a frozen (fixed) migration target. Now, however, we need to apply the
