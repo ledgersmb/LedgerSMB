@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 207;
+use Test::More tests => 210;
 use File::Find;
 
 my @on_disk;
@@ -63,9 +63,9 @@ my @modules =
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
-          'LedgerSMB::PGNumber', 'LedgerSMB::PGOld',
+          'LedgerSMB::PGNumber', 'LedgerSMB::PGOld', 'LedgerSMB::Request',
           'LedgerSMB::Setting', 'LedgerSMB::Tax', 'LedgerSMB::Upgrade_Tests',
-          'LedgerSMB::Form', 'LedgerSMB::IS',
+          'LedgerSMB::Upgrade_Pre_Tests', 'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
           'LedgerSMB::DBObject::EOY',

@@ -38,6 +38,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::PSGI::Util;
+use LedgerSMB::Upgrade_Pre_Tests;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
@@ -721,6 +722,13 @@ sub _upgrade_test_is_applicable {
             && ($test->appname eq $dbinfo->{appname}));
 }
 
+sub _applicable_upgrade_pre_tests {
+    my $dbinfo = shift;
+
+    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
+                  LedgerSMB::Upgrade_Pre_Tests->get_pre_tests;
+}
+
 sub _applicable_upgrade_tests {
     my $dbinfo = shift;
 
@@ -736,6 +744,16 @@ sub upgrade {
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
+
+    for my $check (_applicable_upgrade_pre_tests($dbinfo)) {
+        next if defined $request->{"applied_$check->{name}"}
+             && $request->{"applied_$check->{name}"} eq 'On';
+        my $sth = $request->{dbh}->prepare($check->test_query);
+        my $status = $sth->execute()
+            or die 'Failed to execute pre-migration pre-check ' . $check->{name} . ', ' . $sth->errstr;
+        $request->{"applied_$check->{name}"} = 'On';
+        $sth->finish();
+    }
 
     for my $check (_applicable_upgrade_tests($dbinfo)) {
         next if $check->skipable
@@ -899,7 +917,6 @@ sub fix_tests{
         . 'found different test by the same name while fixing data'
         if $request->{verify_check} ne md5_hex($check->test_query);
 
-
     my $table = $check->table;
     my @edits = @{$check->columns};
     # If we are inserting and id is displayed, we want to insert
@@ -931,15 +948,14 @@ sub fix_tests{
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$count"};
         }
-        push @values, map { MIME::Base64::decode($_)} split(/,/,$request->{"id_$count"})
+        push @values, map { $_ ne '' ? MIME::Base64::decode($_) : undef} split(/,/,$request->{"id_$count"})
            if ! $check->{insert};
 
         my $rv = $sth->execute(@values) ||
             $request->error($sth->errstr);
         return LedgerSMB::PSGI::Util::internal_server_error(
-            qq{Upgrade query affected $rv rows, while only a single row
-was expected})
-            if $rv > 1;
+            qq{Upgrade query affected $rv rows, while a single row was expected})
+                if $rv != 1;
     }
     $sth->finish();
     $dbh->commit;

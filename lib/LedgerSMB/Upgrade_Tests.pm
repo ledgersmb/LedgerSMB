@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Upgrade_Tests - Upgrade tests for LedgerSMB
+LedgerSMB::Upgrade_Pre_Tests - Upgrade pre-tests for LedgerSMB
 
 =head1 SYNPOPSIS
 
@@ -19,7 +19,6 @@ use Moose;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 use List::Util qw( first );
-
 use LedgerSMB::Locale qw(marktext);
 
 =head1 FUNCTIONS
@@ -444,40 +443,6 @@ push @tests, __PACKAGE__->new(
   min_version => '1.3',
   max_version => '1.4'
 );
-
-#=pod
-
-# This must be done before the acc_trans test, for they have duplicates
-# and need a unique key
-    push @tests, __PACKAGE__->new(
-        # Add a unique key to allow editing
-        # Make the test serially reusable and protect against triggers
-        test_query => 'ALTER TABLE acc_trans DISABLE TRIGGER USER;
-                       ALTER TABLE acc_trans DROP COLUMN IF EXISTS i_key;
-                      CREATE TABLE acc_trans1 (LIKE acc_trans INCLUDING ALL);
-                       ALTER TABLE acc_trans1 DISABLE TRIGGER USER;
-                       ALTER TABLE acc_trans1 add column i_key SERIAL UNIQUE;
-                      INSERT INTO acc_trans1 SELECT * FROM acc_trans;
-                        DROP TABLE acc_trans;
-                       ALTER TABLE acc_trans1 RENAME TO acc_trans;
-                       ALTER TABLE acc_trans ENABLE TRIGGER USER;
-                      SELECT trans_id
-                        FROM acc_trans
-                       WHERE i_key IS NULL',
-      display_name => marktext('Transactions unique key'),
-              name => 'add_unique_acc_trans_key',
-      display_cols => ['trans_id'],
-           columns => ['trans_id'],
-        id_columns => ['i_key'],
-          id_where => 'i_key IS NULL AND ',
-      instructions => marktext(
-                       'This should never show. We added a unique key to acc_trans'),
-           buttons => ['Save and Retry', 'Cancel'],
-             table => 'acc_trans',
-           appname => 'sql-ledger',
-       min_version => '2.7',
-       max_version => '3.0'
-    );
 
 push @tests, __PACKAGE__->new(
    test_query => q{select distinct gifi_accno from chart
@@ -1223,9 +1188,7 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-    # Add a unique key to allow editing
-    # Make the test serially reusable and protect against triggers
-    test_query => q(SELECT ac.i_key, ac.trans_id, ac.id, ac.memo, ac.amount, xx.description,
+    test_query => q(SELECT ac.lsmb_entry_id, ac.trans_id, ac.id, ac.chart_id, ac.memo, ac.amount, xx.description,
                           ch.description as account, ch.accno, ch.link, ch.charttype, ch.category, ac.cleared, approved
                      FROM acc_trans ac
                      JOIN (
@@ -1238,14 +1201,13 @@ push @tests, __PACKAGE__->new(
                          OR ch.link NOT LIKE '%paid' )
                       AND ac.cleared IS NOT NULL
                       AND ac.approved
-                 ORDER BY accno, transdate, ac.id),
+                 ORDER BY trans_id, ac.id, accno, transdate),
   display_name => marktext('Unneeded Reconciliations'),
           name => 'reconciliation_on_unrelated_accounts',
-  display_cols => ['i_key', 'trans_id', 'id', 'memo', 'amount', 'description',
-                   'accno', 'account', 'category', 'cleared', 'approved'],
+  display_cols => ['trans_id', 'id', 'memo', 'amount', 'description',
+                   'accno', 'account', 'link', 'category', 'cleared', 'approved'],
        columns => ['cleared'],
-    id_columns => ['i_key'],
-      id_where => 'approved and cleared IS NOT NULL AND ',
+    id_columns => ['lsmb_entry_id'],
   instructions => marktext(
                    'Reconciliations should be on asset, liability or equity accounts only.<br>
 Please review the dates and categories in the original application if needed'),
@@ -1262,9 +1224,9 @@ Please review the dates and categories in the original application if needed'),
                            AND ac.cleared IS NOT NULL
                            AND ac.approved;)],
              table => 'acc_trans',
-      appname => 'sql-ledger',
-  min_version => '2.7',
-  max_version => '3.0'
+           appname => 'sql-ledger',
+       min_version => '2.7',
+       max_version => '3.0'
 );
 
 
