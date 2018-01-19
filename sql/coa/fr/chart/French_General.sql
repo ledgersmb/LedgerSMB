@@ -1054,21 +1054,21 @@ FROM account WHERE accno in ('512', '51203');
 --
 -- insert taxes
 --
-INSERT INTO tax (chart_id, rate) VALUES (id,0.055)
-WHERE id IN (
+INSERT INTO tax (chart_id, rate)
+SELECT id,0.055 FROM (
     SELECT id FROM account
     WHERE accno IN ('445621','445661','445711','445861','445871')
-);
-INSERT INTO tax (chart_id, rate) VALUES (id,0.206)
-WHERE id IN (
+) a;
+INSERT INTO tax (chart_id, rate)
+SELECT id,0.206 FROM (
     SELECT id FROM account
     WHERE accno IN ('445622','445662','445712','445862','445872')
-);
-INSERT INTO tax (chart_id, rate) VALUES (id,0.196)
-WHERE id IN (
+) a;
+INSERT INTO tax (chart_id, rate)
+SELECT id,0.196 FROM (
     SELECT id FROM account
     WHERE accno IN ('445623','445663','445713','445863','445873')
-);
+) a;
 --
 -- Set defaults
 --
