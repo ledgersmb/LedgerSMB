@@ -994,11 +994,6 @@ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             deliverydate, serialnumber
        FROM :slschema.invoice;
 
-ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
-
-update :slschema.acc_trans
-  set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
-
 INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount, transdate,
                        source, cleared, fx_transaction,
                        memo, approved, cleared_on, voucher_id, invoice_id)
