@@ -739,11 +739,11 @@ sub upgrade {
 
     for my $check (_applicable_upgrade_tests($dbinfo)) {
         next if $check->skipable
-             && defined $request->{"skip_$request->{check}"}
-             && $request->{"skip_$request->{check}"} eq 'On';
+             && defined $request->{"skip_$check->{name}"}
+             && $request->{"skip_$check->{name}"} eq 'On';
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->name . ', ' . $sth->errstr;
+            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
         if ($sth->rows > 0){ # Check failed --CT
              return _failed_check($request, $check, $sth);
         }
