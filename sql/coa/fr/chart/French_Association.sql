@@ -19,8 +19,8 @@ $$ LANGUAGE PLPGSQL;
 
 SELECT account_heading_save(NULL, '000', '', NULL);
 
-SELECT pg_temp_account_heading_save(NULL,'1', 'CLASSE 1: Comptes de capitaux', '000');
-SELECT pg_temp_account_heading_save(NULL,'10', 'Capital et réserves', '1');
+SELECT pg_temp._account_heading_save(NULL,'1', 'CLASSE 1: Comptes de capitaux', '000');
+SELECT pg_temp._account_heading_save(NULL,'10', 'Capital et réserves', '1');
 SELECT account__save(NULL,'102', 'Fonds associatif sans droit de reprise','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1021', 'Valeur du patrimoine intégré','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1022', 'Fonds statutaire (à éclater en fonction des statuts)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -50,23 +50,23 @@ SELECT account__save(NULL,'1068', 'Autres réserves (dont réserves pour projet 
 SELECT account__save(NULL,'10682', 'Réserves pour investissements','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'10683', 'Réserves de trésorerie (provenant du résultat)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'10688', 'Réserves diverses','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'11', 'ELEMENTS EN INSTANCE D''AFFECTATION', '1');
+SELECT pg_temp._account_heading_save(NULL,'11', 'ELEMENTS EN INSTANCE D''AFFECTATION', '1');
 SELECT account__save(NULL,'110', 'Report à nouveau (solde créditeur)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'115', 'Résultats sous contrôle de tiers financeurs','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'119', 'Report à nouveau (solde débiteur) ','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'12', 'RESULTAT NET DE L''EXERCICE', '1');
+SELECT pg_temp._account_heading_save(NULL,'12', 'RESULTAT NET DE L''EXERCICE', '1');
 SELECT account__save(NULL,'120', 'Résultat de l''exercice (excédent)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'129', 'Résultat de l''exercice (déficit)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'13', 'SUBVENTIONS D''INVESTISSEMENT (affectés à des biens renouvelables)', '1');
+SELECT pg_temp._account_heading_save(NULL,'13', 'SUBVENTIONS D''INVESTISSEMENT (affectés à des biens renouvelables)', '1');
 SELECT account__save(NULL,'131', 'Subventions d''investissement (renouvelables)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'139', 'Subventions d''investissement inscrites au compte de résultat','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'15', 'PROVISIONS POUR RISQUES ET CHARGES', '1');
+SELECT pg_temp._account_heading_save(NULL,'15', 'PROVISIONS POUR RISQUES ET CHARGES', '1');
 SELECT account__save(NULL,'151', 'Provisions pour risques','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1516', 'Provisions pour risques d''emploi','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1518', 'Autres provisions pour risques','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'157', 'Provisions pour charges à répartir sur plusieurs exercices','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1572', 'Provisions pour grosses réparations','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'16', 'EMPRUNTS ET DETTES ASSIMILEES', '1');
+SELECT pg_temp._account_heading_save(NULL,'16', 'EMPRUNTS ET DETTES ASSIMILEES', '1');
 SELECT account__save(NULL,'164', 'Emprunts auprès des établissements de crédit','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1641', 'Emprunts (à détailler)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'167', 'Emprunts et dettes assorties de conditions particulières','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -76,24 +76,24 @@ SELECT account__save(NULL,'1681', 'Autres emprunts (à détailler)','L',NULL, NU
 SELECT account__save(NULL,'1685', 'Rentes viagères capitalisées','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1687', 'Autres dettes (à détailler)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1688', 'Intérêts courus (à détailler)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'18', 'COMPTES DE LIAISON DES ETABLISSEMENTS', '1');
+SELECT pg_temp._account_heading_save(NULL,'18', 'COMPTES DE LIAISON DES ETABLISSEMENTS', '1');
 SELECT account__save(NULL,'181', 'Apports permanents entre siège social et établissements','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'185', 'Biens et prestations de services échangés entre établissements et siège social','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'186', 'Biens et prestations de services échangés entre établissements (charges)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'187', 'Biens et prestations de services échangés entre établissements (produits)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'19', 'FONDS DEDIES', '1');
+SELECT pg_temp._account_heading_save(NULL,'19', 'FONDS DEDIES', '1');
 SELECT account__save(NULL,'194', 'Fonds dédiés sur subventions de fonctionnement','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'195', 'Fonds dédiés sur dons manuels affectés','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'197', 'Fonds dédiés sur legs et donations affectés','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'198', 'Excédent disponible après affectation au projet associatif','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'199', 'Reprise des fonds affectés au projet associatif','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'2', 'CLASSE 2. Comptes d''immobilisations', '2');
-SELECT pg_temp_account_heading_save(NULL,'20', 'IMMOBILISATIONS INCORPORELLES', '2');
+SELECT pg_temp._account_heading_save(NULL,'2', 'CLASSE 2. Comptes d''immobilisations', '2');
+SELECT pg_temp._account_heading_save(NULL,'20', 'IMMOBILISATIONS INCORPORELLES', '2');
 SELECT account__save(NULL,'201', 'Frais d''établissement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2012', 'Frais de premier établissement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'206', 'Droit au bail','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'208', 'Autres immobilisations incorporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'21', 'IMMOBILISATIONS CORPORELLES', '2');
+SELECT pg_temp._account_heading_save(NULL,'21', 'IMMOBILISATIONS CORPORELLES', '2');
 SELECT account__save(NULL,'211', 'Terrains','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'212', 'Agencements et aménagements des constructions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'213', 'Constructions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -112,18 +112,18 @@ SELECT account__save(NULL,'2184', 'Mobilier','A',NULL, NULL, false, false, strin
 SELECT account__save(NULL,'2185', 'Cheptel','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'228', 'Immobilisations grevées de droits','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'229', 'Droits des propriétaires','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'23', 'IMMOBILISATIONS EN COURS', '2');
+SELECT pg_temp._account_heading_save(NULL,'23', 'IMMOBILISATIONS EN COURS', '2');
 SELECT account__save(NULL,'231', 'Immobilisations corporelles en cours','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2313', 'Constructions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2315', 'Installations techniques, matériel et outillage industriels','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2318', 'Autres immobilisations corporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'238', 'Avances et acomptes versés sur commande d''immobilisations corporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'26', 'PARTICIPATIONS ET CREANCES RATTACHEES A DES PARTICIPATIONS', '2');
+SELECT pg_temp._account_heading_save(NULL,'26', 'PARTICIPATIONS ET CREANCES RATTACHEES A DES PARTICIPATIONS', '2');
 SELECT account__save(NULL,'261', 'Titres de participation','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'266', 'Autres formes de participation','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'267', 'Créances rattachées à des participations','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'269', 'Versements restant à effectuer sur titres de participation non libérés','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'27', 'AUTRES IMMOBILISATIONS FINANCIERES', '2');
+SELECT pg_temp._account_heading_save(NULL,'27', 'AUTRES IMMOBILISATIONS FINANCIERES', '2');
 SELECT account__save(NULL,'271', 'Titres immobilisés (droit de propriété)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2711', 'Actions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'272', 'Titres immobilisés (droit de créance)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -140,7 +140,7 @@ SELECT account__save(NULL,'276', 'Autres créances immobilisées','A',NULL, NULL
 SELECT account__save(NULL,'2761', 'Créances diverses','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2768', 'Intérêts courus (à détailler)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'279', 'Versement restant à effectuer sur titres immobilisés non libérés','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'28', 'AMORTISSEMENTS DES IMMOBILISATIONS', '2');
+SELECT pg_temp._account_heading_save(NULL,'28', 'AMORTISSEMENTS DES IMMOBILISATIONS', '2');
 SELECT account__save(NULL,'280', 'Amortissements des immobilisations incorporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2801', 'Frais d''établissement (même ventilation que celle du compte 201)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2808', 'Autres immobilisations incorporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -150,7 +150,7 @@ SELECT account__save(NULL,'2813', 'Constructions (même ventilation que celle du
 SELECT account__save(NULL,'2814', 'Constructions sur sol d''autrui (même ventilation que celle du compte 214)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2815', 'Installations techniques, matériel et outillage industriels (même ventilation que celle du compte 215)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2818', 'Autres immobilisations corporelles (même ventilation que celle du compte 218)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'29', 'PROVISIONS POUR DEPRECIATION DES IMMOBILISATIONS', '2');
+SELECT pg_temp._account_heading_save(NULL,'29', 'PROVISIONS POUR DEPRECIATION DES IMMOBILISATIONS', '2');
 SELECT account__save(NULL,'290', 'Provisions pour dépréciation des immobilisations incorporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2906', 'Droit au bail','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2908', 'Autres immobilisations incorporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -166,22 +166,22 @@ SELECT account__save(NULL,'2972', 'Titres immobilisés (droit de créance) (mêm
 SELECT account__save(NULL,'2974', 'Prêts (même ventilation que celle du compte 274)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2975', 'Dépôts et cautionnements versés (même ventilation que celle du compte 275)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2976', 'Autres créances immobilisées (même ventilation que celle du compte 276)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'3', 'CLASSE 3. Comptes de stocks et en-cours', '3');
-SELECT pg_temp_account_heading_save(NULL,'31', 'MATIERES PREMIERES ET FOURNITURES', '3');
-SELECT pg_temp_account_heading_save(NULL,'32', 'AUTRES APPROVISIONNEMENTS', '3');
-SELECT pg_temp_account_heading_save(NULL,'33', 'EN-COURS DE PRODUCTION DE BIENS', '3');
-SELECT pg_temp_account_heading_save(NULL,'34', 'EN-COURS DE PRODUCTION DE SERVICES', '3');
-SELECT pg_temp_account_heading_save(NULL,'35', 'STOCKS DE PRODUITS', '3');
-SELECT pg_temp_account_heading_save(NULL,'37', 'STOCKS DE MARCHANDISES', '3');
-SELECT pg_temp_account_heading_save(NULL,'39', 'PROVISIONS POUR DEPRECIATION DES STOCKS ET EN-COURS', '3');
+SELECT pg_temp._account_heading_save(NULL,'3', 'CLASSE 3. Comptes de stocks et en-cours', '3');
+SELECT pg_temp._account_heading_save(NULL,'31', 'MATIERES PREMIERES ET FOURNITURES', '3');
+SELECT pg_temp._account_heading_save(NULL,'32', 'AUTRES APPROVISIONNEMENTS', '3');
+SELECT pg_temp._account_heading_save(NULL,'33', 'EN-COURS DE PRODUCTION DE BIENS', '3');
+SELECT pg_temp._account_heading_save(NULL,'34', 'EN-COURS DE PRODUCTION DE SERVICES', '3');
+SELECT pg_temp._account_heading_save(NULL,'35', 'STOCKS DE PRODUITS', '3');
+SELECT pg_temp._account_heading_save(NULL,'37', 'STOCKS DE MARCHANDISES', '3');
+SELECT pg_temp._account_heading_save(NULL,'39', 'PROVISIONS POUR DEPRECIATION DES STOCKS ET EN-COURS', '3');
 SELECT account__save(NULL,'391', 'Provisions pour dépréciation des matières premières et fournitures','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'392', 'Provisions pour dépréciation des autres approvisionnements','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'393', 'Provisions pour dépréciation des en-cours de production de biens','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'394', 'Provisions pour dépréciation des en-cours de production de services','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'395', 'Provisions pour dépréciation des stocks de produits','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'397', 'Provisions pour dépréciation des stocks de marchandises','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'4', 'CLASSE 4. Comptes de tiers', '4');
-SELECT pg_temp_account_heading_save(NULL,'40', 'FOURNISSEURS ET COMPTES RATTACHES', '4');
+SELECT pg_temp._account_heading_save(NULL,'4', 'CLASSE 4. Comptes de tiers', '4');
+SELECT pg_temp._account_heading_save(NULL,'40', 'FOURNISSEURS ET COMPTES RATTACHES', '4');
 SELECT account__save(NULL,'401', 'Fournisseurs','A',NULL, NULL, false, false, string_to_array('AP', ':'), false, false);
 SELECT account__save(NULL,'4011', 'Fournisseurs - Achats de biens ou de prestations de services','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'404', 'Fournisseurs d''immobilisations','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -193,12 +193,12 @@ SELECT account__save(NULL,'4084', 'Fournisseurs - achats d''immobilisations','A'
 SELECT account__save(NULL,'409', 'Fournisseurs débiteurs','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4091', 'Fournisseurs - Avances et acomptes versés sur commandes','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4096', 'Fournisseurs - Créances pour emballage et matériel à rendre','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'41', 'USAGERS ET COMPTES RATTACHES', '4');
+SELECT pg_temp._account_heading_save(NULL,'41', 'USAGERS ET COMPTES RATTACHES', '4');
 SELECT account__save(NULL,'411', 'Usagers (et organismes de prise en charge)','A',NULL, NULL, false, false, string_to_array('AR', ':'), false, false);
 SELECT account__save(NULL,'416', 'Créances douteuses ou litigieuses','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'418', 'Usagers - Produits non encore facturés','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'419', 'Usagers créditeurs','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'42', 'PERSONNEL ET COMPTES RATTACHES', '4');
+SELECT pg_temp._account_heading_save(NULL,'42', 'PERSONNEL ET COMPTES RATTACHES', '4');
 SELECT account__save(NULL,'421', 'Personnel - Rémunérations dues','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'422', 'Comités d''entreprises, d''établissement...','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'425', 'Personnel - Avances et acomptes','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -207,7 +207,7 @@ SELECT account__save(NULL,'428', 'Personnel - Charges à payer et produits à re
 SELECT account__save(NULL,'4282', 'Dettes provisionnées pour congés à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4286', 'Autres charges à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4287', 'Produits à recevoir','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'43', 'SECURITE SOCIALE ET AUTRES ORGANISMES SOCIAUX', '4');
+SELECT pg_temp._account_heading_save(NULL,'43', 'SECURITE SOCIALE ET AUTRES ORGANISMES SOCIAUX', '4');
 SELECT account__save(NULL,'431', 'Sécurité sociale','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'437', 'Autres organismes sociaux','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4372', 'Mutuelles','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -218,7 +218,7 @@ SELECT account__save(NULL,'438', 'Organismes sociaux - Charges à payer et produ
 SELECT account__save(NULL,'4382', 'Charges sociales sur congés à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4386', 'Autres charges à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4387', 'Produits à recevoir','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'44', 'ETAT ET AUTRES COLLECTIVITES PUBLIQUES', '4');
+SELECT pg_temp._account_heading_save(NULL,'44', 'ETAT ET AUTRES COLLECTIVITES PUBLIQUES', '4');
 SELECT account__save(NULL,'441', 'Etat - Subventions à recevoir','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4411', 'Subventions d''investissement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4417', 'Subventions d''exploitation','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -226,6 +226,20 @@ SELECT account__save(NULL,'4419', 'Avances sur subventions','A',NULL, NULL, fals
 SELECT account__save(NULL,'444', 'Etat - Impôts sur les bénéfices','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4445', 'Etat - Impôt sur les société (organismes sans but lucratif)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'445', 'Etat - Taxes sur le chiffre d''affaires','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'4452', 'TVA due intracommunautaire','L',NULL, NULL, false, true, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'4455', 'Taxes sur ca à decaisser','L',NULL, NULL, false, true, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'4456', 'Taxes sur le ca déductibles','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'445621', 'TVA sur immo.  5.5%','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart', ':'), false, false);
+SELECT account__save(NULL,'445622', 'TVA sur immo. 20.6%','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart', ':'), false, false);
+SELECT account__save(NULL,'445623', 'TVA sur immo. 19.6%','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart', ':'), false, false);
+SELECT account__save(NULL,'445661','TVA déductible 5.5%','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'445662', 'TVA déductible 20.6%','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'445663','TVA déductible 19.6%','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'44567', 'Crédit de TVA à reporter','L',NULL, NULL, false, true, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'4457', 'Taxe sur le c.a. collect. entrepr.','A',NULL, NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'445711','TVA collectée 5.5%','A',NULL, NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'445712', 'TVA collectée 20.6%','A',NULL, NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'445713','TVA collectée 19.6%','A',NULL, NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'447', 'Autres impôts, taxes et versements assimilés','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4471', 'Impôts, taxes et versements assimilés sur rémunérations (administration des impôts)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'44711', 'Taxe sur les salaires','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -241,29 +255,29 @@ SELECT account__save(NULL,'448', 'Etat - Charges à payer et produits à recevoi
 SELECT account__save(NULL,'4482', 'Charges fiscales sur congés à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4486', 'Autres charges à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4487', 'Produits à recevoir','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'45', 'CONFEDERATION, FEDERATION, UNION, ASSOCIATIONS AFFILIEES ET SOCIETAIRES ', '4');
+SELECT pg_temp._account_heading_save(NULL,'45', 'CONFEDERATION, FEDERATION, UNION, ASSOCIATIONS AFFILIEES ET SOCIETAIRES ', '4');
 SELECT account__save(NULL,'451', 'Confédération, fédération, union et associations affiliées - Compte courant','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'455', 'Sociétaires - Comptes courants','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'46', 'DEBITEURS DIVERS ET CREDITEURS DIVERS', '4');
+SELECT pg_temp._account_heading_save(NULL,'46', 'DEBITEURS DIVERS ET CREDITEURS DIVERS', '4');
 SELECT account__save(NULL,'467', 'Autres comptes débiteurs ou créditeurs','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'468', 'Divers - Charges à payer et produits à recevoir','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4686', 'Charges à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4687', 'Produits à recevoir','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'47', 'COMPTES D''ATTENTE', '4');
+SELECT pg_temp._account_heading_save(NULL,'47', 'COMPTES D''ATTENTE', '4');
 SELECT account__save(NULL,'471', 'Recettes à classer','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'472', 'Dépenses à classer et à régulariser','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'475', 'Legs et donations en cours de réalisation','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'48', 'COMPTE DE REGULARISATION', '4');
+SELECT pg_temp._account_heading_save(NULL,'48', 'COMPTE DE REGULARISATION', '4');
 SELECT account__save(NULL,'481', 'Charges à répartir sur plusieurs exercices','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4812', 'Frais d''acquisition des immobilisations','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4818', 'Charges à étaler','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'486', 'Charges constatées d''avance','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'487', 'Produits constatés d''avance','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'49', 'PROVISIONS POUR DEPRECIATION DES COMPTES DE TIERS', '4');
+SELECT pg_temp._account_heading_save(NULL,'49', 'PROVISIONS POUR DEPRECIATION DES COMPTES DE TIERS', '4');
 SELECT account__save(NULL,'491', 'Provisions pour dépréciation des comptes d''usagers (et organismes de prise en charge)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'496', 'Provisions pour dépréciation des comptes de débiteurs divers','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'5', 'CLASSE 5. Comptes financiers', '5');
-SELECT pg_temp_account_heading_save(NULL,'50', 'VALEURS MOBILIERES DE PLACEMENT', '5');
+SELECT pg_temp._account_heading_save(NULL,'5', 'CLASSE 5. Comptes financiers', '5');
+SELECT pg_temp._account_heading_save(NULL,'50', 'VALEURS MOBILIERES DE PLACEMENT', '5');
 SELECT account__save(NULL,'503', 'Actions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5031', 'Titres cotés','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5035', 'Titres non cotés','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -274,7 +288,7 @@ SELECT account__save(NULL,'507', 'Bons du Trésor et bons de caisse à court ter
 SELECT account__save(NULL,'508', 'Autres valeurs mobilières et créances assimilées','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5081', 'Autres valeurs mobilières','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5088', 'Intérêts courus sur obligations, bons et valeurs assimilées','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'51', 'BANQUES, ETABLISSEMENTS FINANCIERS ET ASSIMILES', '5');
+SELECT pg_temp._account_heading_save(NULL,'51', 'BANQUES, ETABLISSEMENTS FINANCIERS ET ASSIMILES', '5');
 SELECT account__save(NULL,'512','Banque','A',NULL, NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'514', 'Chèques postaux','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'515', 'Caisses du trésor et ets publics','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -283,20 +297,20 @@ SELECT account__save(NULL,'5171', 'Caisse d''épargne','A',NULL, NULL, false, fa
 SELECT account__save(NULL,'518', 'Intérêts en cours', 'A',NULL, NULL, false, false, string_to_array('IC_income', ':'), false, false);
 SELECT account__save(NULL,'5186', 'Intérêts courus à payer', 'L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5187', 'Intérêts courus à recevoir', 'A',NULL, NULL, false, false, string_to_array('IC_income', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'53', 'CAISSE', '5');
+SELECT pg_temp._account_heading_save(NULL,'53', 'CAISSE', '5');
 SELECT account__save(NULL,'531', 'Caisse du siège','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'532', 'Caisses des lieux d''activités','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'54', 'REGIES D''AVANCES ET ACCREDITIFS', '5');
+SELECT pg_temp._account_heading_save(NULL,'54', 'REGIES D''AVANCES ET ACCREDITIFS', '5');
 SELECT account__save(NULL,'541', 'Régies d''avances','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'542', 'Accréditifs','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'58', 'VIREMENTS INTERNES', '5');
+SELECT pg_temp._account_heading_save(NULL,'58', 'VIREMENTS INTERNES', '5');
 SELECT account__save(NULL,'581', 'Virements de fonds','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'59', 'PROVISIONS POUR DEPRECIATION DES COMPTES FINANCIERS', '5');
+SELECT pg_temp._account_heading_save(NULL,'59', 'PROVISIONS POUR DEPRECIATION DES COMPTES FINANCIERS', '5');
 SELECT account__save(NULL,'590', 'Provisions pour dépréciation des valeurs mobilières de placement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'6', 'CLASSE 6. Comptes de charges', '6');
-SELECT pg_temp_account_heading_save(NULL,'60', 'ACHATS (sauf 603)', '6');
+SELECT pg_temp._account_heading_save(NULL,'6', 'CLASSE 6. Comptes de charges', '6');
+SELECT pg_temp._account_heading_save(NULL,'60', 'ACHATS (sauf 603)', '6');
 SELECT account__save(NULL,'601','Achats stockés - Matières premières et fournitures','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
-SELECT account__save(NULL,'601','Achats stockés - Autres approvisionnements','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
+SELECT account__save(NULL,'602','Achats stockés - Autres approvisionnements','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'603', 'Variation des stocks (approvisionnements et marchandises)','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'6031', 'Variation des stocks de matières premières et fournitures','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'6032', 'Variation des stocks des autres approvisionnements','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
@@ -311,7 +325,7 @@ SELECT account__save(NULL,'607','Achats de marchandises','E',NULL, NULL, false, 
 SELECT account__save(NULL,'6071', 'Marchandise (ou groupe) A','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6072', 'Marchandise (ou groupe) B','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'609', 'Rabais, remises et ristournes obtenues sur achats','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'61', 'AUTRES CHARGES EXTERNES', '6');
+SELECT pg_temp._account_heading_save(NULL,'61', 'AUTRES CHARGES EXTERNES', '6');
 --;Services extérieurs
 SELECT account__save(NULL,'611','Sous-traitance générale','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'612', 'Redevances de crédit-bail','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
@@ -334,7 +348,7 @@ SELECT account__save(NULL,'6181', 'Documentation générale','E',NULL, NULL, fal
 SELECT account__save(NULL,'6183','Documentation technique','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6185', 'Frais de colloques, séminaires, conférences','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'619', 'Rabais, remises et ristournes obtenues sur services extérieurs','E',NULL, NULL, true, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'62', 'AUTRES SERVICES EXTERIEURS', '6');
+SELECT pg_temp._account_heading_save(NULL,'62', 'AUTRES SERVICES EXTERIEURS', '6');
 SELECT account__save(NULL,'621', 'Personnel extérieur à l''association','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'622', 'Rémunérations d''intermédiaires et honoraires','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6226', 'Honoraires','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
@@ -361,7 +375,7 @@ SELECT account__save(NULL,'628', 'Divers','E',NULL, NULL, false, false, string_t
 SELECT account__save(NULL,'6281','Cotisations (liées à l''activité économique)','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6284', 'Frais de recrutement du personnel','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'629', 'Rabais, remises et ristournes obtenus sur autres services extérieurs','E',NULL, NULL, true, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'63', 'IMPOTS, TAXES ET VERSEMENTS ASSIMILES', '6');
+SELECT pg_temp._account_heading_save(NULL,'63', 'IMPOTS, TAXES ET VERSEMENTS ASSIMILES', '6');
 SELECT account__save(NULL,'631', 'Impôts, taxes et versements assimilés sur rémunérations','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6311', 'Taxe sur les salaires','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6313', 'Participation des employeurs à la formation professionnelle continue','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -379,7 +393,7 @@ SELECT account__save(NULL,'6353', 'Impôts indirects','E',NULL, NULL, false, fal
 SELECT account__save(NULL,'6354', 'Droits d''enregistrement et timbre','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6358', 'Autres droits','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'637', 'Autres impôts, taxes et versements assimilés','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'64', 'CHARGES DE PERSONNEL', '6');
+SELECT pg_temp._account_heading_save(NULL,'64', 'CHARGES DE PERSONNEL', '6');
 SELECT account__save(NULL,'641', 'Rémunérations du personnel','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6411', 'Salaires appointements','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6412', 'Conges payés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -396,7 +410,7 @@ SELECT account__save(NULL,'647', 'Autres charges sociales','E',NULL, NULL, false
 SELECT account__save(NULL,'6472', 'Versements aux comités d''entreprise et d''établissement','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6475', 'Médecine du travail, pharmacie','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'648', 'Autres charges de personnel','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'65', 'AUTRES CHARGES DE GESTION COURANTE', '6');
+SELECT pg_temp._account_heading_save(NULL,'65', 'AUTRES CHARGES DE GESTION COURANTE', '6');
 SELECT account__save(NULL,'651', 'Redevances pour concessions, brevets, licences, marques, procédés, droits et valeurs similaires','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6511', 'Redevances pour concessions, brevets, licences, marques, procédés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6516', 'Droits d''auteur et de reproduction (SACEM)','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -408,14 +422,14 @@ SELECT account__save(NULL,'657', 'Subventions versées par l''association','E',N
 SELECT account__save(NULL,'6571', 'Bourses accordées aux usagers','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'658', 'Charges diverses gestion courante','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6586', 'Cotisations (liées à la vie statutaire)','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'66', 'CHARGES FINANCIERES', '6');
+SELECT pg_temp._account_heading_save(NULL,'66', 'CHARGES FINANCIERES', '6');
 SELECT account__save(NULL,'661', 'Charges d''intérêts','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6611', 'Intérêts des emprunts et dettes','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6616', 'Intérêts bancaires','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6618', 'Intérêts des autres dettes','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'666', 'Pertes de change','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'667', 'Charges nettes sur cessions de valeurs mobilières de placement','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'67', 'CHARGES EXCEPTIONNELLES', '6');
+SELECT pg_temp._account_heading_save(NULL,'67', 'CHARGES EXCEPTIONNELLES', '6');
 SELECT account__save(NULL,'671', 'Charges exceptionnelles sur opérations de gestion','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6712', 'Pénalités et amendes fiscales ou pénales','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6713', 'Dons, libéralités','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
@@ -428,7 +442,7 @@ SELECT account__save(NULL,'6751', 'Immobilisations incorporelles','E',NULL, NULL
 SELECT account__save(NULL,'6752', 'Immobilisations corporelles','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6756', 'Immobilisations financières','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'678', 'Autres charges exceptionnelles ','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'68', 'DOTATIONS AUX AMORTISSEMENTS, PROVISIONS ET ENGAGEMENTS', '6');
+SELECT pg_temp._account_heading_save(NULL,'68', 'DOTATIONS AUX AMORTISSEMENTS, PROVISIONS ET ENGAGEMENTS', '6');
 SELECT account__save(NULL,'681', 'Dotations aux amortissements, provisions et engagements','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6811', 'Dotations aux amortissements des immobilisations incorporelles et corporelles','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'68111', 'Dotations aux amortissements des immobilisations incorporelles','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -448,10 +462,10 @@ SELECT account__save(NULL,'689', 'Engagements à réaliser sur ressources affect
 SELECT account__save(NULL,'6894', 'Engagements à réaliser sur subventions attribuées','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6895', 'Engagements à réaliser sur dons manuels affectés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6897', 'Engagements à réaliser sur legs et donations affectés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'69', 'IMPOTS SUR LES BENEFICES', '6');
+SELECT pg_temp._account_heading_save(NULL,'69', 'IMPOTS SUR LES BENEFICES', '6');
 SELECT account__save(NULL,'695', 'Impôts sur les sociétés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'7', 'CLASSE 7. Comptes de produits', '7');
-SELECT pg_temp_account_heading_save(NULL,'70', 'VENTES DE PRODUITS FINIS, PRESTATIONS DE SERVICES, MARCHANDISES', '7');
+SELECT pg_temp._account_heading_save(NULL,'7', 'CLASSE 7. Comptes de produits', '7');
+SELECT pg_temp._account_heading_save(NULL,'70', 'VENTES DE PRODUITS FINIS, PRESTATIONS DE SERVICES, MARCHANDISES', '7');
 SELECT account__save(NULL,'701', 'Ventes de produits finis','I',NULL, NULL, false, false, string_to_array('IC_sale', ':'), false, false);
 SELECT account__save(NULL,'706','Prestations de services','I',NULL, NULL, false, false, string_to_array('IC_income', ':'), false, false);
 SELECT account__save(NULL,'707','Ventes de marchandises','I',NULL, NULL, false, false, string_to_array('IC_sale', ':'), false, false);
@@ -461,14 +475,14 @@ SELECT account__save(NULL,'7083', 'Locations diverses','I',NULL, NULL, false, fa
 SELECT account__save(NULL,'7084', 'Mise à disposition de personnel facturée','I',NULL, NULL, false, false, string_to_array('IC_income', ':'), false, false);
 SELECT account__save(NULL,'7088', 'Autres produits d''activités annexes','I',NULL, NULL, false, false, string_to_array('IC_income', ':'), false, false);
 SELECT account__save(NULL,'709', 'Rabais, remises et ristournes accordés par l''association','I',NULL, NULL, true, false, string_to_array('IC_sale', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'71', 'PRODUCTION STOCKEE (OU DESTOCKAGE)', '7');
+SELECT pg_temp._account_heading_save(NULL,'71', 'PRODUCTION STOCKEE (OU DESTOCKAGE)', '7');
 SELECT account__save(NULL,'713', 'Variation des stocks (en-cours de production, produits)','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7133', 'Variation des en-cours de production de biens','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7134', 'Variation des en-cours de production de services','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7135', 'Variation des stocks de produits','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'74', 'PRODUCTION IMMOBILISEE', '7');
+SELECT pg_temp._account_heading_save(NULL,'74', 'PRODUCTION IMMOBILISEE', '7');
 SELECT account__save(NULL,'740', 'Subventions d''exploitation','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'75', 'AUTRES PRODUITS DE GESTION COURANTE', '7');
+SELECT pg_temp._account_heading_save(NULL,'75', 'AUTRES PRODUITS DE GESTION COURANTE', '7');
 SELECT account__save(NULL,'751', 'Redevances pour concessions, brevets, licences, marques, procédés, droits et valeurs similaires','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'754', 'Collectes','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'756', 'Cotisations','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -480,7 +494,7 @@ SELECT account__save(NULL,'7585', 'Contributions volontaires 1','I',NULL, NULL, 
 SELECT account__save(NULL,'7586', 'Contributions volontaires 2','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7587', 'Contributions volontaires 3','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7588', 'Contributions volontaires 4','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'76', 'PRODUITS FINANCIERS', '7');
+SELECT pg_temp._account_heading_save(NULL,'76', 'PRODUITS FINANCIERS', '7');
 SELECT account__save(NULL,'761', 'Produits de participations','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'762', 'Produits des autres immobilisations financières','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7621', 'Revenus des titres immobilisés','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -491,7 +505,7 @@ SELECT account__save(NULL,'766','Gains de change','I','8', NULL, false, false, s
 SELECT account__save(NULL,'767', 'Produits nets sur cessions de valeurs mobilières de placement','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'768', 'Autres produits financiers','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7681', 'Intérêts des comptes financiers débiteurs','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'77', 'PRODUITS EXCEPTIONNELS', '7');
+SELECT pg_temp._account_heading_save(NULL,'77', 'PRODUITS EXCEPTIONNELS', '7');
 SELECT account__save(NULL,'771', 'Produits exceptionnels sur opérations de gestion','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7713', 'Libéralités perçues','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7714', 'Rentrées sur créances amorties','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -505,7 +519,7 @@ SELECT account__save(NULL,'7752', 'Immobilisations corporelles','I',NULL, NULL, 
 SELECT account__save(NULL,'7756', 'Immobilisations financières','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'777', 'Quote-part des subventions d''investissement virée au résultat de l''exercice','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'778', 'Autres produits exceptionnels','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'78', 'REPRISES SUR AMORTISSEMENTS ET PROVISIONS', '7');
+SELECT pg_temp._account_heading_save(NULL,'78', 'REPRISES SUR AMORTISSEMENTS ET PROVISIONS', '7');
 SELECT account__save(NULL,'781', 'Reprises sur amortiss. & provisions','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7811', 'Reprises sur amortissements des immobilisations incorporelles et corporelles','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7815', 'Reprises sur provisions pour risques et charges d''exploitation','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -518,25 +532,23 @@ SELECT account__save(NULL,'78665', 'Valeurs mobilières de placement','I',NULL, 
 SELECT account__save(NULL,'787', 'Reprises sur provisions','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7876', 'Reprise sur provisions pour dépréciations exceptionnelles','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'789', 'Report des ressources non utilisées des exercices antérieurs','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'79', 'TRANSFERTS DE CHARGES', '7');
+SELECT pg_temp._account_heading_save(NULL,'79', 'TRANSFERTS DE CHARGES', '7');
 SELECT account__save(NULL,'791', 'Transferts de charges d''exploitation','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'796', 'Transferts de charges financière','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'797', 'Transferts de charges exceptionnelles','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'8', 'CLASSE 8. CONTRIBUTIONS VOLONTAIRES', '8');
-SELECT pg_temp_account_heading_save(NULL,'86', 'EMPLOIS DES CONTRIBUTIONS VOLONTAIRES EN NATURE', '8');
+SELECT pg_temp._account_heading_save(NULL,'8', 'CLASSE 8. CONTRIBUTIONS VOLONTAIRES', '8');
+SELECT pg_temp._account_heading_save(NULL,'86', 'EMPLOIS DES CONTRIBUTIONS VOLONTAIRES EN NATURE', '8');
 SELECT account__save(NULL,'860', 'Secours en nature, alimentaires, vestimentaires, ...','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'861', 'Mise à disposition gratuite de biens','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'8611', 'Mise à disposition gratuite de locaux','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'8612', 'Mise à disposition gratuite de matériels','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'862', 'Prestations','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'864', 'Personnel bénévole','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'87', 'CONTRIBUTIONS VOLONTAIRES EN NATURE', '8');
+SELECT pg_temp._account_heading_save(NULL,'87', 'CONTRIBUTIONS VOLONTAIRES EN NATURE', '8');
 SELECT account__save(NULL,'870', 'Bénévolat','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'871', 'Prestations en nature','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'875', 'Dons en nature','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT pg_temp_account_heading_save(NULL,'89', 'BILAN', '8');
-SELECT account__save(NULL,'', '','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'', '','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT pg_temp._account_heading_save(NULL,'89', 'BILAN', '8');
 
 -- Reconciliations accounts
 --
@@ -545,21 +557,21 @@ FROM account WHERE accno in ('512', '531','532');
 --
 -- insert taxes
 --
-INSERT INTO tax (chart_id, rate) VALUES (id,0.055)
-WHERE id IN (
+INSERT INTO tax (chart_id, rate)
+SELECT id,0.055 FROM (
     SELECT id FROM account
     WHERE accno IN ('445621','445661','445711','445861','445871')
-);
-INSERT INTO tax (chart_id, rate) VALUES (id,0.206)
-WHERE id IN (
+) a;
+INSERT INTO tax (chart_id, rate)
+SELECT id,0.206 FROM (
     SELECT id FROM account
     WHERE accno IN ('445622','445662','445712','445862','445872')
-);
-INSERT INTO tax (chart_id, rate) VALUES (id,0.196)
-WHERE id IN (
+) a;
+INSERT INTO tax (chart_id, rate)
+SELECT id,0.196 FROM (
     SELECT id FROM account
     WHERE accno IN ('445623','445663','445713','445863','445873')
-);
+) a;
 --
 -- Set defaults
 --
