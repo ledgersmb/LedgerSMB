@@ -38,7 +38,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Upgrade_Pre_Tests;
+use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
@@ -722,11 +722,11 @@ sub _upgrade_test_is_applicable {
             && ($test->appname eq $dbinfo->{appname}));
 }
 
-sub _applicable_upgrade_pre_tests {
+sub _applicable_upgrade_preparations {
     my $dbinfo = shift;
 
     return grep { _upgrade_test_is_applicable($dbinfo, $_) }
-                  LedgerSMB::Upgrade_Pre_Tests->get_pre_tests;
+                  LedgerSMB::Upgrade_preparations->get_preparations;
 }
 
 sub _applicable_upgrade_tests {
@@ -745,13 +745,13 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (_applicable_upgrade_pre_tests($dbinfo)) {
-        next if defined $request->{"applied_$check->{name}"}
-             && $request->{"applied_$check->{name}"} eq 'On';
-        my $sth = $request->{dbh}->prepare($check->test_query);
+    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
+        next if defined $request->{"applied_$preparation->{name}"}
+             && $request->{"applied_$preparation->{name}"} eq 'On';
+        my $sth = $request->{dbh}->prepare($preparation->preparation);
         my $status = $sth->execute()
-            or die 'Failed to execute pre-migration pre-check ' . $check->{name} . ', ' . $sth->errstr;
-        $request->{"applied_$check->{name}"} = 'On';
+            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
+        $request->{"applied_$preparation->{name}"} = 'On';
         $sth->finish();
     }
 

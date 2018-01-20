@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Upgrade_Pre_Tests - Upgrade pre-tests for LedgerSMB
+LedgerSMB::Upgrade_Preparation - Upgrade preparations for LedgerSMB
 
 =head1 SYNPOPSIS
 
@@ -8,11 +8,11 @@ LedgerSMB::Upgrade_Pre_Tests - Upgrade pre-tests for LedgerSMB
 
 =head1 DESCRIPTION
 
-This module has a single function that returns upgrade pre-tests.
+This module has a single function that returns upgrade preparations.
 
 =cut
 
-package LedgerSMB::Upgrade_Pre_Tests;
+package LedgerSMB::Upgrade_Preparation;
 use strict;
 use warnings;
 use Moose;
@@ -23,18 +23,20 @@ use namespace::autoclean;
 
 =over
 
-=item get_pre_tests()
+=item get_migration_preparations()
 
-Returns the pre-test array
-Pre-tests are run only once before any tests, to adjust some tables for
+Returns the preparation array.
+Preparations are run only once before any tests, to adjust some tables for
 data uniqueness to allow edit, for example.
+They must not alter data to prevent the user to revert to his original package,
+either a previous LedgerSMB or SQL-ledger.
 
 =cut
 
-sub get_pre_tests {
+sub get_migration_preparations {
     my ($self) = @_;
-    my @pre_tests = $self->_get_pre_tests;
-    return @pre_tests;
+    my @preparations = $self->_get_migration_preparations;
+    return @preparations;
 }
 
 =back
@@ -48,7 +50,7 @@ as such).
 
 =item name
 
-Name of the test
+Name of the preparation
 
 =cut
 
@@ -79,13 +81,13 @@ Can currently be 'ledgersmb' or 'sql-leder'.
 
 has appname => (is => 'ro', isa => 'Str', required => 1);
 
-=item test_query
+=item preparation
 
 Text of the query to run
 
 =cut
 
-has test_query => (is => 'ro', isa => 'Str', required => 1);
+has preparation => (is => 'ro', isa => 'Str', required => 1);
 
 =back
 
@@ -93,22 +95,22 @@ has test_query => (is => 'ro', isa => 'Str', required => 1);
 
 =cut
 
-sub _get_pre_tests {
+sub _get_migration_preparations {
     my ($request) = @_;
 
-    my @pre_tests;
+    my @preparations;
 
-    push @pre_tests, __PACKAGE__->new(
+    push @preparations, __PACKAGE__->new(
         # Add a unique key to allow editing
-        test_query => 'ALTER TABLE acc_trans DROP COLUMN IF EXISTS lsmb_entry_id;
-                       ALTER TABLE acc_trans add column lsmb_entry_id SERIAL UNIQUE;',
+        preparation => 'ALTER TABLE acc_trans DROP COLUMN IF EXISTS lsmb_entry_id;
+                        ALTER TABLE acc_trans add column lsmb_entry_id SERIAL UNIQUE;',
         name => 'add_unique_acc_trans_key',
            appname => 'sql-ledger',
        min_version => '2.7',
        max_version => '3.0'
     );
 
-    return @pre_tests;
+    return @preparations;
 }
 
 __PACKAGE__->meta->make_immutable;
