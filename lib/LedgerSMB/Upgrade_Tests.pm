@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Upgrade_Pre_Tests - Upgrade pre-tests for LedgerSMB
+LedgerSMB::Upgrade_Tests - Upgrade tests for LedgerSMB
 
 =head1 SYNPOPSIS
 
@@ -19,6 +19,7 @@ use Moose;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 use List::Util qw( first );
+
 use LedgerSMB::Locale qw(marktext);
 
 =head1 FUNCTIONS
