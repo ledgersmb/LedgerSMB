@@ -431,11 +431,11 @@ update :slschema.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
 UPDATE :slschema.acc_trans SET type = 'AP'
- WHERE trans_id IN (SELECT id FROM ap);
+ WHERE trans_id IN (SELECT id FROM :slschema.ap);
 UPDATE :slschema.acc_trans SET type = 'AR'
- WHERE trans_id IN (SELECT id FROM ar);
+ WHERE trans_id IN (SELECT id FROM :slschema.ar);
 UPDATE :slschema.acc_trans SET type = 'GL'
- WHERE trans_id IN (SELECT id FROM gl);
+ WHERE trans_id IN (SELECT id FROM :slschema.gl);
 UPDATE :slschema.acc_trans SET accno = (SELECT accno
                            FROM :slschema.chart
                           WHERE chart.id = :slschema.acc_trans.chart_id);
