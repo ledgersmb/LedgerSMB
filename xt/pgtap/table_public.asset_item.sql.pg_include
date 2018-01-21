@@ -1,0 +1,117 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_asset_item()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'asset_item',
+    'Should have table public.asset_item'
+);
+
+RETURN NEXT has_pk(
+    'public', 'asset_item',
+    'Table public.asset_item should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'asset_item'::name, ARRAY[
+    'id'::name,
+    'description'::name,
+    'tag'::name,
+    'purchase_value'::name,
+    'salvage_value'::name,
+    'usable_life'::name,
+    'purchase_date'::name,
+    'start_depreciation'::name,
+    'location_id'::name,
+    'department_id'::name,
+    'invoice_id'::name,
+    'asset_account_id'::name,
+    'dep_account_id'::name,
+    'exp_account_id'::name,
+    'obsolete_by'::name,
+    'asset_class_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'asset_item', 'id', 'Column public.asset_item.id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'id', 'integer', 'Column public.asset_item.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'id', 'Column public.asset_item.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'asset_item', 'id', 'Column public.asset_item.id shouldhave a default');
+--SELECT col_default_is(   'public', 'asset_item', 'id', 'nextval(''asset_item_id_seq''::regclass)', 'Column public.asset_item.id default is');RETURN NEXT col_default_is(   'public', 'asset_item', 'id', 'nextval(''asset_item_id_seq''::regclass)', 'Column public.asset_item.id default is');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'description', 'Column public.asset_item.description should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'description', 'text', 'Column public.asset_item.description should be type text');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'description', 'Column public.asset_item.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'description', 'Column public.asset_item.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'tag', 'Column public.asset_item.tag should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'tag', 'text', 'Column public.asset_item.tag should be type text');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'tag', 'Column public.asset_item.tag should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'tag', 'Column public.asset_item.tag should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'purchase_value', 'Column public.asset_item.purchase_value should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'purchase_value', 'numeric', 'Column public.asset_item.purchase_value should be type numeric');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'purchase_value', 'Column public.asset_item.purchase_value should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'purchase_value', 'Column public.asset_item.purchase_value should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'salvage_value', 'Column public.asset_item.salvage_value should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'salvage_value', 'numeric', 'Column public.asset_item.salvage_value should be type numeric');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'salvage_value', 'Column public.asset_item.salvage_value should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'salvage_value', 'Column public.asset_item.salvage_value should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'usable_life', 'Column public.asset_item.usable_life should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'usable_life', 'numeric', 'Column public.asset_item.usable_life should be type numeric');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'usable_life', 'Column public.asset_item.usable_life should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'usable_life', 'Column public.asset_item.usable_life should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'purchase_date', 'Column public.asset_item.purchase_date should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'purchase_date', 'date', 'Column public.asset_item.purchase_date should be type date');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'purchase_date', 'Column public.asset_item.purchase_date should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'purchase_date', 'Column public.asset_item.purchase_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'start_depreciation', 'Column public.asset_item.start_depreciation should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'start_depreciation', 'date', 'Column public.asset_item.start_depreciation should be type date');
+RETURN NEXT col_not_null(     'public', 'asset_item', 'start_depreciation', 'Column public.asset_item.start_depreciation should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'start_depreciation', 'Column public.asset_item.start_depreciation should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'location_id', 'Column public.asset_item.location_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'location_id', 'integer', 'Column public.asset_item.location_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'location_id', 'Column public.asset_item.location_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'location_id', 'Column public.asset_item.location_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'department_id', 'Column public.asset_item.department_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'department_id', 'integer', 'Column public.asset_item.department_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'department_id', 'Column public.asset_item.department_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'department_id', 'Column public.asset_item.department_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'invoice_id', 'Column public.asset_item.invoice_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'invoice_id', 'integer', 'Column public.asset_item.invoice_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'invoice_id', 'Column public.asset_item.invoice_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'invoice_id', 'Column public.asset_item.invoice_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'asset_account_id', 'Column public.asset_item.asset_account_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'asset_account_id', 'integer', 'Column public.asset_item.asset_account_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'asset_account_id', 'Column public.asset_item.asset_account_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'asset_account_id', 'Column public.asset_item.asset_account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'dep_account_id', 'Column public.asset_item.dep_account_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'dep_account_id', 'integer', 'Column public.asset_item.dep_account_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'dep_account_id', 'Column public.asset_item.dep_account_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'dep_account_id', 'Column public.asset_item.dep_account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'exp_account_id', 'Column public.asset_item.exp_account_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'exp_account_id', 'integer', 'Column public.asset_item.exp_account_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'exp_account_id', 'Column public.asset_item.exp_account_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'exp_account_id', 'Column public.asset_item.exp_account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'obsolete_by', 'Column public.asset_item.obsolete_by should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'obsolete_by', 'integer', 'Column public.asset_item.obsolete_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'obsolete_by', 'Column public.asset_item.obsolete_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'obsolete_by', 'Column public.asset_item.obsolete_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_item', 'asset_class_id', 'Column public.asset_item.asset_class_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_item', 'asset_class_id', 'integer', 'Column public.asset_item.asset_class_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_item', 'asset_class_id', 'Column public.asset_item.asset_class_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_item', 'asset_class_id', 'Column public.asset_item.asset_class_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

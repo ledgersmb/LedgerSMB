@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_recurringprint()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'recurringprint',
+    'Should have table public.recurringprint'
+);
+
+RETURN NEXT has_pk(
+    'public', 'recurringprint',
+    'Table public.recurringprint should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'recurringprint'::name, ARRAY[
+    'id'::name,
+    'formname'::name,
+    'format'::name,
+    'printer'::name
+]);
+
+RETURN NEXT has_column(       'public', 'recurringprint', 'id', 'Column public.recurringprint.id should exist');
+RETURN NEXT col_type_is(      'public', 'recurringprint', 'id', 'integer', 'Column public.recurringprint.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'recurringprint', 'id', 'Column public.recurringprint.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringprint', 'id', 'Column public.recurringprint.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurringprint', 'formname', 'Column public.recurringprint.formname should exist');
+RETURN NEXT col_type_is(      'public', 'recurringprint', 'formname', 'text', 'Column public.recurringprint.formname should be type text');
+RETURN NEXT col_not_null(     'public', 'recurringprint', 'formname', 'Column public.recurringprint.formname should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringprint', 'formname', 'Column public.recurringprint.formname should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurringprint', 'format', 'Column public.recurringprint.format should exist');
+RETURN NEXT col_type_is(      'public', 'recurringprint', 'format', 'text', 'Column public.recurringprint.format should be type text');
+RETURN NEXT col_is_null(      'public', 'recurringprint', 'format', 'Column public.recurringprint.format should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringprint', 'format', 'Column public.recurringprint.format should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurringprint', 'printer', 'Column public.recurringprint.printer should exist');
+RETURN NEXT col_type_is(      'public', 'recurringprint', 'printer', 'text', 'Column public.recurringprint.printer should be type text');
+RETURN NEXT col_is_null(      'public', 'recurringprint', 'printer', 'Column public.recurringprint.printer should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringprint', 'printer', 'Column public.recurringprint.printer should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

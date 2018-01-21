@@ -1,0 +1,1036 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._schema()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT schemas_are(ARRAY[
+    'public'
+]);
+
+RETURN NEXT schema_owner_is('public','postgres');
+RETURN NEXT tables_are('public', ARRAY[
+    'ac_tax_form',
+    'acc_trans',
+    'account',
+    'account_checkpoint',
+    'account_heading',
+    'account_heading_translation',
+    'account_link',
+    'account_link_description',
+    'account_translation',
+    'ap',
+    'ar',
+    'assembly',
+    'asset_class',
+    'asset_dep_method',
+    'asset_disposal_method',
+    'asset_item',
+    'asset_note',
+    'asset_report',
+    'asset_report_class',
+    'asset_report_line',
+    'asset_rl_to_disposal_method',
+    'asset_unit_class',
+    'audittrail',
+    'batch',
+    'batch_class',
+    'bu_class_to_module',
+    'budget_info',
+    'budget_line',
+    'budget_note',
+    'budget_to_business_unit',
+    'business',
+    'business_unit',
+    'business_unit_ac',
+    'business_unit_class',
+    'business_unit_inv',
+    'business_unit_jl',
+    'business_unit_oitem',
+    'business_unit_translation',
+    'company',
+    'contact_class',
+    'country',
+    'country_tax_form',
+    'cr_coa_to_account',
+    'cr_report',
+    'cr_report_line',
+    'custom_field_catalog',
+    'custom_table_catalog',
+    'db_patch_log',
+    'db_patches',
+    'defaults',
+    'eca_invoice',
+    'eca_note',
+    'eca_tax',
+    'eca_to_contact',
+    'eca_to_location',
+    'employee_class',
+    'employee_to_ec',
+    'entity',
+    'entity_bank_account',
+    'entity_class',
+    'entity_credit_account',
+    'entity_employee',
+    'entity_note',
+    'entity_other_name',
+    'entity_to_contact',
+    'entity_to_location',
+    'exchangerate',
+    'file_base',
+    'file_class',
+    'file_eca',
+    'file_entity',
+    'file_incoming',
+    'file_internal',
+    'file_order',
+    'file_order_to_order',
+    'file_order_to_tx',
+    'file_part',
+    'file_secondary_attachment',
+    'file_transaction',
+    'file_tx_to_order',
+    'file_view_catalog',
+    'fixes',
+    'gifi',
+    'gl',
+    'inventory_report',
+    'inventory_report_line',
+    'invoice',
+    'invoice_note',
+    'invoice_tax_form',
+    'jcitems',
+    'jctype',
+    'job',
+    'journal_entry',
+    'journal_line',
+    'journal_note',
+    'journal_type',
+    'language',
+    'location',
+    'location_class',
+    'location_class_to_entity_class',
+    'lsmb_group',
+    'lsmb_group_grants',
+    'lsmb_module',
+    'lsmb_sequence',
+    'makemodel',
+    'menu_acl',
+    'menu_attribute',
+    'menu_node',
+    'mfg_lot',
+    'mfg_lot_item',
+    'mime_type',
+    'new_shipto',
+    'note',
+    'note_class',
+    'oe',
+    'oe_class',
+    'open_forms',
+    'orderitems',
+    'parts',
+    'parts_translation',
+    'partscustomer',
+    'partsgroup',
+    'partsgroup_translation',
+    'partstax',
+    'partsvendor',
+    'payment',
+    'payment_links',
+    'payment_map',
+    'payment_type',
+    'payroll_deduction',
+    'payroll_deduction_class',
+    'payroll_deduction_type',
+    'payroll_employee_class',
+    'payroll_employee_class_to_income_type',
+    'payroll_income_category',
+    'payroll_income_class',
+    'payroll_income_type',
+    'payroll_paid_timeoff',
+    'payroll_pto_class',
+    'payroll_report',
+    'payroll_report_line',
+    'payroll_wage',
+    'person',
+    'person_to_company',
+    'pricegroup',
+    'recurring',
+    'recurringemail',
+    'recurringprint',
+    'robot',
+    'salutation',
+    'session',
+    'sic',
+    'status',
+    'tax',
+    'tax_extended',
+    'taxcategory',
+    'taxmodule',
+    'template',
+    'trans_type',
+    'transactions',
+    'translation',
+    'trial_balance__yearend_types',
+    'user_preference',
+    'users',
+    'voucher',
+    'warehouse',
+    'warehouse_inventory',
+    'yearend'
+]);
+
+RETURN NEXT table_owner_is('public','ac_tax_form','postgres','public.ac_tax_form owner is postgres');
+RETURN NEXT table_owner_is('public','acc_trans','postgres','public.acc_trans owner is postgres');
+RETURN NEXT table_owner_is('public','account','postgres','public.account owner is postgres');
+RETURN NEXT table_owner_is('public','account_checkpoint','postgres','public.account_checkpoint owner is postgres');
+RETURN NEXT table_owner_is('public','account_heading','postgres','public.account_heading owner is postgres');
+RETURN NEXT table_owner_is('public','account_heading_translation','postgres','public.account_heading_translation owner is postgres');
+RETURN NEXT table_owner_is('public','account_link','postgres','public.account_link owner is postgres');
+RETURN NEXT table_owner_is('public','account_link_description','postgres','public.account_link_description owner is postgres');
+RETURN NEXT table_owner_is('public','account_translation','postgres','public.account_translation owner is postgres');
+RETURN NEXT table_owner_is('public','ap','postgres','public.ap owner is postgres');
+RETURN NEXT table_owner_is('public','ar','postgres','public.ar owner is postgres');
+RETURN NEXT table_owner_is('public','assembly','postgres','public.assembly owner is postgres');
+RETURN NEXT table_owner_is('public','asset_class','postgres','public.asset_class owner is postgres');
+RETURN NEXT table_owner_is('public','asset_dep_method','postgres','public.asset_dep_method owner is postgres');
+RETURN NEXT table_owner_is('public','asset_disposal_method','postgres','public.asset_disposal_method owner is postgres');
+RETURN NEXT table_owner_is('public','asset_item','postgres','public.asset_item owner is postgres');
+RETURN NEXT table_owner_is('public','asset_note','postgres','public.asset_note owner is postgres');
+RETURN NEXT table_owner_is('public','asset_report','postgres','public.asset_report owner is postgres');
+RETURN NEXT table_owner_is('public','asset_report_class','postgres','public.asset_report_class owner is postgres');
+RETURN NEXT table_owner_is('public','asset_report_line','postgres','public.asset_report_line owner is postgres');
+RETURN NEXT table_owner_is('public','asset_rl_to_disposal_method','postgres','public.asset_rl_to_disposal_method owner is postgres');
+RETURN NEXT table_owner_is('public','asset_unit_class','postgres','public.asset_unit_class owner is postgres');
+RETURN NEXT table_owner_is('public','audittrail','postgres','public.audittrail owner is postgres');
+RETURN NEXT table_owner_is('public','batch','postgres','public.batch owner is postgres');
+RETURN NEXT table_owner_is('public','batch_class','postgres','public.batch_class owner is postgres');
+RETURN NEXT table_owner_is('public','bu_class_to_module','postgres','public.bu_class_to_module owner is postgres');
+RETURN NEXT table_owner_is('public','budget_info','postgres','public.budget_info owner is postgres');
+RETURN NEXT table_owner_is('public','budget_line','postgres','public.budget_line owner is postgres');
+RETURN NEXT table_owner_is('public','budget_note','postgres','public.budget_note owner is postgres');
+RETURN NEXT table_owner_is('public','budget_to_business_unit','postgres','public.budget_to_business_unit owner is postgres');
+RETURN NEXT table_owner_is('public','business','postgres','public.business owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit','postgres','public.business_unit owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit_ac','postgres','public.business_unit_ac owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit_class','postgres','public.business_unit_class owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit_inv','postgres','public.business_unit_inv owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit_jl','postgres','public.business_unit_jl owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit_oitem','postgres','public.business_unit_oitem owner is postgres');
+RETURN NEXT table_owner_is('public','business_unit_translation','postgres','public.business_unit_translation owner is postgres');
+RETURN NEXT table_owner_is('public','company','postgres','public.company owner is postgres');
+RETURN NEXT table_owner_is('public','contact_class','postgres','public.contact_class owner is postgres');
+RETURN NEXT table_owner_is('public','country','postgres','public.country owner is postgres');
+RETURN NEXT table_owner_is('public','country_tax_form','postgres','public.country_tax_form owner is postgres');
+RETURN NEXT table_owner_is('public','cr_coa_to_account','postgres','public.cr_coa_to_account owner is postgres');
+RETURN NEXT table_owner_is('public','cr_report','postgres','public.cr_report owner is postgres');
+RETURN NEXT table_owner_is('public','cr_report_line','postgres','public.cr_report_line owner is postgres');
+RETURN NEXT table_owner_is('public','custom_field_catalog','postgres','public.custom_field_catalog owner is postgres');
+RETURN NEXT table_owner_is('public','custom_table_catalog','postgres','public.custom_table_catalog owner is postgres');
+RETURN NEXT table_owner_is('public','db_patch_log','postgres','public.db_patch_log owner is postgres');
+RETURN NEXT table_owner_is('public','db_patches','postgres','public.db_patches owner is postgres');
+RETURN NEXT table_owner_is('public','defaults','postgres','public.defaults owner is postgres');
+RETURN NEXT table_owner_is('public','eca_invoice','postgres','public.eca_invoice owner is postgres');
+RETURN NEXT table_owner_is('public','eca_note','postgres','public.eca_note owner is postgres');
+RETURN NEXT table_owner_is('public','eca_tax','postgres','public.eca_tax owner is postgres');
+RETURN NEXT table_owner_is('public','eca_to_contact','postgres','public.eca_to_contact owner is postgres');
+RETURN NEXT table_owner_is('public','eca_to_location','postgres','public.eca_to_location owner is postgres');
+RETURN NEXT table_owner_is('public','employee_class','postgres','public.employee_class owner is postgres');
+RETURN NEXT table_owner_is('public','employee_to_ec','postgres','public.employee_to_ec owner is postgres');
+RETURN NEXT table_owner_is('public','entity','postgres','public.entity owner is postgres');
+RETURN NEXT table_owner_is('public','entity_bank_account','postgres','public.entity_bank_account owner is postgres');
+RETURN NEXT table_owner_is('public','entity_class','postgres','public.entity_class owner is postgres');
+RETURN NEXT table_owner_is('public','entity_credit_account','postgres','public.entity_credit_account owner is postgres');
+RETURN NEXT table_owner_is('public','entity_employee','postgres','public.entity_employee owner is postgres');
+RETURN NEXT table_owner_is('public','entity_note','postgres','public.entity_note owner is postgres');
+RETURN NEXT table_owner_is('public','entity_other_name','postgres','public.entity_other_name owner is postgres');
+RETURN NEXT table_owner_is('public','entity_to_contact','postgres','public.entity_to_contact owner is postgres');
+RETURN NEXT table_owner_is('public','entity_to_location','postgres','public.entity_to_location owner is postgres');
+RETURN NEXT table_owner_is('public','exchangerate','postgres','public.exchangerate owner is postgres');
+RETURN NEXT table_owner_is('public','file_base','postgres','public.file_base owner is postgres');
+RETURN NEXT table_owner_is('public','file_class','postgres','public.file_class owner is postgres');
+RETURN NEXT table_owner_is('public','file_eca','postgres','public.file_eca owner is postgres');
+RETURN NEXT table_owner_is('public','file_entity','postgres','public.file_entity owner is postgres');
+RETURN NEXT table_owner_is('public','file_incoming','postgres','public.file_incoming owner is postgres');
+RETURN NEXT table_owner_is('public','file_internal','postgres','public.file_internal owner is postgres');
+RETURN NEXT table_owner_is('public','file_order','postgres','public.file_order owner is postgres');
+RETURN NEXT table_owner_is('public','file_order_to_order','postgres','public.file_order_to_order owner is postgres');
+RETURN NEXT table_owner_is('public','file_order_to_tx','postgres','public.file_order_to_tx owner is postgres');
+RETURN NEXT table_owner_is('public','file_part','postgres','public.file_part owner is postgres');
+RETURN NEXT table_owner_is('public','file_secondary_attachment','postgres','public.file_secondary_attachment owner is postgres');
+RETURN NEXT table_owner_is('public','file_transaction','postgres','public.file_transaction owner is postgres');
+RETURN NEXT table_owner_is('public','file_tx_to_order','postgres','public.file_tx_to_order owner is postgres');
+RETURN NEXT table_owner_is('public','file_view_catalog','postgres','public.file_view_catalog owner is postgres');
+RETURN NEXT table_owner_is('public','fixes','postgres','public.fixes owner is postgres');
+RETURN NEXT table_owner_is('public','gifi','postgres','public.gifi owner is postgres');
+RETURN NEXT table_owner_is('public','gl','postgres','public.gl owner is postgres');
+RETURN NEXT table_owner_is('public','inventory_report','postgres','public.inventory_report owner is postgres');
+RETURN NEXT table_owner_is('public','inventory_report_line','postgres','public.inventory_report_line owner is postgres');
+RETURN NEXT table_owner_is('public','invoice','postgres','public.invoice owner is postgres');
+RETURN NEXT table_owner_is('public','invoice_note','postgres','public.invoice_note owner is postgres');
+RETURN NEXT table_owner_is('public','invoice_tax_form','postgres','public.invoice_tax_form owner is postgres');
+RETURN NEXT table_owner_is('public','jcitems','postgres','public.jcitems owner is postgres');
+RETURN NEXT table_owner_is('public','jctype','postgres','public.jctype owner is postgres');
+RETURN NEXT table_owner_is('public','job','postgres','public.job owner is postgres');
+RETURN NEXT table_owner_is('public','journal_entry','postgres','public.journal_entry owner is postgres');
+RETURN NEXT table_owner_is('public','journal_line','postgres','public.journal_line owner is postgres');
+RETURN NEXT table_owner_is('public','journal_note','postgres','public.journal_note owner is postgres');
+RETURN NEXT table_owner_is('public','journal_type','postgres','public.journal_type owner is postgres');
+RETURN NEXT table_owner_is('public','language','postgres','public.language owner is postgres');
+RETURN NEXT table_owner_is('public','location','postgres','public.location owner is postgres');
+RETURN NEXT table_owner_is('public','location_class','postgres','public.location_class owner is postgres');
+RETURN NEXT table_owner_is('public','location_class_to_entity_class','postgres','public.location_class_to_entity_class owner is postgres');
+RETURN NEXT table_owner_is('public','lsmb_group','postgres','public.lsmb_group owner is postgres');
+RETURN NEXT table_owner_is('public','lsmb_group_grants','postgres','public.lsmb_group_grants owner is postgres');
+RETURN NEXT table_owner_is('public','lsmb_module','postgres','public.lsmb_module owner is postgres');
+RETURN NEXT table_owner_is('public','lsmb_sequence','postgres','public.lsmb_sequence owner is postgres');
+RETURN NEXT table_owner_is('public','makemodel','postgres','public.makemodel owner is postgres');
+RETURN NEXT table_owner_is('public','menu_acl','postgres','public.menu_acl owner is postgres');
+RETURN NEXT table_owner_is('public','menu_attribute','postgres','public.menu_attribute owner is postgres');
+RETURN NEXT table_owner_is('public','menu_node','postgres','public.menu_node owner is postgres');
+RETURN NEXT table_owner_is('public','mfg_lot','postgres','public.mfg_lot owner is postgres');
+RETURN NEXT table_owner_is('public','mfg_lot_item','postgres','public.mfg_lot_item owner is postgres');
+RETURN NEXT table_owner_is('public','mime_type','postgres','public.mime_type owner is postgres');
+RETURN NEXT table_owner_is('public','new_shipto','postgres','public.new_shipto owner is postgres');
+RETURN NEXT table_owner_is('public','note','postgres','public.note owner is postgres');
+RETURN NEXT table_owner_is('public','note_class','postgres','public.note_class owner is postgres');
+RETURN NEXT table_owner_is('public','oe','postgres','public.oe owner is postgres');
+RETURN NEXT table_owner_is('public','oe_class','postgres','public.oe_class owner is postgres');
+RETURN NEXT table_owner_is('public','open_forms','postgres','public.open_forms owner is postgres');
+RETURN NEXT table_owner_is('public','orderitems','postgres','public.orderitems owner is postgres');
+RETURN NEXT table_owner_is('public','parts','postgres','public.parts owner is postgres');
+RETURN NEXT table_owner_is('public','parts_translation','postgres','public.parts_translation owner is postgres');
+RETURN NEXT table_owner_is('public','partscustomer','postgres','public.partscustomer owner is postgres');
+RETURN NEXT table_owner_is('public','partsgroup','postgres','public.partsgroup owner is postgres');
+RETURN NEXT table_owner_is('public','partsgroup_translation','postgres','public.partsgroup_translation owner is postgres');
+RETURN NEXT table_owner_is('public','partstax','postgres','public.partstax owner is postgres');
+RETURN NEXT table_owner_is('public','partsvendor','postgres','public.partsvendor owner is postgres');
+RETURN NEXT table_owner_is('public','payment','postgres','public.payment owner is postgres');
+RETURN NEXT table_owner_is('public','payment_links','postgres','public.payment_links owner is postgres');
+RETURN NEXT table_owner_is('public','payment_map','postgres','public.payment_map owner is postgres');
+RETURN NEXT table_owner_is('public','payment_type','postgres','public.payment_type owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_deduction','postgres','public.payroll_deduction owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_deduction_class','postgres','public.payroll_deduction_class owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_deduction_type','postgres','public.payroll_deduction_type owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_employee_class','postgres','public.payroll_employee_class owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_employee_class_to_income_type','postgres','public.payroll_employee_class_to_income_type owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_income_category','postgres','public.payroll_income_category owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_income_class','postgres','public.payroll_income_class owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_income_type','postgres','public.payroll_income_type owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_paid_timeoff','postgres','public.payroll_paid_timeoff owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_pto_class','postgres','public.payroll_pto_class owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_report','postgres','public.payroll_report owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_report_line','postgres','public.payroll_report_line owner is postgres');
+RETURN NEXT table_owner_is('public','payroll_wage','postgres','public.payroll_wage owner is postgres');
+RETURN NEXT table_owner_is('public','person','postgres','public.person owner is postgres');
+RETURN NEXT table_owner_is('public','person_to_company','postgres','public.person_to_company owner is postgres');
+RETURN NEXT table_owner_is('public','pricegroup','postgres','public.pricegroup owner is postgres');
+RETURN NEXT table_owner_is('public','recurring','postgres','public.recurring owner is postgres');
+RETURN NEXT table_owner_is('public','recurringemail','postgres','public.recurringemail owner is postgres');
+RETURN NEXT table_owner_is('public','recurringprint','postgres','public.recurringprint owner is postgres');
+RETURN NEXT table_owner_is('public','robot','postgres','public.robot owner is postgres');
+RETURN NEXT table_owner_is('public','salutation','postgres','public.salutation owner is postgres');
+RETURN NEXT table_owner_is('public','session','postgres','public.session owner is postgres');
+RETURN NEXT table_owner_is('public','sic','postgres','public.sic owner is postgres');
+RETURN NEXT table_owner_is('public','status','postgres','public.status owner is postgres');
+RETURN NEXT table_owner_is('public','tax','postgres','public.tax owner is postgres');
+RETURN NEXT table_owner_is('public','tax_extended','postgres','public.tax_extended owner is postgres');
+RETURN NEXT table_owner_is('public','taxcategory','postgres','public.taxcategory owner is postgres');
+RETURN NEXT table_owner_is('public','taxmodule','postgres','public.taxmodule owner is postgres');
+RETURN NEXT table_owner_is('public','template','postgres','public.template owner is postgres');
+RETURN NEXT table_owner_is('public','trans_type','postgres','public.trans_type owner is postgres');
+RETURN NEXT table_owner_is('public','transactions','postgres','public.transactions owner is postgres');
+RETURN NEXT table_owner_is('public','translation','postgres','public.translation owner is postgres');
+RETURN NEXT table_owner_is('public','trial_balance__yearend_types','postgres','public.trial_balance__yearend_types owner is postgres');
+RETURN NEXT table_owner_is('public','user_preference','postgres','public.user_preference owner is postgres');
+RETURN NEXT table_owner_is('public','users','postgres','public.users owner is postgres');
+RETURN NEXT table_owner_is('public','voucher','postgres','public.voucher owner is postgres');
+RETURN NEXT table_owner_is('public','warehouse','postgres','public.warehouse owner is postgres');
+RETURN NEXT table_owner_is('public','warehouse_inventory','postgres','public.warehouse_inventory owner is postgres');
+RETURN NEXT table_owner_is('public','yearend','postgres','public.yearend owner is postgres');
+RETURN NEXT views_are('public', ARRAY[
+    'account_heading_derived_category',
+    'account_heading_descendant',
+    'account_heading_tree',
+    'cash_impact',
+    'employee_search',
+    'employees',
+    'file_links',
+    'file_order_links',
+    'file_tx_links',
+    'menu_friendly',
+    'overpayments',
+    'periods',
+    'recon_payee',
+    'role_view',
+    'tx_report',
+    'user_listable'
+]);
+
+RETURN NEXT view_owner_is('public','account_heading_derived_category','postgres', 'public.account_heading_derived_category owner is postgres');
+RETURN NEXT view_owner_is('public','account_heading_descendant','postgres', 'public.account_heading_descendant owner is postgres');
+RETURN NEXT view_owner_is('public','account_heading_tree','postgres', 'public.account_heading_tree owner is postgres');
+RETURN NEXT view_owner_is('public','cash_impact','postgres', 'public.cash_impact owner is postgres');
+RETURN NEXT view_owner_is('public','employee_search','postgres', 'public.employee_search owner is postgres');
+RETURN NEXT view_owner_is('public','employees','postgres', 'public.employees owner is postgres');
+RETURN NEXT view_owner_is('public','file_links','postgres', 'public.file_links owner is postgres');
+RETURN NEXT view_owner_is('public','file_order_links','postgres', 'public.file_order_links owner is postgres');
+RETURN NEXT view_owner_is('public','file_tx_links','postgres', 'public.file_tx_links owner is postgres');
+RETURN NEXT view_owner_is('public','menu_friendly','postgres', 'public.menu_friendly owner is postgres');
+RETURN NEXT view_owner_is('public','overpayments','postgres', 'public.overpayments owner is postgres');
+RETURN NEXT view_owner_is('public','periods','postgres', 'public.periods owner is postgres');
+RETURN NEXT view_owner_is('public','recon_payee','postgres', 'public.recon_payee owner is postgres');
+RETURN NEXT view_owner_is('public','role_view','postgres', 'public.role_view owner is postgres');
+RETURN NEXT view_owner_is('public','tx_report','postgres', 'public.tx_report owner is postgres');
+RETURN NEXT view_owner_is('public','user_listable','postgres', 'public.user_listable owner is postgres');
+RETURN NEXT sequences_are('public', ARRAY[
+    'acc_trans_entry_id_seq',
+    'account_checkpoint_id_seq',
+    'account_heading_id_seq',
+    'account_id_seq',
+    'asset_class_id_seq',
+    'asset_dep_method_id_seq',
+    'asset_disposal_method_id_seq',
+    'asset_item_id_seq',
+    'asset_report_id_seq',
+    'audittrail_entry_id_seq',
+    'batch_class_id_seq',
+    'batch_id_seq',
+    'budget_info_id_seq',
+    'business_id_seq',
+    'business_unit_class_id_seq',
+    'business_unit_id_seq',
+    'company_id_seq',
+    'contact_class_id_seq',
+    'country_id_seq',
+    'country_tax_form_id_seq',
+    'cr_report_id_seq',
+    'cr_report_line_id_seq',
+    'custom_field_catalog_field_id_seq',
+    'custom_table_catalog_table_id_seq',
+    'employee_class_id_seq',
+    'entity_bank_account_id_seq',
+    'entity_class_id_seq',
+    'entity_credit_account_id_seq',
+    'entity_id_seq',
+    'file_base_id_seq',
+    'file_class_id_seq',
+    'id',
+    'inventory_report_id_seq',
+    'invoice_id_seq',
+    'jcitems_id_seq',
+    'journal_entry_id_seq',
+    'journal_line_id_seq',
+    'journal_type_id_seq',
+    'location_class_id_seq',
+    'location_class_to_entity_class_id_seq',
+    'location_id_seq',
+    'lot_tracking_number',
+    'menu_acl_id_seq',
+    'menu_attribute_id_seq',
+    'menu_node_id_seq',
+    'mfg_lot_id_seq',
+    'mfg_lot_item_id_seq',
+    'mime_type_id_seq',
+    'new_shipto_id_seq',
+    'note_class_id_seq',
+    'note_id_seq',
+    'oe_id_seq',
+    'open_forms_id_seq',
+    'orderitems_id_seq',
+    'parts_id_seq',
+    'partscustomer_entry_id_seq',
+    'partsgroup_id_seq',
+    'partsvendor_entry_id_seq',
+    'payment_id_seq',
+    'payment_type_id_seq',
+    'payroll_deduction_entry_id_seq',
+    'payroll_deduction_type_id_seq',
+    'payroll_employee_class_id_seq',
+    'payroll_income_category_id_seq',
+    'payroll_income_type_id_seq',
+    'payroll_pto_class_id_seq',
+    'payroll_report_id_seq',
+    'payroll_report_line_id_seq',
+    'payroll_wage_entry_id_seq',
+    'person_id_seq',
+    'pricegroup_id_seq',
+    'robot_id_seq',
+    'salutation_id_seq',
+    'session_session_id_seq',
+    'taxcategory_taxcategory_id_seq',
+    'taxmodule_taxmodule_id_seq',
+    'template_id_seq',
+    'users_id_seq',
+    'voucher_id_seq',
+    'warehouse_id_seq',
+    'warehouse_inventory_entry_id_seq'
+]);
+
+RETURN NEXT sequence_owner_is('public','acc_trans_entry_id_seq','postgres','public.acc_trans_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','account_checkpoint_id_seq','postgres','public.account_checkpoint_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','account_heading_id_seq','postgres','public.account_heading_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','account_id_seq','postgres','public.account_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','asset_class_id_seq','postgres','public.asset_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','asset_dep_method_id_seq','postgres','public.asset_dep_method_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','asset_disposal_method_id_seq','postgres','public.asset_disposal_method_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','asset_item_id_seq','postgres','public.asset_item_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','asset_report_id_seq','postgres','public.asset_report_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','audittrail_entry_id_seq','postgres','public.audittrail_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','batch_class_id_seq','postgres','public.batch_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','batch_id_seq','postgres','public.batch_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','budget_info_id_seq','postgres','public.budget_info_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','business_id_seq','postgres','public.business_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','business_unit_class_id_seq','postgres','public.business_unit_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','business_unit_id_seq','postgres','public.business_unit_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','company_id_seq','postgres','public.company_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','contact_class_id_seq','postgres','public.contact_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','country_id_seq','postgres','public.country_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','country_tax_form_id_seq','postgres','public.country_tax_form_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','cr_report_id_seq','postgres','public.cr_report_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','cr_report_line_id_seq','postgres','public.cr_report_line_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','custom_field_catalog_field_id_seq','postgres','public.custom_field_catalog_field_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','custom_table_catalog_table_id_seq','postgres','public.custom_table_catalog_table_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','employee_class_id_seq','postgres','public.employee_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','entity_bank_account_id_seq','postgres','public.entity_bank_account_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','entity_class_id_seq','postgres','public.entity_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','entity_credit_account_id_seq','postgres','public.entity_credit_account_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','entity_id_seq','postgres','public.entity_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','file_base_id_seq','postgres','public.file_base_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','file_class_id_seq','postgres','public.file_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','id','postgres','public.id owner is postgres');
+RETURN NEXT sequence_owner_is('public','inventory_report_id_seq','postgres','public.inventory_report_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','invoice_id_seq','postgres','public.invoice_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','jcitems_id_seq','postgres','public.jcitems_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','journal_entry_id_seq','postgres','public.journal_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','journal_line_id_seq','postgres','public.journal_line_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','journal_type_id_seq','postgres','public.journal_type_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','location_class_id_seq','postgres','public.location_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','location_class_to_entity_class_id_seq','postgres','public.location_class_to_entity_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','location_id_seq','postgres','public.location_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','lot_tracking_number','postgres','public.lot_tracking_number owner is postgres');
+RETURN NEXT sequence_owner_is('public','menu_acl_id_seq','postgres','public.menu_acl_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','menu_attribute_id_seq','postgres','public.menu_attribute_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','menu_node_id_seq','postgres','public.menu_node_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','mfg_lot_id_seq','postgres','public.mfg_lot_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','mfg_lot_item_id_seq','postgres','public.mfg_lot_item_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','mime_type_id_seq','postgres','public.mime_type_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','new_shipto_id_seq','postgres','public.new_shipto_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','note_class_id_seq','postgres','public.note_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','note_id_seq','postgres','public.note_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','oe_id_seq','postgres','public.oe_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','open_forms_id_seq','postgres','public.open_forms_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','orderitems_id_seq','postgres','public.orderitems_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','parts_id_seq','postgres','public.parts_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','partscustomer_entry_id_seq','postgres','public.partscustomer_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','partsgroup_id_seq','postgres','public.partsgroup_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','partsvendor_entry_id_seq','postgres','public.partsvendor_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payment_id_seq','postgres','public.payment_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payment_type_id_seq','postgres','public.payment_type_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_deduction_entry_id_seq','postgres','public.payroll_deduction_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_deduction_type_id_seq','postgres','public.payroll_deduction_type_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_employee_class_id_seq','postgres','public.payroll_employee_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_income_category_id_seq','postgres','public.payroll_income_category_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_income_type_id_seq','postgres','public.payroll_income_type_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_pto_class_id_seq','postgres','public.payroll_pto_class_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_report_id_seq','postgres','public.payroll_report_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_report_line_id_seq','postgres','public.payroll_report_line_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','payroll_wage_entry_id_seq','postgres','public.payroll_wage_entry_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','person_id_seq','postgres','public.person_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','pricegroup_id_seq','postgres','public.pricegroup_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','robot_id_seq','postgres','public.robot_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','salutation_id_seq','postgres','public.salutation_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','session_session_id_seq','postgres','public.session_session_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','taxcategory_taxcategory_id_seq','postgres','public.taxcategory_taxcategory_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','taxmodule_taxmodule_id_seq','postgres','public.taxmodule_taxmodule_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','template_id_seq','postgres','public.template_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','users_id_seq','postgres','public.users_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','voucher_id_seq','postgres','public.voucher_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','warehouse_id_seq','postgres','public.warehouse_id_seq owner is postgres');
+RETURN NEXT sequence_owner_is('public','warehouse_inventory_entry_id_seq','postgres','public.warehouse_inventory_entry_id_seq owner is postgres');
+RETURN NEXT functions_are('public', ARRAY[
+    '_entity_location_save',
+    'account__all_headings',
+    'account__delete',
+    'account__delete_translation',
+    'account__get_by_link_desc',
+    'account__get_from_accno',
+    'account__get_taxes',
+    'account__is_recon',
+    'account__list_by_heading',
+    'account__list_translations',
+    'account__obtain_balance',
+    'account__obtain_starting_balance',
+    'account__save',
+    'account__save_tax',
+    'account__save_translation',
+    'account_get',
+    'account_has_transactions',
+    'account_heading__check_tree',
+    'account_heading__delete',
+    'account_heading__delete_translation',
+    'account_heading__list',
+    'account_heading__list_translations',
+    'account_heading__save_translation',
+    'account_heading_get',
+    'account_heading_list',
+    'account_heading_save',
+    'add_custom_field',
+    'admin__add_function_to_group',
+    'admin__add_group_to_role',
+    'admin__add_user_to_role',
+    'admin__create_group',
+    'admin__delete_group',
+    'admin__delete_user',
+    'admin__drop_session',
+    'admin__get_roles',
+    'admin__get_roles_for_user',
+    'admin__get_roles_for_user_by_entity',
+    'admin__get_user',
+    'admin__get_user_by_entity',
+    'admin__is_group',
+    'admin__is_user',
+    'admin__list_group_grants',
+    'admin__list_sessions',
+    'admin__remove_function_from_group',
+    'admin__remove_group_from_role',
+    'admin__remove_user_from_role',
+    'admin__save_user',
+    'admin__search_users',
+    'ap_simple_post',
+    'ar_ap__transaction_search',
+    'ar_ap__transaction_search_summary',
+    'array_endswith',
+    'array_splice_from',
+    'array_splice_to',
+    'as_array',
+    'assembly__stock',
+    'asset__get',
+    'asset__import_from_disposal',
+    'asset__save',
+    'asset__search',
+    'asset_class__get',
+    'asset_class__get_asset_accounts',
+    'asset_class__get_dep_accounts',
+    'asset_class__get_dep_method',
+    'asset_class__get_dep_methods',
+    'asset_class__list',
+    'asset_class__save',
+    'asset_class__search',
+    'asset_dep__straight_line_base',
+    'asset_dep__used_months',
+    'asset_dep_get_usable_life_yr',
+    'asset_dep_straight_line_month',
+    'asset_dep_straight_line_yr_d',
+    'asset_dep_straight_line_yr_m',
+    'asset_depreciation__approve',
+    'asset_disposal__approve',
+    'asset_item__add_note',
+    'asset_item__search',
+    'asset_nbv_report',
+    'asset_report__approve',
+    'asset_report__begin_disposal',
+    'asset_report__begin_import',
+    'asset_report__disposal_gl',
+    'asset_report__dispose',
+    'asset_report__generate',
+    'asset_report__generate_gl',
+    'asset_report__get',
+    'asset_report__get_disposal',
+    'asset_report__get_disposal_methods',
+    'asset_report__get_expense_accts',
+    'asset_report__get_gain_accts',
+    'asset_report__get_lines',
+    'asset_report__get_loss_accts',
+    'asset_report__import',
+    'asset_report__record_approve',
+    'asset_report__save',
+    'asset_report__search',
+    'asset_report_partial_disposal_details',
+    'avgcost',
+    'batch__lock',
+    'batch__lock_for_update',
+    'batch__search',
+    'batch__unlock',
+    'batch_create',
+    'batch_delete',
+    'batch_get_class_id',
+    'batch_get_users',
+    'batch_list_classes',
+    'batch_post',
+    'batch_search_empty',
+    'batch_search_mini',
+    'budget__approve',
+    'budget__get_business_units',
+    'budget__get_details',
+    'budget__get_info',
+    'budget__get_notes',
+    'budget__mark_obsolete',
+    'budget__reject',
+    'budget__save_details',
+    'budget__save_info',
+    'budget__save_note',
+    'budget__search',
+    'budget__variance_report',
+    'business_type__list',
+    'business_unit__get',
+    'business_unit__get_tree_for',
+    'business_unit__list_by_class',
+    'business_unit__list_classes',
+    'business_unit__save',
+    'business_unit_class__get_modules',
+    'business_unit_class__save',
+    'business_unit_class__save_modules',
+    'business_unit_get',
+    'chart_get_ar_ap',
+    'chart_list_all',
+    'chart_list_cash',
+    'chart_list_discount',
+    'chart_list_overpayment',
+    'chart_list_search',
+    'check_expiration',
+    'cogs__add_for_ap',
+    'cogs__add_for_ap_line',
+    'cogs__add_for_ar',
+    'cogs__add_for_ar_line',
+    'cogs__reverse_ap',
+    'cogs__reverse_ar',
+    'company__get',
+    'company__get_all_accounts',
+    'company__get_by_cc',
+    'company__next_id',
+    'company__save',
+    'company_get_billing_info',
+    'compound_array',
+    'concat_colon',
+    'concat_colon',
+    'contact__search',
+    'contact_class__list',
+    'cr_coa_to_account_save',
+    'cr_report_block_changing_approved',
+    'currency_get_exchangerate',
+    'customer_location_save',
+    'date_get_all_years',
+    'days_in_month',
+    'deduction__list_for_entity',
+    'deduction__list_types',
+    'deduction__save',
+    'defaults__get_contra_accounts',
+    'defaults_get_defaultcurrency',
+    'del_recurring',
+    'del_yearend',
+    'draft__search',
+    'draft_approve',
+    'draft_delete',
+    'drop_custom_field',
+    'eca__delete_contact',
+    'eca__delete_location',
+    'eca__delete_pricematrix',
+    'eca__get_by_meta_number',
+    'eca__get_entity',
+    'eca__get_pricematrix',
+    'eca__get_pricematrix_by_pricegroup',
+    'eca__get_taxes',
+    'eca__history',
+    'eca__history_summary',
+    'eca__list_contacts',
+    'eca__list_locations',
+    'eca__list_notes',
+    'eca__location_save',
+    'eca__save',
+    'eca__save_contact',
+    'eca__save_notes',
+    'eca__save_pricematrix',
+    'eca__set_taxes',
+    'eca_bu_trigger',
+    'employee__all_managers',
+    'employee__all_salespeople',
+    'employee__get',
+    'employee__get_user',
+    'employee__list_managers',
+    'employee__save',
+    'employee__search',
+    'employee_search',
+    'entity__delete_bank_account',
+    'entity__delete_contact',
+    'entity__delete_location',
+    'entity__get',
+    'entity__get_bank_account',
+    'entity__list_bank_account',
+    'entity__list_classes',
+    'entity__list_contacts',
+    'entity__list_credit',
+    'entity__list_locations',
+    'entity__list_notes',
+    'entity__location_save',
+    'entity__save_bank_account',
+    'entity__save_contact',
+    'entity__save_notes',
+    'entity_credit__get',
+    'entity_credit_get_id',
+    'entity_credit_get_id_by_meta_number',
+    'entity_save',
+    'eoy__latest_checkpoint',
+    'eoy__reopen_books_at',
+    'eoy_close_books',
+    'eoy_create_checkpoint',
+    'eoy_earnings_accounts',
+    'eoy_reopen_books',
+    'eoy_zero_accounts',
+    'file__attach_to_eca',
+    'file__attach_to_entity',
+    'file__attach_to_order',
+    'file__attach_to_part',
+    'file__attach_to_tx',
+    'file__get',
+    'file__get_for_template',
+    'file__get_mime_type',
+    'file__list_by',
+    'file__list_links',
+    'file__save_incoming',
+    'file__save_internal',
+    'file_links_vrebuild',
+    'form_check',
+    'form_close',
+    'form_open',
+    'full_ilike_match',
+    'get_default_lang',
+    'get_fractional_month',
+    'get_fractional_year',
+    'get_link_descriptions',
+    'gifi__list',
+    'gl_audit_trail_append',
+    'goods__history',
+    'goods__search',
+    'in_tree',
+    'in_tree',
+    'inventory__activity',
+    'inventory__get_item_by_id',
+    'inventory__get_item_by_partnumber',
+    'inventory__search_part',
+    'inventory_adjust__approve',
+    'inventory_adjust__create',
+    'inventory_adjust__delete',
+    'inventory_adjust__get',
+    'inventory_adjust__get_lines',
+    'inventory_adjust__list',
+    'inventory_adjust__save_info',
+    'inventory_adjust__save_line',
+    'inventory_adjust__search',
+    'inventory_get_item_at_day',
+    'invoice__get_by_vendor_number',
+    'is_leapyear',
+    'is_same_month',
+    'is_same_year',
+    'journal__add',
+    'journal__add_line',
+    'journal__delete',
+    'journal__get_entry',
+    'journal__get_invoice',
+    'journal__lines',
+    'journal__make_invoice',
+    'journal__save_recurring_print',
+    'journal__search',
+    'journal__validate_entry',
+    'lastcost',
+    'leap_days',
+    'list_taxforms',
+    'location__get',
+    'location_delete',
+    'location_list_class',
+    'location_list_country',
+    'location_save',
+    'lock_record',
+    'lsmb__backup_roles',
+    'lsmb__clear_role_backup',
+    'lsmb__create_role',
+    'lsmb__decompose_timestamp',
+    'lsmb__global_role',
+    'lsmb__grant_exec',
+    'lsmb__grant_menu',
+    'lsmb__grant_perms',
+    'lsmb__grant_perms',
+    'lsmb__grant_role',
+    'lsmb__is_allowed_role',
+    'lsmb__max_date',
+    'lsmb__min_date',
+    'lsmb__restore_roles',
+    'lsmb__role',
+    'lsmb__role_prefix',
+    'lsmb_module__get',
+    'lsmb_module__list',
+    'menu_children',
+    'menu_generate',
+    'menu_insert',
+    'mfg_lot__commit',
+    'months_passed',
+    'next_leap_year_calc',
+    'order__combine',
+    'order__search',
+    'overpayment__reverse',
+    'parse_date',
+    'part__get_by_id',
+    'parts__get_by_id',
+    'parts__get_by_partnumber',
+    'parts__search_lite',
+    'partsgroup__search',
+    'payment__get_gl',
+    'payment__overpayments_list',
+    'payment__reverse',
+    'payment__search',
+    'payment_bulk_post',
+    'payment_gather_header_info',
+    'payment_gather_line_info',
+    'payment_get_all_accounts',
+    'payment_get_all_contact_invoices',
+    'payment_get_available_overpayment_amount',
+    'payment_get_entity_account_payment_info',
+    'payment_get_entity_accounts',
+    'payment_get_open_accounts',
+    'payment_get_open_invoice',
+    'payment_get_open_invoices',
+    'payment_get_open_overpayment_entities',
+    'payment_get_unused_overpayment',
+    'payment_get_vc_info',
+    'payment_post',
+    'payment_type__get_label',
+    'payment_type__list',
+    'payments_get_open_currencies',
+    'payments_set_exchangerate',
+    'payroll_deduction_type__search',
+    'payroll_income_category__list',
+    'payroll_income_class__for_country',
+    'payroll_income_type__get',
+    'payroll_income_type__save',
+    'payroll_income_type__search',
+    'periods_get',
+    'person__delete_contact',
+    'person__delete_location',
+    'person__get',
+    'person__get_by_cc',
+    'person__get_my_entity_id',
+    'person__get_my_id',
+    'person__list_bank_account',
+    'person__list_contacts',
+    'person__list_languages',
+    'person__list_locations',
+    'person__list_notes',
+    'person__list_salutations',
+    'person__save',
+    'person__save_contact',
+    'person__save_location',
+    'pnl__customer',
+    'pnl__income_statement_accrual',
+    'pnl__income_statement_cash',
+    'pnl__invoice',
+    'pnl__product',
+    'prevent_closed_transactions',
+    'pricegroup__list',
+    'pricegroup__search',
+    'pricegroups__list',
+    'pricelist__delete',
+    'pricelist__save',
+    'pricematrix__for_customer',
+    'pricematrix__for_vendor',
+    'quote_ident_array',
+    'reconciliation__account_list',
+    'reconciliation__add_entry',
+    'reconciliation__check',
+    'reconciliation__check_balanced',
+    'reconciliation__delete_my_report',
+    'reconciliation__delete_unapproved',
+    'reconciliation__get_cleared_balance',
+    'reconciliation__get_current_balance',
+    'reconciliation__new_report_id',
+    'reconciliation__pending_transactions',
+    'reconciliation__previous_report_date',
+    'reconciliation__reject_set',
+    'reconciliation__report_approve',
+    'reconciliation__report_details',
+    'reconciliation__report_details_payee',
+    'reconciliation__report_details_payee_with_days',
+    'reconciliation__report_summary',
+    'reconciliation__save_set',
+    'reconciliation__search',
+    'reconciliation__submit_set',
+    'report__aa_outstanding',
+    'report__aa_outstanding_details',
+    'report__aa_transactions',
+    'report__balance_sheet',
+    'report__cash_summary',
+    'report__coa',
+    'report__general_balance',
+    'report__gl',
+    'report__incoming_cogs_line',
+    'report__invoice_aging_detail',
+    'report__invoice_aging_summary',
+    'report_trial_balance',
+    'robot__get',
+    'robot__get_by_cc',
+    'robot__get_my_entity_id',
+    'robot__list_notes',
+    'robot__save',
+    'save_taxform',
+    'sequence__delete',
+    'sequence__get',
+    'sequence__increment',
+    'sequence__list',
+    'sequence__list_by_key',
+    'sequence__save',
+    'session_check',
+    'session_create',
+    'session_delete',
+    'setting__get_currencies',
+    'setting__increment_base',
+    'setting__set',
+    'setting_get',
+    'setting_get_default_accounts',
+    'setting_increment',
+    'sic__list',
+    'tax_form__get',
+    'tax_form__list_all',
+    'tax_form__list_ext',
+    'tax_form__save',
+    'tax_form_details_report',
+    'tax_form_details_report_accrual',
+    'tax_form_summary_report',
+    'tax_form_summary_report_accrual',
+    'template__get',
+    'template__get_by_id',
+    'template__list',
+    'template__save',
+    'tg_enforce_perms_eclass',
+    'timecard__allocate',
+    'timecard__bu_class',
+    'timecard__get',
+    'timecard__parts',
+    'timecard__report',
+    'timecard__save',
+    'timecard_type__get',
+    'timecard_type__list',
+    'to_args',
+    'to_args',
+    'track_global_sequence',
+    'trial_balance__generate',
+    'trial_balance__heading_accounts',
+    'trial_balance__list_headings',
+    'trigger_parts_short',
+    'unlock',
+    'unlock_all',
+    'user__change_password',
+    'user__check_my_expiration',
+    'user__expires_soon',
+    'user__get_all_users',
+    'user__get_preferences',
+    'user__save_preferences',
+    'voucher__delete',
+    'voucher__list',
+    'voucher_get_batch',
+    'wage__list_for_entity',
+    'wage__list_types',
+    'wage__save',
+    'warehouse__list',
+    'warehouse__list_all'
+]);
+
+END;
+$$ LANGUAGE plpgsql;

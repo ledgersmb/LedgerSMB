@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_business()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'business',
+    'Should have table public.business'
+);
+
+RETURN NEXT has_pk(
+    'public', 'business',
+    'Table public.business should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'business'::name, ARRAY[
+    'id'::name,
+    'description'::name,
+    'discount'::name
+]);
+
+RETURN NEXT has_column(       'public', 'business', 'id', 'Column public.business.id should exist');
+RETURN NEXT col_type_is(      'public', 'business', 'id', 'integer', 'Column public.business.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business', 'id', 'Column public.business.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'business', 'id', 'Column public.business.id shouldhave a default');
+--SELECT col_default_is(   'public', 'business', 'id', 'nextval(''business_id_seq''::regclass)', 'Column public.business.id default is');RETURN NEXT col_default_is(   'public', 'business', 'id', 'nextval(''business_id_seq''::regclass)', 'Column public.business.id default is');
+
+RETURN NEXT has_column(       'public', 'business', 'description', 'Column public.business.description should exist');
+RETURN NEXT col_type_is(      'public', 'business', 'description', 'text', 'Column public.business.description should be type text');
+RETURN NEXT col_is_null(      'public', 'business', 'description', 'Column public.business.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business', 'description', 'Column public.business.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'business', 'discount', 'Column public.business.discount should exist');
+RETURN NEXT col_type_is(      'public', 'business', 'discount', 'numeric', 'Column public.business.discount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'business', 'discount', 'Column public.business.discount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business', 'discount', 'Column public.business.discount should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

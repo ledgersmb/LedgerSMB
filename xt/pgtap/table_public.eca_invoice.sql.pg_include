@@ -1,0 +1,77 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_eca_invoice()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'eca_invoice',
+    'Should have table public.eca_invoice'
+);
+
+RETURN NEXT has_pk(
+    'public', 'eca_invoice',
+    'Table public.eca_invoice should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'eca_invoice'::name, ARRAY[
+    'order_id'::name,
+    'journal_id'::name,
+    'on_hold'::name,
+    'reverse'::name,
+    'credit_id'::name,
+    'due'::name,
+    'language_code'::name,
+    'force_closed'::name,
+    'order_number'::name
+]);
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'order_id', 'Column public.eca_invoice.order_id should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'order_id', 'integer', 'Column public.eca_invoice.order_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'eca_invoice', 'order_id', 'Column public.eca_invoice.order_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_invoice', 'order_id', 'Column public.eca_invoice.order_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'journal_id', 'Column public.eca_invoice.journal_id should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'journal_id', 'integer', 'Column public.eca_invoice.journal_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_invoice', 'journal_id', 'Column public.eca_invoice.journal_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_invoice', 'journal_id', 'Column public.eca_invoice.journal_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'on_hold', 'Column public.eca_invoice.on_hold should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'on_hold', 'boolean', 'Column public.eca_invoice.on_hold should be type boolean');
+RETURN NEXT col_is_null(      'public', 'eca_invoice', 'on_hold', 'Column public.eca_invoice.on_hold should allow NULL');
+RETURN NEXT col_has_default(  'public', 'eca_invoice', 'on_hold', 'Column public.eca_invoice.on_hold shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'eca_invoice', 'on_hold', 'false', 'Column public.eca_invoice.on_hold default is');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'reverse', 'Column public.eca_invoice.reverse should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'reverse', 'boolean', 'Column public.eca_invoice.reverse should be type boolean');
+RETURN NEXT col_is_null(      'public', 'eca_invoice', 'reverse', 'Column public.eca_invoice.reverse should allow NULL');
+RETURN NEXT col_has_default(  'public', 'eca_invoice', 'reverse', 'Column public.eca_invoice.reverse shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'eca_invoice', 'reverse', 'false', 'Column public.eca_invoice.reverse default is');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'credit_id', 'Column public.eca_invoice.credit_id should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'credit_id', 'integer', 'Column public.eca_invoice.credit_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_invoice', 'credit_id', 'Column public.eca_invoice.credit_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_invoice', 'credit_id', 'Column public.eca_invoice.credit_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'due', 'Column public.eca_invoice.due should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'due', 'date', 'Column public.eca_invoice.due should be type date');
+RETURN NEXT col_not_null(     'public', 'eca_invoice', 'due', 'Column public.eca_invoice.due should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_invoice', 'due', 'Column public.eca_invoice.due should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'language_code', 'Column public.eca_invoice.language_code should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'language_code', 'character(6)', 'Column public.eca_invoice.language_code should be type character(6)');
+RETURN NEXT col_is_null(      'public', 'eca_invoice', 'language_code', 'Column public.eca_invoice.language_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_invoice', 'language_code', 'Column public.eca_invoice.language_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'force_closed', 'Column public.eca_invoice.force_closed should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'force_closed', 'boolean', 'Column public.eca_invoice.force_closed should be type boolean');
+RETURN NEXT col_not_null(     'public', 'eca_invoice', 'force_closed', 'Column public.eca_invoice.force_closed should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'eca_invoice', 'force_closed', 'Column public.eca_invoice.force_closed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'eca_invoice', 'force_closed', 'false', 'Column public.eca_invoice.force_closed default is');
+
+RETURN NEXT has_column(       'public', 'eca_invoice', 'order_number', 'Column public.eca_invoice.order_number should exist');
+RETURN NEXT col_type_is(      'public', 'eca_invoice', 'order_number', 'text', 'Column public.eca_invoice.order_number should be type text');
+RETURN NEXT col_is_null(      'public', 'eca_invoice', 'order_number', 'Column public.eca_invoice.order_number should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_invoice', 'order_number', 'Column public.eca_invoice.order_number should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

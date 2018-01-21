@@ -1,0 +1,82 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_batch()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'batch',
+    'Should have table public.batch'
+);
+
+RETURN NEXT has_pk(
+    'public', 'batch',
+    'Table public.batch should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'batch'::name, ARRAY[
+    'id'::name,
+    'batch_class_id'::name,
+    'control_code'::name,
+    'description'::name,
+    'default_date'::name,
+    'approved_on'::name,
+    'approved_by'::name,
+    'created_by'::name,
+    'locked_by'::name,
+    'created_on'::name
+]);
+
+RETURN NEXT has_column(       'public', 'batch', 'id', 'Column public.batch.id should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'id', 'integer', 'Column public.batch.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'batch', 'id', 'Column public.batch.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'batch', 'id', 'Column public.batch.id shouldhave a default');
+--SELECT col_default_is(   'public', 'batch', 'id', 'nextval(''batch_id_seq''::regclass)', 'Column public.batch.id default is');RETURN NEXT col_default_is(   'public', 'batch', 'id', 'nextval(''batch_id_seq''::regclass)', 'Column public.batch.id default is');
+
+RETURN NEXT has_column(       'public', 'batch', 'batch_class_id', 'Column public.batch.batch_class_id should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'batch_class_id', 'integer', 'Column public.batch.batch_class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'batch', 'batch_class_id', 'Column public.batch.batch_class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'batch_class_id', 'Column public.batch.batch_class_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'control_code', 'Column public.batch.control_code should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'control_code', 'text', 'Column public.batch.control_code should be type text');
+RETURN NEXT col_not_null(     'public', 'batch', 'control_code', 'Column public.batch.control_code should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'control_code', 'Column public.batch.control_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'description', 'Column public.batch.description should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'description', 'text', 'Column public.batch.description should be type text');
+RETURN NEXT col_is_null(      'public', 'batch', 'description', 'Column public.batch.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'description', 'Column public.batch.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'default_date', 'Column public.batch.default_date should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'default_date', 'date', 'Column public.batch.default_date should be type date');
+RETURN NEXT col_not_null(     'public', 'batch', 'default_date', 'Column public.batch.default_date should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'default_date', 'Column public.batch.default_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'approved_on', 'Column public.batch.approved_on should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'approved_on', 'date', 'Column public.batch.approved_on should be type date');
+RETURN NEXT col_is_null(      'public', 'batch', 'approved_on', 'Column public.batch.approved_on should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'approved_on', 'Column public.batch.approved_on should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'approved_by', 'Column public.batch.approved_by should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'approved_by', 'integer', 'Column public.batch.approved_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'batch', 'approved_by', 'Column public.batch.approved_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'approved_by', 'Column public.batch.approved_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'created_by', 'Column public.batch.created_by should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'created_by', 'integer', 'Column public.batch.created_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'batch', 'created_by', 'Column public.batch.created_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'created_by', 'Column public.batch.created_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'locked_by', 'Column public.batch.locked_by should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'locked_by', 'integer', 'Column public.batch.locked_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'batch', 'locked_by', 'Column public.batch.locked_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'batch', 'locked_by', 'Column public.batch.locked_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'batch', 'created_on', 'Column public.batch.created_on should exist');
+RETURN NEXT col_type_is(      'public', 'batch', 'created_on', 'date', 'Column public.batch.created_on should be type date');
+RETURN NEXT col_is_null(      'public', 'batch', 'created_on', 'Column public.batch.created_on should allow NULL');
+RETURN NEXT col_has_default(  'public', 'batch', 'created_on', 'Column public.batch.created_on shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'batch', 'created_on', 'now()', 'Column public.batch.created_on default is');
+
+END;
+$$ LANGUAGE plpgsql;

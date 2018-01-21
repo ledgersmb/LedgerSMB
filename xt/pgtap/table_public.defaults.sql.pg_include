@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_defaults()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'defaults',
+    'Should have table public.defaults'
+);
+
+RETURN NEXT has_pk(
+    'public', 'defaults',
+    'Table public.defaults should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'defaults'::name, ARRAY[
+    'setting_key'::name,
+    'value'::name
+]);
+
+RETURN NEXT has_column(       'public', 'defaults', 'setting_key', 'Column public.defaults.setting_key should exist');
+RETURN NEXT col_type_is(      'public', 'defaults', 'setting_key', 'text', 'Column public.defaults.setting_key should be type text');
+RETURN NEXT col_not_null(     'public', 'defaults', 'setting_key', 'Column public.defaults.setting_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'defaults', 'setting_key', 'Column public.defaults.setting_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'defaults', 'value', 'Column public.defaults.value should exist');
+RETURN NEXT col_type_is(      'public', 'defaults', 'value', 'text', 'Column public.defaults.value should be type text');
+RETURN NEXT col_is_null(      'public', 'defaults', 'value', 'Column public.defaults.value should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'defaults', 'value', 'Column public.defaults.value should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

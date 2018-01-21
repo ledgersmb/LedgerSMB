@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_wage()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_wage',
+    'Should have table public.payroll_wage'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payroll_wage',
+    'Table public.payroll_wage should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_wage'::name, ARRAY[
+    'entry_id'::name,
+    'entity_id'::name,
+    'type_id'::name,
+    'rate'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_wage', 'entry_id', 'Column public.payroll_wage.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_wage', 'entry_id', 'integer', 'Column public.payroll_wage.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_wage', 'entry_id', 'Column public.payroll_wage.entry_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_wage', 'entry_id', 'Column public.payroll_wage.entry_id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_wage', 'entry_id', 'nextval(''payroll_wage_entry_id_seq''::regclass)', 'Column public.payroll_wage.entry_id default is');RETURN NEXT col_default_is(   'public', 'payroll_wage', 'entry_id', 'nextval(''payroll_wage_entry_id_seq''::regclass)', 'Column public.payroll_wage.entry_id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_wage', 'entity_id', 'Column public.payroll_wage.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_wage', 'entity_id', 'integer', 'Column public.payroll_wage.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_wage', 'entity_id', 'Column public.payroll_wage.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_wage', 'entity_id', 'Column public.payroll_wage.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_wage', 'type_id', 'Column public.payroll_wage.type_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_wage', 'type_id', 'integer', 'Column public.payroll_wage.type_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_wage', 'type_id', 'Column public.payroll_wage.type_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_wage', 'type_id', 'Column public.payroll_wage.type_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_wage', 'rate', 'Column public.payroll_wage.rate should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_wage', 'rate', 'numeric', 'Column public.payroll_wage.rate should be type numeric');
+RETURN NEXT col_not_null(     'public', 'payroll_wage', 'rate', 'Column public.payroll_wage.rate should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_wage', 'rate', 'Column public.payroll_wage.rate should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

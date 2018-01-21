@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_location_class_to_entity_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'location_class_to_entity_class',
+    'Should have table public.location_class_to_entity_class'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'location_class_to_entity_class',
+    'Table public.location_class_to_entity_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'location_class_to_entity_class'::name, ARRAY[
+    'id'::name,
+    'location_class'::name,
+    'entity_class'::name
+]);
+
+RETURN NEXT has_column(       'public', 'location_class_to_entity_class', 'id', 'Column public.location_class_to_entity_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'location_class_to_entity_class', 'id', 'integer', 'Column public.location_class_to_entity_class.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'location_class_to_entity_class', 'id', 'Column public.location_class_to_entity_class.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'location_class_to_entity_class', 'id', 'Column public.location_class_to_entity_class.id shouldhave a default');
+--SELECT col_default_is(   'public', 'location_class_to_entity_class', 'id', 'nextval(''location_class_to_entity_class_id_seq''::regclass)', 'Column public.location_class_to_entity_class.id default is');RETURN NEXT col_default_is(   'public', 'location_class_to_entity_class', 'id', 'nextval(''location_class_to_entity_class_id_seq''::regclass)', 'Column public.location_class_to_entity_class.id default is');
+
+RETURN NEXT has_column(       'public', 'location_class_to_entity_class', 'location_class', 'Column public.location_class_to_entity_class.location_class should exist');
+RETURN NEXT col_type_is(      'public', 'location_class_to_entity_class', 'location_class', 'integer', 'Column public.location_class_to_entity_class.location_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'location_class_to_entity_class', 'location_class', 'Column public.location_class_to_entity_class.location_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location_class_to_entity_class', 'location_class', 'Column public.location_class_to_entity_class.location_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'location_class_to_entity_class', 'entity_class', 'Column public.location_class_to_entity_class.entity_class should exist');
+RETURN NEXT col_type_is(      'public', 'location_class_to_entity_class', 'entity_class', 'integer', 'Column public.location_class_to_entity_class.entity_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'location_class_to_entity_class', 'entity_class', 'Column public.location_class_to_entity_class.entity_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location_class_to_entity_class', 'entity_class', 'Column public.location_class_to_entity_class.entity_class should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

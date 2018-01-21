@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_file_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'file_class',
+    'Should have table public.file_class'
+);
+
+RETURN NEXT has_pk(
+    'public', 'file_class',
+    'Table public.file_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'file_class'::name, ARRAY[
+    'id'::name,
+    'class'::name
+]);
+
+RETURN NEXT has_column(       'public', 'file_class', 'id', 'Column public.file_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'file_class', 'id', 'integer', 'Column public.file_class.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_class', 'id', 'Column public.file_class.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'file_class', 'id', 'Column public.file_class.id shouldhave a default');
+--SELECT col_default_is(   'public', 'file_class', 'id', 'nextval(''file_class_id_seq''::regclass)', 'Column public.file_class.id default is');RETURN NEXT col_default_is(   'public', 'file_class', 'id', 'nextval(''file_class_id_seq''::regclass)', 'Column public.file_class.id default is');
+
+RETURN NEXT has_column(       'public', 'file_class', 'class', 'Column public.file_class.class should exist');
+RETURN NEXT col_type_is(      'public', 'file_class', 'class', 'text', 'Column public.file_class.class should be type text');
+RETURN NEXT col_not_null(     'public', 'file_class', 'class', 'Column public.file_class.class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_class', 'class', 'Column public.file_class.class should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

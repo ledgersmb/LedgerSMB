@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_cr_coa_to_account()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'cr_coa_to_account',
+    'Should have table public.cr_coa_to_account'
+);
+
+RETURN NEXT has_pk(
+    'public', 'cr_coa_to_account',
+    'Table public.cr_coa_to_account should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'cr_coa_to_account'::name, ARRAY[
+    'chart_id'::name,
+    'account'::name
+]);
+
+RETURN NEXT has_column(       'public', 'cr_coa_to_account', 'chart_id', 'Column public.cr_coa_to_account.chart_id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_coa_to_account', 'chart_id', 'integer', 'Column public.cr_coa_to_account.chart_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'cr_coa_to_account', 'chart_id', 'Column public.cr_coa_to_account.chart_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_coa_to_account', 'chart_id', 'Column public.cr_coa_to_account.chart_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_coa_to_account', 'account', 'Column public.cr_coa_to_account.account should exist');
+RETURN NEXT col_type_is(      'public', 'cr_coa_to_account', 'account', 'text', 'Column public.cr_coa_to_account.account should be type text');
+RETURN NEXT col_not_null(     'public', 'cr_coa_to_account', 'account', 'Column public.cr_coa_to_account.account should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_coa_to_account', 'account', 'Column public.cr_coa_to_account.account should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

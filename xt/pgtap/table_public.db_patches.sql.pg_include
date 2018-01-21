@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_db_patches()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'db_patches',
+    'Should have table public.db_patches'
+);
+
+RETURN NEXT has_pk(
+    'public', 'db_patches',
+    'Table public.db_patches should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'db_patches'::name, ARRAY[
+    'sha'::name,
+    'path'::name,
+    'last_updated'::name
+]);
+
+RETURN NEXT has_column(       'public', 'db_patches', 'sha', 'Column public.db_patches.sha should exist');
+RETURN NEXT col_type_is(      'public', 'db_patches', 'sha', 'text', 'Column public.db_patches.sha should be type text');
+RETURN NEXT col_not_null(     'public', 'db_patches', 'sha', 'Column public.db_patches.sha should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patches', 'sha', 'Column public.db_patches.sha should not have a default');
+
+RETURN NEXT has_column(       'public', 'db_patches', 'path', 'Column public.db_patches.path should exist');
+RETURN NEXT col_type_is(      'public', 'db_patches', 'path', 'text', 'Column public.db_patches.path should be type text');
+RETURN NEXT col_not_null(     'public', 'db_patches', 'path', 'Column public.db_patches.path should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patches', 'path', 'Column public.db_patches.path should not have a default');
+
+RETURN NEXT has_column(       'public', 'db_patches', 'last_updated', 'Column public.db_patches.last_updated should exist');
+RETURN NEXT col_type_is(      'public', 'db_patches', 'last_updated', 'timestamp without time zone', 'Column public.db_patches.last_updated should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'db_patches', 'last_updated', 'Column public.db_patches.last_updated should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patches', 'last_updated', 'Column public.db_patches.last_updated should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

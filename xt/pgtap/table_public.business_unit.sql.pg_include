@@ -1,0 +1,69 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_business_unit()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'business_unit',
+    'Should have table public.business_unit'
+);
+
+RETURN NEXT has_pk(
+    'public', 'business_unit',
+    'Table public.business_unit should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'business_unit'::name, ARRAY[
+    'id'::name,
+    'class_id'::name,
+    'control_code'::name,
+    'description'::name,
+    'start_date'::name,
+    'end_date'::name,
+    'parent_id'::name,
+    'credit_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'business_unit', 'id', 'Column public.business_unit.id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'id', 'integer', 'Column public.business_unit.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit', 'id', 'Column public.business_unit.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'business_unit', 'id', 'Column public.business_unit.id shouldhave a default');
+--SELECT col_default_is(   'public', 'business_unit', 'id', 'nextval(''business_unit_id_seq''::regclass)', 'Column public.business_unit.id default is');RETURN NEXT col_default_is(   'public', 'business_unit', 'id', 'nextval(''business_unit_id_seq''::regclass)', 'Column public.business_unit.id default is');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'class_id', 'Column public.business_unit.class_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'class_id', 'integer', 'Column public.business_unit.class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit', 'class_id', 'Column public.business_unit.class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'class_id', 'Column public.business_unit.class_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'control_code', 'Column public.business_unit.control_code should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'control_code', 'text', 'Column public.business_unit.control_code should be type text');
+RETURN NEXT col_is_null(      'public', 'business_unit', 'control_code', 'Column public.business_unit.control_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'control_code', 'Column public.business_unit.control_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'description', 'Column public.business_unit.description should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'description', 'text', 'Column public.business_unit.description should be type text');
+RETURN NEXT col_is_null(      'public', 'business_unit', 'description', 'Column public.business_unit.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'description', 'Column public.business_unit.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'start_date', 'Column public.business_unit.start_date should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'start_date', 'date', 'Column public.business_unit.start_date should be type date');
+RETURN NEXT col_is_null(      'public', 'business_unit', 'start_date', 'Column public.business_unit.start_date should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'start_date', 'Column public.business_unit.start_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'end_date', 'Column public.business_unit.end_date should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'end_date', 'date', 'Column public.business_unit.end_date should be type date');
+RETURN NEXT col_is_null(      'public', 'business_unit', 'end_date', 'Column public.business_unit.end_date should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'end_date', 'Column public.business_unit.end_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'parent_id', 'Column public.business_unit.parent_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'parent_id', 'integer', 'Column public.business_unit.parent_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'business_unit', 'parent_id', 'Column public.business_unit.parent_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'parent_id', 'Column public.business_unit.parent_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit', 'credit_id', 'Column public.business_unit.credit_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit', 'credit_id', 'integer', 'Column public.business_unit.credit_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'business_unit', 'credit_id', 'Column public.business_unit.credit_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit', 'credit_id', 'Column public.business_unit.credit_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

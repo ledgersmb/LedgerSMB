@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_income_category()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_income_category',
+    'Should have table public.payroll_income_category'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'payroll_income_category',
+    'Table public.payroll_income_category should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_income_category'::name, ARRAY[
+    'id'::name,
+    'label'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_income_category', 'id', 'Column public.payroll_income_category.id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_income_category', 'id', 'integer', 'Column public.payroll_income_category.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_income_category', 'id', 'Column public.payroll_income_category.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_income_category', 'id', 'Column public.payroll_income_category.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_income_category', 'id', 'nextval(''payroll_income_category_id_seq''::regclass)', 'Column public.payroll_income_category.id default is');RETURN NEXT col_default_is(   'public', 'payroll_income_category', 'id', 'nextval(''payroll_income_category_id_seq''::regclass)', 'Column public.payroll_income_category.id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_income_category', 'label', 'Column public.payroll_income_category.label should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_income_category', 'label', 'text', 'Column public.payroll_income_category.label should be type text');
+RETURN NEXT col_is_null(      'public', 'payroll_income_category', 'label', 'Column public.payroll_income_category.label should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_income_category', 'label', 'Column public.payroll_income_category.label should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

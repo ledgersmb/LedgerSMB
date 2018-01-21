@@ -1,0 +1,63 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_report_line()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_report_line',
+    'Should have table public.payroll_report_line'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payroll_report_line',
+    'Table public.payroll_report_line should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_report_line'::name, ARRAY[
+    'id'::name,
+    'report_id'::name,
+    'employee_id'::name,
+    'it_id'::name,
+    'qty'::name,
+    'rate'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'id', 'Column public.payroll_report_line.id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'id', 'integer', 'Column public.payroll_report_line.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_report_line', 'id', 'Column public.payroll_report_line.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_report_line', 'id', 'Column public.payroll_report_line.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_report_line', 'id', 'nextval(''payroll_report_line_id_seq''::regclass)', 'Column public.payroll_report_line.id default is');RETURN NEXT col_default_is(   'public', 'payroll_report_line', 'id', 'nextval(''payroll_report_line_id_seq''::regclass)', 'Column public.payroll_report_line.id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'report_id', 'Column public.payroll_report_line.report_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'report_id', 'integer', 'Column public.payroll_report_line.report_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_report_line', 'report_id', 'Column public.payroll_report_line.report_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report_line', 'report_id', 'Column public.payroll_report_line.report_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'employee_id', 'Column public.payroll_report_line.employee_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'employee_id', 'integer', 'Column public.payroll_report_line.employee_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_report_line', 'employee_id', 'Column public.payroll_report_line.employee_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report_line', 'employee_id', 'Column public.payroll_report_line.employee_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'it_id', 'Column public.payroll_report_line.it_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'it_id', 'integer', 'Column public.payroll_report_line.it_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_report_line', 'it_id', 'Column public.payroll_report_line.it_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report_line', 'it_id', 'Column public.payroll_report_line.it_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'qty', 'Column public.payroll_report_line.qty should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'qty', 'numeric', 'Column public.payroll_report_line.qty should be type numeric');
+RETURN NEXT col_not_null(     'public', 'payroll_report_line', 'qty', 'Column public.payroll_report_line.qty should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report_line', 'qty', 'Column public.payroll_report_line.qty should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'rate', 'Column public.payroll_report_line.rate should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'rate', 'numeric', 'Column public.payroll_report_line.rate should be type numeric');
+RETURN NEXT col_not_null(     'public', 'payroll_report_line', 'rate', 'Column public.payroll_report_line.rate should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report_line', 'rate', 'Column public.payroll_report_line.rate should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report_line', 'description', 'Column public.payroll_report_line.description should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report_line', 'description', 'text', 'Column public.payroll_report_line.description should be type text');
+RETURN NEXT col_is_null(      'public', 'payroll_report_line', 'description', 'Column public.payroll_report_line.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report_line', 'description', 'Column public.payroll_report_line.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

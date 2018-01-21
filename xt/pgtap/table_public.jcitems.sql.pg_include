@@ -1,0 +1,124 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_jcitems()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'jcitems',
+    'Should have table public.jcitems'
+);
+
+RETURN NEXT has_pk(
+    'public', 'jcitems',
+    'Table public.jcitems should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'jcitems'::name, ARRAY[
+    'id'::name,
+    'business_unit_id'::name,
+    'parts_id'::name,
+    'description'::name,
+    'qty'::name,
+    'allocated'::name,
+    'sellprice'::name,
+    'fxsellprice'::name,
+    'serialnumber'::name,
+    'checkedin'::name,
+    'checkedout'::name,
+    'person_id'::name,
+    'notes'::name,
+    'total'::name,
+    'non_billable'::name,
+    'jctype'::name,
+    'curr'::name
+]);
+
+RETURN NEXT has_column(       'public', 'jcitems', 'id', 'Column public.jcitems.id should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'id', 'integer', 'Column public.jcitems.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'jcitems', 'id', 'Column public.jcitems.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'jcitems', 'id', 'Column public.jcitems.id shouldhave a default');
+--SELECT col_default_is(   'public', 'jcitems', 'id', 'nextval(''jcitems_id_seq''::regclass)', 'Column public.jcitems.id default is');RETURN NEXT col_default_is(   'public', 'jcitems', 'id', 'nextval(''jcitems_id_seq''::regclass)', 'Column public.jcitems.id default is');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'business_unit_id', 'Column public.jcitems.business_unit_id should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'business_unit_id', 'integer', 'Column public.jcitems.business_unit_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'business_unit_id', 'Column public.jcitems.business_unit_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'business_unit_id', 'Column public.jcitems.business_unit_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'parts_id', 'Column public.jcitems.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'parts_id', 'integer', 'Column public.jcitems.parts_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'parts_id', 'Column public.jcitems.parts_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'parts_id', 'Column public.jcitems.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'description', 'Column public.jcitems.description should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'description', 'text', 'Column public.jcitems.description should be type text');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'description', 'Column public.jcitems.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'description', 'Column public.jcitems.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'qty', 'Column public.jcitems.qty should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'qty', 'numeric', 'Column public.jcitems.qty should be type numeric');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'qty', 'Column public.jcitems.qty should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'qty', 'Column public.jcitems.qty should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'allocated', 'Column public.jcitems.allocated should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'allocated', 'numeric', 'Column public.jcitems.allocated should be type numeric');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'allocated', 'Column public.jcitems.allocated should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'allocated', 'Column public.jcitems.allocated should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'sellprice', 'Column public.jcitems.sellprice should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'sellprice', 'numeric', 'Column public.jcitems.sellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'sellprice', 'Column public.jcitems.sellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'sellprice', 'Column public.jcitems.sellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'fxsellprice', 'Column public.jcitems.fxsellprice should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'fxsellprice', 'numeric', 'Column public.jcitems.fxsellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'fxsellprice', 'Column public.jcitems.fxsellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'fxsellprice', 'Column public.jcitems.fxsellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'serialnumber', 'Column public.jcitems.serialnumber should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'serialnumber', 'text', 'Column public.jcitems.serialnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'serialnumber', 'Column public.jcitems.serialnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'serialnumber', 'Column public.jcitems.serialnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'checkedin', 'Column public.jcitems.checkedin should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'checkedin', 'timestamp with time zone', 'Column public.jcitems.checkedin should be type timestamp with time zone');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'checkedin', 'Column public.jcitems.checkedin should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'checkedin', 'Column public.jcitems.checkedin should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'checkedout', 'Column public.jcitems.checkedout should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'checkedout', 'timestamp with time zone', 'Column public.jcitems.checkedout should be type timestamp with time zone');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'checkedout', 'Column public.jcitems.checkedout should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'checkedout', 'Column public.jcitems.checkedout should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'person_id', 'Column public.jcitems.person_id should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'person_id', 'integer', 'Column public.jcitems.person_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'jcitems', 'person_id', 'Column public.jcitems.person_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'person_id', 'Column public.jcitems.person_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'notes', 'Column public.jcitems.notes should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'notes', 'text', 'Column public.jcitems.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'jcitems', 'notes', 'Column public.jcitems.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'notes', 'Column public.jcitems.notes should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'total', 'Column public.jcitems.total should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'total', 'numeric', 'Column public.jcitems.total should be type numeric');
+RETURN NEXT col_not_null(     'public', 'jcitems', 'total', 'Column public.jcitems.total should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'total', 'Column public.jcitems.total should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'non_billable', 'Column public.jcitems.non_billable should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'non_billable', 'numeric', 'Column public.jcitems.non_billable should be type numeric');
+RETURN NEXT col_not_null(     'public', 'jcitems', 'non_billable', 'Column public.jcitems.non_billable should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'jcitems', 'non_billable', 'Column public.jcitems.non_billable shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'jcitems', 'non_billable', '0', 'Column public.jcitems.non_billable default is');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'jctype', 'Column public.jcitems.jctype should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'jctype', 'integer', 'Column public.jcitems.jctype should be type integer');
+RETURN NEXT col_not_null(     'public', 'jcitems', 'jctype', 'Column public.jcitems.jctype should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'jctype', 'Column public.jcitems.jctype should not have a default');
+
+RETURN NEXT has_column(       'public', 'jcitems', 'curr', 'Column public.jcitems.curr should exist');
+RETURN NEXT col_type_is(      'public', 'jcitems', 'curr', 'character(3)', 'Column public.jcitems.curr should be type character(3)');
+RETURN NEXT col_not_null(     'public', 'jcitems', 'curr', 'Column public.jcitems.curr should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jcitems', 'curr', 'Column public.jcitems.curr should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

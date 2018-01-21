@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_gifi()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'gifi',
+    'Should have table public.gifi'
+);
+
+RETURN NEXT has_pk(
+    'public', 'gifi',
+    'Table public.gifi should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'gifi'::name, ARRAY[
+    'accno'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'gifi', 'accno', 'Column public.gifi.accno should exist');
+RETURN NEXT col_type_is(      'public', 'gifi', 'accno', 'text', 'Column public.gifi.accno should be type text');
+RETURN NEXT col_not_null(     'public', 'gifi', 'accno', 'Column public.gifi.accno should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'gifi', 'accno', 'Column public.gifi.accno should not have a default');
+
+RETURN NEXT has_column(       'public', 'gifi', 'description', 'Column public.gifi.description should exist');
+RETURN NEXT col_type_is(      'public', 'gifi', 'description', 'text', 'Column public.gifi.description should be type text');
+RETURN NEXT col_is_null(      'public', 'gifi', 'description', 'Column public.gifi.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'gifi', 'description', 'Column public.gifi.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

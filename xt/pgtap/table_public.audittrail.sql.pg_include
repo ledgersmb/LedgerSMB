@@ -1,0 +1,70 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_audittrail()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'audittrail',
+    'Should have table public.audittrail'
+);
+
+RETURN NEXT has_pk(
+    'public', 'audittrail',
+    'Table public.audittrail should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'audittrail'::name, ARRAY[
+    'trans_id'::name,
+    'tablename'::name,
+    'reference'::name,
+    'formname'::name,
+    'action'::name,
+    'transdate'::name,
+    'person_id'::name,
+    'entry_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'audittrail', 'trans_id', 'Column public.audittrail.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'trans_id', 'integer', 'Column public.audittrail.trans_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'audittrail', 'trans_id', 'Column public.audittrail.trans_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'audittrail', 'trans_id', 'Column public.audittrail.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'tablename', 'Column public.audittrail.tablename should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'tablename', 'text', 'Column public.audittrail.tablename should be type text');
+RETURN NEXT col_is_null(      'public', 'audittrail', 'tablename', 'Column public.audittrail.tablename should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'audittrail', 'tablename', 'Column public.audittrail.tablename should not have a default');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'reference', 'Column public.audittrail.reference should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'reference', 'text', 'Column public.audittrail.reference should be type text');
+RETURN NEXT col_is_null(      'public', 'audittrail', 'reference', 'Column public.audittrail.reference should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'audittrail', 'reference', 'Column public.audittrail.reference should not have a default');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'formname', 'Column public.audittrail.formname should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'formname', 'text', 'Column public.audittrail.formname should be type text');
+RETURN NEXT col_is_null(      'public', 'audittrail', 'formname', 'Column public.audittrail.formname should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'audittrail', 'formname', 'Column public.audittrail.formname should not have a default');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'action', 'Column public.audittrail.action should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'action', 'text', 'Column public.audittrail.action should be type text');
+RETURN NEXT col_is_null(      'public', 'audittrail', 'action', 'Column public.audittrail.action should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'audittrail', 'action', 'Column public.audittrail.action should not have a default');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'transdate', 'Column public.audittrail.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'transdate', 'timestamp without time zone', 'Column public.audittrail.transdate should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'audittrail', 'transdate', 'Column public.audittrail.transdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'audittrail', 'transdate', 'Column public.audittrail.transdate shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'audittrail', 'transdate', 'now()', 'Column public.audittrail.transdate default is');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'person_id', 'Column public.audittrail.person_id should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'person_id', 'integer', 'Column public.audittrail.person_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'audittrail', 'person_id', 'Column public.audittrail.person_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'audittrail', 'person_id', 'Column public.audittrail.person_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'audittrail', 'entry_id', 'Column public.audittrail.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'audittrail', 'entry_id', 'bigint', 'Column public.audittrail.entry_id should be type bigint');
+RETURN NEXT col_not_null(     'public', 'audittrail', 'entry_id', 'Column public.audittrail.entry_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'audittrail', 'entry_id', 'Column public.audittrail.entry_id shouldhave a default');
+--SELECT col_default_is(   'public', 'audittrail', 'entry_id', 'nextval(''audittrail_entry_id_seq''::regclass)', 'Column public.audittrail.entry_id default is');RETURN NEXT col_default_is(   'public', 'audittrail', 'entry_id', 'nextval(''audittrail_entry_id_seq''::regclass)', 'Column public.audittrail.entry_id default is');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_open_forms()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'open_forms',
+    'Should have table public.open_forms'
+);
+
+RETURN NEXT has_pk(
+    'public', 'open_forms',
+    'Table public.open_forms should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'open_forms'::name, ARRAY[
+    'id'::name,
+    'session_id'::name,
+    'form_name'::name,
+    'last_used'::name
+]);
+
+RETURN NEXT has_column(       'public', 'open_forms', 'id', 'Column public.open_forms.id should exist');
+RETURN NEXT col_type_is(      'public', 'open_forms', 'id', 'integer', 'Column public.open_forms.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'open_forms', 'id', 'Column public.open_forms.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'open_forms', 'id', 'Column public.open_forms.id shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'open_forms', 'id', '(floor((random() * (1000000)::double precision)) + (1)::double precision)', 'Column public.open_forms.id default is');
+
+RETURN NEXT has_column(       'public', 'open_forms', 'session_id', 'Column public.open_forms.session_id should exist');
+RETURN NEXT col_type_is(      'public', 'open_forms', 'session_id', 'integer', 'Column public.open_forms.session_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'open_forms', 'session_id', 'Column public.open_forms.session_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'open_forms', 'session_id', 'Column public.open_forms.session_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'open_forms', 'form_name', 'Column public.open_forms.form_name should exist');
+RETURN NEXT col_type_is(      'public', 'open_forms', 'form_name', 'character varying(100)', 'Column public.open_forms.form_name should be type character varying(100)');
+RETURN NEXT col_is_null(      'public', 'open_forms', 'form_name', 'Column public.open_forms.form_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'open_forms', 'form_name', 'Column public.open_forms.form_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'open_forms', 'last_used', 'Column public.open_forms.last_used should exist');
+RETURN NEXT col_type_is(      'public', 'open_forms', 'last_used', 'timestamp without time zone', 'Column public.open_forms.last_used should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'open_forms', 'last_used', 'Column public.open_forms.last_used should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'open_forms', 'last_used', 'Column public.open_forms.last_used should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,58 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_robot()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'robot',
+    'Should have table public.robot'
+);
+
+RETURN NEXT has_pk(
+    'public', 'robot',
+    'Table public.robot should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'robot'::name, ARRAY[
+    'id'::name,
+    'entity_id'::name,
+    'first_name'::name,
+    'middle_name'::name,
+    'last_name'::name,
+    'created'::name
+]);
+
+RETURN NEXT has_column(       'public', 'robot', 'id', 'Column public.robot.id should exist');
+RETURN NEXT col_type_is(      'public', 'robot', 'id', 'integer', 'Column public.robot.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'robot', 'id', 'Column public.robot.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'robot', 'id', 'Column public.robot.id shouldhave a default');
+--SELECT col_default_is(   'public', 'robot', 'id', 'nextval(''robot_id_seq''::regclass)', 'Column public.robot.id default is');RETURN NEXT col_default_is(   'public', 'robot', 'id', 'nextval(''robot_id_seq''::regclass)', 'Column public.robot.id default is');
+
+RETURN NEXT has_column(       'public', 'robot', 'entity_id', 'Column public.robot.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'robot', 'entity_id', 'integer', 'Column public.robot.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'robot', 'entity_id', 'Column public.robot.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'robot', 'entity_id', 'Column public.robot.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'robot', 'first_name', 'Column public.robot.first_name should exist');
+RETURN NEXT col_type_is(      'public', 'robot', 'first_name', 'text', 'Column public.robot.first_name should be type text');
+RETURN NEXT col_is_null(      'public', 'robot', 'first_name', 'Column public.robot.first_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'robot', 'first_name', 'Column public.robot.first_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'robot', 'middle_name', 'Column public.robot.middle_name should exist');
+RETURN NEXT col_type_is(      'public', 'robot', 'middle_name', 'text', 'Column public.robot.middle_name should be type text');
+RETURN NEXT col_is_null(      'public', 'robot', 'middle_name', 'Column public.robot.middle_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'robot', 'middle_name', 'Column public.robot.middle_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'robot', 'last_name', 'Column public.robot.last_name should exist');
+RETURN NEXT col_type_is(      'public', 'robot', 'last_name', 'text', 'Column public.robot.last_name should be type text');
+RETURN NEXT col_not_null(     'public', 'robot', 'last_name', 'Column public.robot.last_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'robot', 'last_name', 'Column public.robot.last_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'robot', 'created', 'Column public.robot.created should exist');
+RETURN NEXT col_type_is(      'public', 'robot', 'created', 'date', 'Column public.robot.created should be type date');
+RETURN NEXT col_not_null(     'public', 'robot', 'created', 'Column public.robot.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'robot', 'created', 'Column public.robot.created shouldhave a default');
+--SELECT col_default_is(   'public', 'robot', 'created', '(''now''::text)::date', 'Column public.robot.created default is');RETURN NEXT col_default_is(   'public', 'robot', 'created', '(''now''::text)::date', 'Column public.robot.created default is');
+
+END;
+$$ LANGUAGE plpgsql;

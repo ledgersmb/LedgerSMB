@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_business_unit_jl()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'business_unit_jl',
+    'Should have table public.business_unit_jl'
+);
+
+RETURN NEXT has_pk(
+    'public', 'business_unit_jl',
+    'Table public.business_unit_jl should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'business_unit_jl'::name, ARRAY[
+    'entry_id'::name,
+    'bu_class'::name,
+    'bu_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'business_unit_jl', 'entry_id', 'Column public.business_unit_jl.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit_jl', 'entry_id', 'integer', 'Column public.business_unit_jl.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit_jl', 'entry_id', 'Column public.business_unit_jl.entry_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit_jl', 'entry_id', 'Column public.business_unit_jl.entry_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit_jl', 'bu_class', 'Column public.business_unit_jl.bu_class should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit_jl', 'bu_class', 'integer', 'Column public.business_unit_jl.bu_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit_jl', 'bu_class', 'Column public.business_unit_jl.bu_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit_jl', 'bu_class', 'Column public.business_unit_jl.bu_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit_jl', 'bu_id', 'Column public.business_unit_jl.bu_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit_jl', 'bu_id', 'integer', 'Column public.business_unit_jl.bu_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit_jl', 'bu_id', 'Column public.business_unit_jl.bu_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit_jl', 'bu_id', 'Column public.business_unit_jl.bu_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

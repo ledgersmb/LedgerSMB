@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_sic()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'sic',
+    'Should have table public.sic'
+);
+
+RETURN NEXT has_pk(
+    'public', 'sic',
+    'Table public.sic should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'sic'::name, ARRAY[
+    'code'::name,
+    'sictype'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'sic', 'code', 'Column public.sic.code should exist');
+RETURN NEXT col_type_is(      'public', 'sic', 'code', 'character varying(6)', 'Column public.sic.code should be type character varying(6)');
+RETURN NEXT col_not_null(     'public', 'sic', 'code', 'Column public.sic.code should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'sic', 'code', 'Column public.sic.code should not have a default');
+
+RETURN NEXT has_column(       'public', 'sic', 'sictype', 'Column public.sic.sictype should exist');
+RETURN NEXT col_type_is(      'public', 'sic', 'sictype', 'character(1)', 'Column public.sic.sictype should be type character(1)');
+RETURN NEXT col_is_null(      'public', 'sic', 'sictype', 'Column public.sic.sictype should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'sic', 'sictype', 'Column public.sic.sictype should not have a default');
+
+RETURN NEXT has_column(       'public', 'sic', 'description', 'Column public.sic.description should exist');
+RETURN NEXT col_type_is(      'public', 'sic', 'description', 'text', 'Column public.sic.description should be type text');
+RETURN NEXT col_is_null(      'public', 'sic', 'description', 'Column public.sic.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'sic', 'description', 'Column public.sic.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

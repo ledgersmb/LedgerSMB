@@ -1,0 +1,46 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_users()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'users',
+    'Should have table public.users'
+);
+
+RETURN NEXT has_pk(
+    'public', 'users',
+    'Table public.users should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'users'::name, ARRAY[
+    'id'::name,
+    'username'::name,
+    'notify_password'::name,
+    'entity_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'users', 'id', 'Column public.users.id should exist');
+RETURN NEXT col_type_is(      'public', 'users', 'id', 'integer', 'Column public.users.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'users', 'id', 'Column public.users.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'users', 'id', 'Column public.users.id shouldhave a default');
+--SELECT col_default_is(   'public', 'users', 'id', 'nextval(''users_id_seq''::regclass)', 'Column public.users.id default is');RETURN NEXT col_default_is(   'public', 'users', 'id', 'nextval(''users_id_seq''::regclass)', 'Column public.users.id default is');
+
+RETURN NEXT has_column(       'public', 'users', 'username', 'Column public.users.username should exist');
+RETURN NEXT col_type_is(      'public', 'users', 'username', 'character varying(30)', 'Column public.users.username should be type character varying(30)');
+RETURN NEXT col_not_null(     'public', 'users', 'username', 'Column public.users.username should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'users', 'username', 'Column public.users.username should not have a default');
+
+RETURN NEXT has_column(       'public', 'users', 'notify_password', 'Column public.users.notify_password should exist');
+RETURN NEXT col_type_is(      'public', 'users', 'notify_password', 'interval', 'Column public.users.notify_password should be type interval');
+RETURN NEXT col_not_null(     'public', 'users', 'notify_password', 'Column public.users.notify_password should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'users', 'notify_password', 'Column public.users.notify_password shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'users', 'notify_password', '7 days'::interval, 'Column public.users.notify_password default is');
+
+RETURN NEXT has_column(       'public', 'users', 'entity_id', 'Column public.users.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'users', 'entity_id', 'integer', 'Column public.users.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'users', 'entity_id', 'Column public.users.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'users', 'entity_id', 'Column public.users.entity_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

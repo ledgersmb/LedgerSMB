@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_employee_to_ec()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'employee_to_ec',
+    'Should have table public.employee_to_ec'
+);
+
+RETURN NEXT has_pk(
+    'public', 'employee_to_ec',
+    'Table public.employee_to_ec should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'employee_to_ec'::name, ARRAY[
+    'employee_id'::name,
+    'ec_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'employee_to_ec', 'employee_id', 'Column public.employee_to_ec.employee_id should exist');
+RETURN NEXT col_type_is(      'public', 'employee_to_ec', 'employee_id', 'integer', 'Column public.employee_to_ec.employee_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'employee_to_ec', 'employee_id', 'Column public.employee_to_ec.employee_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'employee_to_ec', 'employee_id', 'Column public.employee_to_ec.employee_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'employee_to_ec', 'ec_id', 'Column public.employee_to_ec.ec_id should exist');
+RETURN NEXT col_type_is(      'public', 'employee_to_ec', 'ec_id', 'integer', 'Column public.employee_to_ec.ec_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'employee_to_ec', 'ec_id', 'Column public.employee_to_ec.ec_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'employee_to_ec', 'ec_id', 'Column public.employee_to_ec.ec_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

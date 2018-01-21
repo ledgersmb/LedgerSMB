@@ -1,0 +1,59 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_user_preference()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'user_preference',
+    'Should have table public.user_preference'
+);
+
+RETURN NEXT has_pk(
+    'public', 'user_preference',
+    'Table public.user_preference should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'user_preference'::name, ARRAY[
+    'id'::name,
+    'language'::name,
+    'stylesheet'::name,
+    'printer'::name,
+    'dateformat'::name,
+    'numberformat'::name
+]);
+
+RETURN NEXT has_column(       'public', 'user_preference', 'id', 'Column public.user_preference.id should exist');
+RETURN NEXT col_type_is(      'public', 'user_preference', 'id', 'integer', 'Column public.user_preference.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'user_preference', 'id', 'Column public.user_preference.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'user_preference', 'id', 'Column public.user_preference.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'user_preference', 'language', 'Column public.user_preference.language should exist');
+RETURN NEXT col_type_is(      'public', 'user_preference', 'language', 'character varying(6)', 'Column public.user_preference.language should be type character varying(6)');
+RETURN NEXT col_is_null(      'public', 'user_preference', 'language', 'Column public.user_preference.language should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'user_preference', 'language', 'Column public.user_preference.language should not have a default');
+
+RETURN NEXT has_column(       'public', 'user_preference', 'stylesheet', 'Column public.user_preference.stylesheet should exist');
+RETURN NEXT col_type_is(      'public', 'user_preference', 'stylesheet', 'text', 'Column public.user_preference.stylesheet should be type text');
+RETURN NEXT col_not_null(     'public', 'user_preference', 'stylesheet', 'Column public.user_preference.stylesheet should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'user_preference', 'stylesheet', 'Column public.user_preference.stylesheet shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'user_preference', 'stylesheet', 'ledgersmb.css'::text, 'Column public.user_preference.stylesheet default is');
+
+RETURN NEXT has_column(       'public', 'user_preference', 'printer', 'Column public.user_preference.printer should exist');
+RETURN NEXT col_type_is(      'public', 'user_preference', 'printer', 'text', 'Column public.user_preference.printer should be type text');
+RETURN NEXT col_is_null(      'public', 'user_preference', 'printer', 'Column public.user_preference.printer should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'user_preference', 'printer', 'Column public.user_preference.printer should not have a default');
+
+RETURN NEXT has_column(       'public', 'user_preference', 'dateformat', 'Column public.user_preference.dateformat should exist');
+RETURN NEXT col_type_is(      'public', 'user_preference', 'dateformat', 'text', 'Column public.user_preference.dateformat should be type text');
+RETURN NEXT col_not_null(     'public', 'user_preference', 'dateformat', 'Column public.user_preference.dateformat should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'user_preference', 'dateformat', 'Column public.user_preference.dateformat shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'user_preference', 'dateformat', 'yyyy-mm-dd'::text, 'Column public.user_preference.dateformat default is');
+
+RETURN NEXT has_column(       'public', 'user_preference', 'numberformat', 'Column public.user_preference.numberformat should exist');
+RETURN NEXT col_type_is(      'public', 'user_preference', 'numberformat', 'text', 'Column public.user_preference.numberformat should be type text');
+RETURN NEXT col_not_null(     'public', 'user_preference', 'numberformat', 'Column public.user_preference.numberformat should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'user_preference', 'numberformat', 'Column public.user_preference.numberformat shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'user_preference', 'numberformat', '1000.00'::text, 'Column public.user_preference.numberformat default is');
+
+END;
+$$ LANGUAGE plpgsql;

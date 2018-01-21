@@ -1,0 +1,57 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_file_order_to_tx()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'file_order_to_tx',
+    'Should have table public.file_order_to_tx'
+);
+
+RETURN NEXT has_pk(
+    'public', 'file_order_to_tx',
+    'Table public.file_order_to_tx should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'file_order_to_tx'::name, ARRAY[
+    'file_id'::name,
+    'source_class'::name,
+    'ref_key'::name,
+    'dest_class'::name,
+    'attached_by'::name,
+    'attached_at'::name
+]);
+
+RETURN NEXT has_column(       'public', 'file_order_to_tx', 'file_id', 'Column public.file_order_to_tx.file_id should exist');
+RETURN NEXT col_type_is(      'public', 'file_order_to_tx', 'file_id', 'integer', 'Column public.file_order_to_tx.file_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_order_to_tx', 'file_id', 'Column public.file_order_to_tx.file_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_order_to_tx', 'file_id', 'Column public.file_order_to_tx.file_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_order_to_tx', 'source_class', 'Column public.file_order_to_tx.source_class should exist');
+RETURN NEXT col_type_is(      'public', 'file_order_to_tx', 'source_class', 'integer', 'Column public.file_order_to_tx.source_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_order_to_tx', 'source_class', 'Column public.file_order_to_tx.source_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_order_to_tx', 'source_class', 'Column public.file_order_to_tx.source_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_order_to_tx', 'ref_key', 'Column public.file_order_to_tx.ref_key should exist');
+RETURN NEXT col_type_is(      'public', 'file_order_to_tx', 'ref_key', 'integer', 'Column public.file_order_to_tx.ref_key should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_order_to_tx', 'ref_key', 'Column public.file_order_to_tx.ref_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_order_to_tx', 'ref_key', 'Column public.file_order_to_tx.ref_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_order_to_tx', 'dest_class', 'Column public.file_order_to_tx.dest_class should exist');
+RETURN NEXT col_type_is(      'public', 'file_order_to_tx', 'dest_class', 'integer', 'Column public.file_order_to_tx.dest_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_order_to_tx', 'dest_class', 'Column public.file_order_to_tx.dest_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_order_to_tx', 'dest_class', 'Column public.file_order_to_tx.dest_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_order_to_tx', 'attached_by', 'Column public.file_order_to_tx.attached_by should exist');
+RETURN NEXT col_type_is(      'public', 'file_order_to_tx', 'attached_by', 'integer', 'Column public.file_order_to_tx.attached_by should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_order_to_tx', 'attached_by', 'Column public.file_order_to_tx.attached_by should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_order_to_tx', 'attached_by', 'Column public.file_order_to_tx.attached_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_order_to_tx', 'attached_at', 'Column public.file_order_to_tx.attached_at should exist');
+RETURN NEXT col_type_is(      'public', 'file_order_to_tx', 'attached_at', 'timestamp without time zone', 'Column public.file_order_to_tx.attached_at should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'file_order_to_tx', 'attached_at', 'Column public.file_order_to_tx.attached_at should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'file_order_to_tx', 'attached_at', 'Column public.file_order_to_tx.attached_at shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'file_order_to_tx', 'attached_at', 'now()', 'Column public.file_order_to_tx.attached_at default is');
+
+END;
+$$ LANGUAGE plpgsql;

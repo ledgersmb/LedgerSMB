@@ -1,0 +1,46 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_job()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'job',
+    'Should have table public.job'
+);
+
+RETURN NEXT has_pk(
+    'public', 'job',
+    'Table public.job should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'job'::name, ARRAY[
+    'bu_id'::name,
+    'parts_id'::name,
+    'production'::name,
+    'completed'::name
+]);
+
+RETURN NEXT has_column(       'public', 'job', 'bu_id', 'Column public.job.bu_id should exist');
+RETURN NEXT col_type_is(      'public', 'job', 'bu_id', 'integer', 'Column public.job.bu_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'job', 'bu_id', 'Column public.job.bu_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'job', 'bu_id', 'Column public.job.bu_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'job', 'parts_id', 'Column public.job.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'job', 'parts_id', 'integer', 'Column public.job.parts_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'job', 'parts_id', 'Column public.job.parts_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'job', 'parts_id', 'Column public.job.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'job', 'production', 'Column public.job.production should exist');
+RETURN NEXT col_type_is(      'public', 'job', 'production', 'numeric', 'Column public.job.production should be type numeric');
+RETURN NEXT col_is_null(      'public', 'job', 'production', 'Column public.job.production should allow NULL');
+RETURN NEXT col_has_default(  'public', 'job', 'production', 'Column public.job.production shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'job', 'production', '0', 'Column public.job.production default is');
+
+RETURN NEXT has_column(       'public', 'job', 'completed', 'Column public.job.completed should exist');
+RETURN NEXT col_type_is(      'public', 'job', 'completed', 'numeric', 'Column public.job.completed should be type numeric');
+RETURN NEXT col_is_null(      'public', 'job', 'completed', 'Column public.job.completed should allow NULL');
+RETURN NEXT col_has_default(  'public', 'job', 'completed', 'Column public.job.completed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'job', 'completed', '0', 'Column public.job.completed default is');
+
+END;
+$$ LANGUAGE plpgsql;

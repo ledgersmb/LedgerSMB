@@ -1,0 +1,57 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_account_checkpoint()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'account_checkpoint',
+    'Should have table public.account_checkpoint'
+);
+
+RETURN NEXT has_pk(
+    'public', 'account_checkpoint',
+    'Table public.account_checkpoint should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'account_checkpoint'::name, ARRAY[
+    'end_date'::name,
+    'account_id'::name,
+    'amount'::name,
+    'id'::name,
+    'debits'::name,
+    'credits'::name
+]);
+
+RETURN NEXT has_column(       'public', 'account_checkpoint', 'end_date', 'Column public.account_checkpoint.end_date should exist');
+RETURN NEXT col_type_is(      'public', 'account_checkpoint', 'end_date', 'date', 'Column public.account_checkpoint.end_date should be type date');
+RETURN NEXT col_not_null(     'public', 'account_checkpoint', 'end_date', 'Column public.account_checkpoint.end_date should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_checkpoint', 'end_date', 'Column public.account_checkpoint.end_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_checkpoint', 'account_id', 'Column public.account_checkpoint.account_id should exist');
+RETURN NEXT col_type_is(      'public', 'account_checkpoint', 'account_id', 'integer', 'Column public.account_checkpoint.account_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'account_checkpoint', 'account_id', 'Column public.account_checkpoint.account_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_checkpoint', 'account_id', 'Column public.account_checkpoint.account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_checkpoint', 'amount', 'Column public.account_checkpoint.amount should exist');
+RETURN NEXT col_type_is(      'public', 'account_checkpoint', 'amount', 'numeric', 'Column public.account_checkpoint.amount should be type numeric');
+RETURN NEXT col_not_null(     'public', 'account_checkpoint', 'amount', 'Column public.account_checkpoint.amount should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_checkpoint', 'amount', 'Column public.account_checkpoint.amount should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_checkpoint', 'id', 'Column public.account_checkpoint.id should exist');
+RETURN NEXT col_type_is(      'public', 'account_checkpoint', 'id', 'integer', 'Column public.account_checkpoint.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'account_checkpoint', 'id', 'Column public.account_checkpoint.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account_checkpoint', 'id', 'Column public.account_checkpoint.id shouldhave a default');
+--SELECT col_default_is(   'public', 'account_checkpoint', 'id', 'nextval(''account_checkpoint_id_seq''::regclass)', 'Column public.account_checkpoint.id default is');RETURN NEXT col_default_is(   'public', 'account_checkpoint', 'id', 'nextval(''account_checkpoint_id_seq''::regclass)', 'Column public.account_checkpoint.id default is');
+
+RETURN NEXT has_column(       'public', 'account_checkpoint', 'debits', 'Column public.account_checkpoint.debits should exist');
+RETURN NEXT col_type_is(      'public', 'account_checkpoint', 'debits', 'numeric', 'Column public.account_checkpoint.debits should be type numeric');
+RETURN NEXT col_is_null(      'public', 'account_checkpoint', 'debits', 'Column public.account_checkpoint.debits should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account_checkpoint', 'debits', 'Column public.account_checkpoint.debits should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_checkpoint', 'credits', 'Column public.account_checkpoint.credits should exist');
+RETURN NEXT col_type_is(      'public', 'account_checkpoint', 'credits', 'numeric', 'Column public.account_checkpoint.credits should be type numeric');
+RETURN NEXT col_is_null(      'public', 'account_checkpoint', 'credits', 'Column public.account_checkpoint.credits should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account_checkpoint', 'credits', 'Column public.account_checkpoint.credits should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

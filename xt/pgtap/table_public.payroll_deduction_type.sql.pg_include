@@ -1,0 +1,69 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_deduction_type()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_deduction_type',
+    'Should have table public.payroll_deduction_type'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'payroll_deduction_type',
+    'Table public.payroll_deduction_type should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_deduction_type'::name, ARRAY[
+    'id'::name,
+    'account_id'::name,
+    'pdc_id'::name,
+    'country_id'::name,
+    'label'::name,
+    'unit'::name,
+    'default_amount'::name,
+    'calc_percent'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'id', 'Column public.payroll_deduction_type.id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'id', 'integer', 'Column public.payroll_deduction_type.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'id', 'Column public.payroll_deduction_type.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_deduction_type', 'id', 'Column public.payroll_deduction_type.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_deduction_type', 'id', 'nextval(''payroll_deduction_type_id_seq''::regclass)', 'Column public.payroll_deduction_type.id default is');RETURN NEXT col_default_is(   'public', 'payroll_deduction_type', 'id', 'nextval(''payroll_deduction_type_id_seq''::regclass)', 'Column public.payroll_deduction_type.id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'account_id', 'Column public.payroll_deduction_type.account_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'account_id', 'integer', 'Column public.payroll_deduction_type.account_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'account_id', 'Column public.payroll_deduction_type.account_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'account_id', 'Column public.payroll_deduction_type.account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'pdc_id', 'Column public.payroll_deduction_type.pdc_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'pdc_id', 'integer', 'Column public.payroll_deduction_type.pdc_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'pdc_id', 'Column public.payroll_deduction_type.pdc_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'pdc_id', 'Column public.payroll_deduction_type.pdc_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'country_id', 'Column public.payroll_deduction_type.country_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'country_id', 'integer', 'Column public.payroll_deduction_type.country_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'country_id', 'Column public.payroll_deduction_type.country_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'country_id', 'Column public.payroll_deduction_type.country_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'label', 'Column public.payroll_deduction_type.label should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'label', 'text', 'Column public.payroll_deduction_type.label should be type text');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'label', 'Column public.payroll_deduction_type.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'label', 'Column public.payroll_deduction_type.label should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'unit', 'Column public.payroll_deduction_type.unit should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'unit', 'text', 'Column public.payroll_deduction_type.unit should be type text');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'unit', 'Column public.payroll_deduction_type.unit should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'unit', 'Column public.payroll_deduction_type.unit should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'default_amount', 'Column public.payroll_deduction_type.default_amount should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'default_amount', 'numeric', 'Column public.payroll_deduction_type.default_amount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'payroll_deduction_type', 'default_amount', 'Column public.payroll_deduction_type.default_amount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'default_amount', 'Column public.payroll_deduction_type.default_amount should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction_type', 'calc_percent', 'Column public.payroll_deduction_type.calc_percent should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction_type', 'calc_percent', 'boolean', 'Column public.payroll_deduction_type.calc_percent should be type boolean');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction_type', 'calc_percent', 'Column public.payroll_deduction_type.calc_percent should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction_type', 'calc_percent', 'Column public.payroll_deduction_type.calc_percent should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

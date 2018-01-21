@@ -1,0 +1,82 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_partscustomer()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'partscustomer',
+    'Should have table public.partscustomer'
+);
+
+RETURN NEXT has_pk(
+    'public', 'partscustomer',
+    'Table public.partscustomer should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'partscustomer'::name, ARRAY[
+    'parts_id'::name,
+    'credit_id'::name,
+    'pricegroup_id'::name,
+    'pricebreak'::name,
+    'sellprice'::name,
+    'validfrom'::name,
+    'validto'::name,
+    'curr'::name,
+    'entry_id'::name,
+    'qty'::name
+]);
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'parts_id', 'Column public.partscustomer.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'parts_id', 'integer', 'Column public.partscustomer.parts_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'parts_id', 'Column public.partscustomer.parts_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'parts_id', 'Column public.partscustomer.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'credit_id', 'Column public.partscustomer.credit_id should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'credit_id', 'integer', 'Column public.partscustomer.credit_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'credit_id', 'Column public.partscustomer.credit_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'credit_id', 'Column public.partscustomer.credit_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'pricegroup_id', 'Column public.partscustomer.pricegroup_id should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'pricegroup_id', 'integer', 'Column public.partscustomer.pricegroup_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'pricegroup_id', 'Column public.partscustomer.pricegroup_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'pricegroup_id', 'Column public.partscustomer.pricegroup_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'pricebreak', 'Column public.partscustomer.pricebreak should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'pricebreak', 'numeric', 'Column public.partscustomer.pricebreak should be type numeric');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'pricebreak', 'Column public.partscustomer.pricebreak should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'pricebreak', 'Column public.partscustomer.pricebreak should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'sellprice', 'Column public.partscustomer.sellprice should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'sellprice', 'numeric', 'Column public.partscustomer.sellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'sellprice', 'Column public.partscustomer.sellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'sellprice', 'Column public.partscustomer.sellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'validfrom', 'Column public.partscustomer.validfrom should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'validfrom', 'date', 'Column public.partscustomer.validfrom should be type date');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'validfrom', 'Column public.partscustomer.validfrom should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'validfrom', 'Column public.partscustomer.validfrom should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'validto', 'Column public.partscustomer.validto should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'validto', 'date', 'Column public.partscustomer.validto should be type date');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'validto', 'Column public.partscustomer.validto should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'validto', 'Column public.partscustomer.validto should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'curr', 'Column public.partscustomer.curr should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'curr', 'character(3)', 'Column public.partscustomer.curr should be type character(3)');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'curr', 'Column public.partscustomer.curr should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partscustomer', 'curr', 'Column public.partscustomer.curr should not have a default');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'entry_id', 'Column public.partscustomer.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'entry_id', 'integer', 'Column public.partscustomer.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partscustomer', 'entry_id', 'Column public.partscustomer.entry_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'partscustomer', 'entry_id', 'Column public.partscustomer.entry_id shouldhave a default');
+--SELECT col_default_is(   'public', 'partscustomer', 'entry_id', 'nextval(''partscustomer_entry_id_seq''::regclass)', 'Column public.partscustomer.entry_id default is');RETURN NEXT col_default_is(   'public', 'partscustomer', 'entry_id', 'nextval(''partscustomer_entry_id_seq''::regclass)', 'Column public.partscustomer.entry_id default is');
+
+RETURN NEXT has_column(       'public', 'partscustomer', 'qty', 'Column public.partscustomer.qty should exist');
+RETURN NEXT col_type_is(      'public', 'partscustomer', 'qty', 'numeric', 'Column public.partscustomer.qty should be type numeric');
+RETURN NEXT col_is_null(      'public', 'partscustomer', 'qty', 'Column public.partscustomer.qty should allow NULL');
+RETURN NEXT col_has_default(  'public', 'partscustomer', 'qty', 'Column public.partscustomer.qty shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'partscustomer', 'qty', '0', 'Column public.partscustomer.qty default is');
+
+END;
+$$ LANGUAGE plpgsql;

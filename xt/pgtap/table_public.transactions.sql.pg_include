@@ -1,0 +1,56 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_transactions()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'transactions',
+    'Should have table public.transactions'
+);
+
+RETURN NEXT has_pk(
+    'public', 'transactions',
+    'Table public.transactions should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'transactions'::name, ARRAY[
+    'id'::name,
+    'table_name'::name,
+    'locked_by'::name,
+    'approved'::name,
+    'approved_by'::name,
+    'approved_at'::name
+]);
+
+RETURN NEXT has_column(       'public', 'transactions', 'id', 'Column public.transactions.id should exist');
+RETURN NEXT col_type_is(      'public', 'transactions', 'id', 'integer', 'Column public.transactions.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'transactions', 'id', 'Column public.transactions.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'transactions', 'id', 'Column public.transactions.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'transactions', 'table_name', 'Column public.transactions.table_name should exist');
+RETURN NEXT col_type_is(      'public', 'transactions', 'table_name', 'text', 'Column public.transactions.table_name should be type text');
+RETURN NEXT col_is_null(      'public', 'transactions', 'table_name', 'Column public.transactions.table_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'transactions', 'table_name', 'Column public.transactions.table_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'transactions', 'locked_by', 'Column public.transactions.locked_by should exist');
+RETURN NEXT col_type_is(      'public', 'transactions', 'locked_by', 'integer', 'Column public.transactions.locked_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'transactions', 'locked_by', 'Column public.transactions.locked_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'transactions', 'locked_by', 'Column public.transactions.locked_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'transactions', 'approved', 'Column public.transactions.approved should exist');
+RETURN NEXT col_type_is(      'public', 'transactions', 'approved', 'boolean', 'Column public.transactions.approved should be type boolean');
+RETURN NEXT col_is_null(      'public', 'transactions', 'approved', 'Column public.transactions.approved should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'transactions', 'approved', 'Column public.transactions.approved should not have a default');
+
+RETURN NEXT has_column(       'public', 'transactions', 'approved_by', 'Column public.transactions.approved_by should exist');
+RETURN NEXT col_type_is(      'public', 'transactions', 'approved_by', 'integer', 'Column public.transactions.approved_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'transactions', 'approved_by', 'Column public.transactions.approved_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'transactions', 'approved_by', 'Column public.transactions.approved_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'transactions', 'approved_at', 'Column public.transactions.approved_at should exist');
+RETURN NEXT col_type_is(      'public', 'transactions', 'approved_at', 'timestamp without time zone', 'Column public.transactions.approved_at should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'transactions', 'approved_at', 'Column public.transactions.approved_at should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'transactions', 'approved_at', 'Column public.transactions.approved_at should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

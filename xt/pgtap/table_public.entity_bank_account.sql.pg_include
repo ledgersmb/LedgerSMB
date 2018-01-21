@@ -1,0 +1,51 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_entity_bank_account()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'entity_bank_account',
+    'Should have table public.entity_bank_account'
+);
+
+RETURN NEXT has_pk(
+    'public', 'entity_bank_account',
+    'Table public.entity_bank_account should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'entity_bank_account'::name, ARRAY[
+    'id'::name,
+    'entity_id'::name,
+    'bic'::name,
+    'iban'::name,
+    'remark'::name
+]);
+
+RETURN NEXT has_column(       'public', 'entity_bank_account', 'id', 'Column public.entity_bank_account.id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_bank_account', 'id', 'integer', 'Column public.entity_bank_account.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_bank_account', 'id', 'Column public.entity_bank_account.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'entity_bank_account', 'id', 'Column public.entity_bank_account.id shouldhave a default');
+--SELECT col_default_is(   'public', 'entity_bank_account', 'id', 'nextval(''entity_bank_account_id_seq''::regclass)', 'Column public.entity_bank_account.id default is');RETURN NEXT col_default_is(   'public', 'entity_bank_account', 'id', 'nextval(''entity_bank_account_id_seq''::regclass)', 'Column public.entity_bank_account.id default is');
+
+RETURN NEXT has_column(       'public', 'entity_bank_account', 'entity_id', 'Column public.entity_bank_account.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_bank_account', 'entity_id', 'integer', 'Column public.entity_bank_account.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_bank_account', 'entity_id', 'Column public.entity_bank_account.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_bank_account', 'entity_id', 'Column public.entity_bank_account.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_bank_account', 'bic', 'Column public.entity_bank_account.bic should exist');
+RETURN NEXT col_type_is(      'public', 'entity_bank_account', 'bic', 'character varying', 'Column public.entity_bank_account.bic should be type character varying');
+RETURN NEXT col_not_null(     'public', 'entity_bank_account', 'bic', 'Column public.entity_bank_account.bic should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_bank_account', 'bic', 'Column public.entity_bank_account.bic should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_bank_account', 'iban', 'Column public.entity_bank_account.iban should exist');
+RETURN NEXT col_type_is(      'public', 'entity_bank_account', 'iban', 'character varying', 'Column public.entity_bank_account.iban should be type character varying');
+RETURN NEXT col_not_null(     'public', 'entity_bank_account', 'iban', 'Column public.entity_bank_account.iban should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_bank_account', 'iban', 'Column public.entity_bank_account.iban should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_bank_account', 'remark', 'Column public.entity_bank_account.remark should exist');
+RETURN NEXT col_type_is(      'public', 'entity_bank_account', 'remark', 'character varying', 'Column public.entity_bank_account.remark should be type character varying');
+RETURN NEXT col_is_null(      'public', 'entity_bank_account', 'remark', 'Column public.entity_bank_account.remark should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_bank_account', 'remark', 'Column public.entity_bank_account.remark should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

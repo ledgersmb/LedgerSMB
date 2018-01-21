@@ -1,0 +1,109 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_acc_trans()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'acc_trans',
+    'Should have table public.acc_trans'
+);
+
+RETURN NEXT has_pk(
+    'public', 'acc_trans',
+    'Table public.acc_trans should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'acc_trans'::name, ARRAY[
+    'trans_id'::name,
+    'chart_id'::name,
+    'amount'::name,
+    'transdate'::name,
+    'source'::name,
+    'cleared'::name,
+    'fx_transaction'::name,
+    'memo'::name,
+    'invoice_id'::name,
+    'approved'::name,
+    'cleared_on'::name,
+    'reconciled_on'::name,
+    'voucher_id'::name,
+    'entry_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'trans_id', 'Column public.acc_trans.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'trans_id', 'integer', 'Column public.acc_trans.trans_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'acc_trans', 'trans_id', 'Column public.acc_trans.trans_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'trans_id', 'Column public.acc_trans.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'chart_id', 'Column public.acc_trans.chart_id should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'chart_id', 'integer', 'Column public.acc_trans.chart_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'acc_trans', 'chart_id', 'Column public.acc_trans.chart_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'chart_id', 'Column public.acc_trans.chart_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'amount', 'Column public.acc_trans.amount should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'amount', 'numeric', 'Column public.acc_trans.amount should be type numeric');
+RETURN NEXT col_not_null(     'public', 'acc_trans', 'amount', 'Column public.acc_trans.amount should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'amount', 'Column public.acc_trans.amount should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'transdate', 'Column public.acc_trans.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'transdate', 'date', 'Column public.acc_trans.transdate should be type date');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'transdate', 'Column public.acc_trans.transdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'acc_trans', 'transdate', 'Column public.acc_trans.transdate shouldhave a default');
+--SELECT col_default_is(   'public', 'acc_trans', 'transdate', '(''now''::text)::date', 'Column public.acc_trans.transdate default is');RETURN NEXT col_default_is(   'public', 'acc_trans', 'transdate', '(''now''::text)::date', 'Column public.acc_trans.transdate default is');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'source', 'Column public.acc_trans.source should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'source', 'text', 'Column public.acc_trans.source should be type text');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'source', 'Column public.acc_trans.source should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'source', 'Column public.acc_trans.source should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'cleared', 'Column public.acc_trans.cleared should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'cleared', 'boolean', 'Column public.acc_trans.cleared should be type boolean');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'cleared', 'Column public.acc_trans.cleared should allow NULL');
+RETURN NEXT col_has_default(  'public', 'acc_trans', 'cleared', 'Column public.acc_trans.cleared shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'acc_trans', 'cleared', 'false', 'Column public.acc_trans.cleared default is');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'fx_transaction', 'Column public.acc_trans.fx_transaction should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'fx_transaction', 'boolean', 'Column public.acc_trans.fx_transaction should be type boolean');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'fx_transaction', 'Column public.acc_trans.fx_transaction should allow NULL');
+RETURN NEXT col_has_default(  'public', 'acc_trans', 'fx_transaction', 'Column public.acc_trans.fx_transaction shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'acc_trans', 'fx_transaction', 'false', 'Column public.acc_trans.fx_transaction default is');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'memo', 'Column public.acc_trans.memo should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'memo', 'text', 'Column public.acc_trans.memo should be type text');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'memo', 'Column public.acc_trans.memo should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'memo', 'Column public.acc_trans.memo should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'invoice_id', 'Column public.acc_trans.invoice_id should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'invoice_id', 'integer', 'Column public.acc_trans.invoice_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'invoice_id', 'Column public.acc_trans.invoice_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'invoice_id', 'Column public.acc_trans.invoice_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'approved', 'Column public.acc_trans.approved should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'approved', 'boolean', 'Column public.acc_trans.approved should be type boolean');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'approved', 'Column public.acc_trans.approved should allow NULL');
+RETURN NEXT col_has_default(  'public', 'acc_trans', 'approved', 'Column public.acc_trans.approved shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'acc_trans', 'approved', 'true', 'Column public.acc_trans.approved default is');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'cleared_on', 'Column public.acc_trans.cleared_on should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'cleared_on', 'date', 'Column public.acc_trans.cleared_on should be type date');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'cleared_on', 'Column public.acc_trans.cleared_on should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'cleared_on', 'Column public.acc_trans.cleared_on should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'reconciled_on', 'Column public.acc_trans.reconciled_on should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'reconciled_on', 'date', 'Column public.acc_trans.reconciled_on should be type date');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'reconciled_on', 'Column public.acc_trans.reconciled_on should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'reconciled_on', 'Column public.acc_trans.reconciled_on should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'voucher_id', 'Column public.acc_trans.voucher_id should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'voucher_id', 'integer', 'Column public.acc_trans.voucher_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'acc_trans', 'voucher_id', 'Column public.acc_trans.voucher_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'acc_trans', 'voucher_id', 'Column public.acc_trans.voucher_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'acc_trans', 'entry_id', 'Column public.acc_trans.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'acc_trans', 'entry_id', 'integer', 'Column public.acc_trans.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'acc_trans', 'entry_id', 'Column public.acc_trans.entry_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'acc_trans', 'entry_id', 'Column public.acc_trans.entry_id shouldhave a default');
+--SELECT col_default_is(   'public', 'acc_trans', 'entry_id', 'nextval(''acc_trans_entry_id_seq''::regclass)', 'Column public.acc_trans.entry_id default is');RETURN NEXT col_default_is(   'public', 'acc_trans', 'entry_id', 'nextval(''acc_trans_entry_id_seq''::regclass)', 'Column public.acc_trans.entry_id default is');
+
+END;
+$$ LANGUAGE plpgsql;

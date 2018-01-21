@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payment_links()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payment_links',
+    'Should have table public.payment_links'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'payment_links',
+    'Table public.payment_links should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payment_links'::name, ARRAY[
+    'payment_id'::name,
+    'entry_id'::name,
+    'type'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payment_links', 'payment_id', 'Column public.payment_links.payment_id should exist');
+RETURN NEXT col_type_is(      'public', 'payment_links', 'payment_id', 'integer', 'Column public.payment_links.payment_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'payment_links', 'payment_id', 'Column public.payment_links.payment_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment_links', 'payment_id', 'Column public.payment_links.payment_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment_links', 'entry_id', 'Column public.payment_links.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'payment_links', 'entry_id', 'integer', 'Column public.payment_links.entry_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'payment_links', 'entry_id', 'Column public.payment_links.entry_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment_links', 'entry_id', 'Column public.payment_links.entry_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment_links', 'type', 'Column public.payment_links.type should exist');
+RETURN NEXT col_type_is(      'public', 'payment_links', 'type', 'integer', 'Column public.payment_links.type should be type integer');
+RETURN NEXT col_is_null(      'public', 'payment_links', 'type', 'Column public.payment_links.type should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment_links', 'type', 'Column public.payment_links.type should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

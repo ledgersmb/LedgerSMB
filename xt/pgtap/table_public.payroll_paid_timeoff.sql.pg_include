@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_paid_timeoff()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_paid_timeoff',
+    'Should have table public.payroll_paid_timeoff'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'payroll_paid_timeoff',
+    'Table public.payroll_paid_timeoff should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_paid_timeoff'::name, ARRAY[
+    'employee_id'::name,
+    'pto_class_id'::name,
+    'report_id'::name,
+    'amount'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_paid_timeoff', 'employee_id', 'Column public.payroll_paid_timeoff.employee_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_paid_timeoff', 'employee_id', 'integer', 'Column public.payroll_paid_timeoff.employee_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_paid_timeoff', 'employee_id', 'Column public.payroll_paid_timeoff.employee_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_paid_timeoff', 'employee_id', 'Column public.payroll_paid_timeoff.employee_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_paid_timeoff', 'pto_class_id', 'Column public.payroll_paid_timeoff.pto_class_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_paid_timeoff', 'pto_class_id', 'integer', 'Column public.payroll_paid_timeoff.pto_class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_paid_timeoff', 'pto_class_id', 'Column public.payroll_paid_timeoff.pto_class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_paid_timeoff', 'pto_class_id', 'Column public.payroll_paid_timeoff.pto_class_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_paid_timeoff', 'report_id', 'Column public.payroll_paid_timeoff.report_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_paid_timeoff', 'report_id', 'integer', 'Column public.payroll_paid_timeoff.report_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_paid_timeoff', 'report_id', 'Column public.payroll_paid_timeoff.report_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_paid_timeoff', 'report_id', 'Column public.payroll_paid_timeoff.report_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_paid_timeoff', 'amount', 'Column public.payroll_paid_timeoff.amount should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_paid_timeoff', 'amount', 'numeric', 'Column public.payroll_paid_timeoff.amount should be type numeric');
+RETURN NEXT col_not_null(     'public', 'payroll_paid_timeoff', 'amount', 'Column public.payroll_paid_timeoff.amount should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_paid_timeoff', 'amount', 'Column public.payroll_paid_timeoff.amount should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

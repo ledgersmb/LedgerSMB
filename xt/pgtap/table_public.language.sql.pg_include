@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_language()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'language',
+    'Should have table public.language'
+);
+
+RETURN NEXT has_pk(
+    'public', 'language',
+    'Table public.language should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'language'::name, ARRAY[
+    'code'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'language', 'code', 'Column public.language.code should exist');
+RETURN NEXT col_type_is(      'public', 'language', 'code', 'character varying(6)', 'Column public.language.code should be type character varying(6)');
+RETURN NEXT col_not_null(     'public', 'language', 'code', 'Column public.language.code should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'language', 'code', 'Column public.language.code should not have a default');
+
+RETURN NEXT has_column(       'public', 'language', 'description', 'Column public.language.description should exist');
+RETURN NEXT col_type_is(      'public', 'language', 'description', 'text', 'Column public.language.description should be type text');
+RETURN NEXT col_is_null(      'public', 'language', 'description', 'Column public.language.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'language', 'description', 'Column public.language.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

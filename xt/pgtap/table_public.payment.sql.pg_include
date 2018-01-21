@@ -1,0 +1,83 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payment()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payment',
+    'Should have table public.payment'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payment',
+    'Table public.payment should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payment'::name, ARRAY[
+    'id'::name,
+    'reference'::name,
+    'gl_id'::name,
+    'payment_class'::name,
+    'payment_date'::name,
+    'closed'::name,
+    'entity_credit_id'::name,
+    'employee_id'::name,
+    'currency'::name,
+    'notes'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payment', 'id', 'Column public.payment.id should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'id', 'integer', 'Column public.payment.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payment', 'id', 'Column public.payment.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payment', 'id', 'Column public.payment.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payment', 'id', 'nextval(''payment_id_seq''::regclass)', 'Column public.payment.id default is');RETURN NEXT col_default_is(   'public', 'payment', 'id', 'nextval(''payment_id_seq''::regclass)', 'Column public.payment.id default is');
+
+RETURN NEXT has_column(       'public', 'payment', 'reference', 'Column public.payment.reference should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'reference', 'text', 'Column public.payment.reference should be type text');
+RETURN NEXT col_not_null(     'public', 'payment', 'reference', 'Column public.payment.reference should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'reference', 'Column public.payment.reference should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment', 'gl_id', 'Column public.payment.gl_id should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'gl_id', 'integer', 'Column public.payment.gl_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'payment', 'gl_id', 'Column public.payment.gl_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'gl_id', 'Column public.payment.gl_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment', 'payment_class', 'Column public.payment.payment_class should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'payment_class', 'integer', 'Column public.payment.payment_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'payment', 'payment_class', 'Column public.payment.payment_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'payment_class', 'Column public.payment.payment_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment', 'payment_date', 'Column public.payment.payment_date should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'payment_date', 'date', 'Column public.payment.payment_date should be type date');
+RETURN NEXT col_is_null(      'public', 'payment', 'payment_date', 'Column public.payment.payment_date should allow NULL');
+RETURN NEXT col_has_default(  'public', 'payment', 'payment_date', 'Column public.payment.payment_date shouldhave a default');
+--SELECT col_default_is(   'public', 'payment', 'payment_date', '(''now''::text)::date', 'Column public.payment.payment_date default is');RETURN NEXT col_default_is(   'public', 'payment', 'payment_date', '(''now''::text)::date', 'Column public.payment.payment_date default is');
+
+RETURN NEXT has_column(       'public', 'payment', 'closed', 'Column public.payment.closed should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'closed', 'boolean', 'Column public.payment.closed should be type boolean');
+RETURN NEXT col_is_null(      'public', 'payment', 'closed', 'Column public.payment.closed should allow NULL');
+RETURN NEXT col_has_default(  'public', 'payment', 'closed', 'Column public.payment.closed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'payment', 'closed', 'false', 'Column public.payment.closed default is');
+
+RETURN NEXT has_column(       'public', 'payment', 'entity_credit_id', 'Column public.payment.entity_credit_id should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'entity_credit_id', 'integer', 'Column public.payment.entity_credit_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'payment', 'entity_credit_id', 'Column public.payment.entity_credit_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'entity_credit_id', 'Column public.payment.entity_credit_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment', 'employee_id', 'Column public.payment.employee_id should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'employee_id', 'integer', 'Column public.payment.employee_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'payment', 'employee_id', 'Column public.payment.employee_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'employee_id', 'Column public.payment.employee_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment', 'currency', 'Column public.payment.currency should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'currency', 'character(3)', 'Column public.payment.currency should be type character(3)');
+RETURN NEXT col_is_null(      'public', 'payment', 'currency', 'Column public.payment.currency should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'currency', 'Column public.payment.currency should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment', 'notes', 'Column public.payment.notes should exist');
+RETURN NEXT col_type_is(      'public', 'payment', 'notes', 'text', 'Column public.payment.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'payment', 'notes', 'Column public.payment.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payment', 'notes', 'Column public.payment.notes should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

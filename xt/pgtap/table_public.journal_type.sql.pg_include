@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_journal_type()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'journal_type',
+    'Should have table public.journal_type'
+);
+
+RETURN NEXT has_pk(
+    'public', 'journal_type',
+    'Table public.journal_type should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'journal_type'::name, ARRAY[
+    'id'::name,
+    'name'::name
+]);
+
+RETURN NEXT has_column(       'public', 'journal_type', 'id', 'Column public.journal_type.id should exist');
+RETURN NEXT col_type_is(      'public', 'journal_type', 'id', 'integer', 'Column public.journal_type.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_type', 'id', 'Column public.journal_type.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_type', 'id', 'Column public.journal_type.id shouldhave a default');
+--SELECT col_default_is(   'public', 'journal_type', 'id', 'nextval(''journal_type_id_seq''::regclass)', 'Column public.journal_type.id default is');RETURN NEXT col_default_is(   'public', 'journal_type', 'id', 'nextval(''journal_type_id_seq''::regclass)', 'Column public.journal_type.id default is');
+
+RETURN NEXT has_column(       'public', 'journal_type', 'name', 'Column public.journal_type.name should exist');
+RETURN NEXT col_type_is(      'public', 'journal_type', 'name', 'text', 'Column public.journal_type.name should be type text');
+RETURN NEXT col_not_null(     'public', 'journal_type', 'name', 'Column public.journal_type.name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_type', 'name', 'Column public.journal_type.name should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_taxcategory()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'taxcategory',
+    'Should have table public.taxcategory'
+);
+
+RETURN NEXT has_pk(
+    'public', 'taxcategory',
+    'Table public.taxcategory should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'taxcategory'::name, ARRAY[
+    'taxcategory_id'::name,
+    'taxcategoryname'::name,
+    'taxmodule_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'taxcategory', 'taxcategory_id', 'Column public.taxcategory.taxcategory_id should exist');
+RETURN NEXT col_type_is(      'public', 'taxcategory', 'taxcategory_id', 'integer', 'Column public.taxcategory.taxcategory_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'taxcategory', 'taxcategory_id', 'Column public.taxcategory.taxcategory_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'taxcategory', 'taxcategory_id', 'Column public.taxcategory.taxcategory_id shouldhave a default');
+--SELECT col_default_is(   'public', 'taxcategory', 'taxcategory_id', 'nextval(''taxcategory_taxcategory_id_seq''::regclass)', 'Column public.taxcategory.taxcategory_id default is');RETURN NEXT col_default_is(   'public', 'taxcategory', 'taxcategory_id', 'nextval(''taxcategory_taxcategory_id_seq''::regclass)', 'Column public.taxcategory.taxcategory_id default is');
+
+RETURN NEXT has_column(       'public', 'taxcategory', 'taxcategoryname', 'Column public.taxcategory.taxcategoryname should exist');
+RETURN NEXT col_type_is(      'public', 'taxcategory', 'taxcategoryname', 'text', 'Column public.taxcategory.taxcategoryname should be type text');
+RETURN NEXT col_not_null(     'public', 'taxcategory', 'taxcategoryname', 'Column public.taxcategory.taxcategoryname should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'taxcategory', 'taxcategoryname', 'Column public.taxcategory.taxcategoryname should not have a default');
+
+RETURN NEXT has_column(       'public', 'taxcategory', 'taxmodule_id', 'Column public.taxcategory.taxmodule_id should exist');
+RETURN NEXT col_type_is(      'public', 'taxcategory', 'taxmodule_id', 'integer', 'Column public.taxcategory.taxmodule_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'taxcategory', 'taxmodule_id', 'Column public.taxcategory.taxmodule_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'taxcategory', 'taxmodule_id', 'Column public.taxcategory.taxmodule_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

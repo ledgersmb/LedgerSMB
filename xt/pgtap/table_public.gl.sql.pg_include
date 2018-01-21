@@ -1,0 +1,72 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_gl()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'gl',
+    'Should have table public.gl'
+);
+
+RETURN NEXT has_pk(
+    'public', 'gl',
+    'Table public.gl should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'gl'::name, ARRAY[
+    'id'::name,
+    'reference'::name,
+    'description'::name,
+    'transdate'::name,
+    'person_id'::name,
+    'notes'::name,
+    'approved'::name,
+    'trans_type_code'::name
+]);
+
+RETURN NEXT has_column(       'public', 'gl', 'id', 'Column public.gl.id should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'id', 'integer', 'Column public.gl.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'gl', 'id', 'Column public.gl.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'gl', 'id', 'Column public.gl.id shouldhave a default');
+--SELECT col_default_is(   'public', 'gl', 'id', 'nextval(''id''::regclass)', 'Column public.gl.id default is');RETURN NEXT col_default_is(   'public', 'gl', 'id', 'nextval(''id''::regclass)', 'Column public.gl.id default is');
+
+RETURN NEXT has_column(       'public', 'gl', 'reference', 'Column public.gl.reference should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'reference', 'text', 'Column public.gl.reference should be type text');
+RETURN NEXT col_is_null(      'public', 'gl', 'reference', 'Column public.gl.reference should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'gl', 'reference', 'Column public.gl.reference should not have a default');
+
+RETURN NEXT has_column(       'public', 'gl', 'description', 'Column public.gl.description should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'description', 'text', 'Column public.gl.description should be type text');
+RETURN NEXT col_is_null(      'public', 'gl', 'description', 'Column public.gl.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'gl', 'description', 'Column public.gl.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'gl', 'transdate', 'Column public.gl.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'transdate', 'date', 'Column public.gl.transdate should be type date');
+RETURN NEXT col_is_null(      'public', 'gl', 'transdate', 'Column public.gl.transdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'gl', 'transdate', 'Column public.gl.transdate shouldhave a default');
+--SELECT col_default_is(   'public', 'gl', 'transdate', '(''now''::text)::date', 'Column public.gl.transdate default is');RETURN NEXT col_default_is(   'public', 'gl', 'transdate', '(''now''::text)::date', 'Column public.gl.transdate default is');
+
+RETURN NEXT has_column(       'public', 'gl', 'person_id', 'Column public.gl.person_id should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'person_id', 'integer', 'Column public.gl.person_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'gl', 'person_id', 'Column public.gl.person_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'gl', 'person_id', 'Column public.gl.person_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'gl', 'notes', 'Column public.gl.notes should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'notes', 'text', 'Column public.gl.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'gl', 'notes', 'Column public.gl.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'gl', 'notes', 'Column public.gl.notes should not have a default');
+
+RETURN NEXT has_column(       'public', 'gl', 'approved', 'Column public.gl.approved should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'approved', 'boolean', 'Column public.gl.approved should be type boolean');
+RETURN NEXT col_is_null(      'public', 'gl', 'approved', 'Column public.gl.approved should allow NULL');
+RETURN NEXT col_has_default(  'public', 'gl', 'approved', 'Column public.gl.approved shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'gl', 'approved', 'true', 'Column public.gl.approved default is');
+
+RETURN NEXT has_column(       'public', 'gl', 'trans_type_code', 'Column public.gl.trans_type_code should exist');
+RETURN NEXT col_type_is(      'public', 'gl', 'trans_type_code', 'character(2)', 'Column public.gl.trans_type_code should be type character(2)');
+RETURN NEXT col_not_null(     'public', 'gl', 'trans_type_code', 'Column public.gl.trans_type_code should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'gl', 'trans_type_code', 'Column public.gl.trans_type_code shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'gl', 'trans_type_code', 'gl'::bpchar, 'Column public.gl.trans_type_code default is');
+
+END;
+$$ LANGUAGE plpgsql;

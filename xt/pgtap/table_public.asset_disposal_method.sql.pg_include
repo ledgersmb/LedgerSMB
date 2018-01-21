@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_asset_disposal_method()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'asset_disposal_method',
+    'Should have table public.asset_disposal_method'
+);
+
+RETURN NEXT has_pk(
+    'public', 'asset_disposal_method',
+    'Table public.asset_disposal_method should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'asset_disposal_method'::name, ARRAY[
+    'label'::name,
+    'id'::name,
+    'multiple'::name,
+    'short_label'::name
+]);
+
+RETURN NEXT has_column(       'public', 'asset_disposal_method', 'label', 'Column public.asset_disposal_method.label should exist');
+RETURN NEXT col_type_is(      'public', 'asset_disposal_method', 'label', 'text', 'Column public.asset_disposal_method.label should be type text');
+RETURN NEXT col_not_null(     'public', 'asset_disposal_method', 'label', 'Column public.asset_disposal_method.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_disposal_method', 'label', 'Column public.asset_disposal_method.label should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_disposal_method', 'id', 'Column public.asset_disposal_method.id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_disposal_method', 'id', 'integer', 'Column public.asset_disposal_method.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'asset_disposal_method', 'id', 'Column public.asset_disposal_method.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'asset_disposal_method', 'id', 'Column public.asset_disposal_method.id shouldhave a default');
+--SELECT col_default_is(   'public', 'asset_disposal_method', 'id', 'nextval(''asset_disposal_method_id_seq''::regclass)', 'Column public.asset_disposal_method.id default is');RETURN NEXT col_default_is(   'public', 'asset_disposal_method', 'id', 'nextval(''asset_disposal_method_id_seq''::regclass)', 'Column public.asset_disposal_method.id default is');
+
+RETURN NEXT has_column(       'public', 'asset_disposal_method', 'multiple', 'Column public.asset_disposal_method.multiple should exist');
+RETURN NEXT col_type_is(      'public', 'asset_disposal_method', 'multiple', 'integer', 'Column public.asset_disposal_method.multiple should be type integer');
+RETURN NEXT col_is_null(      'public', 'asset_disposal_method', 'multiple', 'Column public.asset_disposal_method.multiple should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_disposal_method', 'multiple', 'Column public.asset_disposal_method.multiple should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_disposal_method', 'short_label', 'Column public.asset_disposal_method.short_label should exist');
+RETURN NEXT col_type_is(      'public', 'asset_disposal_method', 'short_label', 'character(1)', 'Column public.asset_disposal_method.short_label should be type character(1)');
+RETURN NEXT col_is_null(      'public', 'asset_disposal_method', 'short_label', 'Column public.asset_disposal_method.short_label should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_disposal_method', 'short_label', 'Column public.asset_disposal_method.short_label should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

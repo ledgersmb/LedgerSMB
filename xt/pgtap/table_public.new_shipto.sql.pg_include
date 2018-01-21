@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_new_shipto()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'new_shipto',
+    'Should have table public.new_shipto'
+);
+
+RETURN NEXT has_pk(
+    'public', 'new_shipto',
+    'Table public.new_shipto should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'new_shipto'::name, ARRAY[
+    'id'::name,
+    'trans_id'::name,
+    'oe_id'::name,
+    'location_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'new_shipto', 'id', 'Column public.new_shipto.id should exist');
+RETURN NEXT col_type_is(      'public', 'new_shipto', 'id', 'integer', 'Column public.new_shipto.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'new_shipto', 'id', 'Column public.new_shipto.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'new_shipto', 'id', 'Column public.new_shipto.id shouldhave a default');
+--SELECT col_default_is(   'public', 'new_shipto', 'id', 'nextval(''new_shipto_id_seq''::regclass)', 'Column public.new_shipto.id default is');RETURN NEXT col_default_is(   'public', 'new_shipto', 'id', 'nextval(''new_shipto_id_seq''::regclass)', 'Column public.new_shipto.id default is');
+
+RETURN NEXT has_column(       'public', 'new_shipto', 'trans_id', 'Column public.new_shipto.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'new_shipto', 'trans_id', 'integer', 'Column public.new_shipto.trans_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'new_shipto', 'trans_id', 'Column public.new_shipto.trans_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'new_shipto', 'trans_id', 'Column public.new_shipto.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'new_shipto', 'oe_id', 'Column public.new_shipto.oe_id should exist');
+RETURN NEXT col_type_is(      'public', 'new_shipto', 'oe_id', 'integer', 'Column public.new_shipto.oe_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'new_shipto', 'oe_id', 'Column public.new_shipto.oe_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'new_shipto', 'oe_id', 'Column public.new_shipto.oe_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'new_shipto', 'location_id', 'Column public.new_shipto.location_id should exist');
+RETURN NEXT col_type_is(      'public', 'new_shipto', 'location_id', 'integer', 'Column public.new_shipto.location_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'new_shipto', 'location_id', 'Column public.new_shipto.location_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'new_shipto', 'location_id', 'Column public.new_shipto.location_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_deduction()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_deduction',
+    'Should have table public.payroll_deduction'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payroll_deduction',
+    'Table public.payroll_deduction should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_deduction'::name, ARRAY[
+    'entry_id'::name,
+    'entity_id'::name,
+    'type_id'::name,
+    'rate'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_deduction', 'entry_id', 'Column public.payroll_deduction.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction', 'entry_id', 'integer', 'Column public.payroll_deduction.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction', 'entry_id', 'Column public.payroll_deduction.entry_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_deduction', 'entry_id', 'Column public.payroll_deduction.entry_id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_deduction', 'entry_id', 'nextval(''payroll_deduction_entry_id_seq''::regclass)', 'Column public.payroll_deduction.entry_id default is');RETURN NEXT col_default_is(   'public', 'payroll_deduction', 'entry_id', 'nextval(''payroll_deduction_entry_id_seq''::regclass)', 'Column public.payroll_deduction.entry_id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction', 'entity_id', 'Column public.payroll_deduction.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction', 'entity_id', 'integer', 'Column public.payroll_deduction.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction', 'entity_id', 'Column public.payroll_deduction.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction', 'entity_id', 'Column public.payroll_deduction.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction', 'type_id', 'Column public.payroll_deduction.type_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction', 'type_id', 'integer', 'Column public.payroll_deduction.type_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction', 'type_id', 'Column public.payroll_deduction.type_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction', 'type_id', 'Column public.payroll_deduction.type_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_deduction', 'rate', 'Column public.payroll_deduction.rate should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_deduction', 'rate', 'numeric', 'Column public.payroll_deduction.rate should be type numeric');
+RETURN NEXT col_not_null(     'public', 'payroll_deduction', 'rate', 'Column public.payroll_deduction.rate should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_deduction', 'rate', 'Column public.payroll_deduction.rate should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

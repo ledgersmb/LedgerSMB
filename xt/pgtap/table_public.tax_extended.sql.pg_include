@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_tax_extended()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'tax_extended',
+    'Should have table public.tax_extended'
+);
+
+RETURN NEXT has_pk(
+    'public', 'tax_extended',
+    'Table public.tax_extended should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'tax_extended'::name, ARRAY[
+    'tax_basis'::name,
+    'rate'::name,
+    'entry_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'tax_extended', 'tax_basis', 'Column public.tax_extended.tax_basis should exist');
+RETURN NEXT col_type_is(      'public', 'tax_extended', 'tax_basis', 'numeric', 'Column public.tax_extended.tax_basis should be type numeric');
+RETURN NEXT col_is_null(      'public', 'tax_extended', 'tax_basis', 'Column public.tax_extended.tax_basis should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'tax_extended', 'tax_basis', 'Column public.tax_extended.tax_basis should not have a default');
+
+RETURN NEXT has_column(       'public', 'tax_extended', 'rate', 'Column public.tax_extended.rate should exist');
+RETURN NEXT col_type_is(      'public', 'tax_extended', 'rate', 'numeric', 'Column public.tax_extended.rate should be type numeric');
+RETURN NEXT col_is_null(      'public', 'tax_extended', 'rate', 'Column public.tax_extended.rate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'tax_extended', 'rate', 'Column public.tax_extended.rate should not have a default');
+
+RETURN NEXT has_column(       'public', 'tax_extended', 'entry_id', 'Column public.tax_extended.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'tax_extended', 'entry_id', 'integer', 'Column public.tax_extended.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'tax_extended', 'entry_id', 'Column public.tax_extended.entry_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'tax_extended', 'entry_id', 'Column public.tax_extended.entry_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

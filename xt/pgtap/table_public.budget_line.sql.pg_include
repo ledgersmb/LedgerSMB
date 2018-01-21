@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_budget_line()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'budget_line',
+    'Should have table public.budget_line'
+);
+
+RETURN NEXT has_pk(
+    'public', 'budget_line',
+    'Table public.budget_line should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'budget_line'::name, ARRAY[
+    'budget_id'::name,
+    'account_id'::name,
+    'description'::name,
+    'amount'::name
+]);
+
+RETURN NEXT has_column(       'public', 'budget_line', 'budget_id', 'Column public.budget_line.budget_id should exist');
+RETURN NEXT col_type_is(      'public', 'budget_line', 'budget_id', 'integer', 'Column public.budget_line.budget_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_line', 'budget_id', 'Column public.budget_line.budget_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_line', 'budget_id', 'Column public.budget_line.budget_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_line', 'account_id', 'Column public.budget_line.account_id should exist');
+RETURN NEXT col_type_is(      'public', 'budget_line', 'account_id', 'integer', 'Column public.budget_line.account_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_line', 'account_id', 'Column public.budget_line.account_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_line', 'account_id', 'Column public.budget_line.account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_line', 'description', 'Column public.budget_line.description should exist');
+RETURN NEXT col_type_is(      'public', 'budget_line', 'description', 'text', 'Column public.budget_line.description should be type text');
+RETURN NEXT col_is_null(      'public', 'budget_line', 'description', 'Column public.budget_line.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_line', 'description', 'Column public.budget_line.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_line', 'amount', 'Column public.budget_line.amount should exist');
+RETURN NEXT col_type_is(      'public', 'budget_line', 'amount', 'numeric', 'Column public.budget_line.amount should be type numeric');
+RETURN NEXT col_not_null(     'public', 'budget_line', 'amount', 'Column public.budget_line.amount should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_line', 'amount', 'Column public.budget_line.amount should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,58 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_lsmb_sequence()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'lsmb_sequence',
+    'Should have table public.lsmb_sequence'
+);
+
+RETURN NEXT has_pk(
+    'public', 'lsmb_sequence',
+    'Table public.lsmb_sequence should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'lsmb_sequence'::name, ARRAY[
+    'label'::name,
+    'setting_key'::name,
+    'prefix'::name,
+    'suffix'::name,
+    'sequence'::name,
+    'accept_input'::name
+]);
+
+RETURN NEXT has_column(       'public', 'lsmb_sequence', 'label', 'Column public.lsmb_sequence.label should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_sequence', 'label', 'text', 'Column public.lsmb_sequence.label should be type text');
+RETURN NEXT col_not_null(     'public', 'lsmb_sequence', 'label', 'Column public.lsmb_sequence.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_sequence', 'label', 'Column public.lsmb_sequence.label should not have a default');
+
+RETURN NEXT has_column(       'public', 'lsmb_sequence', 'setting_key', 'Column public.lsmb_sequence.setting_key should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_sequence', 'setting_key', 'text', 'Column public.lsmb_sequence.setting_key should be type text');
+RETURN NEXT col_not_null(     'public', 'lsmb_sequence', 'setting_key', 'Column public.lsmb_sequence.setting_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_sequence', 'setting_key', 'Column public.lsmb_sequence.setting_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'lsmb_sequence', 'prefix', 'Column public.lsmb_sequence.prefix should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_sequence', 'prefix', 'text', 'Column public.lsmb_sequence.prefix should be type text');
+RETURN NEXT col_is_null(      'public', 'lsmb_sequence', 'prefix', 'Column public.lsmb_sequence.prefix should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_sequence', 'prefix', 'Column public.lsmb_sequence.prefix should not have a default');
+
+RETURN NEXT has_column(       'public', 'lsmb_sequence', 'suffix', 'Column public.lsmb_sequence.suffix should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_sequence', 'suffix', 'text', 'Column public.lsmb_sequence.suffix should be type text');
+RETURN NEXT col_is_null(      'public', 'lsmb_sequence', 'suffix', 'Column public.lsmb_sequence.suffix should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_sequence', 'suffix', 'Column public.lsmb_sequence.suffix should not have a default');
+
+RETURN NEXT has_column(       'public', 'lsmb_sequence', 'sequence', 'Column public.lsmb_sequence.sequence should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_sequence', 'sequence', 'text', 'Column public.lsmb_sequence.sequence should be type text');
+RETURN NEXT col_not_null(     'public', 'lsmb_sequence', 'sequence', 'Column public.lsmb_sequence.sequence should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'lsmb_sequence', 'sequence', 'Column public.lsmb_sequence.sequence shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'lsmb_sequence', 'sequence', '1'::text, 'Column public.lsmb_sequence.sequence default is');
+
+RETURN NEXT has_column(       'public', 'lsmb_sequence', 'accept_input', 'Column public.lsmb_sequence.accept_input should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_sequence', 'accept_input', 'boolean', 'Column public.lsmb_sequence.accept_input should be type boolean');
+RETURN NEXT col_is_null(      'public', 'lsmb_sequence', 'accept_input', 'Column public.lsmb_sequence.accept_input should allow NULL');
+RETURN NEXT col_has_default(  'public', 'lsmb_sequence', 'accept_input', 'Column public.lsmb_sequence.accept_input shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'lsmb_sequence', 'accept_input', 'true', 'Column public.lsmb_sequence.accept_input default is');
+
+END;
+$$ LANGUAGE plpgsql;

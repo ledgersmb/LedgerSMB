@@ -1,0 +1,40 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_mime_type()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'mime_type',
+    'Should have table public.mime_type'
+);
+
+RETURN NEXT has_pk(
+    'public', 'mime_type',
+    'Table public.mime_type should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'mime_type'::name, ARRAY[
+    'id'::name,
+    'mime_type'::name,
+    'invoice_include'::name
+]);
+
+RETURN NEXT has_column(       'public', 'mime_type', 'id', 'Column public.mime_type.id should exist');
+RETURN NEXT col_type_is(      'public', 'mime_type', 'id', 'integer', 'Column public.mime_type.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'mime_type', 'id', 'Column public.mime_type.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'mime_type', 'id', 'Column public.mime_type.id shouldhave a default');
+--SELECT col_default_is(   'public', 'mime_type', 'id', 'nextval(''mime_type_id_seq''::regclass)', 'Column public.mime_type.id default is');RETURN NEXT col_default_is(   'public', 'mime_type', 'id', 'nextval(''mime_type_id_seq''::regclass)', 'Column public.mime_type.id default is');
+
+RETURN NEXT has_column(       'public', 'mime_type', 'mime_type', 'Column public.mime_type.mime_type should exist');
+RETURN NEXT col_type_is(      'public', 'mime_type', 'mime_type', 'text', 'Column public.mime_type.mime_type should be type text');
+RETURN NEXT col_not_null(     'public', 'mime_type', 'mime_type', 'Column public.mime_type.mime_type should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'mime_type', 'mime_type', 'Column public.mime_type.mime_type should not have a default');
+
+RETURN NEXT has_column(       'public', 'mime_type', 'invoice_include', 'Column public.mime_type.invoice_include should exist');
+RETURN NEXT col_type_is(      'public', 'mime_type', 'invoice_include', 'boolean', 'Column public.mime_type.invoice_include should be type boolean');
+RETURN NEXT col_is_null(      'public', 'mime_type', 'invoice_include', 'Column public.mime_type.invoice_include should allow NULL');
+RETURN NEXT col_has_default(  'public', 'mime_type', 'invoice_include', 'Column public.mime_type.invoice_include shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'mime_type', 'invoice_include', 'false', 'Column public.mime_type.invoice_include default is');
+
+END;
+$$ LANGUAGE plpgsql;

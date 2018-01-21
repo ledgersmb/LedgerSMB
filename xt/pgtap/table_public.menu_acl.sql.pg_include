@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_menu_acl()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'menu_acl',
+    'Should have table public.menu_acl'
+);
+
+RETURN NEXT has_pk(
+    'public', 'menu_acl',
+    'Table public.menu_acl should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'menu_acl'::name, ARRAY[
+    'id'::name,
+    'role_name'::name,
+    'acl_type'::name,
+    'node_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'menu_acl', 'id', 'Column public.menu_acl.id should exist');
+RETURN NEXT col_type_is(      'public', 'menu_acl', 'id', 'integer', 'Column public.menu_acl.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'menu_acl', 'id', 'Column public.menu_acl.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'menu_acl', 'id', 'Column public.menu_acl.id shouldhave a default');
+--SELECT col_default_is(   'public', 'menu_acl', 'id', 'nextval(''menu_acl_id_seq''::regclass)', 'Column public.menu_acl.id default is');RETURN NEXT col_default_is(   'public', 'menu_acl', 'id', 'nextval(''menu_acl_id_seq''::regclass)', 'Column public.menu_acl.id default is');
+
+RETURN NEXT has_column(       'public', 'menu_acl', 'role_name', 'Column public.menu_acl.role_name should exist');
+RETURN NEXT col_type_is(      'public', 'menu_acl', 'role_name', 'character varying', 'Column public.menu_acl.role_name should be type character varying');
+RETURN NEXT col_not_null(     'public', 'menu_acl', 'role_name', 'Column public.menu_acl.role_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_acl', 'role_name', 'Column public.menu_acl.role_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_acl', 'acl_type', 'Column public.menu_acl.acl_type should exist');
+RETURN NEXT col_type_is(      'public', 'menu_acl', 'acl_type', 'character varying', 'Column public.menu_acl.acl_type should be type character varying');
+RETURN NEXT col_is_null(      'public', 'menu_acl', 'acl_type', 'Column public.menu_acl.acl_type should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_acl', 'acl_type', 'Column public.menu_acl.acl_type should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_acl', 'node_id', 'Column public.menu_acl.node_id should exist');
+RETURN NEXT col_type_is(      'public', 'menu_acl', 'node_id', 'integer', 'Column public.menu_acl.node_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'menu_acl', 'node_id', 'Column public.menu_acl.node_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_acl', 'node_id', 'Column public.menu_acl.node_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

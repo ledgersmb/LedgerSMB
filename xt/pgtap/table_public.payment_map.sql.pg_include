@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payment_map()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payment_map',
+    'Should have table public.payment_map'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payment_map',
+    'Table public.payment_map should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payment_map'::name, ARRAY[
+    'line_id'::name,
+    'pays'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payment_map', 'line_id', 'Column public.payment_map.line_id should exist');
+RETURN NEXT col_type_is(      'public', 'payment_map', 'line_id', 'integer', 'Column public.payment_map.line_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payment_map', 'line_id', 'Column public.payment_map.line_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payment_map', 'line_id', 'Column public.payment_map.line_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payment_map', 'pays', 'Column public.payment_map.pays should exist');
+RETURN NEXT col_type_is(      'public', 'payment_map', 'pays', 'integer', 'Column public.payment_map.pays should be type integer');
+RETURN NEXT col_not_null(     'public', 'payment_map', 'pays', 'Column public.payment_map.pays should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payment_map', 'pays', 'Column public.payment_map.pays should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

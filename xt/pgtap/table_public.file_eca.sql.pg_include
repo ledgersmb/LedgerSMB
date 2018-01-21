@@ -1,0 +1,76 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_file_eca()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'file_eca',
+    'Should have table public.file_eca'
+);
+
+RETURN NEXT has_pk(
+    'public', 'file_eca',
+    'Table public.file_eca should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'file_eca'::name, ARRAY[
+    'content'::name,
+    'mime_type_id'::name,
+    'file_name'::name,
+    'description'::name,
+    'uploaded_by'::name,
+    'uploaded_at'::name,
+    'id'::name,
+    'ref_key'::name,
+    'file_class'::name
+]);
+
+RETURN NEXT has_column(       'public', 'file_eca', 'content', 'Column public.file_eca.content should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'content', 'bytea', 'Column public.file_eca.content should be type bytea');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'content', 'Column public.file_eca.content should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'content', 'Column public.file_eca.content should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'mime_type_id', 'Column public.file_eca.mime_type_id should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'mime_type_id', 'integer', 'Column public.file_eca.mime_type_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'mime_type_id', 'Column public.file_eca.mime_type_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'mime_type_id', 'Column public.file_eca.mime_type_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'file_name', 'Column public.file_eca.file_name should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'file_name', 'text', 'Column public.file_eca.file_name should be type text');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'file_name', 'Column public.file_eca.file_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'file_name', 'Column public.file_eca.file_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'description', 'Column public.file_eca.description should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'description', 'text', 'Column public.file_eca.description should be type text');
+RETURN NEXT col_is_null(      'public', 'file_eca', 'description', 'Column public.file_eca.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'description', 'Column public.file_eca.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'uploaded_by', 'Column public.file_eca.uploaded_by should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'uploaded_by', 'integer', 'Column public.file_eca.uploaded_by should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'uploaded_by', 'Column public.file_eca.uploaded_by should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'uploaded_by', 'Column public.file_eca.uploaded_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'uploaded_at', 'Column public.file_eca.uploaded_at should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'uploaded_at', 'timestamp without time zone', 'Column public.file_eca.uploaded_at should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'uploaded_at', 'Column public.file_eca.uploaded_at should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'file_eca', 'uploaded_at', 'Column public.file_eca.uploaded_at shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'file_eca', 'uploaded_at', 'now()', 'Column public.file_eca.uploaded_at default is');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'id', 'Column public.file_eca.id should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'id', 'integer', 'Column public.file_eca.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'id', 'Column public.file_eca.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'file_eca', 'id', 'Column public.file_eca.id shouldhave a default');
+--SELECT col_default_is(   'public', 'file_eca', 'id', 'nextval(''file_base_id_seq''::regclass)', 'Column public.file_eca.id default is');RETURN NEXT col_default_is(   'public', 'file_eca', 'id', 'nextval(''file_base_id_seq''::regclass)', 'Column public.file_eca.id default is');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'ref_key', 'Column public.file_eca.ref_key should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'ref_key', 'integer', 'Column public.file_eca.ref_key should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'ref_key', 'Column public.file_eca.ref_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'ref_key', 'Column public.file_eca.ref_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_eca', 'file_class', 'Column public.file_eca.file_class should exist');
+RETURN NEXT col_type_is(      'public', 'file_eca', 'file_class', 'integer', 'Column public.file_eca.file_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_eca', 'file_class', 'Column public.file_eca.file_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_eca', 'file_class', 'Column public.file_eca.file_class should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

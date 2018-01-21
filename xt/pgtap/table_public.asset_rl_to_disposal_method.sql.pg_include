@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_asset_rl_to_disposal_method()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'asset_rl_to_disposal_method',
+    'Should have table public.asset_rl_to_disposal_method'
+);
+
+RETURN NEXT has_pk(
+    'public', 'asset_rl_to_disposal_method',
+    'Table public.asset_rl_to_disposal_method should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'asset_rl_to_disposal_method'::name, ARRAY[
+    'report_id'::name,
+    'asset_id'::name,
+    'disposal_method_id'::name,
+    'percent_disposed'::name
+]);
+
+RETURN NEXT has_column(       'public', 'asset_rl_to_disposal_method', 'report_id', 'Column public.asset_rl_to_disposal_method.report_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_rl_to_disposal_method', 'report_id', 'integer', 'Column public.asset_rl_to_disposal_method.report_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'asset_rl_to_disposal_method', 'report_id', 'Column public.asset_rl_to_disposal_method.report_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_rl_to_disposal_method', 'report_id', 'Column public.asset_rl_to_disposal_method.report_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_rl_to_disposal_method', 'asset_id', 'Column public.asset_rl_to_disposal_method.asset_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_rl_to_disposal_method', 'asset_id', 'integer', 'Column public.asset_rl_to_disposal_method.asset_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'asset_rl_to_disposal_method', 'asset_id', 'Column public.asset_rl_to_disposal_method.asset_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_rl_to_disposal_method', 'asset_id', 'Column public.asset_rl_to_disposal_method.asset_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_rl_to_disposal_method', 'disposal_method_id', 'Column public.asset_rl_to_disposal_method.disposal_method_id should exist');
+RETURN NEXT col_type_is(      'public', 'asset_rl_to_disposal_method', 'disposal_method_id', 'integer', 'Column public.asset_rl_to_disposal_method.disposal_method_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'asset_rl_to_disposal_method', 'disposal_method_id', 'Column public.asset_rl_to_disposal_method.disposal_method_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_rl_to_disposal_method', 'disposal_method_id', 'Column public.asset_rl_to_disposal_method.disposal_method_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'asset_rl_to_disposal_method', 'percent_disposed', 'Column public.asset_rl_to_disposal_method.percent_disposed should exist');
+RETURN NEXT col_type_is(      'public', 'asset_rl_to_disposal_method', 'percent_disposed', 'numeric', 'Column public.asset_rl_to_disposal_method.percent_disposed should be type numeric');
+RETURN NEXT col_is_null(      'public', 'asset_rl_to_disposal_method', 'percent_disposed', 'Column public.asset_rl_to_disposal_method.percent_disposed should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'asset_rl_to_disposal_method', 'percent_disposed', 'Column public.asset_rl_to_disposal_method.percent_disposed should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

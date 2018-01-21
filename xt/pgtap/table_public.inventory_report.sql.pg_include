@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_inventory_report()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'inventory_report',
+    'Should have table public.inventory_report'
+);
+
+RETURN NEXT has_pk(
+    'public', 'inventory_report',
+    'Table public.inventory_report should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'inventory_report'::name, ARRAY[
+    'id'::name,
+    'transdate'::name,
+    'source'::name,
+    'trans_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'inventory_report', 'id', 'Column public.inventory_report.id should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report', 'id', 'integer', 'Column public.inventory_report.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'inventory_report', 'id', 'Column public.inventory_report.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'inventory_report', 'id', 'Column public.inventory_report.id shouldhave a default');
+--SELECT col_default_is(   'public', 'inventory_report', 'id', 'nextval(''inventory_report_id_seq''::regclass)', 'Column public.inventory_report.id default is');RETURN NEXT col_default_is(   'public', 'inventory_report', 'id', 'nextval(''inventory_report_id_seq''::regclass)', 'Column public.inventory_report.id default is');
+
+RETURN NEXT has_column(       'public', 'inventory_report', 'transdate', 'Column public.inventory_report.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report', 'transdate', 'date', 'Column public.inventory_report.transdate should be type date');
+RETURN NEXT col_not_null(     'public', 'inventory_report', 'transdate', 'Column public.inventory_report.transdate should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report', 'transdate', 'Column public.inventory_report.transdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'inventory_report', 'source', 'Column public.inventory_report.source should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report', 'source', 'text', 'Column public.inventory_report.source should be type text');
+RETURN NEXT col_is_null(      'public', 'inventory_report', 'source', 'Column public.inventory_report.source should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report', 'source', 'Column public.inventory_report.source should not have a default');
+
+RETURN NEXT has_column(       'public', 'inventory_report', 'trans_id', 'Column public.inventory_report.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report', 'trans_id', 'integer', 'Column public.inventory_report.trans_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'inventory_report', 'trans_id', 'Column public.inventory_report.trans_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report', 'trans_id', 'Column public.inventory_report.trans_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,178 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_entity_credit_account()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'entity_credit_account',
+    'Should have table public.entity_credit_account'
+);
+
+RETURN NEXT has_pk(
+    'public', 'entity_credit_account',
+    'Table public.entity_credit_account should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'entity_credit_account'::name, ARRAY[
+    'id'::name,
+    'entity_id'::name,
+    'entity_class'::name,
+    'pay_to_name'::name,
+    'discount'::name,
+    'description'::name,
+    'discount_terms'::name,
+    'discount_account_id'::name,
+    'taxincluded'::name,
+    'creditlimit'::name,
+    'terms'::name,
+    'meta_number'::name,
+    'business_id'::name,
+    'language_code'::name,
+    'pricegroup_id'::name,
+    'curr'::name,
+    'startdate'::name,
+    'enddate'::name,
+    'threshold'::name,
+    'employee_id'::name,
+    'primary_contact'::name,
+    'ar_ap_account_id'::name,
+    'cash_account_id'::name,
+    'bank_account'::name,
+    'taxform_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'id', 'Column public.entity_credit_account.id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'id', 'integer', 'Column public.entity_credit_account.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_credit_account', 'id', 'Column public.entity_credit_account.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'id', 'Column public.entity_credit_account.id shouldhave a default');
+--SELECT col_default_is(   'public', 'entity_credit_account', 'id', 'nextval(''entity_credit_account_id_seq''::regclass)', 'Column public.entity_credit_account.id default is');RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'id', 'nextval(''entity_credit_account_id_seq''::regclass)', 'Column public.entity_credit_account.id default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'entity_id', 'Column public.entity_credit_account.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'entity_id', 'integer', 'Column public.entity_credit_account.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_credit_account', 'entity_id', 'Column public.entity_credit_account.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'entity_id', 'Column public.entity_credit_account.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'entity_class', 'Column public.entity_credit_account.entity_class should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'entity_class', 'integer', 'Column public.entity_credit_account.entity_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_credit_account', 'entity_class', 'Column public.entity_credit_account.entity_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'entity_class', 'Column public.entity_credit_account.entity_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'pay_to_name', 'Column public.entity_credit_account.pay_to_name should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'pay_to_name', 'text', 'Column public.entity_credit_account.pay_to_name should be type text');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'pay_to_name', 'Column public.entity_credit_account.pay_to_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'pay_to_name', 'Column public.entity_credit_account.pay_to_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'discount', 'Column public.entity_credit_account.discount should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'discount', 'numeric', 'Column public.entity_credit_account.discount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'discount', 'Column public.entity_credit_account.discount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'discount', 'Column public.entity_credit_account.discount should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'description', 'Column public.entity_credit_account.description should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'description', 'text', 'Column public.entity_credit_account.description should be type text');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'description', 'Column public.entity_credit_account.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'description', 'Column public.entity_credit_account.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'discount_terms', 'Column public.entity_credit_account.discount_terms should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'discount_terms', 'integer', 'Column public.entity_credit_account.discount_terms should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'discount_terms', 'Column public.entity_credit_account.discount_terms should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'discount_terms', 'Column public.entity_credit_account.discount_terms shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'discount_terms', '0', 'Column public.entity_credit_account.discount_terms default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'discount_account_id', 'Column public.entity_credit_account.discount_account_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'discount_account_id', 'integer', 'Column public.entity_credit_account.discount_account_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'discount_account_id', 'Column public.entity_credit_account.discount_account_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'discount_account_id', 'Column public.entity_credit_account.discount_account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'taxincluded', 'Column public.entity_credit_account.taxincluded should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'taxincluded', 'boolean', 'Column public.entity_credit_account.taxincluded should be type boolean');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'taxincluded', 'Column public.entity_credit_account.taxincluded should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'taxincluded', 'Column public.entity_credit_account.taxincluded shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'taxincluded', 'false', 'Column public.entity_credit_account.taxincluded default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'creditlimit', 'Column public.entity_credit_account.creditlimit should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'creditlimit', 'numeric', 'Column public.entity_credit_account.creditlimit should be type numeric');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'creditlimit', 'Column public.entity_credit_account.creditlimit should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'creditlimit', 'Column public.entity_credit_account.creditlimit shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'creditlimit', '0', 'Column public.entity_credit_account.creditlimit default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'terms', 'Column public.entity_credit_account.terms should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'terms', 'smallint', 'Column public.entity_credit_account.terms should be type smallint');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'terms', 'Column public.entity_credit_account.terms should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'terms', 'Column public.entity_credit_account.terms shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'terms', '0', 'Column public.entity_credit_account.terms default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'meta_number', 'Column public.entity_credit_account.meta_number should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'meta_number', 'character varying(32)', 'Column public.entity_credit_account.meta_number should be type character varying(32)');
+RETURN NEXT col_not_null(     'public', 'entity_credit_account', 'meta_number', 'Column public.entity_credit_account.meta_number should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'meta_number', 'Column public.entity_credit_account.meta_number should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'business_id', 'Column public.entity_credit_account.business_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'business_id', 'integer', 'Column public.entity_credit_account.business_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'business_id', 'Column public.entity_credit_account.business_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'business_id', 'Column public.entity_credit_account.business_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'language_code', 'Column public.entity_credit_account.language_code should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'language_code', 'character varying(6)', 'Column public.entity_credit_account.language_code should be type character varying(6)');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'language_code', 'Column public.entity_credit_account.language_code should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'language_code', 'Column public.entity_credit_account.language_code shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'language_code', 'en'::character varying, 'Column public.entity_credit_account.language_code default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'pricegroup_id', 'Column public.entity_credit_account.pricegroup_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'pricegroup_id', 'integer', 'Column public.entity_credit_account.pricegroup_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'pricegroup_id', 'Column public.entity_credit_account.pricegroup_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'pricegroup_id', 'Column public.entity_credit_account.pricegroup_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'curr', 'Column public.entity_credit_account.curr should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'curr', 'character(3)', 'Column public.entity_credit_account.curr should be type character(3)');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'curr', 'Column public.entity_credit_account.curr should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'curr', 'Column public.entity_credit_account.curr should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'startdate', 'Column public.entity_credit_account.startdate should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'startdate', 'date', 'Column public.entity_credit_account.startdate should be type date');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'startdate', 'Column public.entity_credit_account.startdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'startdate', 'Column public.entity_credit_account.startdate shouldhave a default');
+--SELECT col_default_is(   'public', 'entity_credit_account', 'startdate', '(''now''::text)::date', 'Column public.entity_credit_account.startdate default is');RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'startdate', '(''now''::text)::date', 'Column public.entity_credit_account.startdate default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'enddate', 'Column public.entity_credit_account.enddate should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'enddate', 'date', 'Column public.entity_credit_account.enddate should be type date');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'enddate', 'Column public.entity_credit_account.enddate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'enddate', 'Column public.entity_credit_account.enddate should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'threshold', 'Column public.entity_credit_account.threshold should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'threshold', 'numeric', 'Column public.entity_credit_account.threshold should be type numeric');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'threshold', 'Column public.entity_credit_account.threshold should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_credit_account', 'threshold', 'Column public.entity_credit_account.threshold shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_credit_account', 'threshold', '0', 'Column public.entity_credit_account.threshold default is');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'employee_id', 'Column public.entity_credit_account.employee_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'employee_id', 'integer', 'Column public.entity_credit_account.employee_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'employee_id', 'Column public.entity_credit_account.employee_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'employee_id', 'Column public.entity_credit_account.employee_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'primary_contact', 'Column public.entity_credit_account.primary_contact should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'primary_contact', 'integer', 'Column public.entity_credit_account.primary_contact should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'primary_contact', 'Column public.entity_credit_account.primary_contact should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'primary_contact', 'Column public.entity_credit_account.primary_contact should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'ar_ap_account_id', 'Column public.entity_credit_account.ar_ap_account_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'ar_ap_account_id', 'integer', 'Column public.entity_credit_account.ar_ap_account_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'ar_ap_account_id', 'Column public.entity_credit_account.ar_ap_account_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'ar_ap_account_id', 'Column public.entity_credit_account.ar_ap_account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'cash_account_id', 'Column public.entity_credit_account.cash_account_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'cash_account_id', 'integer', 'Column public.entity_credit_account.cash_account_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'cash_account_id', 'Column public.entity_credit_account.cash_account_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'cash_account_id', 'Column public.entity_credit_account.cash_account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'bank_account', 'Column public.entity_credit_account.bank_account should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'bank_account', 'integer', 'Column public.entity_credit_account.bank_account should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'bank_account', 'Column public.entity_credit_account.bank_account should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'bank_account', 'Column public.entity_credit_account.bank_account should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_credit_account', 'taxform_id', 'Column public.entity_credit_account.taxform_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_credit_account', 'taxform_id', 'integer', 'Column public.entity_credit_account.taxform_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_credit_account', 'taxform_id', 'Column public.entity_credit_account.taxform_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_credit_account', 'taxform_id', 'Column public.entity_credit_account.taxform_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_partsgroup()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'partsgroup',
+    'Should have table public.partsgroup'
+);
+
+RETURN NEXT has_pk(
+    'public', 'partsgroup',
+    'Table public.partsgroup should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'partsgroup'::name, ARRAY[
+    'id'::name,
+    'partsgroup'::name,
+    'parent'::name
+]);
+
+RETURN NEXT has_column(       'public', 'partsgroup', 'id', 'Column public.partsgroup.id should exist');
+RETURN NEXT col_type_is(      'public', 'partsgroup', 'id', 'integer', 'Column public.partsgroup.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partsgroup', 'id', 'Column public.partsgroup.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'partsgroup', 'id', 'Column public.partsgroup.id shouldhave a default');
+--SELECT col_default_is(   'public', 'partsgroup', 'id', 'nextval(''partsgroup_id_seq''::regclass)', 'Column public.partsgroup.id default is');RETURN NEXT col_default_is(   'public', 'partsgroup', 'id', 'nextval(''partsgroup_id_seq''::regclass)', 'Column public.partsgroup.id default is');
+
+RETURN NEXT has_column(       'public', 'partsgroup', 'partsgroup', 'Column public.partsgroup.partsgroup should exist');
+RETURN NEXT col_type_is(      'public', 'partsgroup', 'partsgroup', 'text', 'Column public.partsgroup.partsgroup should be type text');
+RETURN NEXT col_is_null(      'public', 'partsgroup', 'partsgroup', 'Column public.partsgroup.partsgroup should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsgroup', 'partsgroup', 'Column public.partsgroup.partsgroup should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsgroup', 'parent', 'Column public.partsgroup.parent should exist');
+RETURN NEXT col_type_is(      'public', 'partsgroup', 'parent', 'integer', 'Column public.partsgroup.parent should be type integer');
+RETURN NEXT col_is_null(      'public', 'partsgroup', 'parent', 'Column public.partsgroup.parent should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsgroup', 'parent', 'Column public.partsgroup.parent should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

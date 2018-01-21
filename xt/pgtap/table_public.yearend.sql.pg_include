@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_yearend()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'yearend',
+    'Should have table public.yearend'
+);
+
+RETURN NEXT has_pk(
+    'public', 'yearend',
+    'Table public.yearend should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'yearend'::name, ARRAY[
+    'trans_id'::name,
+    'reversed'::name,
+    'transdate'::name
+]);
+
+RETURN NEXT has_column(       'public', 'yearend', 'trans_id', 'Column public.yearend.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'yearend', 'trans_id', 'integer', 'Column public.yearend.trans_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'yearend', 'trans_id', 'Column public.yearend.trans_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'yearend', 'trans_id', 'Column public.yearend.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'yearend', 'reversed', 'Column public.yearend.reversed should exist');
+RETURN NEXT col_type_is(      'public', 'yearend', 'reversed', 'boolean', 'Column public.yearend.reversed should be type boolean');
+RETURN NEXT col_is_null(      'public', 'yearend', 'reversed', 'Column public.yearend.reversed should allow NULL');
+RETURN NEXT col_has_default(  'public', 'yearend', 'reversed', 'Column public.yearend.reversed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'yearend', 'reversed', 'false', 'Column public.yearend.reversed default is');
+
+RETURN NEXT has_column(       'public', 'yearend', 'transdate', 'Column public.yearend.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'yearend', 'transdate', 'date', 'Column public.yearend.transdate should be type date');
+RETURN NEXT col_is_null(      'public', 'yearend', 'transdate', 'Column public.yearend.transdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'yearend', 'transdate', 'Column public.yearend.transdate should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

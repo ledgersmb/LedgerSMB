@@ -1,0 +1,64 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_journal_line()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'journal_line',
+    'Should have table public.journal_line'
+);
+
+RETURN NEXT has_pk(
+    'public', 'journal_line',
+    'Table public.journal_line should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'journal_line'::name, ARRAY[
+    'id'::name,
+    'account_id'::name,
+    'journal_id'::name,
+    'amount'::name,
+    'cleared'::name,
+    'reconciliation_report'::name,
+    'line_type'::name
+]);
+
+RETURN NEXT has_column(       'public', 'journal_line', 'id', 'Column public.journal_line.id should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'id', 'integer', 'Column public.journal_line.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_line', 'id', 'Column public.journal_line.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_line', 'id', 'Column public.journal_line.id shouldhave a default');
+--SELECT col_default_is(   'public', 'journal_line', 'id', 'nextval(''journal_line_id_seq''::regclass)', 'Column public.journal_line.id default is');RETURN NEXT col_default_is(   'public', 'journal_line', 'id', 'nextval(''journal_line_id_seq''::regclass)', 'Column public.journal_line.id default is');
+
+RETURN NEXT has_column(       'public', 'journal_line', 'account_id', 'Column public.journal_line.account_id should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'account_id', 'integer', 'Column public.journal_line.account_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_line', 'account_id', 'Column public.journal_line.account_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_line', 'account_id', 'Column public.journal_line.account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_line', 'journal_id', 'Column public.journal_line.journal_id should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'journal_id', 'integer', 'Column public.journal_line.journal_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_line', 'journal_id', 'Column public.journal_line.journal_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_line', 'journal_id', 'Column public.journal_line.journal_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_line', 'amount', 'Column public.journal_line.amount should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'amount', 'numeric', 'Column public.journal_line.amount should be type numeric');
+RETURN NEXT col_not_null(     'public', 'journal_line', 'amount', 'Column public.journal_line.amount should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_line', 'amount', 'Column public.journal_line.amount should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_line', 'cleared', 'Column public.journal_line.cleared should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'cleared', 'boolean', 'Column public.journal_line.cleared should be type boolean');
+RETURN NEXT col_not_null(     'public', 'journal_line', 'cleared', 'Column public.journal_line.cleared should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_line', 'cleared', 'Column public.journal_line.cleared shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_line', 'cleared', 'false', 'Column public.journal_line.cleared default is');
+
+RETURN NEXT has_column(       'public', 'journal_line', 'reconciliation_report', 'Column public.journal_line.reconciliation_report should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'reconciliation_report', 'integer', 'Column public.journal_line.reconciliation_report should be type integer');
+RETURN NEXT col_is_null(      'public', 'journal_line', 'reconciliation_report', 'Column public.journal_line.reconciliation_report should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_line', 'reconciliation_report', 'Column public.journal_line.reconciliation_report should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_line', 'line_type', 'Column public.journal_line.line_type should exist');
+RETURN NEXT col_type_is(      'public', 'journal_line', 'line_type', 'text', 'Column public.journal_line.line_type should be type text');
+RETURN NEXT col_is_null(      'public', 'journal_line', 'line_type', 'Column public.journal_line.line_type should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_line', 'line_type', 'Column public.journal_line.line_type should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

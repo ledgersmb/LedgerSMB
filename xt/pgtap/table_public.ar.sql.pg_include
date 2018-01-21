@@ -1,0 +1,208 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_ar()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'ar',
+    'Should have table public.ar'
+);
+
+RETURN NEXT has_pk(
+    'public', 'ar',
+    'Table public.ar should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'ar'::name, ARRAY[
+    'id'::name,
+    'invnumber'::name,
+    'transdate'::name,
+    'entity_id'::name,
+    'taxincluded'::name,
+    'amount'::name,
+    'netamount'::name,
+    'duedate'::name,
+    'invoice'::name,
+    'shippingpoint'::name,
+    'terms'::name,
+    'notes'::name,
+    'curr'::name,
+    'ordnumber'::name,
+    'person_id'::name,
+    'till'::name,
+    'quonumber'::name,
+    'intnotes'::name,
+    'shipvia'::name,
+    'language_code'::name,
+    'ponumber'::name,
+    'on_hold'::name,
+    'reverse'::name,
+    'approved'::name,
+    'entity_credit_account'::name,
+    'force_closed'::name,
+    'description'::name,
+    'is_return'::name,
+    'crdate'::name,
+    'setting_sequence'::name
+]);
+
+RETURN NEXT has_column(       'public', 'ar', 'id', 'Column public.ar.id should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'id', 'integer', 'Column public.ar.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'ar', 'id', 'Column public.ar.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'id', 'Column public.ar.id shouldhave a default');
+--SELECT col_default_is(   'public', 'ar', 'id', 'nextval(''id''::regclass)', 'Column public.ar.id default is');RETURN NEXT col_default_is(   'public', 'ar', 'id', 'nextval(''id''::regclass)', 'Column public.ar.id default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'invnumber', 'Column public.ar.invnumber should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'invnumber', 'text', 'Column public.ar.invnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'invnumber', 'Column public.ar.invnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'invnumber', 'Column public.ar.invnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'transdate', 'Column public.ar.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'transdate', 'date', 'Column public.ar.transdate should be type date');
+RETURN NEXT col_is_null(      'public', 'ar', 'transdate', 'Column public.ar.transdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'transdate', 'Column public.ar.transdate shouldhave a default');
+--SELECT col_default_is(   'public', 'ar', 'transdate', '(''now''::text)::date', 'Column public.ar.transdate default is');RETURN NEXT col_default_is(   'public', 'ar', 'transdate', '(''now''::text)::date', 'Column public.ar.transdate default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'entity_id', 'Column public.ar.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'entity_id', 'integer', 'Column public.ar.entity_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'ar', 'entity_id', 'Column public.ar.entity_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'entity_id', 'Column public.ar.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'taxincluded', 'Column public.ar.taxincluded should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'taxincluded', 'boolean', 'Column public.ar.taxincluded should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'taxincluded', 'Column public.ar.taxincluded should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'taxincluded', 'Column public.ar.taxincluded should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'amount', 'Column public.ar.amount should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'amount', 'numeric', 'Column public.ar.amount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'ar', 'amount', 'Column public.ar.amount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'amount', 'Column public.ar.amount should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'netamount', 'Column public.ar.netamount should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'netamount', 'numeric', 'Column public.ar.netamount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'ar', 'netamount', 'Column public.ar.netamount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'netamount', 'Column public.ar.netamount should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'duedate', 'Column public.ar.duedate should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'duedate', 'date', 'Column public.ar.duedate should be type date');
+RETURN NEXT col_is_null(      'public', 'ar', 'duedate', 'Column public.ar.duedate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'duedate', 'Column public.ar.duedate should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'invoice', 'Column public.ar.invoice should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'invoice', 'boolean', 'Column public.ar.invoice should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'invoice', 'Column public.ar.invoice should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'invoice', 'Column public.ar.invoice shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'ar', 'invoice', 'false', 'Column public.ar.invoice default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'shippingpoint', 'Column public.ar.shippingpoint should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'shippingpoint', 'text', 'Column public.ar.shippingpoint should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'shippingpoint', 'Column public.ar.shippingpoint should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'shippingpoint', 'Column public.ar.shippingpoint should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'terms', 'Column public.ar.terms should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'terms', 'smallint', 'Column public.ar.terms should be type smallint');
+RETURN NEXT col_is_null(      'public', 'ar', 'terms', 'Column public.ar.terms should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'terms', 'Column public.ar.terms shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'ar', 'terms', '0', 'Column public.ar.terms default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'notes', 'Column public.ar.notes should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'notes', 'text', 'Column public.ar.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'notes', 'Column public.ar.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'notes', 'Column public.ar.notes should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'curr', 'Column public.ar.curr should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'curr', 'character(3)', 'Column public.ar.curr should be type character(3)');
+RETURN NEXT col_is_null(      'public', 'ar', 'curr', 'Column public.ar.curr should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'curr', 'Column public.ar.curr should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'ordnumber', 'Column public.ar.ordnumber should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'ordnumber', 'text', 'Column public.ar.ordnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'ordnumber', 'Column public.ar.ordnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'ordnumber', 'Column public.ar.ordnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'person_id', 'Column public.ar.person_id should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'person_id', 'integer', 'Column public.ar.person_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'ar', 'person_id', 'Column public.ar.person_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'person_id', 'Column public.ar.person_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'till', 'Column public.ar.till should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'till', 'character varying(20)', 'Column public.ar.till should be type character varying(20)');
+RETURN NEXT col_is_null(      'public', 'ar', 'till', 'Column public.ar.till should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'till', 'Column public.ar.till should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'quonumber', 'Column public.ar.quonumber should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'quonumber', 'text', 'Column public.ar.quonumber should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'quonumber', 'Column public.ar.quonumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'quonumber', 'Column public.ar.quonumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'intnotes', 'Column public.ar.intnotes should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'intnotes', 'text', 'Column public.ar.intnotes should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'intnotes', 'Column public.ar.intnotes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'intnotes', 'Column public.ar.intnotes should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'shipvia', 'Column public.ar.shipvia should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'shipvia', 'text', 'Column public.ar.shipvia should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'shipvia', 'Column public.ar.shipvia should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'shipvia', 'Column public.ar.shipvia should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'language_code', 'Column public.ar.language_code should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'language_code', 'character varying(6)', 'Column public.ar.language_code should be type character varying(6)');
+RETURN NEXT col_is_null(      'public', 'ar', 'language_code', 'Column public.ar.language_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'language_code', 'Column public.ar.language_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'ponumber', 'Column public.ar.ponumber should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'ponumber', 'text', 'Column public.ar.ponumber should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'ponumber', 'Column public.ar.ponumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'ponumber', 'Column public.ar.ponumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'on_hold', 'Column public.ar.on_hold should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'on_hold', 'boolean', 'Column public.ar.on_hold should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'on_hold', 'Column public.ar.on_hold should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'on_hold', 'Column public.ar.on_hold shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'ar', 'on_hold', 'false', 'Column public.ar.on_hold default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'reverse', 'Column public.ar.reverse should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'reverse', 'boolean', 'Column public.ar.reverse should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'reverse', 'Column public.ar.reverse should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'reverse', 'Column public.ar.reverse shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'ar', 'reverse', 'false', 'Column public.ar.reverse default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'approved', 'Column public.ar.approved should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'approved', 'boolean', 'Column public.ar.approved should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'approved', 'Column public.ar.approved should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'approved', 'Column public.ar.approved shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'ar', 'approved', 'true', 'Column public.ar.approved default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'entity_credit_account', 'Column public.ar.entity_credit_account should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'entity_credit_account', 'integer', 'Column public.ar.entity_credit_account should be type integer');
+RETURN NEXT col_not_null(     'public', 'ar', 'entity_credit_account', 'Column public.ar.entity_credit_account should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'entity_credit_account', 'Column public.ar.entity_credit_account should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'force_closed', 'Column public.ar.force_closed should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'force_closed', 'boolean', 'Column public.ar.force_closed should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'force_closed', 'Column public.ar.force_closed should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'force_closed', 'Column public.ar.force_closed should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'description', 'Column public.ar.description should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'description', 'text', 'Column public.ar.description should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'description', 'Column public.ar.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'description', 'Column public.ar.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'is_return', 'Column public.ar.is_return should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'is_return', 'boolean', 'Column public.ar.is_return should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ar', 'is_return', 'Column public.ar.is_return should allow NULL');
+RETURN NEXT col_has_default(  'public', 'ar', 'is_return', 'Column public.ar.is_return shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'ar', 'is_return', 'false', 'Column public.ar.is_return default is');
+
+RETURN NEXT has_column(       'public', 'ar', 'crdate', 'Column public.ar.crdate should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'crdate', 'date', 'Column public.ar.crdate should be type date');
+RETURN NEXT col_is_null(      'public', 'ar', 'crdate', 'Column public.ar.crdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'crdate', 'Column public.ar.crdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'ar', 'setting_sequence', 'Column public.ar.setting_sequence should exist');
+RETURN NEXT col_type_is(      'public', 'ar', 'setting_sequence', 'text', 'Column public.ar.setting_sequence should be type text');
+RETURN NEXT col_is_null(      'public', 'ar', 'setting_sequence', 'Column public.ar.setting_sequence should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ar', 'setting_sequence', 'Column public.ar.setting_sequence should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

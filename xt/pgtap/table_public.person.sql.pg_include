@@ -1,0 +1,76 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_person()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'person',
+    'Should have table public.person'
+);
+
+RETURN NEXT has_pk(
+    'public', 'person',
+    'Table public.person should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'person'::name, ARRAY[
+    'id'::name,
+    'entity_id'::name,
+    'salutation_id'::name,
+    'first_name'::name,
+    'middle_name'::name,
+    'last_name'::name,
+    'created'::name,
+    'birthdate'::name,
+    'personal_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'person', 'id', 'Column public.person.id should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'id', 'integer', 'Column public.person.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'person', 'id', 'Column public.person.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'person', 'id', 'Column public.person.id shouldhave a default');
+--SELECT col_default_is(   'public', 'person', 'id', 'nextval(''person_id_seq''::regclass)', 'Column public.person.id default is');RETURN NEXT col_default_is(   'public', 'person', 'id', 'nextval(''person_id_seq''::regclass)', 'Column public.person.id default is');
+
+RETURN NEXT has_column(       'public', 'person', 'entity_id', 'Column public.person.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'entity_id', 'integer', 'Column public.person.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'person', 'entity_id', 'Column public.person.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'entity_id', 'Column public.person.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'person', 'salutation_id', 'Column public.person.salutation_id should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'salutation_id', 'integer', 'Column public.person.salutation_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'person', 'salutation_id', 'Column public.person.salutation_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'salutation_id', 'Column public.person.salutation_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'person', 'first_name', 'Column public.person.first_name should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'first_name', 'text', 'Column public.person.first_name should be type text');
+RETURN NEXT col_not_null(     'public', 'person', 'first_name', 'Column public.person.first_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'first_name', 'Column public.person.first_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'person', 'middle_name', 'Column public.person.middle_name should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'middle_name', 'text', 'Column public.person.middle_name should be type text');
+RETURN NEXT col_is_null(      'public', 'person', 'middle_name', 'Column public.person.middle_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'middle_name', 'Column public.person.middle_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'person', 'last_name', 'Column public.person.last_name should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'last_name', 'text', 'Column public.person.last_name should be type text');
+RETURN NEXT col_not_null(     'public', 'person', 'last_name', 'Column public.person.last_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'last_name', 'Column public.person.last_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'person', 'created', 'Column public.person.created should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'created', 'date', 'Column public.person.created should be type date');
+RETURN NEXT col_not_null(     'public', 'person', 'created', 'Column public.person.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'person', 'created', 'Column public.person.created shouldhave a default');
+--SELECT col_default_is(   'public', 'person', 'created', '(''now''::text)::date', 'Column public.person.created default is');RETURN NEXT col_default_is(   'public', 'person', 'created', '(''now''::text)::date', 'Column public.person.created default is');
+
+RETURN NEXT has_column(       'public', 'person', 'birthdate', 'Column public.person.birthdate should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'birthdate', 'date', 'Column public.person.birthdate should be type date');
+RETURN NEXT col_is_null(      'public', 'person', 'birthdate', 'Column public.person.birthdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'birthdate', 'Column public.person.birthdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'person', 'personal_id', 'Column public.person.personal_id should exist');
+RETURN NEXT col_type_is(      'public', 'person', 'personal_id', 'text', 'Column public.person.personal_id should be type text');
+RETURN NEXT col_is_null(      'public', 'person', 'personal_id', 'Column public.person.personal_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'person', 'personal_id', 'Column public.person.personal_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

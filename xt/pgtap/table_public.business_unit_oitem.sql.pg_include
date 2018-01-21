@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_business_unit_oitem()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'business_unit_oitem',
+    'Should have table public.business_unit_oitem'
+);
+
+RETURN NEXT has_pk(
+    'public', 'business_unit_oitem',
+    'Table public.business_unit_oitem should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'business_unit_oitem'::name, ARRAY[
+    'entry_id'::name,
+    'class_id'::name,
+    'bu_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'business_unit_oitem', 'entry_id', 'Column public.business_unit_oitem.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit_oitem', 'entry_id', 'integer', 'Column public.business_unit_oitem.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit_oitem', 'entry_id', 'Column public.business_unit_oitem.entry_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit_oitem', 'entry_id', 'Column public.business_unit_oitem.entry_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit_oitem', 'class_id', 'Column public.business_unit_oitem.class_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit_oitem', 'class_id', 'integer', 'Column public.business_unit_oitem.class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit_oitem', 'class_id', 'Column public.business_unit_oitem.class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit_oitem', 'class_id', 'Column public.business_unit_oitem.class_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'business_unit_oitem', 'bu_id', 'Column public.business_unit_oitem.bu_id should exist');
+RETURN NEXT col_type_is(      'public', 'business_unit_oitem', 'bu_id', 'integer', 'Column public.business_unit_oitem.bu_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'business_unit_oitem', 'bu_id', 'Column public.business_unit_oitem.bu_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'business_unit_oitem', 'bu_id', 'Column public.business_unit_oitem.bu_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

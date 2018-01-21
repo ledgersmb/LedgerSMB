@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_person_to_company()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'person_to_company',
+    'Should have table public.person_to_company'
+);
+
+RETURN NEXT has_pk(
+    'public', 'person_to_company',
+    'Table public.person_to_company should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'person_to_company'::name, ARRAY[
+    'location_id'::name,
+    'person_id'::name,
+    'company_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'person_to_company', 'location_id', 'Column public.person_to_company.location_id should exist');
+RETURN NEXT col_type_is(      'public', 'person_to_company', 'location_id', 'integer', 'Column public.person_to_company.location_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'person_to_company', 'location_id', 'Column public.person_to_company.location_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'person_to_company', 'location_id', 'Column public.person_to_company.location_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'person_to_company', 'person_id', 'Column public.person_to_company.person_id should exist');
+RETURN NEXT col_type_is(      'public', 'person_to_company', 'person_id', 'integer', 'Column public.person_to_company.person_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'person_to_company', 'person_id', 'Column public.person_to_company.person_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'person_to_company', 'person_id', 'Column public.person_to_company.person_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'person_to_company', 'company_id', 'Column public.person_to_company.company_id should exist');
+RETURN NEXT col_type_is(      'public', 'person_to_company', 'company_id', 'integer', 'Column public.person_to_company.company_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'person_to_company', 'company_id', 'Column public.person_to_company.company_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'person_to_company', 'company_id', 'Column public.person_to_company.company_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

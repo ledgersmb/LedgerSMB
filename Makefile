@@ -43,15 +43,15 @@ RHEL_perlmodules += perl-namespace-autoclean perl-MooseX-NonMoose
 RHEL_perlmodules += perl-XML-Simple
 RHEL_perlmodules += perl-YAML perl-FCGI-ProcManager
 RHEL_feature_PDF := perl-TeX-Encode texlive
-RHEL_feature_PDF_utf8 := 
-RHEL_feature_OpenOffice := 
-RHEL_feature_XLS := 
+RHEL_feature_PDF_utf8 :=
+RHEL_feature_OpenOffice :=
+RHEL_feature_XLS :=
 
-FBSD_essential := 
-FBSD_perlmodules := 
-FBSD_feature_PDF := 
-FBSD_feature_OpenOffice := 
-FBSD_feature_XLS := 
+FBSD_essential :=
+FBSD_perlmodules :=
+FBSD_feature_PDF :=
+FBSD_feature_OpenOffice :=
+FBSD_feature_XLS :=
 
 APT_GET = sudo apt-get install
 YUM = sudo yum install
@@ -200,6 +200,7 @@ Help on using this Makefile
     - submodules   : Initialises and updates our git submodules
     - test         : Runs tests
     - devtest      : Runs all tests including development/author tests
+    - tapgen       : Compile Schema validation files
     - dist         : builds the release distribution archive
     - dependencies : Installs all dependencies including cpan ones. (except features)
                      Preferring system perl modules over cpan ones
@@ -468,6 +469,14 @@ devtest:
 	prove -Ilib t/*.t
 	prove -Ilib xt/*.t
 
+tapgen:
+	prove -Ilib xt/40-dbsetup.t
+	pg_tapgen --directory xt/pgtap --dbname lsmbinstalltest
+	find xt/pgtap -type f -name '*.sql' \
+        -execdir sh -c 'awk -f ../../tools/compile_pgtap.awk {} > {}.pg_include' \; \
+        -execdir rm {} \;
+	prove -Ilib xt/89-dropdb.t
+
 ########
 # todo list
 ########
@@ -477,13 +486,13 @@ devtest:
 # - postgres_access
 # - postgres_verify
 # - postgres (depends on postgres_*)
-# 
+#
 # - starman (adds system user and systemd script)
-# 
+#
 # - letsencrypt
-# 
+#
 # - nginx
-# 
+#
 # - apache
 # - httpd (defaults to nginx)
 # Oh, and the first to add would be
