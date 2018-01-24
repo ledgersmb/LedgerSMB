@@ -72,7 +72,7 @@ builder {
             my $env = shift;
 
             return [ 302,
-                     [ Location => '/login.pl' ],
+                     [ Location => 'login.pl' ],
                      [ '' ] ]
                          if $env->{PATH_INFO} eq '/';
 
