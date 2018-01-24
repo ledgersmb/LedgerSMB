@@ -225,7 +225,7 @@ sub setup_url_space {
                 my $env = shift;
 
                 return [ HTTP_FOUND,
-                         [ Location => '/login.pl' ],
+                         [ Location => 'login.pl' ],
                          [ '' ] ]
                              if $env->{PATH_INFO} eq '/';
 
