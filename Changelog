@@ -55,6 +55,20 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.16
+* Properly compute the last cleared balance on reconciliation (Yves L, #3405)
+* Fix regression reports not showing (PDF, etc) download links (Erik H, #3408)
+* Fix typo in SQL Ledger upgrade code (Erik H, #3409)
+* Add French Chart of Accounts (Yves L)
+* Lift requirement to enter sensitive private data when creating users (Erik H)
+* Fix absolute [New] link on order, AR and AP pages (Erik H)
+* Support non-root hosting by using relative '/' to 'login.pl' redirect (Erik H)
+* Paginate output when searches return over 1000 results (Erik H)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.5.15
 * Generate access logs on standard output by default (Erik H)
 * Fix cli scripts; block running as root in PSGI instead of Sysconfig (Erik H)
