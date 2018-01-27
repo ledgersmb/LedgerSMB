@@ -15,8 +15,33 @@ IF NOT QSTRING.match('&amp;company=');
 END;
 
 LINK = request.script _ '?' _ QSTRING;
-LINK = LINK.replace('\&amp;\&amp;', '&amp;');
+LINK = LINK.replace('&amp;&amp;', '&amp;');
 
+
+PAGINATED = request.paginate
+   OR (NOT request.paginate.defined AND rows.size > 1000);
+IF PAGINATED;
+   page=request.page.defined ? request.page : 1;
+   page_length=request.page_length.defined ? request.page_length : 100;
+   IF page_length > 1000;
+      page_length = 1000;
+   ELSIF page_length < 10;
+      page_length = 10;
+   END;
+
+   IF page < 0;
+      page = 1;
+   ELSIF rows.size < page * page_length;
+      page = 1;
+   END;
+
+   first_page_row = page * page_length;
+   last_page_row = (rows.size < (page+1)*page_length)
+            ? rows.size : (page+1)*page_length - 1;
+
+   rows = rows.slice(first_page_row, last_page_row);
+
+END;
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
@@ -54,6 +79,19 @@ END;
     END; ?>
 <?lsmb PROCESS dynatable tbody = {rows = rows }
                attributes = {class = 'report', order_url = order_url } ?>
+<?lsmb IF PAGINATED AND NOT request.paginate.defined ?>
+  <div>
+    <?lsmb text('Too many rows match your query; first 1000 lines returned'); ?>
+    <a href="<?lsmb LINK ?>&amp;paginate=0"><?lsmb text('Expand full match') ?></a>
+  </div>
+<?lsmb END ?>
+<?lsmb IF PAGINATED ?>
+  <div>
+    <a href="<?lsmb LINK.remove('&amp;page=[^&]+').remove('&amp;paginate=[^&]+') ?>&amp;page=<?lsmb page - 1 ?>"> &lt;<?lsmb text('Prev') ?> </a>
+    |
+    <a href="<?lsmb LINK.remove('&amp;page=[^&]+').remove('&amp;paginate=[^&]+') ?>&amp;page=<?lsmb page + 1 ?>"> <?lsmb text('Next') ?> &gt; </a>
+  </div>
+<?lsmb END ?>
 <div id="options">
 <?lsmb
 FOREACH OPTION IN options;
