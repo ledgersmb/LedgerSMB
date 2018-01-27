@@ -79,7 +79,6 @@ use LWP::Simple;
 
 use charnames qw(:full);
 use open ':utf8';
-use base qw(LedgerSMB::Request);
 use utf8;
 
 
