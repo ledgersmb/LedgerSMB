@@ -63,7 +63,6 @@ Changelog for 1.5.16
 * Lift requirement to enter sensitive private data when creating users (Erik H)
 * Fix absolute [New] link on order, AR and AP pages (Erik H)
 * Support non-root hosting by using relative '/' to 'login.pl' redirect (Erik H)
-* Paginate output when searches return over 1000 results (Erik H)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
