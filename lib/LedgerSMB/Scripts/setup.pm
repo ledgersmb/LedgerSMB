@@ -1131,7 +1131,6 @@ Saves the administrative user, and then directs to the login page.
 
 sub save_user {
     my ($request) = @_;
-    $request->requires(qw(first_name last_name ssn employeenumber));
     $request->{entity_class} = EC_EMPLOYEE;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     use LedgerSMB::Entity::Person::Employee;
