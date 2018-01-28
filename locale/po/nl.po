@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.16-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-07 21:05+0000\n"
+"POT-Creation-Date: 2018-01-28 18:02+0000\n"
 "Last-Translator: Jos <j.verdoold@gmail.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -311,6 +311,15 @@ msgstr "Rekeningen vanaf"
 msgid "Accounts To"
 msgstr "Rekeningen tot"
 
+#: lib/LedgerSMB/Upgrade_Tests.pm:439
+msgid "Accounts marked for recon -- once"
+msgstr ""
+
+#: lib/LedgerSMB/Upgrade_Tests.pm:454
+#, fuzzy
+msgid "Accounts marked for recon exist"
+msgstr "Rekening bestaat niet!"
+
 #: lib/LedgerSMB/Upgrade_Tests.pm:539 lib/LedgerSMB/Upgrade_Tests.pm:613
 msgid "Accounts without heading"
 msgstr "Rekeningen zonder groep"
@@ -548,7 +557,7 @@ msgstr "Boeking Toevoegen"
 msgid "Add Unit"
 msgstr "Eenheid toevoegen"
 
-#: UI/Contact/divs/employee.html:221 UI/Contact/divs/user.html:126
+#: UI/Contact/divs/employee.html:218 UI/Contact/divs/user.html:126
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:96
 msgid "Add User"
 msgstr "Gebruiker Toevoegen"
@@ -2011,7 +2020,7 @@ msgstr "Rapport maken"
 msgid "Create New Tax Form"
 msgstr "Belastingformulier maken"
 
-#: UI/setup/new_user.html:174
+#: UI/setup/new_user.html:171
 msgid "Create User"
 msgstr "Gebruiker maken"
 
@@ -2197,7 +2206,7 @@ msgstr "Dag Maand"
 msgid "DB admin login"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:168
+#: UI/Contact/divs/employee.html:166
 msgid "DOB"
 msgstr "Geb. datum"
 
@@ -2385,7 +2394,7 @@ msgstr "Datum gewerkt"
 msgid "Date from"
 msgstr "Datum vanaf"
 
-#: UI/Admin/user_search.html:51 UI/setup/new_user.html:135
+#: UI/Admin/user_search.html:51 UI/setup/new_user.html:134
 msgid "Date of Birth"
 msgstr "Geboortedatum"
 
@@ -3115,7 +3124,7 @@ msgstr "Dienst Wijzigen"
 msgid "Edit Tax Form"
 msgstr "Bewerken Belastingformulier"
 
-#: UI/Contact/divs/employee.html:214
+#: UI/Contact/divs/employee.html:211
 msgid "Edit User"
 msgstr "Gebruiker Wijzigen"
 
@@ -3230,7 +3239,7 @@ msgstr "Niet-gevulde leveranciersnummers"
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:68
 #: UI/budgetting/budget_entry.html:51 UI/business_units/edit.html:67
 #: UI/Contact/divs/credit.html:31 UI/Contact/divs/credit.html:122
-#: UI/Contact/divs/credit.html:123 UI/Contact/divs/employee.html:191
+#: UI/Contact/divs/credit.html:123 UI/Contact/divs/employee.html:188
 #: UI/Reports/filters/budget_search.html:54
 msgid "End Date"
 msgstr "Einddatum"
@@ -4795,7 +4804,7 @@ msgstr "Toekennen bevoegdheden aan gebruikers"
 #: bin/aa.pl:1497 lib/LedgerSMB/Report/Invoices/Outstanding.pm:267
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:323
 #: lib/LedgerSMB/Report/Orders.pm:267 UI/Contact/divs/employee.html:105
-#: UI/Contact/divs/employee.html:143
+#: UI/Contact/divs/employee.html:142
 #: UI/Reports/filters/invoice_outstanding.html:189
 #: UI/Reports/filters/invoice_search.html:300
 msgid "Manager"
@@ -6027,6 +6036,16 @@ msgstr "Kies een leverancier met beschikbaar overschotsaldo"
 msgid "Please submit a start/end time or a qty"
 msgstr "Vul een start/einddatum in of een hoeveelheid"
 
+#: lib/LedgerSMB/Upgrade_Tests.pm:458
+msgid ""
+"Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' "
+"table and change it to an existing value"
+msgstr ""
+
+#: lib/LedgerSMB/Upgrade_Tests.pm:443
+msgid "Please use pgAdmin3 or psql to remove the duplicates"
+msgstr ""
+
 #: lib/LedgerSMB/Upgrade_Tests.pm:388
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
@@ -7024,7 +7043,7 @@ msgstr "Zater"
 #: UI/business_units/edit.html:107 UI/business_units/list_classes.html:87
 #: UI/Configuration/sequence.html:10 UI/Configuration/sequence.html:119
 #: UI/Configuration/settings.html:74 UI/Contact/divs/bank_act.html:85
-#: UI/Contact/divs/company.html:181 UI/Contact/divs/employee.html:204
+#: UI/Contact/divs/company.html:181 UI/Contact/divs/employee.html:201
 #: UI/Contact/divs/notes.html:68 UI/Contact/divs/person.html:196
 #: UI/Contact/pricelist.html:96 UI/import_csv/import_csv.html:74
 #: UI/import_csv/import_inventory_csv.html:81
@@ -7119,7 +7138,7 @@ msgid "Scheduled"
 msgstr "Ingepland"
 
 #: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:538
-#: lib/LedgerSMB/Template.pm:311 UI/lib/utilities.html:44
+#: lib/LedgerSMB/Template.pm:310 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Scherm"
 
@@ -7753,7 +7772,7 @@ msgstr "Standaard Industiële Codes"
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:155
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:64
 #: UI/budgetting/budget_entry.html:41 UI/business_units/edit.html:59
-#: UI/Contact/divs/credit.html:30 UI/Contact/divs/employee.html:180
+#: UI/Contact/divs/credit.html:30 UI/Contact/divs/employee.html:177
 #: UI/Reports/filters/budget_search.html:44
 msgid "Start Date"
 msgstr "Startdatum"
@@ -8016,7 +8035,7 @@ msgstr "Belasting formulieren"
 msgid "Tax ID"
 msgstr "BTW#"
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:146
+#: UI/Contact/divs/employee.html:153 UI/setup/new_user.html:144
 msgid "Tax ID/SSN"
 msgstr "BTW/BSN#"
 
