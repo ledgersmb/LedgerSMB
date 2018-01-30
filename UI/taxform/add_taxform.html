@@ -13,7 +13,10 @@
           title = text('Create New Tax Form'); #'
        END ?> 
 <div class="listtop"><?lsmb title ?></div>
-<form data-dojo-type="lsmb/Form" name="add_taxform" method="post">
+<form data-dojo-type="lsmb/Form"
+      name="add_taxform"
+      method="post"
+      action="<?lsmb script ?>">
 <?lsmb PROCESS input element_data = {
     type = "hidden"
     name = "id"

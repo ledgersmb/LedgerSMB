@@ -93,7 +93,7 @@ This retrieves and edits a tax form.  Requires that id be set.
 
 sub edit {
     my ($request) = @_;
-    my $tf = LedgerSMB::DBObject::TaxForm->get($request->{id});
+    my $tf = LedgerSMB::DBObject::TaxForm->new(%$request)->get($request->{id});
     $request->merge($tf);
     _taxform_screen($request);
 }
