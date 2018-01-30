@@ -5,8 +5,7 @@ use Pod::ProjectDocs;
 
 my $pd = Pod::ProjectDocs->new(
     outroot => 'UI/pod',
-    except => [qr/^UI\/js(-src)?\/(dijit|dojo)/, qr/(blib|conf|dists|doc|.git|log|sql|utils|UI\/pod)/],
-    libroot => './',
+    libroot => './lib/',
     title   => 'LedgerSMB Documentation',
 );
 $pd->gen();

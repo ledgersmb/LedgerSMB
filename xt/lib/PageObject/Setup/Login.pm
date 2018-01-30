@@ -10,6 +10,7 @@ use PageObject::Setup::Admin;
 use Selenium::Remote::WDKeys;
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 __PACKAGE__->self_register(

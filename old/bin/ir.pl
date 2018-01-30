@@ -357,7 +357,7 @@ sub form_header {
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor value="$form->{vendor}" size=35>
-                 <a href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=1"
+                 <a href="login.pl?action=login&company=$form->{company}#contact.pl?action=add&entity_class=1"
                   target="new" id="new-contact">[|
                  .  $locale->text('New') . qq|]</a>|;
     }

@@ -8,28 +8,20 @@ use LedgerSMB::DBObject::Admin;
 use strict;
 use DBI;
 
-if ($ENV{LSMB_INSTALL_DB} && !$ENV{LSMB_NEW_DB}){
-   BAIL_OUT('Told to install db, but no LSMB_NEW_DB set.
+# This entire test suite will be skipped unless environment
+# variable LSMB_TEST_DB is true
+defined $ENV{LSMB_TEST_DB} or plan skip_all => 'LSMB_TEST_DB is not set';
 
-HINT:  Set LSMB_NEW_DB environment variable and try running again.');
-}
+# LSMB_NEW_DB must always be set for these tests to run. It specifies
+# the database used in running these tests. Unless LSMB_INSTALL_DB is true,
+# the database will be created when this test is run and later dropped
+# by xt/89-dropdb.t
+$ENV{LSMB_NEW_DB} or BAIL_OUT('LSMB_NEW_DB is not set');
 
 my $temp = $ENV{TEMP} || '/tmp/';
-my $run_tests = 1;
-for my $log (qw(dblog dblog_stderr dblog_stdout)){
-    unlink "$LedgerSMB::Sysconfig::tempdir/$log";
-}
-for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
-  if (!defined $ENV{$evar}){
-      $run_tests = 0;
-      plan skip_all => "$evar not set";
-  }
-}
 
-if ($run_tests){
-        plan tests => 20;
-        $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-}
+plan tests => 19;
+$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 
 my $db = LedgerSMB::Database->new({
          dbname       => $ENV{LSMB_NEW_DB},
@@ -42,12 +34,19 @@ ok($db->create, 'Database Created')
   || BAIL_OUT('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
 ok($db->apply_changes, 'applied changes');
-
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
+
 if (!$ENV{LSMB_INSTALL_DB}){
-    open (my $DBLOCK, '>', "$temp/LSMB_TEST_DB");
-    print $DBLOCK $ENV{LSMB_NEW_DB};
-    close ($DBLOCK);
+
+    # This lock file is used by xt/89-dropdb.t to determine
+    # whether to drop LSMB_TEST_DB
+    my $dblock_file = "$temp/LSMB_TEST_DB";
+    open (my $DBLOCK, '>', $dblock_file)
+        or BAIL_OUT("failed to open $dblock_file for writing : $!");
+    print $DBLOCK $ENV{LSMB_NEW_DB}
+        or BAIL_OUT("failed writing to $dblock_file : $!");
+    close ($DBLOCK)
+        or BAIL_OUT("failed to close $dblock_file after writing $!");
 }
 
 # Validate that we can copy the database
@@ -142,15 +141,6 @@ SKIP: {
       $dbh->commit;
 };
 
-open  my $log, '<', "$LedgerSMB::Sysconfig::tempdir/dblog";
-
-my $passed_no_errs = 1;
-while (my $line = <$log>){
-    last if $line =~ /Fixes/i; # Fixes roll back!
-    $passed_no_errs = 0 if $line =~ /Rollback/i;
-}
-
-is($passed_no_errs, 1, 'No rollbacks in db scripts');
 
 SKIP: {
      skip 'No COA specified', 1 if !defined $ENV{LSMB_LOAD_COA};

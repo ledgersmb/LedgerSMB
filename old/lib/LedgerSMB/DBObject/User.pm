@@ -97,11 +97,10 @@ sub change_my_password {
 
     $self->get unless $self->{user};
 
-    my $login = $self->{user}->{username};
     my $dbname = $self->{company};
 
     my $verify = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, $login, $self->{old_password}
+        qq|dbi:Pg:dbname="$dbname"|, $self->{login}, $self->{old_password}
     );
     if (!$verify){
         $self->error($self->{_locale}->text('Incorrect Password'));

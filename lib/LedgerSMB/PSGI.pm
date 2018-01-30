@@ -126,16 +126,15 @@ sub psgi_app {
            DBName  => $env->{'lsmb.company'},
            Locale  => $request->{_locale};
 
-        my $content_type = Plack::Util::header_get($headers, 'content-type');
-        push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
-            if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
-
         $request->{dbh}->commit if defined $request->{dbh};
     }
     catch {
         # The database setup middleware will roll back before disconnecting
         my $error = $_;
         if ($error !~ /^Died at/) {
+            $env->{'psgix.logger'}->({
+                level => 'error',
+                message => $_ });
             ($status, $headers, $body) =
                 @{LedgerSMB::PSGI::Util::internal_server_error(
                       $_, 'Error!',
@@ -197,11 +196,18 @@ sub setup_url_space {
                  if $development;
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
-        mount "/$_.pl" => $old_app
-            for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
+        mount "/$_.pl" => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            $old_app
+        }
+        for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
@@ -219,7 +225,7 @@ sub setup_url_space {
                 my $env = shift;
 
                 return [ HTTP_FOUND,
-                         [ Location => '/login.pl' ],
+                         [ Location => 'login.pl' ],
                          [ '' ] ]
                              if $env->{PATH_INFO} eq '/';
 

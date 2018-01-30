@@ -7,6 +7,7 @@ use Carp;
 use PageObject::App::Search;
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject::App::Search';
 
 my $page_heading = 'Search Requests for Quotation';

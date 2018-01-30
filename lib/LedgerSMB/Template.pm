@@ -506,7 +506,6 @@ sub _maketext {
 sub _render {
     my $self = shift;
     my $vars = shift;
-    $vars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
     $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
@@ -529,6 +528,7 @@ sub _render {
     my $escape = $format->can('escape');
     my $unescape = $format->can('unescape');
     my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
+    $cleanvars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $cleanvars->{escape} = sub { return $escape->(@_); };
     $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
         if ($unescape && !$self->{no_escape});

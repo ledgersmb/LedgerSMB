@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(58);
+    SELECT plan(62);
 
     -- Add data
 
@@ -38,6 +38,7 @@ BEGIN;
     SELECT has_function('reconciliation__get_current_balance',array['integer', 'date']);
     SELECT has_function('reconciliation__new_report_id',array['integer', 'numeric', 'date', 'boolean']);
     SELECT has_function('reconciliation__pending_transactions',array['integer', 'numeric']);
+    SELECT has_function('reconciliation__previous_report_date',ARRAY['integer','date']);
     SELECT has_function('reconciliation__reject_set',array['integer']);
     SELECT has_function('reconciliation__report_approve',array['integer']);
     SELECT has_function('reconciliation__report_details',array['integer']);
@@ -68,7 +69,11 @@ BEGIN;
     SELECT results_eq('test', Array[4], 'Transactions that should be in cr_report');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date, false);
+    PREPARE test AS SELECT reconciliation__previous_report_date(test_get_account_id('-11111'), now()::date);
+    SELECT results_eq('test', ARRAY[]::cr_report[], 'No previous report');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, '1001-01-01', false);
     SELECT results_eq('test', $$ SELECT id+1 FROM test_parameters $$, 'Create Recon Report');
     DEALLOCATE test;
 
@@ -76,7 +81,11 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Delete Recon Report');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date, false);
+    PREPARE test AS SELECT reconciliation__previous_report_date(test_get_account_id('-11111'), now()::date);
+    SELECT results_eq('test', ARRAY[]::cr_report[], 'Deleted previous report doesn''t show up');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, '1001-01-01', false);
     SELECT results_eq('test', $$ SELECT id+2 FROM test_parameters $$, 'Create Recon Report');
     DEALLOCATE test;
 
@@ -107,12 +116,16 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Report Submitted');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int));
-    SELECT results_eq('test',ARRAY[true],'Report Submitted');
+    PREPARE test AS SELECT reconciliation__previous_report_date(test_get_account_id('-11111'), '1001-01-01');
+    SELECT results_eq('test', ARRAY[]::cr_report[], 'No previous report before 1001-01-01');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__report_approve(currval('cr_report_id_seq')::int) > 0;
     SELECT results_eq('test',ARRAY[true],'1 Report Approved');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT end_date FROM reconciliation__previous_report_date(test_get_account_id('-11111'), '1001-01-02');
+    SELECT results_eq('test', ARRAY['1001-01-01']::date[], 'One previous report at 1001-01-01');
     DEALLOCATE test;
 
     PREPARE test as SELECT count(*)::int

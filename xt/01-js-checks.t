@@ -20,12 +20,13 @@ sub content_test {
     my ($filename) = @_;
 
     my ($fh, @tab_lines, @trailing_space_lines);
-    open $fh, '<', $filename;
+    open $fh, '<', $filename
+        or BAIL_OUT("failed to open $filename $!");
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;
         push @trailing_space_lines, ($.) if / $/;
     }
-    close $fh;
+    close $fh or diag("error closing $filename : $!");
     ok((! @tab_lines) && (! @trailing_space_lines),
        "Source critique for '$filename'");
     diag("Line# with tabs: " . (join ', ', @tab_lines)) if @tab_lines;

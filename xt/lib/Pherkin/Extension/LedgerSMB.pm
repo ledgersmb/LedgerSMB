@@ -21,6 +21,7 @@ use LedgerSMB::Entity::User;
 use Test::BDD::Cucumber::Extension;
 
 use Moose;
+use namespace::autoclean;
 extends 'Test::BDD::Cucumber::Extension';
 
 
@@ -312,4 +313,5 @@ INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
     }
 }
 
+__PACKAGE__->meta->make_immutable;
 1;

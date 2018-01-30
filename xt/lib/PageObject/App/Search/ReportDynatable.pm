@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 extends 'PageObject';
 
 __PACKAGE__->self_register(

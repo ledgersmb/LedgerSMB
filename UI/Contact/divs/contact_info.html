@@ -11,13 +11,13 @@ FOREACH ROW IN contacts;
     ROW.edit = '[' _ text('Edit') _ ']';
     ROW.delete = '[' _ text('Delete') _ ']';
     base_suffix =
-               "$request.script?entity_id=$entity_id&" _
+               "$request.script?entity_id=$entity_id&amp;" _
                "contact=" _ tt_url(ROW.contact) _
-               "&class_id=$ROW.class_id&" _
+               "&amp;class_id=$ROW.class_id&amp;" _
                "description=" _ tt_url(ROW.description) _
-               "&credit_id=$credit_act.id&for_credit=$ROW.credit_id&target_div=contact_info_div";
-    ROW.edit_href_suffix = base_suffix _ '&action=edit';
-    ROW.delete_href_suffix = base_suffix _ '&action=delete_contact';
+               "&amp;credit_id=$credit_act.id&amp;for_credit=$ROW.credit_id&amp;target_div=contact_info_div";
+    ROW.edit_href_suffix = base_suffix _ '&amp;action=edit';
+    ROW.delete_href_suffix = base_suffix _ '&amp;action=delete_contact';
     IF ROW.credit_id;
          ROW.for_credit = 'X';
     END;

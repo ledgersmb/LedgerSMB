@@ -39,6 +39,7 @@ sub internal_server_error {
     my ($msg, $title, $company, $dbversion) = @_;
 
     $title //= 'Error!';
+    $msg =~ s/\n/<br>/g;
     my @body_lines = ( '<html><body>',
                        q{<h2 class="error">Error!</h2>},
                        "<p><b>$msg</b></p>" );

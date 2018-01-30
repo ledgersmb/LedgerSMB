@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# t/98-pod-coverage.t
+# xt/08-pod-coverage.t
 #
 # Checks POD coverage.
 #
@@ -12,7 +12,17 @@ use Test::More; # plan automatically generated below
 use File::Find;
 use File::Util;
 
-plan skip_all => "POD_TESTING missing" if ! $ENV{POD_TESTING};
+# Only test with perl versions >= 5.20. Earlier versions of perl
+# handle constants in a way which causes Test::Pod::Coverage to
+# consider them naked subroutines.
+eval{require 5.20.0} or plan skip_all => 'perl version < 5.20.0';
+
+
+eval "use Test::Pod::Coverage";
+if ($@){
+    plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
+}
+
 
 my @on_disk;
 
@@ -38,27 +48,15 @@ sub collect {
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'lib/LedgerSMB.pm', 'lib/LedgerSMB/');
 
 # only check new code; we're scaling down on old code anyway
+find(\&collect, 'lib');
+
 @on_disk =
-    grep { ! m#^old/bin/# }
-    grep { ! m#^lib/LedgerSMB/..\.pm# }
-    grep { ! m#^lib/LedgerSMB/Form\.pm# }
-    grep { ! m#^lib/LedgerSMB/Auth/# }
-    grep { ! m#^lib/LedgerSMB/Num2text\.pm# } # LedgerSMB::Num2text is old code
     grep { ! m#^lib/LedgerSMB/Sysconfig.pm# } # LedgerSMB::Sysconfig false fail
     @on_disk;
 
-
-use Test::More;
-eval "use Test::Pod::Coverage";
-if ($@){
-    plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
-} else {
-    plan tests => scalar(@on_disk);
-}
-
+plan tests => scalar(@on_disk);
 
 # Copied from 01-load.t
 my @exception_modules =

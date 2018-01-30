@@ -4,11 +4,11 @@
      data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF request.target_div == 'files_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
-<?lsmb callback="contact.pl?action=get&entity_class=" _
-                credit_act.entity_class _ "&entity_id=" _ entity_id _
-                "&credit_id=" _ credit_act.id;
+<?lsmb callback="contact.pl?action=get&amp;entity_class=" _
+                credit_act.entity_class _ "&amp;entity_id=" _ entity_id _
+                "&amp;credit_id=" _ credit_act.id;
 columns = [{ col_id = 'file_name', name = text('File name'), #'
-               type = 'href', href_base="file.pl&action=get"}
+               type = 'href', href_base="file.pl&amp;action=get"}
            { col_id = 'mime_type', name = text('File Type'), #'
                type = 'text'}
            { col_id = 'uploaded_at', name = text('Attached At'), #'
@@ -19,7 +19,7 @@ columns = [{ col_id = 'file_name', name = text('File name'), #'
 <?lsmb
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
-            COL.href_base='file.pl?action=get&file_class=4&id=';
+            COL.href_base='file.pl?action=get&amp;file_class=4&amp;id=';
             COL.href_target='_download';
          END;
   END;
@@ -37,7 +37,7 @@ INCLUDE dynatable
 <?lsmb
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
-                  COL.href_base='file.pl?action=get&file_class=5&id=';
+                  COL.href_base='file.pl?action=get&amp;file_class=5&amp;id=';
          END;
   END;
   FOREACH ROW IN eca_files;
@@ -50,12 +50,12 @@ INCLUDE dynatable
       tbody = {rows = eca_files };
 END;
 ?>
-<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb entity_id
-         ?>&file_class=4&callback=<?lsmb tt_url(callback) ?>"
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb entity_id
+         ?>&amp;file_class=4&amp;callback=<?lsmb tt_url(callback) ?>"
 >[<?lsmb text('Attach to Entity') ?>]</a>
 <?lsmb IF credit_act.id ?>
-<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb credit_act.id
-    ?>&file_class=5&callback=<?lsmb tt_url(callback) ?>"
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb credit_act.id
+    ?>&amp;file_class=5&amp;callback=<?lsmb tt_url(callback) ?>"
 >[<?lsmb text('Attach to Credit Account') ?>]</a>
 <?lsmb END ?>
 </div>

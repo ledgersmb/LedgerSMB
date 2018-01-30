@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 extends 'Weasel::Element::Document';
 
 use Try::Tiny;
@@ -48,4 +49,5 @@ sub wait_for_body {
     return $self->body;
 }
 
+__PACKAGE__->meta->make_immutable;
 1;
