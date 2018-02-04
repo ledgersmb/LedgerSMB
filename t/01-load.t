@@ -59,6 +59,7 @@ my @modules =
           'LedgerSMB::File', 'LedgerSMB::Report',
           'LedgerSMB::Template', 'LedgerSMB::Legacy_Util',
           'LedgerSMB::Company_Config', 'LedgerSMB::Database',
+          'LedgerSMB::Database::ChangeChecks',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',

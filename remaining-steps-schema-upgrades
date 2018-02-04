@@ -9,3 +9,16 @@ Steps in the schema upgrade branch:
 - 
 
 - implement tests!
+  - t/16-schema-upgrade-precheck.t
+    - loading change files
+      * bail if required arguments haven't been provided to 'check'
+      - succeed with multiple checks defined in a single file
+      - TBD: fail if multiple checks in a file share the same title?
+    * run checks (with no real $dbh; no formatters)
+      * various combinations of succeeding and failing tests
+    *
+
+
+Legenda:
+ Starred items are done
+ Dashed items are to be done or in progress

@@ -1,11 +1,14 @@
 
-package LedgerSMB::Database::PreChecks;
+package LedgerSMB::Database::ChangeChecks;
+
+use strict;
+use warnings;
 
 use Exporter 'import';
 use File::Spec;
 use MIME::Base64;
 
-our @EXPORT = qw| check grid confirm save_grid dropdowns_sql |;
+our @EXPORT = qw| check grid confirm save_grid dropdowns_sql |; ## no critic
 our @EXPORT_OK = qw| run_checks load_checks |;
 
 our @checks;
@@ -86,13 +89,13 @@ SECURITY WARNING: Please note that the file indicated by C<$path> is
 sub load_checks {
     my ($path) = @_;
 
-    local @checks;
+    local @checks = ();
 
     # for security reasons only load files from absolute path locations
     $path = File::Spec->rel2abs($path)
         unless ref $path;
     {
-        package main;
+        package main; ## no critic
         # Run in the main package in order not to polute the check runner
         # package; pre-check files are supposed to declare their own package
         # name if they don't want to run in 'main'.
@@ -104,22 +107,19 @@ sub load_checks {
             my $content = <$path>;
             unless ( eval $content ) {
                 if ( $@ ) {
-                    warn "Failed to load the pre-check code: $@\n";
-                    die "Schema-upgrade pre-check failed.";
+                    die "Schema-upgrade pre-check failed: $@";
                 }
             }
         }
         elsif ( -e $path ) {
             unless ( do $path ) {
                 if ($! or $@) {
-                    warn "Failed to load pre-check-code $path ($!): $@\n";
-                    die "Schema-upgrade pre-check failed.";
+                    die "Schema-upgrade pre-check failed: $@";
                 }
             }
         }
         else {
-            warn "Indicated pre-check code does not exist: $path";
-            die "Schema-upgrade pre-check failed."
+            die "Schema-upgrade pre-check failed: '$path' doesn't exist"
         }
 
     }
@@ -194,7 +194,7 @@ The function returns the value(s) returned by C<$block>.
 =cut
 
 
-sub run_with_formatters(&$) {
+sub run_with_formatters(&$) { ## no critic
     my ($block, $formatters) = @_;
 
     local (*_describe, *_confirm, *_grid) =
@@ -305,7 +305,7 @@ to resolve the problem detected.
 
 sub _describe {
     # placeholder; bound to a real function by run_with_formatters()
-    die "'announce' can't be called outside run_with_formatters scope";
+    die q{'announce' can't be called outside run_with_formatters scope};
 }
 
 sub describe {
@@ -322,7 +322,7 @@ confirm the data entered.
 
 sub _confirm {
     # placeholder; bound to a real function by run_with_formatters()
-    die "'confirm' can't be called outside run_with_formatters scope";
+    die q{'confirm' can't be called outside run_with_formatters scope};
 }
 
 sub confirm {
@@ -378,7 +378,7 @@ For an example see the SYNOPSIS section above.
 
 sub _grid {
     # placeholder; bound to a real function by run_with_formatters()
-    die "'grid' can't be called outside run_with_formatters scope";
+    die q{'grid' can't be called outside run_with_formatters scope};
 }
 
 sub grid {
@@ -398,7 +398,7 @@ descriptions to be shown instead of the true values.
 sub dropdowns_sql {
     my ($dbh, $query) = @_;
 
-    my $sth = $dbh->prepare($query) or die $sth->errstr;
+    my $sth = $dbh->prepare($query) or die $dbh->errstr;
     $sth->execute                   or die $sth->errstr;
 
     return {
@@ -430,7 +430,7 @@ Used to access UI responses from elements named in the C<on_failure> phase.
 
 sub provided {
     # placeholder; bound to a real function by run_with_formatters()
-    die "'provided' can't be called outside run_with_formatters scope";
+    die q{'provided' can't be called outside run_with_formatters scope};
 }
 
 
@@ -471,7 +471,7 @@ sub save_grid {
         # the safe channel, only to find out if the unsafe channel provided replacement
         # data for it. That way, the unsafe channel can't be used to overwrite good data.
 
-        $sth->execute((map { $ui_row{$row->{__pk}}->{$_} } @fields),
+        $sth->execute((map { $ui_rows{$row->{__pk}}->{$_} } @fields),
                       (map { $row->{$_} } @$pk ))
             or die $sth->errstr;
     }
