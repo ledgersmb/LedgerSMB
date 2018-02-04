@@ -1,0 +1,11 @@
+Steps in the schema upgrade branch:
+
+** Separate commits to new infrastructure (can be squashed) from existing files!
+    (the latter can't be squashed, need to be descriptive commits to become part of project history)
+
+- change-application needs a data-source (to return values from the input form to the change applicator)
+- define all formatters
+- change all callees to die on error (and return status on failure)
+- 
+
+- implement tests!
