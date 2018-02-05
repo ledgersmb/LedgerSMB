@@ -187,7 +187,7 @@ sub run_checks {
 
 =item run_with_formatters($block, $formatters)
 
-Runs C<$block> in a context with C<$formatters) set up.
+Runs C<$block> in a context with C<$formatters> set up.
 
 The function returns the value(s) returned by C<$block>.
 

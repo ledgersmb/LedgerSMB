@@ -38,7 +38,7 @@ print $th $tests;
 $th->flush;
 lives_and(sub { is scalar &load_checks($th->filename), 0 },
           'Loading empty checks from file');
-close $th;
+close $th or die "Failed to close empty test file: $!";
 
 
 throws_ok(sub { &load_checks('/tmp/non-existant') },
