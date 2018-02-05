@@ -250,3 +250,5 @@ SKIP: {
         use_ok($_);
     }
 }
+
+done_testing;
