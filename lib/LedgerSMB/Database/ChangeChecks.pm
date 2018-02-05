@@ -8,8 +8,9 @@ use Exporter 'import';
 use File::Spec;
 use MIME::Base64;
 
-our @EXPORT = qw| check grid confirm save_grid dropdowns_sql |; ## no critic
-our @EXPORT_OK = qw| run_checks load_checks |;
+our @EXPORT = qw| check grid confirm describe save_grid
+ dropdowns_sql |; ## no critic
+our @EXPORT_OK = qw| run_with_formatters run_checks load_checks |;
 
 our @checks;
 
@@ -177,7 +178,7 @@ sub run_checks {
     my $checks = $args{checks};
 
     foreach my $c (@$checks) {
-        my $rc = _run_check($dbh, $check);
+        my $rc = _run_check($dbh, $c);
 
         return 0 if $rc;
     }
@@ -197,7 +198,8 @@ The function returns the value(s) returned by C<$block>.
 sub run_with_formatters(&$) { ## no critic
     my ($block, $formatters) = @_;
 
-    local (*_describe, *_confirm, *_grid) =
+    no warnings 'redefine';
+    local (*_describe, *_confirm, *_grid, *provided) =
         @{$formatters}{qw(describe confirm grid provided)};
 
     return $block->();
@@ -305,7 +307,7 @@ to resolve the problem detected.
 
 sub _describe {
     # placeholder; bound to a real function by run_with_formatters()
-    die q{'announce' can't be called outside run_with_formatters scope};
+    die q{'describe' can't be called outside run_with_formatters scope};
 }
 
 sub describe {

@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use DBI;
 use File::Temp qw( :seekable );
 use IO::Scalar;
 
@@ -10,7 +11,8 @@ use Test::More 'no_plan';
 use Test::Exception;
 
 
-use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
+use LedgerSMB::Database::ChangeChecks qw( :DEFAULT run_with_formatters
+       run_checks load_checks );
 
 
 #
@@ -180,7 +182,198 @@ throws_ok(sub { &load_checks($fh) }, qr/doesn't define 'on_failure'/,
 #
 #
 #
-#  Tests to assert that multiple checks can be defined in a single file
+#  Tests to assert successfully detecting failure and successful completion
 #
 
+# create a fake database handle...
+my $dbh = DBI->connect('DBI:Mock:', '', '');
 
+
+#
+# Single succeeding scenario
+
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'headers' ],
+        ],
+};
+
+lives_and( sub {
+    is &run_checks( $dbh,
+                    checks => [
+                        {
+                            query => 'something',
+                            on_failure => sub { die 'on_failure called?!' },
+                        },
+                    ]
+        ), 1
+    }, 'single completed check');
+
+
+
+#
+# Multiple succeeding scenarios
+
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'headers' ],
+        ],
+};
+$dbh->{mock_add_resultset} = {
+    sql     => 'something else',
+    results => [
+        [ 'headers' ],
+        ],
+};
+
+lives_and( sub {
+    is &run_checks( $dbh,
+                    checks => [
+                        {
+                            query => 'something',
+                            on_failure =>
+                                sub { die 'on_failure called?!' },
+                        },
+                        {
+                            query => 'something else',
+                            on_failure =>
+                                sub { die 'on_failure (2) called?!' },
+                        },
+                    ]
+        ), 1
+           }, 'multiple completed checks');
+
+
+#
+# Single failing scenario
+
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'headers' ],
+        [ 'failing row' ],
+        ],
+};
+
+my $result = undef;
+
+lives_and( sub {
+    is &run_checks( $dbh,
+                    checks => [
+                        {
+                            query => 'something',
+                            on_failure => sub { $result = 'called'; },
+                        },
+                    ]
+        ), 0
+    }, 'single failed check: indicates failure');
+
+is $result, 'called', 'single failed check: "on_failure" called';
+
+
+#
+# Multiple scenarios, first failing
+
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'headers' ],
+        [ 'failing row' ],
+        ],
+};
+# No need for a second resultset: it won't be queried...
+
+$result = [];
+lives_and( sub {
+    is &run_checks( $dbh,
+                    checks => [
+                        {
+                            query => 'something',
+                            on_failure =>
+                                sub { push @$result, 'called 1' },
+                        },
+                        {
+                            query => 'something else',
+                            on_failure =>
+                                sub { die 'on_failure (2) called?!' },
+                        },
+                    ]
+        ), 0
+           }, 'multiple checks, first failing');
+
+# second "on_failure" not called: processing aborted after first one
+is_deeply $result, [ 'called 1' ],
+    'multiple checks, first failing; "on_failure" called';
+
+
+#
+# Multiple scenarios, second failing
+
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'headers' ],
+        ],
+};
+$dbh->{mock_add_resultset} = {
+    sql     => 'something else',
+    results => [
+        [ 'headers' ],
+        [ 'failing row' ],
+        ],
+};
+
+$result = [];
+lives_and( sub {
+    is &run_checks( $dbh,
+                    checks => [
+                        {
+                            query => 'something',
+                            on_failure =>
+                                sub { push @$result, 'called 1' },
+                        },
+                        {
+                            query => 'something else',
+                            on_failure =>
+                                sub { push @$result, 'called 2' },
+                        },
+                    ]
+        ), 0
+           }, 'multiple checks, first failing');
+
+# first "on_failure" not called: query succeeded.
+is_deeply $result, [ 'called 2' ],
+    'multiple checks, first failing; "on_failure" called';
+
+
+
+#
+#
+#
+#  Tests to assert successful establishing of execution environment
+#
+
+throws_ok { confirm(); } qr/can't be called outside/,
+    '"confirm" throws error outside formatter-context';
+throws_ok { describe(); } qr/can't be called outside/,
+    '"describe" throws error outside formatter-context';
+throws_ok { grid(); } qr/can't be called outside/,
+    '"grid" throws error outside formatter-context';
+throws_ok { LedgerSMB::Database::ChangeChecks::provided(); }
+    qr/can't be called outside/,
+    '"provided" throws error outside formatter-context';
+
+run_with_formatters {
+    lives_ok { confirm(); } '"confirm" runs inside formatter-context';
+    lives_ok { describe(); } '"describe" runs inside formatter-context';
+    lives_ok { grid(); } '"grid" runs inside formatter-context';
+    lives_ok { LedgerSMB::Database::ChangeChecks::provided(); }
+    '"provided" runs inside formatter-context';
+} {
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+    provided => sub {},
+};
