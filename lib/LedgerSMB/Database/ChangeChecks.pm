@@ -8,8 +8,8 @@ use Exporter 'import';
 use File::Spec;
 use MIME::Base64;
 
-our @EXPORT = qw| check grid confirm describe save_grid
- dropdowns_sql |; ## no critic
+our @EXPORT =  ## no critic
+    qw| check grid confirm describe save_grid dropdowns_sql |;
 our @EXPORT_OK = qw| run_with_formatters run_checks load_checks |;
 
 our @checks;
@@ -198,7 +198,7 @@ The function returns the value(s) returned by C<$block>.
 sub run_with_formatters(&$) { ## no critic
     my ($block, $formatters) = @_;
 
-    no warnings 'redefine';
+    no warnings 'redefine'; ## no critic
     local (*_describe, *_confirm, *_grid, *provided) =
         @{$formatters}{qw(describe confirm grid provided)};
 
