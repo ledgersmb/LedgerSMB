@@ -452,14 +452,19 @@ sub save_grid {
     # assert that a name is provided
     # assert that a grid by that name has been defined
 
-    # don't take any risk: the sources providing the table name *are* dynamically loaded..
+    # don't take any risk:
+    # the sources providing the table name *are* dynamically loaded..
     my $table = $dbh->quote_identifier($check->{table}->{name});
     my $pk = $check->{table}->{primary_key};
     $pk = (ref $pk) ? $pk : [ $pk ];
 
     my @fields = @{$check->{grids}->{$name}};
-    my $set_fields = join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @fields);
-    my $where = join(' and ', map { $dbh->quote_identifier($_) . ' = ?' } @$pk);
+    my $set_fields = join(', ',
+                          map { $dbh->quote_identifier($_) . ' = ?' }
+                          @fields);
+    my $where = join(' and ',
+                     map { $dbh->quote_identifier($_) . ' = ?' }
+                     @$pk);
     my $query = qq|UPDATE $table
                       SET $set_fields
                     WHERE $where|;
@@ -470,8 +475,9 @@ sub save_grid {
 
     for my $row (grep { exists $ui_rows{$_->{__pk}} } @$failed_rows) {
         # note that we're *explicitly* iterating over the data provided through
-        # the safe channel, only to find out if the unsafe channel provided replacement
-        # data for it. That way, the unsafe channel can't be used to overwrite good data.
+        # the safe channel, only to find out if the unsafe channel
+        # provided replacement data for it. That way, the unsafe channel
+        # can't be used to overwrite good data.
 
         $sth->execute((map { $ui_rows{$row->{__pk}}->{$_} } @fields),
                       (map { $row->{$_} } @$pk ))
@@ -492,7 +498,7 @@ sub save_grid {
 sub _encode_pk {
     my ($row, $pk_fields) = @_;
 
-    return join(' ', map { defined $_ ? encode_base64($_) : '[n]' }
+    return join(' ', map { defined $_ ? encode_base64($_, '') : '[n]' }
                 map { $row->{$_} if exists $row->{$_}; } @$pk_fields);
 }
 

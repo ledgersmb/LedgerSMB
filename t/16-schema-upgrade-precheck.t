@@ -377,3 +377,24 @@ run_with_formatters {
     grid => sub {},
     provided => sub {},
 };
+
+
+#
+#
+#
+#  Tests to assert validity of internal helpers
+#
+
+my $encoded_pk =
+    LedgerSMB::Database::ChangeChecks::_encode_pk(
+        { num => 3, str => 'abc', not_avail => undef },
+        [ 'num', 'str', 'not_avail' ]
+    );
+print STDERR $encoded_pk;
+my %pk;
+@pk{('num', 'str', 'not_avail')} =
+    @{LedgerSMB::Database::ChangeChecks::_decode_pk($encoded_pk)};
+
+is LedgerSMB::Database::ChangeChecks::_encode_pk(
+    \%pk, [ 'num', 'str', 'not_avail' ]),
+    $encoded_pk, 'primary key encoding + decoding';
