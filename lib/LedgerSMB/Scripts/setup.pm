@@ -998,18 +998,22 @@ sub select_coa {
 
     my ($request) = @_;
 
-      if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
-          die $request->{_locale}->text('Access Denied');
-      }
+    if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
+        die $request->{_locale}->text('Access Denied');
+    }
 
     if ($request->{coa_lc}){
         if ($request->{chart}){
             my ($reauth, $database) = _get_database($request);
             return $reauth if $reauth;
 
-            $database->load_coa( {
-               country => $request->{coa_lc},
-               chart => $request->{chart} });
+            $database->load_coa(
+                {
+                    country => $request->{coa_lc},
+                    chart => $request->{chart},
+                    gifi => $request->{gifi},
+                    sic => $request->{sic}
+                });
 
            return template_screen($request);
         } else {
@@ -1019,6 +1023,25 @@ sub select_coa {
                 sort(grep !/^(\.|[Ss]ample.*)/,
                       readdir(CHART));
             closedir(CHART);
+
+            opendir(GIFI, "sql/coa/$request->{coa_lc}/gifi");
+            @{$request->{gifis}} =
+                map +{ name => $_ },
+                sort(grep !/^(\.|[Ss]ample.*)/,
+                      readdir(GIFI));
+            closedir(GIFI);
+
+            if (-e "sql/coa/$request->{coa_lc}/sic") {
+                opendir(SIC, "sql/coa/$request->{coa_lc}/sic");
+                @{$request->{sics}} =
+                    map +{ name => $_ },
+                    sort(grep !/^(\.|[Ss]ample.*)/,
+                         readdir(SIC));
+                closedir(SIC);
+            }
+            else {
+                @{$request->{sics}} = ();
+            }
        }
     } else {
         #COA Directories
