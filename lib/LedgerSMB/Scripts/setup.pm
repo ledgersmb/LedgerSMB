@@ -875,9 +875,13 @@ sub select_coa {
         if ($request->{chart}){
            my $database = _get_database($request);
 
-           $database->load_coa( {
+            $database->load_coa(
+                {
                country => $request->{coa_lc},
-               chart => $request->{chart} });
+                    chart => $request->{chart},
+                    gifi => $request->{gifi},
+                    sic => $request->{sic}
+                });
 
            template_screen($request);
            return;
@@ -888,6 +892,25 @@ sub select_coa {
                 sort(grep !/^(\.|[Ss]ample.*)/,
                       readdir(CHART));
             closedir(CHART);
+
+            opendir(GIFI, "sql/coa/$request->{coa_lc}/gifi");
+            @{$request->{gifis}} =
+                map +{ name => $_ },
+                sort(grep !/^(\.|[Ss]ample.*)/,
+                      readdir(GIFI));
+            closedir(GIFI);
+
+            if (-e "sql/coa/$request->{coa_lc}/sic") {
+                opendir(SIC, "sql/coa/$request->{coa_lc}/sic");
+                @{$request->{sics}} =
+                    map +{ name => $_ },
+                    sort(grep !/^(\.|[Ss]ample.*)/,
+                         readdir(SIC));
+                closedir(SIC);
+            }
+            else {
+                @{$request->{sics}} = ();
+            }
        }
     } else {
         #COA Directories
