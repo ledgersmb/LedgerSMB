@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_warehouse()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'warehouse',
+    'Should have table public.warehouse'
+);
+
+RETURN NEXT has_pk(
+    'public', 'warehouse',
+    'Table public.warehouse should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'warehouse'::name, ARRAY[
+    'id'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'warehouse', 'id', 'Column public.warehouse.id should exist');
+RETURN NEXT col_type_is(      'public', 'warehouse', 'id', 'integer', 'Column public.warehouse.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'warehouse', 'id', 'Column public.warehouse.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'warehouse', 'id', 'Column public.warehouse.id shouldhave a default');
+--SELECT col_default_is(   'public', 'warehouse', 'id', 'nextval(''warehouse_id_seq''::regclass)', 'Column public.warehouse.id default is');RETURN NEXT col_default_is(   'public', 'warehouse', 'id', 'nextval(''warehouse_id_seq''::regclass)', 'Column public.warehouse.id default is');
+
+RETURN NEXT has_column(       'public', 'warehouse', 'description', 'Column public.warehouse.description should exist');
+RETURN NEXT col_type_is(      'public', 'warehouse', 'description', 'text', 'Column public.warehouse.description should be type text');
+RETURN NEXT col_is_null(      'public', 'warehouse', 'description', 'Column public.warehouse.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'warehouse', 'description', 'Column public.warehouse.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

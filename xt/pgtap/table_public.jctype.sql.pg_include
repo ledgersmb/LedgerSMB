@@ -1,0 +1,52 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_jctype()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'jctype',
+    'Should have table public.jctype'
+);
+
+RETURN NEXT has_pk(
+    'public', 'jctype',
+    'Table public.jctype should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'jctype'::name, ARRAY[
+    'id'::name,
+    'label'::name,
+    'description'::name,
+    'is_service'::name,
+    'is_timecard'::name
+]);
+
+RETURN NEXT has_column(       'public', 'jctype', 'id', 'Column public.jctype.id should exist');
+RETURN NEXT col_type_is(      'public', 'jctype', 'id', 'integer', 'Column public.jctype.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'jctype', 'id', 'Column public.jctype.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jctype', 'id', 'Column public.jctype.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'jctype', 'label', 'Column public.jctype.label should exist');
+RETURN NEXT col_type_is(      'public', 'jctype', 'label', 'text', 'Column public.jctype.label should be type text');
+RETURN NEXT col_not_null(     'public', 'jctype', 'label', 'Column public.jctype.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jctype', 'label', 'Column public.jctype.label should not have a default');
+
+RETURN NEXT has_column(       'public', 'jctype', 'description', 'Column public.jctype.description should exist');
+RETURN NEXT col_type_is(      'public', 'jctype', 'description', 'text', 'Column public.jctype.description should be type text');
+RETURN NEXT col_not_null(     'public', 'jctype', 'description', 'Column public.jctype.description should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'jctype', 'description', 'Column public.jctype.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'jctype', 'is_service', 'Column public.jctype.is_service should exist');
+RETURN NEXT col_type_is(      'public', 'jctype', 'is_service', 'boolean', 'Column public.jctype.is_service should be type boolean');
+RETURN NEXT col_is_null(      'public', 'jctype', 'is_service', 'Column public.jctype.is_service should allow NULL');
+RETURN NEXT col_has_default(  'public', 'jctype', 'is_service', 'Column public.jctype.is_service shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'jctype', 'is_service', 'true', 'Column public.jctype.is_service default is');
+
+RETURN NEXT has_column(       'public', 'jctype', 'is_timecard', 'Column public.jctype.is_timecard should exist');
+RETURN NEXT col_type_is(      'public', 'jctype', 'is_timecard', 'boolean', 'Column public.jctype.is_timecard should be type boolean');
+RETURN NEXT col_is_null(      'public', 'jctype', 'is_timecard', 'Column public.jctype.is_timecard should allow NULL');
+RETURN NEXT col_has_default(  'public', 'jctype', 'is_timecard', 'Column public.jctype.is_timecard shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'jctype', 'is_timecard', 'true', 'Column public.jctype.is_timecard default is');
+
+END;
+$$ LANGUAGE plpgsql;

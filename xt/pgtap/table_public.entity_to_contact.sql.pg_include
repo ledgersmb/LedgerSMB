@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_entity_to_contact()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'entity_to_contact',
+    'Should have table public.entity_to_contact'
+);
+
+RETURN NEXT has_pk(
+    'public', 'entity_to_contact',
+    'Table public.entity_to_contact should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'entity_to_contact'::name, ARRAY[
+    'entity_id'::name,
+    'contact_class_id'::name,
+    'contact'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'entity_to_contact', 'entity_id', 'Column public.entity_to_contact.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_to_contact', 'entity_id', 'integer', 'Column public.entity_to_contact.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_to_contact', 'entity_id', 'Column public.entity_to_contact.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_to_contact', 'entity_id', 'Column public.entity_to_contact.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_to_contact', 'contact_class_id', 'Column public.entity_to_contact.contact_class_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_to_contact', 'contact_class_id', 'integer', 'Column public.entity_to_contact.contact_class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_to_contact', 'contact_class_id', 'Column public.entity_to_contact.contact_class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_to_contact', 'contact_class_id', 'Column public.entity_to_contact.contact_class_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_to_contact', 'contact', 'Column public.entity_to_contact.contact should exist');
+RETURN NEXT col_type_is(      'public', 'entity_to_contact', 'contact', 'text', 'Column public.entity_to_contact.contact should be type text');
+RETURN NEXT col_not_null(     'public', 'entity_to_contact', 'contact', 'Column public.entity_to_contact.contact should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_to_contact', 'contact', 'Column public.entity_to_contact.contact should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_to_contact', 'description', 'Column public.entity_to_contact.description should exist');
+RETURN NEXT col_type_is(      'public', 'entity_to_contact', 'description', 'text', 'Column public.entity_to_contact.description should be type text');
+RETURN NEXT col_is_null(      'public', 'entity_to_contact', 'description', 'Column public.entity_to_contact.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_to_contact', 'description', 'Column public.entity_to_contact.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

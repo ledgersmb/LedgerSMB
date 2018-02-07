@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_oe_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'oe_class',
+    'Should have table public.oe_class'
+);
+
+RETURN NEXT has_pk(
+    'public', 'oe_class',
+    'Table public.oe_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'oe_class'::name, ARRAY[
+    'id'::name,
+    'oe_class'::name
+]);
+
+RETURN NEXT has_column(       'public', 'oe_class', 'id', 'Column public.oe_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'oe_class', 'id', 'smallint', 'Column public.oe_class.id should be type smallint');
+RETURN NEXT col_is_null(      'public', 'oe_class', 'id', 'Column public.oe_class.id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe_class', 'id', 'Column public.oe_class.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe_class', 'oe_class', 'Column public.oe_class.oe_class should exist');
+RETURN NEXT col_type_is(      'public', 'oe_class', 'oe_class', 'text', 'Column public.oe_class.oe_class should be type text');
+RETURN NEXT col_not_null(     'public', 'oe_class', 'oe_class', 'Column public.oe_class.oe_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'oe_class', 'oe_class', 'Column public.oe_class.oe_class should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,51 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_account_heading()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'account_heading',
+    'Should have table public.account_heading'
+);
+
+RETURN NEXT has_pk(
+    'public', 'account_heading',
+    'Table public.account_heading should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'account_heading'::name, ARRAY[
+    'id'::name,
+    'accno'::name,
+    'parent_id'::name,
+    'description'::name,
+    'category'::name
+]);
+
+RETURN NEXT has_column(       'public', 'account_heading', 'id', 'Column public.account_heading.id should exist');
+RETURN NEXT col_type_is(      'public', 'account_heading', 'id', 'integer', 'Column public.account_heading.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'account_heading', 'id', 'Column public.account_heading.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account_heading', 'id', 'Column public.account_heading.id shouldhave a default');
+--SELECT col_default_is(   'public', 'account_heading', 'id', 'nextval(''account_heading_id_seq''::regclass)', 'Column public.account_heading.id default is');RETURN NEXT col_default_is(   'public', 'account_heading', 'id', 'nextval(''account_heading_id_seq''::regclass)', 'Column public.account_heading.id default is');
+
+RETURN NEXT has_column(       'public', 'account_heading', 'accno', 'Column public.account_heading.accno should exist');
+RETURN NEXT col_type_is(      'public', 'account_heading', 'accno', 'text', 'Column public.account_heading.accno should be type text');
+RETURN NEXT col_not_null(     'public', 'account_heading', 'accno', 'Column public.account_heading.accno should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_heading', 'accno', 'Column public.account_heading.accno should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_heading', 'parent_id', 'Column public.account_heading.parent_id should exist');
+RETURN NEXT col_type_is(      'public', 'account_heading', 'parent_id', 'integer', 'Column public.account_heading.parent_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'account_heading', 'parent_id', 'Column public.account_heading.parent_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account_heading', 'parent_id', 'Column public.account_heading.parent_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_heading', 'description', 'Column public.account_heading.description should exist');
+RETURN NEXT col_type_is(      'public', 'account_heading', 'description', 'text', 'Column public.account_heading.description should be type text');
+RETURN NEXT col_is_null(      'public', 'account_heading', 'description', 'Column public.account_heading.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account_heading', 'description', 'Column public.account_heading.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_heading', 'category', 'Column public.account_heading.category should exist');
+RETURN NEXT col_type_is(      'public', 'account_heading', 'category', 'character(1)', 'Column public.account_heading.category should be type character(1)');
+RETURN NEXT col_is_null(      'public', 'account_heading', 'category', 'Column public.account_heading.category should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account_heading', 'category', 'Column public.account_heading.category should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

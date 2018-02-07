@@ -1,0 +1,89 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_location()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'location',
+    'Should have table public.location'
+);
+
+RETURN NEXT has_pk(
+    'public', 'location',
+    'Table public.location should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'location'::name, ARRAY[
+    'id'::name,
+    'line_one'::name,
+    'line_two'::name,
+    'line_three'::name,
+    'city'::name,
+    'state'::name,
+    'country_id'::name,
+    'mail_code'::name,
+    'created'::name,
+    'inactive_date'::name,
+    'active'::name
+]);
+
+RETURN NEXT has_column(       'public', 'location', 'id', 'Column public.location.id should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'id', 'integer', 'Column public.location.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'location', 'id', 'Column public.location.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'location', 'id', 'Column public.location.id shouldhave a default');
+--SELECT col_default_is(   'public', 'location', 'id', 'nextval(''location_id_seq''::regclass)', 'Column public.location.id default is');RETURN NEXT col_default_is(   'public', 'location', 'id', 'nextval(''location_id_seq''::regclass)', 'Column public.location.id default is');
+
+RETURN NEXT has_column(       'public', 'location', 'line_one', 'Column public.location.line_one should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'line_one', 'text', 'Column public.location.line_one should be type text');
+RETURN NEXT col_not_null(     'public', 'location', 'line_one', 'Column public.location.line_one should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'line_one', 'Column public.location.line_one should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'line_two', 'Column public.location.line_two should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'line_two', 'text', 'Column public.location.line_two should be type text');
+RETURN NEXT col_is_null(      'public', 'location', 'line_two', 'Column public.location.line_two should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'line_two', 'Column public.location.line_two should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'line_three', 'Column public.location.line_three should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'line_three', 'text', 'Column public.location.line_three should be type text');
+RETURN NEXT col_is_null(      'public', 'location', 'line_three', 'Column public.location.line_three should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'line_three', 'Column public.location.line_three should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'city', 'Column public.location.city should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'city', 'text', 'Column public.location.city should be type text');
+RETURN NEXT col_not_null(     'public', 'location', 'city', 'Column public.location.city should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'city', 'Column public.location.city should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'state', 'Column public.location.state should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'state', 'text', 'Column public.location.state should be type text');
+RETURN NEXT col_is_null(      'public', 'location', 'state', 'Column public.location.state should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'state', 'Column public.location.state should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'country_id', 'Column public.location.country_id should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'country_id', 'integer', 'Column public.location.country_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'location', 'country_id', 'Column public.location.country_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'country_id', 'Column public.location.country_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'mail_code', 'Column public.location.mail_code should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'mail_code', 'text', 'Column public.location.mail_code should be type text');
+RETURN NEXT col_is_null(      'public', 'location', 'mail_code', 'Column public.location.mail_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'mail_code', 'Column public.location.mail_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'created', 'Column public.location.created should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'created', 'date', 'Column public.location.created should be type date');
+RETURN NEXT col_not_null(     'public', 'location', 'created', 'Column public.location.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'location', 'created', 'Column public.location.created shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'location', 'created', 'now()', 'Column public.location.created default is');
+
+RETURN NEXT has_column(       'public', 'location', 'inactive_date', 'Column public.location.inactive_date should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'inactive_date', 'timestamp without time zone', 'Column public.location.inactive_date should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'location', 'inactive_date', 'Column public.location.inactive_date should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'location', 'inactive_date', 'Column public.location.inactive_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'location', 'active', 'Column public.location.active should exist');
+RETURN NEXT col_type_is(      'public', 'location', 'active', 'boolean', 'Column public.location.active should be type boolean');
+RETURN NEXT col_not_null(     'public', 'location', 'active', 'Column public.location.active should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'location', 'active', 'Column public.location.active shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'location', 'active', 'true', 'Column public.location.active default is');
+
+END;
+$$ LANGUAGE plpgsql;

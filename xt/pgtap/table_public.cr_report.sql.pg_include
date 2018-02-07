@@ -1,0 +1,119 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_cr_report()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'cr_report',
+    'Should have table public.cr_report'
+);
+
+RETURN NEXT has_pk(
+    'public', 'cr_report',
+    'Table public.cr_report should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'cr_report'::name, ARRAY[
+    'id'::name,
+    'chart_id'::name,
+    'their_total'::name,
+    'approved'::name,
+    'submitted'::name,
+    'end_date'::name,
+    'updated'::name,
+    'entered_by'::name,
+    'entered_username'::name,
+    'deleted'::name,
+    'deleted_by'::name,
+    'approved_by'::name,
+    'approved_username'::name,
+    'recon_fx'::name,
+    'max_ac_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'cr_report', 'id', 'Column public.cr_report.id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'id', 'bigint', 'Column public.cr_report.id should be type bigint');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'id', 'Column public.cr_report.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'id', 'Column public.cr_report.id shouldhave a default');
+--SELECT col_default_is(   'public', 'cr_report', 'id', 'nextval(''cr_report_id_seq''::regclass)', 'Column public.cr_report.id default is');RETURN NEXT col_default_is(   'public', 'cr_report', 'id', 'nextval(''cr_report_id_seq''::regclass)', 'Column public.cr_report.id default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'chart_id', 'Column public.cr_report.chart_id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'chart_id', 'integer', 'Column public.cr_report.chart_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'chart_id', 'Column public.cr_report.chart_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report', 'chart_id', 'Column public.cr_report.chart_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'their_total', 'Column public.cr_report.their_total should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'their_total', 'numeric', 'Column public.cr_report.their_total should be type numeric');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'their_total', 'Column public.cr_report.their_total should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report', 'their_total', 'Column public.cr_report.their_total should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'approved', 'Column public.cr_report.approved should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'approved', 'boolean', 'Column public.cr_report.approved should be type boolean');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'approved', 'Column public.cr_report.approved should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'approved', 'Column public.cr_report.approved shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'approved', 'false', 'Column public.cr_report.approved default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'submitted', 'Column public.cr_report.submitted should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'submitted', 'boolean', 'Column public.cr_report.submitted should be type boolean');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'submitted', 'Column public.cr_report.submitted should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'submitted', 'Column public.cr_report.submitted shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'submitted', 'false', 'Column public.cr_report.submitted default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'end_date', 'Column public.cr_report.end_date should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'end_date', 'date', 'Column public.cr_report.end_date should be type date');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'end_date', 'Column public.cr_report.end_date should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'end_date', 'Column public.cr_report.end_date shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'end_date', 'now()', 'Column public.cr_report.end_date default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'updated', 'Column public.cr_report.updated should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'updated', 'timestamp without time zone', 'Column public.cr_report.updated should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'updated', 'Column public.cr_report.updated should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'updated', 'Column public.cr_report.updated shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'updated', 'now()', 'Column public.cr_report.updated default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'entered_by', 'Column public.cr_report.entered_by should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'entered_by', 'integer', 'Column public.cr_report.entered_by should be type integer');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'entered_by', 'Column public.cr_report.entered_by should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'entered_by', 'Column public.cr_report.entered_by shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'entered_by', 'person__get_my_entity_id()', 'Column public.cr_report.entered_by default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'entered_username', 'Column public.cr_report.entered_username should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'entered_username', 'text', 'Column public.cr_report.entered_username should be type text');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'entered_username', 'Column public.cr_report.entered_username should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'entered_username', 'Column public.cr_report.entered_username shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'entered_username', '"session_user"()', 'Column public.cr_report.entered_username default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'deleted', 'Column public.cr_report.deleted should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'deleted', 'boolean', 'Column public.cr_report.deleted should be type boolean');
+RETURN NEXT col_not_null(     'public', 'cr_report', 'deleted', 'Column public.cr_report.deleted should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'deleted', 'Column public.cr_report.deleted shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'deleted', 'false', 'Column public.cr_report.deleted default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'deleted_by', 'Column public.cr_report.deleted_by should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'deleted_by', 'integer', 'Column public.cr_report.deleted_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'cr_report', 'deleted_by', 'Column public.cr_report.deleted_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report', 'deleted_by', 'Column public.cr_report.deleted_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'approved_by', 'Column public.cr_report.approved_by should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'approved_by', 'integer', 'Column public.cr_report.approved_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'cr_report', 'approved_by', 'Column public.cr_report.approved_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report', 'approved_by', 'Column public.cr_report.approved_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'approved_username', 'Column public.cr_report.approved_username should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'approved_username', 'text', 'Column public.cr_report.approved_username should be type text');
+RETURN NEXT col_is_null(      'public', 'cr_report', 'approved_username', 'Column public.cr_report.approved_username should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report', 'approved_username', 'Column public.cr_report.approved_username should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'recon_fx', 'Column public.cr_report.recon_fx should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'recon_fx', 'boolean', 'Column public.cr_report.recon_fx should be type boolean');
+RETURN NEXT col_is_null(      'public', 'cr_report', 'recon_fx', 'Column public.cr_report.recon_fx should allow NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report', 'recon_fx', 'Column public.cr_report.recon_fx shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report', 'recon_fx', 'false', 'Column public.cr_report.recon_fx default is');
+
+RETURN NEXT has_column(       'public', 'cr_report', 'max_ac_id', 'Column public.cr_report.max_ac_id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report', 'max_ac_id', 'integer', 'Column public.cr_report.max_ac_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'cr_report', 'max_ac_id', 'Column public.cr_report.max_ac_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report', 'max_ac_id', 'Column public.cr_report.max_ac_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

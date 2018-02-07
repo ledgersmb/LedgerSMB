@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_taxmodule()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'taxmodule',
+    'Should have table public.taxmodule'
+);
+
+RETURN NEXT has_pk(
+    'public', 'taxmodule',
+    'Table public.taxmodule should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'taxmodule'::name, ARRAY[
+    'taxmodule_id'::name,
+    'taxmodulename'::name
+]);
+
+RETURN NEXT has_column(       'public', 'taxmodule', 'taxmodule_id', 'Column public.taxmodule.taxmodule_id should exist');
+RETURN NEXT col_type_is(      'public', 'taxmodule', 'taxmodule_id', 'integer', 'Column public.taxmodule.taxmodule_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'taxmodule', 'taxmodule_id', 'Column public.taxmodule.taxmodule_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'taxmodule', 'taxmodule_id', 'Column public.taxmodule.taxmodule_id shouldhave a default');
+--SELECT col_default_is(   'public', 'taxmodule', 'taxmodule_id', 'nextval(''taxmodule_taxmodule_id_seq''::regclass)', 'Column public.taxmodule.taxmodule_id default is');RETURN NEXT col_default_is(   'public', 'taxmodule', 'taxmodule_id', 'nextval(''taxmodule_taxmodule_id_seq''::regclass)', 'Column public.taxmodule.taxmodule_id default is');
+
+RETURN NEXT has_column(       'public', 'taxmodule', 'taxmodulename', 'Column public.taxmodule.taxmodulename should exist');
+RETURN NEXT col_type_is(      'public', 'taxmodule', 'taxmodulename', 'text', 'Column public.taxmodule.taxmodulename should be type text');
+RETURN NEXT col_not_null(     'public', 'taxmodule', 'taxmodulename', 'Column public.taxmodule.taxmodulename should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'taxmodule', 'taxmodulename', 'Column public.taxmodule.taxmodulename should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

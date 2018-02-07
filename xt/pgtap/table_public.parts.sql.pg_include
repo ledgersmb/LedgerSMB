@@ -1,0 +1,190 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_parts()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'parts',
+    'Should have table public.parts'
+);
+
+RETURN NEXT has_pk(
+    'public', 'parts',
+    'Table public.parts should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'parts'::name, ARRAY[
+    'id'::name,
+    'partnumber'::name,
+    'description'::name,
+    'unit'::name,
+    'listprice'::name,
+    'sellprice'::name,
+    'lastcost'::name,
+    'priceupdate'::name,
+    'weight'::name,
+    'onhand'::name,
+    'notes'::name,
+    'makemodel'::name,
+    'assembly'::name,
+    'alternate'::name,
+    'rop'::name,
+    'inventory_accno_id'::name,
+    'income_accno_id'::name,
+    'expense_accno_id'::name,
+    'returns_accno_id'::name,
+    'bin'::name,
+    'obsolete'::name,
+    'bom'::name,
+    'image'::name,
+    'drawing'::name,
+    'microfiche'::name,
+    'partsgroup_id'::name,
+    'avgcost'::name
+]);
+
+RETURN NEXT has_column(       'public', 'parts', 'id', 'Column public.parts.id should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'id', 'integer', 'Column public.parts.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'parts', 'id', 'Column public.parts.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'id', 'Column public.parts.id shouldhave a default');
+--SELECT col_default_is(   'public', 'parts', 'id', 'nextval(''parts_id_seq''::regclass)', 'Column public.parts.id default is');RETURN NEXT col_default_is(   'public', 'parts', 'id', 'nextval(''parts_id_seq''::regclass)', 'Column public.parts.id default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'partnumber', 'Column public.parts.partnumber should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'partnumber', 'text', 'Column public.parts.partnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'partnumber', 'Column public.parts.partnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'partnumber', 'Column public.parts.partnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'description', 'Column public.parts.description should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'description', 'text', 'Column public.parts.description should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'description', 'Column public.parts.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'description', 'Column public.parts.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'unit', 'Column public.parts.unit should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'unit', 'character varying(5)', 'Column public.parts.unit should be type character varying(5)');
+RETURN NEXT col_is_null(      'public', 'parts', 'unit', 'Column public.parts.unit should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'unit', 'Column public.parts.unit should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'listprice', 'Column public.parts.listprice should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'listprice', 'numeric', 'Column public.parts.listprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'listprice', 'Column public.parts.listprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'listprice', 'Column public.parts.listprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'sellprice', 'Column public.parts.sellprice should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'sellprice', 'numeric', 'Column public.parts.sellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'sellprice', 'Column public.parts.sellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'sellprice', 'Column public.parts.sellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'lastcost', 'Column public.parts.lastcost should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'lastcost', 'numeric', 'Column public.parts.lastcost should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'lastcost', 'Column public.parts.lastcost should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'lastcost', 'Column public.parts.lastcost should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'priceupdate', 'Column public.parts.priceupdate should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'priceupdate', 'date', 'Column public.parts.priceupdate should be type date');
+RETURN NEXT col_is_null(      'public', 'parts', 'priceupdate', 'Column public.parts.priceupdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'priceupdate', 'Column public.parts.priceupdate shouldhave a default');
+--SELECT col_default_is(   'public', 'parts', 'priceupdate', '(''now''::text)::date', 'Column public.parts.priceupdate default is');RETURN NEXT col_default_is(   'public', 'parts', 'priceupdate', '(''now''::text)::date', 'Column public.parts.priceupdate default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'weight', 'Column public.parts.weight should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'weight', 'numeric', 'Column public.parts.weight should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'weight', 'Column public.parts.weight should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'weight', 'Column public.parts.weight should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'onhand', 'Column public.parts.onhand should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'onhand', 'numeric', 'Column public.parts.onhand should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'onhand', 'Column public.parts.onhand should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'onhand', 'Column public.parts.onhand shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'parts', 'onhand', '0', 'Column public.parts.onhand default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'notes', 'Column public.parts.notes should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'notes', 'text', 'Column public.parts.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'notes', 'Column public.parts.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'notes', 'Column public.parts.notes should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'makemodel', 'Column public.parts.makemodel should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'makemodel', 'boolean', 'Column public.parts.makemodel should be type boolean');
+RETURN NEXT col_is_null(      'public', 'parts', 'makemodel', 'Column public.parts.makemodel should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'makemodel', 'Column public.parts.makemodel shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'parts', 'makemodel', 'false', 'Column public.parts.makemodel default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'assembly', 'Column public.parts.assembly should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'assembly', 'boolean', 'Column public.parts.assembly should be type boolean');
+RETURN NEXT col_is_null(      'public', 'parts', 'assembly', 'Column public.parts.assembly should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'assembly', 'Column public.parts.assembly shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'parts', 'assembly', 'false', 'Column public.parts.assembly default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'alternate', 'Column public.parts.alternate should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'alternate', 'boolean', 'Column public.parts.alternate should be type boolean');
+RETURN NEXT col_is_null(      'public', 'parts', 'alternate', 'Column public.parts.alternate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'alternate', 'Column public.parts.alternate shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'parts', 'alternate', 'false', 'Column public.parts.alternate default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'rop', 'Column public.parts.rop should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'rop', 'numeric', 'Column public.parts.rop should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'rop', 'Column public.parts.rop should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'rop', 'Column public.parts.rop should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'inventory_accno_id', 'Column public.parts.inventory_accno_id should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'inventory_accno_id', 'integer', 'Column public.parts.inventory_accno_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'parts', 'inventory_accno_id', 'Column public.parts.inventory_accno_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'inventory_accno_id', 'Column public.parts.inventory_accno_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'income_accno_id', 'Column public.parts.income_accno_id should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'income_accno_id', 'integer', 'Column public.parts.income_accno_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'parts', 'income_accno_id', 'Column public.parts.income_accno_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'income_accno_id', 'Column public.parts.income_accno_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'expense_accno_id', 'Column public.parts.expense_accno_id should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'expense_accno_id', 'integer', 'Column public.parts.expense_accno_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'parts', 'expense_accno_id', 'Column public.parts.expense_accno_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'expense_accno_id', 'Column public.parts.expense_accno_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'returns_accno_id', 'Column public.parts.returns_accno_id should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'returns_accno_id', 'integer', 'Column public.parts.returns_accno_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'parts', 'returns_accno_id', 'Column public.parts.returns_accno_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'returns_accno_id', 'Column public.parts.returns_accno_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'bin', 'Column public.parts.bin should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'bin', 'text', 'Column public.parts.bin should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'bin', 'Column public.parts.bin should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'bin', 'Column public.parts.bin should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'obsolete', 'Column public.parts.obsolete should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'obsolete', 'boolean', 'Column public.parts.obsolete should be type boolean');
+RETURN NEXT col_is_null(      'public', 'parts', 'obsolete', 'Column public.parts.obsolete should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'obsolete', 'Column public.parts.obsolete shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'parts', 'obsolete', 'false', 'Column public.parts.obsolete default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'bom', 'Column public.parts.bom should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'bom', 'boolean', 'Column public.parts.bom should be type boolean');
+RETURN NEXT col_is_null(      'public', 'parts', 'bom', 'Column public.parts.bom should allow NULL');
+RETURN NEXT col_has_default(  'public', 'parts', 'bom', 'Column public.parts.bom shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'parts', 'bom', 'false', 'Column public.parts.bom default is');
+
+RETURN NEXT has_column(       'public', 'parts', 'image', 'Column public.parts.image should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'image', 'text', 'Column public.parts.image should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'image', 'Column public.parts.image should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'image', 'Column public.parts.image should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'drawing', 'Column public.parts.drawing should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'drawing', 'text', 'Column public.parts.drawing should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'drawing', 'Column public.parts.drawing should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'drawing', 'Column public.parts.drawing should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'microfiche', 'Column public.parts.microfiche should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'microfiche', 'text', 'Column public.parts.microfiche should be type text');
+RETURN NEXT col_is_null(      'public', 'parts', 'microfiche', 'Column public.parts.microfiche should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'microfiche', 'Column public.parts.microfiche should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'partsgroup_id', 'Column public.parts.partsgroup_id should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'partsgroup_id', 'integer', 'Column public.parts.partsgroup_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'parts', 'partsgroup_id', 'Column public.parts.partsgroup_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'partsgroup_id', 'Column public.parts.partsgroup_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'parts', 'avgcost', 'Column public.parts.avgcost should exist');
+RETURN NEXT col_type_is(      'public', 'parts', 'avgcost', 'numeric', 'Column public.parts.avgcost should be type numeric');
+RETURN NEXT col_is_null(      'public', 'parts', 'avgcost', 'Column public.parts.avgcost should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'parts', 'avgcost', 'Column public.parts.avgcost should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

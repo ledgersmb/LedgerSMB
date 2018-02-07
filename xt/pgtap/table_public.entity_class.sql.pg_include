@@ -1,0 +1,40 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_entity_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'entity_class',
+    'Should have table public.entity_class'
+);
+
+RETURN NEXT has_pk(
+    'public', 'entity_class',
+    'Table public.entity_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'entity_class'::name, ARRAY[
+    'id'::name,
+    'class'::name,
+    'active'::name
+]);
+
+RETURN NEXT has_column(       'public', 'entity_class', 'id', 'Column public.entity_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_class', 'id', 'integer', 'Column public.entity_class.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_class', 'id', 'Column public.entity_class.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'entity_class', 'id', 'Column public.entity_class.id shouldhave a default');
+--SELECT col_default_is(   'public', 'entity_class', 'id', 'nextval(''entity_class_id_seq''::regclass)', 'Column public.entity_class.id default is');RETURN NEXT col_default_is(   'public', 'entity_class', 'id', 'nextval(''entity_class_id_seq''::regclass)', 'Column public.entity_class.id default is');
+
+RETURN NEXT has_column(       'public', 'entity_class', 'class', 'Column public.entity_class.class should exist');
+RETURN NEXT col_type_is(      'public', 'entity_class', 'class', 'text', 'Column public.entity_class.class should be type text');
+RETURN NEXT col_not_null(     'public', 'entity_class', 'class', 'Column public.entity_class.class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_class', 'class', 'Column public.entity_class.class should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_class', 'active', 'Column public.entity_class.active should exist');
+RETURN NEXT col_type_is(      'public', 'entity_class', 'active', 'boolean', 'Column public.entity_class.active should be type boolean');
+RETURN NEXT col_not_null(     'public', 'entity_class', 'active', 'Column public.entity_class.active should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'entity_class', 'active', 'Column public.entity_class.active shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_class', 'active', 'true', 'Column public.entity_class.active default is');
+
+END;
+$$ LANGUAGE plpgsql;

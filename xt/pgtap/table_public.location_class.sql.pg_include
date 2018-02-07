@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_location_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'location_class',
+    'Should have table public.location_class'
+);
+
+RETURN NEXT has_pk(
+    'public', 'location_class',
+    'Table public.location_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'location_class'::name, ARRAY[
+    'id'::name,
+    'class'::name,
+    'authoritative'::name
+]);
+
+RETURN NEXT has_column(       'public', 'location_class', 'id', 'Column public.location_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'location_class', 'id', 'integer', 'Column public.location_class.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'location_class', 'id', 'Column public.location_class.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'location_class', 'id', 'Column public.location_class.id shouldhave a default');
+--SELECT col_default_is(   'public', 'location_class', 'id', 'nextval(''location_class_id_seq''::regclass)', 'Column public.location_class.id default is');RETURN NEXT col_default_is(   'public', 'location_class', 'id', 'nextval(''location_class_id_seq''::regclass)', 'Column public.location_class.id default is');
+
+RETURN NEXT has_column(       'public', 'location_class', 'class', 'Column public.location_class.class should exist');
+RETURN NEXT col_type_is(      'public', 'location_class', 'class', 'text', 'Column public.location_class.class should be type text');
+RETURN NEXT col_not_null(     'public', 'location_class', 'class', 'Column public.location_class.class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location_class', 'class', 'Column public.location_class.class should not have a default');
+
+RETURN NEXT has_column(       'public', 'location_class', 'authoritative', 'Column public.location_class.authoritative should exist');
+RETURN NEXT col_type_is(      'public', 'location_class', 'authoritative', 'boolean', 'Column public.location_class.authoritative should be type boolean');
+RETURN NEXT col_not_null(     'public', 'location_class', 'authoritative', 'Column public.location_class.authoritative should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'location_class', 'authoritative', 'Column public.location_class.authoritative should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

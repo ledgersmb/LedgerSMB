@@ -1,0 +1,72 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_eca_note()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'eca_note',
+    'Should have table public.eca_note'
+);
+
+RETURN NEXT has_pk(
+    'public', 'eca_note',
+    'Table public.eca_note should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'eca_note'::name, ARRAY[
+    'id'::name,
+    'note_class'::name,
+    'note'::name,
+    'vector'::name,
+    'created'::name,
+    'created_by'::name,
+    'ref_key'::name,
+    'subject'::name
+]);
+
+RETURN NEXT has_column(       'public', 'eca_note', 'id', 'Column public.eca_note.id should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'id', 'integer', 'Column public.eca_note.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_note', 'id', 'Column public.eca_note.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'eca_note', 'id', 'Column public.eca_note.id shouldhave a default');
+--SELECT col_default_is(   'public', 'eca_note', 'id', 'nextval(''note_id_seq''::regclass)', 'Column public.eca_note.id default is');RETURN NEXT col_default_is(   'public', 'eca_note', 'id', 'nextval(''note_id_seq''::regclass)', 'Column public.eca_note.id default is');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'note_class', 'Column public.eca_note.note_class should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'note_class', 'integer', 'Column public.eca_note.note_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_note', 'note_class', 'Column public.eca_note.note_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_note', 'note_class', 'Column public.eca_note.note_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'note', 'Column public.eca_note.note should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'note', 'text', 'Column public.eca_note.note should be type text');
+RETURN NEXT col_not_null(     'public', 'eca_note', 'note', 'Column public.eca_note.note should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_note', 'note', 'Column public.eca_note.note should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'vector', 'Column public.eca_note.vector should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'vector', 'tsvector', 'Column public.eca_note.vector should be type tsvector');
+RETURN NEXT col_not_null(     'public', 'eca_note', 'vector', 'Column public.eca_note.vector should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'eca_note', 'vector', 'Column public.eca_note.vector shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'eca_note', 'vector', ''::tsvector, 'Column public.eca_note.vector default is');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'created', 'Column public.eca_note.created should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'created', 'timestamp without time zone', 'Column public.eca_note.created should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'eca_note', 'created', 'Column public.eca_note.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'eca_note', 'created', 'Column public.eca_note.created shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'eca_note', 'created', 'now()', 'Column public.eca_note.created default is');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'created_by', 'Column public.eca_note.created_by should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'created_by', 'text', 'Column public.eca_note.created_by should be type text');
+RETURN NEXT col_is_null(      'public', 'eca_note', 'created_by', 'Column public.eca_note.created_by should allow NULL');
+RETURN NEXT col_has_default(  'public', 'eca_note', 'created_by', 'Column public.eca_note.created_by shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'eca_note', 'created_by', '"session_user"()', 'Column public.eca_note.created_by default is');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'ref_key', 'Column public.eca_note.ref_key should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'ref_key', 'integer', 'Column public.eca_note.ref_key should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_note', 'ref_key', 'Column public.eca_note.ref_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_note', 'ref_key', 'Column public.eca_note.ref_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_note', 'subject', 'Column public.eca_note.subject should exist');
+RETURN NEXT col_type_is(      'public', 'eca_note', 'subject', 'text', 'Column public.eca_note.subject should be type text');
+RETURN NEXT col_is_null(      'public', 'eca_note', 'subject', 'Column public.eca_note.subject should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_note', 'subject', 'Column public.eca_note.subject should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

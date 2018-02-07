@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_account_link_description()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'account_link_description',
+    'Should have table public.account_link_description'
+);
+
+RETURN NEXT has_pk(
+    'public', 'account_link_description',
+    'Table public.account_link_description should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'account_link_description'::name, ARRAY[
+    'description'::name,
+    'summary'::name,
+    'custom'::name
+]);
+
+RETURN NEXT has_column(       'public', 'account_link_description', 'description', 'Column public.account_link_description.description should exist');
+RETURN NEXT col_type_is(      'public', 'account_link_description', 'description', 'text', 'Column public.account_link_description.description should be type text');
+RETURN NEXT col_not_null(     'public', 'account_link_description', 'description', 'Column public.account_link_description.description should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_link_description', 'description', 'Column public.account_link_description.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_link_description', 'summary', 'Column public.account_link_description.summary should exist');
+RETURN NEXT col_type_is(      'public', 'account_link_description', 'summary', 'boolean', 'Column public.account_link_description.summary should be type boolean');
+RETURN NEXT col_not_null(     'public', 'account_link_description', 'summary', 'Column public.account_link_description.summary should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_link_description', 'summary', 'Column public.account_link_description.summary should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_link_description', 'custom', 'Column public.account_link_description.custom should exist');
+RETURN NEXT col_type_is(      'public', 'account_link_description', 'custom', 'boolean', 'Column public.account_link_description.custom should be type boolean');
+RETURN NEXT col_not_null(     'public', 'account_link_description', 'custom', 'Column public.account_link_description.custom should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_link_description', 'custom', 'Column public.account_link_description.custom should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,157 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_oe()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'oe',
+    'Should have table public.oe'
+);
+
+RETURN NEXT has_pk(
+    'public', 'oe',
+    'Table public.oe should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'oe'::name, ARRAY[
+    'id'::name,
+    'ordnumber'::name,
+    'transdate'::name,
+    'entity_id'::name,
+    'amount'::name,
+    'netamount'::name,
+    'reqdate'::name,
+    'taxincluded'::name,
+    'shippingpoint'::name,
+    'notes'::name,
+    'curr'::name,
+    'person_id'::name,
+    'closed'::name,
+    'quotation'::name,
+    'quonumber'::name,
+    'intnotes'::name,
+    'shipvia'::name,
+    'language_code'::name,
+    'ponumber'::name,
+    'terms'::name,
+    'entity_credit_account'::name,
+    'oe_class_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'oe', 'id', 'Column public.oe.id should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'id', 'integer', 'Column public.oe.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'oe', 'id', 'Column public.oe.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'oe', 'id', 'Column public.oe.id shouldhave a default');
+--SELECT col_default_is(   'public', 'oe', 'id', 'nextval(''oe_id_seq''::regclass)', 'Column public.oe.id default is');RETURN NEXT col_default_is(   'public', 'oe', 'id', 'nextval(''oe_id_seq''::regclass)', 'Column public.oe.id default is');
+
+RETURN NEXT has_column(       'public', 'oe', 'ordnumber', 'Column public.oe.ordnumber should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'ordnumber', 'text', 'Column public.oe.ordnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'ordnumber', 'Column public.oe.ordnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'ordnumber', 'Column public.oe.ordnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'transdate', 'Column public.oe.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'transdate', 'date', 'Column public.oe.transdate should be type date');
+RETURN NEXT col_is_null(      'public', 'oe', 'transdate', 'Column public.oe.transdate should allow NULL');
+RETURN NEXT col_has_default(  'public', 'oe', 'transdate', 'Column public.oe.transdate shouldhave a default');
+--SELECT col_default_is(   'public', 'oe', 'transdate', '(''now''::text)::date', 'Column public.oe.transdate default is');RETURN NEXT col_default_is(   'public', 'oe', 'transdate', '(''now''::text)::date', 'Column public.oe.transdate default is');
+
+RETURN NEXT has_column(       'public', 'oe', 'entity_id', 'Column public.oe.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'entity_id', 'integer', 'Column public.oe.entity_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'oe', 'entity_id', 'Column public.oe.entity_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'entity_id', 'Column public.oe.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'amount', 'Column public.oe.amount should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'amount', 'numeric', 'Column public.oe.amount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'oe', 'amount', 'Column public.oe.amount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'amount', 'Column public.oe.amount should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'netamount', 'Column public.oe.netamount should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'netamount', 'numeric', 'Column public.oe.netamount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'oe', 'netamount', 'Column public.oe.netamount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'netamount', 'Column public.oe.netamount should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'reqdate', 'Column public.oe.reqdate should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'reqdate', 'date', 'Column public.oe.reqdate should be type date');
+RETURN NEXT col_is_null(      'public', 'oe', 'reqdate', 'Column public.oe.reqdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'reqdate', 'Column public.oe.reqdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'taxincluded', 'Column public.oe.taxincluded should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'taxincluded', 'boolean', 'Column public.oe.taxincluded should be type boolean');
+RETURN NEXT col_is_null(      'public', 'oe', 'taxincluded', 'Column public.oe.taxincluded should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'taxincluded', 'Column public.oe.taxincluded should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'shippingpoint', 'Column public.oe.shippingpoint should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'shippingpoint', 'text', 'Column public.oe.shippingpoint should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'shippingpoint', 'Column public.oe.shippingpoint should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'shippingpoint', 'Column public.oe.shippingpoint should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'notes', 'Column public.oe.notes should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'notes', 'text', 'Column public.oe.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'notes', 'Column public.oe.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'notes', 'Column public.oe.notes should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'curr', 'Column public.oe.curr should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'curr', 'character(3)', 'Column public.oe.curr should be type character(3)');
+RETURN NEXT col_is_null(      'public', 'oe', 'curr', 'Column public.oe.curr should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'curr', 'Column public.oe.curr should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'person_id', 'Column public.oe.person_id should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'person_id', 'integer', 'Column public.oe.person_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'oe', 'person_id', 'Column public.oe.person_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'person_id', 'Column public.oe.person_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'closed', 'Column public.oe.closed should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'closed', 'boolean', 'Column public.oe.closed should be type boolean');
+RETURN NEXT col_is_null(      'public', 'oe', 'closed', 'Column public.oe.closed should allow NULL');
+RETURN NEXT col_has_default(  'public', 'oe', 'closed', 'Column public.oe.closed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'oe', 'closed', 'false', 'Column public.oe.closed default is');
+
+RETURN NEXT has_column(       'public', 'oe', 'quotation', 'Column public.oe.quotation should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'quotation', 'boolean', 'Column public.oe.quotation should be type boolean');
+RETURN NEXT col_is_null(      'public', 'oe', 'quotation', 'Column public.oe.quotation should allow NULL');
+RETURN NEXT col_has_default(  'public', 'oe', 'quotation', 'Column public.oe.quotation shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'oe', 'quotation', 'false', 'Column public.oe.quotation default is');
+
+RETURN NEXT has_column(       'public', 'oe', 'quonumber', 'Column public.oe.quonumber should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'quonumber', 'text', 'Column public.oe.quonumber should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'quonumber', 'Column public.oe.quonumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'quonumber', 'Column public.oe.quonumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'intnotes', 'Column public.oe.intnotes should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'intnotes', 'text', 'Column public.oe.intnotes should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'intnotes', 'Column public.oe.intnotes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'intnotes', 'Column public.oe.intnotes should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'shipvia', 'Column public.oe.shipvia should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'shipvia', 'text', 'Column public.oe.shipvia should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'shipvia', 'Column public.oe.shipvia should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'shipvia', 'Column public.oe.shipvia should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'language_code', 'Column public.oe.language_code should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'language_code', 'character varying(6)', 'Column public.oe.language_code should be type character varying(6)');
+RETURN NEXT col_is_null(      'public', 'oe', 'language_code', 'Column public.oe.language_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'language_code', 'Column public.oe.language_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'ponumber', 'Column public.oe.ponumber should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'ponumber', 'text', 'Column public.oe.ponumber should be type text');
+RETURN NEXT col_is_null(      'public', 'oe', 'ponumber', 'Column public.oe.ponumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'ponumber', 'Column public.oe.ponumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'terms', 'Column public.oe.terms should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'terms', 'smallint', 'Column public.oe.terms should be type smallint');
+RETURN NEXT col_is_null(      'public', 'oe', 'terms', 'Column public.oe.terms should allow NULL');
+RETURN NEXT col_has_default(  'public', 'oe', 'terms', 'Column public.oe.terms shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'oe', 'terms', '0', 'Column public.oe.terms default is');
+
+RETURN NEXT has_column(       'public', 'oe', 'entity_credit_account', 'Column public.oe.entity_credit_account should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'entity_credit_account', 'integer', 'Column public.oe.entity_credit_account should be type integer');
+RETURN NEXT col_not_null(     'public', 'oe', 'entity_credit_account', 'Column public.oe.entity_credit_account should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'entity_credit_account', 'Column public.oe.entity_credit_account should not have a default');
+
+RETURN NEXT has_column(       'public', 'oe', 'oe_class_id', 'Column public.oe.oe_class_id should exist');
+RETURN NEXT col_type_is(      'public', 'oe', 'oe_class_id', 'integer', 'Column public.oe.oe_class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'oe', 'oe_class_id', 'Column public.oe.oe_class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'oe', 'oe_class_id', 'Column public.oe.oe_class_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

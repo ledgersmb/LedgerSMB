@@ -1,0 +1,118 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_invoice()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'invoice',
+    'Should have table public.invoice'
+);
+
+RETURN NEXT has_pk(
+    'public', 'invoice',
+    'Table public.invoice should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'invoice'::name, ARRAY[
+    'id'::name,
+    'trans_id'::name,
+    'parts_id'::name,
+    'description'::name,
+    'qty'::name,
+    'allocated'::name,
+    'sellprice'::name,
+    'precision'::name,
+    'fxsellprice'::name,
+    'discount'::name,
+    'assemblyitem'::name,
+    'unit'::name,
+    'deliverydate'::name,
+    'serialnumber'::name,
+    'vendor_sku'::name,
+    'notes'::name
+]);
+
+RETURN NEXT has_column(       'public', 'invoice', 'id', 'Column public.invoice.id should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'id', 'integer', 'Column public.invoice.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'invoice', 'id', 'Column public.invoice.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'invoice', 'id', 'Column public.invoice.id shouldhave a default');
+--SELECT col_default_is(   'public', 'invoice', 'id', 'nextval(''invoice_id_seq''::regclass)', 'Column public.invoice.id default is');RETURN NEXT col_default_is(   'public', 'invoice', 'id', 'nextval(''invoice_id_seq''::regclass)', 'Column public.invoice.id default is');
+
+RETURN NEXT has_column(       'public', 'invoice', 'trans_id', 'Column public.invoice.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'trans_id', 'integer', 'Column public.invoice.trans_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'invoice', 'trans_id', 'Column public.invoice.trans_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'trans_id', 'Column public.invoice.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'parts_id', 'Column public.invoice.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'parts_id', 'integer', 'Column public.invoice.parts_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'invoice', 'parts_id', 'Column public.invoice.parts_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'parts_id', 'Column public.invoice.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'description', 'Column public.invoice.description should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'description', 'text', 'Column public.invoice.description should be type text');
+RETURN NEXT col_is_null(      'public', 'invoice', 'description', 'Column public.invoice.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'description', 'Column public.invoice.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'qty', 'Column public.invoice.qty should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'qty', 'numeric', 'Column public.invoice.qty should be type numeric');
+RETURN NEXT col_is_null(      'public', 'invoice', 'qty', 'Column public.invoice.qty should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'qty', 'Column public.invoice.qty should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'allocated', 'Column public.invoice.allocated should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'allocated', 'numeric', 'Column public.invoice.allocated should be type numeric');
+RETURN NEXT col_is_null(      'public', 'invoice', 'allocated', 'Column public.invoice.allocated should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'allocated', 'Column public.invoice.allocated should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'sellprice', 'Column public.invoice.sellprice should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'sellprice', 'numeric', 'Column public.invoice.sellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'invoice', 'sellprice', 'Column public.invoice.sellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'sellprice', 'Column public.invoice.sellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'precision', 'Column public.invoice."precision" should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'precision', 'integer', 'Column public.invoice."precision" should be type integer');
+RETURN NEXT col_is_null(      'public', 'invoice', 'precision', 'Column public.invoice."precision" should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'precision', 'Column public.invoice."precision" should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'fxsellprice', 'Column public.invoice.fxsellprice should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'fxsellprice', 'numeric', 'Column public.invoice.fxsellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'invoice', 'fxsellprice', 'Column public.invoice.fxsellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'fxsellprice', 'Column public.invoice.fxsellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'discount', 'Column public.invoice.discount should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'discount', 'numeric', 'Column public.invoice.discount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'invoice', 'discount', 'Column public.invoice.discount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'discount', 'Column public.invoice.discount should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'assemblyitem', 'Column public.invoice.assemblyitem should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'assemblyitem', 'boolean', 'Column public.invoice.assemblyitem should be type boolean');
+RETURN NEXT col_is_null(      'public', 'invoice', 'assemblyitem', 'Column public.invoice.assemblyitem should allow NULL');
+RETURN NEXT col_has_default(  'public', 'invoice', 'assemblyitem', 'Column public.invoice.assemblyitem shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'invoice', 'assemblyitem', 'false', 'Column public.invoice.assemblyitem default is');
+
+RETURN NEXT has_column(       'public', 'invoice', 'unit', 'Column public.invoice.unit should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'unit', 'character varying', 'Column public.invoice.unit should be type character varying');
+RETURN NEXT col_is_null(      'public', 'invoice', 'unit', 'Column public.invoice.unit should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'unit', 'Column public.invoice.unit should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'deliverydate', 'Column public.invoice.deliverydate should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'deliverydate', 'date', 'Column public.invoice.deliverydate should be type date');
+RETURN NEXT col_is_null(      'public', 'invoice', 'deliverydate', 'Column public.invoice.deliverydate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'deliverydate', 'Column public.invoice.deliverydate should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'serialnumber', 'Column public.invoice.serialnumber should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'serialnumber', 'text', 'Column public.invoice.serialnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'invoice', 'serialnumber', 'Column public.invoice.serialnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'serialnumber', 'Column public.invoice.serialnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'vendor_sku', 'Column public.invoice.vendor_sku should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'vendor_sku', 'text', 'Column public.invoice.vendor_sku should be type text');
+RETURN NEXT col_is_null(      'public', 'invoice', 'vendor_sku', 'Column public.invoice.vendor_sku should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'vendor_sku', 'Column public.invoice.vendor_sku should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice', 'notes', 'Column public.invoice.notes should exist');
+RETURN NEXT col_type_is(      'public', 'invoice', 'notes', 'text', 'Column public.invoice.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'invoice', 'notes', 'Column public.invoice.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice', 'notes', 'Column public.invoice.notes should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

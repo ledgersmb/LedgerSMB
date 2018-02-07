@@ -1,0 +1,83 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_entity_employee()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'entity_employee',
+    'Should have table public.entity_employee'
+);
+
+RETURN NEXT has_pk(
+    'public', 'entity_employee',
+    'Table public.entity_employee should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'entity_employee'::name, ARRAY[
+    'entity_id'::name,
+    'startdate'::name,
+    'enddate'::name,
+    'role'::name,
+    'ssn'::name,
+    'sales'::name,
+    'manager_id'::name,
+    'employeenumber'::name,
+    'dob'::name,
+    'is_manager'::name
+]);
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'entity_id', 'Column public.entity_employee.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'entity_id', 'integer', 'Column public.entity_employee.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_employee', 'entity_id', 'Column public.entity_employee.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'entity_id', 'Column public.entity_employee.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'startdate', 'Column public.entity_employee.startdate should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'startdate', 'date', 'Column public.entity_employee.startdate should be type date');
+RETURN NEXT col_not_null(     'public', 'entity_employee', 'startdate', 'Column public.entity_employee.startdate should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'entity_employee', 'startdate', 'Column public.entity_employee.startdate shouldhave a default');
+--SELECT col_default_is(   'public', 'entity_employee', 'startdate', '(''now''::text)::date', 'Column public.entity_employee.startdate default is');RETURN NEXT col_default_is(   'public', 'entity_employee', 'startdate', '(''now''::text)::date', 'Column public.entity_employee.startdate default is');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'enddate', 'Column public.entity_employee.enddate should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'enddate', 'date', 'Column public.entity_employee.enddate should be type date');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'enddate', 'Column public.entity_employee.enddate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'enddate', 'Column public.entity_employee.enddate should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'role', 'Column public.entity_employee.role should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'role', 'character varying(20)', 'Column public.entity_employee.role should be type character varying(20)');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'role', 'Column public.entity_employee.role should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'role', 'Column public.entity_employee.role should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'ssn', 'Column public.entity_employee.ssn should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'ssn', 'text', 'Column public.entity_employee.ssn should be type text');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'ssn', 'Column public.entity_employee.ssn should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'ssn', 'Column public.entity_employee.ssn should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'sales', 'Column public.entity_employee.sales should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'sales', 'boolean', 'Column public.entity_employee.sales should be type boolean');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'sales', 'Column public.entity_employee.sales should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_employee', 'sales', 'Column public.entity_employee.sales shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_employee', 'sales', 'false', 'Column public.entity_employee.sales default is');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'manager_id', 'Column public.entity_employee.manager_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'manager_id', 'integer', 'Column public.entity_employee.manager_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'manager_id', 'Column public.entity_employee.manager_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'manager_id', 'Column public.entity_employee.manager_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'employeenumber', 'Column public.entity_employee.employeenumber should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'employeenumber', 'character varying(32)', 'Column public.entity_employee.employeenumber should be type character varying(32)');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'employeenumber', 'Column public.entity_employee.employeenumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'employeenumber', 'Column public.entity_employee.employeenumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'dob', 'Column public.entity_employee.dob should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'dob', 'date', 'Column public.entity_employee.dob should be type date');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'dob', 'Column public.entity_employee.dob should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_employee', 'dob', 'Column public.entity_employee.dob should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_employee', 'is_manager', 'Column public.entity_employee.is_manager should exist');
+RETURN NEXT col_type_is(      'public', 'entity_employee', 'is_manager', 'boolean', 'Column public.entity_employee.is_manager should be type boolean');
+RETURN NEXT col_is_null(      'public', 'entity_employee', 'is_manager', 'Column public.entity_employee.is_manager should allow NULL');
+RETURN NEXT col_has_default(  'public', 'entity_employee', 'is_manager', 'Column public.entity_employee.is_manager shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'entity_employee', 'is_manager', 'false', 'Column public.entity_employee.is_manager default is');
+
+END;
+$$ LANGUAGE plpgsql;

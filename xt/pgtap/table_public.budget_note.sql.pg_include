@@ -1,0 +1,73 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_budget_note()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'budget_note',
+    'Should have table public.budget_note'
+);
+
+RETURN NEXT has_pk(
+    'public', 'budget_note',
+    'Table public.budget_note should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'budget_note'::name, ARRAY[
+    'id'::name,
+    'note_class'::name,
+    'note'::name,
+    'vector'::name,
+    'created'::name,
+    'created_by'::name,
+    'ref_key'::name,
+    'subject'::name
+]);
+
+RETURN NEXT has_column(       'public', 'budget_note', 'id', 'Column public.budget_note.id should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'id', 'integer', 'Column public.budget_note.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_note', 'id', 'Column public.budget_note.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_note', 'id', 'Column public.budget_note.id shouldhave a default');
+--SELECT col_default_is(   'public', 'budget_note', 'id', 'nextval(''note_id_seq''::regclass)', 'Column public.budget_note.id default is');RETURN NEXT col_default_is(   'public', 'budget_note', 'id', 'nextval(''note_id_seq''::regclass)', 'Column public.budget_note.id default is');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'note_class', 'Column public.budget_note.note_class should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'note_class', 'integer', 'Column public.budget_note.note_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_note', 'note_class', 'Column public.budget_note.note_class should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_note', 'note_class', 'Column public.budget_note.note_class shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'budget_note', 'note_class', '6', 'Column public.budget_note.note_class default is');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'note', 'Column public.budget_note.note should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'note', 'text', 'Column public.budget_note.note should be type text');
+RETURN NEXT col_not_null(     'public', 'budget_note', 'note', 'Column public.budget_note.note should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_note', 'note', 'Column public.budget_note.note should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'vector', 'Column public.budget_note.vector should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'vector', 'tsvector', 'Column public.budget_note.vector should be type tsvector');
+RETURN NEXT col_not_null(     'public', 'budget_note', 'vector', 'Column public.budget_note.vector should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_note', 'vector', 'Column public.budget_note.vector shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'budget_note', 'vector', ''::tsvector, 'Column public.budget_note.vector default is');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'created', 'Column public.budget_note.created should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'created', 'timestamp without time zone', 'Column public.budget_note.created should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'budget_note', 'created', 'Column public.budget_note.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_note', 'created', 'Column public.budget_note.created shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'budget_note', 'created', 'now()', 'Column public.budget_note.created default is');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'created_by', 'Column public.budget_note.created_by should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'created_by', 'text', 'Column public.budget_note.created_by should be type text');
+RETURN NEXT col_is_null(      'public', 'budget_note', 'created_by', 'Column public.budget_note.created_by should allow NULL');
+RETURN NEXT col_has_default(  'public', 'budget_note', 'created_by', 'Column public.budget_note.created_by shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'budget_note', 'created_by', '"session_user"()', 'Column public.budget_note.created_by default is');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'ref_key', 'Column public.budget_note.ref_key should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'ref_key', 'integer', 'Column public.budget_note.ref_key should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_note', 'ref_key', 'Column public.budget_note.ref_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_note', 'ref_key', 'Column public.budget_note.ref_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_note', 'subject', 'Column public.budget_note.subject should exist');
+RETURN NEXT col_type_is(      'public', 'budget_note', 'subject', 'text', 'Column public.budget_note.subject should be type text');
+RETURN NEXT col_is_null(      'public', 'budget_note', 'subject', 'Column public.budget_note.subject should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_note', 'subject', 'Column public.budget_note.subject should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

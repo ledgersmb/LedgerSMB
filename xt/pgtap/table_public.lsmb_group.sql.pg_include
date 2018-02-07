@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_lsmb_group()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'lsmb_group',
+    'Should have table public.lsmb_group'
+);
+
+RETURN NEXT has_pk(
+    'public', 'lsmb_group',
+    'Table public.lsmb_group should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'lsmb_group'::name, ARRAY[
+    'role_name'::name
+]);
+
+RETURN NEXT has_column(       'public', 'lsmb_group', 'role_name', 'Column public.lsmb_group.role_name should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_group', 'role_name', 'text', 'Column public.lsmb_group.role_name should be type text');
+RETURN NEXT col_not_null(     'public', 'lsmb_group', 'role_name', 'Column public.lsmb_group.role_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_group', 'role_name', 'Column public.lsmb_group.role_name should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

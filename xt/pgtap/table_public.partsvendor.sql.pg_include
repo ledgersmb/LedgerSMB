@@ -1,0 +1,63 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_partsvendor()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'partsvendor',
+    'Should have table public.partsvendor'
+);
+
+RETURN NEXT has_pk(
+    'public', 'partsvendor',
+    'Table public.partsvendor should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'partsvendor'::name, ARRAY[
+    'credit_id'::name,
+    'parts_id'::name,
+    'partnumber'::name,
+    'leadtime'::name,
+    'lastcost'::name,
+    'curr'::name,
+    'entry_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'credit_id', 'Column public.partsvendor.credit_id should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'credit_id', 'integer', 'Column public.partsvendor.credit_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partsvendor', 'credit_id', 'Column public.partsvendor.credit_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'partsvendor', 'credit_id', 'Column public.partsvendor.credit_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'parts_id', 'Column public.partsvendor.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'parts_id', 'integer', 'Column public.partsvendor.parts_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'partsvendor', 'parts_id', 'Column public.partsvendor.parts_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsvendor', 'parts_id', 'Column public.partsvendor.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'partnumber', 'Column public.partsvendor.partnumber should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'partnumber', 'text', 'Column public.partsvendor.partnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'partsvendor', 'partnumber', 'Column public.partsvendor.partnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsvendor', 'partnumber', 'Column public.partsvendor.partnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'leadtime', 'Column public.partsvendor.leadtime should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'leadtime', 'smallint', 'Column public.partsvendor.leadtime should be type smallint');
+RETURN NEXT col_is_null(      'public', 'partsvendor', 'leadtime', 'Column public.partsvendor.leadtime should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsvendor', 'leadtime', 'Column public.partsvendor.leadtime should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'lastcost', 'Column public.partsvendor.lastcost should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'lastcost', 'numeric', 'Column public.partsvendor.lastcost should be type numeric');
+RETURN NEXT col_is_null(      'public', 'partsvendor', 'lastcost', 'Column public.partsvendor.lastcost should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsvendor', 'lastcost', 'Column public.partsvendor.lastcost should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'curr', 'Column public.partsvendor.curr should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'curr', 'character(3)', 'Column public.partsvendor.curr should be type character(3)');
+RETURN NEXT col_is_null(      'public', 'partsvendor', 'curr', 'Column public.partsvendor.curr should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsvendor', 'curr', 'Column public.partsvendor.curr should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsvendor', 'entry_id', 'Column public.partsvendor.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'partsvendor', 'entry_id', 'integer', 'Column public.partsvendor.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partsvendor', 'entry_id', 'Column public.partsvendor.entry_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'partsvendor', 'entry_id', 'Column public.partsvendor.entry_id shouldhave a default');
+--SELECT col_default_is(   'public', 'partsvendor', 'entry_id', 'nextval(''partsvendor_entry_id_seq''::regclass)', 'Column public.partsvendor.entry_id default is');RETURN NEXT col_default_is(   'public', 'partsvendor', 'entry_id', 'nextval(''partsvendor_entry_id_seq''::regclass)', 'Column public.partsvendor.entry_id default is');
+
+END;
+$$ LANGUAGE plpgsql;

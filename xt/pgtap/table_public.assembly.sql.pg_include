@@ -1,0 +1,50 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_assembly()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'assembly',
+    'Should have table public.assembly'
+);
+
+RETURN NEXT has_pk(
+    'public', 'assembly',
+    'Table public.assembly should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'assembly'::name, ARRAY[
+    'id'::name,
+    'parts_id'::name,
+    'qty'::name,
+    'bom'::name,
+    'adj'::name
+]);
+
+RETURN NEXT has_column(       'public', 'assembly', 'id', 'Column public.assembly.id should exist');
+RETURN NEXT col_type_is(      'public', 'assembly', 'id', 'integer', 'Column public.assembly.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'assembly', 'id', 'Column public.assembly.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'assembly', 'id', 'Column public.assembly.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'assembly', 'parts_id', 'Column public.assembly.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'assembly', 'parts_id', 'integer', 'Column public.assembly.parts_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'assembly', 'parts_id', 'Column public.assembly.parts_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'assembly', 'parts_id', 'Column public.assembly.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'assembly', 'qty', 'Column public.assembly.qty should exist');
+RETURN NEXT col_type_is(      'public', 'assembly', 'qty', 'numeric', 'Column public.assembly.qty should be type numeric');
+RETURN NEXT col_is_null(      'public', 'assembly', 'qty', 'Column public.assembly.qty should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'assembly', 'qty', 'Column public.assembly.qty should not have a default');
+
+RETURN NEXT has_column(       'public', 'assembly', 'bom', 'Column public.assembly.bom should exist');
+RETURN NEXT col_type_is(      'public', 'assembly', 'bom', 'boolean', 'Column public.assembly.bom should be type boolean');
+RETURN NEXT col_is_null(      'public', 'assembly', 'bom', 'Column public.assembly.bom should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'assembly', 'bom', 'Column public.assembly.bom should not have a default');
+
+RETURN NEXT has_column(       'public', 'assembly', 'adj', 'Column public.assembly.adj should exist');
+RETURN NEXT col_type_is(      'public', 'assembly', 'adj', 'boolean', 'Column public.assembly.adj should be type boolean');
+RETURN NEXT col_is_null(      'public', 'assembly', 'adj', 'Column public.assembly.adj should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'assembly', 'adj', 'Column public.assembly.adj should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

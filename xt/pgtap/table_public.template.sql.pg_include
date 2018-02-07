@@ -1,0 +1,58 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_template()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'template',
+    'Should have table public.template'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'template',
+    'Table public.template should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'template'::name, ARRAY[
+    'id'::name,
+    'template_name'::name,
+    'language_code'::name,
+    'template'::name,
+    'format'::name,
+    'last_modified'::name
+]);
+
+RETURN NEXT has_column(       'public', 'template', 'id', 'Column public.template.id should exist');
+RETURN NEXT col_type_is(      'public', 'template', 'id', 'integer', 'Column public.template.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'template', 'id', 'Column public.template.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'template', 'id', 'Column public.template.id shouldhave a default');
+--SELECT col_default_is(   'public', 'template', 'id', 'nextval(''template_id_seq''::regclass)', 'Column public.template.id default is');RETURN NEXT col_default_is(   'public', 'template', 'id', 'nextval(''template_id_seq''::regclass)', 'Column public.template.id default is');
+
+RETURN NEXT has_column(       'public', 'template', 'template_name', 'Column public.template.template_name should exist');
+RETURN NEXT col_type_is(      'public', 'template', 'template_name', 'text', 'Column public.template.template_name should be type text');
+RETURN NEXT col_not_null(     'public', 'template', 'template_name', 'Column public.template.template_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'template', 'template_name', 'Column public.template.template_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'template', 'language_code', 'Column public.template.language_code should exist');
+RETURN NEXT col_type_is(      'public', 'template', 'language_code', 'character varying(6)', 'Column public.template.language_code should be type character varying(6)');
+RETURN NEXT col_is_null(      'public', 'template', 'language_code', 'Column public.template.language_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'template', 'language_code', 'Column public.template.language_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'template', 'template', 'Column public.template.template should exist');
+RETURN NEXT col_type_is(      'public', 'template', 'template', 'text', 'Column public.template.template should be type text');
+RETURN NEXT col_not_null(     'public', 'template', 'template', 'Column public.template.template should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'template', 'template', 'Column public.template.template should not have a default');
+
+RETURN NEXT has_column(       'public', 'template', 'format', 'Column public.template.format should exist');
+RETURN NEXT col_type_is(      'public', 'template', 'format', 'text', 'Column public.template.format should be type text');
+RETURN NEXT col_not_null(     'public', 'template', 'format', 'Column public.template.format should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'template', 'format', 'Column public.template.format should not have a default');
+
+RETURN NEXT has_column(       'public', 'template', 'last_modified', 'Column public.template.last_modified should exist');
+RETURN NEXT col_type_is(      'public', 'template', 'last_modified', 'timestamp with time zone', 'Column public.template.last_modified should be type timestamp with time zone');
+RETURN NEXT col_not_null(     'public', 'template', 'last_modified', 'Column public.template.last_modified should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'template', 'last_modified', 'Column public.template.last_modified shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'template', 'last_modified', 'now()', 'Column public.template.last_modified default is');
+
+END;
+$$ LANGUAGE plpgsql;

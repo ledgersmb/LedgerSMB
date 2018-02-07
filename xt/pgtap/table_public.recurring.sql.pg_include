@@ -1,0 +1,69 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_recurring()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'recurring',
+    'Should have table public.recurring'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'recurring',
+    'Table public.recurring should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'recurring'::name, ARRAY[
+    'id'::name,
+    'reference'::name,
+    'startdate'::name,
+    'nextdate'::name,
+    'enddate'::name,
+    'recurring_interval'::name,
+    'howmany'::name,
+    'payment'::name
+]);
+
+RETURN NEXT has_column(       'public', 'recurring', 'id', 'Column public.recurring.id should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'id', 'integer', 'Column public.recurring.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'recurring', 'id', 'Column public.recurring.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'id', 'Column public.recurring.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'reference', 'Column public.recurring.reference should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'reference', 'text', 'Column public.recurring.reference should be type text');
+RETURN NEXT col_is_null(      'public', 'recurring', 'reference', 'Column public.recurring.reference should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'reference', 'Column public.recurring.reference should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'startdate', 'Column public.recurring.startdate should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'startdate', 'date', 'Column public.recurring.startdate should be type date');
+RETURN NEXT col_is_null(      'public', 'recurring', 'startdate', 'Column public.recurring.startdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'startdate', 'Column public.recurring.startdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'nextdate', 'Column public.recurring.nextdate should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'nextdate', 'date', 'Column public.recurring.nextdate should be type date');
+RETURN NEXT col_is_null(      'public', 'recurring', 'nextdate', 'Column public.recurring.nextdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'nextdate', 'Column public.recurring.nextdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'enddate', 'Column public.recurring.enddate should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'enddate', 'date', 'Column public.recurring.enddate should be type date');
+RETURN NEXT col_is_null(      'public', 'recurring', 'enddate', 'Column public.recurring.enddate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'enddate', 'Column public.recurring.enddate should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'recurring_interval', 'Column public.recurring.recurring_interval should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'recurring_interval', 'interval', 'Column public.recurring.recurring_interval should be type interval');
+RETURN NEXT col_is_null(      'public', 'recurring', 'recurring_interval', 'Column public.recurring.recurring_interval should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'recurring_interval', 'Column public.recurring.recurring_interval should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'howmany', 'Column public.recurring.howmany should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'howmany', 'integer', 'Column public.recurring.howmany should be type integer');
+RETURN NEXT col_is_null(      'public', 'recurring', 'howmany', 'Column public.recurring.howmany should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurring', 'howmany', 'Column public.recurring.howmany should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurring', 'payment', 'Column public.recurring.payment should exist');
+RETURN NEXT col_type_is(      'public', 'recurring', 'payment', 'boolean', 'Column public.recurring.payment should be type boolean');
+RETURN NEXT col_is_null(      'public', 'recurring', 'payment', 'Column public.recurring.payment should allow NULL');
+RETURN NEXT col_has_default(  'public', 'recurring', 'payment', 'Column public.recurring.payment shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'recurring', 'payment', 'false', 'Column public.recurring.payment default is');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,79 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_journal_note()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'journal_note',
+    'Should have table public.journal_note'
+);
+
+RETURN NEXT has_pk(
+    'public', 'journal_note',
+    'Table public.journal_note should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'journal_note'::name, ARRAY[
+    'id'::name,
+    'note_class'::name,
+    'note'::name,
+    'vector'::name,
+    'created'::name,
+    'created_by'::name,
+    'ref_key'::name,
+    'subject'::name,
+    'internal_only'::name
+]);
+
+RETURN NEXT has_column(       'public', 'journal_note', 'id', 'Column public.journal_note.id should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'id', 'integer', 'Column public.journal_note.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'id', 'Column public.journal_note.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_note', 'id', 'Column public.journal_note.id shouldhave a default');
+--SELECT col_default_is(   'public', 'journal_note', 'id', 'nextval(''note_id_seq''::regclass)', 'Column public.journal_note.id default is');RETURN NEXT col_default_is(   'public', 'journal_note', 'id', 'nextval(''note_id_seq''::regclass)', 'Column public.journal_note.id default is');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'note_class', 'Column public.journal_note.note_class should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'note_class', 'integer', 'Column public.journal_note.note_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'note_class', 'Column public.journal_note.note_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_note', 'note_class', 'Column public.journal_note.note_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'note', 'Column public.journal_note.note should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'note', 'text', 'Column public.journal_note.note should be type text');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'note', 'Column public.journal_note.note should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_note', 'note', 'Column public.journal_note.note should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'vector', 'Column public.journal_note.vector should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'vector', 'tsvector', 'Column public.journal_note.vector should be type tsvector');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'vector', 'Column public.journal_note.vector should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_note', 'vector', 'Column public.journal_note.vector shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_note', 'vector', ''::tsvector, 'Column public.journal_note.vector default is');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'created', 'Column public.journal_note.created should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'created', 'timestamp without time zone', 'Column public.journal_note.created should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'created', 'Column public.journal_note.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_note', 'created', 'Column public.journal_note.created shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_note', 'created', 'now()', 'Column public.journal_note.created default is');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'created_by', 'Column public.journal_note.created_by should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'created_by', 'text', 'Column public.journal_note.created_by should be type text');
+RETURN NEXT col_is_null(      'public', 'journal_note', 'created_by', 'Column public.journal_note.created_by should allow NULL');
+RETURN NEXT col_has_default(  'public', 'journal_note', 'created_by', 'Column public.journal_note.created_by shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_note', 'created_by', '"session_user"()', 'Column public.journal_note.created_by default is');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'ref_key', 'Column public.journal_note.ref_key should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'ref_key', 'integer', 'Column public.journal_note.ref_key should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'ref_key', 'Column public.journal_note.ref_key should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_note', 'ref_key', 'Column public.journal_note.ref_key should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'subject', 'Column public.journal_note.subject should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'subject', 'text', 'Column public.journal_note.subject should be type text');
+RETURN NEXT col_is_null(      'public', 'journal_note', 'subject', 'Column public.journal_note.subject should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_note', 'subject', 'Column public.journal_note.subject should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_note', 'internal_only', 'Column public.journal_note.internal_only should exist');
+RETURN NEXT col_type_is(      'public', 'journal_note', 'internal_only', 'boolean', 'Column public.journal_note.internal_only should be type boolean');
+RETURN NEXT col_not_null(     'public', 'journal_note', 'internal_only', 'Column public.journal_note.internal_only should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_note', 'internal_only', 'Column public.journal_note.internal_only shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_note', 'internal_only', 'false', 'Column public.journal_note.internal_only default is');
+
+END;
+$$ LANGUAGE plpgsql;

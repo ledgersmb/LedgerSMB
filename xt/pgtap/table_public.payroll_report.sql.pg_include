@@ -1,0 +1,51 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_report()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_report',
+    'Should have table public.payroll_report'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payroll_report',
+    'Table public.payroll_report should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_report'::name, ARRAY[
+    'id'::name,
+    'ec_id'::name,
+    'payment_date'::name,
+    'created_by'::name,
+    'approved_by'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_report', 'id', 'Column public.payroll_report.id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report', 'id', 'integer', 'Column public.payroll_report.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_report', 'id', 'Column public.payroll_report.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_report', 'id', 'Column public.payroll_report.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_report', 'id', 'nextval(''payroll_report_id_seq''::regclass)', 'Column public.payroll_report.id default is');RETURN NEXT col_default_is(   'public', 'payroll_report', 'id', 'nextval(''payroll_report_id_seq''::regclass)', 'Column public.payroll_report.id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_report', 'ec_id', 'Column public.payroll_report.ec_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report', 'ec_id', 'integer', 'Column public.payroll_report.ec_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_report', 'ec_id', 'Column public.payroll_report.ec_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report', 'ec_id', 'Column public.payroll_report.ec_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report', 'payment_date', 'Column public.payroll_report.payment_date should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report', 'payment_date', 'date', 'Column public.payroll_report.payment_date should be type date');
+RETURN NEXT col_not_null(     'public', 'payroll_report', 'payment_date', 'Column public.payroll_report.payment_date should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report', 'payment_date', 'Column public.payroll_report.payment_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report', 'created_by', 'Column public.payroll_report.created_by should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report', 'created_by', 'integer', 'Column public.payroll_report.created_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'payroll_report', 'created_by', 'Column public.payroll_report.created_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report', 'created_by', 'Column public.payroll_report.created_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_report', 'approved_by', 'Column public.payroll_report.approved_by should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_report', 'approved_by', 'integer', 'Column public.payroll_report.approved_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'payroll_report', 'approved_by', 'Column public.payroll_report.approved_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_report', 'approved_by', 'Column public.payroll_report.approved_by should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

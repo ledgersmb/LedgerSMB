@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_country()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'country',
+    'Should have table public.country'
+);
+
+RETURN NEXT has_pk(
+    'public', 'country',
+    'Table public.country should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'country'::name, ARRAY[
+    'id'::name,
+    'name'::name,
+    'short_name'::name,
+    'itu'::name
+]);
+
+RETURN NEXT has_column(       'public', 'country', 'id', 'Column public.country.id should exist');
+RETURN NEXT col_type_is(      'public', 'country', 'id', 'integer', 'Column public.country.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'country', 'id', 'Column public.country.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'country', 'id', 'Column public.country.id shouldhave a default');
+--SELECT col_default_is(   'public', 'country', 'id', 'nextval(''country_id_seq''::regclass)', 'Column public.country.id default is');RETURN NEXT col_default_is(   'public', 'country', 'id', 'nextval(''country_id_seq''::regclass)', 'Column public.country.id default is');
+
+RETURN NEXT has_column(       'public', 'country', 'name', 'Column public.country.name should exist');
+RETURN NEXT col_type_is(      'public', 'country', 'name', 'text', 'Column public.country.name should be type text');
+RETURN NEXT col_not_null(     'public', 'country', 'name', 'Column public.country.name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'country', 'name', 'Column public.country.name should not have a default');
+
+RETURN NEXT has_column(       'public', 'country', 'short_name', 'Column public.country.short_name should exist');
+RETURN NEXT col_type_is(      'public', 'country', 'short_name', 'text', 'Column public.country.short_name should be type text');
+RETURN NEXT col_not_null(     'public', 'country', 'short_name', 'Column public.country.short_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'country', 'short_name', 'Column public.country.short_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'country', 'itu', 'Column public.country.itu should exist');
+RETURN NEXT col_type_is(      'public', 'country', 'itu', 'text', 'Column public.country.itu should be type text');
+RETURN NEXT col_is_null(      'public', 'country', 'itu', 'Column public.country.itu should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'country', 'itu', 'Column public.country.itu should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

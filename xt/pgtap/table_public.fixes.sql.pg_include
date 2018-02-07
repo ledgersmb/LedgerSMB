@@ -1,0 +1,51 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_fixes()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'fixes',
+    'Should have table public.fixes'
+);
+
+RETURN NEXT has_pk(
+    'public', 'fixes',
+    'Table public.fixes should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'fixes'::name, ARRAY[
+    'checksum'::name,
+    'path'::name,
+    'stdout'::name,
+    'stderr'::name,
+    'applied_at'::name
+]);
+
+RETURN NEXT has_column(       'public', 'fixes', 'checksum', 'Column public.fixes.checksum should exist');
+RETURN NEXT col_type_is(      'public', 'fixes', 'checksum', 'text', 'Column public.fixes.checksum should be type text');
+RETURN NEXT col_not_null(     'public', 'fixes', 'checksum', 'Column public.fixes.checksum should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'fixes', 'checksum', 'Column public.fixes.checksum should not have a default');
+
+RETURN NEXT has_column(       'public', 'fixes', 'path', 'Column public.fixes.path should exist');
+RETURN NEXT col_type_is(      'public', 'fixes', 'path', 'text', 'Column public.fixes.path should be type text');
+RETURN NEXT col_not_null(     'public', 'fixes', 'path', 'Column public.fixes.path should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'fixes', 'path', 'Column public.fixes.path should not have a default');
+
+RETURN NEXT has_column(       'public', 'fixes', 'stdout', 'Column public.fixes.stdout should exist');
+RETURN NEXT col_type_is(      'public', 'fixes', 'stdout', 'text', 'Column public.fixes.stdout should be type text');
+RETURN NEXT col_is_null(      'public', 'fixes', 'stdout', 'Column public.fixes.stdout should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'fixes', 'stdout', 'Column public.fixes.stdout should not have a default');
+
+RETURN NEXT has_column(       'public', 'fixes', 'stderr', 'Column public.fixes.stderr should exist');
+RETURN NEXT col_type_is(      'public', 'fixes', 'stderr', 'text', 'Column public.fixes.stderr should be type text');
+RETURN NEXT col_is_null(      'public', 'fixes', 'stderr', 'Column public.fixes.stderr should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'fixes', 'stderr', 'Column public.fixes.stderr should not have a default');
+
+RETURN NEXT has_column(       'public', 'fixes', 'applied_at', 'Column public.fixes.applied_at should exist');
+RETURN NEXT col_type_is(      'public', 'fixes', 'applied_at', 'timestamp without time zone', 'Column public.fixes.applied_at should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'fixes', 'applied_at', 'Column public.fixes.applied_at should allow NULL');
+RETURN NEXT col_has_default(  'public', 'fixes', 'applied_at', 'Column public.fixes.applied_at shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'fixes', 'applied_at', 'now()', 'Column public.fixes.applied_at default is');
+
+END;
+$$ LANGUAGE plpgsql;

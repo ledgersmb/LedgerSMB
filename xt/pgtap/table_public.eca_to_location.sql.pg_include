@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_eca_to_location()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'eca_to_location',
+    'Should have table public.eca_to_location'
+);
+
+RETURN NEXT has_pk(
+    'public', 'eca_to_location',
+    'Table public.eca_to_location should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'eca_to_location'::name, ARRAY[
+    'location_id'::name,
+    'location_class'::name,
+    'credit_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'eca_to_location', 'location_id', 'Column public.eca_to_location.location_id should exist');
+RETURN NEXT col_type_is(      'public', 'eca_to_location', 'location_id', 'integer', 'Column public.eca_to_location.location_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_to_location', 'location_id', 'Column public.eca_to_location.location_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_to_location', 'location_id', 'Column public.eca_to_location.location_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_to_location', 'location_class', 'Column public.eca_to_location.location_class should exist');
+RETURN NEXT col_type_is(      'public', 'eca_to_location', 'location_class', 'integer', 'Column public.eca_to_location.location_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_to_location', 'location_class', 'Column public.eca_to_location.location_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_to_location', 'location_class', 'Column public.eca_to_location.location_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'eca_to_location', 'credit_id', 'Column public.eca_to_location.credit_id should exist');
+RETURN NEXT col_type_is(      'public', 'eca_to_location', 'credit_id', 'integer', 'Column public.eca_to_location.credit_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'eca_to_location', 'credit_id', 'Column public.eca_to_location.credit_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'eca_to_location', 'credit_id', 'Column public.eca_to_location.credit_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

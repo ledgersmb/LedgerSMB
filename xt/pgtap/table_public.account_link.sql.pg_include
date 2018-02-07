@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_account_link()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'account_link',
+    'Should have table public.account_link'
+);
+
+RETURN NEXT has_pk(
+    'public', 'account_link',
+    'Table public.account_link should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'account_link'::name, ARRAY[
+    'account_id'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'account_link', 'account_id', 'Column public.account_link.account_id should exist');
+RETURN NEXT col_type_is(      'public', 'account_link', 'account_id', 'integer', 'Column public.account_link.account_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'account_link', 'account_id', 'Column public.account_link.account_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_link', 'account_id', 'Column public.account_link.account_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'account_link', 'description', 'Column public.account_link.description should exist');
+RETURN NEXT col_type_is(      'public', 'account_link', 'description', 'text', 'Column public.account_link.description should be type text');
+RETURN NEXT col_not_null(     'public', 'account_link', 'description', 'Column public.account_link.description should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account_link', 'description', 'Column public.account_link.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

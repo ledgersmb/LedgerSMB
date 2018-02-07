@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_lsmb_module()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'lsmb_module',
+    'Should have table public.lsmb_module'
+);
+
+RETURN NEXT has_pk(
+    'public', 'lsmb_module',
+    'Table public.lsmb_module should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'lsmb_module'::name, ARRAY[
+    'id'::name,
+    'label'::name
+]);
+
+RETURN NEXT has_column(       'public', 'lsmb_module', 'id', 'Column public.lsmb_module.id should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_module', 'id', 'integer', 'Column public.lsmb_module.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'lsmb_module', 'id', 'Column public.lsmb_module.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_module', 'id', 'Column public.lsmb_module.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'lsmb_module', 'label', 'Column public.lsmb_module.label should exist');
+RETURN NEXT col_type_is(      'public', 'lsmb_module', 'label', 'text', 'Column public.lsmb_module.label should be type text');
+RETURN NEXT col_not_null(     'public', 'lsmb_module', 'label', 'Column public.lsmb_module.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'lsmb_module', 'label', 'Column public.lsmb_module.label should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

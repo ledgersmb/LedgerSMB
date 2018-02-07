@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_partstax()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'partstax',
+    'Should have table public.partstax'
+);
+
+RETURN NEXT has_pk(
+    'public', 'partstax',
+    'Table public.partstax should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'partstax'::name, ARRAY[
+    'parts_id'::name,
+    'chart_id'::name,
+    'taxcategory_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'partstax', 'parts_id', 'Column public.partstax.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'partstax', 'parts_id', 'integer', 'Column public.partstax.parts_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partstax', 'parts_id', 'Column public.partstax.parts_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'partstax', 'parts_id', 'Column public.partstax.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partstax', 'chart_id', 'Column public.partstax.chart_id should exist');
+RETURN NEXT col_type_is(      'public', 'partstax', 'chart_id', 'integer', 'Column public.partstax.chart_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partstax', 'chart_id', 'Column public.partstax.chart_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'partstax', 'chart_id', 'Column public.partstax.chart_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partstax', 'taxcategory_id', 'Column public.partstax.taxcategory_id should exist');
+RETURN NEXT col_type_is(      'public', 'partstax', 'taxcategory_id', 'integer', 'Column public.partstax.taxcategory_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'partstax', 'taxcategory_id', 'Column public.partstax.taxcategory_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partstax', 'taxcategory_id', 'Column public.partstax.taxcategory_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

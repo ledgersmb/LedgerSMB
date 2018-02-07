@@ -1,0 +1,60 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_session()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'session',
+    'Should have table public.session'
+);
+
+RETURN NEXT has_pk(
+    'public', 'session',
+    'Table public.session should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'session'::name, ARRAY[
+    'session_id'::name,
+    'token'::name,
+    'last_used'::name,
+    'ttl'::name,
+    'users_id'::name,
+    'notify_pasword'::name
+]);
+
+RETURN NEXT has_column(       'public', 'session', 'session_id', 'Column public.session.session_id should exist');
+RETURN NEXT col_type_is(      'public', 'session', 'session_id', 'integer', 'Column public.session.session_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'session', 'session_id', 'Column public.session.session_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'session', 'session_id', 'Column public.session.session_id shouldhave a default');
+--SELECT col_default_is(   'public', 'session', 'session_id', 'nextval(''session_session_id_seq''::regclass)', 'Column public.session.session_id default is');RETURN NEXT col_default_is(   'public', 'session', 'session_id', 'nextval(''session_session_id_seq''::regclass)', 'Column public.session.session_id default is');
+
+RETURN NEXT has_column(       'public', 'session', 'token', 'Column public.session.token should exist');
+RETURN NEXT col_type_is(      'public', 'session', 'token', 'character varying(32)', 'Column public.session.token should be type character varying(32)');
+RETURN NEXT col_is_null(      'public', 'session', 'token', 'Column public.session.token should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'session', 'token', 'Column public.session.token should not have a default');
+
+RETURN NEXT has_column(       'public', 'session', 'last_used', 'Column public.session.last_used should exist');
+RETURN NEXT col_type_is(      'public', 'session', 'last_used', 'timestamp without time zone', 'Column public.session.last_used should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'session', 'last_used', 'Column public.session.last_used should allow NULL');
+RETURN NEXT col_has_default(  'public', 'session', 'last_used', 'Column public.session.last_used shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'session', 'last_used', 'now()', 'Column public.session.last_used default is');
+
+RETURN NEXT has_column(       'public', 'session', 'ttl', 'Column public.session.ttl should exist');
+RETURN NEXT col_type_is(      'public', 'session', 'ttl', 'integer', 'Column public.session.ttl should be type integer');
+RETURN NEXT col_not_null(     'public', 'session', 'ttl', 'Column public.session.ttl should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'session', 'ttl', 'Column public.session.ttl shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'session', 'ttl', '3600', 'Column public.session.ttl default is');
+
+RETURN NEXT has_column(       'public', 'session', 'users_id', 'Column public.session.users_id should exist');
+RETURN NEXT col_type_is(      'public', 'session', 'users_id', 'integer', 'Column public.session.users_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'session', 'users_id', 'Column public.session.users_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'session', 'users_id', 'Column public.session.users_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'session', 'notify_pasword', 'Column public.session.notify_pasword should exist');
+RETURN NEXT col_type_is(      'public', 'session', 'notify_pasword', 'interval', 'Column public.session.notify_pasword should be type interval');
+RETURN NEXT col_not_null(     'public', 'session', 'notify_pasword', 'Column public.session.notify_pasword should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'session', 'notify_pasword', 'Column public.session.notify_pasword shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'session', 'notify_pasword', '7 days'::interval, 'Column public.session.notify_pasword default is');
+
+END;
+$$ LANGUAGE plpgsql;

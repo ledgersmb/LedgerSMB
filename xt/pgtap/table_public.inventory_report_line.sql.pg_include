@@ -1,0 +1,50 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_inventory_report_line()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'inventory_report_line',
+    'Should have table public.inventory_report_line'
+);
+
+RETURN NEXT has_pk(
+    'public', 'inventory_report_line',
+    'Table public.inventory_report_line should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'inventory_report_line'::name, ARRAY[
+    'adjust_id'::name,
+    'parts_id'::name,
+    'counted'::name,
+    'expected'::name,
+    'variance'::name
+]);
+
+RETURN NEXT has_column(       'public', 'inventory_report_line', 'adjust_id', 'Column public.inventory_report_line.adjust_id should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report_line', 'adjust_id', 'integer', 'Column public.inventory_report_line.adjust_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'inventory_report_line', 'adjust_id', 'Column public.inventory_report_line.adjust_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report_line', 'adjust_id', 'Column public.inventory_report_line.adjust_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'inventory_report_line', 'parts_id', 'Column public.inventory_report_line.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report_line', 'parts_id', 'integer', 'Column public.inventory_report_line.parts_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'inventory_report_line', 'parts_id', 'Column public.inventory_report_line.parts_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report_line', 'parts_id', 'Column public.inventory_report_line.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'inventory_report_line', 'counted', 'Column public.inventory_report_line.counted should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report_line', 'counted', 'numeric', 'Column public.inventory_report_line.counted should be type numeric');
+RETURN NEXT col_is_null(      'public', 'inventory_report_line', 'counted', 'Column public.inventory_report_line.counted should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report_line', 'counted', 'Column public.inventory_report_line.counted should not have a default');
+
+RETURN NEXT has_column(       'public', 'inventory_report_line', 'expected', 'Column public.inventory_report_line.expected should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report_line', 'expected', 'numeric', 'Column public.inventory_report_line.expected should be type numeric');
+RETURN NEXT col_is_null(      'public', 'inventory_report_line', 'expected', 'Column public.inventory_report_line.expected should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report_line', 'expected', 'Column public.inventory_report_line.expected should not have a default');
+
+RETURN NEXT has_column(       'public', 'inventory_report_line', 'variance', 'Column public.inventory_report_line.variance should exist');
+RETURN NEXT col_type_is(      'public', 'inventory_report_line', 'variance', 'numeric', 'Column public.inventory_report_line.variance should be type numeric');
+RETURN NEXT col_is_null(      'public', 'inventory_report_line', 'variance', 'Column public.inventory_report_line.variance should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'inventory_report_line', 'variance', 'Column public.inventory_report_line.variance should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

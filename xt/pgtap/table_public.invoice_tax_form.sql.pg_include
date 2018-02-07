@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_invoice_tax_form()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'invoice_tax_form',
+    'Should have table public.invoice_tax_form'
+);
+
+RETURN NEXT has_pk(
+    'public', 'invoice_tax_form',
+    'Table public.invoice_tax_form should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'invoice_tax_form'::name, ARRAY[
+    'invoice_id'::name,
+    'reportable'::name
+]);
+
+RETURN NEXT has_column(       'public', 'invoice_tax_form', 'invoice_id', 'Column public.invoice_tax_form.invoice_id should exist');
+RETURN NEXT col_type_is(      'public', 'invoice_tax_form', 'invoice_id', 'integer', 'Column public.invoice_tax_form.invoice_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'invoice_tax_form', 'invoice_id', 'Column public.invoice_tax_form.invoice_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice_tax_form', 'invoice_id', 'Column public.invoice_tax_form.invoice_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'invoice_tax_form', 'reportable', 'Column public.invoice_tax_form.reportable should exist');
+RETURN NEXT col_type_is(      'public', 'invoice_tax_form', 'reportable', 'boolean', 'Column public.invoice_tax_form.reportable should be type boolean');
+RETURN NEXT col_is_null(      'public', 'invoice_tax_form', 'reportable', 'Column public.invoice_tax_form.reportable should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'invoice_tax_form', 'reportable', 'Column public.invoice_tax_form.reportable should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

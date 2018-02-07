@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_ac_tax_form()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'ac_tax_form',
+    'Should have table public.ac_tax_form'
+);
+
+RETURN NEXT has_pk(
+    'public', 'ac_tax_form',
+    'Table public.ac_tax_form should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'ac_tax_form'::name, ARRAY[
+    'entry_id'::name,
+    'reportable'::name
+]);
+
+RETURN NEXT has_column(       'public', 'ac_tax_form', 'entry_id', 'Column public.ac_tax_form.entry_id should exist');
+RETURN NEXT col_type_is(      'public', 'ac_tax_form', 'entry_id', 'integer', 'Column public.ac_tax_form.entry_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'ac_tax_form', 'entry_id', 'Column public.ac_tax_form.entry_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'ac_tax_form', 'entry_id', 'Column public.ac_tax_form.entry_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'ac_tax_form', 'reportable', 'Column public.ac_tax_form.reportable should exist');
+RETURN NEXT col_type_is(      'public', 'ac_tax_form', 'reportable', 'boolean', 'Column public.ac_tax_form.reportable should be type boolean');
+RETURN NEXT col_is_null(      'public', 'ac_tax_form', 'reportable', 'Column public.ac_tax_form.reportable should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'ac_tax_form', 'reportable', 'Column public.ac_tax_form.reportable should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_file_view_catalog()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'file_view_catalog',
+    'Should have table public.file_view_catalog'
+);
+
+RETURN NEXT has_pk(
+    'public', 'file_view_catalog',
+    'Table public.file_view_catalog should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'file_view_catalog'::name, ARRAY[
+    'file_class'::name,
+    'view_name'::name
+]);
+
+RETURN NEXT has_column(       'public', 'file_view_catalog', 'file_class', 'Column public.file_view_catalog.file_class should exist');
+RETURN NEXT col_type_is(      'public', 'file_view_catalog', 'file_class', 'integer', 'Column public.file_view_catalog.file_class should be type integer');
+RETURN NEXT col_not_null(     'public', 'file_view_catalog', 'file_class', 'Column public.file_view_catalog.file_class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_view_catalog', 'file_class', 'Column public.file_view_catalog.file_class should not have a default');
+
+RETURN NEXT has_column(       'public', 'file_view_catalog', 'view_name', 'Column public.file_view_catalog.view_name should exist');
+RETURN NEXT col_type_is(      'public', 'file_view_catalog', 'view_name', 'text', 'Column public.file_view_catalog.view_name should be type text');
+RETURN NEXT col_not_null(     'public', 'file_view_catalog', 'view_name', 'Column public.file_view_catalog.view_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'file_view_catalog', 'view_name', 'Column public.file_view_catalog.view_name should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,85 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_account()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'account',
+    'Should have table public.account'
+);
+
+RETURN NEXT has_pk(
+    'public', 'account',
+    'Table public.account should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'account'::name, ARRAY[
+    'id'::name,
+    'accno'::name,
+    'description'::name,
+    'is_temp'::name,
+    'category'::name,
+    'gifi_accno'::name,
+    'heading'::name,
+    'contra'::name,
+    'tax'::name,
+    'obsolete'::name
+]);
+
+RETURN NEXT has_column(       'public', 'account', 'id', 'Column public.account.id should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'id', 'integer', 'Column public.account.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'account', 'id', 'Column public.account.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account', 'id', 'Column public.account.id shouldhave a default');
+--SELECT col_default_is(   'public', 'account', 'id', 'nextval(''account_id_seq''::regclass)', 'Column public.account.id default is');RETURN NEXT col_default_is(   'public', 'account', 'id', 'nextval(''account_id_seq''::regclass)', 'Column public.account.id default is');
+
+RETURN NEXT has_column(       'public', 'account', 'accno', 'Column public.account.accno should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'accno', 'text', 'Column public.account.accno should be type text');
+RETURN NEXT col_not_null(     'public', 'account', 'accno', 'Column public.account.accno should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account', 'accno', 'Column public.account.accno should not have a default');
+
+RETURN NEXT has_column(       'public', 'account', 'description', 'Column public.account.description should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'description', 'text', 'Column public.account.description should be type text');
+RETURN NEXT col_is_null(      'public', 'account', 'description', 'Column public.account.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account', 'description', 'Column public.account.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'account', 'is_temp', 'Column public.account.is_temp should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'is_temp', 'boolean', 'Column public.account.is_temp should be type boolean');
+RETURN NEXT col_not_null(     'public', 'account', 'is_temp', 'Column public.account.is_temp should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account', 'is_temp', 'Column public.account.is_temp shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'account', 'is_temp', 'false', 'Column public.account.is_temp default is');
+
+RETURN NEXT has_column(       'public', 'account', 'category', 'Column public.account.category should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'category', 'character(1)', 'Column public.account.category should be type character(1)');
+RETURN NEXT col_not_null(     'public', 'account', 'category', 'Column public.account.category should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account', 'category', 'Column public.account.category should not have a default');
+
+RETURN NEXT has_column(       'public', 'account', 'gifi_accno', 'Column public.account.gifi_accno should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'gifi_accno', 'text', 'Column public.account.gifi_accno should be type text');
+RETURN NEXT col_is_null(      'public', 'account', 'gifi_accno', 'Column public.account.gifi_accno should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'account', 'gifi_accno', 'Column public.account.gifi_accno should not have a default');
+
+RETURN NEXT has_column(       'public', 'account', 'heading', 'Column public.account.heading should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'heading', 'integer', 'Column public.account.heading should be type integer');
+RETURN NEXT col_not_null(     'public', 'account', 'heading', 'Column public.account.heading should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'account', 'heading', 'Column public.account.heading should not have a default');
+
+RETURN NEXT has_column(       'public', 'account', 'contra', 'Column public.account.contra should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'contra', 'boolean', 'Column public.account.contra should be type boolean');
+RETURN NEXT col_not_null(     'public', 'account', 'contra', 'Column public.account.contra should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account', 'contra', 'Column public.account.contra shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'account', 'contra', 'false', 'Column public.account.contra default is');
+
+RETURN NEXT has_column(       'public', 'account', 'tax', 'Column public.account.tax should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'tax', 'boolean', 'Column public.account.tax should be type boolean');
+RETURN NEXT col_not_null(     'public', 'account', 'tax', 'Column public.account.tax should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account', 'tax', 'Column public.account.tax shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'account', 'tax', 'false', 'Column public.account.tax default is');
+
+RETURN NEXT has_column(       'public', 'account', 'obsolete', 'Column public.account.obsolete should exist');
+RETURN NEXT col_type_is(      'public', 'account', 'obsolete', 'boolean', 'Column public.account.obsolete should be type boolean');
+RETURN NEXT col_not_null(     'public', 'account', 'obsolete', 'Column public.account.obsolete should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'account', 'obsolete', 'Column public.account.obsolete shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'account', 'obsolete', 'false', 'Column public.account.obsolete default is');
+
+END;
+$$ LANGUAGE plpgsql;

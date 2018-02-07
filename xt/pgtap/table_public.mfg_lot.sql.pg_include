@@ -1,0 +1,53 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_mfg_lot()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'mfg_lot',
+    'Should have table public.mfg_lot'
+);
+
+RETURN NEXT hasnt_pk(
+    'public', 'mfg_lot',
+    'Table public.mfg_lot should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'mfg_lot'::name, ARRAY[
+    'id'::name,
+    'lot_number'::name,
+    'parts_id'::name,
+    'qty'::name,
+    'stock_date'::name
+]);
+
+RETURN NEXT has_column(       'public', 'mfg_lot', 'id', 'Column public.mfg_lot.id should exist');
+RETURN NEXT col_type_is(      'public', 'mfg_lot', 'id', 'integer', 'Column public.mfg_lot.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'mfg_lot', 'id', 'Column public.mfg_lot.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'mfg_lot', 'id', 'Column public.mfg_lot.id shouldhave a default');
+--SELECT col_default_is(   'public', 'mfg_lot', 'id', 'nextval(''mfg_lot_id_seq''::regclass)', 'Column public.mfg_lot.id default is');RETURN NEXT col_default_is(   'public', 'mfg_lot', 'id', 'nextval(''mfg_lot_id_seq''::regclass)', 'Column public.mfg_lot.id default is');
+
+RETURN NEXT has_column(       'public', 'mfg_lot', 'lot_number', 'Column public.mfg_lot.lot_number should exist');
+RETURN NEXT col_type_is(      'public', 'mfg_lot', 'lot_number', 'text', 'Column public.mfg_lot.lot_number should be type text');
+RETURN NEXT col_not_null(     'public', 'mfg_lot', 'lot_number', 'Column public.mfg_lot.lot_number should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'mfg_lot', 'lot_number', 'Column public.mfg_lot.lot_number shouldhave a default');
+--SELECT col_default_is(   'public', 'mfg_lot', 'lot_number', '(nextval(''lot_tracking_number''::regclass))::text', 'Column public.mfg_lot.lot_number default is');RETURN NEXT col_default_is(   'public', 'mfg_lot', 'lot_number', '(nextval(''lot_tracking_number''::regclass))::text', 'Column public.mfg_lot.lot_number default is');
+
+RETURN NEXT has_column(       'public', 'mfg_lot', 'parts_id', 'Column public.mfg_lot.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'mfg_lot', 'parts_id', 'integer', 'Column public.mfg_lot.parts_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'mfg_lot', 'parts_id', 'Column public.mfg_lot.parts_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'mfg_lot', 'parts_id', 'Column public.mfg_lot.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'mfg_lot', 'qty', 'Column public.mfg_lot.qty should exist');
+RETURN NEXT col_type_is(      'public', 'mfg_lot', 'qty', 'numeric', 'Column public.mfg_lot.qty should be type numeric');
+RETURN NEXT col_not_null(     'public', 'mfg_lot', 'qty', 'Column public.mfg_lot.qty should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'mfg_lot', 'qty', 'Column public.mfg_lot.qty should not have a default');
+
+RETURN NEXT has_column(       'public', 'mfg_lot', 'stock_date', 'Column public.mfg_lot.stock_date should exist');
+RETURN NEXT col_type_is(      'public', 'mfg_lot', 'stock_date', 'date', 'Column public.mfg_lot.stock_date should be type date');
+RETURN NEXT col_not_null(     'public', 'mfg_lot', 'stock_date', 'Column public.mfg_lot.stock_date should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'mfg_lot', 'stock_date', 'Column public.mfg_lot.stock_date shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'mfg_lot', 'stock_date', '(now())::date', 'Column public.mfg_lot.stock_date default is');
+
+END;
+$$ LANGUAGE plpgsql;

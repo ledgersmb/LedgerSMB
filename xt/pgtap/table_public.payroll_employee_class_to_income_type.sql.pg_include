@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_employee_class_to_income_type()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_employee_class_to_income_type',
+    'Should have table public.payroll_employee_class_to_income_type'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payroll_employee_class_to_income_type',
+    'Table public.payroll_employee_class_to_income_type should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_employee_class_to_income_type'::name, ARRAY[
+    'ec_id'::name,
+    'it_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_employee_class_to_income_type', 'ec_id', 'Column public.payroll_employee_class_to_income_type.ec_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_employee_class_to_income_type', 'ec_id', 'integer', 'Column public.payroll_employee_class_to_income_type.ec_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_employee_class_to_income_type', 'ec_id', 'Column public.payroll_employee_class_to_income_type.ec_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_employee_class_to_income_type', 'ec_id', 'Column public.payroll_employee_class_to_income_type.ec_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'payroll_employee_class_to_income_type', 'it_id', 'Column public.payroll_employee_class_to_income_type.it_id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_employee_class_to_income_type', 'it_id', 'integer', 'Column public.payroll_employee_class_to_income_type.it_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_employee_class_to_income_type', 'it_id', 'Column public.payroll_employee_class_to_income_type.it_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_employee_class_to_income_type', 'it_id', 'Column public.payroll_employee_class_to_income_type.it_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

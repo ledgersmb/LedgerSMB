@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_entity_other_name()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'entity_other_name',
+    'Should have table public.entity_other_name'
+);
+
+RETURN NEXT has_pk(
+    'public', 'entity_other_name',
+    'Table public.entity_other_name should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'entity_other_name'::name, ARRAY[
+    'entity_id'::name,
+    'other_name'::name
+]);
+
+RETURN NEXT has_column(       'public', 'entity_other_name', 'entity_id', 'Column public.entity_other_name.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'entity_other_name', 'entity_id', 'integer', 'Column public.entity_other_name.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'entity_other_name', 'entity_id', 'Column public.entity_other_name.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_other_name', 'entity_id', 'Column public.entity_other_name.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'entity_other_name', 'other_name', 'Column public.entity_other_name.other_name should exist');
+RETURN NEXT col_type_is(      'public', 'entity_other_name', 'other_name', 'text', 'Column public.entity_other_name.other_name should be type text');
+RETURN NEXT col_not_null(     'public', 'entity_other_name', 'other_name', 'Column public.entity_other_name.other_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'entity_other_name', 'other_name', 'Column public.entity_other_name.other_name should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,53 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_country_tax_form()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'country_tax_form',
+    'Should have table public.country_tax_form'
+);
+
+RETURN NEXT has_pk(
+    'public', 'country_tax_form',
+    'Table public.country_tax_form should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'country_tax_form'::name, ARRAY[
+    'country_id'::name,
+    'form_name'::name,
+    'id'::name,
+    'default_reportable'::name,
+    'is_accrual'::name
+]);
+
+RETURN NEXT has_column(       'public', 'country_tax_form', 'country_id', 'Column public.country_tax_form.country_id should exist');
+RETURN NEXT col_type_is(      'public', 'country_tax_form', 'country_id', 'integer', 'Column public.country_tax_form.country_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'country_tax_form', 'country_id', 'Column public.country_tax_form.country_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'country_tax_form', 'country_id', 'Column public.country_tax_form.country_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'country_tax_form', 'form_name', 'Column public.country_tax_form.form_name should exist');
+RETURN NEXT col_type_is(      'public', 'country_tax_form', 'form_name', 'text', 'Column public.country_tax_form.form_name should be type text');
+RETURN NEXT col_not_null(     'public', 'country_tax_form', 'form_name', 'Column public.country_tax_form.form_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'country_tax_form', 'form_name', 'Column public.country_tax_form.form_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'country_tax_form', 'id', 'Column public.country_tax_form.id should exist');
+RETURN NEXT col_type_is(      'public', 'country_tax_form', 'id', 'integer', 'Column public.country_tax_form.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'country_tax_form', 'id', 'Column public.country_tax_form.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'country_tax_form', 'id', 'Column public.country_tax_form.id shouldhave a default');
+--SELECT col_default_is(   'public', 'country_tax_form', 'id', 'nextval(''country_tax_form_id_seq''::regclass)', 'Column public.country_tax_form.id default is');RETURN NEXT col_default_is(   'public', 'country_tax_form', 'id', 'nextval(''country_tax_form_id_seq''::regclass)', 'Column public.country_tax_form.id default is');
+
+RETURN NEXT has_column(       'public', 'country_tax_form', 'default_reportable', 'Column public.country_tax_form.default_reportable should exist');
+RETURN NEXT col_type_is(      'public', 'country_tax_form', 'default_reportable', 'boolean', 'Column public.country_tax_form.default_reportable should be type boolean');
+RETURN NEXT col_not_null(     'public', 'country_tax_form', 'default_reportable', 'Column public.country_tax_form.default_reportable should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'country_tax_form', 'default_reportable', 'Column public.country_tax_form.default_reportable shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'country_tax_form', 'default_reportable', 'false', 'Column public.country_tax_form.default_reportable default is');
+
+RETURN NEXT has_column(       'public', 'country_tax_form', 'is_accrual', 'Column public.country_tax_form.is_accrual should exist');
+RETURN NEXT col_type_is(      'public', 'country_tax_form', 'is_accrual', 'boolean', 'Column public.country_tax_form.is_accrual should be type boolean');
+RETURN NEXT col_not_null(     'public', 'country_tax_form', 'is_accrual', 'Column public.country_tax_form.is_accrual should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'country_tax_form', 'is_accrual', 'Column public.country_tax_form.is_accrual shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'country_tax_form', 'is_accrual', 'false', 'Column public.country_tax_form.is_accrual default is');
+
+END;
+$$ LANGUAGE plpgsql;

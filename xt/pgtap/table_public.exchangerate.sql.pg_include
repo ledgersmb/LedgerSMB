@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_exchangerate()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'exchangerate',
+    'Should have table public.exchangerate'
+);
+
+RETURN NEXT has_pk(
+    'public', 'exchangerate',
+    'Table public.exchangerate should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'exchangerate'::name, ARRAY[
+    'curr'::name,
+    'transdate'::name,
+    'buy'::name,
+    'sell'::name
+]);
+
+RETURN NEXT has_column(       'public', 'exchangerate', 'curr', 'Column public.exchangerate.curr should exist');
+RETURN NEXT col_type_is(      'public', 'exchangerate', 'curr', 'character(3)', 'Column public.exchangerate.curr should be type character(3)');
+RETURN NEXT col_not_null(     'public', 'exchangerate', 'curr', 'Column public.exchangerate.curr should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'exchangerate', 'curr', 'Column public.exchangerate.curr should not have a default');
+
+RETURN NEXT has_column(       'public', 'exchangerate', 'transdate', 'Column public.exchangerate.transdate should exist');
+RETURN NEXT col_type_is(      'public', 'exchangerate', 'transdate', 'date', 'Column public.exchangerate.transdate should be type date');
+RETURN NEXT col_not_null(     'public', 'exchangerate', 'transdate', 'Column public.exchangerate.transdate should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'exchangerate', 'transdate', 'Column public.exchangerate.transdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'exchangerate', 'buy', 'Column public.exchangerate.buy should exist');
+RETURN NEXT col_type_is(      'public', 'exchangerate', 'buy', 'numeric', 'Column public.exchangerate.buy should be type numeric');
+RETURN NEXT col_is_null(      'public', 'exchangerate', 'buy', 'Column public.exchangerate.buy should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'exchangerate', 'buy', 'Column public.exchangerate.buy should not have a default');
+
+RETURN NEXT has_column(       'public', 'exchangerate', 'sell', 'Column public.exchangerate.sell should exist');
+RETURN NEXT col_type_is(      'public', 'exchangerate', 'sell', 'numeric', 'Column public.exchangerate.sell should be type numeric');
+RETURN NEXT col_is_null(      'public', 'exchangerate', 'sell', 'Column public.exchangerate.sell should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'exchangerate', 'sell', 'Column public.exchangerate.sell should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

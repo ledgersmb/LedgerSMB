@@ -1,0 +1,89 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_budget_info()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'budget_info',
+    'Should have table public.budget_info'
+);
+
+RETURN NEXT has_pk(
+    'public', 'budget_info',
+    'Table public.budget_info should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'budget_info'::name, ARRAY[
+    'id'::name,
+    'start_date'::name,
+    'end_date'::name,
+    'reference'::name,
+    'description'::name,
+    'entered_by'::name,
+    'approved_by'::name,
+    'obsolete_by'::name,
+    'entered_at'::name,
+    'approved_at'::name,
+    'obsolete_at'::name
+]);
+
+RETURN NEXT has_column(       'public', 'budget_info', 'id', 'Column public.budget_info.id should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'id', 'integer', 'Column public.budget_info.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'id', 'Column public.budget_info.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_info', 'id', 'Column public.budget_info.id shouldhave a default');
+--SELECT col_default_is(   'public', 'budget_info', 'id', 'nextval(''budget_info_id_seq''::regclass)', 'Column public.budget_info.id default is');RETURN NEXT col_default_is(   'public', 'budget_info', 'id', 'nextval(''budget_info_id_seq''::regclass)', 'Column public.budget_info.id default is');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'start_date', 'Column public.budget_info.start_date should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'start_date', 'date', 'Column public.budget_info.start_date should be type date');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'start_date', 'Column public.budget_info.start_date should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'start_date', 'Column public.budget_info.start_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'end_date', 'Column public.budget_info.end_date should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'end_date', 'date', 'Column public.budget_info.end_date should be type date');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'end_date', 'Column public.budget_info.end_date should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'end_date', 'Column public.budget_info.end_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'reference', 'Column public.budget_info.reference should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'reference', 'text', 'Column public.budget_info.reference should be type text');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'reference', 'Column public.budget_info.reference should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'reference', 'Column public.budget_info.reference should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'description', 'Column public.budget_info.description should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'description', 'text', 'Column public.budget_info.description should be type text');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'description', 'Column public.budget_info.description should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'description', 'Column public.budget_info.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'entered_by', 'Column public.budget_info.entered_by should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'entered_by', 'integer', 'Column public.budget_info.entered_by should be type integer');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'entered_by', 'Column public.budget_info.entered_by should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_info', 'entered_by', 'Column public.budget_info.entered_by shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'budget_info', 'entered_by', 'person__get_my_entity_id()', 'Column public.budget_info.entered_by default is');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'approved_by', 'Column public.budget_info.approved_by should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'approved_by', 'integer', 'Column public.budget_info.approved_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'budget_info', 'approved_by', 'Column public.budget_info.approved_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'approved_by', 'Column public.budget_info.approved_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'obsolete_by', 'Column public.budget_info.obsolete_by should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'obsolete_by', 'integer', 'Column public.budget_info.obsolete_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'budget_info', 'obsolete_by', 'Column public.budget_info.obsolete_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'obsolete_by', 'Column public.budget_info.obsolete_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'entered_at', 'Column public.budget_info.entered_at should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'entered_at', 'timestamp without time zone', 'Column public.budget_info.entered_at should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'budget_info', 'entered_at', 'Column public.budget_info.entered_at should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'budget_info', 'entered_at', 'Column public.budget_info.entered_at shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'budget_info', 'entered_at', 'now()', 'Column public.budget_info.entered_at default is');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'approved_at', 'Column public.budget_info.approved_at should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'approved_at', 'timestamp without time zone', 'Column public.budget_info.approved_at should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'budget_info', 'approved_at', 'Column public.budget_info.approved_at should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'approved_at', 'Column public.budget_info.approved_at should not have a default');
+
+RETURN NEXT has_column(       'public', 'budget_info', 'obsolete_at', 'Column public.budget_info.obsolete_at should exist');
+RETURN NEXT col_type_is(      'public', 'budget_info', 'obsolete_at', 'timestamp without time zone', 'Column public.budget_info.obsolete_at should be type timestamp without time zone');
+RETURN NEXT col_is_null(      'public', 'budget_info', 'obsolete_at', 'Column public.budget_info.obsolete_at should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'budget_info', 'obsolete_at', 'Column public.budget_info.obsolete_at should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

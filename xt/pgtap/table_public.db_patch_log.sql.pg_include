@@ -1,0 +1,50 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_db_patch_log()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'db_patch_log',
+    'Should have table public.db_patch_log'
+);
+
+RETURN NEXT has_pk(
+    'public', 'db_patch_log',
+    'Table public.db_patch_log should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'db_patch_log'::name, ARRAY[
+    'when_applied'::name,
+    'path'::name,
+    'sha'::name,
+    'sqlstate'::name,
+    'error'::name
+]);
+
+RETURN NEXT has_column(       'public', 'db_patch_log', 'when_applied', 'Column public.db_patch_log.when_applied should exist');
+RETURN NEXT col_type_is(      'public', 'db_patch_log', 'when_applied', 'timestamp without time zone', 'Column public.db_patch_log.when_applied should be type timestamp without time zone');
+RETURN NEXT col_not_null(     'public', 'db_patch_log', 'when_applied', 'Column public.db_patch_log.when_applied should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patch_log', 'when_applied', 'Column public.db_patch_log.when_applied should not have a default');
+
+RETURN NEXT has_column(       'public', 'db_patch_log', 'path', 'Column public.db_patch_log.path should exist');
+RETURN NEXT col_type_is(      'public', 'db_patch_log', 'path', 'text', 'Column public.db_patch_log.path should be type text');
+RETURN NEXT col_not_null(     'public', 'db_patch_log', 'path', 'Column public.db_patch_log.path should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patch_log', 'path', 'Column public.db_patch_log.path should not have a default');
+
+RETURN NEXT has_column(       'public', 'db_patch_log', 'sha', 'Column public.db_patch_log.sha should exist');
+RETURN NEXT col_type_is(      'public', 'db_patch_log', 'sha', 'text', 'Column public.db_patch_log.sha should be type text');
+RETURN NEXT col_not_null(     'public', 'db_patch_log', 'sha', 'Column public.db_patch_log.sha should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patch_log', 'sha', 'Column public.db_patch_log.sha should not have a default');
+
+RETURN NEXT has_column(       'public', 'db_patch_log', 'sqlstate', 'Column public.db_patch_log.sqlstate should exist');
+RETURN NEXT col_type_is(      'public', 'db_patch_log', 'sqlstate', 'text', 'Column public.db_patch_log.sqlstate should be type text');
+RETURN NEXT col_not_null(     'public', 'db_patch_log', 'sqlstate', 'Column public.db_patch_log.sqlstate should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patch_log', 'sqlstate', 'Column public.db_patch_log.sqlstate should not have a default');
+
+RETURN NEXT has_column(       'public', 'db_patch_log', 'error', 'Column public.db_patch_log.error should exist');
+RETURN NEXT col_type_is(      'public', 'db_patch_log', 'error', 'text', 'Column public.db_patch_log.error should be type text');
+RETURN NEXT col_is_null(      'public', 'db_patch_log', 'error', 'Column public.db_patch_log.error should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'db_patch_log', 'error', 'Column public.db_patch_log.error should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

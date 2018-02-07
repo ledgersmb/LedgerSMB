@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_makemodel()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'makemodel',
+    'Should have table public.makemodel'
+);
+
+RETURN NEXT has_pk(
+    'public', 'makemodel',
+    'Table public.makemodel should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'makemodel'::name, ARRAY[
+    'parts_id'::name,
+    'barcode'::name,
+    'make'::name,
+    'model'::name
+]);
+
+RETURN NEXT has_column(       'public', 'makemodel', 'parts_id', 'Column public.makemodel.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'makemodel', 'parts_id', 'integer', 'Column public.makemodel.parts_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'makemodel', 'parts_id', 'Column public.makemodel.parts_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'makemodel', 'parts_id', 'Column public.makemodel.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'makemodel', 'barcode', 'Column public.makemodel.barcode should exist');
+RETURN NEXT col_type_is(      'public', 'makemodel', 'barcode', 'text', 'Column public.makemodel.barcode should be type text');
+RETURN NEXT col_is_null(      'public', 'makemodel', 'barcode', 'Column public.makemodel.barcode should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'makemodel', 'barcode', 'Column public.makemodel.barcode should not have a default');
+
+RETURN NEXT has_column(       'public', 'makemodel', 'make', 'Column public.makemodel.make should exist');
+RETURN NEXT col_type_is(      'public', 'makemodel', 'make', 'text', 'Column public.makemodel.make should be type text');
+RETURN NEXT col_not_null(     'public', 'makemodel', 'make', 'Column public.makemodel.make should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'makemodel', 'make', 'Column public.makemodel.make should not have a default');
+
+RETURN NEXT has_column(       'public', 'makemodel', 'model', 'Column public.makemodel.model should exist');
+RETURN NEXT col_type_is(      'public', 'makemodel', 'model', 'text', 'Column public.makemodel.model should be type text');
+RETURN NEXT col_not_null(     'public', 'makemodel', 'model', 'Column public.makemodel.model should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'makemodel', 'model', 'Column public.makemodel.model should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

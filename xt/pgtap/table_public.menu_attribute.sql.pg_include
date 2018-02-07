@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_menu_attribute()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'menu_attribute',
+    'Should have table public.menu_attribute'
+);
+
+RETURN NEXT has_pk(
+    'public', 'menu_attribute',
+    'Table public.menu_attribute should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'menu_attribute'::name, ARRAY[
+    'node_id'::name,
+    'attribute'::name,
+    'value'::name,
+    'id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'menu_attribute', 'node_id', 'Column public.menu_attribute.node_id should exist');
+RETURN NEXT col_type_is(      'public', 'menu_attribute', 'node_id', 'integer', 'Column public.menu_attribute.node_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'menu_attribute', 'node_id', 'Column public.menu_attribute.node_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_attribute', 'node_id', 'Column public.menu_attribute.node_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_attribute', 'attribute', 'Column public.menu_attribute.attribute should exist');
+RETURN NEXT col_type_is(      'public', 'menu_attribute', 'attribute', 'character varying', 'Column public.menu_attribute.attribute should be type character varying');
+RETURN NEXT col_not_null(     'public', 'menu_attribute', 'attribute', 'Column public.menu_attribute.attribute should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_attribute', 'attribute', 'Column public.menu_attribute.attribute should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_attribute', 'value', 'Column public.menu_attribute.value should exist');
+RETURN NEXT col_type_is(      'public', 'menu_attribute', 'value', 'character varying', 'Column public.menu_attribute.value should be type character varying');
+RETURN NEXT col_not_null(     'public', 'menu_attribute', 'value', 'Column public.menu_attribute.value should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_attribute', 'value', 'Column public.menu_attribute.value should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_attribute', 'id', 'Column public.menu_attribute.id should exist');
+RETURN NEXT col_type_is(      'public', 'menu_attribute', 'id', 'integer', 'Column public.menu_attribute.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'menu_attribute', 'id', 'Column public.menu_attribute.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'menu_attribute', 'id', 'Column public.menu_attribute.id shouldhave a default');
+--SELECT col_default_is(   'public', 'menu_attribute', 'id', 'nextval(''menu_attribute_id_seq''::regclass)', 'Column public.menu_attribute.id default is');RETURN NEXT col_default_is(   'public', 'menu_attribute', 'id', 'nextval(''menu_attribute_id_seq''::regclass)', 'Column public.menu_attribute.id default is');
+
+END;
+$$ LANGUAGE plpgsql;

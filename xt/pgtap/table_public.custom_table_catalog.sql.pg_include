@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_custom_table_catalog()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'custom_table_catalog',
+    'Should have table public.custom_table_catalog'
+);
+
+RETURN NEXT has_pk(
+    'public', 'custom_table_catalog',
+    'Table public.custom_table_catalog should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'custom_table_catalog'::name, ARRAY[
+    'table_id'::name,
+    'extends'::name,
+    'table_name'::name
+]);
+
+RETURN NEXT has_column(       'public', 'custom_table_catalog', 'table_id', 'Column public.custom_table_catalog.table_id should exist');
+RETURN NEXT col_type_is(      'public', 'custom_table_catalog', 'table_id', 'integer', 'Column public.custom_table_catalog.table_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'custom_table_catalog', 'table_id', 'Column public.custom_table_catalog.table_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'custom_table_catalog', 'table_id', 'Column public.custom_table_catalog.table_id shouldhave a default');
+--SELECT col_default_is(   'public', 'custom_table_catalog', 'table_id', 'nextval(''custom_table_catalog_table_id_seq''::regclass)', 'Column public.custom_table_catalog.table_id default is');RETURN NEXT col_default_is(   'public', 'custom_table_catalog', 'table_id', 'nextval(''custom_table_catalog_table_id_seq''::regclass)', 'Column public.custom_table_catalog.table_id default is');
+
+RETURN NEXT has_column(       'public', 'custom_table_catalog', 'extends', 'Column public.custom_table_catalog.extends should exist');
+RETURN NEXT col_type_is(      'public', 'custom_table_catalog', 'extends', 'text', 'Column public.custom_table_catalog.extends should be type text');
+RETURN NEXT col_is_null(      'public', 'custom_table_catalog', 'extends', 'Column public.custom_table_catalog.extends should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'custom_table_catalog', 'extends', 'Column public.custom_table_catalog.extends should not have a default');
+
+RETURN NEXT has_column(       'public', 'custom_table_catalog', 'table_name', 'Column public.custom_table_catalog.table_name should exist');
+RETURN NEXT col_type_is(      'public', 'custom_table_catalog', 'table_name', 'text', 'Column public.custom_table_catalog.table_name should be type text');
+RETURN NEXT col_is_null(      'public', 'custom_table_catalog', 'table_name', 'Column public.custom_table_catalog.table_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'custom_table_catalog', 'table_name', 'Column public.custom_table_catalog.table_name should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

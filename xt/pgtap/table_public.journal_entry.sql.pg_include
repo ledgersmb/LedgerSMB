@@ -1,0 +1,102 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_journal_entry()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'journal_entry',
+    'Should have table public.journal_entry'
+);
+
+RETURN NEXT has_pk(
+    'public', 'journal_entry',
+    'Table public.journal_entry should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'journal_entry'::name, ARRAY[
+    'id'::name,
+    'reference'::name,
+    'description'::name,
+    'locked_by'::name,
+    'journal'::name,
+    'post_date'::name,
+    'effective_start'::name,
+    'effective_end'::name,
+    'currency'::name,
+    'approved'::name,
+    'is_template'::name,
+    'entered_by'::name,
+    'approved_by'::name
+]);
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'id', 'Column public.journal_entry.id should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'id', 'integer', 'Column public.journal_entry.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_entry', 'id', 'Column public.journal_entry.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'journal_entry', 'id', 'Column public.journal_entry.id shouldhave a default');
+--SELECT col_default_is(   'public', 'journal_entry', 'id', 'nextval(''journal_entry_id_seq''::regclass)', 'Column public.journal_entry.id default is');RETURN NEXT col_default_is(   'public', 'journal_entry', 'id', 'nextval(''journal_entry_id_seq''::regclass)', 'Column public.journal_entry.id default is');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'reference', 'Column public.journal_entry.reference should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'reference', 'text', 'Column public.journal_entry.reference should be type text');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'reference', 'Column public.journal_entry.reference should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'reference', 'Column public.journal_entry.reference should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'description', 'Column public.journal_entry.description should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'description', 'text', 'Column public.journal_entry.description should be type text');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'description', 'Column public.journal_entry.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'description', 'Column public.journal_entry.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'locked_by', 'Column public.journal_entry.locked_by should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'locked_by', 'integer', 'Column public.journal_entry.locked_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'locked_by', 'Column public.journal_entry.locked_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'locked_by', 'Column public.journal_entry.locked_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'journal', 'Column public.journal_entry.journal should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'journal', 'integer', 'Column public.journal_entry.journal should be type integer');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'journal', 'Column public.journal_entry.journal should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'journal', 'Column public.journal_entry.journal should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'post_date', 'Column public.journal_entry.post_date should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'post_date', 'date', 'Column public.journal_entry.post_date should be type date');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'post_date', 'Column public.journal_entry.post_date should allow NULL');
+RETURN NEXT col_has_default(  'public', 'journal_entry', 'post_date', 'Column public.journal_entry.post_date shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_entry', 'post_date', 'now()', 'Column public.journal_entry.post_date default is');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'effective_start', 'Column public.journal_entry.effective_start should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'effective_start', 'date', 'Column public.journal_entry.effective_start should be type date');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'effective_start', 'Column public.journal_entry.effective_start should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'effective_start', 'Column public.journal_entry.effective_start should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'effective_end', 'Column public.journal_entry.effective_end should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'effective_end', 'date', 'Column public.journal_entry.effective_end should be type date');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'effective_end', 'Column public.journal_entry.effective_end should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'effective_end', 'Column public.journal_entry.effective_end should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'currency', 'Column public.journal_entry.currency should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'currency', 'character(3)', 'Column public.journal_entry.currency should be type character(3)');
+RETURN NEXT col_not_null(     'public', 'journal_entry', 'currency', 'Column public.journal_entry.currency should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'currency', 'Column public.journal_entry.currency should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'approved', 'Column public.journal_entry.approved should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'approved', 'boolean', 'Column public.journal_entry.approved should be type boolean');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'approved', 'Column public.journal_entry.approved should allow NULL');
+RETURN NEXT col_has_default(  'public', 'journal_entry', 'approved', 'Column public.journal_entry.approved shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_entry', 'approved', 'false', 'Column public.journal_entry.approved default is');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'is_template', 'Column public.journal_entry.is_template should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'is_template', 'boolean', 'Column public.journal_entry.is_template should be type boolean');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'is_template', 'Column public.journal_entry.is_template should allow NULL');
+RETURN NEXT col_has_default(  'public', 'journal_entry', 'is_template', 'Column public.journal_entry.is_template shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'journal_entry', 'is_template', 'false', 'Column public.journal_entry.is_template default is');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'entered_by', 'Column public.journal_entry.entered_by should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'entered_by', 'integer', 'Column public.journal_entry.entered_by should be type integer');
+RETURN NEXT col_not_null(     'public', 'journal_entry', 'entered_by', 'Column public.journal_entry.entered_by should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'entered_by', 'Column public.journal_entry.entered_by should not have a default');
+
+RETURN NEXT has_column(       'public', 'journal_entry', 'approved_by', 'Column public.journal_entry.approved_by should exist');
+RETURN NEXT col_type_is(      'public', 'journal_entry', 'approved_by', 'integer', 'Column public.journal_entry.approved_by should be type integer');
+RETURN NEXT col_is_null(      'public', 'journal_entry', 'approved_by', 'Column public.journal_entry.approved_by should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'journal_entry', 'approved_by', 'Column public.journal_entry.approved_by should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

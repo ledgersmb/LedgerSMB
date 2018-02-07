@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payment_type()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payment_type',
+    'Should have table public.payment_type'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payment_type',
+    'Table public.payment_type should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payment_type'::name, ARRAY[
+    'id'::name,
+    'label'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payment_type', 'id', 'Column public.payment_type.id should exist');
+RETURN NEXT col_type_is(      'public', 'payment_type', 'id', 'integer', 'Column public.payment_type.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payment_type', 'id', 'Column public.payment_type.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payment_type', 'id', 'Column public.payment_type.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payment_type', 'id', 'nextval(''payment_type_id_seq''::regclass)', 'Column public.payment_type.id default is');RETURN NEXT col_default_is(   'public', 'payment_type', 'id', 'nextval(''payment_type_id_seq''::regclass)', 'Column public.payment_type.id default is');
+
+RETURN NEXT has_column(       'public', 'payment_type', 'label', 'Column public.payment_type.label should exist');
+RETURN NEXT col_type_is(      'public', 'payment_type', 'label', 'text', 'Column public.payment_type.label should be type text');
+RETURN NEXT col_not_null(     'public', 'payment_type', 'label', 'Column public.payment_type.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payment_type', 'label', 'Column public.payment_type.label should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

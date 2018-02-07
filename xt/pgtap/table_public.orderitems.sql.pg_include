@@ -1,0 +1,99 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_orderitems()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'orderitems',
+    'Should have table public.orderitems'
+);
+
+RETURN NEXT has_pk(
+    'public', 'orderitems',
+    'Table public.orderitems should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'orderitems'::name, ARRAY[
+    'id'::name,
+    'trans_id'::name,
+    'parts_id'::name,
+    'description'::name,
+    'qty'::name,
+    'sellprice'::name,
+    'precision'::name,
+    'discount'::name,
+    'unit'::name,
+    'reqdate'::name,
+    'ship'::name,
+    'serialnumber'::name,
+    'notes'::name
+]);
+
+RETURN NEXT has_column(       'public', 'orderitems', 'id', 'Column public.orderitems.id should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'id', 'integer', 'Column public.orderitems.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'orderitems', 'id', 'Column public.orderitems.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'orderitems', 'id', 'Column public.orderitems.id shouldhave a default');
+--SELECT col_default_is(   'public', 'orderitems', 'id', 'nextval(''orderitems_id_seq''::regclass)', 'Column public.orderitems.id default is');RETURN NEXT col_default_is(   'public', 'orderitems', 'id', 'nextval(''orderitems_id_seq''::regclass)', 'Column public.orderitems.id default is');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'trans_id', 'Column public.orderitems.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'trans_id', 'integer', 'Column public.orderitems.trans_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'trans_id', 'Column public.orderitems.trans_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'trans_id', 'Column public.orderitems.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'parts_id', 'Column public.orderitems.parts_id should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'parts_id', 'integer', 'Column public.orderitems.parts_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'parts_id', 'Column public.orderitems.parts_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'parts_id', 'Column public.orderitems.parts_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'description', 'Column public.orderitems.description should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'description', 'text', 'Column public.orderitems.description should be type text');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'description', 'Column public.orderitems.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'description', 'Column public.orderitems.description should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'qty', 'Column public.orderitems.qty should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'qty', 'numeric', 'Column public.orderitems.qty should be type numeric');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'qty', 'Column public.orderitems.qty should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'qty', 'Column public.orderitems.qty should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'sellprice', 'Column public.orderitems.sellprice should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'sellprice', 'numeric', 'Column public.orderitems.sellprice should be type numeric');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'sellprice', 'Column public.orderitems.sellprice should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'sellprice', 'Column public.orderitems.sellprice should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'precision', 'Column public.orderitems."precision" should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'precision', 'integer', 'Column public.orderitems."precision" should be type integer');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'precision', 'Column public.orderitems."precision" should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'precision', 'Column public.orderitems."precision" should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'discount', 'Column public.orderitems.discount should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'discount', 'numeric', 'Column public.orderitems.discount should be type numeric');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'discount', 'Column public.orderitems.discount should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'discount', 'Column public.orderitems.discount should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'unit', 'Column public.orderitems.unit should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'unit', 'character varying(5)', 'Column public.orderitems.unit should be type character varying(5)');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'unit', 'Column public.orderitems.unit should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'unit', 'Column public.orderitems.unit should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'reqdate', 'Column public.orderitems.reqdate should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'reqdate', 'date', 'Column public.orderitems.reqdate should be type date');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'reqdate', 'Column public.orderitems.reqdate should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'reqdate', 'Column public.orderitems.reqdate should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'ship', 'Column public.orderitems.ship should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'ship', 'numeric', 'Column public.orderitems.ship should be type numeric');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'ship', 'Column public.orderitems.ship should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'ship', 'Column public.orderitems.ship should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'serialnumber', 'Column public.orderitems.serialnumber should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'serialnumber', 'text', 'Column public.orderitems.serialnumber should be type text');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'serialnumber', 'Column public.orderitems.serialnumber should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'serialnumber', 'Column public.orderitems.serialnumber should not have a default');
+
+RETURN NEXT has_column(       'public', 'orderitems', 'notes', 'Column public.orderitems.notes should exist');
+RETURN NEXT col_type_is(      'public', 'orderitems', 'notes', 'text', 'Column public.orderitems.notes should be type text');
+RETURN NEXT col_is_null(      'public', 'orderitems', 'notes', 'Column public.orderitems.notes should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'orderitems', 'notes', 'Column public.orderitems.notes should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

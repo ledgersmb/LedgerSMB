@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_trans_type()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'trans_type',
+    'Should have table public.trans_type'
+);
+
+RETURN NEXT has_pk(
+    'public', 'trans_type',
+    'Table public.trans_type should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'trans_type'::name, ARRAY[
+    'code'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'trans_type', 'code', 'Column public.trans_type.code should exist');
+RETURN NEXT col_type_is(      'public', 'trans_type', 'code', 'character(2)', 'Column public.trans_type.code should be type character(2)');
+RETURN NEXT col_not_null(     'public', 'trans_type', 'code', 'Column public.trans_type.code should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'trans_type', 'code', 'Column public.trans_type.code should not have a default');
+
+RETURN NEXT has_column(       'public', 'trans_type', 'description', 'Column public.trans_type.description should exist');
+RETURN NEXT col_type_is(      'public', 'trans_type', 'description', 'character varying(1000)', 'Column public.trans_type.description should be type character varying(1000)');
+RETURN NEXT col_is_null(      'public', 'trans_type', 'description', 'Column public.trans_type.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'trans_type', 'description', 'Column public.trans_type.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

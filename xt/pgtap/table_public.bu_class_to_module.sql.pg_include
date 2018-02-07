@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_bu_class_to_module()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'bu_class_to_module',
+    'Should have table public.bu_class_to_module'
+);
+
+RETURN NEXT has_pk(
+    'public', 'bu_class_to_module',
+    'Table public.bu_class_to_module should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'bu_class_to_module'::name, ARRAY[
+    'bu_class_id'::name,
+    'module_id'::name
+]);
+
+RETURN NEXT has_column(       'public', 'bu_class_to_module', 'bu_class_id', 'Column public.bu_class_to_module.bu_class_id should exist');
+RETURN NEXT col_type_is(      'public', 'bu_class_to_module', 'bu_class_id', 'integer', 'Column public.bu_class_to_module.bu_class_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'bu_class_to_module', 'bu_class_id', 'Column public.bu_class_to_module.bu_class_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'bu_class_to_module', 'bu_class_id', 'Column public.bu_class_to_module.bu_class_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'bu_class_to_module', 'module_id', 'Column public.bu_class_to_module.module_id should exist');
+RETURN NEXT col_type_is(      'public', 'bu_class_to_module', 'module_id', 'integer', 'Column public.bu_class_to_module.module_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'bu_class_to_module', 'module_id', 'Column public.bu_class_to_module.module_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'bu_class_to_module', 'module_id', 'Column public.bu_class_to_module.module_id should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

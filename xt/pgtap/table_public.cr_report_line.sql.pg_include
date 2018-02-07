@@ -1,0 +1,114 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_cr_report_line()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'cr_report_line',
+    'Should have table public.cr_report_line'
+);
+
+RETURN NEXT has_pk(
+    'public', 'cr_report_line',
+    'Table public.cr_report_line should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'cr_report_line'::name, ARRAY[
+    'id'::name,
+    'report_id'::name,
+    'scn'::name,
+    'their_balance'::name,
+    'our_balance'::name,
+    'errorcode'::name,
+    'user'::name,
+    'clear_time'::name,
+    'insert_time'::name,
+    'trans_type'::name,
+    'post_date'::name,
+    'ledger_id'::name,
+    'voucher_id'::name,
+    'overlook'::name,
+    'cleared'::name
+]);
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'id', 'Column public.cr_report_line.id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'id', 'bigint', 'Column public.cr_report_line.id should be type bigint');
+RETURN NEXT col_not_null(     'public', 'cr_report_line', 'id', 'Column public.cr_report_line.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report_line', 'id', 'Column public.cr_report_line.id shouldhave a default');
+--SELECT col_default_is(   'public', 'cr_report_line', 'id', 'nextval(''cr_report_line_id_seq''::regclass)', 'Column public.cr_report_line.id default is');RETURN NEXT col_default_is(   'public', 'cr_report_line', 'id', 'nextval(''cr_report_line_id_seq''::regclass)', 'Column public.cr_report_line.id default is');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'report_id', 'Column public.cr_report_line.report_id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'report_id', 'integer', 'Column public.cr_report_line.report_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'cr_report_line', 'report_id', 'Column public.cr_report_line.report_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'report_id', 'Column public.cr_report_line.report_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'scn', 'Column public.cr_report_line.scn should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'scn', 'text', 'Column public.cr_report_line.scn should be type text');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'scn', 'Column public.cr_report_line.scn should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'scn', 'Column public.cr_report_line.scn should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'their_balance', 'Column public.cr_report_line.their_balance should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'their_balance', 'numeric', 'Column public.cr_report_line.their_balance should be type numeric');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'their_balance', 'Column public.cr_report_line.their_balance should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'their_balance', 'Column public.cr_report_line.their_balance should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'our_balance', 'Column public.cr_report_line.our_balance should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'our_balance', 'numeric', 'Column public.cr_report_line.our_balance should be type numeric');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'our_balance', 'Column public.cr_report_line.our_balance should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'our_balance', 'Column public.cr_report_line.our_balance should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'errorcode', 'Column public.cr_report_line.errorcode should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'errorcode', 'integer', 'Column public.cr_report_line.errorcode should be type integer');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'errorcode', 'Column public.cr_report_line.errorcode should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'errorcode', 'Column public.cr_report_line.errorcode should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'user', 'Column public.cr_report_line."user" should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'user', 'integer', 'Column public.cr_report_line."user" should be type integer');
+RETURN NEXT col_not_null(     'public', 'cr_report_line', 'user', 'Column public.cr_report_line."user" should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'user', 'Column public.cr_report_line."user" should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'clear_time', 'Column public.cr_report_line.clear_time should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'clear_time', 'date', 'Column public.cr_report_line.clear_time should be type date');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'clear_time', 'Column public.cr_report_line.clear_time should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'clear_time', 'Column public.cr_report_line.clear_time should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'insert_time', 'Column public.cr_report_line.insert_time should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'insert_time', 'timestamp with time zone', 'Column public.cr_report_line.insert_time should be type timestamp with time zone');
+RETURN NEXT col_not_null(     'public', 'cr_report_line', 'insert_time', 'Column public.cr_report_line.insert_time should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report_line', 'insert_time', 'Column public.cr_report_line.insert_time shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report_line', 'insert_time', 'now()', 'Column public.cr_report_line.insert_time default is');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'trans_type', 'Column public.cr_report_line.trans_type should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'trans_type', 'text', 'Column public.cr_report_line.trans_type should be type text');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'trans_type', 'Column public.cr_report_line.trans_type should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'trans_type', 'Column public.cr_report_line.trans_type should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'post_date', 'Column public.cr_report_line.post_date should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'post_date', 'date', 'Column public.cr_report_line.post_date should be type date');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'post_date', 'Column public.cr_report_line.post_date should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'post_date', 'Column public.cr_report_line.post_date should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'ledger_id', 'Column public.cr_report_line.ledger_id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'ledger_id', 'integer', 'Column public.cr_report_line.ledger_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'ledger_id', 'Column public.cr_report_line.ledger_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'ledger_id', 'Column public.cr_report_line.ledger_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'voucher_id', 'Column public.cr_report_line.voucher_id should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'voucher_id', 'integer', 'Column public.cr_report_line.voucher_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'cr_report_line', 'voucher_id', 'Column public.cr_report_line.voucher_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'cr_report_line', 'voucher_id', 'Column public.cr_report_line.voucher_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'overlook', 'Column public.cr_report_line.overlook should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'overlook', 'boolean', 'Column public.cr_report_line.overlook should be type boolean');
+RETURN NEXT col_not_null(     'public', 'cr_report_line', 'overlook', 'Column public.cr_report_line.overlook should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report_line', 'overlook', 'Column public.cr_report_line.overlook shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report_line', 'overlook', 'false', 'Column public.cr_report_line.overlook default is');
+
+RETURN NEXT has_column(       'public', 'cr_report_line', 'cleared', 'Column public.cr_report_line.cleared should exist');
+RETURN NEXT col_type_is(      'public', 'cr_report_line', 'cleared', 'boolean', 'Column public.cr_report_line.cleared should be type boolean');
+RETURN NEXT col_not_null(     'public', 'cr_report_line', 'cleared', 'Column public.cr_report_line.cleared should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'cr_report_line', 'cleared', 'Column public.cr_report_line.cleared shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'cr_report_line', 'cleared', 'false', 'Column public.cr_report_line.cleared default is');
+
+END;
+$$ LANGUAGE plpgsql;

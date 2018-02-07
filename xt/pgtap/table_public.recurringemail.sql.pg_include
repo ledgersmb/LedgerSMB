@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_recurringemail()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'recurringemail',
+    'Should have table public.recurringemail'
+);
+
+RETURN NEXT has_pk(
+    'public', 'recurringemail',
+    'Table public.recurringemail should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'recurringemail'::name, ARRAY[
+    'id'::name,
+    'formname'::name,
+    'format'::name,
+    'message'::name
+]);
+
+RETURN NEXT has_column(       'public', 'recurringemail', 'id', 'Column public.recurringemail.id should exist');
+RETURN NEXT col_type_is(      'public', 'recurringemail', 'id', 'integer', 'Column public.recurringemail.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'recurringemail', 'id', 'Column public.recurringemail.id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringemail', 'id', 'Column public.recurringemail.id should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurringemail', 'formname', 'Column public.recurringemail.formname should exist');
+RETURN NEXT col_type_is(      'public', 'recurringemail', 'formname', 'text', 'Column public.recurringemail.formname should be type text');
+RETURN NEXT col_not_null(     'public', 'recurringemail', 'formname', 'Column public.recurringemail.formname should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringemail', 'formname', 'Column public.recurringemail.formname should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurringemail', 'format', 'Column public.recurringemail.format should exist');
+RETURN NEXT col_type_is(      'public', 'recurringemail', 'format', 'text', 'Column public.recurringemail.format should be type text');
+RETURN NEXT col_is_null(      'public', 'recurringemail', 'format', 'Column public.recurringemail.format should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringemail', 'format', 'Column public.recurringemail.format should not have a default');
+
+RETURN NEXT has_column(       'public', 'recurringemail', 'message', 'Column public.recurringemail.message should exist');
+RETURN NEXT col_type_is(      'public', 'recurringemail', 'message', 'text', 'Column public.recurringemail.message should be type text');
+RETURN NEXT col_is_null(      'public', 'recurringemail', 'message', 'Column public.recurringemail.message should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'recurringemail', 'message', 'Column public.recurringemail.message should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

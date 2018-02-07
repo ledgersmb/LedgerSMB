@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_batch_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'batch_class',
+    'Should have table public.batch_class'
+);
+
+RETURN NEXT has_pk(
+    'public', 'batch_class',
+    'Table public.batch_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'batch_class'::name, ARRAY[
+    'id'::name,
+    'class'::name
+]);
+
+RETURN NEXT has_column(       'public', 'batch_class', 'id', 'Column public.batch_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'batch_class', 'id', 'integer', 'Column public.batch_class.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'batch_class', 'id', 'Column public.batch_class.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'batch_class', 'id', 'Column public.batch_class.id shouldhave a default');
+--SELECT col_default_is(   'public', 'batch_class', 'id', 'nextval(''batch_class_id_seq''::regclass)', 'Column public.batch_class.id default is');RETURN NEXT col_default_is(   'public', 'batch_class', 'id', 'nextval(''batch_class_id_seq''::regclass)', 'Column public.batch_class.id default is');
+
+RETURN NEXT has_column(       'public', 'batch_class', 'class', 'Column public.batch_class.class should exist');
+RETURN NEXT col_type_is(      'public', 'batch_class', 'class', 'character varying', 'Column public.batch_class.class should be type character varying');
+RETURN NEXT col_not_null(     'public', 'batch_class', 'class', 'Column public.batch_class.class should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'batch_class', 'class', 'Column public.batch_class.class should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

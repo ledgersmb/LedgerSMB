@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_payroll_employee_class()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'payroll_employee_class',
+    'Should have table public.payroll_employee_class'
+);
+
+RETURN NEXT has_pk(
+    'public', 'payroll_employee_class',
+    'Table public.payroll_employee_class should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'payroll_employee_class'::name, ARRAY[
+    'id'::name,
+    'label'::name
+]);
+
+RETURN NEXT has_column(       'public', 'payroll_employee_class', 'id', 'Column public.payroll_employee_class.id should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_employee_class', 'id', 'integer', 'Column public.payroll_employee_class.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'payroll_employee_class', 'id', 'Column public.payroll_employee_class.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'payroll_employee_class', 'id', 'Column public.payroll_employee_class.id shouldhave a default');
+--SELECT col_default_is(   'public', 'payroll_employee_class', 'id', 'nextval(''payroll_employee_class_id_seq''::regclass)', 'Column public.payroll_employee_class.id default is');RETURN NEXT col_default_is(   'public', 'payroll_employee_class', 'id', 'nextval(''payroll_employee_class_id_seq''::regclass)', 'Column public.payroll_employee_class.id default is');
+
+RETURN NEXT has_column(       'public', 'payroll_employee_class', 'label', 'Column public.payroll_employee_class.label should exist');
+RETURN NEXT col_type_is(      'public', 'payroll_employee_class', 'label', 'text', 'Column public.payroll_employee_class.label should be type text');
+RETURN NEXT col_not_null(     'public', 'payroll_employee_class', 'label', 'Column public.payroll_employee_class.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'payroll_employee_class', 'label', 'Column public.payroll_employee_class.label should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

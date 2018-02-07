@@ -1,0 +1,38 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_partsgroup_translation()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'partsgroup_translation',
+    'Should have table public.partsgroup_translation'
+);
+
+RETURN NEXT has_pk(
+    'public', 'partsgroup_translation',
+    'Table public.partsgroup_translation should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'partsgroup_translation'::name, ARRAY[
+    'trans_id'::name,
+    'language_code'::name,
+    'description'::name
+]);
+
+RETURN NEXT has_column(       'public', 'partsgroup_translation', 'trans_id', 'Column public.partsgroup_translation.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'partsgroup_translation', 'trans_id', 'integer', 'Column public.partsgroup_translation.trans_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'partsgroup_translation', 'trans_id', 'Column public.partsgroup_translation.trans_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'partsgroup_translation', 'trans_id', 'Column public.partsgroup_translation.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsgroup_translation', 'language_code', 'Column public.partsgroup_translation.language_code should exist');
+RETURN NEXT col_type_is(      'public', 'partsgroup_translation', 'language_code', 'character varying(6)', 'Column public.partsgroup_translation.language_code should be type character varying(6)');
+RETURN NEXT col_not_null(     'public', 'partsgroup_translation', 'language_code', 'Column public.partsgroup_translation.language_code should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'partsgroup_translation', 'language_code', 'Column public.partsgroup_translation.language_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'partsgroup_translation', 'description', 'Column public.partsgroup_translation.description should exist');
+RETURN NEXT col_type_is(      'public', 'partsgroup_translation', 'description', 'text', 'Column public.partsgroup_translation.description should be type text');
+RETURN NEXT col_is_null(      'public', 'partsgroup_translation', 'description', 'Column public.partsgroup_translation.description should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'partsgroup_translation', 'description', 'Column public.partsgroup_translation.description should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

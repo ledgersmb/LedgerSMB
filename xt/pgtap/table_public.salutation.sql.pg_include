@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_salutation()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'salutation',
+    'Should have table public.salutation'
+);
+
+RETURN NEXT has_pk(
+    'public', 'salutation',
+    'Table public.salutation should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'salutation'::name, ARRAY[
+    'id'::name,
+    'salutation'::name
+]);
+
+RETURN NEXT has_column(       'public', 'salutation', 'id', 'Column public.salutation.id should exist');
+RETURN NEXT col_type_is(      'public', 'salutation', 'id', 'integer', 'Column public.salutation.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'salutation', 'id', 'Column public.salutation.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'salutation', 'id', 'Column public.salutation.id shouldhave a default');
+--SELECT col_default_is(   'public', 'salutation', 'id', 'nextval(''salutation_id_seq''::regclass)', 'Column public.salutation.id default is');RETURN NEXT col_default_is(   'public', 'salutation', 'id', 'nextval(''salutation_id_seq''::regclass)', 'Column public.salutation.id default is');
+
+RETURN NEXT has_column(       'public', 'salutation', 'salutation', 'Column public.salutation.salutation should exist');
+RETURN NEXT col_type_is(      'public', 'salutation', 'salutation', 'text', 'Column public.salutation.salutation should be type text');
+RETURN NEXT col_not_null(     'public', 'salutation', 'salutation', 'Column public.salutation.salutation should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'salutation', 'salutation', 'Column public.salutation.salutation should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

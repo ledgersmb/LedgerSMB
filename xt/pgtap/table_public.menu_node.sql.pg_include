@@ -1,0 +1,45 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_menu_node()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'menu_node',
+    'Should have table public.menu_node'
+);
+
+RETURN NEXT has_pk(
+    'public', 'menu_node',
+    'Table public.menu_node should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'menu_node'::name, ARRAY[
+    'id'::name,
+    'label'::name,
+    'parent'::name,
+    'position'::name
+]);
+
+RETURN NEXT has_column(       'public', 'menu_node', 'id', 'Column public.menu_node.id should exist');
+RETURN NEXT col_type_is(      'public', 'menu_node', 'id', 'integer', 'Column public.menu_node.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'menu_node', 'id', 'Column public.menu_node.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'menu_node', 'id', 'Column public.menu_node.id shouldhave a default');
+--SELECT col_default_is(   'public', 'menu_node', 'id', 'nextval(''menu_node_id_seq''::regclass)', 'Column public.menu_node.id default is');RETURN NEXT col_default_is(   'public', 'menu_node', 'id', 'nextval(''menu_node_id_seq''::regclass)', 'Column public.menu_node.id default is');
+
+RETURN NEXT has_column(       'public', 'menu_node', 'label', 'Column public.menu_node.label should exist');
+RETURN NEXT col_type_is(      'public', 'menu_node', 'label', 'character varying', 'Column public.menu_node.label should be type character varying');
+RETURN NEXT col_not_null(     'public', 'menu_node', 'label', 'Column public.menu_node.label should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_node', 'label', 'Column public.menu_node.label should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_node', 'parent', 'Column public.menu_node.parent should exist');
+RETURN NEXT col_type_is(      'public', 'menu_node', 'parent', 'integer', 'Column public.menu_node.parent should be type integer');
+RETURN NEXT col_is_null(      'public', 'menu_node', 'parent', 'Column public.menu_node.parent should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_node', 'parent', 'Column public.menu_node.parent should not have a default');
+
+RETURN NEXT has_column(       'public', 'menu_node', 'position', 'Column public.menu_node."position" should exist');
+RETURN NEXT col_type_is(      'public', 'menu_node', 'position', 'integer', 'Column public.menu_node."position" should be type integer');
+RETURN NEXT col_not_null(     'public', 'menu_node', 'position', 'Column public.menu_node."position" should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'menu_node', 'position', 'Column public.menu_node."position" should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,70 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_company()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'company',
+    'Should have table public.company'
+);
+
+RETURN NEXT has_pk(
+    'public', 'company',
+    'Table public.company should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'company'::name, ARRAY[
+    'id'::name,
+    'entity_id'::name,
+    'legal_name'::name,
+    'tax_id'::name,
+    'sales_tax_id'::name,
+    'license_number'::name,
+    'sic_code'::name,
+    'created'::name
+]);
+
+RETURN NEXT has_column(       'public', 'company', 'id', 'Column public.company.id should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'id', 'integer', 'Column public.company.id should be type integer');
+RETURN NEXT col_not_null(     'public', 'company', 'id', 'Column public.company.id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'company', 'id', 'Column public.company.id shouldhave a default');
+--SELECT col_default_is(   'public', 'company', 'id', 'nextval(''company_id_seq''::regclass)', 'Column public.company.id default is');RETURN NEXT col_default_is(   'public', 'company', 'id', 'nextval(''company_id_seq''::regclass)', 'Column public.company.id default is');
+
+RETURN NEXT has_column(       'public', 'company', 'entity_id', 'Column public.company.entity_id should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'entity_id', 'integer', 'Column public.company.entity_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'company', 'entity_id', 'Column public.company.entity_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'company', 'entity_id', 'Column public.company.entity_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'company', 'legal_name', 'Column public.company.legal_name should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'legal_name', 'text', 'Column public.company.legal_name should be type text');
+RETURN NEXT col_not_null(     'public', 'company', 'legal_name', 'Column public.company.legal_name should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'company', 'legal_name', 'Column public.company.legal_name should not have a default');
+
+RETURN NEXT has_column(       'public', 'company', 'tax_id', 'Column public.company.tax_id should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'tax_id', 'text', 'Column public.company.tax_id should be type text');
+RETURN NEXT col_is_null(      'public', 'company', 'tax_id', 'Column public.company.tax_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'company', 'tax_id', 'Column public.company.tax_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'company', 'sales_tax_id', 'Column public.company.sales_tax_id should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'sales_tax_id', 'text', 'Column public.company.sales_tax_id should be type text');
+RETURN NEXT col_is_null(      'public', 'company', 'sales_tax_id', 'Column public.company.sales_tax_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'company', 'sales_tax_id', 'Column public.company.sales_tax_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'company', 'license_number', 'Column public.company.license_number should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'license_number', 'text', 'Column public.company.license_number should be type text');
+RETURN NEXT col_is_null(      'public', 'company', 'license_number', 'Column public.company.license_number should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'company', 'license_number', 'Column public.company.license_number should not have a default');
+
+RETURN NEXT has_column(       'public', 'company', 'sic_code', 'Column public.company.sic_code should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'sic_code', 'character varying', 'Column public.company.sic_code should be type character varying');
+RETURN NEXT col_is_null(      'public', 'company', 'sic_code', 'Column public.company.sic_code should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'company', 'sic_code', 'Column public.company.sic_code should not have a default');
+
+RETURN NEXT has_column(       'public', 'company', 'created', 'Column public.company.created should exist');
+RETURN NEXT col_type_is(      'public', 'company', 'created', 'date', 'Column public.company.created should be type date');
+RETURN NEXT col_not_null(     'public', 'company', 'created', 'Column public.company.created should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'company', 'created', 'Column public.company.created shouldhave a default');
+--SELECT col_default_is(   'public', 'company', 'created', '(''now''::text)::date', 'Column public.company.created default is');RETURN NEXT col_default_is(   'public', 'company', 'created', '(''now''::text)::date', 'Column public.company.created default is');
+
+END;
+$$ LANGUAGE plpgsql;

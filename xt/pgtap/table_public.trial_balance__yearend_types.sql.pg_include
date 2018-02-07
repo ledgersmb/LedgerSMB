@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_trial_balance__yearend_types()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'trial_balance__yearend_types',
+    'Should have table public.trial_balance__yearend_types'
+);
+
+RETURN NEXT has_pk(
+    'public', 'trial_balance__yearend_types',
+    'Table public.trial_balance__yearend_types should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'trial_balance__yearend_types'::name, ARRAY[
+    'type'::name
+]);
+
+RETURN NEXT has_column(       'public', 'trial_balance__yearend_types', 'type', 'Column public.trial_balance__yearend_types.type should exist');
+RETURN NEXT col_type_is(      'public', 'trial_balance__yearend_types', 'type', 'text', 'Column public.trial_balance__yearend_types.type should be type text');
+RETURN NEXT col_not_null(     'public', 'trial_balance__yearend_types', 'type', 'Column public.trial_balance__yearend_types.type should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'trial_balance__yearend_types', 'type', 'Column public.trial_balance__yearend_types.type should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

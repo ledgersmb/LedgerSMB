@@ -1,0 +1,52 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_status()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'status',
+    'Should have table public.status'
+);
+
+RETURN NEXT has_pk(
+    'public', 'status',
+    'Table public.status should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'status'::name, ARRAY[
+    'trans_id'::name,
+    'formname'::name,
+    'printed'::name,
+    'emailed'::name,
+    'spoolfile'::name
+]);
+
+RETURN NEXT has_column(       'public', 'status', 'trans_id', 'Column public.status.trans_id should exist');
+RETURN NEXT col_type_is(      'public', 'status', 'trans_id', 'integer', 'Column public.status.trans_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'status', 'trans_id', 'Column public.status.trans_id should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'status', 'trans_id', 'Column public.status.trans_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'status', 'formname', 'Column public.status.formname should exist');
+RETURN NEXT col_type_is(      'public', 'status', 'formname', 'text', 'Column public.status.formname should be type text');
+RETURN NEXT col_not_null(     'public', 'status', 'formname', 'Column public.status.formname should be NOT NULL');
+RETURN NEXT col_hasnt_default('public', 'status', 'formname', 'Column public.status.formname should not have a default');
+
+RETURN NEXT has_column(       'public', 'status', 'printed', 'Column public.status.printed should exist');
+RETURN NEXT col_type_is(      'public', 'status', 'printed', 'boolean', 'Column public.status.printed should be type boolean');
+RETURN NEXT col_is_null(      'public', 'status', 'printed', 'Column public.status.printed should allow NULL');
+RETURN NEXT col_has_default(  'public', 'status', 'printed', 'Column public.status.printed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'status', 'printed', 'false', 'Column public.status.printed default is');
+
+RETURN NEXT has_column(       'public', 'status', 'emailed', 'Column public.status.emailed should exist');
+RETURN NEXT col_type_is(      'public', 'status', 'emailed', 'boolean', 'Column public.status.emailed should be type boolean');
+RETURN NEXT col_is_null(      'public', 'status', 'emailed', 'Column public.status.emailed should allow NULL');
+RETURN NEXT col_has_default(  'public', 'status', 'emailed', 'Column public.status.emailed shouldhave a default');
+RETURN NEXT col_default_is(   'public', 'status', 'emailed', 'false', 'Column public.status.emailed default is');
+
+RETURN NEXT has_column(       'public', 'status', 'spoolfile', 'Column public.status.spoolfile should exist');
+RETURN NEXT col_type_is(      'public', 'status', 'spoolfile', 'text', 'Column public.status.spoolfile should be type text');
+RETURN NEXT col_is_null(      'public', 'status', 'spoolfile', 'Column public.status.spoolfile should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'status', 'spoolfile', 'Column public.status.spoolfile should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION lsmb_pgtap._table_public_custom_field_catalog()
+RETURNS SETOF TEXT AS $$
+BEGIN
+
+
+RETURN NEXT has_table(
+    'public', 'custom_field_catalog',
+    'Should have table public.custom_field_catalog'
+);
+
+RETURN NEXT has_pk(
+    'public', 'custom_field_catalog',
+    'Table public.custom_field_catalog should have a primary key'
+);
+
+RETURN NEXT columns_are('public'::name, 'custom_field_catalog'::name, ARRAY[
+    'field_id'::name,
+    'table_id'::name,
+    'field_name'::name
+]);
+
+RETURN NEXT has_column(       'public', 'custom_field_catalog', 'field_id', 'Column public.custom_field_catalog.field_id should exist');
+RETURN NEXT col_type_is(      'public', 'custom_field_catalog', 'field_id', 'integer', 'Column public.custom_field_catalog.field_id should be type integer');
+RETURN NEXT col_not_null(     'public', 'custom_field_catalog', 'field_id', 'Column public.custom_field_catalog.field_id should be NOT NULL');
+RETURN NEXT col_has_default(  'public', 'custom_field_catalog', 'field_id', 'Column public.custom_field_catalog.field_id shouldhave a default');
+--SELECT col_default_is(   'public', 'custom_field_catalog', 'field_id', 'nextval(''custom_field_catalog_field_id_seq''::regclass)', 'Column public.custom_field_catalog.field_id default is');RETURN NEXT col_default_is(   'public', 'custom_field_catalog', 'field_id', 'nextval(''custom_field_catalog_field_id_seq''::regclass)', 'Column public.custom_field_catalog.field_id default is');
+
+RETURN NEXT has_column(       'public', 'custom_field_catalog', 'table_id', 'Column public.custom_field_catalog.table_id should exist');
+RETURN NEXT col_type_is(      'public', 'custom_field_catalog', 'table_id', 'integer', 'Column public.custom_field_catalog.table_id should be type integer');
+RETURN NEXT col_is_null(      'public', 'custom_field_catalog', 'table_id', 'Column public.custom_field_catalog.table_id should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'custom_field_catalog', 'table_id', 'Column public.custom_field_catalog.table_id should not have a default');
+
+RETURN NEXT has_column(       'public', 'custom_field_catalog', 'field_name', 'Column public.custom_field_catalog.field_name should exist');
+RETURN NEXT col_type_is(      'public', 'custom_field_catalog', 'field_name', 'text', 'Column public.custom_field_catalog.field_name should be type text');
+RETURN NEXT col_is_null(      'public', 'custom_field_catalog', 'field_name', 'Column public.custom_field_catalog.field_name should allow NULL');
+RETURN NEXT col_hasnt_default('public', 'custom_field_catalog', 'field_name', 'Column public.custom_field_catalog.field_name should not have a default');
+
+END;
+$$ LANGUAGE plpgsql;
