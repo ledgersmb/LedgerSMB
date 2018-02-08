@@ -152,8 +152,19 @@ sub _run_check {
             });
     return 0 unless (@rows);
 
-    ###TODO if we have input data, we need to run 'on_submit'; otherwise, we
-    # need to run 'on_failure'
+    if (provided()) {
+        $check->{on_submit}->($dbh);
+
+        @rows =
+            $dbh->selectall_array(
+                $check->{query},
+                {
+                    Slice => {},
+                    RaiseError => 1,
+                });
+        return 0 unless (@rows);
+    }
+
     $check->{on_failure}->($dbh, \@rows);
     return 1;
 }
@@ -539,9 +550,16 @@ Next to the output formatters, these input-requesting routines are to be supplie
 
 =item provided [ $name ]
 
-Called to retrieve input provided to the UI. When called with a C<$name> argument,
-the value(s) of a specific element rendered in the C<on_failure> phase must be
-returned. These are the expected return value types per named rendered output:
+Called to retrieve input provided to the UI.
+
+When called without parameters, returns a boolean value indicating whether
+any inputs are available for processing at all. In other words, during the
+C<on_failure> phase, this callback is supposed to return a falsy value,
+while in the C<on_submit> phase, a true-ish value must be returned.
+
+When called with a C<$name> argument, the value(s) of a specific element
+rendered in the C<on_failure> phase must be returned. These are the expected
+return value types per named rendered output:
 
 =over
 
@@ -558,11 +576,6 @@ without making explicit protocol requirements for the naming of the primary key 
 Returns the value associated with the selected/pressed/clicked description.
 
 =back
-
-When called without parameters, returns a boolean value indicating whether any
-inputs are available for processing at all. In other words, during the C<on_failure>
-phase, this callback is supposed to return a falsy value, while in the C<on_submit>
-phase, a true-ish value must be returned.
 
 =back
 

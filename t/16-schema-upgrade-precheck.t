@@ -249,6 +249,7 @@ lives_and( sub {
 #
 # Single failing scenario
 
+$dbh = DBI->connect('DBI:Mock:', '', '');
 $dbh->{mock_add_resultset} = {
     sql     => 'something',
     results => [
@@ -259,16 +260,23 @@ $dbh->{mock_add_resultset} = {
 
 my $result = undef;
 
-lives_and( sub {
-    is &run_checks( $dbh,
-                    checks => [
-                        {
-                            query => 'something',
-                            on_failure => sub { $result = 'called'; },
-                        },
-                    ]
-        ), 0
-    }, 'single failed check: indicates failure');
+run_with_formatters {
+    lives_and {
+        is &run_checks( $dbh,
+                        checks => [
+                            {
+                                query => 'something',
+                                on_failure => sub { $result = 'called'; },
+                            },
+                        ]
+            ), 0
+    } 'single failed check: indicates failure';
+} {
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+    provided => sub { return 0; },
+};
 
 is $result, 'called', 'single failed check: "on_failure" called';
 
@@ -286,22 +294,29 @@ $dbh->{mock_add_resultset} = {
 # No need for a second resultset: it won't be queried...
 
 $result = [];
-lives_and( sub {
-    is &run_checks( $dbh,
-                    checks => [
-                        {
-                            query => 'something',
-                            on_failure =>
-                                sub { push @$result, 'called 1' },
-                        },
-                        {
-                            query => 'something else',
-                            on_failure =>
-                                sub { die 'on_failure (2) called?!' },
-                        },
-                    ]
-        ), 0
-           }, 'multiple checks, first failing');
+run_with_formatters {
+    lives_and {
+        is &run_checks( $dbh,
+                        checks => [
+                            {
+                                query => 'something',
+                                on_failure =>
+                                    sub { push @$result, 'called 1' },
+                            },
+                            {
+                                query => 'something else',
+                                on_failure =>
+                                    sub { die 'on_failure (2) called?!' },
+                            },
+                        ]
+            ), 0
+    } 'multiple checks, first failing';
+} {
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+    provided => sub { return 0; },
+};
 
 # second "on_failure" not called: processing aborted after first one
 is_deeply $result, [ 'called 1' ],
@@ -311,6 +326,7 @@ is_deeply $result, [ 'called 1' ],
 #
 # Multiple scenarios, second failing
 
+$dbh = DBI->connect('DBI:Mock:', '', '');
 $dbh->{mock_add_resultset} = {
     sql     => 'something',
     results => [
@@ -326,22 +342,29 @@ $dbh->{mock_add_resultset} = {
 };
 
 $result = [];
-lives_and( sub {
-    is &run_checks( $dbh,
-                    checks => [
-                        {
-                            query => 'something',
-                            on_failure =>
-                                sub { push @$result, 'called 1' },
-                        },
-                        {
-                            query => 'something else',
-                            on_failure =>
-                                sub { push @$result, 'called 2' },
-                        },
-                    ]
-        ), 0
-           }, 'multiple checks, first failing');
+run_with_formatters {
+    lives_and {
+        is &run_checks( $dbh,
+                        checks => [
+                            {
+                                query => 'something',
+                                on_failure =>
+                                    sub { push @$result, 'called 1' },
+                            },
+                            {
+                                query => 'something else',
+                                on_failure =>
+                                    sub { push @$result, 'called 2' },
+                            },
+                        ]
+            ), 0
+    } 'multiple checks, first failing';
+} {
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+    provided => sub { return 0; },
+};
 
 # first "on_failure" not called: query succeeded.
 is_deeply $result, [ 'called 2' ],
@@ -378,6 +401,58 @@ run_with_formatters {
     provided => sub {},
 };
 
+#
+#
+#
+#  Tests to assert the 'provided' protocol
+#
+
+run_with_formatters {
+    lives_and { is LedgerSMB::Database::ChangeChecks::provided(), 1,
+                '"provided" without arguments'; }
+    lives_and { is LedgerSMB::Database::ChangeChecks::provided('name'),
+                'name', '"provided" with argument'; }
+} {
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+    provided => sub { return 1 if ! @_; return shift; },
+};
+
+
+# Result set with failures
+$dbh = DBI->connect('DBI:Mock:', '', '');
+$dbh->{mock_add_resultset} = [
+    [ 'headers' ],
+    [ 'failing-row' ],
+    ];
+
+# Result set without failures, so we fake that the data was fixed
+$dbh->{mock_add_resultset} = [
+    [ 'headers' ],
+    ];
+
+$result = 'failed';
+run_with_formatters {
+    lives_and {
+        is &run_checks( $dbh,
+                        checks => [
+                            {
+                                query => 'something',
+                                on_failure => sub { die 'on_failure called?!' },
+                                on_submit => sub { $result = 'success' },
+                            },
+                        ]
+            ), 1
+    } 'No call to "on_failure" when data "provided"';
+} {
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+    provided => sub { print STDERR "here!"; return 1; }
+};
+is $result, 'success', 'due to "provided" data, "on_submit" is called';
+
 
 #
 #
@@ -390,7 +465,7 @@ my $encoded_pk =
         { num => 3, str => 'abc', not_avail => undef },
         [ 'num', 'str', 'not_avail' ]
     );
-print STDERR $encoded_pk;
+
 my %pk;
 @pk{('num', 'str', 'not_avail')} =
     @{LedgerSMB::Database::ChangeChecks::_decode_pk($encoded_pk)};
