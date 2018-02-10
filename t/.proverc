@@ -1,5 +1,5 @@
 # default arguments for the 'prove' command
--l
+--lib
 -Iold/lib/
 # arguments for Perl source runner
 --source Perl
