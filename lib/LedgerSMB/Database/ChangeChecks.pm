@@ -16,7 +16,7 @@ our @checks;
 
 =head1 NAME
 
-LedgerSMB::Database::PreChecks - Pre-migration checks for schema changes
+LedgerSMB::Database::ChangeChecks - Data validation checks for schema changes
 
 =head1 DESCRIPTION
 
@@ -27,17 +27,22 @@ executed before schema change scripts are being run.
 
   package SomePackage;
 
-  use LedgerSMB::Database::PreChecks;
+  use LedgerSMB::Database::ChangeChecks;
 
   check "The first check",
      query => qq|SELECT * FROM a_table|,
      description => qq|... extensive description for the user ... |,
+     tables => {
+        'table_a' => { prim_key => [ 'a', 'b' ] },
+        ...
+     },
      on_failure => sub {
          my ($dbh, $rows) = @_;
 
          grid $rows,
            name => 'grid',
            id => 'id',
+           table => 'table_a',
            columns => [ 'column1', 'column2', ... ] # column subset
            edit_columns => [ ... one or more columns ..],
            dropdowns => {
@@ -52,8 +57,7 @@ executed before schema change scripts are being run.
          save_grid $inputs,
            id => 'id',
            name => 'grid',
-           table => 'a_table',
-           edit_columns => [ ... one or more columns ...];
+           table => 'a_table';
      };
 
   check "The second check",
@@ -132,6 +136,45 @@ sub load_checks {
 
 our $check;
 
+=item run_with_formatters($block, $formatters)
+
+Runs C<$block> in a context with C<$formatters> set up.
+
+The function returns the value(s) returned by C<$block>.
+
+The function binds the following formatting functions:
+
+=over
+
+=item confirm
+
+=item describe
+
+=item grid
+
+=item provided
+
+=back
+
+When one of the functions isn't provided, it's bound to a failure-generating
+coderef
+
+=cut
+
+
+sub run_with_formatters(&$) { ## no critic
+    my ($block, $formatters) = @_;
+
+    $formatters->{$_} //= sub { die "$_: not provided in current context" }
+        for (qw|describe confirm grid provided|);
+
+    no warnings 'redefine'; ## no critic
+    local (*_describe, *_confirm, *_grid, *provided) =
+        @{$formatters}{qw(describe confirm grid provided)};
+
+    return $block->();
+}
+
 
 #
 #
@@ -153,7 +196,21 @@ sub _run_check {
     return 0 unless (@rows);
 
     if (provided()) {
-        $check->{on_submit}->($dbh);
+        my @grids;
+        run_with_formatters {
+            # collect configuration of 'grid' keywords
+            $check->{on_failure}->($dbh, []);
+        } {
+            confirm => sub {},
+            describe => sub {},
+            grid => sub { shift; # discard the failing rows ref
+                          push @grids, { @_ };
+            },
+            provided => sub {},
+        };
+
+        $check->{grids} = { map { $_->{name} => $_ } @grids };
+        $check->{on_submit}->($dbh, \@rows);
 
         @rows =
             $dbh->selectall_array(
@@ -182,6 +239,10 @@ Returns true when checks have successfully completed, false if one of the
 checks has failed. For the failing check, the C<on_failure> event has been
 called on return.
 
+The caller is expected to repeat the C<run_checks> call with a C<provided>
+formatter bound to a function which provides replacement values to update
+the table content with, in case it returns unsuccessfully.
+
 =cut
 
 sub run_checks {
@@ -195,25 +256,6 @@ sub run_checks {
     }
 
     return 1;
-}
-
-=item run_with_formatters($block, $formatters)
-
-Runs C<$block> in a context with C<$formatters> set up.
-
-The function returns the value(s) returned by C<$block>.
-
-=cut
-
-
-sub run_with_formatters(&$) { ## no critic
-    my ($block, $formatters) = @_;
-
-    no warnings 'redefine'; ## no critic
-    local (*_describe, *_confirm, *_grid, *provided) =
-        @{$formatters}{qw(describe confirm grid provided)};
-
-    return $block->();
 }
 
 
@@ -239,34 +281,75 @@ Required. Contains a longer description of what the check means to achieve
 and explains which options the user is being presented with and what the
 user is supposed to do to resolve the situation.
 
-=item table
+=item tables
 
-...
+Required when a check involves either the C<grid> or C<save_grid> DSL keywords.
 
-=item assert_sql
+Contains a hash reference listing a series of hashes describing the tables
+for which C<grid> (and possibly the associated C<save_grid>) functions will
+be invoked.
 
-...
+   tables => {
+       'some-table' => {
+          pk   =>  [ 'a', 'b', 'c' ] },
+       'some-other-table' => {
+          pk   =>  [ 'd', 'e', 'f' ] }
+   }
 
-=item grids
 
-...
+=item query
+
+Has as its value a string specifying an SQL query which when executed returns
+the rows violating the (part of) the change being applied.
+
+When this query returns any rows, the check is considered to have "failed".
+
+Note that the query may be executed multiple times during the upgrade
+process. The query may therefor not modify the database in any way.
 
 =item on_failure
 
-Required. A coderef pointing to a function of 2 arguments, taking the
-database handle as the first argument and a coderef returning the successive
-rows of the query as arrayrefs (or undef when there are no further results).
+Required. A coderef pointing to a function of 3 arguments:
+
+=over
+
+=item $check
+
+A hashref holding the check's configuration as defined in the source.
+
+=item $dbh
+
+The database handle against which the check query was run.
+
+=item $rows
+
+An arrayref holding the rows which failed the check -- i.e. those returned
+by the C<query>.
+
+=back
 
 The on_failure coderef makes use of the user interface defining
-elements of the pre-check DSL: grid, confirm, choice, dropdowns_sql.
+elements of the pre-check DSL: C<grid>, C<confirm>, C<choice>, C<dropdowns_sql>.
+
+The number of times the C<on_failure> function is executed is undefined and
+the function is likely to be run multiple times, possibly even within a single
+request.
 
 =item on_submit
 
-Required. A coderef pointing to a function of 2 arguments, taking the
-database handle as the first argument and hashref the values of the
-'id' column as the keys. The values are hashrefs with the column names
-of the editable columns as the keys and the selected values as the hash
-values.
+Required. A coderef pointing to a function of 3 arguments:
+
+=over
+
+=item $check
+
+A hashref holding the check's configuration as defined in the source.
+
+=item $dbh
+
+The database handle against which the check query was run.
+
+=back
 
 The 'on_submit' coderef makes use of the data-modifying elements of the
 pre-check DSL: save_grid.
@@ -355,13 +438,17 @@ The following keys are available:
 Names the grid in order to be able to extract the (changed) values
 from the returned data.
 
-=item prim_key
+=item table
 
 When a string value, names the column containing the primary key of the
 target table. In case of an arrayref, lists the complex primary key.
 
 Needed here as it allows the UI to be able to request
 the primary key from the returned data later.
+
+When the name of the grid equals the name of one of the tables in the
+check as provided through the C<tables> keyword, there's no need to
+specify this keyword as it'll be taken from the table definition.
 
 =item columns
 
@@ -395,8 +482,15 @@ sub _grid {
 }
 
 sub grid {
-    # assert that the values in the rows hashes include values for all fields of the
-    # primary key!
+    my ($rows, %args) = @_;
+    # assert that the values in the rows hashes include values for
+    # all fields of the primary key!
+    #
+    # and then generate the primary keys.
+    my $pk = $check->{tables}->{$args{table} // $args{name}}->{prim_key};
+    $pk = (ref $pk) ? $pk : [ $pk ];
+    $_->{__pk} = _encode_pk($_, $pk) for (@$rows);
+
     return _grid(@_);
 }
 
@@ -405,6 +499,9 @@ sub grid {
 Expects a query with two columns; the first being the values expected
 in the column to which the dropdown is applied. The second being the
 descriptions to be shown instead of the true values.
+
+This function can be used in the "value" position of the key/value pairs
+as meant in the C<dropdowns> keyword.
 
 =cut
 
@@ -435,9 +532,11 @@ sub dropdowns_sql {
 #
 #################################
 
-=item provided [ $name ]
+=item provided [ $name [, key => value, ... ]
 
 Used to access UI responses from elements named in the C<on_failure> phase.
+
+See the documentation in the L<FORMATTERS> section.
 
 =cut
 
@@ -447,12 +546,26 @@ sub provided {
 }
 
 
-=item save_grid $dbh, $failed_rows [, name => $name, ... ]
+=item save_grid $dbh, $failed_rows [, name => $name, table => $table, ... ]
 
 Iterates over C<$failed_rows>, finding input for those rows as provided in
 the UI and applying the fixed data to the database using C<$dbh>.
 
-UI data is requested using the C<provided> routine.
+The following keys are supported:
+
+=over
+
+=item name
+
+The name of the grid to be saved; used as argument to C<provided> to
+query the replacement data.
+
+=item table
+
+The name of the table to save the data to. If not provided, defaults
+to the value provided in the C<name> argument.
+
+=back
 
 =cut
 
@@ -465,11 +578,11 @@ sub save_grid {
 
     # don't take any risk:
     # the sources providing the table name *are* dynamically loaded..
-    my $table = $dbh->quote_identifier($check->{table}->{name});
-    my $pk = $check->{table}->{primary_key};
+    my $table = $dbh->quote_identifier($args{table} // $name);
+    my $pk = $check->{tables}->{$args{table} // $name}->{prim_key};
     $pk = (ref $pk) ? $pk : [ $pk ];
 
-    my @fields = @{$check->{grids}->{$name}};
+    my @fields = @{$check->{grids}->{$name}->{edit_columns}};
     my $set_fields = join(', ',
                           map { $dbh->quote_identifier($_) . ' = ?' }
                           @fields);
@@ -483,7 +596,6 @@ sub save_grid {
 
     $_->{__pk} = _encode_pk($_, $pk) for (@$failed_rows);
     my %ui_rows = map { $_->{__pk} => $_ } @{provided $name};
-
     for my $row (grep { exists $ui_rows{$_->{__pk}} } @$failed_rows) {
         # note that we're *explicitly* iterating over the data provided through
         # the safe channel, only to find out if the unsafe channel

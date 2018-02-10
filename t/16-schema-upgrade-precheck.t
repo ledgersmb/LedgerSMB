@@ -3,9 +3,11 @@
 use strict;
 use warnings;
 
+use Data::Dumper;
 use DBI;
 use File::Temp qw( :seekable );
 use IO::Scalar;
+use MIME::Base64;
 
 use Test::More 'no_plan';
 use Test::Exception;
@@ -13,6 +15,27 @@ use Test::Exception;
 
 use LedgerSMB::Database::ChangeChecks qw( :DEFAULT run_with_formatters
        run_checks load_checks );
+
+
+#
+#
+#
+#  Tests to assert validity of internal helpers
+#
+
+my $encoded_pk =
+    LedgerSMB::Database::ChangeChecks::_encode_pk(
+        { num => 3, str => 'abc', not_avail => undef },
+        [ 'num', 'str', 'not_avail' ]
+    );
+
+my %pk;
+@pk{('num', 'str', 'not_avail')} =
+    @{LedgerSMB::Database::ChangeChecks::_decode_pk($encoded_pk)};
+
+is LedgerSMB::Database::ChangeChecks::_encode_pk(
+    \%pk, [ 'num', 'str', 'not_avail' ]),
+    $encoded_pk, 'primary key encoding + decoding';
 
 
 #
@@ -378,28 +401,39 @@ is_deeply $result, [ 'called 2' ],
 #  Tests to assert successful establishing of execution environment
 #
 
-throws_ok { confirm(); } qr/can't be called outside/,
-    '"confirm" throws error outside formatter-context';
-throws_ok { describe(); } qr/can't be called outside/,
-    '"describe" throws error outside formatter-context';
-throws_ok { grid(); } qr/can't be called outside/,
-    '"grid" throws error outside formatter-context';
-throws_ok { LedgerSMB::Database::ChangeChecks::provided(); }
-    qr/can't be called outside/,
-    '"provided" throws error outside formatter-context';
+{
+    # The call to C<grid> depends on the $check context
+    local $LedgerSMB::Database::ChangeChecks::check = {
+        tables => {
+            'a' => { prim_key => 'a' }
+        }
+    };
 
-run_with_formatters {
-    lives_ok { confirm(); } '"confirm" runs inside formatter-context';
-    lives_ok { describe(); } '"describe" runs inside formatter-context';
-    lives_ok { grid(); } '"grid" runs inside formatter-context';
-    lives_ok { LedgerSMB::Database::ChangeChecks::provided(); }
-    '"provided" runs inside formatter-context';
-} {
-    confirm => sub {},
-    describe => sub {},
-    grid => sub {},
-    provided => sub {},
-};
+
+    throws_ok { confirm(); } qr/can't be called outside/,
+         '"confirm" throws error outside formatter-context';
+    throws_ok { describe(); } qr/can't be called outside/,
+         '"describe" throws error outside formatter-context';
+    throws_ok { grid [], name => 'a'; } qr/can't be called outside/,
+         '"grid" throws error outside formatter-context';
+    throws_ok { LedgerSMB::Database::ChangeChecks::provided(); }
+         qr/can't be called outside/,
+        '"provided" throws error outside formatter-context';
+
+    run_with_formatters {
+        lives_ok { confirm(); } '"confirm" runs inside formatter-context';
+        lives_ok { describe(); } '"describe" runs inside formatter-context';
+        lives_ok { grid [], name => 'a'; }
+                 '"grid" runs inside formatter-context';
+        lives_ok { LedgerSMB::Database::ChangeChecks::provided(); }
+        '"provided" runs inside formatter-context';
+    } {
+        confirm => sub {},
+        describe => sub {},
+        grid => sub {},
+        provided => sub {},
+    };
+}
 
 #
 #
@@ -439,7 +473,7 @@ run_with_formatters {
                         checks => [
                             {
                                 query => 'something',
-                                on_failure => sub { die 'on_failure called?!' },
+                                on_failure => sub { },
                                 on_submit => sub { $result = 'success' },
                             },
                         ]
@@ -449,27 +483,77 @@ run_with_formatters {
     confirm => sub {},
     describe => sub {},
     grid => sub {},
-    provided => sub { print STDERR "here!"; return 1; }
+    provided => sub { return 1; }
 };
 is $result, 'success', 'due to "provided" data, "on_submit" is called';
 
 
+
 #
 #
 #
-#  Tests to assert validity of internal helpers
+#  Tests to assert the correctness of 'save_grid'
 #
 
-my $encoded_pk =
-    LedgerSMB::Database::ChangeChecks::_encode_pk(
-        { num => 3, str => 'abc', not_avail => undef },
-        [ 'num', 'str', 'not_avail' ]
-    );
 
-my %pk;
-@pk{('num', 'str', 'not_avail')} =
-    @{LedgerSMB::Database::ChangeChecks::_decode_pk($encoded_pk)};
+# Result set with failures
+$dbh = DBI->connect('DBI:Mock:', '', '');
+$dbh->{mock_add_resultset} = [
+    [ qw/a d e/ ],
+    [ qw/z y x/ ],
+    [ qw/w v u/ ],
+    ];
+$dbh->{mock_add_resultset} = [
+    [ qw/d/ ],
+    [] ];
+$dbh->{mock_add_resultset} = [
+    [ qw/d/ ],
+    [] ];
 
-is LedgerSMB::Database::ChangeChecks::_encode_pk(
-    \%pk, [ 'num', 'str', 'not_avail' ]),
-    $encoded_pk, 'primary key encoding + decoding';
+print STDERR "here!!";
+
+run_with_formatters {
+    LedgerSMB::Database::ChangeChecks::_run_check(
+        $dbh,
+        {
+            tables => {
+                'abc' => { prim_key => 'a' },
+            },
+            query => 'dummy',
+            on_failure => sub {
+                my ($check, $dbh, $rows) = @_;
+                grid $rows,
+                  name => 'b',
+                  table => 'abc',
+                  columns => [ qw/d e/ ],
+                  edit_columns => [ 'd' ],
+                ;
+            },
+            on_submit => sub {
+                save_grid $dbh, [
+                    { a => 'z', d => 'y', e => 'x' },
+                    { a => 'w', d => 'v', e => 'u' },
+                ], name => 'b', table => 'abc';
+            },
+        });
+} {
+    provided => sub {
+        return [ { __pk => encode_base64('z', ''), a => 'z', d => 'a' },
+                 { __pk => encode_base64('w', ''), a => 'w', d => 'b' },
+            ];
+    },
+    confirm => sub {},
+    describe => sub {},
+    grid => sub {},
+};
+
+my $sql_history = ${$dbh->{mock_all_history}}[-2];
+my $stmt = $sql_history->statement;
+$stmt =~ s/\s+/ /g;
+
+is $stmt, q{UPDATE "abc" SET "d" = ? WHERE "a" = ?},
+    'Found the correct update statement';
+is_deeply $sql_history->bound_params, [ 'b', 'w' ],
+    'Found the correct bound parameters';
+
+done_testing;

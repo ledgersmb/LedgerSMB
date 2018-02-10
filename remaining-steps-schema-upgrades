@@ -17,7 +17,7 @@ Steps in the schema upgrade branch:
     * run checks (with no real $dbh; no formatters)
       * various combinations of succeeding and failing tests
     * use formatters to bind functions
-
+    - 
 
 Legenda:
  Starred items are done
