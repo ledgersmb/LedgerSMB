@@ -553,7 +553,7 @@ $$
                               OR ac.fx_transaction IS TRUE)))
                 AND (ac.entry_id > coalesce(r.max_ac_id, 0))
         GROUP BY gl.ref, ac.source, ac.transdate,
-                ac.memo, ac.voucher_id, gl.table,
+                ac.memo, ac.voucher_id, gl.table, ac.trans_id,
                 case when gl.table = 'gl' then gl.id else 1 end
         HAVING count(rl.id) = 0;
 
