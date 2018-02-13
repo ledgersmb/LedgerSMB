@@ -1211,7 +1211,7 @@ push @tests, __PACKAGE__->new(
     id_columns => ['lsmb_entry_id'],
   instructions => marktext(
                    'Reconciliations should be on asset, liability or equity accounts only.<br>
-Please review the dates and categories in the original application if needed'),
+Please void the unneeded cleared dates here or the whole reconciliation in the original application'),
            buttons => ['Save and Retry', 'Cancel', 'Force', 'Skip'],
           tooltips => {
                'Force' => marktext('This will <b>keep</b> the transactions but will <b>ignore</b> the non-necessary reconciliations'),
