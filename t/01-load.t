@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 207;
+use Test::More tests => 208;
 use File::Find;
 
 my @on_disk;
@@ -33,7 +33,6 @@ my @exception_modules =
 
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
-
      # Exclude because tested conditionally on X12::Parser way below
      'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
 
@@ -65,7 +64,7 @@ my @modules =
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld',
           'LedgerSMB::Setting', 'LedgerSMB::Tax', 'LedgerSMB::Upgrade_Tests',
-          'LedgerSMB::Form', 'LedgerSMB::IS',
+          'LedgerSMB::Upgrade_Preparation', 'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
           'LedgerSMB::DBObject::EOY',

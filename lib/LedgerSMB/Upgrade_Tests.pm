@@ -1188,6 +1188,48 @@ push @tests, __PACKAGE__->new(
   max_version => '3.0'
 );
 
+push @tests, __PACKAGE__->new(
+    test_query => q(SELECT ac.lsmb_entry_id, ac.trans_id, ac.id, ac.chart_id, ac.memo, ac.amount, xx.description,
+                          ch.description as account, ch.accno, ch.link, ch.charttype, ch.category, ac.cleared, approved
+                     FROM acc_trans ac
+                     JOIN (
+                               SELECT g.id, g.description FROM gl g
+                         UNION SELECT a.id, n.name        FROM ar a JOIN customer n ON n.id = a.customer_id
+                         UNION SELECT a.id, n.name        FROM ap a JOIN vendor n   ON n.id = a.vendor_id
+                     ) xx ON xx.id = ac.trans_id
+                     JOIN chart ch ON (ac.chart_id = ch.id)
+                    WHERE ( ch.category NOT IN ( 'A', 'L', 'Q' )
+                         OR ch.link NOT LIKE '%paid' )
+                      AND ac.cleared IS NOT NULL
+                      AND ac.approved
+                 ORDER BY trans_id, ac.id, accno, transdate),
+  display_name => marktext('Unneeded Reconciliations'),
+          name => 'reconciliation_on_unrelated_accounts',
+  display_cols => ['trans_id', 'id', 'memo', 'amount', 'description',
+                   'accno', 'account', 'link', 'category', 'cleared', 'approved'],
+       columns => ['cleared'],
+    id_columns => ['lsmb_entry_id'],
+  instructions => marktext(
+                   'Reconciliations should be on asset, liability or equity accounts only.<br>
+Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel that you need to adjust more before migrating.'),
+           buttons => ['Save and Retry', 'Cancel', 'Force', 'Skip'],
+          tooltips => {
+               'Force' => marktext('This will <b>keep</b> the transactions but will <b>ignore</b> the non-necessary reconciliations'),
+               'Skip'  => marktext('This will <b>skip</b> this test <b><u>without doing any correction</u></b>')
+          },
+     force_queries => [q(UPDATE acc_trans ac SET cleared = NULL
+                         WHERE chart_id in ( SELECT id
+                                               FROM chart c
+                                              WHERE c.category NOT IN ( 'A', 'L' )
+                                                 OR c.link NOT LIKE '%paid' )
+                           AND ac.cleared IS NOT NULL
+                           AND ac.approved;)],
+             table => 'acc_trans',
+           appname => 'sql-ledger',
+       min_version => '2.7',
+       max_version => '3.0'
+);
+
 
 ### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
