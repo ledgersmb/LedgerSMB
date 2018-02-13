@@ -726,7 +726,7 @@ sub _applicable_upgrade_preparations {
     my $dbinfo = shift;
 
     return grep { _upgrade_test_is_applicable($dbinfo, $_) }
-                  LedgerSMB::Upgrade_preparations->get_preparations;
+                  LedgerSMB::Upgrade_Preparation->get_migration_preparations;
 }
 
 sub _applicable_upgrade_tests {
