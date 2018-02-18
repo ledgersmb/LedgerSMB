@@ -240,7 +240,7 @@ sub columns {
        type => 'text',
        name => LedgerSMB::Report::text('Markup'),},
 
-    {col_id => 'price_updated',
+    {col_id => 'priceupdate',
        type => 'text',
        name => LedgerSMB::Report::text('Price Updated'),},
 
