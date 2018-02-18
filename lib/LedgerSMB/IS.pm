@@ -1499,7 +1499,7 @@ sub retrieve_invoice {
         #HV TODO drop entity_id from ar
         $query = qq|
                SELECT a.invnumber, a.ordnumber, a.quonumber,
-                      a.transdate, a.paid,
+                      a.transdate, 0 as paid,
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
