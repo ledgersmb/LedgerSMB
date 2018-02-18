@@ -944,7 +944,7 @@ sub retrieve_invoice {
 
         $query = qq|
             SELECT a.invnumber, a.transdate, a.duedate,
-                   a.ordnumber, a.quonumber, a.paid, a.taxincluded,
+                   a.ordnumber, a.quonumber, 0 as paid, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code, a.ponumber, a.crdate,
                    a.on_hold, a.reverse, a.description
