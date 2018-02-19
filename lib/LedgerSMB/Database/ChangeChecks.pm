@@ -169,7 +169,7 @@ sub run_with_formatters(&$) { ## no critic
         for (qw|describe confirm grid provided|);
 
     no warnings 'redefine'; ## no critic
-    local (*_describe, *_confirm, *_grid, *provided) =
+    local (*_describe, *_confirm, *_grid, *_provided) =
         @{$formatters}{qw(describe confirm grid provided)};
 
     return $block->();
@@ -405,7 +405,7 @@ sub _describe {
 }
 
 sub describe {
-    return _describe(@_);
+    return _describe($check, @_);
 }
 
 
@@ -422,7 +422,7 @@ sub _confirm {
 }
 
 sub confirm {
-    return _confirm(@_);
+    return _confirm($check, @_);
 }
 
 =item grid $rows, [ key => $value ]
@@ -491,7 +491,7 @@ sub grid {
     $pk = (ref $pk) ? $pk : [ $pk ];
     $_->{__pk} = _encode_pk($_, $pk) for (@$rows);
 
-    return _grid(@_);
+    return _grid($check, @_);
 }
 
 =item dropdowns_sql($dbh, $query)
@@ -540,9 +540,13 @@ See the documentation in the L<FORMATTERS> section.
 
 =cut
 
-sub provided {
+sub _provided {
     # placeholder; bound to a real function by run_with_formatters()
     die q{'provided' can't be called outside run_with_formatters scope};
+}
+
+sub provided {
+    return _provided($check, @_);
 }
 
 
@@ -636,15 +640,20 @@ sub _decode_pk {
 
 =head1 FORMATTERS
 
-Formatters implement the UI of the checks. This way, the UI can be anything from
-a web request/response based implementation to a terminal/ncurses solution.
+Formatters implement the UI of the checks. This way, the UI can be anything
+from a web request/response based implementation to a terminal/ncurses solution.
 
-Formatters implement callbacks that will be called from the checks while processing
-any of the events. During the C<on_failure> event, this usually will mean output
-generation, while the C<on_submit> event will want to query the UI for input provided.
+The formatters have the same arguments as their API equivalents, except that
+each formatter has a reference to the C<$check> in progress prepended to the
+argument list. E.g. C<grid $check, $rows, ...>.
 
-The following output hooks have to be provided, all quite high level, leaving the
-implementation with lots of room to render the output.
+Formatters implement callbacks that will be called from the checks while
+processing any of the events. During the C<on_failure> event, this usually will
+mean output generation, while the C<on_submit> event will want to query the UI
+for input provided.
+
+The following output hooks have to be provided, all quite high level, leaving
+the implementation with lots of room to render the output.
 
 =over
 
@@ -656,7 +665,8 @@ implementation with lots of room to render the output.
 
 =back
 
-Next to the output formatters, these input-requesting routines are to be supplied:
+Next to the output formatters, these input-requesting routines are to
+be supplied:
 
 =over
 

@@ -5,6 +5,8 @@ Steps in the schema upgrade branch:
 
 - change-application needs a data-source (to return values from the input form to the change applicator)
 - define all formatters
+  - HTML
+  - File (pre-defined inputs)
 - change all callees to die on error (and return status on failure)
 - 
 
