@@ -179,7 +179,7 @@ sub invoice_links {
         $form->{"select$key"} = '';
         foreach my $ref ( @{ $form->{AR_links}{$key} } ) {
             $value = "$ref->{accno}--$ref->{description}";
-            $selected = ($value eq $form->{$key}) ? " selected" : "";
+            $selected = ($value eq $form->{$key}) ? ' selected="selected"' : "";
             $form->{"select$key"} .= qq|<option value="$value"$selected>$value</option>\n|;
         }
 
@@ -935,7 +935,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
 
         $form->{"selectAR_paid_$i"} = $form->{selectAR_paid};
         $form->{"selectAR_paid_$i"} =~
-s/option>\Q$form->{"AR_paid_$i"}\E/option selected>$form->{"AR_paid_$i"}/;
+s/option value="\Q$form->{"AR_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" selected="selected"/;
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
