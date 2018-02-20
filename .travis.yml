@@ -1,6 +1,6 @@
 # run on GCE build as per suggested:
 # https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
-sudo: required
+sudo: false
 dist: trusty
 language: perl
 env:
@@ -105,7 +105,7 @@ cache:
 
 before_install:
   # list all the running services before we start. Perhaps we can stop some of them to save resources.
-  - sudo service --status-all
+  - service --status-all
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
   - source /opt/jdk_switcher/jdk_switcher.sh
@@ -191,10 +191,6 @@ after_failure:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
   # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
-  - echo ===============================
-  - echo === dmesg                   ===
-  - echo ===============================
-  - sudo dmesg
   - echo ===============================
   - echo === /tmp/plackup-access.log ===
   - echo ===============================
