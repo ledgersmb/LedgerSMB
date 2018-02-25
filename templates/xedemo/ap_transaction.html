@@ -115,7 +115,7 @@
 	  <td width=10> </td>
 	  <td align=right><?lsmb amount.${loop_count} ?></td>
 	  <td width=10> </td>
-	  <td><?lsmb description.${loop_count} ?></td>
+	  <td><?lsmb description.${loop_count}.replace("\n","<br />") ?></td>
 	  <td width=10> </td>
 	  <td><?lsmb projectnumber.${loop_count} ?></td>
 	</tr>
@@ -136,7 +136,7 @@
 	<?lsmb FOREACH tax ?>
 	<?lsmb loop_count = loop.count - 1 ?>
 	<tr>
-	  <th colspan=2 align=right><?lsmb taxdescription.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
+	  <th colspan=2 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
 	  <td width=10> </td>
 	  <td align=right><?lsmb tax.${loop_count} ?></td>
 	</tr>
