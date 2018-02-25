@@ -196,9 +196,6 @@ sub invoice_details {
                   if $projectnumber_id;
                 $form->{projectnumber} .= $form->{partsgroup};
             }
-
-            $form->format_string($form->{projectnumber});
-
         }
 
         $sortby = qq|$projectnumber$form->{partsgroup}|;
@@ -668,8 +665,6 @@ sub invoice_details {
     $form->{text_decimal}   = $c->num2text( $form->{decimal} * 1 );
     $form->{text_amount}    = $c->num2text($whole);
     $form->{integer_amount} = $form->format_amount( $myconfig, $whole );
-
-    $form->format_string(qw(text_amount text_decimal));
 
     $form->{invtotal} ||= 0;
     $form->{paid} ||= 0;
