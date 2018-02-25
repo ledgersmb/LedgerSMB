@@ -1293,24 +1293,12 @@ sub print_form {
 
     &{"$form->{vc}_details"};
 
-    my @vars = ();
-
     $form->{parts_id} = [];
     foreach my $i ( 1 .. $form->{rowcount} ) {
-        push @vars,
-          (
-            "partnumber_$i",    "description_$i",
-            "projectnumber_$i", "partsgroup_$i",
-            "serialnumber_$i",  "bin_$i",
-            "unit_$i",          "notes_$i",
-            "image_$i",         "id_$i"
-          );
-          push @{$form->{parts_id}}, $form->{"id_$i"};
+        push @{$form->{parts_id}}, $form->{"id_$i"};
     }
-    for ( split / /, $form->{taxaccounts} ) { push @vars, "${_}_description" }
 
     $ARAP = ( $form->{vc} eq 'customer' ) ? "AR" : "AP";
-    push @vars, $ARAP;
 
     # format payment dates
     foreach my $i ( 1 .. $form->{paidaccounts} - 1 ) {
@@ -1319,11 +1307,7 @@ sub print_form {
               $locale->date( \%myconfig, $form->{"datepaid_$i"},
                 $form->{longformat} );
         }
-
-        push @vars, "${ARAP}_paid_$i", "source_$i", "memo_$i";
     }
-
-    $form->format_string(@vars);
 
     ( $form->{employee} ) = split /--/, $form->{employee};
     ( $form->{warehouse}, $form->{warehouse_id} ) = split /--/,
@@ -1368,7 +1352,7 @@ sub print_form {
               $locale->date( \%myconfig, $form->{$_}, $form->{longformat} );
         }
     }
-    @vars =
+    my @vars =
       qw(name address1 address2 city state zipcode country contact phone fax email);
 
     $shipto = 1;
@@ -1395,12 +1379,6 @@ sub print_form {
             }
         }
     }
-
-    # some of the stuff could have umlauts so we translate them
-    push @vars,
-      qw(contact shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact shiptoemail shippingpoint shipvia notes intnotes employee warehouse);
-
-    push @vars, ( "${inv}number", "${inv}date", "${due}date" );
 
     $form->{address} =~ s/\\n/\n/g;
 
@@ -1517,8 +1495,6 @@ sub print_form {
 
         $old_form->{queued} = $form->{queued};
     }
-
-    $form->format_string( "email", "cc", "bcc" );
 
     $form->{fileid} = $form->{"${inv}number"};
     $form->{fileid} =~ s/(\s|\W)+//g;
