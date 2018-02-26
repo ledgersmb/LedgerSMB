@@ -1,7 +1,7 @@
 # RPM spec written for and tested on CentOS 4 and CentOS 5 
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.5.17
+Version: 1.5.18-dev
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
