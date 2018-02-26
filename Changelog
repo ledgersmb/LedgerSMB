@@ -62,9 +62,12 @@ Changelog for 1.5.17
 * Fix failure to include 'Price Updated' column on goods search (Erik H, #3333)
 * Fix payment account on invoice to retain value on update (Erik H, #3455)
 * Fix linebreaks, '<' and '>' showing as HTML code on invoice (Erik H, #3457)
+* Estonian translation update (Margus L)
+* German translation update (Mikael H)
 
 Erik H is Erik Huelsmann
-Yves L is Yves Lavoie
+Margus L is Margus Lepmets
+Mikael H is Mikael Helger
 
 
 Changelog for 1.5.16
