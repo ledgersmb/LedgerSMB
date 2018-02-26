@@ -2,6 +2,18 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.17
+* Fix inability to add taxforms (Erik H, #3431)
+* Add loading of SIC and GIFI on company creation to setup.pl (Erik H, #3442)
+* Fix double counted 'paid' amount on some printed invoices (Erik H, #3440)
+* Fix failure to include 'Price Updated' column on goods search (Erik H, #3333)
+* Fix payment account on invoice to retain value on update (Erik H, #3455)
+* Fix linebreaks, '<' and '>' showing as HTML code on invoice (Erik H, #3457)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.5.16
 * Properly compute the last cleared balance on reconciliation (Yves L, #3405)
 * Fix regression reports not showing (PDF, etc) download links (Erik H, #3408)
