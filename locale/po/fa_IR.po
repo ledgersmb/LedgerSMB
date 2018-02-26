@@ -2,7 +2,7 @@
 # saeed soltani <saeedhakh2007@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.17-dev\n"
+"Project-Id-Version: LedgerSMB 1.5.17\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-02-26 16:55+0000\n"
 "Last-Translator: saeed soltani <saeedhakh2007@gmail.com>, 2017\n"
