@@ -507,7 +507,7 @@ sub form_header {
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap>| . $locale->text('SO Number') . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
         </table>
