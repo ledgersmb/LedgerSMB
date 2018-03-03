@@ -182,6 +182,7 @@ END; ?>
                                     TYPE = COL.type;
                                  END;
                                  DOJO = tfoot.dojo_type.$COL_ID;
+                                 DOJO_PROPS = tfoot.dojo_props.$COL_ID;
                                  IF tfoot.coltypes.${COL.col_id} == 'spacer';
                                     SPACECOUNT = SPACECOUNT + 1;
                                  ELSE;
@@ -202,7 +203,8 @@ END; ?>
                                   id=COL.col_id _ '-' _ ROWCOUNT
                                   type="text"
                                   class=COL.class
-                       "data-dojo-type"=DOJO
+                                  "data-dojo-type"=DOJO
+                                  "data-dojo-props"=DOJO_PROPS
                                   name=PFX _ COL.col_id _ '_tfoot_' _ ROWCOUNT
                                   value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSIF TYPE == 'checkbox';
