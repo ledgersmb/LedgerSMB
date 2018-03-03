@@ -700,6 +700,9 @@ sub retrieve {
         my $listprice;
 
         while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate},
+                $decimalplaces, $form, $myconfig );
+
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
             $bu_sth->execute($ref->{invoice_id});
@@ -722,9 +725,6 @@ sub retrieve {
             $tth->finish;
             chop $ref->{taxaccounts};
 
-            # preserve price
-            $sellprice = $ref->{sellprice};
-
             # multiply by exchangerate
             $ref->{sellprice} =
               $form->round_amount(
@@ -737,12 +737,6 @@ sub retrieve {
                     $ref->{$_} / $form->{ $form->{currency} },
                     $decimalplaces );
             }
-
-            # partnumber and price matrix
-            PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate},
-                $decimalplaces, $form, $myconfig );
-
-            $ref->{sellprice} = $sellprice;
 
             $ref->{partsgroup} = $ref->{partsgrouptranslation}
               if $ref->{partsgrouptranslation};
