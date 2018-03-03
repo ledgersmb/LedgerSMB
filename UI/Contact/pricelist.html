@@ -87,7 +87,8 @@ checking a price deal for a customer.
          tfoot = { coltypes = { int_partnumber = 'input_text',
                                    description = 'text', 
                               },
-                  dojo_type = { int_partnumber = "lsmb/parts/PartSelector" },
+                   dojo_type = { int_partnumber = "lsmb/parts/PartSelector" },
+                   dojo_props = { int_partnumber = "required: false" },
                    rows = [{}]} ?>
 <?lsmb PROCESS button element_data = {
     type = "submit"
