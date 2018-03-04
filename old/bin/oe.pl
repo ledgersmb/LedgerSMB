@@ -400,7 +400,8 @@ sub form_header {
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
           </tr>
           <tr class="ponunber-row">
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap>| . ($form->{type} =~ /purchase_/ ?
+                        $locale->text('SO Number') : $locale->text('PO Number')) . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
 |;
@@ -1811,7 +1812,8 @@ sub display_ship_receive {
         <input type=hidden name=transdate value=$form->{transdate}>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap>| . ($form->{type} =~ /purchase_/ ?
+            $locale->text('SO Number') : $locale->text('PO Number')) . qq|</th>
         <td>$form->{ponumber}</td>
         <input type=hidden name=ponumber value="$form->{ponumber}">
           </tr>
