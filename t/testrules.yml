@@ -10,10 +10,14 @@ seq:
     - par:
       - t/*
       - xt/{0,1,2,3}*
-  - seq: xt/40-dbsetup.t
+  - seq:
+    - xt/40-dbsetup.t
+    - par:
+      - xt/40-database.t
+      - xt/41-coaload.t
   - seq:
     - par:
-      - xt/{4,5,7}*.t
+      - xt/{43,44,5,7}*.t
       - xt/6{1,2,3,7,8,9}*.t
       - seq:
         - xt/60-startlsmb.t
