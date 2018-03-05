@@ -133,7 +133,6 @@ BEGIN
         RETURN FALSE;
     END IF;
 
-    --TODO: Why can't we cascade DELETE with a TRIGGER to prevent?
     DELETE FROM cr_report_line
      WHERE report_id = in_report_id
            AND report_id IN (SELECT id FROM cr_report
