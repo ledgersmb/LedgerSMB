@@ -222,6 +222,7 @@ pricematrix__for_vendor
 quote_ident_array
 reconciliation__add_entry
 reconciliation__check
+reconciliation__check_balanced
 reconciliation__delete_my_report
 reconciliation__delete_unapproved
 reconciliation__get_cleared_balance

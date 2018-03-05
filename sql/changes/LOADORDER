@@ -68,3 +68,4 @@
 1.6/add_empty_salutation.sql
 1.6/missing-countries.sql
 1.6/constrain_default_password_duration.sql
+1.6/constrain_cr_report_line_entries.sql
