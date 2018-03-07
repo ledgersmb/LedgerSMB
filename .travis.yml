@@ -190,6 +190,10 @@ after_success:
 after_failure:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
+  - echo ===============================
+  - echo === dmesg                   ===
+  - echo ===============================
+  - cat /var/log/dmesg
   # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
   - echo ===============================
   - echo === /tmp/plackup-access.log ===
