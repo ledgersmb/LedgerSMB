@@ -63,8 +63,12 @@ Changelog for 1.5.18
 * Customer pricelist changes can be saved without adding new rows (Erik H)
 * Field 'PO Number' on purchase documents renamed to 'SO Number' (Erik H, #3276)
 * (Running) 'Balance' column of 'Search & GL' report incorrect (Erik H)
+* German translation update (Mikael A)
+* Estonian translation update (Margus L)
 
 Erik H is Erik Huelsmann
+Margus L is Margus Lepmets
+Mikael H is Mikael Arhelger
 
 
 Changelog for 1.5.17
@@ -75,11 +79,11 @@ Changelog for 1.5.17
 * Fix payment account on invoice to retain value on update (Erik H, #3455)
 * Fix linebreaks, '<' and '>' showing as HTML code on invoice (Erik H, #3457)
 * Estonian translation update (Margus L)
-* German translation update (Mikael H)
+* German translation update (Mikael A)
 
 Erik H is Erik Huelsmann
 Margus L is Margus Lepmets
-Mikael H is Mikael Helger
+Mikael H is Mikael Arhelger
 
 
 Changelog for 1.5.16
