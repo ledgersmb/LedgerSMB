@@ -55,6 +55,18 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.18
+* Fix menu-resizing minimum threshold overlapping main content (Erik H, #3421)
+* Persist selected menu-width across sessions/page reloads (Erik H)
+* Fix customer pricelist Quantity field not saved for new rows (Erik H)
+* Fix quantity discounts not working on orders/quotations (Erik H, #3439)
+* Customer pricelist changes can be saved without adding new rows (Erik H)
+* Field 'PO Number' on purchase documents renamed to 'SO Number' (Erik H, #3276)
+* (Running) 'Balance' column of 'Search & GL' report incorrect (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.17
 * Fix inability to add taxforms (Erik H, #3431)
 * Add loading of SIC and GIFI on company creation to setup.pl (Erik H, #3442)
