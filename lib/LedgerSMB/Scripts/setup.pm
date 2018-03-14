@@ -1129,7 +1129,7 @@ sub process_and_run_upgrade_script {
     $dbtemplate->render($request);
     $database->run_file(
         file =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
-        log => $temp . "_stdout",
+        stdout_log => $temp . "_stdout",
         errlog => $temp . "_stderr"
         );
 
