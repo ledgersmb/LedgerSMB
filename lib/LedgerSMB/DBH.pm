@@ -12,7 +12,6 @@ package LedgerSMB::DBH;
 use strict;
 use warnings;
 
-use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting;
