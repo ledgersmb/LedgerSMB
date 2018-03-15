@@ -118,10 +118,7 @@ sub timecard_screen {
 
          my @dates = ();
          for (SUNDAY .. SATURDAY){
-            push @dates, LedgerSMB::PGDate->from_db(
-                    $startdate->add(days => 1)->strftime('%Y-%m-%d'),
-                    'date'
-            );
+             push @dates, $startdate->add(days => 1)->clone;
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
