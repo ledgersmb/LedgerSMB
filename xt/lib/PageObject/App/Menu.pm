@@ -20,6 +20,7 @@ __PACKAGE__->self_register(
               tag_name => 'div',
               attributes => {
                   id => 'menudiv',
+#                role => 'presentation'
               });
 
 
@@ -107,7 +108,7 @@ sub click_menu {
         ok(use_module($tgt_class),
            "$tgt_class can be 'use'-d dynamically");
 
-        my $root = $self->find("//*[\@id='top_menu']");
+        my $root = $self->find("//*[\@id='top_menu']"); # and \@role='presentation'
         ok($root, "Menu tree loaded");
 
         my $item = $root;

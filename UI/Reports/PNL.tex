@@ -11,7 +11,7 @@
        END;
     END;
   END;
-  last_col_no = max_path_depth + 1 + report.cheads.ids.keys.size;
+  last_col_no = max_path_depth + 1 + report.sorted_col_ids.size;
   IF report.legacy_hierarchy ;
      hierarchy = 'flat-hierarchy';
   ELSE ;
@@ -37,11 +37,11 @@
 
 
 \begin{longtable}{@{\extracolsep{'0pt}}<?lsmb i = 1; WHILE i <= max_path_depth ; 'l'; i = i + 1; END;
- -?>p{2cm}<?lsmb FOREACH c IN report.cheads.ids.keys; 'r'; END ?>}
+ -?>p{2cm}<?lsmb FOREACH c IN report.sorted_col_ids; 'r'; END ?>}
 \\
 \multicolumn{<?lsmb max_path_depth+1 ?>}{l}{}%
 <?lsmb
- FOREACH col IN report.cheads.ids.keys;
+ FOREACH col IN report.sorted_col_ids;
      ' & \shortstack{';
      report.cheads.ids.$col.props.description ;
      '} ';
@@ -95,7 +95,7 @@
 <?lsmb END -?>
 %
  & %
-<?lsmb FOREACH col IN report.cheads.ids.keys;
+<?lsmb FOREACH col IN report.sorted_col_ids;
   ' & '; report.cells.$row.$col;
 END; -?>
 %

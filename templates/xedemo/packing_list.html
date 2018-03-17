@@ -130,7 +130,7 @@
 	<tr valign=top>
 	  <td><?lsmb runningnumber.${loop_count} ?></td>
 	  <td><?lsmb number.${loop_count} ?></td>
-	  <td><?lsmb item_description.${loop_count} ?></td>
+	  <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
 	  <td><?lsmb serialnumber.${loop_count} ?></td>
 	  <td><?lsmb deliverydate.${loop_count} ?></td>
 	  <td align=right><?lsmb qty.${loop_count} ?></td>

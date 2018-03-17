@@ -500,7 +500,7 @@ sub form_header {
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap>| . $locale->text('SO Number') . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
         </table>
@@ -872,7 +872,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
         $form->{"selectAP_paid_$i"} = $form->{selectAP_paid};
         $form->{"selectAP_paid_$i"} =~
-s/option>\Q$form->{"AP_paid_$i"}\E/option selected>$form->{"AP_paid_$i"}/;
+s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" selected="selected"/;
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};

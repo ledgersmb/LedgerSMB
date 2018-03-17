@@ -36,10 +36,10 @@ sub content {
 
     my $gone = 1;
     try {
-        $self->_get_content->tag_name
+        my $tagname = $self->_get_content->tag_name
             if $self->has_content;
         # we're still here?
-        $gone = 0;
+        $gone = 0 if defined $tagname;
     };
     $self->clear_content if $gone; # force builder
 
@@ -73,10 +73,10 @@ sub wait_for_content {
             if ($old_content) {
                 my $gone = 1;
                 try {
-                    $old_content->tag_name;
+                    my $tagname = $old_content->tag_name;
                     # When successfully accessing the tag
                     #  it's not out of scope yet...
-                    $gone = 0;
+                    $gone = 0 if defined $tagname;
                 };
                 $old_content = undef if $gone;
                 return 0;

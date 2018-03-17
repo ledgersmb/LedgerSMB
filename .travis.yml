@@ -1,6 +1,6 @@
 # run on GCE build as per suggested:
 # https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
-sudo: required
+sudo: false
 dist: trusty
 language: perl
 env:
@@ -105,11 +105,9 @@ cache:
 
 before_install:
   # list all the running services before we start. Perhaps we can stop some of them to save resources.
-  - sudo service --status-all
+  - service --status-all
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  - source /opt/jdk_switcher/jdk_switcher.sh
-  - jdk_switcher use oraclejdk8
   - phantomjs --version
   - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
   - phantomjs --version
@@ -120,6 +118,7 @@ before_install:
       wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
       tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
       hash -r ;
+      export QT_QPA_PLATFORM=phantom
       phantomjs --version ;
     fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
@@ -150,7 +149,6 @@ before_script:
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
   - #PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
-  - #sleep 5  # give starman a chance to start # we now have better handling for this in Is_LSMB_running.sh
   - utils/test/Is_LSMB_running.sh --early # fail early if starman is not running (can be skipped based on reponame or owner by setting an array in the script)
   - nginx -c /tmp/nginx.conf
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
@@ -164,7 +162,7 @@ script:
      LSMB_BASE_URL="http://127.0.0.1:5000"
      PSGI_BASE_URL="http://127.0.0.1:5001"
      HARNESS_RULESFILE="t/testrules.yml"
-    prove -j9 -r
+    prove --jobs $(test-jobs) --recurse
           --pgtap-option dbname=lsmbinstalltest
           --pgtap-option username=postgres
           --feature-option tags=~@wip
@@ -190,11 +188,11 @@ after_success:
 after_failure:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
   - echo ===============================
   - echo === dmesg                   ===
   - echo ===============================
-  - sudo dmesg
+  - cat /var/log/dmesg
+  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
   - echo ===============================
   - echo === /tmp/plackup-access.log ===
   - echo ===============================

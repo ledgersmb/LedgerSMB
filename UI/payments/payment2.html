@@ -180,7 +180,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <?lsmb END ?>
       </tr>
       <?lsmb # We have to clear i for later usage :)  ?>
-      <?lsmb i = '0'; topay_subtotal = 0  -?>
+      <?lsmb i = '0';  -?>
       <?lsmb FOREACH row IN rows ?>
       <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
       <tr class="<?lsmb alterning_style ?>">
@@ -224,7 +224,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         </td>
         <?lsmb END ?>
         <?lsmb #This should be computed and updated to the div using  ?>
-        <?lsmb topay_subtotal=topay_subtotal + row.topay_fx.value; -?>
         <td align="center"><?lsmb row.topay_fx.id=row.topay_fx.name;
                                   PROCESS input element_data = {
                                       type = "text"
@@ -314,7 +313,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <th class="listheading">X</th>
       </tr>
       <?lsmb # We have to insert the overpayment data  -?>
-      <?lsmb overpayment_item = 0; overpayment_subtotal = 0 -?>
+      <?lsmb overpayment_item = 0; -?>
       <?lsmb FOREACH item IN overpayment -?>
       <?lsmb overpayment_item = overpayment_item + 1  -?>
       <?lsmb j = overpayment_item % 2; alterning_style = "listrow$j" ?>
@@ -364,7 +363,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                    id="overpayment_topay_" _ overpayment_item
                    name="overpayment_topay_" _ overpayment_item
                    value=item.amount } ?>
-            <?lsmb overpayment_subtotal = overpayment_subtotal + item.amount -?>
         </td>
         <td align="center">
           <?lsmb
@@ -457,7 +455,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
    <th colspan="2"><?lsmb overpayment_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>
    <tr class="listtotal">
-   <?lsmb payment_total = overpayment_subtotal + topay_subtotal -?>
    <th colspan="5" align="right"><?lsmb text('Total') -?></th>
    <th colspan="2"><?lsmb payment_total -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>

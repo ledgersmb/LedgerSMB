@@ -55,6 +55,37 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.18
+* Fix menu-resizing minimum threshold overlapping main content (Erik H, #3421)
+* Persist selected menu-width across sessions/page reloads (Erik H)
+* Fix customer pricelist Quantity field not saved for new rows (Erik H)
+* Fix quantity discounts not working on orders/quotations (Erik H, #3439)
+* Customer pricelist changes can be saved without adding new rows (Erik H)
+* Field 'PO Number' on purchase documents renamed to 'SO Number' (Erik H, #3276)
+* (Running) 'Balance' column of 'Search & GL' report incorrect (Erik H)
+* German translation update (Mikael A)
+* Estonian translation update (Margus L)
+
+Erik H is Erik Huelsmann
+Margus L is Margus Lepmets
+Mikael H is Mikael Arhelger
+
+
+Changelog for 1.5.17
+* Fix inability to add taxforms (Erik H, #3431)
+* Add loading of SIC and GIFI on company creation to setup.pl (Erik H, #3442)
+* Fix double counted 'paid' amount on some printed invoices (Erik H, #3440)
+* Fix failure to include 'Price Updated' column on goods search (Erik H, #3333)
+* Fix payment account on invoice to retain value on update (Erik H, #3455)
+* Fix linebreaks, '<' and '>' showing as HTML code on invoice (Erik H, #3457)
+* Estonian translation update (Margus L)
+* German translation update (Mikael A)
+
+Erik H is Erik Huelsmann
+Margus L is Margus Lepmets
+Mikael H is Mikael Arhelger
+
+
 Changelog for 1.5.16
 * Properly compute the last cleared balance on reconciliation (Yves L, #3405)
 * Fix regression reports not showing (PDF, etc) download links (Erik H, #3408)

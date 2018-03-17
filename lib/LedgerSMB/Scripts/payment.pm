@@ -56,6 +56,7 @@ use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
 use strict;
 use warnings;
+use List::Util qw/sum/;
 
 # CT:  A few notes for future refactoring of this code:
 # 1:  I don't think it is a good idea to make the UI too dependant on internal
@@ -972,7 +973,7 @@ sub payment2 {
                 my ($cashid, $cashaccno, $cashdescription  ) = split(/--/, $request->{"overpayment_cash_account_$i"});
 
                 push @overpayment, {
-                    amount  => $request->{"overpayment_topay_$i"},
+                    amount  => LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"}),
                                    source1 => $request->{"overpayment_source1_$i"},
                                    source2 => $request->{"overpayment_source2_$i"},
                                    memo    => $request->{"overpayment_memo_$i"},
@@ -1046,6 +1047,7 @@ sub payment2 {
   },
   column_headers => \@column_headers,
   rows        =>  \@invoice_data,
+        topay_subtotal => (sum map { $_->{topay} } @invoice_data) // 0,
   topay_state   => \@topay_state,
         vendorcustomer => {
             name => 'vendor-customer',
@@ -1078,6 +1080,9 @@ sub payment2 {
  notes => $request->{notes},
  overpayment         => \@overpayment,
  overpayment_account => \@overpayment_account,
+        overpayment_subtotal => (sum map { $_->{amount} } @overpayment) // 0,
+        payment_total => (sum map { $_->{amount} } @overpayment)
+            + (sum map { $_->{topay} } @invoice_data),
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}

@@ -140,7 +140,7 @@
 	<tr valign=top>
           <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
 	  <td><?lsmb number.${loop_count} ?></td>
-	  <td><?lsmb item_description.${loop_count} ?></td>
+	  <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
 	  <td align=right><?lsmb qty.${loop_count} ?></td>
 	  <td><?lsmb unit.${loop_count} ?></td>
 	  <td align=right><?lsmb sellprice.${loop_count} ?></td>
@@ -166,7 +166,7 @@
 	<?lsmb FOREACH tax ?>
 	<?lsmb loop_count = loop.count - 1 ?>
 	<tr>
-	  <th colspan=6 align=right><?lsmb taxdescription.${loop_count} ?> on <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
+	  <th colspan=6 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> on <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
 	  <td colspan=2 align=right><?lsmb tax.${loop_count} ?></td>
 	</tr>
 	<?lsmb END ?>

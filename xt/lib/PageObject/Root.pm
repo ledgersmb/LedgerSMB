@@ -34,10 +34,10 @@ sub wait_for_body {
             if ($old_body) {
                 my $gone = 1;
                 try {
-                    $old_body->tag_name;
+                    my $tagname = $old_body->tag_name;
                     # When successfully accessing the tag
                     #  it's not out of scope yet...
-                    $gone = 0;
+                    $gone = 0 if defined $tagname;
                 };
                 $old_body = undef if $gone;
                 return 0; # Not done yet

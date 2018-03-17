@@ -387,13 +387,9 @@ tag in the LOADORDER file will be applied (the main use-case being migrations).
 
 sub load_base_schema {
     my ($self, %args) = @_;
-    my $log = loader_log_filename();
 
     $self->run_file(
-
         file       => "$self->{source_dir}/Pg-database.sql",
-        log_stdout => ($args{log} || "${log}_stdout"),
-        log_stderr => ($args{errlog} || "${log}_stderr")
     );
     my $dbh = $self->connect({ AutoCommit => 1 });
     my $sth = $dbh->prepare(
@@ -415,8 +411,6 @@ sub load_base_schema {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
                 file       => "$self->{source_dir}/on_load/$fname",
-                log_stdout => ($args{log} || "${log}_stdout"),
-                log_stderr => ($args{errlog} || "${log}_stderr")
                 ) if -f "$self->{source_dir}/on_load/$fname";
         }
         closedir(LOADDIR);
@@ -434,7 +428,6 @@ Loads or reloads sql modules from $loadorder
 
 sub load_modules {
     my ($self, $loadorder, $args) = @_;
-    my $log = loader_log_filename();
 
     my $filename = "$self->{source_dir}/modules/$loadorder";
     open my $fh, '<', $filename
@@ -454,8 +447,6 @@ sub load_modules {
 
         $self->run_file(
             file       => "$self->{source_dir}/modules/$mod",
-            log_stdout => $args->{log}    || "${log}_stdout",
-            log_stderr => $args->{errlog} || "${log}_stderr"
         );
 
         my $sth = $dbh->prepare(q{select value from defaults
@@ -470,29 +461,34 @@ sub load_modules {
     return 1;
 }
 
-=head2 $db->load_coa({country => '2-char-country-code',
-                     chart => 'name-of-chart' })
+=head2 $db->load_coa({ country => '2-char-country-code',
+                       chart => 'name-of-chart',
+                       gifi => 'name-of-gifi',
+                       sic => 'name-of-sic' })
 
-Loads the chart of accounts (and possibly GIFI) as specified in
+Loads the chart of accounts (and possibly GIFI/SIC tables) as specified in
 the chart of accounts file name given for the given 2-char (iso) country code.
 
 =cut
 
 sub load_coa {
     my ($self, $args) = @_;
-    my $log = loader_log_filename();
 
     $self->run_file (
         file         => "$self->{source_dir}/coa/$args->{country}/chart/$args->{chart}",
-        log_stdout   => $log,
-        log_stderr   => $log,
         );
-    if (defined $args->{coa_lc}
-        && -f "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+
+    $args->{gifi} //= $args->{chart};
+    if (defined $args->{gifi}
+        && -f "$self->{source_dir}/coa/$args->{country}/gifi/$args->{gifi}"){
         $self->run_file(
-            file        => "$self->{source_dir}/coa/$args->{coa_lc}/gifi/$args->{chart}",
-            log_stdout  => $log,
-            log_stderr  => $log,
+            file        => "$self->{source_dir}/coa/$args->{country}/gifi/$args->{gifi}",
+            );
+    }
+    if (defined $args->{sic}
+        && -f "$self->{source_dir}/coa/$args->{country}/sic/$args->{sic}"){
+        $self->run_file(
+            file        => "$self->{source_dir}/coa/$args->{country}/sic/$args->{sic}",
             );
     }
     return;

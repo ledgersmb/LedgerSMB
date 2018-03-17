@@ -258,7 +258,9 @@ FOR retval IN
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description AS accname,
               ac.chart_id, ac.entry_id,
-              sum(ac.amount_bc) over (rows unbounded preceding) + t_balance
+              sum(ac.amount_bc) over (order by ac.transdate, ac.trans_id,
+                                            c.accno, ac.entry_id)
+                + t_balance
                 as running_balance,
               compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
          FROM (select id, 'gl' as type, false as invoice, reference,
@@ -307,7 +309,7 @@ FOR retval IN
               ac.chart_id, ac.entry_id, ac.trans_id
        HAVING in_business_units is null or in_business_units
                 <@ compound_array(string_to_array(bu_tree.path, ',')::int[])
-     ORDER BY ac.transdate, ac.trans_id, c.accno
+     ORDER BY ac.transdate, ac.trans_id, c.accno, ac.entry_id
 LOOP
    RETURN NEXT retval;
 END LOOP;

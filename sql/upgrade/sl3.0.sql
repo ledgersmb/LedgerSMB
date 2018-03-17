@@ -384,6 +384,7 @@ ALTER TABLE :slschema.customer ADD COLUMN company_id int;
 ALTER TABLE :slschema.customer ADD COLUMN credit_id int;
 
 -- Speed optimizations
+ALTER TABLE :slschema.acc_trans DROP COLUMN IF EXISTS lsmb_entry_id;
 ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
 ALTER TABLE :slschema.acc_trans ADD COLUMN type CHAR(2);
 ALTER TABLE :slschema.acc_trans ADD COLUMN accno TEXT;

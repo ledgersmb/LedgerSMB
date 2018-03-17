@@ -38,6 +38,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::PSGI::Util;
+use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
@@ -721,6 +722,13 @@ sub _upgrade_test_is_applicable {
             && ($test->appname eq $dbinfo->{appname}));
 }
 
+sub _applicable_upgrade_preparations {
+    my $dbinfo = shift;
+
+    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
+                  LedgerSMB::Upgrade_Preparation->get_migration_preparations;
+}
+
 sub _applicable_upgrade_tests {
     my $dbinfo = shift;
 
@@ -736,6 +744,16 @@ sub upgrade {
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
+
+    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
+        next if defined $request->{"applied_$preparation->{name}"}
+             && $request->{"applied_$preparation->{name}"} eq 'On';
+        my $sth = $request->{dbh}->prepare($preparation->preparation);
+        my $status = $sth->execute()
+            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
+        $request->{"applied_$preparation->{name}"} = 'On';
+        $sth->finish();
+    }
 
     for my $check (_applicable_upgrade_tests($dbinfo)) {
         next if $check->skipable
@@ -899,7 +917,6 @@ sub fix_tests{
         . 'found different test by the same name while fixing data'
         if $request->{verify_check} ne md5_hex($check->test_query);
 
-
     my $table = $check->table;
     my @edits = @{$check->columns};
     # If we are inserting and id is displayed, we want to insert
@@ -931,15 +948,14 @@ sub fix_tests{
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$count"};
         }
-        push @values, map { MIME::Base64::decode($_)} split(/,/,$request->{"id_$count"})
+        push @values, map { $_ ne '' ? MIME::Base64::decode($_) : undef} split(/,/,$request->{"id_$count"})
            if ! $check->{insert};
 
         my $rv = $sth->execute(@values) ||
             $request->error($sth->errstr);
         return LedgerSMB::PSGI::Util::internal_server_error(
-            qq{Upgrade query affected $rv rows, while only a single row
-was expected})
-            if $rv > 1;
+            qq{Upgrade query affected $rv rows, while a single row was expected})
+                if $rv != 1;
     }
     $sth->finish();
     $dbh->commit;
@@ -998,18 +1014,22 @@ sub select_coa {
 
     my ($request) = @_;
 
-      if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
-          die $request->{_locale}->text('Access Denied');
-      }
+    if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
+        die $request->{_locale}->text('Access Denied');
+    }
 
     if ($request->{coa_lc}){
         if ($request->{chart}){
             my ($reauth, $database) = _get_database($request);
             return $reauth if $reauth;
 
-            $database->load_coa( {
-               country => $request->{coa_lc},
-               chart => $request->{chart} });
+            $database->load_coa(
+                {
+                    country => $request->{coa_lc},
+                    chart => $request->{chart},
+                    gifi => $request->{gifi},
+                    sic => $request->{sic}
+                });
 
            return template_screen($request);
         } else {
@@ -1019,6 +1039,25 @@ sub select_coa {
                 sort(grep !/^(\.|[Ss]ample.*)/,
                       readdir(CHART));
             closedir(CHART);
+
+            opendir(GIFI, "sql/coa/$request->{coa_lc}/gifi");
+            @{$request->{gifis}} =
+                map +{ name => $_ },
+                sort(grep !/^(\.|[Ss]ample.*)/,
+                      readdir(GIFI));
+            closedir(GIFI);
+
+            if (-e "sql/coa/$request->{coa_lc}/sic") {
+                opendir(SIC, "sql/coa/$request->{coa_lc}/sic");
+                @{$request->{sics}} =
+                    map +{ name => $_ },
+                    sort(grep !/^(\.|[Ss]ample.*)/,
+                         readdir(SIC));
+                closedir(SIC);
+            }
+            else {
+                @{$request->{sics}} = ();
+            }
        }
     } else {
         #COA Directories
