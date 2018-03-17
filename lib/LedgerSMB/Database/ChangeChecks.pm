@@ -203,8 +203,10 @@ sub _run_check {
         } {
             confirm => sub {},
             describe => sub {},
-            grid => sub { shift; # discard the failing rows ref
-                          push @grids, { @_ };
+            grid => sub {
+                shift; # discard the check
+                shift; # discard the failing rows ref
+                push @grids, { @_ };
             },
             provided => sub {},
         };

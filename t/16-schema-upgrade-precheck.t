@@ -441,17 +441,24 @@ is_deeply $result, [ 'called 2' ],
 #  Tests to assert the 'provided' protocol
 #
 
-run_with_formatters {
-    lives_and { is LedgerSMB::Database::ChangeChecks::provided(), 1,
-                '"provided" without arguments'; }
-    lives_and { is LedgerSMB::Database::ChangeChecks::provided('name'),
-                'name', '"provided" with argument'; }
-} {
-    confirm => sub {},
-    describe => sub {},
-    grid => sub {},
-    provided => sub { return 1 if ! @_; return shift; },
-};
+{
+    local $LedgerSMB::Database::ChangeChecks::check = 'the-check';
+    run_with_formatters {
+        lives_and { is LedgerSMB::Database::ChangeChecks::provided(), 1,
+                    '"provided" without arguments'; }
+        lives_and { is LedgerSMB::Database::ChangeChecks::provided('name'),
+                    'name', '"provided" with argument'; }
+    } {
+        confirm => sub {},
+        describe => sub {},
+        grid => sub {},
+        provided => sub {
+            shift; # remove the check being passed in
+            return 1 if ! @_;
+            return shift;
+        },
+    };
+}
 
 
 # Result set with failures
@@ -509,8 +516,6 @@ $dbh->{mock_add_resultset} = [
 $dbh->{mock_add_resultset} = [
     [ qw/d/ ],
     [] ];
-
-print STDERR "here!!";
 
 run_with_formatters {
     LedgerSMB::Database::ChangeChecks::_run_check(
