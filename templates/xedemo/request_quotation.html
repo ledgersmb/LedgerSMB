@@ -151,7 +151,7 @@
         <tr valign=top>
           <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
 	  <td><?lsmb number.${loop_count} ?></td>
-	  <td><?lsmb item_description.${loop_count} ?></td>
+	  <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
 	  <td align=right><?lsmb qty.${loop_count} ?></td>
 	  <td><?lsmb unit.${loop_count} ?></td>
 	</tr>

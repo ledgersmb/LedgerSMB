@@ -194,7 +194,7 @@ create or replace function pg_temp.reconciliation__account_list () returns setof
         coa.accno || ' ' || coa.description as name,
         coa.accno, coa.id as id
     FROM account coa
-         JOIN cr_coa_to_account cta ON cta.chart_id = coa.id
+    JOIN cr_coa_to_account cta ON cta.chart_id = coa.id
     ORDER BY coa.accno;
 $$ language sql;
 
@@ -361,10 +361,7 @@ $$
     SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
-    JOIN (      SELECT id FROM ar WHERE approved
-          UNION SELECT id FROM ap WHERE approved
-          UNION SELECT id FROM gl WHERE approved
-          ) g ON g.id = ac.trans_id
+        JOIN transactions t ON t.id = ac.trans_id AND t.approved
     WHERE c.id = $1 AND cleared
       AND ac.approved IS true
       AND ac.transdate <= in_report_date
@@ -385,6 +382,31 @@ ALTER TABLE :slschema.vendor ADD COLUMN credit_id int;
 ALTER TABLE :slschema.customer ADD COLUMN entity_id int;
 ALTER TABLE :slschema.customer ADD COLUMN company_id int;
 ALTER TABLE :slschema.customer ADD COLUMN credit_id int;
+
+-- Speed optimizations
+ALTER TABLE :slschema.acc_trans DROP COLUMN IF EXISTS lsmb_entry_id;
+ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
+ALTER TABLE :slschema.acc_trans ADD COLUMN type CHAR(2);
+ALTER TABLE :slschema.acc_trans ADD COLUMN accno TEXT;
+ALTER TABLE :slschema.acc_trans ADD transdate_month DATE;
+ALTER TABLE :slschema.acc_trans ADD cleared_month DATE;
+UPDATE :slschema.acc_trans SET transdate_month = date_trunc('MONTH', transdate)::DATE,
+                               cleared_month = date_trunc('MONTH', cleared)::DATE;
+CREATE INDEX transdate_month_i ON :slschema.acc_trans USING btree(transdate_month);
+CREATE INDEX cleared_month_i ON :slschema.acc_trans USING btree(cleared_month);
+
+update :slschema.acc_trans
+  set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
+
+UPDATE :slschema.acc_trans SET type = 'AP'
+ WHERE trans_id IN (SELECT id FROM :slschema.ap);
+UPDATE :slschema.acc_trans SET type = 'AR'
+ WHERE trans_id IN (SELECT id FROM :slschema.ar);
+UPDATE :slschema.acc_trans SET type = 'GL'
+ WHERE trans_id IN (SELECT id FROM :slschema.gl);
+UPDATE :slschema.acc_trans SET accno = (SELECT accno
+                           FROM :slschema.chart
+                          WHERE chart.id = :slschema.acc_trans.chart_id);
 
 --Accounts
 
@@ -987,7 +1009,7 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
 
 --Payments
 
-CREATE OR REPLACE FUNCTION payment_migrate
+CREATE OR REPLACE FUNCTION pg_temp.payment_migrate
 (in_id                            int,      -- Payment id
  in_trans_id                      int,      -- Transaction id
  in_exchangerate                  numeric,  -- Exchange rate
@@ -1039,7 +1061,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-SELECT payment_migrate(p.id, p.trans_id, cast(p.exchangerate as numeric), p.paymentmethod_id)
+SELECT pg_temp.payment_migrate(p.id, p.trans_id, cast(p.exchangerate as numeric), p.paymentmethod_id)
 FROM :slschema.payment p;
 
 -- Reconciliations
@@ -1104,25 +1126,16 @@ INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, enter
 -- The ID and matching post_date are entered in a temp table to pull the back into cr_report_line immediately after.
 -- Temp table will be dropped automatically at the end of the transaction.
 WITH cr_entry AS (
-SELECT cr.id::INT, cr.end_date, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
-    FROM :slschema.acc_trans a
-    JOIN :slschema.chart s ON chart_id=s.id
-    JOIN pg_temp.reconciliation__account_list() coa ON coa.accno=s.accno
-    JOIN account c on c.accno=s.accno
-    JOIN public.cr_report cr ON c.id = cr.chart_id
-    AND date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
-    AND date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE
-    AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM :slschema.acc_trans))
-    JOIN (
-        WITH types AS ( SELECT id,'AP' AS type FROM :slschema.ap
-                  UNION SELECT id,'AR'         FROM :slschema.ar
-                  UNION SELECT id,'GL'         FROM :slschema.gl)
-        SELECT DISTINCT ac.trans_id, types.type
-        FROM :slschema.acc_trans ac
-        JOIN types ON ac.trans_id = types.id
-        ORDER BY ac.trans_id
-    ) n ON n.trans_id = a.trans_id
-    ORDER BY post_date,cr.id,n.type,a.source ASC NULLS LAST,a.amount
+SELECT cr.id::INT, cr.end_date, a.source, a.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
+    FROM cr_coa_to_account cta
+    JOIN account c on cta.chart_id = c.id
+    JOIN cr_report cr ON cr.chart_id = c.id
+    JOIN :slschema.acc_trans a ON c.accno=a.accno
+   WHERE a.type IS NOT NULL
+     AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM :slschema.acc_trans))
+     AND a.transdate_month <= date_trunc('MONTH', cr.end_date)::DATE
+     AND a.cleared_month   >= date_trunc('MONTH', cr.end_date)::DATE
+ORDER BY post_date,cr.id,a.type,a.source ASC NULLS LAST,a.amount
 )
 SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_entry.end_date, cr_entry.post_date, cr_entry.lsmb_entry_id
 INTO TEMPORARY _cr_report_line
@@ -1408,5 +1421,5 @@ SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
---TODO:  Translation migratiion.  Partsgroups?
+--TODO:  Translation migration.  Partsgroups?
 -- TODO:  User/password Migration

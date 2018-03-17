@@ -3,6 +3,7 @@ Changelog for 1.6 Series
 Forthcoming
 
 User Interface
+* Reports and search results exportable to XLS(X) (Yves L)
 * Left menu replaced by a (faster) Dojo-based version (Yves L/Erik H)
 
 Installation & Administration
@@ -11,6 +12,8 @@ Installation & Administration
 * Better detection of incorrect @INC paths (David G)
 * Automatic date format selection using browser locale (Yves L/Erik H)
 * No more warnings from database creation and upgrade (Erik H)
+* Improved logging: various logs correlated using unique request IDs (Erik H)
+* Functions 'warn()' and 'die()' logged to debug logs (Erik H)
 
 Performance
 * PSGI responses no longer written to file but kept in memory (Erik H/Yves L)
@@ -51,6 +54,64 @@ David G is David Godfrey
 
 Changelog for 1.5 Series
 Released 2016-12-24
+
+Changelog for 1.5.18
+* Fix menu-resizing minimum threshold overlapping main content (Erik H, #3421)
+* Persist selected menu-width across sessions/page reloads (Erik H)
+* Fix customer pricelist Quantity field not saved for new rows (Erik H)
+* Fix quantity discounts not working on orders/quotations (Erik H, #3439)
+* Customer pricelist changes can be saved without adding new rows (Erik H)
+* Field 'PO Number' on purchase documents renamed to 'SO Number' (Erik H, #3276)
+* (Running) 'Balance' column of 'Search & GL' report incorrect (Erik H)
+* German translation update (Mikael A)
+* Estonian translation update (Margus L)
+
+Erik H is Erik Huelsmann
+Margus L is Margus Lepmets
+Mikael H is Mikael Arhelger
+
+
+Changelog for 1.5.17
+* Fix inability to add taxforms (Erik H, #3431)
+* Add loading of SIC and GIFI on company creation to setup.pl (Erik H, #3442)
+* Fix double counted 'paid' amount on some printed invoices (Erik H, #3440)
+* Fix failure to include 'Price Updated' column on goods search (Erik H, #3333)
+* Fix payment account on invoice to retain value on update (Erik H, #3455)
+* Fix linebreaks, '<' and '>' showing as HTML code on invoice (Erik H, #3457)
+* Estonian translation update (Margus L)
+* German translation update (Mikael A)
+
+Erik H is Erik Huelsmann
+Margus L is Margus Lepmets
+Mikael H is Mikael Arhelger
+
+
+Changelog for 1.5.16
+* Properly compute the last cleared balance on reconciliation (Yves L, #3405)
+* Fix regression reports not showing (PDF, etc) download links (Erik H, #3408)
+* Fix typo in SQL Ledger upgrade code (Erik H, #3409)
+* Add French Chart of Accounts (Yves L)
+* Lift requirement to enter sensitive private data when creating users (Erik H)
+* Fix absolute [New] link on order, AR and AP pages (Erik H)
+* Support non-root hosting by using relative '/' to 'login.pl' redirect (Erik H)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
+Changelog for 1.5.15
+* Generate access logs on standard output by default (Erik H)
+* Fix cli scripts; block running as root in PSGI instead of Sysconfig (Erik H)
+* Remove our moving out of SourceForge notice from the welcome page (Erik H)
+* Fix zero-value depreciations from blocking later depreciations (Chris T)
+* Be explicit about which Perl::Critic policies to apply in tests (Nick P)
+* Check for file errors when blacklist test (Nick P)
+* Make checks work (out of the box) with our Docker dev images (Nick P)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+
 
 Changelog for 1.5.14
 * Post (instead of save) transaction on depreciation approval (Erik H)

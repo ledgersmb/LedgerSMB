@@ -406,7 +406,8 @@ sub form_header {
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
           </tr>
           <tr class="ponunber-row">
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap>| . ($form->{type} =~ /purchase_/ ?
+                        $locale->text('SO Number') : $locale->text('PO Number')) . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
 |;
@@ -513,7 +514,7 @@ sub form_header {
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" id=$form->{vc} name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="new"
-                 href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=$eclass">
+                 href="login.pl?action=login&company=$form->{company}#contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
@@ -1776,7 +1777,8 @@ sub display_ship_receive {
         <input type=hidden name=transdate value=$form->{transdate}>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap>| . ($form->{type} =~ /purchase_/ ?
+            $locale->text('SO Number') : $locale->text('PO Number')) . qq|</th>
         <td>$form->{ponumber}</td>
         <input type=hidden name=ponumber value="$form->{ponumber}">
           </tr>

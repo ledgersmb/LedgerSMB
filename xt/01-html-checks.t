@@ -39,7 +39,8 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
-    open $fh, '<', $filename;
+    open $fh, '<', $filename
+        or BAIL_OUT("failed to open $filename for reading $!");
     $is_snippet = 1
         if ($filename !~ m#(log(in|out))|main|setup/#
             || $filename =~ m#setup/ui-db-credentials#);
@@ -49,7 +50,7 @@ sub content_test {
         $ui_header_used = 1 if /ui-header\.html/;
         $text .= $_;
     }
-    close $fh;
+    close $fh or diag("failed to close $filename : $!");
 
     #Fix source text. Template statements have to be removed for now.
     #IF/ELSE/END branches will clash though. - YL

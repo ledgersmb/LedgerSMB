@@ -146,7 +146,6 @@ sub print_transaction {
       ( $form->{display_form} ) ? $form->{display_form} : "display_form";
 
     &{"$form->{vc}_details"};
-    @a = qw(name address1 address2 city state zipcode country);
 
     $form->{invtotal} = 0;
     foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
@@ -170,8 +169,6 @@ sub print_transaction {
     }
     foreach my $accno ( split / /, $form->{taxaccounts} ) {
         if ( $form->{"tax_$accno"} ) {
-            $form->format_string("${accno}_description");
-
             $tax += $form->parse_amount( \%myconfig, $form->{"tax_$accno"} );
 
             $form->{"${accno}_tax"} = $form->{"tax_$accno"};
@@ -191,15 +188,10 @@ sub print_transaction {
     }
 
     $tax = 0 if $form->{taxincluded};
-
-    push @a, $form->{ARAP};
-    $form->format_string(@a);
-
     $form->{paid} = 0;
     foreach my $i ( 1 .. $form->{paidaccounts} - 1 ) {
 
         if ( $form->{"paid_$i"} ) {
-            @a = ();
             $form->{paid} +=
               $form->parse_amount( \%myconfig, $form->{"paid_$i"} );
 
@@ -208,9 +200,6 @@ sub print_transaction {
                   $locale->date( \%myconfig, $form->{"datepaid_$i"},
                     $form->{longformat} );
             }
-
-            push @a, "$form->{ARAP}_paid_$i", "source_$i", "memo_$i";
-            $form->format_string(@a);
 
             ( $accno, $account ) = split /--/, $form->{"$form->{ARAP}_paid_$i"};
 
@@ -246,12 +235,6 @@ sub print_transaction {
     }
 
     $form->{notes} =~ s/^\s+//g;
-
-    @a = ( "invnumber", "transdate", "duedate", "crdate", "notes" );
-
-    push @a,
-      qw(company address tel fax businessnumber text_amount text_decimal);
-
     $form->{invdate} = $form->{transdate};
 
     if ($form->{formname} eq 'transaction' ){

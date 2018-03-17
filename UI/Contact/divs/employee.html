@@ -136,7 +136,6 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
         name = "employeenumber"
         type = "text"
         size = 20
-   required = 'true'
 }  ?>
 </div>
 <div class="input_group g2">
@@ -159,7 +158,6 @@ default_values = [employee.manager_id]
          type = "text"
         class = "tax_id"
          size = "16"
-     required = 'true'
 } ?>
 </div>
 </div>
@@ -173,7 +171,6 @@ default_values = [employee.manager_id]
         type = "text"
         class = "date"
         size = 10
-      required = 'true'
 }  ?>
 </div>
 <div class="input_group g2">
@@ -211,14 +208,14 @@ default_values = [employee.manager_id]
 <?lsmb
 IF manage_users and entity_id;
    IF user_id ?>
-       <a href="admin.pl?action=edit_user&user_id=<?lsmb user_id ?>"
+       <a href="admin.pl?action=edit_user&amp;user_id=<?lsmb user_id ?>"
        >[<?lsmb text('Edit User') ?>]</a><?lsmb
    ELSE ?>
-       <a href="admin.pl?action=new_user&first_name=<?lsmb tt_url(first_name)
-                ?>&last_name=<?lsmb tt_url(last_name)
-                ?>&employeenumber=<?lsmb tt_url(employeenumber)
-                ?>&country_id=<?lsmb tt_url(country_id)
-                ?>&entity_id=<?lsmb tt_url(entity_id) ?>"
+       <a href="admin.pl?action=new_user&amp;first_name=<?lsmb tt_url(first_name)
+                ?>&amp;last_name=<?lsmb tt_url(last_name)
+                ?>&amp;employeenumber=<?lsmb tt_url(employeenumber)
+                ?>&amp;country_id=<?lsmb tt_url(country_id)
+                ?>&amp;entity_id=<?lsmb tt_url(entity_id) ?>"
        >[<?lsmb text('Add User') ?>]</a><?lsmb
    END;
 END ?>

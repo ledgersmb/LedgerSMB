@@ -23,6 +23,8 @@ use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
+use Log::Log4perl::Layout::PatternLayout;
+use LedgerSMB::Middleware::RequestID;
 
 require Plack::Middleware::Pod
     if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
@@ -38,6 +40,10 @@ if ( $LedgerSMB::Sysconfig::dojo_built) {
 } else {
     print "Starting Worker on PID $$ Using Dojo Source\n";
 }
+
+Log::Log4perl::Layout::PatternLayout::add_global_cspec(
+    'Z',
+    sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
 
 # Plack configuration
 use Plack::Builder;
@@ -72,12 +78,12 @@ builder {
                 enable "Debug::$_";
             }
         }
-        for (qw(LazyLoadModules W3CValidate)) {
+        for (qw(LazyLoadModules Log4perl)) {
             enable "Debug::$_"
                 if check_config_option("$_","Plack::Middleware::Debug::$_");
         }
-        enable 'Debug::Log4perl', method => $LedgerSMB::Sysconfig::Log4perl_method
-            if check_config_option('Log4perl','Plack::Middleware::Debug::Log4perl');
+        enable 'Debug::W3CValidate', validator_uri => $LedgerSMB::Sysconfig::W3CValidate_uri
+            if check_config_option('Log4perl','Plack::Middleware::Debug::W3CValidate');
         enable 'Debug::DBIProfile', profile => $LedgerSMB::Sysconfig::DBIProfile_profile
             if check_config_option('DBIProfile','Plack::Middleware::Debug::DBIProfile');
         enable 'Debug::DBITrace', level => $LedgerSMB::Sysconfig::DBITrace_level

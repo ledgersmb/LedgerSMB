@@ -870,6 +870,7 @@ sub save_pricelist {
                       price => $request->{"lastcost_tfoot_$count"} ||
                                $request->{"sellprice_tfoot_$count"},
                    leadtime => $request->{"leadtime_tfoot_$count"},
+                        qty => $request->{"qty_tfoot_$count"},
          } if defined $part->{id};
     }
 

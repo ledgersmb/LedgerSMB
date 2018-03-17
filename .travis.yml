@@ -1,6 +1,6 @@
 # run on GCE build as per suggested:
 # https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
-sudo: required
+sudo: false
 dist: trusty
 language: perl
 env:
@@ -19,12 +19,6 @@ notifications:
   webhooks: https://ledgersmb.org/webhook/travis_ci_notifications
 
 
-# POD_TESTING=1 can be set as an environment variable to enable pod tests,
-# but these only work with perl versions >= 5.20. Earlier versions of perl
-# handle constants in a way which causes Test::Pod::Coverage to consider
-# them as naked subroutines.
-
-
 matrix:
   include:
     - perl: '5.26'
@@ -34,8 +28,9 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.6-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
-        - POD_TESTING=1
     - perl: '5.24'
       addons:
         postgresql: '9.5'
@@ -43,6 +38,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.5-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         # - TEST_SAUCE=1
         - DOJO_BUILT=0
@@ -51,7 +48,9 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx postgresql-9.4-pgtap
+             - nginx postgresql-9.4-pgtap
+             - texlive-latex-recommended
+             - texlive-xetex
       env:
         - COVERAGE=1
     - perl: '5.20'
@@ -60,6 +59,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.4-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - COA_TESTING=1
     - perl: '5.18'
@@ -68,6 +69,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.3-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - DB_TESTING=1
     - perl: '5.16'
@@ -76,6 +79,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.2-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - DB_TESTING=1
     - perl: '5.14'
@@ -84,6 +89,8 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.2-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
       env:
         - DB_TESTING=1
 
@@ -98,11 +105,9 @@ cache:
 
 before_install:
   # list all the running services before we start. Perhaps we can stop some of them to save resources.
-  - sudo service --status-all
+  - service --status-all
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  - source /opt/jdk_switcher/jdk_switcher.sh
-  - jdk_switcher use oraclejdk8
   - phantomjs --version
   - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
   - phantomjs --version
@@ -113,6 +118,7 @@ before_install:
       wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
       tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
       hash -r ;
+      export QT_QPA_PLATFORM=phantom
       phantomjs --version ;
     fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
@@ -127,7 +133,7 @@ before_install:
   - npm install uglify-js@">=2.0 <3.0"
 
 install:
-  - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
+  - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-images --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 
 before_script:
@@ -143,7 +149,6 @@ before_script:
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
   - #PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
-  - #sleep 5  # give starman a chance to start # we now have better handling for this in Is_LSMB_running.sh
   - utils/test/Is_LSMB_running.sh --early # fail early if starman is not running (can be skipped based on reponame or owner by setting an array in the script)
   - nginx -c /tmp/nginx.conf
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
@@ -157,7 +162,7 @@ script:
      LSMB_BASE_URL="http://127.0.0.1:5000"
      PSGI_BASE_URL="http://127.0.0.1:5001"
      HARNESS_RULESFILE="t/testrules.yml"
-    prove -j9 -r
+    prove --jobs $(test-jobs) --recurse
           --pgtap-option dbname=lsmbinstalltest
           --pgtap-option username=postgres
           --feature-option tags=~@wip
@@ -183,11 +188,11 @@ after_success:
 after_failure:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
   - echo ===============================
   - echo === dmesg                   ===
   - echo ===============================
-  - sudo dmesg
+  - cat /var/log/dmesg
+  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
   - echo ===============================
   - echo === /tmp/plackup-access.log ===
   - echo ===============================

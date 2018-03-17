@@ -7,6 +7,7 @@ use Carp;
 use Module::Runtime qw(use_module);
 
 use Moose;
+use namespace::autoclean;
 extends 'Weasel::Element';
 
 use Weasel::FindExpanders qw/ register_find_expander /;
@@ -56,8 +57,7 @@ sub wait_for_page {
                 # if there's a reference element,
                 # wait for it to go stale (raise an exception)
                 eval {
-                    $ref->tag_name;
-                    1;
+                    defined $ref->tag_name;
                 };
                 $ref = undef if !defined $@;
                 return 0;

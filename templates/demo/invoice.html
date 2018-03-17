@@ -152,7 +152,7 @@
         <tr valign=top>
           <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
           <td><?lsmb number.${loop_count} ?></td>
-          <td><?lsmb item_description.${loop_count} ?></td>
+          <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
           <td><?lsmb deliverydate.${loop_count} ?></td>
           <td align=right><?lsmb qty.${loop_count} ?></td>
           <td><?lsmb unit.${loop_count} ?></td>
@@ -176,7 +176,7 @@
         <?lsmb FOREACH tax ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr>
-          <th colspan=7 align=right><?lsmb taxdescription.${loop_count} ?> on <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
+          <th colspan=7 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> on <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
           <td colspan=2 align=right><?lsmb tax.${loop_count} ?></td>
         </tr>
         <?lsmb END ?>
@@ -304,7 +304,7 @@
   <tr>
     <td>&nbsp;</td>
 
-    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count} ?> <?lsmb text('Registration [_1]', taxnumber.${loop_count}) ?></th>
+    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> <?lsmb text('Registration [_1]', taxnumber.${loop_count}) ?></th>
   </tr>
   <?lsmb END ?>
 

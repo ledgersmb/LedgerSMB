@@ -563,6 +563,26 @@ in_date_to and in_date_from give a range of reports.  All other inputs are
 exact matches.
 $$;
 
+CREATE OR REPLACE FUNCTION reconciliation__previous_report_date
+(in_chart_id int, in_end_date DATE)
+returns setof cr_report AS
+$$
+                SELECT r.* FROM cr_report r
+                  JOIN account c ON r.chart_id = c.id
+                 WHERE in_end_date > end_date
+                   AND in_chart_id = chart_id
+                   AND submitted
+                   AND NOT r.deleted
+                 ORDER BY end_date DESC
+                 LIMIT 1
+$$ language sql;
+
+COMMENT ON FUNCTION reconciliation__previous_report_date
+(in_chart_id int, in_end_date DATE) IS
+$$ Returns the submitted reconciliation report before in_end_date
+for the in_chart_id account
+$$;
+
 DROP TYPE IF EXISTS recon_accounts CASCADE;
 
 create type recon_accounts as (
