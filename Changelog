@@ -55,6 +55,15 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.19
+* Fix payment screen localized amount formatting problem (Erik H, #3283)
+* Separate error and output 'psql' logs during database upgrade (Nick P)
+* Fix random order of PNL and B/S reports columns (Erik H, #2244)
+
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+
+
 Changelog for 1.5.18
 * Fix menu-resizing minimum threshold overlapping main content (Erik H, #3421)
 * Persist selected menu-width across sessions/page reloads (Erik H)
