@@ -1,11 +1,11 @@
 account,description,is_heading,heading_account<?lsmb
- FOREACH col IN report.cheads.ids.keys -?>
+ FOREACH col IN report.sorted_col_ids -?>
 ,"<?lsmb report.cheads.ids.$col.props.description ?>"<?lsmb END; ?>
 <?lsmb FOREACH row IN report.sorted_row_ids ; -?>
 <?lsmb report.rheads.ids.$row.props.account_number -?>,"<?lsmb report.rheads.ids.$row.props.account_description ?>",<?lsmb IF report.rheads.ids.$row.props.account_type == 'H' -?>Y<?lsmb ELSE ?>N<?lsmb END ?>,<?lsmb
 PARENT = report.rheads.ids.$row.parent_id ;
 report.rheads.ids.$PARENT.props.account_number ?><?lsmb
- FOREACH col IN report.cheads.ids.keys ; -?>
+ FOREACH col IN report.sorted_col_ids ; -?>
 ,<?lsmb report.cells.$row.$col -?><?lsmb
 END; ?>
 <?lsmb END; -?>
