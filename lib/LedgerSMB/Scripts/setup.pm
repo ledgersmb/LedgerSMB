@@ -401,7 +401,8 @@ sub run_backup {
         $template->render($request);
     } elsif ($request->{backup_type} eq 'browser'){
         binmode(STDOUT, ':bytes');
-        open BAK, '<', $backupfile;
+        open BAK, '<', $backupfile
+            or die "failed to open backup file $backupfile $!";
         my $cgi = CGI::Simple->new();
         print $cgi->header(
           -type       => $mimetype,
