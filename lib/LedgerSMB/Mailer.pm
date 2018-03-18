@@ -140,15 +140,12 @@ sub prepare_message {
 }
 
 =head2 $mail->attach(data => $data, file => $file,
-                     filename => $name, strip => $strip)
+                     filename => $name)
 
 Add an attachment to the prepared message.  If $data is specified, use the
 value of that variable as the attachment value, otherwise attach the file
 given by $file.  If both a file and data are given, the data is attached.
 filename must be given and is used to name the attachment.
-
-$strip is an optional string to remove from the filename send with the
-attachment.
 
 =cut
 
@@ -171,10 +168,9 @@ sub attach {
     # strip path from output name
     my $filename;
     if ($args{filename}) {
-        my $strip = quotemeta $args{strip};
         $filename = $args{filename};
-        $filename =~ s/(.*\/|$strip)//g;
-        }
+        $filename =~ s/(.*\/)//g;
+    }
 
     # handle both string and file types of input
     my @data;
