@@ -116,7 +116,36 @@ HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
 lives_and(sub { is scalar &load_checks($fh), 2 },
-          'Loading a two checks from file-handle');
+          'Loading two checks from file-handle');
+
+
+
+$tests = <<HEREDOC;
+package PreCheckTests;
+
+use LedgerSMB::Database::ChangeChecks;
+
+check 'title',
+    description => q|a description|,
+    query => q|a query|,
+    on_submit => sub { return 1; },
+    on_failure => sub { return 1; };
+
+
+check 'title',
+    description => q|a description|,
+    query => q|a query|,
+    on_submit => sub { return 1; },
+    on_failure => sub { return 1; };
+
+
+1;
+HEREDOC
+
+$fh = IO::Scalar->new(\$tests);
+throws_ok(sub { &load_checks($fh) },
+          qr/^Multiple checks with the same name not supported/,
+          'Loading two equally named checks from file-handle');
 
 
 ###TODO: Do we need to validate that the checks have unique names?!
