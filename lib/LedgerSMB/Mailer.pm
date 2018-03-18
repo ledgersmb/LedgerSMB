@@ -111,28 +111,6 @@ sub prepare_message {
     }
     die 'No email from address' unless $self->{from};
 
-
-    my $domain = $self->{from};
-    $domain =~ s/(.*?\@|>)//g;
-
-    # Make sure we generate a message id which has sufficient chance
-    # of being unique. Note that the purpose of MD5 here isn't to be
-    # cryptographically secure; it's a hash which provides sufficient
-    # distribution across the number space.
-    my $msg_random = md5_hex(
-        'From' => $self->{from},
-        'To' => $self->{to},
-        'Cc' => $self->{cc},
-        'Bcc' => $self->{bcc},
-        'Subject' => $self->{subject},
-        # To get better distribution, also take non-message related
-        # components into account: time, pid and a random number
-        'Date/Time' => time,
-        'Process-id' => $$,
-        'Random-component' => rand(),
-        );
-    my $msg_id = "<LSMB-$msg_random\@$domain>";
-
     $self->{contenttype} = 'text/plain' unless $self->{contenttype};
 
     for (qw(from to cc bcc subject)) {
@@ -150,7 +128,7 @@ sub prepare_message {
         'Type' => 'TEXT',
         'Data' => Encode::encode_utf8($self->{message}),
         'Encoding' => '8bit',
-        'Message-ID' => $msg_id,
+        'Message-ID' => $self->generate_message_id,
     );
     $self->{_message}->attr( 'Content-Type' => $self->{contenttype} );
     $self->{_message}->attr( 'Content-Type.charset' => 'UTF-8' ) if
@@ -162,15 +140,12 @@ sub prepare_message {
 }
 
 =head2 $mail->attach(data => $data, file => $file,
-                     filename => $name, strip => $strip)
+                     filename => $name)
 
 Add an attachment to the prepared message.  If $data is specified, use the
 value of that variable as the attachment value, otherwise attach the file
 given by $file.  If both a file and data are given, the data is attached.
 filename must be given and is used to name the attachment.
-
-$strip is an optional string to remove from the filename send with the
-attachment.
 
 =cut
 
@@ -193,10 +168,9 @@ sub attach {
     # strip path from output name
     my $filename;
     if ($args{filename}) {
-        my $strip = quotemeta $args{strip};
         $filename = $args{filename};
-        $filename =~ s/(.*\/|$strip)//g;
-        }
+        $filename =~ s/(.*\/)//g;
+    }
 
     # handle both string and file types of input
     my @data;
@@ -248,5 +222,39 @@ sub send {
     return;
 }
 
-1;
 
+=head2 $mail->generate_message_id
+
+Generate and return a statistically unique rfc 2393 MIME Message-ID, based
+on various message fields, time, process_id and a random component.
+
+=cut
+
+sub generate_message_id {
+
+    my $self = shift;
+    my $domain = $self->{from};
+    $domain =~ s/(.*?\@|>)//g;
+
+    # Make sure we generate a message id which has sufficient chance
+    # of being unique. Note that the purpose of MD5 here isn't to be
+    # cryptographically secure; it's a hash which provides sufficient
+    # distribution across the number space.
+    my $msg_random = md5_hex(
+        'From' => $self->{from},
+        'To' => $self->{to} // '',
+        'Cc' => $self->{cc} // '',
+        'Bcc' => $self->{bcc} // '',
+        'Subject' => $self->{subject} // '',
+        # To get better distribution, also take non-message related
+        # components into account: time, pid and a random number
+        'Date/Time' => time,
+        'Process-id' => $$,
+        'Random-component' => rand(),
+        );
+    my $msg_id = "<LSMB-$msg_random\@$domain>";
+
+    return $msg_id;
+}
+
+1;
