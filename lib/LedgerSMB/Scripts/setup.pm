@@ -364,17 +364,7 @@ sub run_backup {
     my $mimetype;
 
     if ($request->{backup} eq 'roles'){
-       my @t = localtime(time);
-       $t[4]++;
-       $t[5] += 1900;
-       $t[3] = substr( "0$t[3]", -2 );
-       $t[4] = substr( "0$t[4]", -2 );
-       my $date = "$t[5]-$t[4]-$t[3]";
-
-       $backupfile = $database->backup_globals(
-                      tempdir => $LedgerSMB::Sysconfig::backupdir,
-                         file => "roles_${date}.sql"
-       );
+       $backupfile = $database->backup_globals;
        $mimetype   = 'text/x-sql';
     } elsif ($request->{backup} eq 'db'){
        $backupfile = $database->backup;
@@ -411,9 +401,9 @@ sub run_backup {
         $template->render($request);
     } elsif ($request->{backup_type} eq 'browser'){
         binmode(STDOUT, ':bytes');
-        open BAK, '<', $backupfile;
+        open BAK, '<', $backupfile
+            or die "failed to open backup file $backupfile $!";
         my $cgi = CGI::Simple->new();
-        $backupfile =~ s/$LedgerSMB::Sysconfig::backuppath(\/)?//;
         print $cgi->header(
           -type       => $mimetype,
           -status     => '200',
