@@ -403,7 +403,6 @@ sub run_backup {
         binmode(STDOUT, ':bytes');
         open BAK, '<', $backupfile;
         my $cgi = CGI::Simple->new();
-        $backupfile =~ s/$LedgerSMB::Sysconfig::backuppath(\/)?//;
         print $cgi->header(
           -type       => $mimetype,
           -status     => '200',
