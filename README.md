@@ -38,33 +38,18 @@ is all that's required on the client (except IE8 and 9); it includes Chrome as
 of version 13, FireFox as of 3.6 and MS Internet Explorer as of version 10 and
 a wide range of mobile browsers.
 
-# Quick start
+# Quick start (Docker compose)
 
-The quickest way to get set up is to use the Docker containers the project
-makes available through Docker Hub.
+The quickest way to get the Docker image up and running is by using the
+docker-compose file available through the GitHub repository at:
 
-After setting up Docker on the, run these commands to produce a testing
-setup:
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.5/docker-compose.yml
 
-```sh
- $ docker pull ledgersmb/ledgersmb
- $ docker pull postgres
- $ mkdir -p /var/lib/pg-container/data
- $ docker run -d --name lsmb-postgres \
-      -v /var/lib/pg-container/data:/var/lib/postgresql/data \
-      -e POSTGRES_PASSWORD=<your secure password> \
-      -e PGDATA=/var/lib/postgresql/data/pgdata  postgres
- $ docker run -d --name lsmb --link lsmb-postgres:postgres ledgersmb/ledgersmb
-```
-
-The commands above automatically start the containers.
-
-More environment variables are available to be able to
-
- * run the PostgreSQL database on a different server than the one
-   running the LedgerSMB container
- * set up outgoing e-mail to send invoices, reports and other outputs
-   from the container
+which sets up both the LedgerSMB image and a supporting database image for
+production purposes (i.e. with persistent (database) data, with the
+exception of one thing: setting up an Nginx or Apache reverse proxy
+with TLS 1.2 support -- a requirement if you want to access your
+installation over any type of network.
 
 See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgersmb/).
 
