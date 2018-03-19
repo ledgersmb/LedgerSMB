@@ -165,13 +165,6 @@ sub attach {
         carp 'No attachement supplied' unless defined $args{data};
     }
 
-    # strip path from output name
-    my $filename;
-    if ($args{filename}) {
-        $filename = $args{filename};
-        $filename =~ s/(.*\/)//g;
-    }
-
     # handle both string and file types of input
     my @data;
     if (defined $args{data}) {
@@ -182,7 +175,7 @@ sub attach {
 
     return $self->{_message}->attach(
         'Type' => $args{mimetype},
-        'Filename' => $filename,
+        'Filename' => $args{filename},
         'Disposition' => 'attachment',
         @data,
         );
