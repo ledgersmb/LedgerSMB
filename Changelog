@@ -59,6 +59,7 @@ Changelog for 1.5.19
 * Fix payment screen localized amount formatting problem (Erik H, #3283)
 * Separate error and output 'psql' logs during database upgrade (Nick P)
 * Fix random order of PNL and B/S reports columns (Erik H, #2244)
+* Various fixes to setup.pl regarding backup file generation (Erik H)
 
 Erik H is Erik Huelsmann
 Nick P is Nick Prater
