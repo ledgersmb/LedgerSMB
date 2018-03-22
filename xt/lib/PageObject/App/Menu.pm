@@ -108,6 +108,7 @@ sub click_menu {
         ok(use_module($tgt_class),
            "$tgt_class can be 'use'-d dynamically");
 
+        #Wait for a loaded and displayed top_menu
         my $root = $self->find("//*[\@id='top_menu']"); # and \@role='presentation'
         ok($root, "Menu tree loaded");
 
@@ -126,7 +127,9 @@ sub click_menu {
             ok($label,"Found label $label");
             my $submenu = $item->find("//*[\@id='$label']");
             ok($submenu,"Submenu found " . $submenu->get_text);
-            $submenu->click;
+            my $expanded = $submenu->get_attribute('aria-expanded') // 'false';
+            $submenu->click
+                if $expanded ne 'true';
 
         } for @$paths;
     };
