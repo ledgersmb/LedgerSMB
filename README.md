@@ -81,10 +81,10 @@ To get the latest development version:
  $ git submodule update --init --recursive
 ```
 
-To get the released version 1.5.5, the commands look like:
+To get the released version 1.5.18, the commands look like:
 
 ```
- $ git clone -b 1.5.5 https://github.com/ledgersmb/LedgerSMB.git
+ $ git clone -b 1.5.18 https://github.com/ledgersmb/LedgerSMB.git
  $ cd LedgerSMB
  $ git submodule update --init --recursive
 ```
