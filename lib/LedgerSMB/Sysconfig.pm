@@ -11,6 +11,7 @@ use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
 use English qw(-no_match_vars);
+use File::Path qw(make_path);
 
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
@@ -434,13 +435,10 @@ our $log4perl_config = qq(
 
 
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
-     my $rc;
-     if ($Config{path_sep} eq ';'){ # We need an actual platform configuration variable
-         $rc = system("mkdir " . LedgerSMB::Sysconfig::tempdir());
-     } else {
-         $rc=system("mkdir -p " . LedgerSMB::Sysconfig::tempdir());
-     #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
-     }
+    make_path(
+        LedgerSMB::Sysconfig::tempdir(),
+        {mode => oct('0700')},
+    ) or die 'failed to create temporary directory ' . LedgerSMB::Sysconfig::tempdir() . " $!";
 }
 
 sub check_permissions {
