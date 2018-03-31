@@ -435,10 +435,8 @@ our $log4perl_config = qq(
 
 
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
-    make_path(
-        LedgerSMB::Sysconfig::tempdir(),
-        {mode => oct('0700')},
-    ) or die 'failed to create temporary directory ' . LedgerSMB::Sysconfig::tempdir() . " $!";
+    make_path(LedgerSMB::Sysconfig::tempdir())
+        or die 'failed to create temporary directory ' . LedgerSMB::Sysconfig::tempdir() . " $!";
 }
 
 sub check_permissions {
