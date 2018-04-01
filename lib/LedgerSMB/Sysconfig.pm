@@ -614,9 +614,6 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
 
 sub check_permissions {
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
-    # commit 6978b88 added this line to resolve issues if HOME isn't set
-    $ENV{HOME} = $tempdir;    ## no critic   # sniff
-
 
     if(!(-d "$tempdir")){
         die_pretty( "$tempdir wasn't created.",
