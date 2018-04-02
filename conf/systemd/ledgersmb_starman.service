@@ -23,7 +23,7 @@ ExecStart=/usr/bin/starman                     \
     --listen localhost:5762                    \
     -I lib                                     \
     -I old/lib                                 \
-    tools/starman.psgi
+    bin/ledgersmb-server.psgi
 Restart=always
 
 [Install]
