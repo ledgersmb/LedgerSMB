@@ -59,10 +59,18 @@ Changelog for 1.5.19
 * Fix payment screen localized amount formatting problem (Erik H, #3283)
 * Separate error and output 'psql' logs during database upgrade (Nick P)
 * Fix random order of PNL and B/S reports columns (Erik H, #2244)
-* Various fixes to setup.pl regarding backup file generation (Erik H)
+* Various fixes to setup.pl regarding backup file generation (Nick P)
+* Use File::Path to create directory instead of through shell call-out (Nick P)
+* On TAB-exit of accounts/parts selector, select first item (Erik H)
+* Estonian translation update (Margus L)
+* German translation update (Mikael A)
+* Hungarian translation update (Istvan P)
 
 Erik H is Erik Huelsmann
 Nick P is Nick Prater
+Istvan P is is Istvan Pongracz
+Margus L is Margus Lepmets
+Mikael A is Mikael Arhelger
 
 
 Changelog for 1.5.18
@@ -78,7 +86,7 @@ Changelog for 1.5.18
 
 Erik H is Erik Huelsmann
 Margus L is Margus Lepmets
-Mikael H is Mikael Arhelger
+Mikael A is Mikael Arhelger
 
 
 Changelog for 1.5.17
@@ -93,7 +101,7 @@ Changelog for 1.5.17
 
 Erik H is Erik Huelsmann
 Margus L is Margus Lepmets
-Mikael H is Mikael Arhelger
+Mikael A is Mikael Arhelger
 
 
 Changelog for 1.5.16
