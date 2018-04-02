@@ -1,5 +1,5 @@
 define([
-    "dijit/form/FilteringSelect",
+    "lsmb/FilteringSelect",
     "dojo/_base/declare",
     "dojo/aspect",
     "dojo/topic",
