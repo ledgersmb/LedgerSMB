@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.19-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-03-11 10:35+0000\n"
+"POT-Creation-Date: 2018-04-02 18:55+0000\n"
 "Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2016\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -186,7 +186,7 @@ msgstr "Akkumulert Sum"
 
 #: lib/LedgerSMB.pm:596 lib/LedgerSMB.pm:597
 #: lib/LedgerSMB/Scripts/configuration.pm:332
-#: lib/LedgerSMB/Scripts/setup.pm:872
+#: lib/LedgerSMB/Scripts/setup.pm:862
 msgid "Access Denied"
 msgstr "Nektet Adgang"
 
@@ -205,7 +205,7 @@ msgstr "Nektet Adgang"
 #: UI/Contact/contact.html:20 UI/Contact/divs/credit.html:187
 #: UI/Contact/divs/credit.html:188 UI/journal/journal_entry.html:113
 #: UI/orders/order.html:253 UI/payments/payment2.html:86
-#: UI/payments/payment2.html:246 UI/payments/payment2.html:311
+#: UI/payments/payment2.html:245 UI/payments/payment2.html:310
 #: UI/payments/payments_detail.html:213 UI/payments/payments_filter.html:95
 #: UI/payroll/deduction.html:50 UI/payroll/income.html:52
 #: UI/rc-reconciliation.html:12 UI/reconciliation/upload.html:25
@@ -247,7 +247,7 @@ msgstr "Kontonr."
 #: lib/LedgerSMB/Report/Taxform/Details.pm:111
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:79
 #: lib/LedgerSMB/Report/Trial_Balance.pm:175
-#: lib/LedgerSMB/Scripts/payment.pm:152 t/data/04-complex_template.html:558
+#: lib/LedgerSMB/Scripts/payment.pm:153 t/data/04-complex_template.html:558
 #: UI/accounts/edit.html:32 UI/accounts/edit.html:102
 #: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
 #: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
@@ -265,7 +265,7 @@ msgstr "Kontonummer siste"
 msgid "Account Number Start"
 msgstr "Kontonummer første"
 
-#: lib/LedgerSMB/Scripts/payment.pm:153
+#: lib/LedgerSMB/Scripts/payment.pm:154
 msgid "Account Title"
 msgstr "Kontotype"
 
@@ -766,7 +766,7 @@ msgstr "Tillat Innlegg"
 #: templates/xedemo/sales_order.html:135 templates/xedemo/sales_order.tex:122
 #: templates/xedemo/sales_quotation.html:104
 #: templates/xedemo/sales_quotation.tex:91 UI/orders/order.html:249
-#: UI/payments/payment2.html:315 UI/Reports/filters/gl.html:103
+#: UI/payments/payment2.html:314 UI/Reports/filters/gl.html:103
 #: UI/Reports/filters/gl.html:109
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:308
@@ -779,7 +779,7 @@ msgid "Amount Budgetted"
 msgstr "Beløp Budsjettert"
 
 #: bin/aa.pl:1658 lib/LedgerSMB/Report/Invoices/Outstanding.pm:238
-#: lib/LedgerSMB/Scripts/payment.pm:797 lib/LedgerSMB/Scripts/payment.pm:803
+#: lib/LedgerSMB/Scripts/payment.pm:798 lib/LedgerSMB/Scripts/payment.pm:804
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -831,15 +831,15 @@ msgstr "Årlig rett linje månedlig"
 msgid "Any"
 msgstr "Noen"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1191
+#: lib/LedgerSMB/Scripts/payment.pm:1196
 msgid "Applied discount"
 msgstr "Lagt til rabatt"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1746 lib/LedgerSMB/Scripts/payment.pm:1824
+#: lib/LedgerSMB/Scripts/payment.pm:1751 lib/LedgerSMB/Scripts/payment.pm:1829
 msgid "Applied discount by an overpayment"
 msgstr "Lagt til rabatt på grunn av overbetaling"
 
-#: lib/LedgerSMB/Scripts/payment.pm:795
+#: lib/LedgerSMB/Scripts/payment.pm:796
 msgid "Apply Disc"
 msgstr "Legg til disk"
 
@@ -1560,7 +1560,7 @@ msgstr "Kort ID"
 msgid "Cash"
 msgstr "Kontant"
 
-#: UI/payments/payment2.html:312 UI/Reports/filters/payments.html:65
+#: UI/payments/payment2.html:311 UI/Reports/filters/payments.html:65
 msgid "Cash Account"
 msgstr "Kontantkonto"
 
@@ -1865,8 +1865,8 @@ msgstr "Innhold"
 #: bin/aa.pl:1761 bin/arap.pl:269 bin/arapprn.pl:400 bin/ic.pl:956
 #: bin/ic.pl:1767 bin/ic.pl:2049 bin/ic.pl:2198 bin/io.pl:618 bin/io.pl:1088
 #: bin/oe.pl:1548 bin/oe.pl:2079 bin/oe.pl:2590 bin/pe.pl:330 bin/pe.pl:749
-#: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:626
-#: lib/LedgerSMB/Scripts/payment.pm:693 lib/LedgerSMB/Scripts/payment.pm:1357
+#: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:627
+#: lib/LedgerSMB/Scripts/payment.pm:694 lib/LedgerSMB/Scripts/payment.pm:1362
 #: UI/am-audit-control.html:49 UI/asset/begin_approval.html:67
 #: UI/asset/begin_depreciation_all.html:26 UI/asset/begin_report.html:61
 #: UI/Contact/divs/credit.html:401 UI/create_batch.html:52
@@ -2079,7 +2079,7 @@ msgstr "Kreditnota"
 
 #: lib/LedgerSMB/Report/COA.pm:112 lib/LedgerSMB/Report/GL.pm:116
 #: lib/LedgerSMB/Report/Trial_Balance.pm:205
-#: lib/LedgerSMB/Scripts/payment.pm:158 UI/Reports/co/filter_cd.html:91
+#: lib/LedgerSMB/Scripts/payment.pm:159 UI/Reports/co/filter_cd.html:91
 msgid "Credits"
 msgstr "Kredit"
 
@@ -2213,7 +2213,7 @@ msgstr "Fødseldato"
 msgid "DOB:"
 msgstr "Fødseldato:"
 
-#: bin/aa.pl:1307 lib/LedgerSMB/Scripts/payment.pm:333
+#: bin/aa.pl:1307 lib/LedgerSMB/Scripts/payment.pm:334
 msgid "Data not saved.  Please try again."
 msgstr "Data ikke lagret. Prøv igjen."
 
@@ -2257,7 +2257,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr "Databasen eksisterer ikke"
 
-#: lib/LedgerSMB/Scripts/setup.pm:834
+#: lib/LedgerSMB/Scripts/setup.pm:824
 msgid "Database exists."
 msgstr "Databasen eksisterer."
 
@@ -2284,8 +2284,8 @@ msgstr "Datasett"
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:103
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
-#: lib/LedgerSMB/Scripts/asset.pm:538 lib/LedgerSMB/Scripts/payment.pm:154
-#: lib/LedgerSMB/Scripts/payment.pm:791 templates/demo/ap_transaction.html:73
+#: lib/LedgerSMB/Scripts/asset.pm:538 lib/LedgerSMB/Scripts/payment.pm:155
+#: lib/LedgerSMB/Scripts/payment.pm:792 templates/demo/ap_transaction.html:73
 #: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
 #: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
 #: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
@@ -2452,7 +2452,7 @@ msgstr "Regning"
 
 #: lib/LedgerSMB/Report/COA.pm:105 lib/LedgerSMB/Report/GL.pm:110
 #: lib/LedgerSMB/Report/Trial_Balance.pm:199
-#: lib/LedgerSMB/Scripts/payment.pm:157 UI/Reports/co/filter_cd.html:83
+#: lib/LedgerSMB/Scripts/payment.pm:158 UI/Reports/co/filter_cd.html:83
 msgid "Debits"
 msgstr "Tilgodehavende"
 
@@ -2817,7 +2817,7 @@ msgstr "Rab"
 msgid "Disc %"
 msgstr "Rab %"
 
-#: bin/ic.pl:1127 lib/LedgerSMB/Scripts/payment.pm:794
+#: bin/ic.pl:1127 lib/LedgerSMB/Scripts/payment.pm:795
 #: UI/accounts/edit.html:300 UI/accounts/edit.html:340
 #: UI/am-business-form.html:16 UI/Contact/divs/credit.html:167
 #: UI/Contact/divs/credit.html:168 UI/payments/payments_detail.html:328
@@ -2874,7 +2874,7 @@ msgstr "Dokument"
 msgid "Document Type"
 msgstr "Dokumenttype"
 
-#: lib/LedgerSMB/Scripts/setup.pm:430
+#: lib/LedgerSMB/Scripts/setup.pm:420
 msgid "Don't know what to do with backup"
 msgstr "Vet ikke hva jeg skal gjøre med backup"
 
@@ -3350,7 +3350,7 @@ msgstr "Egenkapital (midlertidig)"
 msgid "Equity to Liabilities"
 msgstr "Egenkapital til Gjeld"
 
-#: lib/LedgerSMB/Scripts/setup.pm:387
+#: lib/LedgerSMB/Scripts/setup.pm:377
 msgid "Error creating backup file"
 msgstr "Feil ved kreering av backup fil"
 
@@ -3362,7 +3362,7 @@ msgstr "Feil ved kreering av Gruppe fil. Prøv igjen."
 msgid "Error from Function:"
 msgstr "Feil fra Funksjon "
 
-#: lib/LedgerSMB/Scripts/setup.pm:474
+#: lib/LedgerSMB/Scripts/setup.pm:464
 msgid "Error while opening directory: [_1]"
 msgstr "Feil ved åpning av Mappe: [_1]"
 
@@ -3388,7 +3388,7 @@ msgstr "Val"
 
 #: bin/aa.pl:434 bin/ir.pl:351 bin/is.pl:331 bin/oe.pl:341 bin/oe.pl:349
 #: bin/oe.pl:1534 lib/LedgerSMB/Report/Contact/History.pm:116
-#: lib/LedgerSMB/Scripts/payment.pm:802 UI/orders/order.html:54
+#: lib/LedgerSMB/Scripts/payment.pm:803 UI/orders/order.html:54
 #: UI/payments/payment2.html:141 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
 #: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
@@ -3399,7 +3399,7 @@ msgstr "Vekslingskurs"
 msgid "Exchange rate for payment missing!"
 msgstr "Vekslingskurs for betaling mangler!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1113
+#: lib/LedgerSMB/Scripts/payment.pm:1118
 msgid "Exchange rate hasn't been defined!"
 msgstr "Vekslingskurs er ikke definert!"
 
@@ -3738,8 +3738,8 @@ msgstr "Fra Dato"
 msgid "Full"
 msgstr "Full"
 
-#: lib/LedgerSMB/Scripts/setup.pm:994 lib/LedgerSMB/Scripts/setup.pm:1052
-#: lib/LedgerSMB/Scripts/setup.pm:1257
+#: lib/LedgerSMB/Scripts/setup.pm:984 lib/LedgerSMB/Scripts/setup.pm:1042
+#: lib/LedgerSMB/Scripts/setup.pm:1247
 msgid "Full Permissions"
 msgstr "Fulle Rettigheter"
 
@@ -4146,7 +4146,7 @@ msgstr "Interne notater"
 msgid "Invalid Reporting Basis"
 msgstr "Invalid Rapport Grunnlag"
 
-#: lib/LedgerSMB/Scripts/setup.pm:384
+#: lib/LedgerSMB/Scripts/setup.pm:374
 msgid "Invalid backup request"
 msgstr "Invalid backup forespørsel"
 
@@ -4225,7 +4225,7 @@ msgstr "Varebeholdning overført"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:278
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
-#: lib/LedgerSMB/Scripts/payment.pm:790 templates/demo/invoice.html:4
+#: lib/LedgerSMB/Scripts/payment.pm:791 templates/demo/invoice.html:4
 #: templates/demo/invoice.tex:116 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:4
 #: templates/demo_with_images/invoice.html:18
@@ -4391,7 +4391,7 @@ msgstr "Fakturaer"
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
 #: templates/xedemo/sales_quotation.html:97
 #: templates/xedemo/work_order.html:128 templates/xedemo/work_order.tex:124
-#: UI/io-email.html:96 UI/payments/payment2.html:310
+#: UI/io-email.html:96 UI/payments/payment2.html:309
 msgid "Item"
 msgstr "Artikkel"
 
@@ -4729,7 +4729,7 @@ msgstr "Logg inn. Vent litt"
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:836
+#: lib/LedgerSMB/Scripts/setup.pm:826
 msgid "Login?"
 msgstr "Logg inn?"
 
@@ -4791,8 +4791,8 @@ msgstr ""
 "Forsikre deg om at alle navn kun består av alfanumeriske tegn (og "
 "understreker) og er minst ett tegn langt"
 
-#: lib/LedgerSMB/Scripts/setup.pm:993 lib/LedgerSMB/Scripts/setup.pm:1051
-#: lib/LedgerSMB/Scripts/setup.pm:1256
+#: lib/LedgerSMB/Scripts/setup.pm:983 lib/LedgerSMB/Scripts/setup.pm:1041
+#: lib/LedgerSMB/Scripts/setup.pm:1246
 msgid "Manage Users"
 msgstr "Behandle Brukere"
 
@@ -4845,11 +4845,11 @@ msgid "May "
 msgstr "mai "
 
 #: bin/aa.pl:816 bin/ir.pl:674 bin/ir.pl:844 bin/is.pl:761 bin/is.pl:924
-#: lib/LedgerSMB/Report/GL.pm:127 lib/LedgerSMB/Scripts/payment.pm:156
-#: lib/LedgerSMB/Scripts/payment.pm:796 templates/demo/ap_transaction.html:195
+#: lib/LedgerSMB/Report/GL.pm:127 lib/LedgerSMB/Scripts/payment.pm:157
+#: lib/LedgerSMB/Scripts/payment.pm:797 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:118
-#: UI/orders/order.html:248 UI/payments/payment2.html:314
+#: UI/orders/order.html:248 UI/payments/payment2.html:313
 #: UI/Reports/filters/gl.html:75 UI/Reports/filters/gl.html:249
 msgid "Memo"
 msgstr "Notat"
@@ -5107,7 +5107,7 @@ msgstr "Ingen NULL Ansattnummer"
 msgid "No Old Password"
 msgstr "Ikke noe gammelt passord"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1258
+#: lib/LedgerSMB/Scripts/setup.pm:1248
 msgid "No changes"
 msgstr "Ingen forandringer"
 
@@ -5131,7 +5131,7 @@ msgstr "Ingen språk valgt"
 msgid "No open Projects!"
 msgstr "Ignen åpne prosjekter!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1229
+#: lib/LedgerSMB/Scripts/payment.pm:1234
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Ingen for mye betalt konto valgt. Finnes det noen?"
 
@@ -5342,7 +5342,7 @@ msgstr "ODS"
 msgid "OH"
 msgstr "OH"
 
-#: UI/payments/payment2.html:307
+#: UI/payments/payment2.html:306
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr "OVERBETALT / FORHÅNDSBETALT / BETALT"
 
@@ -5642,7 +5642,7 @@ msgstr "PO nummer"
 msgid "POST"
 msgstr "Post"
 
-#: UI/payments/payment2.html:485 UI/payments/use_overpayment2.html:358
+#: UI/payments/payment2.html:482 UI/payments/use_overpayment2.html:358
 msgid "POST AND PRINT"
 msgstr "Post og Skriv"
 
@@ -5671,7 +5671,7 @@ msgstr "Nummer for følgeseddel mangler!"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:233
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:302
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:140
-#: lib/LedgerSMB/Scripts/payment.pm:793 templates/demo/invoice.html:190
+#: lib/LedgerSMB/Scripts/payment.pm:794 templates/demo/invoice.html:190
 #: templates/demo/invoice.tex:175 templates/demo_with_images/invoice.html:193
 #: templates/demo_with_images/invoice.tex:174 templates/xedemo/invoice.html:192
 #: templates/xedemo/invoice.tex:169 UI/payments/payments_detail.html:327
@@ -5764,7 +5764,7 @@ msgstr "Passordet må stemme"
 msgid "Pay From"
 msgstr "Betal Fra"
 
-#: lib/LedgerSMB/Scripts/payment.pm:151 UI/Contact/divs/credit.html:97
+#: lib/LedgerSMB/Scripts/payment.pm:152 UI/Contact/divs/credit.html:97
 #: UI/Contact/divs/credit.html:98 UI/payments/payments_filter.html:141
 msgid "Pay To"
 msgstr "Betal Til"
@@ -5783,7 +5783,7 @@ msgstr "Betalbar"
 msgid "Payables"
 msgstr "Utbetalinger"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1025 t/data/04-complex_template.html:282
+#: lib/LedgerSMB/Scripts/payment.pm:1026 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:280 UI/accounts/edit.html:322
 #: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
 #: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2804
@@ -6045,7 +6045,7 @@ msgstr ""
 #: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:258 bin/gl.pl:298
 #: bin/ir.pl:541 bin/ir.pl:575 bin/ir.pl:944 bin/is.pl:585 bin/is.pl:623
 #: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
-#: UI/payments/payment2.html:479
+#: UI/payments/payment2.html:476
 msgid "Post"
 msgstr "Bokfør"
 
@@ -6553,7 +6553,7 @@ msgstr "Rebygg/Oppgrader?"
 msgid "Recd"
 msgstr "Mottatt"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1025 sql/Pg-database.sql:2803
+#: lib/LedgerSMB/Scripts/payment.pm:1026 sql/Pg-database.sql:2803
 #: sql/Pg-database.sql:2972
 msgid "Receipt"
 msgstr "Kvittering"
@@ -6587,7 +6587,7 @@ msgstr "Motta"
 msgid "Receive Merchandise"
 msgstr "Motta varer"
 
-#: lib/LedgerSMB/Scripts/payment.pm:847
+#: lib/LedgerSMB/Scripts/payment.pm:848
 msgid "Received"
 msgstr "Mottatt"
 
@@ -6912,9 +6912,8 @@ msgid "SKU"
 msgstr "SKU"
 
 #: bin/ir.pl:511 bin/oe.pl:403 bin/oe.pl:1814
-#, fuzzy
 msgid "SO Number"
-msgstr "PO nummer"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:129
 msgid "SQL-Ledger 3.0 database detected."
@@ -7049,7 +7048,7 @@ msgstr "Lagre"
 msgid "Save As New"
 msgstr "Lagre som Ny"
 
-#: lib/LedgerSMB/Scripts/payment.pm:221
+#: lib/LedgerSMB/Scripts/payment.pm:222
 msgid "Save Batch"
 msgstr "Lagre Batch"
 
@@ -7093,7 +7092,7 @@ msgstr "Lagre Planlagt"
 msgid "Save Template"
 msgstr "Lagre Maler"
 
-#: lib/LedgerSMB/Scripts/setup.pm:754
+#: lib/LedgerSMB/Scripts/setup.pm:744
 msgid "Save and Retry"
 msgstr "Lagre og Prøv igjen"
 
@@ -7127,7 +7126,7 @@ msgstr "Planlegge"
 msgid "Scheduled"
 msgstr "Planlagt"
 
-#: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:538
+#: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:539
 #: lib/LedgerSMB/Template.pm:310 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Skjerm"
@@ -7695,7 +7694,7 @@ msgstr "Sortert av"
 #: lib/LedgerSMB/Report/GL.pm:215
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:75
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:141
-#: lib/LedgerSMB/Scripts/payment.pm:155 lib/LedgerSMB/Scripts/recon.pm:219
+#: lib/LedgerSMB/Scripts/payment.pm:156 lib/LedgerSMB/Scripts/recon.pm:219
 #: templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:253
 #: templates/demo/printPayment.html:50
@@ -7707,8 +7706,8 @@ msgstr "Sortert av"
 #: templates/xedemo/ar_transaction.html:193 templates/xedemo/invoice.html:255
 #: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:29
 #: UI/journal/journal_entry.html:117 UI/orders/order.html:247
-#: UI/payments/payment2.html:109 UI/payments/payment2.html:259
-#: UI/payments/payment2.html:313 UI/payments/payments_detail.html:304
+#: UI/payments/payment2.html:109 UI/payments/payment2.html:258
+#: UI/payments/payment2.html:312 UI/payments/payments_detail.html:304
 #: UI/reconciliation/report.html:84 UI/reconciliation/report.html:159
 #: UI/reconciliation/report.html:210 UI/Reports/filters/gl.html:69
 #: UI/Reports/filters/gl.html:243 UI/Reports/filters/inventory_adj.html:11
@@ -7901,7 +7900,7 @@ msgstr "Avgitt"
 #: templates/xedemo/purchase_order.html:159
 #: templates/xedemo/sales_order.html:161
 #: templates/xedemo/sales_quotation.html:130 UI/orders/order.html:215
-#: UI/payments/payment2.html:301 UI/payments/payment2.html:458
+#: UI/payments/payment2.html:300 UI/payments/payment2.html:456
 #: UI/payments/use_overpayment2.html:140 UI/payments/use_overpayment2.html:326
 #: UI/Reports/filters/gl.html:296
 #: UI/Reports/filters/invoice_outstanding.html:281
@@ -8266,15 +8265,15 @@ msgstr "Takk for handelen!"
 msgid "The amount of"
 msgstr "Beløpet av"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1507 lib/LedgerSMB/Scripts/payment.pm:1513
+#: lib/LedgerSMB/Scripts/payment.pm:1512 lib/LedgerSMB/Scripts/payment.pm:1518
 msgid "The amount of the invoice number"
 msgstr "Beløpet av dette Faktura nummer"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1761
+#: lib/LedgerSMB/Scripts/payment.pm:1766
 msgid "The amount to be pay from the accno"
 msgstr "Beløpet betales fra accno"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1729
+#: lib/LedgerSMB/Scripts/payment.pm:1734
 msgid "The amount to be pay of the invoice number"
 msgstr "Beløpet betales for dette Fakuranummer"
 
@@ -8339,12 +8338,12 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dette dokumentet er godkjent av"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1127
+#: lib/LedgerSMB/Scripts/payment.pm:1132
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering."
 
-#: lib/LedgerSMB/Scripts/payment.pm:1814
+#: lib/LedgerSMB/Scripts/payment.pm:1819
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering"
@@ -8486,7 +8485,7 @@ msgstr "Til e-post"
 msgid "To my browser"
 msgstr "Til min Browser"
 
-#: lib/LedgerSMB/Scripts/payment.pm:844
+#: lib/LedgerSMB/Scripts/payment.pm:845
 msgid "To pay"
 msgstr "Å betale"
 
@@ -8512,7 +8511,7 @@ msgstr "Til: [_1]"
 msgid "Toggle all removal checkboxes"
 msgstr "Veksle alle fjernings avmerkingsboksene"
 
-#: UI/payments/payment2.html:295
+#: UI/payments/payment2.html:294
 msgid "Toggle removal of entry in current payment"
 msgstr "Veksle fjerning av oppføring i dagens betaling"
 
@@ -8533,8 +8532,8 @@ msgstr "Topplan"
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:299
 #: lib/LedgerSMB/Report/Taxform/Details.pm:98
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:96
-#: lib/LedgerSMB/Scripts/asset.pm:543 lib/LedgerSMB/Scripts/payment.pm:200
-#: lib/LedgerSMB/Scripts/payment.pm:792 templates/demo/ap_transaction.html:126
+#: lib/LedgerSMB/Scripts/asset.pm:543 lib/LedgerSMB/Scripts/payment.pm:201
+#: lib/LedgerSMB/Scripts/payment.pm:793 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:184
@@ -8580,7 +8579,7 @@ msgstr "Topplan"
 #: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
 #: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
 #: UI/payments/payment1.html:86 UI/payments/payment1.html:95
-#: UI/payments/payment2.html:463 UI/payments/payments_detail.html:326
+#: UI/payments/payment2.html:460 UI/payments/payments_detail.html:326
 #: UI/reconciliation/report.html:146 UI/reconciliation/report.html:197
 #: UI/reconciliation/report.html:241
 #: UI/Reports/filters/invoice_outstanding.html:211
@@ -8896,7 +8895,7 @@ msgstr "Ikke i bruk"
 #: bin/ir.pl:533 bin/ir.pl:943 bin/is.pl:577 bin/is.pl:1026 bin/oe.pl:630
 #: bin/oe.pl:853 bin/oe.pl:1956 bin/pe.pl:606
 #: lib/LedgerSMB/Scripts/budgets.pm:97 UI/am-taxes.html:72
-#: UI/payments/payment2.html:473 UI/payments/payments_detail.html:469
+#: UI/payments/payment2.html:470 UI/payments/payments_detail.html:469
 #: UI/payroll/deduction.html:90 UI/payroll/income.html:96
 #: UI/reconciliation/report.html:267
 msgid "Update"
@@ -8949,7 +8948,7 @@ msgstr "Bruk Overbetaling"
 msgid "Use Shipto"
 msgstr "Bruk send til"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1636
+#: lib/LedgerSMB/Scripts/payment.pm:1641
 msgid "Use overpayment/prepayment"
 msgstr "Bruk overbetaling/forhåndsinnbetaling"
 
@@ -8966,7 +8965,7 @@ msgstr "Bruker"
 msgid "User Name"
 msgstr "Bruker Navn"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1038
+#: lib/LedgerSMB/Scripts/setup.pm:1028
 msgid "User already exists. Import?"
 msgstr "Bruker eksisterer allerede. Importer?"
 
@@ -9429,19 +9428,19 @@ msgstr "i måneder"
 msgid "in years"
 msgstr "i år"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1761
+#: lib/LedgerSMB/Scripts/payment.pm:1766
 msgid "is bigger than the amount available"
 msgstr "er større enn tilgjengelig beløp"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1513
+#: lib/LedgerSMB/Scripts/payment.pm:1518
 msgid "is lesser than 0"
 msgstr "er mindre enn 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1507
+#: lib/LedgerSMB/Scripts/payment.pm:1512
 msgid "is lesser than the amount to be paid"
 msgstr "er mindre en beløpet som skal betales"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1729
+#: lib/LedgerSMB/Scripts/payment.pm:1734
 msgid "is null"
 msgstr "er null"
 
@@ -9501,8 +9500,8 @@ msgstr "til_dato"
 msgid "unexpected error!"
 msgstr "uventet feil!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1769 lib/LedgerSMB/Scripts/payment.pm:1786
-#: lib/LedgerSMB/Scripts/payment.pm:1841 lib/LedgerSMB/Scripts/payment.pm:1858
+#: lib/LedgerSMB/Scripts/payment.pm:1774 lib/LedgerSMB/Scripts/payment.pm:1791
+#: lib/LedgerSMB/Scripts/payment.pm:1846 lib/LedgerSMB/Scripts/payment.pm:1863
 msgid "use of an overpayment"
 msgstr "bruk en overbetaling"
 

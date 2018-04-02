@@ -1,11 +1,12 @@
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2016
+# István Pongrácz <pongracz.istvan@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.19-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-03-11 10:35+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
+"POT-Creation-Date: 2018-04-02 18:55+0000\n"
+"Last-Translator: István Pongrácz <pongracz.istvan@gmail.com>, 2018\n"
 "Language-Team: Hungarian (https://www.transifex.com/ledgersmb/teams/58325/"
 "hu/)\n"
 "Language: hu\n"
@@ -16,11 +17,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
-msgstr ""
+msgstr "#Számlák"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
-msgstr ""
+msgstr "%Csökk."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:96
 msgid "(+) Salvage Value"
@@ -36,7 +37,7 @@ msgstr "(=) Nettó k.é."
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:160
 msgid "(Locked)"
-msgstr ""
+msgstr "(Zárolt)"
 
 #: lib/LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
@@ -86,7 +87,7 @@ msgstr "Szállító számla"
 
 #: UI/Reports/filters/search_goods.html:163
 msgid "AP Invoices"
-msgstr ""
+msgstr "Szállító számlák"
 
 #: bin/aa.pl:1547 lib/LedgerSMB/Report/Invoices/Outstanding.pm:300
 #: UI/Reports/filters/invoice_outstanding.html:5
@@ -115,7 +116,7 @@ msgstr "Új szállító utalvány"
 
 #: UI/import_csv/import_inventory_csv.html:22
 msgid "AP account"
-msgstr ""
+msgstr "Szállító számla"
 
 #: bin/am.pl:859 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:109
@@ -133,7 +134,7 @@ msgstr "Vevőszámla"
 
 #: UI/Reports/filters/search_goods.html:140
 msgid "AR Invoices"
-msgstr ""
+msgstr "Vevőszámlák"
 
 #: bin/aa.pl:1546 lib/LedgerSMB/Report/Invoices/Outstanding.pm:302
 #: UI/Reports/filters/invoice_outstanding.html:9
@@ -162,7 +163,7 @@ msgstr "Új vevő utalvány"
 
 #: UI/import_csv/import_inventory_csv.html:13
 msgid "AR account"
-msgstr ""
+msgstr "Vevő számla"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:115
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:105
@@ -180,7 +181,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:596 lib/LedgerSMB.pm:597
 #: lib/LedgerSMB/Scripts/configuration.pm:332
-#: lib/LedgerSMB/Scripts/setup.pm:872
+#: lib/LedgerSMB/Scripts/setup.pm:862
 msgid "Access Denied"
 msgstr "Hozzáférés megtagadva"
 
@@ -199,7 +200,7 @@ msgstr "Hozzáférés megtagadva"
 #: UI/Contact/contact.html:20 UI/Contact/divs/credit.html:187
 #: UI/Contact/divs/credit.html:188 UI/journal/journal_entry.html:113
 #: UI/orders/order.html:253 UI/payments/payment2.html:86
-#: UI/payments/payment2.html:246 UI/payments/payment2.html:311
+#: UI/payments/payment2.html:245 UI/payments/payment2.html:310
 #: UI/payments/payments_detail.html:213 UI/payments/payments_filter.html:95
 #: UI/payroll/deduction.html:50 UI/payroll/income.html:52
 #: UI/rc-reconciliation.html:12 UI/reconciliation/upload.html:25
@@ -241,7 +242,7 @@ msgstr "Számlaszám"
 #: lib/LedgerSMB/Report/Taxform/Details.pm:111
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:79
 #: lib/LedgerSMB/Report/Trial_Balance.pm:175
-#: lib/LedgerSMB/Scripts/payment.pm:152 t/data/04-complex_template.html:558
+#: lib/LedgerSMB/Scripts/payment.pm:153 t/data/04-complex_template.html:558
 #: UI/accounts/edit.html:32 UI/accounts/edit.html:102
 #: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
 #: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
@@ -259,7 +260,7 @@ msgstr "Számlaszám vége"
 msgid "Account Number Start"
 msgstr "Számlaszám kezdete"
 
-#: lib/LedgerSMB/Scripts/payment.pm:153
+#: lib/LedgerSMB/Scripts/payment.pm:154
 msgid "Account Title"
 msgstr "Számla megnevezése"
 
@@ -270,16 +271,16 @@ msgstr "Számlatípus"
 
 #: lib/LedgerSMB/GL.pm:206
 msgid "Account [_1] not found"
-msgstr ""
+msgstr "Számla [_1] nem található"
 
 #: bin/gl.pl:614
 msgid "Account [_1] not found."
-msgstr ""
+msgstr "Számla [_1] nem található."
 
 #: UI/Reports/filters/balance_sheet.html:226
 #: UI/Reports/filters/income_statement.html:273
 msgid "Account category"
-msgstr ""
+msgstr "Számla kategória"
 
 #: bin/am.pl:132
 msgid "Account does not exist!"
@@ -288,7 +289,7 @@ msgstr "A számla nem létezik!"
 #: UI/Reports/filters/balance_sheet.html:179
 #: UI/Reports/filters/income_statement.html:226
 msgid "Account numbers"
-msgstr ""
+msgstr "Számlaszámok"
 
 #: UI/payments/payments_detail.html:132 UI/reconciliation/report.html:16
 #: UI/Reports/filters/reconciliation_search.html:48
@@ -344,11 +345,11 @@ msgstr ""
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
-msgstr ""
+msgstr "Műveletek"
 
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
-msgstr ""
+msgstr "Műveletek:"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -364,7 +365,7 @@ msgstr "Aktív"
 
 #: UI/business_units/filter.html:35
 msgid "Active On"
-msgstr ""
+msgstr "Aktív be"
 
 #: lib/LedgerSMB/Scripts/admin.pm:146
 msgid "Active Sessions"
@@ -421,7 +422,7 @@ msgstr "Új osztály"
 
 #: sql/Pg-database.sql:2790
 msgid "Add Contact"
-msgstr ""
+msgstr "Kapcsolat hozzáadása"
 
 #: bin/is.pl:104
 msgid "Add Credit Invoice"
@@ -478,7 +479,7 @@ msgstr ""
 
 #: UI/budgetting/budget_entry.html:175
 msgid "Add Note"
-msgstr ""
+msgstr "Emlékeztető hozzáadása"
 
 #: sql/Pg-database.sql:2935
 msgid "Add Overhead"
@@ -606,17 +607,17 @@ msgstr "Cím"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr ""
+msgstr "Cím1"
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr ""
+msgstr "Cím:"
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
 msgid "Address: [_1]"
-msgstr ""
+msgstr "Cím: [_1]"
 
 #: lib/LedgerSMB/Scripts/contact.pm:188 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:2
@@ -625,7 +626,7 @@ msgstr "Címek"
 
 #: bin/ic.pl:1275
 msgid "Adj"
-msgstr ""
+msgstr "Igazítás"
 
 #: lib/LedgerSMB/Scripts/asset.pm:784
 msgid "Adjusted Basis"
@@ -760,7 +761,7 @@ msgstr "Felülírható"
 #: templates/xedemo/sales_order.html:135 templates/xedemo/sales_order.tex:122
 #: templates/xedemo/sales_quotation.html:104
 #: templates/xedemo/sales_quotation.tex:91 UI/orders/order.html:249
-#: UI/payments/payment2.html:315 UI/Reports/filters/gl.html:103
+#: UI/payments/payment2.html:314 UI/Reports/filters/gl.html:103
 #: UI/Reports/filters/gl.html:109
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:308
@@ -773,7 +774,7 @@ msgid "Amount Budgetted"
 msgstr "Költségvetés összege"
 
 #: bin/aa.pl:1658 lib/LedgerSMB/Report/Invoices/Outstanding.pm:238
-#: lib/LedgerSMB/Scripts/payment.pm:797 lib/LedgerSMB/Scripts/payment.pm:803
+#: lib/LedgerSMB/Scripts/payment.pm:798 lib/LedgerSMB/Scripts/payment.pm:804
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -825,15 +826,15 @@ msgstr ""
 msgid "Any"
 msgstr "Bármelyik"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1191
+#: lib/LedgerSMB/Scripts/payment.pm:1196
 msgid "Applied discount"
 msgstr "Alkalmazott árengedmény"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1746 lib/LedgerSMB/Scripts/payment.pm:1824
+#: lib/LedgerSMB/Scripts/payment.pm:1751 lib/LedgerSMB/Scripts/payment.pm:1829
 msgid "Applied discount by an overpayment"
 msgstr "Árengedmény a túlfizetésből"
 
-#: lib/LedgerSMB/Scripts/payment.pm:795
+#: lib/LedgerSMB/Scripts/payment.pm:796
 msgid "Apply Disc"
 msgstr "Engedményadás"
 
@@ -1554,7 +1555,7 @@ msgstr "Kártya ID"
 msgid "Cash"
 msgstr "Pénzmozgások"
 
-#: UI/payments/payment2.html:312 UI/Reports/filters/payments.html:65
+#: UI/payments/payment2.html:311 UI/Reports/filters/payments.html:65
 msgid "Cash Account"
 msgstr "Pénz számla"
 
@@ -1859,8 +1860,8 @@ msgstr ""
 #: bin/aa.pl:1761 bin/arap.pl:269 bin/arapprn.pl:400 bin/ic.pl:956
 #: bin/ic.pl:1767 bin/ic.pl:2049 bin/ic.pl:2198 bin/io.pl:618 bin/io.pl:1088
 #: bin/oe.pl:1548 bin/oe.pl:2079 bin/oe.pl:2590 bin/pe.pl:330 bin/pe.pl:749
-#: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:626
-#: lib/LedgerSMB/Scripts/payment.pm:693 lib/LedgerSMB/Scripts/payment.pm:1357
+#: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:627
+#: lib/LedgerSMB/Scripts/payment.pm:694 lib/LedgerSMB/Scripts/payment.pm:1362
 #: UI/am-audit-control.html:49 UI/asset/begin_approval.html:67
 #: UI/asset/begin_depreciation_all.html:26 UI/asset/begin_report.html:61
 #: UI/Contact/divs/credit.html:401 UI/create_batch.html:52
@@ -2073,7 +2074,7 @@ msgstr "Új kéziszámla korrekció"
 
 #: lib/LedgerSMB/Report/COA.pm:112 lib/LedgerSMB/Report/GL.pm:116
 #: lib/LedgerSMB/Report/Trial_Balance.pm:205
-#: lib/LedgerSMB/Scripts/payment.pm:158 UI/Reports/co/filter_cd.html:91
+#: lib/LedgerSMB/Scripts/payment.pm:159 UI/Reports/co/filter_cd.html:91
 msgid "Credits"
 msgstr "Követel"
 
@@ -2207,7 +2208,7 @@ msgstr "Szül.nap"
 msgid "DOB:"
 msgstr ""
 
-#: bin/aa.pl:1307 lib/LedgerSMB/Scripts/payment.pm:333
+#: bin/aa.pl:1307 lib/LedgerSMB/Scripts/payment.pm:334
 msgid "Data not saved.  Please try again."
 msgstr "Az adat nem került mentésre. Kérem próbálja újra."
 
@@ -2251,7 +2252,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr "Az adatbázis nem létezik."
 
-#: lib/LedgerSMB/Scripts/setup.pm:834
+#: lib/LedgerSMB/Scripts/setup.pm:824
 msgid "Database exists."
 msgstr ""
 
@@ -2276,8 +2277,8 @@ msgstr "Cégadatbázis"
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:103
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
-#: lib/LedgerSMB/Scripts/asset.pm:538 lib/LedgerSMB/Scripts/payment.pm:154
-#: lib/LedgerSMB/Scripts/payment.pm:791 templates/demo/ap_transaction.html:73
+#: lib/LedgerSMB/Scripts/asset.pm:538 lib/LedgerSMB/Scripts/payment.pm:155
+#: lib/LedgerSMB/Scripts/payment.pm:792 templates/demo/ap_transaction.html:73
 #: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
 #: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
 #: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
@@ -2444,7 +2445,7 @@ msgstr "Új kéziszámla korrekció"
 
 #: lib/LedgerSMB/Report/COA.pm:105 lib/LedgerSMB/Report/GL.pm:110
 #: lib/LedgerSMB/Report/Trial_Balance.pm:199
-#: lib/LedgerSMB/Scripts/payment.pm:157 UI/Reports/co/filter_cd.html:83
+#: lib/LedgerSMB/Scripts/payment.pm:158 UI/Reports/co/filter_cd.html:83
 msgid "Debits"
 msgstr "Tartozik"
 
@@ -2809,7 +2810,7 @@ msgstr "Árk"
 msgid "Disc %"
 msgstr "Kedv.%"
 
-#: bin/ic.pl:1127 lib/LedgerSMB/Scripts/payment.pm:794
+#: bin/ic.pl:1127 lib/LedgerSMB/Scripts/payment.pm:795
 #: UI/accounts/edit.html:300 UI/accounts/edit.html:340
 #: UI/am-business-form.html:16 UI/Contact/divs/credit.html:167
 #: UI/Contact/divs/credit.html:168 UI/payments/payments_detail.html:328
@@ -2819,11 +2820,11 @@ msgstr "Engedmény"
 
 #: lib/LedgerSMB/Report/Listings/Business_Type.pm:54
 msgid "Discount (%)"
-msgstr ""
+msgstr "Engedmény (%)"
 
 #: t/data/04-complex_template.html:242
 msgid "Discount:"
-msgstr ""
+msgstr "Engedmény:"
 
 #: lib/LedgerSMB/Scripts/asset.pm:711
 msgid "Disp. Aquired Value"
@@ -2831,7 +2832,7 @@ msgstr ""
 
 #: UI/templates/preview.html:66
 msgid "Display"
-msgstr ""
+msgstr "Megjelenít"
 
 #: lib/LedgerSMB/Scripts/asset.pm:586 sql/Pg-database.sql:2896
 #: sql/Pg-database.sql:2899
@@ -2864,9 +2865,9 @@ msgstr "Dokumentum"
 
 #: UI/Reports/co/filter_cd.html:76
 msgid "Document Type"
-msgstr ""
+msgstr "Dokumentum típusa"
 
-#: lib/LedgerSMB/Scripts/setup.pm:430
+#: lib/LedgerSMB/Scripts/setup.pm:420
 msgid "Don't know what to do with backup"
 msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 
@@ -3341,7 +3342,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:387
+#: lib/LedgerSMB/Scripts/setup.pm:377
 msgid "Error creating backup file"
 msgstr "Hiba történt a biztonsági mentés fájl létrehozása során"
 
@@ -3353,7 +3354,7 @@ msgstr "Hiba történt a köteg létrehozásakor. Kérem próbálja újra."
 msgid "Error from Function:"
 msgstr "Hiba a funkcióban:"
 
-#: lib/LedgerSMB/Scripts/setup.pm:474
+#: lib/LedgerSMB/Scripts/setup.pm:464
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3379,7 +3380,7 @@ msgstr "Árf"
 
 #: bin/aa.pl:434 bin/ir.pl:351 bin/is.pl:331 bin/oe.pl:341 bin/oe.pl:349
 #: bin/oe.pl:1534 lib/LedgerSMB/Report/Contact/History.pm:116
-#: lib/LedgerSMB/Scripts/payment.pm:802 UI/orders/order.html:54
+#: lib/LedgerSMB/Scripts/payment.pm:803 UI/orders/order.html:54
 #: UI/payments/payment2.html:141 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
 #: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
@@ -3390,7 +3391,7 @@ msgstr "Átváltási árfolyam"
 msgid "Exchange rate for payment missing!"
 msgstr "A fizetett összeg átváltási árfolyama hiányzik!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1113
+#: lib/LedgerSMB/Scripts/payment.pm:1118
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -3729,8 +3730,8 @@ msgstr "Kezdő dátum"
 msgid "Full"
 msgstr "Teljes"
 
-#: lib/LedgerSMB/Scripts/setup.pm:994 lib/LedgerSMB/Scripts/setup.pm:1052
-#: lib/LedgerSMB/Scripts/setup.pm:1257
+#: lib/LedgerSMB/Scripts/setup.pm:984 lib/LedgerSMB/Scripts/setup.pm:1042
+#: lib/LedgerSMB/Scripts/setup.pm:1247
 msgid "Full Permissions"
 msgstr "Teljes jogosultság"
 
@@ -4134,7 +4135,7 @@ msgstr "Belső feljegyzés"
 msgid "Invalid Reporting Basis"
 msgstr "Valótlan jelentés alap"
 
-#: lib/LedgerSMB/Scripts/setup.pm:384
+#: lib/LedgerSMB/Scripts/setup.pm:374
 msgid "Invalid backup request"
 msgstr "Érvénytelen biztonsági mentés kérés"
 
@@ -4213,7 +4214,7 @@ msgstr "Készlet áthelyezve!"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:278
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
-#: lib/LedgerSMB/Scripts/payment.pm:790 templates/demo/invoice.html:4
+#: lib/LedgerSMB/Scripts/payment.pm:791 templates/demo/invoice.html:4
 #: templates/demo/invoice.tex:116 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:4
 #: templates/demo_with_images/invoice.html:18
@@ -4379,7 +4380,7 @@ msgstr "Számlák"
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
 #: templates/xedemo/sales_quotation.html:97
 #: templates/xedemo/work_order.html:128 templates/xedemo/work_order.tex:124
-#: UI/io-email.html:96 UI/payments/payment2.html:310
+#: UI/io-email.html:96 UI/payments/payment2.html:309
 msgid "Item"
 msgstr "Tétel"
 
@@ -4714,7 +4715,7 @@ msgstr ""
 msgid "Login"
 msgstr "Belépés"
 
-#: lib/LedgerSMB/Scripts/setup.pm:836
+#: lib/LedgerSMB/Scripts/setup.pm:826
 msgid "Login?"
 msgstr ""
 
@@ -4774,8 +4775,8 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:993 lib/LedgerSMB/Scripts/setup.pm:1051
-#: lib/LedgerSMB/Scripts/setup.pm:1256
+#: lib/LedgerSMB/Scripts/setup.pm:983 lib/LedgerSMB/Scripts/setup.pm:1041
+#: lib/LedgerSMB/Scripts/setup.pm:1246
 msgid "Manage Users"
 msgstr "Felhasználók kezelése"
 
@@ -4828,11 +4829,11 @@ msgid "May "
 msgstr "Május"
 
 #: bin/aa.pl:816 bin/ir.pl:674 bin/ir.pl:844 bin/is.pl:761 bin/is.pl:924
-#: lib/LedgerSMB/Report/GL.pm:127 lib/LedgerSMB/Scripts/payment.pm:156
-#: lib/LedgerSMB/Scripts/payment.pm:796 templates/demo/ap_transaction.html:195
+#: lib/LedgerSMB/Report/GL.pm:127 lib/LedgerSMB/Scripts/payment.pm:157
+#: lib/LedgerSMB/Scripts/payment.pm:797 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:118
-#: UI/orders/order.html:248 UI/payments/payment2.html:314
+#: UI/orders/order.html:248 UI/payments/payment2.html:313
 #: UI/Reports/filters/gl.html:75 UI/Reports/filters/gl.html:249
 msgid "Memo"
 msgstr "Megjegyzés"
@@ -5090,7 +5091,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1258
+#: lib/LedgerSMB/Scripts/setup.pm:1248
 msgid "No changes"
 msgstr ""
 
@@ -5116,7 +5117,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr "Nincs nyitott projekt!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1229
+#: lib/LedgerSMB/Scripts/payment.pm:1234
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Nincs kiválasztva túlfizetés számla.  Létezik ilyen számla egyébként?"
 
@@ -5327,7 +5328,7 @@ msgstr ""
 msgid "OH"
 msgstr "Rk"
 
-#: UI/payments/payment2.html:307
+#: UI/payments/payment2.html:306
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr ""
 
@@ -5628,7 +5629,7 @@ msgstr "Beszerzési rendelés"
 msgid "POST"
 msgstr "RÖGZÍT"
 
-#: UI/payments/payment2.html:485 UI/payments/use_overpayment2.html:358
+#: UI/payments/payment2.html:482 UI/payments/use_overpayment2.html:358
 msgid "POST AND PRINT"
 msgstr "Rögzít és nyomtat"
 
@@ -5657,7 +5658,7 @@ msgstr "Szállítólevél száma hiányzik!"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:233
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:302
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:140
-#: lib/LedgerSMB/Scripts/payment.pm:793 templates/demo/invoice.html:190
+#: lib/LedgerSMB/Scripts/payment.pm:794 templates/demo/invoice.html:190
 #: templates/demo/invoice.tex:175 templates/demo_with_images/invoice.html:193
 #: templates/demo_with_images/invoice.tex:174 templates/xedemo/invoice.html:192
 #: templates/xedemo/invoice.tex:169 UI/payments/payments_detail.html:327
@@ -5750,7 +5751,7 @@ msgstr "A jelszavaknak egyezniük kell."
 msgid "Pay From"
 msgstr "Fizetés innen"
 
-#: lib/LedgerSMB/Scripts/payment.pm:151 UI/Contact/divs/credit.html:97
+#: lib/LedgerSMB/Scripts/payment.pm:152 UI/Contact/divs/credit.html:97
 #: UI/Contact/divs/credit.html:98 UI/payments/payments_filter.html:141
 msgid "Pay To"
 msgstr "Fizetés"
@@ -5769,7 +5770,7 @@ msgstr ""
 msgid "Payables"
 msgstr "Kötelezettségek"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1025 t/data/04-complex_template.html:282
+#: lib/LedgerSMB/Scripts/payment.pm:1026 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:280 UI/accounts/edit.html:322
 #: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
 #: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2804
@@ -6028,7 +6029,7 @@ msgstr ""
 #: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:258 bin/gl.pl:298
 #: bin/ir.pl:541 bin/ir.pl:575 bin/ir.pl:944 bin/is.pl:585 bin/is.pl:623
 #: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
-#: UI/payments/payment2.html:479
+#: UI/payments/payment2.html:476
 msgid "Post"
 msgstr "Rögzítés"
 
@@ -6536,7 +6537,7 @@ msgstr ""
 msgid "Recd"
 msgstr "Érkezett"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1025 sql/Pg-database.sql:2803
+#: lib/LedgerSMB/Scripts/payment.pm:1026 sql/Pg-database.sql:2803
 #: sql/Pg-database.sql:2972
 msgid "Receipt"
 msgstr "Befizetés"
@@ -6570,7 +6571,7 @@ msgstr "Bevételezés"
 msgid "Receive Merchandise"
 msgstr "Áru érkeztetés"
 
-#: lib/LedgerSMB/Scripts/payment.pm:847
+#: lib/LedgerSMB/Scripts/payment.pm:848
 msgid "Received"
 msgstr "Befolyt"
 
@@ -6895,9 +6896,8 @@ msgid "SKU"
 msgstr "SKU"
 
 #: bin/ir.pl:511 bin/oe.pl:403 bin/oe.pl:1814
-#, fuzzy
 msgid "SO Number"
-msgstr "Beszerzési rendelés"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:129
 msgid "SQL-Ledger 3.0 database detected."
@@ -7032,7 +7032,7 @@ msgstr "Mentés"
 msgid "Save As New"
 msgstr "Mentés újként"
 
-#: lib/LedgerSMB/Scripts/payment.pm:221
+#: lib/LedgerSMB/Scripts/payment.pm:222
 msgid "Save Batch"
 msgstr "Köteg mentése"
 
@@ -7076,7 +7076,7 @@ msgstr "Ütemezés mentése"
 msgid "Save Template"
 msgstr "Sablon mentése"
 
-#: lib/LedgerSMB/Scripts/setup.pm:754
+#: lib/LedgerSMB/Scripts/setup.pm:744
 msgid "Save and Retry"
 msgstr "Mentés és újra"
 
@@ -7110,7 +7110,7 @@ msgstr "Beütemez"
 msgid "Scheduled"
 msgstr "Ütemezve"
 
-#: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:538
+#: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:539
 #: lib/LedgerSMB/Template.pm:310 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Képernyő"
@@ -7291,7 +7291,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
-msgstr ""
+msgstr "Kiválasztott"
 
 #: UI/payments/payments_filter.html:3
 msgid "Selection"
@@ -7635,11 +7635,11 @@ msgstr "Aláírás"
 
 #: sql/Pg-database.sql:2483
 msgid "Simple"
-msgstr ""
+msgstr "Egyszerű"
 
 #: UI/import_csv/import_inventory_csv.html:61
 msgid "Single date"
-msgstr ""
+msgstr "Egyszerű dátum"
 
 #: lib/LedgerSMB/Entity/Person.pm:109 sql/Pg-database.sql:728
 msgid "Sir."
@@ -7678,7 +7678,7 @@ msgstr "Rendezve"
 #: lib/LedgerSMB/Report/GL.pm:215
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:75
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:141
-#: lib/LedgerSMB/Scripts/payment.pm:155 lib/LedgerSMB/Scripts/recon.pm:219
+#: lib/LedgerSMB/Scripts/payment.pm:156 lib/LedgerSMB/Scripts/recon.pm:219
 #: templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:253
 #: templates/demo/printPayment.html:50
@@ -7690,8 +7690,8 @@ msgstr "Rendezve"
 #: templates/xedemo/ar_transaction.html:193 templates/xedemo/invoice.html:255
 #: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:29
 #: UI/journal/journal_entry.html:117 UI/orders/order.html:247
-#: UI/payments/payment2.html:109 UI/payments/payment2.html:259
-#: UI/payments/payment2.html:313 UI/payments/payments_detail.html:304
+#: UI/payments/payment2.html:109 UI/payments/payment2.html:258
+#: UI/payments/payment2.html:312 UI/payments/payments_detail.html:304
 #: UI/reconciliation/report.html:84 UI/reconciliation/report.html:159
 #: UI/reconciliation/report.html:210 UI/Reports/filters/gl.html:69
 #: UI/Reports/filters/gl.html:243 UI/Reports/filters/inventory_adj.html:11
@@ -7751,7 +7751,7 @@ msgstr "Kezdő dátum"
 
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
-msgstr ""
+msgstr "Kezdő dátum:"
 
 #: UI/payments/payments_filter.html:179
 msgid "Start Source Numbering At:"
@@ -7777,7 +7777,7 @@ msgstr "Kezdési dátum"
 
 #: t/data/04-complex_template.html:177
 msgid "Starting Date:"
-msgstr ""
+msgstr "Kezdő dátum:"
 
 #: bin/io.pl:1637
 msgid "State"
@@ -7830,7 +7830,7 @@ msgstr "Saját termék bevét"
 
 #: UI/users/preferences.html:22
 msgid "Strength"
-msgstr ""
+msgstr "Erősség"
 
 #: UI/users/preferences.html:81
 msgid "Stylesheet"
@@ -7847,7 +7847,7 @@ msgstr "Tárgy"
 
 #: bin/arap.pl:804 bin/io.pl:1470 UI/Contact/divs/notes.html:77
 msgid "Subject: [_1]"
-msgstr ""
+msgstr "Tárgy: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -7884,7 +7884,7 @@ msgstr "Elküldve"
 #: templates/xedemo/purchase_order.html:159
 #: templates/xedemo/sales_order.html:161
 #: templates/xedemo/sales_quotation.html:130 UI/orders/order.html:215
-#: UI/payments/payment2.html:301 UI/payments/payment2.html:458
+#: UI/payments/payment2.html:300 UI/payments/payment2.html:456
 #: UI/payments/use_overpayment2.html:140 UI/payments/use_overpayment2.html:326
 #: UI/Reports/filters/gl.html:296
 #: UI/Reports/filters/invoice_outstanding.html:281
@@ -7918,7 +7918,7 @@ msgstr "Gyűjtőszámla"
 
 #: lib/LedgerSMB/Report/Timecards.pm:122
 msgid "Sun"
-msgstr ""
+msgstr "Vas"
 
 #: UI/Contact/divs/person.html:117
 msgid "Surname"
@@ -8249,15 +8249,15 @@ msgstr "Köszönjük hogy nálunk vásárolt!"
 msgid "The amount of"
 msgstr "Az összeg"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1507 lib/LedgerSMB/Scripts/payment.pm:1513
+#: lib/LedgerSMB/Scripts/payment.pm:1512 lib/LedgerSMB/Scripts/payment.pm:1518
 msgid "The amount of the invoice number"
 msgstr "A számla értéke"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1761
+#: lib/LedgerSMB/Scripts/payment.pm:1766
 msgid "The amount to be pay from the accno"
 msgstr "Fizetendő összeg az accno-ból"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1729
+#: lib/LedgerSMB/Scripts/payment.pm:1734
 msgid "The amount to be pay of the invoice number"
 msgstr "A számla fizetendő összege"
 
@@ -8322,11 +8322,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Ezt a dokumentumot jóváhagyta"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1127
+#: lib/LedgerSMB/Scripts/payment.pm:1132
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr "Ez a vegyes könyvelési tétel egy pénzmozgásos tranzakció következménye"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1814
+#: lib/LedgerSMB/Scripts/payment.pm:1819
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr "Ez könyvelési tétel mozgás egy túlfizetéses tranzakció eredménye"
 
@@ -8371,7 +8371,7 @@ msgstr "Munkalap"
 
 #: UI/timecards/entry_filter.html:26
 msgid "Time Frame"
-msgstr ""
+msgstr "Időkeret"
 
 #: UI/timecards/timecard.html:68
 msgid "Time In"
@@ -8467,7 +8467,7 @@ msgstr "Email küldés"
 msgid "To my browser"
 msgstr "Böngészőbe küldés"
 
-#: lib/LedgerSMB/Scripts/payment.pm:844
+#: lib/LedgerSMB/Scripts/payment.pm:845
 msgid "To pay"
 msgstr "Fizetendő"
 
@@ -8493,7 +8493,7 @@ msgstr ""
 msgid "Toggle all removal checkboxes"
 msgstr ""
 
-#: UI/payments/payment2.html:295
+#: UI/payments/payment2.html:294
 msgid "Toggle removal of entry in current payment"
 msgstr ""
 
@@ -8514,8 +8514,8 @@ msgstr "Legfelső szint"
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:299
 #: lib/LedgerSMB/Report/Taxform/Details.pm:98
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:96
-#: lib/LedgerSMB/Scripts/asset.pm:543 lib/LedgerSMB/Scripts/payment.pm:200
-#: lib/LedgerSMB/Scripts/payment.pm:792 templates/demo/ap_transaction.html:126
+#: lib/LedgerSMB/Scripts/asset.pm:543 lib/LedgerSMB/Scripts/payment.pm:201
+#: lib/LedgerSMB/Scripts/payment.pm:793 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:184
@@ -8561,7 +8561,7 @@ msgstr "Legfelső szint"
 #: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
 #: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
 #: UI/payments/payment1.html:86 UI/payments/payment1.html:95
-#: UI/payments/payment2.html:463 UI/payments/payments_detail.html:326
+#: UI/payments/payment2.html:460 UI/payments/payments_detail.html:326
 #: UI/reconciliation/report.html:146 UI/reconciliation/report.html:197
 #: UI/reconciliation/report.html:241
 #: UI/Reports/filters/invoice_outstanding.html:211
@@ -8875,7 +8875,7 @@ msgstr ""
 #: bin/ir.pl:533 bin/ir.pl:943 bin/is.pl:577 bin/is.pl:1026 bin/oe.pl:630
 #: bin/oe.pl:853 bin/oe.pl:1956 bin/pe.pl:606
 #: lib/LedgerSMB/Scripts/budgets.pm:97 UI/am-taxes.html:72
-#: UI/payments/payment2.html:473 UI/payments/payments_detail.html:469
+#: UI/payments/payment2.html:470 UI/payments/payments_detail.html:469
 #: UI/payroll/deduction.html:90 UI/payroll/income.html:96
 #: UI/reconciliation/report.html:267
 msgid "Update"
@@ -8928,7 +8928,7 @@ msgstr "Saját túlfizetés használata"
 msgid "Use Shipto"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1636
+#: lib/LedgerSMB/Scripts/payment.pm:1641
 msgid "Use overpayment/prepayment"
 msgstr "Használja a túlfizetést/előutalást"
 
@@ -8945,7 +8945,7 @@ msgstr "Felhasználó"
 msgid "User Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1038
+#: lib/LedgerSMB/Scripts/setup.pm:1028
 msgid "User already exists. Import?"
 msgstr "A felhasználó már létezik. Beolvassa az adatait?"
 
@@ -9406,19 +9406,19 @@ msgstr ""
 msgid "in years"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1761
+#: lib/LedgerSMB/Scripts/payment.pm:1766
 msgid "is bigger than the amount available"
 msgstr "nagyobb, mint a rendelkezésre álló összeg"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1513
+#: lib/LedgerSMB/Scripts/payment.pm:1518
 msgid "is lesser than 0"
 msgstr "kevesebb mint 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1507
+#: lib/LedgerSMB/Scripts/payment.pm:1512
 msgid "is lesser than the amount to be paid"
 msgstr "kevesebb, mint a valós fizetés értéke"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1729
+#: lib/LedgerSMB/Scripts/payment.pm:1734
 msgid "is null"
 msgstr "nulla"
 
@@ -9478,8 +9478,8 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "váratlan hiba!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1769 lib/LedgerSMB/Scripts/payment.pm:1786
-#: lib/LedgerSMB/Scripts/payment.pm:1841 lib/LedgerSMB/Scripts/payment.pm:1858
+#: lib/LedgerSMB/Scripts/payment.pm:1774 lib/LedgerSMB/Scripts/payment.pm:1791
+#: lib/LedgerSMB/Scripts/payment.pm:1846 lib/LedgerSMB/Scripts/payment.pm:1863
 msgid "use of an overpayment"
 msgstr "felhasznál egy túlfizetést"
 
