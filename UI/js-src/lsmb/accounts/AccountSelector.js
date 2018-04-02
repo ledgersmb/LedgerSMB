@@ -1,5 +1,5 @@
 define([
-    "dijit/form/FilteringSelect",
+    "lsmb/FilteringSelect",
     "dojo/_base/declare",
     "lsmb/accounts/AccountRestStore"
     ], function(
