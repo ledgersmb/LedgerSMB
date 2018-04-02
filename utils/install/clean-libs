@@ -1,9 +1,0 @@
-#!/usr/bin/perl
-
-use File::Find::Rule;
-
-print join '',
-  map { "$_\n" }
-  File::Find::Rule->name(qr/LedgerSMB(\.pm)?/)
-                  ->maxdepth(1)
-                  ->in(@INC, map { "$_/auto" } @INC);
