@@ -7,7 +7,6 @@ use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
 
-use File::Temp;
 use LedgerSMB::AM;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
@@ -21,7 +20,8 @@ use LedgerSMB::App_State;
 use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
-my $temp;
+
+my $temp = $LedgerSMB::Sysconfig::tempdir;
 my $form;
 my $myconfig;
 my $template;
@@ -114,7 +114,6 @@ SKIP: {
     $template = undef;
     $template = LedgerSMB::Template->new('user' => $myconfig, 'format' => 'PDF',
         path => 't/data', 'template' => '04-template');
-    $temp = File::Temp->new();
     ok(defined $template,
         'Template, new (PDF): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -122,19 +121,18 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (PDF): Object creation with format and template');
     is($template->render({'login' => 'foo&bar'}),
-        $temp->filename,
+        "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): Simple PDF template, default filename');
-    ok(-e $temp->filename,
+    ok(-e "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): File created');
-    is(unlink($temp->filename), 1,
+    is(unlink("$temp/04-template-output-$$.pdf"), 1,
         'Template, render (PDF): removing testfile');
-    ok(!-e $temp->filename,
+    ok(!-e "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): testfile removed');
 
     $template = undef;
     $template = LedgerSMB::Template->new('user' => $myconfig, 'format' => 'PS',
         path => 't/data', 'template' => '04-template');
-    $temp = File::Temp->new();
     ok(defined $template,
         'Template, new (PS): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -142,18 +140,17 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (PS): Object creation with format and template');
     is($template->render({'login' => 'foo\&bar'}),
-        $temp->filename,
+        "$temp/04-template-output-$$.ps",
         'Template, render (PS): Simple Postscript template, default filename');
-    ok(-e $temp->filename, 'Template, render (PS): File created');
-    is(unlink($temp->filename), 1,
+    ok(-e "$temp/04-template-output-$$.ps", 'Template, render (PS): File created');
+    is(unlink("$temp/04-template-output-$$.ps"), 1,
         'Template, render (PS): removing testfile');
-    ok(!-e $temp->filename,
+    ok(!-e "$temp/04-template-output-$$.ps",
         'Template, render (PS): testfile removed');
 
     $template = undef;
     $template = LedgerSMB::Template->new('user' => $myconfig, 'format' => 'XLS',
         path => 't/data', 'template' => '04-template');
-    $temp = File::Temp->new();
     ok(defined $template,
         'Template, new (XLS): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -161,18 +158,17 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (XLS): Object creation with format and template');
     is($template->render({'login' => 'foo\&bar'}),
-        $temp->filename,
+        "$temp/04-template-output-$$.xls",
         'Template, render (XLS): Simple Postscript template, default filename');
-    ok(-e $temp->filename, 'Template, render (XLS): File created');
-    is(unlink($temp->filename), 1,
+    ok(-e "$temp/04-template-output-$$.xls", 'Template, render (XLS): File created');
+    is(unlink("$temp/04-template-output-$$.xls"), 1,
         'Template, render (XLS): removing testfile');
-    ok(!-e $temp->filename,
+    ok(!-e "$temp/04-template-output-$$.xls",
         'Template, render (XLS): testfile removed');
 
     $template = undef;
     $template = LedgerSMB::Template->new('user' => $myconfig, 'format' => 'XLSX',
         path => 't/data', 'template' => '04-template');
-    $temp = File::Temp->new();
     ok(defined $template,
         'Template, new (XLSX): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -180,12 +176,12 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (XLSX): Object creation with format and template');
     is($template->render({'login' => 'foo\&bar'}),
-        $temp->filename,
+        "$temp/04-template-output-$$.xlsx",
         'Template, render (XLSX): Simple Postscript template, default filename');
-    ok(-e $temp->filename, 'Template, render (XLSX): File created');
-    is(unlink($temp->filename), 1,
+    ok(-e "$temp/04-template-output-$$.xlsx", 'Template, render (XLSX): File created');
+    is(unlink("$temp/04-template-output-$$.xlsx"), 1,
         'Template, render (XLSX): removing testfile');
-    ok(!-e $temp->filename,
+    ok(!-e "$temp/04-template-output-$$.xlsx",
         'Template, render (XLSX): testfile removed');
 
 }
