@@ -281,7 +281,6 @@ use LedgerSMB::Template::DBProvider;
 
 use Template::Parser;
 use Log::Log4perl;
-use File::Copy 'cp';
 use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
