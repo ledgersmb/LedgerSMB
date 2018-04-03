@@ -124,17 +124,19 @@ Preprocess for rendering.
 
 =item render($hashref)
 
-TODO
+Returns the LedgerSMB::Template object itself. Dies on error.
+
 
 =item output
 
 This function outputs the rendered file in an appropriate manner.
 
-=item my $source = get_template_source($get_template)
+=item get_template_source($extension)
 
-Returns the Template source when common or call a specialized getter if not
+Returns the name of the Template source, incorporating the specified
+extension as appropriate.
 
-=item my $arghash = get_template_args($extension)
+=item get_template_args($extension)
 
 Returns a hash with the default arguments for the Template and the
 desired file extention
