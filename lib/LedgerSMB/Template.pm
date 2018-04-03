@@ -274,7 +274,6 @@ use Carp;
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
-use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
