@@ -126,7 +126,8 @@ SKIP: {
         'Template, render (PDF): Simple PDF template, default filename');
     ok(-e $temp->filename,
         'Template, render (PDF): File created');
-    undef $temp;
+    is(unlink($temp->filename), 1,
+        'Template, render (PDF): removing testfile');
     ok(!-e $temp->filename,
         'Template, render (PDF): testfile removed');
 
@@ -144,7 +145,8 @@ SKIP: {
         $temp->filename,
         'Template, render (PS): Simple Postscript template, default filename');
     ok(-e $temp->filename, 'Template, render (PS): File created');
-    undef $temp;
+    is(unlink($temp->filename), 1,
+        'Template, render (PS): removing testfile');
     ok(!-e $temp->filename,
         'Template, render (PS): testfile removed');
 
@@ -162,7 +164,8 @@ SKIP: {
         $temp->filename,
         'Template, render (XLS): Simple Postscript template, default filename');
     ok(-e $temp->filename, 'Template, render (XLS): File created');
-    undef $temp;
+    is(unlink($temp->filename), 1,
+        'Template, render (XLS): removing testfile');
     ok(!-e $temp->filename,
         'Template, render (XLS): testfile removed');
 
@@ -180,7 +183,8 @@ SKIP: {
         $temp->filename,
         'Template, render (XLSX): Simple Postscript template, default filename');
     ok(-e $temp->filename, 'Template, render (XLSX): File created');
-    undef $temp;
+    is(unlink($temp->filename), 1,
+        'Template, render (XLSX): removing testfile');
     ok(!-e $temp->filename,
         'Template, render (XLSX): testfile removed');
 
