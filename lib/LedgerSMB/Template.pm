@@ -82,10 +82,6 @@ template to get debugging messages is to be surrounded by
 
 The output method to use, defaults to HTTP.  Media is a synonym for method
 
-=item output_file (optional)
-
-The base name of the file for output.
-
 =back
 
 =item available_formats()
