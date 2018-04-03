@@ -10,9 +10,9 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [method => $string], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [path => $path], [method => $string], [no_escape => $bool], [debug => $bool] );
 
-This command instantiates a new template:
+Instantiates a new template. Accepts the following arguments:
 
 =over
 
@@ -49,7 +49,7 @@ gettext function.
 
 The language for template selection.
 
-=item include_path (optional)
+=item path (optional)
 
 Overrides the template directory.
 
