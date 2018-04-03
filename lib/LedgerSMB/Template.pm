@@ -284,7 +284,6 @@ use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
 use Scalar::Util qw(reftype);
-use Try::Tiny;
 
 use parent qw( Exporter );
 our @EXPORT_OK = qw( preprocess );
