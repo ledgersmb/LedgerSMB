@@ -19,7 +19,7 @@ Instantiates a new template. Accepts the following arguments:
 =item template
 
 The template to be processed.  This is the file that is the template to be
-processed. When C<include_path> equals 'DB', the file is retrieved from
+processed. When 'path' equals 'DB', the file is retrieved from
 the database instead of from disk.
 Based on the specified format, an appropriate extension is appended
 to resolve to the correct template file.
