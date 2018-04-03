@@ -78,7 +78,7 @@ is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
 ####################
 
 # Template->new
-$myconfig = {'templates' => 't/data'};
+$myconfig = {};
 $template = undef;
 $template = LedgerSMB::Template->new('user' => $myconfig, 'language' => 'de',
         'path' => 't/data', 'format' => 'HTML');
