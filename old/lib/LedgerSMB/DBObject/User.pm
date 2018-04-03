@@ -303,57 +303,6 @@ sub get_all_users {
 }
 
 
-
-# sub roles {
-
-#     my $self = shift @_;
-#     my $id = shift @_;
-
-
-# }
-
-=item save_contact($id, $class, $contact)
-
-#TODO: document this sub!
-
-=cut
-
-sub save_contact {
-
-    my $self = shift @_;
-    my $id = shift @_;
-    my $class = shift @_;
-    my $contact = shift @_;
-    my @ret;
-    my $logger = Log::Log4perl->get_logger("LedgerSMB");
-
-    if ($id) {
-        @ret = $self->call_procedure(funcname=>"person__save_contact",
-            args=>[
-                $self->{entity}->{id},
-                $self->{contacts}->[$id]->{contact_class},
-                $self->{contacts}->[$id]->{contact},
-                $contact
-            ]
-        );
-    }
-    else{
-        @ret = $self->call_procedure(funcname=>"person__save_contact",
-            args=>[
-                $self->{entity_id},
-                $class,
-                undef,
-                $contact
-            ]
-        );
-    }
-    if ($ret[0]->{person__save_contact} != 1){
-        die "Couldn't save contact...";
-    }
-    return 1;
-}
-
-
 =back
 
 =cut
