@@ -127,10 +127,6 @@ Preprocess for rendering.
 Returns the LedgerSMB::Template object itself. Dies on error.
 
 
-=item output
-
-This function outputs the rendered file in an appropriate manner.
-
 =item get_template_source($extension)
 
 Returns the name of the Template source, incorporating the specified
