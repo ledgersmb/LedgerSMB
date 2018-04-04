@@ -3,12 +3,12 @@ package LedgerSMB::Legacy_Util;
 
 =head1 NAME
 
-LedgerSMB::PSGI::Util - LedgerSMB Utility functions
+LedgerSMB::Legacy_Util - LedgerSMB Utility functions
 
 =head1 DESCRIPTION
 
-
-
+Functions for rendering templates and delivering the result via the
+specified output method.
 
 =cut
 
@@ -21,17 +21,36 @@ use Log::Log4perl;
 
 =head1 FUNCTIONS
 
-=head2 render_template($template, $variables)
+=head2 render_template($template, $variables, [$method])
+
+=over
+
+=item template
+
+A LedgerSMB::Template object.
+
+=item variables
+
+A hashref of variables which is passed to the template.
+
+=item method (optional)
+
+Determines where to send the output. Allowed values:
+
+email|print|screen|<printer name>
+
+=back
 
 =cut
 
 sub render_template {
-    my $self = shift @_;
-    my $vars = shift @_;
+    my $self = shift;
+    my $vars = shift;
+    my $method = shift;
 
     my $post = $self->_render($vars);
 
-    output_template($self);
+    output_template($self, (method => $method));
 }
 
 
@@ -46,10 +65,6 @@ supported keys in C<%args>:
 Determines where to send the output. Allowed values:
 
 email|print|screen|<printer name>
-
-=item media
-
-Synonym for method
 
 =item printmode + OUT
 
@@ -68,8 +83,7 @@ sub output_template {
 
     for ( keys %args ) { $template->{output_options}->{$_} = $args{$_}; };
 
-    my $method = $template->{method} || $args{method} || $args{media};
-    $method = '' if !defined $method;
+    my $method = $args{method} // '';
 
     if ('email' eq lc $method) {
         _output_template_email($template);

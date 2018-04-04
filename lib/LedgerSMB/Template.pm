@@ -10,7 +10,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [path => $path], [method => $string], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [no_escape => $bool], [debug => $bool] );
 
 Instantiates a new template. Accepts the following arguments:
 
@@ -78,9 +78,15 @@ template to get debugging messages is to be surrounded by
   <?lsmb END ?>
     </tr>
 
+<<<<<<< HEAD
 =item method/media (optional)
 
 The output method to use, defaults to HTTP.  Media is a synonym for method
+=======
+=item output_file (optional)
+
+The base name of the file for output.
+>>>>>>> master
 
 =back
 
@@ -326,11 +332,10 @@ sub new {
     $logger->trace('output_options, keys: ' . join '|', keys %{$args{output_options}});
 
     $self->{$_} = $args{$_}
-        for (qw( template format language no_escape debug locale method
+        for (qw( template format language no_escape debug locale
                  format_options output_options additional_vars ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
-    $self->{method} ||= $args{media};
     if ($self->{language}){ # Language takes precedence over locale
         $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
     }
