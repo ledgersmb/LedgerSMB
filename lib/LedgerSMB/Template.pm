@@ -113,10 +113,6 @@ and leaves auto-output enabled.
 Additionally, variables are added to the template processor as required
 by the HTML UI.
 
-=item preprocess ($rawvars, $escape)
-
-Preprocess for rendering.
-
 
 =item render($hashref)
 
@@ -132,6 +128,17 @@ extension as appropriate.
 
 Returns a hash with the default arguments for the Template and the
 desired file extention
+
+=back
+
+=head1 FUNCTIONS
+
+=over
+
+=item preprocess ($rawvars, $escape)
+
+Preprocess for rendering. This is not an object method, it is a standalone
+subroutine.
 
 =back
 
