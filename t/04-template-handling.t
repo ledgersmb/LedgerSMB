@@ -78,10 +78,8 @@ is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
 ####################
 
 # Template->new
-$myconfig = {};
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'user'     => $myconfig,
     'language' => 'de',
     'path'     => 't/data',
     'format'   => 'HTML'
@@ -95,7 +93,6 @@ is($template->{include_path}, 't/data',
 
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'user'     => $myconfig,
     'format'   => 'HTML',
     'path'     => 't/data',
     'template' => '04-template',
@@ -108,7 +105,6 @@ isa_ok($template, 'LedgerSMB::Template',
 
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'user'     => $myconfig,
     'format'   => 'HTML',
     'path'     => 't/data',
     'template' => '04-template-2'
@@ -123,6 +119,7 @@ throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
 #####################
 
 SKIP: {
+    $myconfig = {};
     skip "LATEX_TESTING not set", 7 unless $ENV{LATEX_TESTING};
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -217,7 +214,6 @@ SKIP: {
 
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'user'     => $myconfig,
     'format'   => 'TXT',
     'path'     => 't/data',
     'template' => '04-template'
@@ -232,7 +228,6 @@ is($template->{output}, "I am a template.\nLook at me foo&bar.",
 
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'user'     => $myconfig,
     'format'   => 'HTML',
     'path'     => 't/data',
     'template' => '04-template'
@@ -260,22 +255,6 @@ ok(defined $template,
         'Template, private (preprocess): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template',
         'Template, private (preprocess): Object creation with format and template');
-my $number = Math::BigFloat->new(17.5);
-isa_ok($number, 'Math::BigFloat',
-        'Template, private (preprocess): number');
-## Commending out the one below because it is not valid when Math::BigInt::GMP is loaded
-# $template->_preprocess($number);
-## Commenting out these tests since currently the functionality is known broken
-## and unused
-#cmp_ok($number, 'eq', '17,50',
-#       'Template, private (_preprocess): Math::BigFloat conversion');
-#$number = [Math::BigFloat->new(1008.51), 'hello'];
-#$template->_preprocess($number);
-#
-#cmp_ok($number->[0], 'eq', '1.008,51',
-#       'Template, private (_preprocess): Math::BigFloat conversion (array)');
-#cmp_ok($number->[1], 'eq', 'hello',
-#       'Template, private (_preprocess): no conversion (array)');
 
 ###################################
 ## LedgerSMB::Template::Elements ##
@@ -347,7 +326,7 @@ is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
 # LPR PRinting Tests
 SKIP: {
-#    skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
+    skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
     use LedgerSMB::Sysconfig;
     %LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
 
