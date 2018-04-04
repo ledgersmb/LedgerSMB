@@ -137,8 +137,8 @@ SKIP: {
         'Template, new (PDF): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (PDF): Object creation with format and template');
-    is($template->render({'login' => 'foo&bar'}),
-        "$temp/04-template-output-$$.pdf",
+    isa_ok($template->render({'login' => 'foo&bar'}),
+        'LedgerSMB::Template',
         'Template, render (PDF): Simple PDF template, default filename');
     ok(-e "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): File created');
@@ -160,8 +160,8 @@ SKIP: {
         'Template, new (PS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (PS): Object creation with format and template');
-    is($template->render({'login' => 'foo\&bar'}),
-        "$temp/04-template-output-$$.ps",
+    isa_ok($template->render({'login' => 'foo\&bar'}),
+        'LedgerSMB::Template',
         'Template, render (PS): Simple Postscript template, default filename');
     ok(-e "$temp/04-template-output-$$.ps", 'Template, render (PS): File created');
     is(unlink("$temp/04-template-output-$$.ps"), 1,
@@ -182,8 +182,8 @@ SKIP: {
         'Template, new (XLS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLS): Object creation with format and template');
-    is($template->render({'login' => 'foo\&bar'}),
-        "$temp/04-template-output-$$.xls",
+    isa_ok($template->render({'login' => 'foo\&bar'}),
+        'LedgerSMB::Template',
         'Template, render (XLS): Simple Postscript template, default filename');
     ok(-e "$temp/04-template-output-$$.xls", 'Template, render (XLS): File created');
     is(unlink("$temp/04-template-output-$$.xls"), 1,
@@ -204,8 +204,8 @@ SKIP: {
         'Template, new (XLSX): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLSX): Object creation with format and template');
-    is($template->render({'login' => 'foo\&bar'}),
-        "$temp/04-template-output-$$.xlsx",
+    isa_ok($template->render({'login' => 'foo\&bar'}),
+        'LedgerSMB::Template',
         'Template, render (XLSX): Simple Postscript template, default filename');
     ok(-e "$temp/04-template-output-$$.xlsx", 'Template, render (XLSX): File created');
     is(unlink("$temp/04-template-output-$$.xlsx"), 1,
@@ -347,7 +347,7 @@ is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
 # LPR PRinting Tests
 SKIP: {
-    skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
+#    skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
     use LedgerSMB::Sysconfig;
     %LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
 
