@@ -80,7 +80,7 @@ localepath = locale/po
 
 # location where compiled templates are stored
 #
-# When relative, appended to the directory specified by	File::Spec->tmpdir()
+# When relative, appended to the directory specified by File::Spec->tmpdir()
 #
 #templates_cache = lsmb_templates
 
