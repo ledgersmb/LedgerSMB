@@ -190,6 +190,24 @@ SKIP: {
         'Template, render (XLSX): Simple Postscript template, default filename');
     # xlsx is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (XLSX): output is XLSX');
+
+    $template = undef;
+    $template = LedgerSMB::Template->new(
+        'format'   => 'ODS',
+        'path'     => 't/data',
+        'template' => '04-template'
+    );
+    ok(defined $template,
+        'Template, new (ODS): Object creation with format and template');
+    isa_ok($template, 'LedgerSMB::Template',
+        'Template, new (ODS): Object creation with format and template');
+    is($template->{include_path}, 't/data',
+        'Template, new (ODS): Object creation with format and template');
+    isa_ok($template->render({'login' => 'foo\&bar'}),
+        'LedgerSMB::Template',
+        'Template, render (ODS): Simple Postscript template, default filename');
+    # xlsx is actualy a zip file.
+    like($template->{output}, qr/^PK/, 'Template, render (ODS): output is ODS');
 }
 
 $template = undef;
