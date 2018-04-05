@@ -101,7 +101,11 @@ throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
 #####################
 
 SKIP: {
-    #skip "LATEX_TESTING not set", 7 unless $ENV{LATEX_TESTING};
+    eval {require Template::Plugin::Latex} ||
+        skip 'Template::Plugin::Latex not installed', 10;
+    eval {require Template::Latex} ||
+        skip 'Template::Latex not installed', 10;
+
     $template = undef;
     $template = LedgerSMB::Template->new(
         'format'   => 'PDF',
@@ -135,6 +139,14 @@ SKIP: {
         'LedgerSMB::Template',
         'Template, render (PS): Simple Postscript template, default filename');
     like($template->{output}, qr/^%!PS/, 'Template, render (PS): output is Postscript');
+}
+
+
+SKIP: {
+    eval {require Excel::Writer::XLSX} ||
+        skip 'Excel::Writer::XLSX not installed', 10;
+    eval {require Spreadsheet::WriteExcel} ||
+        skip 'Spreadsheet::WriteExcel not installed', 10;
 
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -172,6 +184,13 @@ SKIP: {
         'Template, render (XLSX): Simple Postscript template, default filename');
     # xlsx is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (XLSX): output is XLSX');
+}
+
+SKIP: {
+    eval {require XML::Twig } ||
+        skip 'XML::Twig not installed', 5;
+    eval {require OpenOffice::OODoc} ||
+        skip 'OpenOffice::OODoc not installed', 5;
 
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -188,7 +207,7 @@ SKIP: {
     isa_ok($template->render({'login' => 'foo\&bar'}),
         'LedgerSMB::Template',
         'Template, render (ODS): Simple Postscript template, default filename');
-    # xlsx is actualy a zip file.
+    # ods is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (ODS): output is ODS');
 }
 
@@ -285,9 +304,13 @@ is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
 is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
 
-# LPR PRinting Tests
+# LPR Printing Tests
 SKIP: {
-    #skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
+    eval {require Template::Plugin::Latex} ||
+        skip 'Template::Plugin::Latex not installed', 10;
+    eval {require Template::Latex} ||
+        skip 'Template::Latex not installed', 10;
+
     my $temp = File::Temp->new();
     %LedgerSMB::Sysconfig::printer = ('test' => "cat > $temp");
 
