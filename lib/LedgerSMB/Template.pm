@@ -563,9 +563,6 @@ sub _render {
         die "Template error: $err" if $err;
     }
 
-    if($self->{_no_postprocess}) {
-        return undef;
-    }
     $format->can('postprocess')->($self, $output, $config);
     return;
 }
