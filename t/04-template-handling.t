@@ -7,6 +7,7 @@ use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
 
+use File::Temp;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
@@ -16,7 +17,6 @@ use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
-my $temp = $LedgerSMB::Sysconfig::tempdir;
 my $template;
 my $locale;
 
@@ -289,8 +289,8 @@ is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 # LPR PRinting Tests
 SKIP: {
     #skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
-    use LedgerSMB::Sysconfig;
-    %LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
+    my $temp = File::Temp->new();
+    %LedgerSMB::Sysconfig::printer = ('test' => "cat > $temp");
 
     $template = LedgerSMB::Template->new(
         'format'   => 'PDF',
@@ -305,6 +305,6 @@ SKIP: {
     );
 
     my $LPR_TEST;
-    ok(open ($LPR_TEST, '<', "t/var/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
+    ok(open ($LPR_TEST, '<', $temp), 'LedgerSMB::Template::_output_lpr output file opened successfully');
     like(<$LPR_TEST>, qr/^%PDF/, 'output file is pdf');
 }
