@@ -4,17 +4,25 @@ LedgerSMB::Template - Template support module for LedgerSMB
 
 =head1 SYNOPSIS
 
-This module renders templates.
+This module renders templates to an in-memory property.
+
+Unlike legacy versions, this module does not handle the
+output/delivery of the rendered template (to browser, file,
+e-mail etc).
 
 =head1 METHODS
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
 
 Instantiates a new template. Accepts the following arguments:
 
 =over
+
+=item user (optional)
+
+A LedgerSMB::User object defining user preferences.
 
 =item template
 
@@ -26,7 +34,8 @@ to resolve to the correct template file.
 
 =item format
 
-The format to be used.  Currently HTML, PS, PDF, TXT and CSV are supported.
+The format to be used.  Currently HTML, PS, PDF, TXT, CSV, ODS, XLS, XLSX
+are supported, subject to their dependencies being available.
 
 =item format_options (optional)
 
