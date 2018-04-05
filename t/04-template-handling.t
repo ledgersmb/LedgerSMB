@@ -7,17 +7,11 @@ use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
 
-use LedgerSMB::AM;
-use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
-use LedgerSMB::Template::Elements;
-use LedgerSMB::Template::CSV;
 use LedgerSMB::Template::HTML;
-use LedgerSMB::Template::TXT;
-use LedgerSMB::App_State;
 use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
