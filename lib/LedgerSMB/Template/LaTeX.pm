@@ -121,7 +121,7 @@ Latex plugin.
 sub initialize_template {
     my ($parent, $config, $template) = @_;
 
-    my %options = ( FORMAT => $config->{_format} );
+    my %options = ( format => $config->{_format} );
     Template::Plugin::Latex->new($template->context, \%options);
 
     return undef;
