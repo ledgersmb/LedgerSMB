@@ -257,23 +257,6 @@ isa_ok($template, 'LedgerSMB::Template',
 ## LedgerSMB::Template::Elements ##
 ###################################
 
-$template = undef;
-
-my $lsmb = LedgerSMB->new();
-$locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
-  or $lsmb->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
-
-
-$template = LedgerSMB::Template->new(
-    'user'     => {numberformat => '1.000,00'},
-    'format'   => 'HTML',
-    'path'     => 't/data',
-    'locale'   => $locale,
-    'template' => '04-complex_template'
-);
-
-$template->render({});
-
 my $contact_request = {
         entity_id    => 1,
         control_code => 'test1',
