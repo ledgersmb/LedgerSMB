@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Test::More 'no_plan';
-use Test::Trap qw(trap $trap);
 use Test::Exception;
 
 use File::Temp;
