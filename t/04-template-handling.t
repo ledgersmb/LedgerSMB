@@ -119,11 +119,9 @@ throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
 #####################
 
 SKIP: {
-    $myconfig = {};
-    skip "LATEX_TESTING not set", 7 unless $ENV{LATEX_TESTING};
+    #skip "LATEX_TESTING not set", 7 unless $ENV{LATEX_TESTING};
     $template = undef;
     $template = LedgerSMB::Template->new(
-        'user'     => $myconfig,
         'format'   => 'PDF',
         'path'     => 't/data',
         'template' => '04-template'
@@ -137,17 +135,11 @@ SKIP: {
     isa_ok($template->render({'login' => 'foo&bar'}),
         'LedgerSMB::Template',
         'Template, render (PDF): Simple PDF template, default filename');
-    ok(-e "$temp/04-template-output-$$.pdf",
-        'Template, render (PDF): File created');
-    is(unlink("$temp/04-template-output-$$.pdf"), 1,
-        'Template, render (PDF): removing testfile');
-    ok(!-e "$temp/04-template-output-$$.pdf",
-        'Template, render (PDF): testfile removed');
+    like($template->{output}, qr/^%PDF/, 'Template, render (PDF): output is PDF');
 
     $template = undef;
     $template = LedgerSMB::Template->new(
-        'user'     => $myconfig,
-        'format'   => 'PS',
+        'format'   => 'postscript',
         'path'     => 't/data',
         'template' => '04-template'
     );
@@ -160,15 +152,10 @@ SKIP: {
     isa_ok($template->render({'login' => 'foo\&bar'}),
         'LedgerSMB::Template',
         'Template, render (PS): Simple Postscript template, default filename');
-    ok(-e "$temp/04-template-output-$$.ps", 'Template, render (PS): File created');
-    is(unlink("$temp/04-template-output-$$.ps"), 1,
-        'Template, render (PS): removing testfile');
-    ok(!-e "$temp/04-template-output-$$.ps",
-        'Template, render (PS): testfile removed');
+    like($template->{output}, qr/^%!PS/, 'Template, render (PS): output is Postscript');
 
     $template = undef;
     $template = LedgerSMB::Template->new(
-        'user'     => $myconfig,
         'format'   => 'XLS',
         'path'     => 't/data',
         'template' => '04-template'
@@ -182,15 +169,12 @@ SKIP: {
     isa_ok($template->render({'login' => 'foo\&bar'}),
         'LedgerSMB::Template',
         'Template, render (XLS): Simple Postscript template, default filename');
-    ok(-e "$temp/04-template-output-$$.xls", 'Template, render (XLS): File created');
-    is(unlink("$temp/04-template-output-$$.xls"), 1,
-        'Template, render (XLS): removing testfile');
-    ok(!-e "$temp/04-template-output-$$.xls",
-        'Template, render (XLS): testfile removed');
+    # xls is a Microsoft BIFF format file.
+    # make sure it looks like one by checking the first few header bytes.
+    like($template->{output}, qr/^\xD0\xCF\x11\xE0/, 'Template, render (XLS): output is XLS');
 
     $template = undef;
     $template = LedgerSMB::Template->new(
-        'user'     => $myconfig,
         'format'   => 'XLSX',
         'path'     => 't/data',
         'template' => '04-template'
@@ -204,12 +188,8 @@ SKIP: {
     isa_ok($template->render({'login' => 'foo\&bar'}),
         'LedgerSMB::Template',
         'Template, render (XLSX): Simple Postscript template, default filename');
-    ok(-e "$temp/04-template-output-$$.xlsx", 'Template, render (XLSX): File created');
-    is(unlink("$temp/04-template-output-$$.xlsx"), 1,
-        'Template, render (XLSX): removing testfile');
-    ok(!-e "$temp/04-template-output-$$.xlsx",
-        'Template, render (XLSX): testfile removed');
-
+    # xlsx is actualy a zip file.
+    like($template->{output}, qr/^PK/, 'Template, render (XLSX): output is XLSX');
 }
 
 $template = undef;
