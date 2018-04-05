@@ -22,8 +22,6 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
-my $form;
-my $myconfig;
 my $template;
 my $locale;
 
@@ -259,7 +257,6 @@ isa_ok($template, 'LedgerSMB::Template',
 ###################################
 
 $template = undef;
-$form = undef;
 
 my $lsmb = LedgerSMB->new();
 $locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
@@ -312,7 +309,6 @@ my $payment_template =  LedgerSMB::Template->new(
     path            => 'UI/payments',
     template        => 'payments_detail',
     format          => 'HTML',
-    no_auto_output  => 1,
 );
 
 $payment_template->render({ request => { script => '' },
@@ -329,11 +325,9 @@ SKIP: {
     %LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
 
     $template = LedgerSMB::Template->new(
-        'user'           => $myconfig,
         'format'         => 'PDF',
         'template'       => '04-template',
         'locale'         => $locale,
-        'no_auto_output' => 1
     );
     $template->render({media => 'test'});
     $template->output(media => 'test');
