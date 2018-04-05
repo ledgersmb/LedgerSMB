@@ -28,16 +28,6 @@ my $locale;
 
 $locale = LedgerSMB::Locale->get_handle('fr');
 
-##############
-## AM tests ##
-##############
-my $expStackTrace = 0;
-if ( defined $ENV{PERL5OPT}
-     && ($ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ ||
-         $ENV{PERL5OPT}=~/.*?Carp::Always.*/ ))
-{
-   $expStackTrace = 1;
-}
 
 ###############################################
 ## LedgerSMB::Template::preprocess checks ##
