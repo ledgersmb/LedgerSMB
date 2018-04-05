@@ -13,17 +13,6 @@
 # DB authentication module included.
 auth = DB
 
-# Be aware of tempdir setting. If client_browser and server_apache on same
-# machine, sharing tmp-dir , problems 'Permission denied' if server tries to
-# write temp-file which already exists as client-owned
-#
-# Note tempdir is used as the basename of the dir, the real dirname is
-# equivalent to....
-#    /tmp/ledgersmb-$EUID/
-# If you specify a different dir to /tmp/ledgersmb ensure it's parent is
-# writable by the running user.
-tempdir = /tmp/ledgersmb
-
 # This is the logical CSS directory.  I.e. it is what comes before the
 # ledgersmb.css in the url.  Example might be /my_css_dir/ or
 # http://localhost/other_css_dir/
@@ -91,7 +80,7 @@ localepath = locale/po
 
 # location where compiled templates are stored
 #
-# When relative, appended to the directory specified in the 'tempdir' variable
+# When relative, appended to the directory specified by	File::Spec->tmpdir()
 #
 #templates_cache = lsmb_templates
 

@@ -14,6 +14,7 @@ Installation & Administration
 * No more warnings from database creation and upgrade (Erik H)
 * Improved logging: various logs correlated using unique request IDs (Erik H)
 * Functions 'warn()' and 'die()' logged to debug logs (Erik H)
+* Removed 'tempdir' configuration option (Nick P)
 
 Performance
 * PSGI responses no longer written to file but kept in memory (Erik H/Yves L)

@@ -370,13 +370,6 @@ def 'fs_cssdir',
     default => 'css/',
     doc => q{};
 
-# Temporary files stored at"
-def 'tempdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} && "$ENV{TEMP}/ledgersmb" || '/tmp/ledgersmb' }, # We can't specify envvar=>'TEMP' as that would overwrite TEMP with anything set in ledgersmb.conf. Conversely we need to use TEMP as the prefix for the default
-    suffix => "-$EUID",
-    doc => q{};
-
 # Backup files stored at"
 def 'backupdir',
     section => 'paths',
@@ -603,44 +596,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
 
-if(!(-d LedgerSMB::Sysconfig::tempdir())){
-     my $rc;
-     if ($Config{path_sep} eq ';'){ # We need an actual platform configuration variable
-         $rc = system('mkdir ' . LedgerSMB::Sysconfig::tempdir());
-     } else {
-         $rc=system('mkdir -p ' . LedgerSMB::Sysconfig::tempdir());
-     }
-}
-
-sub check_permissions {
-    my $tempdir = LedgerSMB::Sysconfig::tempdir();
-
-    if(!(-d "$tempdir")){
-        die_pretty( "$tempdir wasn't created.",
-                    "Does UID $EUID have access to $tempdir\'s parent?"
-        );
-    }
-
-    if(!(-r "$tempdir")){
-        die_pretty(" $tempdir can't be read from.",
-                    "Does UID $EUID have read permission?"
-        );
-    }
-
-    if(!(-w "$tempdir")){
-        die_pretty( "$tempdir can't be written to.",
-                    "Does UID $EUID have write permission?"
-        );
-    }
-
-    if(!(-x "$tempdir")){
-        die_pretty( "$tempdir can't be listed.",
-                    "Does UID $EUID have execute permission?"
-        );
-    }
-    return;
-}
-
 # if you have latex installed set to 1
 ###TODO-LOCALIZE-DOLLAR-AT
 our $latex = 0;
@@ -667,6 +622,5 @@ sub override_defaults {
 }
 
 override_defaults;
-check_permissions;
 
 1;
