@@ -6,15 +6,16 @@ LedgerSMB::Template - Template support module for LedgerSMB
 
 This module renders templates to an in-memory property.
 
-Unlike legacy versions, this module does not handle the
-output/delivery of the rendered template (to browser, file,
-e-mail etc).
+This module does not handle the
+output/delivery of the rendered template to browser, file,
+e-mail etc.  For that, see modules such as LedgerSMB::PSGI::Util
+and LedgerSMB::Legacy_Util.
 
 =head1 METHODS
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
 
 Instantiates a new template. Accepts the following arguments:
 
@@ -44,9 +45,13 @@ details.
 
 =item output_options (optional)
 
-A hash of output-specific options.  If the output is sent as an HTTP
-response, the output option C<filename> causes C<Content-Disposition>
-headers to be generated of the type C<attachment> (forcing file download).
+A hash of output-specific options, not used internally by LedgerSMB::Template.
+These options may be used by output/delivery code.
+
+For example, if the output is sent as an HTTP response using
+LedgerSMB::PSGI::Util::template_to_psgi(),  the output option C<filename>
+causes C<Content-Disposition> headers to be generated of the type
+C<attachment> (forcing file download).
 
 =item locale (optional)
 
@@ -68,7 +73,7 @@ current database.  Resolving the template takes the 'language' and
 
 =item no_escape (optional)
 
-Disables escaping on the template variables.
+Disables escaping on the template variables when true.
 
 =item debug (optional)
 
@@ -87,17 +92,8 @@ template to get debugging messages is to be surrounded by
   <?lsmb END ?>
     </tr>
 
-<<<<<<< HEAD
-=item method/media (optional)
-
-The output method to use, defaults to HTTP.  Media is a synonym for method
-=======
-=item output_file (optional)
-
-The base name of the file for output.
->>>>>>> master
-
 =back
+
 
 =item available_formats()
 
@@ -115,9 +111,12 @@ Returns a list of format names, any of the following (in order) as applicable:
 
 =item XLS
 
+=item XLSX
+
 =item ODS
 
 =back
+
 
 =item new_UI($request, template => $file, ...)
 
@@ -133,11 +132,15 @@ by the HTML UI.
 
 Returns the LedgerSMB::Template object itself. Dies on error.
 
+The rendered template result is available from the LedgerSMB::Template
+object's C<output> property.
+
 
 =item get_template_source($extension)
 
 Returns the name of the Template source, incorporating the specified
 extension as appropriate.
+
 
 =item get_template_args($extension)
 
@@ -145,6 +148,7 @@ Returns a hash with the default arguments for the Template and the
 desired file extention
 
 =back
+
 
 =head1 FUNCTIONS
 
@@ -156,6 +160,28 @@ Preprocess for rendering. This is not an object method, it is a standalone
 subroutine.
 
 =back
+
+
+=head1 PROPERTIES
+
+=over 
+
+=item output
+
+The result of rendering the template.
+
+=item mimetype
+
+The mimetype of the rendered template.
+
+=item output_options
+
+Not used internally by LedgerSMB::Template, but used as a way of passing
+options to output/delivery code, such as
+LedgerSMB::PSGI::Util::template_to_psgi().
+
+=back
+
 
 =head1 TEMPLATE FUNCTIONS
 
