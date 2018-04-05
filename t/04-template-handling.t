@@ -322,8 +322,5 @@ SKIP: {
 
     my $LPR_TEST;
     ok(open ($LPR_TEST, '<', "t/var/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
-
-    my $line1 = <$LPR_TEST>;
-
-    like($line1, qr/^%PDF/, 'output file is pdf');
+    like(<$LPR_TEST>, qr/^%PDF/, 'output file is pdf');
 }
