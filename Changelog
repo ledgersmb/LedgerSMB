@@ -55,6 +55,12 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.20
+* Fix inability to save custom sequences (System > Sequence) (Erik H, #3511)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.19
 * Fix payment screen localized amount formatting problem (Erik H, #3283)
 * Separate error and output 'psql' logs during database upgrade (Nick P)

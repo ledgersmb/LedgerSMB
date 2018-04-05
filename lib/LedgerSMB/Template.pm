@@ -4,29 +4,39 @@ LedgerSMB::Template - Template support module for LedgerSMB
 
 =head1 SYNOPSIS
 
-This module renders templates.
+This module renders templates to an in-memory property.
+
+This module does not handle the
+output/delivery of the rendered template to browser, file,
+e-mail etc.  For that, see modules such as LedgerSMB::PSGI::Util
+and LedgerSMB::Legacy_Util.
 
 =head1 METHODS
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale], [language => $string], [include_path => $path], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
 
-This command instantiates a new template:
+Instantiates a new template. Accepts the following arguments:
 
 =over
+
+=item user (optional)
+
+A LedgerSMB::User object defining user preferences.
 
 =item template
 
 The template to be processed.  This is the file that is the template to be
-processed. When C<include_path> equals 'DB', the file is retrieved from
+processed. When 'path' equals 'DB', the file is retrieved from
 the database instead of from disk.
 Based on the specified format, an appropriate extension is appended
 to resolve to the correct template file.
 
 =item format
 
-The format to be used.  Currently HTML, PS, PDF, TXT and CSV are supported.
+The format to be used.  Currently HTML, PS, PDF, TXT, CSV, ODS, XLS, XLSX
+are supported, subject to their dependencies being available.
 
 =item format_options (optional)
 
@@ -35,9 +45,13 @@ details.
 
 =item output_options (optional)
 
-A hash of output-specific options.  If the output is sent as an HTTP
-response, the output option C<filename> causes C<Content-Disposition>
-headers to be generated of the type C<attachment> (forcing file download).
+A hash of output-specific options, not used internally by LedgerSMB::Template.
+These options may be used by output/delivery code.
+
+For example, if the output is sent as an HTTP response using
+LedgerSMB::PSGI::Util::template_to_psgi(),  the output option C<filename>
+causes C<Content-Disposition> headers to be generated of the type
+C<attachment> (forcing file download).
 
 =item locale (optional)
 
@@ -49,7 +63,7 @@ gettext function.
 
 The language for template selection.
 
-=item include_path (optional)
+=item path (optional)
 
 Overrides the template directory.
 
@@ -59,7 +73,7 @@ current database.  Resolving the template takes the 'language' and
 
 =item no_escape (optional)
 
-Disables escaping on the template variables.
+Disables escaping on the template variables when true.
 
 =item debug (optional)
 
@@ -78,11 +92,8 @@ template to get debugging messages is to be surrounded by
   <?lsmb END ?>
     </tr>
 
-=item output_file (optional)
-
-The base name of the file for output.
-
 =back
+
 
 =item available_formats()
 
@@ -100,9 +111,12 @@ Returns a list of format names, any of the following (in order) as applicable:
 
 =item XLS
 
+=item XLSX
+
 =item ODS
 
 =back
+
 
 =item new_UI($request, template => $file, ...)
 
@@ -113,29 +127,61 @@ and leaves auto-output enabled.
 Additionally, variables are added to the template processor as required
 by the HTML UI.
 
-=item preprocess ($rawvars, $escape)
-
-Preprocess for rendering.
-
 
 =item render($hashref)
 
-TODO
+Returns the LedgerSMB::Template object itself. Dies on error.
 
-=item output
+The rendered template result is available from the LedgerSMB::Template
+object's C<output> property.
 
-This function outputs the rendered file in an appropriate manner.
 
-=item my $source = get_template_source($get_template)
+=item get_template_source($extension)
 
-Returns the Template source when common or call a specialized getter if not
+Returns the name of the Template source, incorporating the specified
+extension as appropriate.
 
-=item my $arghash = get_template_args($extension)
+
+=item get_template_args($extension)
 
 Returns a hash with the default arguments for the Template and the
 desired file extention
 
 =back
+
+
+=head1 FUNCTIONS
+
+=over
+
+=item preprocess ($rawvars, $escape)
+
+Preprocess for rendering. This is not an object method, it is a standalone
+subroutine.
+
+=back
+
+
+=head1 PROPERTIES
+
+=over 
+
+=item output
+
+The result of rendering the template.
+
+=item mimetype
+
+The mimetype of the rendered template.
+
+=item output_options
+
+Not used internally by LedgerSMB::Template, but used as a way of passing
+options to output/delivery code, such as
+LedgerSMB::PSGI::Util::template_to_psgi().
+
+=back
+
 
 =head1 TEMPLATE FUNCTIONS
 
@@ -276,19 +322,15 @@ use Carp;
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
-use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
 
 use Template::Parser;
 use Log::Log4perl;
-use File::Copy 'cp';
 use File::Spec;
-use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
 use Scalar::Util qw(reftype);
-use Try::Tiny;
 
 use parent qw( Exporter );
 our @EXPORT_OK = qw( preprocess );
@@ -556,9 +598,6 @@ sub _render {
         die "Template error: $err" if $err;
     }
 
-    if($self->{_no_postprocess}) {
-        return undef;
-    }
     $format->can('postprocess')->($self, $output, $config);
     return;
 }
