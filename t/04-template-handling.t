@@ -307,9 +307,9 @@ is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 # LPR Printing Tests
 SKIP: {
     eval {require Template::Plugin::Latex} ||
-        skip 'Template::Plugin::Latex not installed', 10;
+        skip 'Template::Plugin::Latex not installed', 2;
     eval {require Template::Latex} ||
-        skip 'Template::Latex not installed', 10;
+        skip 'Template::Latex not installed', 2;
 
     my $temp = File::Temp->new();
     %LedgerSMB::Sysconfig::printer = ('test' => "cat > $temp");
