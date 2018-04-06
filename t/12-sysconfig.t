@@ -10,12 +10,11 @@ chdir 't/data';
 require LedgerSMB::Sysconfig;
 
 
-plan tests => (10+scalar(@LedgerSMB::Sysconfig::scripts)
+plan tests => (9+scalar(@LedgerSMB::Sysconfig::scripts)
                +scalar(@LedgerSMB::Sysconfig::newscripts));
 
 is $LedgerSMB::Sysconfig::auth, 'DB2', 'Auth set correctly';
 is $LedgerSMB::Sysconfig::cssdir, 'css3/', 'css dir set correctly';
-is $LedgerSMB::Sysconfig::fs_cssdir, 'css4', 'css fs dir set correctly';
 is $LedgerSMB::Sysconfig::cache_templates, 5, 'template caching working';
 is $LedgerSMB::Sysconfig::language, 'en2', 'language set correctly';
 is $LedgerSMB::Sysconfig::check_max_invoices, '52',

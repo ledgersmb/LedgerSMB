@@ -18,10 +18,6 @@ auth = DB
 # http://localhost/other_css_dir/
 cssdir = css/
 
-# This is the location on the file system where the css files are, for editing
-# and selection.  An example might be /var/www/ledgersmb_css/
-fs_cssdir = css/
-
 # If set to a true value this caches templates.  Typically it will be set to 0
 # to disable or 1 to enable.
 cache_templates = 0

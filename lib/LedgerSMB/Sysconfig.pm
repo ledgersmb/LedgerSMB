@@ -365,11 +365,6 @@ def 'cssdir',
     default => 'css/',
     doc => q{};
 
-def 'fs_cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
-
 # Path to the translation files
 def 'localepath',
     section => 'paths',
