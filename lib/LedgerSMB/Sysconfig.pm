@@ -354,12 +354,6 @@ def 'cache_templates',
 
 ### SECTION  ---   paths
 
-def 'pathsep',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => ':',
-    doc => q{
-The documentation for the 'main.pathsep' key};
-
 def 'cssdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => 'css/',
