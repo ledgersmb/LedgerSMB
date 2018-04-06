@@ -42,9 +42,6 @@ images  = UI/images
 localepath = locale/po
 
 [programs]
-# program to use for file compression
-gzip       = gzip -S .gz
-
 # For latex and pdflatex, specify  full path.  These will be used to configure
 # Template::Latex so it can find them.  This can be used to specify programs
 # other than vanilla latex and pdflatex, such as the xe varieties of either one,

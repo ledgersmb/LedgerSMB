@@ -478,8 +478,6 @@ for ($cfg->Parameters('printers')){
 
 # Programs
 our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
-our $gzip = $cfg->val('programs', 'gzip', 'gzip -S .gz');
-
 
 
 # Whitelist for redirect destination / this isn't really configuration.
