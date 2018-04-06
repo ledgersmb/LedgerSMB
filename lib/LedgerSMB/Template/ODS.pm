@@ -18,9 +18,6 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
-use IO::Scalar;
-use Template;
-use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
@@ -29,8 +26,6 @@ use HTML::Escape;
 use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
 
-my $binmode = undef;
-my $extension = 'ods';
 
 # SC: The ODS handlers need these vars in common
 my $ods;

@@ -14,7 +14,6 @@ package LedgerSMB::Template::HTML;
 use strict;
 use warnings;
 
-use Template;
 use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;

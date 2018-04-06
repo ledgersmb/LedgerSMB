@@ -14,8 +14,6 @@ package LedgerSMB::Template::CSV;
 use warnings;
 use strict;
 
-use Template;
-
 my $binmode = ':utf8';
 my $extension = 'csv';
 

@@ -19,7 +19,6 @@ use strict;
 use warnings;
 
 use IO::Scalar;
-use Template;
 use Excel::Writer::XLSX;
 use Spreadsheet::WriteExcel;
 
