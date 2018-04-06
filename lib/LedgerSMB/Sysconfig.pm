@@ -337,11 +337,6 @@ def 'DBI_TRACE',
     default => 0,
     doc => q{};
 
-def 'no_db_str',
-    section => 'main',
-    default => 'database',
-    doc => q{};
-
 def 'cache_templates',
     section => 'main',
     default => 0,
