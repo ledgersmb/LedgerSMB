@@ -249,6 +249,21 @@ is($template->{mimetype}, 'text/plain', 'Template, new (HTML): correct mimetype'
 
 $template = undef;
 $template = LedgerSMB::Template->new(
+    'format'   => 'CSV',
+    'path'     => 't/data',
+    'template' => '04-template'
+);
+ok(defined $template,
+        'Template, new (CSV): Object creation with format and template');
+isa_ok($template, 'LedgerSMB::Template',
+       'Template, new (CSV): Object creation with format and template');
+$template->render({'login' => 'foo&bar'});
+is($template->{output}, "account,amount,description,project",
+        'Template, render (CSV): Simple TXT template, correct output');
+is($template->{mimetype}, 'text/csv', 'Template, new (CSV): correct mimetype');
+
+$template = undef;
+$template = LedgerSMB::Template->new(
     'format'   => 'HTML',
     'path'     => 't/data',
     'template' => '04-template'
