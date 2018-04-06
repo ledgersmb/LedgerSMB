@@ -342,11 +342,6 @@ def 'no_db_str',
     default => 'database',
     doc => q{};
 
-def 'db_autoupdate',
-    section => 'main',
-    default => undef,
-    doc => q{};
-
 def 'cache_templates',
     section => 'main',
     default => 0,
