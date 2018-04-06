@@ -14,7 +14,6 @@ package LedgerSMB::Template::TXT;
 use strict;
 use warnings;
 
-use Template;
 use DateTime;
 
 # The following are for EDI only
