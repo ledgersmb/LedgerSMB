@@ -563,7 +563,6 @@ our $log4perl_config = qq(
 
 
 # if you have latex installed set to 1
-###TODO-LOCALIZE-DOLLAR-AT
 our $latex = 0;
 
 
