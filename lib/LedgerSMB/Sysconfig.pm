@@ -198,11 +198,6 @@ def 'Log4perl',
     default => 1,
     doc => q{};
 
-def 'Log4perl_category',
-    section => 'debug',
-    default => 'plack',
-    doc => q{};
-
 def 'Memory',
     section => 'debug',
     default => 0,
