@@ -102,9 +102,9 @@ throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
 
 SKIP: {
     eval {require Template::Plugin::Latex} ||
-        skip 'Template::Plugin::Latex not installed', 10;
+        skip 'Template::Plugin::Latex not installed', 12;
     eval {require Template::Latex} ||
-        skip 'Template::Latex not installed', 10;
+        skip 'Template::Latex not installed', 12;
 
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -122,6 +122,11 @@ SKIP: {
         'LedgerSMB::Template',
         'Template, render (PDF): Simple PDF template, default filename');
     like($template->{output}, qr/^%PDF/, 'Template, render (PDF): output is PDF');
+    is(
+        $template->{mimetype},
+        'application/pdf',
+        'Template, render (PDF): correct mimetype'
+    );
 
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -139,14 +144,15 @@ SKIP: {
         'LedgerSMB::Template',
         'Template, render (PS): Simple Postscript template, default filename');
     like($template->{output}, qr/^%!PS/, 'Template, render (PS): output is Postscript');
+    is($template->{mimetype}, 'application/postscript', 'Template, render (PS): correct mimetype');
 }
 
 
 SKIP: {
     eval {require Excel::Writer::XLSX} ||
-        skip 'Excel::Writer::XLSX not installed', 10;
+        skip 'Excel::Writer::XLSX not installed', 12;
     eval {require Spreadsheet::WriteExcel} ||
-        skip 'Spreadsheet::WriteExcel not installed', 10;
+        skip 'Spreadsheet::WriteExcel not installed', 12;
 
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -166,6 +172,11 @@ SKIP: {
     # xls is a Microsoft BIFF format file.
     # make sure it looks like one by checking the first few header bytes.
     like($template->{output}, qr/^\xD0\xCF\x11\xE0/, 'Template, render (XLS): output is XLS');
+    is(
+        $template->{mimetype},
+        'application/vnd.ms-excel',
+        'Template, render (XLS): correct mimetype'
+    );
 
     $template = undef;
     $template = LedgerSMB::Template->new(
@@ -184,6 +195,11 @@ SKIP: {
         'Template, render (XLSX): Simple Postscript template, default filename');
     # xlsx is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (XLSX): output is XLSX');
+    is(
+        $template->{mimetype},
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Template, render (XLSX): correct mimetype'
+    );
 }
 
 SKIP: {
@@ -209,6 +225,11 @@ SKIP: {
         'Template, render (ODS): Simple Postscript template, default filename');
     # ods is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (ODS): output is ODS');
+    is(
+        $template->{mimetype},
+        'application/vnd.oasis.opendocument.spreadsheet',
+        'Template, render (ODS): correct mimetype'
+    );
 }
 
 $template = undef;
@@ -224,6 +245,7 @@ isa_ok($template, 'LedgerSMB::Template',
 $template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&bar.",
         'Template, render (TXT): Simple TXT template, correct output');
+is($template->{mimetype}, 'text/plain', 'Template, new (HTML): correct mimetype');
 
 $template = undef;
 $template = LedgerSMB::Template->new(
@@ -238,6 +260,7 @@ isa_ok($template, 'LedgerSMB::Template',
 $template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
         'Template, render (HTML): Simple HTML template, correct output');
+is($template->{mimetype}, 'text/html', 'Template, new (HTML): correct mimetype');
 
 #########################################
 ## LedgerSMB::Template private methods ##
