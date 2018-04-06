@@ -211,7 +211,14 @@ Returns the rendered template's mimetype.
 
 sub mimetype {
     my $config = shift;
-    return 'application/vnd.ms-excel';
+    my $mimetype;
+
+    if ($config->{_output_extension} eq 'xlsx') {
+        $mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    }
+    else {
+        $mimetype = 'application/vnd.ms-excel';
+    }
 }
 
 =back
