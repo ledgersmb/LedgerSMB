@@ -370,12 +370,6 @@ def 'fs_cssdir',
     default => 'css/',
     doc => q{};
 
-# Backup files stored at"
-def 'backupdir',
-    section => 'paths',
-    default => sub { $ENV{BACKUP} || '/tmp/ledgersmb-backups' },
-    doc => q{};
-
 # Path to the translation files
 def 'localepath',
     section => 'paths',

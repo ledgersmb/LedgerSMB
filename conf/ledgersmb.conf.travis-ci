@@ -55,9 +55,6 @@ templates  = templates
 images  = UI/images
 localepath = locale/po
 
-# location we write backup files to on the server
-backupdir = /tmp/ledgersmb-backups
-
 [programs]
 # program to use for file compression
 gzip       = gzip -S .gz
