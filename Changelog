@@ -14,7 +14,9 @@ Installation & Administration
 * No more warnings from database creation and upgrade (Erik H)
 * Improved logging: various logs correlated using unique request IDs (Erik H)
 * Functions 'warn()' and 'die()' logged to debug logs (Erik H)
-* Removed 'tempdir' configuration option (Nick P)
+* Removed need for 'tempdir' and associated configuration option (Nick P)
+* Removed numerous unused configuration options (Nick P)
+* Specific output formats can be disabled in configuration (Yves L)
 
 Performance
 * PSGI responses no longer written to file but kept in memory (Erik H/Yves L)
@@ -32,8 +34,8 @@ Code cleanup
 * Authentication handling centralized in request dispatch code (Erik H)
 * Cleaned up handling of uploaded files in request handling (Erik H)
 * Moved to Plack::Request (from CGI::Simple & LedgerSMB) (Erik H)
-* Template format plugin cleanup and refactoring (Erik H)
-* Template handling code cleanup (Erik H)
+* Template format plugin cleanup and refactoring (Erik H/Nick P)
+* Template handling code cleanup (Erik H/Nick P)
 * Unreferenced UI templates deleted (Erik H)
 * Centralized and more robust entry point for code in old/ (Erik H)
 * Merge of SQL-Ledger 2.8 and 3.0 migration code; improved consistency (Yves L)
@@ -45,6 +47,7 @@ Code cleanup
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
 * Enforce numerous Perl::Critic policies with code cleanup (Nick P/Rob R)
+* Add tests for all template output formats (Nick P)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
