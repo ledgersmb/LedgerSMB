@@ -198,11 +198,6 @@ def 'Log4perl',
     default => 1,
     doc => q{};
 
-def 'Log4perl_category',
-    section => 'debug',
-    default => 'plack',
-    doc => q{};
-
 def 'Memory',
     section => 'debug',
     default => 0,
@@ -337,16 +332,6 @@ def 'DBI_TRACE',
     default => 0,
     doc => q{};
 
-def 'no_db_str',
-    section => 'main',
-    default => 'database',
-    doc => q{};
-
-def 'db_autoupdate',
-    section => 'main',
-    default => undef,
-    doc => q{};
-
 def 'cache_templates',
     section => 'main',
     default => 0,
@@ -354,26 +339,9 @@ def 'cache_templates',
 
 ### SECTION  ---   paths
 
-def 'pathsep',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => ':',
-    doc => q{
-The documentation for the 'main.pathsep' key};
-
 def 'cssdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => 'css/',
-    doc => q{};
-
-def 'fs_cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
-
-# Backup files stored at"
-def 'backupdir',
-    section => 'paths',
-    default => sub { $ENV{BACKUP} || '/tmp/ledgersmb-backups' },
     doc => q{};
 
 # Path to the translation files
@@ -510,8 +478,6 @@ for ($cfg->Parameters('printers')){
 
 # Programs
 our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
-our $gzip = $cfg->val('programs', 'gzip', 'gzip -S .gz');
-
 
 
 # Whitelist for redirect destination / this isn't really configuration.
