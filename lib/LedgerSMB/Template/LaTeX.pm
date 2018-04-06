@@ -135,13 +135,26 @@ Implements the template's post-processing protocol.
 
 sub postprocess {
     my ($parent, $output, $config) = @_;
+    return undef;
+}
+
+=item mimetype()
+
+Returns the rendered template's mimetype.
+
+=cut
+
+sub mimetype {
+    my $config = shift;
+    my $mimetype;
 
     if (lc $config->{_format} eq 'pdf') {
-        $parent->{mimetype} = 'application/pdf';
+        $mimetype = 'application/pdf';
     } else {
-        $parent->{mimetype} = 'application/postscript';
+        $mimetype = 'application/postscript';
     }
-    return undef;
+
+    return $mimetype;
 }
 
 =back

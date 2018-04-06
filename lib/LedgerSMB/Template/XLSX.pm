@@ -183,8 +183,6 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $temp_output, $config) = @_;
 
-    $parent->{mimetype} = 'application/vnd.ms-excel';
-
     # Implement Template Toolkit's protocol: if the variable
     # '$output' contains a string, it's a filename. If it's a
     # reference, the variable referred to is the output memory area
@@ -203,6 +201,17 @@ sub postprocess {
     &_xlsx_process($workbook, $$temp_output);
 
     return undef;
+}
+
+=item mimetype()
+
+Returns the rendered template's mimetype.
+
+=cut
+
+sub mimetype {
+    my $config = shift;
+    return 'application/vnd.ms-excel';
 }
 
 =back
