@@ -835,9 +835,18 @@ sub postprocess {
     my ($parent, $output, $config) = @_;
 
     &_ods_process($config->{_output}, $$output);
-    $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
-
     return undef;
+}
+
+=item mimetype()
+
+Returns the rendered template's mimetype.
+
+=cut
+
+sub mimetype {
+    my $config = shift;
+    return 'application/vnd.oasis.opendocument.spreadsheet';
 }
 
 =back

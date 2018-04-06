@@ -304,6 +304,10 @@ configuration hash C<$config>.
 This function does not have a defined return value, but should return
 C<undef> for forward compatibility.
 
+=item mimetype()
+
+Returns the MIME content-type for the rendered template.
+
 =back
 
 =head1 Copyright 2007-2017, The LedgerSMB Core Team
@@ -599,6 +603,7 @@ sub _render {
     }
 
     $format->can('postprocess')->($self, $output, $config);
+    $self->{mimetype} = $format->can('mimetype')->($config);
     return;
 }
 
