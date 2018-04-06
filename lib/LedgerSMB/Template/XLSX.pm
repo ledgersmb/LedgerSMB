@@ -219,6 +219,8 @@ sub mimetype {
     else {
         $mimetype = 'application/vnd.ms-excel';
     }
+
+    return $mimetype;
 }
 
 =back
