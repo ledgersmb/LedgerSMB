@@ -14,6 +14,7 @@ Installation & Administration
 * No more warnings from database creation and upgrade (Erik H)
 * Improved logging: various logs correlated using unique request IDs (Erik H)
 * Functions 'warn()' and 'die()' logged to debug logs (Erik H)
+* Removed 'tempdir' configuration option (Nick P)
 
 Performance
 * PSGI responses no longer written to file but kept in memory (Erik H/Yves L)
@@ -55,6 +56,30 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.20
+* Fix inability to save custom sequences (System > Sequence) (Erik H, #3511)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.19
+* Fix payment screen localized amount formatting problem (Erik H, #3283)
+* Separate error and output 'psql' logs during database upgrade (Nick P)
+* Fix random order of PNL and B/S reports columns (Erik H, #2244)
+* Various fixes to setup.pl regarding backup file generation (Nick P)
+* Use File::Path to create directory instead of through shell call-out (Nick P)
+* On TAB-exit of accounts/parts selector, select first item (Erik H)
+* Estonian translation update (Margus L)
+* German translation update (Mikael A)
+* Hungarian translation update (Istvan P)
+
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+Istvan P is is Istvan Pongracz
+Margus L is Margus Lepmets
+Mikael A is Mikael Arhelger
+
+
 Changelog for 1.5.18
 * Fix menu-resizing minimum threshold overlapping main content (Erik H, #3421)
 * Persist selected menu-width across sessions/page reloads (Erik H)
@@ -68,7 +93,7 @@ Changelog for 1.5.18
 
 Erik H is Erik Huelsmann
 Margus L is Margus Lepmets
-Mikael H is Mikael Arhelger
+Mikael A is Mikael Arhelger
 
 
 Changelog for 1.5.17
@@ -83,7 +108,7 @@ Changelog for 1.5.17
 
 Erik H is Erik Huelsmann
 Margus L is Margus Lepmets
-Mikael H is Mikael Arhelger
+Mikael A is Mikael Arhelger
 
 
 Changelog for 1.5.16

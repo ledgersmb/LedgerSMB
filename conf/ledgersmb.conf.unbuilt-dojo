@@ -13,25 +13,10 @@
 # DB authentication module included.
 auth = DB
 
-# Be aware of tempdir setting. If client_browser and server_apache on same
-# machine, sharing tmp-dir , problems 'Permission denied' if server tries to
-# write temp-file which already exists as client-owned
-#
-# Note tempdir is used as the basename of the dir, the real dirname is
-# equivalent to....
-#    /tmp/ledgersmb-$EUID/
-# If you specify a different dir to /tmp/ledgersmb ensure it's parent is
-# writable by the running user.
-tempdir = /tmp/ledgersmb
-
 # This is the logical CSS directory.  I.e. it is what comes before the
 # ledgersmb.css in the url.  Example might be /my_css_dir/ or
 # http://localhost/other_css_dir/
 cssdir = css/
-
-# This is the location on the file system where the css files are, for editing
-# and selection.  An example might be /var/www/ledgersmb_css/
-fs_cssdir = css/
 
 # If set to a true value this caches templates.  Typically it will be set to 0
 # to disable or 1 to enable.
@@ -58,13 +43,6 @@ max_post_size = 4194304
 # logged in at the same time
 cookie_name = LedgerSMB-1.5
 
-# This is the string we look for in the failed connection error to determine
-# if the database was not found.  For English-language locales, this can be
-# left in place.  If the database server is running a different locale, it may
-# need to be changed.  Any partial match on the connection error assumes that
-# the failure to connect was caused by an invalid database request.
-no_db_str = database
-
 # This is the Dojo theme to be used by default -- e.g. when no other theme
 # has been selected.
 #dojo_theme = claro
@@ -83,34 +61,15 @@ templates  = templates
 # images base directory
 images  = UI/images
 
-# location we write backup files to on the server
-backupdir = /tmp/ledgersmb-backups
-
-
 localepath = locale/po
 
 # location where compiled templates are stored
 #
-# When relative, appended to the directory specified in the 'tempdir' variable
+# When relative, appended to the directory specified by File::Spec->tmpdir()
 #
 #templates_cache = lsmb_templates
 
 [programs]
-# program to use for file compression
-gzip       = gzip -S .gz
-
-# For latex and pdflatex, specify  full path.  These will be used to configure
-# Template::Latex so it can find them.  This can be used to specify programs
-# other than vanilla latex and pdflatex, such as the xe varieties of either one,
-# if unicode is required.
-#
-# If these are not set, the package defaults (set when you installed
-# Template::Latex) will be used
-#
-# pdflatex = /usr/bin/pdflatex
-# latex    = /usr/bin/latex
-# dvips    = /usr/bin/dvips
-#
 
 [mail]
 # The sendmail command is used to send mail unless smtphost is set.

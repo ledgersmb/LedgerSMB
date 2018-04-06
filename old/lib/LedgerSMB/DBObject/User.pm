@@ -19,14 +19,14 @@ use Try::Tiny;
 This badly needs to be rewritten and moved to later frameworks.  Planned for
 1.5.
 
+=head2 METHODS
+
 =over
 
-=item LedgerSMB::User->country_codes();
+=item country_codes();
 
 Returns a hash where the keys are registered locales and the values are the
 textual representation of the locale name.
-
-=back
 
 =cut
 
@@ -54,11 +54,8 @@ sub country_codes {
     return %cc;
 }
 
-=head2 METHODS
 
-=over
-
-=item $self->save_preferences()
+=item save_preferences()
 
 Saves preferences to the database and reloads the values in the object
 from the db for consistency.
@@ -72,9 +69,9 @@ sub save_preferences {
     return $self->get;
 }
 
-=item $self->change_my_password()
+=item change_my_password()
 
-Uses the object keys
+Uses the object keys:
 
  * login
  * old_password
@@ -113,7 +110,7 @@ sub change_my_password {
     return $self->call_dbmethod(funcname => 'user__change_password');
 }
 
-=item $self->get_option_data()
+=item get_option_data()
 
 Sets the options for the user preference screen.
 
@@ -162,7 +159,7 @@ sub get_option_data {
     return $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
 }
 
-=item $self->save()
+=item save()
 
 Saves (creates) the user in the database
 
@@ -200,7 +197,7 @@ sub save {
     return 1;
 }
 
-=item $self->get($id)
+=item get($id)
 
 Initializes the $self instance with data from the database, identified
 with user id $id.
@@ -259,7 +256,7 @@ sub get {
     return $user;
 }
 
-=item $self->remove()
+=item remove()
 
 Removes the user identified by $self->{id} and $self->{username}.
 
@@ -290,7 +287,7 @@ sub remove {
 #     );
 # }
 
-=item $self->get_all_users()
+=item get_all_users()
 
 Retrieves a list of users for the company (database).
 Sets $self->{users} and returns an arrayref.
@@ -303,57 +300,6 @@ sub get_all_users {
 
     my @ret = $self->call_dbmethod( funcname=>"user__get_all_users" );
     return $self->{users} = \@ret;
-}
-
-
-
-# sub roles {
-
-#     my $self = shift @_;
-#     my $id = shift @_;
-
-
-# }
-
-=item $self->save_contact($id, $class, $contact)
-
-#TODO: document this sub!
-
-=cut
-
-sub save_contact {
-
-    my $self = shift @_;
-    my $id = shift @_;
-    my $class = shift @_;
-    my $contact = shift @_;
-    my @ret;
-    my $logger = Log::Log4perl->get_logger("LedgerSMB");
-
-    if ($id) {
-        @ret = $self->call_procedure(funcname=>"person__save_contact",
-            args=>[
-                $self->{entity}->{id},
-                $self->{contacts}->[$id]->{contact_class},
-                $self->{contacts}->[$id]->{contact},
-                $contact
-            ]
-        );
-    }
-    else{
-        @ret = $self->call_procedure(funcname=>"person__save_contact",
-            args=>[
-                $self->{entity_id},
-                $class,
-                undef,
-                $contact
-            ]
-        );
-    }
-    if ($ret[0]->{person__save_contact} != 1){
-        die "Couldn't save contact...";
-    }
-    return 1;
 }
 
 

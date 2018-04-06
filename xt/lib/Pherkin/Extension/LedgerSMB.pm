@@ -313,5 +313,5 @@ INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
     }
 }
 
-__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable(inline_constructor => 0);
 1;
