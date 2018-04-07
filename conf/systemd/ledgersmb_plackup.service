@@ -31,7 +31,7 @@ ExecStart=/usr/bin/plackup   \
     --access-log $LOG        \
     --server Starman         \
     -R "bin, lib, old/lib"   \
-    tools/starman.psgi
+    bin/ledgersmb-server.psgi
 
 Restart=always
 
