@@ -52,6 +52,30 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 
+
+#### Block to work around the problem that Captury::Tiny doesn't dig
+### the fact that CGI::Emulate::PSGI localizes STDOUT and STDERR
+
+use IO::Handle;  # Is a core module
+
+sub _run_command {
+    my $self = shift;
+    local *STDOUT = IO::Handle->new_from_fd(1, 'w');
+    local *STDERR = IO::Handle->new_from_fd(2, 'w');
+
+    return $self->SUPER::_run_command(@_);
+}
+
+sub _run_command_to_file {
+    my $self = shift;
+    local *STDOUT = IO::Handle->new_from_fd(1, 'w');
+    local *STDERR = IO::Handle->new_from_fd(2, 'w');
+
+    return $self->SUPER::_run_command_to_file(@_);
+}
+
+#### End of work-around block
+
 =head1 PROPERTIES
 
 =over
