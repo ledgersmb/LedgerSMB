@@ -63,8 +63,10 @@ Changelog for 1.5.20
 * Fix inability to save custom sequences (System > Sequence) (Erik H, #3511)
 * Fix error when downloading balance sheet as PDF (Erik H, #3515)
 * Fix empty backup file due to PGObject::Util::DBAdmin 0.120 (Erik H, #3531)
+* Norwegian (nb) translation update (Havard S)
 
 Erik H is Erik Huelsmann
+Havard S is Havard Sorli
 
 
 Changelog for 1.5.19
