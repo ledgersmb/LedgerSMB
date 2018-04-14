@@ -1,13 +1,13 @@
 # Translators:
 # Stig Berg <stig@tmb.no>, 2016
 # Erik Huelsmann <ehuels@gmail.com>, 2016
-# Ha Sorli <havard@sorli.no>, 2016
+# Håvard Sørli <havard@sorli.no>, 2016
 # Arne Hanssen <arne.senja@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.20-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-02 18:55+0000\n"
+"POT-Creation-Date: 2018-04-14 07:52+0000\n"
 "Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2016\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -27,15 +27,15 @@ msgstr "% Nedskrevet."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:96
 msgid "(+) Salvage Value"
-msgstr "(+) Beregnet Verdi"
+msgstr "(+) Beregnet verdi"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:104
 msgid "(-) Accum. Dep."
-msgstr "(-) Akkum. Nedskrivning"
+msgstr "(-) Akkum. nedskrivning"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:108
 msgid "(=) NBV"
-msgstr "(=) Nedskrevet Verdi"
+msgstr "(=) Nedskrevet verdi"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:160
 msgid "(Locked)"
@@ -315,11 +315,11 @@ msgstr "Konter til"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:439
 msgid "Accounts marked for recon -- once"
-msgstr ""
+msgstr "Kontoer merket for avstemming - en gang"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:454
 msgid "Accounts marked for recon exist"
-msgstr ""
+msgstr "Kontoer markert for avstemming eksisterer"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:539 lib/LedgerSMB/Upgrade_Tests.pm:613
 msgid "Accounts without heading"
@@ -907,7 +907,7 @@ msgstr "Er du sikker på at du vil fjerne tilbudsnummer"
 
 #: UI/Reports/filters/balance_sheet.html:95
 msgid "As per"
-msgstr ""
+msgstr "Per"
 
 #: bin/ic.pl:2221
 msgid "Assemblies restocked!"
@@ -1779,7 +1779,7 @@ msgstr "Sammenlign med"
 
 #: UI/Reports/filters/balance_sheet.html:144
 msgid "Comparison Dates"
-msgstr ""
+msgstr "Sammenlign datoer"
 
 #: UI/Reports/filters/balance_sheet.html:284
 #: UI/Reports/filters/income_statement.html:187
@@ -1839,11 +1839,11 @@ msgstr "Kontakt Info"
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
 msgid "Contact Info:"
-msgstr "Kontakt Info:"
+msgstr "Kontakt info:"
 
 #: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 msgid "Contact Information"
-msgstr "Kontakt Informasjon"
+msgstr "Kontakt informasjon"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:90
 #: UI/Reports/filters/contact_search.html:8
@@ -2025,7 +2025,7 @@ msgstr "Opprett bruker"
 
 #: UI/Contact/divs/user.html:71 UI/setup/new_user.html:45
 msgid "Create new user"
-msgstr ""
+msgstr "Opprett ny bruker"
 
 #: UI/asset/search_reports.html:48 UI/create_batch.html:82
 #: UI/Reports/filters/unapproved.html:52
@@ -2203,7 +2203,7 @@ msgstr "D M"
 
 #: UI/setup/credentials.html:55
 msgid "DB admin login"
-msgstr ""
+msgstr "DB admin login"
 
 #: UI/Contact/divs/employee.html:166
 msgid "DOB"
@@ -2251,7 +2251,7 @@ msgstr "Database operasjon ferdig"
 
 #: UI/setup/credentials.html:37
 msgid "Database administrator credentials"
-msgstr ""
+msgstr "Database administrator rettigheter"
 
 #: lib/LedgerSMB/Scripts/setup.pm:187
 msgid "Database does not exist."
@@ -2402,7 +2402,7 @@ msgstr "Mangler mottaksdato"
 
 #: UI/Reports/filters/balance_sheet.html:47
 msgid "Date selection"
-msgstr ""
+msgstr "Datovalg"
 
 #: bin/aa.pl:1702 UI/payments/payment1.html:73
 #: UI/Reports/filters/contact_search.html:123
@@ -3982,7 +3982,7 @@ msgstr "Ignorer Årsavslutning"
 #: UI/Reports/filters/balance_sheet.html:109
 #: UI/Reports/filters/income_statement.html:152
 msgid "Ignore year-closing"
-msgstr ""
+msgstr "Ignorer Årsavslutning"
 
 #: bin/ic.pl:503 lib/LedgerSMB/Report/Inventory/Search.pm:258
 #: UI/Reports/filters/search_goods.html:320
@@ -4024,7 +4024,7 @@ msgstr "Importer Lagerbeholdning"
 
 #: UI/Contact/divs/user.html:83 UI/setup/new_user.html:57
 msgid "Import existing user"
-msgstr ""
+msgstr "Importer eksisterende bruker"
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:29
 #: templates/demo_with_images/timecard.html:52
@@ -5881,7 +5881,7 @@ msgstr "Periode"
 
 #: UI/Reports/filters/income_statement.html:82
 msgid "Period selection"
-msgstr ""
+msgstr "Valgt periode"
 
 #: UI/lib/report_base.html:291
 msgid "Period type"
@@ -6028,10 +6028,12 @@ msgid ""
 "Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' "
 "table and change it to an existing value"
 msgstr ""
+"Vennligst bruk pgAdmin3 eller psql for å slå opp 'chart_id' verdien i  "
+"'account' tabellen og endre den til en eksisterende verdi"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:443
 msgid "Please use pgAdmin3 or psql to remove the duplicates"
-msgstr ""
+msgstr "Bruk pgAdmin3 eller psql for å fjerne duplikatene"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:388
 msgid "Please use the 1.2 UI to add the GIFI accounts"
@@ -6670,7 +6672,7 @@ msgstr "Registrering [_1]"
 #: UI/Reports/filters/balance_sheet.html:20
 #: UI/Reports/filters/income_statement.html:56
 msgid "Regular"
-msgstr ""
+msgstr "Regelmessig"
 
 #: lib/LedgerSMB/Scripts/budgets.pm:118 UI/reconciliation/report.html:301
 msgid "Reject"
@@ -6734,7 +6736,7 @@ msgstr "Rapport i"
 #: UI/Reports/filters/balance_sheet.html:13
 #: UI/Reports/filters/income_statement.html:21
 msgid "Report type"
-msgstr ""
+msgstr "Rapport type"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
@@ -6746,7 +6748,7 @@ msgstr "Rapport Enheter"
 
 #: UI/Reports/filters/income_statement.html:300
 msgid "Reporting unit filters"
-msgstr ""
+msgstr "Rapport enhet filtere"
 
 #: sql/Pg-database.sql:2815 sql/Pg-database.sql:2828 sql/Pg-database.sql:2857
 #: sql/Pg-database.sql:2861 sql/Pg-database.sql:2886 sql/Pg-database.sql:2897
@@ -6913,7 +6915,7 @@ msgstr "SKU"
 
 #: bin/ir.pl:511 bin/oe.pl:403 bin/oe.pl:1814
 msgid "SO Number"
-msgstr ""
+msgstr "SO Number"
 
 #: lib/LedgerSMB/Scripts/setup.pm:129
 msgid "SQL-Ledger 3.0 database detected."
@@ -7303,7 +7305,7 @@ msgstr "Velg txt, postscript eller PDF!"
 #: UI/Reports/filters/balance_sheet.html:50
 #: UI/Reports/filters/income_statement.html:85
 msgid "Select using"
-msgstr ""
+msgstr "Velg å bruke"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
@@ -8971,7 +8973,7 @@ msgstr "Bruker eksisterer allerede. Importer?"
 
 #: UI/Contact/divs/user.html:59 UI/setup/new_user.html:40
 msgid "User creation"
-msgstr ""
+msgstr "Opprett bruker"
 
 #: UI/Contact/divs/user.html:28 UI/Contact/divs/user.html:41
 #: UI/setup/edit_user.html:29 UI/setup/edit_user.html:42
@@ -9013,7 +9015,7 @@ msgstr "Gyldig til"
 
 #: UI/Reports/filters/income_statement.html:23
 msgid "Valuation"
-msgstr ""
+msgstr "verdivurdering"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:92
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
