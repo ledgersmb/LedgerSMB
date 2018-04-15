@@ -19,6 +19,7 @@ LedgerSMB::Database::ChangeChecks
 
 use Test::More;
 
+use LedgerSMB;
 use LedgerSMB::Database;
 use LedgerSMB::Database::ChangeChecks qw/load_checks run_checks run_with_formatters/;
 
@@ -188,43 +189,60 @@ package checks1;
 use Test::More;
 use LedgerSMB::Database::ChangeChecks;
 
-check 'test_success_1',
-   query => q{SELECT * FROM defaults WHERE value = 'zzzzzzz'},
+check 'test_failure',
+   query => q{SELECT * FROM defaults WHERE value = '$LedgerSMB::VERSION'},
    description => 'test',
    tables => {
       'defaults' => { prim_key => [ 'setting_key' ] },
    },
-   columns => [ 'setting_key', 'value' ],
-   edit_columns => [ 'value' ],
-   on_failure => sub { ok(0, 'on_failure not to be called!'); },
-   on_submit => sub { ok(0, 'on_submit not to be called!'); };
-
-
-check 'test_success_2',
-   query => q{SELECT * FROM entity_class WHERE id < 0},
-   description => 'test',
-   tables => {
-      'defaults' => { prim_key => [ 'id' ] },
+   on_failure => sub {
+       my (\$dbh, \$rows) = \@_;
+       grid \$rows,
+         name => 'defaults',
+         columns => [ 'setting_key', 'value' ],
+         edit_columns => [ 'value' ];
    },
-   columns => [ 'id', 'class' ],
-   edit_columns => [ 'id' ],
-   on_failure => sub { ok(0, 'on_failure not to be called!'); },
-   on_submit => sub { ok(0, 'on_submit not to be called!'); };
+   on_submit => sub { save_grid \$_[0], \$_[1], name=>'defaults'; };
 
 1;
 |;
 
 @checks = load_checks(IO::Scalar->new(\$check_def));
 
+my $grid_rows;
 run_with_formatters {
+    # We first have checks fail
+    ok(! run_checks($dbh, checks => \@checks),
+       'Checks failed');
+
+    # and then issue the same request (presumably with 'response content')
+    # to apply the 
     ok(run_checks($dbh, checks => \@checks),
-       'Checks successfully completed');
+       'Checks succeeded');
 } {
-    provided => sub { return 0; },
+    grid => sub {
+        my ($dbh, $rows) = @_;
+        $grid_rows = $rows;
+    },
+    provided => sub {
+        my ($check, $name) = @_;
+        return defined $grid_rows
+            unless defined $name;
+
+        $grid_rows->[0]->{value} = 'the-latest-version';
+
+        return $grid_rows;
+    },
 };
 
+my $sth = $dbh->prepare(
+    q{select count(*) from defaults where value = 'the-latest-version'});
 
+$sth->execute;
+my ($count) = @{$sth->fetchrow_arrayref};
 
+is($count, 1, 'The table was correctly updated');
+$sth->finish;
 
 $dbh->disconnect;
 

@@ -681,7 +681,7 @@ be supplied:
 
 =over
 
-=item provided [ $name ]
+=item provided $check [, $name ]
 
 Called to retrieve input provided to the UI.
 
@@ -698,11 +698,12 @@ return value types per named rendered output:
 
 =item grid
 
-C<grid> inputs are returned using an arrayref holding hashrefs holding all the
+C<grid> inputs are returned using an arrayref of hashrefs holding all the
 fields originally supplied to the grid.
 
-Note: This requirement is in place to make sure the grid returns the primary key
-without making explicit protocol requirements for the naming of the primary key field.
+Note: This requirement is in place to make sure the grid returns the primary
+key without making explicit protocol requirements for the naming of the
+primary key field.
 
 =item confirm
 
