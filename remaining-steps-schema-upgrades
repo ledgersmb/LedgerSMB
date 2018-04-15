@@ -15,8 +15,7 @@ Steps in the schema upgrade branch:
   - xt/43-schema-upgrades.t -- actual database checks
     * run a succeeding check
     * run a failing check
-    - run a check file with multiple (succeeding) checks
-    - run a check file with a failing check, submitting corrective action
+    * run a check file with a failing check, submitting corrective action
 
 
 - change-application needs a data-source
