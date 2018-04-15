@@ -130,7 +130,7 @@ sub load_checks {
     }
 
     my %checks_count;
-    $checks_count{$_}++ for ( map { $_->[0] } @checks );
+    $checks_count{$_}++ for ( map { $_->{title} } @checks );
 
     die 'Multiple checks with the same name not supported'
         if grep { $checks_count{$_} > 1 } keys %checks_count;
@@ -199,6 +199,8 @@ sub _run_check {
                 Slice => {},
                 RaiseError => 1,
             });
+    die "Failed to execute query of check '$check->{title}': " . $dbh->errstr
+        if defined $dbh->errstr;
     return 0 unless (@rows);
 
     if (provided()) {
@@ -379,7 +381,8 @@ sub check {
     die "Check '$title' doesn't define 'on_failure'"
         unless $args{on_failure};
 
-    push @checks, \@args;
+    $args{title} = $title;
+    push @checks, \%args;
 }
 
 
