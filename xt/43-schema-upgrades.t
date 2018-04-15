@@ -225,6 +225,19 @@ run_with_formatters {
 
 
 
+
 $dbh->disconnect;
+
+
+
+$dbh = DBI->connect("dbi:Pg:dbname=$ENV{LSMB_NEW_DB}", undef, undef,
+                       { AutoCommit => 1, PrintError => 0 })
+    or BAIL_OUT "Can't connect to template database: " . DBI->errstr;;
+
+$dbh->do(q{set client_min_messages = 'warning'});
+$dbh->do(qq{DROP DATABASE IF EXISTS $ENV{LSMB_NEW_DB}_43_upgrades})
+    or BAIL_OUT "Can't drop old test database: " . DBI->errstr;
+$dbh->disconnect;
+
 
 done_testing;
