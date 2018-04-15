@@ -153,10 +153,14 @@ sub run_all {
     return;
 }
 
-=head2 apply_all
+=head2 apply_all($dbh)
 
 Applies all files in the loadorder, with tracking info, locking until it
 completes.
+
+Returns true when successfully completed.
+
+Throws an exception upon error.
 
 =cut
 
@@ -164,23 +168,33 @@ sub apply_all {
     my ($self, $dbh) = @_;
     _lock($dbh);
     for ($self->scripts){
-        $_->apply($dbh) unless $_->is_applied($dbh);
+        if (! $_->is_applied($dbh)) {
+            $_->apply($dbh);
+        }
     }
-    return _unlock($dbh);
+    _unlock($dbh);
+
+    return 1;
 }
 
 sub _lock {
     my ($dbh) = @_;
-    return $dbh->do(
-            q{ select pg_advisory_lock(
-               'db_patches'::regclass::oid::int, 1) });
+    # pg_advisory_lock() returns void; nothing to return here
+    $dbh->do(
+        q{ select pg_advisory_lock(
+              'db_patches'::regclass::oid::int, 1) });
+    return;
 }
 
 sub _unlock {
     my ($dbh) = @_;
-    return $dbh->do(
-            q{ select pg_advisory_unlock( 
+    # pg_advisory_unlock() returns false when no lock was held,
+    # however, pg_advisory_lock() blocks until there's one available...
+    #  (so we're guaranteed to *have* a lock...)
+    $dbh->do(
+        q{ select pg_advisory_unlock(
                'db_patches'::regclass::oid::int, 1) });
+    return;
 }
 
 sub _needs_init {
