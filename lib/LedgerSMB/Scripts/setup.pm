@@ -1511,7 +1511,7 @@ sub rebuild_modules {
     # The order is important here:
     #  New modules should be able to depend on the latest changes
     #  e.g. table definitions, etc.
-    $self->apply_changes();
+    $database->apply_changes();
 
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
