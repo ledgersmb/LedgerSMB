@@ -25,7 +25,7 @@ ExecStart=/usr/bin/plackup                     \
     --listen localhost:3244                    \
     -I lib                                     \
     -I old/lib/                                \
-    tools/starman.psgi
+    bin/ledgersmb-server.psgi
 Restart=always
 
 [Install]

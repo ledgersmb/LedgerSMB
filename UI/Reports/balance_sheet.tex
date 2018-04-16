@@ -11,7 +11,7 @@
        END;
     END;
   END;
-  last_col_no = max_path_depth + 1 + report.cheads.ids.keys.size;
+  last_col_no = max_path_depth + 1 + report.sorted_col_ids.size;
   IF report.legacy_hierarchy ;
      hierarchy = 'flat-hierarchy';
   ELSE ;
@@ -40,7 +40,7 @@
 -?>p{2cm}<?lsmb
  FOREACH c IN report.sorted_col_ids; 'r'; END -?>}
 \\
-\multicolumn{<?lsmb max_path_depth+1 ?>}{l}{}
+\multicolumn{<?lsmb max_path_depth + 1 ?>}{l}{}
 <?lsmb
  FOREACH col IN report.sorted_col_ids;
      ' & \shortstack{';

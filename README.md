@@ -101,7 +101,7 @@ page on CPAN.
    It may not be necessary to install cpanminus if you are only going to install from debian packages.
  * PostgreSQL client libraries
  * PostgreSQL server
- * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
+ * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
    This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
    in RedHat/Fedora
  * make       This is used by cpan dependencies during thier build process
@@ -159,7 +159,7 @@ Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
 
 When not installing as root or through `sudo`, `cpanm` will install unfulfilled
-library dependencies into a location which can be used with `local::lib`. 
+library dependencies into a location which can be used with `local::lib`.
 
 The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 contain a list of distribution provided packages to reduce the
@@ -242,7 +242,7 @@ With the above steps completed, the system is ready to run the web server:
  >     Do not use the starman --user= mechanism, it currently drops privileges too late.
 
 ```bash
- $ starman -I lib -I old/lib --listen localhost:5762 tools/starman.psgi
+ $ starman -I lib -I old/lib --listen localhost:5762 bin/ledgersmb-server.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
 Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6

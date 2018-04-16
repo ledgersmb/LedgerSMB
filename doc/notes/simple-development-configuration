@@ -29,9 +29,7 @@ changes are done to any file in those directories. Simply add to the list
 if some are missing.
 
 Last, the systemd service uses an alternate PSGI file, which is based on
-LedgerSMB standard file, but edited to add Development tools. Even though
-it doesn't use starman, we chose to name it starman-development.psgi to
-show the link with starman.psgi.
+LedgerSMB standard file, but edited to add Development tools.
 
 PSGI start file
 ===============

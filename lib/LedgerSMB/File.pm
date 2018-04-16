@@ -25,9 +25,9 @@ use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
-use File::MimeInfo;
 use File::Temp;
 use Log::Log4perl;
+use MIME::Types;
 use PGObject::Type::ByteString;
 use LedgerSMB::Magic qw( FC_PART );
 use LedgerSMB::MooseTypes;
@@ -194,7 +194,7 @@ sets it.
 sub get_mime_type {
     my ($self) = @_;
     if (!($self->mime_type_id || $self->mime_type_text)){
-       $self->mime_type_text(mimetype($self->file_name));
+       $self->mime_type_text(MIME::Type->new->mimeTypeOf($self->file_name));
     }
     if (!($self->mime_type_id && $self->mime_type_text)){
        my ($ref) = $self->call_dbmethod(funcname => 'file__get_mime_type');
