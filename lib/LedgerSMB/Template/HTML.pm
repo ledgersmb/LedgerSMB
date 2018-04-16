@@ -14,7 +14,6 @@ package LedgerSMB::Template::HTML;
 use strict;
 use warnings;
 
-use Template;
 use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;
@@ -69,8 +68,18 @@ Implements the template's post-processing protocol.
 
 sub postprocess {
     my ($parent, $output, $config) = @_;
-    $parent->{mimetype} = 'text/' . $extension;
     return undef;
+}
+
+=item mimetype()
+
+Returns the rendered template's mimetype.
+
+=cut
+
+sub mimetype {
+    my $config = shift;
+    return 'text/' . $extension;
 }
 
 =back

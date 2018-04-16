@@ -47,33 +47,18 @@ is all that's required on the client (except IE8 and 9); it includes Chrome as
 of version 13, FireFox as of 3.6 and MS Internet Explorer as of version 10 and
 a wide range of mobile browsers.
 
-# Quick start
+# Quick start (Docker compose)
 
-The quickest way to get set up is to use the Docker containers the project
-makes available through Docker Hub.
+The quickest way to get the Docker image up and running is by using the
+docker-compose file available through the GitHub repository at:
 
-After setting up Docker on the, run these commands to produce a testing
-setup:
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.5/docker-compose.yml
 
-```sh
- $ docker pull ledgersmb/ledgersmb
- $ docker pull postgres
- $ mkdir -p /var/lib/pg-container/data
- $ docker run -d --name lsmb-postgres \
-      -v /var/lib/pg-container/data:/var/lib/postgresql/data \
-      -e POSTGRES_PASSWORD=<your secure password> \
-      -e PGDATA=/var/lib/postgresql/data/pgdata  postgres
- $ docker run -d --name lsmb --link lsmb-postgres:postgres ledgersmb/ledgersmb
-```
-
-The commands above automatically start the containers.
-
-More environment variables are available to be able to
-
- * run the PostgreSQL database on a different server than the one
-   running the LedgerSMB container
- * set up outgoing e-mail to send invoices, reports and other outputs
-   from the container
+which sets up both the LedgerSMB image and a supporting database image for
+production purposes (i.e. with persistent (database) data, with the
+exception of one thing: setting up an Nginx or Apache reverse proxy
+with TLS 1.2 support -- a requirement if you want to access your
+installation over any type of network.
 
 See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgersmb/).
 
@@ -96,10 +81,10 @@ To get the latest development version:
  $ git submodule update --init --recursive
 ```
 
-To get the released version 1.5.5, the commands look like:
+To get the released version 1.5.18, the commands look like:
 
 ```
- $ git clone -b 1.5.5 https://github.com/ledgersmb/LedgerSMB.git
+ $ git clone -b 1.5.18 https://github.com/ledgersmb/LedgerSMB.git
  $ cd LedgerSMB
  $ git submodule update --init --recursive
 ```
@@ -116,7 +101,7 @@ page on CPAN.
    It may not be necessary to install cpanminus if you are only going to install from debian packages.
  * PostgreSQL client libraries
  * PostgreSQL server
- * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
+ * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
    This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
    in RedHat/Fedora
  * make       This is used by cpan dependencies during thier build process
@@ -174,7 +159,7 @@ Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
 
 When not installing as root or through `sudo`, `cpanm` will install unfulfilled
-library dependencies into a location which can be used with `local::lib`. 
+library dependencies into a location which can be used with `local::lib`.
 
 The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 contain a list of distribution provided packages to reduce the
@@ -257,7 +242,7 @@ With the above steps completed, the system is ready to run the web server:
  >     Do not use the starman --user= mechanism, it currently drops privileges too late.
 
 ```bash
- $ starman -I lib -I old/lib --listen localhost:5762 tools/starman.psgi
+ $ starman -I lib -I old/lib --listen localhost:5762 bin/ledgersmb-server.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
 Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6
@@ -321,7 +306,7 @@ as well as in the Transifex project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2017 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2018 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 

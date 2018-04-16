@@ -90,7 +90,8 @@ builder {
             if check_config_option('DBITrace','Plack::Middleware::Debug::DBITrace');
         enable 'Debug::TraceENV', method => $LedgerSMB::Sysconfig::TraceENV_method
             if check_config_option('TraceENV','Plack::Middleware::Debug::TraceENV');
-        enable 'Debug::Profiler::NYTProf', exclude => [$LedgerSMB::Sysconfig::NYTProf_exclude]
+        enable 'Debug::Profiler::NYTProf', exclude => [$LedgerSMB::Sysconfig::NYTProf_exclude],
+                                           minimal  => $LedgerSMB::Sysconfig::NYTProf_minimal
             if check_config_option('NYTProf','Plack::Middleware::Debug::Profiler::NYTProf');
     }
 #   qw/Dancer::Settings Dancer::Logger Dancer::Version/

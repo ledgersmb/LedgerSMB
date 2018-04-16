@@ -59,8 +59,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data'
                                });
-throws_ok { $db->create_and_load } qr/APPLICATION ERROR/,
-    'Database creation fails on missing schema';
+throws_ok { $db->create_and_load }
+          qr/(APPLICATION ERROR|Specified file does not exist)/,
+    'Database creation fails on missing schema file';
 
 #
 # missing schema file's directory
@@ -72,7 +73,8 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/missing-directory'
                                });
-throws_ok { $db->create_and_load } qr/APPLICATION ERROR/,
+throws_ok { $db->create_and_load }
+          qr/(APPLICATION ERROR|Specified file does not exist)/,
      'Database creation fails on missing schema';
 
 
@@ -110,7 +112,8 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/schema-failure'
                                });
-throws_ok { $db->create_and_load } qr/ERROR:\s*relation "defal" does not exist/,
+throws_ok { $db->create_and_load }
+          qr/(ERROR:\s*relation "defal" does not exist|error running command)/,
     'Database creation fails on base schema load failure';
 
 
@@ -142,7 +145,7 @@ $db = LedgerSMB::Database->new({
     source_dir => './xt/data/40-database/module-failure-2'
                                });
 throws_ok { $db->create_and_load }
-        qr/ERROR:\s*function "fail_me" already exists/,
+        qr/(ERROR:\s*function "fail_me" already exists|error running command)/,
     'Database creation fails when a module fails to load (syntax error)';
 
 

@@ -1,0 +1,16 @@
+<workbook>
+<worksheet name="<?lsmb text('Title Page') ?>" rows="<?lsmb HEADS ?>" 
+           columns="2">
+<row><cell text="<?lsmb text('Report Name') ?>:" />
+     <cell text="<?lsmb name ?>" />
+</row>
+<row><cell text="<?lsmb text('Company') ?>:" />
+     <cell test="<?lsmb request.company ?>" />
+</row>
+<?lsmb FOREACH HLINE IN hlines -?>
+<row><cell text="<?lsmb HLINE.text ?>:" />
+     <cell text="<?lsmb request.${LINE.name} ?>" />
+</row>
+<?lsmb END -?>
+</worksheet>
+</workbook>

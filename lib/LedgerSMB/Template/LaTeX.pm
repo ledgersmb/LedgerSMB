@@ -121,7 +121,7 @@ Latex plugin.
 sub initialize_template {
     my ($parent, $config, $template) = @_;
 
-    my %options = ( FORMAT => $config->{_format} );
+    my %options = ( format => $config->{_format} );
     Template::Plugin::Latex->new($template->context, \%options);
 
     return undef;
@@ -135,13 +135,26 @@ Implements the template's post-processing protocol.
 
 sub postprocess {
     my ($parent, $output, $config) = @_;
+    return undef;
+}
+
+=item mimetype()
+
+Returns the rendered template's mimetype.
+
+=cut
+
+sub mimetype {
+    my $config = shift;
+    my $mimetype;
 
     if (lc $config->{_format} eq 'pdf') {
-        $parent->{mimetype} = 'application/pdf';
+        $mimetype = 'application/pdf';
     } else {
-        $parent->{mimetype} = 'application/postscript';
+        $mimetype = 'application/postscript';
     }
-    return undef;
+
+    return $mimetype;
 }
 
 =back

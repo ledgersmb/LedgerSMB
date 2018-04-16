@@ -41,7 +41,7 @@ In separate terminals, you need to run the following commands from the
 root of the development tree for the above to work:
 
 ```sh
- $ starman tools/starman.psgi
+ $ starman bin/ledgersmb-server.psgi
  $ phantomjs --webdriver=4422
 ```
 

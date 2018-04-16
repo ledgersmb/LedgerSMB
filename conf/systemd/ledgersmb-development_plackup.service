@@ -35,7 +35,7 @@ ExecStart=/usr/bin/plackup           \
     --server HTTP::Server::PSGI      \
     --env development                \
     --Reload "lib, old/lib"          \
-    tools/starman-development.psgi
+    utils/devel/ledgersmb-server-development.psgi
 #
 # Take note that the --reload and --Reload switches monitors different
 # directories. reload monitors also base and all its subdirectories,

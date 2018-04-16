@@ -32,7 +32,7 @@ sub collect {
 }
 find(\&collect, 'lib/', 'old/bin/', 'old/lib/');
 
-push @on_disk, 'tools/starman.psgi';
+push @on_disk, 'bin/ledgersmb-server.psgi';
 
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',

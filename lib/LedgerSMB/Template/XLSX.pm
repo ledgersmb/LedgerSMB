@@ -19,7 +19,6 @@ use strict;
 use warnings;
 
 use IO::Scalar;
-use Template;
 use Excel::Writer::XLSX;
 use Spreadsheet::WriteExcel;
 
@@ -184,8 +183,6 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $temp_output, $config) = @_;
 
-    $parent->{mimetype} = 'application/vnd.ms-excel';
-
     # Implement Template Toolkit's protocol: if the variable
     # '$output' contains a string, it's a filename. If it's a
     # reference, the variable referred to is the output memory area
@@ -204,6 +201,26 @@ sub postprocess {
     &_xlsx_process($workbook, $$temp_output);
 
     return undef;
+}
+
+=item mimetype()
+
+Returns the rendered template's mimetype.
+
+=cut
+
+sub mimetype {
+    my $config = shift;
+    my $mimetype;
+
+    if ($config->{_output_extension} eq 'xlsx') {
+        $mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    }
+    else {
+        $mimetype = 'application/vnd.ms-excel';
+    }
+
+    return $mimetype;
 }
 
 =back

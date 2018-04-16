@@ -198,11 +198,6 @@ def 'Log4perl',
     default => 1,
     doc => q{};
 
-def 'Log4perl_category',
-    section => 'debug',
-    default => 'plack',
-    doc => q{};
-
 def 'Memory',
     section => 'debug',
     default => 0,
@@ -337,16 +332,6 @@ def 'DBI_TRACE',
     default => 0,
     doc => q{};
 
-def 'no_db_str',
-    section => 'main',
-    default => 'database',
-    doc => q{};
-
-def 'db_autoupdate',
-    section => 'main',
-    default => undef,
-    doc => q{};
-
 def 'cache_templates',
     section => 'main',
     default => 0,
@@ -354,33 +339,9 @@ def 'cache_templates',
 
 ### SECTION  ---   paths
 
-def 'pathsep',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => ':',
-    doc => q{
-The documentation for the 'main.pathsep' key};
-
 def 'cssdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => 'css/',
-    doc => q{};
-
-def 'fs_cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
-
-# Temporary files stored at"
-def 'tempdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} && "$ENV{TEMP}/ledgersmb" || '/tmp/ledgersmb' }, # We can't specify envvar=>'TEMP' as that would overwrite TEMP with anything set in ledgersmb.conf. Conversely we need to use TEMP as the prefix for the default
-    suffix => "-$EUID",
-    doc => q{};
-
-# Backup files stored at"
-def 'backupdir',
-    section => 'paths',
-    default => sub { $ENV{BACKUP} || '/tmp/ledgersmb-backups' },
     doc => q{};
 
 # Path to the translation files
@@ -412,22 +373,22 @@ def 'templates_cache',
 def 'template_latex',
     section => 'template_format',
     default => 0,
-    doc => q{};
+    doc => q{Set to 'disabled' to prevent LaTeX output formats (Postscript and PDF) being made available};
 
 def 'template_xls',
     section => 'template_format',
     default => 0,
-    doc => q{};
+    doc => q{Set to 'disabled' to prevent XLS output formats being made available};
 
 def 'template_xlsx',
     section => 'template_format',
     default => 0,
-    doc => q{};
+    doc => q{Set to 'disabled' to prevent XLSX output formats being made available};
 
 def 'template_ods',
     section => 'template_format',
     default => 0,
-    doc => q{};
+    doc => q{Set to 'disabled' to prevent ODS output formats being made available};
 
 
 ### SECTION  ---   mail
@@ -517,8 +478,6 @@ for ($cfg->Parameters('printers')){
 
 # Programs
 our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
-our $gzip = $cfg->val('programs', 'gzip', 'gzip -S .gz');
-
 
 
 # Whitelist for redirect destination / this isn't really configuration.
@@ -603,49 +562,7 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
 
-if(!(-d LedgerSMB::Sysconfig::tempdir())){
-     my $rc;
-     if ($Config{path_sep} eq ';'){ # We need an actual platform configuration variable
-         $rc = system('mkdir ' . LedgerSMB::Sysconfig::tempdir());
-     } else {
-         $rc=system('mkdir -p ' . LedgerSMB::Sysconfig::tempdir());
-     }
-}
-
-sub check_permissions {
-    my $tempdir = LedgerSMB::Sysconfig::tempdir();
-    # commit 6978b88 added this line to resolve issues if HOME isn't set
-    $ENV{HOME} = $tempdir;    ## no critic   # sniff
-
-
-    if(!(-d "$tempdir")){
-        die_pretty( "$tempdir wasn't created.",
-                    "Does UID $EUID have access to $tempdir\'s parent?"
-        );
-    }
-
-    if(!(-r "$tempdir")){
-        die_pretty(" $tempdir can't be read from.",
-                    "Does UID $EUID have read permission?"
-        );
-    }
-
-    if(!(-w "$tempdir")){
-        die_pretty( "$tempdir can't be written to.",
-                    "Does UID $EUID have write permission?"
-        );
-    }
-
-    if(!(-x "$tempdir")){
-        die_pretty( "$tempdir can't be listed.",
-                    "Does UID $EUID have execute permission?"
-        );
-    }
-    return;
-}
-
 # if you have latex installed set to 1
-###TODO-LOCALIZE-DOLLAR-AT
 our $latex = 0;
 
 
@@ -657,19 +574,26 @@ sub override_defaults {
     $latex = eval {require Template::Plugin::Latex; 1;};
 
     # Check availability and loadability
-    $LedgerSMB::Sysconfig::template_latex = eval {require LedgerSMB::Template::LaTeX; 1}
-        if $LedgerSMB::Sysconfig::template_latex ne 'disabled';
-    $LedgerSMB::Sysconfig::template_xls   = eval {require LedgerSMB::Template::XLS; 1}
-        if $LedgerSMB::Sysconfig::template_xls ne 'disabled';
-    $LedgerSMB::Sysconfig::template_xlsx  = eval {require LedgerSMB::Template::XLSX; 1}
-        if $LedgerSMB::Sysconfig::template_xlsx ne 'disabled';
-    $LedgerSMB::Sysconfig::template_ods   = eval {require LedgerSMB::Template::ODS; 1}
-        if $LedgerSMB::Sysconfig::template_ods ne 'disabled';
+    $LedgerSMB::Sysconfig::template_latex = (
+        $LedgerSMB::Sysconfig::template_latex ne 'disabled' &&
+        eval {require LedgerSMB::Template::LaTeX}
+    );
+    $LedgerSMB::Sysconfig::template_xls = (
+        $LedgerSMB::Sysconfig::template_xls ne 'disabled' &&
+        eval {require LedgerSMB::Template::XLS}
+    );
+    $LedgerSMB::Sysconfig::template_xlsx = (
+        $LedgerSMB::Sysconfig::template_xlsx ne 'disabled' &&
+        eval {require LedgerSMB::Template::XLSX}
+    );
+    $LedgerSMB::Sysconfig::template_ods = (
+        $LedgerSMB::Sysconfig::template_ods ne 'disabled' &&
+        eval {require LedgerSMB::Template::ODS}
+    );
 
     return;
 }
 
 override_defaults;
-check_permissions;
 
 1;

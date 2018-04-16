@@ -11,7 +11,7 @@ use LedgerSMB::Sysconfig;
 
 my $out;
 if ( defined $ARGV[0] && $ARGV[0] eq '--regenerate') {
-    my $out_file = "$FindBin::Bin/../sql/modules/BLACKLIST";
+    my $out_file = "$FindBin::Bin/../../sql/modules/BLACKLIST";
     open $out, ">", $out_file
         or die "failed to open $out_file for writing $!";
 }
@@ -22,7 +22,7 @@ else {
 my %func = (); # set of functions as keys
 
 my $order;
-my $order_file = "$FindBin::Bin/../sql/modules/LOADORDER";
+my $order_file = "$FindBin::Bin/../../sql/modules/LOADORDER";
 open ($order, '<', $order_file)
     or die "Cannot open $order_file $!";
 
@@ -41,7 +41,7 @@ close ($out) or die "failed to close output file after writing $!";
 sub process_mod {
     my ($mod) = @_;
 
-    my $mod_file = "$FindBin::Bin/../sql/modules/$mod";
+    my $mod_file = "$FindBin::Bin/../../sql/modules/$mod";
     open my $mod_h, '<', $mod_file
         or die "cannot open $mod_file $!";
 
