@@ -37,6 +37,7 @@ use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use LedgerSMB::Mailer;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
