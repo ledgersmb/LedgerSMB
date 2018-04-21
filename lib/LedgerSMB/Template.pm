@@ -124,8 +124,8 @@ Wrapper around the constructor that sets the following properties:
 
     path   => 'UI'
     format => 'HTML',
-    user   => C<$request->{_user}>
-    locale => C<$request->{_locale}
+    user   => $request->{_user}
+    locale => $request->{_locale}
 
 Additionally, variables are added to the template processor as required
 by the HTML UI.
