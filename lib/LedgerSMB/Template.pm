@@ -120,9 +120,12 @@ Returns a list of format names, any of the following (in order) as applicable:
 
 =item new_UI($request, template => $file, ...)
 
-Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
-the user to C<$request->{_user}>, the locale to C<$request->{_locale}
-and leaves auto-output enabled.
+Wrapper around the constructor that sets the following properties:
+
+    path   => 'UI'
+    format => 'HTML',
+    user   => $request->{_user}
+    locale => $request->{_locale}
 
 Additionally, variables are added to the template processor as required
 by the HTML UI.
