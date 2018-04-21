@@ -10,8 +10,7 @@ LedgerSMB::Setup::SchemaChecks - UI for schema checks run from setup.pl
 Provides the UI for schema upgrade precondition checks when run from
 setup.pl.
 
-=head1
-
+=head1 FUNCTIONS
 
 =cut
 
@@ -20,7 +19,7 @@ use warnings;
 
 use Digest::MD5 qw(md5_hex);
 
-use LedgerSMB::Database::ChangeChecks qw/ run_with_formatter_scope /;
+use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
 
 our @HTML;
 our $failing_check;
@@ -32,14 +31,25 @@ sub _check_hashid {
 }
 
 sub _unpack_grid_data {
+    my ($request, $prefix, $columns) = @_;
+    my $rowcount = $request->{"rowcount_$prefix"};
 
+    my @rows = ();
+    for my $rowno (1 .. $rowcount) {
+        push @rows, {
+            map { $_ => $request->{"${prefix}_${_}_$rowno"} }
+               (@$columns, '__pk')
+        };
+    }
+
+    return \@rows;
 }
 
 sub _wrap_html {
     my ($request) = shift;
 
     my $vars = {
-        check_id => _check_hashid( $failing_check );
+        check_id => _check_hashid( $failing_check ),
     };
     my $template = LedgerSMB::Template->new_UI(
         $request,
@@ -93,7 +103,6 @@ sub _format_describe {
         $request,
         template => 'setup/upgrade/description',
         );
-    my $description
     $template->render(
         {
             title => $check->{title},
@@ -111,16 +120,17 @@ sub _format_grid {
             type => 'hidden',
             col_id => '__pk',
         },
-        map { $_ => { type => 'text',
-                      col_id => $_,
-                      name => $_,
-              }
-        }
+        ( map { $_ => { type => 'text',
+                        col_id => $_,
+                        name => $_,
+                }
+          } @{$check->{columns}} ),
     };
     $cols->{$_}->{type} = 'input_text'
         for @{$check->{edit_columns}};
     my $atts = {
         input_prefix => $args{name},
+        id => $args{name},
     };
 
     my $template = LedgerSMB::Template->new_UI(
@@ -152,9 +162,10 @@ sub _provided {
 
 
     if (@_) {
+        my $name = shift;
         # we're being asked for a specific element
         # and since we currently only support grids... it'll be a grid.
-
+        return _unpack_grid_data($request, $name, $check->{columns});
     }
     else {
         # we're being asked if we have content to be processed
@@ -164,19 +175,37 @@ sub _provided {
 }
 
 
-sub run_with_formatter_scope(&) {
+=head2 html_formatter_context $coderef $request
+
+Calls C<$coderef> with a hash-argument containing the ChangeCheck formatters
+required to be passed to C<run_with_formatters> in that module; also sets
+up a context for the (HTML) formatters to be called within.
+
+Returns C<undef> when the C<$coderef> returns false.
+
+Returns an array of HTML snippets when C<$coderef> returns true.
+
+=cut
+
+sub html_formatter_context(&$) { ## no critic
     my ($closure, $request) = @_;
 
     local @HTML = ();
     local $failing_check = undef;
-    return $closure->(
-        {
-            confirm => sub { return _format_confirm( $request, @_ ); },
-            grid => sub { return _format_grid( $request, @_ ); },
-            describe => sub { return _format_describe( $request, @_ ); },
-            provided => sub { return _provided( $request, @_ ); },
-        }) ? _wrap_html($request) : undef;
+    return (run_with_formatters { return $closure->(@_); }
+            {
+                confirm => sub { return _format_confirm( $request, @_ ); },
+                grid => sub { return _format_grid( $request, @_ ); },
+                describe => sub { return _format_describe( $request, @_ ); },
+                provided => sub { return _provided( $request, @_ ); },
+            }) ? _wrap_html($request) : undef;
 }
+
+
+=head1 COPYRIGHT
+
+
+=cut
 
 
 1;
