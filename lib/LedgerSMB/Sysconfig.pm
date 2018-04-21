@@ -396,38 +396,32 @@ def 'template_ods',
 def 'sendmail',
     section => 'mail',
     default => '/usr/sbin/sendmail -t',
-    doc => q{location of sendmail};
-
+    doc => q{The sendmail command used for sending e-mail. Applies only when smtphost is not defined.};
 
 def 'smtphost',
     section => 'mail',
-    default => '',
-    doc => '';
+    default => undef,
+    doc => 'Connect to this SMTP host to send e-mails. If defined, used instead of sendmail.';
 
 def 'smtptimeout',
     section => 'mail',
     default => 60,
-    doc => '';
+    doc => 'Timeout in seconds for smtp connections.';
 
 def 'smtpuser',
     section => 'mail',
-    default => '',
-    doc => '';
+    default => undef,
+    doc => 'Optional username used when connecting to smtp server.';
 
 def 'smtppass',
     section => 'mail',
-    default => '',
-    doc => '';
-
-def 'smtpauthmethod',
-    section => 'mail',
-    default => '',
-    doc => '';
+    default => undef,
+    doc => 'Optional password used when connecting to smtp server.';
 
 def 'backup_email_from',
     section => 'mail',
-    default => '',
-    doc => '';
+    default => undef,
+    doc => 'The e-mail address from which backups are sent.';
 
 
 ### SECTION  ---   database
