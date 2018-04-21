@@ -211,7 +211,7 @@ sub send {
             }
 
             if (defined $LedgerSMB::Sysconfig::smtppass) {
-                push(@send_options, AuthPass => $LedgerSMB::Sysconfig::smtpass);
+                push(@send_options, AuthPass => $LedgerSMB::Sysconfig::smtppass);
             }
         } else {
             @send_options = (
