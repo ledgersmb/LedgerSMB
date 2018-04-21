@@ -418,11 +418,6 @@ def 'smtppass',
     default => undef,
     doc => 'Optional password used when connecting to smtp server.';
 
-def 'smtpauthmethod',
-    section => 'mail',
-    default => '',
-    doc => '';
-
 def 'backup_email_from',
     section => 'mail',
     default => undef,
