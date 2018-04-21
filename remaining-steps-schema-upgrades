@@ -3,6 +3,13 @@ Steps in the schema upgrade branch:
 ** Separate commits to new infrastructure (can be squashed) from existing files!
     (the latter can't be squashed, need to be descriptive commits to become part of project history)
 
+
+- implement 'setup.pl' infrastructure:
+  * HTML snippets for rendering
+  * formatter API consumed to build HTML results
+  - formatter API to consume posted/corrected data
+  - 
+
 - implement tests!
   - t/16-schema-upgrade-precheck.t -- non-database logic check
     * loading change files
