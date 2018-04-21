@@ -7,7 +7,7 @@ Steps in the schema upgrade branch:
 - implement 'setup.pl' infrastructure:
   * HTML snippets for rendering
   * formatter API consumed to build HTML results
-  - formatter API to consume posted/corrected data
+  * formatter API to consume posted/corrected data
   - 
 
 - implement tests!

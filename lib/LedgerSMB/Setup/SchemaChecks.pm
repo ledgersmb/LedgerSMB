@@ -17,9 +17,15 @@ setup.pl.
 use strict;
 use warnings;
 
+use Exporter 'import';
 use Digest::MD5 qw(md5_hex);
 
 use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
+use LedgerSMB::Template;
+
+our @EXPORT = ## no critic
+    qw| html_formatter_context |;
+
 
 our @HTML;
 our $failing_check;
@@ -80,14 +86,14 @@ sub _format_confirm {
     $failing_check = $check;
 
     my $seq = 0;
-    my $template = LedgerSMB::Template->new_UI($request,
-        template => 'setup/upgrade/confirm',
-        );
     while (@confirmations) {
+        my $template = LedgerSMB::Template->new_UI($request,
+                template => 'setup/upgrade/confirm',
+            );
         $template->render(
             {
-                value => pop @confirmations,
-                description => pop @confirmations,
+                value => shift @confirmations,
+                description => shift @confirmations,
                 id => "confirm-$seq",
             });
         push @HTML, $template->{output};
@@ -99,19 +105,31 @@ sub _format_confirm {
 sub _format_describe {
     my ($request, $check, $msg) = @_;
 
+    # We need to have the failing check available, because we need
+    # to calculate a hashed ID from it to check later for which
+    # check we're being submitted data.
+    $failing_check = $check;
+
+    $msg //= $check->{description};
     my $template = LedgerSMB::Template->new_UI(
         $request,
-        template => 'setup/upgrade/description',
+        template => 'setup/upgrade/describe',
         );
     $template->render(
         {
             title => $check->{title},
             description => $msg
         });
+    push @HTML, $template->{output};
 }
 
 sub _format_grid {
     my ($request, $check, $rows, %args) = @_;
+
+    # We need to have the failing check available, because we need
+    # to calculate a hashed ID from it to check later for which
+    # check we're being submitted data.
+    $failing_check = $check;
 
     my $c = 0;
     $_->{row_id} = $c++ for @$rows;
