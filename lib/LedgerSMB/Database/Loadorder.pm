@@ -13,6 +13,7 @@ use Cwd;
 use List::Util qw| any |;
 
 use LedgerSMB::Database::Change;
+use LedgerSMB::Database::ChangeChecks qw/load_checks run_checks/;
 
 =head1 SYNOPSIS
 
@@ -153,22 +154,31 @@ sub run_all {
     return;
 }
 
-=head2 apply_all($dbh)
+=head2 apply_all($dbh, checks => $boolean)
 
 Applies all files in the loadorder, with tracking info, locking until it
-completes.
+completes. Runs change precondition checks available, when C<checks> is true.
 
 Returns true when successfully completed.
+
+Returns false when change precondition checks fail.
 
 Throws an exception upon error.
 
 =cut
 
 sub apply_all {
-    my ($self, $dbh) = @_;
+    my ($self, $dbh, %args) = @_;
     _lock($dbh);
     for ($self->scripts){
         if (! $_->is_applied($dbh)) {
+            my $checks_file = $_->path . '.checks.pl';
+            if ($args{checks} and -e $checks_file) {
+                my @checks = load_checks($checks_file);
+
+                run_checks($dbh, checks => \@checks)
+                    or return 0;
+            }
             $_->apply($dbh);
         }
     }
