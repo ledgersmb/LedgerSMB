@@ -42,7 +42,7 @@ sub content_test {
     open $fh, '<', $filename
         or BAIL_OUT("failed to open $filename for reading $!");
     $is_snippet = 1
-        if ($filename !~ m#(log(in|out))|main|setup/#
+        if ($filename !~ m#(log(in|out))|main|(setup/(?!upgrade/)#
             || $filename =~ m#setup/ui-db-credentials#);
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;
