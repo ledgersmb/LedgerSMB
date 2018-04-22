@@ -216,6 +216,7 @@ sub _run_check {
 
     if (provided()) {
         my @grids;
+        my %name_types;
         run_with_formatters {
             # collect configuration of 'grid' keywords
             $check->{on_failure}->($dbh, []);
@@ -766,6 +767,8 @@ falsy value, while in the C<on_submit> phase, a true-ish value must be returned.
 When called with a C<$name> argument, the value(s) of a specific element
 rendered in the C<on_failure> phase for the given C<$check> must be returned.
 These are the expected return value types per named rendered output:
+
+The name of the C<confirm> UI elements is "confirm".
 
 =item grid
 
