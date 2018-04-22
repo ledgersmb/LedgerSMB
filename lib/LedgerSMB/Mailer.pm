@@ -197,19 +197,32 @@ sub send {
     $self->{_message}->replace( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
     local $@ = undef;
     eval {
-        if ( $LedgerSMB::Sysconfig::smtphost ) {
-            $self->{_message}->send(
+        my @send_options;
+
+        if (defined $LedgerSMB::Sysconfig::smtphost) {
+            @send_options = (
                 'smtp',
                 $LedgerSMB::Sysconfig::smtphost,
-                Timeout => $LedgerSMB::Sysconfig::smtptimeout
-                 ) || return "$!";
+                Timeout => $LedgerSMB::Sysconfig::smtptimeout,
+                Port => $LedgerSMB::Sysconfig::smtpport,
+            );
+
+            if (defined $LedgerSMB::Sysconfig::smtpuser) {
+                push(@send_options, AuthUser => $LedgerSMB::Sysconfig::smtpuser);
+            }
+
+            if (defined $LedgerSMB::Sysconfig::smtppass) {
+                push(@send_options, AuthPass => $LedgerSMB::Sysconfig::smtppass);
+            }
         } else {
-            $self->{_message}->send(
+            @send_options = (
                 'sendmail',
                 SendMail => $LedgerSMB::Sysconfig::sendmail,
-                     SetSender => 1
-                ) || return "$!";
+                SetSender => 1
+            );
         }
+
+        $self->{_message}->send(@send_options) or return "$!";
     };
     die "Could not send email: $@.  Please check your configuration." if $@;
     return;
