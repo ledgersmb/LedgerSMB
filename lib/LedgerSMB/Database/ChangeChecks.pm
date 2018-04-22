@@ -729,9 +729,21 @@ the implementation with lots of room to render the output.
 
 =item confirm
 
+Offers the user a way to indicate (s)he is done providing input for
+the given event.
+
 =item describe
 
+Shows the check's title and long description, informing the user
+about the intent of the check and the implications of the various
+resolutions offered.
+
 =item grid
+
+Renders a grid with the columns indicated in the arguments. For each
+row, there's one magic column that needs to be reproduced in the
+C<on_submit> event which isn't listed in any of the columns: the C<__pk>
+column.
 
 =back
 
@@ -745,24 +757,24 @@ be supplied:
 Called to retrieve input provided to the UI.
 
 When called without parameters, returns a boolean value indicating whether
-any inputs are available for processing at all. In other words, during the
-C<on_failure> phase, this callback is supposed to return a falsy value,
-while in the C<on_submit> phase, a true-ish value must be returned.
+any inputs are available for processing at all for the given check. In other
+words, during the C<on_failure> phase, this callback is supposed to return a
+falsy value, while in the C<on_submit> phase, a true-ish value must be returned.
 
 When called with a C<$name> argument, the value(s) of a specific element
-rendered in the C<on_failure> phase must be returned. These are the expected
-return value types per named rendered output:
+rendered in the C<on_failure> phase for the given C<$check> must be returned.
+These are the expected return value types per named rendered output:
 
 =over
 
 =item grid
 
-C<grid> inputs are returned using an arrayref of hashrefs holding all the
-fields originally supplied to the grid.
+C<grid> inputs are returned using an arrayref of hashrefs holding at least
+the magical C<__pk> column value and the values of the columns named in
+C<edit_columns>.
 
-Note: This requirement is in place to make sure the grid returns the primary
-key without making explicit protocol requirements for the naming of the
-primary key field.
+Note that the composition of the values in the C<__pk> column is explicitly
+declared internal (and thus can't be depended upon).
 
 =item confirm
 
