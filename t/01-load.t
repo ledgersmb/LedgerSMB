@@ -175,7 +175,7 @@ my @modules =
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Scripts::employee::country',
           'LedgerSMB::Setting::Sequence',
-          'LedgerSMB::Setup::SchemaChecks.pm',
+          'LedgerSMB::Setup::SchemaChecks',
           'LedgerSMB::Taxes::Simple',
           'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TXT',
