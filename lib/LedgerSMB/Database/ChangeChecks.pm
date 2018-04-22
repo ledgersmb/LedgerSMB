@@ -765,8 +765,6 @@ When called with a C<$name> argument, the value(s) of a specific element
 rendered in the C<on_failure> phase for the given C<$check> must be returned.
 These are the expected return value types per named rendered output:
 
-=over
-
 =item grid
 
 C<grid> inputs are returned using an arrayref of hashrefs holding at least
