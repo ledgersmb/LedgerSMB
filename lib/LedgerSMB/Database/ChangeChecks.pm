@@ -547,8 +547,10 @@ sub grid {
     #
     # and then generate the primary keys.
     unless (defined $check->{tables}
-            and (defined $check->{tables}->{$args{table}}
-                 or defined $check->{tables}->{$args{name}})) {
+            and ((defined $args{table}
+                  and defined $check->{tables}->{$args{table}})
+                 or (defined $args{name}
+                     and defined $check->{tables}->{$args{name}}))) {
         die "Check '$check->{title}' misses table primary key in 'grid'";
     }
 
