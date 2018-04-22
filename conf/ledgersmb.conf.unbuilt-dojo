@@ -78,6 +78,7 @@ localepath = locale/po
 # If smtp host is defined, messages will be sent via this smtp server,
 # instead of the default sendmail method.
 # smtphost = localhost
+# smtpport = 25
 # smtpuser = username
 # smtppass = password
 # smtptimeout = 60

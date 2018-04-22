@@ -18,6 +18,7 @@ Installation & Administration
 * Removed numerous unused configuration options (Nick P)
 * Specific output formats can be disabled in configuration (Yves L)
 * Respect smtpuser and smtppass configuration options (Nick P)
+* Add smtpport configuration option (Nick P)
 
 Performance
 * PSGI responses no longer written to file but kept in memory (Erik H/Yves L)

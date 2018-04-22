@@ -204,6 +204,7 @@ sub send {
                 'smtp',
                 $LedgerSMB::Sysconfig::smtphost,
                 Timeout => $LedgerSMB::Sysconfig::smtptimeout,
+                Port => $LedgerSMB::Sysconfig::smtpport,
             );
 
             if (defined $LedgerSMB::Sysconfig::smtpuser) {
