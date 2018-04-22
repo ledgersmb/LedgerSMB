@@ -15,12 +15,22 @@ use Test::More 'no_plan';
 use Test::Exception;
 
 
+use LedgerSMB;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 
 
 Log::Log4perl->easy_init($OFF);
 
+
+sub test_request {
+    my $req = LedgerSMB->new();
+
+    $req->{script} = 'script.pl';
+    $req->{query_string} = 'action=rebuild';
+
+    return $req;
+}
 
 
 ###############################################
@@ -122,11 +132,12 @@ $dbh->{mock_add_resultset} = {
 
 $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
-} { };
+} test_request();
 
 is join("\n", @$out), q{<body>
   <form method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        action="script.pl?action=rebuild">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <div class="description">
   <h1>title</h1>
@@ -177,11 +188,12 @@ $dbh->{mock_add_resultset} = {
 
 $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
-} { };
+} test_request();
 
 is join("\n", @$out), q{<body>
   <form method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        action="script.pl?action=rebuild">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <div class="description">
   <h1>title</h1>
@@ -232,11 +244,12 @@ $dbh->{mock_add_resultset} = {
 
 $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
-} { };
+} test_request();
 
 is join("\n", @$out), q{<body>
   <form method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        action="script.pl?action=rebuild">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <button
    type="submit"
@@ -286,11 +299,12 @@ $dbh->{mock_add_resultset} = {
 
 $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
-} { };
+} test_request();
 
 is join("\n", @$out), q{<body>
   <form method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        action="script.pl?action=rebuild">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <button
    type="submit"
@@ -357,11 +371,12 @@ $dbh->{mock_add_resultset} = {
 
 $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
-} { };
+} test_request();
 
 is join("\n", @$out), q{<body>
   <form method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        action="script.pl?action=rebuild">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <table id="grid"
        class="dynatable "

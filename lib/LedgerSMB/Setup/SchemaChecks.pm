@@ -68,6 +68,7 @@ sub _wrap_html {
     $template->render(
         {
             check_id => _check_hashid( $failing_check ),
+            action_url => $request->get_relative_url,
         });
     unshift @HTML, $template->{output};
 
