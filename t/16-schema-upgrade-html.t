@@ -253,6 +253,75 @@ is join("\n", @$out), q{<body>
 </form>
 </body>}, 'print the buttons/confirmations on failure';
 
+###############################################
+#
+#
+#  Fifth test: Render a grid (2-column p-key)
+#
+###############################################
+
+$tests = <<HEREDOC;
+package PreCheckTests;
+
+use LedgerSMB::Database::ChangeChecks;
+
+check 'title',
+    description => q|a description|,
+    query => q|something|,
+    tables => {
+        'abc' => { prim_key => ['a', 'b'] },
+    },
+    on_submit => sub { return 1; },
+    on_failure => sub {
+        my (\$dbh, \$rows) = \@_;
+
+        grid \$rows,
+        name => 'grid',
+        id => 'grid',
+        table => 'abc',
+        columns => [ 'a', 'b', 'c' ],
+        edit_columns => ['c'];
+    };
+
+1;
+HEREDOC
+
+$fh = IO::Scalar->new(\$tests);
+lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+          'Loading a single check from file-handle');
+
+$dbh = DBI->connect('DBI:Mock:', '', '');
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'a', 'b', 'c' ],
+        [ 'col1', 'col2', 'col3' ],
+        ],
+};
+
+$out = html_formatter_context {
+    return ! run_checks($dbh, checks => \@checks);
+} { };
+
+is join("\n", @$out), q{<body>
+  <form method="POST"
+        enctype="multipart/form-data">
+    <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
+<table id="grid"
+       class="dynatable "
+       width=""><thead>
+   <tr>   <th class="a  text">a
+   </th>   <th class="b  text">b
+   </th>   <th class="c  input_text">c
+   </th>   </tr>
+</thead><tbody>   <tr class=" 0">
+      <input id="row-1" type="hidden" name="row_1" value="0" />
+      <input id="grid--pk-0" type="hidden" name="grid__pk_0" />      <td class="a  text">            col1      </td>      <td class="b  text">            col2      </td>      <td class="c  input_text">          <input id="c-1" type="text" name="gridc_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />      </td>   </tr>
+</tbody><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
+</table>
+</form>
+</body>}, 'print the grid on failure';
+
 
 
 

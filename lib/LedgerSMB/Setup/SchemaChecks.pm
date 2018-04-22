@@ -36,6 +36,7 @@ sub _check_hashid {
     return md5_hex($check->{title});
 }
 
+
 sub _unpack_grid_data {
     my ($request, $prefix, $columns) = @_;
     my $rowcount = $request->{"rowcount_$prefix"};
@@ -134,18 +135,20 @@ sub _format_grid {
     my $c = 0;
     $_->{row_id} = $c++ for @$rows;
     my $cols = {
-        {
-            type => 'hidden',
-            col_id => '__pk',
-        },
-        ( map { $_ => { type => 'text',
-                        col_id => $_,
-                        name => $_,
-                }
-          } @{$check->{columns}} ),
+        map { $_ => { type => 'text',
+                      col_id => $_,
+                      name => $_,
+              }
+        } @{$args{columns}}
     };
+    $cols->{__pk} = {
+        type => 'hidden',
+        col_id => '__pk',
+    };
+
     $cols->{$_}->{type} = 'input_text'
-        for @{$check->{edit_columns}};
+        for @{$args{edit_columns}};
+    $cols = [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ];
     my $atts = {
         input_prefix => $args{name},
         id => $args{name},
