@@ -33,7 +33,7 @@ our $failing_check;
 sub _check_hashid {
     my $check = shift;
 
-    return md5_hex($check->{title});
+    return md5_hex($check->{path} // '', $check->{title});
 }
 
 
@@ -45,9 +45,12 @@ sub _unpack_grid_data {
     for my $rowno (1 .. $rowcount) {
         push @rows, {
             map { $_ => $request->{"${prefix}_${_}_$rowno"} }
-               (@$columns, '__pk')
+               (@$columns, '--pk')
         };
     }
+    # Rename '--pk' to '__pk', the value expected by the upgrade framework
+    # but renamed due to TT not allowing access to underscore-prefixed vars
+    $_->{__pk} = $_->{'--pk'} for @rows;
 
     return \@rows;
 }
@@ -134,6 +137,9 @@ sub _format_grid {
 
     my $c = 0;
     $_->{row_id} = $c++ for @$rows;
+    # underscore-prefixed variables are treated as private by
+    # TT, so, not available for interpolation --> rename.
+    $_->{'--pk'} = $_->{__pk} for @$rows;
     my $cols = {
         map { $_ => { type => 'text',
                       col_id => $_,
@@ -143,7 +149,8 @@ sub _format_grid {
     };
     $cols->{__pk} = {
         type => 'hidden',
-        col_id => '__pk',
+        col_id => '--pk',
+        name => '__pk',
     };
 
     $cols->{$_}->{type} = 'input_text'
