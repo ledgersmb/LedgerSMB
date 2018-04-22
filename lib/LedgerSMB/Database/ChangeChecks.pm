@@ -20,8 +20,15 @@ LedgerSMB::Database::ChangeChecks - Data validation checks for schema changes
 
 =head1 DESCRIPTION
 
-This module provides the DSL commands necessary to build the checks being
+This module provides the DSL necessary to build the checks being
 executed before schema change scripts are being run.
+
+Additionally, it defines an API to be used to implement user interfaces. This
+API is further detailed in the L</FORMATTERS> section at the end of this
+document.
+
+Lastly, the module implements a few driver functions (described in the
+L</FUNCTIONS> section of this document).
 
 =head1 SYNOPSIS
 
@@ -46,8 +53,10 @@ executed before schema change scripts are being run.
            columns => [ 'column1', 'column2', ... ] # column subset
            edit_columns => [ ... one or more columns ..],
            dropdowns => {
-             column1 => [ { value1 => "Text 1" },
-                          ... ],
+             column1 => {
+                 value1 => "Text 1",
+                 ...,
+             },
              column2 => dropdowns_sql($dbh, "SELECT value, text FROM b_table"),
            };
      },
@@ -76,16 +85,24 @@ executed before schema change scripts are being run.
 
 =head1 FUNCTIONS
 
-=over
+Modules designed to run checks and/or bind a user interface
+to perform user interaction for failing checks, may want to use
+these functions.
 
-=item load_checks( $path )
+These functions need to be explicitly imported into a using module
+(as they are marked C<@EXPORT_OK>, but not C<@EXPORT>).
 
+=head2 load_checks( $path )
 
-Returns a list of checks defined in the file named by C<$path>.
-Alternatively, C<$path> may be a file handle reference.
+Loads the check definitions from the file designated by C<$path>, returning
+the checks as a list. C<$path> will be either a filesystem path or a file
+handle reference.
 
+Unless the input specifies its own C<package> scope, the input will be
+imported into the C<main::> package. It's highly recommended to define
+a package scope in the input.
 
-SECURITY WARNING: Please note that the file indicated by C<$path> is
+B<SECURITY WARNING>: Please note that the file indicated by C<$path> is
   being evaluated (executed). It's considered insecure to pass
   relative paths to this function.
 
@@ -145,28 +162,17 @@ sub load_checks {
 
 our $check;
 
-=item run_with_formatters($block, $formatters)
+=head2 run_with_formatters($block, $formatters)
 
-Runs C<$block> in a context with C<$formatters> set up.
+Sets up a context of L</FORMATTERS> given in C<$formatters>
+and runs the C<$block> in this context, returning the block's
+return value(s).
 
-The function returns the value(s) returned by C<$block>.
-
-The function binds the following formatting functions:
-
-=over
-
-=item confirm
-
-=item describe
-
-=item grid
-
-=item provided
-
-=back
-
+C<$formatters> is a hash reference with the names of the L</FORMATTERS>
+as the hash keys (C<confirm>, C<describe>, C<grid>, C<provided>). The
+values are coderefs of functions following the respective formatter protocols.
 When one of the functions isn't provided, it's bound to a failure-generating
-coderef
+coderef.
 
 =cut
 
@@ -174,8 +180,10 @@ coderef
 sub run_with_formatters(&$) { ## no critic
     my ($block, $formatters) = @_;
 
-    $formatters->{$_} //= sub { die "$_: not provided in current context" }
-        for (qw|describe confirm grid provided|);
+    for my $fmt (qw|describe confirm grid provided|) {
+        $formatters->{$fmt} //=
+            sub { die "$fmt: not provided in current context" }
+    }
 
     no warnings 'redefine'; ## no critic
     local (*_describe, *_confirm, *_grid, *_provided) =
@@ -239,12 +247,12 @@ sub _run_check {
     return 1;
 }
 
-=item run_checks( $dbh, checks => [ .. ] )
+=head2 run_checks( $dbh, checks => [ .. ] )
 
 Runs checks previously loaded using C<load_checks> contained in the
 array reference of the C<checks> argument.
 
-Checks are being run against the database identified by handle C<$dbh>,
+Checks are being run against the database identified by C<$dbh>,
 which must be opened by database superuser or the database owner (i.e.
 a LedgerSMB database admin).
 
@@ -254,7 +262,7 @@ called on return.
 
 The caller is expected to repeat the C<run_checks> call with a C<provided>
 formatter bound to a function which provides replacement values to update
-the table content with, in case it returns unsuccessfully.
+the table content with, in case of an unsuccessful return.
 
 =cut
 
@@ -272,13 +280,18 @@ sub run_checks {
 }
 
 
-=back
-
 =head1 DSL keywords for check definition
 
-=over
+The keyword(s) in this section will be automatically imported into
+the active namespace when this module is C<use>d. It's therefore highly
+recommended to declare a specific namespace in each file using this
+module.
 
-=item check( $title, ... )
+Checks defined in an input file are distinguished by their declared
+title. It's therefore not possible to declare multiple checks with
+the same title in a single file.
+
+=head2 check( $title, ... )
 
 Defines a query to be run as part of schema upgrades. Each check requires
 a title and a number of keyword arguments. The title is used to present
@@ -290,39 +303,52 @@ Further keyword arguments are:
 
 =item description
 
-Required. Contains a longer description of what the check means to achieve
+I<Required>. Contains a longer description of what the check means to achieve
 and explains which options the user is being presented with and what the
 user is supposed to do to resolve the situation.
 
 =item tables
 
-Required when a check involves either the C<grid> or C<save_grid> DSL keywords.
+I<Required> when a check involves either the C<grid> or C<save_grid>
+DSL keywords.
 
-Contains a hash reference listing a series of hashes describing the tables
-for which C<grid> (and possibly the associated C<save_grid>) functions will
-be invoked.
+Contains a hash reference with table names as the keys and hashes of
+table attributes as the values. These attributes prevent duplication
+of arguments across the C<grid> and C<save_grid> keywords.
 
    tables => {
        'some-table' => {
-          pk   =>  [ 'a', 'b', 'c' ] },
+          prim_key   =>  [ 'a', 'b', 'c' ],
+       },
        'some-other-table' => {
-          pk   =>  [ 'd', 'e', 'f' ] }
+          prim_key   =>  [ 'd', 'e', 'f' ],
+       }
    }
 
 
 =item query
 
-Has as its value a string specifying an SQL query which when executed returns
-the rows violating the (part of) the change being applied.
-
-When this query returns any rows, the check is considered to have "failed".
+I<Required>. Specifies the SQL query to be run to identify data non-compliant
+with the intended change to be applied. This query returns those rows failing
+the compliance check. When this query returns any rows, the check is
+considered to have "failed", causing the C<on_failure> event to be triggered.
 
 Note that the query may be executed multiple times during the upgrade
 process. The query may therefore not modify the database in any way.
 
 =item on_failure
 
-Required. A coderef pointing to a function of 3 arguments:
+I<Required>. A coderef pointing to a function of 3 argument.
+
+   sub {
+      my ($check, $dbh, $rows) = @_;
+
+      describe;
+      grid $rows,
+        table => 'some-table'
+        name => 'the-grid';
+      confirm left => 'Left', right => 'Right';
+   }
 
 =over
 
@@ -342,30 +368,43 @@ by the C<query>.
 =back
 
 The on_failure coderef makes use of the user interface defining
-elements of the pre-check DSL: C<grid>, C<confirm>, C<choice>, C<dropdowns_sql>.
+elements of the pre-check DSL: C<grid>, C<confirm>, C<dropdowns_sql>.
 
 The number of times the C<on_failure> function is executed is undefined and
 the function is likely to be run multiple times, possibly even within a single
-request.
+invocation of C<run_tests>.
 
 =item on_submit
 
-Required. A coderef pointing to a function of 3 arguments:
+I<Required>. A coderef pointing to a function of 2 arguments.
+
+   sub {
+      my ($dbh, $rows) = @_;
+
+      save_grid $dbh, $rows,
+        name => 'the-grid',
+        table => 'some-table';
+   }
 
 =over
-
-=item $check
-
-A hashref holding the check's configuration as defined in the source.
 
 =item $dbh
 
 The database handle against which the check query was run.
 
+=item $rows
+
+The failing rows, retrieved from the database. These rows can be
+used to validate input provided through the UI for validity. This
+process has been implemented in C<save_grid>, which will only accept
+modified values for internally identified failing rows -- as a measure
+for security.
+
 =back
 
 The 'on_submit' coderef makes use of the data-modifying elements of the
-pre-check DSL: save_grid.
+pre-check DSL: C<save_grid>. Alternatively, the code can use the C<$dbh>
+provided to directly modify the database contents.
 
 =back
 
@@ -390,11 +429,17 @@ sub check {
 
 
 
-=back
-
 =head1 DSL keywords for 'on_failure' event
 
-=over
+This event will be triggered when a query returns any rows, indicating
+the schema contains data not compliant with the intended change.
+
+The general purpose for this event is to define the UI to be presented
+as required to make the data pass the compliance check.
+
+Please note that the code in this event should not modify the database
+or any context in general: the code may be run more than once and the
+code may even be run with different formatters bound than expected.
 
 =cut
 
@@ -405,11 +450,14 @@ sub check {
 #################################
 
 
-=item describe [ $msg ]
+=head2 describe [ $msg ]
 
-Should be used to explain the test that has been performed and the repair
+Used to explain the test that has been performed and the repair
 options shown as well as what the user is expected to do in order
 to resolve the problem detected.
+
+Without C<$msg>, presents the content of the C<description> as
+provided through the check definition statement.
 
 =cut
 
@@ -423,10 +471,11 @@ sub describe {
 }
 
 
-=item confirm [ value1 => 'Description1', value2 => ..., ... ]
+=head2 confirm [ value1 => 'Description1', value2 => ..., ... ]
 
-Used to render (multiple) confirmation options for the user to
-confirm the data entered.
+Used to render confirmation options for the user to
+confirm the data entered. The intended way to render a confirmation
+is to render a button.
 
 =cut
 
@@ -439,9 +488,9 @@ sub confirm {
     return _confirm($check, @_);
 }
 
-=item grid $rows, [ key => $value ]
+=head2 grid $rows, [ name => $string, table => $string, ... ]
 
-Used to render a grid with the rows as indicated in the C<$rows> hashref.
+Used to render a grid with the rows as indicated in the C<$rows> arrayref.
 
 The following keys are available:
 
@@ -449,42 +498,38 @@ The following keys are available:
 
 =item name
 
-Names the grid in order to be able to extract the (changed) values
-from the returned data.
+I<Required>. Names the grid in order to be able to extract the (changed)
+values from the returned data through the C<provided> dsl keyword.
 
 =item table
 
-When a string value, names the column containing the primary key of the
-target table. In case of an arrayref, lists the complex primary key.
-
-Needed here as it allows the UI to be able to request
-the primary key from the returned data later.
+I<Optional>. Names one of the tables specified through the C<tables>
+keyword of the check definition.
 
 When the name of the grid equals the name of one of the tables in the
 check as provided through the C<tables> keyword, there's no need to
-specify this keyword as it'll be taken from the table definition.
+specify this keyword.
 
 =item columns
 
-Names the columns to be rendered (visibly) on the UI, in the order the
-UI is supposed to render them.
+I<Required>. Names the columns to be rendered (visibly) on the UI.
 
 =item edit_columns
 
-Names the columns which should be editable on the UI. This should be
-a subset of C<columns>.
+I<Required>. Names the columns which should be editable on the UI. This
+should be a subset of C<columns>.
 
 =item dropdowns
 
-Contains an arrayref with the keys being a subset of the columns for which
-a dropdown should be rendered and the values being hashrefs mapping the
-values of the field to descriptions.
+I<Optional>. Contains a hashref with the keys being a subset of the
+columns for which a dropdown should be rendered and the values being
+hashrefs mapping the values of the field to descriptions.
 
 A column doesn't need to be editable in order for a dropdown to be applied;
 the UI is supposed to show a read-only dropdown element when the column
 is marked as dropdown but not as editable.
 
-For an example see the SYNOPSIS section above.
+For an example see the L</SYNOPSIS> section above.
 
 =back
 
@@ -501,6 +546,12 @@ sub grid {
     # all fields of the primary key!
     #
     # and then generate the primary keys.
+    unless (defined $check->{tables}
+            and (defined $check->{tables}->{$args{table}}
+                 or defined $check->{tables}->{$args{name}})) {
+        die "Check '$check->{title}' misses table primary key in 'grid'";
+    }
+
     my $pk = $check->{tables}->{$args{table} // $args{name}}->{prim_key};
     $pk = (ref $pk) ? $pk : [ $pk ];
     $_->{__pk} = _encode_pk($_, $pk) for (@$rows);
@@ -508,14 +559,15 @@ sub grid {
     return _grid($check, @_);
 }
 
-=item dropdowns_sql($dbh, $query)
+=head2 dropdowns_sql($dbh, $query)
 
-Expects a query with two columns; the first being the values expected
-in the column to which the dropdown is applied. The second being the
-descriptions to be shown instead of the true values.
+Expects a query with a two-column result; the first column being the values
+expected in the column to which the dropdown is applied. The second being the
+descriptions to be shown instead of the actual values in the column.
 
 This function can be used in the "value" position of the key/value pairs
-as meant in the C<dropdowns> keyword.
+as meant in the C<dropdowns> keyword as shown in the L</SYNOPSIS> section
+above.
 
 =cut
 
@@ -532,11 +584,15 @@ sub dropdowns_sql {
 }
 
 
-=back
-
 =head1 DSL keywords for 'on_submit' event
 
-=over
+The 'on_submit' event is triggered when C<run_tests> detects a
+check failure and C<provided> indicates there's corrective data
+available to be applied for the check at hand.
+
+Code in this event handler can make use of the database handle passed
+and modify the database content directly. Alternatively, DSL keywords
+are available to do some of the heavy-lifting and/or UI interaction.
 
 =cut
 
@@ -546,7 +602,7 @@ sub dropdowns_sql {
 #
 #################################
 
-=item provided [ $name [, key => value, ... ]
+=head2 provided [ $name [, key => value, ... ]
 
 Used to access UI responses from elements named in the C<on_failure> phase.
 
@@ -564,10 +620,12 @@ sub provided {
 }
 
 
-=item save_grid $dbh, $failed_rows [, name => $name, table => $table, ... ]
+=head2 save_grid $dbh, $failed_rows [, name => $name, table => $table, ... ]
 
 Iterates over C<$failed_rows>, finding input for those rows as provided in
-the UI and applying the fixed data to the database using C<$dbh>.
+the UI and applying the fixed data to the database using C<$dbh>. The columns
+to be stored by this command are extracted from the C<grid> command identified
+by the same C<name> in the C<on_failure> event.
 
 The following keys are supported:
 
@@ -575,13 +633,13 @@ The following keys are supported:
 
 =item name
 
-The name of the grid to be saved; used as argument to C<provided> to
-query the replacement data.
+I<Required>. The name of the grid to be saved; used as argument to
+C<provided> to query the replacement data.
 
 =item table
 
-The name of the table to save the data to. If not provided, defaults
-to the value provided in the C<name> argument.
+I<Optional>. The name of the table to save the data to. If not provided,
+defaults to the value provided in the C<name> argument.
 
 =back
 
@@ -650,8 +708,6 @@ sub _decode_pk {
              split(/ /, $pk_value) ];
 }
 
-=back
-
 =head1 FORMATTERS
 
 Formatters implement the UI of the checks. This way, the UI can be anything
@@ -711,8 +767,6 @@ primary key field.
 =item confirm
 
 Returns the value associated with the selected/pressed/clicked description.
-
-=back
 
 =back
 
