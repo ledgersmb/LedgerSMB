@@ -216,7 +216,6 @@ sub _run_check {
 
     if (provided()) {
         my @grids;
-        my %name_types;
         run_with_formatters {
             # collect configuration of 'grid' keywords
             $check->{on_failure}->($dbh, []);
