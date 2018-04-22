@@ -37,6 +37,7 @@ use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use LedgerSMB::Mailer;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
@@ -389,6 +390,7 @@ sub backup_roles {
 # Private method, basically just passes the inputs on to the next screen.
 sub _begin_backup {
     my $request = shift @_;
+    $request->{can_email} = defined $LedgerSMB::Sysconfig::backup_email_from;
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/begin_backup',
