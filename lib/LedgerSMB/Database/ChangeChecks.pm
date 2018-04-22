@@ -315,7 +315,7 @@ the rows violating the (part of) the change being applied.
 When this query returns any rows, the check is considered to have "failed".
 
 Note that the query may be executed multiple times during the upgrade
-process. The query may therefor not modify the database in any way.
+process. The query may therefore not modify the database in any way.
 
 =item on_failure
 

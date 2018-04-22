@@ -13,6 +13,7 @@ my @on_disk = ();
 sub collect {
     my $module = $File::Find::name;
     return if $module !~ m/\.html$/
+           || $module =~ m(/setup/upgrade/epilogue.html) # unbalanced by design
            || $module =~ m/\/pod\//
            || $module =~ m(/js/)
            || $module =~ m(/js-src/(dijit|dojo|util)/);
