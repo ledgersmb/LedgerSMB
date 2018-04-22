@@ -120,7 +120,7 @@ before_install:
 
 install:
   - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-images --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
-  - if [ "$COVERAGE" == "1" ] ; then cpan-install --coverage ; fi
+  - cpan-install --coverage
 
 before_script:
   - make dist DIST_VER=travis DIST_DIR=${HOME}/built-dist/tar-output
@@ -129,7 +129,7 @@ before_script:
   - cd ledgersmb
   - cp conf/ledgersmb.conf.default ledgersmb.conf
   - cp t/.proverc ./
-  - if [ "$COVERAGE" == "1" ] ; then coverage-setup 2>/dev/null ; fi
+  - coverage-setup
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
