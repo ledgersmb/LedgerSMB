@@ -1514,7 +1514,7 @@ sub rebuild_modules {
     #  e.g. table definitions, etc.
 
     my $HTML = html_formatter_context {
-        return $database->apply_changes( checks => 1 );
+        return ! $database->apply_changes( checks => 1 );
     } $request;
 
     return [ HTTP_OK,

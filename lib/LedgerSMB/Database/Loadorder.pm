@@ -176,8 +176,9 @@ sub apply_all {
             if ($args{checks} and -e $checks_file) {
                 my @checks = load_checks($checks_file);
 
-                run_checks($dbh, checks => \@checks)
-                    or return 0;
+                if (not run_checks($dbh, checks => \@checks)) {
+                    return 0;
+                }
             }
             $_->apply($dbh);
         }
