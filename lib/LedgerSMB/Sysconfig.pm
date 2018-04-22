@@ -403,6 +403,11 @@ def 'smtphost',
     default => undef,
     doc => 'Connect to this SMTP host to send e-mails. If defined, used instead of sendmail.';
 
+def 'smtpport',
+    section => 'mail',
+    default => 25,
+    doc => 'Connect to the smtp host using this port.';
+
 def 'smtptimeout',
     section => 'mail',
     default => 60,
