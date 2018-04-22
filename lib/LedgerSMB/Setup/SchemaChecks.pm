@@ -212,7 +212,7 @@ up a context for the (HTML) formatters to be called within.
 
 Returns C<undef> when the C<$coderef> returns false.
 
-Returns an array of HTML snippets when C<$coderef> returns true.
+Returns a reference to an array of HTML snippets when C<$coderef> returns true.
 
 =cut
 

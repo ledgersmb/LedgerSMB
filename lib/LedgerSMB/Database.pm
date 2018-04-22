@@ -547,12 +547,14 @@ sub upgrade_modules {
     return 1;
 }
 
-=head2 apply_changes( [upto_tag => $tag] )
+=head2 apply_changes( [upto_tag => $tag], [checks => $boolean] )
 
 Runs fixes if they have not been applied, optionally up to
 a specific tagged point in the LOADORDER file.
 
-Returns the return status of <LedgerSMB::Database::Loadorder->apply_changes>.
+Runs schema upgrade checks when the value of C<checks> is true.
+
+Returns the return status of C<LedgerSMB::Database::Loadorder->apply_changes>.
 
 =cut
 
@@ -568,7 +570,7 @@ sub apply_changes {
             "$self->{source_dir}/changes/LOADORDER",
             upto_tag => $args{upto_tag});
     $loadorder->init_if_needed($dbh);
-    my $rv = $loadorder->apply_all($dbh);
+    my $rv = $loadorder->apply_all($dbh, checks => $args{checks});
     $dbh->disconnect;
 
     return $rv;

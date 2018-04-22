@@ -131,6 +131,9 @@ sub load_checks {
 
     my %checks_count;
     $checks_count{$_}++ for ( map { $_->{title} } @checks );
+    unless (ref $path) {
+        $_->{path} = $path for @checks;
+    }
 
     die 'Multiple checks with the same name not supported'
         if grep { $checks_count{$_} > 1 } keys %checks_count;
