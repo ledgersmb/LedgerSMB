@@ -203,7 +203,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         $form->{oldlanguage_code} = $form->{language_code};
     }
 
-    push @column_index, @{LedgerSMB::Sysconfig::io_lineitem_columns};
+    push @column_index, qw(unit onhand sellprice discount linetotal);
     for my $cls(@{$form->{bu_class}}){
         if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
              push @column_index, "b_unit_$cls->{id}";
