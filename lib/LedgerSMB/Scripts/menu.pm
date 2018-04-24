@@ -88,8 +88,6 @@ Returns the menu items in JSON format
 sub menuitems_json {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    # There must be a better way
-    my $method = $request->{_auth}->{env}->{REQUEST_METHOD};
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
 
     $menu->generate;
