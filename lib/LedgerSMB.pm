@@ -135,25 +135,16 @@ use warnings;
 
 use PGObject;
 
-use LedgerSMB::PGNumber;
-use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
-use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use HTTP::Status qw( HTTP_OK) ;
 use LedgerSMB::User;
-use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
-use LedgerSMB::DBH;
 use LedgerSMB::Template::TXT;
-use utf8;
-
 use LedgerSMB::Template qw( preprocess );
-
-use Try::Tiny;
+use Log::Log4perl;
 use Carp;
-use DBI;
 use JSON::MaybeXS;
 
 our $VERSION = '1.6.0-dev';
