@@ -52,6 +52,7 @@ requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
 requires 'Text::CSV';
+requires 'Text::Markdown';
 requires 'Version::Compare';
 requires 'XML::Simple';
 requires 'namespace::autoclean';

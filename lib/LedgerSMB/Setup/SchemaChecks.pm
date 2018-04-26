@@ -19,6 +19,7 @@ use warnings;
 
 use Exporter 'import';
 use Digest::MD5 qw(md5_hex);
+use Text::Markdown qw(markdown);
 
 use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
 use LedgerSMB::Template;
@@ -123,7 +124,9 @@ sub _format_describe {
     $template->render(
         {
             title => $check->{title},
-            description => $msg
+        },
+        {
+            description => markdown($msg),
         });
     push @HTML, $template->{output};
 }

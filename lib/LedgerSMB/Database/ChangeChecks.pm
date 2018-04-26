@@ -9,7 +9,7 @@ use File::Spec;
 use MIME::Base64;
 
 our @EXPORT =  ## no critic
-    qw| check grid confirm describe save_grid dropdowns_sql |;
+    qw| check grid confirm describe provided save_grid dropdowns_sql |;
 our @EXPORT_OK = qw| run_with_formatters run_checks load_checks |;
 
 our @checks;
@@ -306,6 +306,9 @@ Further keyword arguments are:
 I<Required>. Contains a longer description of what the check means to achieve
 and explains which options the user is being presented with and what the
 user is supposed to do to resolve the situation.
+
+The string is interpreted as
+L<Markdown|https://daringfireball.net/projects/markdown/>.
 
 =item tables
 
@@ -739,6 +742,9 @@ the given event.
 Shows the check's title and long description, informing the user
 about the intent of the check and the implications of the various
 resolutions offered.
+
+The long description must be interpreted as Markdown and should
+be formatted appropriately for the target UI.
 
 =item grid
 
