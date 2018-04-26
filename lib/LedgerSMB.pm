@@ -141,8 +141,7 @@ use LedgerSMB::Locale;
 use HTTP::Status qw( HTTP_OK) ;
 use LedgerSMB::User;
 use LedgerSMB::Company_Config;
-use LedgerSMB::Template::TXT;
-use LedgerSMB::Template qw( preprocess );
+use LedgerSMB::Template;
 use Log::Log4perl;
 use Carp;
 use JSON::MaybeXS;
@@ -436,13 +435,16 @@ sub merge {
 sub to_json {
     my ($self, $output) = @_;
 
-    return [ HTTP_OK,
-             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-             [ $json->encode(
-                   preprocess(
-                       $output,
-                       \&LedgerSMB::Template::TXT::escape )) ]
-        ];
+    my $response_data = LedgerSMB::Template::preprocess(
+        $output,
+        sub {return shift} # no escaping
+    );
+
+    return [
+        HTTP_OK,
+        [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+        [ $json->encode($response_data) ],
+    ];
 }
 
 sub system_info {
