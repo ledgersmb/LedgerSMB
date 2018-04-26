@@ -356,7 +356,7 @@ sub copy_db {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $rc = $database->copy($request->{new_name})
+    $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
 
     return complete($request);
@@ -961,7 +961,6 @@ sub fix_tests{
 
 sub create_db {
     my ($request) = @_;
-    my $rc=0;
 
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
@@ -982,7 +981,7 @@ sub create_db {
         return $template->render($request);
     }
 
-    $rc=$database->create_and_load();
+    my $rc = $database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
     return select_coa($request);
@@ -1220,7 +1219,6 @@ sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
     my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $database->loader_log_filename();
-    my $rc;
 
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
@@ -1340,7 +1338,6 @@ sub run_upgrade {
 sub run_sl28_migration {
     my ($request) = @_;
     my $database = _init_db($request);
-    my $rc = 0;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
@@ -1359,7 +1356,6 @@ sub run_sl28_migration {
 sub run_sl30_migration {
     my ($request) = @_;
     my $database = _init_db($request);
-    my $rc = 0;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
