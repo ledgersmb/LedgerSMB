@@ -2,4 +2,6 @@
   <form method="POST"
         enctype="multipart/form-data"
         action="<?lsmb action_url ?>">
+    <input type="hidden" name="action" value="rebuild_modules">
+    <input type="hidden" name="database" value="<?lsmb database ?>">
     <input type="hidden" name="check_id" value="<?lsmb check_id ?>">

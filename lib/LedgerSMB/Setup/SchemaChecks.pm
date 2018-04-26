@@ -59,9 +59,6 @@ sub _unpack_grid_data {
 sub _wrap_html {
     my ($request) = shift;
 
-    my $vars = {
-        check_id => _check_hashid( $failing_check ),
-    };
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/upgrade/preamble',
@@ -69,6 +66,7 @@ sub _wrap_html {
     $template->render(
         {
             check_id => _check_hashid( $failing_check ),
+            database => $request->{database},
             action_url => $request->get_relative_url,
         });
     unshift @HTML, $template->{output};
@@ -188,16 +186,23 @@ sub _provided {
 
     # so, it's best to check whether we actually have a matching
     # check/data combo and return early (and return undef) if not.
+
     return undef
         unless (defined $request->{check_id}
-                && $request->{check_id} eq _check_hashid($request));
+                && $request->{check_id} eq _check_hashid($check));
 
 
     if (@_) {
         my $name = shift;
         # we're being asked for a specific element
-        # and since we currently only support grids... it'll be a grid.
-        return _unpack_grid_data($request, $name, $check->{columns});
+        # and since we currently only support confirm and grids...
+        if ($name eq 'confirm') {
+            return $request->{confirm};
+        }
+        else {
+            # it'll be a grid.
+            return _unpack_grid_data($request, $name, $check->{columns});
+        }
     }
     else {
         # we're being asked if we have content to be processed
