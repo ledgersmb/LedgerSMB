@@ -221,7 +221,7 @@ sub _needs_init {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2016 The LedgerSMB Core Team
+Copyright (C) 2016-2018 The LedgerSMB Core Team
 
 This file may be used under the terms of the GNU General Public License,
 version 2 or at your option any later version.  This file may be moved to the

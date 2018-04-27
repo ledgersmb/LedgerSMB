@@ -317,7 +317,7 @@ Returns the MIME content-type for the rendered template.
 
 =back
 
-=head1 Copyright 2007-2017, The LedgerSMB Core Team
+=head1 Copyright 2007-2018, The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

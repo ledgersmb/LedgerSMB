@@ -1576,7 +1576,7 @@ sub system_info {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011-2017 LedgerSMB Core Team.
+Copyright (C) 2011-2018 LedgerSMB Core Team.
 This file is licensed under the GNU General Public License version 2,
 or at your option any later version.  Please see the included
 License.txt for details.

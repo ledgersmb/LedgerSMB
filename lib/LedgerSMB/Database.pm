@@ -668,7 +668,7 @@ sub run_file_with_logs {
 
 =head1 COPYRIGHT
 
-This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
+This module is copyright (C) 2007-2018, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 

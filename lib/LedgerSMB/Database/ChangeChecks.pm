@@ -792,6 +792,11 @@ Returns the value associated with the selected/pressed/clicked description.
 
 =head1 COPYRIGHT
 
+Copyright(C) 2018 The LedgerSMB Core Team.
+
+This file may be reused under the terms of the GNU General Public License
+version 2 or at your option any later version.  Please see the included
+LICENSE.TXT for more information.
 
 =cut
 
