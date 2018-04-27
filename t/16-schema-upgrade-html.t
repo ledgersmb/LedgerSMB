@@ -134,7 +134,45 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-is join("\n", @$out), q{<body>
+is join("\n", @$out), q{<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title></title>
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
+            <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
+            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+        
+        
+        <script type="text/javascript">
+            var dojoConfig = {
+                async: 1,
+                locale: '',
+                packages: [{"name":"lsmb","location":"../lsmb"}]
+            };
+            var lsmbConfig = {
+                
+            };
+       </script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
+
+        
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+        <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -193,7 +231,45 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-is join("\n", @$out), q{<body>
+is join("\n", @$out), q{<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title></title>
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
+            <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
+            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+        
+        
+        <script type="text/javascript">
+            var dojoConfig = {
+                async: 1,
+                locale: '',
+                packages: [{"name":"lsmb","location":"../lsmb"}]
+            };
+            var lsmbConfig = {
+                
+            };
+       </script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
+
+        
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+        <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -252,7 +328,45 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-is join("\n", @$out), q{<body>
+is join("\n", @$out), q{<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title></title>
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
+            <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
+            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+        
+        
+        <script type="text/javascript">
+            var dojoConfig = {
+                async: 1,
+                locale: '',
+                packages: [{"name":"lsmb","location":"../lsmb"}]
+            };
+            var lsmbConfig = {
+                
+            };
+       </script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
+
+        
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+        <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -309,7 +423,45 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-is join("\n", @$out), q{<body>
+is join("\n", @$out), q{<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title></title>
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
+            <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
+            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+        
+        
+        <script type="text/javascript">
+            var dojoConfig = {
+                async: 1,
+                locale: '',
+                packages: [{"name":"lsmb","location":"../lsmb"}]
+            };
+            var lsmbConfig = {
+                
+            };
+       </script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
+
+        
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+        <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -383,7 +535,45 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-is join("\n", @$out), q{<body>
+is join("\n", @$out), q{<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title></title>
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
+            <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
+            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+        
+        
+        <script type="text/javascript">
+            var dojoConfig = {
+                async: 1,
+                locale: '',
+                packages: [{"name":"lsmb","location":"../lsmb"}]
+            };
+            var lsmbConfig = {
+                
+            };
+       </script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
+
+        
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+        <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
