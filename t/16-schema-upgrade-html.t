@@ -138,12 +138,15 @@ is join("\n", @$out), q{<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
+    <input type="hidden" name="action" value="rebuild_modules">
+    <input type="hidden" name="database" value="">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <div class="description">
   <h1>title</h1>
 
   <p>
-    a description
+    <p>a description</p>
+
   </p>
 </div>
 </form>
@@ -194,12 +197,15 @@ is join("\n", @$out), q{<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
+    <input type="hidden" name="action" value="rebuild_modules">
+    <input type="hidden" name="database" value="">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <div class="description">
   <h1>title</h1>
 
   <p>
-    another description
+    <p>another description</p>
+
   </p>
 </div>
 </form>
@@ -250,6 +256,8 @@ is join("\n", @$out), q{<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
+    <input type="hidden" name="action" value="rebuild_modules">
+    <input type="hidden" name="database" value="">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <button
    type="submit"
@@ -305,6 +313,8 @@ is join("\n", @$out), q{<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
+    <input type="hidden" name="action" value="rebuild_modules">
+    <input type="hidden" name="database" value="">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <button
    type="submit"
@@ -377,6 +387,8 @@ is join("\n", @$out), q{<body>
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
+    <input type="hidden" name="action" value="rebuild_modules">
+    <input type="hidden" name="database" value="">
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <table id="grid"
        class="dynatable "
