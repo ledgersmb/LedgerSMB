@@ -76,6 +76,13 @@ gap.
            $dbh->do("INSERT INTO defaults VALUES ('inv-entity-remove', 'y')")
               or die "Failed to set migration strategy: " . $dbh->errstr;
         }
+        elsif ($confirm eq 'retain') {
+           # We set a migration strategy in the defaults table
+           $dbh->do("INSERT INTO defaults VALUES ('inv-entity-retain', 'y')")
+              or die "Failed to set migration strategy: " . $dbh->errstr;
+        }
+        else
+          die "Unexpected confirmation value found: $confirm";
     }
 ;
 
