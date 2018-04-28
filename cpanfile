@@ -53,6 +53,7 @@ requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
 requires 'Text::CSV';
+requires 'Text::Markdown';
 requires 'Version::Compare';
 requires 'XML::Simple';
 requires 'namespace::autoclean';
@@ -114,6 +115,7 @@ feature 'debug', "Debug pane" =>
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
     requires 'App::Prove', '3.36';
+    requires 'DBD::Mock';
     requires 'File::Util';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';

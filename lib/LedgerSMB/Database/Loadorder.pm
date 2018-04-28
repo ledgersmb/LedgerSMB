@@ -13,6 +13,7 @@ use Cwd;
 use List::Util qw| any |;
 
 use LedgerSMB::Database::Change;
+use LedgerSMB::Database::ChangeChecks qw/load_checks run_checks/;
 
 =head1 SYNOPSIS
 
@@ -153,34 +154,58 @@ sub run_all {
     return;
 }
 
-=head2 apply_all
+=head2 apply_all($dbh, checks => $boolean)
 
 Applies all files in the loadorder, with tracking info, locking until it
-completes.
+completes. Runs change precondition checks available, when C<checks> is true.
+
+Returns true when successfully completed.
+
+Returns false when change precondition checks fail.
+
+Throws an exception upon error.
 
 =cut
 
 sub apply_all {
-    my ($self, $dbh) = @_;
+    my ($self, $dbh, %args) = @_;
     _lock($dbh);
     for ($self->scripts){
-        $_->apply($dbh) unless $_->is_applied($dbh);
+        if (! $_->is_applied($dbh)) {
+            my $checks_file = $_->path . '.checks.pl';
+            if ($args{checks} and -e $checks_file) {
+                my @checks = load_checks($checks_file);
+
+                if (not run_checks($dbh, checks => \@checks)) {
+                    return 0;
+                }
+            }
+            $_->apply($dbh);
+        }
     }
-    return _unlock($dbh);
+    _unlock($dbh);
+
+    return 1;
 }
 
 sub _lock {
     my ($dbh) = @_;
-    return $dbh->do(
-            q{ select pg_advisory_lock(
-               'db_patches'::regclass::oid::int, 1) });
+    # pg_advisory_lock() returns void; nothing to return here
+    $dbh->do(
+        q{ select pg_advisory_lock(
+              'db_patches'::regclass::oid::int, 1) });
+    return;
 }
 
 sub _unlock {
     my ($dbh) = @_;
-    return $dbh->do(
-            q{ select pg_advisory_unlock( 
+    # pg_advisory_unlock() returns false when no lock was held,
+    # however, pg_advisory_lock() blocks until there's one available...
+    #  (so we're guaranteed to *have* a lock...)
+    $dbh->do(
+        q{ select pg_advisory_unlock(
                'db_patches'::regclass::oid::int, 1) });
+    return;
 }
 
 sub _needs_init {
@@ -196,7 +221,7 @@ sub _needs_init {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2016 The LedgerSMB Core Team
+Copyright (C) 2016-2018 The LedgerSMB Core Team
 
 This file may be used under the terms of the GNU General Public License,
 version 2 or at your option any later version.  This file may be moved to the

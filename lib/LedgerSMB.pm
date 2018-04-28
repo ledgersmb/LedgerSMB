@@ -135,25 +135,15 @@ use warnings;
 
 use PGObject;
 
-use LedgerSMB::PGNumber;
-use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
-use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use HTTP::Status qw( HTTP_OK) ;
 use LedgerSMB::User;
-use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
-use LedgerSMB::DBH;
-use LedgerSMB::Template::TXT;
-use utf8;
-
-use LedgerSMB::Template qw( preprocess );
-
-use Try::Tiny;
+use LedgerSMB::Template;
+use Log::Log4perl;
 use Carp;
-use DBI;
 use JSON::MaybeXS;
 
 our $VERSION = '1.6.0-dev';
@@ -445,13 +435,16 @@ sub merge {
 sub to_json {
     my ($self, $output) = @_;
 
-    return [ HTTP_OK,
-             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-             [ $json->encode(
-                   preprocess(
-                       $output,
-                       \&LedgerSMB::Template::TXT::escape )) ]
-        ];
+    my $response_data = LedgerSMB::Template::preprocess(
+        $output,
+        sub {return shift} # no escaping
+    );
+
+    return [
+        HTTP_OK,
+        [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+        [ $json->encode($response_data) ],
+    ];
 }
 
 sub system_info {

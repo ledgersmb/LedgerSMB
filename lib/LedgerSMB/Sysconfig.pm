@@ -461,12 +461,6 @@ def 'db_sslmode',
     envvar => 'PGSSLMODE',
     doc => '';
 
-### WHAT DOES THIS DO???
-our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
-
-
-
-
 
 # available printers
 our %printer;

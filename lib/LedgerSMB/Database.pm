@@ -445,9 +445,10 @@ sub load_modules {
                     values ('module_load_ok', 'no') })
             or die $dbh->errstr;
 
-        $self->run_file(
-            file       => "$self->{source_dir}/modules/$mod",
+        my ($success, $stdout, $stderr) = $self->run_file_with_logs(
+            file => "$self->{source_dir}/modules/$mod",
         );
+        $success or die $stderr;
 
         my $sth = $dbh->prepare(q{select value from defaults
                                    where setting_key = 'module_load_ok'});
@@ -520,6 +521,9 @@ sub create_and_load {
 
 This routine upgrades modules as required with a patch release upgrade.
 
+Be sure to run C<apply_changes> before this method to ensure the
+schema the modules are upgraded into is in the correct state.
+
 =cut
 
 sub upgrade_modules {
@@ -527,10 +531,6 @@ sub upgrade_modules {
 
     my $temp = $self->loader_log_filename();
 
-    # The order is important here:
-    #  New modules should be able to depend on the latest changes
-    #  e.g. table definitions, etc.
-    $self->apply_changes();
     $self->load_modules($loadorder, {
     log     => $temp . '_stdout',
     errlog  => $temp . '_stderr'
@@ -547,10 +547,14 @@ sub upgrade_modules {
     return 1;
 }
 
-=head2 apply_changes( [upto_tag => $tag] )
+=head2 apply_changes( [upto_tag => $tag], [checks => $boolean] )
 
 Runs fixes if they have not been applied, optionally up to
 a specific tagged point in the LOADORDER file.
+
+Runs schema upgrade checks when the value of C<checks> is true.
+
+Returns the return status of C<LedgerSMB::Database::Loadorder->apply_changes>.
 
 =cut
 
@@ -566,8 +570,10 @@ sub apply_changes {
             "$self->{source_dir}/changes/LOADORDER",
             upto_tag => $args{upto_tag});
     $loadorder->init_if_needed($dbh);
-    $loadorder->apply_all($dbh);
-    return $dbh->disconnect;
+    my $rv = $loadorder->apply_all($dbh, checks => $args{checks});
+    $dbh->disconnect;
+
+    return $rv;
 }
 
 =head2 stats
@@ -619,9 +625,50 @@ sub stats {
     return $results;
 }
 
+=head2 run_file_with_logs(file => $file) 
+
+Wrapper around run_file() method, which does not die on error and returns
+the captured stdout and stderr output.
+
+Returns an array of three elements comprising:
+
+   * success, false if an error occurred, true otherwise
+   * stdout output log
+   * stderr output log
+
+=cut
+
+sub run_file_with_logs {
+
+    my $self = shift;
+    my @args = @_;
+    my $stdout_fh = File::Temp->new;
+    my $stderr_fh = File::Temp->new;
+
+    # ->run_file croaks on error, but we trap that condition
+    # so that we can carry on and do something useful with
+    # its output logs.
+    local ($!, $@) = (undef, undef);
+    my $success = eval {
+        $self->run_file(
+            @args,
+            stdout_log => $stdout_fh->filename,
+            errlog => $stderr_fh->filename,
+        ) and return 1;
+    };
+
+    # Slurp contents of log files
+    local $/ = undef;
+    my $stdout = <$stdout_fh>;
+    my $stderr = <$stderr_fh>;
+
+    return ($success, $stdout, $stderr);
+}
+
+
 =head1 COPYRIGHT
 
-This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
+This module is copyright (C) 2007-2018, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 

@@ -13,6 +13,7 @@ my @on_disk = ();
 sub collect {
     my $module = $File::Find::name;
     return if $module !~ m/\.html$/
+           || $module =~ m(/setup/upgrade/epilogue.html) # unbalanced by design
            || $module =~ m/\/pod\//
            || $module =~ m(/js/)
            || $module =~ m(/js-src/(dijit|dojo|util)/);
@@ -42,7 +43,7 @@ sub content_test {
     open $fh, '<', $filename
         or BAIL_OUT("failed to open $filename for reading $!");
     $is_snippet = 1
-        if ($filename !~ m#(log(in|out))|main|setup/#
+        if ($filename !~ m#(log(in|out))|main|(setup/(?!upgrade/))#
             || $filename =~ m#setup/ui-db-credentials#);
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;

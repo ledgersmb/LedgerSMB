@@ -39,11 +39,12 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Mailer;
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Upgrade_Preparation;
-use LedgerSMB::Upgrade_Tests;
+use LedgerSMB::Setting;
+use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
-use LedgerSMB::Setting;
+use LedgerSMB::Upgrade_Preparation;
+use LedgerSMB::Upgrade_Tests;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
@@ -356,7 +357,7 @@ sub copy_db {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $rc = $database->copy($request->{new_name})
+    $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
 
     return complete($request);
@@ -961,7 +962,6 @@ sub fix_tests{
 
 sub create_db {
     my ($request) = @_;
-    my $rc=0;
 
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
@@ -982,7 +982,7 @@ sub create_db {
         return $template->render($request);
     }
 
-    $rc=$database->create_and_load();
+    my $rc = $database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
     return select_coa($request);
@@ -1220,7 +1220,6 @@ sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
     my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $database->loader_log_filename();
-    my $rc;
 
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
@@ -1340,7 +1339,6 @@ sub run_upgrade {
 sub run_sl28_migration {
     my ($request) = @_;
     my $database = _init_db($request);
-    my $rc = 0;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
@@ -1359,7 +1357,6 @@ sub run_sl28_migration {
 sub run_sl30_migration {
     my ($request) = @_;
     my $database = _init_db($request);
-    my $rc = 0;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
@@ -1512,6 +1509,20 @@ sub rebuild_modules {
     my ($request, $database) = @_;
     $database //= _init_db($request);
 
+    # The order is important here:
+    #  New modules should be able to depend on the latest changes
+    #  e.g. table definitions, etc.
+
+    my $HTML = html_formatter_context {
+        return ! $database->apply_changes( checks => 1 );
+    } $request;
+
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'text/html; charset=UTF-8' ],
+             $HTML
+        ]
+        if $HTML;
+
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
     return complete($request);
@@ -1565,7 +1576,7 @@ sub system_info {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011-2017 LedgerSMB Core Team.
+Copyright (C) 2011-2018 LedgerSMB Core Team.
 This file is licensed under the GNU General Public License version 2,
 or at your option any later version.  Please see the included
 License.txt for details.

@@ -60,6 +60,7 @@ my @modules =
           'LedgerSMB::Template', 'LedgerSMB::Company_Config',
           'LedgerSMB::Legacy_Util',
           'LedgerSMB::Currency', 'LedgerSMB::Database',
+          'LedgerSMB::Database::ChangeChecks',
           'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::IIAA',
@@ -177,7 +178,9 @@ my @modules =
           'LedgerSMB::Scripts::drafts', 'LedgerSMB::Scripts::recon',
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Scripts::employee::country',
-          'LedgerSMB::Setting::Sequence', 'LedgerSMB::Taxes::Simple',
+          'LedgerSMB::Setting::Sequence',
+          'LedgerSMB::Setup::SchemaChecks',
+          'LedgerSMB::Taxes::Simple',
           'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
@@ -263,5 +266,4 @@ SKIP: {
     }
 }
 
-&done_testing();
-
+done_testing;
