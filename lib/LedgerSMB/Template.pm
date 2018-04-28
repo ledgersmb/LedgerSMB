@@ -131,12 +131,16 @@ Additionally, variables are added to the template processor as required
 by the HTML UI.
 
 
-=item render($hashref)
+=item render($variables, $raw_variables)
 
 Returns the LedgerSMB::Template object itself. Dies on error.
 
 The rendered template result is available from the LedgerSMB::Template
-object's C<output> property.
+object's C<output> property, based on C<variables> and C<raw_variables>.
+
+C<variables> are escaped using the specific mechanism to the output
+format. C<raw_variables> are passed without escaping or processing
+to the template processor.
 
 
 =item get_template_source($extension)
@@ -313,7 +317,7 @@ Returns the MIME content-type for the rendered template.
 
 =back
 
-=head1 Copyright 2007-2017, The LedgerSMB Core Team
+=head1 Copyright 2007-2018, The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
@@ -550,6 +554,7 @@ sub _maketext {
 sub _render {
     my $self = shift;
     my $vars = shift;
+    my $cvars = shift;
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
     $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
@@ -580,6 +585,8 @@ sub _render {
     $cleanvars->{tt_url} = \&_tt_url;
     $cleanvars->{$_} = $self->{additional_vars}->{$_}
         for (keys %{$self->{additional_vars}});
+    $cleanvars->{$_} = $cvars->{$_}
+        for (keys %$cvars);
 
     my $output;
     my $config;
@@ -613,8 +620,9 @@ sub _render {
 sub render {
     my $self = shift @_;
     my $vars = shift @_;
+    my $cvars = shift @_;
 
-    $self->_render($vars);
+    $self->_render($vars, $cvars);
     return $self;
 }
 

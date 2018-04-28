@@ -39,11 +39,12 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Mailer;
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Upgrade_Preparation;
-use LedgerSMB::Upgrade_Tests;
+use LedgerSMB::Setting;
+use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
-use LedgerSMB::Setting;
+use LedgerSMB::Upgrade_Preparation;
+use LedgerSMB::Upgrade_Tests;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
@@ -1508,6 +1509,20 @@ sub rebuild_modules {
     my ($request, $database) = @_;
     $database //= _init_db($request);
 
+    # The order is important here:
+    #  New modules should be able to depend on the latest changes
+    #  e.g. table definitions, etc.
+
+    my $HTML = html_formatter_context {
+        return ! $database->apply_changes( checks => 1 );
+    } $request;
+
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'text/html; charset=UTF-8' ],
+             $HTML
+        ]
+        if $HTML;
+
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
     return complete($request);
@@ -1561,7 +1576,7 @@ sub system_info {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011-2017 LedgerSMB Core Team.
+Copyright (C) 2011-2018 LedgerSMB Core Team.
 This file is licensed under the GNU General Public License version 2,
 or at your option any later version.  Please see the included
 License.txt for details.

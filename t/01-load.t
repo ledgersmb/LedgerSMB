@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 207;
+use Test::More;
 use File::Find;
 
 my @on_disk;
@@ -59,6 +59,7 @@ my @modules =
           'LedgerSMB::File', 'LedgerSMB::Report',
           'LedgerSMB::Template', 'LedgerSMB::Legacy_Util',
           'LedgerSMB::Company_Config', 'LedgerSMB::Database',
+          'LedgerSMB::Database::ChangeChecks',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
@@ -173,7 +174,9 @@ my @modules =
           'LedgerSMB::Scripts::drafts', 'LedgerSMB::Scripts::recon',
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Scripts::employee::country',
-          'LedgerSMB::Setting::Sequence', 'LedgerSMB::Taxes::Simple',
+          'LedgerSMB::Setting::Sequence',
+          'LedgerSMB::Setup::SchemaChecks',
+          'LedgerSMB::Taxes::Simple',
           'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
@@ -249,3 +252,5 @@ SKIP: {
         use_ok($_);
     }
 }
+
+done_testing;
