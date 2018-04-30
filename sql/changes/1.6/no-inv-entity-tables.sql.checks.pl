@@ -6,8 +6,8 @@ use LedgerSMB::Database::ChangeChecks;
 
 check q|Assert "inventory_report" table's columns can be upgraded|,
     query => q|SELECT ir.transdate,
-                      ap.invnum as ap_invoice_number,
-                      ar.invnum as ar_invoice_number  FROM inventory_report ir
+                      ap.invnumber as ap_invoice_number,
+                      ar.invnumber as ar_invoice_number  FROM inventory_report ir
                LEFT JOIN ap ON ap.id = ir.ap_trans_id
                LEFT JOIN ar ON ar.id = ir.ar_trans_id
                 WHERE NOT EXISTS
@@ -81,8 +81,9 @@ gap.
            $dbh->do("INSERT INTO defaults VALUES ('inv-entity-retain', 'y')")
               or die "Failed to set migration strategy: " . $dbh->errstr;
         }
-        else
+        else {
           die "Unexpected confirmation value found: $confirm";
+        }
     }
 ;
 
