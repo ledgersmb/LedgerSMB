@@ -1095,44 +1095,6 @@ COMMENT ON FUNCTION asset_report__record_approve(in_id int) IS
 $$Marks the asset_report record approved.  Not generally recommended to call
 directly.$$;
 
-create or replace function asset_depreciation__approve(in_report_id int, in_expense_acct int)
-returns asset_report
-as $$
-declare retval asset_report;
-begin
-
-retval := asset_report__record_approve(in_report_id);
-
-INSERT INTO gl (reference, description, approved)
-select 'Asset Report ' || in_id, 'Asset Depreciation Report for ' || report_date,
-       false
- FROM asset_report where id = in_id;
-
-INSERT INTO acc_trans (amount, chart_id, transdate, approved, trans_id)
-SELECT l.amount, a.dep_account_id, r.report_date, true, currval('id')
-  FROM asset_report r
-  JOIN asset_report_line l ON (r.id = l.report_id)
-  JOIN asset_item a ON (a.id = l.asset_id)
- WHERE r.id = in_id;
-
-INSERT INTO acc_trans (amount, chart_id, transdate, approved, trans_id)
-SELECT sum(l.amount) * -1, in_expense_acct, r.report_date, approved,
-       currval('id')
-  FROM asset_report r
-  JOIN asset_report_line l ON (r.id = l.report_id)
-  JOIN asset_item a ON (a.id = l.asset_id)
- WHERE r.id = in_id
- GROUP BY r.report_date;
-
-
-return retval;
-
-end;
-$$ language plpgsql;
-
-COMMENT ON function asset_depreciation__approve
-(in_report_id int, in_expense_acct int) IS
-$$Approves an asset depreciation report and creats the GL draft.$$;
 
 CREATE OR REPLACE FUNCTION asset_report__get_disposal_methods()
 RETURNS SETOF asset_disposal_method as
