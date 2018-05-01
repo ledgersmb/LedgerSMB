@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(40);
+    SELECT plan(39);
 
     -- Add data
 
@@ -54,7 +54,6 @@ BEGIN;
     SELECT has_function('asset_report__import',array['text', 'text', 'numeric', 'numeric', 'numeric', 'date', 'date', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer', 'numeric', 'boolean']);
     SELECT has_function('asset_report__begin_disposal',array['integer', 'date', 'integer']);
     SELECT has_function('asset_report__record_approve',array['integer']);
-    SELECT has_function('asset_depreciation__approve',array['integer', 'integer']);
     SELECT has_function('asset__import_from_disposal',array['integer']);
 
     -- Run tests
