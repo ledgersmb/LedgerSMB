@@ -83,8 +83,9 @@ RETURNS int AS
 $$
 DECLARE ret_val int;
 BEGIN
-        INSERT INTO gl (transdate, reference, description, approved)
-        VALUES (in_end_date, in_reference, in_description, true);
+        INSERT INTO gl (transdate, reference, description, approved,
+                        trans_type_code)
+        VALUES (in_end_date, in_reference, in_description, true, 'ye');
 
         INSERT INTO yearend (trans_id, transdate) values (currval('id'), in_end_date);
         INSERT INTO acc_trans (transdate, chart_id, trans_id, amount)
@@ -162,9 +163,10 @@ BEGIN
         WHERE transdate = in_end_date and reversed is not true;
 
         IF FOUND THEN
-                INSERT INTO gl (reference, description, approved)
+                INSERT INTO gl (reference, description, approved,
+                                trans_type_code)
                 SELECT 'Reversing ' || reference, 'Reversing ' || description,
-                        true
+                        true, 'ye'
                 FROM gl WHERE id = (select trans_id from yearend
                         where transdate = in_end_date and reversed is not true);
 

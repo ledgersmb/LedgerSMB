@@ -186,11 +186,14 @@ DECLARE
         t_dep_amount numeric;
 
 Begin
-        INSERT INTO gl (reference, description, transdate, approved)
-        SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
+        INSERT INTO gl (reference, description, transdate,
+                        approved, trans_type_code)
+        SELECT setting_increment('glnumber'),
+               'Asset Report ' || asset_report.id,
                 report_date,
                 coalesce((select value::boolean from defaults
-                           where setting_key = 'debug_fixed_assets'), true)
+                           where setting_key = 'debug_fixed_assets'), true),
+                'fa'
         FROM asset_report
         JOIN asset_report_line
                 ON (asset_report.id = asset_report_line.report_id)
@@ -748,10 +751,9 @@ CREATE OR REPLACE FUNCTION asset_report__disposal_gl
 (in_id int, in_gain_acct int, in_loss_acct int)
 RETURNS bool AS
 $$
-  INSERT
-    INTO gl (reference, description, transdate, approved)
+  INSERT INTO gl (reference, description, transdate, approved, trans_type_code)
   SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
-                report_date, false
+                report_date, false, 'fd'
     FROM asset_report
     JOIN asset_report_line ON (asset_report.id = asset_report_line.report_id)
     JOIN asset_item        ON (asset_report_line.asset_id = asset_item.id)
@@ -1126,9 +1128,9 @@ if retval.report_class = 2 then
      t_disposed_percent := 100;
 end if;
 
-INSERT INTO gl (reference, description, approved, transdate)
+INSERT INTO gl (reference, description, approved, transdate, trans_type_code)
 select 'Asset Report ' || in_id, 'Asset Disposal Report for ' || report_date,
-       false, report_date
+       false, report_date, 'fd'
  FROM asset_report where id = in_id;
 
 -- REMOVING ASSETS FROM ACCOUNT (Credit)
