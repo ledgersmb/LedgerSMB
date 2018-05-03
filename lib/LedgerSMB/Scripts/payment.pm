@@ -1883,7 +1883,7 @@ sub post_overpayment {
         }
 
 
-        if (! $entity_lst{$entity}) {
+        if (! $entity_list{$entity_id}) {
             $entity_list{$entity_id} =
                 LedgerSMB::DBObject::Payment->new({base => $request});
             my $list_key = $entity_list{$entity_id};
