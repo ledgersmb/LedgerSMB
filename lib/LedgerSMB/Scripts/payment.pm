@@ -1131,7 +1131,8 @@ sub post_payment {
     # since we are using two tables there is no need to use doubled information,
     # we could specify this gl is the result of a payment movement...
     #
-    $Payment->{gl_description} = $locale->text('This gl movement, is a consecuence of a payment transaction');
+    $Payment->{gl_description} =
+        $locale->text('This gl movement, is a consecuence of a payment transaction');
     #
     # Im not sure what this is for... gotta comment this later
     $Payment->{approved} = 'true';
@@ -1144,7 +1145,9 @@ sub post_payment {
     # Variable definition
     #
     # We use the prefix op to refer to the overpayment variables.
-    my $unhandled_overpayment = 0; # This variable might be fuzzy, we are using it to handle invalid data
+
+    # This variable might be fuzzy, we are using it to handle invalid data
+    my $unhandled_overpayment = 0;
     # i.e. a user set an overpayment qty inside an invoice.
     my @array_options;
     my @amount;
@@ -1159,24 +1162,30 @@ sub post_payment {
     my @op_memo;
     my @op_account_id;
     #
-    # We need the invoices in order to process the income data, this is done this way
-    # since the data we have isn't indexed in any way.
+    # We need the invoices in order to process the income data, this is
+    # done this way since the data we have isn't indexed in any way.
     #
-    # Ok, we want to use the disccount information in order to do some accounting movements,
-    # we will process it with the same logic for a regular payment, and see where does this leave us.
+    # Ok, we want to use the disccount information in order to do some
+    # accounting movements, we will process it with the same logic for
+    # a regular payment, and see where does this leave us.
     #
     $Payment->{vc_name} = $Payment->{company_name};
-    @array_options = $Payment->get_entity_credit_account();# We need to know the disccount account
+    @array_options = $Payment->get_entity_credit_account();
     my $discount_account_id = $array_options[0]->{discount};
     @array_options = $Payment->get_open_invoices();
     for my $ref (0 .. $#array_options) {
-        if ((!$request->{"checkbox_$array_options[$ref]->{invoice_id}"})&&($request->{"topay_fx_$array_options[$ref]->{invoice_id}"})) {
+        if ((!$request->{"checkbox_$array_options[$ref]->{invoice_id}"})
+            && ($request->{"topay_fx_$array_options[$ref]->{invoice_id}"})) {
             # First i have to determine if discounts will apply
             # we will assume that a discount should apply only
             # if this is the last payment of an invoice
             my  $temporary_discount = 0;
-            my  $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
-            if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($array_options[$ref]->{due_fx} <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
+            my  $request_topay_fx_bigfloat =
+                LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+            if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})
+                && ($array_options[$ref]->{due_fx}
+                    <=  $request_topay_fx_bigfloat
+                        +  $array_options[$ref]->{discount_fx})) {
                 $temporary_discount = $array_options[$ref]->{discount_fx};
             }
             #
@@ -1188,8 +1197,10 @@ sub post_payment {
                  <
                  $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
                 ){
-                # We need to store all the overpayments so we can use it on a new payment2 screen
-                $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;
+                # We need to store all the overpayments
+                # so we can use it on a new payment2 screen
+                $unhandled_overpayment += $request_topay_fx_bigfloat
+                    + $temporary_discount - $array_options[$ref]->{amount} ;
 
             }
             if ($temporary_discount != 0) {
@@ -1198,12 +1209,20 @@ sub post_payment {
                 push @source, $locale->text('Applied discount');
                 push @transaction_id, $array_options[$ref]->{invoice_id};
             }
-            push @amount,   $request_topay_fx_bigfloat; # We'll use this for both cash and ap/ar accounts
-            push @cash_account_id,  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"} ? $request->{"account_$array_options[$ref]->{invoice_id}"} : $request->{account};
-            push @source, $request->{"optional_pay_$array_options[$ref]"} ?
-                $request->{"source_$array_options[$ref]->{invoice_id}"}.' '.$request->{"source_text_$array_options[$ref]->{invoice_id}"}
-            : $request->{source}.' '.$request->{source_value}; # We'll use this for both source and ap/ar accounts
-            push @memo, $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"};
+
+             # We'll use this for both cash and ap/ar accounts
+            push @amount,   $request_topay_fx_bigfloat;
+            push @cash_account_id,
+               $request->{"optional_pay_$array_options[$ref]->{invoice_id}"}
+               ? $request->{"account_$array_options[$ref]->{invoice_id}"}
+               : $request->{account};
+
+            # We'll use this for both source and ap/ar accounts
+            push @source, $request->{"optional_pay_$array_options[$ref]"}
+              ? $request->{"source_$array_options[$ref]->{invoice_id}"} .' ' . $request->{"source_text_$array_options[$ref]->{invoice_id}"}
+              : $request->{source}.' '.$request->{source_value};
+            push @memo,
+                $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"};
             push @transaction_id, $array_options[$ref]->{invoice_id};
         }
     }
@@ -1219,11 +1238,14 @@ sub post_payment {
     #
     # note: I love the for's C-like syntax.
     for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
-        if (!$request->{"overpayment_checkbox_$i"}) { # Is overpayment marked as deleted ?
-            if ( $request->{"overpayment_topay_$i"} ) { # Is this overpayment an used field?
-                # Now we split the account selected options, using the namespace the if statement
-                # provides for us.
-                $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
+        if (!$request->{"overpayment_checkbox_$i"}) {
+            # Is overpayment marked as deleted ?
+            if ( $request->{"overpayment_topay_$i"} ) {
+                # Is this overpayment an used field?
+                # Now we split the account selected options, using the
+                # namespace the if statement provides for us.
+                $request->{"overpayment_topay_$i"} =
+                    LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
 
                 my $id;
                 if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
@@ -1235,7 +1257,8 @@ sub post_payment {
                 }
                 push @op_amount, $request->{"overpayment_topay_$i"};
                 push @op_cash_account_id, $cashid;
-                push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
+                push @op_source, $request->{"overpayment_source1_$i"}
+                   . ' ' .$request->{"overpayment_source2_$i"};
                 push @op_memo, $request->{"overpayment_memo_$i"};
                 if (not $id and $id ne '0'){
                     $request->error($request->{_locale}->text('No overpayment account selected.  Was one set up?'));
@@ -1245,16 +1268,20 @@ sub post_payment {
         }
     }
     # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
-    $Payment->{cash_account_id}    =  $Payment->_db_array_scalars(@cash_account_id);
+    $Payment->{cash_account_id}    =
+        $Payment->_db_array_scalars(@cash_account_id);
     $Payment->{amount}             =  $Payment->_db_array_scalars(@amount);
     $Payment->{source}             =  $Payment->_db_array_scalars(@source);
     $Payment->{memo}               =  $Payment->_db_array_scalars(@memo);
-    $Payment->{transaction_id}     =  $Payment->_db_array_scalars(@transaction_id);
+    $Payment->{transaction_id}     =
+        $Payment->_db_array_scalars(@transaction_id);
     $Payment->{op_amount}          =  $Payment->_db_array_scalars(@op_amount);
-    $Payment->{op_cash_account_id} =  $Payment->_db_array_scalars(@op_cash_account_id);
+    $Payment->{op_cash_account_id} =
+        $Payment->_db_array_scalars(@op_cash_account_id);
     $Payment->{op_source}          =  $Payment->_db_array_scalars(@op_source);
     $Payment->{op_memo}            =  $Payment->_db_array_scalars(@op_memo);
-    $Payment->{op_account_id}      =  $Payment->_db_array_scalars(@op_account_id);
+    $Payment->{op_account_id}      =
+        $Payment->_db_array_scalars(@op_account_id);
     # Ok, passing the control to postgresql and hoping for the best...
 
     $Payment->post_payment();
