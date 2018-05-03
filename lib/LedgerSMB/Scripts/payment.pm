@@ -1062,8 +1062,8 @@ sub payment2 {
             name  => 'account_class',
             value => $Payment->{account_class}
         },
-        project =>  @project ? @project : '' ,        # WE NEED TO VERIFY THAT THE ARRAY EXISTS, IF IT DOESNT,
-        department => @department ? @department : '', # WE WILL PASS A NULL STRING, THIS FIXES THE ISSUES
+        project =>  @project ? \@project : '' ,        # WE NEED TO VERIFY THAT THE ARRAY EXISTS, IF IT DOESNT,
+        department => @department ? \@department : '', # WE WILL PASS A NULL STRING, THIS FIXES THE ISSUES
         # I WAS HAVING WITH THE NULL ARRAYS, STILL UGLY :P
         account => \@account_options,
         selected_account => $request->{account},
@@ -1111,7 +1111,7 @@ sub payment2 {
            name => 'MEDIA',
            options => \@media_options
         },
-        exrate => @currency_options,
+        exrate => \@currency_options,
         selectedcheckboxes => @selected_checkboxes  ? \@selected_checkboxes : '',
         notes => $request->{notes},
         overpayment         => \@overpayment,
