@@ -1689,7 +1689,8 @@ sub post_overpayment {
     my @memo;
     my @source;
     my @transaction_id;
-    #this variables will store all the unused overpayment which will be used to pay the invoices
+    # this variables will store all the unused overpayment which will
+    # be used to pay the invoices
     my %entity_unused_ovp;
     my $unused_ovp_index;
 
@@ -1706,36 +1707,53 @@ sub post_overpayment {
             next;
         }
 
-        my ($entity_id,$entity_name) = split(/--/, $request->{"entity_id_$count"});
-        my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $request->{"selected_accno_$count"});
+        my ($entity_id, $entity_name) =
+            split(/--/, $request->{"entity_id_$count"});
+        my ($ovp_chart_id, $ovp_selected_accno) =
+            split(/--/, $request->{"selected_accno_$count"});
 
-        #Let's see which will the amount of the invoice due that will be paid from an overpayment
-        my $applied_due = ($request->{"optional_discount_$count"} && $request->{"amount_$count"} == $request->{"due_$count"})?
-            $request->{"due_$count"}:
-            $request->{"due_$count"} + $request->{"discount_$count"};
+        # Let's see which will the amount of the invoice due that will
+        # be paid from an overpayment
+        my $applied_due =
+            ($request->{"optional_discount_$count"}
+             && $request->{"amount_$count"} == $request->{"due_$count"})
+            ? $request->{"due_$count"}
+            : $request->{"due_$count"} + $request->{"discount_$count"};
 
-        #let's check if the overpayment movements of the $ovp_chart_id accno has already been searched, if not, search and store it
-        #to later use
+        # let's check if the overpayment movements of the $ovp_chart_id accno
+        # has already been searched, if not, search and store it to later use
         if(!$entity_unused_ovp{"$ovp_chart_id"})
         {
-            $entity_unused_ovp{"$ovp_chart_id"} = LedgerSMB::DBObject::Payment->new({'base' => $request});
+            $entity_unused_ovp{"$ovp_chart_id"} =
+                LedgerSMB::DBObject::Payment->new({'base' => $request});
             $entity_unused_ovp{$ovp_chart_id}->{chart_id} = $ovp_chart_id;
-            #this call will store the unused overpayments in $entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"} just check the .pm
+            # this call will store the unused overpayments in
+            # $entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"}
+            # just check the .pm
             $entity_unused_ovp{"$ovp_chart_id"}->get_unused_overpayments();
-            #this counter will keep track of the ovp that had been used to pay the invoices
+            # this counter will keep track of the ovp that had been used to
+            # pay the invoices
             $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index} = 0;
         }
-        $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index};
+        $unused_ovp_index =
+            $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index};
 
         ###############################################################
         #        Warnings Section
         ###############################################################
-        #In this section, the post_overpayment will check some user inputs and verify if those are apted to call the post method, if not just store a warning message in the
-        #$request->{warning} variable and then call the use_overpayment2 method and it will manage it
+        # In this section, the post_overpayment will check some user inputs
+        # and verify if those are apted to call the post method, if not just
+        # store a warning message in the
+        # $request->{warning} variable and then call the use_overpayment2
+        # method and it will manage it
 
-        #the $invoice_id_amount_to_pay hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice
-        $invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} += $request->{"amount_$count"};
-        if($invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} > $applied_due){
+        # the $invoice_id_amount_to_pay hash will keep track of the amount to
+        # be paid of an specific invoice_id, this amount could not be more than
+        # the due of that invoice
+        $invoice_id_amount_to_pay{$request->{"invoice_id_$count"}} +=
+            $request->{"amount_$count"};
+        if($invoice_id_amount_to_pay{$request->{"invoice_id_$count"}}
+           > $applied_due){
             $request->{warning} .= "Warning\n";
         }
 
@@ -1755,136 +1773,76 @@ sub post_overpayment {
             return use_overpayment2($request);
         }
 
-        #lets fill our entity_list by it's entity ID
-        if($entity_list{$entity_id})
-        {
 
-            #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
-            if ($entity_list{$entity_id}->{"optional_discount_$count"} && $entity_list{$entity_id}->{"amount_$count"} == $entity_list{$entity_id}->{"due_$count"}) {
-                push @{$entity_list{$entity_id}->{array_amount}}, $entity_list{$entity_id}->{"discount_$count"};
-                push @{$entity_list{$entity_id}->{array_cash_account_id}}, $entity_list{$entity_id}->{"vc_discount_accno_$count"};
-                push @{$entity_list{$entity_id}->{array_source}}, $locale->text('Applied discount by an overpayment');
-                push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-                push @{$entity_list{$entity_id}->{array_memo}}, undef;
-                push @{$entity_list{$entity_id}->{ovp_payment_id}}, undef;
-            }
-
-            #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
-            my $tmp_ovp_amount = $entity_list{$entity_id}->{"amount_$count"};
-
-            #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
-            while($tmp_ovp_amount > 0)
-            {
-                #Send a warning if there are no more available amount in the $ovp_chart_id accno
-                if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} eq '')
-                {
-                    $request->{warning} .= $locale->text('The amount to be pay from the accno').qq| $ovp_chart_id |.$locale->text('is bigger than the amount available').qq|\n|;
-                    $tmp_ovp_amount = -1;
-                    next;
-                }
-                if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
-                {
-                    push @{$entity_list{$entity_id}->{array_amount}}, $tmp_ovp_amount;
-                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
-                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
-
-                    $tmp_ovp_amount = 0;
-                    #lets see if there is more amount on the present overpayment movement
-                    my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
-                    if ($tmp_residual_ovp_amount == 0)
-                    {
-                        $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-                    }
-                } else{
-                    $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-
-                    push @{$entity_list{$entity_id}->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
-                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
-
-                    $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-                }
-
-            }
-
-        }else {
-            #Create an Payment object if this entity has not been saved, this object will encapsulate all the entity info which will be needed to
-            #call the sql payment_post method
-            $entity_list{$entity_id} = LedgerSMB::DBObject::Payment->new({base => $request});
-            $entity_list{$entity_id}->{entity_credit_id} = $entity_id;
-
-
-            # LETS GET THE DEPARTMENT INFO
-            # ******************************************, Falta implementarlo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            #if ($request->{department}) {
-            #}
-            #$entity_list{"$entity_id"}->{"department_id"} = $request->{department};
-            #********************************************************
-
-            # We want to set a gl_description,
-            # since we are using two tables there is no need to use doubled information,
-            # we could specify this gl is the result of a overpayment movement...
-            #
-            $entity_list{$entity_id}->{gl_description} = $locale->text('This gl movement, is the result of a overpayment transaction');
+        if (! $entity_lst{$entity}) {
+            $entity_list{$entity_id} =
+                LedgerSMB::DBObject::Payment->new({base => $request});
+            my $list_key = $entity_list{$entity_id};
+            $list_key->{entity_credit_id} = $entity_id;
+            $list_key->{gl_description} =
+                $locale->text('This gl movement, is the result of a overpayment transaction');
 
             # Im not sure what this is for... gotta comment this later
-            $entity_list{$entity_id}->{approved} = 'true';
-            #
+            $list_key->{approved} = 'true';
+        }
 
-            #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
-            if ($entity_list{$entity_id}->{"optional_discount_$count"} && $entity_list{"$entity_id"}->{"amount_$count"} == $entity_list{"$entity_id"}->{"due_$count"}) {
-                push @{$entity_list{$entity_id}->{array_amount}}, $entity_list{$entity_id}->{"discount_$count"};
-                push @{$entity_list{$entity_id}->{array_cash_account_id}}, $entity_list{$entity_id}->{"vc_discount_accno_$count"};
-                push @{$entity_list{$entity_id}->{array_source}}, $locale->text('Applied discount by an overpayment');
-                push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-                push @{$entity_list{$entity_id}->{array_memo}}, undef;
-                push @{$entity_list{$entity_id}->{ovp_payment_id}}, undef;
 
-            }
+        my $list_key = $entity_list{$entity_id};
 
-            #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
-            my $tmp_ovp_amount = $entity_list{$entity_id}->{"amount_$count"};
+        #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
+        if ($list_key->{"optional_discount_$count"} && $list_key->{"amount_$count"} == $list_key->{"due_$count"}) {
+            push @{$list_key->{array_amount}}, $list_key->{"discount_$count"};
+            push @{$list_key->{array_cash_account_id}}, $list_key->{"vc_discount_accno_$count"};
+            push @{$list_key->{array_source}}, $locale->text('Applied discount by an overpayment');
+            push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
+            push @{$list_key->{array_memo}}, undef;
+            push @{$list_key->{ovp_payment_id}}, undef;
+        }
 
-            #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
-            while($tmp_ovp_amount > 0)
+        #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
+        my $tmp_ovp_amount = $list_key->{"amount_$count"};
+
+        #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
+        while($tmp_ovp_amount > 0)
+        {
+            #Send a warning if there are no more available amount in the $ovp_chart_id accno
+            if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} eq '')
             {
-                if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
-                {
-                    push @{$entity_list{$entity_id}->{array_amount}}, $tmp_ovp_amount;
-                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
-                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
-
-                    $tmp_ovp_amount = 0;
-                    #lets see if there is more amount on the present overpayment movement
-                    my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
-                    if ($tmp_residual_ovp_amount == 0)
-                    {
-                        $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-                    }
-                } else{
-                    $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-
-                    push @{$entity_list{$entity_id}->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
-                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
-
-                    $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-                }
+                $request->{warning} .= $locale->text('The amount to be pay from the accno').qq| $ovp_chart_id |.$locale->text('is bigger than the amount available').qq|\n|;
+                $tmp_ovp_amount = -1;
+                next;
             }
+            if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
+            {
+                push @{$list_key->{array_amount}}, $tmp_ovp_amount;
+                push @{$list_key->{array_cash_account_id}}, $ovp_chart_id;
+                push @{$list_key->{array_source}},
+                       $locale->text('use of an overpayment');
+                push @{$list_key->{array_transaction_id}},
+                       $list_key->{"invoice_id_$count"};
+                push @{$list_key->{array_memo}}, undef;
+                push @{$list_key->{ovp_payment_id}},
+                       @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
 
+                $tmp_ovp_amount = 0;
+                #lets see if there is more amount on the present overpayment movement
+                my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
+                if ($tmp_residual_ovp_amount == 0)
+                {
+                    $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+                }
+            } else{
+                $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
 
+                push @{$list_key->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+                push @{$list_key->{array_cash_account_id}}, $ovp_chart_id;
+                push @{$list_key->{array_source}}, $locale->text('use of an overpayment');
+                push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
+                push @{$list_key->{array_memo}}, undef;
+                push @{$list_key->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+
+                $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+            }
         }
 
         $count++;
@@ -1895,13 +1853,12 @@ sub post_overpayment {
     # Now we have all our movements organized by vendor/customer, it is time to call the post_payment sql method by each one of them
     for my $key (keys %entity_list)
     {
-        # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
-        $entity_list{$key}->{amount}             =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_amount}});
-        $entity_list{$key}->{cash_account_id}    =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_cash_account_id}});
-        $entity_list{$key}->{source}             =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_source}});
-        $entity_list{$key}->{memo}               =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_memo}});
-        $entity_list{$key}->{transaction_id}     =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_transaction_id}});
-        $entity_list{$key}->{ovp_payment_id}     =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{ovp_payment_id}});
+        my $list_key = $entity_list{$key};
+        for my $field (qw(amount cash_account_id source memo transaction_id
+                          ovp_payment_id)) {
+            $list_key->{$key} =
+                $list_key->_db_array_scalars(@{$list_key->{"array_$field"}});
+        }
 
         $entity_list{$key}->post_payment();
     }
