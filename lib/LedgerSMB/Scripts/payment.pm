@@ -129,8 +129,8 @@ sub get_search_criteria {
 
 =item pre_bulk_post_report
 
-This displays a report of the expected GL activity of a payment batch before it
-is saved.  For receipts, this just redirects to bulk_post currently.
+    This displays a report of the expected GL activity of a payment batch before it
+    is saved.  For receipts, this just redirects to bulk_post currently.
 
 =cut
 
@@ -568,71 +568,71 @@ TT2 system.
 =cut
 
 sub payment {
- my ($request)    = @_;
- #my $locale       = $request->{_locale};
- my $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
- my $Settings = LedgerSMB::Setting->new({'base' => $request});
+    my ($request)    = @_;
+    #my $locale       = $request->{_locale};
+    my $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Settings = LedgerSMB::Setting->new({'base' => $request});
 
-# Lets get the currencies (this uses the $dbPayment->{account_class} property)
- my @currOptions;
- my @arrayOptions;
- @arrayOptions = $Settings->get_currencies();
+    # Lets get the currencies (this uses the $dbPayment->{account_class} property)
+    my @currOptions;
+    my @arrayOptions;
+    @arrayOptions = $Settings->get_currencies();
 
- for my $ref (0 .. $#arrayOptions) {
-     push @currOptions, { value => $arrayOptions[$ref],
-                           text => $arrayOptions[$ref]};
+    for my $ref (0 .. $#arrayOptions) {
+        push @currOptions, { value => $arrayOptions[$ref],
+                             text => $arrayOptions[$ref]};
 
- }
-# Lets build filter by period
-my $date = LedgerSMB::DBObject::Date->new({base => $request});
-   $date->build_filter_by_period($request->{_locale});
-# Lets set the data in a hash for the template system. :)
-my $select = {
-  script => 'payment.pl',
-  stylesheet => $request->{_user}->{stylesheet},
-  login    => { name  => 'login',
-                value => $request->{_user}->{login}   },
-  curr => {
-    name => 'curr',
-    options => \@currOptions
-  },
-  month => {
-    name => 'month',
-    options => $date->{monthsOptions}
-  },
-  year => {
-    name => 'year',
-    options => $date->{yearsOptions}
-  },
-  interval_radios => $date->{radioOptions},
-  amountfrom => {
-    name => 'amountfrom',
-    },
-  amountto => {
-    name => 'amountto',
-  },
-  accountclass => {
-   name  => 'account_class',
-   value => $dbPayment->{account_class}
-  },
-  type => {
-    name  => 'type',
-    value => $request->{type}
-  },
-  action => {
-    name => 'action',
-    value => 'payment1_5',
-    text => $request->{_locale}->text('Continue'),
-  }
-};
+    }
+    # Lets build filter by period
+    my $date = LedgerSMB::DBObject::Date->new({base => $request});
+    $date->build_filter_by_period($request->{_locale});
+    # Lets set the data in a hash for the template system. :)
+    my $select = {
+        script => 'payment.pl',
+        stylesheet => $request->{_user}->{stylesheet},
+        login    => { name  => 'login',
+                      value => $request->{_user}->{login}   },
+        curr => {
+            name => 'curr',
+            options => \@currOptions
+        },
+                month => {
+                    name => 'month',
+                    options => $date->{monthsOptions}
+            },
+        year => {
+            name => 'year',
+            options => $date->{yearsOptions}
+        },
+        interval_radios => $date->{radioOptions},
+        amountfrom => {
+            name => 'amountfrom',
+        },
+        amountto => {
+            name => 'amountto',
+        },
+        accountclass => {
+            name  => 'account_class',
+            value => $dbPayment->{account_class}
+        },
+        type => {
+            name  => 'type',
+            value => $request->{type}
+        },
+        action => {
+            name => 'action',
+            value => 'payment1_5',
+            text => $request->{_locale}->text('Continue'),
+        }
+    };
 
- my $template;
-     $template = LedgerSMB::Template->new(
-     user     => $request->{_user},
-     locale   => $request->{_locale},
-     path     => 'UI/payments',
-     template => 'payment1',
-     format   => 'HTML' );
+    my $template;
+    $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payments',
+        template => 'payment1',
+        format   => 'HTML' );
      return $template->render($select);
 }
 
@@ -647,59 +647,61 @@ one to handle the payment against
 =cut
 
 sub payment1_5 {
-my ($request)    = @_;
-#my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
-my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-my @array_options = $dbPayment->get_entity_credit_account();
-if ($#array_options == -1) {
-    return &payment($request);
-} elsif ($#array_options == 0) {
-   $request->{'vendor-customer'} = $array_options[0]->{id}.'--'.$array_options[0]->{name};
-   return &payment2($request);
-} else {
-   # Lets call upon the template system
-   my @company_options;
-   for my $ref (0 .. $#array_options) {
-       push @company_options, {    id => $array_options[$ref]->{id},
-                                   name => $array_options[$ref]->{name},
-                                   meta_number => $array_options[$ref]->{meta_number}};
-   }
-   @company_options = sort { $a->{name} cmp $b->{name} } @company_options;
-   my $select = {
-    companies => \@company_options,
-    script       => 'payment.pl',
-    stylesheet   => $request->{_user}->{stylesheet},
-    login        => {  name     => 'login',
-                       value    => $request->{_user}->{login}},
-    department   => {  name     => 'department',
-                       value    => $request->{department}},
-    currency     => {  name     => 'curr',
-                       value    => $request->{curr}},
-    datefrom     => {  name     => 'datefrom',
-                       value    => $request->{datefrom}},
-    dateto       => {  name     => 'dateto',
-                       value    => $request->{dateto}},
-    amountfrom   => {  name     => 'amountfrom',
-                       value    => $request->{datefrom}},
-    amountto     => {  name     => 'amountto',
-                       value    => $request->{dateto}},
-    accountclass => {  name     => 'account_class',
-                       value    => $dbPayment->{account_class}},
-    type         => {  name  => 'type',
-                       value => $request->{type}},
-    action       => {  name => 'action',
-                       value => 'payment2',
-                       text =>  $request->{_locale}->text('Continue')}
-    };
-    my $template;
-     $template = LedgerSMB::Template->new(
-     user     => $request->{_user},
-     locale   => $request->{_locale},
-     path     => 'UI/payments',
-     template => 'payment1_5',
-     format   => 'HTML' );
-    return $template->render($select);
- }
+    my ($request)    = @_;
+    #my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
+    my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my @array_options = $dbPayment->get_entity_credit_account();
+    if ($#array_options == -1) {
+        return &payment($request);
+    } elsif ($#array_options == 0) {
+        $request->{'vendor-customer'} = $array_options[0]->{id}.'--'.$array_options[0]->{name};
+        return &payment2($request);
+    }
+    else {
+        # Lets call upon the template system
+        my @company_options;
+        for my $ref (0 .. $#array_options) {
+            push @company_options, {    id => $array_options[$ref]->{id},
+                                        name => $array_options[$ref]->{name},
+                                        meta_number => $array_options[$ref]->{meta_number}};
+        }
+        @company_options = sort { $a->{name} cmp $b->{name} } @company_options;
+        my $select = {
+            companies => \@company_options,
+            script       => 'payment.pl',
+            stylesheet   => $request->{_user}->{stylesheet},
+            login        => {  name     => 'login',
+                               value    => $request->{_user}->{login}},
+            department   => {  name     => 'department',
+                               value    => $request->{department}},
+            currency     => {  name     => 'curr',
+                               value    => $request->{curr}},
+            datefrom     => {  name     => 'datefrom',
+                               value    => $request->{datefrom}},
+            dateto       => {  name     => 'dateto',
+                               value    => $request->{dateto}},
+            amountfrom   => {  name     => 'amountfrom',
+                               value    => $request->{datefrom}},
+            amountto     => {  name     => 'amountto',
+                               value    => $request->{dateto}},
+            accountclass => {  name     => 'account_class',
+                               value    => $dbPayment->{account_class}},
+            type         => {  name  => 'type',
+                               value => $request->{type}},
+            action       => {  name => 'action',
+                               value => 'payment2',
+                               text =>  $request->{_locale}->text('Continue')}
+        };
+        my $template;
+        $template = LedgerSMB::Template->new(
+            user     => $request->{_user},
+            locale   => $request->{_locale},
+            path     => 'UI/payments',
+            template => 'payment1_5',
+            format   => 'HTML');
+
+        return $template->render($select);
+    }
 
 }
 
@@ -841,10 +843,10 @@ sub payment2 {
     # FINALLY WE ADD TO THE COLUMN HEADERS A LAST FIELD TO PRINT THE CLOSE INVOICE CHECKBOX TRICK :)
     if ($request->{account_class} == 1){
         push @column_headers, {text => $locale->text('To pay').$currency_text},
-                              {text => 'X'};
+        {text => 'X'};
     } else {
         push @column_headers, {text => $locale->text('Received').$currency_text},
-                              {text => 'X'};
+        {text => 'X'};
     }
     my @invoice_data;
     my @topay_state;
@@ -925,23 +927,23 @@ sub payment2 {
                     id     =>  $invoice_id,
                     href   => $uri
                 },
-                invoice_date      => "$invoice->{invoice_date}",
-                amount            => $invoice_amt ? $invoice_amt->to_output() : '',
-                due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
-                paid              => $paid_formatted,
-                discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
-                optional_discount =>  $request->{"optional_discount_$invoice_id"},
-                exchange_rate     =>  "$invoice->{exchangerate}",
-                due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-                topay             => $invoice->{due} - $invoice->{discount},
-                source_text       =>  $request->{"source_text_$invoice_id"},
-                optional          =>  $request->{"optional_pay_$invoice_id"},
-                selected_account  =>  $request->{"account_$invoice_id"},
-                selected_source   =>  $request->{"source_$invoice_id"},
-                memo              =>  {
-                    name  => "memo_invoice_$invoice_id",
-                    value => $request->{"memo_invoice_$invoice_id"}
-                },#END HASH
+                        invoice_date      => "$invoice->{invoice_date}",
+                        amount            => $invoice_amt ? $invoice_amt->to_output() : '',
+                        due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
+                        paid              => $paid_formatted,
+                        discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
+                        optional_discount =>  $request->{"optional_discount_$invoice_id"},
+                        exchange_rate     =>  "$invoice->{exchangerate}",
+                        due_fx            =>  "$due_fx", # This was set at the begining of the for statement
+                        topay             => $invoice->{due} - $invoice->{discount},
+                        source_text       =>  $request->{"source_text_$invoice_id"},
+                        optional          =>  $request->{"optional_pay_$invoice_id"},
+                        selected_account  =>  $request->{"account_$invoice_id"},
+                        selected_source   =>  $request->{"source_$invoice_id"},
+                        memo              =>  {
+                            name  => "memo_invoice_$invoice_id",
+                            value => $request->{"memo_invoice_$invoice_id"}
+                    },#END HASH
                 topay_fx          =>  {
                     name  => "topay_fx_$invoice_id",
                     value => $request->{"topay_fx_$invoice_id"} //
@@ -986,11 +988,11 @@ sub payment2 {
                         accno       => $accno,
                         description => $description
                     },
-                    cashaccount => {
-                        id     =>   $cashid,
-                        accno  =>  $cashaccno,
-                        description => $cashdescription
-                    }
+                            cashaccount => {
+                                id     =>   $cashid,
+                                accno  =>  $cashaccno,
+                                description => $cashdescription
+                        }
                 };
             }
             else {
@@ -1045,10 +1047,10 @@ sub payment2 {
         defaultcurrency => {
             text => $default_currency
         },
-        curr => {
-            name  => 'curr',
-            value => $request->{curr},
-        },
+                curr => {
+                    name  => 'curr',
+                    value => $request->{curr},
+            },
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
         topay_subtotal => (sum map { $_->{topay} } @invoice_data) // 0,
@@ -1069,7 +1071,7 @@ sub payment2 {
                 {text => $vc_options[0]->{city}},
                 {text => $vc_options[0]->{state}},
                 {text => $vc_options[0]->{country}},
-           ]
+                ]
         },
         format => {
            name => 'FORMAT',
@@ -1108,141 +1110,141 @@ and its used for all the mechanics of storing a payment.
 =cut
 
 sub post_payment {
-my ($request) = @_;
-my $locale       = $request->{_locale};
-my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my ($request) = @_;
+    my $locale       = $request->{_locale};
+    my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 
-if (!$request->{exrate}) {
-     $Payment->error($locale->text('Exchange rate hasn\'t been defined!'));}
-# LETS GET THE CUSTOMER/VENDOR INFORMATION
-($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
-# LETS GET THE DEPARTMENT INFO
+    if (!$request->{exrate}) {
+        $Payment->error($locale->text('Exchange rate hasn\'t been defined!'));}
+    # LETS GET THE CUSTOMER/VENDOR INFORMATION
+    ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
+    # LETS GET THE DEPARTMENT INFO
 
-if ($request->{department} and ( $request->{department} =~ /^(\d+)--*/ ) ) {
+    if ($request->{department} and ( $request->{department} =~ /^(\d+)--*/ ) ) {
         $Payment->{department_id} = $1;
-} else {
+    } else {
         $Payment->{department_id} = undef;
-}
+    }
 
-#
-# We want to set a gl_description,
-# since we are using two tables there is no need to use doubled information,
-# we could specify this gl is the result of a payment movement...
-#
-$Payment->{gl_description} = $locale->text('This gl movement, is a consecuence of a payment transaction');
-#
-# Im not sure what this is for... gotta comment this later
-$Payment->{approved} = 'true';
-#
-# We have to setup a lot of things before we can process the payment
-# they are related to payment_post sql function, so if you have any doubts
-# look there.
-#-------------------------------------------------------------------------
-#
-# Variable definition
-#
-# We use the prefix op to refer to the overpayment variables.
-my $unhandled_overpayment = 0; # This variable might be fuzzy, we are using it to handle invalid data
-                           # i.e. a user set an overpayment qty inside an invoice.
-my @array_options;
-my @amount;
-my @discount;
-my @cash_account_id;
-my @memo;
-my @source;
-my @transaction_id;
-my @op_amount;
-my @op_cash_account_id;
-my @op_source;
-my @op_memo;
-my @op_account_id;
-#
-# We need the invoices in order to process the income data, this is done this way
-# since the data we have isn't indexed in any way.
-#
-# Ok, we want to use the disccount information in order to do some accounting movements,
-# we will process it with the same logic for a regular payment, and see where does this leave us.
-#
-$Payment->{vc_name} = $Payment->{company_name};
-@array_options = $Payment->get_entity_credit_account();# We need to know the disccount account
-my $discount_account_id = $array_options[0]->{discount};
-@array_options = $Payment->get_open_invoices();
-for my $ref (0 .. $#array_options) {
- if ((!$request->{"checkbox_$array_options[$ref]->{invoice_id}"})&&($request->{"topay_fx_$array_options[$ref]->{invoice_id}"})) {
-         # First i have to determine if discounts will apply
-         # we will assume that a discount should apply only
-         # if this is the last payment of an invoice
-     my  $temporary_discount = 0;
-     my  $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
-     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($array_options[$ref]->{due_fx} <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
-         $temporary_discount = $array_options[$ref]->{discount_fx};
-     }
-         #
-         # The prefix cash is to set the movements of the cash accounts,
-         # same names are used for ap/ar accounts w/o the cash prefix.
-         #
-     my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($LedgerSMB::Company_Config::decimal_places)
-            <
-          $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
-     ){
-         # We need to store all the overpayments so we can use it on a new payment2 screen
-         $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;
+    #
+    # We want to set a gl_description,
+    # since we are using two tables there is no need to use doubled information,
+    # we could specify this gl is the result of a payment movement...
+    #
+    $Payment->{gl_description} = $locale->text('This gl movement, is a consecuence of a payment transaction');
+    #
+    # Im not sure what this is for... gotta comment this later
+    $Payment->{approved} = 'true';
+    #
+    # We have to setup a lot of things before we can process the payment
+    # they are related to payment_post sql function, so if you have any doubts
+    # look there.
+    #-------------------------------------------------------------------------
+    #
+    # Variable definition
+    #
+    # We use the prefix op to refer to the overpayment variables.
+    my $unhandled_overpayment = 0; # This variable might be fuzzy, we are using it to handle invalid data
+    # i.e. a user set an overpayment qty inside an invoice.
+    my @array_options;
+    my @amount;
+    my @discount;
+    my @cash_account_id;
+    my @memo;
+    my @source;
+    my @transaction_id;
+    my @op_amount;
+    my @op_cash_account_id;
+    my @op_source;
+    my @op_memo;
+    my @op_account_id;
+    #
+    # We need the invoices in order to process the income data, this is done this way
+    # since the data we have isn't indexed in any way.
+    #
+    # Ok, we want to use the disccount information in order to do some accounting movements,
+    # we will process it with the same logic for a regular payment, and see where does this leave us.
+    #
+    $Payment->{vc_name} = $Payment->{company_name};
+    @array_options = $Payment->get_entity_credit_account();# We need to know the disccount account
+    my $discount_account_id = $array_options[0]->{discount};
+    @array_options = $Payment->get_open_invoices();
+    for my $ref (0 .. $#array_options) {
+        if ((!$request->{"checkbox_$array_options[$ref]->{invoice_id}"})&&($request->{"topay_fx_$array_options[$ref]->{invoice_id}"})) {
+            # First i have to determine if discounts will apply
+            # we will assume that a discount should apply only
+            # if this is the last payment of an invoice
+            my  $temporary_discount = 0;
+            my  $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+            if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($array_options[$ref]->{due_fx} <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
+                $temporary_discount = $array_options[$ref]->{discount_fx};
+            }
+            #
+            # The prefix cash is to set the movements of the cash accounts,
+            # same names are used for ap/ar accounts w/o the cash prefix.
+            #
+            my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
+            if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($LedgerSMB::Company_Config::decimal_places)
+                 <
+                 $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
+                ){
+                # We need to store all the overpayments so we can use it on a new payment2 screen
+                $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;
 
-     }
-         if ($temporary_discount != 0) {
-             push @amount, $temporary_discount;
-             push @cash_account_id, $discount_account_id;
-             push @source, $locale->text('Applied discount');
-             push @transaction_id, $array_options[$ref]->{invoice_id};
-         }
-         push @amount,   $request_topay_fx_bigfloat; # We'll use this for both cash and ap/ar accounts
-         push @cash_account_id,  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"} ? $request->{"account_$array_options[$ref]->{invoice_id}"} : $request->{account};
-         push @source, $request->{"optional_pay_$array_options[$ref]"} ?
-                       $request->{"source_$array_options[$ref]->{invoice_id}"}.' '.$request->{"source_text_$array_options[$ref]->{invoice_id}"}
-                       : $request->{source}.' '.$request->{source_value}; # We'll use this for both source and ap/ar accounts
-         push @memo, $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"};
-         push @transaction_id, $array_options[$ref]->{invoice_id};
- }
-}
-# Check if there is an unhandled overpayment and run payment2 as needed
-if ($unhandled_overpayment) {
-    $request->{payment_id} = 0;
-    return payment2($request);
-}
-#
-# Now we need the overpayment information.
-#
-# We will use the prefix op to indicate it is an overpayment information.
-#
-# note: I love the for's C-like syntax.
-for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
-   if (!$request->{"overpayment_checkbox_$i"}) { # Is overpayment marked as deleted ?
-     if ( $request->{"overpayment_topay_$i"} ) { # Is this overpayment an used field?
-     # Now we split the account selected options, using the namespace the if statement
-     # provides for us.
-     $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
+            }
+            if ($temporary_discount != 0) {
+                push @amount, $temporary_discount;
+                push @cash_account_id, $discount_account_id;
+                push @source, $locale->text('Applied discount');
+                push @transaction_id, $array_options[$ref]->{invoice_id};
+            }
+            push @amount,   $request_topay_fx_bigfloat; # We'll use this for both cash and ap/ar accounts
+            push @cash_account_id,  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"} ? $request->{"account_$array_options[$ref]->{invoice_id}"} : $request->{account};
+            push @source, $request->{"optional_pay_$array_options[$ref]"} ?
+                $request->{"source_$array_options[$ref]->{invoice_id}"}.' '.$request->{"source_text_$array_options[$ref]->{invoice_id}"}
+            : $request->{source}.' '.$request->{source_value}; # We'll use this for both source and ap/ar accounts
+            push @memo, $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"};
+            push @transaction_id, $array_options[$ref]->{invoice_id};
+        }
+    }
+    # Check if there is an unhandled overpayment and run payment2 as needed
+    if ($unhandled_overpayment) {
+        $request->{payment_id} = 0;
+        return payment2($request);
+    }
+    #
+    # Now we need the overpayment information.
+    #
+    # We will use the prefix op to indicate it is an overpayment information.
+    #
+    # note: I love the for's C-like syntax.
+    for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
+        if (!$request->{"overpayment_checkbox_$i"}) { # Is overpayment marked as deleted ?
+            if ( $request->{"overpayment_topay_$i"} ) { # Is this overpayment an used field?
+                # Now we split the account selected options, using the namespace the if statement
+                # provides for us.
+                $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
 
-     my $id;
-     if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
-          $id = $1;
-     }
-     my $cashid;
-     if ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/) {
-         $cashid = $1;
-     }
-     push @op_amount, $request->{"overpayment_topay_$i"};
-     push @op_cash_account_id, $cashid;
-     push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
-     push @op_memo, $request->{"overpayment_memo_$i"};
-     if (not $id and $id ne '0'){
-         $request->error($request->{_locale}->text('No overpayment account selected.  Was one set up?'));
-     }
-     push @op_account_id, $id;
-     }
-   }
-}
-# Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
+                my $id;
+                if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
+                    $id = $1;
+                }
+                my $cashid;
+                if ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/) {
+                    $cashid = $1;
+                }
+                push @op_amount, $request->{"overpayment_topay_$i"};
+                push @op_cash_account_id, $cashid;
+                push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
+                push @op_memo, $request->{"overpayment_memo_$i"};
+                if (not $id and $id ne '0'){
+                    $request->error($request->{_locale}->text('No overpayment account selected.  Was one set up?'));
+                }
+                push @op_account_id, $id;
+            }
+        }
+    }
+    # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
     $Payment->{cash_account_id}    =  $Payment->_db_array_scalars(@cash_account_id);
     $Payment->{amount}             =  $Payment->_db_array_scalars(@amount);
     $Payment->{source}             =  $Payment->_db_array_scalars(@source);
@@ -1253,7 +1255,7 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
     $Payment->{op_source}          =  $Payment->_db_array_scalars(@op_source);
     $Payment->{op_memo}            =  $Payment->_db_array_scalars(@op_memo);
     $Payment->{op_account_id}      =  $Payment->_db_array_scalars(@op_account_id);
-# Ok, passing the control to postgresql and hoping for the best...
+    # Ok, passing the control to postgresql and hoping for the best...
 
     $Payment->post_payment();
     if ($request->{continue_to_calling_sub}) {
@@ -1274,33 +1276,33 @@ receive the $Payment object with all this information.
 =cut
 
 sub print_payment {
-  my ($Payment) = @_;
-  my $locale    = $Payment->{_locale};
-  $Payment->gather_printable_info();
-  my $header = @{$Payment->{header_info}}[0];
-  my @rows   = @{$Payment->{line_info}};
-  ###############################################################################
-  #                 FIRST CODE SECTION
-  #
-  # THE FOLLOWING LINES OF CODE ADD SOME EXTRA PROCESSING TO THE DATA THAT
-  # WILL BE  AVAILIBLE ON THE UI,
-  # PLEASE FEEL FREE TO ADD EXTRA LINES IF YOU NEED IT (AND KNOW WHAT YOU ARE DOING).
-  ###############################################################################
-  # First we need to solve some ugly behaviour in the template system
-     $header->{amount} = abs("$header->{amount}");
-  # The next code will enable number to text conversion
-     $Payment->init();
-     $header->{amount2text} = $Payment->num2text($header->{amount});
-  ############################################################################
-  # IF YOU NEED MORE INFORMATION ON THE HEADER AND ROWS ITEMS CHECK SQL FUNCTIONS
-  # payment_gather_header_info AND payment_gather_line_info
-  for my $row (@rows) {
-      $row->{amount} = $row->{amount}->to_output(money => 1);
-  }
-  my $select = {
-      header        => $header,
-      rows          => \@rows,
-      format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
+    my ($Payment) = @_;
+    my $locale    = $Payment->{_locale};
+    $Payment->gather_printable_info();
+    my $header = @{$Payment->{header_info}}[0];
+    my @rows   = @{$Payment->{line_info}};
+    ###############################################################################
+    #                 FIRST CODE SECTION
+    #
+    # THE FOLLOWING LINES OF CODE ADD SOME EXTRA PROCESSING TO THE DATA THAT
+    # WILL BE  AVAILIBLE ON THE UI,
+    # PLEASE FEEL FREE TO ADD EXTRA LINES IF YOU NEED IT (AND KNOW WHAT YOU ARE DOING).
+    ###############################################################################
+    # First we need to solve some ugly behaviour in the template system
+    $header->{amount} = abs("$header->{amount}");
+    # The next code will enable number to text conversion
+    $Payment->init();
+    $header->{amount2text} = $Payment->num2text($header->{amount});
+    ############################################################################
+    # IF YOU NEED MORE INFORMATION ON THE HEADER AND ROWS ITEMS CHECK SQL FUNCTIONS
+    # payment_gather_header_info AND payment_gather_line_info
+    for my $row (@rows) {
+        $row->{amount} = $row->{amount}->to_output(money => 1);
+    }
+    my $select = {
+        header        => $header,
+        rows          => \@rows,
+        format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
   };
   $Payment->{templates_path} = 'templates/'.LedgerSMB::Setting::get('templates').'/';
   my $template = LedgerSMB::Template->new(
@@ -1320,12 +1322,12 @@ to these functions
 =cut
 
 sub post_and_print_payment {
-my ($request) = @_;
-$request->{continue_to_calling_sub} = 1;
-$request->{payment_id} = &post_payment($request);
-my $locale       = $request->{_locale};
-my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-return print_payment($Payment);
+    my ($request) = @_;
+    $request->{continue_to_calling_sub} = 1;
+    $request->{payment_id} = &post_payment($request);
+    my $locale       = $request->{_locale};
+    my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    return print_payment($Payment);
 }
 
 =item use_overpayment
@@ -1336,44 +1338,44 @@ it should be powerful enough to link overpayment from one customer to other cust
 =cut
 
 sub use_overpayment {
-my ($request) = @_;
-my $locale    = $request->{_locale};
-my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
-my $Settings = LedgerSMB::Setting->new({'base' => $request});
-my @arrayOptions;
-my @entities;
+    my ($request) = @_;
+    my $locale    = $request->{_locale};
+    my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Settings = LedgerSMB::Setting->new({'base' => $request});
+    my @arrayOptions;
+    my @entities;
 
-#We will use $ui to handle all the data needed by the User Interface
-my $ui = {
-    script => 'payment.pl',
-    stylesheet => $request->{_user}->{stylesheet} };
-$ui->{account_class} = {name => 'account_class', value => $request->{account_class}};
+    #We will use $ui to handle all the data needed by the User Interface
+    my $ui = {
+        script => 'payment.pl',
+        stylesheet => $request->{_user}->{stylesheet} };
+    $ui->{account_class} = {name => 'account_class', value => $request->{account_class}};
 
-#We want to get all the customer/vendor with unused overpayment
-my @data = $Payment->get_open_overpayment_entities();
-for my $ref (0 .. $#data) {
-       push @entities, { value => $data[$ref]->{id},
-                         name =>  $data[$ref]->{name}};
-   }
+    #We want to get all the customer/vendor with unused overpayment
+    my @data = $Payment->get_open_overpayment_entities();
+    for my $ref (0 .. $#data) {
+        push @entities, { value => $data[$ref]->{id},
+                          name =>  $data[$ref]->{name}};
+    }
 
-my @currOptions;
-@arrayOptions = $Settings->get_currencies();
+    my @currOptions;
+    @arrayOptions = $Settings->get_currencies();
 
-for my $ref (0 .. $#arrayOptions) {
-    push @currOptions, { value => $arrayOptions[$ref],
-                          text => $arrayOptions[$ref]};
-}
+    for my $ref (0 .. $#arrayOptions) {
+        push @currOptions, { value => $arrayOptions[$ref],
+                             text => $arrayOptions[$ref]};
+    }
 
 
-$ui->{curr} = \@currOptions;
-$ui->{entities} =  \@entities;
-$ui->{action}   =  {name => 'action', value => 'use_overpayment2', text => $locale->text('Continue')};
-my $template = LedgerSMB::Template->new(
-  user     => $request->{_user},
-  locale   => $request->{_locale},
-  path     => 'UI/payments',
-  template => 'use_overpayment1',
-  format => 'HTML' );
+    $ui->{curr} = \@currOptions;
+    $ui->{entities} =  \@entities;
+    $ui->{action}   =  {name => 'action', value => 'use_overpayment2', text => $locale->text('Continue')};
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payments',
+        template => 'use_overpayment1',
+        format => 'HTML' );
 return $template->render($ui);
 }
 
@@ -1386,284 +1388,284 @@ This sub runs to allow the user to specify the invoices in which an overpayment 
 
 
 sub use_overpayment2 {
-my ($request) = @_;
-my $locale    = $request->{_locale};
-my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
-my $Selected_entity;
-my @vc_info;
-my @vc_list;
-my @overpayments;
-my @ui_overpayments;
-my @avble_invoices;
-my @ui_avble_invoices;
-my @ui_selected_inv;
-my $exchangerate;
-my $ui_exchangerate;
-my @selected_checkboxes;
-my %seen_invoices;
-my $ui_to_use_subtotal = 0;
-my $ui_avble_subtotal = 0;
-my @hiddens;
-my $vc_entity_info;
-my $default_currency;
-my %amount_to_be_used;
-my %ovp_repeated_invoices;
-my %invoice_id_amount_to_pay;
-my $count;
-my $warning = $Payment->{'warning'};
+    my ($request) = @_;
+    my $locale    = $request->{_locale};
+    my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Selected_entity;
+    my @vc_info;
+    my @vc_list;
+    my @overpayments;
+    my @ui_overpayments;
+    my @avble_invoices;
+    my @ui_avble_invoices;
+    my @ui_selected_inv;
+    my $exchangerate;
+    my $ui_exchangerate;
+    my @selected_checkboxes;
+    my %seen_invoices;
+    my $ui_to_use_subtotal = 0;
+    my $ui_avble_subtotal = 0;
+    my @hiddens;
+    my $vc_entity_info;
+    my $default_currency;
+    my %amount_to_be_used;
+    my %ovp_repeated_invoices;
+    my %invoice_id_amount_to_pay;
+    my $count;
+    my $warning = $Payment->{'warning'};
 
-# First we need to insert some hidden information
+    # First we need to insert some hidden information
 
-push @hiddens, { id => 'entity_credit_id',
-                 name =>  'entity_credit_id',
-                 type => 'hidden',
-                 value => $request->{entity_credit_id}};
-push @hiddens, { id  => 'account_class',
-                 name => 'account_class',
-                 type => 'hidden',
-                 value =>  $request->{account_class} };
-push @hiddens, { id  => 'login',
-                 name => 'login',
-                 type => 'hidden',
-                 value => $request->{login}   };
-push @hiddens, { id  => 'curr',
-                 name => 'curr',
-                 type => 'hidden',
-                 value => $request->{curr}   };
+    push @hiddens, { id => 'entity_credit_id',
+                     name =>  'entity_credit_id',
+                     type => 'hidden',
+                     value => $request->{entity_credit_id}};
+    push @hiddens, { id  => 'account_class',
+                     name => 'account_class',
+                     type => 'hidden',
+                     value =>  $request->{account_class} };
+    push @hiddens, { id  => 'login',
+                     name => 'login',
+                     type => 'hidden',
+                     value => $request->{login}   };
+    push @hiddens, { id  => 'curr',
+                     name => 'curr',
+                     type => 'hidden',
+                     value => $request->{curr}   };
 
-#lets search the entity default currency
-$default_currency = $Payment->get_default_currency();
-
-
-# WE NEED TO KNOW IF WE ARE USING A CURRENCY THAT NEEDS AN EXCHANGERATE
-if ($default_currency ne $request->{curr} ) {
-# DOES THE CURRENCY IN USE HAS AN EXCHANGE RATE?, IF SO
-# WE MUST SET THE VALUE, OTHERWISE THE UI WILL HANDLE IT
-  $exchangerate = $Payment->{exrate} ?
-                  $Payment->{exrate} :
-                  $Payment->get_exchange_rate($request->{curr},
-                  $Payment->{datepaid} ? $Payment->{datepaid} : $Payment->{current_date});
-  if ($exchangerate) {
-    $ui_exchangerate = {
-     id => 'exrate',
-         name => 'exrate',
-         value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS,
-         text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
-                                   #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
-    };
-  } else {
-    $ui_exchangerate = {
-     id => 'exrate',
-         name => 'exrate'};
-  }
-
-} else {
-# WE MUST SET EXCHANGERATE TO 1 FOR THE MATHS SINCE WE
-# ARE USING THE DEFAULT CURRENCY
-  $exchangerate = 1;
-  $ui_exchangerate = {
-                         id => 'exrate',
-             name => 'exrate',
-                         value => 1,
-                         text =>  1
-                      };
-}
-
-#get the owner of the overpayment info
-$vc_entity_info = $Payment->get_vc_info();
+    #lets search the entity default currency
+    $default_currency = $Payment->get_default_currency();
 
 
+    # WE NEED TO KNOW IF WE ARE USING A CURRENCY THAT NEEDS AN EXCHANGERATE
+    if ($default_currency ne $request->{curr} ) {
+        # DOES THE CURRENCY IN USE HAS AN EXCHANGE RATE?, IF SO
+        # WE MUST SET THE VALUE, OTHERWISE THE UI WILL HANDLE IT
+        $exchangerate = $Payment->{exrate} ?
+            $Payment->{exrate} :
+            $Payment->get_exchange_rate($request->{curr},
+                                        $Payment->{datepaid} ? $Payment->{datepaid} : $Payment->{current_date});
+        if ($exchangerate) {
+            $ui_exchangerate = {
+                id => 'exrate',
+                name => 'exrate',
+                value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS,
+                text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
+                    #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
+            };
+        } else {
+            $ui_exchangerate = {
+                id => 'exrate',
+                name => 'exrate'};
+        }
 
-#list all the vendor/customer
-@vc_info = $Payment->get_entity_credit_account();
-for my $ref (0 .. $#vc_info) {
-       my ($name) = split(/:/, $vc_info[$ref]->{name});
-       push @vc_list, { value            => $vc_info[$ref]->{id},
-                        name            => $name,
-                        vc_discount_accno => $vc_info[$ref]->{discount}};
-}
-
-
-$count=1;
-#lets see which invoice do we have printed
-while ($Payment->{"entity_id_$count"})
-{
-  if ($Payment->{"checkbox_$count"})
-  {
-    $count++;
-    next;
-  }
-
-  if ($ovp_repeated_invoices{qq|$Payment->{"invoice_id_$count"}|}->{qq|$Payment->{"selected_accno_$count"}|} != $Payment->{"selected_accno_$count"}){
-
-    #the "ovp_repeated_invoices" hash will store the convination of invoice id and overpayment account, if this convination has already printed
-    #do not print it again
-    $ovp_repeated_invoices{qq|$Payment->{"invoice_id_$count"}|}->{qq|$Payment->{"selected_accno_$count"}|} = $Payment->{"selected_accno_$count"};
-
-    #the "repeated invoice" flag will check if this invoice has already been printed, if it does, do not print the apply discount checkbox in the UI
-
-    if (!$ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice}){
-      $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{optional_discount} = $Payment->{"optional_discount_$count"};
-      $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice} = 'false';
-    } else{
-      $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice} = 'true';
+    } else {
+        # WE MUST SET EXCHANGERATE TO 1 FOR THE MATHS SINCE WE
+        # ARE USING THE DEFAULT CURRENCY
+        $exchangerate = 1;
+        $ui_exchangerate = {
+            id => 'exrate',
+            name => 'exrate',
+            value => 1,
+            text =>  1
+        };
     }
 
-    $ui_to_use_subtotal += $Payment->{"amount_$count"};
+    #get the owner of the overpayment info
+    $vc_entity_info = $Payment->get_vc_info();
 
-    my ($id,$name) = split(/--/, $Payment->{"entity_id_$count"});
-    my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $Payment->{"selected_accno_$count"});
-    my $applied_due = ($ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{optional_discount})? $Payment->{"due_$count"}: $Payment->{"due_$count"} + $Payment->{"discount_$count"};
 
-    $amount_to_be_used{"$ovp_selected_accno"} += $Payment->{"amount_$count"};
-    #this hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice.
-    $invoice_id_amount_to_pay{qq|$Payment->{"invoice_id_$count"}|} += $Payment->{"amount_$count"};
-    if($invoice_id_amount_to_pay{qq|$Payment->{"invoice_id_$count"}|} > $applied_due){
-      $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than the amount to be paid').qq|\n|;
+
+    #list all the vendor/customer
+    @vc_info = $Payment->get_entity_credit_account();
+    for my $ref (0 .. $#vc_info) {
+        my ($name) = split(/:/, $vc_info[$ref]->{name});
+        push @vc_list, { value            => $vc_info[$ref]->{id},
+                         name            => $name,
+                         vc_discount_accno => $vc_info[$ref]->{discount}};
     }
-    ###################################################################
-    #    ojo no me gusta como esta implementado
-    ###################################################################
-    if($Payment->{"amount_$count"} < 0){
-      $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than 0').qq|\n|;
+
+
+    $count=1;
+    #lets see which invoice do we have printed
+    while ($Payment->{"entity_id_$count"})
+    {
+        if ($Payment->{"checkbox_$count"})
+        {
+            $count++;
+            next;
+        }
+
+        if ($ovp_repeated_invoices{qq|$Payment->{"invoice_id_$count"}|}->{qq|$Payment->{"selected_accno_$count"}|} != $Payment->{"selected_accno_$count"}){
+
+            #the "ovp_repeated_invoices" hash will store the convination of invoice id and overpayment account, if this convination has already printed
+            #do not print it again
+            $ovp_repeated_invoices{qq|$Payment->{"invoice_id_$count"}|}->{qq|$Payment->{"selected_accno_$count"}|} = $Payment->{"selected_accno_$count"};
+
+            #the "repeated invoice" flag will check if this invoice has already been printed, if it does, do not print the apply discount checkbox in the UI
+
+            if (!$ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice}){
+                $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{optional_discount} = $Payment->{"optional_discount_$count"};
+                $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice} = 'false';
+            } else{
+                $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice} = 'true';
+            }
+
+            $ui_to_use_subtotal += $Payment->{"amount_$count"};
+
+            my ($id,$name) = split(/--/, $Payment->{"entity_id_$count"});
+            my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $Payment->{"selected_accno_$count"});
+            my $applied_due = ($ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{optional_discount})? $Payment->{"due_$count"}: $Payment->{"due_$count"} + $Payment->{"discount_$count"};
+
+            $amount_to_be_used{"$ovp_selected_accno"} += $Payment->{"amount_$count"};
+            #this hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice.
+            $invoice_id_amount_to_pay{qq|$Payment->{"invoice_id_$count"}|} += $Payment->{"amount_$count"};
+            if($invoice_id_amount_to_pay{qq|$Payment->{"invoice_id_$count"}|} > $applied_due){
+                $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than the amount to be paid').qq|\n|;
+            }
+            ###################################################################
+            #    ojo no me gusta como esta implementado
+            ###################################################################
+            if($Payment->{"amount_$count"} < 0){
+                $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than 0').qq|\n|;
+            }
+            #lets make the href for the invoice
+            my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
+            $uri .= '.pl?action=edit&id='.$Payment->{"invoice_id_$count"}.'&login='.$request->{login};
+
+            push @ui_selected_inv, { invoice          => { number => $Payment->{"invnumber_$count"},
+                                                           id     => $Payment->{"invoice_id_$count"},
+                                                           href   => $uri},
+                                     entity_name        => $name,
+                                     entity_id          => $Payment->{"entity_id_$count"},
+                                     vc_discount_accno     => $Payment->{"vc_discount_accno_$count"},
+                                     invoice_date       => $Payment->{"invoice_date_$count"},
+                                     applied_due        => $applied_due,
+                                     optional_discount    => $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{optional_discount},
+                                     repeated_invoice    => $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice},
+                                     due                => $Payment->{"due_$count"},
+                                     discount        => $Payment->{"discount_$count"},
+                                     selected_accno     => {id        => $ovp_chart_id,
+                                                            ovp_accno => $ovp_selected_accno},
+                                     amount             => $Payment->{"amount_$count"}} unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
+        }
+        $count++;
     }
-    #lets make the href for the invoice
-    my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-    $uri .= '.pl?action=edit&id='.$Payment->{"invoice_id_$count"}.'&login='.$request->{login};
-
-    push @ui_selected_inv, { invoice          => { number => $Payment->{"invnumber_$count"},
-                                                        id     => $Payment->{"invoice_id_$count"},
-                                                        href   => $uri},
-                           entity_name        => $name,
-                           entity_id          => $Payment->{"entity_id_$count"},
-                           vc_discount_accno     => $Payment->{"vc_discount_accno_$count"},
-                           invoice_date       => $Payment->{"invoice_date_$count"},
-                           applied_due        => $applied_due,
-               optional_discount    => $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{optional_discount},
-               repeated_invoice    => $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{repeated_invoice},
-               due                => $Payment->{"due_$count"},
-               discount        => $Payment->{"discount_$count"},
-                           selected_accno     => {id        => $ovp_chart_id,
-                                                    ovp_accno => $ovp_selected_accno},
-                           amount             => $Payment->{"amount_$count"}} unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
-  }
-  $count++;
-}
 
 
-#lets search which available invoice do we have for the selected entity
-if (($Payment->{new_entity_id} != $Payment->{entity_credit_id})&& !$Payment->{new_checkbox})
-{
-  $request->{entity_credit_id} = $Payment->{new_entity_id};
-  #lets create an object who has the entity_credit_id of the selected entity
-  $Selected_entity = LedgerSMB::DBObject::Payment->new({'base' => $Payment});
-  $Selected_entity->{invnumber} = $Selected_entity->{new_invoice} ;
+    #lets search which available invoice do we have for the selected entity
+    if (($Payment->{new_entity_id} != $Payment->{entity_credit_id})&& !$Payment->{new_checkbox})
+    {
+        $request->{entity_credit_id} = $Payment->{new_entity_id};
+        #lets create an object who has the entity_credit_id of the selected entity
+        $Selected_entity = LedgerSMB::DBObject::Payment->new({'base' => $Payment});
+        $Selected_entity->{invnumber} = $Selected_entity->{new_invoice} ;
 
-  my ($id,$name,$vc_discount_accno) = split(/--/, $Selected_entity->{new_entity_id});
-  my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $Selected_entity->{new_accno});
+        my ($id,$name,$vc_discount_accno) = split(/--/, $Selected_entity->{new_entity_id});
+        my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $Selected_entity->{new_accno});
 
-  $Selected_entity->{entity_credit_id} = $id;
+        $Selected_entity->{entity_credit_id} = $id;
 
-  @avble_invoices = $Selected_entity->get_open_invoice();
-  for my $ref (0 .. $#avble_invoices) {
+        @avble_invoices = $Selected_entity->get_open_invoice();
+        for my $ref (0 .. $#avble_invoices) {
 
-    #this hash will store the convination of invoice id and overpayment account, if this convination has already printed
-    #do not print it again
-    if ($ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} != $Selected_entity->{new_accno}){
-      $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} = $Selected_entity->{new_accno};
+            #this hash will store the convination of invoice id and overpayment account, if this convination has already printed
+            #do not print it again
+            if ($ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} != $Selected_entity->{new_accno}){
+                $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} = $Selected_entity->{new_accno};
 
-      #the "repeated invoice" flag will check if this invoice has already been printed, if it does, do not print the apply discount checkbox in the UI
-      if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice}){
-        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'false';
-      } else{
-        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'true';
-      }
+                #the "repeated invoice" flag will check if this invoice has already been printed, if it does, do not print the apply discount checkbox in the UI
+                if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice}){
+                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'false';
+                } else{
+                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'true';
+                }
 
 
-      if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount}){
-        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount} = 'true';
-      }
+                if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount}){
+                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount} = 'true';
+                }
 
-      $invoice_id_amount_to_pay{qq|$avble_invoices[$ref]->{invoice_id}|} += $Selected_entity->{new_amount};
-      $ui_to_use_subtotal += $Selected_entity->{new_amount};
-      $amount_to_be_used{$ovp_selected_accno} += $Selected_entity->{new_amount};
+                $invoice_id_amount_to_pay{qq|$avble_invoices[$ref]->{invoice_id}|} += $Selected_entity->{new_amount};
+                $ui_to_use_subtotal += $Selected_entity->{new_amount};
+                $amount_to_be_used{$ovp_selected_accno} += $Selected_entity->{new_amount};
 
-      #lets make the href for the invoice
-      my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-      $uri .= '.pl?action=edit&id='.$avble_invoices[$ref]->{invoice_id}.'&login='.$request->{login};
+                #lets make the href for the invoice
+                my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
+                $uri .= '.pl?action=edit&id='.$avble_invoices[$ref]->{invoice_id}.'&login='.$request->{login};
 
-      push @ui_avble_invoices, { invoice       => { number => $avble_invoices[$ref]->{invnumber},
-                                                        id     => $avble_invoices[$ref]->{invoice_id},
-                                                        href   => $uri},
-                                 entity_name       => $name,
-                                 vc_discount_accno => $vc_discount_accno,
-                                 entity_id        => qq|$Selected_entity->{entity_credit_id}--$name|,
-                 invoice_date        => $avble_invoices[$ref]->{invoice_date},
-                 applied_due       => $Payment->{"due_$count"},
-                 repeated_invoice  => $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{repeated_invoice},
-                 due            => $avble_invoices[$ref]->{due},
-                 discount          => $avble_invoices[$ref]->{discount},
-                 selected_accno    => {    id       => $ovp_chart_id,
-                                        ovp_accno => $ovp_selected_accno},
-                 amount        => $Selected_entity->{new_amount}} unless ($seen_invoices{$avble_invoices[$ref]->{invoice_id}}++)
+                push @ui_avble_invoices, { invoice       => { number => $avble_invoices[$ref]->{invnumber},
+                                                              id     => $avble_invoices[$ref]->{invoice_id},
+                                                              href   => $uri},
+                                           entity_name       => $name,
+                                           vc_discount_accno => $vc_discount_accno,
+                                           entity_id        => qq|$Selected_entity->{entity_credit_id}--$name|,
+                                           invoice_date        => $avble_invoices[$ref]->{invoice_date},
+                                           applied_due       => $Payment->{"due_$count"},
+                                           repeated_invoice  => $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{repeated_invoice},
+                                           due            => $avble_invoices[$ref]->{due},
+                                           discount          => $avble_invoices[$ref]->{discount},
+                                           selected_accno    => {    id       => $ovp_chart_id,
+                                                                     ovp_accno => $ovp_selected_accno},
+                                           amount        => $Selected_entity->{new_amount}} unless ($seen_invoices{$avble_invoices[$ref]->{invoice_id}}++)
+            }
+        }
     }
-  }
-}
 
 
-# we need to get all the available overpayments
-@overpayments = $Payment->get_available_overpayment_amount();
+    # we need to get all the available overpayments
+    @overpayments = $Payment->get_available_overpayment_amount();
 
-for my $ref (0 .. $#overpayments) {
-    my $overpay = $overpayments[$ref];
-    push @ui_overpayments, {
+    for my $ref (0 .. $#overpayments) {
+        my $overpay = $overpayments[$ref];
+        push @ui_overpayments, {
             id          =>  $overpay->{chart_id},
             accno       =>  $overpay->{accno},
             description =>  $overpay->{description},
             amount      =>  $overpay->{movements},
             available   =>  $overpay->{available},
             touse       =>  $amount_to_be_used{$overpay->{accno}},
+        };
+        $ui_avble_subtotal += $overpay->{available};
+    }
+
+
+    # We start with our data selection called ui
+
+    my $ui = {
+        script        => 'payment.pl',
+        exrate        => $ui_exchangerate,
+        datepaid        => {name           => 'datepaid',
+                            value    => $Payment->{datepaid}? $Payment->{datepaid} : $Payment->{current_date},
+                            size    => '10'},
+        notes        => $Payment->{notes},
+        vc_entity_info    => $vc_entity_info,
+        curr                => $request->{curr},
+        default_curr         => $default_currency,
+        dont_search_inv    => $Payment->{new_checkbox},
+        vc_list            => \@vc_list,
+        entity_credit_id     => $Payment->{entity_credit_id},
+        selected_inv        => \@ui_selected_inv,
+        avble_invoices       => \@ui_avble_invoices,
+        account_class        => $request->{account_class},
+        overpayments         => \@ui_overpayments,
+        to_use_subtotal       => $ui_to_use_subtotal,
+        avble_subtotal    => $ui_avble_subtotal,
+        stylesheet       => $request->{_user}->{stylesheet},
+        warning        => $warning,
+        header          => { text => $locale->text('Use overpayment/prepayment')},
     };
-    $ui_avble_subtotal += $overpay->{available};
-}
 
+    # Lastly we include the hiddens on the UI
 
-# We start with our data selection called ui
+    $ui->{hiddens} = \@hiddens;
 
-my $ui = {
- script        => 'payment.pl',
- exrate        => $ui_exchangerate,
-       datepaid        => {name           => 'datepaid',
-                                    value    => $Payment->{datepaid}? $Payment->{datepaid} : $Payment->{current_date},
-                                    size    => '10'},
-           notes        => $Payment->{notes},
-       vc_entity_info    => $vc_entity_info,
-           curr                => $request->{curr},
-           default_curr         => $default_currency,
-       dont_search_inv    => $Payment->{new_checkbox},
-       vc_list            => \@vc_list,
-       entity_credit_id     => $Payment->{entity_credit_id},
-       selected_inv        => \@ui_selected_inv,
-       avble_invoices       => \@ui_avble_invoices,
-           account_class        => $request->{account_class},
-           overpayments         => \@ui_overpayments,
-           to_use_subtotal       => $ui_to_use_subtotal,
-           avble_subtotal    => $ui_avble_subtotal,
-           stylesheet       => $request->{_user}->{stylesheet},
-           warning        => $warning,
-           header          => { text => $locale->text('Use overpayment/prepayment')},
-          };
-
-# Lastly we include the hiddens on the UI
-
-$ui->{hiddens} = \@hiddens;
-
-my $template =    LedgerSMB::Template->new(
-          user     => $request->{_user},
-          locale   => $request->{_locale},
-          path     => 'UI/payments',
-          template => 'use_overpayment2',
-          format => 'HTML' );
+    my $template =    LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payments',
+        template => 'use_overpayment2',
+        format => 'HTML' );
 
 
 return $template->render($ui);
@@ -1677,234 +1679,234 @@ This method reorganize the selected invoices by customer/vendor and adapt them t
 
 
 sub post_overpayment {
-my ($request) = @_;
-my $locale    = $request->{_locale};
-my %entity_list;
-my %invoice_id_amount_to_pay;
-my @amount;
-my @discount;
-my @cash_account_id;
-my @memo;
-my @source;
-my @transaction_id;
-#this variables will store all the unused overpayment which will be used to pay the invoices
-my %entity_unused_ovp;
-my $unused_ovp_index;
+    my ($request) = @_;
+    my $locale    = $request->{_locale};
+    my %entity_list;
+    my %invoice_id_amount_to_pay;
+    my @amount;
+    my @discount;
+    my @cash_account_id;
+    my @memo;
+    my @source;
+    my @transaction_id;
+    #this variables will store all the unused overpayment which will be used to pay the invoices
+    my %entity_unused_ovp;
+    my $unused_ovp_index;
 
-#let's store all unused invoice in entity_unused_ovp, it will be
+    #let's store all unused invoice in entity_unused_ovp, it will be
 
-#lets see which invoice do we have, and reorganize them by vendor/customer
-my $count=1;
-while ($request->{"entity_id_$count"})
-{
-
-  if ($request->{"checkbox_$count"})
-  {
-    $count++;
-    next;
-  }
-
-  my ($entity_id,$entity_name) = split(/--/, $request->{"entity_id_$count"});
-  my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $request->{"selected_accno_$count"});
-
-  #Let's see which will the amount of the invoice due that will be paid from an overpayment
-  my $applied_due = ($request->{"optional_discount_$count"} && $request->{"amount_$count"} == $request->{"due_$count"})?
-                        $request->{"due_$count"}:
-                        $request->{"due_$count"} + $request->{"discount_$count"};
-
-  #let's check if the overpayment movements of the $ovp_chart_id accno has already been searched, if not, search and store it
-  #to later use
-  if(!$entity_unused_ovp{"$ovp_chart_id"})
-  {
-    $entity_unused_ovp{"$ovp_chart_id"} = LedgerSMB::DBObject::Payment->new({'base' => $request});
-    $entity_unused_ovp{$ovp_chart_id}->{chart_id} = $ovp_chart_id;
-    #this call will store the unused overpayments in $entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"} just check the .pm
-    $entity_unused_ovp{"$ovp_chart_id"}->get_unused_overpayments();
-    #this counter will keep track of the ovp that had been used to pay the invoices
-    $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index} = 0;
-  }
-  $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index};
-
-  ###############################################################
-  #        Warnings Section
-  ###############################################################
-  #In this section, the post_overpayment will check some user inputs and verify if those are apted to call the post method, if not just store a warning message in the
-  #$request->{warning} variable and then call the use_overpayment2 method and it will manage it
-
-  #the $invoice_id_amount_to_pay hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice
-  $invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} += $request->{"amount_$count"};
-  if($invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} > $applied_due){
-    $request->{warning} .= "Warning\n";
-  }
-
-  #The amount to be paid shouldn't be negative
-  if ($request->{"amount_$count"} < 0){
-    $request->{warning} .= "Warning\n";
-  }
-
-  #Is the amount to be paid null?, tell the user and he/she will be able to manage it
-  if ($request->{"amount_$count"} == 0 )
-  {
-    $request->{warning} .= $locale->text('The amount to be pay of the invoice number').qq| $request->{"invnumber_$count"} |.$locale->text('is null').qq|\n|;
-  }
-
-  #if the amount to be paid is bigger than the amount of the invoice, just call the update method and it will manage it
-  if($request->{warning}){
-    return use_overpayment2($request);
-  }
-
-  #lets fill our entity_list by it's entity ID
-  if($entity_list{$entity_id})
-  {
-
-    #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
-    if ($entity_list{$entity_id}->{"optional_discount_$count"} && $entity_list{$entity_id}->{"amount_$count"} == $entity_list{$entity_id}->{"due_$count"}) {
-        push @{$entity_list{$entity_id}->{array_amount}}, $entity_list{$entity_id}->{"discount_$count"};
-        push @{$entity_list{$entity_id}->{array_cash_account_id}}, $entity_list{$entity_id}->{"vc_discount_accno_$count"};
-        push @{$entity_list{$entity_id}->{array_source}}, $locale->text('Applied discount by an overpayment');
-    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-    push @{$entity_list{$entity_id}->{array_memo}}, undef;
-    push @{$entity_list{$entity_id}->{ovp_payment_id}}, undef;
-    }
-
-    #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
-    my $tmp_ovp_amount = $entity_list{$entity_id}->{"amount_$count"};
-
-    #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
-    while($tmp_ovp_amount > 0)
+    #lets see which invoice do we have, and reorganize them by vendor/customer
+    my $count=1;
+    while ($request->{"entity_id_$count"})
     {
-      #Send a warning if there are no more available amount in the $ovp_chart_id accno
-      if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} eq '')
-      {
-        $request->{warning} .= $locale->text('The amount to be pay from the accno').qq| $ovp_chart_id |.$locale->text('is bigger than the amount available').qq|\n|;
-        $tmp_ovp_amount = -1;
-        next;
-      }
-      if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
-      {
-        push @{$entity_list{$entity_id}->{array_amount}}, $tmp_ovp_amount;
-        push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-        push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-        push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-        push @{$entity_list{$entity_id}->{array_memo}}, undef;
-        push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
 
-        $tmp_ovp_amount = 0;
-        #lets see if there is more amount on the present overpayment movement
-        my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
-        if ($tmp_residual_ovp_amount == 0)
+        if ($request->{"checkbox_$count"})
         {
-          $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+            $count++;
+            next;
         }
-      } else{
-        $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
 
-        push @{$entity_list{$entity_id}->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-        push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-        push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-        push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-        push @{$entity_list{$entity_id}->{array_memo}}, undef;
-        push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+        my ($entity_id,$entity_name) = split(/--/, $request->{"entity_id_$count"});
+        my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $request->{"selected_accno_$count"});
 
-        $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-      }
+        #Let's see which will the amount of the invoice due that will be paid from an overpayment
+        my $applied_due = ($request->{"optional_discount_$count"} && $request->{"amount_$count"} == $request->{"due_$count"})?
+            $request->{"due_$count"}:
+            $request->{"due_$count"} + $request->{"discount_$count"};
 
+        #let's check if the overpayment movements of the $ovp_chart_id accno has already been searched, if not, search and store it
+        #to later use
+        if(!$entity_unused_ovp{"$ovp_chart_id"})
+        {
+            $entity_unused_ovp{"$ovp_chart_id"} = LedgerSMB::DBObject::Payment->new({'base' => $request});
+            $entity_unused_ovp{$ovp_chart_id}->{chart_id} = $ovp_chart_id;
+            #this call will store the unused overpayments in $entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"} just check the .pm
+            $entity_unused_ovp{"$ovp_chart_id"}->get_unused_overpayments();
+            #this counter will keep track of the ovp that had been used to pay the invoices
+            $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index} = 0;
+        }
+        $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index};
+
+        ###############################################################
+        #        Warnings Section
+        ###############################################################
+        #In this section, the post_overpayment will check some user inputs and verify if those are apted to call the post method, if not just store a warning message in the
+        #$request->{warning} variable and then call the use_overpayment2 method and it will manage it
+
+        #the $invoice_id_amount_to_pay hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice
+        $invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} += $request->{"amount_$count"};
+        if($invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} > $applied_due){
+            $request->{warning} .= "Warning\n";
+        }
+
+        #The amount to be paid shouldn't be negative
+        if ($request->{"amount_$count"} < 0){
+            $request->{warning} .= "Warning\n";
+        }
+
+        #Is the amount to be paid null?, tell the user and he/she will be able to manage it
+        if ($request->{"amount_$count"} == 0 )
+        {
+            $request->{warning} .= $locale->text('The amount to be pay of the invoice number').qq| $request->{"invnumber_$count"} |.$locale->text('is null').qq|\n|;
+        }
+
+        #if the amount to be paid is bigger than the amount of the invoice, just call the update method and it will manage it
+        if($request->{warning}){
+            return use_overpayment2($request);
+        }
+
+        #lets fill our entity_list by it's entity ID
+        if($entity_list{$entity_id})
+        {
+
+            #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
+            if ($entity_list{$entity_id}->{"optional_discount_$count"} && $entity_list{$entity_id}->{"amount_$count"} == $entity_list{$entity_id}->{"due_$count"}) {
+                push @{$entity_list{$entity_id}->{array_amount}}, $entity_list{$entity_id}->{"discount_$count"};
+                push @{$entity_list{$entity_id}->{array_cash_account_id}}, $entity_list{$entity_id}->{"vc_discount_accno_$count"};
+                push @{$entity_list{$entity_id}->{array_source}}, $locale->text('Applied discount by an overpayment');
+                push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
+                push @{$entity_list{$entity_id}->{array_memo}}, undef;
+                push @{$entity_list{$entity_id}->{ovp_payment_id}}, undef;
+            }
+
+            #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
+            my $tmp_ovp_amount = $entity_list{$entity_id}->{"amount_$count"};
+
+            #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
+            while($tmp_ovp_amount > 0)
+            {
+                #Send a warning if there are no more available amount in the $ovp_chart_id accno
+                if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} eq '')
+                {
+                    $request->{warning} .= $locale->text('The amount to be pay from the accno').qq| $ovp_chart_id |.$locale->text('is bigger than the amount available').qq|\n|;
+                    $tmp_ovp_amount = -1;
+                    next;
+                }
+                if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
+                {
+                    push @{$entity_list{$entity_id}->{array_amount}}, $tmp_ovp_amount;
+                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
+                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
+                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
+                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
+                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+
+                    $tmp_ovp_amount = 0;
+                    #lets see if there is more amount on the present overpayment movement
+                    my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
+                    if ($tmp_residual_ovp_amount == 0)
+                    {
+                        $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+                    }
+                } else{
+                    $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+
+                    push @{$entity_list{$entity_id}->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
+                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
+                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
+                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
+                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+
+                    $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+                }
+
+            }
+
+        }else {
+            #Create an Payment object if this entity has not been saved, this object will encapsulate all the entity info which will be needed to
+            #call the sql payment_post method
+            $entity_list{$entity_id} = LedgerSMB::DBObject::Payment->new({base => $request});
+            $entity_list{$entity_id}->{entity_credit_id} = $entity_id;
+
+
+            # LETS GET THE DEPARTMENT INFO
+            # ******************************************, Falta implementarlo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            #if ($request->{department}) {
+            #}
+            #$entity_list{"$entity_id"}->{"department_id"} = $request->{department};
+            #********************************************************
+
+            # We want to set a gl_description,
+            # since we are using two tables there is no need to use doubled information,
+            # we could specify this gl is the result of a overpayment movement...
+            #
+            $entity_list{$entity_id}->{gl_description} = $locale->text('This gl movement, is the result of a overpayment transaction');
+
+            # Im not sure what this is for... gotta comment this later
+            $entity_list{$entity_id}->{approved} = 'true';
+            #
+
+            #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
+            if ($entity_list{$entity_id}->{"optional_discount_$count"} && $entity_list{"$entity_id"}->{"amount_$count"} == $entity_list{"$entity_id"}->{"due_$count"}) {
+                push @{$entity_list{$entity_id}->{array_amount}}, $entity_list{$entity_id}->{"discount_$count"};
+                push @{$entity_list{$entity_id}->{array_cash_account_id}}, $entity_list{$entity_id}->{"vc_discount_accno_$count"};
+                push @{$entity_list{$entity_id}->{array_source}}, $locale->text('Applied discount by an overpayment');
+                push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
+                push @{$entity_list{$entity_id}->{array_memo}}, undef;
+                push @{$entity_list{$entity_id}->{ovp_payment_id}}, undef;
+
+            }
+
+            #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
+            my $tmp_ovp_amount = $entity_list{$entity_id}->{"amount_$count"};
+
+            #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
+            while($tmp_ovp_amount > 0)
+            {
+                if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
+                {
+                    push @{$entity_list{$entity_id}->{array_amount}}, $tmp_ovp_amount;
+                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
+                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
+                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
+                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
+                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+
+                    $tmp_ovp_amount = 0;
+                    #lets see if there is more amount on the present overpayment movement
+                    my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
+                    if ($tmp_residual_ovp_amount == 0)
+                    {
+                        $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+                    }
+                } else{
+                    $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+
+                    push @{$entity_list{$entity_id}->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+                    push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
+                    push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
+                    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
+                    push @{$entity_list{$entity_id}->{array_memo}}, undef;
+                    push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+
+                    $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
+                }
+            }
+
+
+        }
+
+        $count++;
     }
 
-  }else {
-    #Create an Payment object if this entity has not been saved, this object will encapsulate all the entity info which will be needed to
-    #call the sql payment_post method
-    $entity_list{$entity_id} = LedgerSMB::DBObject::Payment->new({base => $request});
-    $entity_list{$entity_id}->{entity_credit_id} = $entity_id;
 
 
-    # LETS GET THE DEPARTMENT INFO
-    # ******************************************, Falta implementarlo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #if ($request->{department}) {
-    #}
-    #$entity_list{"$entity_id"}->{"department_id"} = $request->{department};
-    #********************************************************
-
-    # We want to set a gl_description,
-    # since we are using two tables there is no need to use doubled information,
-    # we could specify this gl is the result of a overpayment movement...
-    #
-    $entity_list{$entity_id}->{gl_description} = $locale->text('This gl movement, is the result of a overpayment transaction');
-
-    # Im not sure what this is for... gotta comment this later
-    $entity_list{$entity_id}->{approved} = 'true';
-    #
-
-    #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
-    if ($entity_list{$entity_id}->{"optional_discount_$count"} && $entity_list{"$entity_id"}->{"amount_$count"} == $entity_list{"$entity_id"}->{"due_$count"}) {
-        push @{$entity_list{$entity_id}->{array_amount}}, $entity_list{$entity_id}->{"discount_$count"};
-        push @{$entity_list{$entity_id}->{array_cash_account_id}}, $entity_list{$entity_id}->{"vc_discount_accno_$count"};
-        push @{$entity_list{$entity_id}->{array_source}}, $locale->text('Applied discount by an overpayment');
-    push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-    push @{$entity_list{$entity_id}->{array_memo}}, undef;
-    push @{$entity_list{$entity_id}->{ovp_payment_id}}, undef;
-
-    }
-
-    #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno
-    my $tmp_ovp_amount = $entity_list{$entity_id}->{"amount_$count"};
-
-    #let's store the AR/AP movement vs the overpayment accno, and keep track of all the ovp_id that will be use
-    while($tmp_ovp_amount > 0)
+    # Now we have all our movements organized by vendor/customer, it is time to call the post_payment sql method by each one of them
+    for my $key (keys %entity_list)
     {
-      if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
-      {
-        push @{$entity_list{$entity_id}->{array_amount}}, $tmp_ovp_amount;
-        push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-        push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-        push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-        push @{$entity_list{$entity_id}->{array_memo}}, undef;
-        push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
+        # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
+        $entity_list{$key}->{amount}             =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_amount}});
+        $entity_list{$key}->{cash_account_id}    =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_cash_account_id}});
+        $entity_list{$key}->{source}             =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_source}});
+        $entity_list{$key}->{memo}               =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_memo}});
+        $entity_list{$key}->{transaction_id}     =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_transaction_id}});
+        $entity_list{$key}->{ovp_payment_id}     =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{ovp_payment_id}});
 
-        $tmp_ovp_amount = 0;
-        #lets see if there is more amount on the present overpayment movement
-        my $tmp_residual_ovp_amount = @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} - $tmp_ovp_amount;
-        if ($tmp_residual_ovp_amount == 0)
-        {
-          $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-        }
-      } else{
-        $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-
-        push @{$entity_list{$entity_id}->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-        push @{$entity_list{$entity_id}->{array_cash_account_id}}, $ovp_chart_id;
-        push @{$entity_list{$entity_id}->{array_source}}, $locale->text('use of an overpayment');
-        push @{$entity_list{$entity_id}->{array_transaction_id}}, $entity_list{$entity_id}->{"invoice_id_$count"};
-        push @{$entity_list{$entity_id}->{array_memo}}, undef;
-        push @{$entity_list{$entity_id}->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
-
-        $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
-      }
+        $entity_list{$key}->post_payment();
     }
 
-
-  }
-
-  $count++;
-}
-
-
-
-# Now we have all our movements organized by vendor/customer, it is time to call the post_payment sql method by each one of them
-for my $key (keys %entity_list)
-{
-  # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
-  $entity_list{$key}->{amount}             =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_amount}});
-  $entity_list{$key}->{cash_account_id}    =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_cash_account_id}});
-  $entity_list{$key}->{source}             =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_source}});
-  $entity_list{$key}->{memo}               =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_memo}});
-  $entity_list{$key}->{transaction_id}     =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{array_transaction_id}});
-  $entity_list{$key}->{ovp_payment_id}     =  $entity_list{$key}->_db_array_scalars(@{$entity_list{$key}->{ovp_payment_id}});
-
-  $entity_list{$key}->post_payment();
-}
-
-return use_overpayment($request);
+    return use_overpayment($request);
 
 }
 
@@ -1924,5 +1926,5 @@ return use_overpayment($request);
         }
     }
 };
-1;
 
+1;
