@@ -705,7 +705,22 @@ sub payment1_5 {
 
 }
 
-=item payment2
+
+=item update_payment2($request)
+
+This method is used by the payment2 form when executing the action
+associated with the Update button. The difference with the primary
+method is in the handling of the "invoice checkboxes".
+
+=cut
+
+sub update_payment2 {
+    my ($request) = @_;
+
+    return payment2($request, update => 1);
+}
+
+=item payment2($request, update => $boolean)
 
 This method is used  for the payment module, it is a consecuence
 of the payment sub, and its used for all the mechanics of an invoices
@@ -714,7 +729,7 @@ payment module.
 =cut
 
 sub payment2 {
-    my ($request) = @_;
+    my ($request, %args) = @_;
     my $locale       = $request->{_locale};
     my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
     # VARIABLES
@@ -865,12 +880,8 @@ sub payment2 {
     for my $invoice (@open_invoices) {
         $invoice->{invoice_date} = $invoice->{invoice_date}->to_output;
 
-        if ($request->{"checkbox_$invoice->{invoice_id}"}) {
-            push @selected_checkboxes, {
-                name => "checkbox_$invoice->{invoice_id}",
-                value => 'checked'
-            };
-
+        if ($args{update}
+            && ! $request->{"checkbox_$invoice->{invoice_id}"}) {
             next;
         }
 
@@ -1112,7 +1123,6 @@ sub payment2 {
            options => \@media_options
         },
         exrate => \@currency_options,
-        selectedcheckboxes => @selected_checkboxes  ? \@selected_checkboxes : '',
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
