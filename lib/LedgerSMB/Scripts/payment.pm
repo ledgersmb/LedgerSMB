@@ -864,126 +864,130 @@ sub payment2 {
     my $unhandled_overpayment;
     for my $invoice (@open_invoices) {
         $invoice->{invoice_date} = $invoice->{invoice_date}->to_output;
-        if (  !$request->{"checkbox_$invoice->{invoice_id}"}) {
-            my $request_topay_fx_bigfloat
-                = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
-            # SHOULD I APPLY DISCCOUNTS?
-            $request->{"optional_discount_$invoice->{invoice_id}"} =
-                $request->{first_load}
-                ? 'on'
-                :  $request->{"optional_discount_$invoice->{invoice_id}"};
 
-            # LETS SET THE EXCHANGERATE VALUES
-            #tshvr4 meaning of next statement? does the same in either case!
-            my $due_fx = $invoice->{due_fx};
+        if ($request->{"checkbox_$invoice->{invoice_id}"}) {
+            push @selected_checkboxes, {
+                name => "checkbox_$invoice->{invoice_id}",
+                value => 'checked'
+            };
 
-            my $topay_fx_value;
-            if ("$exchangerate") {
-                $topay_fx_value =   $due_fx;
-                if (!$request->{"optional_discount_$invoice->{invoice_id}"}) {
-                    $topay_fx_value = $due_fx =
-                        $due_fx +
-                        ($invoice->{discount}/$invoice->{exchangerate});
-                }
-            } else {
-                #    $topay_fx_value = "N/A";
-            }
-
-
-            # We need to check for unhandled overpayment, see the post
-            # function for details
-            # First we will see if the discount should apply?
-
-
-            # We need to compute the unhandled_overpayment, notice that
-            # all the values inside the if already have
-            # the exchangerate applied
-
-            # XXX:  This causes issues currently, so display of unhandled
-            # overpayment has disabled.  Was getting numbers that didn't make
-            # a lot of sense to me. --CT
-            $due_fx ||= 0;
-            $request_topay_fx_bigfloat ||= 0;
-            if ( $due_fx <  $request_topay_fx_bigfloat) {
-                # We need to store all the overpayments
-                # so we can use it on the screen
-                $unhandled_overpayment =
-                    $unhandled_overpayment + $request_topay_fx_bigfloat
-                    - $due_fx;
-                #$request->{"topay_fx_$invoice->{invoice_id}"} = "$due_fx";
-                $request_topay_fx_bigfloat=$due_fx;
-            }
-            my $paid = $invoice->{amount} -
-                $invoice->{due} - $invoice->{discount};
-            my $paid_formatted = $paid->to_output;
-            # Now its time to build the link to the invoice :)
-            my $uri_module;
-            #TODO move following code to sub getModuleForUri() ?
-            if($Payment->{account_class} == 1) { # 1 is vendor
-                if($invoice->{invoice}) {
-                    $uri_module='ir';
-                }
-                else {
-                    $uri_module='ap';
-                }
-            }#account_class 1
-            elsif($Payment->{account_class} == 2) { # 2 is customer
-                if($invoice->{invoice}) {
-                    $uri_module='is';
-                }
-                else {
-                    $uri_module='ar';
-                }
-            }#account_class 2
-            else {
-                #TODO
-                $uri_module='??';
-            }
-            #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            my $uri = $uri_module . '.pl?action=edit&id='
-                . $invoice->{invoice_id} . '&login=' . $request->{login};
-            my $invoice_id = $invoice->{invoice_id};
-            my $invoice_amt = $invoice->{amount};
-            push @invoice_data, {
-                invoice => {
-                    number => $invoice->{invnumber},
-                    id     =>  $invoice_id,
-                    href   => $uri },
-                invoice_date      => "$invoice->{invoice_date}",
-                amount            => $invoice_amt ? $invoice_amt->to_output() : '',
-                due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
-                paid              => $paid_formatted,
-                discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
-                optional_discount =>  $request->{"optional_discount_$invoice_id"},
-                exchange_rate     =>  "$invoice->{exchangerate}",
-                due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-                topay             => $invoice->{due} - $invoice->{discount},
-                source_text       =>  $request->{"source_text_$invoice_id"},
-                optional          =>  $request->{"optional_pay_$invoice_id"},
-                selected_account  =>  $request->{"account_$invoice_id"},
-                selected_source   =>  $request->{"source_$invoice_id"},
-                memo              =>  {
-                    name  => "memo_invoice_$invoice_id",
-                    value => $request->{"memo_invoice_$invoice_id"}
-                },#END HASH
-                topay_fx          =>  {
-                    name  => "topay_fx_$invoice_id",
-                    value => $request->{"topay_fx_$invoice_id"} //
-                        ( $topay_fx_value ?
-                          LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output()
-                          : ''),
-                }#END HASH
-            };# END PUSH
-
-            push @topay_state, {
-                id  => "topaystate_$invoice_id",
-                value => $request->{"topaystate_$invoice_id"}
-            }; #END PUSH
+            next;
         }
+
+        my $request_topay_fx_bigfloat
+            = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
+        # SHOULD I APPLY DISCCOUNTS?
+        $request->{"optional_discount_$invoice->{invoice_id}"} =
+            $request->{first_load}
+        ? 'on'
+            :  $request->{"optional_discount_$invoice->{invoice_id}"};
+
+        # LETS SET THE EXCHANGERATE VALUES
+        #tshvr4 meaning of next statement? does the same in either case!
+        my $due_fx = $invoice->{due_fx};
+
+        my $topay_fx_value;
+        if ("$exchangerate") {
+            $topay_fx_value =   $due_fx;
+            if (!$request->{"optional_discount_$invoice->{invoice_id}"}) {
+                $topay_fx_value = $due_fx =
+                    $due_fx +
+                    ($invoice->{discount}/$invoice->{exchangerate});
+            }
+        } else {
+            #    $topay_fx_value = "N/A";
+        }
+
+
+        # We need to check for unhandled overpayment, see the post
+        # function for details
+        # First we will see if the discount should apply?
+
+
+        # We need to compute the unhandled_overpayment, notice that
+        # all the values inside the if already have
+        # the exchangerate applied
+
+        # XXX:  This causes issues currently, so display of unhandled
+        # overpayment has disabled.  Was getting numbers that didn't make
+        # a lot of sense to me. --CT
+        $due_fx ||= 0;
+        $request_topay_fx_bigfloat ||= 0;
+        if ( $due_fx <  $request_topay_fx_bigfloat) {
+            # We need to store all the overpayments
+            # so we can use it on the screen
+            $unhandled_overpayment =
+                $unhandled_overpayment + $request_topay_fx_bigfloat
+                - $due_fx;
+            #$request->{"topay_fx_$invoice->{invoice_id}"} = "$due_fx";
+            $request_topay_fx_bigfloat=$due_fx;
+        }
+        my $paid = $invoice->{amount} -
+            $invoice->{due} - $invoice->{discount};
+        my $paid_formatted = $paid->to_output;
+        # Now its time to build the link to the invoice :)
+        my $uri_module;
+        #TODO move following code to sub getModuleForUri() ?
+        if($Payment->{account_class} == 1) { # 1 is vendor
+            if($invoice->{invoice}) {
+                $uri_module='ir';
+            }
+            else {
+                $uri_module='ap';
+            }
+        }#account_class 1
+        elsif($Payment->{account_class} == 2) { # 2 is customer
+            if($invoice->{invoice}) {
+                $uri_module='is';
+            }
+            else {
+                $uri_module='ar';
+            }
+        }#account_class 2
         else {
-            push @selected_checkboxes, {name => "checkbox_$invoice->{invoice_id}",
-                                        value => 'checked'} ;
-        } #END IF
+            #TODO
+            $uri_module='??';
+        }
+        #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
+        my $uri = $uri_module . '.pl?action=edit&id='
+            . $invoice->{invoice_id} . '&login=' . $request->{login};
+        my $invoice_id = $invoice->{invoice_id};
+        my $invoice_amt = $invoice->{amount};
+        push @invoice_data, {
+            invoice => {
+                number => $invoice->{invnumber},
+                id     =>  $invoice_id,
+                href   => $uri },
+            invoice_date      => "$invoice->{invoice_date}",
+            amount            => $invoice_amt ? $invoice_amt->to_output() : '',
+            due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
+            paid              => $paid_formatted,
+            discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
+            optional_discount =>  $request->{"optional_discount_$invoice_id"},
+            exchange_rate     =>  "$invoice->{exchangerate}",
+            due_fx            =>  "$due_fx", # This was set at the begining of the for statement
+            topay             => $invoice->{due} - $invoice->{discount},
+            source_text       =>  $request->{"source_text_$invoice_id"},
+            optional          =>  $request->{"optional_pay_$invoice_id"},
+            selected_account  =>  $request->{"account_$invoice_id"},
+            selected_source   =>  $request->{"source_$invoice_id"},
+            memo              =>  {
+                name  => "memo_invoice_$invoice_id",
+                value => $request->{"memo_invoice_$invoice_id"}
+            },#END HASH
+            topay_fx          =>  {
+                name  => "topay_fx_$invoice_id",
+                value => $request->{"topay_fx_$invoice_id"} //
+                    ( $topay_fx_value ?
+                      LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output()
+                      : ''),
+            }#END HASH
+        };# END PUSH
+
+        push @topay_state, {
+            id  => "topaystate_$invoice_id",
+            value => $request->{"topaystate_$invoice_id"}
+        }; #END PUSH
     }# END FOR
     # And finally, we are going to store the information for the overpayment / prepayment / advanced payment
     # and all the stuff, this is only needed for the update function.
