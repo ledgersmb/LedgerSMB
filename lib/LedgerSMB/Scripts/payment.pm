@@ -707,8 +707,9 @@ sub payment1_5 {
 
 =item payment2
 
-This method is used  for the payment module, it is a consecuence of the payment sub,
-and its used for all the mechanics of an invoices payment module.
+This method is used  for the payment module, it is a consecuence
+of the payment sub, and its used for all the mechanics of an invoices
+payment module.
 
 =cut
 
@@ -748,12 +749,14 @@ sub payment2 {
     ($Payment->{entity_credit_id}, $Payment->{company_name})
         = split /--/ , $request->{'vendor-customer'};
 
-    # WE NEED TO RETRIEVE A BILLING LOCATION, THIS IS HARDCODED FOR NOW... Should we change it?
+    # WE NEED TO RETRIEVE A BILLING LOCATION,
+    # THIS IS HARDCODED FOR NOW... Should we change it?
     $Payment->{location_class_id} = '1';
     my @vc_options;
     @vc_options = $Payment->get_vc_info();
     # LETS BUILD THE PROJECTS INFO
-    # I DONT KNOW IF I NEED ALL THIS, BUT AS IT IS AVAILABLE I'LL STORE IT FOR LATER USAGE.
+    # I DONT KNOW IF I NEED ALL THIS,
+    # BUT AS IT IS AVAILABLE I'LL STORE IT FOR LATER USAGE.
     if ($request->{projects}) {
         ($project_id, $project_number, $project_name)
             = split /--/ ,  $request->{projects} ;
@@ -763,8 +766,9 @@ sub payment2 {
             value => $request->{projects}};
     }
     # LETS GET THE DEPARTMENT INFO
-    # WE HAVE TO SET $dbPayment->{department_id} NOW, THIS DATA WILL BE USED LATER WHEN WE
-    # CALL FOR payment_get_open_invoices. :)
+    # WE HAVE TO SET $dbPayment->{department_id} NOW,
+    # THIS DATA WILL BE USED LATER
+    # WHEN WE CALL FOR payment_get_open_invoices. :)
     if ($request->{department}) {
         ($Payment->{department_id}, $department_name)
             = split /--/, $request->{department};
@@ -773,19 +777,11 @@ sub payment2 {
             text => $department_name,
             value => $request->{department}};
     }
-    # LETS GET ALL THE ACCOUNTS
     my @account_options = $Payment->list_accounting();
-    # LETS GET THE POSSIBLE SOURCES
     my @sources_options = $Payment->get_sources(\%$locale);
-    # LETS BUILD THE CURRENCIES INFORMATION
-    # FIRST, WE NEED TO KNOW THE DEFAULT CURRENCY
     my $default_currency = $Payment->get_default_currency();
-    # LETS BUILD THE COLUMN HEADERS WE ALWAYS NEED
-    # THE OTHER HEADERS WILL BE BUILT IF THE RIGHT CONDITIONS ARE MET.
-    # -----------------------------------------------
-    # SOME USERS WONT USE MULTIPLE CURRENCIES, AND WONT LIKE THE FACT CURRENCY BEING
-    # ON THE SCREEN ALL THE TIME, SO IF THEY ARE USING THE DEFAULT CURRENCY WE WONT PRINT IT
-    my $currency_text  =  $request->{curr} eq $default_currency ? '' : '('.$request->{curr}.')';
+    my $currency_text  =
+        $request->{curr} eq $default_currency ? '' : '('.$request->{curr}.')';
     my $default_currency_text = $currency_text ? '('.$default_currency.')' : '';
     my @column_headers =  (
         {text => $locale->text('Invoice')},
@@ -797,34 +793,38 @@ sub payment2 {
         {text => $locale->text('Memo')},
         {text => $locale->text('Amount Due').$default_currency_text}
         );
-    # WE NEED TO KNOW IF WE ARE USING A CURRENCY THAT NEEDS AN EXCHANGERATE
+
     if ($default_currency ne $request->{curr} ) {
-        # FIRST WE PUSH THE OTHER COLUMN HEADERS WE NEED
         push @column_headers, {text => $locale->text('Exchange Rate')},
         {text => $locale->text('Amount Due') . $currency_text};
-        # WE SET THEM IN THE RIGHT ORDER FOR THE TABLE INSIDE THE UI
         @column_headers[7,8] = @column_headers[8,7];
 
         # select the exchange rate for the currency at the payment date
-        # this has preference over what comes from the request, because the payment date
-        # may have changed since the last request and the currency rate in the request
-        # can be associated with the old payment date -- for example when a rate has been
-        # entered for the current date and the user selects a different date after opening
-        # the screen: today's rate would be used with no way for the user to override, if
-        # we would simply take the exrate from the request.
-        $exchangerate = $Payment->get_exchange_rate($request->{curr},
-                                                    $request->{datepaid} ? $request->{datepaid}
-                                                    : $Payment->{current_date});
-        $exchangerate = $request->{exrate} if ((! $exchangerate) &&
-                                               $request->{datepaid} eq $request->{olddatepaid});
+        # this has preference over what comes from the request, because the
+        # payment date may have changed since the last request and the
+        # currency rate in the request can be associated with the old payment
+        # date -- for example when a rate has been entered for the current
+        # date and the user selects a different date after opening
+        # the screen: today's rate would be used with no way for the user
+        # to override, if we would simply take the exrate from the request.
+        $exchangerate = $Payment->get_exchange_rate(
+            $request->{curr},
+            $request->{datepaid}
+            ? $request->{datepaid} : $Payment->{current_date});
 
+        if ((! $exchangerate)
+            && $request->{datepaid} eq $request->{olddatepaid}) {
+            $exchangerate = $request->{exrate};
+        }
 
         if ($exchangerate) {
             @currency_options = {
                 name => 'exrate',
-                value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS,
-                text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
-                    #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
+                #THERE IS A STRANGE BEHAVIOUR WITH THIS,
+                #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
+                #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
+                value => "$exchangerate",
+                text =>  "$exchangerate"
             };
         } else {
             @currency_options = { name => 'exrate'};
@@ -841,12 +841,22 @@ sub payment2 {
         };
     }
     # FINALLY WE ADD TO THE COLUMN HEADERS A LAST FIELD TO PRINT THE CLOSE INVOICE CHECKBOX TRICK :)
-    if ($request->{account_class} == 1){
-        push @column_headers, {text => $locale->text('To pay').$currency_text},
-        {text => 'X'};
+    if ($request->{account_class} == 1) {
+        push @column_headers,
+            {
+                text => $locale->text('To pay').$currency_text
+            },
+            {
+                text => 'X'
+            };
     } else {
-        push @column_headers, {text => $locale->text('Received').$currency_text},
-        {text => 'X'};
+        push @column_headers,
+            {
+                text => $locale->text('Received').$currency_text
+            },
+            {
+                text => 'X'
+            };
     }
     my @invoice_data;
     my @topay_state;
@@ -858,7 +868,10 @@ sub payment2 {
             my $request_topay_fx_bigfloat
                 = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
             # SHOULD I APPLY DISCCOUNTS?
-            $request->{"optional_discount_$invoice->{invoice_id}"} = $request->{first_load}? 'on':  $request->{"optional_discount_$invoice->{invoice_id}"};
+            $request->{"optional_discount_$invoice->{invoice_id}"} =
+                $request->{first_load}
+                ? 'on'
+                :  $request->{"optional_discount_$invoice->{invoice_id}"};
 
             # LETS SET THE EXCHANGERATE VALUES
             #tshvr4 meaning of next statement? does the same in either case!
@@ -868,33 +881,42 @@ sub payment2 {
             if ("$exchangerate") {
                 $topay_fx_value =   $due_fx;
                 if (!$request->{"optional_discount_$invoice->{invoice_id}"}) {
-                    $topay_fx_value = $due_fx = $due_fx + ($invoice->{discount}/$invoice->{exchangerate});
+                    $topay_fx_value = $due_fx =
+                        $due_fx +
+                        ($invoice->{discount}/$invoice->{exchangerate});
                 }
             } else {
                 #    $topay_fx_value = "N/A";
             }
 
 
-            # We need to check for unhandled overpayment, see the post function for details
+            # We need to check for unhandled overpayment, see the post
+            # function for details
             # First we will see if the discount should apply?
 
 
-            # We need to compute the unhandled_overpayment, notice that all the values inside the if already have
+            # We need to compute the unhandled_overpayment, notice that
+            # all the values inside the if already have
             # the exchangerate applied
 
-            # XXX:  This causes issues currently, so display of unhandled overpayment has
-            # disabled.  Was getting numbers that didn't make a lot of sense to me. --CT
+            # XXX:  This causes issues currently, so display of unhandled
+            # overpayment has disabled.  Was getting numbers that didn't make
+            # a lot of sense to me. --CT
             $due_fx ||= 0;
             $request_topay_fx_bigfloat ||= 0;
             if ( $due_fx <  $request_topay_fx_bigfloat) {
-                # We need to store all the overpayments so we can use it on the screen
-                $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat - $due_fx;
+                # We need to store all the overpayments
+                # so we can use it on the screen
+                $unhandled_overpayment =
+                    $unhandled_overpayment + $request_topay_fx_bigfloat
+                    - $due_fx;
                 #$request->{"topay_fx_$invoice->{invoice_id}"} = "$due_fx";
                 $request_topay_fx_bigfloat=$due_fx;
             }
-            my $paid = $invoice->{amount} - $invoice->{due} - $invoice->{discount};
-            my $paid_formatted=$paid->to_output;
-            #Now its time to build the link to the invoice :)
+            my $paid = $invoice->{amount} -
+                $invoice->{due} - $invoice->{discount};
+            my $paid_formatted = $paid->to_output;
+            # Now its time to build the link to the invoice :)
             my $uri_module;
             #TODO move following code to sub getModuleForUri() ?
             if($Payment->{account_class} == 1) { # 1 is vendor
@@ -918,32 +940,32 @@ sub payment2 {
                 $uri_module='??';
             }
             #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            my $uri =$uri_module.'.pl?action=edit&id='.$invoice->{invoice_id}.'&login='.$request->{login};
+            my $uri = $uri_module . '.pl?action=edit&id='
+                . $invoice->{invoice_id} . '&login=' . $request->{login};
             my $invoice_id = $invoice->{invoice_id};
             my $invoice_amt = $invoice->{amount};
             push @invoice_data, {
                 invoice => {
                     number => $invoice->{invnumber},
                     id     =>  $invoice_id,
-                    href   => $uri
-                },
-                        invoice_date      => "$invoice->{invoice_date}",
-                        amount            => $invoice_amt ? $invoice_amt->to_output() : '',
-                        due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
-                        paid              => $paid_formatted,
-                        discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
-                        optional_discount =>  $request->{"optional_discount_$invoice_id"},
-                        exchange_rate     =>  "$invoice->{exchangerate}",
-                        due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-                        topay             => $invoice->{due} - $invoice->{discount},
-                        source_text       =>  $request->{"source_text_$invoice_id"},
-                        optional          =>  $request->{"optional_pay_$invoice_id"},
-                        selected_account  =>  $request->{"account_$invoice_id"},
-                        selected_source   =>  $request->{"source_$invoice_id"},
-                        memo              =>  {
-                            name  => "memo_invoice_$invoice_id",
-                            value => $request->{"memo_invoice_$invoice_id"}
-                    },#END HASH
+                    href   => $uri },
+                invoice_date      => "$invoice->{invoice_date}",
+                amount            => $invoice_amt ? $invoice_amt->to_output() : '',
+                due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
+                paid              => $paid_formatted,
+                discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
+                optional_discount =>  $request->{"optional_discount_$invoice_id"},
+                exchange_rate     =>  "$invoice->{exchangerate}",
+                due_fx            =>  "$due_fx", # This was set at the begining of the for statement
+                topay             => $invoice->{due} - $invoice->{discount},
+                source_text       =>  $request->{"source_text_$invoice_id"},
+                optional          =>  $request->{"optional_pay_$invoice_id"},
+                selected_account  =>  $request->{"account_$invoice_id"},
+                selected_source   =>  $request->{"source_$invoice_id"},
+                memo              =>  {
+                    name  => "memo_invoice_$invoice_id",
+                    value => $request->{"memo_invoice_$invoice_id"}
+                },#END HASH
                 topay_fx          =>  {
                     name  => "topay_fx_$invoice_id",
                     value => $request->{"topay_fx_$invoice_id"} //
@@ -975,8 +997,10 @@ sub payment2 {
         if (!$request->{"overpayment_checkbox_$i"}) {
             if ( $request->{"overpayment_topay_$i"} ) {
                 # Now we split the account selected options
-                my ($id, $accno, $description) = split(/--/, $request->{"overpayment_account_$i"});
-                my ($cashid, $cashaccno, $cashdescription  ) = split(/--/, $request->{"overpayment_cash_account_$i"});
+                my ($id, $accno, $description) =
+                    split(/--/, $request->{"overpayment_account_$i"});
+                my ($cashid, $cashaccno, $cashdescription  ) =
+                    split(/--/, $request->{"overpayment_cash_account_$i"});
 
                 push @overpayment, {
                     amount  => LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"}),
@@ -1014,7 +1038,9 @@ sub payment2 {
     my @format_options;
     push @format_options, {value => 1, text => 'HTML'};
     if (${LedgerSMB::Sysconfig::latex}) {
-        push  @format_options, {value => 2, text => 'PDF' }, {value => 3, text => 'POSTSCRIPT' };
+        push  @format_options,
+        {value => 2, text => 'PDF' },
+        {value => 3, text => 'POSTSCRIPT' };
     }
     # LETS BUILD THE SELECTION FOR THE UI
     # Notice that the first data inside this selection is the firs_load, this
