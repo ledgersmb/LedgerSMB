@@ -737,7 +737,7 @@ sub payment2 {
     my @project;
     my @selected_checkboxes;
     my @department;
-    my @currency_options;
+    my $currency_options;
     my $exchangerate;
     my $module;
     my $b_units;
@@ -833,7 +833,7 @@ sub payment2 {
         }
 
         if ($exchangerate) {
-            @currency_options = {
+            $currency_options = {
                 name => 'exrate',
                 #THERE IS A STRANGE BEHAVIOUR WITH THIS,
                 #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
@@ -842,14 +842,14 @@ sub payment2 {
                 text =>  "$exchangerate"
             };
         } else {
-            @currency_options = { name => 'exrate'};
+            $currency_options = { name => 'exrate'};
         }
 
     } else {
         # WE MUST SET EXCHANGERATE TO 1 FOR THE MATHS SINCE WE
         # ARE USING THE DEFAULT CURRENCY
         $exchangerate = 1;
-        @currency_options = {
+        $currency_options = {
             name => 'exrate',
             value => 1,
             text =>  1
@@ -1122,7 +1122,7 @@ sub payment2 {
            name => 'MEDIA',
            options => \@media_options
         },
-        exrate => \@currency_options,
+        exrate => $currency_options,
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
