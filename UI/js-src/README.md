@@ -14,7 +14,7 @@ To rebuild the dojo and lsmb javascript, you should have node.js installed. Chan
 the UI/js-src/lsmb directory, and run:
 
 ```
-../utils/buildscripts/build.sh --profile lsmb.profile.js
+../util/buildscripts/build.sh --profile lsmb.profile.js
 ```
 
 This command will clear out the UI/js/ directory, and create a new build of all Javascript files.
