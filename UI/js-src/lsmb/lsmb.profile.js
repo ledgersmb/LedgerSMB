@@ -18,6 +18,8 @@ var profile = (function(){
         releaseDir: "../../js",
         releaseName: "",
         action: "release",
+        // Usual Dojo optimizer is Google Closure.
+        // See http://lisperator.net/uglifyjs/ for UglifyJS
         layerOptimize: "uglify",
         optimize: "uglify",
         cssOptimize: "comments",

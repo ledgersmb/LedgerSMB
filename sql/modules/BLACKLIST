@@ -39,7 +39,6 @@ asset_class__get_asset_accounts
 asset_class__get_dep_accounts
 asset_class__get_dep_methods
 asset_class__list
-asset_depreciation__approve
 asset_item__add_note
 asset_report__generate_gl
 asset_report__get

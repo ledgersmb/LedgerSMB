@@ -99,7 +99,9 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
               <td colspan="2" id="date_column">
                 <?lsmb PROCESS input element_data=datepaid ?>
                 <?lsmb datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid ?>
-                <?lsmb INCLUDE tooltip element_data = { id => "date_column", msg => text("Date to register payment") }; ?>
+                <?lsmb INCLUDE tooltip element_data = {
+                       ref_id => "datepaid"
+                       msg => text("Date to register payment") }; ?>
               </td>
             </tr>
             <tr id="source_row">
@@ -115,7 +117,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                                 name="source"
                                                 options=sources
                                                 default_values=[selected_source] }; ?>
-                <?lsmb INCLUDE tooltip element_data = { id => 'source_column', msg => text("Only for documentation") }; ?>
+                <?lsmb INCLUDE tooltip element_data = {
+                       ref_id => 'source_column'
+                       msg => text("Only for documentation")
+                }; ?>
               </td>
               <td id="source_text_column">
                 <?lsmb PROCESS input element_data={
@@ -123,7 +128,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                        name  => 'source_value'
                        id    => 'source_value'
                        value => source_value } -?>
-                <?lsmb INCLUDE tooltip element_data = { id => 'source_value', msg => text("Source documentation") }; ?>
+                <?lsmb INCLUDE tooltip element_data = {
+                       ref_id => 'source_value'
+                       msg => text("Source documentation") };
+                ?>
               </td>
             </tr>
             <tr id="currency_row">
@@ -173,7 +181,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                     });
                                 </script>
                             </button>
-                            <?lsmb INCLUDE tooltip element_data = { id => "checkbox_all", msg => text("Toggle all removal checkboxes") }; ?>
+                         <?lsmb INCLUDE tooltip element_data = {
+                                ref_id => "checkbox_all"
+                                msg => text("Toggle all removal checkboxes")
+                         }; ?>
                        </th>
         <?lsmb     END;
                    j = j + 1; ?>
@@ -210,8 +221,12 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                       checked=CHECKED } ?>
         </td>
         <td align="center">
-            <?lsmb row.memo.id=row.memo.name ; PROCESS input element_data=row.memo; -?>
-            <?lsmb INCLUDE tooltip element_data = { id => row.memo.name, msg => text("Memo to help retrieval") }; ?>
+          <?lsmb row.memo.id=row.memo.name;
+                 PROCESS input element_data=row.memo; -?>
+          <?lsmb INCLUDE tooltip element_data = {
+                 ref_id => row.memo.name
+                 msg => text("Memo to help retrieval")
+          }; ?>
         </td>
         <?lsmb IF defaultcurrency.text != curr.value ?>
         <td><?lsmb row.exchange_rate ?></td>
@@ -220,7 +235,9 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <?lsmb IF defaultcurrency.text != curr.value ?>
         <td>
             <div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div>
-            <?lsmb INCLUDE tooltip element_data = { id => "div_topay_invoice_$i", msg => text("Amount to pay") }; ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                   ref_id => "div_topay_invoice_$i"
+                   msg => text("Amount to pay") }; ?>
         </td>
         <?lsmb END ?>
         <?lsmb #This should be computed and updated to the div using  ?>
@@ -284,12 +301,18 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
           </div>
         </td>
         <td valign="middle"
-            align="center"><?lsmb PROCESS input element_data = {
-                                                       type="checkbox"
-                                                       class="remove"
-                                                       id="checkbox_" _ row.invoice.id
-                                                       name="checkbox_" _ row.invoice.id } ?>
-            <?lsmb INCLUDE tooltip element_data = { id => "checkbox_" _ row.invoice.id, msg => text("Toggle removal of entry in current payment") }; ?>
+            align="center">
+          <?lsmb
+             PROCESS input element_data = {
+             type="checkbox"
+             class="remove"
+             id="checkbox_" _ row.invoice.id
+             name="checkbox_" _ row.invoice.id
+             checked="checked"
+             } ?>
+          <?lsmb INCLUDE tooltip element_data = {
+                 ref_id => "checkbox_" _ row.invoice.id
+                 msg => text("Uncheck to remove entry from payment") }; ?>
         </td>
       </tr>
       <?lsmb END ?>
@@ -461,37 +484,35 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
    </table>
 
    <hr />
-  <?lsmb update.accesskey   = "U";
-         update.title       = "UPDATE ALT+U";
-         update.name        = "action";
-         update.value       = "payment2";
-         update.text        = text("Update");
-         PROCESS button element_data=update -?>
-  <?lsmb post.accesskey   = "P";
-         post.title       = "POST ALT+P";
-         post.name        = "action";
-         post.value       = "post_payment";
-         post.text        = text("Post");
-         PROCESS button element_data=post -?>
-  <?lsmb post_and_print.accesskey = "R";
-         post_and_print.title     = "POST AND PRINT ALT+R";
-         post_and_print.name = "action";
-         post_and_print.value = "post_and_print_payment";
-         post_and_print.text = text("POST AND PRINT");;
-         PROCESS button element_data=post_and_print ?>
+   <?lsmb PROCESS button element_data={
+          accesskey   = "U"
+          title       = "UPDATE ALT+U"
+          name        = "action"
+          value       = "update_payment2"
+          text        = text("Update")
+         } -?>
+  <?lsmb PROCESS button element_data={
+         accesskey   = "P"
+         title       = "POST ALT+P"
+         name        = "action"
+         value       = "post_payment"
+         text        = text("Post")
+         } -?>
+  <?lsmb PROCESS button element_data={
+         accesskey = "R"
+         title     = "POST AND PRINT ALT+R"
+         name = "action"
+         value = "post_and_print_payment"
+         text = text("POST AND PRINT")
+         } ?>
   <?lsmb PROCESS select element_data=format ?>
   <?lsmb PROCESS select element_data=media ?>
-  <?lsmb FOREACH element_data IN selectedcheckboxes  ?>
-    <?lsmb # We should use a cipher here, to avoid XSS
-           element_data.type  ='hidden';
-           element_data.value ='checked';
-           PROCESS input element_data?>
-  <?lsmb END ?>
   <div id=div_topay_state>
   <?lsmb FOREACH item IN topay_state -?>
-        <?lsmb  item.type = "hidden";
-                item.name = item.id;
-                PROCESS input element_data=item ?>
+        <?lsmb  PROCESS input element_data= {
+                type = "hidden"
+                name = item.id
+                } ?>
   <?lsmb END -?>
   </div>
  </form>

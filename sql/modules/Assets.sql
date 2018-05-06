@@ -186,11 +186,14 @@ DECLARE
         t_dep_amount numeric;
 
 Begin
-        INSERT INTO gl (reference, description, transdate, approved)
-        SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
+        INSERT INTO gl (reference, description, transdate,
+                        approved, trans_type_code)
+        SELECT setting_increment('glnumber'),
+               'Asset Report ' || asset_report.id,
                 report_date,
                 coalesce((select value::boolean from defaults
-                           where setting_key = 'debug_fixed_assets'), true)
+                           where setting_key = 'debug_fixed_assets'), true),
+                'fa'
         FROM asset_report
         JOIN asset_report_line
                 ON (asset_report.id = asset_report_line.report_id)
@@ -748,10 +751,9 @@ CREATE OR REPLACE FUNCTION asset_report__disposal_gl
 (in_id int, in_gain_acct int, in_loss_acct int)
 RETURNS bool AS
 $$
-  INSERT
-    INTO gl (reference, description, transdate, approved)
+  INSERT INTO gl (reference, description, transdate, approved, trans_type_code)
   SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
-                report_date, false
+                report_date, false, 'fd'
     FROM asset_report
     JOIN asset_report_line ON (asset_report.id = asset_report_line.report_id)
     JOIN asset_item        ON (asset_report_line.asset_id = asset_item.id)
@@ -1101,48 +1103,6 @@ COMMENT ON FUNCTION asset_report__record_approve(in_id int) IS
 $$Marks the asset_report record approved.  Not generally recommended to call
 directly.$$;
 
-create or replace function asset_depreciation__approve(in_report_id int, in_expense_acct int)
-returns asset_report
-as $$
-declare retval asset_report;
-begin
-
-retval := asset_report__record_approve(in_report_id);
-
-INSERT INTO gl (reference, description, approved)
-select 'Asset Report ' || in_id, 'Asset Depreciation Report for ' || report_date,
-       false
- FROM asset_report where id = in_id;
-
-INSERT INTO acc_trans (amount_bc, curr, amount_tc,
-                       chart_id, transdate, approved, trans_id)
-SELECT l.amount, defaults_get_defaultcurrency(), l.amount,
-       a.dep_account_id, r.report_date, true, currval('id')
-  FROM asset_report r
-  JOIN asset_report_line l ON (r.id = l.report_id)
-  JOIN asset_item a ON (a.id = l.asset_id)
- WHERE r.id = in_id;
-
-INSERT INTO acc_trans (amount_bc, curr, amount_tc,
-                       chart_id, transdate, approved, trans_id)
-SELECT sum(l.amount) * -1, defaults_get_defaultcurrency(), sum(l.amount) * -1,
-       in_expense_acct, r.report_date, approved,
-       currval('id')
-  FROM asset_report r
-  JOIN asset_report_line l ON (r.id = l.report_id)
-  JOIN asset_item a ON (a.id = l.asset_id)
- WHERE r.id = in_id
- GROUP BY r.report_date;
-
-
-return retval;
-
-end;
-$$ language plpgsql;
-
-COMMENT ON function asset_depreciation__approve
-(in_report_id int, in_expense_acct int) IS
-$$Approves an asset depreciation report and creats the GL draft.$$;
 
 CREATE OR REPLACE FUNCTION asset_report__get_disposal_methods()
 RETURNS SETOF asset_disposal_method as
@@ -1174,9 +1134,9 @@ if retval.report_class = 2 then
      t_disposed_percent := 100;
 end if;
 
-INSERT INTO gl (reference, description, approved, transdate)
+INSERT INTO gl (reference, description, approved, transdate, trans_type_code)
 select 'Asset Report ' || in_id, 'Asset Disposal Report for ' || report_date,
-       false, report_date
+       false, report_date, 'fd'
  FROM asset_report where id = in_id;
 
 -- REMOVING ASSETS FROM ACCOUNT (Credit)

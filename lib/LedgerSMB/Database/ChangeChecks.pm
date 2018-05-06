@@ -628,9 +628,13 @@ sub provided {
 =head2 save_grid $dbh, $failed_rows [, name => $name, table => $table, ... ]
 
 Iterates over C<$failed_rows>, finding input for those rows as provided in
-the UI and applying the fixed data to the database using C<$dbh>. The columns
-to be stored by this command are extracted from the C<grid> command identified
-by the same C<name> in the C<on_failure> event.
+the UI and applying the fixed data to the database using C<$dbh>. Parameters
+are retrieved from the grid declaration with the same C<name> in the
+C<on_failure> event. Arguments to this function can be used to override
+the values in the C<grid> declaration.
+The columns to be stored by this command are taken to be the C<edit_columns>
+from that table.
+
 
 The following keys are supported:
 
@@ -646,24 +650,36 @@ C<provided> to query the replacement data.
 I<Optional>. The name of the table to save the data to. If not provided,
 defaults to the value provided in the C<name> argument.
 
+=item edit_columns
+
+I<Optional>. Overrides the value of the columns to be saved as would
+have been taken from the associated grid declaration.
+
 =back
 
 =cut
 
 sub save_grid {
-    my ($dbh, $failed_rows, %args) = @_;
+    my ($dbh, $failed_rows, %call_args) = @_;
 
-    my $name = $args{name};
+    my $name = $call_args{name};
     # assert that a name is provided
     # assert that a grid by that name has been defined
 
+    my %grid_args;
+    if (defined $check->{grids}
+        and defined $check->{grids}->{$name}) {
+        %grid_args = %{$check->{grids}->{$name}};
+    }
+
+    my %args = ( %grid_args, %call_args );
     # don't take any risk:
     # the sources providing the table name *are* dynamically loaded..
     my $table = $dbh->quote_identifier($args{table} // $name);
     my $pk = $check->{tables}->{$args{table} // $name}->{prim_key};
     $pk = (ref $pk) ? $pk : [ $pk ];
 
-    my @fields = @{$check->{grids}->{$name}->{edit_columns}};
+    my @fields = @{$args{edit_columns}};
     my $set_fields = join(', ',
                           map { $dbh->quote_identifier($_) . ' = ?' }
                           @fields);

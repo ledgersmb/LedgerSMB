@@ -146,7 +146,7 @@ use Log::Log4perl;
 use Carp;
 use JSON::MaybeXS;
 
-our $VERSION = '1.6.0-dev';
+our $VERSION = '1.7.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 my $json = JSON::MaybeXS->new( pretty => 1,

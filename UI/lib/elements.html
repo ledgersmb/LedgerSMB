@@ -37,16 +37,20 @@
   }
 
   # default currency
-  currency_defaults = {
-    "data-dojo-type" = 'dijit/form/CurrencyTextBox',
-    "data-dojo-props" = "currency:'$SETTINGS.default_currency'"
-  }
+  # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
+  currency_defaults = text_defaults
+#  currency_defaults = {
+#    "data-dojo-type" = 'dijit/form/CurrencyTextBox',
+#    "data-dojo-props" = "currency:'$SETTINGS.default_currency'"
+#  }
 
   # default monetary (currency without currency indicator)
-  monetary_defaults = {
-    "data-dojo-type" = 'dijit/form/NumberTextBox',
-    "data-dojo-props" = "constraints:{pattern:'0.00'}"
-  }
+  # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
+  monetary_defaults = text_defaults
+#  monetary_defaults = {
+#    "data-dojo-type" = 'dijit/form/NumberTextBox',
+#    "data-dojo-props" = "constraints:{pattern:'0.00'}"
+#  }
 
   # date
   USER.dojo_dateformat = USER.dateformat.replace('mm','MM');
@@ -441,7 +445,7 @@
 END ?>
 
 <?lsmb BLOCK tooltip;
-  IF element_data && element_data.id.defined() && element_data.msg.defined();
+  IF element_data && element_data.msg.defined();
      props="\"connectId:'" _ element_data.ref_id _ "'";
      IF element_data.position.defined();
         positions = [];

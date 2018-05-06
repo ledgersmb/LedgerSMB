@@ -891,10 +891,10 @@ BEGIN
    -- HANDLE THE OVERPAYMENTS NOW
   IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
        INSERT INTO gl (reference, description, transdate,
-                       person_id, notes, approved)
+                       person_id, notes, approved, trans_type_code)
               VALUES (setting_increment('glnumber'),
                       in_gl_description, in_datepaid, var_employee,
-                      in_notes, in_approved);
+                      in_notes, in_approved, 'op');
        SELECT currval('id') INTO var_gl_id;
 
        UPDATE payment SET gl_id = var_gl_id
@@ -1477,8 +1477,9 @@ BEGIN
 
 -- reverse overpayment gl
 
-INSERT INTO gl (transdate, reference, description, approved)
-SELECT transdate, reference || '-reversal', 'reversal of ' || description, '0'
+INSERT INTO gl (transdate, reference, description, approved, trans_type_code)
+SELECT transdate, reference || '-reversal',
+       'reversal of ' || description, '0', 'op'
   FROM gl WHERE id = (select gl_id from payment where id = in_id);
 
 IF NOT FOUND THEN
