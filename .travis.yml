@@ -59,26 +59,6 @@ matrix:
             - texlive-xetex
       env:
         - DB_TESTING=1
-    - perl: '5.16'
-      addons:
-        postgresql: "9.2"
-        apt:
-          packages:
-            - nginx postgresql-9.2-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
-      env:
-        - DB_TESTING=1
-    - perl: '5.14'
-      addons:
-        postgresql: "9.2"
-        apt:
-          packages:
-            - nginx postgresql-9.2-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
-      env:
-        - DB_TESTING=1
 
 before_cache:
   - mkdir -p $HOME/dojo_archive
