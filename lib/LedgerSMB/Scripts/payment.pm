@@ -1974,7 +1974,7 @@ sub post_overpayment {
 
 =back
 
-    =cut
+=cut
 
 {
     local ($!, $@) = (undef, undef);
