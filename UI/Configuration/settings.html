@@ -13,7 +13,16 @@
         <th align="right"><?lsmb ITEM.label ?></th>
         <td colspan="<?lsmb ITEM.info ? 1 : 2 ?>" style='white-space:nowrap'>
           <?lsmb
-             IF ITEM.type == 'YES_NO';
+             IF ITEM.name == 'password_duration';
+               PROCESS input element_data = {
+                       name = ITEM.name,
+                       type = 'text',
+                       value = form.${ITEM.name},
+                       size = 5,
+                       'data-dojo-type' = 'dijit/form/NumberTextBox',
+                       'data-dojo-props' = 'constraints:{min:0.00001,max:3653}',
+               };
+             ELSIF ITEM.type == 'YES_NO';
                IF form.${ITEM.name};
                  YES="CHECKED";
                  NO=undef;
