@@ -142,17 +142,17 @@ sub call {
                                     $creds->{password})
             or return LedgerSMB::PSGI::Util::unauthorized();
 
-        my $version;
-        LedgerSMB::App_State::run_with_state sub {
-            $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
-        }, DBH => $dbh;
-        if ($version) {
-            return LedgerSMB::PSGI::Util::incompatible_database(
-                $LedgerSMB::VERSION, $version);
-        }
-
         my $extended_cookie = '';
         if (! $env->{'lsmb.dbonly'}) {
+            my $version;
+            LedgerSMB::App_State::run_with_state sub {
+                $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
+            }, DBH => $dbh;
+            if ($version) {
+                return LedgerSMB::PSGI::Util::incompatible_database(
+                    $LedgerSMB::VERSION, $version);
+            }
+
             $extended_cookie = _verify_session($env->{'lsmb.db'},
                                                $env->{'lsmb.company'},
                                                $session_cookie);
