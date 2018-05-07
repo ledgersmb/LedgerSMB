@@ -52,8 +52,11 @@ sub new {
         $args->{dbh} = $args->{_DBH};
         delete $args->{_DBH};
     };
-    my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
-    my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
+
+    # key/value pairs from the `base` argument become
+    # properties of the new object.
+    my $self = { map { $_ => $args->{base}->{$_} } keys %{$args->{base}} };
+
     $self =  PGObject::Simple::new($pkg, %$self);
     $self->__validate__  if $self->can('__validate__');
     return $self;
