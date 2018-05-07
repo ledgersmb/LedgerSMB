@@ -2,7 +2,7 @@
 package migration_checks;
 
 
-use LedgerSMB::Database::Change::Checks;
+use LedgerSMB::Database::ChangeChecks;
 
 
 
