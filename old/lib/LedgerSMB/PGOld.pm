@@ -6,10 +6,6 @@ LedgerSMB::PGOld - Old DBObject replacement for 1.3-era LedgerSMB code
 
 This is like DBObject but uses the PGObject::Simple for base functionality.
 
-=head1 METHODS
-
-See PGObject::Simple
-
 =cut
 
 # This is temporary until we can get rid of it.  Basically the following
@@ -29,12 +25,23 @@ use LedgerSMB::App_State;
 
 =head1 METHODS
 
+See PGObject::Simple
+
 =over
 
 =item new(%args)
-=item rew(\%args)
 
 Constructor.
+
+Recognized arguments are:
+
+=over
+
+=item base
+
+A hashref which is imported as properties of the new object.
+
+=back
 
 =cut
 
