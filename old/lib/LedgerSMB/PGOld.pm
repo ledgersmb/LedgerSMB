@@ -94,13 +94,6 @@ sub _parse_array {
     # No longer needed since we require DBD::Pg 2.x
 }
 
-sub _db_array_scalars {
-    my $self = shift @_;
-    my @args = @_;
-    return \@args;
-    # No longer needed since we require DBD::Pg 2.x
-}
-
 =item $self->merge(\%base, %args)
 
 Sets the values from hash 'base' in $self, optionally limited by the
