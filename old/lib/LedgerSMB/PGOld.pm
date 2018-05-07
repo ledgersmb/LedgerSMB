@@ -87,13 +87,6 @@ sub dbh {
     return LedgerSMB::App_State::DBH();
 }
 
-sub _parse_array {
-    my ($self, $value) = @_;
-    return @$value if ref $value eq 'ARRAY';
-    return if !defined $value;
-    # No longer needed since we require DBD::Pg 2.x
-}
-
 =item $self->merge(\%base, %args)
 
 Sets the values from hash 'base' in $self, optionally limited by the
