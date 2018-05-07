@@ -33,6 +33,19 @@ sub test_request {
 }
 
 
+sub filter_js_src {
+
+    # Given an array ref of rendered html lines,
+    # perform in-place substitution of javascript paths
+    # so that differences between built and unbuilt dojo
+    # installations are ignored.
+    my $lines = shift;
+    foreach my $line(@{$lines}) {
+        $line =~ s|"js-src/|"js/|g;
+    }
+}
+
+
 ###############################################
 #
 #
@@ -134,6 +147,7 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -231,6 +245,7 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -328,6 +343,7 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -423,6 +439,7 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -535,6 +552,7 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
