@@ -81,6 +81,25 @@ sub session_timed_out {
 }
 
 
+=head2 incompatible_database($expected, $actual)
+
+Returns a standard error representation for 'LedgerSMB database version
+incompatible'
+
+=cut
+
+sub incompatible_database {
+    my ($expected, $actual) = @_;
+
+    return
+        [ 521, ## no critic
+          [ 'Content-Type' => 'text/html; charset=utf-8' ],
+          [ 'Database is not the expected version.  ' .
+            "Was $actual, expected $expected.  " .
+            'Please re-run <a href="setup.pl">setup.pl</a> to correct.' ] ];
+}
+
+
 =head2 template_to_psgi($template, %args)
 
 Returns a PSGI return value triplet (status, headers and body).

@@ -2,7 +2,7 @@
 package migration_checks;
 
 
-use LedgerSMB::Database::Change::Checks;
+use LedgerSMB::Database::ChangeChecks;
 
 
 
@@ -20,7 +20,7 @@ to prevent similar erroneous data from entering the database.
             prim_key => 'id',
         },
     },
-    assert_sql => qq|SELECT * FROM asset_item WHERE purchase_value IS NULL|,
+    query => qq|SELECT * FROM asset_item WHERE purchase_value IS NULL|,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
@@ -55,7 +55,7 @@ to prevent similar erroneous data from entering the database.
             prim_key => 'id',
         },
     },
-    assert_sql => qq|SELECT * FROM asset_item WHERE salvage_value IS NULL|,
+    query => qq|SELECT * FROM asset_item WHERE salvage_value IS NULL|,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
@@ -90,7 +90,7 @@ to prevent similar erroneous data from entering the database.
             prim_key => 'id',
         },
     },
-    assert_sql => qq|SELECT * FROM asset_item WHERE usable_life IS NULL|,
+    query => qq|SELECT * FROM asset_item WHERE usable_life IS NULL|,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
