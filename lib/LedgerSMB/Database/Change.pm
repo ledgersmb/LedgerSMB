@@ -142,6 +142,10 @@ Applies the current file to the db in the current dbh. May issue
 one or more C<$dbh->commit()>s; if there's a pending transaction on
 a handle, C<$dbh->clone()> can be used to create a separate copy.
 
+Returns no value in particular.
+
+Throws an error in case of failure.
+
 =cut
 
 sub apply {
@@ -153,6 +157,7 @@ sub apply {
 
     my @statements = _combine_statement_blocks($self->_split_statements);
     my $last_stmt_rc;
+    my ($state, $errstr);
 
     $dbh->do(q{set client_min_messages = 'warning';});
     $dbh->commit if ! $dbh->{AutoCommit};
@@ -178,6 +183,11 @@ sub apply {
             else {
                 $dbh->commit;
             }
+        }
+        elsif (not $no_transactions and not $last_stmt_rc) {
+            $errstr = $dbh->errstr;
+            $state = $dbh->state;
+            last;
         }
     }
 
@@ -210,8 +220,12 @@ sub apply {
     $dbh->do(q{
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
             VALUES(now(), ?, ?, ?, ?)
-    }, undef, $self->sha, $self->path, $dbh->state, $dbh->errstr);
+    }, undef, $self->sha, $self->path, $state, $errstr);
     $dbh->commit if (! $dbh->{AutoCommit});
+
+    if ($errstr) {
+        die 'Error applying upgrade script ' . $self->path . ': ' . $errstr;
+    }
 
     return;
 }
