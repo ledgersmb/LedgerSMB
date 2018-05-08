@@ -224,7 +224,7 @@ sub apply {
     $dbh->commit if (! $dbh->{AutoCommit});
 
     if ($errstr) {
-        die "Error applying upgrade script " . $self->path . ": " . $errstr;
+        die 'Error applying upgrade script ' . $self->path . ': ' . $errstr;
     }
 
     return;
