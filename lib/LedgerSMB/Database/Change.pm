@@ -184,7 +184,7 @@ sub apply {
                 $dbh->commit;
             }
         }
-        elsif (not $no_transactions and !$last_stmt_rc) {
+        elsif (not $no_transactions and not $last_stmt_rc) {
             $errstr = $dbh->errstr;
             $state = $dbh->state;
             last;
