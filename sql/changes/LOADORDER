@@ -61,6 +61,7 @@
 #1.6 changes
 1.6/drop_chart.sql
 1.6/drop_arap_cols.sql
+1.6/audittrail-pg-user.sql
 1.6/gl-trans-type.sql
 1.6/gl-trans-type2.sql
 1.6/no-inv-entity-cleanup.sql
