@@ -12,10 +12,16 @@
 UPDATE defaults
 SET value = NULL
 WHERE setting_key = 'password_duration' AND (
-  value ~ '^([0-9]+[.]?[0-9]*|[.][0-9]+)$' OR
+  value !~ '^([0-9]+[.]?[0-9]*|[.][0-9]+)$' OR
   value::numeric <= 0 OR
   value::numeric >= 3654
 );
+
+
+-- Drop existing constraint if this change has
+-- previously been applied.
+ALTER TABLE defaults
+DROP CONSTRAINT IF EXISTS defaults_password_duration_check;
 
 
 -- Add a constraint that enforces a valid
