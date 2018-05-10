@@ -100,11 +100,6 @@ include_stylesheet=["setup/stylesheet.css"];
                         value = 'create_user'
                 };
            END;
-                PROCESS input element_data = {
-                         type = 'hidden'
-                         name = 'form_id'
-                        value = form_id
-                };
     ?>
     </form>
     <?lsmb IF user.user_id and not request.pls_import?>
@@ -116,11 +111,6 @@ include_stylesheet=["setup/stylesheet.css"];
                name="id"
                value=request.id
               };
-                PROCESS input element_data = {
-                         type = 'hidden'
-                         name = 'form_id'
-                        value = form_id
-                };
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
            <div>
