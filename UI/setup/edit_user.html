@@ -19,7 +19,7 @@ include_stylesheet=["setup/stylesheet.css"];
                 END ?>
         </div>
 
-    <form data-dojo-type="lsmb/SimpleForm" method="POST">
+    <form data-dojo-type="lsmb/SimpleForm" method="POST" action="<?lsmb request.script ?>">
       <input type="hidden" name="id" value="<?lsmb request.id ?>" />
       <input type="hidden" name="database" value="<?lsmb request.database ?>" />
         <table id="user-data">
@@ -104,7 +104,7 @@ include_stylesheet=["setup/stylesheet.css"];
     </form>
     <?lsmb IF user.user_id and not request.pls_import?>
         <hr />
-        <form data-dojo-type="lsmb/SimpleForm" name="groups" method="POST" action="<?lsmb script ?>">
+        <form data-dojo-type="lsmb/SimpleForm" name="groups" method="POST" action="<?lsmb request.script ?>">
             <input type="hidden" name="database" value="<?lsmb request.database ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"
