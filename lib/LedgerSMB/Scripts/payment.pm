@@ -1214,7 +1214,7 @@ sub post_payment {
     my $discount_account_id = $array_options[0]->{discount};
     @array_options = $Payment->get_open_invoices();
     for my $ref (0 .. $#array_options) {
-        if ((!$request->{"checkbox_$array_options[$ref]->{invoice_id}"})
+        if ($request->{"checkbox_$array_options[$ref]->{invoice_id}"}
             && ($request->{"topay_fx_$array_options[$ref]->{invoice_id}"})) {
             # First i have to determine if discounts will apply
             # we will assume that a discount should apply only
