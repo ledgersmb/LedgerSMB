@@ -469,7 +469,7 @@ sub preprocess {
             # btw, some (internal) objects are XS objects, on which this trick
             # treating it as a hashref really doesn't work...
             next if /^_/;
-            $vars->{preprocess($_, $escape)} = preprocess( $rawvars->{$_}, $escape );
+            $vars->{$_} = preprocess( $rawvars->{$_}, $escape );
         }
     }
     # return undef for GLOB references (includes IO::File objects)
