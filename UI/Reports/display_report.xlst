@@ -16,11 +16,11 @@ END;
      <cell text="<?lsmb name ?>" />
 </row>
 <row><cell text="<?lsmb text('Company') ?>:" />
-     <cell test="<?lsmb request.company ?>" />
+     <cell text="<?lsmb request.company ?>" />
 </row>
 <?lsmb FOREACH HLINE IN hlines -?>
 <row><cell text="<?lsmb HLINE.text ?>:" />
-     <cell text="<?lsmb request.${LINE.name} ?>" />
+     <cell text="<?lsmb request.${HLINE.name} ?>" />
 </row>
 <?lsmb END -?>
 </worksheet>

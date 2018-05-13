@@ -8,14 +8,15 @@ PROCESS "elements.html";
 PROCESS "dynatable.html";
 
 FORMATS = LIST_FORMATS();
-QSTRING = ENVARS.QUERY_STRING;
+QSTRING = request.query_string;
 
-IF NOT QSTRING.match('&amp;company=');
-   QSTRING = QSTRING _ '&amp;company=' _ DBNAME;
+IF NOT QSTRING.match('company=');
+   ESCAPED_COMPANY = request.company FILTER uri;
+   QSTRING = QSTRING _ '&amp;company=' _ ESCAPED_COMPANY;
 END;
 
 LINK = request.script _ '?' _ QSTRING;
-LINK = LINK.replace('\&amp;\&amp;', '&amp;');
+
 
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
