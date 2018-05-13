@@ -73,7 +73,9 @@ use parent qw ( Plack::Middleware );
 use Plack::Request;
 use Plack::Util;
 
+use LedgerSMB;
 use LedgerSMB::Auth;
+use LedgerSMB::App_State;
 use LedgerSMB::DBH;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
@@ -142,6 +144,15 @@ sub call {
 
         my $extended_cookie = '';
         if (! $env->{'lsmb.dbonly'}) {
+            my $version;
+            LedgerSMB::App_State::run_with_state sub {
+                $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
+            }, DBH => $dbh;
+            if ($version) {
+                return LedgerSMB::PSGI::Util::incompatible_database(
+                    $LedgerSMB::VERSION, $version);
+            }
+
             $extended_cookie = _verify_session($env->{'lsmb.db'},
                                                $env->{'lsmb.company'},
                                                $session_cookie);

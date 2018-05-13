@@ -51,6 +51,7 @@ Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
 * Enforce numerous Perl::Critic policies with code cleanup (Nick P/Rob R)
 * Add tests for all template output formats (Nick P)
+* Constrain password_duration setting to valid values (Nick P)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie

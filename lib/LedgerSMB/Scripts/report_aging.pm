@@ -14,6 +14,7 @@ package LedgerSMB::Scripts::report_aging;
 
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::Legacy_Util;
 use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Setting;
@@ -137,7 +138,8 @@ sub generate_statement {
     } elsif ($request->{media} eq 'screen'){
         return $template->render({statements => \@statements});
     } else {
-        $template->legacy_render({statements => \@statements});
+        LedgerSMB::Legacy_Util::render_template($template, {
+             statements => \@statements });
         $request->{module_name}='gl';
         $request->{report_type}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);

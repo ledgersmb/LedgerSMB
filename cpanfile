@@ -1,7 +1,7 @@
 #!perl
 
 
-requires 'perl', '5.14.0';
+requires 'perl', '5.18.0';
 
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';

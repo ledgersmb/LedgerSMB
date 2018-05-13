@@ -697,7 +697,7 @@ sub edit_warehouse {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-warehouse-form');
-    $template->legacy_render({
+    LedgerSMB::Legacy_Util::render_template($template, {
         form => $form,
         row_count => $rows,
         buttons => \@buttons,
@@ -927,7 +927,7 @@ sub recurring_transactions {
     my $template = LedgerSMB::Template->new_UI(
         $form,
         template => 'am-list-recurring');
-    $template->legacy_render({
+    LedgerSMB::Legacy_Util::render_template( $template, {
         form => $form,
         buttons => \@buttons,
         columns => \@column_index,
