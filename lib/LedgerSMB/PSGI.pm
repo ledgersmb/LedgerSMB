@@ -19,9 +19,10 @@ use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
-use HTTP::Status qw( HTTP_FOUND );
+use LedgerSMB::Sysconfig;
 
 use CGI::Emulate::PSGI;
+use HTTP::Status qw( HTTP_FOUND );
 use Try::Tiny;
 use List::Util qw{  none };
 use Scalar::Util qw{ reftype };
@@ -231,6 +232,10 @@ sub setup_url_space {
                 return $app->($env);
             }
         };
+
+        if (! $LedgerSMB::Sysconfig::dojo_built) {
+            mount '/js/' => Plack::App::File->new(root => 'UI/js-src')->to_app
+        }
 
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };

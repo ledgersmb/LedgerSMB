@@ -24,8 +24,8 @@
             # *persistent*
             # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
         ?>
-        <link rel="stylesheet" href="<?lsmb dojo_location ?>/dojo/resources/dojo.css" type="text/css" />
-        <link rel="stylesheet" href="<?lsmb dojo_location ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
 
         <?lsmb IF form.stylesheet ?>
             <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
@@ -52,8 +52,8 @@
                  <?lsmb END ?>
             };
        </script>
-        <script type="text/javascript" src="<?lsmb dojo_location ?>/dojo/dojo.js"></script>
-        <script type="text/javascript" src="<?lsmb dojo_location ?>/lsmb/main.js"></script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
         <?lsmb FOREACH s = include_script ?>
             <script type="text/javascript" src="<?lsmb s ?>" ></script>
         <?lsmb END ?>

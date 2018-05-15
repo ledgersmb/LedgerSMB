@@ -420,21 +420,17 @@ sub new_UI {
     my $class = shift;
     my $request = shift;
 
-    my $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
-            if $LedgerSMB::App_State::Company_Config;
-    my $UI_vars = {
-        dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
-        dojo_built => $LedgerSMB::Sysconfig::dojo_built,
-        dojo_location => $LedgerSMB::Sysconfig::dojo_location,
-    };
-
     return $class->new(
         @_,
         format => 'HTML' ,
         path => 'UI',
         user => $request->{_user},
         locale => $request->{_locale},
-        additional_vars => $UI_vars
+        additional_vars => {
+            dojo_theme =>
+                ($LedgerSMB::App_State::Company_Config->{dojo_theme}
+                 // $LedgerSMB::Sysconfig::dojo_theme),
+        },
     );
 }
 
