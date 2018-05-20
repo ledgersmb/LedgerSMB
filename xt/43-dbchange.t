@@ -83,5 +83,6 @@ like $chg_db->errstr, qr/relation "test2" does not exist/,
 $chg_db->disconnect;
 
 $dbh->do(qq{DROP DATABASE  "$ENV{LSMB_NEW_DB}_41_dbchange"});
+$dbh->disconnect;
 
 done_testing;
