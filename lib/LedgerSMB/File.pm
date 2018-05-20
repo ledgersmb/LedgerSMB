@@ -206,21 +206,6 @@ sub get_mime_type {
     return $self->mime_type_text;
 }
 
-=item set_mime_type
-
-Sets the mipe_type_id from the mime_type_text
-
-=cut
-
-sub set_mime_type {
-    my ($self, $mime_type) = @_;
-    $self->mime_type_text($mime_type);
-    my ($ref) = $self->call_procedure(funcname => 'file__mime_type_text',
-         args => [undef, $self->mime_type_text]);
-    return $self->mime_type_id($ref->{id});
-
-}
-
 =item detect_type
 
 Auto-detects the type of the file.  Not yet implemented
