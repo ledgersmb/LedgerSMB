@@ -20,7 +20,6 @@ __PACKAGE__->self_register(
               tag_name => 'div',
               attributes => {
                   id => 'menudiv',
-#                role => 'presentation'
               });
 
 
@@ -108,13 +107,10 @@ sub click_menu {
         ok(use_module($tgt_class),
            "$tgt_class can be 'use'-d dynamically");
 
-        my $root = $self->find("//*[\@id='top_menu']"); # and \@role='presentation'
-        ok($root, "Menu tree loaded");
+        my $item = $self->find("//*[\@id='top_menu' and contains(\@class, 'done-parsing')]");
+        ok($item, "Menu tree loaded");
 
-        my $item = $root;
-
-        do {
-            my $path = $_;
+        for my $path (@$paths) {
             my $xpath = ".//div[contains(\@class, 'dijitTreeNodeContainer')]" .
                         "//div[contains(\@class, 'dijitTreeNode')" .
                           " and .//span[\@role='treeitem'" .
@@ -124,11 +120,12 @@ sub click_menu {
 
             my $label = $item->get_attribute('id') . '_label';
             ok($label,"Found label $label");
+
             my $submenu = $item->find("//*[\@id='$label']");
             ok($submenu,"Submenu found " . $submenu->get_text);
-            $submenu->click;
 
-        } for @$paths;
+            $submenu->click;
+        }
     };
 
     return $self->session->page->body->maindiv->wait_for_content;
