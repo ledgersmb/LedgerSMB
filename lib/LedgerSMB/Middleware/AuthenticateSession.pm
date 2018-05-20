@@ -70,6 +70,7 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
+use DBI;
 use Plack::Request;
 use Plack::Util;
 
@@ -136,8 +137,16 @@ sub call {
     my $dbh = $env->{'lsmb.db'} =
         LedgerSMB::DBH->connect($env->{'lsmb.company'},
                                 $creds->{login},
-                                $creds->{password})
-        or return LedgerSMB::PSGI::Util::unauthorized();
+                                $creds->{password});
+
+    if (! defined $dbh) {
+        $env->{'psgix.logger'}->(
+            {
+                level => 'error',
+                msg => q|Unable to create database connection: | . DBI->errstr
+            });
+        return LedgerSMB::PSGI::Util::unauthorized();
+    }
 
     my $extended_cookie = '';
     if (! $env->{'lsmb.dbonly'}) {
