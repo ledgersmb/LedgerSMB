@@ -194,7 +194,9 @@ sets it.
 sub get_mime_type {
     my ($self) = @_;
     if (!($self->mime_type_id || $self->mime_type_text)){
-       $self->mime_type_text(MIME::Type->new->mimeTypeOf($self->file_name));
+       $self->mime_type_text(
+            MIME::Types->new->mimeTypeOf($self->file_name)->type
+       );
     }
     if (!($self->mime_type_id && $self->mime_type_text)){
        my ($ref) = $self->call_dbmethod(funcname => 'file__get_mime_type');
@@ -325,7 +327,7 @@ sub list_links{
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 The LedgerSMB Core Team
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
