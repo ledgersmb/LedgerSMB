@@ -105,19 +105,14 @@ sub call {
 
     my $auth = LedgerSMB::Auth::factory($env);
     my $creds = $auth->get_credentials;
-    if (! $env->{'lsmb.dbonly'}) {
-        my ($unused_token, $cookie_company);
-        ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
-            split(/:/, $session_cookie // '', 3);
-
-        $env->{'lsmb.company'} = $cookie_company
-            if $cookie_company && $cookie_company ne 'Login';
+    my ($unused_token, $cookie_company);
+    ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
+        split(/:/, $session_cookie // '', 3);
+    if (! $env->{'lsmb.dbonly'}
+        && $cookie_company && $cookie_company ne 'Login') {
+        $env->{'lsmb.company'} = $cookie_company;
     }
-    else {
-        my ($unused_token, $cookie_company);
-        ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
-            split(/:/, $session_cookie // '', 3);
-
+    elsif ($env->{'lsmb.dbonly'}) {
         $env->{'lsmb.company'} ||=
             eval { $req->parameters->get_one('company') } ||
             # temporarily accept a 'database' parameter too,
