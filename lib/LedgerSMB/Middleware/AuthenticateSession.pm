@@ -104,8 +104,6 @@ sub call {
         $env->{'lsmb.want_cleared_session'} ? ''
         : $req->cookies->{$cookie_name};
 
-    my $auth = LedgerSMB::Auth::factory($env);
-    my $creds = $auth->get_credentials;
     my ($unused_token, $cookie_company);
     ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
         split(/:/, $session_cookie // '', 3);
@@ -134,6 +132,7 @@ sub call {
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $env->{'lsmb.company'};
 
+    my $creds = LedgerSMB::Auth::factory($env)->get_credentials;
     my $dbh = $env->{'lsmb.db'} =
         LedgerSMB::DBH->connect($env->{'lsmb.company'},
                                 $creds->{login},
