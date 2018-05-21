@@ -1257,7 +1257,7 @@ sub process_and_run_upgrade_script {
        or warn 'Failed to close temporary file';
 
     $database->run_file(
-        file => $tempfile,
+        file => $tempfile->filename,
         stdout_log => $temp . '_stdout',
         errlog => $temp . '_stderr'
         );

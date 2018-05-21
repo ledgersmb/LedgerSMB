@@ -121,25 +121,33 @@ will be accepted.
 
 sub upload {
     my ($request) = @_;
-    my @fnames =  $request->upload;
-    my $name = $fnames[0];
-    my $fh = $request->upload($name);
-    my $fdata = join ('', <$fh>);
+
+    my $upload = $request->{_uploads}->{template_file}
+        or die 'No template file uploaded';
+
+    # Slurp uploaded file
+    open my $fh, '<', $upload->path or die "Error opening uploaded file $!";
+    local $/ = undef;
+    my $fdata = <$fh>;
+
+    # Sanity check that browser-provided local name of uploaded file matches
+    # the template name and extension. Is this appropriate/necessary?
     die 'No content' unless $fdata;
     my $testname = $request->{template_name} . '.' . $request->{format};
     die LedgerSMB::App_State::Locale->text(
                 'Unexpected file name, expected [_1], got [_2]',
-                 $testname, $name)
-          unless $name eq $testname;
+                 $testname, $upload->basename)
+          unless $upload->basename eq $testname;
     $request->{template} = $fdata;
     my $dbtemp = LedgerSMB::Template::DB->new(%$request);
     $dbtemp->save();
+
     return display($request);
 }
 
 =head1 COPYRIGHT
 
-Copyright (C) 2014-2016 The LedgerSMB Core Team.
+Copyright (C) 2014-2018 The LedgerSMB Core Team.
 
 This file may be re-used under the terms of the GNU General Public License
 version 2 or at your option any later version.  Please see the included

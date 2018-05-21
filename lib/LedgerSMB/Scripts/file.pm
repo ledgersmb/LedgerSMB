@@ -101,27 +101,37 @@ Attaches a file to an object
 sub attach_file {
     my ($request) = @_;
     my $file = $fileclassmap->{$request->{file_class}}->new(%$request);
-    my @fnames =  $request->upload;
-    $file->file_name($fnames[0]) if $fnames[0];
+
     if ($request->{url}){
         $file->file_name($request->{url});
-    $file->mime_type_text('text/x-uri');
-        $file->file_name($request->{url});
+        $file->mime_type_text('text/x-uri');
         $file->get_mime_type;
         $file->content($request->{url});
-    } else {
-        if (!$fnames[0]){
-             $request->error($request->{_locale}->text(
-                  'No file uploaded'
-             ));
-        }
-        $file->file_name($fnames[0]);
-        $file->get_mime_type;
-        my $fh = $request->upload('upload_data');
-        binmode $fh, ':raw';
-        my $fdata = join ('', <$fh>);
-        $file->content($fdata);
     }
+    else {
+        # Expecting a file upload.
+        my $upload = $request->{_uploads}->{upload_data}
+            or die $request->{_locale}->text('No file uploaded');
+
+        # Slurp uploaded file.
+        # Wrapped in a block to tightly localise $/, otherwise loading of
+        # the mime database within the underlying MIME::Types module fails,
+        # without raising an error.
+        {
+            open my $fh, '<', $upload->path or die "Error opening uploaded file $!";
+            binmode $fh;
+            local $/ = undef;
+            $file->content(<$fh>);
+            $file->file_name($upload->basename);
+        }
+
+        # If provided, use the content-type submitted by the browser.
+        # Otherwise the underlying file module will guess the mime type
+        # according to the uploaded file extension.
+        $file->mime_type_text($upload->content_type) if $upload->content_type;
+        $file->get_mime_type;
+    }
+
     $file->attach;
 
     return [ HTTP_SEE_OTHER,
@@ -133,7 +143,7 @@ sub attach_file {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011-2016 LedgerSMB Core Team.  This file is licensed under the GNU
+Copyright (C) 2011-2018 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 
