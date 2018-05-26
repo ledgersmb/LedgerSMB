@@ -220,13 +220,13 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 (Installation from tarball is highly preferred over installation from GitHub for production installs.)
 
 ```bash
- $ cp conf/ledgersmb.conf.default ledgersmb.conf
+ $ cp doc/conf/ledgersmb.conf.default ledgersmb.conf
 ```
 
 ### From-GitHub installs
 
 ```bash
- $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
+ $ cp doc/conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
 ```
 
  > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
