@@ -44,7 +44,7 @@ if ($EUID == 0) {
         'Running a Web Service as root is a security problem.',
         'If you are starting LedgerSMB as a system service,',
         'please make sure that you drop privileges as per README.md',
-        'and the example files in conf/.',
+        'and the example files in doc/conf/.',
         'The method of passing a --user argument to starman cannot',
         'be used as starman drops privileges too late, starting us as root.'
     );

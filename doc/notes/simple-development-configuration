@@ -12,7 +12,7 @@ Contents
 Systemd service
 ===============
 
-A systemd example configuration is provided in conf/systemd/, under the 
+A systemd example configuration is provided in doc/conf/systemd/, under the 
 name ledgersmb-development_plackup.service. Place it in /etc/systemd/system
 and edit to fit your setup.
 

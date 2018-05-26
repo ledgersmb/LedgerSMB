@@ -107,11 +107,11 @@ before_script:
   - cd ${HOME}/built-dist
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
-  - cp conf/ledgersmb.conf.default ledgersmb.conf
+  - cp doc/conf/ledgersmb.conf.default ledgersmb.conf
   - cp t/.proverc ./
   - coverage-setup
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
-  - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
+  - sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
   - #PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi >/dev/null 2>/dev/null &
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
