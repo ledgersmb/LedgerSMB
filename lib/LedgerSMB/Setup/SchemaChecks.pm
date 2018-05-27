@@ -18,6 +18,7 @@ use strict;
 use warnings;
 
 use Exporter 'import';
+use Encode;
 use Digest::MD5 qw(md5_hex);
 use Text::Markdown qw(markdown);
 
@@ -78,7 +79,7 @@ sub _wrap_html {
     $template->render();
     push @HTML, $template->{output};
 
-    return \@HTML;
+    return [ map { encode_utf8($_) } @HTML ];
 }
 
 sub _format_confirm {
