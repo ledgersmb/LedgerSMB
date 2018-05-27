@@ -490,21 +490,30 @@ sub print_batch {
         `$zipcmd`;
 
         my $file_path = "$dirname.zip";
-        open my $zip, '<', $file_path
-            or die "Failed to open temporary zip file $file_path : $!";
-        binmode $zip, ':bytes';
-        unlink $file_path;
 
-        return [
-            HTTP_OK,
-            [
-                'Content-Type' => 'application/zip',
-                'Content-Disposition' =>
-                    'attachment; filename="batch-'
-                    . $request->{batch_id} . '.zip"',
-            ],
-            $zip
-        ];
+        return sub {
+            my $responder = shift;
+
+            open my $zip, '<:bytes', $file_path
+                or die "Failed to open temporary zip file $file_path : $!";
+
+            $responder->(
+                [
+                 HTTP_OK,
+                 [
+                  'Content-Type' => 'application/zip',
+                  'Content-Disposition' =>
+                      'attachment; filename="batch-'
+                      . $request->{batch_id} . '.zip"',
+                 ],
+                 $zip   # the file-handle
+                ]);
+
+            close $zip
+                or warn "Failed to close temporary zip file $file_path : $!";
+            unlink $file_path
+                or warn "Failed to unlink temporary zip file $file_path : $!";
+        };
     }
     else {
         return $report->render($request);
