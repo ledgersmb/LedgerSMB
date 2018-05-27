@@ -24,6 +24,7 @@ use strict;
 use warnings;
 
 use Digest::MD5 qw(md5_hex);
+use Encode;
 use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use List::Util qw( first );
@@ -1524,7 +1525,7 @@ sub rebuild_modules {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'text/html; charset=UTF-8' ],
-             $HTML
+             [ map { encode_utf8($_) } @$HTML ]
         ]
         if $HTML;
 
