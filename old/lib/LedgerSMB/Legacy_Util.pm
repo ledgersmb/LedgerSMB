@@ -15,6 +15,11 @@ specified output method.
 use strict;
 use warnings;
 
+use LedgerSMB::App_State;
+use LedgerSMB::Mailer;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
+
 use Log::Log4perl;
 
 
@@ -222,7 +227,7 @@ sub _output_template_lpr {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2017 The LedgerSMB Core Team
+Copyright (C) 2017-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
