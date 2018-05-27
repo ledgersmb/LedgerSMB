@@ -10,7 +10,8 @@ check q|Assert foreign key from entity_credit_account to business can be added|,
                  FROM entity_credit_account eca
                  LEFT JOIN entity e on eca.entity_id = e.id
                  LEFT JOIN entity_class ec on eca.entity_class = ec.id
-                WHERE NOT EXISTS
+                WHERE eca.business_id IS NOT NULL
+                      AND NOT EXISTS
                        (SELECT 1 FROM business b
                          WHERE eca.business_id = b.id)|,
     description => q|
