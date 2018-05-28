@@ -462,10 +462,9 @@ sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->upload('import_file');
-
     my $csv = Text::CSV->new;
     $csv->header($handle);
-    @{$self->{import_entries}} = $csv->getlines_all($handle);
+    $self->{import_entries} = $csv->getline_all($handle);
 
     return @{$self->{import_entries}};
 }
