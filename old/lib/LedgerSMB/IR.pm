@@ -596,6 +596,8 @@ sub post_invoice {
                                 ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         #The following generates a rounding error in PgNumber in tests
+        #because Math::BigFloat doesn't handle subclassing andcorrectly and
+        #and uses LedgerSMB::PGNumber to access its own internal data
         $sth->execute( $form->{id}, $accno,
                     $form->{payables}/$form->{exchangerate},
             $form->{transdate} , 0)
