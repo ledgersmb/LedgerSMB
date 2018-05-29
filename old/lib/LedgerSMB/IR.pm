@@ -111,14 +111,18 @@ sub post_invoice {
     my $item;
     my $invoice_id;
     my $keepcleared;
+    my $fxdiff = 0;
 
-    ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
+    ( $null, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee};
 
     unless ( $form->{employee_id} ) {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
-    ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
+    $form->{department_id} = 0;
+    ( $null, $form->{department_id} ) = split( /--/, $form->{department} )
+        if $form->{department};
     $form->{department_id} *= 1;
 
     $query = qq|
@@ -213,7 +217,6 @@ sub post_invoice {
             push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
 
             push( @{ $form->{bin} },         $form->{"bin_$i"} );
-            warn $form->{"description_$i"};
             push( @{ $form->{item_description} }, $form->{"description_$i"} );
             push( @{ $form->{itemnotes} },   $form->{"notes_$i"} );
             push(
@@ -246,7 +249,7 @@ sub post_invoice {
                 )
             );
 
-            if ( $form->{"projectnumber_$i"} ne "" ) {
+            if ( $form->{"projectnumber_$i"} && $form->{"projectnumber_$i"} ne "" ) {
                 ( $null, $project_id ) =
                   split /--/, $form->{"projectnumber_$i"};
             }
@@ -262,7 +265,7 @@ sub post_invoice {
             my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
             # deduct discount
             my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
-            $decimalplaces = ($form->{"precision_$i"} > $moneyplaces)
+            $decimalplaces = ($form->{"precision_$i"} && $form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
             $form->{"sellprice_$i"} = $fxsellprice -
@@ -462,7 +465,7 @@ sub post_invoice {
     }
 
     $form->{paid} = 0;
-    foreach my $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. ( $form->{paidaccounts} || 0 )) {
         $form->{"paid_$i"} =
           $form->parse_amount( $myconfig, $form->{"paid_$i"} );
         $form->{"paid_$i"} *= -1 if $form->{reverse};
@@ -483,12 +486,14 @@ sub post_invoice {
     $invnetamount = $amount;
 
     $amount = 0;
-    for ( split / /, $form->{taxaccounts} ) {
-        $amount += $form->{acc_trans}{ $form->{id} }{$_}{amount} =
-          $form->round_amount( $form->{acc_trans}{ $form->{id} }{$_}{amount},
-            2 );
+    if ($form->{taxaccounts}) {
+        for ( split / /, $form->{taxaccounts} ) {
+            $amount += $form->{acc_trans}{ $form->{id} }{$_}{amount} =
+              $form->round_amount( $form->{acc_trans}{ $form->{id} }{$_}{amount},
+                2 );
 
-        $form->{acc_trans}{ $form->{id} }{$_}{amount} *= -1;
+            $form->{acc_trans}{ $form->{id} }{$_}{amount} *= -1;
+        }
     }
     $invamount = $invnetamount + $amount;
 
@@ -580,7 +585,6 @@ sub post_invoice {
         $tax_sth->finish;
     }
 
-
     # record payable
     if ( $form->{payables} ) {
         ($accno) = split /--/, $form->{AP};
@@ -591,6 +595,9 @@ sub post_invoice {
                          VALUES (?, (SELECT id FROM account WHERE accno = ?),
                                 ?, ?, ?)|;
         $sth = $dbh->prepare($query);
+        #The following generates a rounding error in PgNumber in tests
+        #because Math::BigFloat doesn't handle subclassing andcorrectly and
+        #and uses LedgerSMB::PGNumber to access its own internal data
         $sth->execute( $form->{id}, $accno,
                     $form->{payables}/$form->{exchangerate},
             $form->{transdate} , 0)
@@ -631,7 +638,7 @@ sub post_invoice {
     my $cleared = 0;
 
     # record payments and offsetting AP
-    for my $i ( 1 .. $form->{paidaccounts} ) {
+    for my $i ( 1 .. ( $form->{paidaccounts} || 0 )) {
 
         if ( $form->{"paid_$i"} ) {
             my ($accno) = split /--/, $form->{"AP_paid_$i"};
@@ -762,6 +769,7 @@ sub post_invoice {
     }
 
     # set values which could be empty
+    $form->{taxincluded} //= 0;
     $form->{taxincluded} *= 1;
 
     my $approved = 1;
@@ -814,7 +822,8 @@ sub post_invoice {
 
     # add shipto
     $form->{name} = $form->{vendor};
-    $form->{name} =~ s/--$form->{vendor_id}//;
+    $form->{name} =~ s/--$form->{vendor_id}//
+        if $form->{vendor} && $form->{vendor_id};
     $form->add_shipto($form->{id});
 
     if (!$form->{separate_duties}){
