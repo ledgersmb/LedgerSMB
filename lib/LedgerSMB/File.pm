@@ -156,24 +156,6 @@ has file_path => (is => 'rw', isa => 'Maybe[Str]',
                       return File::Temp->newdir( CLEANUP => 1 );
                   } );
 
-=item sizex
-
-X axis dimensions, if Image::Size is installed and file is image (only on files
-retrieved for invoices).
-
-=cut
-
-has sizex => (is => 'rw', isa => 'Maybe[Int]');
-
-=item sizey
-
-Y axis dimensions, if Image::Size is installed and file is image (only on files
-retrieved for invoices).
-
-=cut
-
-has sizey => (is => 'rw', isa => 'Maybe[Int]');
-
 =back
 
 =cut
