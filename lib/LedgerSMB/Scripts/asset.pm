@@ -934,9 +934,9 @@ sub _import_file {
     my $handle = $request->upload('import_file');
     my $csv = Text::CSV->new;
     $csv->header($handle);
-    my @import_entries = $csv->getlines_all($handle);
+    my $import_entries = $csv->getline_all($handle);
 
-    return @import_entries;
+    return @$import_entries;
 }
 
 
