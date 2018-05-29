@@ -99,7 +99,7 @@ sub psgi_app {
         $env->{'lsmb.invalidate_session_cb'});
 
     $request->{action} = $env->{'lsmb.action_name'};
-    my ($status, $headers, $body);
+    my $res;
     try {
         LedgerSMB::App_State::run_with_state sub {
             if ($env->{'lsmb.want_db'} && !$env->{'lsmb.dbonly'}) {
@@ -112,15 +112,11 @@ sub psgi_app {
                 };
             }
 
-            my $res = $env->{'lsmb.action'}->($request);
+            $res = $env->{'lsmb.action'}->($request);
 
             if (ref $res && ref $res eq 'LedgerSMB::Template') {
                 # We got an evaluated template instead of a PSGI triplet...
-                ($status, $headers, $body) =
-                    @{LedgerSMB::PSGI::Util::template_to_psgi($res)};
-            }
-            else {
-                ($status, $headers, $body) = @$res;
+                $res = LedgerSMB::PSGI::Util::template_to_psgi($res);
             }
         }, DBH     => $env->{'lsmb.db'},
            DBName  => $env->{'lsmb.company'},
@@ -135,14 +131,13 @@ sub psgi_app {
             $env->{'psgix.logger'}->({
                 level => 'error',
                 message => $_ });
-            ($status, $headers, $body) =
-                @{LedgerSMB::PSGI::Util::internal_server_error(
-                      $_, 'Error!',
-                      $request->{dbversion}, $request->{company})};
+            $res = LedgerSMB::PSGI::Util::internal_server_error(
+                $_, 'Error!',
+                $request->{dbversion}, $request->{company});
         }
     };
 
-    return [ $status, $headers, $body ];
+    return $res;
 }
 
 sub _run_old {
