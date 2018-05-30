@@ -13,6 +13,7 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::Headers::Fast'; # dependency of Plack too; don't need '::Fast'
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
