@@ -438,6 +438,39 @@ sub parse_file {
     my $self = shift @_;
 
     my $handle = $self->{_request}->upload('import_file');
+    binmode $handle, ':bytes';
+    my $encoding = '';
+    my $bom_length = 0;
+    sysread $handle, my $bytes, 4;
+    if ("\xFF\xFE" eq substr($bytes, 0, 2)) {
+        $encoding = 'UTF-16LE';
+        $bom_length = 2;
+    }
+    elsif ("\xFE\xFF" eq substr($bytes, 0, 2)) {
+        $encoding = 'UTF-16BE';
+        $bom_length = 2;
+    }
+    elsif ("\xEF\xBB\xBF" eq substr($bytes, 0, 3)) {
+        $encoding = 'UTF-8';
+        $bom_length = 3;
+    }
+    elsif ("\x00\x00\xFE\xFF" eq $bytes) {
+        $encoding = 'UTF-32LE';
+        $bom_length = 4;
+    }
+    elsif ("\xFF\xFE\x00\x00" eq $bytes) {
+        $encoding = 'UTF-32BE';
+        $bom_length = 4;
+    }
+    sysseek $handle, 0, 1;
+    if ($encoding) {
+        binmode $handle, ':encoding(' . $encoding . ')';
+    }
+
+    if ($bom_length) {
+        read($handle, my $unused, 1); # read the bom character
+    }
+
     my $contents = join("\n", <$handle>);
 
     $self->{import_entries} = [];
