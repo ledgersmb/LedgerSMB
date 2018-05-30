@@ -26,7 +26,7 @@ my $dbh = DBI->connect(
 ) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
 
 
-plan tests => (8);
+plan tests => (11);
 
 
 # Test detection of mime type from file extension
@@ -50,3 +50,29 @@ is($file->get_mime_type, 'image/png', q{returned 'image/png' after explicitly se
 is($file->mime_type_text, 'image/png', q{correct mime_type_text property after explicitly setting 'image/png' mime type});
 like($file->mime_type_id, qr/^[1-9]\d*$/, q{valid mime_type_id property after explicitly setting 'image/png' mime type});
 
+SKIP: {
+    eval{require Image::Size} or skip 'Image::Size not installed', 3;
+    my $content;
+    my @result;
+
+    # Test private image size method with good data
+    $content = slurp_file('t/data/8x8-image.png');
+    @result = $file->_image_size($content);
+    is_deeply(\@result, [8, 8, 'PNG'], '_image_size() correctly identified 8x8 PNG');
+
+    # Test private image size method with bad data
+    @result = $file->_image_size('BAD_IMAGE_DATA');
+    is($result[0], undef, '_image_size() gives undefined x-dimension with bad data');
+    is($result[1], undef, '_image_size() gives undefined y-dimension with bad data');
+}
+
+
+
+# Helper function to slurp contents of a file
+sub slurp_file {
+    my $filename = shift;
+    open my $fh, '<', $filename
+        or BAIL_OUT("error opening $filename for reading $!");
+    local $/ = undef;
+    return <$fh>;
+}
