@@ -156,24 +156,6 @@ has file_path => (is => 'rw', isa => 'Maybe[Str]',
                       return File::Temp->newdir( CLEANUP => 1 );
                   } );
 
-=item sizex
-
-X axis dimensions, if Image::Size is installed and file is image (only on files
-retrieved for invoices).
-
-=cut
-
-has sizex => (is => 'rw', isa => 'Maybe[Int]');
-
-=item sizey
-
-Y axis dimensions, if Image::Size is installed and file is image (only on files
-retrieved for invoices).
-
-=cut
-
-has sizey => (is => 'rw', isa => 'Maybe[Int]');
-
 =back
 
 =cut
@@ -257,15 +239,6 @@ sub get_for_template{
         binmode $fh, ':bytes';
         print $fh $result->{content} or die "Cannot print to file $full_path";;
         close $fh or die "Cannot close file $full_path";
-
-        local $@ = undef;
-        eval { # Block used so that Image::Size is optional
-            require Image::Size;
-            my ($x, $y);
-            ($x, $y) = imgsize(\{$result->{content}});
-            $result->{sizex} = $x;
-            $result->{sizey} = $y;
-        };
 
         if ($result->{file_class} == FC_PART){
            $result->{ref_key} = $result->{file_name};

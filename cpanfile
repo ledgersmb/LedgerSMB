@@ -65,12 +65,6 @@ feature 'starman', "Standalone Server w/Starman" =>
         requires "Starman";
 };
 
-feature 'latex-pdf-images',
-    "Size detection for images for embedding in LaTeX templates" =>
-    sub {
-        requires "Image::Size";
-};
-
 feature 'edi', "X12 EDI support" =>
     sub {
         requires 'X12::Parser';

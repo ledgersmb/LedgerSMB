@@ -442,7 +442,7 @@ endif
 #   make feature_PDF
 #       Install system and cpan packages for generating PDF/Postscript output
 feature_PDF: $(OS_feature_PDF)
-	cpanm --quiet --notest --with-feature=latex-pdf-ps --with-feature=latex-pdf-images --installdeps .
+	cpanm --quiet --notest --with-feature=latex-pdf-ps --installdeps .
 
 #   make feature_PDF_utf8
 #       Install system and cpan packages for UTF8 ouput in PDF/Postscript output
