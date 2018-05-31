@@ -26,7 +26,7 @@ my $dbh = DBI->connect(
 ) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
 
 
-plan tests => (8);
+plan tests => (14);
 
 
 # Test detection of mime type from file extension
@@ -49,4 +49,23 @@ $file->mime_type_text('image/png');
 is($file->get_mime_type, 'image/png', q{returned 'image/png' after explicitly setting mime type});
 is($file->mime_type_text, 'image/png', q{correct mime_type_text property after explicitly setting 'image/png' mime type});
 like($file->mime_type_id, qr/^[1-9]\d*$/, q{valid mime_type_id property after explicitly setting 'image/png' mime type});
+
+
+# Test scalar content is coerced into a reference
+$file = LedgerSMB::File->new(
+    _dbh => $dbh,
+);
+ok($file, 'LedgerSMB::File object created');
+ok(ref $file->content('This is plain string content.'), 'Plain string content coerced into a reference');
+is(${$file->content}, 'This is plain string content.', 'Plain string content returned ok');
+
+
+# Test scalar reference content is accepted
+$file = LedgerSMB::File->new(
+    _dbh => $dbh,
+);
+ok($file, 'LedgerSMB::File object created');
+my $content = 'This is scalar reference content.';
+ok(ref $file->content(\$content), 'Scalar reference content accepted');
+is(${$file->content}, 'This is scalar reference content.', 'Scalar reference content returned ok');
 
