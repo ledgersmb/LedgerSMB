@@ -1,11 +1,12 @@
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2016
+# Nick Prater <nick.github@npbroadcast.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.21-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-14 07:52+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
+"POT-Creation-Date: 2018-05-31 20:40+0000\n"
+"Last-Translator: Nick Prater <nick.github@npbroadcast.com>, 2018\n"
 "Language-Team: English (United Kingdom) (https://www.transifex.com/ledgersmb/"
 "teams/58325/en_GB/)\n"
 "Language: en_GB\n"
@@ -1604,7 +1605,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:125
 msgid "Check Prefix"
-msgstr ""
+msgstr "Cheque Prefix"
 
 #: UI/payments/check_job.html:7
 msgid "Checking Job"
@@ -4141,7 +4142,7 @@ msgstr ""
 msgid "Invalid date/time entered"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/import_csv.pm:452
+#: lib/LedgerSMB/Scripts/import_csv.pm:485
 msgid "Invalid file"
 msgstr ""
 
@@ -4575,7 +4576,7 @@ msgstr ""
 
 #: UI/reconciliation/report.html:52
 msgid "Less Outstanding Checks:"
-msgstr ""
+msgstr "Less Outstanding Cheques:"
 
 #: sql/Pg-database.sql:2961 sql/Pg-database.sql:2976
 msgid "Letterhead"
@@ -4807,7 +4808,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128
 msgid "Max Invoices per Check Stub"
-msgstr ""
+msgstr "Max Invoices per Cheque Stub"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:126
 msgid "Max per dropdown"

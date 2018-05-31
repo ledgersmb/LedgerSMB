@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-02 18:55+0000\n"
+"POT-Creation-Date: 2018-05-31 20:40+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4134,7 +4134,7 @@ msgstr ""
 msgid "Invalid date/time entered"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/import_csv.pm:452
+#: lib/LedgerSMB/Scripts/import_csv.pm:485
 msgid "Invalid file"
 msgstr ""
 

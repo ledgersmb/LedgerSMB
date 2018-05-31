@@ -1,11 +1,12 @@
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2016
+# Jesus of Nazareth <brianjerezb@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.21-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-14 07:52+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
+"POT-Creation-Date: 2018-05-31 20:40+0000\n"
+"Last-Translator: Jesus of Nazareth <brianjerezb@gmail.com>, 2018\n"
 "Language-Team: Spanish (Colombia) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_CO/)\n"
 "Language: es_CO\n"
@@ -16,7 +17,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
-msgstr ""
+msgstr "# Factura"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -182,7 +183,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/configuration.pm:332
 #: lib/LedgerSMB/Scripts/setup.pm:862
 msgid "Access Denied"
-msgstr ""
+msgstr "Acceso restringido"
 
 #: bin/aa.pl:598 bin/aa.pl:662 bin/aa.pl:814 bin/aa.pl:1682 bin/ic.pl:1125
 #: bin/ir.pl:454 bin/ir.pl:842 bin/is.pl:470 bin/is.pl:922 bin/oe.pl:437
@@ -266,7 +267,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:78
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:179
 msgid "Account Type"
-msgstr ""
+msgstr "Tipo de cuenta"
 
 #: lib/LedgerSMB/GL.pm:206
 msgid "Account [_1] not found"
@@ -610,7 +611,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr ""
+msgstr "Dirección:"
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
@@ -847,7 +848,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/asset.pm:739 lib/LedgerSMB/Scripts/asset.pm:806
 #: lib/LedgerSMB/Scripts/budgets.pm:112 UI/reconciliation/report.html:294
 msgid "Approve"
-msgstr ""
+msgstr "Aprobar"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:143
 #: UI/asset/search_reports.html:61 UI/Reports/filters/gl.html:179
@@ -856,12 +857,12 @@ msgstr ""
 #: UI/Reports/filters/trial_balance.html:50
 #: UI/Reports/filters/unapproved.html:65
 msgid "Approved"
-msgstr ""
+msgstr "Aprobada"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:93
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:155
 msgid "Approved By"
-msgstr ""
+msgstr "Aprobada por"
 
 #: lib/LedgerSMB/Scripts/asset.pm:542
 msgid "Approved at"
@@ -1105,15 +1106,15 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:144
 #: UI/payments/use_overpayment2.html:125
 msgid "Available"
-msgstr ""
+msgstr "Disponible"
 
 #: UI/setup/list_databases.html:9
 msgid "Available Databases"
-msgstr ""
+msgstr "Bases de datos disponibles"
 
 #: UI/setup/list_users.html:8
 msgid "Available Users"
-msgstr ""
+msgstr "Usuarios disponibles"
 
 #: UI/payments/use_overpayment2.html:121
 msgid "Available overpayments"
@@ -1184,7 +1185,7 @@ msgstr ""
 
 #: UI/Contact/divs/bank_act.html:62
 msgid "Bank Account"
-msgstr ""
+msgstr "Cuenta bancaria"
 
 #: t/data/04-complex_template.html:601
 msgid "Bank Account:"
@@ -1910,7 +1911,7 @@ msgstr "Copias"
 
 #: UI/setup/confirm_operation.html:46
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: bin/am.pl:174 bin/am.pl:190
 msgid "Copy to COA"
@@ -2249,7 +2250,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:187
 msgid "Database does not exist."
-msgstr ""
+msgstr "La base de datos no existe."
 
 #: lib/LedgerSMB/Scripts/setup.pm:824
 msgid "Database exists."
@@ -4141,7 +4142,7 @@ msgstr ""
 msgid "Invalid date/time entered"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/import_csv.pm:452
+#: lib/LedgerSMB/Scripts/import_csv.pm:485
 msgid "Invalid file"
 msgstr ""
 
@@ -5838,7 +5839,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:402
 msgid "Percent"
-msgstr ""
+msgstr "Porcentaje"
 
 #: lib/LedgerSMB/Scripts/asset.pm:709
 msgid "Percent Disposed"
@@ -7660,7 +7661,7 @@ msgstr ""
 
 #: UI/io-email.html:94 UI/orders/order.html:306
 msgid "Sort by"
-msgstr ""
+msgstr "Ordenar por"
 
 #: bin/aa.pl:815 bin/aa.pl:1519 bin/ir.pl:843 bin/is.pl:923
 #: lib/LedgerSMB/Report/Budget/Search.pm:128 lib/LedgerSMB/Report/GL.pm:122
@@ -8046,7 +8047,7 @@ msgstr "Impuestos Gravables"
 
 #: bin/am.pl:575 UI/Contact/divs/credit.html:286 sql/Pg-database.sql:2839
 msgid "Taxes"
-msgstr ""
+msgstr "Impuestos"
 
 #: bin/am.pl:707
 msgid "Taxes saved!"
@@ -8184,7 +8185,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Num2text.pm:84
 msgid "Ten"
-msgstr ""
+msgstr "Diez"
 
 #: bin/oe.pl:363
 msgid "Terms"
@@ -8931,7 +8932,7 @@ msgstr "Usuario"
 
 #: UI/login.html:63
 msgid "User Name"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1028
 msgid "User already exists. Import?"
@@ -9314,7 +9315,7 @@ msgstr ""
 
 #: bin/old-handler.pl:174
 msgid "action not defined!"
-msgstr ""
+msgstr "¡Acción no definida!"
 
 #: UI/rp-search-generate_balance_sheet.html:2
 msgid "as at"
@@ -9400,7 +9401,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1518
 msgid "is lesser than 0"
-msgstr ""
+msgstr "Es menor a 0"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1512
 msgid "is lesser than the amount to be paid"
@@ -9448,7 +9449,7 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:378
 msgid "subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #: sql/Pg-database.sql:3728
 msgid "time"
@@ -9464,7 +9465,7 @@ msgstr ""
 
 #: bin/ic.pl:1436
 msgid "unexpected error!"
-msgstr ""
+msgstr "¡Error inesperado!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1774 lib/LedgerSMB/Scripts/payment.pm:1791
 #: lib/LedgerSMB/Scripts/payment.pm:1846 lib/LedgerSMB/Scripts/payment.pm:1863

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.21-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-14 07:52+0000\n"
+"POT-Creation-Date: 2018-05-31 20:40+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: French (https://www.transifex.com/ledgersmb/teams/58325/fr/)\n"
 "Language: fr\n"
@@ -4140,7 +4140,7 @@ msgstr ""
 msgid "Invalid date/time entered"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/import_csv.pm:452
+#: lib/LedgerSMB/Scripts/import_csv.pm:485
 msgid "Invalid file"
 msgstr ""
 
