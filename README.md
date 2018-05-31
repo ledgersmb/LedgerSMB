@@ -119,8 +119,6 @@ Then, some of the features listed below have system requirements as well:
    * dvitopdf
    * dvitops
    * pdftops
- * latex-pdf-images
-   * ImageMagick
 
 ## Perl module dependencies
 
@@ -154,7 +152,6 @@ specifying ```--with-feature=<feature>```:
 | Feature          | Description                         |
 |------------------|-------------------------------------|
 | latex-pdf-ps     | Enable PDF and PostScript output    |
-| latex-pdf-images | Image size detection for PDF output |
 | starman          | Starman Perl/PSGI webserver         |
 | openoffice       | OpenOffice.org document output      |
 | edi              | (EXPERIMENTAL) X12 EDI support      |
@@ -173,7 +170,6 @@ number of dependencies installed from CPAN.
 **NOTES**
 
  1. For the pdf-ps target, LaTeX is required.
- 1. For the pdf-images target, ImageMagick is  required.
 
 ## PostgreSQL configuration
 
