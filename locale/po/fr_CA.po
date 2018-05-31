@@ -3,7 +3,7 @@
 # ylavoie <ylavoie@yveslavoie.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.21\n"
+"Project-Id-Version: LedgerSMB 1.5.22-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-05-31 20:40+0000\n"
 "Last-Translator: ylavoie <ylavoie@yveslavoie.com>, 2016\n"
