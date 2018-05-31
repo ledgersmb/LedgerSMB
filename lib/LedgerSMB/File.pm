@@ -237,12 +237,17 @@ sub get_for_template{
         open my $fh, '>', $full_path
             or die "Failed to open output file $full_path : $!";
         binmode $fh, ':bytes';
-        print $fh $result->{content} or die "Cannot print to file $full_path";
+        print $fh $result->{content} or die "Cannot print to file $full_path";;
         close $fh or die "Cannot close file $full_path";
 
-        ($result->{sizex}, $result->{sizey}) = $self->_image_size(
-            $result->{content}
-        );
+        local $@ = undef;
+        eval { # Block used so that Image::Size is optional
+            require Image::Size;
+            my ($x, $y);
+            ($x, $y) = imgsize(\{$result->{content}});
+            $result->{sizex} = $x;
+            $result->{sizey} = $y;
+        };
 
         if ($result->{file_class} == FC_PART){
            $result->{ref_key} = $result->{file_name};
@@ -284,43 +289,6 @@ sub list_links{
      );
     return @results;
 }
-
-=back
-
-=head1 PRIVATE METHODS
-
-=over
-
-=item _image_size($content)
-
-Given binary content representing an image, extracts the image dimensions. This
-method requires the perl module Image::Size or else the result will be undef,
-with no error raised.
-
-Returns an array comprising:
-
-    x-dimension (pixels)
-    y-dimension (pixels)
-    image type (gif, png, etc)
-
-=cut
-
-sub _image_size {
-
-    my ($self, $content) = @_;
-    my @rv;
-
-    # Image::Size is an optional dependency.
-    # Wrap in eval block so as not to die if it is missing.
-    local $@ = undef;
-    eval {
-        require Image::Size;
-        @rv = Image::Size::imgsize(\$content);
-    };
-
-    return @rv;
-}
-
 
 =back
 
