@@ -211,8 +211,37 @@ sub get {
 
 =item get_for_template({ref_key => int, file_class => int})
 
-Returns file data for invoices for embedded images, except that content is set
-to a directory relative to C<file_path> where these files are stored.
+This is a specialised query with rather opaque logic and transformations,
+intended to extract a set of files for inclusion in LaTeX invoice templates.
+
+A temporary directory is created by this method, into which the returned
+files are written, for use by the template. The path of this temporary
+directory is available as the `file_path` property. This directory and its
+contents are removed when this object instance goes out of scope.
+
+The method returns a list and writes to the temporary directory:
+
+  1) All files matching the specified `file_class` and `ref_key`, having a
+     `mime_type` with `invoice_include=TRUE`.
+
+AND
+
+  2) For every part on an invoice having `trans_id` equal to the specified
+     `ref_key` argument (regardless of specified file_class), the most recent
+     (by id) file associated with that part having mime_type beginning
+     'image%'.
+
+If file_class is FC_PART, the returned file_name is a concatanation of
+`ref_key` and `file_name` joined by '-', rather than the raw database
+`file_name` field.
+
+All file classed have underscores stripped from their `file_name` fields.
+For FC_PART file classes, this happens after the concatanation of `ref_key`.
+
+[For FC_PART file classes, as a final step before data is returned, the
+`ref_key` field is replaced with part of the reconstructed `file_name`,
+up to the first '-' character. As `ref_key` is an integer field, this
+step appears only to restore the original `ref_key`.]
 
 =cut
 
@@ -250,6 +279,19 @@ sub get_for_template{
 =item list({ref_key => int, file_class => int})
 
 Lists files directly attached to the object.
+
+Returns an array of hashrefs, each representing a file and comprising:
+
+  * id
+  * uploaded_by_id    # entity_id of the user who uploaded the file
+  * uploaded_by_name  # entity name of the user who uploaded the file
+  * file_name
+  * description
+  * content           # A reference to the raw file content
+  * mime_type         # The normalised mime type (e.g. 'text/plain')
+  * file_class
+  * ref_key
+  * uploaded_at       # date/time string YYYY-MM-DD HH:MM:SS.ssssss
 
 =cut
 
