@@ -158,11 +158,31 @@ instance goes out of scope.
 
 =cut
 
-has file_path => (is => 'rw', isa => 'Maybe[Str]',
-                  lazy => 1,
-                  default => sub {
-                      return File::Temp->newdir( CLEANUP => 1 );
-                  } );
+has file_path => (
+    is => 'ro',
+    isa => 'Maybe[Str]',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        $self->_tempdir->dirname;
+    },
+);
+
+=item _tempdir
+
+Private property holding the File::Temp::Dir object created for the
+get_for_template() method.
+
+=cut
+
+has _tempdir => (
+    is => 'ro',
+    isa => 'Maybe[Object]',
+    lazy => 1,
+    default => sub {
+        File::Temp->newdir( CLEANUP => 1 );
+    },
+);
 
 =back
 
@@ -243,6 +263,20 @@ For FC_PART file classes, this happens after the concatanation of `ref_key`.
 up to the first '-' character. As `ref_key` is an integer field, this
 step appears only to restore the original `ref_key`.]
 
+Returns an array containing a list of hashes, each comprising the
+following keys:
+
+  * id
+  * uploaded_by_id    # entity_id of the user who uploaded the file
+  * uploaded_by_name  # entity name of the user who uploaded the file
+  * file_name         # NOT the filename from the database - see notes above
+  * description
+  * content           # A reference to the raw file content
+  * mime_type         # The normalised mime type (e.g. 'text/plain')
+  * file_class
+  * ref_key
+  * uploaded_at       # date/time string YYYY-MM-DD HH:MM:SS.ssssss
+
 =cut
 
 sub get_for_template{
@@ -287,7 +321,7 @@ Returns an array of hashrefs, each representing a file and comprising:
   * uploaded_by_name  # entity name of the user who uploaded the file
   * file_name
   * description
-  * content           # A reference to the raw file content
+  * content           # always undef for this method
   * mime_type         # The normalised mime type (e.g. 'text/plain')
   * file_class
   * ref_key
