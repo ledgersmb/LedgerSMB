@@ -196,18 +196,6 @@ sub get_mime_type {
     return $self->mime_type_text;
 }
 
-=item detect_type
-
-Auto-detects the type of the file.  Not yet implemented
-
-=cut
-
-sub detect_type {
-    my ($self) = @_;
-    $logger->warn("Stub LedgerSMB::File::detect_type\n");
-    return;
-};
-
 =item get
 
 Retrieves a file.  ID and file_class properties must be set.
