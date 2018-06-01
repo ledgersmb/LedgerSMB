@@ -245,6 +245,13 @@ undef $file;
 ok(!-e $directory_path, 'temporary directory deleted once out-of-scope');
 
 
-
 # Drop our working database
-$dbh->do("DROP DATABASE $test_db");
+$dbh = DBI->connect(
+    "dbi:Pg:dbname=$ENV{LSMB_NEW_DB}",
+    undef,
+    undef,
+    { AutoCommit => 1, PrintError => 0 }
+) or BAIL_OUT "Can't reconnect to template database: " . DBI->errstr;
+
+$dbh->do("DROP DATABASE $test_db")
+    or BAIL_OUT "Can't drop test database: " . DBI->errstr;
