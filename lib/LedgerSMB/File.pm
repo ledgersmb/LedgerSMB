@@ -35,25 +35,29 @@ use LedgerSMB::MooseTypes;
 
 PGObject::Type::ByteString->register(registry => 'default');
 
-=item  attached_by_id
+=item  uploaded_by_id
 
 Entity id of the individual who attached the file.
 
 =cut
 
-has attached_by_id => (is => 'rw', isa => 'Maybe[Int]');
+has uploaded_by_id => (is => 'rw', isa => 'Maybe[Int]');
 
-=item attached_by
+=item uploaded_by
 
 Entity name of individual who attached file
 
 =cut
 
-has attached_by => (is => 'rw', isa => 'Maybe[Str]');
+has uploaded_by => (is => 'rw', isa => 'Maybe[Str]');
 
-=item attached_at
+=item uploaded_at
 
 Timestamp of attachment point.
+
+=cut
+
+has uploaded_at => (is => 'ro', isa => 'Maybe[Str]');
 
 =item content
 
