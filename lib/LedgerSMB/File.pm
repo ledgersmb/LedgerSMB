@@ -252,12 +252,13 @@ sub get {
 This is a specialised query with rather opaque logic and transformations,
 intended to extract a set of files for inclusion in LaTeX invoice templates.
 
-A temporary directory is created by this method, into which the returned
-files are written, for use by the template. The path of this temporary
-directory is available as the `file_path` property. This directory and its
-contents are removed when this object instance goes out of scope.
+If results are returned, a temporary directory is created by this method,
+into which the returned files are written, for use by the template. The
+path of this temporary directory is available as the `file_path` property.
+This directory and its contents are removed when this object instance goes
+out of scope.
 
-The method returns a list and writes to the temporary directory:
+The method returns as a list and writes to the temporary directory:
 
   1) All files matching the specified `file_class` and `ref_key`, having a
      `mime_type` with `invoice_include=TRUE`.
@@ -266,14 +267,14 @@ AND
 
   2) For every part on an invoice having `trans_id` equal to the specified
      `ref_key` argument (regardless of specified file_class), the most recent
-     (by id) file associated with that part having mime_type beginning
-     'image%'.
+     (by id) file associated with that part having mime_type matching
+     'image*'.
 
 If file_class is FC_PART, the returned file_name is a concatanation of
 `ref_key` and `file_name` joined by '-', rather than the raw database
 `file_name` field.
 
-All file classed have underscores stripped from their `file_name` fields.
+All file classes have underscores stripped from their `file_name` fields.
 For FC_PART file classes, this happens after the concatanation of `ref_key`.
 
 [For FC_PART file classes, as a final step before data is returned, the
