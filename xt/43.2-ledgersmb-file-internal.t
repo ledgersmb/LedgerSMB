@@ -149,7 +149,7 @@ $file = LedgerSMB::File::Internal->new(
     _dbh => $dbh,
     id => $old_result->{id},
     file_class => FC_INTERNAL,
-); 
+);
 $file->get;
 is($file->{file_name}, 'test_file.txt', 'file_name correct when retrieving file');
 is($file->{description}, 'This is the file description', 'description correct when retrieving file');
@@ -174,7 +174,7 @@ is($file->{src_class}, undef, 'src_class is undef when retrieving file');
 @files = $file->list({
     file_class => FC_INTERNAL,
     ref_key => 0,
-}); 
+});
 is(scalar(@files), 1, 'list method returned exactly one file');
 is($files[0]->{id}, $old_result->{id}, 'file list item has correct id');
 is_deeply(
@@ -200,7 +200,7 @@ is_deeply(
 @files = $file->list_links({
     file_class => FC_INTERNAL,
     ref_key => 0,
-}); 
+});
 is(scalar(@files), 0, 'list links method returns empty list');
 
 
@@ -208,7 +208,7 @@ is(scalar(@files), 0, 'list links method returns empty list');
 @files = $file->get_for_template({
     file_class => FC_INTERNAL,
     ref_key => 0,
-}); 
+});
 is(scalar(@files), 1, 'get_for_template method returned correct number of files');
 $result = $files[0];
 
