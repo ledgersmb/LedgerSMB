@@ -296,7 +296,7 @@ sub get_for_template{
         open my $fh, '>', $full_path
             or die "Failed to open output file $full_path : $!";
         binmode $fh, ':bytes';
-        print $fh $result->{content} or die "Cannot print to file $full_path";;
+        print $fh ${$result->{content}} or die "Cannot print to file $full_path";
         close $fh or die "Cannot close file $full_path";
 
         if ($result->{file_class} == FC_PART){
