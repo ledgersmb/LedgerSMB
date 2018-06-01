@@ -57,7 +57,11 @@ Timestamp of attachment point.
 
 =item content
 
-This stores a reference to the binary content of the file.
+This property yields a reference to the binary content of the file.
+Dereferencing it will yield the underlying raw content.
+
+When setting, either a string, or a scalar reference to a string
+may be used, either of which will be coerced into a reference.
 
 Note: Important difference with the 1.4 series is that before
   1.5.0 this attribute stored the actual content instead of a
