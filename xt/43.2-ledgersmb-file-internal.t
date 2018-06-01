@@ -2,7 +2,7 @@
 
 =head1 UNIT TESTS FOR LedgerSMB::File::Internal
 
-Partial tests for the LedgerSMB::Internal module, which subclassed
+Partial tests for the LedgerSMB::Internal module, which subclasses
 LedgerSMB::File.
 
 =cut
