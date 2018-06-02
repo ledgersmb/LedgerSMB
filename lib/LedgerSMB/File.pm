@@ -340,7 +340,8 @@ sub get_for_template{
 
 =item list({ref_key => int, file_class => int})
 
-Lists files directly attached to the object.
+Returns a list of files directly attached to the object. No content is
+returned, except for files with a mime type of 'text/x-uri'
 
 Returns an array of hashrefs, each representing a file and comprising:
 
@@ -349,7 +350,7 @@ Returns an array of hashrefs, each representing a file and comprising:
   * uploaded_by_name  # entity name of the user who uploaded the file
   * file_name
   * description
-  * content           # always undef for this method
+  * content           # Reference to content, undef unless mime_type='text/x-uri'
   * mime_type         # The normalised mime type (e.g. 'text/plain')
   * file_class
   * ref_key
