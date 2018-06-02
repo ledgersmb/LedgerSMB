@@ -198,7 +198,6 @@ $result = $files[0]->{mime_type} eq 'text/x-uri' ? $files[0] : $files[1];
 
 # Can't use is_deeply() as it won't handle content reference,
 # so test each key/value separately
-$result = $files[0];
 is(scalar(keys %{$result}), 10, 'get_for_template uri result has correct number of hash keys');
 is($result->{id}, $uri->{id}, 'file list id is correct for uri');
 is($result->{uploaded_by_id}, $uri->{uploaded_by}, 'file list uploaded_by_id is correct for uri');
