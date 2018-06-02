@@ -53,7 +53,7 @@ $dbh->do("UPDATE mime_type SET invoice_include = TRUE WHERE mime_type='text/plai
     or BAIL_OUT "Can't set mime type for inclusion on invoices";
 
 
-plan tests => (59);
+plan tests => (72);
 
 #
 #######################################
@@ -170,28 +170,64 @@ is($file->{src_class}, undef, 'src_class is undef when retrieving file');
 #is($file->{uploaded_by_name}, 'LSMB-FILE-TEST', 'correct uploaded_by_name when retrieving file');
 
 
+# Add another file of type 'text/x-uri'
+# This isn't really a file, but the file storage mechanism is coerced
+# to store uris, which are then given special treatment by retrieval methods
+my $uri = LedgerSMB::File::Internal->new(
+    _dbh => $dbh,
+    content => 'https://ledgersmb.org',
+    mime_type_text => 'text/x-uri',
+    file_name => 'i-am-a-uri',  # cannot be null, must be unique, though it has no meaning for uri
+    description => 'Link description',
+);
+ok($uri, 'LedgerSMB::File::Internal object created for uri');
+is($uri->get_mime_type, 'text/x-uri', 'set mime type for uri');
+ok($uri = $uri->attach, 'attached uri');
+
+
 # List files
 @files = $file->list({
     file_class => FC_INTERNAL,
     ref_key => 0,
 });
-is(scalar(@files), 1, 'list method returned exactly one file');
-is($files[0]->{id}, $old_result->{id}, 'file list item has correct id');
+is(scalar(@files), 2, 'list method returned correct number of files');
+
+# Check results for uri. Content should be set
+# Return order is not deterministic, so find the uri text file record to test
+$result = $files[0]->{mime_type} eq 'text/x-uri' ? $files[0] : $files[1];
 
 # Can't use is_deeply() as it won't handle content reference,
 # so test each key/value separately
 $result = $files[0];
-is(scalar(keys %{$result}), 10, 'get_for_template result has correct number of hash keys');
-is($result->{id}, $file->{id}, 'file list id is correct');
-is($result->{uploaded_by_id}, $file->{uploaded_by}, 'file list uploaded_by_id is correct');
-is($result->{uploaded_by_name}, 'LSMB-FILE-TEST', 'file list uploaded_by_name is correct');
-is($result->{file_name}, 'test_file.txt', 'file list file_name is correct');
-is($result->{description}, 'This is the file description', 'file list description is correct');
-is(${$result->{content}}, undef, 'file list content is undef');
-is($result->{mime_type}, 'text/plain', 'file list mime_type is correct');
-is($result->{file_class}, FC_INTERNAL, 'file list file_class is correct');
-is($result->{ref_key}, 0, 'file list ref_key is correct');
-is($result->{uploaded_at}, $file->{uploaded_at}, 'file list uploaded_at is correct');
+is(scalar(keys %{$result}), 10, 'get_for_template uri result has correct number of hash keys');
+is($result->{id}, $uri->{id}, 'file list id is correct for uri');
+is($result->{uploaded_by_id}, $uri->{uploaded_by}, 'file list uploaded_by_id is correct for uri');
+is($result->{uploaded_by_name}, 'LSMB-FILE-TEST', 'file list uploaded_by_name is correct for uri');
+is($result->{file_name}, 'i-am-a-uri', 'file list file_name is correct for uri');
+is($result->{description}, 'Link description', 'file list description is correct for uri');
+is(${$result->{content}}, 'https://ledgersmb.org', 'file list content is defined correctly for uri');
+is($result->{mime_type}, 'text/x-uri', 'file list mime_type is correct for uri');
+is($result->{file_class}, FC_INTERNAL, 'file list file_class is correct for uri');
+is($result->{ref_key}, 0, 'file list ref_key is correct for uri');
+is($result->{uploaded_at}, $uri->{uploaded_at}, 'file list uploaded_at is correct for uri');
+
+# Check results for 'normal' file. Content should be undef
+# Return order is not deterministic, so find the plain text file record to test
+$result = $files[0]->{mime_type} eq 'text/plain' ? $files[0] : $files[1];
+
+# Can't use is_deeply() as it won't handle content reference,
+# so test each key/value separately.
+is(scalar(keys %{$result}), 10, 'get_for_template file result has correct number of hash keys');
+is($result->{id}, $file->{id}, 'file list id is correct for file');
+is($result->{uploaded_by_id}, $file->{uploaded_by}, 'file list uploaded_by_id is correct for file');
+is($result->{uploaded_by_name}, 'LSMB-FILE-TEST', 'file list uploaded_by_name is correct for file');
+is($result->{file_name}, 'test_file.txt', 'file list file_name is correct for file');
+is($result->{description}, 'This is the file description', 'file list description is correct for file');
+is(${$result->{content}}, undef, 'file list content is undef for file');
+is($result->{mime_type}, 'text/plain', 'file list mime_type is correct for file');
+is($result->{file_class}, FC_INTERNAL, 'file list file_class is correct for file');
+is($result->{ref_key}, 0, 'file list ref_key is correct for file');
+is($result->{uploaded_at}, $file->{uploaded_at}, 'file list uploaded_at is correct for file');
 
 
 # List links method
@@ -204,6 +240,7 @@ is(scalar(@files), 0, 'list links method returns empty list');
 
 
 # Get for template method
+# Should only return one of the files we've added according to mime_type
 @files = $file->get_for_template({
     file_class => FC_INTERNAL,
     ref_key => 0,
@@ -242,6 +279,7 @@ ok(close $fh, 'closed extracted file after reading');
 undef $result;
 undef @files;
 undef $file;
+undef $uri;
 ok(!-e $directory_path, 'temporary directory deleted once out-of-scope');
 
 
