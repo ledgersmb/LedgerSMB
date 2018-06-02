@@ -1446,6 +1446,7 @@ sub print_form {
         $output_options{message} = $form->{message};
         $output_options{filename} = $form->{formname} . '-'. $form->{"${inv}number"};
         $output_options{filename} .= '.'. $form->{format}; # assuming pdf or html
+        $output_options{attach} = 1 if $form->{sendmode} eq 'attachment';
 
         if ( %$old_form ) {
             $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n|
