@@ -6,20 +6,20 @@ use LedgerSMB::Database::ChangeChecks;
 
 
 
-check 'Assert duplicate values between abstract "notes" table and children',
+check 'Assert duplicate values between abstract "note" table and children',
     description => q|
-The migration checks found rows in your "notes" table which also exist in
-one of the derived tables. No rows should be in the "notes" table directly;
+The migration checks found rows in your "note" table which also exist in
+one of the derived tables. No rows should be in the "note" table directly;
 only derived tables should have rows.
 
 The rows affected are listed below. Please accept the proposed migration
 strategy by clicking the 'Remove' button below.
     |,
-    query => qq|SELECT * FROM ONLY notes n
-                 WHERE EXISTS (select 1 from notes d
+    query => qq|SELECT * FROM ONLY note n
+                 WHERE EXISTS (select 1 from note d
                                 where n.id = d.id
                                group by d.id
-                               having count(*) > 1  |,
+                               having count(*) > 1 ) |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
@@ -37,12 +37,12 @@ strategy by clicking the 'Remove' button below.
         my $confirm = provided 'confirm'; # 'remove' / 'retain'
 
         if ($confirm eq 'remove') {
-            $dbh->do(q{DELETE FROM ONLY notes n
-                    WHERE EXISTS (select 1 from notes d
+            $dbh->do(q{DELETE FROM ONLY note n
+                    WHERE EXISTS (select 1 from note d
                                    where n.id = d.id
                                   group by d.id
-                                  having count(*) > 1})
-                or die 'Unable to remove duplicate "notes": ' . $dbh->errstr;
+                                  having count(*) > 1)})
+                or die 'Unable to remove duplicate "note": ' . $dbh->errstr;
         }
         else {
           die "Unexpected confirmation value found: $confirm";
@@ -63,9 +63,9 @@ strategy by clicking the 'Remove' button below.
     |,
     query => qq|SELECT * FROM ONLY file_secondary_attachment n
                  WHERE EXISTS (select 1 from file_secondary_attachment d
-                                where n.id = d.id
-                               group by d.id
-                               having count(*) > 1  |,
+                                where n.file_id = d.file_id
+                               group by d.file_id
+                               having count(*) > 1)  |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
@@ -87,7 +87,7 @@ strategy by clicking the 'Remove' button below.
                     WHERE EXISTS (select 1 from file_secondary_attachment d
                                    where n.id = d.id
                                   group by d.id
-                                  having count(*) > 1})
+                                  having count(*) > 1)})
                 or die 'Unable to remove duplicate "file_secondary_attachment"s: ' . $dbh->errstr;
         }
         else {
@@ -110,7 +110,7 @@ strategy by clicking the 'Remove' button below.
                  WHERE EXISTS (select 1 from file_base d
                                 where n.id = d.id
                                group by d.id
-                               having count(*) > 1  |,
+                               having count(*) > 1 )  |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
@@ -132,7 +132,7 @@ strategy by clicking the 'Remove' button below.
                     WHERE EXISTS (select 1 from file_base d
                                    where n.id = d.id
                                   group by d.id
-                                  having count(*) > 1})
+                                  having count(*) > 1)})
                 or die 'Unable to remove duplicate "file_base"s: ' . $dbh->errstr;
         }
         else {
@@ -141,9 +141,9 @@ strategy by clicking the 'Remove' button below.
     };
 
 
-check 'Assert "notes" table containing no records of its own',
+check 'Assert "note" table containing no records of its own',
     description => q|
-The migration checks found rows in your "notes" table
+The migration checks found rows in your "note" table
 which do not exist in one of the derived table. This isn't allowed
 and the upgrade process tries to introduce a restriction to prevent it.
 However, the pre-existing rows prevent this new check from being
@@ -160,7 +160,7 @@ The rows affected are listed below. Please accept the proposed migration
 strategy by clicking the 'Remove' button below, but understand that in
 case there's no backup, this information is removed irreversibly.
     |,
-    query => qq|SELECT * FROM ONLY notes|,
+    query => qq|SELECT * FROM ONLY note|,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
@@ -178,8 +178,8 @@ case there's no backup, this information is removed irreversibly.
         my $confirm = provided 'confirm'; # 'remove' / 'retain'
 
         if ($confirm eq 'remove') {
-            $dbh->do(q{DELETE FROM ONLY notes})
-                or die 'Unable to remove "notes" records: ' . $dbh->errstr;
+            $dbh->do(q{DELETE FROM ONLY note})
+                or die 'Unable to remove "note" records: ' . $dbh->errstr;
         }
         else {
           die "Unexpected confirmation value found: $confirm";
