@@ -1,5 +1,5 @@
 /* stylesheet for ledger-smb */
-@import url(system/global.css);
+@import url("system/global.css");
 
 td.money {
    text-align: right;
