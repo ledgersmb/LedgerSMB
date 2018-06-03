@@ -152,9 +152,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -179,10 +177,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -250,9 +244,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -277,10 +269,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -348,9 +336,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -375,10 +361,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -444,9 +426,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -471,10 +451,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -557,9 +533,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -584,10 +558,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
