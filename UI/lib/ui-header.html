@@ -10,11 +10,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title><?lsmb form.titlebar ? form.titlebar : titlebar ?></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-        <?lsmb IF refresh -?>
-            <meta http-equiv="refresh" content="<?lsmb refresh.delay ?>; <?lsmb refresh.url ?>">
-        <?lsmb END -?>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <?lsmb# HTML Snippet, for import only ?>
         <?lsmb
@@ -57,12 +52,6 @@
         <?lsmb FOREACH s = include_script ?>
             <script type="text/javascript" src="<?lsmb s ?>" ></script>
         <?lsmb END ?>
-
-        <?lsmb IF html_charset ?>
-            <meta http-equiv="content-type" content="text/html; charset=<?lsmb html_charset ?>">
-        <?lsmb ELSE ?>
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <?lsmb END # if html_charset ?>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <?lsmb BLOCK end_html ?>
