@@ -553,7 +553,6 @@ sub _render {
     my $cvars = shift;
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
-    $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
         default_currency =>
