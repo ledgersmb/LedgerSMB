@@ -290,13 +290,13 @@ tr.record {
 }
 
 tr.suspect {
-	background-color: red;
+        background-color: red;
         color: white;
         font-weight: bold;
 }
 
 tr.warning, div.warning {
-	background-color: yellow;
+        background-color: yellow;
         color: black;
 }
 
