@@ -355,6 +355,45 @@ html, body {
        text-align: center;
 }
 
+#PNL th[colspan="1"].indent {
+  width: 1em;
+}
+
+#PNL th[colspan="2"].indent {
+  width: 2em;
+}
+
+#PNL th[colspan="3"].indent {
+  width: 3em;
+}
+
+#PNL th[colspan="4"].indent {
+  width: 4em;
+}
+
+#PNL td.heading1,
+#PNL th.heading1 {
+  font-weight: bold;
+  padding-bottom: 1em;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+#PNL td.heading2,
+#PNL th.heading2 {
+  font-weight: bold;
+  font-style: italic;
+}
+
+#PNL table.balancesheet {
+  margin-top: 2em;
+  border-top: 1px solid black;
+}
+
+#PNL .amount {
+  padding-left: 0.5em;
+}
+
 /****** Reconciliation ****/
 
 
