@@ -7,13 +7,30 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb title ?></div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="credentials">
-<?lsmb IF coa_lc;
+  <div id="sep" class="listheading">
+    Pre-defined Chart-of-Accounts selection
+  </div>
+
+  <?lsmb IF coa_lc;
    INCLUDE input element_data = {
         name = 'coa_lc'
         type = 'hidden'
        value = coa_lc
-   } ;
-END ?>
+         } ;
+         ?>
+  <p>
+    The selected country ('<?lsmb coa_lc ?>') has the following charts
+    predefined.
+  </p>
+  <?lsmb ELSE ?>
+  <p>
+    Please select a country from the list of countries with predefined
+    charts of accounts, or select Skip and define or import accounts and
+    headings later. Please do take note that you want to load a chart
+    for evaluation purposes as many functions depend on accounts of
+    certain types being defined.
+  </p>
+  <?lsmb END ?>
 <div class="inputrow">
 <?lsmb IF coa_lc;
     INCLUDE select element_data = {
@@ -49,7 +66,7 @@ END ?>
            label = text('SIC')
        };
     END;
-ELSE;
+   ELSE;
     INCLUDE select element_data = {
          options = coa_lcs
             name = 'coa_lc'
