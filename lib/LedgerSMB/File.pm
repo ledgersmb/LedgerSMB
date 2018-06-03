@@ -260,7 +260,7 @@ sub get_for_template{
         $result->{file_name} =~ s/\_//g;
         open FILE, '>', $self->file_path . "/$result->{file_name}";
         binmode FILE, ':bytes';
-        print FILE $result->{content};
+        print FILE ${$result->{content}};
         close FILE;
         { #pre-5.14 compatibility block
             local ($@); # pre-5.14, do not die() in this block
