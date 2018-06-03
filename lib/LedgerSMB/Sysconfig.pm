@@ -334,11 +334,6 @@ def 'cache_templates',
 
 ### SECTION  ---   paths
 
-def 'cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
-
 # Path to the translation files
 def 'localepath',
     section => 'paths',

@@ -2,11 +2,6 @@
 auth = DB
 logging  = 0
 
-# This is the logical CSS directory.  I.e. it is what comes before the 
-# ledgersmb.css in the url.  Example might be /my_css_dir/ or 
-# http://localhost/other_css_dir/
-cssdir = css/
-
 # If set to a true value this caches templates.  Typically it will be set to 0 
 # to disable or 1 to enable.
 
