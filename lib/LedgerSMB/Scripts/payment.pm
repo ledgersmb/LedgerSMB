@@ -224,7 +224,8 @@ sub pre_bulk_post_report {
         value => 'post_payments_bulk',
         class => 'submit',
     }];
-    $request->{action} = 'p';
+    delete $request->{$_}
+       for qw(action dbh);
     return $template->render({
         form => $request,
         hiddens => $request,
@@ -235,19 +236,6 @@ sub pre_bulk_post_report {
     });
 }
 
-# Is this even used?  It would just redirect back to the report which is not
-# helpful.  --CT
-
-sub p_payments_bulk_post {
-    my ($request) = @_;
-    return pre_bulk_post_report(@_);
-}
-
-# wrapper around post_payments_bulk munged for dynatable.
-
-sub post_payments_bulk_p {
-    return post_payments_bulk(@_);
-}
 
 =item get_search_results
 
