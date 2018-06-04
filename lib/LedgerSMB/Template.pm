@@ -476,7 +476,7 @@ sub get_template_source {
     my ($self, $format_extension) = @_;
 
     my $source;
-    if ($self->{include_path} eq 'DB'){
+    if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $source = $self->{template};
     } else {
         $source = $self->{template} . '.' . $format_extension;
@@ -490,7 +490,7 @@ sub get_template_args {
     my $binmode = shift;
 
     my %additional_options = ();
-    if ($self->{include_path} eq 'DB'){
+    if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $additional_options{INCLUDE_PATH} = [];
         $additional_options{LOAD_TEMPLATES} =
             [ LedgerSMB::Template::DBProvider->new(
@@ -503,7 +503,9 @@ sub get_template_args {
                       }),
                   }) ];
     }
-    my $paths = [$self->{include_path},'templates/demo','UI/lib'];
+    my $paths = ['UI/lib'];
+    unshift @$paths, $self->{include_path}
+        if defined $self->{include_path};
     unshift @$paths, $self->{include_path_lang}
         if defined $self->{include_path_lang};
     my $arghash = {
@@ -519,7 +521,7 @@ sub get_template_args {
     };
 
     if ($LedgerSMB::Sysconfig::cache_templates
-        && $self->{include_path} ne 'DB') {
+        && (!$self->{include_path} || $self->{include_path} ne 'DB')) {
        # don't cache compiled database-retrieved templates
        # they will vary between databases
         $arghash->{COMPILE_EXT} = '.lttc';
