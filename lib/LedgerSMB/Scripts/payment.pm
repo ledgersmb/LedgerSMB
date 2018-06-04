@@ -416,12 +416,12 @@ sub print {
             user => $payment->{_user},
             template => 'check_multiple',
             format => uc $payment->{'format'},
-            output_args => $payment,
+            path => 'DB',
+            output_options => {
+               filename => 'printed-checks',
+            },
         );
-        $template->render($payment);
-        $template->output(%$payment);
-        $request->{action} = 'update_payments';
-        return display_payments(@_);
+        return $template->render($payment);
     } else {
 
     }
