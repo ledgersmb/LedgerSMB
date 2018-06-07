@@ -17,6 +17,13 @@ use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 __PACKAGE__->register(registry => 'default',
     types => [qw(float4 float8 float numeric), 'double precision']);
 
+our ($accuracy, $precision, $round_mode, $div_scale);
+
+# Globals
+$accuracy = PGObject::Type::BigFloat->accuracy();
+$precision = PGObject::Type::BigFloat->precision();
+$round_mode = PGObject::Type::BigFloat->round_mode();
+$div_scale = PGObject::Type::BigFloat->div_scale();
 
 =head1 SYNPOSIS
 
