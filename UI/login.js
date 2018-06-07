@@ -57,15 +57,15 @@ function send_form() {
      });
 }
 
-require(["dojo/dom-construct", "dijit/ProgressBar", "dojo/domReady!"],
-          function(construct, progressbar){
-                var indicator = new progressbar({
-                "style": "width: 10em",
-                "id": "login-progressbar",
-                "value": 100,
-                "indeterminate": true
-                }).placeAt("login-indicator", "only");
-                indicator.startup();
-          });
+require(["dijit/ProgressBar", "dojo/domReady"],
+    function(progressbar){
+        var indicator = new progressbar({
+            "style": "width: 10em",
+            "id": "login-progressbar",
+            "value": 100,
+            "indeterminate": true
+        }).placeAt("login-indicator", "only");
+        indicator.startup();
+    });
 
 

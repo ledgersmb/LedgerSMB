@@ -301,7 +301,7 @@ submodules:
 #   builds release distribution archive
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
-	find . | grep -vE '^.$$|^\./\.|^\./UI/js-src/(dojo|dijit|util)/|\.uncompressed\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
+	find . | grep -vE '^.$$|^\./\.|^\./UI/js-src/(dojo|dijit|util)/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
 clean:
 	rm -rf inc META.yml MYMETA.yml MYMETA.json blib pm_to_blib
@@ -442,7 +442,7 @@ endif
 #   make feature_PDF
 #       Install system and cpan packages for generating PDF/Postscript output
 feature_PDF: $(OS_feature_PDF)
-	cpanm --quiet --notest --with-feature=latex-pdf-ps --with-feature=latex-pdf-images --installdeps .
+	cpanm --quiet --notest --with-feature=latex-pdf-ps --installdeps .
 
 #   make feature_PDF_utf8
 #       Install system and cpan packages for UTF8 ouput in PDF/Postscript output

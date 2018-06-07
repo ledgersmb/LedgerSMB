@@ -281,11 +281,6 @@ def 'dojo_theme',
     default => 'claro',
     doc => q{};
 
-def 'dojo_location',
-    section => 'main',
-    default => ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js',
-    doc => q{};
-
 def 'force_username_case',
     section => 'main',
     default => undef,  # don't force case
@@ -338,11 +333,6 @@ def 'cache_templates',
     doc => q{};
 
 ### SECTION  ---   paths
-
-def 'cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
 
 # Path to the translation files
 def 'localepath',

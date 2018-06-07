@@ -19,9 +19,10 @@ use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
-use HTTP::Status qw( HTTP_FOUND );
+use LedgerSMB::Sysconfig;
 
 use CGI::Emulate::PSGI;
+use HTTP::Status qw( HTTP_FOUND );
 use Try::Tiny;
 use List::Util qw{  none };
 use Scalar::Util qw{ reftype };
@@ -43,7 +44,7 @@ if ($EUID == 0) {
         'Running a Web Service as root is a security problem.',
         'If you are starting LedgerSMB as a system service,',
         'please make sure that you drop privileges as per README.md',
-        'and the example files in conf/.',
+        'and the example files in doc/conf/.',
         'The method of passing a --user argument to starman cannot',
         'be used as starman drops privileges too late, starting us as root.'
     );
@@ -98,7 +99,7 @@ sub psgi_app {
         $env->{'lsmb.invalidate_session_cb'});
 
     $request->{action} = $env->{'lsmb.action_name'};
-    my ($status, $headers, $body);
+    my $res;
     try {
         LedgerSMB::App_State::run_with_state sub {
             if ($env->{'lsmb.want_db'} && !$env->{'lsmb.dbonly'}) {
@@ -111,15 +112,11 @@ sub psgi_app {
                 };
             }
 
-            my $res = $env->{'lsmb.action'}->($request);
+            $res = $env->{'lsmb.action'}->($request);
 
             if (ref $res && ref $res eq 'LedgerSMB::Template') {
                 # We got an evaluated template instead of a PSGI triplet...
-                ($status, $headers, $body) =
-                    @{LedgerSMB::PSGI::Util::template_to_psgi($res)};
-            }
-            else {
-                ($status, $headers, $body) = @$res;
+                $res = LedgerSMB::PSGI::Util::template_to_psgi($res);
             }
         }, DBH     => $env->{'lsmb.db'},
            DBName  => $env->{'lsmb.company'},
@@ -134,14 +131,13 @@ sub psgi_app {
             $env->{'psgix.logger'}->({
                 level => 'error',
                 message => $_ });
-            ($status, $headers, $body) =
-                @{LedgerSMB::PSGI::Util::internal_server_error(
-                      $_, 'Error!',
-                      $request->{dbversion}, $request->{company})};
+            $res = LedgerSMB::PSGI::Util::internal_server_error(
+                $_, 'Error!',
+                $request->{dbversion}, $request->{company});
         }
     };
 
-    return [ $status, $headers, $body ];
+    return $res;
 }
 
 sub _run_old {
@@ -231,6 +227,10 @@ sub setup_url_space {
                 return $app->($env);
             }
         };
+
+        if (! $LedgerSMB::Sysconfig::dojo_built) {
+            mount '/js/' => Plack::App::File->new(root => 'UI/js-src')->to_app
+        }
 
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };

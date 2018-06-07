@@ -543,12 +543,9 @@ sub _grid {
     die q{'grid' can't be called outside run_with_formatters scope};
 }
 
-sub grid {
-    my ($rows, %args) = @_;
-    # assert that the values in the rows hashes include values for
-    # all fields of the primary key!
-    #
-    # and then generate the primary keys.
+sub _assert_pk {
+    my (%args) = @_;
+
     unless (defined $check->{tables}
             and ((defined $args{table}
                   and defined $check->{tables}->{$args{table}})
@@ -556,10 +553,22 @@ sub grid {
                      and defined $check->{tables}->{$args{name}}))) {
         die "Check '$check->{title}' misses table primary key in 'grid'";
     }
+}
 
-    my $pk = $check->{tables}->{$args{table} // $args{name}}->{prim_key};
-    $pk = (ref $pk) ? $pk : [ $pk ];
-    $_->{__pk} = _encode_pk($_, $pk) for (@$rows);
+sub grid {
+    my ($rows, %args) = @_;
+
+    if ($args{edit_columns}) {
+        # assert that the values in the rows hashes include values for
+        # all fields of the primary key!
+        #
+        # and then generate the primary keys.
+        _assert_pk(%args);
+
+        my $pk = $check->{tables}->{$args{table} // $args{name}}->{prim_key};
+        $pk = (ref $pk) ? $pk : [ $pk ];
+        $_->{__pk} = _encode_pk($_, $pk) for (@$rows);
+    }
 
     return _grid($check, @_);
 }
@@ -671,6 +680,7 @@ sub save_grid {
         and defined $check->{grids}->{$name}) {
         %grid_args = %{$check->{grids}->{$name}};
     }
+    _assert_pk(%grid_args);
 
     my %args = ( %grid_args, %call_args );
     # don't take any risk:

@@ -225,6 +225,32 @@ sub render {
     return $self->_render($request, renderer => 'render');
 }
 
+sub _output_name {
+    my $self = shift;
+    my $request = shift;
+
+    return undef
+        unless $request->{format};
+
+    $self->format('html')
+        unless defined $self->format;
+
+
+    my $name = $self->name || '';
+    $name =~ s/ /_/g;
+
+    $name = $name . '_' . $self->from_date->to_output
+            if $self->can('from_date')
+               and defined $self->from_date
+               and defined $self->from_date->to_output;
+    $name = $name . '-' . $self->to_date->to_output
+            if $self->can('to_date')
+               and defined $self->to_date
+               and defined $self->to_date->to_output;
+
+    return $name;
+}
+
 sub _render {
     my ($self, $request) = @_;
     my $template;
@@ -338,6 +364,9 @@ sub _render {
         user => $LedgerSMB::App_State::User,
         locale => $self->locale,
         path => 'UI',
+        output_options => {
+            filename => $self->_output_name($request),
+        },
         template => $template,
         format => uc($request->{format} || 'HTML'),
     );

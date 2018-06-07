@@ -12,6 +12,7 @@ seq:
       - xt/{0,1,2,3}*
   - seq:
     - xt/40-dbsetup.t
+    - xt/45*.t
     - par:
       - xt/40-database.t
       - xt/41-coaload.t

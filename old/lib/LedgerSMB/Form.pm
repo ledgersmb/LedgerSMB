@@ -125,8 +125,8 @@ sub new {
     elsif ( $ENV{QUERY_STRING} ) {
         $_ = $ENV{QUERY_STRING};
     }
-    elsif ( $ARGV[0] ) {
-        $_ = $ARGV[0];
+    else {
+        $_ = undef;
     }
 
     $logger->trace(" RequestIn=$_") if $_;

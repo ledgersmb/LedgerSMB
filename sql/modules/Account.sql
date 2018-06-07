@@ -254,12 +254,27 @@ $$ language sql;
 COMMENT ON FUNCTION account__get_taxes() IS
 $$ Returns set of accounts where the tax attribute is true.$$;
 
-DROP FUNCTION IF EXISTS account_get(int);
+
+
+DROP TYPE IF EXISTS account_config CASCADE;
+CREATE TYPE account_config AS (
+  id int,
+  accno text,
+  description text,
+  is_temp bool,
+  category CHAR(1),
+  gifi_accno text,
+  heading int,
+  contra bool,
+  tax bool,
+  obsolete bool,
+  link text
+);
 
 DROP FUNCTION IF EXISTS account_get(int);
-CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account AS
+CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account_config AS
 $$
-select c.*
+select c.*, concat_colon(l.description) as link
   from account c
   left join account_link l
     ON (c.id = l.account_id)
