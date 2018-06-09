@@ -1253,7 +1253,7 @@ sub process_and_run_upgrade_script {
         format_options => {extension => 'sql'},
         format => 'TXT' );
 
-    $dbtemplate->render($request, VERSION_COMPARE => \&Version::Compare::version_compare);
+    $dbtemplate->render($request, {VERSION_COMPARE => \&Version::Compare::version_compare});
 
     my $tempfile = File::Temp->new();
     print $tempfile $dbtemplate->{output}

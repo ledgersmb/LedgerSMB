@@ -30,9 +30,14 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 # System requirements
 
+Note that these are the system requirements for LedgerSMB 1.7; the planned next
+minor release. Please check the system requirements for [the 1.5 production
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.5#system-requirements)
+and [1.6 version](https://github.com/ledgersmb/LedgerSMB/tree/1.6#system-requirements).
+
 ## Server
 
- * Perl 5.14+
+ * Perl 5.18+
  * PostgreSQL 9.4+
  * Web server (e.g. nginx, Apache, lighttpd)
 
@@ -42,7 +47,7 @@ below.
 
 ## Client
 
-A [Dojo 1.12 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
+A [Dojo 1.13 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
 is all that's required on the client (except IE8 and 9); it includes Chrome as
 of version 13, FireFox as of 3.6 and MS Internet Explorer as of version 10 and
 a wide range of mobile browsers.

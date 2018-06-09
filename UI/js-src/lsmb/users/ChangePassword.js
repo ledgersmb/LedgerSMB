@@ -120,7 +120,7 @@ define(["lsmb/TabularForm",
                             if (err.response.status != "500"){
                                  I.setFeedback(0, I.text("Bad username/Password"));
                             } else {
-                                 I.setFeedback(0,I.text("Company does not exist."));
+                                 I.setFeedback(0,I.text("Error changing password."));
                             }
                           }
                       });

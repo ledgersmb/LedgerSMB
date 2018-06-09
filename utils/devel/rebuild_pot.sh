@@ -15,7 +15,7 @@ cat - > locale/LedgerSMB.pot <<EOF
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB $version_now\n"
-"Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
+"Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: $date_now\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
