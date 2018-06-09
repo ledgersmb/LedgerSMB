@@ -29,7 +29,7 @@ use Scalar::Util qw{ reftype };
 # To build the URL space
 use Plack;
 use Plack::Builder;
-use Plack::Request;
+use Plack::Request::WithEncoding;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Middleware::ReverseProxy;
@@ -89,7 +89,7 @@ sub psgi_app {
 
     my $auth = LedgerSMB::Auth::factory($env);
 
-    my $psgi_req = Plack::Request->new($env);
+    my $psgi_req = Plack::Request::WithEncoding->new($env);
     my $request = LedgerSMB->new(
         $psgi_req->parameters, $env->{'lsmb.script'}, $env->{QUERY_STRING},
         $psgi_req->uploads, $psgi_req->cookies, $auth, $env->{'lsmb.db'},
