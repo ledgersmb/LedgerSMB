@@ -65,30 +65,8 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 # Quick start (from source)
 
 The instructions below are for getting started quickly; the [project's
-site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
+site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-16)
 for **production** installs.
-
-## Check out the sources from GitHub
-
-__***Skip this step for from-tarball installs***__
-(Installation from release tarballs is preferred over installation from GitHub.)
-
-To get the latest development version:
-
-```sh
- $ git clone https://github.com/ledgersmb/LedgerSMB.git
- $ cd LedgerSMB
- $ git submodule update --init --recursive
-```
-
-To get the released version 1.5.18, the commands look like:
-
-```
- $ git clone -b 1.5.18 https://github.com/ledgersmb/LedgerSMB.git
- $ cd LedgerSMB
- $ git submodule update --init --recursive
-```
-
 
 ## System (library) dependencies
 
@@ -161,7 +139,7 @@ purpose of the quick start.
 When not installing as root or through `sudo`, `cpanm` will install unfulfilled
 library dependencies into a location which can be used with `local::lib`.
 
-The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
+The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-16)
 contain a list of distribution provided packages to reduce the
 number of dependencies installed from CPAN.
 
@@ -211,24 +189,11 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 
 ## Configure LedgerSMB
 
-### From-tarball installs
 (Installation from tarball is highly preferred over installation from GitHub for production installs.)
 
 ```bash
- $ cp conf/ledgersmb.conf.default ledgersmb.conf
+ $ cp doc/conf/ledgersmb.conf.default ledgersmb.conf
 ```
-
-### From-GitHub installs
-
-```bash
- $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
-```
-
- > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
- > page load times of some pages.  However, creating a built dojo
- > adds considerable complexity to these instructions; please consult
- > [the extensive setup instructions](https://ledgersmb.org/topic/installing-ledgersmb-15-github)
- > to build dojo.
 
 ## Running Starman
 
