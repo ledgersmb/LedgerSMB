@@ -64,8 +64,7 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 
 # Quick start (from source)
 
-The instructions below are for getting started quickly; the [project's
-site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-16)
+The instructions below are for getting started quickly; the [project's site](http://ledgersmb.org) provides [in-depth installation instructions](https://ledgersmb.org/content/installing-ledgersmb-16)
 for **production** installs.
 
 ## System (library) dependencies
@@ -221,7 +220,7 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 All regular Perl environment variables can be used. In particular, it's important to make sure
 `PERL5LIB` is set correctly when setting up `local::lib` for the first time.
 
-We support the following
+We support the following Environment Variables within our code
 - LSMB_WORKINGDIR : Optional
      - Causes a chdir to the specified directory as the first thing done in starman.psgi
      - If not set the current dir is used.
@@ -229,6 +228,21 @@ We support the following
     ```
     LSMB_WORKINGDIR='/usr/local/ledgersmb/'
     ```
+- LOG : Optional
+     - Causes a logfile to be generated, Legged messages go's to standard out when this is not set.
+     - Example : `LOG=/var/log/ledgersmb/ledgersmb-development_plackup.log`
+
+
+We support the following Environment Variables for our dependancies
+- PGHOST : Optional
+     - Specifies the Postgres server Domain Name or IP address
+- PGPORT : Optional
+     - Sepcifies the Postgres server Port
+- PGSSLMODE : Optional
+     - Enables SSL for the Postgres connection
+
+All Environment Variables supported by our dependancies should be passed through to them,
+that includes the standard Postgres Variables and others
 
 
 ## Next steps
