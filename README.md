@@ -64,7 +64,8 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 
 # Quick start (from source)
 
-The instructions below are for getting started quickly; the [project's site](http://ledgersmb.org) provides [in-depth installation instructions](https://ledgersmb.org/content/installing-ledgersmb-16)
+The instructions below are for getting started quickly; the [project's site](http://ledgersmb.org)
+ provides [in-depth installation instructions](https://ledgersmb.org/content/installing-ledgersmb-16)
 for **production** installs.
 
 ## System (library) dependencies
@@ -228,9 +229,6 @@ We support the following Environment Variables within our code
     ```
     LSMB_WORKINGDIR='/usr/local/ledgersmb/'
     ```
-- LOG : Optional
-     - Causes a logfile to be generated, Legged messages go's to standard out when this is not set.
-     - Example : `LOG=/var/log/ledgersmb/ledgersmb-development_plackup.log`
 
 
 We support the following Environment Variables for our dependancies
