@@ -97,7 +97,6 @@ sub save {
     if ($self->{depreciation}){
         my ($ref) = $self->call_dbmethod(funcname => 'asset_report__save');
         $self->{report_id} = $ref->{id};
-        $self->{asset_ids} = $self->_db_array_scalars(@{$self->{asset_ids}});
         my ($dep) = $self->call_dbmethod(funcname => 'asset_class__get_dep_method');
         $self->call_dbmethod(funcname => $dep->{sproc});
     } else {

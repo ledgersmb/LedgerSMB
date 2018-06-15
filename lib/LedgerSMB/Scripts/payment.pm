@@ -1296,20 +1296,16 @@ sub post_payment {
         }
     }
     # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
-    $Payment->{cash_account_id}    =
-        $Payment->_db_array_scalars(@cash_account_id);
-    $Payment->{amount}             =  $Payment->_db_array_scalars(@amount);
-    $Payment->{source}             =  $Payment->_db_array_scalars(@source);
-    $Payment->{memo}               =  $Payment->_db_array_scalars(@memo);
-    $Payment->{transaction_id}     =
-        $Payment->_db_array_scalars(@transaction_id);
-    $Payment->{op_amount}          =  $Payment->_db_array_scalars(@op_amount);
-    $Payment->{op_cash_account_id} =
-        $Payment->_db_array_scalars(@op_cash_account_id);
-    $Payment->{op_source}          =  $Payment->_db_array_scalars(@op_source);
-    $Payment->{op_memo}            =  $Payment->_db_array_scalars(@op_memo);
-    $Payment->{op_account_id}      =
-        $Payment->_db_array_scalars(@op_account_id);
+    $Payment->{cash_account_id}    = \@cash_account_id;
+    $Payment->{amount}             = \@amount;
+    $Payment->{source}             = \@source;
+    $Payment->{memo}               = \@memo;
+    $Payment->{transaction_id}     = \@transaction_id;
+    $Payment->{op_amount}          = \@op_amount;
+    $Payment->{op_cash_account_id} = \@op_cash_account_id;
+    $Payment->{op_source}          = \@op_source;
+    $Payment->{op_memo}            = \@op_memo;
+    $Payment->{op_account_id}      = \@op_account_id;
     # Ok, passing the control to postgresql and hoping for the best...
 
     $Payment->post_payment();
@@ -1964,7 +1960,7 @@ sub post_overpayment {
         for my $field (qw(amount cash_account_id source memo transaction_id
                           ovp_payment_id)) {
             $list_key->{$key} =
-                $list_key->_db_array_scalars(@{$list_key->{"array_$field"}});
+                $list_key->{"array_$field"};
         }
 
         $entity_list{$key}->post_payment();
