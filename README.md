@@ -203,7 +203,7 @@ With the above steps completed, the system is ready to run the web server:
  >     a serious security issue, and as such LedgerSMB doesn't support it.
  >     Instead, if you need to start LedgerSMB from a root process, drop
  >     privileges to a user that doesn't have write access to the LedgerSMB Directories first.
- >     Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
+ >     Most daemonising mechanisms (eg: systemd) provide a mechanism to do this.
  >     Do not use the starman --user= mechanism, it currently drops privileges too late.
 
 ```bash
@@ -231,7 +231,7 @@ We support the following Environment Variables within our code
     ```
 
 
-We support the following Environment Variables for our dependancies
+We support the following Environment Variables for our dependencies
 - PGHOST : Optional
      - Specifies the Postgres server Domain Name or IP address
 - PGPORT : Optional
@@ -239,7 +239,7 @@ We support the following Environment Variables for our dependancies
 - PGSSLMODE : Optional
      - Enables SSL for the Postgres connection
 
-All Environment Variables supported by our dependancies should be passed through to them,
+All Environment Variables supported by our dependencies should be passed through to them,
 that includes the standard Postgres Variables and others
 
 
@@ -265,9 +265,9 @@ Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
 Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
 
 Mailing lists:
- * [Announce List](https://lists.ledgersmb.org/mailman/listinfo/announce)
- * [User List](https://lists.ledgersmb.org/mailman/listinfo/users)
- * [Development List](https://lists.ledgersmb.org/mailman/listinfo/devel)
+ * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce](https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce)
+ * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-users](https://lists.sourceforge.net/lists/listinfo/ledger-smb-users)
+ * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel](https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel)
 
 Repository: https://github.com/ledgersmb/LedgerSMB
 
