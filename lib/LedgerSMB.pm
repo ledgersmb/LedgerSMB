@@ -174,7 +174,6 @@ sub new {
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
-    $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
     $self->{query_string} = $query_string if defined $query_string;
