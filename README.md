@@ -265,9 +265,9 @@ Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
 Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
 
 Mailing lists:
- * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce](https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce)
- * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-users](https://lists.sourceforge.net/lists/listinfo/ledger-smb-users)
- * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel](https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel)
+ * [Announce List](https://lists.ledgersmb.org/mailman/listinfo/announce)
+ * [User List](https://lists.ledgersmb.org/mailman/listinfo/users)
+ * [Development List](https://lists.ledgersmb.org/mailman/listinfo/devel)
 
 Repository: https://github.com/ledgersmb/LedgerSMB
 
