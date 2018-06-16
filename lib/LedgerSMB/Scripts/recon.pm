@@ -283,7 +283,10 @@ sub _display_report {
                                     + $recon->{outstanding_total}
                                     + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
-    $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
+    $recon->{out_of_balance}->bfround(
+        LedgerSMB::Setting->get('decimal_places') * -1
+    );
+    $recon->{submit_enabled} = ($recon->{out_of_balance} == 0);
 
     # Check if only one entry could explain the difference
     if ( !$recon->{submit_enabled}) {
