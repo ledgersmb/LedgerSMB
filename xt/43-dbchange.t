@@ -56,6 +56,8 @@ $chg_db->commit or $chg_db->rollback;
 $chg_db->do(q{SELECT count(*) FROM test1;});
 is $chg_db->rows, -1, 'Successfully created the table';
 
+$chg_db->rollback;
+$chg_db->disconnect;
 
 =head2 Changes in 'AutoCommit' mode
 
