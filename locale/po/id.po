@@ -3,7 +3,7 @@
 # allphoneso donie <allphoneso.m6@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.6.1-dev\n"
+"Project-Id-Version: LedgerSMB 1.6.1\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2018-06-17 10:32+0000\n"
 "Last-Translator: allphoneso donie <allphoneso.m6@gmail.com>, 2018\n"
