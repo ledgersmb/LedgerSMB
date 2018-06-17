@@ -1,4 +1,12 @@
+
 package LedgerSMB::Reconciliation::ISO20022;
+
+=head1 NAME
+
+LedgerSMB::Reconciliation::ISO20022 - SEPA payment file processing
+
+=cut
+
 use LedgerSMB::FileFormats::ISO20022::CAMT053;
 use strict;
 use warnings;

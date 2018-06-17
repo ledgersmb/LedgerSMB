@@ -1,8 +1,12 @@
-#  This is the new configuration file for LedgerSMB.  Eventually all system
-# configuration directives will go here,  This will probably not fully replace
-# the ledgersmb.conf until 1.3, however.
 
 package LedgerSMB::Sysconfig;
+
+=head1 NAME
+
+LedgerSMB::Sysconfig - LedgerSMB configuration management
+
+=cut
+
 use strict;
 use warnings;
 
