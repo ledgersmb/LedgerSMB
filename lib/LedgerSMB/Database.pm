@@ -424,6 +424,8 @@ sub load_base_schema {
 
 Loads or reloads sql modules from $loadorder
 
+Returns true when succesful, dies upon error.
+
 =cut
 
 sub load_modules {
@@ -499,6 +501,8 @@ sub load_coa {
 =head2 $db->create_and_load();
 
 Creates a database and then loads it.
+
+Returns true when successful, dies on error.
 
 =cut
 
