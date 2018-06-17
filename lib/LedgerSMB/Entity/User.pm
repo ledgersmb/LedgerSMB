@@ -1,10 +1,12 @@
+
+package LedgerSMB::Entity::User;
+
 =head1 NAME
 
 LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
 =cut
 
-package LedgerSMB::Entity::User;
 use Moose;
 use namespace::autoclean;
 use Try::Tiny;

@@ -1,10 +1,12 @@
+
+package LedgerSMB::PGDate;
+
 =head1 NAME
 
 LedgerSMB::PgDate - Date handling and serialization to database
 
 =cut
 
-package LedgerSMB::PGDate;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use LedgerSMB::Magic qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );

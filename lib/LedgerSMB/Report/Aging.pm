@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Aging;
+
 =head1 NAME
 
 LedgerSMB::Report::Aging - AR/AP Aging reports for LedgerSMB
@@ -18,7 +21,6 @@ reportins aimed at the customer in question.
 
 =cut
 
-package LedgerSMB::Report::Aging;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

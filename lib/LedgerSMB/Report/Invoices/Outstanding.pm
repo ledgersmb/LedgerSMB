@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::Outstanding;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::Outstanding - Outstanding Invoice Reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::Outstanding;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

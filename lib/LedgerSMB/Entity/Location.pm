@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Location;
+
 =head1 NAME
 
 LedgerSMB::Entity::Location - Address Handling for LedgerSMB Contacts
@@ -17,7 +20,6 @@ attached either to the entity (person or company) or credit account
 
 =cut
 
-package LedgerSMB::Entity::Location;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

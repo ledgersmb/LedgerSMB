@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::configuration;
+
 =head1 NAME
 
 LedgerSMB::Scripts::configuration - Configuration Workflows for LedgerSMB
@@ -7,7 +10,7 @@ LedgerSMB::Scripts::configuration - Configuration Workflows for LedgerSMB
 LedgerSMB::Scripts::configuration->can('action')->($request);
 
 =cut
-package LedgerSMB::Scripts::configuration;
+
 use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::App_State;

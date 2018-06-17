@@ -1,3 +1,6 @@
+
+package LedgerSMB::Payroll::Income_Type;
+
 =head1 NAME
 
 LedgerSMB::Payroll::Income_Type - Income Types for LedgerSMB's Payroll Engine
@@ -14,7 +17,6 @@ To save a type
 
 =cut
 
-package LedgerSMB::Payroll::Income_Type;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

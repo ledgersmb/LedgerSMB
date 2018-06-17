@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Business_Type;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Business_Type - List the Business Types in
@@ -17,8 +20,6 @@ This provides a simple list of business types, ordered alphabetically.
 None
 
 =cut
-
-package LedgerSMB::Report::Listings::Business_Type;
 
 use Moose;
 use namespace::autoclean;

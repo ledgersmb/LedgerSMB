@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::co::Caja_Diaria;
+
 =head1 NAME
 
 LedgerSMB::Report::co::Caja_Diaria - Caja Diaria Reports (Colombia)
@@ -24,7 +27,6 @@ specific period.
 
 =cut
 
-package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

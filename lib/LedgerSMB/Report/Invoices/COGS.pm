@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::COGS;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::COGS - FIFO COGS Reports for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Invoices::COGS - FIFO COGS Reports for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::COGS;
 use namespace::autoclean;
 use Moose;
 extends 'LedgerSMB::Report';

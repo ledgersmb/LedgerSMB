@@ -1,3 +1,6 @@
+
+package LedgerSMB::Payroll::Deduction_Type;
+
 =head1 NAME
 
 LedgerSMB::Payroll::Deduction_Type - Deduction Types for LedgerSMB's Payroll
@@ -15,7 +18,6 @@ To save a type
 
 =cut
 
-package LedgerSMB::Payroll::Deduction_Type;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

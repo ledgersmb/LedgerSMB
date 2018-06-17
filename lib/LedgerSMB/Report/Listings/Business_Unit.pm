@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Business_Unit;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Business_Unit - List Business Reporting Units
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::Business_Unit - List Business Reporting Units
 
 =cut
 
-package LedgerSMB::Report::Listings::Business_Unit;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

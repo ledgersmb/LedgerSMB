@@ -1,10 +1,11 @@
+
+package LedgerSMB::Scripts::goods;
+
 =head1 NAME
 
 LedgerSMB::Scripts::goods - Goods and Services workflows for LedgerSMB
 
 =cut
-
-package LedgerSMB::Scripts::goods;
 
 use strict;
 use warnings;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Orders;
+
 =head1 NAME
 
 LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
@@ -9,7 +12,6 @@ LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Orders;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

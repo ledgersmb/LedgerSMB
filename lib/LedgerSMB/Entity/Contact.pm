@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Contact;
+
 =head1 NAME
 
 LedgerSMB::Entity::Contact - Contact info handling for LSMB
@@ -18,7 +21,6 @@ companies in LedgerSMB.
 
 =cut
 
-package LedgerSMB::Entity::Contact;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_State;

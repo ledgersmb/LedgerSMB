@@ -1,4 +1,6 @@
 
+package LedgerSMB::Template::ODS;
+
 =head1 NAME
 
 LedgerSMB::Template::ODS - Template support module for LedgerSMB
@@ -12,8 +14,6 @@ OpenDocument Spreadsheet output.
 =over
 
 =cut
-
-package LedgerSMB::Template::ODS;
 
 use strict;
 use warnings;

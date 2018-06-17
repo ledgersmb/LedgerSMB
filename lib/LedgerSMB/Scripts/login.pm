@@ -1,5 +1,5 @@
 
-=pod
+package LedgerSMB::Scripts::login;
 
 =head1 NAME
 
@@ -15,8 +15,6 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 
 =cut
 
-
-package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
 use HTTP::Status qw( HTTP_OK ) ;

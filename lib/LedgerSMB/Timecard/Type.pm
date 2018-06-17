@@ -1,3 +1,6 @@
+
+package LedgerSMB::Timecard::Type;
+
 =head1 NAME
 
 LedgerSMB::Timecard::Type - Timecard Types for LedgerSMB
@@ -14,7 +17,6 @@ To list all types, ordered by label:
 
 =cut
 
-package LedgerSMB::Timecard::Type;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

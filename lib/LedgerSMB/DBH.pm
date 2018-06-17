@@ -1,3 +1,6 @@
+
+package LedgerSMB::DBH;
+
 =head1 NAME
 
 LedgerSMB::DBH - Database Connection Routines for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::DBH - Database Connection Routines for LedgerSMB
 
 =cut
 
-package LedgerSMB::DBH;
 use strict;
 use warnings;
 

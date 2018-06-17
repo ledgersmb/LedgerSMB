@@ -1,10 +1,12 @@
+
+package LedgerSMB::Budget;
+
 =head1 NAME
 
 LedgerSMB::Budget - Managing budgets stored in the database
 
 =cut
 
-package LedgerSMB::Budget;
 use LedgerSMB::PGDate;
 use strict;
 use warnings;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::PNL::Product;
+
 =head1 NAME
 
 LedgerSMB::Report::PNL::Product - Profit/Loss reports on Products
@@ -19,7 +22,6 @@ real way to track revenue vs loss, for example with the case of resold services.
 
 =cut
 
-package LedgerSMB::Report::PNL::Product;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';

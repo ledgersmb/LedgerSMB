@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Language;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Language - List languages for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::Language - List languages for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Language;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

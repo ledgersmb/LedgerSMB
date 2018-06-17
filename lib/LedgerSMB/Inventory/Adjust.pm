@@ -1,3 +1,6 @@
+
+package LedgerSMB::Inventory::Adjust;
+
 =head1 NAME
 
 LedgerSMB::Inventory::Adjust - Inventory Adjustments for LedgerSMB
@@ -11,7 +14,6 @@ LedgerSMB::Inventory::Adjust - Inventory Adjustments for LedgerSMB
 
 =cut
 
-package LedgerSMB::Inventory::Adjust;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

@@ -1,4 +1,6 @@
 
+package LedgerSMB::Locale;
+
 =head1 NAME
 
 LedgerSMB::Locale - Locale handling class for LedgerSMB
@@ -87,8 +89,6 @@ $myconfig->{dateformat}.
  #
  #====================================================================
 =cut
-
-package LedgerSMB::Locale;
 
 use strict;
 use warnings;

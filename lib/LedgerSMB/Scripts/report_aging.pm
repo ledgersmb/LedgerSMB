@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::report_aging;
+
 =head1 NAME
 
 LedgerSMB::Scripts::report_aging - Aging Reports and Statements for LedgerSMB
@@ -9,8 +12,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::report_aging;
 
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Balance_Sheet;
+
 =head1 NAME
 
 LedgerSMB::Report::Balance_Sheet - The LedgerSMB Balance Sheet Report
@@ -15,7 +18,6 @@ translates data structures for the report.
 
 =cut
 
-package LedgerSMB::Report::Balance_Sheet;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report::Hierarchical';

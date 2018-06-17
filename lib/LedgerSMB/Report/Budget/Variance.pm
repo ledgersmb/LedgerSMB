@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Budget::Variance;
+
 =head1 NAME
 
 LedgerSMB::Report::Budget::Variance - Variance Report per Budget
@@ -17,7 +20,6 @@ against what was budgetted.
 
 =cut
 
-package LedgerSMB::Report::Budget::Variance;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

@@ -1,10 +1,12 @@
+
+package LedgerSMB::Template::DB;
+
 =head1 NAME
 
 LedgerSMB::Template::DB - Template administration functions for LedgerSMB
 
 =cut
 
-package LedgerSMB::Template::DB;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';

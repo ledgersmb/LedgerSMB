@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Payroll::Deduction;
+
 =head1 NAME
 
 LedgerSMB::Entity::Payroll::Deduction - Payroll Deduction handling for
@@ -23,7 +26,6 @@ To save a new deduction:
 
 =cut
 
-package LedgerSMB::Entity::Payroll::Deduction;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

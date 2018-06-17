@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::reports - Common Report workflows
@@ -9,8 +12,6 @@ This module holds common workflow routines for reports.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::reports;
 
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;

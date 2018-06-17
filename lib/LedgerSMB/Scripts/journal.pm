@@ -1,4 +1,6 @@
 
+package LedgerSMB::Scripts::journal;
+
 =head1 NAME
 
 LedgerSMB::Scripts::journal - LedgerSMB slim ajax script for journal's
@@ -12,8 +14,6 @@ list of matching accounts in a ul/li pair
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::journal;
 
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;

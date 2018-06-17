@@ -1,3 +1,6 @@
+
+package LedgerSMB::X12::EDI894;
+
 =head1 NAME
 
 LedgerSMB::X12::EDI894 - X12 894 support for LedgerSMB
@@ -8,8 +11,6 @@ LedgerSMB::X12::EDI894 - X12 894 support for LedgerSMB
  my $form = $edi->order;
 
 =cut
-
-package LedgerSMB::X12::EDI894;
 
 use strict;
 use warnings;

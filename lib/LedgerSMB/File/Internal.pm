@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::File::Internal;
 
 =head1 NAME
 
@@ -33,7 +34,6 @@ methods only.
 
 =cut
 
-package LedgerSMB::File::Internal;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';

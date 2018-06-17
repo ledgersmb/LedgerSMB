@@ -1,10 +1,11 @@
+
+package LedgerSMB::Scripts::template;
+
 =head1 NAME
 
 LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 
 =cut
-
-package LedgerSMB::Scripts::template;
 
 use strict;
 use warnings;

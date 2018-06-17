@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::drafts;
 
 =head1 NAME
 
@@ -16,9 +17,6 @@ which have not been approved yet.
 =over
 
 =cut
-
-
-package LedgerSMB::Scripts::drafts;
 
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::Template;

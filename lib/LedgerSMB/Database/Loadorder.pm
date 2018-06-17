@@ -1,10 +1,11 @@
+
+package LedgerSMB::Database::Loadorder;
+
 =head1 NAME
 
 LedgerSMB::Database::Loadorder - LOADORDER parsing
 
 =cut
-
-package LedgerSMB::Database::Loadorder;
 
 use strict;
 use warnings;

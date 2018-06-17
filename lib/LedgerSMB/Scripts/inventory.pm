@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::inventory;
 
 =head1 NAME
 
@@ -15,7 +16,6 @@ Save customer will update or create as needed.
 =head1 METHODS
 
 =cut
-package LedgerSMB::Scripts::inventory;
 
 use strict;
 use warnings;

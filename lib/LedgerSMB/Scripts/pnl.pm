@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::pnl;
+
 =head1 NAME
 
 LedgerSMB::Scripts::pnl - PNL report workflows for LedgerSMB
@@ -22,8 +25,6 @@ profit and loss.
 Generates an income statement.
 
 =cut
-
-package LedgerSMB::Scripts::pnl;
 
 use LedgerSMB::Report::PNL::Income_Statement;
 use LedgerSMB::Report::PNL::Product;

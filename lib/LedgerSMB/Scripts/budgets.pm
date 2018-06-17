@@ -1,10 +1,11 @@
+
+package LedgerSMB::Scripts::budgets;
+
 =head1 NAME
 
 LedgerSMB::Scripts::budgets - web entry points for administration of budgets
 
 =cut
-
-package LedgerSMB::Scripts::budgets;
 
 use strict;
 use warnings;

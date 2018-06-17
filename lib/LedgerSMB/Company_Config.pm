@@ -1,3 +1,6 @@
+
+package LedgerSMB::Company_Config;
+
 =head1 NAME
 
 LedgerSMB::Company_Config - Company-specific Configuration for LedgerSMB.
@@ -27,7 +30,6 @@ namespace (scope of which is 'my') and setting keys as expected.
 
 =cut
 
-package LedgerSMB::Company_Config;
 use strict;
 use warnings;
 use base qw(LedgerSMB);

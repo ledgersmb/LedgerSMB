@@ -1,3 +1,6 @@
+
+package LedgerSMB::Upgrade_Tests;
+
 =head1 NAME
 
 LedgerSMB::Upgrade_Tests - Upgrade tests for LedgerSMB
@@ -12,7 +15,6 @@ This module has a single function that returns upgrade tests.
 
 =cut
 
-package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;

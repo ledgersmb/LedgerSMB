@@ -1,3 +1,6 @@
+
+package LedgerSMB::X12;
+
 =head1 NAME
 
 LedgerSMB::X12 - Base Class for LedgerSMB X12 handling
@@ -27,7 +30,6 @@ supported by X12::Parser.
 
 =cut
 
-package LedgerSMB::X12;
 use Moose;
 use namespace::autoclean;
 use X12::Parser;

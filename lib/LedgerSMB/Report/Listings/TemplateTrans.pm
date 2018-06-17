@@ -1,10 +1,12 @@
+
+package LedgerSMB::Report::Listings::TemplateTrans;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 
 =cut
 
-package LedgerSMB::Report::Listings::TemplateTrans;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::Magic qw( JRNL_GJ JRNL_AR JRNL_AP );

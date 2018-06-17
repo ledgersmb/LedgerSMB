@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::lreports_co;
+
 =head1 NAME
 
 LedgerSMB::Scripts::lreports_co - Colombian local reports
@@ -9,8 +12,6 @@ This module holds Colombia-specific reports.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::lreports_co;
 
 use LedgerSMB::Template;
 use LedgerSMB::Report::co::Caja_Diaria;

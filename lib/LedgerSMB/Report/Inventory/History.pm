@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::History;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::History - Sales/Purchase History for Goods
@@ -8,7 +11,6 @@ LedgerSMB::Report::Inventory::History - Sales/Purchase History for Goods
 
 =cut
 
-package LedgerSMB::Report::Inventory::History;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

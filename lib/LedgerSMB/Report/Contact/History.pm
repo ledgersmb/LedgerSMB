@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Contact::History;
+
 =head1 NAME
 
 LedgerSMB::Report::Contact::History - Purchase history reports
@@ -24,7 +27,6 @@ both customers and vendors.
 
 =cut
 
-package LedgerSMB::Report::Contact::History;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

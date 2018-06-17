@@ -1,3 +1,6 @@
+
+package LedgerSMB::Setting::Sequence;
+
 =head1 NAME
 
 LedgerSMB::Setting::Sequence - Sequence per Setting Handling for LedgerSMB
@@ -19,7 +22,6 @@ To save a sequence:
 
 =cut
 
-package LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting qw( increment_process );
 use Carp;
 use Moose;

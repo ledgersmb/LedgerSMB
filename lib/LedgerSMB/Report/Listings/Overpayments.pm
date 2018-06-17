@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Overpayments;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Overpayments - Overpayments Search Results for
@@ -9,7 +12,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Overpayments;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

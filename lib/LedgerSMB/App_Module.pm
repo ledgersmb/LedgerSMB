@@ -1,3 +1,6 @@
+
+package LedgerSMB::App_Module;
+
 =head1 NAME
 
 LedgerSMB::App_Module -- Application Module Lists for LedgerSMB
@@ -17,7 +20,6 @@ A default module (id 0, label '') is available for doing lookups.
 
 =cut
 
-package LedgerSMB::App_Module;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

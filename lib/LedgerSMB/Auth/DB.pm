@@ -1,5 +1,5 @@
 
-=pod
+package LedgerSMB::Auth::DB;
 
 =head1 NAME
 
@@ -15,8 +15,6 @@ authentication.
 =over
 
 =cut
-
-package LedgerSMB::Auth::DB;
 
 use strict;
 use warnings;

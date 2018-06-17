@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Adj_Details;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Adj_Details - Inventory Adjustment
@@ -10,8 +13,6 @@ Details report for LedgerSMB
  $rpt->render($request);
 
 =cut
-
-package LedgerSMB::Report::Inventory::Adj_Details;
 
 use Moose;
 use namespace::autoclean;

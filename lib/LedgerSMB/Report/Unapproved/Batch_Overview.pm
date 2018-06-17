@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Unapproved::Batch_Overview;
+
 =head1 NAME
 
 LedgerSMB::Report::Unapproved::Batch_Overview - Search Batches in
@@ -26,7 +29,6 @@ use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 =cut
 
-package LedgerSMB::Report::Unapproved::Batch_Overview;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

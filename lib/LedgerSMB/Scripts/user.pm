@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::user;
 
 =head1 NAME
 
@@ -22,7 +23,7 @@ and defaults to indefinite validity.
 =over
 
 =cut
-package LedgerSMB::Scripts::user;
+
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;

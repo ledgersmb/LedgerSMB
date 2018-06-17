@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::payroll;
+
 =head1 NAME
 
 LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
@@ -7,8 +10,6 @@ LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
  LedgerSMB::Scripts::payroll::new_income_type($request);
 
 =cut
-
-package LedgerSMB::Scripts::payroll;
 
 use strict;
 use warnings;

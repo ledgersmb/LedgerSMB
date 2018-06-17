@@ -1,10 +1,11 @@
+
+package LedgerSMB::MooseTypes;
+
 =head1 NAME
 
 LedgerSMB::MooseTypes - Moose subtypes and coercions for LedgerSMB
 
 =cut
-
-package LedgerSMB::MooseTypes;
 
 use strict;
 use warnings;

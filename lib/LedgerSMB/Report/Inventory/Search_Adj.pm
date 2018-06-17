@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Search_Adj;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Search_Adj - LedgerSMB report of
@@ -11,7 +14,6 @@ inventory adjustments
 
 =cut
 
-package LedgerSMB::Report::Inventory::Search_Adj;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Unapproved::Drafts;
+
 =head1 NAME
 
 LedgerSMB::Report::Unapproved::Drafts - Unapproved Drafts (single
@@ -24,7 +27,6 @@ transactions.
 
 =cut
 
-package LedgerSMB::Report::Unapproved::Drafts;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

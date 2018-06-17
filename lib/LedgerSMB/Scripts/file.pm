@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::file;
 
 =head1 NAME
 
@@ -19,8 +20,6 @@ Retrieves a file and sends it to the web browser.
 Requires that id and file_class be set.
 
 =cut
-
-package LedgerSMB::Scripts::file;
 
 use strict;
 use warnings;

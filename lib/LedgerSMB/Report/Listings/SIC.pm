@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::SIC;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::SIC - List SIC codes in LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::SIC - List SIC codes in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::SIC;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

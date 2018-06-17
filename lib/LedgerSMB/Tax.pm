@@ -1,3 +1,6 @@
+
+package Tax;
+
 =head1 NAME
 LedgerSMB::Tax - Basic tax infrastructure for LedgerSMB
 #
@@ -15,8 +18,6 @@ LedgerSMB::Tax - Basic tax infrastructure for LedgerSMB
   @taxes = LedgerSMB::Tax->init_taxes($request, $taxlist1, $taxlist2)
 
 =cut
-
-package Tax;
 
 use LedgerSMB::PGNumber;
 use Log::Log4perl;

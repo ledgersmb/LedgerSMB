@@ -1,4 +1,6 @@
 
+package LedgerSMB::Template::LaTeX;
+
 =head1 NAME
 
 LedgerSMB::Template::LaTeX - Template support module for LedgerSMB
@@ -17,8 +19,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 =over
 
 =cut
-
-package LedgerSMB::Template::LaTeX;
 
 use warnings;
 use strict;

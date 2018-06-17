@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::File::ECA;
 
 =head1 NAME
 
@@ -21,7 +22,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::ECA;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';

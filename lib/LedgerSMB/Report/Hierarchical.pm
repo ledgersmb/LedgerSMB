@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Hierarchical;
+
 =head1 NAME
 
 LedgerSMB::Report::Hierarchical - Table reports with hierarchical axes
@@ -12,7 +15,6 @@ This report class is an abstract class.
 
 =cut
 
-package LedgerSMB::Report::Hierarchical;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

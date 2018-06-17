@@ -1,4 +1,6 @@
 
+package LedgerSMB;
+
 =head1 NAME
 
 LedgerSMB - The Base class for many LedgerSMB objects, including DBObject.
@@ -127,8 +129,6 @@ each being a hashref detailing configuration items with their values.
  #               Jim Rawlings <jim@your-dba.com> (DB2)
  #====================================================================
 =cut
-
-package LedgerSMB;
 
 use strict;
 use warnings;

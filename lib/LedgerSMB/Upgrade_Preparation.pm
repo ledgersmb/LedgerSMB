@@ -1,3 +1,6 @@
+
+package LedgerSMB::Upgrade_Preparation;
+
 =head1 NAME
 
 LedgerSMB::Upgrade_Preparation - Upgrade preparations for LedgerSMB
@@ -12,7 +15,6 @@ This module has a single function that returns upgrade preparations.
 
 =cut
 
-package LedgerSMB::Upgrade_Preparation;
 use strict;
 use warnings;
 use Moose;

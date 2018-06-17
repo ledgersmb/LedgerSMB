@@ -1,5 +1,5 @@
 
-=pod
+package LedgerSMB::Scripts::contact;
 
 =head1 NAME
 
@@ -13,8 +13,6 @@ This module is the UI controller for the customer, vendor, etc functions; it
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::contact;
 
 use strict;
 use warnings;

@@ -1,4 +1,6 @@
 
+package LedgerSMB::Template::XLSX;
+
 =head1 NAME
 
 LedgerSMB::Template::XLSX - Template support module for LedgerSMB
@@ -12,8 +14,6 @@ Microsoft Spreadsheet XLSX output.
 =over
 
 =cut
-
-package LedgerSMB::Template::XLSX;
 
 use strict;
 use warnings;

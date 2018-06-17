@@ -1,9 +1,12 @@
+
+package LedgerSMB::App_State;
+
 =head1 NAME
 
 LedgerSMB::App_State - Non-web application global state
 
 =cut
-package LedgerSMB::App_State;
+
 use strict;
 use warnings;
 use LedgerSMB::Sysconfig;

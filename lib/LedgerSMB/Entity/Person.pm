@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Person;
+
 =head1 NAME
 
 LedgerSMB::Entity::Person -- Natural Person handling for LedgerSMB
@@ -27,7 +30,6 @@ To get by control code:
 
 =cut
 
-package LedgerSMB::Entity::Person;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Entity';

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Inventory::Adjust_Line;
+
 =head1 NAME
 
 LedgerSMB::Inventory::Adjust_Line - Inventory Adjustemnt Lines for LedgerSMB
@@ -10,7 +13,6 @@ LedgerSMB::Inventory::Adjust_Line - Inventory Adjustemnt Lines for LedgerSMB
 
 =cut
 
-package LedgerSMB::Inventory::Adjust_Line;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Budget::Search;
+
 =head1 NAME
 
 LedgerSMB::Reports::Budget::Search - Search for Budgets
@@ -14,7 +17,6 @@ This is a basic search report for budgets.
 
 =cut
 
-package LedgerSMB::Report::Budget::Search;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

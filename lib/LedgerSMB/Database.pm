@@ -1,4 +1,6 @@
 
+package LedgerSMB::Database;
+
 =head1 NAME
 
 LedgerSMB::Database - APIs for database creation and management.
@@ -25,8 +27,6 @@ C<PGObject::Util::DBAdmin>.
 
 =cut
 
-
-package LedgerSMB::Database;
 
 use strict;
 use warnings;

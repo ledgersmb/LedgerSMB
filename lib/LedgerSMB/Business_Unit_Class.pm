@@ -1,3 +1,6 @@
+
+package LedgerSMB::Business_Unit_Class;
+
 =head1 NAME
 
 LedgerSMB::Business_Unit_Class - Classes for additional accounting dimensions
@@ -11,7 +14,6 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::Business_Unit_Class;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_Module;

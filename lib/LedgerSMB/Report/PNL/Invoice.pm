@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::PNL::Invoice;
+
 =head1 NAME
 
 LedgerSMB::Report::PNL::Invoice - Provides an Income Statement-like report on
@@ -16,7 +19,6 @@ profit margins of specific invoices.
 
 =cut
 
-package LedgerSMB::Report::PNL::Invoice;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';

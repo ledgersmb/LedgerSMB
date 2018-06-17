@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Taxform::Details;
+
 =head1 NAME
 
 LedgerSMB::Report::Taxform::Details - 1099 and similar details forms for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Taxform::Details;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

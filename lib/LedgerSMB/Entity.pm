@@ -1,10 +1,12 @@
+
+package LedgerSMB::Entity;
+
 =head1 NAME
 
 LedgerSMB::Entity -- Entity Management base classes for LedgerSMB
 
 =cut
 
-package LedgerSMB::Entity;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

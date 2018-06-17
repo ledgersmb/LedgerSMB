@@ -1,10 +1,12 @@
+
+package LedgerSMB::PGNumber;
+
 =head1 NAME
 
 LedgerSMB::PGNumber - Number handling and serialization to database
 
 =cut
 
-package LedgerSMB::PGNumber;
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
 use base qw(PGObject::Type::BigFloat);

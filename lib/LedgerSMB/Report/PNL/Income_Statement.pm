@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::PNL::Income_Statement;
+
 =head1 NAME
 
 LedgerSMB::Report::PNL::Income_Statement - Basic Income Statement for LedgerSMB
@@ -13,7 +16,6 @@ This provides the income statement report for LedgerSMB on 1.4 and later.
 
 =cut
 
-package LedgerSMB::Report::PNL::Income_Statement;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';

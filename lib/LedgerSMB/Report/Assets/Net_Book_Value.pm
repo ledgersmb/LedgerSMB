@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Assets::Net_Book_Value;
+
 =head1 NAME
 
 LedgerSMB::Report::Assets::Net_Book_Value - Fixed Asset Current Book Value
@@ -18,7 +21,6 @@ asset accounts.
 
 =cut
 
-package LedgerSMB::Report::Assets::Net_Book_Value;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Payroll::Income_Types;
+
 =head1 NAME
 
 LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Payroll::Income_Types;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

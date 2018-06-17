@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::transtemplate;
+
 =head1 NAME
 
 LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
@@ -7,8 +10,6 @@ LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
  LedgerSMB::Scripts::transtemplate::view($request);
 
 =cut
-
-package LedgerSMB::Scripts::transtemplate;
 
 use strict;
 use warnings;

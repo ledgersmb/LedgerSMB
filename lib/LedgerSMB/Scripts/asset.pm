@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::asset;
 
 =head1 NAME
 
@@ -14,7 +15,6 @@ Asset Management workflow script
 
 =cut
 
-package LedgerSMB::Scripts::asset;
 use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Asset_Class;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Part;
+
 =head1 NAME
 
 LedgerSMB::Part - Good/Service class for LedgerSMB
@@ -8,7 +11,6 @@ This is currently a shell class pending rewrite of old code.
 
 =cut
 
-package LedgerSMB::Part;
 use strict;
 use warnings;
 

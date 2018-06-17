@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Credit_Account;
+
 =head1 NAME
 
 LedgerSMB::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
@@ -27,7 +30,6 @@ and the like.
 
 =cut
 
-package LedgerSMB::Entity::Credit_Account;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

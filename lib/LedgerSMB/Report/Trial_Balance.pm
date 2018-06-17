@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Trial_Balance;
+
 =head1 NAME
 
 LedgerSMB::Report::Trial_Balance - Trial Balance report for LedgerSMB
@@ -22,7 +25,6 @@ We can also retrieve a previous report from the database and run it:
 
 =cut
 
-package LedgerSMB::Report::Trial_Balance;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_State;

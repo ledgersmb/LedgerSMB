@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Bank;
+
 =head1 NAME
 
 LedgerSMB::Entity::Bank - Bank account info for customers, vendors,
@@ -16,7 +19,6 @@ credit account being able to attach itself to a single bank account.
 
 =cut
 
-package LedgerSMB::Entity::Bank;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

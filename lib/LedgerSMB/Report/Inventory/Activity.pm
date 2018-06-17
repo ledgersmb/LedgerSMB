@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Activity;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Activity - Inventory Activity reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Activity;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

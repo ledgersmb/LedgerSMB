@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Company;
+
 =head1 NAME
 
 LedgerSMB::Entity::Company -- Company (business) handling for LedgerSMB
@@ -17,7 +20,6 @@ leads etc.
 
 =cut
 
-package LedgerSMB::Entity::Company;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Entity';

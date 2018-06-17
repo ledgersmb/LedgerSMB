@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::PNL::ECA;
+
 =head1 NAME
 
 LedgerSMB::Report::PNL::ECA - Income Statement-like Reports for Customers
@@ -19,7 +22,6 @@ up since they are treated as an expense only on sale.
 
 =cut
 
-package LedgerSMB::Report::PNL::ECA;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';

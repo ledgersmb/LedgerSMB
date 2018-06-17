@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Asset;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Asset;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

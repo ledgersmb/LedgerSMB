@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::vouchers;
+
 =head1 NAME
 
 LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
@@ -11,8 +14,6 @@ LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 =over
 
 =cut
-
-package LedgerSMB::Scripts::vouchers;
 
 use strict;
 use warnings;

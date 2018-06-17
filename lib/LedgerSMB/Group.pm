@@ -1,3 +1,6 @@
+
+package LedgerSMB::Group;
+
 =head1 NAME
 
 LedgerSMB::Group - Group Management for LedgerSMB
@@ -16,7 +19,6 @@ To retrieve a role from the db:
 
 =cut
 
-package LedgerSMB::Group;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Taxes::Simple;
+
 #=====================================================================
 #
 # Simple Tax support module for LedgerSMB
@@ -24,7 +27,6 @@
 # extract_tax - sets $value to the tax value on a tax-included subtotal
 #
 #====================================================================
-package LedgerSMB::Taxes::Simple;
 
 =head1 NAME
 

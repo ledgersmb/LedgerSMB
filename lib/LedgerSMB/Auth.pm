@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Auth;
 
 =head1 NAME
 
@@ -47,8 +48,6 @@ login data is available.
 =back
 
 =cut
-
-package LedgerSMB::Auth;
 
 use strict;
 use warnings;

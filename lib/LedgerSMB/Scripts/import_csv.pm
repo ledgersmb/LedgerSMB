@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::import_csv;
 
 =head1 NAME
 
@@ -11,7 +12,6 @@ data.
 
 =cut
 
-package LedgerSMB::Scripts::import_csv;
 use strict;
 use warnings;
 

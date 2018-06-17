@@ -1,10 +1,12 @@
+
+package LedgerSMB::Scripts::parts;
+
 =head1 NAME
 
 LedgerSMB::Scripts::parts
 
 =cut
 
-package LedgerSMB::Scripts::parts;
 use strict;
 use warnings;
 

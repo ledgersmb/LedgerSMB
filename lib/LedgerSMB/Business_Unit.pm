@@ -1,3 +1,6 @@
+
+package LedgerSMB::Business_Unit;
+
 =head1 NAME
 
 LedgerSMB::Business_Unit - Accounting Reporting Dimensions for LedgerSMB
@@ -11,7 +14,6 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::Business_Unit;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

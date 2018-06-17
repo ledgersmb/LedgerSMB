@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Reconciliation::Summary;
+
 =head1 NAME
 
 LedgerSMB::Report::Reconciliation::Summary - List of Reconciliation Reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Reconciliation::Summary;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

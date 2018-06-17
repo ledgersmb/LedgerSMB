@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::timecard;
+
 =head1 NAME
 
 LedgerSMB::Scripts::timecard - LedgerSMB workflow routines for timecards.
@@ -14,7 +17,6 @@ process of work, from professional services to payroll and manufacturing.
 
 =cut
 
-package LedgerSMB::Scripts::timecard;
 use LedgerSMB::Template;
 use LedgerSMB::Timecard;
 use LedgerSMB::Timecard::Type;

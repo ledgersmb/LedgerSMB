@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Contact::Purchase;
+
 =head1 NAME
 
 LedgerSMB::Report::Contact::Purchase - Search AR/AP Transactions and
@@ -26,7 +29,6 @@ certain point, and locating specific transactions.
 
 =cut
 
-package LedgerSMB::Report::Contact::Purchase;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

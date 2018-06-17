@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Contact::Search;
+
 =head1 NAME
 
 LedgerSMB::Report::Contact::Search - Search for Customers, Vendors,
@@ -25,7 +28,6 @@ referral.
 
 =cut
 
-package LedgerSMB::Report::Contact::Search;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;

@@ -1,10 +1,12 @@
+
+package LedgerSMB::Scripts::business_unit;
+
 =head1 NAME
 
 LedgerSMB::Scripts::business_unit - web entry points for reporting class admin
 
 =cut
 
-package LedgerSMB::Scripts::business_unit;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::App_Module;
 use LedgerSMB::Business_Unit;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::X12::EDI850;
+
 =head1 NAME
 
 LedgerSMB::X12::EDI850 - Conversion class for X12 850 files to LedgerSMB
@@ -9,8 +12,6 @@ structures
  my $form = $edi->order;
 
 =cut
-
-package LedgerSMB::X12::EDI850;
 
 use strict;
 use warnings;

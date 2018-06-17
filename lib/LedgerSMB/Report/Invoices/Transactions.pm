@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::Transactions;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::Transactions - AR/AP Transactions Reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::Transactions;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

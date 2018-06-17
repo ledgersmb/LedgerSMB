@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report;
+
 =head1 NAME
 
 LedgerSMB::Report - Base Reporting Functionality for LedgerSMB
@@ -37,7 +40,6 @@ UI/reports/display_report template will be used.
 
 =cut
 
-package LedgerSMB::Report;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';

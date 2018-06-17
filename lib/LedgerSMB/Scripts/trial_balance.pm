@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::trial_balance;
+
 =head1 NAME
 
 LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
@@ -7,8 +10,6 @@ LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
   LedgerSMB::Scripts::trial_balance::run($request);
 
 =cut
-
-package LedgerSMB::Scripts::trial_balance;
 
 use strict;
 use warnings;

@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::File;
 
 =head1 NAME
 
@@ -15,8 +16,6 @@ to provide functionality for specific types of file attachments.
 
 =cut
 
-
-package LedgerSMB::File;
 
 use strict;
 use warnings;

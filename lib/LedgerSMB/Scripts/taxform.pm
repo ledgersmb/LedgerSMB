@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::taxform;
+
 =head1 NAME
 
 LedgerSMB::Scripts::taxform - LedgerSMB handler for reports on tax forms.
@@ -15,8 +18,6 @@ information depending on what one clicks.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::taxform;
 
 use strict;
 use warnings;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Asset_Class;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Asset_Class;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

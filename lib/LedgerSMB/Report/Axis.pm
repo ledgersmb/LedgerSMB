@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Axis;
+
 =head1 NAME
 
 LedgerSMB::Report::Axis - Models axes of financial reports
@@ -16,7 +19,6 @@ final report.
 
 =cut
 
-package LedgerSMB::Report::Axis;
 use Moose;
 use namespace::autoclean;
 

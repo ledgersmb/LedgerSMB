@@ -1,10 +1,11 @@
+
+package LedgerSMB::Database::Change;
+
 =head1 NAME
 
 LedgerSMB::Database::Change - Database change scripts for LedgerSMB
 
 =cut
-
-package LedgerSMB::Database::Change;
 
 use strict;
 use warnings;

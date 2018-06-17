@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Note;
+
 =head1 NAME
 
 LedgerSMB::Entity::Note - Notes handling for customers, vendors,
@@ -19,7 +22,6 @@ level.
 
 =cut
 
-package LedgerSMB::Entity::Note;
 use LedgerSMB::Magic qw( NC_ENTITY_CREDIT_ACCOUNT);
 use Moose;
 use namespace::autoclean;

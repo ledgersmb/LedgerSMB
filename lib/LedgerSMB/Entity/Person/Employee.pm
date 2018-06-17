@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Person::Employee;
+
 =head1 NAME
 
 LedgerSMB::Entity::Person::Employee -- Employee handling for LedgerSMB
@@ -28,7 +31,6 @@ To get by control code:
 
 =cut
 
-package LedgerSMB::Entity::Person::Employee;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::Entity::Person;

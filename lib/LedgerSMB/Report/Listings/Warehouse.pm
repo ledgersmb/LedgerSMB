@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Warehouse;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Warehouse - List warehouses in LedgerSMB
@@ -10,7 +13,6 @@ Since no parameters are required:
 
 =cut
 
-package LedgerSMB::Report::Listings::Warehouse;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

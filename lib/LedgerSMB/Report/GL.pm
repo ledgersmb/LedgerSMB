@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::GL;
+
 =head1 NAME
 
 LedgerSMB::Report::GL - GL Reports for LedgerSMB
@@ -23,7 +26,6 @@ searching for and reporting financial transactions.
 
 =cut
 
-package LedgerSMB::Report::GL;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

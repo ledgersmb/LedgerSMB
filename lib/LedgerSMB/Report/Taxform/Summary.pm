@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Taxform::Summary;
+
 =head1 NAME
 
 LedgerSMB::Report::Taxform::Summary - Summary reports for 1099 and similar
@@ -10,7 +13,6 @@ forms for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::DBObject::TaxForm;
 use Moose;
 use namespace::autoclean;

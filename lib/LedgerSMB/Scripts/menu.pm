@@ -1,4 +1,6 @@
 
+package LedgerSMB::Scripts::menu;
+
 =head1 NAME
 
 LedgerSMB::Scripts::menu - LedgerSMB controller script for menus
@@ -13,8 +15,6 @@ devices.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::menu;
 
 use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Template;

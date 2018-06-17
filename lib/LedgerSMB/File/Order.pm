@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::File::Order;
 
 =head1 NAME
 
@@ -22,7 +23,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Order;
 use strict;
 use Moose;
 use namespace::autoclean;

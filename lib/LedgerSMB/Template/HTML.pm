@@ -1,4 +1,6 @@
 
+package LedgerSMB::Template::HTML;
+
 =head1 NAME
 
 LedgerSMB::Template::HTML - Template support module for LedgerSMB
@@ -8,8 +10,6 @@ LedgerSMB::Template::HTML - Template support module for LedgerSMB
 =over
 
 =cut
-
-package LedgerSMB::Template::HTML;
 
 use strict;
 use warnings;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Search;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Search - Search for Goods and Services in
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Search;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';

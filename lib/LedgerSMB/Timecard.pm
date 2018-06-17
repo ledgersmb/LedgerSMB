@@ -1,3 +1,6 @@
+
+package LedgerSMB::Timecard;
+
 =head1 NAME
 
 LedgerSMB::Timecard - Time and Materials Cards for LedgerSMB
@@ -28,7 +31,6 @@ like.
 
 =cut
 
-package LedgerSMB::Timecard;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';

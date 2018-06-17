@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::budget_reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
@@ -5,8 +8,6 @@ LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::budget_reports;
 
 use LedgerSMB::Template;
 use LedgerSMB::Report::Budget::Search;
