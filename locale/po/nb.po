@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.1-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-06-10 08:43+0000\n"
+"POT-Creation-Date: 2018-06-17 10:32+0000\n"
 "Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2018\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -4135,7 +4135,7 @@ msgstr "Ugyldig eller mistanke om rydda forsinkelser"
 msgid "Invalid redirect"
 msgstr "Invalid videresending"
 
-#: lib/LedgerSMB/Scripts/recon.pm:348
+#: lib/LedgerSMB/Scripts/recon.pm:351
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr "Invalid Rapport Saldo. Hint: Prøv å legge inn et nummer"
 
@@ -7061,7 +7061,7 @@ msgstr "Lagre Kontakt"
 msgid "Save Draft"
 msgstr "Lagre Kladd"
 
-#: UI/Contact/divs/user.html:188 UI/setup/edit_user.html:146
+#: UI/Contact/divs/user.html:187 UI/setup/edit_user.html:146
 msgid "Save Groups"
 msgstr "Lagre Grupper"
 
@@ -9507,11 +9507,3 @@ msgstr "uventet feil!"
 #: lib/LedgerSMB/Scripts/payment.pm:1927 lib/LedgerSMB/Scripts/payment.pm:1946
 msgid "use of an overpayment"
 msgstr "bruk en overbetaling"
-
-#~ msgid ""
-#~ "Database is not the expected version.  Was [_1], expected [_2].  Please re-"
-#~ "run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</"
-#~ "a>"
-#~ msgstr ""
-#~ "Databasen er ikke forventet versjon. Var [_1], forventet [_2]. Kjør setup."
-#~ "pl mot denne databasen for å rette opp. <a href='setup.pl'>setup.pl</a>"

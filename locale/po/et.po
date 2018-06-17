@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.1-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-06-10 08:43+0000\n"
+"POT-Creation-Date: 2018-06-17 10:32+0000\n"
 "Last-Translator: Margus Lepmets <margus.lepmets@gmail.com>, 2018\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -4119,7 +4119,7 @@ msgstr ""
 msgid "Invalid redirect"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:348
+#: lib/LedgerSMB/Scripts/recon.pm:351
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
@@ -7019,7 +7019,7 @@ msgstr "Salvesta kontakt"
 msgid "Save Draft"
 msgstr "Salvesta mustand"
 
-#: UI/Contact/divs/user.html:188 UI/setup/edit_user.html:146
+#: UI/Contact/divs/user.html:187 UI/setup/edit_user.html:146
 msgid "Save Groups"
 msgstr "Salvesta grupid"
 

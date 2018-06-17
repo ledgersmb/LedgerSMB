@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-06-10 08:43+0000\n"
+"POT-Creation-Date: 2018-06-17 10:32+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4108,7 +4108,7 @@ msgstr ""
 msgid "Invalid redirect"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:348
+#: lib/LedgerSMB/Scripts/recon.pm:351
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
@@ -7008,7 +7008,7 @@ msgstr ""
 msgid "Save Draft"
 msgstr ""
 
-#: UI/Contact/divs/user.html:188 UI/setup/edit_user.html:146
+#: UI/Contact/divs/user.html:187 UI/setup/edit_user.html:146
 msgid "Save Groups"
 msgstr ""
 
