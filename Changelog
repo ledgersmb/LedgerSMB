@@ -7,6 +7,17 @@ Forthcoming
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.1
+* Menu fails to show sometimes (Erik H, #3684)
+* Error when managing user permissions through HR screen (Erik H, #3686)
+* Reconciliation reports sometimes can't be submitted (Nick P)
+
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+
+
+Changelog for 1.6.0
+
 User Interface
 * Reports and search results exportable to XLS(X) (Yves L)
 * Left menu replaced by a (faster) Dojo-based version (Yves L/Erik H)
