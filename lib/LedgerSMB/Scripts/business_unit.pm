@@ -247,7 +247,7 @@ sub save_class {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 LedgerSMB core team.  Redistribution and use of work is
 governed under the GNU General Public License, version 2 or at your option any

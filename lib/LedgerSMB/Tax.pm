@@ -157,7 +157,7 @@ sub extract_taxes {
 
 1;
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 The original copyright notice follows:
 

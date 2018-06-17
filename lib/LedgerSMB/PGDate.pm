@@ -317,12 +317,17 @@ sub to_sort {
 
 #__PACKAGE__->meta->make_immutable;
 
-1;
-
 =back
 
-=head1 Copyright (C) 2011, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
+
+=cut
+
+
+1;

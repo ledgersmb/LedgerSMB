@@ -61,7 +61,7 @@ has roles => (is => 'rw', isa => 'ArrayRef[Str]', required => 0);
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

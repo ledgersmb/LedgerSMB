@@ -11,7 +11,7 @@ This module provides user support and database management functions.
 
 Deprecated
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
  #====================================================================
  # LedgerSMB

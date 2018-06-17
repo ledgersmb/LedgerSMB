@@ -86,7 +86,7 @@ sub get_credentials {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/

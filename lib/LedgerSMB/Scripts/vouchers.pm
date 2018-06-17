@@ -532,7 +532,7 @@ sub print_batch {
         }
     }
 };
-1;
+
 
 =back
 
@@ -558,10 +558,15 @@ maps to the selection stored proc
       {map_to       => 1,
       select_method => 'custom_sample_ap_select'};
 
-=head1 Copyright (C) 2009, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2009-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

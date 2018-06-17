@@ -174,7 +174,7 @@ sub id_props {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2015 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

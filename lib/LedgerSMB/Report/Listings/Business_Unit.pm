@@ -100,7 +100,7 @@ sub run_report {
     ]);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the GNU General Public License version 2 or at your option any later

@@ -153,7 +153,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used under the
 terms of the GNU General Public License version 2 or at your option any later

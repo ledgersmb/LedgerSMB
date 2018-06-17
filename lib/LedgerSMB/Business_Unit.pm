@@ -188,7 +188,7 @@ Returns tree as a list.
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the
 GNU GPL in accordance with the LICENSE file listed.

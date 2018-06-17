@@ -170,7 +170,7 @@ sub save {
     return $self->call_dbmethod(funcname => 'template__save');
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 

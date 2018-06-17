@@ -1586,7 +1586,7 @@ sub system_info {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 LedgerSMB Core Team.
 This file is licensed under the GNU General Public License version 2,

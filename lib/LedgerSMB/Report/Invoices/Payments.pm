@@ -244,7 +244,7 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

@@ -67,7 +67,7 @@ sub factory {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/

@@ -522,7 +522,7 @@ sub run_import {
     return begin_import($request);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2008-2013 The LedgerSMB Core Team.  This file may be re-used in
 accordance with the GNU General Public License (GNU GPL) v2 or at your option

@@ -15,7 +15,7 @@ sub foo {
 This replaces the older LedgerSMB::DBObject, as it has more features and
 better consistency
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2014 The LedgerSMB Core Team.
 

@@ -219,7 +219,7 @@ sub _needs_init {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2016-2018 The LedgerSMB Core Team
 

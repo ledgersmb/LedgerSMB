@@ -441,7 +441,7 @@ sub save_pricematrix {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team. This file may be reused under the
 terms of the GNU General Public License version 2 or at your option any later

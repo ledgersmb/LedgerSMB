@@ -4,7 +4,7 @@ LedgerSMB::Mailer - Mail output for LedgerSMB
 
 =head1 SYNOPSIS
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
  #====================================================================
  # LedgerSMB

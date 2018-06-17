@@ -136,7 +136,7 @@ sub income_type_results {
 
 =head2 Approval and Check Printing
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

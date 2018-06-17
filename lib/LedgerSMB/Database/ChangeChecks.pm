@@ -816,7 +816,7 @@ Returns the value associated with the selected/pressed/clicked description.
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2018 The LedgerSMB Core Team.
 

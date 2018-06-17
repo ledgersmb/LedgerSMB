@@ -251,7 +251,7 @@ before 'run_report' => sub {
 };
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any
