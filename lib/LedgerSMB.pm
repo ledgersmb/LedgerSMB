@@ -192,15 +192,11 @@ sub new {
 }
 
 sub open_form {
-    my ($self, $args) = @_;
-    my $i = 1;
+    my ($self) = @_;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{_session_id}],
                               continue_on_error => 1
     );
-    if ($args->{commit}){
-       $self->{dbh}->commit;
-    }
     return $self->{form_id} = $vars[0]->{form_open};
 }
 
