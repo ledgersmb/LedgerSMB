@@ -474,6 +474,7 @@ sub pending {
     }
 };
 
+=back
 
 =head1 LICENSE AND COPYRIGHT
 
