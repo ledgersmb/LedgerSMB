@@ -133,6 +133,8 @@ sub call {
         unless $env->{'lsmb.company'};
 
     my $creds = LedgerSMB::Auth::factory($env)->get_credentials;
+    return LedgerSMB::PSGI::Util::unauthorized()
+        unless $creds->{login} && $creds->{password};
     my $dbh = $env->{'lsmb.db'} =
         LedgerSMB::DBH->connect($env->{'lsmb.company'},
                                 $creds->{login},
