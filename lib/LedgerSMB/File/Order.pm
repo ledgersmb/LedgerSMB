@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::File::Order;
 
 =head1 NAME
 
@@ -22,7 +23,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Order;
 use strict;
 use Moose;
 use namespace::autoclean;
@@ -96,7 +96,7 @@ sub attach_all_from_transaction {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 The LedgerSMB Core Team
 

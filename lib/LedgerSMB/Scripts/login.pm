@@ -1,5 +1,5 @@
 
-=pod
+package LedgerSMB::Scripts::login;
 
 =head1 NAME
 
@@ -15,8 +15,6 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 
 =cut
 
-
-package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
 use HTTP::Status qw( HTTP_OK ) ;
@@ -180,7 +178,7 @@ sub logout_js {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2009-2017 LedgerSMB Core Team. This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

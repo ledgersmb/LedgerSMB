@@ -1,10 +1,11 @@
+
+package LedgerSMB::Database::Change;
+
 =head1 NAME
 
 LedgerSMB::Database::Change - Database change scripts for LedgerSMB
 
 =cut
-
-package LedgerSMB::Database::Change;
 
 use strict;
 use warnings;
@@ -376,7 +377,7 @@ Future versions will allow properties to be specified in comment headers in
 the scripts themselves.  This will pose some backwards-compatibility issues and
 therefore will be 2.0 material.
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2016 The LedgerSMB Core Team
 

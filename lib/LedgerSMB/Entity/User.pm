@@ -1,10 +1,12 @@
+
+package LedgerSMB::Entity::User;
+
 =head1 NAME
 
 LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
 =cut
 
-package LedgerSMB::Entity::User;
 use Moose;
 use namespace::autoclean;
 use Try::Tiny;
@@ -179,7 +181,7 @@ sub list_roles {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This file may be reused under the
 conditions of the GNU GPL v2 or at your option any later version.  Please see

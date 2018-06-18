@@ -1,3 +1,6 @@
+
+package LedgerSMB::PGObject;
+
 =head1 NAME
 
 LedgerSMB::PGObject - PGObject::Simple wrapper for LedgerSMB
@@ -15,7 +18,7 @@ sub foo {
 This replaces the older LedgerSMB::DBObject, as it has more features and
 better consistency
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2014 The LedgerSMB Core Team.
 
@@ -25,7 +28,6 @@ LICENSE.TXT for more information.
 
 =cut
 
-package LedgerSMB::PGObject;
 use Moose::Role;
 use namespace::autoclean;
 with 'PGObject::Simple::Role' => { -excludes => [qw(_get_dbh _get_schema _get_prefix)], };

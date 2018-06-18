@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Partsgroups;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
@@ -9,7 +12,6 @@ LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Partsgroups;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -88,7 +90,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

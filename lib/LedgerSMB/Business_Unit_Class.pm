@@ -1,3 +1,6 @@
+
+package LedgerSMB::Business_Unit_Class;
+
 =head1 NAME
 
 LedgerSMB::Business_Unit_Class - Classes for additional accounting dimensions
@@ -11,7 +14,6 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::Business_Unit_Class;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_Module;
@@ -193,7 +195,7 @@ Used in some countries/industries for multi-vendor payments
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the
 GNU GPL in accordance with the LICENSE file listed.

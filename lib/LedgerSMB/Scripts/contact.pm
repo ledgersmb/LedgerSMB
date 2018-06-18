@@ -1,5 +1,5 @@
 
-=pod
+package LedgerSMB::Scripts::contact;
 
 =head1 NAME
 
@@ -13,8 +13,6 @@ This module is the UI controller for the customer, vendor, etc functions; it
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::contact;
 
 use strict;
 use warnings;
@@ -61,7 +59,7 @@ for (@pluginmods){
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
 General Public License, version 2, or at your option any later version.  Please
@@ -985,7 +983,7 @@ sub save_roles {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
 General Public License, version 2, or at your option any later version.  Please

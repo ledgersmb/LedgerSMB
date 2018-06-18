@@ -1,4 +1,6 @@
 
+package LedgerSMB;
+
 =head1 NAME
 
 LedgerSMB - The Base class for many LedgerSMB objects, including DBObject.
@@ -127,8 +129,6 @@ each being a hashref detailing configuration items with their values.
  #               Jim Rawlings <jim@your-dba.com> (DB2)
  #====================================================================
 =cut
-
-package LedgerSMB;
 
 use strict;
 use warnings;
@@ -504,6 +504,18 @@ sub system_info {
         }
     };
 }
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;
 

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Dates;
+
 =head1 NAME
 
 LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Dates;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -251,7 +253,7 @@ before 'run_report' => sub {
 };
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

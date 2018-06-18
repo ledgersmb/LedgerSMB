@@ -1,3 +1,6 @@
+
+package LedgerSMB::Business_Unit;
+
 =head1 NAME
 
 LedgerSMB::Business_Unit - Accounting Reporting Dimensions for LedgerSMB
@@ -11,7 +14,6 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::Business_Unit;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -188,7 +190,7 @@ Returns tree as a list.
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the
 GNU GPL in accordance with the LICENSE file listed.

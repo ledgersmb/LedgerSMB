@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::inv_reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::inv_reports - Inventory Reports in LedgerSMB
@@ -19,8 +22,6 @@ This provides the general inventory reports for LedgerSMB.
 Searches for inventory adjustment reports
 
 =cut
-
-package LedgerSMB::Scripts::inv_reports;
 
 use strict;
 use warnings;
@@ -80,7 +81,7 @@ sub delete {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

@@ -1,10 +1,12 @@
+
+package LedgerSMB::PGNumber;
+
 =head1 NAME
 
 LedgerSMB::PGNumber - Number handling and serialization to database
 
 =cut
 
-package LedgerSMB::PGNumber;
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
 use base qw(PGObject::Type::BigFloat);
@@ -257,13 +259,17 @@ sub to_sort {
     return $_[0]->bstr;
 }
 
-1;
-
 =back
 
-=head1 Copyright (C) 2011, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
+=cut
+
+
+1;

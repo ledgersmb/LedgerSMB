@@ -1,10 +1,11 @@
+
+package LedgerSMB::Database::Loadorder;
+
 =head1 NAME
 
 LedgerSMB::Database::Loadorder - LOADORDER parsing
 
 =cut
-
-package LedgerSMB::Database::Loadorder;
 
 use strict;
 use warnings;
@@ -219,7 +220,7 @@ sub _needs_init {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2016-2018 The LedgerSMB Core Team
 

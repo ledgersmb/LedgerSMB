@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Credit_Account;
+
 =head1 NAME
 
 LedgerSMB::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
@@ -27,7 +30,6 @@ and the like.
 
 =cut
 
-package LedgerSMB::Entity::Credit_Account;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -441,7 +443,7 @@ sub save_pricematrix {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team. This file may be reused under the
 terms of the GNU General Public License version 2 or at your option any later

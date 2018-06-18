@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::order;
+
 =head1 NAME
 
 LedgerSMB::Scripts::order - Order search functions for LedgerSMB
@@ -12,8 +15,6 @@ This module contains the routines needed to search for orders, whether for
 shipping or receiving, merging several orders into one, or the like.
 
 =cut
-
-package LedgerSMB::Scripts::order;
 
 use strict;
 use warnings;
@@ -159,7 +160,7 @@ sub generate {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

@@ -1,3 +1,6 @@
+
+package LedgerSMB::X12::EDI850;
+
 =head1 NAME
 
 LedgerSMB::X12::EDI850 - Conversion class for X12 850 files to LedgerSMB
@@ -9,8 +12,6 @@ structures
  my $form = $edi->order;
 
 =cut
-
-package LedgerSMB::X12::EDI850;
 
 use strict;
 use warnings;
@@ -133,8 +134,18 @@ sub _order {
 
 =back
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2013-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
 
 1;

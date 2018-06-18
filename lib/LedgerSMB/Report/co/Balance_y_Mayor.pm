@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::co::Balance_y_Mayor;
+
 =head1 NAME
 
 LedgerSMB::Report::co::Balance_y_Mayor - Colombian Balance/Ledger Rpt
@@ -23,7 +26,6 @@ standards. This report shows total activity over a time period.
 
 =cut
 
-package LedgerSMB::Report::co::Balance_y_Mayor;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -179,7 +181,7 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

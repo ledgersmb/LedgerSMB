@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::taxform;
+
 =head1 NAME
 
 LedgerSMB::Scripts::taxform - LedgerSMB handler for reports on tax forms.
@@ -15,8 +18,6 @@ information depending on what one clicks.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::taxform;
 
 use strict;
 use warnings;
@@ -217,12 +218,6 @@ sub list_all {
 
 =back
 
-=head1 Copyright (C) 2010 The LedgerSMB Core Team
-
-Licensed under the GNU General Public License version 2 or later (at your
-option).  For more information please see the included LICENSE and COPYRIGHT
-files.
-
 =cut
 
 {
@@ -237,4 +232,16 @@ files.
         }
     }
 };
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2010-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 1;

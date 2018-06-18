@@ -1,4 +1,6 @@
 
+package LedgerSMB::User;
+
 =head1 NAME
 
 LedgerSMB::User - Provides user support and database management functions.
@@ -11,7 +13,7 @@ This module provides user support and database management functions.
 
 Deprecated
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
  #====================================================================
  # LedgerSMB
@@ -54,8 +56,6 @@ Deprecated
 =cut
 
 # inline documentation
-
-package LedgerSMB::User;
 
 use strict;
 use warnings;

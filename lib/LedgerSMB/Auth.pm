@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Auth;
 
 =head1 NAME
 
@@ -48,8 +49,6 @@ login data is available.
 
 =cut
 
-package LedgerSMB::Auth;
-
 use strict;
 use warnings;
 
@@ -67,7 +66,7 @@ sub factory {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::setup;
+
 =head1 NAME
 
 LedgerSMB::Scripts::setup - web entry points for database administration
@@ -18,7 +21,6 @@ management tasks.
 # for the reason that the database logic is fairly complex.  Most of the time
 # these are maintained inside the LedgerSMB::Database package.
 #
-package LedgerSMB::Scripts::setup;
 
 use strict;
 use warnings;
@@ -1586,7 +1588,7 @@ sub system_info {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 LedgerSMB Core Team.
 This file is licensed under the GNU General Public License version 2,

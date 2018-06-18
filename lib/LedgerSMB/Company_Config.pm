@@ -1,3 +1,6 @@
+
+package LedgerSMB::Company_Config;
+
 =head1 NAME
 
 LedgerSMB::Company_Config - Company-specific Configuration for LedgerSMB.
@@ -27,7 +30,6 @@ namespace (scope of which is 'my') and setting keys as expected.
 
 =cut
 
-package LedgerSMB::Company_Config;
 use strict;
 use warnings;
 use base qw(LedgerSMB);
@@ -52,5 +54,16 @@ sub initialize{
    }
    return $LedgerSMB::App_State::Company_Config = $settings;
 }
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::co::Caja_Diaria;
+
 =head1 NAME
 
 LedgerSMB::Report::co::Caja_Diaria - Caja Diaria Reports (Colombia)
@@ -24,7 +27,6 @@ specific period.
 
 =cut
 
-package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -193,7 +195,7 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::employee::country;
+
 =head1 NAME
 
 LedgerSMB::Scripts::employee::country - Country info for employee management
@@ -27,8 +30,6 @@ has the following keys:
 
 =cut
 
-package LedgerSMB::Scripts::employee::country;
-
 use strict;
 use warnings;
 
@@ -41,7 +42,7 @@ our %country_divs = (
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

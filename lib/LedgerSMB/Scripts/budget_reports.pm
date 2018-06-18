@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::budget_reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
@@ -5,8 +8,6 @@ LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::budget_reports;
 
 use LedgerSMB::Template;
 use LedgerSMB::Report::Budget::Search;
@@ -49,6 +50,16 @@ sub variance_report {
 }
 
 =back
+
+=cut
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

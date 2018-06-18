@@ -1,3 +1,6 @@
+
+package LedgerSMB::Part;
+
 =head1 NAME
 
 LedgerSMB::Part - Good/Service class for LedgerSMB
@@ -8,7 +11,6 @@ This is currently a shell class pending rewrite of old code.
 
 =cut
 
-package LedgerSMB::Part;
 use strict;
 use warnings;
 
@@ -57,7 +59,7 @@ sub get_by_partnumber {
     )[0];
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2015 The LedgerSMB Core Team
 

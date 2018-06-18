@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::GIFI;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::GIFI - List GIFI for accounts in LedgerSMB
@@ -11,7 +14,6 @@ No $request is needed since there are no criteria.
 
 =cut
 
-package LedgerSMB::Report::Listings::GIFI;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -86,7 +88,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2013 The LedgerSMB Core Team
 

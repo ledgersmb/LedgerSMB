@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::inventory;
 
 =head1 NAME
 
@@ -15,7 +16,6 @@ Save customer will update or create as needed.
 =head1 METHODS
 
 =cut
-package LedgerSMB::Scripts::inventory;
 
 use strict;
 use warnings;
@@ -162,5 +162,15 @@ sub adjustment_delete {
     $request->{report_name} = 'list_inventory_counts';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 1;

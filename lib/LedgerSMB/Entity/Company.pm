@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Company;
+
 =head1 NAME
 
 LedgerSMB::Entity::Company -- Company (business) handling for LedgerSMB
@@ -17,7 +20,6 @@ leads etc.
 
 =cut
 
-package LedgerSMB::Entity::Company;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Entity';
@@ -140,7 +142,7 @@ sub save {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under the GNU GPL
 version 2 or at your option any future version.  Please see the accompanying LICENSE

@@ -1,10 +1,12 @@
+
+package LedgerSMB::Scripts::business_unit;
+
 =head1 NAME
 
 LedgerSMB::Scripts::business_unit - web entry points for reporting class admin
 
 =cut
 
-package LedgerSMB::Scripts::business_unit;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::App_Module;
 use LedgerSMB::Business_Unit;
@@ -247,7 +249,7 @@ sub save_class {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 LedgerSMB core team.  Redistribution and use of work is
 governed under the GNU General Public License, version 2 or at your option any

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::payroll;
+
 =head1 NAME
 
 LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
@@ -7,8 +10,6 @@ LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
  LedgerSMB::Scripts::payroll::new_income_type($request);
 
 =cut
-
-package LedgerSMB::Scripts::payroll;
 
 use strict;
 use warnings;
@@ -136,7 +137,7 @@ sub income_type_results {
 
 =head2 Approval and Check Printing
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

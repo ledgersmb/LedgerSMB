@@ -1,10 +1,11 @@
+
+package LedgerSMB::Scripts::template;
+
 =head1 NAME
 
 LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 
 =cut
-
-package LedgerSMB::Scripts::template;
 
 use strict;
 use warnings;
@@ -145,7 +146,7 @@ sub upload {
     return display($request);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014-2018 The LedgerSMB Core Team.
 

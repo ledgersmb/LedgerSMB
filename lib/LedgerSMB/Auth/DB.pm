@@ -1,5 +1,5 @@
 
-=pod
+package LedgerSMB::Auth::DB;
 
 =head1 NAME
 
@@ -15,8 +15,6 @@ authentication.
 =over
 
 =cut
-
-package LedgerSMB::Auth::DB;
 
 use strict;
 use warnings;
@@ -86,7 +84,7 @@ sub get_credentials {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/

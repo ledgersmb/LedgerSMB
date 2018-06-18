@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::File::Part;
 
 =head1 NAME
 
@@ -21,7 +22,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Part;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';
@@ -43,7 +43,7 @@ sub attach {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 The LedgerSMB Core Team
 

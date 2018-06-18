@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::invoice;
+
 =head1 NAME
 
 LedgerSMB::Scripts::invoice - Invoice Report Routines for LedgerSMB
@@ -11,8 +14,6 @@ or
  LedgerSMB::Scripts::invoice:invoice_search($request)
 
 =cut
-
-package LedgerSMB::Scripts::invoice;
 
 use strict;
 use warnings;
@@ -93,7 +94,7 @@ sub  invoice_search{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

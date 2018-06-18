@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::payment;
+
 =head1 NAME
 
 LedgerSMB::Scripts::payment - LedgerSMB class defining the Controller functions for payment handling.
@@ -6,7 +9,7 @@ LedgerSMB::Scripts::payment - LedgerSMB class defining the Controller functions 
 
 Defines the controller functions and workflow logic for payment processing.
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Portions Copyright (c) 2007, David Mora R and Christian Ceballos B.
 
@@ -44,7 +47,6 @@ Original copyright notice below.
 =cut
 
 
-package LedgerSMB::Scripts::payment;
 use LedgerSMB::Template;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;

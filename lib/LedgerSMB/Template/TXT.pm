@@ -1,4 +1,6 @@
 
+package LedgerSMB::Template::TXT;
+
 =head1 NAME
 
 LedgerSMB::Template::TXT - Template support module for LedgerSMB
@@ -8,8 +10,6 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 =over
 
 =cut
-
-package LedgerSMB::Template::TXT;
 
 use strict;
 use warnings;
@@ -85,12 +85,13 @@ sub mimetype {
 
 =back
 
-=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

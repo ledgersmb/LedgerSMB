@@ -1,10 +1,13 @@
+
+package LedgerSMB::Mailer;
+
 =head1 NAME
 
 LedgerSMB::Mailer - Mail output for LedgerSMB
 
 =head1 SYNOPSIS
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
  #====================================================================
  # LedgerSMB
@@ -37,8 +40,6 @@ LedgerSMB::Mailer - Mail output for LedgerSMB
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Mailer;
 
 use warnings;
 use strict;

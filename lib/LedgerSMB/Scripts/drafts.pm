@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::drafts;
 
 =head1 NAME
 
@@ -16,9 +17,6 @@ which have not been approved yet.
 =over
 
 =cut
-
-
-package LedgerSMB::Scripts::drafts;
 
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::Template;
@@ -149,7 +147,7 @@ sub list_drafts {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

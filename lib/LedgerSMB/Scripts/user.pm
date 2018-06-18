@@ -1,4 +1,5 @@
-=pod
+
+package LedgerSMB::Scripts::user;
 
 =head1 NAME
 
@@ -22,7 +23,7 @@ and defaults to indefinite validity.
 =over
 
 =cut
-package LedgerSMB::Scripts::user;
+
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;
@@ -102,7 +103,7 @@ sub change_password {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
