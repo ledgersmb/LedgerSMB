@@ -5,6 +5,11 @@ package LedgerSMB::Report::Listings::Asset;
 
 LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements a listing of individual assets from the fixed asset accounting
+subledger.
+
 =head1 SYNPOSIS
 
   LedgerSMB::Report::Listings::Asset->new(%$request)->render($request);

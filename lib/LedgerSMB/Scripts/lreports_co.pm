@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::lreports_co;
 
 LedgerSMB::Scripts::lreports_co - Colombian local reports
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module holds Colombia-specific reports.
 

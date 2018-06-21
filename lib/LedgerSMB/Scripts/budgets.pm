@@ -5,13 +5,14 @@ package LedgerSMB::Scripts::budgets;
 
 LedgerSMB::Scripts::budgets - web entry points for administration of budgets
 
+=head1 DESCRIPTION
+
+Budget workflow scripts.
+
 =cut
 
 use strict;
 use warnings;
-
-=head1 SYNOPSYS
-Budget workflow scripts.
 
 =head1 REQUIRES
 

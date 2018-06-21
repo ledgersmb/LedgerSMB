@@ -5,6 +5,11 @@ package LedgerSMB::Scripts::configuration;
 
 LedgerSMB::Scripts::configuration - Configuration Workflows for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements the presenting and saving done from the screens
+System > Defaults and System > Sequences.
+
 =head1 SYNPOPSIS
 
 LedgerSMB::Scripts::configuration->can('action')->($request);

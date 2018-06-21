@@ -5,6 +5,10 @@ package LedgerSMB::Scripts::budget_reports;
 
 LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
 
+=head1 DESCRIPTION
+
+Budget search and reporting entry points.
+
 =head1 METHODS
 
 =cut

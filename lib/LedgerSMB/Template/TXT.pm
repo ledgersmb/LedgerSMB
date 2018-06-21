@@ -5,6 +5,10 @@ package LedgerSMB::Template::TXT;
 
 LedgerSMB::Template::TXT - Template support module for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements C<LedgerSMB::Template>'s FORMATTER protocol for TXT output.
+
 =head1 METHODS
 
 =over

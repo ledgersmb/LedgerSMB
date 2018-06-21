@@ -2,16 +2,15 @@
 package Tax;
 
 =head1 NAME
+
 LedgerSMB::Tax - Basic tax infrastructure for LedgerSMB
-#
-#======================================================================
-#
-# apply_taxes - applies taxes to the given subtotal
-# extract_taxes - extracts taxes from the given total
-# initialize_taxes - loads taxes from the database
-# calculate_taxes - calculates taxes
-#
-#====================================================================
+
+=head1 DESCRIPTION
+
+apply_taxes - applies taxes to the given subtotal
+extract_taxes - extracts taxes from the given total
+initialize_taxes - loads taxes from the database
+calculate_taxes - calculates taxes
 
 =head2 SYNOPSIS
 

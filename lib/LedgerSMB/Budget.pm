@@ -5,6 +5,13 @@ package LedgerSMB::Budget;
 
 LedgerSMB::Budget - Managing budgets stored in the database
 
+=head1 DESCRIPTION
+
+This module provides budget management routines, such as entering budgets,
+approving or rejecting them, and marking them obsolete.  It does not include
+more free-form areas like reporting.  For those, see
+LedgerSMB::Budget_Report.
+
 =cut
 
 use LedgerSMB::PGDate;
@@ -13,14 +20,6 @@ use warnings;
 
 our $VERSION = 0.1;
 
-=head1 SYNOPSIS
-
-This module provides budget management routines, such as entering budgets,
-approving or rejecting them, and marking them obsolete.  It does not include
-more free-form areas like reporting.  For those, see
-LedgerSMB::Budget_Report.
-
-=cut
 
 use Moose;
 use namespace::autoclean;

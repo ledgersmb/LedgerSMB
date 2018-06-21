@@ -3,9 +3,9 @@ package LedgerSMB::Scripts::payment;
 
 =head1 NAME
 
-LedgerSMB::Scripts::payment - LedgerSMB class defining the Controller functions for payment handling.
+LedgerSMB::Scripts::payment - Web entrypoints for payment handling.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Defines the controller functions and workflow logic for payment processing.
 

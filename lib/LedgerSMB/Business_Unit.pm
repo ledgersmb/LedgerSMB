@@ -5,7 +5,7 @@ package LedgerSMB::Business_Unit;
 
 LedgerSMB::Business_Unit - Accounting Reporting Dimensions for LedgerSMB
 
-=head1 SYNOPSYS
+=head1 DESCRIPTION
 
 This holds the information as to the handling of classes of buisness units.
 Business units are reporting units which can be used to classify various line

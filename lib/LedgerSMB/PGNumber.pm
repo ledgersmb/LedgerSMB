@@ -5,6 +5,14 @@ package LedgerSMB::PGNumber;
 
 LedgerSMB::PGNumber - Number handling and serialization to database
 
+=head1 DESCRIPTION
+
+This is a wrapper class for handling a database interface for numeric (int,
+float, numeric) data types to/from the database and to/from user input.
+
+This extends PGObject::Type::BigFloat which further extends
+Math::BigFloat and can be used in this way.
+
 =cut
 
 # try using the GMP library for Math::BigFloat for speed
@@ -26,14 +34,6 @@ $accuracy = PGObject::Type::BigFloat->accuracy();
 $precision = PGObject::Type::BigFloat->precision();
 $round_mode = PGObject::Type::BigFloat->round_mode();
 $div_scale = PGObject::Type::BigFloat->div_scale();
-
-=head1 SYNPOSIS
-
-This is a wrapper class for handling a database interface for numeric (int,
-float, numeric) data types to/from the database and to/from user input.
-
-This extends PBObject::Type::BigFloat which further extends LedgerSMB::PGNumber and
-can be used in this way.
 
 =head1 INHERITS
 

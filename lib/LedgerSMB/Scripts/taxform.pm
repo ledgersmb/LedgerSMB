@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::taxform;
 
 LedgerSMB::Scripts::taxform - LedgerSMB handler for reports on tax forms.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Implement the ability to do end-of-year reporting on vendors as to how
 much was recorded as reportable.

@@ -5,7 +5,7 @@ package LedgerSMB::Setup::SchemaChecks;
 
 LedgerSMB::Setup::SchemaChecks - UI for schema checks run from setup.pl
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Provides the UI for schema upgrade precondition checks when run from
 setup.pl.

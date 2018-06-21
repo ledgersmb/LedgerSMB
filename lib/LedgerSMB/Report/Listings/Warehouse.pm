@@ -5,6 +5,10 @@ package LedgerSMB::Report::Listings::Warehouse;
 
 LedgerSMB::Report::Listings::Warehouse - List warehouses in LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements an unfiltered listing of warehouses.
+
 =head1 SYNOPSIS
 
 Since no parameters are required:

@@ -3,7 +3,11 @@ package LedgerSMB::Report::Listings::Asset_Class;
 
 =head1 NAME
 
-LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
+LedgerSMB::Report::Listings::Asset_Class - Asset Class listings
+
+=head1 DESCRIPTION
+
+Implements a listing of fixed asset classes
 
 =head1 SYNPOSIS
 

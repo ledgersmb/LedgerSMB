@@ -5,9 +5,9 @@ package LedgerSMB::Template::XLSX;
 
 LedgerSMB::Template::XLSX - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-Microsoft Spreadsheet XLSX output.
+Implements C<LedgerSMB::Template>'s FORMATTER protocol for XLSX output.
 
 =head1 METHODS
 

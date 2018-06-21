@@ -32,6 +32,15 @@ package LedgerSMB::Taxes::Simple;
 
 LedgerSMB::Taxes::Simple - Simple tax calculations
 
+=head1 DESCRIPTION
+
+This package contains tax related functions:
+
+calculate_tax - calculates tax on subtotal
+apply_tax - sets $value to the tax value for the subtotal
+extract_tax - sets $value to the tax value on a tax-included subtotal
+
+
 =head1 SYNOPSIS
 
  my $tax_amt = $tax->calculate_tax( $form, $subtotal, $extract, $passrate);

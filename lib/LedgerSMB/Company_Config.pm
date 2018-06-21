@@ -5,7 +5,7 @@ package LedgerSMB::Company_Config;
 
 LedgerSMB::Company_Config - Company-specific Configuration for LedgerSMB.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module stores the various company-specific configuration details for
 LedgerSMB

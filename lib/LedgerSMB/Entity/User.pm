@@ -5,13 +5,12 @@ package LedgerSMB::Entity::User;
 
 LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
-=cut
+=head1 DESCRIPTION
 
-use Moose;
-use namespace::autoclean;
-use Try::Tiny;
-use LedgerSMB::App_State;
-with 'LedgerSMB::PGObject';
+Implements mapping to database routines for creating/getting/retrieving
+user information ("login accounts").
+
+Note that this class isn't derived from LedgerSMB::Entity.
 
 =head1 SYNOPSYS
 
@@ -26,6 +25,14 @@ Creating a new user:
 Saving permissions:
   my $user = LedgerSMB::Entity::User->new(%$request);
   $user->save_roles($request);
+
+=cut
+
+use Moose;
+use namespace::autoclean;
+use Try::Tiny;
+use LedgerSMB::App_State;
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 

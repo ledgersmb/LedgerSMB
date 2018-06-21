@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::file;
 
 LedgerSMB::Scripts::file - web entry points for file storage and retrieval
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This supplies file retrieval and attachment workflows
 

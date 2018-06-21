@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::asset;
 
 LedgerSMB::Scripts::asset - web entry points for fixed assets accounting
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 Asset Management workflow script
 

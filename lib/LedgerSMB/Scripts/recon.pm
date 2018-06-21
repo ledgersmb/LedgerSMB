@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::recon;
 
 LedgerSMB::Scripts::recon - web entry points for reconciliation workflow
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This module acts as the UI controller class for Reconciliation. It controls
 interfacing with the Core Logic and database layers.

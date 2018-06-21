@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::import_csv;
 
 LedgerSMB::Scripts::import_csv - web entry points for various csv uploads
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 This is a module that demonstrates how to set up scripts for importing bulk
 data.

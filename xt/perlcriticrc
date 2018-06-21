@@ -31,8 +31,8 @@ pager = less
 
 
 [Documentation::RequirePodSections]
-    lib_sections = NAME | LICENSE AND COPYRIGHT
-    script_sections = NAME | LICENSE AND COPYRIGHT
+    lib_sections = NAME | DESCRIPTION | LICENSE AND COPYRIGHT
+    script_sections = NAME | USAGE | DESCRIPTION | LICENSE AND COPYRIGHT
     set_themes = lsmb lsmb_new
 [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = -1 0 1 2 100

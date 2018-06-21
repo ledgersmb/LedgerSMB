@@ -6,6 +6,10 @@ package LedgerSMB::Entity::Payroll::Deduction;
 LedgerSMB::Entity::Payroll::Deduction - Payroll Deduction handling for
 LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements a database mapping for 'deduction instance' attributes.
+
 =head1 SYNPOSIS
 
 To retrieve a list of deductions for an entity:

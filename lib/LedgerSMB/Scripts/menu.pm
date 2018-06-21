@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::menu;
 
 LedgerSMB::Scripts::menu - LedgerSMB controller script for menus
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This script provides a controller class for generating menus.  It can operate in
 two modes:  One creates a standard expanding menu which works with or without

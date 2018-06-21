@@ -1,4 +1,5 @@
 
+
 package LedgerSMB::Scripts::contact;
 
 =head1 NAME
@@ -6,7 +7,7 @@ package LedgerSMB::Scripts::contact;
 LedgerSMB::Scripts::contact - LedgerSMB class defining the Controller
 functions, template instantiation and rendering for customer editing and display.
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This module is the UI controller for the customer, vendor, etc functions; it
 

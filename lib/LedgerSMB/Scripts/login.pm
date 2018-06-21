@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::login;
 
 LedgerSMB:Scripts::login - web entry points for session creation/termination
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This script contains the request handlers for logging in and out of LedgerSMB.
 

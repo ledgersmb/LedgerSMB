@@ -3,15 +3,11 @@ package LedgerSMB::Scripts::inventory;
 
 =head1 NAME
 
-LedgerSMB::Scripts::inventory - LedgerSMB class defining the Controller
-functions, template instantiation and rendering for inventory management.
+LedgerSMB::Scripts::inventory - Web entry points for inventory adjustment
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
-This module is the UI controller for the customer DB access; it provides the
-View interface, as well as defines the Save customer.
-Save customer will update or create as needed.
-
+This module implements inventory adjustment entry points.
 
 =head1 METHODS
 

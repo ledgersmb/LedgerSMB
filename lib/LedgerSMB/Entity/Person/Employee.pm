@@ -5,6 +5,12 @@ package LedgerSMB::Entity::Person::Employee;
 
 LedgerSMB::Entity::Person::Employee -- Employee handling for LedgerSMB
 
+=head1 DESCRIPTION
+
+Derived from C<LedgerSMB::Entity::Person>, this class adds
+"employee attributes" such as start and end dates, HR hierarchy (manager)
+and organisational funcion/role name.
+
 =head1 SYNOPSIS
 
 To save:

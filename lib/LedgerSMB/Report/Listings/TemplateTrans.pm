@@ -5,6 +5,14 @@ package LedgerSMB::Report::Listings::TemplateTrans;
 
 LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 
+=head1 DESCRIPTION
+
+Implements a listing of template transactions: transactions which have
+been (mostly) pre-filled. These transactions have themselves not been
+posted, however, copies of these transactions can be (quickly) posted
+due to the fact that only minimal additional data needs te be specified
+in order to complete the financial transaction.
+
 =cut
 
 use Moose;

@@ -5,16 +5,18 @@ package LedgerSMB::Entity;
 
 LedgerSMB::Entity -- Entity Management base classes for LedgerSMB
 
+=head1 DESCRIPTION
+
+This module manages basic entity management for persons and companies,
+both of which will likely inherit this class.
+
+TODO: "will likely"????
+
 =cut
 
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';
-
-=head1 SYNOPSYS
-
-This module anages basic entity management for persons and companies, both of which will
-likely inherit this class.
 
 =head1 PROPERTIES
 

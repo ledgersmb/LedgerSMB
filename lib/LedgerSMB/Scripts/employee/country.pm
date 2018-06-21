@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::employee::country;
 
 LedgerSMB::Scripts::employee::country - Country info for employee management
 
-=head1 SYNOPSYS
+=head1 DESCRIPTION
 
 none really.  This just allows viewing of certain info,
 

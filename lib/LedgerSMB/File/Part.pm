@@ -5,9 +5,12 @@ package LedgerSMB::File::Part;
 
 LedgerSMB::File::Part - Manages attachments to goods and services.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Manages attachments to goods and services.
+
+Derived from C<LedgerSMB::File>, stores its data in the C<file_part>
+table, linked to the C<part> table.
 
 =head1 INHERITS
 

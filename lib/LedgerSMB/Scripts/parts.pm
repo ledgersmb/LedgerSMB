@@ -5,6 +5,10 @@ package LedgerSMB::Scripts::parts;
 
 LedgerSMB::Scripts::parts
 
+=head1 DESCRIPTION
+
+TODO.
+
 =cut
 
 use strict;

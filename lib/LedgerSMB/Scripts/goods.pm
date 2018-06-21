@@ -5,6 +5,16 @@ package LedgerSMB::Scripts::goods;
 
 LedgerSMB::Scripts::goods - Goods and Services workflows for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements the goods search, parts groups, price groups and
+inventory activity screens.
+
+=head1 SYNOPSIS
+
+ LedgerSMB::Scripts::goods::search_screen($request);
+ LedgerSMB::Scripts::goods::search($request);
+
 =cut
 
 use strict;
@@ -18,12 +28,7 @@ use LedgerSMB::Report::Inventory::Partsgroups;
 use LedgerSMB::Report::Inventory::Pricegroups;
 use LedgerSMB::Report::Inventory::Activity;
 
-=head1 SYNOPSIS
-
- LedgerSMB::Scripts::goods::search_screen($request);
- LedgerSMB::Scripts::goods::search($request);
-
-=head1 Routines
+=head1 METHODS
 
 =over
 

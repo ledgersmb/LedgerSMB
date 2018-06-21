@@ -5,6 +5,10 @@ package LedgerSMB::Scripts::business_unit;
 
 LedgerSMB::Scripts::business_unit - web entry points for reporting class admin
 
+=head1 DESCRIPTION
+
+Workflow routines for LedgerSMB business reporting units
+
 =cut
 
 use LedgerSMB::Business_Unit_Class;
@@ -18,10 +22,6 @@ use strict;
 use warnings;
 
 $Carp::Verbose = 1;
-
-=head1 SYNOPSIS
-
-Workflow routines for LedgerSMB business reporting units
 
 =head1 FUNCTIONS
 

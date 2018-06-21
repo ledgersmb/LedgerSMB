@@ -5,6 +5,10 @@ package LedgerSMB::Template::CSV;
 
 LedgerSMB::Template::CSV - Template support module for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements C<LedgerSMB::Template>'s FORMATTER protocol for CSV output.
+
 =head1 METHODS
 
 =over

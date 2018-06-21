@@ -5,6 +5,11 @@ package LedgerSMB::Entity::Person;
 
 LedgerSMB::Entity::Person -- Natural Person handling for LedgerSMB
 
+=head1 DESCRIPTION
+
+Derived from LedgerSMB::Entity, implements mapping of 'person' fields
+to the database.
+
 =head1 SYNOPSIS
 
 To save:

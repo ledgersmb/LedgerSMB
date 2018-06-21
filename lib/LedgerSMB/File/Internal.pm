@@ -5,6 +5,12 @@ package LedgerSMB::File::Internal;
 
 LedgerSMB::File::Internal - Files for Internal processing
 
+=head1 DESCRIPTION
+
+Implements an internal file store to be used for files not linked to
+anything as attachments. I.e. company logos could be stored through
+this module.
+
 =head1 SYNOPSIS
 
     use LedgerSMB::File::Internal;
@@ -86,5 +92,8 @@ your software.
 
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
+
 1;
