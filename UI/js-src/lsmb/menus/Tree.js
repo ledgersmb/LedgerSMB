@@ -7,10 +7,10 @@ define(["dojo/_base/declare",
         "dojo/store/JsonRest", "dojo/store/Observable",
         "dojo/store/Memory",
         "dijit/Tree", "dijit/tree/ObjectStoreModel",
-        "dojo/dom-class"
+        "dijit/registry", "dojo/dom-class"
        ], function(declare, on, lang, event, mouse, array,
                    JsonRest, Observable, Memory, Tree, ObjectStoreModel,
-                   domClass
+                   registry, domClass
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
@@ -77,7 +77,8 @@ define(["dojo/_base/declare",
                             + location.search + '#' + url, "_blank");
             }
             else {
-                location.hash = url;
+                var mainDiv = registry.byId("maindiv");
+                mainDiv.load_link(url);
             }
         },
         __onClick: function(e) {
