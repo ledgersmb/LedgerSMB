@@ -5,6 +5,13 @@ package LedgerSMB::PGDate;
 
 LedgerSMB::PgDate - Date handling and serialization to database
 
+=head1 DESCRIPTION
+
+This class handles formatting and mapping between the DateTime module and
+PostgreSQL. It provides a handler for date and timestamp datatypes.
+
+The type behaves internally as a Datetime module.
+
 =cut
 
 use DateTime::Format::Strptime;
@@ -17,12 +24,6 @@ use strict;
 use warnings;
 
 __PACKAGE__->register(registry => 'default', types => ['date']);
-
-=head1 SYNPOSIS
-This class handles formatting and mapping between the DateTime module and
-PostgreSQL. It provides a handler for date and timestamp datatypes.
-
-The type behaves internally as a Datetime module.
 
 =head1 SUPPORTED FORMATS
 

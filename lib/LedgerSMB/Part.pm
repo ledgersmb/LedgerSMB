@@ -5,7 +5,7 @@ package LedgerSMB::Part;
 
 LedgerSMB::Part - Good/Service class for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This is currently a shell class pending rewrite of old code.
 

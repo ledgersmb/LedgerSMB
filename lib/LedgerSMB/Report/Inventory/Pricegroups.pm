@@ -5,10 +5,14 @@ package LedgerSMB::Report::Inventory::Pricegroups;
 
 LedgerSMB::Report::Inventory::Pricegroups - Pricegroup search for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements a listing of price groups.
+
 =head1 SYNOPSIS
 
- my $report = LedgerSMB::Report::Inventory::Pricegroups->new(%$request);
- $report->render($request);
+  my $report = LedgerSMB::Report::Inventory::Pricegroups->new(%$request);
+  $report->render($request);
 
 =cut
 

@@ -1,15 +1,13 @@
 package LedgerSMB::Report::Approval_Option;
-use Moose::Role;
-use namespace::autoclean;
 
 =head1 NAME
 
 LedgerSMB::Report::Approval_Option - Report interface for approval
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-This includes an is_approved user-settable flag (Y/N/All) which is mapped to
-a boolean (True/False/Null).  Null is used to request all.
+This moose role adds an C<is_approve>d user-settable flag (Y/N/All)
+which is mapped to a boolean (True/False/Null).  Null is used to request all.
 
 =head1 ADDED PROPERTIES
 
@@ -22,6 +20,9 @@ Y, N, All
 mapped from is_approved
 
 =cut
+
+use Moose::Role;
+use namespace::autoclean;
 
 has is_approved => (is => 'ro', isa => 'Str',
                     default => 'Y');

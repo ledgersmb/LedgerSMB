@@ -2,7 +2,7 @@
 
 LedgerSMB::Template - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module renders templates to an in-memory property.
 

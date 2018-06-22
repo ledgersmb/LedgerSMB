@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::user;
 
 LedgerSMB::Scripts::user - web entry points for user self-administration
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 User preferences and password setting routines for LedgerSMB.  These are all
 accessible to all users and do not perform administrative functions.

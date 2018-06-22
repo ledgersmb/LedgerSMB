@@ -3,7 +3,11 @@ package LedgerSMB::Report::Inventory::Partsgroups;
 
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
+LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search
+
+=head1 DESCRIPTION
+
+Implements a listing of parts groups
 
 =head1 SYNOPSIS
 

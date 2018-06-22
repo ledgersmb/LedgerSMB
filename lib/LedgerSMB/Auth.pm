@@ -5,7 +5,7 @@ package LedgerSMB::Auth;
 
 LedgerSMB::Auth - Provides an abstraction layer for authentication.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This routine provides an abstraction layer for authentication.  The current
 application only ships with a simple authentication layer using

@@ -5,6 +5,10 @@ package LedgerSMB::Scripts::template;
 
 LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 
+=head1 DESCRIPTION
+
+Entry points for uploading, listing, saving and editing document templates.
+
 =cut
 
 use strict;

@@ -5,6 +5,10 @@ package LedgerSMB::Sysconfig;
 
 LedgerSMB::Sysconfig - LedgerSMB configuration management
 
+=head1 DESCRIPTION
+
+LedgerSMB configuration management
+
 =cut
 
 use strict;

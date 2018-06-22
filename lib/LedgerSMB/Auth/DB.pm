@@ -5,7 +5,7 @@ package LedgerSMB::Auth::DB;
 
 LedgerSMB::Auth::DB - Standard Authentication DB module.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This is the standard DB-based module for authentication.  Uses HTTP basic
 authentication.

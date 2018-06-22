@@ -5,7 +5,9 @@ package LedgerSMB::Mailer;
 
 LedgerSMB::Mailer - Mail output for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
+
+Implements mail sending functionality
 
 =head1 LICENSE AND COPYRIGHT
 

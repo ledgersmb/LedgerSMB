@@ -5,6 +5,11 @@ package LedgerSMB::Scripts::vouchers;
 
 LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 
+=head1 DESCRIPTION
+
+TODO: This would be a great place to describe the roles and differences
+between batches and vouchers...
+
 =head1 SYNPOSIS
 
  LedgerSMB::Scripts::vouchers::delete_batch($request);

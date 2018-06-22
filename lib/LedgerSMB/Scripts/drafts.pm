@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::drafts;
 
 LedgerSMB:Scripts::drafts - web entry points for managing to-be posted docs
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module contains the workflows for managing unapproved, unbatched financial
 transactions.  This does not contain facities for creating such transactions,

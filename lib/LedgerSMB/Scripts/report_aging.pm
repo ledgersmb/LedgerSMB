@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::report_aging;
 
 LedgerSMB::Scripts::report_aging - Aging Reports and Statements for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module provides AR/AP aging reports and statements for LedgerSMB.
 

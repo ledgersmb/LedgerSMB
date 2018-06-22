@@ -5,7 +5,7 @@ package LedgerSMB::File;
 
 LedgerSMB::File - Provides routines for managing file attachments.
 
-=head1 SYNPSIS
+=head1 DESCRIPTION
 
 This provides routines for managing file attachments.  Subclasses may be used
 to provide functionality for specific types of file attachments.

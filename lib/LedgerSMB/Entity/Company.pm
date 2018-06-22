@@ -5,10 +5,10 @@ package LedgerSMB::Entity::Company;
 
 LedgerSMB::Entity::Company -- Company (business) handling for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-This handles the overall data management for companies as customers, vendors, sales
-leads etc.
+This handles the overall data management for companies as customers, vendors,
+sales leads etc.
 
 =head1 INHERITS
 

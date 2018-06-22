@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::setup;
 
 LedgerSMB::Scripts::setup - web entry points for database administration
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 The workflows for creating new databases, updating old ones, and running
 management tasks.

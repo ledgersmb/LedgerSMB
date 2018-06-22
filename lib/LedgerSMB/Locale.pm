@@ -5,7 +5,7 @@ package LedgerSMB::Locale;
 
 LedgerSMB::Locale - Locale handling class for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 

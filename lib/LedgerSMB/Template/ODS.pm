@@ -5,9 +5,9 @@ package LedgerSMB::Template::ODS;
 
 LedgerSMB::Template::ODS - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-OpenDocument Spreadsheet output.
+Implements C<LedgerSMB::Template>'s FORMATTER protocol for ODS output.
 
 =head1 METHODS
 

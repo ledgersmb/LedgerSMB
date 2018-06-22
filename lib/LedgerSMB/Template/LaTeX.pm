@@ -5,9 +5,9 @@ package LedgerSMB::Template::LaTeX;
 
 LedgerSMB::Template::LaTeX - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-Muxed LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
+LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
 
 =head1 DETAILS
 

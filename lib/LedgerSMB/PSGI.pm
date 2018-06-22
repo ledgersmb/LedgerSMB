@@ -4,6 +4,10 @@ package LedgerSMB::PSGI;
 
 LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 
+=head1 DESCRIPTION
+
+Maps the URL name space to the various entry points.
+
 =head1 SYNOPSIS
 
  use LedgerSMB::PSGI;

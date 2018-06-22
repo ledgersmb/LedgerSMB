@@ -3,12 +3,11 @@ package LedgerSMB::Scripts::journal;
 
 =head1 NAME
 
-LedgerSMB::Scripts::journal - LedgerSMB slim ajax script for journal's
-account search request.
+LedgerSMB::Scripts::journal - Web entrypoint for ajax account search.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-A script for journal ajax requests: accepts a search string and returns a
+A script for ajax requests: accepts a search string and returns a
 list of matching accounts in a ul/li pair
 
 =head1 METHODS

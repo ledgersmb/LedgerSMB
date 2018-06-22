@@ -6,6 +6,10 @@ package LedgerSMB::Entity::Payroll::Wage;
 LedgerSMB::Entity::Payroll::Wage - Wages and Salary Handling
 for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements a database mapping for 'wage instance' attributes.
+
 =head1 SYNPOSIS
 
 To retrieve a list of wages for an entity:

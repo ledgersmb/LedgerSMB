@@ -5,7 +5,7 @@ package LedgerSMB::Scripts::reports;
 
 LedgerSMB::Scripts::reports - Common Report workflows
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module holds common workflow routines for reports.
 

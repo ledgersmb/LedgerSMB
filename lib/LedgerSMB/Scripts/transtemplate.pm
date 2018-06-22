@@ -5,6 +5,10 @@ package LedgerSMB::Scripts::transtemplate;
 
 LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
 
+=head1 DESCRIPTION
+
+Entry points for managing transaction templates.
+
 =head1 SYNPOSIS
 
  LedgerSMB::Scripts::transtemplate::view($request);
