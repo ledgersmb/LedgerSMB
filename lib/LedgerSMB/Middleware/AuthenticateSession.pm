@@ -191,16 +191,20 @@ sub call {
         my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
         my $path = $env->{SCRIPT_NAME};
         $path =~ s|[^/]*$||g;
-        return Plack::Util::response_cb(
-            $res, sub {
-                my $res = shift;
+        if ($extended_cookie) {
+            return Plack::Util::response_cb(
+                $res, sub {
+                    my $res = shift;
 
-                # Set the new cookie (with the extended life-time on response
-                Plack::Util::header_set(
-                    $res->[1], 'Set-Cookie',
-                    qq|$cookie_name=$extended_cookie; path=$path$secure|)
-                    if $extended_cookie;
-            });
+                    # Set the new cookie (with the extended life-time on response
+                    Plack::Util::header_push(
+                        $res->[1], 'Set-Cookie',
+                        qq|$cookie_name=$extended_cookie; path=$path$secure|);
+                });
+        }
+        else {
+            return $res;
+        }
     }
 
     return $self->app->($env);
