@@ -110,21 +110,14 @@ DECLARE
         new_id int;
 BEGIN
         UPDATE menu_node
-        SET position = position * -1
+        SET position = position + 1
         WHERE parent = in_parent_id
                 AND position >= in_position;
 
         INSERT INTO menu_node (parent, position, label)
         VALUES (in_parent_id, in_position, in_label);
 
-        SELECT INTO new_id currval('menu_node_id_seq');
-
-        UPDATE menu_node
-        SET position = (position * -1) + 1
-        WHERE parent = in_parent_id
-                AND position < 0;
-
-        RETURN new_id;
+        RETURN currval('menu_node_id_seq');
 END;
 $$ language plpgsql;
 
