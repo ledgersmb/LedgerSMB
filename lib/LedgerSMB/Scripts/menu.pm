@@ -1,9 +1,11 @@
 
+package LedgerSMB::Scripts::menu;
+
 =head1 NAME
 
 LedgerSMB::Scripts::menu - LedgerSMB controller script for menus
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This script provides a controller class for generating menus.  It can operate in
 two modes:  One creates a standard expanding menu which works with or without
@@ -13,8 +15,6 @@ devices.
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::menu;
 
 use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Template;
@@ -123,4 +123,17 @@ files.
         }
     }
 };
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
+
 1;

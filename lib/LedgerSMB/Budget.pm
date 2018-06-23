@@ -1,17 +1,11 @@
+
+package LedgerSMB::Budget;
+
 =head1 NAME
 
 LedgerSMB::Budget - Managing budgets stored in the database
 
-=cut
-
-package LedgerSMB::Budget;
-use LedgerSMB::PGDate;
-use strict;
-use warnings;
-
-our $VERSION = 0.1;
-
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module provides budget management routines, such as entering budgets,
 approving or rejecting them, and marking them obsolete.  It does not include
@@ -19,6 +13,13 @@ more free-form areas like reporting.  For those, see
 LedgerSMB::Budget_Report.
 
 =cut
+
+use LedgerSMB::PGDate;
+use strict;
+use warnings;
+
+our $VERSION = 0.1;
+
 
 use Moose;
 use namespace::autoclean;
@@ -333,14 +334,18 @@ sub save_note {
 
 =back
 
-=head1 COPYRIGHT AND LICENSE
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
 
 1;

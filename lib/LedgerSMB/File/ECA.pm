@@ -1,12 +1,15 @@
-=pod
+
+package LedgerSMB::File::ECA;
 
 =head1 NAME
 
 LedgerSMB::File::ECA - Manages attachments to customers and vendors
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-TODO
+Derived from C<LedgerSMB::File>, this module stores file data in
+the C<file_eca> table, attached to records from the
+C<entity_credit_account> table, which stores customers and vendors.
 
 =head1 INHERITS
 
@@ -21,7 +24,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::ECA;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';
@@ -43,7 +45,7 @@ sub attach {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 The LedgerSMB Core Team
 

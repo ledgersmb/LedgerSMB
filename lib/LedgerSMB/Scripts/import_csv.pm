@@ -1,17 +1,21 @@
-=pod
+
+package LedgerSMB::Scripts::import_csv;
 
 =head1 NAME
 
 LedgerSMB::Scripts::import_csv - web entry points for various csv uploads
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 This is a module that demonstrates how to set up scripts for importing bulk
 data.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
-package LedgerSMB::Scripts::import_csv;
 use strict;
 use warnings;
 
@@ -462,10 +466,9 @@ sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->upload('import_file');
-
     my $csv = Text::CSV->new;
     $csv->header($handle);
-    @{$self->{import_entries}} = $csv->getlines_all($handle);
+    $self->{import_entries} = $csv->getline_all($handle);
 
     return @{$self->{import_entries}};
 }
@@ -523,7 +526,7 @@ sub run_import {
     return begin_import($request);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2008-2013 The LedgerSMB Core Team.  This file may be re-used in
 accordance with the GNU General Public License (GNU GPL) v2 or at your option

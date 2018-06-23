@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Scripts::recon;
 
 =head1 NAME
 
 LedgerSMB::Scripts::recon - web entry points for reconciliation workflow
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This module acts as the UI controller class for Reconciliation. It controls
 interfacing with the Core Logic and database layers.
@@ -15,8 +16,6 @@ interfacing with the Core Logic and database layers.
 
 # NOTE:  This is a first draft modification to use the current parameter type.
 # It will certainly need some fine tuning on my part.  Chris
-
-package LedgerSMB::Scripts::recon;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
@@ -283,7 +282,10 @@ sub _display_report {
                                     + $recon->{outstanding_total}
                                     + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
-    $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
+    $recon->{out_of_balance}->bfround(
+        LedgerSMB::Setting->get('decimal_places') * -1
+    );
+    $recon->{submit_enabled} = ($recon->{out_of_balance} == 0);
 
     # Check if only one entry could explain the difference
     if ( !$recon->{submit_enabled}) {
@@ -470,14 +472,18 @@ sub pending {
         }
     }
 };
-1;
 
 =back
 
-=head1 Copyright (C) 2007, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

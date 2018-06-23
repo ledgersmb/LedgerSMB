@@ -1,10 +1,42 @@
+
+package LedgerSMB::Database::Loadorder;
+
 =head1 NAME
 
 LedgerSMB::Database::Loadorder - LOADORDER parsing
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::Database::Loadorder;
+Implements processing of LOADORDER files as used by the schema
+change management infrastructure in C<sql/change/>.
+
+The LOADORDER file contains
+
+=over
+
+=item comments
+
+Lines with a hash (#) as the first non-space character are taken
+to be comments.
+
+=item tag-lines
+
+Tag lines are comment lines with a special format:
+
+  #tag: <tag>
+
+Multiple tags may be specified as a comma-separated list.
+
+=item script paths
+
+Script paths are relative to the directory the LOADORDER file is in.
+Each path may be prefixed by an exclamation mark (!) to signal that
+the referenced script should always be considered succesfully processed,
+even if the script processes with errors.
+
+=back
+
+=cut
 
 use strict;
 use warnings;
@@ -219,7 +251,7 @@ sub _needs_init {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2016-2018 The LedgerSMB Core Team
 

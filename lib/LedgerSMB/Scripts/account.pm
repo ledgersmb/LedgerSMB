@@ -1,19 +1,11 @@
 
 package LedgerSMB::Scripts::account;
-use Template;
-use LedgerSMB::DBObject::Account;
-use LedgerSMB::DBObject::EOY;
-use Log::Log4perl;
-use strict;
-use warnings;
-
-=pod
 
 =head1 NAME
 
 LedgerSMB:Scripts::accounts - web entry points for managing GL accounts
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module contains the workflows for managing chart of accounts entries.
 
@@ -26,6 +18,14 @@ maintainable.
 =over
 
 =cut
+
+use strict;
+use warnings;
+
+use Template;
+use LedgerSMB::DBObject::Account;
+use LedgerSMB::DBObject::EOY;
+use Log::Log4perl;
 
 
 my $logger = Log::Log4perl::get_logger('LedgerSMB::DBObject::Account');
@@ -283,7 +283,7 @@ sub reopen_books {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

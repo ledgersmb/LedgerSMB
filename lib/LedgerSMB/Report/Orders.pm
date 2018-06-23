@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Orders;
+
 =head1 NAME
 
 LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
@@ -9,7 +12,6 @@ LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Orders;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -316,7 +318,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

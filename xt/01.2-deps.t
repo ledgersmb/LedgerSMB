@@ -36,6 +36,6 @@ push @on_disk, 'bin/ledgersmb-server.psgi';
 
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
-                ignores => [ 'Image::Size', 'LaTeX::Driver',
+                ignores => [ 'LaTeX::Driver',
                              'Starman', 'TeX::Encode::charmap'] );
 

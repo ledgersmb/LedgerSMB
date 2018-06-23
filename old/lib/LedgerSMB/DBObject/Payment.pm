@@ -570,9 +570,8 @@ sub get_payment_detail_data {
         $inv->{source} = "";
         $self->{"source_$inv->{contact_id}"} = "";
         }
-    my $tmp_invoices = $inv->{invoices};
-        $inv->{invoices} = [];
-        @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
+
+        $inv->{invoices} //= [];
         @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
         for my $invoice (@{$inv->{invoices}}){
             $invoice->[6] = LedgerSMB::PGNumber->new($invoice->[6]);  ## no critic (ProhibitMagicNumbers) sniff

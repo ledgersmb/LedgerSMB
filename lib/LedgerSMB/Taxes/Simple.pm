@@ -1,3 +1,6 @@
+
+package LedgerSMB::Taxes::Simple;
+
 #=====================================================================
 #
 # Simple Tax support module for LedgerSMB
@@ -24,11 +27,19 @@
 # extract_tax - sets $value to the tax value on a tax-included subtotal
 #
 #====================================================================
-package LedgerSMB::Taxes::Simple;
 
 =head1 NAME
 
 LedgerSMB::Taxes::Simple - Simple tax calculations
+
+=head1 DESCRIPTION
+
+This package contains tax related functions:
+
+calculate_tax - calculates tax on subtotal
+apply_tax - sets $value to the tax value for the subtotal
+extract_tax - sets $value to the tax value on a tax-included subtotal
+
 
 =head1 SYNOPSIS
 
@@ -166,7 +177,18 @@ sub extract_tax {
 
 =back
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
+
 1;

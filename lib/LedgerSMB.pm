@@ -1,9 +1,11 @@
 
+package LedgerSMB;
+
 =head1 NAME
 
 LedgerSMB - The Base class for many LedgerSMB objects, including DBObject.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module creates a basic request handler with utility functions available
 in database objects (LedgerSMB::DBObject)
@@ -128,23 +130,23 @@ each being a hashref detailing configuration items with their values.
  #====================================================================
 =cut
 
-package LedgerSMB;
-
 use strict;
 use warnings;
 
+use Carp;
+use Encode qw(perlio_ok);
+use HTTP::Headers::Fast;
+use HTTP::Status qw( HTTP_OK ) ;
+use JSON::MaybeXS;
+use Log::Log4perl;
 use PGObject;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
-use HTTP::Status qw( HTTP_OK) ;
 use LedgerSMB::User;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Template;
-use Log::Log4perl;
-use Carp;
-use JSON::MaybeXS;
 
 our $VERSION = '1.7.0-dev';
 
@@ -172,7 +174,6 @@ sub new {
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
-    $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
     $self->{query_string} = $query_string if defined $query_string;
@@ -191,15 +192,11 @@ sub new {
 }
 
 sub open_form {
-    my ($self, $args) = @_;
-    my $i = 1;
+    my ($self) = @_;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{_session_id}],
                               continue_on_error => 1
     );
-    if ($args->{commit}){
-       $self->{dbh}->commit;
-    }
     return $self->{form_id} = $vars[0]->{form_open};
 }
 
@@ -323,8 +320,56 @@ sub upload {
     my $tmpfname = eval { $self->{_uploads}->get_one($name)->path };
     return undef unless defined $tmpfname;
 
-    open my $fh, '<', $tmpfname
+    my $headers = HTTP::Headers::Fast->new(
+        Content_Type => $self->{_uploads}->get_one($name)->content_type
+        );
+    my $encoding = ':bytes';
+    my $charset = $headers->content_type_charset;
+    if ($charset) {
+        if (perlio_ok $charset) {
+            $encoding = ':encoding(' . $charset . ')';
+        }
+        else {
+            die "Unsupported PerlIO encoding: $charset";
+        }
+    }
+
+    open my $fh, "<$encoding", $tmpfname
         or die "Can't open uploaded temporary file $tmpfname: $!";
+
+    my $bom_length = 0;
+    if (! $charset
+        && ($headers->content_is_text
+            || $headers->content_is_xml)
+        && -s $tmpfname >= 4) {
+        sysread $fh, my $bytes, 4;
+        if ("\xFF\xFE" eq substr($bytes, 0, 2)) {
+            $encoding = 'UTF-16LE';
+            $bom_length = 2;
+        }
+        elsif ("\xFE\xFF" eq substr($bytes, 0, 2)) {
+            $encoding = 'UTF-16BE';
+            $bom_length = 2;
+        }
+        elsif ("\xEF\xBB\xBF" eq substr($bytes, 0, 3)) {
+            $encoding = 'UTF-8';
+            $bom_length = 3;
+        }
+        elsif ("\x00\x00\xFE\xFF" eq $bytes) {
+            $encoding = 'UTF-32LE';
+            $bom_length = 4;
+        }
+        elsif ("\xFF\xFE\x00\x00" eq $bytes) {
+            $encoding = 'UTF-32BE';
+            $bom_length = 4;
+        }
+        sysseek $fh, 0, 0;
+    }
+
+    if ($bom_length) {
+        binmode $fh, ':encoding(' . $encoding . ')';
+        read($fh, my $unused, 1); # read the bom character
+    }
 
     return $fh;
 }
@@ -459,6 +504,18 @@ sub system_info {
         }
     };
 }
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;
 

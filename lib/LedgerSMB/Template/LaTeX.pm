@@ -1,11 +1,13 @@
 
+package LedgerSMB::Template::LaTeX;
+
 =head1 NAME
 
 LedgerSMB::Template::LaTeX - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-Muxed LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
+LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
 
 =head1 DETAILS
 
@@ -17,8 +19,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 =over
 
 =cut
-
-package LedgerSMB::Template::LaTeX;
 
 use warnings;
 use strict;
@@ -159,12 +159,13 @@ sub mimetype {
 
 =back
 
-=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

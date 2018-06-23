@@ -57,7 +57,7 @@ sub wait_for_page {
                 # if there's a reference element,
                 # wait for it to go stale (raise an exception)
                 eval {
-                    defined $ref->tag_name;
+                    $ref->tag_name;
                 };
                 $ref = undef if !defined $@;
                 return 0;

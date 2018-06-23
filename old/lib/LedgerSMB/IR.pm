@@ -110,14 +110,18 @@ sub post_invoice {
     my $diff = 0;
     my $item;
     my $invoice_id;
+    my $fxdiff = 0;
 
-    ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
+    ( $null, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee};
 
     unless ( $form->{employee_id} ) {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
-    ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
+    $form->{department_id} = 0;
+    ( $null, $form->{department_id} ) = split( /--/, $form->{department} )
+        if $form->{department};
     $form->{department_id} *= 1;
 
     $query = qq|
@@ -209,7 +213,7 @@ sub post_invoice {
             my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
             # deduct discount
             my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
-            $decimalplaces = ($form->{"precision_$i"} > $moneyplaces)
+            $decimalplaces = ($form->{"precision_$i"} && $form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
             $form->{"sellprice_$i"} = $fxsellprice -
@@ -409,7 +413,7 @@ sub post_invoice {
     }
 
     $form->{paid} = 0;
-    foreach my $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. ( $form->{paidaccounts} || 0 )) {
         $form->{"paid_$i"} =
           $form->parse_amount( $myconfig, $form->{"paid_$i"} );
         $form->{"paid_$i"} *= -1 if $form->{reverse};
@@ -430,12 +434,14 @@ sub post_invoice {
     $invnetamount = $amount;
 
     $amount = 0;
-    for ( split / /, $form->{taxaccounts} ) {
-        $amount += $form->{acc_trans}{ $form->{id} }{$_}{amount} =
-          $form->round_amount( $form->{acc_trans}{ $form->{id} }{$_}{amount},
-            2 );
+    if ($form->{taxaccounts}) {
+        for ( split / /, $form->{taxaccounts} ) {
+            $amount += $form->{acc_trans}{ $form->{id} }{$_}{amount} =
+              $form->round_amount( $form->{acc_trans}{ $form->{id} }{$_}{amount},
+                2 );
 
-        $form->{acc_trans}{ $form->{id} }{$_}{amount} *= -1;
+            $form->{acc_trans}{ $form->{id} }{$_}{amount} *= -1;
+        }
     }
     $invamount = $invnetamount + $amount;
 
@@ -491,19 +497,18 @@ sub post_invoice {
             IIAA->post_form_manual_tax($myconfig, $form, -1, "payables");
     }
 
-
     # record payable
     if ( $form->{payables} ) {
         ($accno) = split /--/, $form->{AP};
 
         $query = qq|
-         INSERT INTO acc_trans (trans_id, chart_id,
+          INSERT INTO acc_trans (trans_id, chart_id,
                                 amount_bc, curr, amount_tc, transdate)
                        VALUES (?, (SELECT id FROM account WHERE accno = ?),
                               ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query)
             or $form->dberror($dbh->errstr);
-        $sth->execute( $form->{id}, $accno,
+         $sth->execute( $form->{id}, $accno,
                        $form->{payables}, $form->{currency},
                     $form->{payables}/$form->{exchangerate},
                        $form->{transdate})
@@ -545,6 +550,7 @@ sub post_invoice {
     IIAA->process_form_payments($myconfig, $form);
 
     # set values which could be empty
+    $form->{taxincluded} //= 0;
     $form->{taxincluded} *= 1;
 
     my $approved = 1;
@@ -600,7 +606,8 @@ sub post_invoice {
 
     # add shipto
     $form->{name} = $form->{vendor};
-    $form->{name} =~ s/--$form->{vendor_id}//;
+    $form->{name} =~ s/--$form->{vendor_id}//
+        if $form->{vendor} && $form->{vendor_id};
     $form->add_shipto($form->{id});
 
     if (!$form->{separate_duties}){

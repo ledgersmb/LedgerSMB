@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::order;
+
 =head1 NAME
 
 LedgerSMB::Scripts::order - Order search functions for LedgerSMB
@@ -13,8 +16,6 @@ shipping or receiving, merging several orders into one, or the like.
 
 =cut
 
-package LedgerSMB::Scripts::order;
-
 use strict;
 use warnings;
 
@@ -23,6 +24,10 @@ use LedgerSMB::Report::Orders;
 use LedgerSMB::Magic qw( OEC_PURCHASE_ORDER OEC_SALES_ORDER OEC_QUOTATION OEC_RFQ );
 
 use LedgerSMB::old_code qw(dispatch);
+
+=head1 METHODS
+
+This module doesn't specify any methods.
 
 =head1 ROUTINES
 
@@ -159,7 +164,7 @@ sub generate {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

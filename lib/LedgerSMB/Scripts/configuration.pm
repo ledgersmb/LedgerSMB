@@ -1,13 +1,25 @@
+
+package LedgerSMB::Scripts::configuration;
+
 =head1 NAME
 
 LedgerSMB::Scripts::configuration - Configuration Workflows for LedgerSMB
+
+=head1 DESCRIPTION
+
+Implements the presenting and saving done from the screens
+System > Defaults and System > Sequences.
 
 =head1 SYNPOPSIS
 
 LedgerSMB::Scripts::configuration->can('action')->($request);
 
+=head1 METHODS
+
+This module does not specify any methods.
+
 =cut
-package LedgerSMB::Scripts::configuration;
+
 use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::App_State;
@@ -379,7 +391,7 @@ sub save_sequences {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This file may be reused under the
 conditions of the GNU GPL v2 or at your option any later version.  Please see

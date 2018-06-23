@@ -2,7 +2,7 @@
 
 LedgerSMB::Template - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module renders templates to an in-memory property.
 
@@ -420,21 +420,17 @@ sub new_UI {
     my $class = shift;
     my $request = shift;
 
-    my $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
-            if $LedgerSMB::App_State::Company_Config;
-    my $UI_vars = {
-        dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
-        dojo_built => $LedgerSMB::Sysconfig::dojo_built,
-        dojo_location => $LedgerSMB::Sysconfig::dojo_location,
-    };
-
     return $class->new(
         @_,
         format => 'HTML' ,
         path => 'UI',
         user => $request->{_user},
         locale => $request->{_locale},
-        additional_vars => $UI_vars
+        additional_vars => {
+            dojo_theme =>
+                ($LedgerSMB::App_State::Company_Config->{dojo_theme}
+                 // $LedgerSMB::Sysconfig::dojo_theme),
+        },
     );
 }
 
@@ -480,7 +476,7 @@ sub get_template_source {
     my ($self, $format_extension) = @_;
 
     my $source;
-    if ($self->{include_path} eq 'DB'){
+    if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $source = $self->{template};
     } else {
         $source = $self->{template} . '.' . $format_extension;
@@ -494,7 +490,7 @@ sub get_template_args {
     my $binmode = shift;
 
     my %additional_options = ();
-    if ($self->{include_path} eq 'DB'){
+    if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $additional_options{INCLUDE_PATH} = [];
         $additional_options{LOAD_TEMPLATES} =
             [ LedgerSMB::Template::DBProvider->new(
@@ -507,7 +503,9 @@ sub get_template_args {
                       }),
                   }) ];
     }
-    my $paths = [$self->{include_path},'templates/demo','UI/lib'];
+    my $paths = ['UI/lib'];
+    unshift @$paths, $self->{include_path}
+        if defined $self->{include_path};
     unshift @$paths, $self->{include_path_lang}
         if defined $self->{include_path_lang};
     my $arghash = {
@@ -523,7 +521,7 @@ sub get_template_args {
     };
 
     if ($LedgerSMB::Sysconfig::cache_templates
-        && $self->{include_path} ne 'DB') {
+        && (!$self->{include_path} || $self->{include_path} ne 'DB')) {
        # don't cache compiled database-retrieved templates
        # they will vary between databases
         $arghash->{COMPILE_EXT} = '.lttc';
@@ -557,7 +555,6 @@ sub _render {
     my $cvars = shift;
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
-    $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
         default_currency =>
@@ -625,6 +622,16 @@ sub render {
     $self->_render($vars, $cvars);
     return $self;
 }
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 
 1;

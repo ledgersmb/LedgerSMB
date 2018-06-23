@@ -166,9 +166,11 @@ SKIP: {
         'Template, new (XLS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
+    isa_ok($template->render({'login' => 'foo\&bar',
+                              'rows' => [],
+                              'columns' => [] }),
         'LedgerSMB::Template',
-        'Template, render (XLS): Simple Postscript template, default filename');
+        'Template, render (XLS): Simple XLS template, default filename');
     # xls is a Microsoft BIFF format file.
     # make sure it looks like one by checking the first few header bytes.
     like($template->{output}, qr/^\xD0\xCF\x11\xE0/, 'Template, render (XLS): output is XLS');
@@ -190,9 +192,11 @@ SKIP: {
         'Template, new (XLSX): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLSX): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
+    isa_ok($template->render({'login' => 'foo\&bar',
+                              'rows' => [],
+                              'columns' => []}),
         'LedgerSMB::Template',
-        'Template, render (XLSX): Simple Postscript template, default filename');
+        'Template, render (XLSX): Simple XLSX template, default filename');
     # xlsx is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (XLSX): output is XLSX');
     is(
@@ -222,7 +226,7 @@ SKIP: {
         'Template, new (ODS): Object creation with format and template');
     isa_ok($template->render({'login' => 'foo\&bar'}),
         'LedgerSMB::Template',
-        'Template, render (ODS): Simple Postscript template, default filename');
+        'Template, render (ODS): Simple ODS template, default filename');
     # ods is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (ODS): output is ODS');
     is(

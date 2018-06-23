@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report;
+
 =head1 NAME
 
 LedgerSMB::Report - Base Reporting Functionality for LedgerSMB
@@ -37,7 +40,6 @@ UI/reports/display_report template will be used.
 
 =cut
 
-package LedgerSMB::Report;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
@@ -225,6 +227,32 @@ sub render {
     return $self->_render($request, renderer => 'render');
 }
 
+sub _output_name {
+    my $self = shift;
+    my $request = shift;
+
+    return undef
+        unless $request->{format};
+
+    $self->format('html')
+        unless defined $self->format;
+
+
+    my $name = $self->name || '';
+    $name =~ s/ /_/g;
+
+    $name = $name . '_' . $self->from_date->to_output
+            if $self->can('from_date')
+               and defined $self->from_date
+               and defined $self->from_date->to_output;
+    $name = $name . '-' . $self->to_date->to_output
+            if $self->can('to_date')
+               and defined $self->to_date
+               and defined $self->to_date->to_output;
+
+    return $name;
+}
+
 sub _render {
     my ($self, $request) = @_;
     my $template;
@@ -338,6 +366,9 @@ sub _render {
         user => $LedgerSMB::App_State::User,
         locale => $self->locale,
         path => 'UI',
+        output_options => {
+            filename => $self->_output_name($request),
+        },
         template => $template,
         format => uc($request->{format} || 'HTML'),
     );
@@ -437,7 +468,7 @@ LedgerSMB::Report subclasses are written typically in a few parts:
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

@@ -1,12 +1,18 @@
-=pod
+
+package LedgerSMB::File::Transaction;
 
 =head1 NAME
 
 LedgerSMB::File::Transaction - Manages attachments to financial transactions.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Manages attachments to financial transactions (in 1.3, AR, AP, and GL entries)
+
+Derived from C<LedgerSMB::File>, this module stores attachments in the
+C<file_transaction> table linked to the C<transactions> table (which
+itself is linked to the C<AR>, C<AP> and C<GL> tables).
+
 
 =head1 INHERITS
 
@@ -19,7 +25,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Transaction;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';
@@ -68,7 +73,7 @@ sub attach_all_from_order {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 The LedgerSMB Core Team
 

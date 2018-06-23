@@ -1,16 +1,15 @@
+# LedgerSMB
+
+Small and Medium business accounting and ERP
+
+
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
 [![Build Status](https://api.travis-ci.org/ledgersmb/LedgerSMB.svg?branch=master)](https://travis-ci.org/ledgersmb/LedgerSMB)
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
 
-As coveralls currently has a bug with their badging for master, here is a corrected version
-[![Coverage Status](http://www.sbts.com.au/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
 
-
-# LedgerSMB
-
-Small and Medium business accounting and ERP
 
 # SYNOPSIS
 
@@ -69,31 +68,9 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 
 # Quick start (from source)
 
-The instructions below are for getting started quickly; the [project's
-site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
+The instructions below are for getting started quickly; the [project's site](http://ledgersmb.org)
+ provides [in-depth installation instructions](https://ledgersmb.org/content/installing-ledgersmb-16)
 for **production** installs.
-
-## Check out the sources from GitHub
-
-__***Skip this step for from-tarball installs***__
-(Installation from release tarballs is preferred over installation from GitHub.)
-
-To get the latest development version:
-
-```sh
- $ git clone https://github.com/ledgersmb/LedgerSMB.git
- $ cd LedgerSMB
- $ git submodule update --init --recursive
-```
-
-To get the released version 1.5.18, the commands look like:
-
-```
- $ git clone -b 1.5.18 https://github.com/ledgersmb/LedgerSMB.git
- $ cd LedgerSMB
- $ git submodule update --init --recursive
-```
-
 
 ## System (library) dependencies
 
@@ -119,8 +96,6 @@ Then, some of the features listed below have system requirements as well:
    * dvitopdf
    * dvitops
    * pdftops
- * latex-pdf-images
-   * ImageMagick
 
 ## Perl module dependencies
 
@@ -154,7 +129,6 @@ specifying ```--with-feature=<feature>```:
 | Feature          | Description                         |
 |------------------|-------------------------------------|
 | latex-pdf-ps     | Enable PDF and PostScript output    |
-| latex-pdf-images | Image size detection for PDF output |
 | starman          | Starman Perl/PSGI webserver         |
 | openoffice       | OpenOffice.org document output      |
 | edi              | (EXPERIMENTAL) X12 EDI support      |
@@ -166,14 +140,13 @@ purpose of the quick start.
 When not installing as root or through `sudo`, `cpanm` will install unfulfilled
 library dependencies into a location which can be used with `local::lib`.
 
-The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
+The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-16)
 contain a list of distribution provided packages to reduce the
 number of dependencies installed from CPAN.
 
 **NOTES**
 
  1. For the pdf-ps target, LaTeX is required.
- 1. For the pdf-images target, ImageMagick is  required.
 
 ## PostgreSQL configuration
 
@@ -216,24 +189,11 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 
 ## Configure LedgerSMB
 
-### From-tarball installs
 (Installation from tarball is highly preferred over installation from GitHub for production installs.)
 
 ```bash
- $ cp conf/ledgersmb.conf.default ledgersmb.conf
+ $ cp doc/conf/ledgersmb.conf.default ledgersmb.conf
 ```
-
-### From-GitHub installs
-
-```bash
- $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
-```
-
- > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
- > page load times of some pages.  However, creating a built dojo
- > adds considerable complexity to these instructions; please consult
- > [the extensive setup instructions](https://ledgersmb.org/topic/installing-ledgersmb-15-github)
- > to build dojo.
 
 ## Running Starman
 
@@ -243,7 +203,7 @@ With the above steps completed, the system is ready to run the web server:
  >     a serious security issue, and as such LedgerSMB doesn't support it.
  >     Instead, if you need to start LedgerSMB from a root process, drop
  >     privileges to a user that doesn't have write access to the LedgerSMB Directories first.
- >     Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
+ >     Most daemonising mechanisms (eg: systemd) provide a mechanism to do this.
  >     Do not use the starman --user= mechanism, it currently drops privileges too late.
 
 ```bash
@@ -261,7 +221,7 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 All regular Perl environment variables can be used. In particular, it's important to make sure
 `PERL5LIB` is set correctly when setting up `local::lib` for the first time.
 
-We support the following
+We support the following Environment Variables within our code
 - LSMB_WORKINGDIR : Optional
      - Causes a chdir to the specified directory as the first thing done in starman.psgi
      - If not set the current dir is used.
@@ -269,6 +229,18 @@ We support the following
     ```
     LSMB_WORKINGDIR='/usr/local/ledgersmb/'
     ```
+
+
+We support the following Environment Variables for our dependencies
+- PGHOST : Optional
+     - Specifies the Postgres server Domain Name or IP address
+- PGPORT : Optional
+     - Sepcifies the Postgres server Port
+- PGSSLMODE : Optional
+     - Enables SSL for the Postgres connection
+
+All Environment Variables supported by our dependencies should be passed through to them,
+that includes the standard Postgres Variables and others
 
 
 ## Next steps

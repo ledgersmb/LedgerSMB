@@ -13,6 +13,7 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::Headers::Fast'; # dependency of Plack too; don't need '::Fast'
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
@@ -46,6 +47,7 @@ requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Plack::Request';
+requires 'Plack::Request::WithEncoding';
 requires 'Plack::Util';
 requires 'Template', '2.14';
 requires 'Text::CSV';
@@ -63,12 +65,6 @@ recommends 'Math::BigInt::GMP';
 feature 'starman', "Standalone Server w/Starman" =>
     sub {
         requires "Starman";
-};
-
-feature 'latex-pdf-images',
-    "Size detection for images for embedding in LaTeX templates" =>
-    sub {
-        requires "Image::Size";
 };
 
 feature 'edi', "X12 EDI support" =>

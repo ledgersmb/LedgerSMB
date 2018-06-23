@@ -1,14 +1,23 @@
+
+package LedgerSMB::Scripts::transtemplate;
+
 =head1 NAME
 
 LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
+
+=head1 DESCRIPTION
+
+Entry points for managing transaction templates.
 
 =head1 SYNPOSIS
 
  LedgerSMB::Scripts::transtemplate::view($request);
 
-=cut
+=head1 METHODS
 
-package LedgerSMB::Scripts::transtemplate;
+This module doesn't specify any methods.
+
+=cut
 
 use strict;
 use warnings;
@@ -142,7 +151,7 @@ sub delete {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

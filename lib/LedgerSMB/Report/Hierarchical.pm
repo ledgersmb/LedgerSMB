@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Hierarchical;
+
 =head1 NAME
 
 LedgerSMB::Report::Hierarchical - Table reports with hierarchical axes
@@ -12,7 +15,6 @@ This report class is an abstract class.
 
 =cut
 
-package LedgerSMB::Report::Hierarchical;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -95,7 +97,7 @@ retrieved values.
 has sorted_col_ids => (is => 'rw');
 
 
-=head1 STATIC METHODS
+=head1 FUNCTIONS
 
 =over
 
@@ -124,7 +126,7 @@ sub header_lines {
 
 =back
 
-=head1 SEMI-PUBLIC METHODS
+=head1 METHODS
 
 =head2 cell_value($row_id, $col_id, [$value])
 
@@ -239,7 +241,7 @@ before '_render' => sub {
     $self->sorted_col_ids($self->cheads->sort);
 };
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2013 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

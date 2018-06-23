@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Payroll::Deduction_Types;
+
 =head1 NAME
 
 LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Payroll::Deduction_Types;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -122,7 +124,7 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

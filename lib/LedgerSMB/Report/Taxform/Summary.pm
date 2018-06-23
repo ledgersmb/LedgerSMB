@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Taxform::Summary;
+
 =head1 NAME
 
 LedgerSMB::Report::Taxform::Summary - Summary reports for 1099 and similar
@@ -10,7 +13,6 @@ forms for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::DBObject::TaxForm;
 use Moose;
 use namespace::autoclean;
@@ -153,7 +155,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used under the
 terms of the GNU General Public License version 2 or at your option any later

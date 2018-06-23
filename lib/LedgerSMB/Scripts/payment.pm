@@ -1,12 +1,15 @@
+
+package LedgerSMB::Scripts::payment;
+
 =head1 NAME
 
-LedgerSMB::Scripts::payment - LedgerSMB class defining the Controller functions for payment handling.
+LedgerSMB::Scripts::payment - Web entrypoints for payment handling.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Defines the controller functions and workflow logic for payment processing.
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Portions Copyright (c) 2007, David Mora R and Christian Ceballos B.
 
@@ -44,7 +47,6 @@ Original copyright notice below.
 =cut
 
 
-package LedgerSMB::Scripts::payment;
 use LedgerSMB::Template;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
@@ -224,7 +226,8 @@ sub pre_bulk_post_report {
         value => 'post_payments_bulk',
         class => 'submit',
     }];
-    $request->{action} = 'p';
+    delete $request->{$_}
+       for qw(action dbh);
     return $template->render({
         form => $request,
         hiddens => $request,
@@ -235,19 +238,6 @@ sub pre_bulk_post_report {
     });
 }
 
-# Is this even used?  It would just redirect back to the report which is not
-# helpful.  --CT
-
-sub p_payments_bulk_post {
-    my ($request) = @_;
-    return pre_bulk_post_report(@_);
-}
-
-# wrapper around post_payments_bulk munged for dynatable.
-
-sub post_payments_bulk_p {
-    return post_payments_bulk(@_);
-}
 
 =item get_search_results
 
@@ -428,12 +418,12 @@ sub print {
             user => $payment->{_user},
             template => 'check_multiple',
             format => uc $payment->{'format'},
-            output_args => $payment,
+            path => 'DB',
+            output_options => {
+               filename => 'printed-checks',
+            },
         );
-        $template->render($payment);
-        $template->output(%$payment);
-        $request->{action} = 'update_payments';
-        return display_payments(@_);
+        return $template->render($payment);
     } else {
 
     }
@@ -1295,20 +1285,16 @@ sub post_payment {
    }
     }
     # Finally we store all the data inside the LedgerSMB::DBObject::Payment object.
-    $Payment->{cash_account_id}    =
-        $Payment->_db_array_scalars(@cash_account_id);
-    $Payment->{amount}             =  $Payment->_db_array_scalars(@amount);
-    $Payment->{source}             =  $Payment->_db_array_scalars(@source);
-    $Payment->{memo}               =  $Payment->_db_array_scalars(@memo);
-    $Payment->{transaction_id}     =
-        $Payment->_db_array_scalars(@transaction_id);
-    $Payment->{op_amount}          =  $Payment->_db_array_scalars(@op_amount);
-    $Payment->{op_cash_account_id} =
-        $Payment->_db_array_scalars(@op_cash_account_id);
-    $Payment->{op_source}          =  $Payment->_db_array_scalars(@op_source);
-    $Payment->{op_memo}            =  $Payment->_db_array_scalars(@op_memo);
-    $Payment->{op_account_id}      =
-        $Payment->_db_array_scalars(@op_account_id);
+    $Payment->{cash_account_id}    = \@cash_account_id;
+    $Payment->{amount}             = \@amount;
+    $Payment->{source}             = \@source;
+    $Payment->{memo}               = \@memo;
+    $Payment->{transaction_id}     = \@transaction_id;
+    $Payment->{op_amount}          = \@op_amount;
+    $Payment->{op_cash_account_id} = \@op_cash_account_id;
+    $Payment->{op_source}          = \@op_source;
+    $Payment->{op_memo}            = \@op_memo;
+    $Payment->{op_account_id}      = \@op_account_id;
     $Payment->{exchangerate}       =  $Payment->{exrate};
     # Ok, passing the control to postgresql and hoping for the best...
 
@@ -1962,7 +1948,7 @@ sub post_overpayment {
         for my $field (qw(amount cash_account_id source memo transaction_id
                           ovp_payment_id)) {
             $list_key->{$key} =
-                $list_key->_db_array_scalars(@{$list_key->{"array_$field"}});
+                $list_key->{"array_$field"};
         }
 
         $entity_list{$key}->post_payment();

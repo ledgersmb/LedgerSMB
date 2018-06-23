@@ -1,7 +1,25 @@
+
+package LedgerSMB::Report::Inventory::Activity;
+
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Activity - Inventory Activity reports for
-LedgerSMB
+LedgerSMB::Report::Inventory::Activity - Inventory Activity reports
+
+=head1 DESCRIPTION
+
+Implements a listing of parts, reporting numbers in 4 categories of activity:
+
+=over
+
+=item Sold
+
+=item Used
+
+=item Assembled
+
+=item Adjusted
+
+=back
 
 =head1 SYNOPSIS
 
@@ -10,7 +28,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Activity;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -175,7 +192,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

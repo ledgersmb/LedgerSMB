@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Taxform::Details;
+
 =head1 NAME
 
 LedgerSMB::Report::Taxform::Details - 1099 and similar details forms for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Taxform::Details;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -152,7 +154,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used under the
 terms of the GNU General Public License version 2 or at your option any later

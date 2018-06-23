@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Unapproved::Batch_Detail;
+
 =head1 NAME
 
 LedgerSMB::Report::Unapproved::Batch_Detail - List Vouchers by Batch
@@ -28,7 +31,6 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 =cut
 
-package LedgerSMB::Report::Unapproved::Batch_Detail;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::DBObject::User;
@@ -257,7 +259,7 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

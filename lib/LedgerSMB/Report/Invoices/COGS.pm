@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::COGS;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::COGS - FIFO COGS Reports for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Invoices::COGS - FIFO COGS Reports for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::COGS;
 use namespace::autoclean;
 use Moose;
 extends 'LedgerSMB::Report';
@@ -187,7 +189,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 

@@ -1,6 +1,14 @@
+
+package LedgerSMB::Scripts::vouchers;
+
 =head1 NAME
 
 LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
+
+=head1 DESCRIPTION
+
+TODO: This would be a great place to describe the roles and differences
+between batches and vouchers...
 
 =head1 SYNPOSIS
 
@@ -11,8 +19,6 @@ LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 =over
 
 =cut
-
-package LedgerSMB::Scripts::vouchers;
 
 use strict;
 use warnings;
@@ -490,21 +496,30 @@ sub print_batch {
         `$zipcmd`;
 
         my $file_path = "$dirname.zip";
-        open my $zip, '<', $file_path
-            or die "Failed to open temporary zip file $file_path : $!";
-        binmode $zip, ':bytes';
-        unlink $file_path;
 
-        return [
-            HTTP_OK,
-            [
-                'Content-Type' => 'application/zip',
-                'Content-Disposition' =>
-                    'attachment; filename="batch-'
-                    . $request->{batch_id} . '.zip"',
-            ],
-            $zip
-        ];
+        return sub {
+            my $responder = shift;
+
+            open my $zip, '<:bytes', $file_path
+                or die "Failed to open temporary zip file $file_path : $!";
+
+            $responder->(
+                [
+                 HTTP_OK,
+                 [
+                  'Content-Type' => 'application/zip',
+                  'Content-Disposition' =>
+                      'attachment; filename="batch-'
+                      . $request->{batch_id} . '.zip"',
+                 ],
+                 $zip   # the file-handle
+                ]);
+
+            close $zip
+                or warn "Failed to close temporary zip file $file_path : $!";
+            unlink $file_path
+                or warn "Failed to unlink temporary zip file $file_path : $!";
+        };
     }
     else {
         return $report->render($request);
@@ -523,7 +538,7 @@ sub print_batch {
         }
     }
 };
-1;
+
 
 =back
 
@@ -549,10 +564,15 @@ maps to the selection stored proc
       {map_to       => 1,
       select_method => 'custom_sample_ap_select'};
 
-=head1 Copyright (C) 2009, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2009-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

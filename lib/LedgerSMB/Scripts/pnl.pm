@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::pnl;
+
 =head1 NAME
 
 LedgerSMB::Scripts::pnl - PNL report workflows for LedgerSMB
@@ -13,7 +16,7 @@ Called via lsmb-handler.pl:
 This module provides workflow logic for producing various reports regaridng 
 profit and loss.
 
-=head1 METHODS/WORKFLOWS
+=head1 METHODS
 
 =over
 
@@ -22,8 +25,6 @@ profit and loss.
 Generates an income statement.
 
 =cut
-
-package LedgerSMB::Scripts::pnl;
 
 use LedgerSMB::Report::PNL::Income_Statement;
 use LedgerSMB::Report::PNL::Product;
@@ -76,7 +77,7 @@ sub generate_income_statement {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

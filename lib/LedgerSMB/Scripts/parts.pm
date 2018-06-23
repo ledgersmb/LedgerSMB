@@ -1,10 +1,20 @@
+
+package LedgerSMB::Scripts::parts;
+
 =head1 NAME
 
 LedgerSMB::Scripts::parts
 
+=head1 DESCRIPTION
+
+TODO.
+
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
-package LedgerSMB::Scripts::parts;
 use strict;
 use warnings;
 
@@ -55,5 +65,16 @@ sub partslist_json {
 
     return $request->to_json( $items );
 }
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2015-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 1;

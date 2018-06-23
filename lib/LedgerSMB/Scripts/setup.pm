@@ -1,8 +1,11 @@
+
+package LedgerSMB::Scripts::setup;
+
 =head1 NAME
 
 LedgerSMB::Scripts::setup - web entry points for database administration
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 The workflows for creating new databases, updating old ones, and running
 management tasks.
@@ -18,12 +21,12 @@ management tasks.
 # for the reason that the database logic is fairly complex.  Most of the time
 # these are maintained inside the LedgerSMB::Database package.
 #
-package LedgerSMB::Scripts::setup;
 
 use strict;
 use warnings;
 
 use Digest::MD5 qw(md5_hex);
+use Encode;
 use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use List::Util qw( first );
@@ -458,21 +461,27 @@ sub run_backup {
         return $template->render($request);
     }
     elsif ($request->{backup_type} eq 'browser') {
-        my $bak;
-        open $bak, '<', $backupfile
-            or die "Failed to open temporary backup file $backupfile : $!";
-        unlink $backupfile; # remove the file after it gets closed
-
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
-        return [
-            HTTP_OK,
-            [
-                'Content-Type' => $mimetype,
-                'Content-Disposition' =>
-                    "attachment; filename=\"$attachment_name\""
-            ],
-            $bak  # return the file-handle
-        ];
+        return sub {
+            my $responder = shift;
+
+            open my $bak, '<:bytes', $backupfile
+                or die "Failed to open temporary backup file $backupfile: $!";
+            $responder->(
+                [
+                 HTTP_OK,
+                 [
+                  'Content-Type' => $mimetype,
+                  'Content-Disposition' =>
+                      "attachment; filename=\"$attachment_name\""
+                 ],
+                 $bak  # the file-handle
+                ]);
+            close $bak
+                or warn "Failed to close temporary backup file $backupfile: $!";
+            unlink $backupfile
+                or warn "Failed to unlink temporary backup file $backupfile: $!";
+        };
     }
     else {
         die $request->{_locale}->text('Don\'t know what to do with backup');
@@ -1262,7 +1271,7 @@ sub process_and_run_upgrade_script {
        or warn 'Failed to close temporary file';
 
     $database->run_file(
-        file => $tempfile,
+        file => $tempfile->filename,
         stdout_log => $temp . '_stdout',
         errlog => $temp . '_stderr'
         );
@@ -1524,7 +1533,7 @@ sub rebuild_modules {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'text/html; charset=UTF-8' ],
-             $HTML
+             [ map { encode_utf8($_) } @$HTML ]
         ]
         if $HTML;
 
@@ -1579,7 +1588,7 @@ sub system_info {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 LedgerSMB Core Team.
 This file is licensed under the GNU General Public License version 2,

@@ -1,23 +1,27 @@
+
+package LedgerSMB::App_Module;
+
 =head1 NAME
 
 LedgerSMB::App_Module -- Application Module Lists for LedgerSMB
 
-=head1 SYNOPSYS
+=head1 DESCRIPTION
 
-Application modules, new to LedgerSMB 1.4, are ways to categorize functionality in
-LedgerSMB.  In future versions, these may be important to security management and the
-like.  However at present they are mostly available to tie various reporting entries
-to various parts of the software.
+Application modules, new to LedgerSMB 1.4, are ways to categorize
+functionality in LedgerSMB.  In future versions, these may be important
+to security management and the like.  However at present they are mostly
+available to tie various reporting entries to various parts of the software.
 
-Note that modules are generally read-only and not expected to be saved in the system.
+Note that modules are generally read-only and not expected to be saved in
+the system.
 
-The id attribute is expected to be static and hardcoded, so these must be assigned.
+The id attribute is expected to be static and hardcoded,
+ so these must be assigned.
 
 A default module (id 0, label '') is available for doing lookups.
 
 =cut
 
-package LedgerSMB::App_Module;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';
@@ -78,7 +82,7 @@ sub list{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2012, The LedgerSMB Core Team.  This file may be reused under the terms of
 the GNU General Public License, version 2, or at your option any later version.  See

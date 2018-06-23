@@ -15,7 +15,7 @@ that depreciation routines can't work properly.
 Please fix the data in the table below so the migration can add a constraint
 to prevent similar erroneous data from entering the database.
     |,
-    table => {
+    tables => {
         'asset_item' => {
             prim_key => 'id',
         },
@@ -50,7 +50,7 @@ that depreciation routines can't work properly.
 Please fix the data in the table below so the migration can add a constraint
 to prevent similar erroneous data from entering the database.
     |,
-    table => {
+    tables => {
         'asset_item' => {
             prim_key => 'id',
         },
@@ -85,7 +85,7 @@ that depreciation routines can't work properly.
 Please fix the data in the table below so the migration can add a constraint
 to prevent similar erroneous data from entering the database.
     |,
-    table => {
+    tables => {
         'asset_item' => {
             prim_key => 'id',
         },

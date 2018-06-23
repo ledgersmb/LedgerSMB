@@ -33,6 +33,19 @@ sub test_request {
 }
 
 
+sub filter_js_src {
+
+    # Given an array ref of rendered html lines,
+    # perform in-place substitution of javascript paths
+    # so that differences between built and unbuilt dojo
+    # installations are ignored.
+    my $lines = shift;
+    foreach my $line(@{$lines}) {
+        $line =~ s|"js-src/|"js/|g;
+    }
+}
+
+
 ###############################################
 #
 #
@@ -134,13 +147,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -150,7 +162,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -165,10 +177,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -231,13 +239,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -247,7 +254,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -262,10 +269,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -328,13 +331,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -344,7 +346,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -359,10 +361,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -423,13 +421,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -439,7 +436,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -454,10 +451,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -535,13 +528,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -551,7 +543,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -566,10 +558,6 @@ is join("\n", @$out), q{<!DOCTYPE html>
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
 </head>

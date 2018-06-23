@@ -9,7 +9,7 @@ use warnings;
 
 LedgerSMB:Scripts::currency
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module provides the workflow scripts for managing currencies and fx rates.
 
@@ -355,7 +355,7 @@ sub upload_exchangerates {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

@@ -10,11 +10,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title><?lsmb form.titlebar ? form.titlebar : titlebar ?></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-        <?lsmb IF refresh -?>
-            <meta http-equiv="refresh" content="<?lsmb refresh.delay ?>; <?lsmb refresh.url ?>">
-        <?lsmb END -?>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <?lsmb# HTML Snippet, for import only ?>
         <?lsmb
@@ -24,16 +19,16 @@
             # *persistent*
             # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
         ?>
-        <link rel="stylesheet" href="<?lsmb dojo_location ?>/dojo/resources/dojo.css" type="text/css" />
-        <link rel="stylesheet" href="<?lsmb dojo_location ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
 
         <?lsmb IF form.stylesheet ?>
-            <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
+            <link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" />
         <?lsmb ELSIF stylesheet ?>
-            <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" />
+            <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb FOREACH s = include_stylesheet ?>
-            <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
+            <link rel="stylesheet" href="css/<?lsmb s ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb IF warn_expire ?>
         <script type="text/javascript">
@@ -52,17 +47,11 @@
                  <?lsmb END ?>
             };
        </script>
-        <script type="text/javascript" src="<?lsmb dojo_location ?>/dojo/dojo.js"></script>
-        <script type="text/javascript" src="<?lsmb dojo_location ?>/lsmb/main.js"></script>
+        <script type="text/javascript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/lsmb/main.js"></script>
         <?lsmb FOREACH s = include_script ?>
             <script type="text/javascript" src="<?lsmb s ?>" ></script>
         <?lsmb END ?>
-
-        <?lsmb IF html_charset ?>
-            <meta http-equiv="content-type" content="text/html; charset=<?lsmb html_charset ?>">
-        <?lsmb ELSE ?>
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <?lsmb END # if html_charset ?>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <?lsmb BLOCK end_html ?>

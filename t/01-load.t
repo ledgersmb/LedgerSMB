@@ -52,7 +52,7 @@ my @modules =
           'LedgerSMB::DBH', 'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer',
           'LedgerSMB::User', 'LedgerSMB::Entity',
-          'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
+          'LedgerSMB::GL', 'LedgerSMB::Timecard',
           'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
           'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',

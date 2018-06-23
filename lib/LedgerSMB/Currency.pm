@@ -2,7 +2,7 @@
 
 LedgerSMB::Currency
 
-=head1 SYNOPSYS
+=head1 DESCRIPTION
 
 This holds the information as to the handling of classes of exchange rates.
 Different classes may be created for the purpose of daily entry, revaluation,
@@ -112,7 +112,7 @@ sub delete {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2015 The LedgerSMB Core Team.  This module may be used under the
 GNU GPL in accordance with the LICENSE file listed.

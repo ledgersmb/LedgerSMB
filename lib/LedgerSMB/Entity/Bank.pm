@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Bank;
+
 =head1 NAME
 
 LedgerSMB::Entity::Bank - Bank account info for customers, vendors,
@@ -16,7 +19,6 @@ credit account being able to attach itself to a single bank account.
 
 =cut
 
-package LedgerSMB::Entity::Bank;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';
@@ -124,7 +126,7 @@ dbmethod delete => (funcname => 'delete_bank_account');
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 OPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the GNU General Public License version 2 or at your option any later

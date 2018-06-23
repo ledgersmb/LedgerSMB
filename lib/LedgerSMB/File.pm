@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::File;
 
 =head1 NAME
 
 LedgerSMB::File - Provides routines for managing file attachments.
 
-=head1 SYNPSIS
+=head1 DESCRIPTION
 
 This provides routines for managing file attachments.  Subclasses may be used
 to provide functionality for specific types of file attachments.
@@ -15,8 +16,6 @@ to provide functionality for specific types of file attachments.
 
 =cut
 
-
-package LedgerSMB::File;
 
 use strict;
 use warnings;
@@ -35,29 +34,37 @@ use LedgerSMB::MooseTypes;
 
 PGObject::Type::ByteString->register(registry => 'default');
 
-=item  attached_by_id
+=item  uploaded_by
 
 Entity id of the individual who attached the file.
 
 =cut
 
-has attached_by_id => (is => 'rw', isa => 'Maybe[Int]');
+has uploaded_by => (is => 'rw', isa => 'Maybe[Int]');
 
-=item attached_by
+=item uploaded_by_name
 
 Entity name of individual who attached file
 
 =cut
 
-has attached_by => (is => 'rw', isa => 'Maybe[Str]');
+has uploaded_by_name => (is => 'rw', isa => 'Maybe[Str]');
 
-=item attached_at
+=item uploaded_at
 
 Timestamp of attachment point.
 
+=cut
+
+has uploaded_at => (is => 'ro', isa => 'Maybe[Str]');
+
 =item content
 
-This stores a reference to the binary content of the file.
+This property yields a reference to the binary content of the file.
+Dereferencing it will yield the underlying raw content.
+
+When setting, either a string, or a scalar reference to a string
+may be used, either of which will be coerced into a reference.
 
 Note: Important difference with the 1.4 series is that before
   1.5.0 this attribute stored the actual content instead of a
@@ -150,29 +157,31 @@ instance goes out of scope.
 
 =cut
 
-has file_path => (is => 'rw', isa => 'Maybe[Str]',
-                  lazy => 1,
-                  default => sub {
-                      return File::Temp->newdir( CLEANUP => 1 );
-                  } );
+has file_path => (
+    is => 'ro',
+    isa => 'Maybe[Str]',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        $self->_tempdir->dirname;
+    },
+);
 
-=item sizex
+=item _tempdir
 
-X axis dimensions, if Image::Size is installed and file is image (only on files
-retrieved for invoices).
-
-=cut
-
-has sizex => (is => 'rw', isa => 'Maybe[Int]');
-
-=item sizey
-
-Y axis dimensions, if Image::Size is installed and file is image (only on files
-retrieved for invoices).
+Private property holding the File::Temp::Dir object created for the
+get_for_template() method.
 
 =cut
 
-has sizey => (is => 'rw', isa => 'Maybe[Int]');
+has _tempdir => (
+    is => 'ro',
+    isa => 'Maybe[Object]',
+    lazy => 1,
+    default => sub {
+        File::Temp->newdir( CLEANUP => 1 );
+    },
+);
 
 =back
 
@@ -194,7 +203,9 @@ sets it.
 sub get_mime_type {
     my ($self) = @_;
     if (!($self->mime_type_id || $self->mime_type_text)){
-       $self->mime_type_text(MIME::Type->new->mimeTypeOf($self->file_name));
+       $self->mime_type_text(
+            MIME::Types->new->mimeTypeOf($self->file_name)->type
+       );
     }
     if (!($self->mime_type_id && $self->mime_type_text)){
        my ($ref) = $self->call_dbmethod(funcname => 'file__get_mime_type');
@@ -203,33 +214,6 @@ sub get_mime_type {
     }
     return $self->mime_type_text;
 }
-
-=item set_mime_type
-
-Sets the mipe_type_id from the mime_type_text
-
-=cut
-
-sub set_mime_type {
-    my ($self, $mime_type) = @_;
-    $self->mime_type_text($mime_type);
-    my ($ref) = $self->call_procedure(funcname => 'file__mime_type_text',
-         args => [undef, $self->mime_type_text]);
-    return $self->mime_type_id($ref->{id});
-
-}
-
-=item detect_type
-
-Auto-detects the type of the file.  Not yet implemented
-
-=cut
-
-sub detect_type {
-    my ($self) = @_;
-    $logger->warn("Stub LedgerSMB::File::detect_type\n");
-    return;
-};
 
 =item get
 
@@ -246,8 +230,52 @@ sub get {
 
 =item get_for_template({ref_key => int, file_class => int})
 
-Returns file data for invoices for embedded images, except that content is set
-to a directory relative to C<file_path> where these files are stored.
+This is a specialised query with rather opaque logic and transformations,
+intended to extract a set of files for inclusion in LaTeX invoice templates.
+
+If results are returned, a temporary directory is created by this method,
+into which the returned files are written, for use by the template. The
+path of this temporary directory is available as the `file_path` property.
+This directory and its contents are removed when this object instance goes
+out of scope.
+
+The method returns as a list and writes to the temporary directory:
+
+  1) All files matching the specified `file_class` and `ref_key`, having a
+     `mime_type` with `invoice_include=TRUE`.
+
+AND
+
+  2) For every part on an invoice having `trans_id` equal to the specified
+     `ref_key` argument (regardless of specified file_class), the most recent
+     (by id) file associated with that part having mime_type matching
+     'image*'.
+
+If file_class is FC_PART, the returned file_name is a concatanation of
+`ref_key` and `file_name` joined by '-', rather than the raw database
+`file_name` field.
+
+All file classes have underscores stripped from their `file_name` fields.
+For FC_PART file classes, this happens after the concatanation of `ref_key`.
+
+[For FC_PART file classes, as a final step before data is returned, the
+`ref_key` field is replaced with part of the reconstructed `file_name`,
+up to the first '-' character. As `ref_key` is an integer field, this
+step appears only to restore the original `ref_key`.]
+
+Returns an array containing a list of hashes, each comprising the
+following keys:
+
+  * id
+  * uploaded_by_id    # entity_id of the user who uploaded the file
+  * uploaded_by_name  # entity name of the user who uploaded the file
+  * file_name         # NOT the filename from the database - see notes above
+  * description
+  * content           # A reference to the raw file content
+  * mime_type         # The normalised mime type (e.g. 'text/plain')
+  * file_class
+  * ref_key
+  * uploaded_at       # date/time string YYYY-MM-DD HH:MM:SS.ssssss
 
 =cut
 
@@ -268,17 +296,8 @@ sub get_for_template{
         open my $fh, '>', $full_path
             or die "Failed to open output file $full_path : $!";
         binmode $fh, ':bytes';
-        print $fh $result->{content} or die "Cannot print to file $full_path";;
+        print $fh ${$result->{content}} or die "Cannot print to file $full_path";
         close $fh or die "Cannot close file $full_path";
-
-        local $@ = undef;
-        eval { # Block used so that Image::Size is optional
-            require Image::Size;
-            my ($x, $y);
-            ($x, $y) = imgsize(\{$result->{content}});
-            $result->{sizex} = $x;
-            $result->{sizey} = $y;
-        };
 
         if ($result->{file_class} == FC_PART){
            $result->{ref_key} = $result->{file_name};
@@ -293,7 +312,21 @@ sub get_for_template{
 
 =item list({ref_key => int, file_class => int})
 
-Lists files directly attached to the object.
+Returns a list of files directly attached to the object. No content is
+returned, except for files with a mime type of 'text/x-uri'
+
+Returns an array of hashrefs, each representing a file and comprising:
+
+  * id
+  * uploaded_by_id    # entity_id of the user who uploaded the file
+  * uploaded_by_name  # entity name of the user who uploaded the file
+  * file_name
+  * description
+  * content           # Reference to content, undef unless mime_type='text/x-uri'
+  * mime_type         # The normalised mime type (e.g. 'text/plain')
+  * file_class
+  * ref_key
+  * uploaded_at       # date/time string YYYY-MM-DD HH:MM:SS.ssssss
 
 =cut
 
@@ -323,9 +356,9 @@ sub list_links{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011 The LedgerSMB Core Team
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

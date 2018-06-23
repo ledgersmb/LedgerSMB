@@ -1,4 +1,6 @@
 
+package LedgerSMB::Database;
+
 =head1 NAME
 
 LedgerSMB::Database - APIs for database creation and management.
@@ -25,8 +27,6 @@ C<PGObject::Util::DBAdmin>.
 
 =cut
 
-
-package LedgerSMB::Database;
 
 use strict;
 use warnings;
@@ -424,6 +424,8 @@ sub load_base_schema {
 
 Loads or reloads sql modules from $loadorder
 
+Returns true when succesful, dies upon error.
+
 =cut
 
 sub load_modules {
@@ -499,6 +501,8 @@ sub load_coa {
 =head2 $db->create_and_load();
 
 Creates a database and then loads it.
+
+Returns true when successful, dies on error.
 
 =cut
 
@@ -666,7 +670,7 @@ sub run_file_with_logs {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 This module is copyright (C) 2007-2018, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later

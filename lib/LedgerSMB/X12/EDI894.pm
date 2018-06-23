@@ -1,3 +1,6 @@
+
+package LedgerSMB::X12::EDI894;
+
 =head1 NAME
 
 LedgerSMB::X12::EDI894 - X12 894 support for LedgerSMB
@@ -7,9 +10,17 @@ LedgerSMB::X12::EDI894 - X12 894 support for LedgerSMB
  my $edi = LedgerSMB::X12::EDI894->new(message => 'message.edi');
  my $form = $edi->order;
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::X12::EDI894;
+The X12 894 provides for delivery notifications of orders or product returns.
+While it is not yet clear what we want to do with this, this does return the
+data in a $form object.
+
+=head1 METHODS
+
+This module doesn't specify any methods.
+
+=cut
 
 use strict;
 use warnings;
@@ -27,12 +38,6 @@ sub _config {
     my $pkg_dir = file($INC{module_notional_filename(__PACKAGE__)})->dir;
     return $pkg_dir->file('cf', '894.cf')->stringify;
 }
-
-=head1 DESCRIPTION
-
-The X12 894 provides for delivery notifications of orders or product returns.
-While it is not yet clear what we want to do with this, this does return the
-data in a $form object.
 
 =head1 PROPERTIES
 
@@ -83,7 +88,16 @@ sub _order {
 
 =back
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2013-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
 =cut
+
 
 __PACKAGE__->meta->make_immutable;
 

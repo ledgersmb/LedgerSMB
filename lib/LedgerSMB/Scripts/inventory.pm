@@ -1,21 +1,17 @@
-=pod
+
+package LedgerSMB::Scripts::inventory;
 
 =head1 NAME
 
-LedgerSMB::Scripts::inventory - LedgerSMB class defining the Controller
-functions, template instantiation and rendering for inventory management.
+LedgerSMB::Scripts::inventory - Web entry points for inventory adjustment
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
-This module is the UI controller for the customer DB access; it provides the
-View interface, as well as defines the Save customer.
-Save customer will update or create as needed.
-
+This module implements inventory adjustment entry points.
 
 =head1 METHODS
 
 =cut
-package LedgerSMB::Scripts::inventory;
 
 use strict;
 use warnings;
@@ -162,5 +158,15 @@ sub adjustment_delete {
     $request->{report_name} = 'list_inventory_counts';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 1;

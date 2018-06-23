@@ -1,22 +1,22 @@
+
+package Tax;
+
 =head1 NAME
+
 LedgerSMB::Tax - Basic tax infrastructure for LedgerSMB
-#
-#======================================================================
-#
-# apply_taxes - applies taxes to the given subtotal
-# extract_taxes - extracts taxes from the given total
-# initialize_taxes - loads taxes from the database
-# calculate_taxes - calculates taxes
-#
-#====================================================================
+
+=head1 DESCRIPTION
+
+apply_taxes - applies taxes to the given subtotal
+extract_taxes - extracts taxes from the given total
+initialize_taxes - loads taxes from the database
+calculate_taxes - calculates taxes
 
 =head2 SYNOPSIS
 
   @taxes = LedgerSMB::Tax->init_taxes($request, $taxlist1, $taxlist2)
 
 =cut
-
-package Tax;
 
 use LedgerSMB::PGNumber;
 use Log::Log4perl;
@@ -26,6 +26,10 @@ use warnings;
 
 
 my $logger = Log::Log4perl->get_logger('Tax');
+
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
 
 =head1 FUNCTIONS
 
@@ -157,7 +161,7 @@ sub extract_taxes {
 
 1;
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 The original copyright notice follows:
 

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::Payments;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
@@ -9,7 +12,6 @@ LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::Payments;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -244,7 +246,7 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

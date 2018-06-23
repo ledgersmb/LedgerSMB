@@ -1,8 +1,20 @@
-#  This is the new configuration file for LedgerSMB.  Eventually all system
-# configuration directives will go here,  This will probably not fully replace
-# the ledgersmb.conf until 1.3, however.
 
 package LedgerSMB::Sysconfig;
+
+=head1 NAME
+
+LedgerSMB::Sysconfig - LedgerSMB configuration management
+
+=head1 DESCRIPTION
+
+LedgerSMB configuration management
+
+=head1 METHODS
+
+This module doesn't specify any methods.
+
+=cut
+
 use strict;
 use warnings;
 
@@ -281,11 +293,6 @@ def 'dojo_theme',
     default => 'claro',
     doc => q{};
 
-def 'dojo_location',
-    section => 'main',
-    default => ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js',
-    doc => q{};
-
 def 'force_username_case',
     section => 'main',
     default => undef,  # don't force case
@@ -338,11 +345,6 @@ def 'cache_templates',
     doc => q{};
 
 ### SECTION  ---   paths
-
-def 'cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
 
 # Path to the translation files
 def 'localepath',
@@ -588,5 +590,16 @@ sub override_defaults {
 }
 
 override_defaults;
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;
