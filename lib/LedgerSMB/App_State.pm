@@ -1,20 +1,23 @@
+
+package LedgerSMB::App_State;
+
 =head1 NAME
 
 LedgerSMB::App_State - Non-web application global state
 
+=head1 DESCRIPTION
+
+This is a generic container class for non-web-application related state
+information.  It provides a central place to track such things as localization,
+user, and other application state objects.
+
 =cut
-package LedgerSMB::App_State;
+
 use strict;
 use warnings;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::User;
 use LedgerSMB::Locale;
-
-=head1 SYNPOSIS
-
-This is a generic container class for non-web-application related state
-information.  It provides a central place to track such things as localization,
-user, and other application state objects.
 
 =head1 OBJECTS FOR STORAGE
 
@@ -315,7 +318,7 @@ sub all_months {
 
 1;
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

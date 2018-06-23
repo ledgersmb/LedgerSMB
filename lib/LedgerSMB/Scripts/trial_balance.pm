@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::trial_balance;
+
 =head1 NAME
 
 LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
@@ -7,8 +10,6 @@ LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
   LedgerSMB::Scripts::trial_balance::run($request);
 
 =cut
-
-package LedgerSMB::Scripts::trial_balance;
 
 use strict;
 use warnings;
@@ -67,7 +68,7 @@ sub run {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

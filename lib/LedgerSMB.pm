@@ -1,9 +1,11 @@
 
+package LedgerSMB;
+
 =head1 NAME
 
 LedgerSMB - The Base class for many LedgerSMB objects, including DBObject.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module creates a basic request handler with utility functions available
 in database objects (LedgerSMB::DBObject)
@@ -128,8 +130,6 @@ each being a hashref detailing configuration items with their values.
  #====================================================================
 =cut
 
-package LedgerSMB;
-
 use strict;
 use warnings;
 
@@ -174,7 +174,6 @@ sub new {
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
-    $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
     $self->{query_string} = $query_string if defined $query_string;
@@ -193,15 +192,11 @@ sub new {
 }
 
 sub open_form {
-    my ($self, $args) = @_;
-    my $i = 1;
+    my ($self) = @_;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{_session_id}],
                               continue_on_error => 1
     );
-    if ($args->{commit}){
-       $self->{dbh}->commit;
-    }
     return $self->{form_id} = $vars[0]->{form_open};
 }
 
@@ -509,6 +504,18 @@ sub system_info {
         }
     };
 }
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;
 

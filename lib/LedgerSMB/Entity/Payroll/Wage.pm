@@ -1,7 +1,14 @@
+
+package LedgerSMB::Entity::Payroll::Wage;
+
 =head1 NAME
 
 LedgerSMB::Entity::Payroll::Wage - Wages and Salary Handling
 for LedgerSMB
+
+=head1 DESCRIPTION
+
+Implements a database mapping for 'wage instance' attributes.
 
 =head1 SYNPOSIS
 
@@ -19,7 +26,6 @@ To save a new wage:
 
 =cut
 
-package LedgerSMB::Entity::Payroll::Wage;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -99,7 +105,7 @@ sub save {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

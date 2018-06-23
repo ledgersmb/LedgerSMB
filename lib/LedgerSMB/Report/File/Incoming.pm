@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::File::Incoming;
+
 =head1 NAME
 
 LedgerSMB::Report::File::Incoming - Files for LSMB processes.
@@ -8,7 +11,6 @@ LedgerSMB::Report::File::Incoming - Files for LSMB processes.
 
 =cut
 
-package LedgerSMB::Report::File::Incoming;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -125,7 +127,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 

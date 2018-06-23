@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Scripts::file;
 
 =head1 NAME
 
 LedgerSMB::Scripts::file - web entry points for file storage and retrieval
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This supplies file retrieval and attachment workflows
 
@@ -19,8 +20,6 @@ Retrieves a file and sends it to the web browser.
 Requires that id and file_class be set.
 
 =cut
-
-package LedgerSMB::Scripts::file;
 
 use strict;
 use warnings;
@@ -141,7 +140,7 @@ sub attach_file {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

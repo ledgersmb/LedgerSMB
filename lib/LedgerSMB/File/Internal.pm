@@ -1,8 +1,15 @@
-=pod
+
+package LedgerSMB::File::Internal;
 
 =head1 NAME
 
 LedgerSMB::File::Internal - Files for Internal processing
+
+=head1 DESCRIPTION
+
+Implements an internal file store to be used for files not linked to
+anything as attachments. I.e. company logos could be stored through
+this module.
 
 =head1 SYNOPSIS
 
@@ -33,7 +40,6 @@ methods only.
 
 =cut
 
-package LedgerSMB::File::Internal;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';
@@ -76,7 +82,7 @@ sub attach {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 The LedgerSMB Core Team
 
@@ -86,5 +92,8 @@ your software.
 
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
+
 1;

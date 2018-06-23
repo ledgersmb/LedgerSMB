@@ -82,6 +82,9 @@ L</FUNCTIONS> section of this document).
 
   1;
 
+=head1 METHODS
+
+This module declares no methods.
 
 =head1 FUNCTIONS
 
@@ -816,7 +819,7 @@ Returns the value associated with the selected/pressed/clicked description.
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2018 The LedgerSMB Core Team.
 

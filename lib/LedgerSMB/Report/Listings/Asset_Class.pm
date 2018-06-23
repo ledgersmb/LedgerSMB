@@ -1,6 +1,13 @@
+
+package LedgerSMB::Report::Listings::Asset_Class;
+
 =head1 NAME
 
-LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
+LedgerSMB::Report::Listings::Asset_Class - Asset Class listings
+
+=head1 DESCRIPTION
+
+Implements a listing of fixed asset classes
 
 =head1 SYNPOSIS
 
@@ -8,7 +15,6 @@ LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Asset_Class;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -120,7 +126,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2014 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the GNU General Public License version 2 or at your option any later

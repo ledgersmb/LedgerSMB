@@ -1,17 +1,25 @@
+
+package LedgerSMB::Database::Change;
+
 =head1 NAME
 
 LedgerSMB::Database::Change - Database change scripts for LedgerSMB
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::Database::Change;
+Implements infrastructure to apply "schema-deltas" (schema-changes)
+exactly once. Meaning that if a change has been applied succesfully,
+it won't be applied again.
+
+Note that this functionality isn't specific to LedgerSMB and mostly
+mirrors PGObject::Util::DBChange and originates from that code.
+
+=cut
 
 use strict;
 use warnings;
 use Digest::SHA;
 use Cwd;
-
-our $reloading = 0;
 
 =head1 SYNOPSIS
 
@@ -24,9 +32,9 @@ my $content_wrapped = $dbchange->content_wrap($before, $after);
 
 =head1 METHODS
 
-=head2 new
+=head2 new($path, $properties)
 
-Constructor. LedgerSMB::Database::Change->new($path, $properties);
+Constructor.
 
 $properties is optional and a hashref with any of the following keys set:
 
@@ -376,9 +384,9 @@ Future versions will allow properties to be specified in comment headers in
 the scripts themselves.  This will pose some backwards-compatibility issues and
 therefore will be 2.0 material.
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2016 The LedgerSMB Core Team
+Copyright (C) 2016-2018 The LedgerSMB Core Team
 
 This file may be used under the GNU General Public License version 2 or at your
 option any later version.  As part of the database framework of LedgerSMB it

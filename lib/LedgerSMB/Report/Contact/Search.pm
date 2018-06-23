@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Contact::Search;
+
 =head1 NAME
 
 LedgerSMB::Report::Contact::Search - Search for Customers, Vendors,
@@ -25,7 +28,6 @@ referral.
 
 =cut
 
-package LedgerSMB::Report::Contact::Search;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -282,7 +284,7 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

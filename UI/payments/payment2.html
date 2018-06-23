@@ -136,7 +136,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             </tr>
             <tr id="currency_row">
               <?lsmb #  here goes the selected currency in step 1 ?>
-              <th align="right" id="currency_label_column"><?lsmb text('Currency') -?>:</th>
+              <th align="right" id="currency_label_column"><?lsmb text('Currency') -?></th>
               <td id="currency_column">
                     <?lsmb curr.value -?><?lsmb curr.type='hidden'; PROCESS input element_data=curr -?>
               </td>
@@ -144,7 +144,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
             <?lsmb  IF defaultcurrency.text != curr.text # Only process element if one exists. ?>
             <tr id="exrate_row">
-              <th valign="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
+              <th valign="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?></th>
               <td id="exrate_column">
                 <?lsmb  IF exrate.value -?>
                 <?lsmb  exrate.text -?>

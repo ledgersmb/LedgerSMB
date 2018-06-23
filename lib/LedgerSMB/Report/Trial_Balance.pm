@@ -1,8 +1,11 @@
+
+package LedgerSMB::Report::Trial_Balance;
+
 =head1 NAME
 
 LedgerSMB::Report::Trial_Balance - Trial Balance report for LedgerSMB
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 Unlike other reports, trial balance reports can be saved:
 
@@ -22,7 +25,6 @@ We can also retrieve a previous report from the database and run it:
 
 =cut
 
-package LedgerSMB::Report::Trial_Balance;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_State;
@@ -256,7 +258,7 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
 terms of the LedgerSMB General Public License version 2 or at your option any

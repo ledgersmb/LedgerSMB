@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Timecards;
+
 =head1 NAME
 
 LedgerSMB::Report::Timecards - Time and materials reports for LedgerSMB
@@ -15,7 +18,6 @@ and sales order generation among other things.
 
 =cut
 
-package LedgerSMB::Report::Timecards;
 use LedgerSMB::MooseTypes;
 use Moose;
 use namespace::autoclean;
@@ -195,7 +197,7 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 =cut
 

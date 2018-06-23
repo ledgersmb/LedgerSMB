@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::SIC;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::SIC - List SIC codes in LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::SIC - List SIC codes in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::SIC;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -80,7 +82,7 @@ sub run_report{
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright(C) 2013 The LedgerSMB Core Team.  This file may be reused in
 accordance with the GNU General Public License version 2 or at your option any

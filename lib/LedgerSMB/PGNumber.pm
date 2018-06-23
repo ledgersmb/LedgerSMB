@@ -1,10 +1,20 @@
+
+package LedgerSMB::PGNumber;
+
 =head1 NAME
 
 LedgerSMB::PGNumber - Number handling and serialization to database
 
+=head1 DESCRIPTION
+
+This is a wrapper class for handling a database interface for numeric (int,
+float, numeric) data types to/from the database and to/from user input.
+
+This extends PGObject::Type::BigFloat which further extends
+Math::BigFloat and can be used in this way.
+
 =cut
 
-package LedgerSMB::PGNumber;
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
 use base qw(PGObject::Type::BigFloat);
@@ -17,14 +27,13 @@ use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 __PACKAGE__->register(registry => 'default',
     types => [qw(float4 float8 float numeric), 'double precision']);
 
+our ($accuracy, $precision, $round_mode, $div_scale);
 
-=head1 SYNPOSIS
-
-This is a wrapper class for handling a database interface for numeric (int,
-float, numeric) data types to/from the database and to/from user input.
-
-This extends PBObject::Type::BigFloat which further extends LedgerSMB::PGNumber and
-can be used in this way.
+# Globals
+$accuracy = PGObject::Type::BigFloat->accuracy();
+$precision = PGObject::Type::BigFloat->precision();
+$round_mode = PGObject::Type::BigFloat->round_mode();
+$div_scale = PGObject::Type::BigFloat->div_scale();
 
 =head1 INHERITS
 
@@ -124,7 +133,7 @@ my $lsmb_neg_formats = {
 
 =back
 
-=head1 IO METHODS
+=head1 METHODS
 
 =over
 
@@ -250,13 +259,17 @@ sub to_sort {
     return $_[0]->bstr;
 }
 
-1;
-
 =back
 
-=head1 Copyright (C) 2011, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
+=cut
+
+
+1;

@@ -1,13 +1,18 @@
-=pod
+
+package LedgerSMB::File::Order;
 
 =head1 NAME
 
 LedgerSMB::File::Order - Manages attachments to orders.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-Manages attachments to orders (sales orders, purchase orders, quotations and
-RFQ's).
+Manages attachments to orders (sales orders, purchase orders,
+quotations and RFQ's).
+
+Derived from C<LedgerSMB::File>, this module stores files in the
+C<file_order> table with links to the C<oe> table storing orders
+and quotations.
 
 =head1 INHERITS
 
@@ -22,7 +27,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Order;
 use strict;
 use Moose;
 use namespace::autoclean;
@@ -96,7 +100,7 @@ sub attach_all_from_transaction {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 The LedgerSMB Core Team
 

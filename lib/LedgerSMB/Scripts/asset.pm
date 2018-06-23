@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Scripts::asset;
 
 =head1 NAME
 
 LedgerSMB::Scripts::asset - web entry points for fixed assets accounting
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 Asset Management workflow script
 
@@ -14,7 +15,6 @@ Asset Management workflow script
 
 =cut
 
-package LedgerSMB::Scripts::asset;
 use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Asset_Class;
@@ -1037,8 +1037,6 @@ sub run_import {
     }
 };
 
-1;
-
 =back
 
 =head1 CUSTOMIZATION NOTES
@@ -1046,10 +1044,15 @@ sub run_import {
 The handling of CSV imports of fixed assets is handled by @file_columns.  This
 can be set in a custom/ file.
 
-=head1 Copyright (C) 2010, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

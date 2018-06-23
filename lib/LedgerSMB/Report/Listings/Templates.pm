@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Templates;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Templates - A List of templates installed in the
@@ -14,7 +17,6 @@ and orders).  This is not used for the user interface templates.
 
 =cut
 
-package LedgerSMB::Report::Listings::Templates;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -93,7 +95,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2014 The LedgerSMB Core Team
 

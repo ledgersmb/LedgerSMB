@@ -1,18 +1,13 @@
+
+package LedgerSMB::Scripts::template;
+
 =head1 NAME
 
 LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::Scripts::template;
-
-use strict;
-use warnings;
-
-use LedgerSMB::Template::DB;
-use LedgerSMB::Report::Listings::Templates;
-use LedgerSMB::Template;
-use LedgerSMB::App_State;
+Entry points for uploading, listing, saving and editing document templates.
 
 =head1 SYNPOSIS
 
@@ -23,6 +18,20 @@ To display the edit screen1
 To edit:
 
    LedgerSMB::Scripts::template::edit($request)
+
+=cut
+
+use strict;
+use warnings;
+
+use LedgerSMB::Template::DB;
+use LedgerSMB::Report::Listings::Templates;
+use LedgerSMB::Template;
+use LedgerSMB::App_State;
+
+=head1 METHODS
+
+This module doesn't specify any methods.
 
 =head1 FUNCTIONS
 
@@ -145,7 +154,7 @@ sub upload {
     return display($request);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014-2018 The LedgerSMB Core Team.
 

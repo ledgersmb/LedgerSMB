@@ -5,38 +5,36 @@ define(["dojo/_base/declare",
         "dojo/mouse",
         "dojo/_base/array",
         "dojo/store/JsonRest", "dojo/store/Observable",
-        "dojo/store/Memory", "dojo/store/Cache",
+        "dojo/store/Memory",
         "dijit/Tree", "dijit/tree/ObjectStoreModel",
-        "dojo/dom-class"
+        "dijit/registry", "dojo/dom-class"
        ], function(declare, on, lang, event, mouse, array,
-                   JsonRest, Observable, Memory, Cache, Tree, ObjectStoreModel,
-                   domClass
+                   JsonRest, Observable, Memory, Tree, ObjectStoreModel,
+                   registry, domClass
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
         var restStore = new JsonRest({
-            target:      "menu.pl?action=menuitems_json&",
+            target:      "menu.pl?action=menuitems_json",
             idProperty: "id"
         });
         var memoryStore = new Memory({idProperty: "id"});
-        var store = new Cache(restStore, memoryStore);
-
-        // initialize the store with the full menu
-        var results = store.query({});
-
-        // give store Observable interface so Tree can track updates
-        store = new Observable(store);
+        memoryStore = new Observable(memoryStore);
 
         // create model to interface Tree to store
         var model = new ObjectStoreModel({
-            store: store,
+            store: memoryStore,
             labelAttr: 'label',
             mayHaveChildren: function(item){ return item.menu; },
             getChildren: function(object, onComplete, onError){
-                onComplete(memoryStore.query({parent: object.id}));
-             },
+                restStore.query({}).then(
+                    function(items){
+                        memoryStore.setData(items);
+                        onComplete(memoryStore.query({parent: object.id}));
+                    }, function(){ onError(); });
+            },
             getRoot: function(onItem, onError){
-                store.get(0).then(onItem, onError);
+                onItem({ id: 0 });
             }
         });
 
@@ -79,7 +77,8 @@ define(["dojo/_base/declare",
                             + location.search + '#' + url, "_blank");
             }
             else {
-                location.hash = url;
+                var mainDiv = registry.byId("maindiv");
+                mainDiv.load_link(url);
             }
         },
         __onClick: function(e) {

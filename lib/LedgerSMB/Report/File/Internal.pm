@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::File::Internal;
+
 =head1 NAME
 
 LedgerSMB::Report::File::Internal - Files for LSMB processes.
@@ -8,7 +11,6 @@ LedgerSMB::Report::File::Internal - Files for LSMB processes.
 
 =cut
 
-package LedgerSMB::Report::File::Internal;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -107,7 +109,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 

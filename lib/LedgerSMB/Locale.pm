@@ -1,9 +1,11 @@
 
+package LedgerSMB::Locale;
+
 =head1 NAME
 
 LedgerSMB::Locale - Locale handling class for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 
@@ -87,8 +89,6 @@ $myconfig->{dateformat}.
  #
  #====================================================================
 =cut
-
-package LedgerSMB::Locale;
 
 use strict;
 use warnings;
@@ -187,6 +187,16 @@ sub date {
     }
     return $longdate;
 }
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 1;
 

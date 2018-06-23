@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Contact::History;
+
 =head1 NAME
 
 LedgerSMB::Report::Contact::History - Purchase history reports
@@ -24,7 +27,6 @@ both customers and vendors.
 
 =cut
 
-package LedgerSMB::Report::Contact::History;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -341,7 +343,7 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
 the terms of the GNU General Public License version 2 or at your option any

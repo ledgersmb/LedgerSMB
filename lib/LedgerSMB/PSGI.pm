@@ -4,10 +4,18 @@ package LedgerSMB::PSGI;
 
 LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 
+=head1 DESCRIPTION
+
+Maps the URL name space to the various entry points.
+
 =head1 SYNOPSIS
 
  use LedgerSMB::PSGI;
  my $app = LedgerSMB::PSGI->get_app();
+
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
 
 =cut
 
@@ -30,7 +38,7 @@ use Scalar::Util qw{ reftype };
 # To build the URL space
 use Plack;
 use Plack::Builder;
-use Plack::Request;
+use Plack::Request::WithEncoding;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Middleware::ReverseProxy;
@@ -90,7 +98,7 @@ sub psgi_app {
 
     my $auth = LedgerSMB::Auth::factory($env);
 
-    my $psgi_req = Plack::Request->new($env);
+    my $psgi_req = Plack::Request::WithEncoding->new($env);
     my $request = LedgerSMB->new(
         $psgi_req->parameters, $env->{'lsmb.script'}, $env->{QUERY_STRING},
         $psgi_req->uploads, $psgi_req->cookies, $auth, $env->{'lsmb.db'},
@@ -242,6 +250,15 @@ sub setup_url_space {
 
 =back
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2014-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
 =cut
+
 
 1;

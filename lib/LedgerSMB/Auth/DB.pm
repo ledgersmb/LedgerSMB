@@ -1,11 +1,11 @@
 
-=pod
+package LedgerSMB::Auth::DB;
 
 =head1 NAME
 
 LedgerSMB::Auth::DB - Standard Authentication DB module.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This is the standard DB-based module for authentication.  Uses HTTP basic
 authentication.
@@ -15,8 +15,6 @@ authentication.
 =over
 
 =cut
-
-package LedgerSMB::Auth::DB;
 
 use strict;
 use warnings;
@@ -86,7 +84,7 @@ sub get_credentials {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/

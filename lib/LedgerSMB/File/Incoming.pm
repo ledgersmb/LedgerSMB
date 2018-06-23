@@ -1,9 +1,18 @@
-=pod
+
+package LedgerSMB::File::Incoming;
 
 =head1 NAME
 
-LedgerSMB::File::Incoming - Incoming queue for not-yet-associated file
-attachments
+LedgerSMB::File::Incoming - Queue for to-be-classified files
+
+=head1 DESCRIPTION
+
+Implements a queue or store for files which haven't been classified
+as attachments to transactions, customers, etc, nor have been marked
+as internal files.
+
+Derived from C<LedgerSMB::File>, stores unclassified file data in
+the C<file_incoming> table.
 
 =head1 SYNOPSIS
 
@@ -22,7 +31,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Incoming;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';
@@ -44,7 +52,7 @@ sub attach {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2014 The LedgerSMB Core Team
 

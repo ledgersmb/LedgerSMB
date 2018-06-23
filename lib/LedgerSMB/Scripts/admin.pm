@@ -3,13 +3,11 @@ package LedgerSMB::Scripts::admin;
 use strict;
 use warnings;
 
-=pod
-
 =head1 NAME
 
 LedgerSMB:Scripts::admin - web entry points for user and perms management
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module provides the workflow scripts for managing users and permissions.
 
@@ -137,7 +135,7 @@ sub _column_heading {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please

@@ -1,10 +1,20 @@
+
+package LedgerSMB::Report::Listings::TemplateTrans;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 
+=head1 DESCRIPTION
+
+Implements a listing of template transactions: transactions which have
+been (mostly) pre-filled. These transactions have themselves not been
+posted, however, copies of these transactions can be (quickly) posted
+due to the fact that only minimal additional data needs te be specified
+in order to complete the financial transaction.
+
 =cut
 
-package LedgerSMB::Report::Listings::TemplateTrans;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::Magic qw( JRNL_GJ JRNL_AR JRNL_AP );
@@ -129,7 +139,7 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2016 The LedgerSMB Core Team
 

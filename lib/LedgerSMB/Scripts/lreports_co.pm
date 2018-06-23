@@ -1,16 +1,17 @@
+
+package LedgerSMB::Scripts::lreports_co;
+
 =head1 NAME
 
 LedgerSMB::Scripts::lreports_co - Colombian local reports
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module holds Colombia-specific reports.
 
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::lreports_co;
 
 use LedgerSMB::Template;
 use LedgerSMB::Report::co::Caja_Diaria;
@@ -86,15 +87,6 @@ sub run_bm {
     return $report->render($request);
 }
 
-=back
-
-=head1 Copyright (C) 2007 The LedgerSMB Core Team
-
-Licensed under the GNU General Public License version 2 or later (at your
-option).  For more information please see the included LICENSE and COPYRIGHT
-files.
-
-=cut
 
 {
     local ($!, $@) = ( undef, undef);
@@ -108,4 +100,18 @@ files.
         }
     }
 };
+
+=back
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 1;

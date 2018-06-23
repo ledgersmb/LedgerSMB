@@ -261,7 +261,7 @@ sub generate_links {
         }
      }
 
-     return $self->{link} = $self->_db_array_scalars(@links);
+     return $self->{link} = \@links;
 }
 
 =item list_headings

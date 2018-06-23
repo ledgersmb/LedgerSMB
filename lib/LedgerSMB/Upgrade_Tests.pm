@@ -1,3 +1,6 @@
+
+package LedgerSMB::Upgrade_Tests;
+
 =head1 NAME
 
 LedgerSMB::Upgrade_Tests - Upgrade tests for LedgerSMB
@@ -12,7 +15,6 @@ This module has a single function that returns upgrade tests.
 
 =cut
 
-package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;
@@ -1252,6 +1254,18 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
     return @tests;
 }
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012-2018 The LedgerSMB Core Team
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 __PACKAGE__->meta->make_immutable;
+
 
 1;

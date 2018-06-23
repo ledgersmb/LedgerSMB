@@ -30,6 +30,11 @@ color =  0
 pager = less
 
 
+[Documentation::RequirePodSections]
+    # Section names from Module::Starter::PBP -- Damian Conway's Best Practices
+    lib_sections = NAME | DESCRIPTION | METHODS | LICENSE AND COPYRIGHT
+    script_sections = NAME | USAGE | DESCRIPTION | LICENSE AND COPYRIGHT
+    set_themes = lsmb lsmb_new
 [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = -1 0 1 2 100
     set_themes = lsmb lsmb_wip lsmb_old_wip

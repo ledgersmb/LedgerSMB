@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::File;
 
 =head1 NAME
 
 LedgerSMB::File - Provides routines for managing file attachments.
 
-=head1 SYNPSIS
+=head1 DESCRIPTION
 
 This provides routines for managing file attachments.  Subclasses may be used
 to provide functionality for specific types of file attachments.
@@ -15,8 +16,6 @@ to provide functionality for specific types of file attachments.
 
 =cut
 
-
-package LedgerSMB::File;
 
 use strict;
 use warnings;
@@ -357,7 +356,7 @@ sub list_links{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 The LedgerSMB Core Team
 
