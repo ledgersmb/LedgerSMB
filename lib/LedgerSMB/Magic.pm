@@ -73,6 +73,13 @@ our @EXPORT_OK = qw(
 
 LedgerSMB::Magic - Magic number constants for LedgerSMB
 
+=head1 DESCRIPTION
+
+I<LedgerSMB::Magic> is a library of constants used by the
+LedgerSMB system.  Mostly, these are peculiar to LedgerSMB,
+but where a small part of of a published code is used, the
+constants may be found here rather than separate modules.
+
 =head1 SYNOPSIS
 
  use LedgerSMB::Magic qw( EC_EMPLOYEE );
@@ -81,12 +88,9 @@ LedgerSMB::Magic - Magic number constants for LedgerSMB
      print "This entity  is an employee.";
  }
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-I<LedgerSMB::Magic> is a library of constants used by the
-LedgerSMB system.  Mostly, these are peculiar to LedgerSMB,
-but where a small part of of a published code is used, the
-constants may be found here rather than separate modules.
+This module doesn't specify any (public) methods.
 
 =head1  ACCEPTED NUMERIC LITERALS
 

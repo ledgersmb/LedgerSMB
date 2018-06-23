@@ -24,6 +24,10 @@ use DBI;
 
 Sets up and manages the db connection.  This returns a DBI database handle.
 
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
+
 =head1 FUNCTIONS
 
 =head2 connect ($username, $password)

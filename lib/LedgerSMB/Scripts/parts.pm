@@ -9,6 +9,10 @@ LedgerSMB::Scripts::parts
 
 TODO.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
 use strict;

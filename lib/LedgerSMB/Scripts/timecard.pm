@@ -15,7 +15,12 @@ This module contains the basic workflow scripts for managing timecards for
 LedgerSMB.  Timecards are used to track time and materials consumed in the
 process of work, from professional services to payroll and manufacturing.
 
+=head1 METHODS
+
+This module does not specify any methods.
+
 =cut
+
 
 use LedgerSMB::Template;
 use LedgerSMB::Timecard;
@@ -29,7 +34,6 @@ use LedgerSMB::Setting;
 use DateTime;
 use strict;
 use warnings;
-
 
 =head1 ROUTINES
 

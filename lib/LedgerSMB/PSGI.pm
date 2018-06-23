@@ -13,6 +13,10 @@ Maps the URL name space to the various entry points.
  use LedgerSMB::PSGI;
  my $app = LedgerSMB::PSGI->get_app();
 
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
+
 =cut
 
 use strict;

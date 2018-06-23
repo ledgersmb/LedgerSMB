@@ -6,10 +6,19 @@ package LedgerSMB::X12::EDI850;
 LedgerSMB::X12::EDI850 - Conversion class for X12 850 files to LedgerSMB
 structures
 
+=head1 DESCRIPTION
+
+This module processes X12 EDI 850 purchase orders and can present them in
+structures compatible with LedgerSMB's order entry system.  The API is simple.
+
 =head1 SYNOPSIS
 
  my $edi = LedgerSMB::X12::EDI850->new(message => 'message.edi');
  my $form = $edi->order;
+
+=head1 METHODS
+
+This module doesn't specify any methods.
 
 =cut
 
@@ -30,11 +39,6 @@ sub _config {
     my $pkg_dir = file($INC{module_notional_filename(__PACKAGE__)})->dir;
     return $pkg_dir->file('cf', '850.cf')->stringify;
 }
-
-=head1 DESCRIPTION
-
-This module processes X12 EDI 850 purchase orders and can present them in
-structures compatible with LedgerSMB's order entry system.  The API is simple.
 
 =head1 PROPERTIES
 

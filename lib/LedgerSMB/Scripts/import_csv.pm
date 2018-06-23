@@ -10,6 +10,10 @@ LedgerSMB::Scripts::import_csv - web entry points for various csv uploads
 This is a module that demonstrates how to set up scripts for importing bulk
 data.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
 use strict;

@@ -10,6 +10,9 @@ LedgerSMB::Reconciliation::ISO20022 - SEPA payment file processing
 Implements the mapping from the ISO-20022 CAMT.053 XML message format
 (account statement) to the input data for reconciliation.
 
+=head1 METHODS
+
+
 =cut
 
 use LedgerSMB::FileFormats::ISO20022::CAMT053;

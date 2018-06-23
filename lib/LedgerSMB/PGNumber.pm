@@ -133,7 +133,7 @@ my $lsmb_neg_formats = {
 
 =back
 
-=head1 IO METHODS
+=head1 METHODS
 
 =over
 

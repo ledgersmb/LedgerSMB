@@ -82,6 +82,9 @@ L</FUNCTIONS> section of this document).
 
   1;
 
+=head1 METHODS
+
+This module declares no methods.
 
 =head1 FUNCTIONS
 

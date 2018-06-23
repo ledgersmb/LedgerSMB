@@ -35,6 +35,13 @@ my $_approval_map = {
   All => undef
 };
 
+=head1 METHODS
+
+This module does not declare any (public) methods.
+
+=cut
+
+
 sub _approved {
     my $self = shift;
     die 'Bad approval code: ' . $self->is_approved

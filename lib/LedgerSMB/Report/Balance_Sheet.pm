@@ -63,7 +63,7 @@ has incl_accnos => (is => 'ro', isa => 'Bool');
 
 =back
 
-=head1 SEMI-PUBLIC METHODS
+=head1 METHODS
 
 =head2 run_report()
 

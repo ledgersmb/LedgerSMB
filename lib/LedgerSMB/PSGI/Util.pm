@@ -26,6 +26,10 @@ use warnings;
 use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
  HTTP_UNAUTHORIZED );
 
+=head1 METHODS
+
+This module declares no methods.
+
 =head1 FUNCTIONS
 
 =head2 internal_server_error($msg, $title, $company, $dbversion)

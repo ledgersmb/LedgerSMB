@@ -14,6 +14,10 @@ System > Defaults and System > Sequences.
 
 LedgerSMB::Scripts::configuration->can('action')->($request);
 
+=head1 METHODS
+
+This module does not specify any methods.
+
 =cut
 
 use LedgerSMB::Setting;

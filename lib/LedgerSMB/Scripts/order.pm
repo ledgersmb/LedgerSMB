@@ -25,6 +25,10 @@ use LedgerSMB::Magic qw( OEC_PURCHASE_ORDER OEC_SALES_ORDER OEC_QUOTATION OEC_RF
 
 use LedgerSMB::old_code qw(dispatch);
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =head1 ROUTINES
 
 =over

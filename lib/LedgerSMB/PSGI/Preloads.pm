@@ -21,6 +21,10 @@ at request-dispatch time.
 
  use LedgerSMB::PSGI::Preloads;
 
+=head1 METHODS
+
+This module declares no methods.
+
 =cut
 
 use strict;
