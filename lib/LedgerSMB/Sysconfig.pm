@@ -9,6 +9,10 @@ LedgerSMB::Sysconfig - LedgerSMB configuration management
 
 LedgerSMB configuration management
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
 use strict;

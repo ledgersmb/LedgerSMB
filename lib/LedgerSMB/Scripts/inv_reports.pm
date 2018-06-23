@@ -13,6 +13,10 @@ LedgerSMB::Scripts::inv_reports - Inventory Reports in LedgerSMB
 
 This provides the general inventory reports for LedgerSMB.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =head1 ROUTINES
 
 =over

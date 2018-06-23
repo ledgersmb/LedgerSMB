@@ -5,6 +5,11 @@ package LedgerSMB::Scripts::invoice;
 
 LedgerSMB::Scripts::invoice - Invoice Report Routines for LedgerSMB
 
+=head1 DESCRIPTION
+
+This module contains the invoice search routines.  In future versions this
+module will probably also include various invoice creation routines.
+
 =head1 SYNPOSIS
 
  LedgerSMB::Scripts::invoice:invoices_outstanding($request)
@@ -23,10 +28,9 @@ use LedgerSMB::Report::Invoices::Transactions;
 use LedgerSMB::Report::Invoices::Outstanding;
 use LedgerSMB::Scripts::reports;
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-This module contains the invoice search routines.  In future versions this
-module will probably also include various invoice creation routines.
+This module doesn't specify any methods.
 
 =head1 FUNCTIONS
 

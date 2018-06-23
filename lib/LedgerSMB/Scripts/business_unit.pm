@@ -9,6 +9,10 @@ LedgerSMB::Scripts::business_unit - web entry points for reporting class admin
 
 Workflow routines for LedgerSMB business reporting units
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
 use LedgerSMB::Business_Unit_Class;

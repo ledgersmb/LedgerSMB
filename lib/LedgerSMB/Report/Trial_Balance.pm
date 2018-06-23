@@ -5,7 +5,7 @@ package LedgerSMB::Report::Trial_Balance;
 
 LedgerSMB::Report::Trial_Balance - Trial Balance report for LedgerSMB
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 Unlike other reports, trial balance reports can be saved:
 

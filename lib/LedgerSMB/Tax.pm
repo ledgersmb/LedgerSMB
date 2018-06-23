@@ -27,6 +27,10 @@ use warnings;
 
 my $logger = Log::Log4perl->get_logger('Tax');
 
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
+
 =head1 FUNCTIONS
 
 =head2 init_taxes($request, $taxlist1, $taxlist2)

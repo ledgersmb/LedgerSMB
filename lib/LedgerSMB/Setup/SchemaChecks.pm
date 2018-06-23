@@ -10,6 +10,10 @@ LedgerSMB::Setup::SchemaChecks - UI for schema checks run from setup.pl
 Provides the UI for schema upgrade precondition checks when run from
 setup.pl.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =head1 FUNCTIONS
 
 =cut

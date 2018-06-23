@@ -5,6 +5,11 @@ package LedgerSMB::MooseTypes;
 
 LedgerSMB::MooseTypes - Moose subtypes and coercions for LedgerSMB
 
+=head1 DESCRIPTION
+
+This includes a general set of wrapper types, currently limited to dates and
+numbers, for automatic instantiation from strings.
+
 =cut
 
 use strict;
@@ -30,10 +35,9 @@ use LedgerSMB::PGNumber;
                     coerce => 1
  );
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-This includes a general set of wrapper types, currently limited to dates and
-numbers, for automatic instantiation from strings.
+This module doesn't specify any (public) methods.
 
 =head1 SUBTYPES
 

@@ -97,7 +97,7 @@ retrieved values.
 has sorted_col_ids => (is => 'rw');
 
 
-=head1 STATIC METHODS
+=head1 FUNCTIONS
 
 =over
 
@@ -126,7 +126,7 @@ sub header_lines {
 
 =back
 
-=head1 SEMI-PUBLIC METHODS
+=head1 METHODS
 
 =head2 cell_value($row_id, $col_id, [$value])
 

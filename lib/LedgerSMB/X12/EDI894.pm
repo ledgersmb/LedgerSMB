@@ -10,6 +10,16 @@ LedgerSMB::X12::EDI894 - X12 894 support for LedgerSMB
  my $edi = LedgerSMB::X12::EDI894->new(message => 'message.edi');
  my $form = $edi->order;
 
+=head1 DESCRIPTION
+
+The X12 894 provides for delivery notifications of orders or product returns.
+While it is not yet clear what we want to do with this, this does return the
+data in a $form object.
+
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
 use strict;
@@ -28,12 +38,6 @@ sub _config {
     my $pkg_dir = file($INC{module_notional_filename(__PACKAGE__)})->dir;
     return $pkg_dir->file('cf', '894.cf')->stringify;
 }
-
-=head1 DESCRIPTION
-
-The X12 894 provides for delivery notifications of orders or product returns.
-While it is not yet clear what we want to do with this, this does return the
-data in a $form object.
 
 =head1 PROPERTIES
 

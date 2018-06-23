@@ -31,7 +31,8 @@ pager = less
 
 
 [Documentation::RequirePodSections]
-    lib_sections = NAME | DESCRIPTION | LICENSE AND COPYRIGHT
+    # Section names from Module::Starter::PBP -- Damian Conway's Best Practices
+    lib_sections = NAME | DESCRIPTION | METHODS | LICENSE AND COPYRIGHT
     script_sections = NAME | USAGE | DESCRIPTION | LICENSE AND COPYRIGHT
     set_themes = lsmb lsmb_new
 [ValuesAndExpressions::ProhibitMagicNumbers]

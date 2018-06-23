@@ -12,7 +12,7 @@ user information ("login accounts").
 
 Note that this class isn't derived from LedgerSMB::Entity.
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 Resetting a password (expires in 24 hrs):
   my $user = LedgerSMB::Entity::User->get($entcity_id);

@@ -57,7 +57,7 @@ sub _set_lazy {
     return $self->ref_key;
 }
 
-=head1 METHODS ADDED
+=head1 METHODS
 
 =head2 list_files
 

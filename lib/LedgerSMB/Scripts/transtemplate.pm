@@ -13,6 +13,10 @@ Entry points for managing transaction templates.
 
  LedgerSMB::Scripts::transtemplate::view($request);
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
 use strict;
