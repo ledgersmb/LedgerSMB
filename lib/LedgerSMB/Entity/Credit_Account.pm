@@ -5,7 +5,7 @@ package LedgerSMB::Entity::Credit_Account;
 
 LedgerSMB::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 To get by ID:
 
