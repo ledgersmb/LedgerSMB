@@ -3,7 +3,7 @@
 # Jesus of Nazareth <brianjerezb@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.6.2\n"
+"Project-Id-Version: LedgerSMB 1.6.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2018-06-23 18:14+0000\n"
 "Last-Translator: Jesus of Nazareth <brianjerezb@gmail.com>, 2018\n"
