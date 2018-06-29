@@ -15,7 +15,7 @@ and LedgerSMB::Legacy_Util.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [debug => $bool] );
 
 Instantiates a new template. Accepts the following arguments:
 
@@ -70,10 +70,6 @@ Overrides the template directory.
 The special value 'DB' enforces reading of the template from the
 current database.  Resolving the template takes the 'language' and
 'format' values into account.
-
-=item no_escape (optional)
-
-Disables escaping on the template variables when true.
 
 =item debug (optional)
 
@@ -378,7 +374,7 @@ sub new {
     $logger->trace('output_options, keys: ' . join '|', keys %{$args{output_options}});
 
     $self->{$_} = $args{$_}
-        for (qw( template format language no_escape debug locale
+        for (qw( template format language debug locale
                  format_options output_options additional_vars ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
@@ -409,9 +405,6 @@ sub new {
     }
     use_module("LedgerSMB::Template::$self->{format}")
        or die "Failed to load module $self->{format}";
-
-    carp 'no_escape mode enabled in rendering'
-        if $self->{no_escape};
 
     return $self;
 }
@@ -573,11 +566,10 @@ sub _render {
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
     my $unescape = $format->can('unescape');
-    my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
+    my $cleanvars = preprocess($vars, $escape);
     $cleanvars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $cleanvars->{escape} = sub { return $escape->(@_); };
-    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
-        if ($unescape && !$self->{no_escape});
+    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); } if $unescape;
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
     $cleanvars->{$_} = $self->{additional_vars}->{$_}
