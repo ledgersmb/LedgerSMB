@@ -326,6 +326,7 @@ package LedgerSMB::Template;
 use strict;
 use warnings;
 use Carp;
+
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::Setting;
@@ -555,13 +556,12 @@ sub _maketext {
 sub _render {
     my $self = shift;
     my $vars = shift;
-    my $cvars = shift;
+    my $cvars = shift // {};
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
-        default_currency =>
-            (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
+        %$LedgerSMB::App_State::Company_Config,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
 
     my $format = "LedgerSMB::Template::$self->{format}";
@@ -574,7 +574,7 @@ sub _render {
           escape => sub { return $escape->(@_); },
           text => sub { return $self->_maketext($escape, @_); },
           tt_url => \&_tt_url,
-          %{$self->{additional_vars}},
+          %{$self->{additional_vars} // {}},
           %$cvars )
     };
 
