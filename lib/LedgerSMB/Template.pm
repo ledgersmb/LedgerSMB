@@ -568,7 +568,7 @@ sub _render {
     my $escape = $format->can('escape');
     my $unescape = $format->can('unescape');
     my $cleanvars = {
-        ( preprocess($vars, $escape),
+        ( %{preprocess($vars, $escape)},
           UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
                        : sub { return @_; }),
           escape => sub { return $escape->(@_); },
