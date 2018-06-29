@@ -44,11 +44,13 @@ my @company_settings = qw(templates businessnumber weightunit curr
                           company_address dojo_theme decimal_places min_empty);
 
 our $VERSION = 1.0;
+
+# Used in old/bin/*.pl
 our $settings = {};
 
 sub initialize{
    my ($self) = @_;
-   $settings= {map {$_ => LedgerSMB::Setting->get($_) } @company_settings};
+   $settings = { map {$_ => LedgerSMB::Setting->get($_) } @company_settings };
    $settings->{curr} = [ split (/:/, $settings->{curr}) ];
 
    return $LedgerSMB::App_State::Company_Config = $settings;
