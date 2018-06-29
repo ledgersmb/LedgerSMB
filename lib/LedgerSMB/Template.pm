@@ -423,6 +423,17 @@ sub new_UI {
             dojo_theme =>
                 ($LedgerSMB::App_State::Company_Config->{dojo_theme}
                  // $LedgerSMB::Sysconfig::dojo_theme),
+            PRINTERS => [
+               ( map { { text => $_, value => $_ } }
+                 keys %LedgerSMB::Sysconfig::printers,
+                 {
+                    text => ($LedgerSMB::App_State::Locale ?
+                                $LedgerSMB::App_State::Locale->text('Screen')
+                                : 'Screen' ),
+                    value => 'screen'
+                 } )
+            ],
+            LIST_FORMATS => sub { return $self->available_formats; },
         },
     );
 }
@@ -555,27 +566,19 @@ sub _render {
         decimal_places => $LedgerSMB::Company_Config::decimal_places,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
 
-    @{$vars->{PRINTERS}} =
-        map { { text => $_, value => $_ } }
-        keys %LedgerSMB::Sysconfig::printers;
-    unshift @{$vars->{PRINTERS}}, {
-        text => $LedgerSMB::App_State::Locale->text('Screen'),
-        value => 'screen'
-    } if $LedgerSMB::App_State::Locale;
-
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
     my $unescape = $format->can('unescape');
-    my $cleanvars = preprocess($vars, $escape);
-    $cleanvars->{LIST_FORMATS} = sub { return $self->available_formats; };
-    $cleanvars->{escape} = sub { return $escape->(@_); };
-    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); } if $unescape;
-    $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
-    $cleanvars->{tt_url} = \&_tt_url;
-    $cleanvars->{$_} = $self->{additional_vars}->{$_}
-        for (keys %{$self->{additional_vars}});
-    $cleanvars->{$_} = $cvars->{$_}
-        for (keys %$cvars);
+    my $cleanvars = {
+        ( preprocess($vars, $escape),
+          UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
+                       : sub { return @_; }),
+          escape => sub { return $escape->(@_); },
+          text => sub { return $self->_maketext($escape, @_); },
+          tt_url => \&_tt_url,
+          %{$self->{additional_vars}},
+          %$cvars )
+    };
 
     my $output;
     my $config;
