@@ -286,7 +286,7 @@
   <?lsmb
     PROCESS select element_data=form_elements.formname;
     IF selectlanguage.defined;
-        PROCESS select element_data=form_elements.language;
+        PROCESS select_language element_data=form_elements.language;
     END;
     PROCESS select element_data=form_elements.format;
     PROCESS select element_data=form_elements.media ?>
