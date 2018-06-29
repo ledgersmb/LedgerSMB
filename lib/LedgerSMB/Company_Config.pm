@@ -49,9 +49,8 @@ our $settings = {};
 sub initialize{
    my ($self) = @_;
    $settings= {map {$_ => LedgerSMB::Setting->get($_) } @company_settings};
-   { no strict 'refs';  ## no critic  # sniff
-   @{$settings->{curr}} = split (/:/, $settings->{curr});
-   }
+   $settings->{curr} = [ split (/:/, $settings->{curr}) ];
+
    return $LedgerSMB::App_State::Company_Config = $settings;
 }
 
