@@ -15,7 +15,7 @@ and LedgerSMB::Legacy_Util.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [debug => $bool] );
 
 Instantiates a new template. Accepts the following arguments:
 
@@ -70,10 +70,6 @@ Overrides the template directory.
 The special value 'DB' enforces reading of the template from the
 current database.  Resolving the template takes the 'language' and
 'format' values into account.
-
-=item no_escape (optional)
-
-Disables escaping on the template variables when true.
 
 =item debug (optional)
 
@@ -330,8 +326,8 @@ package LedgerSMB::Template;
 use strict;
 use warnings;
 use Carp;
+
 use LedgerSMB::App_State;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
@@ -378,7 +374,7 @@ sub new {
     $logger->trace('output_options, keys: ' . join '|', keys %{$args{output_options}});
 
     $self->{$_} = $args{$_}
-        for (qw( template format language no_escape debug locale
+        for (qw( template format language debug locale
                  format_options output_options additional_vars ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
@@ -410,9 +406,6 @@ sub new {
     use_module("LedgerSMB::Template::$self->{format}")
        or die "Failed to load module $self->{format}";
 
-    carp 'no_escape mode enabled in rendering'
-        if $self->{no_escape};
-
     return $self;
 }
 
@@ -429,7 +422,18 @@ sub new_UI {
         additional_vars => {
             dojo_theme =>
                 ($LedgerSMB::App_State::Company_Config->{dojo_theme}
-                 // $LedgerSMB::Sysconfig::dojo_theme),
+                 || LedgerSMB::Sysconfig::dojo_theme()),
+            PRINTERS => [
+               ( map { { text => $_, value => $_ } }
+                 keys %LedgerSMB::Sysconfig::printers,
+                 {
+                    text => ($LedgerSMB::App_State::Locale ?
+                                $LedgerSMB::App_State::Locale->text('Screen')
+                                : 'Screen' ),
+                    value => 'screen'
+                 } )
+            ],
+            LIST_FORMATS => sub { return available_formats(); },
         },
     );
 }
@@ -552,38 +556,27 @@ sub _maketext {
 sub _render {
     my $self = shift;
     my $vars = shift;
-    my $cvars = shift;
+    my $cvars = shift // {};
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
-        default_currency =>
-            (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
-        decimal_places => $LedgerSMB::Company_Config::decimal_places,
+        %$LedgerSMB::App_State::Company_Config,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
-
-    @{$vars->{PRINTERS}} =
-        map { { text => $_, value => $_ } }
-        keys %LedgerSMB::Sysconfig::printers;
-    unshift @{$vars->{PRINTERS}}, {
-        text => $LedgerSMB::App_State::Locale->text('Screen'),
-        value => 'screen'
-    } if $LedgerSMB::App_State::Locale;
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
     my $unescape = $format->can('unescape');
-    my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
-    $cleanvars->{LIST_FORMATS} = sub { return $self->available_formats; };
-    $cleanvars->{escape} = sub { return $escape->(@_); };
-    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
-        if ($unescape && !$self->{no_escape});
-    $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
-    $cleanvars->{tt_url} = \&_tt_url;
-    $cleanvars->{$_} = $self->{additional_vars}->{$_}
-        for (keys %{$self->{additional_vars}});
-    $cleanvars->{$_} = $cvars->{$_}
-        for (keys %$cvars);
+    my $cleanvars = {
+        ( %{preprocess($vars, $escape)},
+          UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
+                       : sub { return @_; }),
+          escape => sub { return $escape->(@_); },
+          text => sub { return $self->_maketext($escape, @_); },
+          tt_url => \&_tt_url,
+          %{$self->{additional_vars} // {}},
+          %$cvars )
+    };
 
     my $output;
     my $config;

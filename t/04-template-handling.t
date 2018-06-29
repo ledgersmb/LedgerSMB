@@ -7,6 +7,7 @@ use Test::More 'no_plan';
 use Test::Exception;
 
 use File::Temp;
+use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
