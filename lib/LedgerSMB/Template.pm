@@ -421,7 +421,7 @@ sub new_UI {
         additional_vars => {
             dojo_theme =>
                 ($LedgerSMB::App_State::Company_Config->{dojo_theme}
-                 // $LedgerSMB::Sysconfig::dojo_theme),
+                 || LedgerSMB::Sysconfig::dojo_theme()),
             PRINTERS => [
                ( map { { text => $_, value => $_ } }
                  keys %LedgerSMB::Sysconfig::printers,
@@ -432,7 +432,7 @@ sub new_UI {
                     value => 'screen'
                  } )
             ],
-            LIST_FORMATS => sub { return $self->available_formats; },
+            LIST_FORMATS => sub { return available_formats(); },
         },
     );
 }
