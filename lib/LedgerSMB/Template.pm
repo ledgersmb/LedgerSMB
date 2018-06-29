@@ -327,7 +327,6 @@ use strict;
 use warnings;
 use Carp;
 use LedgerSMB::App_State;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
@@ -563,7 +562,6 @@ sub _render {
     $vars->{SETTINGS} = {
         default_currency =>
             (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
-        decimal_places => $LedgerSMB::Company_Config::decimal_places,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
 
     my $format = "LedgerSMB::Template::$self->{format}";
