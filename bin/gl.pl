@@ -231,6 +231,7 @@ sub display_form
     'approved' => $form->{approved},
      'callback' => $form->{callback},
      'form_id' => $form->{form_id},
+        'separate_duties' => $form->{separate_duties},
     );
 
 
@@ -251,103 +252,80 @@ sub display_form
   my @buttons;
   if ( !$form->{readonly} ) {
           my $i=1;
-          %button = (
-          'update' =>
-            { ndx => 1, key => 'U', value => $locale->text('Update') },
-          'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-                  'edit_and_save' => {ndx => 4, key => 'V',
+      @buttons = (
+          { action => 'update', key => 'U', value => $locale->text('Update') },
+          { action => 'post', key => 'O', value =>
+                ($form->{separate_duties}
+                 ? $locale->text('Save') : $locale->text('Post')),
+            class => 'post' },
+          { action => 'approve', key => 'S', value => $locale->text('Post'),
+            class => 'post' },
+          { action => 'edit_and_save', key => 'V',
                           value => $locale->text('Save Draft') },
-                  'save_temp' =>
-                    { ndx   => 9,
-                      key   => 'T',
+          { action => 'save_temp', key   => 'T',
                       value => $locale->text('Save Template') },
-          'save_as_new' =>
-            { ndx => 6, key => 'N', value => $locale->text('Save as new') },
-          'schedule' =>
-            { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-          'new' =>
-            { ndx => 9, key => 'N', value => $locale->text('New') },
-          'copy_to_new' =>
-            { ndx => 10, key => 'C', value => $locale->text('Copy to New') },
+          { action => 'save_as_new',
+            key => 'N', value => $locale->text('Save as new') },
+          { action => 'schedule',
+            key => 'H', value => $locale->text('Schedule') },
+          { action => 'new',
+            key => 'N', value => $locale->text('New') },
+          { action => 'copy_to_new',
+            key => 'C', value => $locale->text('Copy to New') },
          );
 
-          if ($form->{separate_duties}){
-          $hiddens{separate_duties}=$form->{separate_duties};
-          $button{post}->{value} = $locale->text('Save');
-          }
           %a = ();
               $a{'save_temp'} = 1;
 
           if ( $form->{id}) {
-              $a{'new'} = 1;
-
-              for ( 'save_as_new', 'schedule', 'copy to new' ) { $a{$_} = 1 }
-
-              for ( 'post', 'delete' ) { $a{$_} = 1 }
-          } else {
-              $a{'update'} = 1;
-              if ( ! $closedto or ($transdate > $closedto ) ) {
-                  for ( "post", "schedule" ) { $a{$_} = 1 }
-              }
+          for ( 'new', 'save_as_new', 'schedule', 'copy_to_new' ) {
+              $a{$_} = 1;
           }
-          if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
-        $button{approve} = {
-            ndx   => 3,
-            key   => 'S',
-            value => $locale->text('Post') };
+          if (!$form->{approved} && !$form->{batch_id}) {
         $a{approve} = 1;
         $a{edit_and_save} = 1;
         $a{update} = 1;
-        if ($form->is_allowed_role(['draft_modify'])) {
-            $button{edit_and_save} = {
-            ndx   => 4,
-            key   => 'O',
-            value => $locale->text('Save Draft') };
         }
-        delete $button{post};
+      } else {
+          $a{'update'} = 1;
+          if ( ! $closedto or ($transdate > $closedto ) ) {
+              for ( 'post', 'schedule' ) { $a{$_} = 1 }
           }
-          if ($form->{id} && ($form->{approved} || $form->{batch_id})) {
-          delete $button{post};
           }
 
-          for ( keys %button ) { delete $button{$_} if !$a{$_} }
           my $i=1;
-          for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+      @buttons = map {
           {
-                  push @buttons, {
                   name => 'action',
-                  value => $_ ,
-                  text => $button{$_}->{value},
+              value => $_->{action},
+              text => $_->{value},
                   type => 'submit',
-                  class => 'submit',
-                  accesskey => $button{$_}->{key},
-                  order => $i
-                        };
-                  $i++;
+              class => $_->{class} // 'submit',
+              accesskey => $_->{key},
+              order => $i++
           }
-
+      }
+      grep { $a{$_->{action}} } @buttons;
   }
 
   $form->{recurringset}=0;
   if ( $form->{recurring} ) {
       $form->{recurringset}=1;
   }
-  my $template;
+
   my $template = LedgerSMB::Template->new(
                 user => \%myconfig,
                 locale => $locale,
                 path => 'UI/journal',
                 template => 'journal_entry',
-                format => 'HTML',
-                    );
+      format => 'HTML' );
 
   $template->render({
-            form => \%$form,
+            form => $form,
             buttons => \@buttons,
             hiddens => \%hiddens,
             displayrows => \@displayrows
                    });
-
 }
 
 
