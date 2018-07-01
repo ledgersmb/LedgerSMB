@@ -37,6 +37,7 @@ use Version::Compare;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
+use LedgerSMB::Database::Config;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
@@ -518,27 +519,6 @@ sub revert_migration {
     return $template->render($request);
 }
 
-=item _get_template_directories
-
-Returns set of template directories available.
-
-=cut
-
-sub _get_template_directories {
-    my $subdircount = 0;
-    my @dirarray;
-    my $locale = $LedgerSMB::App_State::Locale;
-    opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text('Error while opening directory: [_1]',  "./$LedgerSMB::Sysconfig::templates");
-    while( my $name = readdir(DIR)){
-        next if ($name =~ /\./);
-        if (-d "$LedgerSMB::Sysconfig::templates/$name" ) {
-            push @dirarray, {text => $name, value => $name};
-        }
-    }
-    closedir(DIR);
-    return \@dirarray;
-}
-
 =item template_screen
 
 Shows the screen for loading templates.  This should appear before loading
@@ -549,7 +529,9 @@ so that further workflow can be aborted.
 
 sub template_screen {
     my ($request) = @_;
-    $request->{template_dirs} = _get_template_directories();
+    $request->{template_dirs} =
+        [ map { +{ text => $_, value => $_ } }
+          keys %{ LedgerSMB::Database::Config->new->templates } ];
     return LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/template_info',
@@ -566,13 +548,15 @@ and not the user creation screen.
 
 sub load_templates {
     my ($request) = @_;
-    my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
+    my $templates = LedgerSMB::Database::Config->new->templates;
+
+    die 'Invalid request' if not exists $templates->{$request->{template_dir}};
+
     _init_db($request);
     my $dbh = $request->{dbh};
-    opendir(DIR, $dir);
-    while (my $fname = readdir(DIR)){
-       next unless -f "$dir/$fname";
-       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$fname");
+
+    for my $template (@{$templates->{$request->{template_dir}}}) {
+       my $dbtemp = LedgerSMB::Template::DB->get_from_file($template);
        $dbtemp->save;
     }
     return _render_new_user($request) unless $request->{only_templates};
@@ -1018,9 +1002,22 @@ sub select_coa {
     use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
+    my $coa_data = LedgerSMB::Database::Config->new->charts_of_accounts;
 
-    if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
-        die $request->{_locale}->text('Access Denied');
+    if ($request->{coa_lc}) {
+        my $coa_lc = $request->{coa_lc};
+        if (not exists $coa_data->{$coa_lc}) {
+            die $request->{_locale}->text('Invalid request');
+        }
+
+        for my $coa_type (qw( chart gifi sic )) {
+            if ($request->{$coa_type}) {
+                if (! grep { $_ eq $request->{$coa_type} }
+                    @{$coa_data->{$coa_lc}->{$coa_type}}) {
+                    die $request->{_locale}->text('Invalid request');
+                }
+            }
+        }
     }
 
     if ($request->{coa_lc}){
@@ -1038,40 +1035,14 @@ sub select_coa {
 
            return template_screen($request);
         } else {
-            opendir(CHART, "sql/coa/$request->{coa_lc}/chart");
-            @{$request->{charts}} =
-                map +{ name => $_ },
-                sort(grep !/^(\.|[Ss]ample.*)/,
-                      readdir(CHART));
-            closedir(CHART);
-
-            opendir(GIFI, "sql/coa/$request->{coa_lc}/gifi");
-            @{$request->{gifis}} =
-                map +{ name => $_ },
-                sort(grep !/^(\.|[Ss]ample.*)/,
-                      readdir(GIFI));
-            closedir(GIFI);
-
-            if (-e "sql/coa/$request->{coa_lc}/sic") {
-                opendir(SIC, "sql/coa/$request->{coa_lc}/sic");
-                @{$request->{sics}} =
-                    map +{ name => $_ },
-                    sort(grep !/^(\.|[Ss]ample.*)/,
-                         readdir(SIC));
-                closedir(SIC);
-            }
-            else {
-                @{$request->{sics}} = ();
+            for my $select (qw(chart gifi sic)) {
+                $request->{"${select}s"} =
+                    [ map { +{ name => $_ } }
+                      @{$coa_data->{$request->{coa_lc}}->{$select}} ];
             }
        }
     } else {
-        #COA Directories
-        opendir(COA, 'sql/coa');
-        @{$request->{coa_lcs}} =
-            map +{ code => $_ },
-            sort(grep !/^(\.|[Ss]ample.*)/,
-                 readdir(COA));
-        closedir(COA);
+        $request->{coa_lcs} = [ values %$coa_data ];
     }
 
     my $template = LedgerSMB::Template->new_UI(
