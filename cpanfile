@@ -11,6 +11,7 @@ requires 'DBI', '1.635';
 requires 'Data::UUID';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
+requires 'File::Find::Rule';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'HTTP::Headers::Fast'; # dependency of Plack too; don't need '::Fast'

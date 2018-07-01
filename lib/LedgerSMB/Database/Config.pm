@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 
 use File::Find::Rule;
 use File::Spec;
@@ -138,5 +139,7 @@ may also be moved out to the PGObject distribution on CPAN and relicensed under
 the same BSD license as the rest of that framework.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;

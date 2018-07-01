@@ -550,7 +550,7 @@ sub load_templates {
     my ($request) = @_;
     my $templates = LedgerSMB::Database::Config->new->templates;
 
-    die "Invalid request" if not exists $templates->{$request->{template_dir}};
+    die 'Invalid request' if not exists $templates->{$request->{template_dir}};
 
     _init_db($request);
     my $dbh = $request->{dbh};
