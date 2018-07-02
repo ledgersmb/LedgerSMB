@@ -134,16 +134,17 @@ sub psgi_app {
     }
     catch {
         # The database setup middleware will roll back before disconnecting
-        if ($_ !~ /^Died at/) {
+        my $error = $_;
+        if ($error !~ /^Died at/) {
             $env->{'psgix.logger'}->({
                 level => 'error',
-                message => $_ });
+                message => $error });
             $res = LedgerSMB::PSGI::Util::internal_server_error(
-                $_, 'Error!',
+                $error, 'Error!',
                 $request->{dbversion}, $request->{company});
         }
         else {
-            $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $_ ]];
+            $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
         }
     };
 
