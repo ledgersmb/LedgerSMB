@@ -17,8 +17,6 @@ no lib '.';
 
 use FindBin;
 use lib $FindBin::Bin . '/../..'; # For our 'old code'-"require"s
-use lib $FindBin::Bin . '/../../lib';
-use lib $FindBin::Bin . '/../../old/lib';
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
