@@ -41,18 +41,21 @@ use HTTP::Status qw( HTTP_OK);
 our $VERSION = '0.1';
 our $custom_batch_types = {};
 
-{
+sub _run_custom_vouchers {
     local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/vouchers.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
                 warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (vouchers.pm - first)\n\n" );
+                die (  'Status: 500 Internal server error ('
+                        . __FILE__ . '.pm - ' . __LINE__ . ")\n\n" );
             }
         }
     }
-};
+}
+
+_run_custom_vouchers();
 
 =item create_batch
 
@@ -526,18 +529,7 @@ sub print_batch {
     }
 }
 
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/vouchers.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (vouchers.pm - end)\n\n" );
-            }
-        }
-    }
-};
+_run_custom_vouchers();
 
 
 =back
