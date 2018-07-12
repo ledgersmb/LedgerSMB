@@ -48,11 +48,12 @@ our $custom_batch_types = {};
         unless ( do $do_ ) {
             if ($! or $@) {
                 warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (vouchers.pm - first)\n\n" );
+                die (  'Status: 500 Internal server error ('
+                        . __FILE__ . '.pm - ' . __LINE__ . ")\n\n" );
             }
         }
     }
-};
+}
 
 =item create_batch
 
@@ -525,20 +526,6 @@ sub print_batch {
         return $report->render($request);
     }
 }
-
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/vouchers.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (vouchers.pm - end)\n\n" );
-            }
-        }
-    }
-};
-
 
 =back
 
