@@ -41,7 +41,7 @@ use HTTP::Status qw( HTTP_OK);
 our $VERSION = '0.1';
 our $custom_batch_types = {};
 
-sub _run_custom_vouchers {
+{
     local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/vouchers.pl';
     if ( -e $do_ ) {
@@ -54,8 +54,6 @@ sub _run_custom_vouchers {
         }
     }
 }
-
-_run_custom_vouchers();
 
 =item create_batch
 
@@ -528,9 +526,6 @@ sub print_batch {
         return $report->render($request);
     }
 }
-
-###_run_custom_vouchers();
-
 
 =back
 
