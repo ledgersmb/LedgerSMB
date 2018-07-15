@@ -339,6 +339,7 @@ SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
                     'entity_bank_account', 'person_to_company']) obj;
 
 SELECT lsmb__create_role('contact_all_rights');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_vendor');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_customer');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_employee');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_contact');
