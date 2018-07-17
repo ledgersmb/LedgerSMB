@@ -21,17 +21,24 @@ define(["dojo/_base/declare",
         var memoryStore = new Memory({idProperty: "id"});
         memoryStore = new Observable(memoryStore);
 
+       var complete = false;
         // create model to interface Tree to store
         var model = new ObjectStoreModel({
             store: memoryStore,
             labelAttr: 'label',
             mayHaveChildren: function(item){ return item.menu; },
             getChildren: function(object, onComplete, onError){
-                restStore.query({}).then(
-                    function(items){
-                        memoryStore.setData(items);
-                        onComplete(memoryStore.query({parent: object.id}));
-                    }, function(){ onError(); });
+                if (complete) {
+                    onComplete(memoryStore.query({parent: object.id}));
+                }
+                else {
+                    restStore.query({}).then(
+                        function(items){
+                            memoryStore.setData(items);
+                            onComplete(memoryStore.query({parent: object.id}));
+                        }, function(){ onError(); });
+                    complete = true;
+                }
             },
             getRoot: function(onItem, onError){
                 onItem({ id: 0 });
