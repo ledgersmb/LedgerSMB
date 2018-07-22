@@ -3,7 +3,7 @@
 # Ferruccio Zamuner <nonsolosoft@diff.org>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.6.3-dev\n"
+"Project-Id-Version: LedgerSMB 1.6.3\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2018-07-22 21:55+0000\n"
 "Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2018\n"
