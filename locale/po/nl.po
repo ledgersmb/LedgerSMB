@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-06-23 18:14+0000\n"
+"POT-Creation-Date: 2018-07-22 21:55+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -285,7 +285,7 @@ msgstr "Rekeningtype"
 msgid "Account [_1] not found"
 msgstr "Rekening [_1] niet gevonden"
 
-#: old/bin/gl.pl:588
+#: old/bin/gl.pl:566
 msgid "Account [_1] not found."
 msgstr "Rekening [_1] niet gevonden"
 
@@ -1473,7 +1473,7 @@ msgstr ""
 msgid "Cancel?"
 msgstr "Annuleren?"
 
-#: old/bin/gl.pl:627
+#: old/bin/gl.pl:605
 msgid "Cannot Repost Transaction"
 msgstr "Transactie al geboekt"
 
@@ -1513,7 +1513,7 @@ msgstr "Kan onderdeel niet verwijderen!"
 msgid "Cannot delete order!"
 msgstr "Kan order niet verwijderen!"
 
-#: old/bin/gl.pl:656
+#: old/bin/gl.pl:634
 msgid "Cannot delete posted transaction"
 msgstr "Geboekte transactie niet verwijderbaar"
 
@@ -1529,11 +1529,11 @@ msgstr "Kan geen factuur boeken in afgesloten periode!"
 msgid "Cannot post payment for a closed period!"
 msgstr "Kan geen betaling boeken voor afgesloten periode!"
 
-#: old/bin/aa.pl:1313 old/bin/gl.pl:639
+#: old/bin/aa.pl:1313 old/bin/gl.pl:617
 msgid "Cannot post transaction for a closed period!"
 msgstr "Kan geen boeking maken in afgesloten periode"
 
-#: old/bin/gl.pl:678
+#: old/bin/gl.pl:656
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr ""
@@ -1908,7 +1908,7 @@ msgstr "Kopie"
 msgid "Copy to COA"
 msgstr "Kopieër naar rekeningstelsel"
 
-#: old/bin/aa.pl:931 old/bin/gl.pl:263 old/bin/ir.pl:527 old/bin/is.pl:574
+#: old/bin/aa.pl:931 old/bin/gl.pl:266 old/bin/ir.pl:527 old/bin/is.pl:574
 msgid "Copy to New"
 msgstr "Kopieër naar Nieuw"
 
@@ -5001,7 +5001,7 @@ msgstr "Netto boekingswaarde"
 msgid "Net Due"
 msgstr "Netto verschuldigd"
 
-#: old/bin/aa.pl:466 old/bin/aa.pl:947 old/bin/gl.pl:261 old/bin/ir.pl:360
+#: old/bin/aa.pl:466 old/bin/aa.pl:947 old/bin/gl.pl:264 old/bin/ir.pl:360
 #: old/bin/ir.pl:546 old/bin/is.pl:339 old/bin/is.pl:594 old/bin/oe.pl:512
 msgid "New"
 msgstr "Nieuw"
@@ -5569,7 +5569,7 @@ msgstr "Onze debets"
 msgid "Out"
 msgstr "Uit"
 
-#: old/bin/gl.pl:687
+#: old/bin/gl.pl:665
 msgid "Out of balance transaction!"
 msgstr "Boeking is niet in evenwicht!"
 
@@ -6036,7 +6036,7 @@ msgstr ""
 "accounts toe te voegen"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252 old/bin/aa.pl:903
-#: old/bin/aa.pl:935 old/bin/aa.pl:955 old/bin/gl.pl:249 old/bin/gl.pl:289
+#: old/bin/aa.pl:935 old/bin/aa.pl:955 old/bin/gl.pl:251 old/bin/gl.pl:253
 #: old/bin/ir.pl:531 old/bin/ir.pl:565 old/bin/ir.pl:934 old/bin/is.pl:1021
 #: old/bin/is.pl:578 old/bin/is.pl:616 UI/payments/payment2.html:499
 msgid "Post"
@@ -7013,9 +7013,9 @@ msgstr "Zater"
 #: lib/LedgerSMB/Scripts/account.pm:169 lib/LedgerSMB/Scripts/account.pm:182
 #: lib/LedgerSMB/Scripts/asset.pm:454 lib/LedgerSMB/Scripts/budgets.pm:104
 #: old/bin/aa.pl:967 old/bin/am.pl:169 old/bin/am.pl:175 old/bin/am.pl:65
-#: old/bin/am.pl:73 old/bin/am.pl:84 old/bin/gl.pl:268 old/bin/ic.pl:830
-#: old/bin/ic.pl:839 old/bin/ir.pl:550 old/bin/is.pl:600 old/bin/oe.pl:635
-#: old/bin/oe.pl:859 old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
+#: old/bin/am.pl:73 old/bin/am.pl:84 old/bin/ic.pl:830 old/bin/ic.pl:839
+#: old/bin/ir.pl:550 old/bin/is.pl:600 old/bin/oe.pl:635 old/bin/oe.pl:859
+#: old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
 #: t/data/04-complex_template.html:620 t/data/04-complex_template.html:644
 #: UI/accounts/edit.html:523 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
@@ -7051,8 +7051,7 @@ msgstr "Aanpassingen opslaan"
 msgid "Save Contact"
 msgstr "Contact opslaan"
 
-#: old/bin/aa.pl:960 old/bin/gl.pl:251 old/bin/gl.pl:297 old/bin/ir.pl:570
-#: old/bin/is.pl:621
+#: old/bin/aa.pl:960 old/bin/gl.pl:256 old/bin/ir.pl:570 old/bin/is.pl:621
 msgid "Save Draft"
 msgstr "Opslaan"
 
@@ -7080,7 +7079,7 @@ msgstr "Nieuwe locatie opslaan"
 msgid "Save Schedule"
 msgstr "Planning Opslaan"
 
-#: old/bin/aa.pl:945 old/bin/gl.pl:255
+#: old/bin/aa.pl:945 old/bin/gl.pl:258
 msgid "Save Template"
 msgstr "Opslaan sjabloon"
 
@@ -7089,7 +7088,7 @@ msgid "Save as New"
 msgstr "Opslaan als nieuw"
 
 #: lib/LedgerSMB/Scripts/account.pm:172 old/bin/am.pl:66 old/bin/am.pl:75
-#: old/bin/gl.pl:257 old/bin/ic.pl:831 old/bin/ic.pl:848 old/bin/oe.pl:647
+#: old/bin/gl.pl:260 old/bin/ic.pl:831 old/bin/ic.pl:848 old/bin/oe.pl:647
 #: old/bin/oe.pl:862
 msgid "Save as new"
 msgstr "Opslaan als nieuw"
@@ -7110,7 +7109,7 @@ msgstr "Opslaan [_1] [_2]"
 msgid "Saving over an existing document.  Continue?"
 msgstr "Opslaan en bestaand document vervangen?"
 
-#: old/bin/aa.pl:904 old/bin/aa.pl:937 old/bin/gl.pl:259 old/bin/ir.pl:540
+#: old/bin/aa.pl:904 old/bin/aa.pl:937 old/bin/gl.pl:262 old/bin/ir.pl:540
 #: old/bin/ir.pl:936 old/bin/is.pl:1022 old/bin/is.pl:586 old/bin/oe.pl:672
 #: old/bin/oe.pl:858
 msgid "Schedule"
@@ -8179,7 +8178,7 @@ msgstr "Sjablonenlijst"
 msgid "Template Not Found"
 msgstr "Sjabloon niet gevonden"
 
-#: old/bin/aa.pl:1125 old/bin/gl.pl:370
+#: old/bin/aa.pl:1125 old/bin/gl.pl:348
 msgid "Template Saved!"
 msgstr "Sjabloon opgeslagen!"
 
@@ -8605,7 +8604,7 @@ msgstr "Transactiegoedkeuring"
 msgid "Transaction Date"
 msgstr "Transactiedatum"
 
-#: old/bin/gl.pl:633
+#: old/bin/gl.pl:611
 msgid "Transaction Date missing!"
 msgstr "Boekingsdatum ontbreekt!"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-06-23 18:14+0000\n"
+"POT-Creation-Date: 2018-07-22 21:55+0000\n"
 "Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2018\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -44,7 +44,7 @@ msgstr "(Låst)"
 #: lib/LedgerSMB/Upgrade_Tests.pm:259 lib/LedgerSMB/Upgrade_Tests.pm:280
 #: lib/LedgerSMB/Upgrade_Tests.pm:475 lib/LedgerSMB/Upgrade_Tests.pm:496
 msgid "."
-msgstr ""
+msgstr "."
 
 #: lib/LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
@@ -130,7 +130,7 @@ msgstr "Kredittkonto Leverandører"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:278 lib/LedgerSMB/Upgrade_Tests.pm:494
 msgid "AP account available when vendors defined"
-msgstr ""
+msgstr "Leverandørkonto er tilgjengelig når leverandører er valgt"
 
 #: old/bin/am.pl:797 UI/Reports/filters/unapproved.html:8
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
@@ -181,7 +181,7 @@ msgstr "Kundekonto"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:257 lib/LedgerSMB/Upgrade_Tests.pm:473
 msgid "AR account available when customers defined"
-msgstr ""
+msgstr "Kunde konto tilgjengelig når kundene er registret."
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:115
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:106
@@ -287,7 +287,7 @@ msgstr "Kontotype"
 msgid "Account [_1] not found"
 msgstr "Konto [_1] ikke funnet"
 
-#: old/bin/gl.pl:588
+#: old/bin/gl.pl:566
 msgid "Account [_1] not found."
 msgstr "Konto [_1] ikke funnet"
 
@@ -1231,7 +1231,7 @@ msgstr "Strekkode"
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
-msgstr ""
+msgstr "Grunn systemet"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:92 old/bin/ir.pl:662
 #: old/bin/is.pl:752
@@ -1475,13 +1475,13 @@ msgstr "Avbryt"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:215
 msgid "Cancel the <b>whole migration</b>"
-msgstr ""
+msgstr "Avbryt <b>hele overføringen</b>"
 
 #: lib/LedgerSMB/Scripts/setup.pm:264
 msgid "Cancel?"
 msgstr "Avbryt?"
 
-#: old/bin/gl.pl:627
+#: old/bin/gl.pl:605
 msgid "Cannot Repost Transaction"
 msgstr "Kan ikke rapportere Postering"
 
@@ -1521,7 +1521,7 @@ msgstr "Kan ikke slette enkeltdel!"
 msgid "Cannot delete order!"
 msgstr "Kan ikke slette ordre!"
 
-#: old/bin/gl.pl:656
+#: old/bin/gl.pl:634
 msgid "Cannot delete posted transaction"
 msgstr "Kan ikke slette bokførte Posteringer"
 
@@ -1537,11 +1537,11 @@ msgstr "Kan ikke bokføre faktura for en avsluttet periode!"
 msgid "Cannot post payment for a closed period!"
 msgstr "Kan ikke bokføre betaling for en avsluttet periode!"
 
-#: old/bin/aa.pl:1313 old/bin/gl.pl:639
+#: old/bin/aa.pl:1313 old/bin/gl.pl:617
 msgid "Cannot post transaction for a closed period!"
 msgstr "Kan ikke bokføre Postering for en avsluttet periode!"
 
-#: old/bin/gl.pl:678
+#: old/bin/gl.pl:656
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr "Kan ikke bokføre Postering med debet og kredit på samme konto!"
@@ -1917,7 +1917,7 @@ msgstr "Kopiere"
 msgid "Copy to COA"
 msgstr "Kopiér til kontoplan"
 
-#: old/bin/aa.pl:931 old/bin/gl.pl:263 old/bin/ir.pl:527 old/bin/is.pl:574
+#: old/bin/aa.pl:931 old/bin/gl.pl:266 old/bin/ir.pl:527 old/bin/is.pl:574
 msgid "Copy to New"
 msgstr "Kopier til Ny"
 
@@ -2249,7 +2249,7 @@ msgstr "Database administrator rettigheter"
 
 #: UI/setup/system_info.html:13
 msgid "Database component"
-msgstr ""
+msgstr "Database komponent"
 
 #: lib/LedgerSMB/Scripts/setup.pm:244
 msgid "Database does not exist."
@@ -2357,7 +2357,7 @@ msgstr "Betalingsdato"
 
 #: UI/lib/report_base.html:197
 msgid "Date Range"
-msgstr ""
+msgstr "Datointervall"
 
 #: old/bin/oe.pl:1740
 msgid "Date Received"
@@ -3314,7 +3314,7 @@ msgstr "Konvulutt"
 
 #: UI/setup/system_info.html:35
 msgid "Environment"
-msgstr ""
+msgstr "miljø"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:223
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:225 lib/LedgerSMB/Report/PNL.pm:212
@@ -4017,6 +4017,7 @@ msgstr "Inn Svc"
 #: UI/setup/upgrade_info.html:33
 msgid "In addition to these new defaults LedgerSMB 1.3 adds stricter "
 msgstr ""
+"I tillegg til disse nye standard verdiene legger LedgerSMB 1.3 til strengere"
 
 #: old/bin/printer.pl:120
 msgid "In-line"
@@ -4588,15 +4589,15 @@ msgstr "LedgerSMB har oppdaget følgende systemkomponenter"
 
 #: UI/setup/upgrade_info.html:29
 msgid "LedgerSMB has introduced three new system wide default values which "
-msgstr ""
+msgstr "LedgerSMB har introdusert tre nye system standardverdier som"
 
 #: UI/setup/upgrade_info.html:76
 msgid "LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts "
-msgstr ""
+msgstr "LedgerSMB støtter flere <em>Leverandør</em> kontoer "
 
 #: UI/setup/upgrade_info.html:52
 msgid "LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts "
-msgstr ""
+msgstr "LedgerSMB støtter flere <em>kunde</em> kontoer"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:731 lib/LedgerSMB/Upgrade_Tests.pm:777
 msgid ""
@@ -5009,7 +5010,7 @@ msgstr "Netto bokført verdi"
 msgid "Net Due"
 msgstr "Netto Forfall"
 
-#: old/bin/aa.pl:466 old/bin/aa.pl:947 old/bin/gl.pl:261 old/bin/ir.pl:360
+#: old/bin/aa.pl:466 old/bin/aa.pl:947 old/bin/gl.pl:264 old/bin/ir.pl:360
 #: old/bin/ir.pl:546 old/bin/is.pl:339 old/bin/is.pl:594 old/bin/oe.pl:512
 msgid "New"
 msgstr "Ny"
@@ -5207,6 +5208,8 @@ msgstr "Merknad klasse"
 #: UI/setup/upgrade_info.html:99
 msgid "Note that the process invoked by hitting the button below might "
 msgstr ""
+"Legg merke til at prosessen som startes ved å trykke på knappen nedenfor, kan "
+"være"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:109
 #: lib/LedgerSMB/Report/Inventory/Search.pm:270
@@ -5574,7 +5577,7 @@ msgstr "Våre tilgodhavender"
 msgid "Out"
 msgstr "Ut"
 
-#: old/bin/gl.pl:687
+#: old/bin/gl.pl:665
 msgid "Out of balance transaction!"
 msgstr "Posteringer er i ubalanse!"
 
@@ -5744,7 +5747,7 @@ msgstr "Passord"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:62
 msgid "Password Duration (days)"
-msgstr ""
+msgstr "Passord varighet (dager)"
 
 #: old/lib/LedgerSMB/DBObject/User.pm:183
 msgid "Password required"
@@ -6041,7 +6044,7 @@ msgstr ""
 "Bruk v. 1.3/1.4 brukergrensesnitt for å legge til næringsoppgave kontoer"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252 old/bin/aa.pl:903
-#: old/bin/aa.pl:935 old/bin/aa.pl:955 old/bin/gl.pl:249 old/bin/gl.pl:289
+#: old/bin/aa.pl:935 old/bin/aa.pl:955 old/bin/gl.pl:251 old/bin/gl.pl:253
 #: old/bin/ir.pl:531 old/bin/ir.pl:565 old/bin/ir.pl:934 old/bin/is.pl:1021
 #: old/bin/is.pl:578 old/bin/is.pl:616 UI/payments/payment2.html:499
 msgid "Post"
@@ -6608,6 +6611,9 @@ msgid ""
 "<br>Void the clearing date in the dialog shown or go back to SQL-Ledger if "
 "you feel that you need to adjust more before migrating."
 msgstr ""
+"Avstemminger bør bare være på eiendel-, gjelds- eller egenkapitalkontoer. "
+"<br>Endre oppklaringsdatoen i dialogboksen som vises eller gå tilbake til SQL-"
+"Ledger hvis du føler at du må justere mer før du overfører."
 
 #: old/bin/ir.pl:463 old/bin/is.pl:485 UI/orders/order.html:41
 msgid "Record in"
@@ -6720,7 +6726,7 @@ msgstr "Rapport [_1] på dato [_2]"
 
 #: UI/reconciliation/report.html:75
 msgid "Report generated by:"
-msgstr ""
+msgstr "Report generert av:"
 
 #: UI/timecards/timecard-week.html:65
 msgid "Report in"
@@ -7018,9 +7024,9 @@ msgstr "Lør"
 #: lib/LedgerSMB/Scripts/account.pm:169 lib/LedgerSMB/Scripts/account.pm:182
 #: lib/LedgerSMB/Scripts/asset.pm:454 lib/LedgerSMB/Scripts/budgets.pm:104
 #: old/bin/aa.pl:967 old/bin/am.pl:169 old/bin/am.pl:175 old/bin/am.pl:65
-#: old/bin/am.pl:73 old/bin/am.pl:84 old/bin/gl.pl:268 old/bin/ic.pl:830
-#: old/bin/ic.pl:839 old/bin/ir.pl:550 old/bin/is.pl:600 old/bin/oe.pl:635
-#: old/bin/oe.pl:859 old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
+#: old/bin/am.pl:73 old/bin/am.pl:84 old/bin/ic.pl:830 old/bin/ic.pl:839
+#: old/bin/ir.pl:550 old/bin/is.pl:600 old/bin/oe.pl:635 old/bin/oe.pl:859
+#: old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
 #: t/data/04-complex_template.html:620 t/data/04-complex_template.html:644
 #: UI/accounts/edit.html:523 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
@@ -7056,8 +7062,7 @@ msgstr "Lagre Forandringer"
 msgid "Save Contact"
 msgstr "Lagre Kontakt"
 
-#: old/bin/aa.pl:960 old/bin/gl.pl:251 old/bin/gl.pl:297 old/bin/ir.pl:570
-#: old/bin/is.pl:621
+#: old/bin/aa.pl:960 old/bin/gl.pl:256 old/bin/ir.pl:570 old/bin/is.pl:621
 msgid "Save Draft"
 msgstr "Lagre Kladd"
 
@@ -7085,7 +7090,7 @@ msgstr "Lagre nytt Sted"
 msgid "Save Schedule"
 msgstr "Lagre Planlagt"
 
-#: old/bin/aa.pl:945 old/bin/gl.pl:255
+#: old/bin/aa.pl:945 old/bin/gl.pl:258
 msgid "Save Template"
 msgstr "Lagre Maler"
 
@@ -7094,7 +7099,7 @@ msgid "Save as New"
 msgstr "Lagre som ny"
 
 #: lib/LedgerSMB/Scripts/account.pm:172 old/bin/am.pl:66 old/bin/am.pl:75
-#: old/bin/gl.pl:257 old/bin/ic.pl:831 old/bin/ic.pl:848 old/bin/oe.pl:647
+#: old/bin/gl.pl:260 old/bin/ic.pl:831 old/bin/ic.pl:848 old/bin/oe.pl:647
 #: old/bin/oe.pl:862
 msgid "Save as new"
 msgstr "Lagre som ny"
@@ -7115,7 +7120,7 @@ msgstr "Lagre [_1] [_2]"
 msgid "Saving over an existing document.  Continue?"
 msgstr "Lagre over et eksisterende dokument. Fortsett?"
 
-#: old/bin/aa.pl:904 old/bin/aa.pl:937 old/bin/gl.pl:259 old/bin/ir.pl:540
+#: old/bin/aa.pl:904 old/bin/aa.pl:937 old/bin/gl.pl:262 old/bin/ir.pl:540
 #: old/bin/ir.pl:936 old/bin/is.pl:1022 old/bin/is.pl:586 old/bin/oe.pl:672
 #: old/bin/oe.pl:858
 msgid "Schedule"
@@ -8185,7 +8190,7 @@ msgstr "Mal  Oversikt"
 msgid "Template Not Found"
 msgstr "Mal  ikke funnet"
 
-#: old/bin/aa.pl:1125 old/bin/gl.pl:370
+#: old/bin/aa.pl:1125 old/bin/gl.pl:348
 msgid "Template Saved!"
 msgstr "Mal  lagret"
 
@@ -8339,6 +8344,8 @@ msgid ""
 "This will <b>keep</b> the transactions but will <b>ignore</b> the non-"
 "necessary reconciliations"
 msgstr ""
+"This will <b>keep</b> the transactions but will <b>ignore</b> the non-"
+"necessary reconciliations"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:714
 msgid ""
@@ -8352,6 +8359,8 @@ msgstr ""
 msgid ""
 "This will <b>skip</b> this test <b><u>without doing any correction</u></b>"
 msgstr ""
+"Dette vil <b>hoppe over</b> denne testen <b><u> uten at det blir gjort "
+"endringer</u></b>"
 
 #: old/lib/LedgerSMB/Num2text.pm:116
 msgid "Thousand"
@@ -8619,7 +8628,7 @@ msgstr "Godkjenne Postering"
 msgid "Transaction Date"
 msgstr "Posterings dato"
 
-#: old/bin/gl.pl:633
+#: old/bin/gl.pl:611
 msgid "Transaction Date missing!"
 msgstr "Posterings dato mangler!"
 
@@ -8764,7 +8773,7 @@ msgstr "Ikke godkjent"
 
 #: UI/payments/payment2.html:315
 msgid "Uncheck to remove entry from payment"
-msgstr ""
+msgstr "Fjern markeringen for å fjerne oppføringen fra betaling"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:696
 msgid ""
@@ -8854,7 +8863,7 @@ msgstr "Lås opp gruppe"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1206
 msgid "Unneeded Reconciliations"
-msgstr ""
+msgstr "Unødvendige avstemminger"
 
 #: lib/LedgerSMB/Scripts/setup.pm:219
 msgid "Unsupported LedgerSMB version detected."
@@ -9414,7 +9423,7 @@ msgstr "gjort"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:572
 msgid "e"
-msgstr ""
+msgstr "e"
 
 #: old/bin/ir.pl:1234 old/bin/is.pl:1330 old/bin/oe.pl:1179
 msgid "ea"
