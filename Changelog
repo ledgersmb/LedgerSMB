@@ -2,6 +2,15 @@
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.3
+* Fix for menu System > Templates fails to execute SQL script (Erik H, #3588)
+* Fix for GL journal buttons displaying in random order (Erik H, #3680)
+* Fix for 'contact_all' role missing 'contact_vendor' rights (Erik H)
+* Fix 1.6.1 regression browser failure to cache menu structure (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.2
 * Print button (to screen) doesn't work more than once (Erik H, #3705)
 * Menu links ignore clicks long after first click (Erik H, #3704)
