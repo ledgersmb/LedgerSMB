@@ -284,13 +284,13 @@ sub single_batch_unlock {
     }
 }
 
-=item batch_voucher_delete
+=item batch_vouchers_delete
 
 Deletes selected vouchers.
 
 =cut
 
-sub batch_voucher_delete {
+sub batch_vouchers_delete {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
