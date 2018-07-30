@@ -34,7 +34,7 @@ Lists the templates.
 
 sub list {
     my ($request) = @_;
-    return LedgerSMB::Report::Listing::Templates->new(%$request)
+    return LedgerSMB::Report::Listings::Templates->new(%$request)
         ->render($request);
 }
 
