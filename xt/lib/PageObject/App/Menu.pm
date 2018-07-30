@@ -122,9 +122,12 @@ sub click_menu {
             ok($label,"Found label $label");
 
             my $submenu = $item->find("//*[\@id='$label']");
-            ok($submenu,"Submenu found " . $submenu->get_text);
+            ok($submenu,"Submenu found '" . $submenu->get_text . "'");
 
-            $submenu->click;
+            #Click toggle the foldable menus. No need if it is already opened
+            my $content = $submenu->find("//*[\@id='$label']/parent::*")->get_attribute('class');
+            $submenu->click
+                if $content !~ 'dijitTreeContentExpanded';
         }
     };
 
