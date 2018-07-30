@@ -14,14 +14,19 @@ The type behaves internally as a Datetime module.
 
 =cut
 
-use DateTime::Format::Strptime;
-use LedgerSMB::App_State;
-use LedgerSMB::Magic qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
-use Carp;
-use PGObject;
-use base qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
+use base qw(PGObject::Type::DateTime);
+
+use Carp;
+use DateTime;
+use DateTime::Format::Strptime;
+use PGObject;
+
+use LedgerSMB::App_State;
+use LedgerSMB::Magic
+    qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
+
 
 __PACKAGE__->register(registry => 'default', types => ['date']);
 

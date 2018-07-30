@@ -43,10 +43,11 @@ Views the transaction template.  Requires that id be set.
 sub _run_update {
     my ($transtemplate, $journal_type) = @_;
 
-    convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
-    $lsmb_legacy::form->{title} = 'Add';
+    convert_to_form($transtemplate, $lsmb_legacy::form, ## no critic
+                    $journal_type);
+    $lsmb_legacy::form->{title} = 'Add'; ## no critic
 
-    return lsmb_legacy::update();
+    return lsmb_legacy::update(); ## no critic
 }
 
 sub view {

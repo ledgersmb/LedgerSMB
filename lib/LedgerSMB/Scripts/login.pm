@@ -15,19 +15,18 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 
 =cut
 
+use strict;
+use warnings;
+
+use HTTP::Status qw( HTTP_OK ) ;
+use Try::Tiny;
 
 use LedgerSMB::Locale;
-use HTTP::Status qw( HTTP_OK ) ;
-
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template;
 use LedgerSMB::User;
-
-use Try::Tiny;
-
-use strict;
-use warnings;
 
 our $VERSION = 1.0;
 

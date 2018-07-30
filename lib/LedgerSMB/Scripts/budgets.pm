@@ -14,6 +14,13 @@ Budget workflow scripts.
 use strict;
 use warnings;
 
+use LedgerSMB::App_State;
+use LedgerSMB::Budget;
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Magic qw( EDIT_BUDGET_ROWS NEW_BUDGET_ROWS );
+use LedgerSMB::Template;
+
 =head1 REQUIRES
 
 =over
@@ -21,14 +28,6 @@ use warnings;
 =item LedgerSMB::Budget
 
 =back
-
-=cut
-
-use LedgerSMB::Budget;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Magic qw( EDIT_BUDGET_ROWS NEW_BUDGET_ROWS );
-
 
 =head1 METHODS
 

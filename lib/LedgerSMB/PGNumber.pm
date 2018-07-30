@@ -15,12 +15,16 @@ Math::BigFloat and can be used in this way.
 
 =cut
 
-# try using the GMP library for Math::BigFloat for speed
-use Math::BigFloat try => 'GMP';
-use base qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
+use base qw(PGObject::Type::BigFloat);
+
+# try using the GMP library for Math::BigFloat for speed
+use Math::BigFloat try => 'GMP';
 use Number::Format;
+use PGObject::Type::BigFloat;
+
+use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 
@@ -29,11 +33,11 @@ __PACKAGE__->register(registry => 'default',
 
 our ($accuracy, $precision, $round_mode, $div_scale);
 
-# Globals
-$accuracy = PGObject::Type::BigFloat->accuracy();
-$precision = PGObject::Type::BigFloat->precision();
-$round_mode = PGObject::Type::BigFloat->round_mode();
-$div_scale = PGObject::Type::BigFloat->div_scale();
+# Same initialization as PGObject::Type::BigFloat
+# which works around Math::BigFloat's weird idea of OO
+$accuracy = $precision = undef;
+$round_mode = 'even';
+$div_scale = 40;
 
 =head1 INHERITS
 

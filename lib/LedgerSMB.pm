@@ -140,6 +140,7 @@ use HTTP::Status qw( HTTP_OK ) ;
 use JSON::MaybeXS;
 use Log::Log4perl;
 use PGObject;
+use Plack;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;

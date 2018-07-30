@@ -19,6 +19,7 @@ use warnings;
 use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
 use LedgerSMB::Inventory::Adjust_Line;
+use LedgerSMB::Report::Inventory::Adjustments;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
 

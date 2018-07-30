@@ -15,15 +15,18 @@ This module doesn't specify any methods.
 
 =cut
 
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::App_Module;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::Template;
-use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Report::Listings::Business_Unit;
-use Carp;
 use strict;
 use warnings;
+
+use Carp;
+
+use LedgerSMB::App_Module;
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::PGDate;
+use LedgerSMB::Report::Listings::Business_Unit;
+use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Template;
 
 $Carp::Verbose = 1;
 

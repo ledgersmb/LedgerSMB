@@ -31,10 +31,12 @@ use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use List::Util qw( first );
 use Locale::Country;
+use Log::Log4perl;
 use MIME::Base64;
 use Try::Tiny;
 use Version::Compare;
 
+use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
@@ -46,6 +48,7 @@ use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
@@ -304,7 +307,7 @@ Checks for common setup issues and errors if admin tasks cannot be completed/
 
 sub sanity_checks {
     my ($database) = @_;
-    `psql --help` || die LedgerSMB::App_State::Locale->text(
+    `psql --help` || die LedgerSMB::App_State::Locale()->text(
                                  'psql not found.'
                               );
     return;

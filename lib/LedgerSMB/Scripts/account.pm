@@ -22,10 +22,12 @@ maintainable.
 use strict;
 use warnings;
 
-use Template;
+use Log::Log4perl;
+
+use LedgerSMB;
 use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::EOY;
-use Log::Log4perl;
+use LedgerSMB::Template;
 
 
 my $logger = Log::Log4perl::get_logger('LedgerSMB::DBObject::Account');

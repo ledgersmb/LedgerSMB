@@ -13,14 +13,21 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 
 =cut
 
-use LedgerSMB::Template;
+use strict;
+use warnings;
+
+use LedgerSMB::App_State;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::Entity;
+use LedgerSMB::Entity::Company;
+use LedgerSMB::Entity::Contact;
+use LedgerSMB::Entity::Credit_Account;
+use LedgerSMB::Entity::Location;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Setting;
-use strict;
-use warnings;
+use LedgerSMB::Template;
 
 our $VERSION = '1.0';
 
@@ -68,10 +75,7 @@ email.
 
 sub generate_statement {
     my ($request) = @_;
-    use LedgerSMB::Entity::Company;
-    use LedgerSMB::Entity::Credit_Account;
-    use LedgerSMB::Entity::Location;
-    use LedgerSMB::Entity::Contact;
+
     _strip_specials($request);
 
     my $rtype = $request->{report_type}; # in case we need it later

@@ -26,14 +26,15 @@ searching for and reporting financial transactions.
 
 =cut
 
+use LedgerSMB::App_State;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Report;
+
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
-
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::App_State;
 
 =head1 PROPERTIES
 
