@@ -31,15 +31,15 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 =cut
 
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
+
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
-
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::Setting;
-
 
 =head1 PROPERTIES
 

@@ -13,6 +13,8 @@ LedgerSMB
 
 =cut
 
+use LedgerSMB::DBObject::TaxForm;
+
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
