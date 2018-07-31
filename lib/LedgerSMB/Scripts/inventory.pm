@@ -16,11 +16,12 @@ This module implements inventory adjustment entry points.
 use strict;
 use warnings;
 
-use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
 use LedgerSMB::Inventory::Adjust_Line;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Template;
 
 =over
 
@@ -129,7 +130,7 @@ sub adjustment_save {
 
 sub adjustment_list {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Inventory::Adjustments->new(%$request);
+    my $report = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
     return $report->render($request);
 }
 
