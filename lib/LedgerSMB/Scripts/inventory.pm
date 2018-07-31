@@ -19,7 +19,6 @@ use warnings;
 use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
 use LedgerSMB::Inventory::Adjust_Line;
-use LedgerSMB::Report::Inventory::Adjustments;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
 
@@ -140,7 +139,7 @@ sub adjustment_list {
 
 sub adjustment_approve {
     my ($request) = @_;
-    my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
+    my $adjust = LedgerSMB::Inventory::Adjust->new(%$request);
     $adjust->approve;
     $request->{report_name} = 'list_inventory_counts';
     return LedgerSMB::Scripts::reports::start_report($request);
@@ -154,7 +153,7 @@ sub adjustment_approve {
 
 sub adjustment_delete {
     my ($request) = @_;
-    my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
+    my $adjust = LedgerSMB::Inventory::Adjust->new(%$request);
     $adjust->delete;
     $request->{report_name} = 'list_inventory_counts';
     return LedgerSMB::Scripts::reports::start_report($request);
