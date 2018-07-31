@@ -130,31 +130,32 @@ Username of the one who approved the report
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [ {col_id => 'account',
-                name => LedgerSMB::Report::text('Account'),
+                name => $self->Text('Account'),
                 type => 'text', },
              {col_id => 'end_date',
-                name => LedgerSMB::Report::text('Statement Date'),
+                name => $self->Text('Statement Date'),
                 type => 'href',
            href_base => 'recon.pl?action=display_report&report_id=', },
              {col_id => 'their_total',
-                name => LedgerSMB::Report::text('Statement Balance'),
+                name => $self->Text('Statement Balance'),
                money => 1,
                 type => 'text', },
              {col_id => 'approved',
-                name => LedgerSMB::Report::text('Approved'),
+                name => $self->Text('Approved'),
                 type => 'text', },
              {col_id => 'submitted',
-                name => LedgerSMB::Report::text('Submitted'),
+                name => $self->Text('Submitted'),
                 type => 'text', },
              {col_id => 'updated',
-                name => LedgerSMB::Report::text('Last Updated'),
+                name => $self->Text('Last Updated'),
                 type => 'text', },
              {col_id => 'entered_by',
-                name => LedgerSMB::Report::text('Entered By'),
+                name => $self->Text('Entered By'),
                 type => 'text', },
              {col_id => 'approved_by',
-                name => LedgerSMB::Report::text('Approved By'),
+                name => $self->Text('Approved By'),
                 type => 'text', },
           ];
 }
@@ -174,14 +175,15 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'date_from',
-             text => LedgerSMB::Report::text('From Date')},
+             text => $self->Text('From Date')},
             {name => 'date_to',
-             text => LedgerSMB::Report::text('To Date') },
+             text => $self->Text('To Date') },
             {name => 'amount_from',
-             text => LedgerSMB::Report::text('From Amount')},
+             text => $self->Text('From Amount')},
             {name => 'amount_to',
-             text => LedgerSMB::Report::text('To Amount')}
+             text => $self->Text('To Amount')}
      ];
 }
 
@@ -192,7 +194,8 @@ sub header_lines {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Reconciliation Reports');
+    my ($self) = @_;
+    return $self->Text('Reconciliation Reports');
 }
 
 =head1 METHODS

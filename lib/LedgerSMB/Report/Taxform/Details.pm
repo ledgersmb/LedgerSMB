@@ -70,34 +70,35 @@ has meta_number => (is => 'ro', isa => 'Str', required => '1');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
         col_id => 'legal_name',
         type   => 'text',
-        name   => LedgerSMB::Report::text('Company'), },
+        name   => $self->Text('Company'), },
 
       { col_id => 'account_type',
         type   => 'text',
-        name   => LedgerSMB::Report::text('Account Type'), },
+        name   => $self->Text('Account Type'), },
 
       { col_id => 'meta_number',
         type   => 'text',
-        name   => LedgerSMB::Report::text('Account Number'), },
+        name   => $self->Text('Account Number'), },
 
      { col_id  => 'invnumber',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Invoice Number') },
+       name    => $self->Text('Invoice Number') },
 
      { col_id  => 'acc_sum',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Ledger sum') },
+       name    => $self->Text('Ledger sum') },
 
      { col_id  => 'invoice_sum',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Invoice sum') },
+       name    => $self->Text('Invoice sum') },
 
      { col_id  => 'total',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Total') },
+       name    => $self->Text('Total') },
      ];
 }
 
@@ -106,11 +107,12 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [
-       { name => 'from_date', text => LedgerSMB::Report::text('From Date') },
-       { name => 'to_date',   text => LedgerSMB::Report::text('To Date') },
-       { name => 'taxform',   text => LedgerSMB::Report::text('Tax Form') },
-       { name => 'meta_number',   text => LedgerSMB::Report::text('Account Number') },
+       { name => 'from_date', text => $self->Text('From Date') },
+       { name => 'to_date',   text => $self->Text('To Date') },
+       { name => 'taxform',   text => $self->Text('Tax Form') },
+       { name => 'meta_number',   text => $self->Text('Account Number') },
     ];
 }
 
@@ -119,7 +121,8 @@ sub header_lines {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Tax Form Details Report');
+    my ($self) = @_;
+    return $self->Text('Tax Form Details Report');
 }
 
 =head2 buttons
@@ -127,9 +130,10 @@ sub name {
 =cut
 
 sub buttons {
+    my ($self) = @_;
     return [{name => 'action',
              type => 'submit',
-             text => LedgerSMB::Report::text('Print'),
+             text => $self->Text('Print'),
             value => 'print'}];
 }
 

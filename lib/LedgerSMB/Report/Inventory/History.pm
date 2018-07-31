@@ -108,62 +108,63 @@ has inc_rfq => (is => 'ro', isa => 'Bool', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
    return [
     {col_id => 'id',
        type => 'href',
   href_base => 'ic.pl?action=edit&id=',
-       name => LedgerSMB::Report::text('ID'),},
+       name => $self->Text('ID'),},
 
     {col_id => 'partnumber',
        type => 'href',
   href_base => 'ic.pl?action=edit&id=',
-       name => LedgerSMB::Report::text('Part Number'),},
+       name => $self->Text('Part Number'),},
 
     {col_id => 'description',
        type => 'text',
-       name => LedgerSMB::Report::text('Description'),},
+       name => $self->Text('Description'),},
 
     {col_id => 'onhand',
        type => 'text',
-       name => LedgerSMB::Report::text('On Hand'),},
+       name => $self->Text('On Hand'),},
 
     {col_id => 'unit',
        type => 'text',
-       name => LedgerSMB::Report::text('Unit'),},
+       name => $self->Text('Unit'),},
 
     {col_id => 'bin',
        type => 'text',
-       name => LedgerSMB::Report::text('Bin'),},
+       name => $self->Text('Bin'),},
 
     {col_id => 'ordnumber',
        type => 'href',
-       name => LedgerSMB::Report::text('Order/Invoice'),},
+       name => $self->Text('Order/Invoice'),},
 
     {col_id => 'transdate',
        type => 'href',
-       name => LedgerSMB::Report::text('Date'),},
+       name => $self->Text('Date'),},
 
     {col_id => 'oe_class',
        type => 'href',
-       name => LedgerSMB::Report::text('Type'),},
+       name => $self->Text('Type'),},
 
     {col_id => 'sellprice',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('Sell Price'),},
+       name => $self->Text('Sell Price'),},
 
     {col_id => 'qty',
        type => 'text',
-       name => LedgerSMB::Report::text('Qty'),},
+       name => $self->Text('Qty'),},
 
     {col_id => 'linetotal',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('Total'),},
+       name => $self->Text('Total'),},
 
     {col_id => 'serialnumber',
        type => 'text',
-       name => LedgerSMB::Report::text('Serial Number'),},
+       name => $self->Text('Serial Number'),},
 
     ];
 }
@@ -185,7 +186,8 @@ Goods and Services
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Goods and Services History');
+    my ($self) = @_;
+    return $self->Text('Goods and Services History');
 }
 
 =head1 METHODS

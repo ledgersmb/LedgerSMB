@@ -51,23 +51,24 @@ has id => (is => 'ro', isa => 'Int');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       { col_id => 'control_code',
           type => 'href',
      href_base => 'business_unit.pl?action=edit&id=',
-          name => LedgerSMB::Report::text('Control Code') },
+          name => $self->Text('Control Code') },
 
       { col_id => 'description',
           type => 'text',
-          name => LedgerSMB::Report::text('Description') },
+          name => $self->Text('Description') },
 
       { col_id => 'start_date',
           type => 'text',
-          name => LedgerSMB::Report::text('Start Date') },
+          name => $self->Text('Start Date') },
 
       { col_id => 'end_date',
           type => 'text',
-          name => LedgerSMB::Report::text('End Date') },
+          name => $self->Text('End Date') },
     ];
 }
 
@@ -85,7 +86,10 @@ Business Units List
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Business Unit List'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Business Unit List');
+}
 
 =head1 METHODS
 

@@ -64,7 +64,7 @@ sub columns {
      }, {
       col_id => 'id',
         type => 'href',
-        name => LedgerSMB::Report::text('ID'),
+        name => $self->Text('ID'),
    href_base => $href_base,
     }, {
       col_id => 'journal_type',
@@ -73,12 +73,12 @@ sub columns {
     }, {
       col_id => 'description',
         type => 'href',
-        name => LedgerSMB::Report::text('Description'),
+        name => $self->Text('Description'),
    href_base => $href_base,
     }, {
       col_id => 'entity_name',
         type => 'text',
-        name => LedgerSMB::Report::text('Counterparty'),
+        name => $self->Text('Counterparty'),
     }];
 }
 
@@ -97,9 +97,10 @@ none
 =cut
 
 sub set_buttons {
+    my ($self) = @_;
     return [
         { name => 'action',
-            text => LedgerSMB::Report::text('Delete'),
+            text => $self->Text('Delete'),
            value => 'delete',
             type => 'submit',
            class => 'submit'
@@ -115,7 +116,7 @@ Template Transactions
 
 sub name {
     my $self = shift;
-    return LedgerSMB::Report::text('Template Transactions');
+    return $self->Text('Template Transactions');
 }
 
 =head2 run_report

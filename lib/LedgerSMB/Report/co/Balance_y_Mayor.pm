@@ -62,38 +62,39 @@ Account name
 =cut
 
 sub columns {
+    my ($self) = @_;
 
     my @COLS = (
     {col_id => 'accno',
-       name => LedgerSMB::Report::text('Account'),
+       name => $self->Text('Account'),
        type => 'href',
      pwidth => 3,
   href_base => '', },
 
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '12', },
 
     {col_id => 'starting_balance',
-       name => LedgerSMB::Report::text('Starting Balance'),
+       name => $self->Text('Starting Balance'),
        type => 'text',
       money => 1,
      pwidth => '3', },
 
     {col_id => 'debits',
-       name => LedgerSMB::Report::text('Debit'),
+       name => $self->Text('Debit'),
        type => 'text',
       money => 1,
      pwidth => '4', },
 
     {col_id => 'credits',
-       name => LedgerSMB::Report::text('Credit'),
+       name => $self->Text('Credit'),
        type => 'text',
       money => 1,
      pwidth => '4', },
     {col_id => 'ending_balance',
-       name => LedgerSMB::Report::text('Balance'),
+       name => $self->Text('Balance'),
        type => 'text',
       money => 1,
      pwidth => '3', },
@@ -131,10 +132,11 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'date_from',
-             text => LedgerSMB::Report::text('Start Date')},
+             text => $self->Text('Start Date')},
             {name => 'date_to',
-             text =>  LedgerSMB::Report::text('End Date')},]
+             text =>  $self->Text('End Date')},]
 }
 
 =back

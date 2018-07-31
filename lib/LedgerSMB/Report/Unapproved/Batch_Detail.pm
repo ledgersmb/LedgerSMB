@@ -86,39 +86,40 @@ before payments.  For payments, receipts, and GL, it is the sum of the credits.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
     {col_id => 'select',
        name => '',
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => LedgerSMB::Report::text('ID'),
+       name => $self->Text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'batch_class',
-       name => LedgerSMB::Report::text('Batch Class'),
+       name => $self->Text('Batch Class'),
        type => 'text',
      pwidth => 2, },
 
     {col_id => 'default_date',
-       name => LedgerSMB::Report::text('Date'),
+       name => $self->Text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'Reference',
-       name => LedgerSMB::Report::text('Reference'),
+       name => $self->Text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => LedgerSMB::Report::text('Amount'),
+       name => $self->Text('Amount'),
        type => 'text',
       money => 1,
      pwidth => '2', },
@@ -134,7 +135,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Voucher List');
+    my ($self) = @_;
+    return $self->Text('Voucher List');
 }
 
 =item header_lines
@@ -144,8 +146,9 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'batch_id',
-             text => LedgerSMB::Report::text('Batch ID')}, ]
+             text => $self->Text('Batch ID')}, ]
 }
 
 =item subtotal_cols
@@ -211,33 +214,33 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Post Batch'),
+                    text  => $self->Text('Post Batch'),
                     value => 'single_batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Delete Batch'),
+                    text  => $self->Text('Delete Batch'),
                     value => 'single_batch_delete',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Delete Vouchers'),
+                    text  => $self->Text('Delete Vouchers'),
                     value => 'batch_vouchers_delete',
                     class => 'submit',
                 },
                 {
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Unlock Batch'),
+                    text  => $self->Text('Unlock Batch'),
                     value => 'single_batch_unlock',
                     class => 'submit',
                 },
                 {
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Print Batch'),
+                    text  => $self->Text('Print Batch'),
                     value => 'print_batch',
                     class => 'submit',
                 }, ]);
