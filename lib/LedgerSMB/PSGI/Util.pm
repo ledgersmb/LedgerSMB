@@ -143,8 +143,7 @@ sub template_to_psgi {
     }
 
     my $body = $self->{output};
-    utf8::encode($body)
-        if utf8::is_utf8($body);
+    utf8::encode($body) if utf8::is_utf8($body); ## no critic
 
     return [ HTTP_OK, $headers, [ $body ] ];
 }

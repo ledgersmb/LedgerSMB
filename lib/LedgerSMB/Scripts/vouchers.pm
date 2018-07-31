@@ -411,41 +411,42 @@ my %print_dispatch = (
        script => 'ar.pl',
        entrypoint => sub {
            my ($voucher, $request) = @_;
-           $lsmb_legacy::form->{ARAP} = 'AR';
-           $lsmb_legacy::form->{arap} = 'ar';
-           $lsmb_legacy::form->{vc} = 'customer';
-           $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+           $lsmb_legacy::form->{ARAP} = 'AR'; ## no critic
+           $lsmb_legacy::form->{arap} = 'ar'; ## no critic
+           $lsmb_legacy::form->{vc} = 'customer'; ## no critic
+           $lsmb_legacy::form->{id} = $voucher->{transaction_id} ## no critic
                 if ref $voucher;
-           $lsmb_legacy::form->{formname} = 'ar_transaction';
+           $lsmb_legacy::form->{formname} = 'ar_transaction'; ## no critic
 
-           lsmb_legacy::create_links();
-           $lsmb_legacy::form->{media} = $request->{media};
-           lsmb_legacy::print();
+           lsmb_legacy::create_links(); ## no critic
+           $lsmb_legacy::form->{media} = $request->{media}; ## no critic
+           lsmb_legacy::print(); ## no critic
        }
     },
     BC_SALES_INVOICE() => {
         script => 'is.pl',
         entrypoint => sub {
             my ($voucher, $request) = @_;
-            $lsmb_legacy::form->{formname} = 'invoice';
-            $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+            $lsmb_legacy::form->{formname} = 'invoice'; ## no critic
+            $lsmb_legacy::form->{id} = ## no critic
+                $voucher->{transaction_id}
                                if ref $voucher;
 
-            lsmb_legacy::create_links();
-            $lsmb_legacy::form->{media} = $request->{media};
-            lsmb_legacy::print();
+            lsmb_legacy::create_links(); ## no critic
+            $lsmb_legacy::form->{media} = $request->{media}; ## no critic
+            lsmb_legacy::print(); ## no critic
         }
     },
    BC_VENDOR_INVOICE() => {
        script => 'is.pl',
        entrypoint => sub {
            my ($voucher, $request) = @_;
-           $lsmb_legacy::form->{formname} = 'product_receipt';
-           $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+           $lsmb_legacy::form->{formname} = 'product_receipt'; ## no critic
+           $lsmb_legacy::form->{id} = $voucher->{transaction_id} ## no critic
                 if ref $voucher;
 
-           lsmb_legacy::create_links();
-           lsmb_legacy::print();
+           lsmb_legacy::create_links(); ## no critic
+           lsmb_legacy::print(); ## no critic
        }
     },
     );

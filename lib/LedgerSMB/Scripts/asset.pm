@@ -15,16 +15,20 @@ Asset Management workflow script
 
 =cut
 
-use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
-use LedgerSMB::Template;
+use strict;
+use warnings;
+
+use Text::CSV;
+
 use LedgerSMB::DBObject::Asset_Class;
 use LedgerSMB::DBObject::Asset;
 use LedgerSMB::DBObject::Asset_Report;
+use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
+use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Assets::Net_Book_Value;
 use LedgerSMB::Report::Listings::Asset_Class;
 use LedgerSMB::Report::Listings::Asset;
-use strict;
-use warnings;
+use LedgerSMB::Template;
 
 our @file_columns = qw(tag purchase_date description asset_class location vendor
                       invoice department asset_account purchase_value

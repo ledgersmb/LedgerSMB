@@ -59,29 +59,29 @@ sub columns {
        {col_id => 'name',
             type => 'href',
        href_base => "contact.pl?action=get$entity_class_param",
-            name => LedgerSMB::Report::text('Name') },
+            name => $self->Text('Name') },
 
        {col_id => 'entity_control_code',
             type => 'href',
        href_base => "contact.pl?action=get$entity_class_param",
-            name => LedgerSMB::Report::text('Control Code') },
+            name => $self->Text('Control Code') },
 
        {col_id => 'meta_number',
             type => 'href',
        href_base => "contact.pl?action=get$entity_class_param",
-            name => LedgerSMB::Report::text('Credit Account Number') },
+            name => $self->Text('Credit Account Number') },
 
        {col_id => 'credit_description',
             type => 'text',
-            name => LedgerSMB::Report::text('Description') },
+            name => $self->Text('Description') },
 
        {col_id => 'business_type',
             type => 'text',
-            name => LedgerSMB::Report::text('Business Type') },
+            name => $self->Text('Business Type') },
 
        {col_id => 'curr',
             type => 'text',
-            name => LedgerSMB::Report::text('Currency') },
+            name => $self->Text('Currency') },
     ];
 }
 
@@ -89,18 +89,22 @@ sub columns {
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Contact Search') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Contact Search');
+}
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
      return [
             {name => 'name_part',
-             text => LedgerSMB::Report::text('Name')},
+             text => $self->Text('Name')},
             {name => 'meta_number',
-             text => LedgerSMB::Report::text('Account Number')}
+             text => $self->Text('Account Number')}
        ];
 }
 

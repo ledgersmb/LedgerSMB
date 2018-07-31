@@ -46,19 +46,22 @@ Original copyright notice below.
 
 =cut
 
+use strict;
+use warnings;
 
-use LedgerSMB::Template;
-use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
+use List::Util qw/sum/;
+
+use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGNumber;
-use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
-use strict;
-use warnings;
-use List::Util qw/sum/;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Template;
+
 
 # CT:  A few notes for future refactoring of this code:
 # 1:  I don't think it is a good idea to make the UI too dependant on internal

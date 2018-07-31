@@ -28,16 +28,17 @@ This module provides for searching for income types.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
         { col_id => 'country_name',
-            name => LedgerSMB::Report::text('Country'),
+            name => $self->Text('Country'),
             type => 'text',
         },
         { col_id => 'income_class',
-            name => LedgerSMB::Report::text('Income Class'),
+            name => $self->Text('Income Class'),
             type => 'text' },
         { col_id => 'label',
-            name => LedgerSMB::Report::text('Label'),
+            name => $self->Text('Label'),
             type => 'href',
        href_base => 'payrol.pl?action=edit&id=' },
     ];
@@ -55,7 +56,10 @@ sub header_lines {
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Income Types') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Income Types');
+}
 
 =back
 

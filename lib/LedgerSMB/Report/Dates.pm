@@ -11,10 +11,13 @@ LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
 
 =cut
 
-use Moose::Role;
-use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 use LedgerSMB::Magic qw( MONTHS_PER_QUARTER );
+use LedgerSMB::PGDate;
+
+use Moose::Role;
+use namespace::autoclean;
+
 =head1 DESCRIPTION
 
 This handles standard date controls in reports.  It just adds properties to

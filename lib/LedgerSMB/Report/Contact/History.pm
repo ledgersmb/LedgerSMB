@@ -55,11 +55,11 @@ sub columns {
     my $cols = [
          {col_id => 'name',
             type => 'text',
-            name => LedgerSMB::Report::text('Name') },
+            name => $self->Text('Name') },
 
          {col_id => 'meta_number',
             type => 'text',
-            name => LedgerSMB::Report::text('Account Number') }];
+            name => $self->Text('Account Number') }];
 
     if (!$self->is_summary){
 
@@ -67,59 +67,59 @@ sub columns {
          {col_id => 'invnumber',
             type => 'href',
        #href_base => 'is.pl?action=edit&id=',
-            name => LedgerSMB::Report::text('Invoice Number') },
+            name => $self->Text('Invoice Number') },
 
          {col_id => 'curr',
             type => 'text',
-            name => LedgerSMB::Report::text('Currency') };
+            name => $self->Text('Currency') };
     }
 
       push @$cols,
 
          {col_id => 'partnumber',
             type => 'text',
-            name => LedgerSMB::Report::text('Part Number') },
+            name => $self->Text('Part Number') },
 
          {col_id => 'description',
             type => 'text',
-            name => LedgerSMB::Report::text('Description') },
+            name => $self->Text('Description') },
 
          {col_id => 'qty',
             type => 'text',
-            name => LedgerSMB::Report::text('Qty') },
+            name => $self->Text('Qty') },
 
          {col_id => 'unit',
             type => 'text',
-            name => LedgerSMB::Report::text('Unit') };
+            name => $self->Text('Unit') };
 
    push @$cols,
          {col_id => 'sellprice',
             type => 'text',
            money => 1,
-            name => LedgerSMB::Report::text('Sell Price') };
+            name => $self->Text('Sell Price') };
 
    push @$cols,
          {col_id => 'discount',
             type => 'text',
-            name => LedgerSMB::Report::text('Disc') },
+            name => $self->Text('Disc') },
 
          {col_id => 'delivery_date',
             type => 'text',
-            name => LedgerSMB::Report::text('Delivery Date') },
+            name => $self->Text('Delivery Date') },
 
          {col_id => 'serialnumber',
             type => 'text',
-            name => LedgerSMB::Report::text('Serial Number') }
+            name => $self->Text('Serial Number') }
           unless $self->is_summary;
 
     push @$cols,
          {col_id => 'exchangerate',
             type => 'text',
-            name => LedgerSMB::Report::text('Exchange Rate') },
+            name => $self->Text('Exchange Rate') },
 
          {col_id => 'salesperson_name',
             type => 'text',
-            name => LedgerSMB::Report::text('Salesperson') };
+            name => $self->Text('Salesperson') };
 
     return $cols;
 }
@@ -128,24 +128,28 @@ sub columns {
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Purchase History') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Purchase History');
+}
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
      return [
             {name => 'name',
-             text => LedgerSMB::Report::text('Name')},
+             text => $self->Text('Name')},
 
             {name => 'meta_number',
-             text => LedgerSMB::Report::text('Account Number')},
+             text => $self->Text('Account Number')},
             {name => 'from_date',
-             text => LedgerSMB::Report::text('Start Date')},
+             text => $self->Text('Start Date')},
 
             {name => 'to_date',
-             text => LedgerSMB::Report::text('End Date')},
+             text => $self->Text('End Date')},
 
 
       ];

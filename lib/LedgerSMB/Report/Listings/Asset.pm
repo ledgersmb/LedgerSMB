@@ -84,22 +84,23 @@ has salvage_value   => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
      { col_id => 'tag',
-         name => LedgerSMB::Report::text('Tag'),
+         name => $self->Text('Tag'),
          type => 'href',
     href_base => 'asset.pl?action=asset_edit&id=', },
     {  col_id => 'description',
-         name => LedgerSMB::Report::text('Description'),
+         name => $self->Text('Description'),
          type => 'text', },
     {  col_id => 'purchase_date',
-         name => LedgerSMB::Report::text('Purchase Date'),
+         name => $self->Text('Purchase Date'),
          type => 'text', },
     {  col_id => 'purchase_value',
-         name => LedgerSMB::Report::text('Purchase Value'),
+         name => $self->Text('Purchase Value'),
          type => 'text', },
     {  col_id => 'usable_life',
-         name => LedgerSMB::Report::text('Usable Life'),
+         name => $self->Text('Usable Life'),
          type => 'text', },
    ];
 }
@@ -122,12 +123,13 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return  [
-     { name => 'tag',         text => LedgerSMB::Report::text('Tag') },
-     { name => 'description', text => LedgerSMB::Report::text('Description') },
-     {name => 'purchase_date',text => LedgerSMB::Report::text('Purchase Date')},
+     { name => 'tag',         text => $self->Text('Tag') },
+     { name => 'description', text => $self->Text('Description') },
+     {name => 'purchase_date',text => $self->Text('Purchase Date')},
      {name => 'purchase_value',
-        text => LedgerSMB::Report::text('Purchase Value') },
+        text => $self->Text('Purchase Value') },
    ];
 }
 
@@ -137,7 +139,10 @@ Asset Listing
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Asset Listing') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Asset Listing');
+}
 
 =head1 METHODS
 

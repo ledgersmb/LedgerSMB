@@ -17,14 +17,17 @@ interfacing with the Core Logic and database layers.
 # NOTE:  This is a first draft modification to use the current parameter type.
 # It will certainly need some fine tuning on my part.  Chris
 
-use LedgerSMB::Template;
-use LedgerSMB::DBObject::Reconciliation;
-use HTTP::Status qw( HTTP_BAD_REQUEST);
-use LedgerSMB::Setting;
-use LedgerSMB::Scripts::reports;
-use LedgerSMB::Report::Reconciliation::Summary;
 use strict;
 use warnings;
+
+use HTTP::Status qw( HTTP_BAD_REQUEST);
+
+use LedgerSMB::DBObject::Reconciliation;
+use LedgerSMB::PGNumber;
+use LedgerSMB::Report::Reconciliation::Summary;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Setting;
+use LedgerSMB::Template;
 
 =over
 

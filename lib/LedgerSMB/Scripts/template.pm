@@ -24,10 +24,11 @@ To edit:
 use strict;
 use warnings;
 
-use LedgerSMB::Template::DB;
+use LedgerSMB;
+use LedgerSMB::App_State;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template;
-use LedgerSMB::App_State;
+use LedgerSMB::Template::DB;
 
 =head1 METHODS
 
@@ -143,7 +144,7 @@ sub upload {
     # the template name and extension. Is this appropriate/necessary?
     die 'No content' unless $fdata;
     my $testname = $request->{template_name} . '.' . $request->{format};
-    die LedgerSMB::App_State::Locale->text(
+    die LedgerSMB::App_State::Locale()->text(
                 'Unexpected file name, expected [_1], got [_2]',
                  $testname, $upload->basename)
           unless $upload->basename eq $testname;

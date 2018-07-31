@@ -333,6 +333,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
 
+use Template;
 use Template::Parser;
 use Log::Log4perl;
 use File::Spec;

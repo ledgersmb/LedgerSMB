@@ -42,18 +42,19 @@ extends 'LedgerSMB::Report';
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
       col_id => 'description',
         type => 'href',
      p_width => '10',
-        name => LedgerSMB::Report::text('Description'),
+        name => $self->Text('Description'),
    href_base => 'am.pl?action=edit_business&id=',
     },
     {
       col_id => 'discount',
         type => 'text',
      p_width => '1',
-        name => LedgerSMB::Report::text('Discount (%)'),
+        name => $self->Text('Discount (%)'),
     }];
 };
 
@@ -72,7 +73,8 @@ sub header_lines {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('List of Business Types');
+    my ($self) = @_;
+    return $self->Text('List of Business Types');
 }
 
 =back

@@ -43,19 +43,20 @@ none
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       {col_id => 'form_name',
          type => 'href',
     href_base => 'taxform.pl?action=edit&id=',
-         name => LedgerSMB::Report::text('Form Name')},
+         name => $self->Text('Form Name')},
 
       {col_id => 'country_name',
          type => 'text',
-         name => LedgerSMB::Report::text('Country Name')},
+         name => $self->Text('Country Name')},
 
       {col_id => 'default_reportable',
          type => 'text',
-         name => LedgerSMB::Report::text('Default Reportable')}
+         name => $self->Text('Default Reportable')}
     ];
 }
 
@@ -71,15 +72,18 @@ Tax Form List
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Tax Form List'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Tax Form List'); }
 
 =head2 buttons
 
 =cut
 
 sub buttons {
+    my ($self) = @_;
     return  [{
-         text => LedgerSMB::Report::text('Add New Tax Form'),
+         text => $self->Text('Add New Tax Form'),
         value => 'add_taxform',
          name => 'action',
          type => 'submit',
@@ -99,8 +103,8 @@ sub run_report {
     for my $row(@rows){
         $row->{row_id} = $row->{id};
         $row->{default_reportable} = ($row->{default_reportable})
-                                     ? LedgerSMB::Report::text('Yes')
-                                     : LedgerSMB::Report::text('No');
+                                     ? $self->Text('Yes')
+                                     : $self->Text('No');
     }
     return $self->rows(\@rows);
 }

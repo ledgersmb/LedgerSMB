@@ -32,14 +32,17 @@ use strict;
 use warnings;
 
 use DateTime;
+use DBD::Pg;
 use DBI;
 use File::Spec;
+use File::Temp;
 use Log::Log4perl;
 use Moose;
 use namespace::autoclean;
 
 extends 'PGObject::Util::DBAdmin';
 
+use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
 
