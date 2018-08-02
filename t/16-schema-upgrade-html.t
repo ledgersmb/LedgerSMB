@@ -8,19 +8,19 @@ use DBI;
 use Digest::MD5 qw( md5_hex );
 use File::Temp qw( :seekable );
 use IO::Scalar;
-use Log::Log4perl qw( :easy );
 use MIME::Base64;
+
+use Log::Log4perl qw( :easy );
+Log::Log4perl->easy_init($OFF);
 
 use Test::More 'no_plan';
 use Test::Exception;
-
 
 use LedgerSMB;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 
 
-Log::Log4perl->easy_init($OFF);
 
 
 sub test_request {
