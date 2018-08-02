@@ -11,8 +11,9 @@ use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use LedgerSMB;
 use LedgerSMB::App_State;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 
 my $lsmb;
