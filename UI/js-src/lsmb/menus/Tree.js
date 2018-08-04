@@ -7,10 +7,10 @@ define(["dojo/_base/declare",
         "dojo/store/JsonRest", "dojo/store/Observable",
         "dojo/store/Memory",
         "dijit/Tree", "dijit/tree/ObjectStoreModel",
-        "dijit/registry", "dojo/dom-class"
+        "dijit/registry"
        ], function(declare, on, lang, event, mouse, array,
                    JsonRest, Observable, Memory, Tree, ObjectStoreModel,
-                   registry, domClass
+                   registry
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
@@ -53,9 +53,6 @@ define(["dojo/_base/declare",
             this.inherited(arguments);
 
             var self = this;
-            this.onLoadDeferred.then(function(){
-                domClass.add(self.domNode, "done-parsing");
-            });
             this.own(
                 on(this.containerNode, "mousedown",
                    lang.hitch(this, this.__onClick)));
