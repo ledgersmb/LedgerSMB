@@ -1336,6 +1336,10 @@ sub order_details {
                 $form->{"${item}_tax"} =
                   $form->format_amount( $myconfig, $taxamount, 2 )
             );
+            push(
+                @{ $form->{taxsummary} },
+                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
+            );
 
             push( @{ $form->{taxdescription} },
                 $form->{"${item}_description"} );
