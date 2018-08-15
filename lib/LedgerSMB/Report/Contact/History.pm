@@ -119,7 +119,11 @@ sub columns {
 
          {col_id => 'salesperson_name',
             type => 'text',
-            name => $self->Text('Salesperson') };
+            name => $self->Text('Salesperson') },
+
+         {col_id => 'transdate',
+            type => 'text',
+            name => $self->Text('Invoice Date') };
 
     return $cols;
 }
