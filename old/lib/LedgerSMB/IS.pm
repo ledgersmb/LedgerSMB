@@ -584,6 +584,10 @@ sub invoice_details {
                 $form->{"${item}_taxbase"} =
                   $form->format_amount( $myconfig, $taxbase{$item}, 2 )
             );
+            push(
+                @{ $form->{taxsummary} },
+                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
+            );
 
             push(
                 @{ $form->{tax} },
