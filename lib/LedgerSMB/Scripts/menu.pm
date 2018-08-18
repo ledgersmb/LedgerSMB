@@ -27,55 +27,6 @@ our $VERSION = '1.0';
 
 =over
 
-=item __default
-
-This pseudomethod is used to trap menu clicks that come back through the file
-and route to the appropriate function.  It routes to expanding_menu.
-
-=back
-
-=cut
-
-sub __default {
-    my ($request) = @_;
-
-    return root_doc($request);
-}
-
-=pod
-
-=over
-
-=item root_doc
-
-Creates the root document.
-
-=back
-
-
-=cut
-
-sub root_doc {
-    my ($request) = @_;
-    my $template;
-
-    $request->{title} = "LedgerSMB $request->{VERSION} -- ".
-    "$request->{login} -- $request->{company}";
-
-    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
-    $menu->generate();
-
-    $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'main',
-    );
-    return $template->render($menu);
-}
-
-=pod
-
-=over
-
 =item menuitems_json
 
 Returns the menu items in JSON format

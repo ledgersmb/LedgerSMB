@@ -122,7 +122,14 @@ sub login {
         return __default($request);
     }
 
-    return LedgerSMB::Scripts::menu::root_doc($request);
+    $request->{title} = "LedgerSMB $request->{VERSION} -- ".
+    "$request->{login} -- $request->{company}";
+
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'main',
+    );
+    return $template->render($request);
 }
 
 =item logout
