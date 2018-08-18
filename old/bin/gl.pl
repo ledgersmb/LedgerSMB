@@ -323,27 +323,32 @@ sub display_form
 
 sub save_temp {
     my ($department_name, $department_id) = split/--/, $form->{department};
-    $lsmb->{department_id} = $department_id;
-    $lsmb->{reference} = $form->{reference};
-    $lsmb->{description} = $form->{description};
-    $lsmb->{department_id} = $department_id;
-    $lsmb->{post_date} = $form->{transdate};
-    $lsmb->{type} = 'gl';
-    $lsmb->{journal_lines} = [];
+
+    my $data = {
+        department_id => $department_id,
+        reference => $form->{reference},
+        description => $form->{description},
+        department_id => $department_id,
+        post_date => $form->{transdate},
+        type => 'gl',
+        journal_lines => [],
+    };
+
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"accno_$iter"} and
                   (($form->{"credit_$iter"} != 0) or ($form->{"debit_$iter"} != 0))){
              my ($acc_id, $acc_name) = split /--/, $form->{"accno_$iter"};
              my $amount = $form->{"credit_$iter"} || ( $form->{"debit_$iter"}
                                                      * -1 );
-             push @{$lsmb->{journal_lines}},
+             push @{$data->{journal_lines}},
                   {accno => $acc_id,
                    amount => $amount,
                    cleared => false,
                   };
         }
     }
-    $template = LedgerSMB::DBObject::TransTemplate->new({base => $form});
+
+    $template = LedgerSMB::DBObject::TransTemplate->new({base => $data});
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }

@@ -7,6 +7,12 @@ Forthcoming
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.4
+* Fix GL Save Template gives error (Nick P, #3754)
+
+Nick P is Nick Prater
+
+
 Changelog for 1.6.3
 * Fix for menu System > Templates fails to execute SQL script (Erik H, #3588)
 * Fix for GL journal buttons displaying in random order (Erik H, #3680)
