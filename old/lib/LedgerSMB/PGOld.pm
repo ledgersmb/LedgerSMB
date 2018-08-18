@@ -48,10 +48,6 @@ A hashref which is imported as properties of the new object.
 sub new {
     my $pkg = shift;
     my $args = (ref $_[0]) ? $_[0] : { @_ };
-    if ($args->{_DBH}) {
-        $args->{dbh} = $args->{_DBH};
-        delete $args->{_DBH};
-    };
 
     my $self = PGObject::Simple::new($pkg, %{$args->{base}});
     $self->__validate__  if $self->can('__validate__');
