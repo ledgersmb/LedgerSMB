@@ -199,7 +199,7 @@ ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
     or diag ('Missing in test: ', explain \@untested_modules);
 
 use_ok('LedgerSMB::Sysconfig')
-    || BAIL_OUT('System Configuration couldn't be loaded!');
+    || BAIL_OUT(q{System Configuration couldn't be loaded!});
 my @to_sort = map { rand() } 0 .. $#modules;
 @modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {
