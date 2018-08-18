@@ -481,15 +481,10 @@ sub merge {
 sub to_json {
     my ($self, $output) = @_;
 
-    my $response_data = LedgerSMB::Template::preprocess(
-        $output,
-        sub {return shift} # no escaping
-    );
-
     return [
         HTTP_OK,
         [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-        [ $json->encode($response_data) ],
+        [ $json->encode($output) ],
     ];
 }
 
