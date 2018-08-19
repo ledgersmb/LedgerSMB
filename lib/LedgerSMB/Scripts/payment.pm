@@ -277,6 +277,7 @@ sub get_search_results {
         currency => $request->{currency},
     exchangerate => $request->{exchangerate},
    date_reversed => $request->{date_reversed},
+   account_class => $request->{account_class},
     };
     return $report->render($request);
 }
@@ -319,11 +320,7 @@ sub reverse_payments {
         }
     }
 
-    # TODO This needs to be set to the appropriate class rather than being
-    # hard-coded to a single class of transaction, otherwise we cannot
-    # search Customers for more transactions when reversing receipts.
-    # This bug exists at least as far back as 1.4.
-    $request->{account_class} = 1;
+    # Go back to search for more payments/receipts to reverse
     return get_search_criteria($request);
 }
 
