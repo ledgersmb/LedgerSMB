@@ -4,6 +4,8 @@ Released 2018-06-10
 
 Changelog for 1.6.4
 * Fix GL Save Template gives error (Nick P, #3754)
+* Fix error adding reverse payment to batch (Nick P, #3761)
+* Fix wrong search screen after reversing receipt (Nick P, #3763)
 
 Nick P is Nick Prater
 
