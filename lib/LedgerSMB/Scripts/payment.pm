@@ -51,6 +51,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
+use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
@@ -271,6 +272,7 @@ sub get_search_results {
         currency => $request->{currency},
     exchangerate => $request->{exchangerate},
    date_reversed => $request->{date_reversed},
+   account_class => $request->{account_class},
     };
     return $report->render($request);
 }
@@ -283,21 +285,38 @@ This reverses payments selected in the search results.
 
 sub reverse_payments {
     my ($request) = @_;
-    $request->dates('date_reversed');
-    $request->dates_series(0, $request->{rowcount_}, 'date_paid');
-    $request->{account_class} = 1;
-    my $payment = LedgerSMB::DBObject::Payment->new({base => $request});
-    for my $count (1 .. $payment->{rowcount_}){
-        if ($payment->{"select_$count"}){
-           $payment->{account_class} = $payment->{"entity_class_$count"};
-           $payment->{credit_id} = $payment->{"credit_id_$count"};
-           $payment->{date_paid} = $payment->{"date_paid_$count"};
-           $payment->{source} = $payment->{"source_$count"};
-           $payment->{voucher_id} = $payment->{"voucher_id_$count"};
-           $payment->reverse;
+
+    my $date_reversed = LedgerSMB::PGDate->from_input(
+        $request->{date_reversed}
+    );
+
+    foreach my $count (1 .. $request->{rowcount_}) {
+        # Reverse only the selected payments
+        if ($request->{"select_$count"}) {
+
+            my $data = {
+                          dbh => $request->{dbh},
+                date_reversed => $date_reversed,
+                     batch_id => $request->{batch_id},
+                   cash_accno => $request->{cash_accno},
+                     currency => $request->{currency},
+                 exchangerate => $request->{exchangerate},
+                       source => $request->{"source_$count"},
+                    credit_id => $request->{"credit_id_$count"},
+                account_class => $request->{"entity_class_$count"},
+                   voucher_id => $request->{"voucher_id_$count"},
+                    date_paid => LedgerSMB::PGDate->from_input(
+                                     $request->{"date_paid_$count"}
+                                 ),
+            };
+
+            my $payment = LedgerSMB::DBObject::Payment->new({base => $data});
+            $payment->reverse;
         }
     }
-    return get_search_criteria($payment);
+
+    # Go back to search for more payments/receipts to reverse
+    return get_search_criteria($request);
 }
 
 =item post_payments_bulk
