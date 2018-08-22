@@ -57,7 +57,8 @@ Wraps a "call" to old code, returning a PSGI triplet for the response.
 sub dispatch {
     my $script = shift;
     my $entrypoint = shift;
-    my $args = shift;
+    my $form_args = shift;
+    my @entrypoint_args = @_;
 
     my $stdout = IO::File->new_tmpfile;
     if (my $cpid = fork()) {
@@ -75,9 +76,15 @@ sub dispatch {
         try {
             local *STDOUT = $stdout;
             $lsmb_legacy::form = Form->new();
-            $lsmb_legacy::form->{$_} = $args->{$_} for (keys %$args);
+            $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
             $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
             %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
+
+            # This is a forked process, but we're using the parent's
+            # database handle. Don't destroy the database handle when
+            # this forked process exits, so the parent can continue using it.
+            $LedgerSMB::App_State::DBH->{AutoInactiveDestroy} = 1;
+
             {
                 # Note that we're only loading this code *after* the fork,
                 # so, we're only ever "polluting" the namespaces of the
@@ -96,7 +103,7 @@ sub dispatch {
                 }
             }
             if (ref $entrypoint eq "CODE") {
-                $entrypoint->(@_);
+                $entrypoint->(@entrypoint_args);
             }
             else {
                 no strict 'refs';
