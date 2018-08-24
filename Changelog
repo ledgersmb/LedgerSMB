@@ -1,4 +1,108 @@
                                                         -*- fundamental -*-
+Changelog for 1.7 Series
+Forthcoming
+
+
+
+Changelog for 1.6 Series
+Released 2018-06-10
+
+Changelog for 1.6.4
+* Fix GL Save Template gives error (Nick P, #3754)
+* Fix error adding reverse payment to batch (Nick P, #3761)
+* Fix wrong search screen after reversing receipt (Nick P, #3763)
+* Fix error displaying template transaction (Nick P, #3759)
+* Update Dojo to 1.13.1 (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.3
+* Fix for menu System > Templates fails to execute SQL script (Erik H, #3588)
+* Fix for GL journal buttons displaying in random order (Erik H, #3680)
+* Fix for 'contact_all' role missing 'contact_vendor' rights (Erik H)
+* Fix 1.6.1 regression browser failure to cache menu structure (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.2
+* Print button (to screen) doesn't work more than once (Erik H, #3705)
+* Menu links ignore clicks long after first click (Erik H, #3704)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.1
+* Menu fails to show sometimes (Erik H, #3684)
+* Error when managing user permissions through HR screen (Erik H, #3686)
+* Reconciliation reports sometimes can't be submitted (Nick P)
+
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+
+
+Changelog for 1.6.0
+
+User Interface
+* Reports and search results exportable to XLS(X) (Yves L)
+* Left menu replaced by a (faster) Dojo-based version (Yves L/Erik H)
+
+Installation & Administration
+* Added 'System Information' page to setup.pl for problem diagnosis (Erik H)
+* Numerous improvements for the migrations and infrastructure (Yves L/Erik H)
+* Better detection of incorrect @INC paths (David G)
+* Automatic date format selection using browser locale (Yves L/Erik H)
+* No more warnings from database creation and upgrade (Erik H)
+* Improved logging: various logs correlated using unique request IDs (Erik H)
+* Functions 'warn()' and 'die()' logged to debug logs (Erik H)
+* Removed need for 'tempdir' and associated configuration option (Nick P)
+* Removed numerous unused configuration options (Nick P)
+* Specific output formats can be disabled in configuration (Yves L)
+* Respect smtpuser and smtppass configuration options (Nick P)
+* Add smtpport configuration option (Nick P)
+* Database upgrades now ask for user input on (expected) faulty data (Erik H)
+
+Performance
+* PSGI responses no longer written to file but kept in memory (Erik H/Yves L)
+
+Rewritten inventory tracking and adjustments
+* Removed the need for the ill-understood 'Inventory Entity' (Erik H)
+* Inventory adjustments GL transactions instead of dummy invoices (Erik H)
+* SQL & in-browser(BDD) tests (Erik H)
+
+Code cleanup
+* Removed code duplication in
+  - Template handling framework (Yves L)
+* Remove unused variables and unreachable code (Nick P)
+* Remove fragments of REST framework never fully implemented (Erik H)
+* Authentication handling centralized in request dispatch code (Erik H)
+* Cleaned up handling of uploaded files in request handling (Erik H)
+* Moved to Plack::Request (from CGI::Simple & LedgerSMB) (Erik H)
+* Template format plugin cleanup and refactoring (Erik H/Nick P)
+* Template handling code cleanup (Erik H/Nick P)
+* Unreferenced UI templates deleted (Erik H)
+* Centralized and more robust entry point for code in old/ (Erik H)
+* Merge of SQL-Ledger 2.8 and 3.0 migration code; improved consistency (Yves L)
+* Improved cleanup of temp files and dirs after use (Erik H)
+* Improved HTML structure (balanced closing/opening tags, etc) (Yves L)
+* Factored HTTP response responsibility out of LedgerSMB::Template (Erik H)
+* Moved request pre- and post-processing into custom Plack Middlewares (Erik H)
+
+Quality assurance
+* Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
+* Enforce numerous Perl::Critic policies with code cleanup (Nick P/Rob R)
+* Add tests for all template output formats (Nick P)
+* Constrain password_duration setting to valid values (Nick P)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+Nick P is Nick Prater
+Rob R is Rob Ransbottom
+David G is David Godfrey
+
+
 Changelog for 1.5 Series
 Released 2016-12-24
 
