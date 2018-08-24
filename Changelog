@@ -2,6 +2,10 @@
 Changelog for 1.7 Series
 Forthcoming
 
+Dependency updates
+* Dojo Toolkit (JavaScript UI tools) updated to 1.14.0 (Erik H)
+
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.6 Series
@@ -12,8 +16,10 @@ Changelog for 1.6.4
 * Fix error adding reverse payment to batch (Nick P, #3761)
 * Fix wrong search screen after reversing receipt (Nick P, #3763)
 * Fix error displaying template transaction (Nick P, #3759)
+* Update Dojo to 1.13.1 (Erik H)
 
 Nick P is Nick Prater
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.6.3
@@ -103,6 +109,12 @@ David G is David Godfrey
 
 Changelog for 1.5 Series
 Released 2016-12-24
+
+Changelog for 1.5.22
+* Upgrade Dojo to 1.10.10 (Erik H)
+
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.5.21
 * Clarify message after changing password through Preferences (Nick P)
