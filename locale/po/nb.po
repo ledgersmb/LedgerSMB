@@ -1,21 +1,22 @@
-#
+# 
 # Translators:
 # Arne Hanssen <arne.senja@gmail.com>, 2016
 # Copyright (c) 2001, 2004,2012
+# Håvard Sørli <havard@sorli.no>, 2017
+# Håvard Sørli <havard@sorli.no>, 2018
 # Stig Berg <stig@tmb.no>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-07-30 18:32+0000\n"
-"PO-Revision-Date: 2016-05-11 18:44+0000\n"
-"Last-Translator: Arne Hanssen <arne.senja@gmail.com>\n"
-"Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
-"language/nb/)\n"
-"Language: nb\n"
+"PO-Revision-Date: 2018-06-25 07:12+0000\n"
+"Last-Translator: Håvard Sørli <havard@sorli.no>\n"
+"Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nb\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: templates/demo/purchase_order.html:132
@@ -34,7 +35,7 @@ msgstr "(-) Akkum. Nedskrivning"
 
 #: scripts/asset.pl:1015
 msgid "(=) NBV"
-msgstr "(=) Nedskrevet Verdi"
+msgstr "(=) Nedskrevet verdi"
 
 #: templates/demo/statement.html:78
 #: templates/demo_with_images/statement.html:78
@@ -63,13 +64,10 @@ msgstr "A"
 #: templates/demo_with_images/packing_list.tex:22
 #: templates/xedemo/invoice.tex:31 templates/xedemo/packing_list.tex:22
 msgid ""
-"A return authorization must be obtained from [_1] before goods are returned. "
-"Returns must be shipped prepaid and properly insured. [_1] will not be "
+"A return authorization must be obtained from [_1] before goods are returned."
+" Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
-msgstr ""
-"En retur autorisasjon må foreligge fra [_1] før varer kan returneres. Varene "
-"må sendes forhåndsbetalt og forsikret. [_1] er ikke ansvarlig for skader "
-"under tilbake transporten!"
+msgstr "En retur autorisasjon må foreligge fra [_1] før varer kan returneres. Varene må sendes forhåndsbetalt og forsikret. [_1] er ikke ansvarlig for skader under tilbake transporten!"
 
 #: sql/Pg-database.sql:778
 msgid "AIM"
@@ -87,7 +85,7 @@ msgstr "Leverandør Aldersfordeling"
 
 #: bin/aa.pl:1609
 msgid "AP Outstanding"
-msgstr "Ubetalte Inngående fakturaer"
+msgstr "Ubetalte inngående fakturaer"
 
 #: bin/aa.pl:2444 bin/gl.pl:845 t/data/04-complex_template.html:325
 #: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
@@ -628,12 +626,12 @@ msgstr "Opptatt"
 #: bin/gl.pl:623 bin/gl.pl:635 bin/ir.pl:612 bin/ir.pl:788 bin/is.pl:713
 #: bin/is.pl:876 bin/jc.pl:1859 bin/oe.pl:1498 bin/oe.pl:1851 bin/pe.pl:2666
 #: bin/pos.pl:458 bin/rp.pl:2012 templates/demo/ap_transaction.html:196
-#: templates/demo/ar_transaction.html:194 templates/demo/ar_transaction.tex:129
-#: templates/demo/invoice.html:250 templates/demo/invoice.tex:141
-#: templates/demo/invoice.tex:201 templates/demo/printPayment.html:53
-#: templates/demo/purchase_order.html:133 templates/demo/purchase_order.tex:120
-#: templates/demo/sales_order.html:135 templates/demo/sales_order.tex:122
-#: templates/demo/sales_quotation.html:104
+#: templates/demo/ar_transaction.html:194
+#: templates/demo/ar_transaction.tex:129 templates/demo/invoice.html:250
+#: templates/demo/invoice.tex:141 templates/demo/invoice.tex:201
+#: templates/demo/printPayment.html:53 templates/demo/purchase_order.html:133
+#: templates/demo/purchase_order.tex:120 templates/demo/sales_order.html:135
+#: templates/demo/sales_order.tex:122 templates/demo/sales_quotation.html:104
 #: templates/demo/sales_quotation.tex:90
 #: templates/demo_with_images/ap_transaction.html:196
 #: templates/demo_with_images/ar_transaction.html:194
@@ -712,8 +710,8 @@ msgstr "Godkjennings  status"
 msgid "Approve"
 msgstr "Godkjenne"
 
-#: scripts/recon.pl:190 UI/asset/search_reports.html:60 UI/batch/filter.html:19
-#: UI/reconciliation/search.html:59
+#: scripts/recon.pl:190 UI/asset/search_reports.html:60
+#: UI/batch/filter.html:19 UI/reconciliation/search.html:59
 msgid "Approved"
 msgstr "Godkjent"
 
@@ -771,8 +769,7 @@ msgstr "Er du sikker på at du vil slette Timekortnummer [_1] [_2] [_3]?"
 
 #: bin/bp.pl:202
 msgid "Are you sure you want to remove the marked entries from the queue?"
-msgstr ""
-"Er du sikker på at du ønsker å fjerne de markerte oppføringene fra køen?"
+msgstr "Er du sikker på at du ønsker å fjerne de markerte oppføringene fra køen?"
 
 #: bin/pe.pl:515 bin/pe.pl:755
 msgid "As of"
@@ -864,7 +861,7 @@ msgstr "Festet til type"
 #: bin/aa.pl:1042 bin/ic.pl:894 bin/ir.pl:941 bin/is.pl:1074 bin/oe.pl:917
 #: UI/journal/journal_entry.html:302
 msgid "Attached and Linked Files"
-msgstr "Festet og Linket filer"
+msgstr "Festet og linket filer"
 
 #: bin/aa.pl:1046 bin/aa.pl:1067 bin/ic.pl:898 bin/ic.pl:919 bin/ir.pl:945
 #: bin/ir.pl:966 bin/is.pl:1078 bin/is.pl:1099 bin/oe.pl:921 bin/oe.pl:942
@@ -911,7 +908,8 @@ msgstr "Vedlegg"
 #: templates/xedemo/request_quotation.html:51
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_order.html:49
-#: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
+#: templates/xedemo/sales_quotation.html:44
+#: templates/xedemo/work_order.html:49
 msgid "Attn: [_1]"
 msgstr "Attn: [_1]"
 
@@ -1008,8 +1006,8 @@ msgstr "Balanse"
 
 #: templates/demo/invoice.html:197 templates/demo/invoice.tex:169
 #: templates/demo_with_images/invoice.html:197
-#: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
-#: templates/xedemo/invoice.tex:168
+#: templates/demo_with_images/invoice.tex:169
+#: templates/xedemo/invoice.html:197 templates/xedemo/invoice.tex:168
 msgid "Balance Due"
 msgstr "Balanse forfalt"
 
@@ -1139,8 +1137,9 @@ msgid "Bin"
 msgstr "Boks"
 
 #: bin/am.pl:2869 bin/io.pl:1374 bin/io.pl:1388 bin/io.pl:1588 bin/oe.pl:317
-#: bin/oe.pl:329 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
-#: templates/demo/bin_list.tex:74 templates/demo_with_images/bin_list.html:4
+#: bin/oe.pl:329 templates/demo/bin_list.html:4
+#: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
+#: templates/demo_with_images/bin_list.html:4
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
@@ -1220,7 +1219,8 @@ msgstr "CSV"
 msgid "CSV File:"
 msgstr "CSV Fil:"
 
-#: bin/am.pl:382 bin/ca.pl:163 bin/gl.pl:869 LedgerSMB/ScriptLib/Company.pm:412
+#: bin/am.pl:382 bin/ca.pl:163 bin/gl.pl:869
+#: LedgerSMB/ScriptLib/Company.pm:412
 msgid "CSV Report"
 msgstr "CSV Raport"
 
@@ -1428,8 +1428,8 @@ msgstr "Store bokstaver ikke tillatt i brukernavn"
 
 #: templates/demo/timecard.html:44 templates/demo/timecard.tex:27
 #: templates/demo_with_images/timecard.html:44
-#: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:44
-#: templates/xedemo/timecard.tex:27
+#: templates/demo_with_images/timecard.tex:27
+#: templates/xedemo/timecard.html:44 templates/xedemo/timecard.tex:27
 msgid "Card ID"
 msgstr "Kort ID"
 
@@ -1689,7 +1689,7 @@ msgstr "Kontakt Informasjon"
 
 #: UI/payments/payments_detail.html:374
 msgid "Contact Total (if paying \"some\")"
-msgstr ""
+msgstr "Kontakt totalt (hvis \"noe\" blir betalt)"
 
 #: bin/aa.pl:1823 bin/am.pl:2082 bin/arap.pl:269 bin/arap.pl:476
 #: bin/arap.pl:586 bin/arapprn.pl:469 bin/bp.pl:163 bin/ic.pl:1398
@@ -1997,15 +1997,15 @@ msgstr "Datasett"
 #: bin/jc.pl:876 bin/jc.pl:1450 bin/jc.pl:1838 bin/oe.pl:1484 bin/oe.pl:1831
 #: bin/oe.pl:2578 bin/pe.pl:2651 bin/rp.pl:943 bin/rp.pl:2010
 #: scripts/asset.pl:633 scripts/payment.pl:162 scripts/payment.pl:900
-#: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
-#: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
-#: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
-#: templates/demo/ar_transaction.tex:77 templates/demo/ar_transaction.tex:128
-#: templates/demo/bin_list.html:109 templates/demo/invoice.html:107
-#: templates/demo/invoice.html:247 templates/demo/invoice.tex:200
-#: templates/demo/packing_list.html:80 templates/demo/packing_list.tex:88
-#: templates/demo/pick_list.html:79 templates/demo/pick_list.tex:81
-#: templates/demo/printPayment.html:78
+#: templates/demo/ap_transaction.html:73
+#: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
+#: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
+#: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
+#: templates/demo/ar_transaction.tex:128 templates/demo/bin_list.html:109
+#: templates/demo/invoice.html:107 templates/demo/invoice.html:247
+#: templates/demo/invoice.tex:200 templates/demo/packing_list.html:80
+#: templates/demo/packing_list.tex:88 templates/demo/pick_list.html:79
+#: templates/demo/pick_list.tex:81 templates/demo/printPayment.html:78
 #: templates/demo/request_quotation.html:104
 #: templates/demo/sales_quotation.html:72 templates/demo/statement.html:75
 #: templates/demo/statement.tex:57 templates/demo/timecard.html:48
@@ -2245,13 +2245,15 @@ msgid "Delete Vouchers"
 msgstr "Slette Kuponger"
 
 #: bin/am.pl:1261
-msgid "Deleting a language will also delete the templates for the language [_1]"
+msgid ""
+"Deleting a language will also delete the templates for the language [_1]"
 msgstr "Slettes et språk slettes også malen til språket [_1]"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
-#: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
+#: templates/xedemo/invoice.tex:135
+#: templates/xedemo/request_quotation.html:144
 msgid "Delivery"
 msgstr "Levering"
 
@@ -2366,9 +2368,9 @@ msgstr "Avskrivning Vellykket"
 #: bin/pe.pl:338 bin/pe.pl:525 bin/pe.pl:740 bin/pe.pl:766 bin/pe.pl:783
 #: bin/pe.pl:964 bin/pe.pl:992 bin/pe.pl:1213 bin/pe.pl:1853 bin/pe.pl:1899
 #: bin/pe.pl:1928 bin/pe.pl:2661 bin/pos.pl:748 bin/rp.pl:2006
-#: LedgerSMB/ScriptLib/Company.pm:553 scripts/asset.pl:167 scripts/asset.pl:314
-#: scripts/asset.pl:497 scripts/asset.pl:800 scripts/asset.pl:871
-#: scripts/asset.pl:1007 templates/demo/bin_list.html:148
+#: LedgerSMB/ScriptLib/Company.pm:553 scripts/asset.pl:167
+#: scripts/asset.pl:314 scripts/asset.pl:497 scripts/asset.pl:800
+#: scripts/asset.pl:871 scripts/asset.pl:1007 templates/demo/bin_list.html:148
 #: templates/demo/bin_list.tex:106 templates/demo/invoice.html:136
 #: templates/demo/invoice.tex:135 templates/demo/packing_list.html:120
 #: templates/demo/packing_list.tex:114 templates/demo/pick_list.html:112
@@ -2401,9 +2403,9 @@ msgstr "Avskrivning Vellykket"
 #: templates/demo/work_order.html:130 templates/demo/work_order.tex:125
 #: templates/xedemo/bin_list.html:148 templates/xedemo/bin_list.tex:106
 #: templates/xedemo/invoice.html:136 templates/xedemo/invoice.tex:134
-#: templates/xedemo/packing_list.html:120 templates/xedemo/packing_list.tex:114
-#: templates/xedemo/pick_list.html:112 templates/xedemo/pick_list.tex:100
-#: templates/xedemo/printPayment.html:47
+#: templates/xedemo/packing_list.html:120
+#: templates/xedemo/packing_list.tex:114 templates/xedemo/pick_list.html:112
+#: templates/xedemo/pick_list.tex:100 templates/xedemo/printPayment.html:47
 #: templates/xedemo/purchase_order.html:128
 #: templates/xedemo/request_quotation.html:141
 #: templates/xedemo/sales_order.html:130 templates/xedemo/sales_order.tex:119
@@ -2893,11 +2895,9 @@ msgstr "Legg inn Bruker"
 
 #: UI/am-defaults.html:116
 msgid ""
-"Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native "
-"and foreign currencies"
-msgstr ""
-"Legg inn opp til 3 bokstaver separert med kolon (f.eks.: USD:NOK:SEK) for "
-"dine lokale og fremmede valutaer"
+"Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native"
+" and foreign currencies"
+msgstr "Legg inn opp til 3 bokstaver separert med kolon (f.eks.: USD:NOK:SEK) for dine lokale og fremmede valutaer"
 
 #: scripts/recon.pl:192
 msgid "Entered By"
@@ -3237,13 +3237,14 @@ msgstr "Fredag"
 #: bin/oe.pl:1928 bin/oe.pl:3230 bin/pe.pl:699 bin/pe.pl:969 bin/pe.pl:2454
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
 #: templates/demo_with_images/bin_list.html:28
-#: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
-#: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:23
-#: UI/asset/search_reports.html:25 UI/bp-search.html:27
-#: UI/ca-list-selector.html:31 UI/Contact/history_filter.html:129
-#: UI/Contact/history_filter.html:148 UI/Contact/search.html:106
-#: UI/Contact/search.html:165 UI/Contact/search.html:373
-#: UI/employee/filter.html:59 UI/journal/search.html:84 UI/pos-receipts.html:16
+#: templates/demo_with_images/bin_list.tex:35
+#: templates/xedemo/bin_list.html:28 templates/xedemo/bin_list.tex:35
+#: UI/asset/begin_approval.html:23 UI/asset/search_reports.html:25
+#: UI/bp-search.html:27 UI/ca-list-selector.html:31
+#: UI/Contact/history_filter.html:129 UI/Contact/history_filter.html:148
+#: UI/Contact/search.html:106 UI/Contact/search.html:165
+#: UI/Contact/search.html:373 UI/employee/filter.html:59
+#: UI/journal/search.html:84 UI/pos-receipts.html:16
 #: UI/rc-reconciliation.html:16 UI/rp-search-generate_balance_sheet.html:19
 #: UI/rp-search-generate_income_statement.html:6
 #: UI/rp-search-generate_income_statement.html:59
@@ -3453,8 +3454,8 @@ msgstr "Hjemmetelefon"
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
-#: templates/demo_with_images/timecard.tex:31 templates/xedemo/timecard.html:60
-#: templates/xedemo/timecard.tex:31
+#: templates/demo_with_images/timecard.tex:31
+#: templates/xedemo/timecard.html:60 templates/xedemo/timecard.tex:31
 msgid "Hours"
 msgstr "Timer"
 
@@ -3471,9 +3472,10 @@ msgstr "IBAN"
 #: scripts/asset.pl:632 scripts/asset.pl:1005 scripts/employee.pl:309
 #: templates/demo/timecard.html:35 templates/demo/timecard.tex:23
 #: templates/demo_with_images/timecard.html:35
-#: templates/demo_with_images/timecard.tex:23 templates/xedemo/timecard.html:35
-#: templates/xedemo/timecard.tex:23 UI/employee/filter.html:98
-#: UI/journal/search.html:205 UI/rp-search-generate_tax_report.html:111
+#: templates/demo_with_images/timecard.tex:23
+#: templates/xedemo/timecard.html:35 templates/xedemo/timecard.tex:23
+#: UI/employee/filter.html:98 UI/journal/search.html:205
+#: UI/rp-search-generate_tax_report.html:111
 msgid "ID"
 msgstr "ID"
 
@@ -3514,8 +3516,8 @@ msgstr "Importer Bruker"
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:29
 #: templates/demo_with_images/timecard.html:52
-#: templates/demo_with_images/timecard.tex:29 templates/xedemo/timecard.html:52
-#: templates/xedemo/timecard.tex:29
+#: templates/demo_with_images/timecard.tex:29
+#: templates/xedemo/timecard.html:52 templates/xedemo/timecard.tex:29
 msgid "In"
 msgstr "Inn"
 
@@ -3591,10 +3593,10 @@ msgstr "Individuelle elementer"
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
 msgid ""
-"Interest on overdue amounts will acrue at the rate of 12% per annum starting "
-"from [_1] until paid in full. Items returned are subject to a 10% restocking "
-"charge."
-msgstr ""
+"Interest on overdue amounts will acrue at the rate of 12% per annum starting"
+" from [_1] until paid in full. Items returned are subject to a 10% "
+"restocking charge."
+msgstr "Renter på forfalte beløpt blir belastet med 12% rente pr. år fra [_1] inntil fordringen er fullt betalt. Returnerte varer blir belastet med 10% i behandlings kostnader. "
 
 #: LedgerSMB.pm:1091
 msgid "Internal Database Error"
@@ -3656,15 +3658,11 @@ msgstr "Lagerbeholdningen må være 0 før du kan sett denne [_1] foreldet!"
 #: bin/ic.pl:3615
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
-msgstr ""
-"Varebeholdning må være null for at du kan sette denne monteringen som "
-"foreldet!"
+msgstr "Varebeholdning må være null for at du kan sette denne monteringen som foreldet!"
 
 #: bin/ic.pl:3614
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
-msgstr ""
-"Varebeholdning må være null for at du kan sette denne sammensetningen som "
-"foreldet!"
+msgstr "Varebeholdning må være null for at du kan sette denne sammensetningen som foreldet!"
 
 #: bin/oe.pl:3078
 msgid "Inventory saved!"
@@ -3812,9 +3810,9 @@ msgstr "Fakturaer"
 #: templates/demo/work_order.html:128 templates/demo/work_order.tex:124
 #: templates/xedemo/bin_list.html:146 templates/xedemo/bin_list.tex:105
 #: templates/xedemo/invoice.html:134 templates/xedemo/invoice.tex:132
-#: templates/xedemo/packing_list.html:118 templates/xedemo/packing_list.tex:113
-#: templates/xedemo/pick_list.html:110 templates/xedemo/pick_list.tex:99
-#: templates/xedemo/purchase_order.html:126
+#: templates/xedemo/packing_list.html:118
+#: templates/xedemo/packing_list.tex:113 templates/xedemo/pick_list.html:110
+#: templates/xedemo/pick_list.tex:99 templates/xedemo/purchase_order.html:126
 #: templates/xedemo/request_quotation.html:139
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
 #: templates/xedemo/sales_quotation.html:97
@@ -3839,21 +3837,18 @@ msgstr "Artikkel"
 #: templates/demo_with_images/packing_list.tex:21
 #: templates/xedemo/packing_list.tex:21
 msgid "Items returned are subject to a 10% restocking charge."
-msgstr ""
+msgstr "Returnerte varer blir belastet med 10% i behandlings kostnader. "
 
 #: templates/demo/invoice.html:286 templates/demo/packing_list.html:176
 #: templates/demo_with_images/invoice.html:286
 #: templates/demo_with_images/packing_list.html:176
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
 msgid ""
-"Items returned are subject to a 10% restocking charge. A return authorization "
-"must be obtained from [_1] before goods are returned. Returns must be shipped "
-"prepaid and properly insured. [_1] will not be responsible for damages during "
-"transit."
-msgstr ""
-"Returnerte varer er gjenstand for 10% returgebyr. Det må innhentes tillatelse "
-"fra [_1] før varer returneres. Returer må sendes forhåndsbetalt og "
-"tilstrekkelig forsikret. [_1] er ikke ansvarlig for skader under transport."
+"Items returned are subject to a 10% restocking charge. A return "
+"authorization must be obtained from [_1] before goods are returned. Returns "
+"must be shipped prepaid and properly insured. [_1] will not be responsible "
+"for damages during transit."
+msgstr "Returnerte varer er gjenstand for 10% returgebyr. Det må innhentes tillatelse fra [_1] før varer returneres. Returer må sendes forhåndsbetalt og tilstrekkelig forsikret. [_1] er ikke ansvarlig for skader under transport."
 
 #: bin/aa.pl:80 bin/ca.pl:72 bin/gl.pl:75 bin/io.pl:76
 #: LedgerSMB/App_State.pm:167
@@ -3908,8 +3903,8 @@ msgstr "Jobb lagret!"
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
-#: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
-#: templates/xedemo/timecard.tex:37
+#: templates/demo_with_images/timecard.tex:37
+#: templates/xedemo/timecard.html:81 templates/xedemo/timecard.tex:37
 msgid "Job/Project #"
 msgstr "Jobb/Prosjekt nummer"
 
@@ -3976,8 +3971,8 @@ msgstr "Arbeid/kostnader"
 
 #: templates/demo/timecard.html:89 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:89
-#: templates/demo_with_images/timecard.tex:39 templates/xedemo/timecard.html:89
-#: templates/xedemo/timecard.tex:39
+#: templates/demo_with_images/timecard.tex:39
+#: templates/xedemo/timecard.html:89 templates/xedemo/timecard.tex:39
 msgid "Labor/Service Code"
 msgstr "Arbeide/Tjenester"
 
@@ -4507,11 +4502,11 @@ msgstr "Ingen blanke annsattnavn"
 
 #: LedgerSMB/DBObject/Company.pm:134
 msgid "No company or credit id in LedgerSMB::DBObject::delete_contact"
-msgstr ""
+msgstr "Ingen firma eller kreditt id i LedgerSMB::DBObject::delete_contact"
 
 #: LedgerSMB/DBObject/Company.pm:172
 msgid "No company or credit id in LedgerSMB::DBObject::delete_location"
-msgstr ""
+msgstr "Ingen firma eller kreditt id i LedgerSMB::DBObject::delete_location"
 
 #: bin/aa.pl:201 bin/ir.pl:124 bin/is.pl:133
 msgid "No currencies defined.  Please set these up under System/Defaults."
@@ -4557,9 +4552,7 @@ msgstr "Gebyrfri"
 msgid ""
 "Non-existing customer pricegroups in partscustomer (can't be edited through "
 "the web interface)"
-msgstr ""
-"Ikke eksisterende Kundes prisgruppe i varegrupper (kan ikke editeres på web "
-"grensesnittet)"
+msgstr "Ikke eksisterende Kundes prisgruppe i varegrupper (kan ikke editeres på web grensesnittet)"
 
 #: sql/Pg-database.sql:2411
 msgid "Non-taxable"
@@ -4668,9 +4661,10 @@ msgstr "Null modell nummer"
 #: templates/demo/pick_list.html:111 templates/demo/purchase_order.html:127
 #: templates/demo/purchase_order.tex:117
 #: templates/demo/request_quotation.html:140
-#: templates/demo/request_quotation.tex:122 templates/demo/sales_order.html:129
-#: templates/demo/sales_quotation.html:71
-#: templates/demo/sales_quotation.html:98 templates/demo/sales_quotation.tex:87
+#: templates/demo/request_quotation.tex:122
+#: templates/demo/sales_order.html:129 templates/demo/sales_quotation.html:71
+#: templates/demo/sales_quotation.html:98
+#: templates/demo/sales_quotation.tex:87
 #: templates/demo_with_images/bin_list.html:147
 #: templates/demo_with_images/invoice.html:135
 #: templates/demo_with_images/invoice.tex:134
@@ -4695,9 +4689,9 @@ msgstr "Null modell nummer"
 #: templates/xedemo/sales_order.html:129
 #: templates/xedemo/sales_quotation.html:71
 #: templates/xedemo/sales_quotation.html:98
-#: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:129
-#: UI/am-taxes.html:14 UI/Contact/contact.html:396 UI/employee.html:29
-#: UI/io-email.html:99
+#: templates/xedemo/sales_quotation.tex:88
+#: templates/xedemo/work_order.html:129 UI/am-taxes.html:14
+#: UI/Contact/contact.html:396 UI/employee.html:29 UI/io-email.html:99
 msgid "Number"
 msgstr "Nummer"
 
@@ -4781,11 +4775,9 @@ msgstr "Åpne Kasse"
 
 #: UI/logout.html:15
 msgid ""
-"Opera detected.  To complete this logout, please close your browser window or "
-"clear private/authentication information"
-msgstr ""
-"Opera oppdaget. For å fullføre avlogging, vennligst lukk nettleservinduet "
-"eller slett privat/autentiseringsinformasjon"
+"Opera detected.  To complete this logout, please close your browser window "
+"or clear private/authentication information"
+msgstr "Opera oppdaget. For å fullføre avlogging, vennligst lukk nettleservinduet eller slett privat/autentiseringsinformasjon"
 
 #: UI/accounts/edit.html:98
 msgid "Options"
@@ -4808,8 +4800,9 @@ msgstr "Ordre"
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
 #: templates/demo/bin_list.html:108 templates/demo/invoice.html:109
 #: templates/demo/packing_list.html:79 templates/demo/pick_list.html:78
-#: templates/demo/purchase_order.html:102 templates/demo/purchase_order.tex:105
-#: templates/demo/sales_order.html:102 templates/demo/sales_order.tex:105
+#: templates/demo/purchase_order.html:102
+#: templates/demo/purchase_order.tex:105 templates/demo/sales_order.html:102
+#: templates/demo/sales_order.tex:105
 #: templates/demo_with_images/ap_transaction.html:88
 #: templates/demo_with_images/ap_transaction.tex:66
 #: templates/demo_with_images/ar_transaction.html:87
@@ -4925,8 +4918,8 @@ msgstr "Våre tilgodhavender"
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
-#: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
-#: templates/xedemo/timecard.tex:30
+#: templates/demo_with_images/timecard.tex:30
+#: templates/xedemo/timecard.html:56 templates/xedemo/timecard.tex:30
 msgid "Out"
 msgstr "Ut"
 
@@ -4998,8 +4991,9 @@ msgid "POST AND PRINT"
 msgstr "Post og Skriv"
 
 #: bin/am.pl:2864 bin/io.pl:1365 bin/io.pl:1383 bin/io.pl:1547 bin/is.pl:294
-#: bin/is.pl:961 bin/oe.pl:305 bin/oe.pl:324 templates/demo/packing_list.html:4
-#: templates/demo/packing_list.html:18 templates/demo/packing_list.tex:81
+#: bin/is.pl:961 bin/oe.pl:305 bin/oe.pl:324
+#: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
+#: templates/demo/packing_list.tex:81
 #: templates/demo_with_images/packing_list.html:4
 #: templates/demo_with_images/packing_list.html:18
 #: templates/demo_with_images/packing_list.tex:81
@@ -5024,8 +5018,9 @@ msgstr "Følgesedler"
 #: bin/aa.pl:1714 bin/aa.pl:2082 scripts/payment.pl:902
 #: templates/demo/invoice.html:184 templates/demo/invoice.tex:164
 #: templates/demo_with_images/invoice.html:184
-#: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
-#: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:293
+#: templates/demo_with_images/invoice.tex:164
+#: templates/xedemo/invoice.html:184 templates/xedemo/invoice.tex:163
+#: UI/payments/payments_detail.html:293
 msgid "Paid"
 msgstr "Betalt"
 
@@ -5163,9 +5158,11 @@ msgid "Payment due by [_1]."
 msgstr "Betalingsforfall på [_1]."
 
 #: bin/aa.pl:832 bin/ir.pl:776 bin/is.pl:864
-#: templates/demo/ap_transaction.html:179 templates/demo/ap_transaction.tex:109
-#: templates/demo/ar_transaction.html:178 templates/demo/ar_transaction.tex:126
-#: templates/demo/invoice.html:237 templates/demo/invoice.tex:198
+#: templates/demo/ap_transaction.html:179
+#: templates/demo/ap_transaction.tex:109
+#: templates/demo/ar_transaction.html:178
+#: templates/demo/ar_transaction.tex:126 templates/demo/invoice.html:237
+#: templates/demo/invoice.tex:198
 #: templates/demo_with_images/ap_transaction.html:179
 #: templates/demo_with_images/ap_transaction.tex:109
 #: templates/demo_with_images/ar_transaction.html:178
@@ -5249,7 +5246,7 @@ msgstr "Skriv ut sjekken til [_1]."
 msgid ""
 "Please point your contrib_dir directive in your ledgersmb.conf to the "
 "appropriate location"
-msgstr ""
+msgstr "Please point your contrib_dir directive in your ledgersmb.conf to the appropriate location"
 
 #: templates/demo/request_quotation.html:128
 #: templates/demo/request_quotation.tex:117
@@ -5586,10 +5583,11 @@ msgstr "Innkjøpsverdi:"
 #: templates/demo/invoice.html:138 templates/demo/invoice.tex:137
 #: templates/demo/packing_list.html:123 templates/demo/packing_list.tex:116
 #: templates/demo/pick_list.html:113 templates/demo/pick_list.tex:101
-#: templates/demo/purchase_order.html:129 templates/demo/purchase_order.tex:118
+#: templates/demo/purchase_order.html:129
+#: templates/demo/purchase_order.tex:118
 #: templates/demo/request_quotation.html:142
-#: templates/demo/request_quotation.tex:123 templates/demo/sales_order.html:131
-#: templates/demo/sales_quotation.html:100
+#: templates/demo/request_quotation.tex:123
+#: templates/demo/sales_order.html:131 templates/demo/sales_quotation.html:100
 #: templates/demo/sales_quotation.tex:88
 #: templates/demo_with_images/bin_list.html:151
 #: templates/demo_with_images/bin_list.tex:108
@@ -5617,8 +5615,9 @@ msgstr "Innkjøpsverdi:"
 #: templates/xedemo/request_quotation.tex:123
 #: templates/xedemo/sales_order.html:131
 #: templates/xedemo/sales_quotation.html:100
-#: templates/xedemo/sales_quotation.tex:89 templates/xedemo/work_order.html:131
-#: UI/Contact/history_filter.html:288 UI/Contact/search.html:262
+#: templates/xedemo/sales_quotation.tex:89
+#: templates/xedemo/work_order.html:131 UI/Contact/history_filter.html:288
+#: UI/Contact/search.html:262
 msgid "Qty"
 msgstr "Antall"
 
@@ -5648,7 +5647,8 @@ msgstr "Satt i kø"
 #: bin/bp.pl:379 bin/ic.pl:1547 bin/ic.pl:1847 bin/io.pl:1343 bin/io.pl:1595
 #: bin/io.pl:1602 bin/oe.pl:282 bin/oe.pl:805 bin/oe.pl:838 bin/oe.pl:1807
 #: bin/oe.pl:1812 bin/oe.pl:2297 templates/demo/sales_quotation.html:4
-#: templates/demo/sales_quotation.html:17 templates/demo/sales_quotation.tex:69
+#: templates/demo/sales_quotation.html:17
+#: templates/demo/sales_quotation.tex:69
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
 #: templates/demo_with_images/sales_quotation.tex:69
@@ -5833,7 +5833,8 @@ msgstr "Fakturanummer"
 msgid "Referral"
 msgstr "Henvisning"
 
-#: templates/demo/ar_transaction.html:224 templates/demo/ar_transaction.tex:143
+#: templates/demo/ar_transaction.html:224
+#: templates/demo/ar_transaction.tex:143
 #: templates/demo_with_images/ar_transaction.html:224
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
@@ -5941,10 +5942,11 @@ msgid "Required attribute not provided: [_1]"
 msgstr "Nødvendig egenskap ikke satt inn: [_1]"
 
 #: bin/io.pl:236 bin/oe.pl:440 bin/oe.pl:494 bin/oe.pl:1231 bin/oe.pl:1701
-#: templates/demo/purchase_order.html:104 templates/demo/purchase_order.tex:106
+#: templates/demo/purchase_order.html:104
+#: templates/demo/purchase_order.tex:106
 #: templates/demo/request_quotation.html:105
-#: templates/demo/request_quotation.tex:107 templates/demo/sales_order.html:104
-#: templates/demo/sales_order.tex:106
+#: templates/demo/request_quotation.tex:107
+#: templates/demo/sales_order.html:104 templates/demo/sales_order.tex:106
 #: templates/demo_with_images/purchase_order.html:104
 #: templates/demo_with_images/purchase_order.tex:106
 #: templates/demo_with_images/request_quotation.html:105
@@ -6529,7 +6531,8 @@ msgstr "Send til"
 #: templates/demo/purchase_order.tex:108
 #: templates/demo/request_quotation.html:108
 #: templates/demo/request_quotation.tex:109
-#: templates/demo/sales_quotation.html:76 templates/demo/sales_quotation.tex:78
+#: templates/demo/sales_quotation.html:76
+#: templates/demo/sales_quotation.tex:78
 #: templates/demo_with_images/bin_list.html:115
 #: templates/demo_with_images/invoice.html:112
 #: templates/demo_with_images/invoice.tex:122
@@ -6570,10 +6573,12 @@ msgstr "Mangler leveringsdato"
 #: templates/demo/invoice.html:111 templates/demo/invoice.tex:121
 #: templates/demo/packing_list.html:85 templates/demo/packing_list.tex:92
 #: templates/demo/pick_list.html:82 templates/demo/pick_list.tex:83
-#: templates/demo/purchase_order.html:106 templates/demo/purchase_order.tex:107
+#: templates/demo/purchase_order.html:106
+#: templates/demo/purchase_order.tex:107
 #: templates/demo/request_quotation.html:107
-#: templates/demo/request_quotation.tex:108 templates/demo/sales_order.html:106
-#: templates/demo/sales_order.tex:108 templates/demo/sales_quotation.html:75
+#: templates/demo/request_quotation.tex:108
+#: templates/demo/sales_order.html:106 templates/demo/sales_order.tex:108
+#: templates/demo/sales_quotation.html:75
 #: templates/demo/sales_quotation.tex:77
 #: templates/demo_with_images/bin_list.html:114
 #: templates/demo_with_images/bin_list.tex:84
@@ -6602,8 +6607,8 @@ msgstr "Mangler leveringsdato"
 #: templates/xedemo/request_quotation.tex:108
 #: templates/xedemo/sales_order.html:106 templates/xedemo/sales_order.tex:108
 #: templates/xedemo/sales_quotation.html:75
-#: templates/xedemo/sales_quotation.tex:78 templates/xedemo/work_order.html:106
-#: UI/orders/order.html:62
+#: templates/xedemo/sales_quotation.tex:78
+#: templates/xedemo/work_order.html:106 UI/orders/order.html:62
 msgid "Shipping Point"
 msgstr "Sendes fra"
 
@@ -7223,7 +7228,7 @@ msgstr "Deres Tilgodehavende"
 
 #: UI/payments/use_overpayment1.html:60
 msgid "There is no customer with overpayments"
-msgstr "Ingen Kunde har overbetalt"
+msgstr "Ingen kunde har overbetalt"
 
 #: UI/payments/use_overpayment1.html:58
 msgid "There is no vendor with overpayments"
@@ -7241,8 +7246,7 @@ msgstr "Tredve"
 msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
-msgstr ""
-"Denne database operasjonen har avsluttet med suksess. LedgerSMB kan nå brukes."
+msgstr "Denne database operasjonen har avsluttet med suksess. LedgerSMB kan nå brukes."
 
 #: templates/demo/printPayment.html:109
 #: templates/demo_with_images/printPayment.html:109
@@ -7252,13 +7256,11 @@ msgstr "Dette dokumentet er godkjent av"
 
 #: scripts/payment.pl:1245
 msgid "This gl movement, is a consecuence of a payment transaction"
-msgstr ""
-"Denne hovedbok forandringen, er et resultat av overbetaling i en Postering"
+msgstr "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering"
 
 #: scripts/payment.pl:1962
 msgid "This gl movement, is the result of a overpayment transaction"
-msgstr ""
-"Denne hovedbok forandringen, er et resultat av overbetaling i en Postering"
+msgstr "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering"
 
 #: LedgerSMB/Num2text.pm:102
 msgid "Thousand"
@@ -7288,8 +7290,9 @@ msgstr "Kasse"
 msgid "Time"
 msgstr "Tid"
 
-#: bin/jc.pl:395 templates/demo/timecard.html:4 templates/demo/timecard.html:18
-#: templates/demo/timecard.tex:17 templates/demo_with_images/timecard.html:4
+#: bin/jc.pl:395 templates/demo/timecard.html:4
+#: templates/demo/timecard.html:18 templates/demo/timecard.tex:17
+#: templates/demo_with_images/timecard.html:4
 #: templates/demo_with_images/timecard.html:18
 #: templates/demo_with_images/timecard.tex:17 templates/xedemo/timecard.html:4
 #: templates/xedemo/timecard.html:18 templates/xedemo/timecard.tex:17
@@ -7340,9 +7343,9 @@ msgstr "Ganger"
 #: UI/bp-search.html:29 UI/ca-list-selector.html:33
 #: UI/Contact/history_filter.html:137 UI/Contact/history_filter.html:156
 #: UI/Contact/search.html:168 UI/Contact/search.html:382
-#: UI/employee/filter.html:68 UI/journal/search.html:90 UI/pos-receipts.html:23
-#: UI/rc-reconciliation.html:22 UI/rp-search-aging.html:20
-#: UI/rp-search-generate_income_statement.html:14
+#: UI/employee/filter.html:68 UI/journal/search.html:90
+#: UI/pos-receipts.html:23 UI/rc-reconciliation.html:22
+#: UI/rp-search-aging.html:20 UI/rp-search-generate_income_statement.html:14
 #: UI/rp-search-generate_income_statement.html:66
 #: UI/rp-search-generate_inv_activity.html:10
 #: UI/rp-search-generate_tax_report.html:10
@@ -7377,11 +7380,11 @@ msgstr "For å bruke"
 
 #: UI/setup/begin_backup.html:25
 msgid "To email"
-msgstr "Til E-mail"
+msgstr "Til E-post"
 
 #: UI/setup/begin_backup.html:39
 msgid "To my browser"
-msgstr "Til min Browser"
+msgstr "Til min nettleser"
 
 #: scripts/payment.pl:955
 msgid "To pay"
@@ -7450,14 +7453,14 @@ msgstr "Topplan"
 #: templates/xedemo/purchase_order.html:185
 #: templates/xedemo/sales_order.html:158 templates/xedemo/sales_order.html:186
 #: templates/xedemo/sales_quotation.html:127
-#: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
-#: templates/xedemo/timecard.tex:45 UI/Contact/search.html:431
-#: UI/orders/order.html:225 UI/payments/payment1.html:79
-#: UI/payments/payment1.html:88 UI/payments/payment2.html:317
-#: UI/payments/payments_detail.html:292 UI/reconciliation/report.html:121
-#: UI/reconciliation/report.html:180 UI/reconciliation/report.html:228
-#: UI/rp-search-generate_tax_report.html:175 UI/taxform/details_report.html:25
-#: UI/taxform/summary_report.html:24
+#: templates/xedemo/sales_quotation.html:154
+#: templates/xedemo/timecard.html:105 templates/xedemo/timecard.tex:45
+#: UI/Contact/search.html:431 UI/orders/order.html:225
+#: UI/payments/payment1.html:79 UI/payments/payment1.html:88
+#: UI/payments/payment2.html:317 UI/payments/payments_detail.html:292
+#: UI/reconciliation/report.html:121 UI/reconciliation/report.html:180
+#: UI/reconciliation/report.html:228 UI/rp-search-generate_tax_report.html:175
+#: UI/taxform/details_report.html:25 UI/taxform/summary_report.html:24
 msgid "Total"
 msgstr "I alt"
 
@@ -7469,7 +7472,7 @@ msgstr "Total akkumulert  inskudd"
 #: templates/demo_with_images/balance_sheet.html:95
 #: templates/xedemo/balance_sheet.html:95
 msgid "Total Assets"
-msgstr "Totalt Eiendeler"
+msgstr "Total eiendeler"
 
 #: bin/ps.pl:300
 msgid "Total Cash in Drawer: [_1]"
@@ -7853,13 +7856,14 @@ msgstr "Brukere"
 msgid "Valid From"
 msgstr "Gyldig Skjema"
 
-#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:50
-#: UI/Contact/pricelist.tex:50
+#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37
+#: UI/Contact/pricelist.html:50 UI/Contact/pricelist.tex:50
 msgid "Valid To"
 msgstr "Gyldig Til"
 
 #: bin/oe.pl:493 bin/oe.pl:1303 bin/oe.pl:1806
-#: templates/demo/sales_quotation.html:73 templates/demo/sales_quotation.tex:76
+#: templates/demo/sales_quotation.html:73
+#: templates/demo/sales_quotation.tex:76
 #: templates/demo_with_images/sales_quotation.html:73
 #: templates/demo_with_images/sales_quotation.tex:76
 #: templates/xedemo/sales_quotation.html:73
@@ -7965,7 +7969,8 @@ msgstr "Kuponger"
 #: bin/oe.pl:1887 bin/oe.pl:2811 templates/demo/bin_list.html:112
 #: templates/demo/bin_list.tex:82 templates/demo/packing_list.html:83
 #: templates/demo/packing_list.tex:90 templates/demo/pick_list.html:81
-#: templates/demo/pick_list.tex:82 templates/demo_with_images/bin_list.html:112
+#: templates/demo/pick_list.tex:82
+#: templates/demo_with_images/bin_list.html:112
 #: templates/demo_with_images/bin_list.tex:82
 #: templates/demo_with_images/packing_list.html:83
 #: templates/demo_with_images/packing_list.tex:90
@@ -8388,12 +8393,3 @@ msgstr "bruk en overbetaling"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr "zh_CN"
-
-#~ msgid "Discover"
-#~ msgstr "Oppdag"
-
-#~ msgid "Gift Cert"
-#~ msgstr "Gave Sertifikat"
-
-#~ msgid "Visa/MC"
-#~ msgstr "Visa/MasteCard"
