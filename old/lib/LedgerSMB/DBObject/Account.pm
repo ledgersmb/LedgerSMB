@@ -2,12 +2,12 @@
 
 LedgerSMB::DBObject::Account - Base class for chart of accounts entries
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 This class contains methods for managing chart of accounts entries (headings
 and accounts).
 
-=head1 INERITS
+=head1 INEHRITS
 
 =over
 
