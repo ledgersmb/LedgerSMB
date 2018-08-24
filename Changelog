@@ -2,6 +2,12 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.22
+* Upgrade Dojo to 1.10.10 (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.21
 * Clarify message after changing password through Preferences (Nick P)
 * Fix errors in ODS report tepmlate's title page (Nick P)
