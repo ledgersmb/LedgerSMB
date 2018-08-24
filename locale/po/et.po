@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 # Peeter Pärtel <peeter@sigma.ee>, 2016
 msgid ""
@@ -6,14 +6,13 @@ msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-09-16 19:45+0000\n"
-"PO-Revision-Date: 2017-04-10 08:33+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Estonian (http://www.transifex.com/ledgersmb/ledgersmb/"
-"language/et/)\n"
-"Language: et\n"
+"PO-Revision-Date: 2018-03-14 10:09+0000\n"
+"Last-Translator: Margus Lepmets <margus.lepmets@gmail.com>\n"
+"Language-Team: Estonian (http://www.transifex.com/ledgersmb/ledgersmb/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
@@ -47,7 +46,7 @@ msgstr "(=) Netoväärtus"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
 msgid "(Locked)"
-msgstr ""
+msgstr "(Lukustatud)"
 
 #: LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
@@ -84,8 +83,8 @@ msgstr "A"
 #: templates/demo_with_images/packing_list.tex:22
 #: templates/xedemo/invoice.tex:31 templates/xedemo/packing_list.tex:22
 msgid ""
-"A return authorization must be obtained from [_1] before goods are returned. "
-"Returns must be shipped prepaid and properly insured. [_1] will not be "
+"A return authorization must be obtained from [_1] before goods are returned."
+" Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
 
@@ -196,7 +195,8 @@ msgstr "Müügi/ostu/pearaamatu summa"
 msgid "Abandonment"
 msgstr ""
 
-#: LedgerSMB/Report/Taxform/Detail.pm:90 LedgerSMB/Report/Taxform/Summary.pm:87
+#: LedgerSMB/Report/Taxform/Detail.pm:90
+#: LedgerSMB/Report/Taxform/Summary.pm:87
 msgid "Acc_trans Sum"
 msgstr "Summa"
 
@@ -255,13 +255,14 @@ msgstr "Konto nr"
 #: LedgerSMB/Report/Contact/Purchase.pm:143
 #: LedgerSMB/Report/Contact/Search.pm:100 LedgerSMB/Report/GL.pm:211
 #: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:92
-#: LedgerSMB/Report/Taxform/Detail.pm:82 LedgerSMB/Report/Taxform/Detail.pm:111
-#: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:154
-#: LedgerSMB/Scripts/payment.pm:148 t/data/04-complex_template.html:558
-#: UI/accounts/edit.html:26 UI/accounts/edit.html:120
-#: UI/Contact/divs/bank_act.html:18 UI/payments/use_overpayment2.html:116
-#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
-#: UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Report/Taxform/Detail.pm:82
+#: LedgerSMB/Report/Taxform/Detail.pm:111
+#: LedgerSMB/Report/Taxform/Summary.pm:79
+#: LedgerSMB/Report/Trial_Balance.pm:154 LedgerSMB/Scripts/payment.pm:148
+#: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
+#: UI/accounts/edit.html:120 UI/Contact/divs/bank_act.html:18
+#: UI/payments/use_overpayment2.html:116 UI/Reports/co/filter_bm.html:78
+#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -273,14 +274,14 @@ msgstr ""
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:128
 msgid "Account Number Start"
-msgstr ""
+msgstr "Konto number algab"
 
 #: LedgerSMB/Scripts/payment.pm:149
 msgid "Account Title"
-msgstr ""
+msgstr "Konto pealkiri"
 
-#: LedgerSMB/Report/Taxform/Detail.pm:78 LedgerSMB/Report/Taxform/Summary.pm:75
-#: UI/accounts/edit.html:197
+#: LedgerSMB/Report/Taxform/Detail.pm:78
+#: LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:197
 msgid "Account Type"
 msgstr "Konto tüüp"
 
@@ -317,11 +318,11 @@ msgstr "Kontod"
 
 #: UI/Reports/co/filter_cd.html:24
 msgid "Accounts From"
-msgstr ""
+msgstr "Kontod alates"
 
 #: UI/Reports/co/filter_cd.html:29
 msgid "Accounts To"
-msgstr ""
+msgstr "Kontod kuni"
 
 #: LedgerSMB/Upgrade_Tests.pm:486 LedgerSMB/Upgrade_Tests.pm:543
 msgid "Accounts without heading"
@@ -344,11 +345,11 @@ msgstr ""
 
 #: lsmb-request.pl:116
 msgid "Action Not Defined: "
-msgstr ""
+msgstr "Tegevus kirjeldamata:"
 
 #: LedgerSMB/Form.pm:645 UI/lib/elements.html:393
 msgid "Action: [_1], ID: [_2]"
-msgstr ""
+msgstr "Tegevus: [_1], ID: [_2]"
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
@@ -372,11 +373,11 @@ msgstr "Aktiivne"
 
 #: UI/business_units/filter.html:35
 msgid "Active On"
-msgstr ""
+msgstr "Aktiivne sees"
 
 #: LedgerSMB/Scripts/admin.pm:145
 msgid "Active Sessions"
-msgstr ""
+msgstr "Aktiivne sessioon"
 
 #: bin/am.pl:1534 bin/ic.pl:2129 LedgerSMB/Report/File/Incoming.pm:101
 #: LedgerSMB/Report/File/Internal.pm:89
@@ -425,7 +426,7 @@ msgstr "Lisa ettevõtte"
 
 #: sql/Pg-database.sql:2891
 msgid "Add Class"
-msgstr ""
+msgstr "Lisa klass"
 
 #: sql/Pg-database.sql:2792
 msgid "Add Contact"
@@ -453,7 +454,7 @@ msgstr "Lisa deebet arve"
 
 #: bin/aa.pl:445
 msgid "Add Debit Note"
-msgstr ""
+msgstr "Lisa deebet märkus"
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:40
 #: sql/Pg-database.sql:2813
@@ -550,7 +551,7 @@ msgstr "Lisa ajakaart"
 
 #: bin/io.pl:2289
 msgid "Add To List"
-msgstr ""
+msgstr "Lisa listi"
 
 #: sql/Pg-database.sql:2799 sql/Pg-database.sql:2802
 msgid "Add Transaction"
@@ -595,7 +596,7 @@ msgstr "Lisa rida 3"
 
 #: UI/Contact/divs/wage.html:71
 msgid "Add/Change Deductions"
-msgstr ""
+msgstr "Lisa/Muuda mahaarvamine"
 
 #: UI/Contact/divs/wage.html:41
 msgid "Add/Change Wage"
@@ -603,7 +604,7 @@ msgstr "Lisa/muuda palka"
 
 #: LedgerSMB/Scripts/business_unit.pm:178
 msgid "Added id [_1]"
-msgstr ""
+msgstr "Lisatud id [_1]"
 
 #: bin/aa.pl:657 bin/arap.pl:175 bin/ic.pl:1700 bin/ir.pl:543 bin/is.pl:576
 #: bin/oe.pl:510 bin/pe.pl:687 UI/Contact/divs/address.html:81
@@ -684,7 +685,7 @@ msgstr "Kõik väljad on kohustuslikud"
 #: templates/demo/invoice.html:221 templates/demo_with_images/invoice.html:224
 #: templates/xedemo/invoice.html:222
 msgid "All prices in [_1]"
-msgstr ""
+msgstr "Kõik hinnad valuutas [_1]"
 
 #: templates/demo/sales_order.html:211 templates/demo/sales_quotation.html:179
 #: templates/demo_with_images/sales_order.html:211
@@ -712,10 +713,11 @@ msgstr ""
 #: templates/demo_with_images/sales_order.tex:158
 #: templates/demo_with_images/sales_quotation.tex:123
 #: templates/xedemo/invoice.tex:188 templates/xedemo/product_receipt.tex:147
-#: templates/xedemo/purchase_order.tex:153 templates/xedemo/sales_order.tex:158
+#: templates/xedemo/purchase_order.tex:153
+#: templates/xedemo/sales_order.tex:158
 #: templates/xedemo/sales_quotation.tex:125
 msgid "All prices in [_1]."
-msgstr ""
+msgstr "Kõik hinnad valuutas [_1]."
 
 #: LedgerSMB/Report/Invoices/COGS.pm:125 UI/timecards/timecard.html:129
 msgid "Allocated"
@@ -723,23 +725,24 @@ msgstr "Eraldatud"
 
 #: UI/Configuration/sequence.html:11
 msgid "Allow Input"
-msgstr ""
+msgstr "Luba sisestus"
 
 #: bin/aa.pl:716 bin/aa.pl:885 bin/aa.pl:1714 bin/am.pl:868 bin/ir.pl:750
 #: bin/ir.pl:926 bin/is.pl:851 bin/is.pl:1014 bin/pe.pl:1067
 #: LedgerSMB/Report/Contact/Purchase.pm:82
 #: LedgerSMB/Report/Invoices/Outstanding.pm:218
-#: LedgerSMB/Report/Invoices/Transactions.pm:271 LedgerSMB/Report/Orders.pm:234
+#: LedgerSMB/Report/Invoices/Transactions.pm:271
+#: LedgerSMB/Report/Orders.pm:234
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:118
 #: templates/demo/ap_transaction.html:196
-#: templates/demo/ar_transaction.html:194 templates/demo/ar_transaction.tex:129
-#: templates/demo/invoice.html:249 templates/demo/invoice.tex:146
-#: templates/demo/invoice.tex:210 templates/demo/printPayment.html:53
-#: templates/demo/product_receipt.html:131
+#: templates/demo/ar_transaction.html:194
+#: templates/demo/ar_transaction.tex:129 templates/demo/invoice.html:249
+#: templates/demo/invoice.tex:146 templates/demo/invoice.tex:210
+#: templates/demo/printPayment.html:53 templates/demo/product_receipt.html:131
 #: templates/demo/product_receipt.tex:120
-#: templates/demo/purchase_order.html:133 templates/demo/purchase_order.tex:120
-#: templates/demo/sales_order.html:135 templates/demo/sales_order.tex:122
-#: templates/demo/sales_quotation.html:104
+#: templates/demo/purchase_order.html:133
+#: templates/demo/purchase_order.tex:120 templates/demo/sales_order.html:135
+#: templates/demo/sales_order.tex:122 templates/demo/sales_quotation.html:104
 #: templates/demo/sales_quotation.tex:90
 #: templates/demo_with_images/ap_transaction.html:196
 #: templates/demo_with_images/ar_transaction.html:194
@@ -772,7 +775,8 @@ msgstr ""
 #: UI/Reports/filters/gl.html:101
 #: UI/Reports/filters/invoice_outstanding.html:191
 #: UI/Reports/filters/invoice_search.html:284
-#: UI/Reports/filters/orders.html:168 UI/rp-search-generate_tax_report.html:158
+#: UI/Reports/filters/orders.html:168
+#: UI/rp-search-generate_tax_report.html:158
 msgid "Amount"
 msgstr "Summa"
 
@@ -1038,10 +1042,10 @@ msgstr "Kaasatud fail"
 #: templates/demo/bin_list.html:51 templates/demo/bin_list.html:84
 #: templates/demo/packing_list.html:52 templates/demo/pick_list.html:51
 #: templates/demo/product_receipt.html:50
-#: templates/demo/product_receipt.html:78 templates/demo/product_receipt.tex:47
-#: templates/demo/product_receipt.tex:82 templates/demo/purchase_order.html:50
-#: templates/demo/purchase_order.html:78 templates/demo/purchase_order.tex:47
-#: templates/demo/purchase_order.tex:82
+#: templates/demo/product_receipt.html:78
+#: templates/demo/product_receipt.tex:47 templates/demo/product_receipt.tex:82
+#: templates/demo/purchase_order.html:50 templates/demo/purchase_order.html:78
+#: templates/demo/purchase_order.tex:47 templates/demo/purchase_order.tex:82
 #: templates/demo/request_quotation.html:51
 #: templates/demo/request_quotation.html:79 templates/demo/sales_order.html:49
 #: templates/demo/sales_quotation.html:44
@@ -1075,7 +1079,8 @@ msgstr "Kaasatud fail"
 #: templates/xedemo/request_quotation.html:51
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_order.html:49
-#: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
+#: templates/xedemo/sales_quotation.html:44
+#: templates/xedemo/work_order.html:49
 msgid "Attn: [_1]"
 msgstr ""
 
@@ -1098,7 +1103,7 @@ msgstr "Autor: [_1]"
 
 #: bin/ir.pl:712 bin/is.pl:513 bin/is.pl:809
 msgid "Automatic"
-msgstr ""
+msgstr "Automaatne"
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:144
 #: UI/payments/use_overpayment2.html:118
@@ -1111,7 +1116,7 @@ msgstr "Kasutatavad andmebaasid"
 
 #: UI/setup/list_users.html:8
 msgid "Available Users"
-msgstr ""
+msgstr "Saadaval kasutajad"
 
 #: UI/payments/use_overpayment2.html:114
 msgid "Available overpayments"
@@ -1148,17 +1153,18 @@ msgstr "Varukoopia"
 
 #: UI/setup/confirm_operation.html:86
 msgid "Backup DB"
-msgstr ""
+msgstr "Varunda andmebaas"
 
 #: UI/setup/confirm_operation.html:93
 msgid "Backup Roles"
-msgstr ""
+msgstr "Varundus rollid"
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:93 LedgerSMB/Report/GL.pm:162
 #: templates/demo/invoice.html:196 templates/demo/invoice.tex:178
 #: templates/demo_with_images/invoice.html:199
-#: templates/demo_with_images/invoice.tex:177 templates/xedemo/invoice.html:197
-#: templates/xedemo/invoice.tex:172 UI/Reports/filters/gl.html:253
+#: templates/demo_with_images/invoice.tex:177
+#: templates/xedemo/invoice.html:197 templates/xedemo/invoice.tex:172
+#: UI/Reports/filters/gl.html:253
 msgid "Balance"
 msgstr "Bilanss"
 
@@ -1313,8 +1319,9 @@ msgid "Bin"
 msgstr "Riiul"
 
 #: bin/am.pl:1511 bin/io.pl:1426 bin/io.pl:1440 bin/io.pl:1648 bin/oe.pl:321
-#: bin/oe.pl:333 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
-#: templates/demo/bin_list.tex:74 templates/demo_with_images/bin_list.html:4
+#: bin/oe.pl:333 templates/demo/bin_list.html:4
+#: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
+#: templates/demo_with_images/bin_list.html:4
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
@@ -1513,8 +1520,7 @@ msgstr "Kannet ei saa salvestada suletud perioodile!"
 #: bin/gl.pl:734
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr ""
-"Kui kandes on deebet ja kreedit samal kontol, siis seda ei saa salvestada!"
+msgstr "Kui kandes on deebet ja kreedit samal kontol, siis seda ei saa salvestada!"
 
 #: bin/aa.pl:1467
 msgid "Cannot post transaction!"
@@ -1542,8 +1548,8 @@ msgstr "Komplekte ei saa ladustada!"
 
 #: templates/demo/timecard.html:44 templates/demo/timecard.tex:27
 #: templates/demo_with_images/timecard.html:44
-#: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:44
-#: templates/xedemo/timecard.tex:27
+#: templates/demo_with_images/timecard.tex:27
+#: templates/xedemo/timecard.html:44 templates/xedemo/timecard.tex:27
 msgid "Card ID"
 msgstr "Kaardi ID"
 
@@ -1629,7 +1635,7 @@ msgstr "Linn"
 #: UI/Contact/divs/company.html:65 UI/Contact/divs/credit.html:66
 #: UI/Contact/divs/person.html:62
 msgid "Class"
-msgstr ""
+msgstr "Klass"
 
 #: LedgerSMB/Scripts/recon.pm:220 UI/reconciliation/report.html:76
 #: UI/reconciliation/report.html:139
@@ -1660,21 +1666,23 @@ msgstr "Sulge kanded kuni"
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
 msgid "Close Period"
-msgstr ""
+msgstr "Sulge periood"
 
 #: UI/accounts/yearend.html:86
 msgid "Close books"
 msgstr ""
 
 #: bin/aa.pl:1612 bin/oe.pl:374 LedgerSMB/Report/Orders.pm:243
-#: UI/Reports/filters/invoice_search.html:209 UI/Reports/filters/orders.html:97
+#: UI/Reports/filters/invoice_search.html:209
+#: UI/Reports/filters/orders.html:97
 #: UI/Reports/filters/purchase_history.html:209
 #: UI/Reports/filters/timecards.html:36
 msgid "Closed"
 msgstr "Suletud"
 
-#: LedgerSMB/Report/Listings/Language.pm:46 LedgerSMB/Report/Listings/SIC.pm:44
-#: UI/am-language-form.html:12 UI/am-sic-form.html:12
+#: LedgerSMB/Report/Listings/Language.pm:46
+#: LedgerSMB/Report/Listings/SIC.pm:44 UI/am-language-form.html:12
+#: UI/am-sic-form.html:12
 msgid "Code"
 msgstr "Kood"
 
@@ -1698,9 +1706,9 @@ msgstr ""
 msgid "Combine Sales Orders"
 msgstr ""
 
-#: LedgerSMB/Report/Taxform/Detail.pm:74 LedgerSMB/Report/Taxform/Summary.pm:71
-#: LedgerSMB/Scripts/contact.pm:164 UI/Contact/contact.html:17
-#: UI/Contact/divs/company.html:1 UI/login.html:64
+#: LedgerSMB/Report/Taxform/Detail.pm:74
+#: LedgerSMB/Report/Taxform/Summary.pm:71 LedgerSMB/Scripts/contact.pm:164
+#: UI/Contact/contact.html:17 UI/Contact/divs/company.html:1 UI/login.html:64
 #: UI/Reports/aging_report.html:19 UI/Reports/display_report.html:26
 #: UI/Reports/display_report.tex:24
 msgid "Company"
@@ -1786,7 +1794,8 @@ msgstr ""
 #: templates/demo_with_images/request_quotation.html:106
 #: templates/demo_with_images/sales_quotation.html:74
 #: templates/xedemo/bin_list.html:110 templates/xedemo/packing_list.html:81
-#: templates/xedemo/pick_list.html:80 templates/xedemo/product_receipt.html:105
+#: templates/xedemo/pick_list.html:80
+#: templates/xedemo/product_receipt.html:105
 #: templates/xedemo/purchase_order.html:105
 #: templates/xedemo/request_quotation.html:106
 #: templates/xedemo/sales_quotation.html:74
@@ -1859,8 +1868,8 @@ msgid "Contra"
 msgstr "Kontrakonto"
 
 #: bin/arap.pl:171 LedgerSMB/Report/Contact/Search.pm:64
-#: LedgerSMB/Report/Listings/Business_Unit.pm:56 LedgerSMB/Report/PNL/ECA.pm:94
-#: LedgerSMB/Report/Taxform/Summary.pm:83
+#: LedgerSMB/Report/Listings/Business_Unit.pm:56
+#: LedgerSMB/Report/PNL/ECA.pm:94 LedgerSMB/Report/Taxform/Summary.pm:83
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:101
 #: UI/business_units/edit.html:27 UI/business_units/filter.html:19
 #: UI/Contact/divs/company.html:42 UI/Contact/divs/person.html:43
@@ -1907,7 +1916,7 @@ msgstr "Müüdud kauba kulu"
 
 #: LedgerSMB/Template/DB.pm:72 LedgerSMB/Template/DB.pm:116
 msgid "Could Not Load Template from DB"
-msgstr ""
+msgstr "Ei õnnestu laadida malli andmebaasist"
 
 #: bin/gl.pl:95
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
@@ -1915,7 +1924,7 @@ msgstr ""
 
 #: bin/ir.pl:1441 bin/is.pl:1470 bin/oe.pl:1379
 msgid "Could not save the data.  Please try again"
-msgstr ""
+msgstr "Salvestamine ebaõnnestus. Palun proovige uuesti"
 
 #: bin/oe.pl:2146
 msgid "Could not save!"
@@ -1964,7 +1973,7 @@ msgstr "Riik:"
 
 #: UI/setup/credentials.html:61
 msgid "Create"
-msgstr ""
+msgstr "Loo"
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2023,8 +2032,8 @@ msgstr "Kreeditkontod"
 msgid "Credit Balance"
 msgstr ""
 
-#: bin/am.pl:1504 templates/demo/invoice.html:12 templates/demo/invoice.tex:114
-#: templates/demo_with_images/invoice.html:12
+#: bin/am.pl:1504 templates/demo/invoice.html:12
+#: templates/demo/invoice.tex:114 templates/demo_with_images/invoice.html:12
 #: templates/demo_with_images/invoice.tex:114 templates/xedemo/invoice.tex:111
 #: sql/Pg-database.sql:2909
 msgid "Credit Invoice"
@@ -2088,12 +2097,14 @@ msgstr "Valuuta"
 
 #: bin/aa.pl:1659 bin/pe.pl:839 LedgerSMB/DBObject/Date.pm:77
 #: LedgerSMB/Report/Aging.pm:126 templates/demo/statement.html:64
-#: templates/demo/statement.tex:38 templates/demo_with_images/statement.html:64
+#: templates/demo/statement.tex:38
+#: templates/demo_with_images/statement.html:64
 #: templates/demo_with_images/statement.tex:38
 #: templates/xedemo/statement.html:64 templates/xedemo/statement.tex:38
-#: UI/bp-search.html:40 UI/lib/report_base.html:138 UI/lib/report_base.html:217
-#: UI/pos-receipts.html:38 UI/rc-reconciliation.html:40
-#: UI/Reports/co/filter_bm.html:53 UI/Reports/filters/aging.html:99
+#: UI/bp-search.html:40 UI/lib/report_base.html:138
+#: UI/lib/report_base.html:217 UI/pos-receipts.html:38
+#: UI/rc-reconciliation.html:40 UI/Reports/co/filter_bm.html:53
+#: UI/Reports/filters/aging.html:99
 #: UI/rp-search-generate_income_statement.html:33
 #: UI/rp-search-generate_tax_report.html:29
 msgid "Current"
@@ -2108,11 +2119,11 @@ msgstr "Käesoleva aasta kasum (kahjum)"
 #: bin/aa.pl:564 bin/aa.pl:1671 bin/ic.pl:1135 bin/is.pl:534 bin/pe.pl:1039
 #: bin/pe.pl:1194 LedgerSMB/Report/Aging.pm:83
 #: LedgerSMB/Report/Invoices/Outstanding.pm:178
-#: LedgerSMB/Report/Invoices/Transactions.pm:250 LedgerSMB/Report/Orders.pm:188
-#: LedgerSMB/Report/Orders.pm:194 UI/business_units/edit.html:82
-#: UI/Contact/divs/credit.html:9 UI/orders/order.html:21
-#: UI/payments/use_overpayment1.html:29 UI/payments/use_overpayment2.html:25
-#: UI/Reports/filters/aging.html:15
+#: LedgerSMB/Report/Invoices/Transactions.pm:250
+#: LedgerSMB/Report/Orders.pm:188 LedgerSMB/Report/Orders.pm:194
+#: UI/business_units/edit.html:82 UI/Contact/divs/credit.html:9
+#: UI/orders/order.html:21 UI/payments/use_overpayment1.html:29
+#: UI/payments/use_overpayment2.html:25 UI/Reports/filters/aging.html:15
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:8
 #: UI/rp-search-generate_tax_report.html:139 sql/Pg-database.sql:543
@@ -2121,7 +2132,7 @@ msgstr "Klient"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:249
 msgid "Customer Account"
-msgstr ""
+msgstr "Kliendi konto"
 
 #: sql/Pg-database.sql:2793
 msgid "Customer History"
@@ -2172,11 +2183,11 @@ msgstr "Sünnikuupäev:"
 
 #: bin/aa.pl:1377 LedgerSMB/Scripts/payment.pm:332
 msgid "Data not saved.  Please try again."
-msgstr ""
+msgstr "Andmed ei ole salvestatud. Palun proovige uuesti."
 
 #: LedgerSMB/Scripts/recon.pm:150
 msgid "Data not saved.  Please update again."
-msgstr ""
+msgstr "Andmed ei ole salvestatud. Palun uuendage uuesti."
 
 #: UI/setup/credentials.html:44 UI/setup/list_databases.html:12
 msgid "Database"
@@ -2204,7 +2215,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:788
 msgid "Database exists."
-msgstr ""
+msgstr "Andmebaas eksisteerib."
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2216,20 +2227,21 @@ msgstr "Andmekogu"
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:94
 #: LedgerSMB/Report/Invoices/Outstanding.pm:188
 #: LedgerSMB/Report/Invoices/Transactions.pm:258
-#: LedgerSMB/Report/Listings/Overpayments.pm:136 LedgerSMB/Report/Orders.pm:213
+#: LedgerSMB/Report/Listings/Overpayments.pm:136
+#: LedgerSMB/Report/Orders.pm:213
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:102
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:526
 #: LedgerSMB/Scripts/payment.pm:150 LedgerSMB/Scripts/payment.pm:806
-#: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
-#: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
-#: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
-#: templates/demo/ar_transaction.tex:77 templates/demo/ar_transaction.tex:128
-#: templates/demo/bin_list.html:109 templates/demo/invoice.html:107
-#: templates/demo/invoice.html:246 templates/demo/invoice.tex:209
-#: templates/demo/packing_list.html:80 templates/demo/packing_list.tex:88
-#: templates/demo/pick_list.html:79 templates/demo/pick_list.tex:81
-#: templates/demo/printPayment.html:78
+#: templates/demo/ap_transaction.html:73
+#: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
+#: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
+#: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
+#: templates/demo/ar_transaction.tex:128 templates/demo/bin_list.html:109
+#: templates/demo/invoice.html:107 templates/demo/invoice.html:246
+#: templates/demo/invoice.tex:209 templates/demo/packing_list.html:80
+#: templates/demo/packing_list.tex:88 templates/demo/pick_list.html:79
+#: templates/demo/pick_list.tex:81 templates/demo/printPayment.html:78
 #: templates/demo/request_quotation.html:104
 #: templates/demo/sales_quotation.html:72 templates/demo/statement.html:62
 #: templates/demo/statement.tex:37 templates/demo/timecard.html:48
@@ -2278,7 +2290,8 @@ msgstr "Andmekogu"
 #: UI/journal/journal_entry.html:40 UI/orders/order.html:246
 #: UI/payments/payment2.html:93 UI/payments/payments_detail.html:306
 #: UI/payments/use_overpayment2.html:80 UI/Reports/filters/gl.html:170
-#: UI/Reports/filters/orders.html:125 UI/rp-search-generate_tax_report.html:127
+#: UI/Reports/filters/orders.html:125
+#: UI/rp-search-generate_tax_report.html:127
 msgid "Date"
 msgstr "Kuupäev"
 
@@ -2289,7 +2302,7 @@ msgstr "Kuupäeva formaat"
 #: bin/ic.pl:959 LedgerSMB/Report/Listings/Overpayments.pm:102
 #: UI/Reports/filters/reconciliation_search.html:11
 msgid "Date From"
-msgstr ""
+msgstr "Kuupäev alates"
 
 #: UI/payments/payments_filter.html:105
 msgid "Date From:"
@@ -2326,7 +2339,7 @@ msgstr ""
 
 #: UI/payments/payment1.html:57
 msgid "Date from"
-msgstr ""
+msgstr "Kuupäev alates"
 
 #: UI/Admin/user_search.html:51 UI/setup/new_user.html:98
 msgid "Date of Birth"
@@ -2338,7 +2351,7 @@ msgstr "Kattesaamise kuupäev puudub!"
 
 #: UI/Reports/filters/balance_sheet.html:42
 msgid "Date selection"
-msgstr ""
+msgstr "Kuupäeva valik"
 
 #: bin/aa.pl:1776 UI/payments/payment1.html:68
 #: UI/Reports/filters/contact_search.html:116
@@ -2347,12 +2360,12 @@ msgstr ""
 
 #: bin/arap.pl:801 bin/io.pl:1919
 msgid "Date: [_1]"
-msgstr ""
+msgstr "Kuupäev: [_1]"
 
 #: UI/Reports/filters/balance_sheet.html:65
 #: UI/Reports/filters/income_statement.html:103
 msgid "Dates"
-msgstr ""
+msgstr "Kuupäevad"
 
 #: bin/am.pl:822 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2435,7 +2448,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:46 UI/setup/upgrade_info.html:33
 msgid "Default Country"
-msgstr ""
+msgstr "Vaikimisi riik"
 
 #: LedgerSMB/Scripts/configuration.pm:35
 msgid "Default Email BCC"
@@ -2459,7 +2472,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:49
 msgid "Default Language"
-msgstr ""
+msgstr "Vaikimisi keel"
 
 #: LedgerSMB/Report/Taxform/List.pm:56
 msgid "Default Reportable"
@@ -2505,14 +2518,15 @@ msgid "Delete Vouchers"
 msgstr ""
 
 #: bin/am.pl:535
-msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr ""
-"[_1] keele kustutamine kustutab ka kõik selles keeles olevad dokumendipõhjad"
+msgid ""
+"Deleting a language will also delete the templates for the language [_1]"
+msgstr "[_1] keele kustutamine kustutab ka kõik selles keeles olevad dokumendipõhjad"
 
 #: templates/demo/invoice.tex:141 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:141
 #: templates/demo_with_images/request_quotation.html:144
-#: templates/xedemo/invoice.tex:136 templates/xedemo/request_quotation.html:144
+#: templates/xedemo/invoice.tex:136
+#: templates/xedemo/request_quotation.html:144
 msgid "Delivery"
 msgstr "Üleandmine"
 
@@ -2604,7 +2618,8 @@ msgstr ""
 #: LedgerSMB/Report/Budget/Search.pm:84 LedgerSMB/Report/Budget/Variance.pm:68
 #: LedgerSMB/Report/Budget/Variance.pm:115 LedgerSMB/Report/COA.pm:94
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:71
-#: LedgerSMB/Report/co/Caja_Diaria.pm:72 LedgerSMB/Report/Contact/History.pm:83
+#: LedgerSMB/Report/co/Caja_Diaria.pm:72
+#: LedgerSMB/Report/Contact/History.pm:83
 #: LedgerSMB/Report/Contact/Search.pm:73 LedgerSMB/Report/File/Incoming.pm:50
 #: LedgerSMB/Report/File/Internal.pm:48 LedgerSMB/Report/GL.pm:100
 #: LedgerSMB/Report/Inventory/Activity.pm:80
@@ -2612,14 +2627,17 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: LedgerSMB/Report/Inventory/History.pm:122
 #: LedgerSMB/Report/Inventory/Search.pm:198
-#: LedgerSMB/Report/Listings/Asset.pm:86 LedgerSMB/Report/Listings/Asset.pm:120
+#: LedgerSMB/Report/Listings/Asset.pm:86
+#: LedgerSMB/Report/Listings/Asset.pm:120
 #: LedgerSMB/Report/Listings/Business_Type.pm:47
 #: LedgerSMB/Report/Listings/Business_Unit.pm:60
 #: LedgerSMB/Report/Listings/GIFI.pm:49
-#: LedgerSMB/Report/Listings/Language.pm:50 LedgerSMB/Report/Listings/SIC.pm:48
+#: LedgerSMB/Report/Listings/Language.pm:50
+#: LedgerSMB/Report/Listings/SIC.pm:48
 #: LedgerSMB/Report/Listings/TemplateTrans.pm:64
-#: LedgerSMB/Report/Listings/Warehouse.pm:39 LedgerSMB/Report/PNL/Product.pm:83
-#: LedgerSMB/Report/Timecards.pm:105 LedgerSMB/Report/Timecards.pm:118
+#: LedgerSMB/Report/Listings/Warehouse.pm:39
+#: LedgerSMB/Report/PNL/Product.pm:83 LedgerSMB/Report/Timecards.pm:105
+#: LedgerSMB/Report/Timecards.pm:118
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:113
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
 #: LedgerSMB/Report/Unapproved/Drafts.pm:100 LedgerSMB/Scripts/asset.pm:390
@@ -2658,9 +2676,9 @@ msgstr ""
 #: templates/demo/work_order.html:130 templates/demo/work_order.tex:125
 #: templates/xedemo/bin_list.html:148 templates/xedemo/bin_list.tex:106
 #: templates/xedemo/invoice.html:136 templates/xedemo/invoice.tex:135
-#: templates/xedemo/packing_list.html:120 templates/xedemo/packing_list.tex:114
-#: templates/xedemo/pick_list.html:112 templates/xedemo/pick_list.tex:100
-#: templates/xedemo/printPayment.html:47
+#: templates/xedemo/packing_list.html:120
+#: templates/xedemo/packing_list.tex:114 templates/xedemo/pick_list.html:112
+#: templates/xedemo/pick_list.tex:100 templates/xedemo/printPayment.html:47
 #: templates/xedemo/product_receipt.html:128
 #: templates/xedemo/purchase_order.html:128
 #: templates/xedemo/request_quotation.html:141
@@ -2683,8 +2701,10 @@ msgstr ""
 #: UI/reconciliation/report.html:79 UI/reconciliation/report.html:142
 #: UI/reconciliation/report.html:201 UI/Reports/filters/budget_search.html:26
 #: UI/Reports/filters/cogs_lines.html:19 UI/Reports/filters/gl.html:78
-#: UI/Reports/filters/gl.html:184 UI/Reports/filters/inventory_activity.html:19
-#: UI/Reports/filters/invoice_search.html:138 UI/Reports/filters/orders.html:68
+#: UI/Reports/filters/gl.html:184
+#: UI/Reports/filters/inventory_activity.html:19
+#: UI/Reports/filters/invoice_search.html:138
+#: UI/Reports/filters/orders.html:68
 #: UI/Reports/filters/purchase_history.html:251
 #: UI/Reports/filters/search_goods.html:19
 #: UI/Reports/filters/search_goods.html:200
@@ -2791,7 +2811,7 @@ msgstr "Viga nulliga jagamisel"
 
 #: bin/io.pl:2407
 msgid "Do not keep field empty [_1]"
-msgstr ""
+msgstr "Ära jära lahtrit tühjaks [_1]"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:77
 msgid "Document"
@@ -2889,7 +2909,7 @@ msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:242
 msgid "Duplicate employee numbers"
-msgstr ""
+msgstr "Töötaja number topelt"
 
 #: bin/am.pl:872 bin/arap.pl:411 bin/is.pl:685 bin/is.pl:1126 bin/oe.pl:726
 #: bin/oe.pl:948 bin/oe.pl:2094 UI/io-email.html:16
@@ -3131,7 +3151,8 @@ msgstr "Töötaja otsing"
 
 #: LedgerSMB/Upgrade_Tests.pm:224
 msgid ""
-"Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
+"Employee name doesn't meet minimal requirements (e.g. non-empty, "
+"alphanumeric)"
 msgstr ""
 
 #: UI/lib/report_base.html:268 sql/Pg-database.sql:2812
@@ -3150,11 +3171,11 @@ msgstr "Töötajad"
 #: UI/Contact/divs/credit.html:25 UI/Contact/divs/credit.html:112
 #: UI/Contact/divs/employee.html:173 UI/Reports/filters/budget_search.html:48
 msgid "End Date"
-msgstr ""
+msgstr "Lõpp kuupäev"
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
 msgid "End Date:"
-msgstr ""
+msgstr "Lõpp kuupäev:"
 
 #: UI/Reports/filters/trial_balance.html:11
 msgid "Ending"
@@ -3186,7 +3207,7 @@ msgstr ""
 
 #: UI/setup/new_user.html:8
 msgid "Enter User"
-msgstr ""
+msgstr "Sisesta kasutaja"
 
 #: LedgerSMB/Upgrade_Tests.pm:210
 msgid "Enter employee numbers where they are missing"
@@ -3235,7 +3256,7 @@ msgstr ""
 
 #: bin/io.pl:1445 bin/is.pl:1100
 msgid "Envelope"
-msgstr ""
+msgstr "Ümbrik"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:237 LedgerSMB/Report/Balance_Sheet.pm:239
 #: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
@@ -3273,7 +3294,7 @@ msgstr ""
 
 #: UI/payments/check_job.html:30
 msgid "Error:"
-msgstr ""
+msgstr "Viga:"
 
 #: LedgerSMB/DBObject/Account.pm:95
 msgid "Error: Cannot include summary account in other dropdown menus"
@@ -3322,7 +3343,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:96
 msgid "Expected"
-msgstr ""
+msgstr "Eeldatud"
 
 #: bin/ic.pl:666 UI/accounts/edit.html:206 UI/accounts/edit.html:418
 #: UI/accounts/edit.html:457 UI/Reports/filters/gl.html:151
@@ -3375,17 +3396,17 @@ msgstr "Faks"
 #: templates/xedemo/ar_transaction.html:53
 #: templates/xedemo/ar_transaction.tex:27 templates/xedemo/letterhead.tex:14
 msgid "Fax:"
-msgstr ""
+msgstr "Faks:"
 
 #: templates/demo/ap_transaction.html:54 templates/demo/ar_transaction.tex:65
 #: templates/demo/bin_list.html:59 templates/demo/bin_list.html:92
 #: templates/demo/invoice.html:53 templates/demo/invoice.html:86
 #: templates/demo/letterhead.html:22 templates/demo/packing_list.html:60
 #: templates/demo/pick_list.html:59 templates/demo/product_receipt.html:58
-#: templates/demo/product_receipt.html:86 templates/demo/product_receipt.tex:56
-#: templates/demo/product_receipt.tex:91 templates/demo/purchase_order.html:58
-#: templates/demo/purchase_order.html:86 templates/demo/purchase_order.tex:56
-#: templates/demo/purchase_order.tex:91
+#: templates/demo/product_receipt.html:86
+#: templates/demo/product_receipt.tex:56 templates/demo/product_receipt.tex:91
+#: templates/demo/purchase_order.html:58 templates/demo/purchase_order.html:86
+#: templates/demo/purchase_order.tex:56 templates/demo/purchase_order.tex:91
 #: templates/demo/request_quotation.html:59
 #: templates/demo/request_quotation.html:87
 #: templates/demo/request_quotation.tex:56
@@ -3447,7 +3468,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:62 templates/xedemo/work_order.html:55
 #: templates/xedemo/work_order.html:83 templates/xedemo/work_order.tex:65
 msgid "Fax: [_1]"
-msgstr ""
+msgstr "Faks: [_1]"
 
 #: templates/demo_with_images/work_order.tex:100
 #: templates/demo/work_order.tex:100 templates/xedemo/work_order.tex:100
@@ -3568,7 +3589,7 @@ msgstr "Valuutakursside vahe kahjum"
 
 #: UI/Reports/filters/taxforms.html:28
 msgid "Form"
-msgstr ""
+msgstr "Vorm"
 
 #: LedgerSMB/Report/Taxform/List.pm:48
 msgid "Form Name"
@@ -3580,7 +3601,7 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:94
 msgid "Forty"
-msgstr ""
+msgstr "nelikümmend"
 
 #: LedgerSMB/Num2text.pm:65
 msgid "Four"
@@ -3597,10 +3618,10 @@ msgstr "Reede"
 #: bin/aa.pl:1774 bin/ic.pl:1141 bin/oe.pl:2295 bin/pe.pl:855
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
 #: templates/demo_with_images/bin_list.html:28
-#: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
-#: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:23
-#: UI/asset/search_reports.html:25 UI/bp-search.html:27
-#: UI/ca-list-selector.html:31 UI/lib/report_base.html:96
+#: templates/demo_with_images/bin_list.tex:35
+#: templates/xedemo/bin_list.html:28 templates/xedemo/bin_list.tex:35
+#: UI/asset/begin_approval.html:23 UI/asset/search_reports.html:25
+#: UI/bp-search.html:27 UI/ca-list-selector.html:31 UI/lib/report_base.html:96
 #: UI/lib/report_base.html:172 UI/pos-receipts.html:16
 #: UI/rc-reconciliation.html:16 UI/Reports/co/filter_bm.html:21
 #: UI/Reports/co/filter_cd.html:39 UI/Reports/filters/contact_search.html:114
@@ -3625,7 +3646,7 @@ msgstr ""
 #: LedgerSMB/Report/Taxform/Detail.pm:108
 #: LedgerSMB/Report/Taxform/Summary.pm:106 LedgerSMB/Report/Timecards.pm:159
 msgid "From Date"
-msgstr ""
+msgstr "Alates"
 
 #: UI/asset/import_asset.html:51 UI/import_csv/import_csv.html:52
 #: UI/import_csv/import_inventory_csv.html:71
@@ -3638,18 +3659,18 @@ msgstr "Laost"
 
 #: LedgerSMB/Report/Trial_Balance.pm:215
 msgid "From date"
-msgstr ""
+msgstr "Alates"
 
 #: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:173
 #: UI/Reports/filters/income_statement.html:256
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Full"
-msgstr ""
+msgstr "Kõik"
 
 #: LedgerSMB/Scripts/setup.pm:923 LedgerSMB/Scripts/setup.pm:981
 #: LedgerSMB/Scripts/setup.pm:1186
 msgid "Full Permissions"
-msgstr ""
+msgstr "Kõik õigused"
 
 #: LedgerSMB/Report/COA.pm:100 LedgerSMB/Report/GL.pm:157
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
@@ -3667,7 +3688,7 @@ msgstr "GIFI"
 #: LedgerSMB/Upgrade_Tests.pm:369 LedgerSMB/Upgrade_Tests.pm:386
 #: LedgerSMB/Upgrade_Tests.pm:404
 msgid "GIFI accounts not in \"gifi\" table"
-msgstr ""
+msgstr "GIFI kontod puuduvad \"gifi\" tabelis"
 
 #: bin/am.pl:222
 msgid "GIFI deleted!"
@@ -3712,11 +3733,11 @@ msgstr ""
 
 #: LedgerSMB/Report/GL.pm:195
 msgid "General Ledger Report"
-msgstr ""
+msgstr "Pearaamatu aruanne"
 
 #: UI/Reports/filters/gl.html:16
 msgid "General Ledger Reports"
-msgstr ""
+msgstr "Pearaamatu aruanded"
 
 #: LedgerSMB/Scripts/order.pm:115 UI/Reports/aging_report.html:99
 #: sql/Pg-database.sql:2784 sql/Pg-database.sql:2822
@@ -3725,7 +3746,7 @@ msgstr "Genereeri"
 
 #: UI/Contact/divs/company.html:146 UI/Contact/divs/person.html:168
 msgid "Generate Control Code"
-msgstr ""
+msgstr "Genereeri kontrollkood"
 
 #: bin/oe.pl:2680
 msgid "Generate Orders"
@@ -3822,7 +3843,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:35
 msgid "History"
-msgstr ""
+msgstr "Ajalugu"
 
 #: sql/Pg-database.sql:820
 msgid "Home Phone"
@@ -3838,8 +3859,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
-#: templates/demo_with_images/timecard.tex:31 templates/xedemo/timecard.html:60
-#: templates/xedemo/timecard.tex:31
+#: templates/demo_with_images/timecard.tex:31
+#: templates/xedemo/timecard.html:60 templates/xedemo/timecard.tex:31
 msgid "Hours"
 msgstr ""
 
@@ -3854,25 +3875,26 @@ msgstr "sada"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:192
 #: LedgerSMB/Report/Invoices/Transactions.pm:255
 #: LedgerSMB/Report/Listings/Asset_Class.pm:64
-#: LedgerSMB/Report/Listings/TemplateTrans.pm:55 LedgerSMB/Report/Orders.pm:209
-#: LedgerSMB/Report/Timecards.pm:109
+#: LedgerSMB/Report/Listings/TemplateTrans.pm:55
+#: LedgerSMB/Report/Orders.pm:209 LedgerSMB/Report/Timecards.pm:109
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:92
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
 #: LedgerSMB/Report/Unapproved/Drafts.pm:84 LedgerSMB/Scripts/asset.pm:525
 #: templates/demo/timecard.html:35 templates/demo/timecard.tex:23
 #: templates/demo_with_images/timecard.html:35
-#: templates/demo_with_images/timecard.tex:23 templates/xedemo/timecard.html:35
-#: templates/xedemo/timecard.tex:23 UI/business_units/list_classes.html:10
-#: UI/Reports/filters/gl.html:163
+#: templates/demo_with_images/timecard.tex:23
+#: templates/xedemo/timecard.html:35 templates/xedemo/timecard.tex:23
+#: UI/business_units/list_classes.html:10 UI/Reports/filters/gl.html:163
 #: UI/Reports/filters/invoice_outstanding.html:130
 #: UI/Reports/filters/invoice_search.html:223
-#: UI/Reports/filters/orders.html:112 UI/rp-search-generate_tax_report.html:111
+#: UI/Reports/filters/orders.html:112
+#: UI/rp-search-generate_tax_report.html:111
 msgid "ID"
 msgstr "ID"
 
 #: sql/Pg-database.sql:817
 msgid "IRC"
-msgstr ""
+msgstr "IRC"
 
 #: templates/demo/printPayment.html:87
 #: templates/demo_with_images/printPayment.html:87
@@ -3947,8 +3969,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:29
 #: templates/demo_with_images/timecard.html:52
-#: templates/demo_with_images/timecard.tex:29 templates/xedemo/timecard.html:52
-#: templates/xedemo/timecard.tex:29
+#: templates/demo_with_images/timecard.tex:29
+#: templates/xedemo/timecard.html:52 templates/xedemo/timecard.tex:29
 msgid "In"
 msgstr ""
 
@@ -3972,7 +3994,8 @@ msgstr "Kaasa tasumine"
 #: UI/Reports/co/filter_cd.html:54 UI/Reports/filters/aging.html:71
 #: UI/Reports/filters/gl.html:109
 #: UI/Reports/filters/invoice_outstanding.html:98
-#: UI/Reports/filters/invoice_search.html:191 UI/Reports/filters/orders.html:79
+#: UI/Reports/filters/invoice_search.html:191
+#: UI/Reports/filters/orders.html:79
 #: UI/Reports/filters/purchase_history.html:163
 #: UI/Reports/filters/search_goods.html:175
 #: UI/rp-search-generate_balance_sheet.html:70
@@ -4036,18 +4059,18 @@ msgstr "Komponendid"
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
 msgid ""
-"Interest on overdue amounts will acrue at the rate of 12% per annum starting "
-"from [_1] until paid in full. Items returned are subject to a 10% restocking "
-"charge."
+"Interest on overdue amounts will acrue at the rate of 12% per annum starting"
+" from [_1] until paid in full. Items returned are subject to a 10% "
+"restocking charge."
 msgstr ""
 
 #: LedgerSMB.pm:753
 msgid "Internal Database Error"
-msgstr ""
+msgstr "Andmebaasi sisene viga"
 
 #: LedgerSMB/DBObject/Account.pm:99
 msgid "Internal Database Error."
-msgstr ""
+msgstr "Andmebaasi sisene viga."
 
 #: LedgerSMB/Report/File/Internal.pm:75
 msgid "Internal Files"
@@ -4072,7 +4095,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/import_csv.pm:430
 msgid "Invalid file"
-msgstr ""
+msgstr "Vigane fail"
 
 #: bin/am.pl:1439 bin/am.pl:1479
 msgid "Invalid redirect"
@@ -4082,7 +4105,8 @@ msgstr ""
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
-#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:84 sql/Pg-database.sql:2948
+#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:84
+#: sql/Pg-database.sql:2948
 msgid "Inventory"
 msgstr "Ladu"
 
@@ -4192,7 +4216,7 @@ msgstr "Arve loonud"
 
 #: bin/aa.pl:1393
 msgid "Invoice Created Date missing!"
-msgstr ""
+msgstr "Arve koostamise kuupäev puudub!"
 
 #: bin/aa.pl:690 bin/aa.pl:1702 bin/ir.pl:583 bin/is.pl:629
 #: LedgerSMB/Report/Invoices/COGS.pm:94 LedgerSMB/Report/Invoices/COGS.pm:99
@@ -4213,11 +4237,11 @@ msgstr "Arve nr"
 
 #: bin/aa.pl:677 bin/aa.pl:1581 bin/aa.pl:1695 bin/ir.pl:569 bin/is.pl:616
 #: LedgerSMB/Report/Contact/History.pm:68
-#: LedgerSMB/Report/Contact/Purchase.pm:65 LedgerSMB/Report/Invoices/COGS.pm:88
-#: LedgerSMB/Report/PNL/Invoice.pm:87 LedgerSMB/Report/Taxform/Detail.pm:86
-#: UI/asset/edit_asset.html:195 UI/asset/search_asset.html:174
-#: UI/orders/order.html:78 UI/payments/payments_detail.html:309
-#: UI/payments/use_overpayment2.html:143
+#: LedgerSMB/Report/Contact/Purchase.pm:65
+#: LedgerSMB/Report/Invoices/COGS.pm:88 LedgerSMB/Report/PNL/Invoice.pm:87
+#: LedgerSMB/Report/Taxform/Detail.pm:86 UI/asset/edit_asset.html:195
+#: UI/asset/search_asset.html:174 UI/orders/order.html:78
+#: UI/payments/payments_detail.html:309 UI/payments/use_overpayment2.html:143
 #: UI/Reports/filters/invoice_outstanding.html:136
 #: UI/Reports/filters/invoice_search.html:87
 #: UI/Reports/filters/invoice_search.html:229
@@ -4235,15 +4259,16 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:76
 #: UI/Reports/filters/invoice_search.html:169
 msgid "Invoice Status"
-msgstr ""
+msgstr "Arve staatus"
 
-#: LedgerSMB/Report/Taxform/Detail.pm:94 LedgerSMB/Report/Taxform/Summary.pm:91
+#: LedgerSMB/Report/Taxform/Detail.pm:94
+#: LedgerSMB/Report/Taxform/Summary.pm:91
 msgid "Invoice Sum"
-msgstr ""
+msgstr "Arve summa"
 
 #: UI/payments/payments_detail.html:216
 msgid "Invoice Total"
-msgstr ""
+msgstr "Arve kokku"
 
 #: sql/Pg-database.sql:2798 sql/Pg-database.sql:2801
 msgid "Invoice Vouchers"
@@ -4251,11 +4276,11 @@ msgstr ""
 
 #: UI/payments/use_overpayment2.html:145
 msgid "Invoice date"
-msgstr ""
+msgstr "Arve kuupäev"
 
 #: UI/payments/use_overpayment2.html:146
 msgid "Invoice due"
-msgstr ""
+msgstr "Maksetähtaeg"
 
 #: LedgerSMB/DBObject/Asset.pm:289
 msgid "Invoice not found"
@@ -4263,7 +4288,7 @@ msgstr "Arvet ei leitud"
 
 #: UI/Reports/filters/purchase_history.html:173
 msgid "Invoices"
-msgstr ""
+msgstr "Arved"
 
 #: bin/ic.pl:1266 bin/io.pl:226 templates/demo/bin_list.html:146
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:134
@@ -4293,9 +4318,9 @@ msgstr ""
 #: templates/demo/work_order.html:128 templates/demo/work_order.tex:124
 #: templates/xedemo/bin_list.html:146 templates/xedemo/bin_list.tex:105
 #: templates/xedemo/invoice.html:134 templates/xedemo/invoice.tex:133
-#: templates/xedemo/packing_list.html:118 templates/xedemo/packing_list.tex:113
-#: templates/xedemo/pick_list.html:110 templates/xedemo/pick_list.tex:99
-#: templates/xedemo/product_receipt.html:126
+#: templates/xedemo/packing_list.html:118
+#: templates/xedemo/packing_list.tex:113 templates/xedemo/pick_list.html:110
+#: templates/xedemo/pick_list.tex:99 templates/xedemo/product_receipt.html:126
 #: templates/xedemo/purchase_order.html:126
 #: templates/xedemo/request_quotation.html:139
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
@@ -4328,10 +4353,10 @@ msgstr ""
 #: templates/demo_with_images/packing_list.html:176
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
 msgid ""
-"Items returned are subject to a 10% restocking charge. A return authorization "
-"must be obtained from [_1] before goods are returned. Returns must be shipped "
-"prepaid and properly insured. [_1] will not be responsible for damages during "
-"transit."
+"Items returned are subject to a 10% restocking charge. A return "
+"authorization must be obtained from [_1] before goods are returned. Returns "
+"must be shipped prepaid and properly insured. [_1] will not be responsible "
+"for damages during transit."
 msgstr ""
 
 #: bin/aa.pl:83 bin/gl.pl:79 bin/io.pl:79 LedgerSMB/App_State.pm:237
@@ -4357,14 +4382,14 @@ msgstr ""
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
-#: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
-#: templates/xedemo/timecard.tex:37
+#: templates/demo_with_images/timecard.tex:37
+#: templates/xedemo/timecard.html:81 templates/xedemo/timecard.tex:37
 msgid "Job/Project #"
 msgstr ""
 
 #: sql/Pg-database.sql:1072 sql/Pg-database.sql:2833
 msgid "Journal Entry"
-msgstr ""
+msgstr "Pearaamatu kanded"
 
 #: UI/setup/complete.html:24 UI/setup/confirm_operation.html:108
 msgid "Journal Lines"
@@ -4402,11 +4427,11 @@ msgstr "LaTeX dokumendipõhjad"
 #: LedgerSMB/Report/Payroll/Income_Types.pm:38
 #: UI/business_units/list_classes.html:11
 msgid "Label"
-msgstr ""
+msgstr "Silt"
 
 #: UI/asset/edit_class.html:18 UI/asset/search_class.html:13
 msgid "Label:"
-msgstr ""
+msgstr "Silt:"
 
 #: bin/ic.pl:698
 msgid "Labor/Overhead"
@@ -4414,8 +4439,8 @@ msgstr "Tööjõu-/üldkulu"
 
 #: templates/demo/timecard.html:89 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:89
-#: templates/demo_with_images/timecard.tex:39 templates/xedemo/timecard.html:89
-#: templates/xedemo/timecard.tex:39
+#: templates/demo_with_images/timecard.tex:39
+#: templates/xedemo/timecard.html:89 templates/xedemo/timecard.tex:39
 msgid "Labor/Service Code"
 msgstr ""
 
@@ -4457,7 +4482,7 @@ msgstr "Perekonnanimi"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:149
 msgid "Last Updated"
-msgstr ""
+msgstr "Viimati uuendatud"
 
 #: UI/setup/new_user.html:78
 msgid "Last name"
@@ -4482,11 +4507,11 @@ msgstr ""
 
 #: UI/setup/complete.html:17 UI/setup/confirm_operation.html:101
 msgid "LedgerSMB Database Statistics"
-msgstr ""
+msgstr "LedgerSMB andmebaasi statistika"
 
 #: UI/login.html:29 UI/menu/expanding.html:45
 msgid "LedgerSMB [_1]"
-msgstr ""
+msgstr "LedgerSMB [_1]"
 
 #: UI/reconciliation/report.html:48
 msgid "Less Outstanding Checks:"
@@ -4494,7 +4519,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2963 sql/Pg-database.sql:2978
 msgid "Letterhead"
-msgstr ""
+msgstr "Kirjapäis"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:228 LedgerSMB/Report/Balance_Sheet.pm:230
 #: LedgerSMB/Report/PNL.pm:205 LedgerSMB/Report/PNL.pm:207
@@ -4535,7 +4560,7 @@ msgstr "Ettevõttede nimekiri"
 
 #: sql/Pg-database.sql:2892
 msgid "List Classes"
-msgstr ""
+msgstr "Klasside nimekiri"
 
 #: sql/Pg-database.sql:2913
 msgid "List GIFI"
@@ -4580,7 +4605,7 @@ msgstr "Ladude nimekiri"
 
 #: LedgerSMB/Report/Listings/Business_Type.pm:73
 msgid "List of Business Types"
-msgstr ""
+msgstr "Ettevõtete tüüpide nimekiri"
 
 #: UI/setup/confirm_operation.html:70 UI/setup/template_info.html:26
 msgid "Load Templates"
@@ -4609,7 +4634,7 @@ msgstr ""
 
 #: UI/menu/expanding.html:47
 msgid "Logged in as [_1]"
-msgstr ""
+msgstr "Sisse logitud kasutajaga [_1]"
 
 #: UI/menu/expanding.html:46
 msgid "Logged into [_1]"
@@ -4621,7 +4646,7 @@ msgstr ""
 
 #: UI/login.html:72
 msgid "Logging in.  Please wait."
-msgstr ""
+msgstr "Sisse logimine. Palun oodake."
 
 #: old-handler.pl:193 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
@@ -4629,7 +4654,7 @@ msgstr "Logi sisse"
 
 #: LedgerSMB/Scripts/setup.pm:790
 msgid "Login?"
-msgstr ""
+msgstr "Login välja?"
 
 #: sql/Pg-database.sql:2931
 msgid "Logout"
@@ -4637,7 +4662,7 @@ msgstr "Logi välja"
 
 #: UI/logout.html:28
 msgid "Logout Successful"
-msgstr ""
+msgstr "Välja logimine õnnestus"
 
 #: UI/accounts/edit.html:475
 msgid "Loss"
@@ -4663,11 +4688,11 @@ msgstr "Tootja"
 
 #: LedgerSMB/Upgrade_Tests.pm:244
 msgid "Make employee numbers unique"
-msgstr ""
+msgstr "Tee töötaja number unikaalseks"
 
 #: LedgerSMB/Upgrade_Tests.pm:277
 msgid "Make invoice numbers unique"
-msgstr ""
+msgstr "Tee arve number unikaalseks"
 
 #: LedgerSMB/Upgrade_Tests.pm:262
 msgid "Make non-obsolete partnumbers unique"
@@ -4689,8 +4714,9 @@ msgid "Manage Users"
 msgstr "Kasutajate haldamine"
 
 #: bin/aa.pl:1571 LedgerSMB/Report/Invoices/Outstanding.pm:267
-#: LedgerSMB/Report/Invoices/Transactions.pm:301 LedgerSMB/Report/Orders.pm:267
-#: UI/Contact/divs/employee.html:94 UI/Contact/divs/employee.html:129
+#: LedgerSMB/Report/Invoices/Transactions.pm:301
+#: LedgerSMB/Report/Orders.pm:267 UI/Contact/divs/employee.html:94
+#: UI/Contact/divs/employee.html:129
 #: UI/Reports/filters/invoice_outstanding.html:183
 #: UI/Reports/filters/invoice_search.html:276
 msgid "Manager"
@@ -4702,7 +4728,7 @@ msgstr "Juhataja:"
 
 #: bin/ir.pl:716 bin/is.pl:517 bin/is.pl:813
 msgid "Manual"
-msgstr ""
+msgstr "Manuaalne"
 
 #: bin/aa.pl:85 bin/gl.pl:81 bin/io.pl:81 LedgerSMB/App_State.pm:239
 msgid "Mar"
@@ -4762,7 +4788,7 @@ msgstr "Meetod"
 
 #: UI/asset/edit_asset.html:100
 msgid "Method Default"
-msgstr ""
+msgstr "Vaikimisi meetod"
 
 #: bin/ic.pl:503 LedgerSMB/Report/Inventory/Search.pm:266
 #: UI/Reports/filters/search_goods.html:73
@@ -4817,9 +4843,9 @@ msgid "Mon"
 msgstr "Esmaspäev"
 
 #: bin/aa.pl:1661 bin/am.pl:824 bin/pe.pl:841 LedgerSMB/DBObject/Date.pm:82
-#: UI/bp-search.html:44 UI/lib/report_base.html:143 UI/lib/report_base.html:224
-#: UI/pos-receipts.html:39 UI/rc-reconciliation.html:47
-#: UI/Reports/co/filter_bm.html:58
+#: UI/bp-search.html:44 UI/lib/report_base.html:143
+#: UI/lib/report_base.html:224 UI/pos-receipts.html:39
+#: UI/rc-reconciliation.html:47 UI/Reports/co/filter_bm.html:58
 #: UI/rp-search-generate_income_statement.html:40
 #: UI/rp-search-generate_tax_report.html:36
 msgid "Month"
@@ -4926,7 +4952,8 @@ msgstr "Järgmine kuupäev"
 msgid "Next Number"
 msgstr "Järgmine number"
 
-#: LedgerSMB/Scripts/configuration.pm:98 LedgerSMB/Scripts/configuration.pm:297
+#: LedgerSMB/Scripts/configuration.pm:98
+#: LedgerSMB/Scripts/configuration.pm:297
 msgid "Next in Sequence"
 msgstr "Järgmine järjekorras"
 
@@ -4958,7 +4985,7 @@ msgstr ""
 
 #: LedgerSMB/DBObject/TransTemplate.pm:34
 msgid "No Account id for [_1]"
-msgstr ""
+msgstr "Kontol puudub id [_1]"
 
 #: LedgerSMB/Report/File.pm:49
 msgid "No File Class Specified"
@@ -5156,11 +5183,13 @@ msgstr ""
 #: templates/demo/invoice.tex:139 templates/demo/packing_list.html:119
 #: templates/demo/pick_list.html:111 templates/demo/product_receipt.html:125
 #: templates/demo/product_receipt.tex:117
-#: templates/demo/purchase_order.html:127 templates/demo/purchase_order.tex:117
+#: templates/demo/purchase_order.html:127
+#: templates/demo/purchase_order.tex:117
 #: templates/demo/request_quotation.html:140
-#: templates/demo/request_quotation.tex:122 templates/demo/sales_order.html:129
-#: templates/demo/sales_quotation.html:71
-#: templates/demo/sales_quotation.html:98 templates/demo/sales_quotation.tex:87
+#: templates/demo/request_quotation.tex:122
+#: templates/demo/sales_order.html:129 templates/demo/sales_quotation.html:71
+#: templates/demo/sales_quotation.html:98
+#: templates/demo/sales_quotation.tex:87
 #: templates/demo_with_images/bin_list.html:147
 #: templates/demo_with_images/invoice.html:137
 #: templates/demo_with_images/invoice.tex:139
@@ -5189,8 +5218,9 @@ msgstr ""
 #: templates/xedemo/sales_order.html:129
 #: templates/xedemo/sales_quotation.html:71
 #: templates/xedemo/sales_quotation.html:98
-#: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:129
-#: UI/am-taxes.html:14 UI/Contact/divs/credit.html:20 UI/io-email.html:99
+#: templates/xedemo/sales_quotation.tex:88
+#: templates/xedemo/work_order.html:129 UI/am-taxes.html:14
+#: UI/Contact/divs/credit.html:20 UI/io-email.html:99
 msgid "Number"
 msgstr "Kood"
 
@@ -5280,11 +5310,11 @@ msgstr ""
 
 #: UI/Reports/filters/contact_search.html:67
 msgid "Only Users"
-msgstr ""
+msgstr "Ainult kasutajatele"
 
 #: UI/Reports/filters/contact_search.html:70
 msgid "Only for Employees"
-msgstr ""
+msgstr "Ainult töötajatele"
 
 #: bin/aa.pl:1609 bin/oe.pl:371 UI/Reports/filters/invoice_search.html:203
 #: UI/Reports/filters/orders.html:91
@@ -5295,13 +5325,13 @@ msgstr "Avatud"
 
 #: UI/logout.html:15
 msgid ""
-"Opera detected.  To complete this logout, please close your browser window or "
-"clear private/authentication information"
+"Opera detected.  To complete this logout, please close your browser window "
+"or clear private/authentication information"
 msgstr ""
 
 #: UI/accounts/edit.html:216
 msgid "Options"
-msgstr ""
+msgstr "Valikud"
 
 #: UI/file/attachment_screen.html:35
 msgid "Or"
@@ -5320,8 +5350,9 @@ msgstr "Tellimus"
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
 #: templates/demo/bin_list.html:108 templates/demo/invoice.html:109
 #: templates/demo/packing_list.html:79 templates/demo/pick_list.html:78
-#: templates/demo/purchase_order.html:102 templates/demo/purchase_order.tex:105
-#: templates/demo/sales_order.html:102 templates/demo/sales_order.tex:105
+#: templates/demo/purchase_order.html:102
+#: templates/demo/purchase_order.tex:105 templates/demo/sales_order.html:102
+#: templates/demo/sales_order.tex:105
 #: templates/demo_with_images/ap_transaction.html:88
 #: templates/demo_with_images/ap_transaction.tex:66
 #: templates/demo_with_images/ar_transaction.html:87
@@ -5373,8 +5404,8 @@ msgstr "Tellimuse sisestamine"
 #: bin/oe.pl:457 bin/oe.pl:1938 LedgerSMB/Report/Contact/Purchase.pm:69
 #: UI/orders/order.html:84 UI/Reports/filters/invoice_outstanding.html:143
 #: UI/Reports/filters/invoice_search.html:97
-#: UI/Reports/filters/invoice_search.html:236 UI/Reports/filters/orders.html:38
-#: UI/Reports/filters/orders.html:119
+#: UI/Reports/filters/invoice_search.html:236
+#: UI/Reports/filters/orders.html:38 UI/Reports/filters/orders.html:119
 msgid "Order Number"
 msgstr "Tellimuse number"
 
@@ -5398,7 +5429,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Inventory/History.pm:138
 msgid "Order/Invoice"
-msgstr ""
+msgstr "Tellimus/Arve"
 
 #: UI/am-taxes.html:16 UI/business_units/list_classes.html:13
 msgid "Ordering"
@@ -5407,7 +5438,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:109
 msgid "Orders"
-msgstr ""
+msgstr "Tellimused"
 
 #: bin/pe.pl:1348
 msgid "Orders generated!"
@@ -5433,8 +5464,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
-#: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
-#: templates/xedemo/timecard.tex:30
+#: templates/demo_with_images/timecard.tex:30
+#: templates/xedemo/timecard.html:56 templates/xedemo/timecard.tex:30
 msgid "Out"
 msgstr ""
 
@@ -5494,8 +5525,8 @@ msgstr "Ostutellimus"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:205 LedgerSMB/Report/Orders.pm:247
 #: UI/orders/order.html:102 UI/Reports/filters/invoice_outstanding.html:149
 #: UI/Reports/filters/invoice_search.html:107
-#: UI/Reports/filters/invoice_search.html:242 UI/Reports/filters/orders.html:48
-#: UI/Reports/filters/orders.html:132
+#: UI/Reports/filters/invoice_search.html:242
+#: UI/Reports/filters/orders.html:48 UI/Reports/filters/orders.html:132
 msgid "PO Number"
 msgstr "Ostutellimuse Number"
 
@@ -5534,8 +5565,9 @@ msgstr "Saatelehe number puudub!"
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
 #: LedgerSMB/Scripts/payment.pm:808 templates/demo/invoice.html:185
 #: templates/demo/invoice.tex:175 templates/demo_with_images/invoice.html:188
-#: templates/demo_with_images/invoice.tex:174 templates/xedemo/invoice.html:186
-#: templates/xedemo/invoice.tex:169 UI/payments/payments_detail.html:312
+#: templates/demo_with_images/invoice.tex:174
+#: templates/xedemo/invoice.html:186 templates/xedemo/invoice.tex:169
+#: UI/payments/payments_detail.html:312
 #: UI/Reports/filters/invoice_outstanding.html:226
 #: UI/Reports/filters/invoice_search.html:317
 msgid "Paid"
@@ -5585,10 +5617,10 @@ msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
-#: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:114
-#: LedgerSMB/Report/Timecards.pm:163 UI/Contact/pricelist.csv:7
-#: UI/Contact/pricelist.html:22 UI/Contact/pricelist.tex:12
-#: UI/inventory/adjustment_entry.html:27
+#: LedgerSMB/Report/Inventory/Activity.pm:130
+#: LedgerSMB/Report/Timecards.pm:114 LedgerSMB/Report/Timecards.pm:163
+#: UI/Contact/pricelist.csv:7 UI/Contact/pricelist.html:22
+#: UI/Contact/pricelist.tex:12 UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/invoice_search.html:117
 #: UI/Reports/filters/timecards.html:10 UI/timecards/timecard.html:33
 #: UI/timecards/timecard-week.html:89
@@ -5706,9 +5738,11 @@ msgid "Payment due by [_1]."
 msgstr ""
 
 #: bin/aa.pl:869 bin/ir.pl:914 bin/is.pl:1002
-#: templates/demo/ap_transaction.html:179 templates/demo/ap_transaction.tex:109
-#: templates/demo/ar_transaction.html:178 templates/demo/ar_transaction.tex:126
-#: templates/demo/invoice.html:236 templates/demo/invoice.tex:207
+#: templates/demo/ap_transaction.html:179
+#: templates/demo/ap_transaction.tex:109
+#: templates/demo/ar_transaction.html:178
+#: templates/demo/ar_transaction.tex:126 templates/demo/invoice.html:236
+#: templates/demo/invoice.tex:207
 #: templates/demo_with_images/ap_transaction.html:179
 #: templates/demo_with_images/ap_transaction.tex:109
 #: templates/demo_with_images/ar_transaction.html:178
@@ -5752,7 +5786,7 @@ msgstr "Periood"
 
 #: UI/Reports/filters/income_statement.html:83
 msgid "Period selection"
-msgstr ""
+msgstr "Perioodi valimine"
 
 #: UI/Reports/filters/balance_sheet.html:78
 #: UI/Reports/filters/income_statement.html:116
@@ -5810,7 +5844,7 @@ msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:601
 msgid "Please make sure all employees have an employee number"
-msgstr ""
+msgstr "Veendu, et kõigil töötajatel oleksid numbrid"
 
 #: LedgerSMB/Upgrade_Tests.pm:698
 msgid "Please make sure all make numbers are non-empty"
@@ -5835,7 +5869,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/account.pm:93
 msgid "Please select a valid heading"
-msgstr ""
+msgstr "Palun vali sobiv päis"
 
 #: UI/payments/use_overpayment1.html:16
 msgid "Please select a vendor with unused overpayments"
@@ -5958,7 +5992,7 @@ msgstr "Hinnagrupid"
 #: LedgerSMB/Report/Inventory/Search.pm:246
 #: UI/Reports/filters/search_goods.html:224
 msgid "Price Updated"
-msgstr ""
+msgstr "Hind uuendatud"
 
 #: bin/ic.pl:1112 bin/pe.pl:221 UI/Contact/divs/credit.html:226
 msgid "Pricegroup"
@@ -5987,13 +6021,13 @@ msgstr ""
 
 #: sql/Pg-database.sql:810
 msgid "Primary Phone"
-msgstr ""
+msgstr "Peamine telefon"
 
 #: bin/aa.pl:977 bin/aa.pl:1002 bin/am.pl:873 bin/arap.pl:486 bin/ir.pl:620
 #: bin/is.pl:680 bin/is.pl:1121 bin/oe.pl:721 bin/oe.pl:941 bin/oe.pl:2091
 #: LedgerSMB/Report/Taxform/Detail.pm:129
-#: LedgerSMB/Report/Taxform/Summary.pm:127 UI/payments/payments_detail.html:485
-#: UI/timecards/timecard.html:155
+#: LedgerSMB/Report/Taxform/Summary.pm:127
+#: UI/payments/payments_detail.html:485 UI/timecards/timecard.html:155
 msgid "Print"
 msgstr "Trüki"
 
@@ -6081,7 +6115,7 @@ msgstr "Projekti number"
 
 #: bin/aa.pl:1706
 msgid "Project Numbers"
-msgstr ""
+msgstr "Projekti numbrid"
 
 #: LedgerSMB/Report/Timecards.pm:101
 msgid "Project/Department Number"
@@ -6091,19 +6125,19 @@ msgstr ""
 msgid "Projects"
 msgstr "Projektid"
 
-#: LedgerSMB/Report/Listings/Asset.pm:89 LedgerSMB/Report/Listings/Asset.pm:121
-#: LedgerSMB/Scripts/asset.pm:391
+#: LedgerSMB/Report/Listings/Asset.pm:89
+#: LedgerSMB/Report/Listings/Asset.pm:121 LedgerSMB/Scripts/asset.pm:391
 msgid "Purchase Date"
-msgstr ""
+msgstr "Ostu kuupäev"
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
 msgid "Purchase Date:"
-msgstr ""
+msgstr "Ostu kuupäev:"
 
 #: LedgerSMB/Report/Contact/History.pm:129
 #: UI/Reports/filters/purchase_history.html:12
 msgid "Purchase History"
-msgstr ""
+msgstr "Ostu ajalugu"
 
 #: bin/am.pl:1305 bin/am.pl:1510 bin/io.pl:1422 bin/io.pl:1641 bin/ir.pl:627
 #: bin/ir.pl:1033 bin/oe.pl:320 bin/oe.pl:753 bin/oe.pl:955 bin/oe.pl:1338
@@ -6131,8 +6165,8 @@ msgstr "Ostutellimuse number"
 msgid "Purchase Orders"
 msgstr "Ostutellimused"
 
-#: LedgerSMB/Report/Listings/Asset.pm:92 LedgerSMB/Report/Listings/Asset.pm:123
-#: LedgerSMB/Scripts/asset.pm:392
+#: LedgerSMB/Report/Listings/Asset.pm:92
+#: LedgerSMB/Report/Listings/Asset.pm:123 LedgerSMB/Scripts/asset.pm:392
 msgid "Purchase Value"
 msgstr ""
 
@@ -6142,7 +6176,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:98
 msgid "Purchased"
-msgstr ""
+msgstr "Ostetud"
 
 #: bin/ic.pl:1268 bin/ic.pl:2125 bin/io.pl:234 bin/io.pl:571 bin/oe.pl:1993
 #: bin/oe.pl:2300 bin/pe.pl:1065 LedgerSMB/Report/Contact/History.pm:87
@@ -6153,10 +6187,11 @@ msgstr ""
 #: templates/demo/packing_list.tex:116 templates/demo/pick_list.html:113
 #: templates/demo/pick_list.tex:101 templates/demo/product_receipt.html:127
 #: templates/demo/product_receipt.tex:118
-#: templates/demo/purchase_order.html:129 templates/demo/purchase_order.tex:118
+#: templates/demo/purchase_order.html:129
+#: templates/demo/purchase_order.tex:118
 #: templates/demo/request_quotation.html:142
-#: templates/demo/request_quotation.tex:123 templates/demo/sales_order.html:131
-#: templates/demo/sales_quotation.html:100
+#: templates/demo/request_quotation.tex:123
+#: templates/demo/sales_order.html:131 templates/demo/sales_quotation.html:100
 #: templates/demo/sales_quotation.tex:88
 #: templates/demo_with_images/bin_list.html:151
 #: templates/demo_with_images/bin_list.tex:108
@@ -6180,7 +6215,8 @@ msgstr ""
 #: templates/xedemo/bin_list.tex:108 templates/xedemo/invoice.html:138
 #: templates/xedemo/invoice.tex:137 templates/xedemo/packing_list.html:123
 #: templates/xedemo/packing_list.tex:116 templates/xedemo/pick_list.html:113
-#: templates/xedemo/pick_list.tex:101 templates/xedemo/product_receipt.html:129
+#: templates/xedemo/pick_list.tex:101
+#: templates/xedemo/product_receipt.html:129
 #: templates/xedemo/product_receipt.tex:118
 #: templates/xedemo/purchase_order.html:129
 #: templates/xedemo/purchase_order.tex:118
@@ -6188,7 +6224,8 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:123
 #: templates/xedemo/sales_order.html:131
 #: templates/xedemo/sales_quotation.html:100
-#: templates/xedemo/sales_quotation.tex:89 templates/xedemo/work_order.html:131
+#: templates/xedemo/sales_quotation.tex:89
+#: templates/xedemo/work_order.html:131
 #: UI/Reports/filters/purchase_history.html:281
 #: UI/timecards/timecard-week.html:98
 msgid "Qty"
@@ -6203,9 +6240,9 @@ msgid "Quantity exceeds available units to stock!"
 msgstr "Kogus on suurem, kui laos olev hulk!"
 
 #: bin/aa.pl:1663 bin/pe.pl:843 LedgerSMB/DBObject/Date.pm:88
-#: UI/bp-search.html:47 UI/lib/report_base.html:148 UI/lib/report_base.html:231
-#: UI/pos-receipts.html:40 UI/rc-reconciliation.html:53
-#: UI/Reports/co/filter_bm.html:63
+#: UI/bp-search.html:47 UI/lib/report_base.html:148
+#: UI/lib/report_base.html:231 UI/pos-receipts.html:40
+#: UI/rc-reconciliation.html:53 UI/Reports/co/filter_bm.html:63
 #: UI/rp-search-generate_income_statement.html:46
 #: UI/rp-search-generate_tax_report.html:42
 msgid "Quarter"
@@ -6214,7 +6251,8 @@ msgstr "Kvartal"
 #: bin/io.pl:1395 bin/io.pl:1655 bin/io.pl:1662 bin/oe.pl:286 bin/oe.pl:744
 #: bin/oe.pl:952 bin/oe.pl:1349 LedgerSMB/Report/Inventory/Search.pm:286
 #: LedgerSMB/Report/Orders.pm:251 templates/demo/sales_quotation.html:4
-#: templates/demo/sales_quotation.html:17 templates/demo/sales_quotation.tex:69
+#: templates/demo/sales_quotation.html:17
+#: templates/demo/sales_quotation.tex:69
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
 #: templates/demo_with_images/sales_quotation.tex:69
@@ -6414,7 +6452,8 @@ msgstr ""
 msgid "Referral"
 msgstr ""
 
-#: templates/demo/ar_transaction.html:224 templates/demo/ar_transaction.tex:143
+#: templates/demo/ar_transaction.html:224
+#: templates/demo/ar_transaction.tex:143
 #: templates/demo_with_images/ar_transaction.html:224
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
@@ -6434,7 +6473,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/budgets.pm:115 UI/reconciliation/report.html:292
 msgid "Reject"
-msgstr ""
+msgstr "Hülga"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:88
 msgid "Rem. Life"
@@ -6477,7 +6516,7 @@ msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:81
 msgid "Report Type"
-msgstr ""
+msgstr "Aruande tüüp"
 
 #: LedgerSMB/Scripts/asset.pm:625
 msgid "Report [_1] on date [_2]"
@@ -6494,7 +6533,7 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:10
 #: UI/Reports/filters/income_statement.html:20
 msgid "Report type"
-msgstr ""
+msgstr "Aruande tüüp"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
@@ -6551,10 +6590,11 @@ msgid "Required attribute not provided: [_1]"
 msgstr ""
 
 #: bin/io.pl:269 bin/oe.pl:467 bin/oe.pl:525
-#: templates/demo/purchase_order.html:104 templates/demo/purchase_order.tex:106
+#: templates/demo/purchase_order.html:104
+#: templates/demo/purchase_order.tex:106
 #: templates/demo/request_quotation.html:105
-#: templates/demo/request_quotation.tex:107 templates/demo/sales_order.html:104
-#: templates/demo/sales_order.tex:106
+#: templates/demo/request_quotation.tex:107
+#: templates/demo/sales_order.html:104 templates/demo/sales_order.tex:106
 #: templates/demo_with_images/purchase_order.html:104
 #: templates/demo_with_images/purchase_order.tex:106
 #: templates/demo_with_images/request_quotation.html:105
@@ -6562,7 +6602,8 @@ msgstr ""
 #: templates/demo_with_images/sales_order.html:104
 #: templates/demo_with_images/sales_order.tex:106
 #: templates/demo_with_images/work_order.html:104
-#: templates/demo/work_order.html:104 templates/xedemo/product_receipt.html:104
+#: templates/demo/work_order.html:104
+#: templates/xedemo/product_receipt.html:104
 #: templates/xedemo/product_receipt.tex:106
 #: templates/xedemo/purchase_order.html:104
 #: templates/xedemo/purchase_order.tex:106
@@ -6592,11 +6633,11 @@ msgstr ""
 
 #: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
 msgid "Return to setup"
-msgstr ""
+msgstr "Tagasi seadistama"
 
 #: UI/logout.html:30
 msgid "Return to the login screen."
-msgstr ""
+msgstr "Mine tagasi logimis lehele"
 
 #: bin/ic.pl:535 UI/accounts/edit.html:388
 msgid "Returns"
@@ -6636,11 +6677,11 @@ msgstr ""
 
 #: UI/setup/begin_backup.html:50
 msgid "Run Backup"
-msgstr ""
+msgstr "Käivita varundus"
 
 #: UI/Reports/filters/inventory_adj.html:35
 msgid "Run Report"
-msgstr ""
+msgstr "Käivita aruanne"
 
 #: UI/Contact/divs/company.html:110 sql/Pg-database.sql:2880
 msgid "SIC"
@@ -6796,32 +6837,32 @@ msgstr "Salvesta muudatused"
 
 #: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:119
 msgid "Save Contact"
-msgstr ""
+msgstr "Salvesta kontakt"
 
 #: bin/aa.pl:1028 bin/gl.pl:282 bin/gl.pl:330 bin/ir.pl:660 bin/is.pl:724
 msgid "Save Draft"
-msgstr ""
+msgstr "Salvesta mustand"
 
 #: UI/Admin/edit_user.html:190 UI/Contact/divs/user.html:149
 #: UI/setup/edit_user.html:154
 msgid "Save Groups"
-msgstr ""
+msgstr "Salvesta grupid"
 
 #: bin/aa.pl:1011 bin/ir.pl:634 bin/is.pl:695
 msgid "Save Info"
-msgstr ""
+msgstr "Salvesta info"
 
 #: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:199
 msgid "Save Location"
-msgstr ""
+msgstr "Salvesta asukoht"
 
 #: UI/Contact/divs/credit.html:309
 msgid "Save New"
-msgstr ""
+msgstr "Salvesta uus"
 
 #: UI/Contact/divs/address.html:207
 msgid "Save New Location"
-msgstr ""
+msgstr "Salvesta uus asukoht"
 
 #: bin/arap.pl:632 bin/arap.pl:637
 msgid "Save Schedule"
@@ -6829,7 +6870,7 @@ msgstr "Salvesta ajastus"
 
 #: bin/aa.pl:1013 bin/gl.pl:286
 msgid "Save Template"
-msgstr ""
+msgstr "Salvesta mall"
 
 #: UI/Admin/edit_user.html:146
 msgid "Save User"
@@ -6837,7 +6878,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:709
 msgid "Save and Retry"
-msgstr ""
+msgstr "Salvesta ja alusta uuesti"
 
 #: bin/aa.pl:1036
 msgid "Save as New"
@@ -6850,15 +6891,15 @@ msgstr "Salvesta uuena"
 
 #: LedgerSMB/Scripts/business_unit.pm:192
 msgid "Saved id [_1]"
-msgstr ""
+msgstr "Salvestatud id [_1]"
 
 #: bin/am.pl:1344
 msgid "Saving [_1] [_2]"
-msgstr ""
+msgstr "Salvestan"
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
-msgstr ""
+msgstr "Kas salvestada üle olemasolev dokument?"
 
 #: bin/aa.pl:979 bin/aa.pl:1005 bin/gl.pl:290 bin/ir.pl:630 bin/ir.pl:1032
 #: bin/is.pl:689 bin/is.pl:1123 bin/oe.pl:757 bin/oe.pl:942
@@ -6879,7 +6920,8 @@ msgstr "Ekraan"
 #: UI/business_units/filter.html:45 UI/Reports/filters/budget_search.html:72
 #: UI/Reports/filters/cogs_lines.html:35
 #: UI/Reports/filters/contact_search.html:131
-#: UI/Reports/filters/overpayments.html:61 UI/Reports/filters/payments.html:126
+#: UI/Reports/filters/overpayments.html:61
+#: UI/Reports/filters/payments.html:126
 #: UI/Reports/filters/reconciliation_search.html:103
 #: UI/Reports/filters/search_goods.html:380
 #: UI/Reports/filters/search_partsgroups.html:18
@@ -6997,7 +7039,7 @@ msgstr "Turvaseaded"
 
 #: UI/reconciliation/report.html:266 UI/Reports/aging_report.html:58
 msgid "Select All"
-msgstr ""
+msgstr "Vali kõik"
 
 #: bin/pe.pl:1165
 msgid "Select Customer"
@@ -7005,7 +7047,7 @@ msgstr "Vali klient"
 
 #: UI/setup/template_info.html:7
 msgid "Select Templates to Load"
-msgstr ""
+msgstr "Vali mall mida laadida"
 
 #: bin/oe.pl:2685
 msgid "Select Vendor"
@@ -7017,7 +7059,7 @@ msgstr "Vali printer!"
 
 #: UI/taxform/add_taxform.html:62
 msgid "Select by Default:"
-msgstr ""
+msgstr "Vaikimisi valik:"
 
 #: bin/arap.pl:184 bin/ic.pl:1706 bin/pe.pl:691
 msgid "Select from one of the names below"
@@ -7046,7 +7088,7 @@ msgstr "Vali txt, postscript või PDF!"
 #: UI/Reports/filters/balance_sheet.html:45
 #: UI/Reports/filters/income_statement.html:86
 msgid "Select using"
-msgstr ""
+msgstr "Kasuta valikus"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
@@ -7054,7 +7096,7 @@ msgstr ""
 
 #: UI/payments/payments_filter.html:7
 msgid "Selection"
-msgstr ""
+msgstr "Valik"
 
 #: bin/ic.pl:1278
 msgid "Sell"
@@ -7100,7 +7142,7 @@ msgstr ""
 #: templates/demo/work_order.html:134 templates/xedemo/packing_list.html:121
 #: templates/xedemo/work_order.html:134
 msgid "Serial #"
-msgstr ""
+msgstr "Seeria #"
 
 #: bin/io.pl:261 bin/oe.pl:2000
 msgid "Serial No."
@@ -7205,7 +7247,8 @@ msgid "Ship To"
 msgstr ""
 
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
-#: templates/demo/product_receipt.html:30 templates/demo/purchase_order.html:30
+#: templates/demo/product_receipt.html:30
+#: templates/demo/purchase_order.html:30
 #: templates/demo/request_quotation.html:30
 #: templates/demo_with_images/packing_list.html:29
 #: templates/demo_with_images/pick_list.html:28
@@ -7220,8 +7263,8 @@ msgid "Ship To:"
 msgstr ""
 
 #: LedgerSMB/Report/Contact/Purchase.pm:117
-#: LedgerSMB/Report/Invoices/Transactions.pm:307 LedgerSMB/Report/Orders.pm:259
-#: templates/demo/product_receipt.html:106
+#: LedgerSMB/Report/Invoices/Transactions.pm:307
+#: LedgerSMB/Report/Orders.pm:259 templates/demo/product_receipt.html:106
 #: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
 #: templates/demo/sales_order.tex:109
 #: templates/demo_with_images/product_receipt.html:106
@@ -7229,15 +7272,16 @@ msgstr ""
 #: templates/demo_with_images/sales_order.html:107
 #: templates/demo_with_images/sales_order.tex:109
 #: templates/demo_with_images/work_order.html:107
-#: templates/demo/work_order.html:107 templates/xedemo/product_receipt.html:107
+#: templates/demo/work_order.html:107
+#: templates/xedemo/product_receipt.html:107
 #: templates/xedemo/purchase_order.html:107
 #: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
 #: templates/xedemo/work_order.html:107
 #: UI/Reports/filters/invoice_outstanding.html:65
 #: UI/Reports/filters/invoice_outstanding.html:266
 #: UI/Reports/filters/invoice_search.html:158
-#: UI/Reports/filters/invoice_search.html:357 UI/Reports/filters/orders.html:58
-#: UI/Reports/filters/orders.html:161
+#: UI/Reports/filters/invoice_search.html:357
+#: UI/Reports/filters/orders.html:58 UI/Reports/filters/orders.html:161
 msgid "Ship Via"
 msgstr ""
 
@@ -7254,7 +7298,8 @@ msgstr "Tarneaadress"
 #: templates/demo/purchase_order.tex:108
 #: templates/demo/request_quotation.html:108
 #: templates/demo/request_quotation.tex:109
-#: templates/demo/sales_quotation.html:76 templates/demo/sales_quotation.tex:78
+#: templates/demo/sales_quotation.html:76
+#: templates/demo/sales_quotation.tex:78
 #: templates/demo_with_images/bin_list.html:115
 #: templates/demo_with_images/invoice.html:114
 #: templates/demo_with_images/invoice.tex:127
@@ -7304,17 +7349,19 @@ msgstr ""
 #: bin/aa.pl:1738 bin/is.pl:601 bin/oe.pl:680 bin/oe.pl:1922
 #: LedgerSMB/Report/Contact/Purchase.pm:113
 #: LedgerSMB/Report/Invoices/Outstanding.pm:271
-#: LedgerSMB/Report/Invoices/Transactions.pm:304 LedgerSMB/Report/Orders.pm:255
-#: templates/demo/bin_list.html:114 templates/demo/bin_list.tex:84
-#: templates/demo/invoice.html:111 templates/demo/invoice.tex:126
-#: templates/demo/packing_list.html:85 templates/demo/packing_list.tex:92
-#: templates/demo/pick_list.html:82 templates/demo/pick_list.tex:83
-#: templates/demo/product_receipt.html:105
+#: LedgerSMB/Report/Invoices/Transactions.pm:304
+#: LedgerSMB/Report/Orders.pm:255 templates/demo/bin_list.html:114
+#: templates/demo/bin_list.tex:84 templates/demo/invoice.html:111
+#: templates/demo/invoice.tex:126 templates/demo/packing_list.html:85
+#: templates/demo/packing_list.tex:92 templates/demo/pick_list.html:82
+#: templates/demo/pick_list.tex:83 templates/demo/product_receipt.html:105
 #: templates/demo/product_receipt.tex:107
-#: templates/demo/purchase_order.html:106 templates/demo/purchase_order.tex:107
+#: templates/demo/purchase_order.html:106
+#: templates/demo/purchase_order.tex:107
 #: templates/demo/request_quotation.html:107
-#: templates/demo/request_quotation.tex:108 templates/demo/sales_order.html:106
-#: templates/demo/sales_order.tex:108 templates/demo/sales_quotation.html:75
+#: templates/demo/request_quotation.tex:108
+#: templates/demo/sales_order.html:106 templates/demo/sales_order.tex:108
+#: templates/demo/sales_quotation.html:75
 #: templates/demo/sales_quotation.tex:77
 #: templates/demo_with_images/bin_list.html:114
 #: templates/demo_with_images/bin_list.tex:84
@@ -7347,8 +7394,9 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:108
 #: templates/xedemo/sales_order.html:106 templates/xedemo/sales_order.tex:108
 #: templates/xedemo/sales_quotation.html:75
-#: templates/xedemo/sales_quotation.tex:78 templates/xedemo/work_order.html:106
-#: UI/orders/order.html:62 UI/Reports/filters/invoice_outstanding.html:260
+#: templates/xedemo/sales_quotation.tex:78
+#: templates/xedemo/work_order.html:106 UI/orders/order.html:62
+#: UI/Reports/filters/invoice_outstanding.html:260
 #: UI/Reports/filters/invoice_search.html:351
 msgid "Shipping Point"
 msgstr "Tarnekoht"
@@ -7540,7 +7588,7 @@ msgstr ""
 
 #: UI/payments/check_job.html:19
 msgid "Status: Complete"
-msgstr ""
+msgstr "Staatus: valmis"
 
 #: UI/payments/check_job.html:17
 msgid "Status: Still Running"
@@ -7674,12 +7722,12 @@ msgstr ""
 #: templates/demo_with_images/printPayment.html:66
 #: templates/xedemo/printPayment.html:66
 msgid "TOTAL"
-msgstr ""
+msgstr "KOKKU"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:72
-#: LedgerSMB/Report/Listings/Asset.pm:82 LedgerSMB/Report/Listings/Asset.pm:119
-#: LedgerSMB/Scripts/asset.pm:628 LedgerSMB/Scripts/asset.pm:692
-#: LedgerSMB/Scripts/asset.pm:763
+#: LedgerSMB/Report/Listings/Asset.pm:82
+#: LedgerSMB/Report/Listings/Asset.pm:119 LedgerSMB/Scripts/asset.pm:628
+#: LedgerSMB/Scripts/asset.pm:692 LedgerSMB/Scripts/asset.pm:763
 msgid "Tag"
 msgstr ""
 
@@ -7694,7 +7742,8 @@ msgstr ""
 #: UI/accounts/edit.html:397 UI/accounts/edit.html:427
 #: UI/Reports/filters/invoice_outstanding.html:198
 #: UI/Reports/filters/invoice_search.html:290
-#: UI/Reports/filters/orders.html:176 UI/rp-search-generate_tax_report.html:167
+#: UI/Reports/filters/orders.html:176
+#: UI/rp-search-generate_tax_report.html:167
 msgid "Tax"
 msgstr "Maks"
 
@@ -7789,7 +7838,7 @@ msgstr "Maksustatav"
 
 #: bin/am.pl:584 UI/Contact/divs/credit.html:263 sql/Pg-database.sql:2841
 msgid "Taxes"
-msgstr ""
+msgstr "Maksud"
 
 #: bin/am.pl:724
 msgid "Taxes saved!"
@@ -7825,7 +7874,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.html:49
 #: templates/xedemo/ar_transaction.tex:26 templates/xedemo/letterhead.tex:13
 msgid "Tel:"
-msgstr ""
+msgstr "Tel:"
 
 #: templates/demo/ap_transaction.html:50 templates/demo/ar_transaction.tex:61
 #: templates/demo/bin_list.html:55 templates/demo/bin_list.html:88
@@ -7833,10 +7882,10 @@ msgstr ""
 #: templates/demo/letterhead.html:21 templates/demo/packing_list.html:56
 #: templates/demo/pick_list.html:55 templates/demo/printPayment.html:27
 #: templates/demo/product_receipt.html:54
-#: templates/demo/product_receipt.html:82 templates/demo/product_receipt.tex:52
-#: templates/demo/product_receipt.tex:87 templates/demo/purchase_order.html:54
-#: templates/demo/purchase_order.html:82 templates/demo/purchase_order.tex:52
-#: templates/demo/purchase_order.tex:87
+#: templates/demo/product_receipt.html:82
+#: templates/demo/product_receipt.tex:52 templates/demo/product_receipt.tex:87
+#: templates/demo/purchase_order.html:54 templates/demo/purchase_order.html:82
+#: templates/demo/purchase_order.tex:52 templates/demo/purchase_order.tex:87
 #: templates/demo/request_quotation.html:55
 #: templates/demo/request_quotation.html:83
 #: templates/demo/request_quotation.tex:52
@@ -7903,7 +7952,7 @@ msgstr ""
 #: templates/xedemo/work_order.html:80 templates/xedemo/work_order.tex:61
 #: templates/xedemo/work_order.tex:96
 msgid "Tel: [_1]"
-msgstr ""
+msgstr "Tel: [_1]"
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
 msgid "Template Listing"
@@ -7915,7 +7964,7 @@ msgstr "Dokumendipõhja ei leitud"
 
 #: bin/aa.pl:1200 bin/gl.pl:411
 msgid "Template Saved!"
-msgstr ""
+msgstr "Mall salvestatud!"
 
 #: LedgerSMB/Report/Listings/TemplateTrans.pm:106
 msgid "Template Transactions"
@@ -7923,11 +7972,11 @@ msgstr ""
 
 #: UI/setup/confirm_operation.html:64
 msgid "Templates"
-msgstr ""
+msgstr "Mallid"
 
 #: LedgerSMB/Num2text.pm:71
 msgid "Ten"
-msgstr ""
+msgstr "kümme"
 
 #: bin/oe.pl:432
 msgid "Terms"
@@ -8010,7 +8059,8 @@ msgid "Their Debits"
 msgstr ""
 
 #: UI/reconciliation/report.html:9
-msgid "There are unapproved reconciliations before the end date of this report."
+msgid ""
+"There are unapproved reconciliations before the end date of this report."
 msgstr ""
 
 #: UI/reconciliation/report.html:7
@@ -8027,11 +8077,11 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:75
 msgid "Thirteen"
-msgstr ""
+msgstr "kolmteist"
 
 #: LedgerSMB/Num2text.pm:93
 msgid "Thirty"
-msgstr ""
+msgstr "Kolmkümmend"
 
 #: UI/Contact/divs/address.html:79 UI/Contact/divs/contact_info.html:28
 msgid "This Account"
@@ -8045,7 +8095,7 @@ msgstr ""
 msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
-msgstr ""
+msgstr "Andmebaasi teguvsed on lõpetatud edukalt.\nLedgerSMB on valmis kasutamiseks."
 
 #: templates/demo/printPayment.html:109
 #: templates/demo_with_images/printPayment.html:109
@@ -8083,7 +8133,8 @@ msgstr "Neljapäev"
 
 #: bin/aa.pl:1677 LedgerSMB/Report/GL.pm:137
 #: LedgerSMB/Report/Invoices/Outstanding.pm:259
-#: LedgerSMB/Report/Invoices/Transactions.pm:295 UI/Reports/filters/gl.html:228
+#: LedgerSMB/Report/Invoices/Transactions.pm:295
+#: UI/Reports/filters/gl.html:228
 #: UI/Reports/filters/invoice_outstanding.html:252
 #: UI/Reports/filters/invoice_search.html:343
 msgid "Till"
@@ -8143,10 +8194,11 @@ msgstr "Korda"
 #: templates/xedemo/request_quotation.tex:27
 #: templates/xedemo/sales_order.html:28 templates/xedemo/work_order.html:28
 #: UI/asset/begin_approval.html:31 UI/asset/search_reports.html:34
-#: UI/bp-search.html:29 UI/ca-list-selector.html:33 UI/lib/report_base.html:105
-#: UI/lib/report_base.html:183 UI/pos-receipts.html:23
-#: UI/rc-reconciliation.html:22 UI/Reports/co/filter_bm.html:27
-#: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
+#: UI/bp-search.html:29 UI/ca-list-selector.html:33
+#: UI/lib/report_base.html:105 UI/lib/report_base.html:183
+#: UI/pos-receipts.html:23 UI/rc-reconciliation.html:22
+#: UI/Reports/co/filter_bm.html:27 UI/Reports/co/filter_cd.html:45
+#: UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/income_statement.html:139
 #: UI/Reports/filters/income_statement.html:211
 #: UI/Reports/filters/purchase_history.html:127
@@ -8198,7 +8250,8 @@ msgstr ""
 msgid "To pay"
 msgstr ""
 
-#: templates/demo/product_receipt.html:29 templates/demo/purchase_order.html:29
+#: templates/demo/product_receipt.html:29
+#: templates/demo/purchase_order.html:29
 #: templates/demo/request_quotation.html:28
 #: templates/demo_with_images/product_receipt.html:29
 #: templates/demo_with_images/purchase_order.html:29
@@ -8230,9 +8283,10 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/COGS.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:228
 #: LedgerSMB/Report/Invoices/Transactions.pm:277
-#: LedgerSMB/Report/Taxform/Detail.pm:98 LedgerSMB/Report/Taxform/Summary.pm:96
-#: LedgerSMB/Scripts/asset.pm:531 LedgerSMB/Scripts/payment.pm:199
-#: LedgerSMB/Scripts/payment.pm:807 templates/demo/ap_transaction.html:126
+#: LedgerSMB/Report/Taxform/Detail.pm:98
+#: LedgerSMB/Report/Taxform/Summary.pm:96 LedgerSMB/Scripts/asset.pm:531
+#: LedgerSMB/Scripts/payment.pm:199 LedgerSMB/Scripts/payment.pm:807
+#: templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:179
@@ -8275,12 +8329,12 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:185
 #: templates/xedemo/sales_order.html:158 templates/xedemo/sales_order.html:186
 #: templates/xedemo/sales_quotation.html:127
-#: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
-#: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
-#: UI/payments/payment1.html:81 UI/payments/payment1.html:90
-#: UI/payments/payment2.html:323 UI/payments/payments_detail.html:311
-#: UI/reconciliation/report.html:127 UI/reconciliation/report.html:186
-#: UI/reconciliation/report.html:234
+#: templates/xedemo/sales_quotation.html:154
+#: templates/xedemo/timecard.html:105 templates/xedemo/timecard.tex:45
+#: UI/orders/order.html:225 UI/payments/payment1.html:81
+#: UI/payments/payment1.html:90 UI/payments/payment2.html:323
+#: UI/payments/payments_detail.html:311 UI/reconciliation/report.html:127
+#: UI/reconciliation/report.html:186 UI/reconciliation/report.html:234
 #: UI/Reports/filters/invoice_outstanding.html:205
 #: UI/Reports/filters/invoice_search.html:296
 #: UI/rp-search-generate_tax_report.html:175
@@ -8299,7 +8353,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:138
 msgid "Total Paid"
-msgstr ""
+msgstr "Kokku makstud"
 
 #: UI/accounts/edit.html:364
 msgid "Tracking Items"
@@ -8315,13 +8369,13 @@ msgstr "Kanne"
 
 #: sql/Pg-database.sql:2852
 msgid "Transaction Approval"
-msgstr ""
+msgstr "Tehingu kinnitamine"
 
 #: LedgerSMB/Report/PNL/Invoice.pm:89 UI/import_csv/import_csv.html:43
 #: UI/import_csv/import_inventory_csv.html:33
 #: UI/Reports/filters/purchase_history.html:132
 msgid "Transaction Date"
-msgstr ""
+msgstr "Kande kuupäev"
 
 #: bin/gl.pl:687
 msgid "Transaction Date missing!"
@@ -8334,7 +8388,7 @@ msgstr "Kande kuupäevad"
 #: UI/reconciliation/report.html:75 UI/reconciliation/report.html:138
 #: UI/Reports/filters/unapproved.html:39
 msgid "Transaction Type"
-msgstr ""
+msgstr "Kande tüüp"
 
 #: UI/setup/complete.html:27 UI/setup/confirm_operation.html:111
 msgid "Transactions"
@@ -8448,7 +8502,7 @@ msgstr "kaks"
 #: UI/Contact/divs/address.html:119 UI/Contact/divs/contact_info.html:29
 #: UI/Contact/divs/credit.html:19 UI/Contact/divs/wage.html:4
 msgid "Type"
-msgstr ""
+msgstr "Tüüp"
 
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2882
 msgid "Type of Business"
@@ -8457,11 +8511,11 @@ msgstr "Ettevõtte tüüp"
 #: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
 #: t/data/04-complex_template.html:526
 msgid "Type:"
-msgstr ""
+msgstr "Tüüp:"
 
 #: UI/payments/use_overpayment2.html:264
 msgid "UPDATE"
-msgstr ""
+msgstr "UUENDA"
 
 #: lsmb-request.pl:113
 msgid "Unable to open script"
@@ -8499,15 +8553,16 @@ msgstr ""
 #: LedgerSMB/Report/Contact/History.pm:91
 #: LedgerSMB/Report/Inventory/History.pm:130
 #: LedgerSMB/Report/Inventory/Search.pm:206 templates/demo/invoice.tex:143
-#: templates/demo/product_receipt.tex:119 templates/demo/purchase_order.tex:119
-#: templates/demo/sales_order.tex:120
+#: templates/demo/product_receipt.tex:119
+#: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
 #: templates/demo_with_images/invoice.tex:143
 #: templates/demo_with_images/product_receipt.tex:119
 #: templates/demo_with_images/purchase_order.tex:119
 #: templates/demo_with_images/sales_order.tex:120
 #: templates/xedemo/invoice.tex:138 templates/xedemo/product_receipt.tex:119
-#: templates/xedemo/purchase_order.tex:119 templates/xedemo/sales_order.tex:120
-#: UI/payroll/income.html:74 UI/Reports/filters/purchase_history.html:291
+#: templates/xedemo/purchase_order.tex:119
+#: templates/xedemo/sales_order.tex:120 UI/payroll/income.html:74
+#: UI/Reports/filters/purchase_history.html:291
 #: UI/Reports/filters/search_goods.html:216
 msgid "Unit"
 msgstr "Ühik"
@@ -8586,11 +8641,11 @@ msgstr ""
 
 #: UI/file/attachment_screen.html:48 UI/templates/preview.html:37
 msgid "Upload"
-msgstr ""
+msgstr "Lae ülesse"
 
 #: LedgerSMB/Report/File/Incoming.pm:56 LedgerSMB/Report/File/Internal.pm:54
 msgid "Uploaded At"
-msgstr ""
+msgstr "Ülesse laetud"
 
 #: LedgerSMB/Report/File/Incoming.pm:59 LedgerSMB/Report/File/Internal.pm:57
 msgid "Uploaded By"
@@ -8623,7 +8678,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Budget/Variance.pm:86
 msgid "Used"
-msgstr ""
+msgstr "Kasutatud"
 
 #: LedgerSMB/Scripts/contact.pm:167 t/data/04-complex_template.html:36
 #: UI/am-company-logo.html:12 UI/Contact/divs/user.html:2
@@ -8659,8 +8714,8 @@ msgstr "Kasutajad"
 msgid "Valid From"
 msgstr "Kahtib alates"
 
-#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:50
-#: UI/Contact/pricelist.tex:50
+#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37
+#: UI/Contact/pricelist.html:50 UI/Contact/pricelist.tex:50
 msgid "Valid To"
 msgstr "Kehtib kuni"
 
@@ -8689,11 +8744,11 @@ msgstr ""
 #: bin/aa.pl:567 bin/aa.pl:1680 bin/ic.pl:1034 bin/ir.pl:499 bin/oe.pl:2572
 #: bin/oe.pl:2728 bin/pe.pl:1040 bin/pe.pl:1195 LedgerSMB/Report/Aging.pm:80
 #: LedgerSMB/Report/Invoices/Outstanding.pm:176
-#: LedgerSMB/Report/Invoices/Transactions.pm:247 LedgerSMB/Report/Orders.pm:191
-#: LedgerSMB/Report/Orders.pm:197 UI/Contact/divs/credit.html:7
-#: UI/payments/payments_detail.html:12 UI/payments/use_overpayment1.html:27
-#: UI/payments/use_overpayment2.html:23 UI/payments/use_overpayment2.html:144
-#: UI/Reports/filters/aging.html:14
+#: LedgerSMB/Report/Invoices/Transactions.pm:247
+#: LedgerSMB/Report/Orders.pm:191 LedgerSMB/Report/Orders.pm:197
+#: UI/Contact/divs/credit.html:7 UI/payments/payments_detail.html:12
+#: UI/payments/use_overpayment1.html:27 UI/payments/use_overpayment2.html:23
+#: UI/payments/use_overpayment2.html:144 UI/Reports/filters/aging.html:14
 #: UI/Reports/filters/invoice_outstanding.html:6
 #: UI/Reports/filters/invoice_search.html:6 UI/Reports/filters/orders.html:5
 #: UI/rp-search-generate_tax_report.html:141 sql/Pg-database.sql:542
@@ -8786,7 +8841,8 @@ msgstr "Palgad/kinnipidamised"
 #: bin/oe.pl:1876 templates/demo/bin_list.html:112
 #: templates/demo/bin_list.tex:82 templates/demo/packing_list.html:83
 #: templates/demo/packing_list.tex:90 templates/demo/pick_list.html:81
-#: templates/demo/pick_list.tex:82 templates/demo_with_images/bin_list.html:112
+#: templates/demo/pick_list.tex:82
+#: templates/demo_with_images/bin_list.html:112
 #: templates/demo_with_images/bin_list.tex:82
 #: templates/demo_with_images/packing_list.html:83
 #: templates/demo_with_images/packing_list.tex:90
@@ -8851,7 +8907,7 @@ msgstr "Mis tüüpi tootega on tegemist?"
 
 #: UI/setup/begin_backup.html:8
 msgid "Where shall we send the backup?"
-msgstr ""
+msgstr "Kuhu me saadaksime varundusfaili?"
 
 #: sql/Pg-database.sql:3765
 msgid "Whole Month Straight Line"
@@ -8881,9 +8937,9 @@ msgid "Yahoo"
 msgstr "Yahoo"
 
 #: bin/aa.pl:1665 bin/am.pl:828 bin/pe.pl:845 LedgerSMB/DBObject/Date.pm:93
-#: UI/bp-search.html:50 UI/lib/report_base.html:153 UI/lib/report_base.html:238
-#: UI/pos-receipts.html:41 UI/rc-reconciliation.html:59
-#: UI/rp-search-generate_income_statement.html:52
+#: UI/bp-search.html:50 UI/lib/report_base.html:153
+#: UI/lib/report_base.html:238 UI/pos-receipts.html:41
+#: UI/rc-reconciliation.html:59 UI/rp-search-generate_income_statement.html:52
 #: UI/rp-search-generate_tax_report.html:48
 msgid "Year"
 msgstr "Aasta"
@@ -8952,9 +9008,7 @@ msgstr "Postiindeks"
 msgid ""
 "[_1]\n"
 "[_2]"
-msgstr ""
-"[_1]\n"
-"[_2]"
+msgstr "[_1]\n[_2]"
 
 #: bin/gl.pl:207
 msgid "[_1] Cash Transfer Transaction"
@@ -9072,7 +9126,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:1599
 msgid "is lesser than 0"
-msgstr ""
+msgstr "on vähem kui 0"
 
 #: LedgerSMB/Scripts/payment.pm:1591
 msgid "is lesser than the amount to be paid"
@@ -9084,7 +9138,7 @@ msgstr "on tühi"
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
-msgstr ""
+msgstr "silt"
 
 #: t/data/04-gettext.html:3 t/data/04-gettext.html:4
 msgid "nl"
