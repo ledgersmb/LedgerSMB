@@ -53,7 +53,7 @@ RETURNS SETOF voucher_list AS
 $$
                 SELECT v.id, a.invoice, a.invnumber, e.name,
                         v.batch_id, v.trans_id,
-                        a.amount, a.transdate, 'Payable', v.batch_class
+                        a.amount_bc, a.transdate, 'Payable', v.batch_class
                 FROM voucher v
                 JOIN ap a ON (v.trans_id = a.id)
                 JOIN entity_credit_account eca
@@ -65,7 +65,7 @@ $$
                 UNION
                 SELECT v.id, a.invoice, a.invnumber, e.name,
                         v.batch_id, v.trans_id,
-                        a.amount, a.transdate, 'Receivable', v.batch_class
+                        a.amount_bc, a.transdate, 'Receivable', v.batch_class
                 FROM voucher v
                 JOIN ar a ON (v.trans_id = a.id)
                 JOIN entity_credit_account eca
@@ -79,8 +79,8 @@ $$
                 SELECT v.id, false, a.source,
                         cr.meta_number || '--'  || co.legal_name ,
                         v.batch_id, v.trans_id,
-                        sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
-                             ELSE a.amount  END), a.transdate,
+                        sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount_bc * -1
+                             ELSE a.amount_bc  END), a.transdate,
                         CASE WHEN bc.class = 'payment' THEN 'Payment'
                              WHEN bc.class = 'payment_reversal'
                              THEN 'Payment Reversal'
@@ -102,8 +102,8 @@ $$
                 UNION ALL
                 SELECT v.id, false, a.source, a.memo,
                         v.batch_id, v.trans_id,
-                        CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
-                             ELSE sum(a.amount)  END, a.transdate,
+                        CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount_bc) * -1
+                             ELSE sum(a.amount_bc)  END, a.transdate,
                         CASE WHEN bc.class = 'receipt' THEN 'Receipt'
                              WHEN bc.class = 'receipt_reversal'
                              THEN 'Receipt Reversal'
@@ -124,11 +124,11 @@ $$
                 UNION ALL
                 SELECT v.id, false, g.reference, g.description,
                         v.batch_id, v.trans_id,
-                        sum(a.amount), g.transdate, 'GL', v.batch_class
+                        sum(a.amount_bc), g.transdate, 'GL', v.batch_class
                 FROM voucher v
                 JOIN gl g ON (g.id = v.trans_id)
                 JOIN acc_trans a ON (v.trans_id = a.trans_id)
-                WHERE a.amount > 0
+                WHERE a.amount_bc > 0
                         AND v.batch_id = in_batch_id
                         AND v.batch_class IN (select id from batch_class
                                         where class = 'gl')
@@ -186,19 +186,19 @@ $$
                 SELECT b.id, c.class, b.control_code, b.description, u.username,
                         b.created_on, b.default_date,
                         sum(
-                                CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
-                                     THEN al.amount
+                                CASE WHEN vc.id = 5 AND al.amount_bc < 0 -- GL
+                                     THEN al.amount_bc
                                      WHEN vc.id  = 1
-                                     THEN ap.amount
+                                     THEN ap.amount_bc
                                      WHEN vc.id = 2
-                                     THEN ar.amount
+                 THEN ar.amount_bc
                                      ELSE 0
                                 END) AS transaction_total,
                         sum(
-                                CASE WHEN l.description = 'AR' AND vc.id IN (6, 7)
-                                     THEN al.amount
-                                     WHEN l.description = 'AP' AND vc.id IN (3, 4)
-                                     THEN al.amount * -1
+                                CASE WHEN alc.description = 'AR' AND vc.id IN (6, 7)
+                                     THEN al.amount_bc
+                                     WHEN alc.description = 'AP' AND vc.id IN (3, 4)
+                                     THEN al.amount_bc * -1
                                      ELSE 0
                                 END
                            ) AS payment_total,
@@ -214,7 +214,7 @@ $$
                         ((vc.id = 5 AND v.trans_id = al.trans_id) OR
                                 (vc.id IN (3, 4, 6, 7)
                                         AND al.voucher_id = v.id))
-                LEFT JOIN account_link l ON (al.chart_id = l.account_id)
+                LEFT JOIN account_link alc ON (al.chart_id = alc.account_id)
                 WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
                         (b.description LIKE
                                 '%' || in_description || '%' OR
@@ -232,13 +232,13 @@ $$
                         b.control_code, b.default_date
                 HAVING
                         (in_amount_gt IS NULL OR
-                        sum(coalesce(ar.amount, ap.amount,
-                                al.amount))
+                        sum(coalesce(ar.amount_bc - ar.paid_deprecated, ap.amount_bc - ap.paid_deprecated,
+                                al.amount_bc))
                         >= in_amount_gt)
                         AND
                         (in_amount_lt IS NULL OR
-                        sum(coalesce(ar.amount, ap.amount,
-                                al.amount))
+                        sum(coalesce(ar.amount_bc - ar.paid_deprecated, ap.amount_bc - ap.paid_deprecated,
+                                al.amount_bc))
                         <= in_amount_lt)
                 ORDER BY b.control_code, b.description
 
@@ -432,6 +432,27 @@ BEGIN
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Batch not found';
         END IF;
+        update ar set paid_deprecated = amount_bc +
+                (select sum(amount_bc) from acc_trans
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AR' AND trans_id = ar.id
+                        AND (voucher_id IS NULL OR voucher_id NOT IN
+                                (select id from voucher
+                                WHERE batch_id = in_batch_id)))
+        where id in (select trans_id from acc_trans where voucher_id IN
+                (select id from voucher where batch_id = in_batch_id));
+
+        update ap set paid_deprecated = amount_bc -
+     (select sum(amount_bc) from acc_trans
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AP' AND trans_id = ap.id
+                        AND (voucher_id IS NULL OR voucher_id NOT IN
+                                (select id from voucher
+                                WHERE batch_id = in_batch_id)))
+        where id in (select trans_id from acc_trans where voucher_id IN
+                (select id from voucher where batch_id = in_batch_id));
 
         DELETE FROM ac_tax_form WHERE entry_id IN
                (select entry_id from acc_trans where voucher_id in
@@ -493,6 +514,25 @@ BEGIN
                 DELETE FROM voucher WHERE id = voucher_row.id;
                 -- DELETE FROM transactions WHERE id = voucher_row.trans_id;
         ELSE
+                update ar set paid_deprecated = amount_bc +
+                        (select sum(amount_bc) from acc_trans
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AR' AND trans_id = ar.id
+                                AND (voucher_id IS NULL
+                                OR voucher_id <> voucher_row.id))
+                where id in (select trans_id from acc_trans
+                                where voucher_id = voucher_row.id);
+
+                update ap set paid_deprecated = amount_bc -
+        (select sum(amount_bc) from acc_trans
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AP' AND trans_id = ar.id
+                                AND (voucher_id IS NULL
+                                OR voucher_id <> voucher_row.id))
+                where id in (select trans_id from acc_trans
+                                where voucher_id = voucher_row.id);
                 DELETE FROM ac_tax_form WHERE entry_id IN
                        (select entry_id from acc_trans
                          where voucher_id = voucher_row.id);

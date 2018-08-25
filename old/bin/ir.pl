@@ -160,6 +160,8 @@ sub invoice_links {
               'No currencies defined.  Please set these up under System/Defaults.'
                             ));
     }
+    @curr = @{$form->{currencies}};
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
 
     @curr = split /:/, $form->{currencies};
     $form->{defaultcurrency} = $curr[0];
@@ -736,11 +738,18 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
         $form->{invsubtotal} =
           $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
+        my $invsubtotal_bc =
+            $form->format_amount( \%myconfig,
+                                  $form->{invsubtotal} * $form->{exchangerate},
+                                  2);
 
         $subtotal = qq|
           <tr>
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-        <td align=right>$form->{invsubtotal}</td>
+      <td align=right>$form->{invsubtotal}</td>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? "<td align=right>$invsubtotal_bc</td>" : '')
+      . qq|
           </tr>
 |;
 
@@ -794,16 +803,25 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $taxincluded <br/>
         <table>
               <tr><th align="center" colspan="2">|.
-                   $locale->text('Calculate Taxes').qq|</th>
-              </tr>
+              $locale->text('Calculate Taxes').qq|</th></tr>
               <tr>
                    <td colspan=2>$manual_tax</td>
-               </tr>
+               </tr>| .
+              (($form->{currency} ne $form->{defaultcurrency})
+               ? "<tr><td colspan=2></td><td align=right>$form->{defaultcurrency}</td></tr>" : '')
+              . qq|</tr>
+
           $subtotal
           $tax
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
-        <td align=right>$form->{invtotal}</td>
+      <td align=right>$form->{invtotal}</td>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? ("<td align=right>" . $form->format_amount( \%myconfig,
+                                                     $form->{invtotal}
+                                                     * $form->{exchangerate}, 2)
+          . "</td>") : '') . qq|
+
           </tr>
         </table>
       </td>
@@ -1037,30 +1055,12 @@ sub update {
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
-            $form->{exchangerate} = $exchangerate
-              if (
-                $form->{forex} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,         $form->{currency},
-                        $form->{transdate}, 'sell'
-                    )
-                )
-              );
             $form->{oldcurrency} = $form->{currency};
         }
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
         delete $form->{exchangerate};
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig,         $form->{currency},
-                    $form->{transdate}, 'sell'
-                )
-            )
-          );
     }
 
     $j = 1;
@@ -1074,15 +1074,6 @@ sub update {
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
             }
 
-            $form->{"exchangerate_$j"} = $exchangerate
-              if (
-                $form->{"forex_$j"} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,             $form->{currency},
-                        $form->{"datepaid_$j"}, 'sell'
-                    )
-                )
-              );
             if ( $j++ != $i ) {
                 for (qw(datepaid source memo cleared paid exchangerate forex)) {
                     delete $form->{"${_}_$i"};

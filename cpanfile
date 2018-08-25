@@ -51,6 +51,7 @@ requires 'Plack::Request';
 requires 'Plack::Request::WithEncoding';
 requires 'Plack::Util';
 requires 'Template', '2.14';
+requires 'Text::CSV';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';

@@ -3,6 +3,10 @@ CREATE TEMPORARY TABLE test_result (
         success bool
 );
 
+-- from https://en.wikipedia.org/wiki/ISO_4217
+INSERT INTO currency (curr, description)
+VALUES ('XTS', 'Code reserved for testing purposes');
+
 INSERT INTO entity (id, name, entity_class, control_code, country_id)
 VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
 
@@ -37,3 +41,20 @@ CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as
 $$
 SELECT id FROM account WHERE accno = $1;
 $$ language sql;
+
+CREATE OR REPLACE FUNCTION test_insert_default_currency() returns boolean as
+$$
+BEGIN
+   PERFORM * FROM defaults WHERE setting_key = 'curr';
+
+   IF NOT FOUND THEN
+      INSERT INTO defaults
+      VALUES ('curr', 'XTS');
+      RETURN 'f'::boolean;
+   ELSE
+      RETURN 't'::boolean;
+   END IF;
+END;
+$$ language plpgsql;
+
+select test_insert_default_currency();

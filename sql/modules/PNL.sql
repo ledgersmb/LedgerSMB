@@ -102,7 +102,7 @@ acc_balance AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
    )
-SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      FROM acc_trans ac
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = ac.chart_id
@@ -118,7 +118,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount) <> 0.00
+   HAVING sum(ac.amount_bc) <> 0.00
     UNION
    SELECT ac.chart_id,
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
@@ -232,7 +232,7 @@ acc_balance AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
    )
-   SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+   SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      FROM acc_trans ac
     INNER JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      LEFT JOIN (SELECT array_agg(path) AS bu_ids, entry_id
@@ -254,7 +254,7 @@ acc_balance AS (
                                    HAVING max(trans_id) = gl.id))
               )
    GROUP BY ac.chart_id
-     HAVING sum(ac.amount) <> 0.00
+     HAVING sum(ac.amount_bc) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -269,7 +269,7 @@ hdr_balance AS (
           hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
-   UNION
+    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
           gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
@@ -353,7 +353,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
-   SELECT ac.chart_id AS id, sum(ac.amount * ca.portion) AS balance
+   SELECT ac.chart_id AS id, sum(ac.amount_bc * ca.portion) AS balance
      FROM acc_trans ac
      JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      JOIN (SELECT id, sum(portion) as portion
@@ -379,7 +379,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount * ca.portion) <> 0.00
+   HAVING sum(ac.amount_bc * ca.portion) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -468,7 +468,7 @@ hdr_meta AS (
                                   WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
-SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac
  WHERE ac.approved AND ac.trans_id = $1
  GROUP BY ac.chart_id
@@ -565,14 +565,14 @@ WITH gl (id) AS
 UNION ALL
    SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
 )
-SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac
   JOIN gl ON ac.trans_id = gl.id
  WHERE ac.approved is true
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount) <> 0.00
+   HAVING sum(ac.amount_bc) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance

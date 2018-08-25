@@ -28,7 +28,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
 
 our $cols = {
-   gl       =>  ['accno', 'debit', 'credit', 'source', 'memo'],
+   gl       =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx', 'credit_fx', 'source', 'memo'],
    ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description',
                  'invnumber', 'transdate'],
    ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description',

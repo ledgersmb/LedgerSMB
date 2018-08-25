@@ -40,6 +40,7 @@ LedgerSMB::OE - Order Entry
 
 package OE;
 use LedgerSMB::Tax;
+use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Num2text;
 use Log::Log4perl;
@@ -383,10 +384,7 @@ sub save {
         $form->{exchangerate} = 1;
     }
     else {
-        $exchangerate =
-          $form->check_exchangerate( $myconfig, $form->{currency},
-            $form->{transdate},
-            ( $form->{vc} eq 'customer' ) ? 'buy' : 'sell' );
+        $exchangerate = "";
     }
 
     $form->{exchangerate} =
@@ -463,17 +461,6 @@ sub save {
     # save printed, emailed, queued
 
     $form->save_status($dbh);
-
-    if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-        if ( $form->{vc} eq 'customer' ) {
-            $form->update_exchangerate( $dbh, $form->{currency},
-                $form->{transdate}, $form->{exchangerate}, 0 );
-        }
-        if ( $form->{vc} eq 'vendor' ) {
-            $form->update_exchangerate( $dbh, $form->{currency},
-                $form->{transdate}, 0, $form->{exchangerate} );
-        }
-    }
 
     if ( $form->{type} =~ /_order$/ ) {
 
@@ -578,9 +565,11 @@ sub retrieve {
     my $ref;
 
     $query = qq|
-        SELECT value, current_date FROM defaults
+      SELECT current_date FROM defaults
          WHERE setting_key = 'curr'|;
-    ( $form->{currencies}, $form->{transdate} ) = $dbh->selectrow_array($query);
+    ( $form->{transdate} ) = $dbh->selectrow_array($query);
+    @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
+    $form->{defaultcurrency} = $form->{currencies}->[0];
 
     $query = qq|
         SELECT value FROM defaults
@@ -772,10 +761,11 @@ sub exchangerate_defaults {
 
     # get default currencies
     my $query = qq|
-        SELECT substr(value,1,3), value FROM defaults
+      SELECT substr(value,1,3) FROM defaults
          WHERE setting_key = 'curr'|;
-    ( $form->{defaultcurrency}, $form->{currencies} ) =
+    ( $form->{defaultcurrency} ) =
       $dbh->selectrow_array($query);
+    @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
 
     $query = qq|
         SELECT $buysell
@@ -790,7 +780,8 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
+    foreach my $var ( grep {! $_ eq $form->{defaultcurrency} }
+                      @{$form->{currencies}} ) {
         $eth1->execute( $var, $form->{transdate} );
         my @exchangelist;
         @exchangelist = $eth1->fetchrow_array;
@@ -813,7 +804,6 @@ sub exchangerate_defaults {
       if $form->{exchangerate};
     $form->{ $form->{currency} } ||= 1;
     $form->{ $form->{defaultcurrency} } = 1;
-
 }
 
 sub order_details {

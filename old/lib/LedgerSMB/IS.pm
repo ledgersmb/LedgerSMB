@@ -44,6 +44,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
 use LedgerSMB::Num2text;
+use LedgerSMB::IIAA;
 use Log::Log4perl;
 
 use LedgerSMB::IS qw(BC_SALES_INVOICE);
@@ -1130,15 +1131,13 @@ sub post_invoice {
 
         $query  = qq|
             INSERT INTO acc_trans
-                        (trans_id, chart_id, amount,
-                        transdate, invoice_id, fx_transaction)
-                 VALUES (?, ?, ?, ?, ?, ?)|;
+                     (trans_id, chart_id, amount_bc, curr, amount_tc,
+                     transdate, invoice_id)
+              VALUES (?, ?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $ref->{chart_id}, $amount - $ref->{fxdiff},
-            $form->{transdate}, $ref->{invoice_id}, 0)
-          || $form->dberror($query);
-        $sth->execute( $form->{id}, $ref->{chart_id}, $ref->{fxdiff},
-            $form->{transdate}, $ref->{invoice_id}, 1)
+        $sth->execute( $form->{id}, $ref->{chart_id}, $amount,
+                       $form->{currency}, $amount - $ref->{fxdiff},
+                       $form->{transdate}, $ref->{invoice_id})
           || $form->dberror($query);
         $diff   = 0;
         $fxdiff = 0;
@@ -1154,45 +1153,8 @@ sub post_invoice {
     delete $form->{acc_trans}{lineitems};
 
     if ($form->{manual_tax}){
-        my $ac_sth = $dbh->prepare(
-              "INSERT INTO acc_trans (chart_id, trans_id, amount, source, memo)
-                    VALUES ((select id from account where accno = ?),
-                            ?, ?, ?, ?)"
-        );
-        my $tax_sth = $dbh->prepare(
-              "INSERT INTO tax_extended (entry_id, tax_basis, rate)
-                    VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
-        );
-        foreach my $taccno (split / /, $form->{taxaccounts}){
-            my $taxamount;
-            my $taxbasis;
-            my $taxrate;
-            my $fx = $form->{exchangerate} || 1;
-            $taxamount = $form->parse_amount($myconfig,
-                                             $form->{"mt_amount_$taccno"});
-            $taxbasis = $form->parse_amount($myconfig,
-                                            $form->{"mt_basis_$taccno"});
-            $taxrate = $form->parse_amount($myconfig,
-                                           $form->{"mt_rate_$taccno"});
-            my $fx_taxamount = $taxamount * $fx;
-            my $fx_taxbasis = $taxbasis * $fx;
-            $form->{receivables} -= $fx_taxamount;
-            $invamount += $fx_taxamount;
-            $ac_sth->execute($taccno, $form->{id}, $fx_taxamount,
-                             $form->{"mt_ref_$taccno"},
-                             $form->{"mt_desc_$taccno"})
-                || $form->dberror();
-            $tax_sth->execute($fx_taxbasis, $taxrate)
-                || $form->dberror();
-        }
-        $ac_sth->finish;
-        $tax_sth->finish;
-    }
-
-    # update exchangerate
-    if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-        $form->update_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-            $form->{exchangerate}, 0 );
+        $invamount +=
+            IIAA->post_form_manual_tax($myconfig, $form, 1, "receivables");
     }
 
     # record receivable
@@ -1201,20 +1163,21 @@ sub post_invoice {
 
         $query = qq|
             INSERT INTO acc_trans
-                        (trans_id, chart_id, amount, transdate,
-                                    fx_transaction)
+                     (trans_id, chart_id,
+                      amount_bc, curr, amount_tc, transdate)
                  VALUES (?, (SELECT id FROM account WHERE accno = ?),
-                        ?, ?, ?)|;
+                     ?, ?, ?, ?)|;
 
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $accno, $form->{receivables} / $form->{exchangerate},
-            $form->{transdate}, 0)
-          || $form->dberror($query);
-        $sth->execute( $form->{id}, $accno, $form->{receivables} -
+        $sth = $dbh->prepare($query)
+            or $form->dberror($dbh->errstr);
+        $sth->execute( $form->{id}, $accno,
+                       $form->{receivables}, $form->{currency},
                $form->{receivables} / $form->{exchangerate},
-               $form->{transdate}, 1) || $form->dberror($query);
+                       $form->{transdate})
+            || $form->dberror($query);
     }
 
+    # post taxes, if !$form->{manual} (see above)
     foreach my $trans_id ( keys %{ $form->{acc_trans} } ) {
         foreach my $accno ( keys %{ $form->{acc_trans}{$trans_id} } ) {
             $amount =
@@ -1224,14 +1187,17 @@ sub post_invoice {
 
                 $query = qq|
                     INSERT INTO acc_trans
-                                (trans_id, chart_id, amount,
+                           (trans_id, chart_id, amount_bc, curr, amount_tc,
                                 transdate)
                     VALUES (?, (SELECT id FROM account
                                  WHERE accno = ?),
-                           ?, ?)|;
+                      ?, ?, ?, ?)|;
 
-                $sth = $dbh->prepare($query);
-                $sth->execute( $trans_id, $accno, $amount, $form->{transdate} )
+                $sth = $dbh->prepare($query)
+                    || $form->dberror($dbh->errstr);
+                $sth->execute( $trans_id, $accno,
+                               $amount, $form->{defaultcurrency}, $amount,
+                               $form->{transdate} )
                   || $form->dberror($query);
             }
         }
@@ -1244,144 +1210,7 @@ sub post_invoice {
 
     my $cleared = 0;
 
-    # record payments and offsetting AR
-    foreach my $i ( 1 .. $form->{paidaccounts} ) {
-
-        if ( $form->{"paid_$i"} ) {
-            my ($accno) = split /--/, $form->{"AR_paid_$i"};
-            $form->{"datepaid_$i"} = $form->{transdate}
-              unless ( $form->{"datepaid_$i"} );
-
-            $form->{datepaid} = $form->{"datepaid_$i"};
-
-            $exchangerate = 0;
-
-            if ( $form->{currency} eq $form->{defaultcurrency} ) {
-                $form->{"exchangerate_$i"} = 1;
-            }
-            else {
-                $exchangerate =
-                  $form->check_exchangerate( $myconfig, $form->{currency},
-                    $form->{"datepaid_$i"}, 'buy' );
-
-                $form->{"exchangerate_$i"} =
-                  ($exchangerate)
-                  ? $exchangerate
-                  : $form->parse_amount( $myconfig,
-                    $form->{"exchangerate_$i"} );
-            }
-
-            # record AR
-            $amount =
-              $form->round_amount( $form->{"paid_$i"} * $form->{exchangerate},
-                2 );
-
-            if ( $form->{receivables} ) {
-                $query = qq|
-                    INSERT INTO acc_trans
-                                (trans_id, chart_id, amount,
-                                transdate)
-                         VALUES (?, (SELECT id FROM account
-                                      WHERE accno = ?),
-                                ?, ?)|;
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{id}, $form->{AR}, $amount,
-                    $form->{"datepaid_$i"} )
-                  || $form->dberror($query);
-            }
-
-            # record payment
-            $amount = $form->{"paid_$i"} * -1;
-            if ($keepcleared) {
-                $cleared = ( $form->{"cleared_$i"} ) ? 1 : 0;
-            }
-
-            $query = qq|
-                INSERT INTO acc_trans
-                            (trans_id, chart_id, amount,
-                            transdate, source, memo, cleared)
-                               VALUES (?, (SELECT id FROM account
-                                           WHERE accno = ?),
-                              ?, ?, ?, ?, ?)|;
-
-            $sth = $dbh->prepare($query);
-            $sth->execute( $form->{id}, $accno, $amount, $form->{"datepaid_$i"},
-                $form->{"source_$i"}, $form->{"memo_$i"}, $cleared )
-              || $form->dberror($query);
-
-            # exchangerate difference
-            $amount = $form->round_amount(
-                (
-                    $form->round_amount(
-                        $form->{"paid_$i"} * $form->{"exchangerate_$i"} -
-                          $form->{"paid_$i"},
-                        2
-                    )
-                ) * -1,
-                2
-            );
-
-            if ($amount) {
-                $query = qq|
-                    INSERT INTO acc_trans
-                                (trans_id, chart_id, amount,
-                                transdate, source,
-                                fx_transaction, cleared)
-                         VALUES (?, (SELECT id FROM account
-                                       WHERE accno = >),
-                                ?, ?, ?, '1', ?)|;
-
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{id}, $accno, $amount,
-                    $form->{"datepaid_$i"},
-                    $form->{"source_$i"}, $cleared )
-                  || $form->dberror($query);
-            }
-
-            # gain/loss
-            $amount = $form->round_amount(
-                (
-                    $form->round_amount(
-                        $form->{"paid_$i"} * $form->{exchangerate}, 2 ) -
-                      $form->round_amount(
-                        $form->{"paid_$i"} * $form->{"exchangerate_$i"}, 2
-                      )
-                ) * -1,
-                2
-            );
-
-            if ($amount) {
-                my $accno_id =
-                  ( $amount > 0 )
-                  ? $fxgain_accno_id
-                  : $fxloss_accno_id;
-
-                $query = qq|
-                    INSERT INTO acc_trans (
-                                trans_id, chart_id, amount,
-                                transdate, fx_transaction,
-                                cleared)
-                         VALUES (?, ?, ?, ?, '1', ?)|;
-
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{id}, $accno_id, $amount,
-                    $form->{"datepaid_$i"}, $cleared )
-                  || $form->dberror($query);
-            }
-
-            # update exchange rate
-            if ( ( $form->{currency} ne $form->{defaultcurrency} )
-                && !$exchangerate )
-            {
-
-                $form->update_exchangerate(
-                    $dbh, $form->{currency},
-                    $form->{"datepaid_$i"},
-                    $form->{"exchangerate_$i"}, 0
-                );
-            }
-        }
-    }
+    IIAA->process_form_payments($myconfig, $form);
 
     # set values which could be empty to 0
     $form->{terms}       *= 1;
@@ -1399,8 +1228,10 @@ sub post_invoice {
                        description = ?,
                transdate = ?,
                entity_credit_account = ?,
-               amount = ?,
-               netamount = ?,
+             amount_bc = ?,
+             amount_tc = ?,
+             netamount_bc = ?,
+             netamount_tc = ?,
                duedate = ?,
                invoice = '1',
                shippingpoint = ?,
@@ -1427,8 +1258,8 @@ sub post_invoice {
         $form->{quonumber},     $form->{description},
         $form->{transdate} || 'now',
         $form->{customer_id},   $invamount,
-        $invnetamount,
-        $form->{duedate} || 'now',
+        $invamount/$form->{exchangerate},
+        $invnetamount,          $invnetamount/$form->{exchangerate},
         $form->{shippingpoint}, $form->{shipvia},
         $form->{terms},         $form->{notes},
         $form->{intnotes},      $form->{taxincluded},
@@ -1462,25 +1293,19 @@ sub retrieve_invoice {
 
     my $query;
 
-    if ( $form->{id} ) {
-
-        # get default accounts and last invoice number
+    if ( ! $form->{id} ) {
         $query = qq|
-            SELECT value AS currencies FROM defaults
-             WHERE setting_key = 'curr'|;
-    }
-    else {
-        $query = qq|
-            SELECT value AS currencies, current_date AS transdate
+         SELECT current_date AS transdate
               FROM defaults
              WHERE setting_key = 'curr'|;
-    }
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     my $ref = $sth->fetchrow_hashref(NAME_lc);
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
     $sth->finish;
+    }
+    @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
 
     if ( $form->{id} ) {
 
@@ -1510,7 +1335,8 @@ sub retrieve_invoice {
         $sth->finish;
 
         my $tax_sth = $dbh->prepare(
-                  qq| SELECT amount, source, memo, tax_basis, rate, accno
+                  qq| SELECT amount_bc as amount, source, memo, tax_basis,
+                             rate, accno
                         FROM acc_trans ac
                         JOIN tax_extended t USING(entry_id)
                         JOIN account c ON c.id = ac.chart_id
@@ -1573,9 +1399,6 @@ sub retrieve_invoice {
         );
 
 
-        # foreign currency
-        &exchangerate_defaults( $dbh, $form );
-
         # query for price matrix
         my $pmh = PriceMatrix::price_matrix_query( $dbh, $form );
 
@@ -1627,7 +1450,7 @@ sub retrieve_invoice {
             $ref->{partsgroup} = $ref->{partsgrouptranslation}
               if $ref->{partsgrouptranslation};
 
-            push @{ $form->{invoice_details} }, $ref;
+        push @{ $form->{invoice_details} }, $ref;
             $form->{"id_$c"} = $ref->{id};
             $form->{"qty_$c"} = $ref->{qty};
         }
@@ -1696,9 +1519,6 @@ sub retrieve_item {
     my $ref;
     my $ptref;
 
-    # setup exchange rates
-    &exchangerate_defaults( $dbh, $form );
-
     # taxes
     $query = qq|
         SELECT c.accno
@@ -1745,57 +1565,6 @@ sub retrieve_item {
     }
 
     $sth->finish;
-
-}
-
-sub exchangerate_defaults {
-    my ( $dbh2, $form ) = @_;
-    $dbh = $form->{dbh};
-
-    my $var;
-
-    # get default currencies
-    my $query = qq|
-        SELECT substr(value,1,3), value FROM defaults
-         WHERE setting_key = 'curr'|;
-    my $eth = $dbh->prepare($query) || $form->dberror($query);
-    $eth->execute;
-    ( $form->{defaultcurrency}, $form->{currencies} ) = $eth->fetchrow_array;
-    $eth->finish;
-
-    $query = qq|
-        SELECT buy
-          FROM exchangerate
-         WHERE curr = ?
-               AND transdate = ?|;
-    my $eth1 = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq/
-        SELECT max(transdate || ' ' || buy || ' ' || curr)
-          FROM exchangerate
-         WHERE curr = ?/;
-    my $eth2 = $dbh->prepare($query) || $form->dberror($query);
-
-    # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
-        $eth1->execute( $var, $form->{transdate} );
-        ( $form->{$var} ) = $eth1->fetchrow_array;
-
-        if ( !$form->{$var} ) {
-            $eth2->execute($var);
-
-            ( $form->{$var} ) = $eth2->fetchrow_array;
-            ( $null, $form->{$var} ) = split / /, $form->{$var};
-            $form->{$var} = 1 unless $form->{$var};
-            $eth2->finish;
-        }
-        $eth1->finish;
-    }
-
-    $form->{ $form->{currency} } = $form->{exchangerate}
-      if $form->{exchangerate};
-    $form->{ $form->{currency} } ||= 1;
-    $form->{ $form->{defaultcurrency} } = 1;
 
 }
 
@@ -2119,5 +1888,3 @@ sub get_taxcheck
 =cut
 
 1;
-
-

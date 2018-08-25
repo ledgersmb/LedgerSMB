@@ -11,9 +11,9 @@ Background:
 
 Scenario: Closed books disallow posting
  Given the following GL transaction posted on 2015-11-01:
-     | accno   |  debit   |  credit  |
-     | 1060    |   200.00 |          |
-     | 2210    |          |   200.00 |
+     | accno   |  debit_bc |  credit_bc  |
+     | 1060    |   200.00  |             |
+     | 2210    |           |   200.00    |
   When I navigate the menu and select the item at "General Journal > Year End"
    And I select the "Close Period" tab
    And I enter "2015-11-30" into "Close As-Of"
@@ -28,9 +28,9 @@ Scenario: Reopen a closed period
    And I press "Re-open Period"
   Then I can't post a transaction on 2015-11-15
   When I post the following GL transaction on 2015-11-16:
-     | accno   |  debit   |  credit  |
-     | 2210    |   215.00 |          |
-     | 5610    |          |   215.00 |
+     | accno   |  debit_bc |  credit_bc  |
+     | 2210    |   215.00  |             |
+     | 5610    |           |   215.00    |
   Then the Balance Sheet per 2016-01-01 looks like:
      | accno               |  type      |  amount  |
      | 1060                |  asset     |   200.00 |

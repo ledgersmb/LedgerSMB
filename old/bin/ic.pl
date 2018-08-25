@@ -115,8 +115,8 @@ sub link_part {
 
     # currencies
     $form->{selectcurrency} = "";
-    for ( split /:/, $form->{currencies} ) {
-        $form->{selectcurrency} .= qq|<option value="$_">$_</option>\n|;
+    for ( @{$form->{currencies}} ) {
+        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n";
     }
 
     # readonly

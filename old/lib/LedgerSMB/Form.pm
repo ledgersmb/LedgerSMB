@@ -110,7 +110,7 @@ sub new {
 
     if (
         ($ENV{CONTENT_LENGTH} != 0)
-        && ($ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size)
+         && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size )
         && $LedgerSMB::Sysconfig::max_post_size != -1
     ) {
         print "Status: 413\n Request entity too large\n\n";
@@ -120,9 +120,9 @@ sub new {
         $_ = $argstr;
     }
     elsif ($ENV{CONTENT_LENGTH}!= 0) {
-        read(STDIN, $_, $ENV{CONTENT_LENGTH});
+        read( STDIN, $_, $ENV{CONTENT_LENGTH} );
     }
-    elsif ($ENV{QUERY_STRING}) {
+    elsif ( $ENV{QUERY_STRING} ) {
         $_ = $ENV{QUERY_STRING};
     }
     else {
@@ -134,10 +134,10 @@ sub new {
     my $orig = {};
     %$orig = split /[&=]/ unless !defined $_;
     for ( keys %$orig ) {
-        $self->{unescape( "", $_) } = unescape("", $orig->{$_});
+        $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
     }
 
-    for my $p(keys %$self) {
+    for my $p(keys %$self){
         utf8::decode($self->{$p});
         utf8::upgrade($self->{$p});
     }
@@ -146,15 +146,15 @@ sub new {
     $self->{dojo_location} = $LedgerSMB::Sysconfig::dojo_location;
 
     if($self->{header}) {
-        delete $self->{header};
-        $logger->error("self->{header} unset!!");
+     delete $self->{header};
+     $logger->error("self->{header} unset!!");
     }
 
-    if (substr( $self->{action}, 0, 1 ) !~ /( |\.)/) {
+    if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
         $self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
 
-        if (defined $self->{nextsub}) {
+        if (defined $self->{nextsub}){
             $self->{nextsub} = lc $self->{nextsub};
             $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
         }
@@ -166,7 +166,7 @@ sub new {
     $self->{login} = "" unless defined $self->{login};
     $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
-    if ($ENV{HTTP_COOKIE}) {
+    if ($ENV{HTTP_COOKIE}){
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
         my %cookie;
         my @cookies = split /;/, $ENV{HTTP_COOKIE};
@@ -187,13 +187,13 @@ sub new {
 
     if (
         ($self->{script})
-        and not List::Util::first {$_ eq $self->{script}}
+        and not List::Util::first { $_ eq $self->{script} }
         @{LedgerSMB::Sysconfig::scripts}
     ) {
         $self->error( 'Access Denied', __LINE__, __FILE__ );
     }
 
-    if (( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ )) {
+    if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
         $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
@@ -204,7 +204,7 @@ sub new {
         }
     }
 
-    if (($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect')) {
+    if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
         $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
@@ -217,24 +217,24 @@ sub open_form {
     my ($self) = @_;
     my @results ;
 
-    if ($self->{form_id} =~ '^\s*$') {
+    if ($self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
 
     #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
     if ($self->{session_id}) {
-        my $sth = $self->{dbh}->prepare('select form_open(?)');
-        my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
+    my $sth = $self->{dbh}->prepare('select form_open(?)');
+    my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
 
         if(! $rc) {
-            $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
-            return undef;
-        }
-        @results = $sth->fetchrow_array();
+     $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
+     return undef;
+    }
+    @results = $sth->fetchrow_array();
     }
     else {
-        $logger->debug("no \$self->{session_id}!");
-        return undef;
+     $logger->debug("no \$self->{session_id}!");
+     return undef;
     }
 
     $self->{form_id} = $results[0];
@@ -253,7 +253,7 @@ sub check_form {
 
 sub close_form {
     my ($self) = @_;
-    if ($self->{form_id} =~ '^\s*$') {
+    if ($self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
 
@@ -447,17 +447,17 @@ argument.  Otherwise, this function simply prints $msg to STDOUT.
 =cut
 
 sub info {
-    my ($self, $msg) = @_;
+    my ( $self, $msg ) = @_;
 
-    $msg =~ s/\n/<br>/g;
+        $msg =~ s/\n/<br>/g;
 
     if (!$self->{header}) {
-        $self->header;
-        print qq| <body>|;
-        $self->{header} = 1;
-    }
+            $self->header;
+            print qq| <body>|;
+            $self->{header} = 1;
+        }
 
-    print "<b>$msg</b>";
+        print "<b>$msg</b>";
 }
 
 =item $form->numtextrows($str, $cols[, $maxrows]);
@@ -471,17 +471,17 @@ account while spaces are not.
 
 sub numtextrows {
 
-    my ($self, $str, $cols, $maxrows) = @_;
+    my ( $self, $str, $cols, $maxrows ) = @_;
 
     my $rows = 0;
 
-    for (split /\n/, $str) {
+    for ( split /\n/, $str ) {
         $rows += int( ( (length) - 2 ) / $cols ) + 1;
     }
 
     $maxrows = $rows unless defined $maxrows;
 
-    return ($rows > $maxrows) ? $maxrows : $rows;
+    return ( $rows > $maxrows ) ? $maxrows : $rows;
 }
 
 =item $form->dberror($msg);
@@ -551,7 +551,7 @@ to "new."
 sub open_status_div {
     my ($self, $div_id) = @_;
     my $class;
-    if ($self->{approved} and $self->{id}) {
+    if ($self->{approved} and $self->{id}){
         $class = "posted";
     }
     elsif ($self->{id}){
@@ -565,7 +565,7 @@ sub open_status_div {
         'Action: [_1], ID: [_2]',
         $self->{action},
         $self->{id}
-    );
+        );
     my $id = $div_id ? "id=\"$div_id\"" : '';
     return "<div $id class=\"$class\">
             <div id=\"history\">$status</div>";
@@ -608,7 +608,7 @@ sub _redirect {
     my ($self) = @_;
     my ( $script, $argv ) = split( /\?/, $self->{callback}, 2 );
 
-    if (!$script) {    # http redirect to login.pl if called w/no args
+    if ( !$script ) {    # http redirect to login.pl if called w/no args
         print "Location: login.pl\n";
         print "Content-type: text/html\n\n";
         return;
@@ -668,7 +668,7 @@ sub sort_columns {
         $self->{sort} =~ s/^"*(.*?)"*$/$1/;
         if (@columns) {
             @columns = grep !/^$self->{sort}$/, @columns;
-            if ($self->{sort} !~ /^\w*$/) {
+            if ($self->{sort} !~ /^\w*$/){
                 $self->{sort} = $self->{dbh}->quote_identifier($self->{sort});
             }
             splice @columns, 0, 0, $self->{sort};
@@ -730,21 +730,21 @@ sub sort_order {
 
     if (ref $ordinal eq 'HASH') {
         #$a[0] =
-        #( $ordinal->{ $a[$_] } )
-        #? "$ordinal->{$a[0]} $self->{direction}";
-        #: "$a[0] $self->{direction}";
+          #( $ordinal->{ $a[$_] } )
+          #? "$ordinal->{$a[0]} $self->{direction}";
+          #: "$a[0] $self->{direction}";
 
         if (defined $_ && $ordinal->{ $a[$_] }) {
-            $a[0] = "$ordinal->{$a[0]} $self->{direction}";
-        }
+              $a[0] = "$ordinal->{$a[0]} $self->{direction}";
+          }
         elsif (!defined $_ && $ordinal->{ $a[0] }) {
-            $a[0] = "$ordinal->{$a[0]} $self->{direction}";
-        }
+              $a[0] = "$ordinal->{$a[0]} $self->{direction}";
+          }
         else {
-            $a[0] = "$a[0] $self->{direction}";
-        }
+              $a[0] = "$a[0] $self->{direction}";
+          }
 
-        for (1 .. $#a) {
+        for ( 1 .. $#a ) {
             $a[$_] = $ordinal->{ $a[$_] } if $ordinal->{ $a[$_] };
         }
 
@@ -788,8 +788,8 @@ sub format_amount {
     $places = "0" unless defined $places;
     $dash = "" unless defined $dash;
     $amount = $self->parse_amount($myconfig, $amount);
-    if ($self->{money_precision}) {
-        $places= $self->{money_precision};
+    if ($self->{money_precision}){
+       $places= $self->{money_precision};
     }
     $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
     $amount = $self->parse_amount( $myconfig, $amount )
@@ -825,7 +825,7 @@ sub parse_amount {
 
     return LedgerSMB::PGNumber->from_input(
         $amount,
-        {format => $myconfig->{numberformat}}
+                                           {format => $myconfig->{numberformat}}
     );
 }
 
@@ -945,24 +945,24 @@ sub datetonum {
         return $date;
     }
 
-    if ($date && $date =~ /\D/) {
+    if ( $date && $date =~ /\D/ ) {
 
         my $yy;
         my $mm;
         my $dd;
 
-        if ($date =~ /^\d{4}-\d\d-\d\d$/) {
-            ($yy, $mm, $dd) = split /\D/, $date;
+        if ( $date =~ /^\d{4}-\d\d-\d\d$/ ) {
+            ( $yy, $mm, $dd ) = split /\D/, $date;
         }
 
         if ($myconfig->{dateformat} =~ /^yy/) {
-            ($yy, $mm, $dd) = split /\D/, $date;
+            ( $yy, $mm, $dd ) = split /\D/, $date;
         }
         elsif ($myconfig->{dateformat} =~ /^mm/) {
-            ($mm, $dd, $yy) = split /\D/, $date;
+            ( $mm, $dd, $yy ) = split /\D/, $date;
         }
         elsif ($myconfig->{dateformat} =~ /^dd/) {
-            ($dd, $mm, $yy) = split /\D/, $date;
+            ( $dd, $mm, $yy ) = split /\D/, $date;
         }
 
         $dd *= 1;
@@ -1098,119 +1098,129 @@ qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" val
 =cut
 
 sub generate_selects {
-    my ($form, $myconfig) = @_;
+     my ($form, $myconfig) = @_;
+     my $locale = $form->{_locale};
 
     # currencies
-    if (!$form->{currencies}) {
-        $form->{currencies} = $form->get_setting('curr');
-    }
+     if (!$form->{currencies}){
+         $form->error($locale->text(
+            'No currencies defined.  Please set these up under System/Defaults.'
+                      ));
+     }
 
-    if ($form->{currencies}) {
+     if ($form->{currencies}) {
+          my %curr;
+          my @curr = @{$form->{currencies}};
+          $form->{defaultcurrency} = $curr[0];
+          foreach (@curr) {
+                $curr{$_} = 1;
+          }
+          @curr = keys %curr;
 
         my @currencies = split /:/, $form->{currencies};
         $form->{defaultcurrency} = $currencies[0];
         $form->{currency} ||= $form->{defaultcurrency};
-        $form->{selectcurrency} = "";
+          $form->{selectcurrency} = "";
 
         foreach my $currency (sort @currencies) {
             my $selected = ($form->{currency} eq $currency)
                          ? ' selected="selected"'
                          : '';
-            $form->{selectcurrency} .=
+                $form->{selectcurrency} .=
                 "<option value=\"$currency\"$selected>$currency</option>\n";
-        }
-    }
+          }
+     }
 
-    # partsgroups
-    if ($form->{all_partsgroup} && @{ $form->{all_partsgroup} }) {
+     # partsgroups
+    if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = "<option></option>\n";
         foreach my $ref ( @{ $form->{all_partsgroup} } ) {
-            my $value = "$ref->{partsgroup}--$ref->{id}";
-            my $selected = ($form->{partsgroup} eq $value) ?
+                my $value = "$ref->{partsgroup}--$ref->{id}";
+                my $selected = ($form->{partsgroup} eq $value) ?
                      ' selected="selected"' : "";
             if ( $ref->{translation} ) {
                 $form->{selectpartsgroup} .=
-                    qq|<option value="$value"$selected>$ref->{translation}</option>\n|;
+                          qq|<option value="$value"$selected>$ref->{translation}</option>\n|;
             }
             else {
                 $form->{selectpartsgroup} .=
-                    qq|<option value="$value"$selected>$ref->{partsgroup}</option>\n|;
+                          qq|<option value="$value"$selected>$ref->{partsgroup}</option>\n|;
             }
         }
     }
 
-    # projects
-    if ($form->{all_project} && @{ $form->{all_project} }) {
+     # projects
+    if ( $form->{all_project} && @{ $form->{all_project} } ) {
         $form->{selectprojectnumber} = "<option></option>\n";
-        $form->{selectprojectnumber} = "";
+          $form->{selectprojectnumber} = "";
 
-        for (@{ $form->{all_project} }) {
+        for ( @{ $form->{all_project} } ) {
             my $value = "$_->{projectnumber}--$_->{id}";
             $form->{selectprojectnumber} .=
-                # change the format here, then change it below!
-                qq|<option value="$value">$_->{projectnumber}</option>\n|;
+                     # change the format here, then change it below!
+                     qq|<option value="$value">$_->{projectnumber}</option>\n|;
         }
 
-        if ($form->{rowcount}) {
-            for my $i (1 .. $form->{rowcount}) {
-                $form->{"selectprojectnumber_$i"} =
-                    $form->{"selectprojectnumber"};
-                $form->{"selectprojectnumber_$i"} =~
-                    s/(value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
-            }
-        }
+          if ($form->{rowcount}) {
+                for my $i ( 1 .. $form->{rowcount} ) {
+                     $form->{"selectprojectnumber_$i"} =
+                          $form->{"selectprojectnumber"};
+                     $form->{"selectprojectnumber_$i"} =~
+                          s/(value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
+                }
+          }
     }
 
     # departments
-    if ($form->{all_department} && @{ $form->{all_department} }) {
+    if ( $form->{all_department} && @{ $form->{all_department} } ) {
         $form->{selectdepartment} = "<option></option>\n";
-        for (@{ $form->{all_department} }) {
-            my $value = "$_->{description}--$_->{id}";
-            my $selected = ($form->{department} eq $value) ?
-                ' selected="selected"' : "";
+        for ( @{ $form->{all_department} } ) {
+                my $value = "$_->{description}--$_->{id}";
+                my $selected = ($form->{department} eq $value) ?
+                     ' selected="selected"' : "";
             $form->{selectdepartment} .=
-                qq|<option value="$value"$selected>$_->{description}</option>\n|;
+                     qq|<option value="$value"$selected>$_->{description}</option>\n|;
         }
     }
 
-    # languages
-    if ($form->{all_language} && @{ $form->{all_language} }) {
+     # languages
+    if ( $form->{all_language} && @{ $form->{all_language} } ) {
         $form->{selectlanguage} = "<option></option>\n";
-        for (@{ $form->{all_language} }) {
-            my $value = $_->{code};
-            my $selected = ($form->{language} eq $value) ?
-                ' selected="selected"' : "";
+        for ( @{ $form->{all_language} } ) {
+                my $value = $_->{code};
+                my $selected = ($form->{language} eq $value) ?
+                     ' selected="selected"' : "";
             $form->{selectlanguage} .=
-                qq|<option value="$value"$selected>$_->{description}</option>\n|;
+              qq|<option value="$value"$selected>$_->{description}</option>\n|;
         }
     }
 
     # sales staff
     if ($form->{all_employee} && @{ $form->{all_employee} }) {
         $form->{selectemployee} = "";
-        for (@{ $form->{all_employee} }) {
+        for ( @{ $form->{all_employee} } ) {
             $form->{selectemployee} .=
-                qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
     }
 
     # customers/vendors
-    if ($form->{vc}) {
-        if ($form->{"all_$form->{vc}"} && @{ $form->{"all_$form->{vc}"} }) {
-            $form->{"select$form->{vc}"} = "";
-            my $vc = $form->{vc};
-            my $search_value = $form->{$vc};
-            $search_value .= qq|--$form->{"${vc}_id"}|
-                unless $search_value =~ /--/;
+     if ($form->{vc}) {
+          if ( $form->{"all_$form->{vc}"} && @{ $form->{"all_$form->{vc}"} } ) {
+                $form->{"select$form->{vc}"} = "";
+              my $vc = $form->{vc};
+              my $search_value = $form->{$vc};
+              $search_value .= qq|--$form->{"${vc}_id"}|
+                  unless $search_value =~ /--/;
 
-            for ( @{ $form->{"all_$form->{vc}"} } ) {
-                my $value = "$_->{name}--$_->{id}";
-                my $selected = ($search_value eq $value) ?
-                    ' selected="selected"' : "";
-                $form->{"select$form->{vc}"} .=
-                    qq|<option value="$value"$selected>$_->{name}</option>\n|;
-            }
-        }
+                for ( @{ $form->{"all_$form->{vc}"} } ) {
+                     my $value = "$_->{name}--$_->{id}";
+                  my $selected = ($search_value eq $value) ?
+                          ' selected="selected"' : "";
+                     $form->{"select$form->{vc}"} .=
+                          qq|<option value="$value"$selected>$_->{name}</option>\n|;
+                }
+          }
      }
 
      # AR/AP links
@@ -1218,52 +1228,52 @@ sub generate_selects {
      if (defined $form->{ARAP}) {
         $form->create_links(
             module => $form->{ARAP},
-            myconfig => $myconfig,
-            vc => $form->{vc},
-            billing => $form->{vc} eq 'customer'
+                                      myconfig => $myconfig,
+                                      vc => $form->{vc},
+                                      billing => $form->{vc} eq 'customer'
                        && $form->{type} eq 'invoice'
         ) unless defined $form->{"$form->{ARAP}_links"};
 
-        foreach my $key (keys %{ $form->{"$form->{ARAP}_links"} }) {
+          foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
-            $form->{"select$key"} = "";
-            foreach my $ref (@{ $form->{"$form->{ARAP}_links"}{$key} }) {
-                my $value = "$ref->{accno}--$ref->{description}";
-                $form->{"select$key"} .=
-                    # change the format here, then change it below too!
-                    qq|<option value="$value">$value</option>\n|;
-            }
-        }
+                $form->{"select$key"} = "";
+                foreach my $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
+                     my $value = "$ref->{accno}--$ref->{description}";
+                     $form->{"select$key"} .=
+                          # change the format here, then change it below too!
+                          qq|<option value="$value">$value</option>\n|;
+                }
+          }
 
-        if ($form->{rowcount}) {
-            for my $i (1 .. $form->{rowcount}) {
-                $form->{"select$form->{ARAP}_amount_$i"} =
-                    $form->{"select$form->{ARAP}_amount"};
-                $form->{"select$form->{ARAP}_amount_$i"} =~
-                    s/(value="\Q$form->{"$form->{ARAP}_amount_$i"}\E")/$1 selected="selected"/;
-            }
-        }
-    }
+          if ($form->{rowcount}) {
+                for my $i ( 1 .. $form->{rowcount} ) {
+                     $form->{"select$form->{ARAP}_amount_$i"} =
+                          $form->{"select$form->{ARAP}_amount"};
+                     $form->{"select$form->{ARAP}_amount_$i"} =~
+                          s/(value="\Q$form->{"$form->{ARAP}_amount_$i"}\E")/$1 selected="selected"/;
+                }
+          }
+     }
 
-    # formats
+     # formats
     $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
-    if (${LedgerSMB::Sysconfig::latex}) {
+    if ( ${LedgerSMB::Sysconfig::latex} ) {
         $form->{selectformat} .= qq|
             <option value="postscript">|
-            . $LedgerSMB::App_State::Locale->text('Postscript')
-            . qq|<option value="pdf">|
-            . $LedgerSMB::App_State::Locale->text('PDF');
+                . $LedgerSMB::App_State::Locale->text('Postscript')
+                . qq|<option value="pdf">|
+                . $LedgerSMB::App_State::Locale->text('PDF');
     }
 
     # warehouse
-    if ($form->{all_warehouse} &&  @{ $form->{all_warehouse} }) {
+    if ( $form->{all_warehouse} &&  @{ $form->{all_warehouse} } ) {
         $form->{selectwarehouse} = "<option></option>\n";
-        for (@{ $form->{all_warehouse} }) {
-            my $value = "$_->{description}--$_->{id}";
-            my $selected = ($form->{warehouse} eq $value) ?
-                ' selected="selected"' : "";
+        for ( @{ $form->{all_warehouse} } ) {
+                my $value = "$_->{description}--$_->{id}";
+                my $selected = ($form->{warehouse} eq $value) ?
+                     ' selected="selected"' : "";
             $form->{selectwarehouse} .=
-                qq|<option value="$value"$selected>$_->{description}\n|;
+                     qq|<option value="$value"$selected>$_->{description}\n|;
         }
     }
 }
@@ -1312,7 +1322,7 @@ Please enter your credentials
 sub db_init {
     my ( $self, $myconfig ) = @_;
     $logger->trace("begin");
-    if (!$self->{company}) {
+    if (!$self->{company}){
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     my $dbname = $self->{company};
@@ -1362,7 +1372,7 @@ sub db_init {
     $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
-    if ($self->{warn_expire}) {
+    if ($self->{warn_expire}){
         $sth = $dbh->prepare('SELECT user__check_my_expiration()');
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
@@ -1396,9 +1406,9 @@ $form->{dbh}->quote($var).
 
 sub dbquote {
 
-    my ($self, $var) = @_;
+    my ( $self, $var ) = @_;
 
-    if ($var eq '') {
+    if ( $var eq '' ) {
         $_ = "NULL";
     }
     else {
@@ -1443,176 +1453,6 @@ sub update_balance {
     }
 }
 
-=item $form->update_exchangerate($dbh, $curr, $transdate, $buy, $sell);
-
-Updates the exchange rates $buy and $sell for the given $currency on $transdate.
-If there is not yet an exchange rate for $currency on $transdate, an entry is
-inserted.  This returns without doing anything if $curr eq ''.
-
-$dbh is not used, favouring $self->{dbh}.
-
-=cut
-
-sub update_exchangerate {
-
-    my ( $self, $dbh, $curr, $transdate, $buy, $sell ) = @_;
-
-    # some sanity check for currency
-    return if ( $curr eq "" );
-
-    my $query = qq|
-        SELECT curr
-        FROM exchangerate
-        WHERE curr = ?
-        AND transdate = ?
-        FOR UPDATE|;
-
-    my $sth = $self->{dbh}->prepare($query);
-    $sth->execute( $curr, $transdate ) || $self->dberror($query);
-
-    my $set;
-    my @queryargs;
-
-    if ( $buy && $sell ) {
-        $set = "buy = ?, sell = ?";
-        @queryargs = ( $buy, $sell );
-    }
-    elsif ($buy) {
-        $set       = "buy = ?";
-        @queryargs = ($buy);
-    }
-    elsif ($sell) {
-        $set       = "sell = ?";
-        @queryargs = ($sell);
-    }
-
-    my $default_buyexchange = LedgerSMB::Setting->get('default_buyexchange');
-    if (!$set && $default_buyexchange) {
-        $set = "buy = ?";
-        $buy = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}");
-        @queryargs = ($buy);
-    }
-    if ( !$set ) {
-        $self->error("Exchange rate missing!");
-    }
-
-    if ( $sth->fetchrow_array ) {
-        $query = qq|UPDATE exchangerate
-                       SET $set
-                     WHERE curr = ?
-                       AND transdate = ?|;
-        push( @queryargs, $curr, $transdate );
-
-    }
-    else {
-        $query = qq|
-            INSERT INTO exchangerate (
-            curr, buy, sell, transdate)
-            VALUES (?, ?, ?, ?)|;
-        @queryargs = ( $curr, $buy, $sell, $transdate );
-    }
-    $sth->finish;
-    $sth = $self->{dbh}->prepare($query);
-
-    $sth->execute(@queryargs) || $self->dberror($query);
-
-}
-
-=item $form->save_exchangerate($myconfig, $currency, $transdate, $rate, $fld);
-
-Saves the exchange rate $rate for the given $currency on $transdate for the
-provided purpose in $fld.  $fld can be either 'buy' or 'sell'.
-
-$myconfig is not used.  $self->update_exchangerate is used for the majority of
-the work.
-
-=cut
-
-sub save_exchangerate {
-
-    my ( $self, $myconfig, $currency, $transdate, $rate, $fld ) = @_;
-
-    my ( $buy, $sell ) = ( 0, 0 );
-    $buy  = $rate if $fld eq 'buy';
-    $sell = $rate if $fld eq 'sell';
-
-    $self->update_exchangerate(
-        $self->{dbh},
-        $currency,
-        $transdate,
-        $buy,
-        $sell
-    );
-}
-
-=item $form->get_exchangerate($curr, $transdate, $fld);
-
-Returns the exchange rate in relation to the default currency for $currency on
-$transdate for the purpose indicated by $fld.  $fld can be either 'buy' or
-'sell' to get usable results.
-
-$dbh is not used, favouring $self->{dbh}.
-
-=cut
-
-
-sub get_exchangerate {
-
-    my ($self, $curr, $transdate, $fld) = @_;
-
-    my $exchangerate = 1;
-
-    if ($transdate) {
-        my $query = qq|
-            SELECT $fld FROM exchangerate
-            WHERE curr = ? AND transdate = ?|;
-        my $sth = $self->{dbh}->prepare($query);
-        $sth->execute( $curr, $transdate );
-
-        ($exchangerate) = $sth->fetchrow_array;
-        if (!$exchangerate) {
-            my $default_buyexchange = LedgerSMB::Setting->get('default_buyexchange');
-            $exchangerate = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}")
-                            if $default_buyexchange;
-        }
-        $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
-        $sth->finish;
-    }
-    return $exchangerate;
-}
-
-=item $form->check_exchangerate($myconfig, $currency, $transdate, $fld);
-
-Returns some true value when an entry for $currency on $transdate is true for
-the purpose indicated by $fld.  $fld can be either 'buy' or 'sell' to get
-usable results.  Returns false if $transdate is not set.
-
-$myconfig is not used.
-
-=cut
-
-sub check_exchangerate {
-
-    my ( $self, $myconfig, $currency, $transdate, $fld ) = @_;
-
-    return "" unless $transdate;
-
-    my $query = qq|
-        SELECT $fld
-        FROM exchangerate
-        WHERE curr = ? AND transdate = ?|;
-
-    my $sth = $self->{dbh}->prepare($query);
-    $sth->execute( $currency, $transdate );
-    my @array = $sth->fetchrow_array;
-    $self->db_parse_numeric(sth => $sth, arrayref => \@array);
-    my ($exchangerate) = @array;
-
-    $sth->finish;
-
-    $exchangerate;
-}
-
 =item $form->add_shipto($id, $is_oe);
 
 Inserts a new location_id reference into the table new_shipto, using the
@@ -1628,7 +1468,7 @@ If $is_oe is true, the value of trans_id is NULL and of oe_id is $id.
 sub add_shipto {
 
     my ($self, $id, $is_oe) = @_;
-    if (! $self->{locationid}) {
+        if (! $self->{locationid}) {
         return;
     }
 
@@ -1636,26 +1476,26 @@ sub add_shipto {
             INSERT INTO new_shipto
             (trans_id, oe_id,location_id)
             VALUES ( ?, ?, ?)
-    |;
+            |;
 
-    my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
-    my $trans_id;
-    my $oe_id;
+        my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
+        my $trans_id;
+        my $oe_id;
 
     if ($is_oe) {
-        $trans_id = undef;
-        $oe_id = $id;
+           $trans_id = undef;
+           $oe_id = $id;
     }
     else {
-         $trans_id = $id;
-         $oe_id = undef;
-    }
+           $trans_id = $id;
+           $oe_id = undef;
+        }
 
-    $sth->execute(
-        $trans_id,
-        $oe_id,
-        $self->{locationid}
-    ) || $self->dberror($query);
+        $sth->execute(
+                        $trans_id,
+            $oe_id,
+            $self->{locationid}
+              ) || $self->dberror($query);
 
     $sth->finish;
 }
@@ -1735,12 +1575,12 @@ sub get_name {
     my ( $self, $myconfig, $table, $transdate, $entity_class) = @_;
 
     if (!$entity_class){
-        if ($table eq 'customer') {
-            $entity_class = 2;
+       if ($table eq 'customer'){
+           $entity_class = 2;
         }
         elsif ($table eq 'vendor') {
-            $entity_class = 1;
-        }
+           $entity_class = 1;
+       }
     }
 
     my @queryargs;
@@ -1758,7 +1598,7 @@ sub get_name {
     }
 
     # Company name is stored in $self->{vendor} or $self->{customer}
-    if ($self->{"${table}number"} eq '') {
+    if ($self->{"${table}number"} eq ''){
         $self->{"${table}number"} = $self->{$table};
     }
 
@@ -1840,7 +1680,7 @@ sub all_vc {
     $sth->execute('vclimit');
     ($myconfig->{vclimit}) = $sth->fetchrow_array();
 
-    if ($vc eq 'customer') {
+    if ($vc eq 'customer'){
         $self->{vc_class} = 2;
     }
     else {
@@ -1959,7 +1799,7 @@ sub all_accounts {
     $self->{all_accounts} = [];
     my $sth = $self->{dbh}->prepare('SELECT * FROM chart_list_all()');
     $sth->execute || $self->dberror('SELECT * FROM chart_list_all()');
-    while ($ref = $sth->fetchrow_hashref('NAME_lc')) {
+    while ($ref = $sth->fetchrow_hashref('NAME_lc')){
         push(@{$self->{all_accounts}}, $ref);
     }
     $sth->finish;
@@ -1980,7 +1820,7 @@ $myconfig and $dbh2 are unused.
 
 sub all_taxaccounts {
 
-    my ($self, $myconfig, $dbh2, $transdate) = @_;
+    my ( $self, $myconfig, $dbh2, $transdate ) = @_;
 
     my $dbh = $self->{dbh};
 
@@ -1995,7 +1835,7 @@ sub all_taxaccounts {
         push( @queryargs, $transdate );
     }
 
-    if ($self->{taxaccounts}) {
+    if ( $self->{taxaccounts} ) {
 
         # rebuild tax rates
         $query = qq|SELECT t.rate, t.taxnumber
@@ -2029,7 +1869,7 @@ $dbh2 is unused.
 
 sub all_employees {
 
-    my ($self, $myconfig, $dbh2, $transdate, $sales) = @_;
+    my ( $self, $myconfig, $dbh2, $transdate, $sales ) = @_;
 
     my $dbh       = $self->{dbh};
     my @whereargs = ();
@@ -2059,7 +1899,7 @@ sub all_employees {
     my $sth = $dbh->prepare($query);
     $sth->execute(@whereargs) || $self->dberror($query);
 
-    while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_employee} }, $ref;
     }
 
@@ -2081,24 +1921,24 @@ sub all_business_units {
     $self->{bu_class} = [];
     $self->{b_units} = {};
 
-    my $dbh = $self->{dbh};
+    my $dbh       = $self->{dbh};
     my $class_sth = $dbh->prepare(
-        q|SELECT * FROM business_unit__list_classes('1', ?)|
+                q|SELECT * FROM business_unit__list_classes('1', ?)|
     );
     $class_sth->execute($module_name)
         || $self->dberror(q|SELECT * FROM business_unit__list_classes('1', ?)|);
 
-    my $bu_sth = $dbh->prepare(
-        q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|
+    my $bu_sth    = $dbh->prepare(
+                q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|
     );
 
-    while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')) {
+    while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
         push @{$self->{bu_class}}, $classref;
         $bu_sth->execute($classref->{id}, $transdate, $credit_id)
             || $self->dberror(q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|);
         $self->{b_units}->{$classref->{id}} = [];
-        while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')) {
-            push @{$self->{b_units}->{$classref->{id}}}, $buref;
+        while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')){
+           push @{$self->{b_units}->{$classref->{id}}}, $buref;
         }
     }
     $class_sth->finish;
@@ -2114,7 +1954,7 @@ languages using the form {'code' => code, 'description' => description}.
 
 sub all_languages {
 
-    my ($self) = @_;
+    my ( $self ) = @_;
 
     my $dbh = $self->{dbh};
 
@@ -2128,7 +1968,7 @@ sub all_languages {
 
     $self->{all_language} = [];
 
-    while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_language} }, $ref;
     }
 
@@ -2156,8 +1996,8 @@ sub all_years {
 
     my $sth = $dbh->prepare($query);
     $sth->execute();
-    while (my ($year) = $sth->fetchrow_array()) {
-        push @{$self->{all_years}}, $year;
+    while (my ($year) = $sth->fetchrow_array()){
+      push @{$self->{all_years}}, $year;
     }
 
     #this should probably be changed to use locale
@@ -2225,7 +2065,7 @@ sub create_links {
     my $job = $args{job};
 
     # get last customers or vendors
-    my ($query, $sth);
+    my ( $query, $sth );
 
     if (!$self->{dbh}) {
         $self->db_init($myconfig);
@@ -2269,9 +2109,9 @@ sub create_links {
 
         push(@$link,"${module}_tax") if $tax_accounts{$ref->{accno}};
 
-        foreach my $key (@$link) {
+        foreach my $key ( @$link ) {
 
-            if ($key =~ /$module/) {
+            if ( $key =~ /$module/ ) {
 
                 # cross reference for keys
                 $xkeyref{ $ref->{accno} } = $key;
@@ -2294,7 +2134,7 @@ sub create_links {
     $vc = 'vendor' unless $vc eq 'customer';
     my $seq = ( $vc eq 'customer' ) ? 'a.setting_sequence'
                                     : 'NULL as setting_sequence';
-    if ($self->{id}) {
+    if ( $self->{id} ) {
 
         $query = qq|
             SELECT a.invnumber, a.transdate,
@@ -2303,7 +2143,9 @@ sub create_links {
                 a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-                a.amount AS oldinvtotal,
+            a.amount_tc AS oldinvtotal,
+            case when a.amount_tc = 0 then 0
+            else a.amount_bc / a.amount_tc end as exchangerate,
                 a.person_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,
@@ -2328,7 +2170,7 @@ sub create_links {
         $ref = $sth->fetchrow_hashref('NAME_lc');
         $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
-        if (!defined $ref->{approved}) {
+        if (!defined $ref->{approved}){
            $ref->{approved} = 0;
         }
 
@@ -2344,7 +2186,7 @@ sub create_links {
             FROM status s WHERE s.trans_id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
-        while ($ref = $sth->fetchrow_hashref('NAME_lc')) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->{printed} .= "$ref->{formname} "
               if $ref->{printed};
             $self->{emailed} .= "$ref->{formname} "
@@ -2367,10 +2209,10 @@ sub create_links {
                       ORDER BY class_id DESC|;
     my %id_map = (
         12 => 'email',
-        13 => 'cc',
-        14 => 'bcc',
-        15 => 'email',
-        16 => 'cc',
+               13 => 'cc',
+               14 => 'bcc',
+               15 => 'email',
+               16 => 'cc',
         17 => 'bcc'
     );
     $sth = $dbh->prepare($query);
@@ -2385,11 +2227,11 @@ sub create_links {
     my $ctype;
     my $billing_email = 0;
 
-    while ($ref = $sth->fetchrow_hashref('NAME_lc')) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         $ctype = $ref->{class_id};
         $ctype = $id_map{$ctype};
         $billing_email = 1
-            if $ref->{class_id} == 15;
+        if $ref->{class_id} == 15;
 
         # If there's an explicit billing email, don't use
         # the standard email addresses; otherwise fall back to standard
@@ -2406,7 +2248,7 @@ sub create_links {
 
         # get amounts from individual entries
         $query = qq|
-            SELECT c.accno, c.description, a.source, a.amount,
+         SELECT c.accno, c.description, a.source, a.amount_tc as amount,
                 a.memo,a.entry_id, a.transdate, a.cleared,
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
@@ -2414,27 +2256,21 @@ sub create_links {
             JOIN account c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
             WHERE a.trans_id = ?
-                AND a.fx_transaction = '0'
-                        GROUP BY c.accno, c.description, a.source, a.amount,
+--          AND a.fx_transaction = '0'
+                        GROUP BY c.accno, c.description, a.source, a.amount_tc,
                                 a.memo,a.entry_id, a.transdate, a.cleared
             ORDER BY transdate|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
 
-        my $fld = ($vc eq 'customer') ? 'buy' : 'sell';
-
-        $self->{exchangerate} = $self->get_exchangerate(
-            $self->{currency},
-            $self->{transdate},
-            $fld
-        );
+        my $fld = ( $vc eq 'customer' ) ? 'buy' : 'sell';
 
         # store amounts in {acc_trans}{$key} for multiple accounts
-        while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+        while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->db_parse_numeric(sth=>$sth, hashref=>$ref);#tshvr
 
-            for my $aref (@{$ref->{bu_lines}}) {
+            for my $aref (@{$ref->{bu_lines}}){
                 $ref->{"b_unit_$aref->[0]"} = $aref->[1];
             }
             $ref->{exchangerate} = $self->get_exchangerate(
@@ -2443,7 +2279,7 @@ sub create_links {
                 $fld
             );
 
-            if ($self->{reverse}) {
+            if ($self->{reverse}){
                 $ref->{amount} *= -1;
             }
 
@@ -2454,13 +2290,13 @@ sub create_links {
     }
     else {
 
-        if (!$self->{"$self->{vc}_id"}) {
+        if ( !$self->{"$self->{vc}_id"} ) {
             $self->lastname_used($vc);
         }
     }
 
     for (qw(separate_duties current_date curr closedto revtrans lock_description)) {
-        if ($_ eq 'closedto') {
+        if ($_ eq 'closedto'){
             $query = qq|
                 SELECT value::date FROM defaults
                  WHERE setting_key = '$_'|;
@@ -2478,10 +2314,8 @@ sub create_links {
         $sth->execute || $self->dberror($query);
 
         ($val) = $sth->fetchrow_array();
-        if ($_ eq 'curr') {
-            $self->{currencies} = $val;
-            my @currencies = split /:/, $val;
-            $self->{defaultcurrency} = $currencies[0];
+        if ( $_ eq 'curr' ) {
+            $self->{defaultcurrency} = $val;
         }
         else {
             $self->{$_} = $val;
@@ -2489,8 +2323,14 @@ sub create_links {
 
         $sth->finish;
     }
+    $sth = $dbh->prepare("select curr from currency");
+    $sth->execute || $self->dberror($query);
+    my @curr = grep { ! ($_ eq $self->{defaultcurrency}) }
+               map { $_->[0] } @{$sth->fetchall_arrayref()};
+    $self->{currencies} = [
+        $self->{defaultcurrency}, (@curr) ];
 
-    if (!$self->{id} && !$self->{transdate}) {
+    if (!$self->{id} && !$self->{transdate}){
         $self->{transdate} = $self->{current_date};
     }
 
@@ -2544,12 +2384,12 @@ sub lastname_used {
     }
 
     my $sth;
-    if ($self->{type} =~ /_order/) {
+    if ( $self->{type} =~ /_order/ ) {
         $arap  = 'oe';
         $where = "quotation = '0'";
     }
 
-    if ($self->{type} =~ /_quotation/) {
+    if ( $self->{type} =~ /_quotation/ ) {
         $arap  = 'oe';
         $where = "quotation = '1'";
     }
@@ -2604,12 +2444,12 @@ sub current_date {
         else {
             $dateformat = $myconfig->{dateformat};
 
-            if ($myconfig->{dateformat} !~ /^y/) {
+            if ( $myconfig->{dateformat} !~ /^y/ ) {
                 my @a = split /\D/, $thisdate;
                 $dateformat .= "yy" if ( length $a[2] > 2 );
             }
 
-            if ($thisdate !~ /\D/) {
+            if ( $thisdate !~ /\D/ ) {
                 $dateformat = 'yyyymmdd';
             }
         }
@@ -2665,17 +2505,17 @@ between $count + 1 and $numrows is deleted.
 
 sub redo_rows {
 
-    my ($self, $flds, $new, $count, $numrows) = @_;
+    my ( $self, $flds, $new, $count, $numrows ) = @_;
     my @ndx = ();
 
-    for (1 .. $count) {
+    for ( 1 .. $count ) {
         push @ndx, { num => $new->[ $_ - 1 ]->{runningnumber}, ndx => $_ };
     }
 
     my $i = 0;
 
     # fill rows
-    foreach my $item (sort { $a->{num} <=> $b->{num} } @ndx) {
+    foreach my $item ( sort { $a->{num} <=> $b->{num} } @ndx ) {
         $i++;
         my $j = $item->{ndx} - 1;
         for (@{$flds}) {
@@ -2719,7 +2559,7 @@ sub get_partsgroup {
     my $where;
     my $sortorder = "partsgroup";
 
-    if ($p->{searchitems} eq 'part') {
+    if ( $p->{searchitems} eq 'part' ) {
         $where = qq| WHERE (p.inventory_accno_id > 0
                        AND p.income_accno_id > 0)|;
     }
@@ -2737,14 +2577,14 @@ sub get_partsgroup {
         $where = qq| WHERE p.income_accno_id > 0|;
     }
 
-    if ($p->{all}) {
+    if ( $p->{all} ) {
         $query = qq|SELECT id, partsgroup
                       FROM partsgroup|;
     }
 
     my @queryargs = ();
 
-    if ($p->{language_code}) {
+    if ( $p->{language_code} ) {
         $sortorder = "translation";
 
         $query = qq|
@@ -2766,7 +2606,7 @@ sub get_partsgroup {
 
     $self->{all_partsgroup} = ();
 
-    while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_partsgroup} }, $ref;
     }
 
@@ -2864,7 +2704,7 @@ sub save_status {
     my $printed;
     my $emailed;
 
-    if ($self->{queued}) {
+    if ( $self->{queued} ) {
 
         %queued = split / +/, $self->{queued};
 
@@ -2873,7 +2713,7 @@ sub save_status {
             $printed = ( $self->{printed} =~ /$formname/ ) ? "1" : "0";
             $emailed = ( $self->{emailed} =~ /$formname/ ) ? "1" : "0";
 
-            if ($queued{$formname}) {
+            if ( $queued{$formname} ) {
                 $query = qq|
                     INSERT INTO status
                         (trans_id, printed, emailed,
@@ -2909,7 +2749,7 @@ sub save_status {
         $status{$_}{emailed} = 1
     }
 
-    foreach my $formname (keys %status) {
+    foreach my $formname ( keys %status ) {
         $printed = ( $formnames  =~ /$self->{formname}/ ) ? "1" : "0";
         $emailed = ( $emailforms =~ /$self->{formname}/ ) ? "1" : "0";
 
@@ -2966,7 +2806,7 @@ sub get_recurring {
         $self->{"recurring$_"} = ""
     }
 
-    while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 
         for (keys %$ref) {
             $self->{"recurring$_"} = $ref->{$_}
@@ -2984,24 +2824,24 @@ sub get_recurring {
     chop $self->{recurringemail};
     chop $self->{recurringprint};
 
-    if ($self->{recurringyears}) {
+    if ( $self->{recurringyears} ) {
         $self->{recurringunit} = 'years';
         $self->{recurringrepeat} = $self->{recurringyears};
     }
-    elsif ($self->{recurringmonths}) {
+    elsif ( $self->{recurringmonths} ) {
         $self->{recurringunit} = 'months';
         $self->{recurringrepeat} = $self->{recurringmonths};
     }
-    elsif ($self->{recurringdays} && ( $self->{recurringdays} % 7 == 0 )) {
+    elsif ( $self->{recurringdays} && ( $self->{recurringdays} % 7 == 0 ) ) {
         $self->{recurringunit} = 'weeks';
         $self->{recurringrepeat} = $self->{recurringdays} / 7;
     }
-    elsif ($self->{recurringdays}) {
+    elsif ( $self->{recurringdays} ) {
         $self->{recurringunit} = 'days';
         $self->{recurringrepeat} = $self->{recurringdays};
     }
 
-    if ($self->{recurringstartdate}) {
+    if ( $self->{recurringstartdate} ) {
 
         $self->{recurringreference} = $self->escape(
             $self->{recurringreference},
@@ -3088,7 +2928,7 @@ $dbh2 is not used.
 
 sub save_recurring {
 
-    my ($self, $dbh2, $myconfig, $is_oe) = @_;
+    my ( $self, $dbh2, $myconfig, $is_oe) = @_;
     my $dbh = $self->{dbh};
     my $query;
 
@@ -3116,7 +2956,7 @@ sub save_recurring {
         $self->{id}
     ) || $self->dberror($query);
 
-    if ($self->{recurring}) {
+    if ( $self->{recurring} ) {
 
         my %s = ();
         (
@@ -3125,12 +2965,12 @@ sub save_recurring {
             $s{print},     $s{email},     $s{message}
         ) = split /,/, $self->{recurring};
 
-        if ($s{unit} !~ /^(day|week|month|year)s?$/i) {
+        if ($s{unit} !~ /^(day|week|month|year)s?$/i){
             $dbh->rollback;
             $self->error("Invalid recurrence unit");
         }
 
-        if ($s{howmany} == 0) {
+        if ($s{howmany} == 0){
             $self->error("Cannot set to recur 0 times");
         }
 
@@ -3143,7 +2983,7 @@ sub save_recurring {
         }
 
         # calculate enddate
-        my $advance = $s{repeat} * ($s{howmany} - 1);
+        my $advance = $s{repeat} * ( $s{howmany} - 1 );
 
         $query = qq|SELECT (?::date + interval '$advance $s{unit}')|;
 
@@ -3163,9 +3003,9 @@ sub save_recurring {
             $s{startdate},
             $enddate
         ) || $self->dberror($query);
-        my ($a, $b) = $sth->fetchrow_array;
+        my ( $a, $b ) = $sth->fetchrow_array;
 
-        if ($a + $b) {
+        if ( $a + $b ) {
             $advance =
               int( ( $a / ( $a + $b ) ) * ( $s{howmany} - 1 ) + 1 ) *
               $s{repeat};
@@ -3175,8 +3015,8 @@ sub save_recurring {
         }
 
         my $nextdate = $enddate;
-        if ($advance > 0) {
-            if ($advance < ($s{repeat} * $s{howmany})) {
+        if ( $advance > 0 ) {
+            if ( $advance < ( $s{repeat} * $s{howmany} ) ) {
                 $query = qq|SELECT (?::date + interval '$advance $s{unit}')|;
                 ($nextdate) = $dbh->selectrow_array(
                     $query,
@@ -3189,13 +3029,13 @@ sub save_recurring {
             $nextdate = $s{startdate};
         }
 
-        if ($self->{recurringnextdate}) {
+        if ( $self->{recurringnextdate} ) {
 
             $nextdate = $self->{recurringnextdate};
 
             $query = qq|SELECT ?::date - ?::date|;
 
-            if ($dbh->selectrow_array($query, undef, $enddate, $nextdate) < 0) {
+            if ( $dbh->selectrow_array($query, undef, $enddate, $nextdate) < 0 ) {
                 undef $nextdate;
             }
         }
@@ -3224,7 +3064,7 @@ sub save_recurring {
         my $i;
         my $sth;
 
-        if ($s{email}) {
+        if ( $s{email} ) {
 
             # formname:format
             @p = split /:/, $s{email};
@@ -3235,7 +3075,7 @@ sub save_recurring {
 
             $sth = $dbh->prepare($query) || $self->dberror($query);
 
-            for ($i = 0 ; $i <= $#p ; $i += 2) {
+            for ( $i = 0 ; $i <= $#p ; $i += 2 ) {
                 $sth->execute(
                     $self->{id},
                     $p[$i],
@@ -3247,7 +3087,7 @@ sub save_recurring {
             $sth->finish;
         }
 
-        if ($s{print}) {
+        if ( $s{print} ) {
 
             # formname:format:printer
             @p = split /:/, $s{print};
@@ -3258,8 +3098,8 @@ sub save_recurring {
 
             $sth = $dbh->prepare($query) || $self->dberror($query);
 
-            for ($i = 0; $i <= $#p; $i += 3) {
-                $p = ($p[ $i + 2 ]) ? $p[ $i + 2 ] : "";
+            for ( $i = 0 ; $i <= $#p ; $i += 3 ) {
+                $p = ( $p[ $i + 2 ] ) ? $p[ $i + 2 ] : "";
                 $sth->execute(
                     $self->{id},
                     $p[$i],
@@ -3285,7 +3125,7 @@ Does nothing if $form->{id} is not set.
 
 sub save_intnotes {
 
-    my ($self, $myconfig, $vc) = @_;
+    my ( $self, $myconfig, $vc ) = @_;
 
     # no id return
     return unless $self->{id};
@@ -3339,8 +3179,8 @@ Replace <?lsmb curr ?> with the value of $form->{currency}
 
 sub update_defaults {
 
-    my ($self, $myconfig, $fld, $dbh_parm, $nocommit) = @_;
-    if ($self->{setting_sequence}) {
+    my ( $self, $myconfig, $fld,$dbh_parm,$nocommit) = @_;
+    if ($self->{setting_sequence}){
         return LedgerSMB::Setting::Sequence->increment(
               $self->{setting_sequence},
               $self
@@ -3371,12 +3211,12 @@ sub update_defaults {
     my $num = $_;
     ($num) = $num =~ /\D*(\d+)\D*$/;
 
-    if (defined $num) {
+    if ( defined $num ) {
         my $incnum;
 
         # if we have leading zeros check how long it is
 
-        if ($num =~ /^0/) {
+        if ( $num =~ /^0/ ) {
             my $l = length $num;
             $incnum = $num + 1;
             $l -= length $incnum;
@@ -3406,7 +3246,7 @@ sub update_defaults {
             $param = $1;
             $str   = "";
 
-            if ($param =~ /<\?lsmb date \?>/i) {
+            if ( $param =~ /<\?lsmb date \?>/i ) {
                 $str = (
                     $self->split_date(
                         $myconfig->{dateformat},
@@ -3419,11 +3259,11 @@ sub update_defaults {
             if ( $param =~
 /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i
             ) {
-                #SC: XXX hairy, undoc, possibly broken
+            #SC: XXX hairy, undoc, possibly broken
                 my $fld = lc $1;
 
-                if ($fld =~ /name/) {
-                    if ($self->{type}) {
+                if ( $fld =~ /name/ ) {
+                    if ( $self->{type} ) {
                         $fld = $self->{vc};
                     }
                 }
@@ -3433,10 +3273,10 @@ sub update_defaults {
                 my @p = split / /, $p;
                 my @n = split / /, uc $self->{$fld};
 
-                if ($#p > 0) {
+                if ( $#p > 0 ) {
 
-                    for (my $i = 1; $i <= $#p; $i++) {
-                        $str .= substr($n[ $i - 1 ], 0, $p[$i]);
+                    for ( my $i = 1 ; $i <= $#p ; $i++ ) {
+                        $str .= substr( $n[ $i - 1 ], 0, $p[$i] );
                     }
                 }
                 else {
@@ -3447,8 +3287,8 @@ sub update_defaults {
                 $var =~ s/\W//g if $fld eq 'phone';
             }
 
-            if ($param =~ /<\?lsmb (yy|mm|dd)/i) {
-                # SC: XXX Does this even work anymore?
+            if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
+        # SC: XXX Does this even work anymore?
                 my $p = $param;
                 $p =~ s/lsmb//;
                 $p =~ s/[^YyMmDd]//g;
@@ -3466,7 +3306,7 @@ sub update_defaults {
                 $var =~ s/\Q$param\E/$str/i;
             }
 
-            if ($param =~ /<\?lsmb curr/i) {
+            if ( $param =~ /<\?lsmb curr/i ) {
                 my $curr = $self->{currency} || $self->{curr};
                 $var =~ s/<\?lsmb curr \?>/$curr/i;
             }
@@ -3499,11 +3339,11 @@ sub should_update_defaults {
     my $gapless_ar = LedgerSMB::Setting->get('gapless_ar');
     return 0 if $gapless_ar and ($fldname eq 'invnumber');
 
-    if (!$self->{$fldname}) {
+    if (!$self->{$fldname}){
        return 1;
     }
 
-    if (!$self->{setting_sequence}) {
+    if (!$self->{setting_sequence}){
         return 0;
     }
 
@@ -3525,12 +3365,13 @@ sub update_invnumber {
     my $sth = $LedgerSMB::App_State::DBH->prepare(
         'select invnumber from ar where id = ?'
     );
-    $sth->execute($self->{id});
-    my ($invnumber) = $sth->fetchrow_array;
+    $sth->execute($self->{id}) or $self->error($sth->errstr);
+    my ($invnumber) = $sth->fetchrow_array
+        or $self->error($sth->errstr);
     return if defined $invnumber or !$sth->rows;
     $sth->finish;
     $sth = $LedgerSMB::App_State::DBH->prepare(
-        'update ar set invnumber = ? where id = ?'
+      'update ar set invnumber = ? where id = ?'
     );
     $sth->execute(
         $self->update_defaults(
@@ -3552,7 +3393,7 @@ sub db_prepare_vars {
     my $self = shift;
 
     for (@_) {
-        if (!$self->{$_} and $self->{$_} ne "0") {
+        if ( !$self->{$_} and $self->{$_} ne "0" ) {
             undef $self->{$_};
         }
     }
@@ -3579,7 +3420,7 @@ sub split_date {
     my $yy;
     my $rv;
 
-    if (!$date) {
+    if ( !$date ) {
         my @d = localtime;
         $dd = $d[3];
         $mm = ++$d[4];
@@ -3590,12 +3431,12 @@ sub split_date {
 
     $dateformat = 'yyyy-mm-dd' if $date =~ /\d{4}\D\d{2}\D\d{2}/;
 
-    if ($dateformat =~ /^yy/) {
+    if ( $dateformat =~ /^yy/ ) {
 
         if ($date) {
 
-            if ($date =~ /\D/) {
-                ($yy, $mm, $dd) = split /\D/, $date;
+            if ( $date =~ /\D/ ) {
+                ( $yy, $mm, $dd ) = split /\D/, $date;
                 $mm *= 1;
                 $dd *= 1;
                 $mm = substr( "0$mm", -2 );
@@ -3611,12 +3452,12 @@ sub split_date {
             $rv = "$yy$mm$dd";
         }
     }
-    elsif ($dateformat =~ /^mm/) {
+    elsif ( $dateformat =~ /^mm/ ) {
 
         if ($date) {
 
-            if ($date =~ /\D/) {
-                ($mm, $dd, $yy) = split /\D/, $date;
+            if ( $date =~ /\D/ ) {
+                ( $mm, $dd, $yy ) = split /\D/, $date;
                 $mm *= 1;
                 $dd *= 1;
                 $mm = substr( "0$mm", -2 );
@@ -3632,12 +3473,12 @@ sub split_date {
             $rv = "$mm$dd$yy";
         }
     }
-    elsif ($dateformat =~ /^dd/) {
+    elsif ( $dateformat =~ /^dd/ ) {
 
         if ($date) {
 
-            if ($date =~ /\D/) {
-                ($dd, $mm, $yy) = split /\D/, $date;
+            if ( $date =~ /\D/ ) {
+                ( $dd, $mm, $yy ) = split /\D/, $date;
                 $mm *= 1;
                 $dd *= 1;
                 $mm = substr( "0$mm", -2 );
@@ -3654,7 +3495,7 @@ sub split_date {
         }
     }
 
-    ($rv, $yy, $mm, $dd);
+    ( $rv, $yy, $mm, $dd );
 }
 
 =item $form->format_date($date);
@@ -3671,12 +3512,12 @@ year.
 sub format_date {
 
     # takes an iso date in, and converts it to the date for printing
-    my ($self, $date) = @_;
+    my ( $self, $date ) = @_;
     my $datestring;
 
-    if ($date =~ /^\d{4}\D/) {    # is an ISO date
+    if ( $date =~ /^\d{4}\D/ ) {    # is an ISO date
         $datestring = $self->{db_dateformat};
-        my ($yyyy, $mm, $dd) = split( /\W/, $date );
+        my ( $yyyy, $mm, $dd ) = split( /\W/, $date );
         $datestring =~ s/y+/$yyyy/;
         $datestring =~ s/mm/$mm/;
         $datestring =~ s/dd/$dd/;
@@ -3701,7 +3542,7 @@ This function dies horribly when $mm + $interval > 24
 
 sub from_to {
 
-    my ($self, $yyyy, $mm, $interval) = @_;
+    my ( $self, $yyyy, $mm, $interval ) = @_;
 
     $yyyy = 0 unless defined $yyyy;
     $mm = 0 unless defined $mm;
@@ -3711,19 +3552,19 @@ sub from_to {
     my $fromdate = "$yyyy-${mm}-01";
     my $bd       = 1;
 
-    if (defined $interval) {
+    if ( defined $interval ) {
 
-        if ($interval == 12) {
+        if ( $interval == 12 ) {
             $yyyy++;
         }
         else {
 
-            if (($mm += $interval) > 12) {
+            if ( ( $mm += $interval ) > 12 ) {
                 $mm -= 12;
                 $yyyy++;
             }
 
-            if ($interval == 0) {
+            if ( $interval == 0 ) {
                 @t    = localtime(time);
                 $dd   = $t[3];
                 $mm   = $t[4] + 1;
@@ -3735,14 +3576,14 @@ sub from_to {
     }
     else {
 
-        if (++$mm > 12) {
+        if ( ++$mm > 12 ) {
             $mm -= 12;
             $yyyy++;
         }
     }
 
     $mm--;
-    @t = localtime(Time::Local::timelocal( 0, 0, 0, $dd, $mm, $yyyy ) - $bd);
+    @t = localtime( Time::Local::timelocal( 0, 0, 0, $dd, $mm, $yyyy ) - $bd );
 
     $t[4]++;
     $t[4] = substr( "0$t[4]", -2 );
@@ -3750,7 +3591,7 @@ sub from_to {
     $t[5] += 1900;
 
 
-    return ($fromdate, "$t[5]-$t[4]-$t[3]");
+    return ( $fromdate, "$t[5]-$t[4]-$t[3]" );
 }
 
 
@@ -3759,21 +3600,21 @@ sub from_to {
 
 sub get_batch_control_code {
 
-    my ($self, $dbh, $batch_id) = @_;
+    my ( $self, $dbh, $batch_id) = @_;
 
     my ($query,$sth,$control);
 
 
-    if (!$dbh) {
+    if ( !$dbh ) {
         $dbh = $self->{dbh};
     }
 
-    $query = qq|select control_code from batch where id=?|;
-    $sth = $dbh->prepare($query) || $self->dberror($query);
+    $query=qq|select control_code from batch where id=?|;
+    $sth=$dbh->prepare($query) || $self->dberror($query);
     $sth->execute(
         $batch_id
     ) || $self->dberror($query);
-    $control = $sth->fetchrow();
+    $control=$sth->fetchrow();
     $sth->finish();
 
     return $control;
@@ -3787,21 +3628,21 @@ sub get_batch_control_code {
 
 sub get_batch_description {
 
-    my ($self, $dbh, $batch_id) = @_;
+    my ( $self, $dbh, $batch_id) = @_;
 
     my ($query,$sth,$desc);
 
 
-    if (!$dbh) {
+    if ( !$dbh ) {
         $dbh = $self->{dbh};
     }
 
-    $query = qq|select description from batch where id=?|;
-    $sth = $dbh->prepare($query) || $self->dberror($query);
+    $query=qq|select description from batch where id=?|;
+    $sth=$dbh->prepare($query) || $self->dberror($query);
     $sth->execute(
         $batch_id
     ) || $self->dberror($query);
-    $desc = $sth->fetchrow();
+    $desc=$sth->fetchrow();
     $sth->finish();
     return $desc;
 
@@ -3821,7 +3662,7 @@ sub sequence_dropdown{
     my $retval = qq|<select name='setting_sequence' class='sequence'>\n|;
     $retval .= qq|<option></option>|;
 
-    for my $seq (@sequences) {
+    for my $seq (@sequences){
         my $selected = '';
         my $label = $seq->label;
         $selected = "selected='selected'"
