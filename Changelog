@@ -17,6 +17,9 @@ Changelog for 1.6.4
 * Fix wrong search screen after reversing receipt (Nick P, #3763)
 * Fix error displaying template transaction (Nick P, #3759)
 * Update Dojo to 1.13.1 (Erik H)
+* Fix error deleting template transaction (Nick P, #3722)
+  - Add role 'transaction_template_delete'
+  - Show template transaction Delete button only with permissions
 
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
