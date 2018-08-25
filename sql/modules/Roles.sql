@@ -968,6 +968,11 @@ SELECT lsmb__create_role('recurring');
 SELECT lsmb__grant_menu('recurring', 115, 'allow');
 SELECT lsmb__grant_menu('recurring', 28, 'allow');
 
+\echo TEMPLATE TRANSACTIONS
+SELECT lsmb__create_role('transaction_template_delete');
+SELECT lsmb__grant_perms('transaction_template_delete', 'journal_entry', 'DELETE');
+SELECT lsmb__grant_perms('transaction_template_delete', 'journal_line', 'DELETE');
+
 \echo TAX FORMS
 SELECT lsmb__create_role('tax_form_save');
 SELECT lsmb__grant_perms('tax_form_save', 'country_tax_form', 'ALL');
