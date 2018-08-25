@@ -970,6 +970,7 @@ SELECT lsmb__grant_menu('recurring', 28, 'allow');
 
 \echo TEMPLATE TRANSACTIONS
 SELECT lsmb__create_role('transaction_template_delete');
+SELECT lsmb__grant_perms('transaction_template_delete', 'eca_invoice', 'DELETE');
 SELECT lsmb__grant_perms('transaction_template_delete', 'journal_entry', 'DELETE');
 SELECT lsmb__grant_perms('transaction_template_delete', 'journal_line', 'DELETE');
 
