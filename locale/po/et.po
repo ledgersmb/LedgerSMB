@@ -4,7 +4,7 @@
 # Margus Lepmets <margus.lepmets@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.6.4\n"
+"Project-Id-Version: LedgerSMB 1.6.5-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2018-08-25 12:35+0000\n"
 "Last-Translator: Margus Lepmets <margus.lepmets@gmail.com>, 2018\n"
