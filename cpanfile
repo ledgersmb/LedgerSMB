@@ -11,6 +11,7 @@ requires 'DBI', '1.635';
 requires 'Data::UUID';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
+requires 'File::Find::Rule';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'HTTP::Headers::Fast'; # dependency of Plack too; don't need '::Fast'
@@ -76,6 +77,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
+        requires 'Template::Latex', '3.08';
         requires 'Template::Plugin::Latex', '3.08';
         requires 'TeX::Encode';
 };

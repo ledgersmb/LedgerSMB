@@ -7,10 +7,10 @@ define(["dojo/_base/declare",
         "dojo/store/JsonRest", "dojo/store/Observable",
         "dojo/store/Memory",
         "dijit/Tree", "dijit/tree/ObjectStoreModel",
-        "dijit/registry", "dojo/dom-class"
+        "dijit/registry"
        ], function(declare, on, lang, event, mouse, array,
                    JsonRest, Observable, Memory, Tree, ObjectStoreModel,
-                   registry, domClass
+                   registry
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
@@ -21,17 +21,24 @@ define(["dojo/_base/declare",
         var memoryStore = new Memory({idProperty: "id"});
         memoryStore = new Observable(memoryStore);
 
+       var complete = false;
         // create model to interface Tree to store
         var model = new ObjectStoreModel({
             store: memoryStore,
             labelAttr: 'label',
             mayHaveChildren: function(item){ return item.menu; },
             getChildren: function(object, onComplete, onError){
-                restStore.query({}).then(
-                    function(items){
-                        memoryStore.setData(items);
-                        onComplete(memoryStore.query({parent: object.id}));
-                    }, function(){ onError(); });
+                if (complete) {
+                    onComplete(memoryStore.query({parent: object.id}));
+                }
+                else {
+                    restStore.query({}).then(
+                        function(items){
+                            memoryStore.setData(items);
+                            onComplete(memoryStore.query({parent: object.id}));
+                        }, function(){ onError(); });
+                    complete = true;
+                }
             },
             getRoot: function(onItem, onError){
                 onItem({ id: 0 });
@@ -46,9 +53,6 @@ define(["dojo/_base/declare",
             this.inherited(arguments);
 
             var self = this;
-            this.onLoadDeferred.then(function(){
-                domClass.add(self.domNode, "done-parsing");
-            });
             this.own(
                 on(this.containerNode, "mousedown",
                    lang.hitch(this, this.__onClick)));

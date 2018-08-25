@@ -132,7 +132,7 @@
                 IF !person_country_id;
                           person_country_id = default_country;
                 END;
-                INCLUDE select element_data = {
+                INCLUDE select_country element_data = {
                         id = 'person-country-id'
                         text_attr = "name"
                         value_attr = "id"

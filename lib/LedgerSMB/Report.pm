@@ -40,13 +40,17 @@ UI/reports/display_report template will be used.
 
 =cut
 
+
+use List::Util qw{ any };
+
+use LedgerSMB::App_State;
+use LedgerSMB::PGNumber;
+use LedgerSMB::Template;
+use LedgerSMB::Setting;
+
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
-use LedgerSMB::Setting;
-use List::Util qw{ any };
-use LedgerSMB::Template;
-use LedgerSMB::App_State;
 
 =head1 PROPERTIES
 

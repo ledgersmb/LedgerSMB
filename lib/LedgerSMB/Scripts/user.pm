@@ -24,11 +24,13 @@ and defaults to indefinite validity.
 
 =cut
 
-use LedgerSMB::Template;
-use LedgerSMB::DBObject::User;
-use LedgerSMB::App_State;
 use strict;
 use warnings;
+
+use LedgerSMB::App_State;
+use LedgerSMB::DBObject::User;
+use LedgerSMB::Locale;
+use LedgerSMB::Template;
 
 our $VERSION = 1.0;
 

@@ -16,9 +16,7 @@ package LedgerSMB::FCGI;
 no lib '.';
 
 use FindBin;
-use lib $FindBin::Bin . '/..'; # For our 'old code'-"require"s
-use lib $FindBin::Bin . '/../lib';
-use lib $FindBin::Bin . '/../old/lib';
+use lib $FindBin::Bin . '/../..'; # For our 'old code'-"require"s
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
@@ -31,8 +29,8 @@ require Plack::Middleware::Pod
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
-die "Library verification failed (found $version from '$path', expected 1.6)"
-    unless $version =~ /^1\.6\./;
+die "Library verification failed (found $version from '$path', expected 1.7)"
+    unless $version =~ /^1\.7\./;
 
 # Report to the console what type of dojo we are running
 if ( $LedgerSMB::Sysconfig::dojo_built) {

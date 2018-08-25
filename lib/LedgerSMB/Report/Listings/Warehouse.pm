@@ -38,11 +38,12 @@ None
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
        col_id => 'description',
         type  => 'href',
    href_base  => 'am.pl?action=edit_warehouse&id=',
-        name  => LedgerSMB::Report::text('Description'),
+        name  => $self->Text('Description'),
     }];
 }
 
@@ -60,7 +61,10 @@ Warehouses
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Warehouses'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Warehouses');
+}
 
 =head1 METHODS
 

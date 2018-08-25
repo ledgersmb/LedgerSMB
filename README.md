@@ -8,6 +8,7 @@ Small and Medium business accounting and ERP
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
+[![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
 
 
 
@@ -265,9 +266,9 @@ Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
 Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
 
 Mailing lists:
- * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce](https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce)
- * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-users](https://lists.sourceforge.net/lists/listinfo/ledger-smb-users)
- * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel](https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel)
+ * [https://lists.ledgersmb.org/mailman/listinfo/announce](https://lists.ledgersmb.org/mailman/listinfo/announce)
+ * [https://lists.ledgersmb.org/mailman/listinfo/users](https://lists.ledgersmb.org/mailman/listinfo/users)
+ * [https://lists.ledgersmb.org/mailman/listinfo/devel](https://lists.ledgersmb.org/mailman/listinfo/devel)
 
 Repository: https://github.com/ledgersmb/LedgerSMB
 

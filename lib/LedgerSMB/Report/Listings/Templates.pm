@@ -47,13 +47,14 @@ has language_code => (is => 'ro', isa => 'Str', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       { col_id => 'template_name',
-          name => LedgerSMB::Report::text('File Name'),
+          name => $self->Text('File Name'),
           type => 'href',
      href_base => 'templates.pl?action=display&' },
       { col_id => 'format',
-          name => LedgerSMB::Report::text('Format'),
+          name => $self->Text('Format'),
           type => 'text' },
    ];
 }
@@ -65,16 +66,21 @@ Just the language_code
 
 =cut
 
-sub header_lines { return [
-      { name => 'language_code', text => LedgerSMB::Report::text('Language') },
-    ]
+sub header_lines {
+    my ($self) = @_;
+    return [
+        { name => 'language_code', text => $self->Text('Language') },
+        ];
 };
 
 =head2 name
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Template Listing') };
+sub name {
+    my ($self) = @_;
+    return $self->Text('Template Listing');
+};
 
 =head1 METHODS
 

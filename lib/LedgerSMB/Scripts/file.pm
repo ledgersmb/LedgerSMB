@@ -24,6 +24,9 @@ Requires that id and file_class be set.
 use strict;
 use warnings;
 
+use DBD::Pg qw(:pg_types);
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
+
 use LedgerSMB::File;
 use LedgerSMB::File::Transaction;
 use LedgerSMB::File::Order;
@@ -32,10 +35,9 @@ use LedgerSMB::File::Entity;
 use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
-use DBD::Pg qw(:pg_types);
-use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA 
-            FC_INTERNAL FC_INCOMING);
-use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
+use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA
+    FC_INTERNAL FC_INCOMING);
+use LedgerSMB::Template;
 
 our $fileclassmap = {
    FC_TRANSACTION()   => 'LedgerSMB::File::Transaction',

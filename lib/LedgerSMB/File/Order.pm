@@ -27,7 +27,8 @@ methods only
 
 =cut
 
-use strict;
+use LedgerSMB::File::Transaction;
+
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';

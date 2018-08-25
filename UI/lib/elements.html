@@ -464,3 +464,19 @@ END ?>
     </div>
   <?lsmb END;
 END ?>
+
+<?lsmb BLOCK select_language;
+    IF ! element_data.default_values || element_data.default_values.size == 0 ;
+       element_data.default_values = [ SETTINGS.default_language ] ;
+    END ;
+    INCLUDE select element_data=element_data ;
+  END ;
+   ?>
+
+<?lsmb BLOCK select_country;
+    IF ! element_data.default_values || element_data.default_values.size == 0 ;
+       element_data.default_values = [ SETTINGS.default_country ] ;
+    END ;
+    PROCESS select element_data=element_data ;
+  END ;
+   ?>

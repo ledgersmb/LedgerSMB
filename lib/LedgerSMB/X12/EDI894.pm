@@ -56,7 +56,10 @@ has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1,
 sub _order {
     my ($self) = @_;
     my $sep = $self->parser->get_element_separator;
-    my $form = Form->new;
+    # Suppressing critic for the line below: We *did* include
+    # but as LedgerSMB::Form (which is the module), but the module
+    # creates the package called 'Form' (not 'LedgerSMB::Form')
+    my $form = Form->new; ## no critic
     my $sender_idx;
     my $sender_id;
 

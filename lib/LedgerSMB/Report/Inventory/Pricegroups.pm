@@ -48,10 +48,11 @@ has pricegroup => (is => 'ro', isa => 'Str', required => '0');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{col_id => 'pricegroup',
                type => 'href',
           href_base => 'pe.pl?action=edit&type=pricegroup&id=',
-               name => LedgerSMB::Report::text('Price Group') }];
+               name => $self->Text('Price Group') }];
 }
 
 =head2 header_lines
@@ -65,8 +66,9 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'partsgroup',
-             text => LedgerSMB::Report::text('Price Group') }];
+             text => $self->Text('Price Group') }];
 }
 
 =head2 name
@@ -76,7 +78,8 @@ Price Groups
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Price Groups');
+    my ($self) = @_;
+    return $self->Text('Price Groups');
 }
 
 =head1 METHODS

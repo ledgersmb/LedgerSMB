@@ -25,8 +25,9 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use Module::Runtime qw/ use_module /;
 use List::Util qw{ none any };
+use Module::Runtime qw/ use_module /;
+use Plack::Request;
 
 use LedgerSMB::PSGI::Util;
 

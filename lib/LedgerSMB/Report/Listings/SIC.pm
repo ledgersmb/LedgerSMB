@@ -39,15 +39,16 @@ None
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       { col_id => 'code',
           type => 'href',
      href_base => 'am.pl?action=edit_sic&code=',
-          name => LedgerSMB::Report::text('Code'), },
+          name => $self->Text('Code'), },
 
       { col_id => 'description',
           type => 'text',
-          name => LedgerSMB::Report::text('Description'), }
+          name => $self->Text('Description'), }
     ];
 }
 
@@ -65,7 +66,10 @@ Standard Industrial Codes
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Standard Industrial Codes'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Standard Industrial Codes');
+}
 
 =head1 METHODS
 

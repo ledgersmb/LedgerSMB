@@ -57,10 +57,10 @@ my @modules =
           'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
           'LedgerSMB::File', 'LedgerSMB::Report',
-          'LedgerSMB::Template', 'LedgerSMB::Company_Config',
-          'LedgerSMB::Legacy_Util',
+          'LedgerSMB::Template', 'LedgerSMB::Legacy_Util',
+          'LedgerSMB::Company_Config',
           'LedgerSMB::Currency', 'LedgerSMB::Database',
-          'LedgerSMB::Database::ChangeChecks',
+          'LedgerSMB::Database::ChangeChecks', 'LedgerSMB::Database::Config',
           'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::IIAA',
@@ -203,7 +203,7 @@ ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
     or diag ('Missing in test: ', explain \@untested_modules);
 
 use_ok('LedgerSMB::Sysconfig')
-    || BAIL_OUT('System Configuration could be loaded!');
+    || BAIL_OUT(q{System Configuration couldn't be loaded!});
 my @to_sort = map { rand() } 0 .. $#modules;
 @modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {

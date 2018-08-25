@@ -48,10 +48,11 @@ has partsgroup => (is => 'ro', isa => 'Str', required => '0');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{col_id => 'partsgroup',
                type => 'href',
           href_base => 'pe.pl?action=edit&type=partsgroup&id=',
-               name => LedgerSMB::Report::text('Group') }];
+               name => $self->Text('Group') }];
 }
 
 =head2 header_lines
@@ -65,8 +66,9 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'partsgroup',
-             text => LedgerSMB::Report::text('Partsgroup') }];
+             text => $self->Text('Partsgroup') }];
 }
 
 =head2 name
@@ -76,7 +78,8 @@ Partsgroups
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Partsgroups');
+    my ($self) = @_;
+    return $self->Text('Partsgroups');
 }
 
 =head1 METHODS

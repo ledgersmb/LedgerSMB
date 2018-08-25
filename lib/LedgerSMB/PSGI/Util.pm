@@ -47,7 +47,8 @@ sub internal_server_error {
     my @body_lines = ( '<html><body>',
                        q{<h2 class="error">Error!</h2>},
                        "<p><b>$msg</b></p>" );
-    push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
+    push @body_lines, '<p>dbversion: ' . ($dbversion // '') .
+         ', company: ' . ($company // '') . '</p>'
         if $company || $dbversion;
 
     push @body_lines, '</body></html>';
@@ -142,8 +143,7 @@ sub template_to_psgi {
     }
 
     my $body = $self->{output};
-    utf8::encode($body)
-        if utf8::is_utf8($body);
+    utf8::encode($body) if utf8::is_utf8($body); ## no critic
 
     return [ HTTP_OK, $headers, [ $body ] ];
 }

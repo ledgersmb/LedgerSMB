@@ -138,10 +138,13 @@ sub psgi_app {
         if ($error !~ /^Died at/) {
             $env->{'psgix.logger'}->({
                 level => 'error',
-                message => $_ });
+                message => $error });
             $res = LedgerSMB::PSGI::Util::internal_server_error(
-                $_, 'Error!',
+                $error, 'Error!',
                 $request->{dbversion}, $request->{company});
+        }
+        else {
+            $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
         }
     };
 

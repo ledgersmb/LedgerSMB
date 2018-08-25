@@ -22,12 +22,13 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 use warnings;
 use strict;
+use charnames ':full';
 
-use Template::Plugin::Latex;
 use Log::Log4perl;
+use Template::Latex;
+use Template::Plugin::Latex;
 use TeX::Encode::charmap;
 use TeX::Encode;
-use charnames ':full';
 
 BEGIN {
     delete $TeX::Encode::charmap::ACCENTED_CHARS{

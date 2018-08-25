@@ -133,7 +133,7 @@ sub _aa_multi {
         }
     }
     for my $ref (@$entries){
-        my $form = Form->new();
+        my $form = Form->new(); ## no critic
         $form->{dbh} = $request->{dbh};
         my $default_currency = LedgerSMB::Setting->get('curr');
         $form->{rowcount} = 1;
@@ -163,7 +163,9 @@ sub _aa_multi {
         ($form->{vendor_id}) = $sth->fetchrow_array;
         $form->{customer_id} = $form->{vendor_id};
 
-        AA->post_transaction($request->{_user}, $form);
+        # The 'AA' package is used as 'LedgerSMB::AA'
+        # which is a problem for Perl::Critic
+        AA->post_transaction($request->{_user}, $form); ## no critic
     }
     return 1;
 }
@@ -172,8 +174,8 @@ sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
     use LedgerSMB::IS;
     use LedgerSMB::IR;
-    my $ar_form = Form->new();
-    my $ap_form = Form->new();
+    my $ar_form = Form->new(); ## no critic
+    my $ap_form = Form->new(); ## no critic
     my $dbh = $request->{dbh};
 
     $ar_form->{dbh} = $ap_form->{dbh} = $dbh;
@@ -241,8 +243,10 @@ sub _inventory_single_date {
     $ap_form->{vendor_id} = $ap_eca->{id};
 
     # POST
-    IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
-    IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
+    IS->post_invoice(undef, $ar_form) ## no critic
+        if $ar_form->{rowcount};
+    IR->post_invoice(undef, $ap_form) ## no critic
+        if $ap_form->{rowcount};
 
     $ar_form->{id} = 'NULL'
         if ! $ar_form->{id};
@@ -272,7 +276,7 @@ sub _process_ap_multi {
 sub _process_gl {
     use LedgerSMB::GL;
     my ($request, $entries) = @_;
-    my $form = Form->new();
+    my $form = Form->new(); ## no critic
     $form->{reference} = $request->{reference};
     $form->{description} = $request->{description};
     $form->{transdate} = $request->{transdate};
@@ -300,8 +304,8 @@ sub _process_gl {
         }
         ++$form->{rowcount};
     }
-    return GL->post_transaction($request->{_user}, $form,
-                         $request->{_locale});
+    return GL->post_transaction( ## no critic
+        $request->{_user}, $form, $request->{_locale});
 }
 
 sub _process_chart {
