@@ -13,20 +13,22 @@ This module holds common workflow routines for reports.
 
 =cut
 
-use LedgerSMB::Template;
+use strict;
+use warnings;
+
+use LedgerSMB::App_State;
+use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Report::Balance_Sheet;
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::GIFI;
-use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
+use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Setting;
-use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
-use strict;
-use warnings;
+use LedgerSMB::Template;
 
 our $VERSION = '1.0';
 

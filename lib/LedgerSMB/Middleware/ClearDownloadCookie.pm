@@ -56,7 +56,7 @@ sub call {
             my $res = shift;
 
                 # Set the requested cookie's value
-                Plack::Util::header_set(
+                Plack::Util::header_push(
                     $res->[1], 'Set-Cookie',
                     qq|$cookie=downloaded; path=$path$secure|)
                     if $cookie;

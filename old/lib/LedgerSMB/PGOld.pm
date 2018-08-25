@@ -53,11 +53,7 @@ sub new {
         delete $args->{_DBH};
     };
 
-    # key/value pairs from the `base` argument become
-    # properties of the new object.
-    my $self = { map { $_ => $args->{base}->{$_} } keys %{$args->{base}} };
-
-    $self =  PGObject::Simple::new($pkg, %$self);
+    my $self = PGObject::Simple::new($pkg, %{$args->{base}});
     $self->__validate__  if $self->can('__validate__');
     return $self;
 }

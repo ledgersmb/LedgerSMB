@@ -112,7 +112,7 @@ pager = less
 [Modules::RequireEndWithOne]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireExplicitInclusion]
-    set_themes = lsmb lsmb_wip
+    set_themes = lsmb lsmb_new
 [Modules::RequireExplicitPackage]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireFilenameMatchesPackage]

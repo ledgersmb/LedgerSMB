@@ -19,8 +19,9 @@ LedgerSMB::Template::Provider - Implements template loading from database
 use strict;
 use warnings;
 
-use Template::Provider;
+use Log::Log4perl;
 use PGObject::Type::DateTime;
+use Template::Provider;
 
 use Moose;
 use namespace::autoclean;

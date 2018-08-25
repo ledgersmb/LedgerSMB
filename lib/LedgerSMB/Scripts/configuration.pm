@@ -20,11 +20,13 @@ This module does not specify any methods.
 
 =cut
 
-use LedgerSMB::Setting;
-use LedgerSMB::Setting::Sequence;
-use LedgerSMB::App_State;
 use strict;
 use warnings;
+
+use LedgerSMB::App_State;
+use LedgerSMB::Setting;
+use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Template;
 
 sub _default_settings {
     my ($request) = @_;

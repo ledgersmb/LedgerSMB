@@ -21,7 +21,7 @@
 
     <?lsmb IF countries ?>
         <?lsmb IF !country_id; country_id = default_country; END ?>
-        <?lsmb PROCESS select element_data = {
+        <?lsmb PROCESS select_country element_data = {
                         name = "country_id"
                         default_values = [country_id]
                         options = countries

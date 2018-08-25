@@ -8,8 +8,8 @@ use Test::More tests => 12;
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::App_State;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies

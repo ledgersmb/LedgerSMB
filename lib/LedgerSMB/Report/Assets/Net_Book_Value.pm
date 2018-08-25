@@ -62,56 +62,57 @@ none
 =cut
 
 sub columns {
+    my ($self) = @_;
     return
     [
           {type => 'text',
          col_id => 'id',
-           name =>  LedgerSMB::Report::text('ID'), },
+           name =>  $self->Text('ID'), },
 
           {type => 'href',
          col_id => 'tag',
       href_base => 'asset.pl?action=asset_edit&id=',
-           name =>  LedgerSMB::Report::text('Tag'),},
+           name =>  $self->Text('Tag'),},
 
           {type => 'text',
          col_id => 'description',
-           name =>  LedgerSMB::Report::text('Description'), },
+           name =>  $self->Text('Description'), },
 
           {type => 'text',
          col_id => 'begin_depreciation',
-           name =>  LedgerSMB::Report::text('In Svc'), },
+           name =>  $self->Text('In Svc'), },
 
           {type => 'text',
          col_id => 'method',
-           name =>  LedgerSMB::Report::text('Method'),},
+           name =>  $self->Text('Method'),},
 
           {type => 'text',
          col_id => 'remaining_life',
-           name =>  LedgerSMB::Report::text('Rem. Life'),},
+           name =>  $self->Text('Rem. Life'),},
 
           {type => 'text',
          col_id => 'basis',
-           name =>  LedgerSMB::Report::text('Basis'),},
+           name =>  $self->Text('Basis'),},
 
           {type => 'text',
          col_id => 'salvage_value',
-           name =>  LedgerSMB::Report::text('(+) Salvage Value'),},
+           name =>  $self->Text('(+) Salvage Value'),},
 
           {type => 'text',
          col_id => 'through_date',
-           name =>  LedgerSMB::Report::text('Dep. Through'),},
+           name =>  $self->Text('Dep. Through'),},
 
           {type => 'text',
          col_id => 'accum_depreciation',
-           name =>  LedgerSMB::Report::text('(-) Accum. Dep.'),},
+           name =>  $self->Text('(-) Accum. Dep.'),},
 
           {type => 'text',
          col_id => 'net_book_value',
-           name =>  LedgerSMB::Report::text('(=) NBV'),},
+           name =>  $self->Text('(=) NBV'),},
 
           {type => 'text',
          col_id => 'percent_depreciated',
-           name =>  LedgerSMB::Report::text('% Dep.'),},
+           name =>  $self->Text('% Dep.'),},
   ];
 };
 
@@ -133,7 +134,8 @@ Net Book Value
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Net Book Value');
+    my ($self) = @_;
+    return $self->Text('Net Book Value');
 }
 
 =head1 METHODS

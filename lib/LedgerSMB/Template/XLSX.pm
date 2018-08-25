@@ -21,6 +21,7 @@ use warnings;
 use IO::Scalar;
 use Excel::Writer::XLSX;
 use Spreadsheet::WriteExcel;
+use XML::Twig;
 
 my $binmode = undef;
 my $extension = 'xlsx';

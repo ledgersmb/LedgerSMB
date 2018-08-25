@@ -40,15 +40,16 @@ together for other reporting uses.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
     { col_id => 'accno',
         type => 'href',
    href_base => 'am.pl?action=edit_gifi&coa=1&accno=',
-        name => LedgerSMB::Report::text('GIFI'), },
+        name => $self->Text('GIFI'), },
 
     { col_id => 'description',
         type => 'text',
-        name => LedgerSMB::Report::text('Description'), },
+        name => $self->Text('Description'), },
 
     ];
 }
@@ -67,7 +68,10 @@ GIFI
 
 =cut
 
-sub name { return LedgerSMB::Report::text('GIFI'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('GIFI');
+}
 
 =head1 REPORT CRITERIA
 

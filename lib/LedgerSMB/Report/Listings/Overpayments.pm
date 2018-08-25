@@ -77,7 +77,8 @@ localized string 'Overpayments'
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Overpayments');
+    my ($self) = @_;
+    return $self->Text('Overpayments');
 }
 
 =head2 header_lines
@@ -99,12 +100,13 @@ sub name {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [
-      {name => 'meta_number', text => LedgerSMB::Report::text('Counterparty Code')}.
-      {name => 'date_from',   text => LedgerSMB::Report::text('Date From')},
-      {name => 'date_to',     text => LedgerSMB::Report::text('Date To')},
-      {name => 'amount_from', text => LedgerSMB::Report::text('Amount From')},
-      {name => 'amount_to',   text =>  LedgerSMB::Report::text('Amount To')},
+      {name => 'meta_number', text => $self->Text('Counterparty Code')}.
+      {name => 'date_from',   text => $self->Text('Date From')},
+      {name => 'date_to',     text => $self->Text('Date To')},
+      {name => 'amount_from', text => $self->Text('Amount From')},
+      {name => 'amount_to',   text =>  $self->Text('Amount To')},
     ];
 }
 
@@ -125,25 +127,26 @@ sub header_lines {
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
         col_id => 'select',
           name => '',
           type => 'checkbox',
     },
     {   col_id => 'entity_name',
-          name => LedgerSMB::Report::text('Counterparty'),
+          name => $self->Text('Counterparty'),
           type => 'text',
     },
     {   col_id => 'transdate',
-          name => LedgerSMB::Report::text('Date'),
+          name => $self->Text('Date'),
           type => 'text',
     },
     {   col_id => 'amount',
-          name => LedgerSMB::Report::text('Paid'),
+          name => $self->Text('Paid'),
           type => 'text',
     },
     {   col_id => 'available',
-          name => LedgerSMB::Report::text('Available'),
+          name => $self->Text('Available'),
           type => 'text',
     }];
 }
@@ -158,7 +161,7 @@ sub set_buttons {
    my $self = shift;
    return [
           { name => 'action',
-            text => LedgerSMB::Report::text('Reverse'),
+            text => $self->Text('Reverse'),
            value => 'reverse_overpayment',
             type => 'submit',
            class => 'submit'

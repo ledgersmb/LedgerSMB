@@ -65,33 +65,34 @@ Difference between budgetted and used.
 =cut
 
 sub columns {
-   return [
+    my ($self) = @_;
+    return [
       {col_id => 'budget_description',
          type => 'text',
-         name => LedgerSMB::Report::text('Description')},
+         name => $self->Text('Description')},
 
       {col_id => 'accno',
          type => 'text',
-         name => LedgerSMB::Report::text('Account Number')},
+         name => $self->Text('Account Number')},
 
       {col_id => 'account_label',
          type => 'text',
-         name => LedgerSMB::Report::text('Account Label')},
+         name => $self->Text('Account Label')},
 
       {col_id => 'budget_amount',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Amount Budgetted')},
+         name => $self->Text('Amount Budgetted')},
 
       {col_id => 'used_amount',
          type => 'text',
          money => 1,
-         name => '- ' . LedgerSMB::Report::text('Used')},
+         name => '- ' . $self->Text('Used')},
 
       {col_id => 'variance',
          type => 'text',
          money => 1,
-         name => '= ' . LedgerSMB::Report::text('Variance')},
+         name => '= ' . $self->Text('Variance')},
    ];
 }
 
@@ -102,7 +103,8 @@ Returns name of report
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Budget Variance Report');
+    my ($self) = @_;
+    return $self->Text('Budget Variance Report');
 }
 
 =item header_lines
@@ -112,14 +114,15 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'reference',
-             text => LedgerSMB::Report::text('Budget Number')},
+             text => $self->Text('Budget Number')},
             {name => 'description',
-             text => LedgerSMB::Report::text('Description')},
+             text => $self->Text('Description')},
             {name => 'start_date',
-             text => LedgerSMB::Report::text('Start Date')},
+             text => $self->Text('Start Date')},
             {name => 'end_date',
-             text => LedgerSMB::Report::text('End Date')},];
+             text => $self->Text('End Date')},];
 }
 
 =back

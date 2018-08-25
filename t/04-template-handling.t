@@ -7,13 +7,15 @@ use Test::More 'no_plan';
 use Test::Exception;
 
 use File::Temp;
+use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
 use LedgerSMB::Template::HTML;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 
 my $template;

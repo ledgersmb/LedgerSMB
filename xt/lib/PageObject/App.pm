@@ -33,14 +33,7 @@ has maindiv => (is => 'ro',
 sub _build_menu {
     my ($self) = @_;
 
-    my $menu = $self->find('*app-menu');
-    $self->session->wait_for(
-        sub {
-            my $item = $self->find("//*[\@id='top_menu' and contains(\@class, 'done-parsing')]");
-            my $attr = $item->get_attribute('class');
-            return $attr =~ 'done-parsing';
-        });
-    return $menu;
+    return $self->find('*app-menu');
 }
 
 sub _build_maindiv {

@@ -133,6 +133,8 @@ sub call {
         unless $env->{'lsmb.company'};
 
     my $creds = LedgerSMB::Auth::factory($env)->get_credentials;
+    return LedgerSMB::PSGI::Util::unauthorized()
+        unless $creds->{login} && $creds->{password};
     my $dbh = $env->{'lsmb.db'} =
         LedgerSMB::DBH->connect($env->{'lsmb.company'},
                                 $creds->{login},
@@ -201,7 +203,7 @@ sub call {
             my $res = shift;
 
             # Set the new cookie (with the extended life-time on response
-            Plack::Util::header_set(
+            Plack::Util::header_push(
                 $res->[1], 'Set-Cookie',
                 qq|$cookie_name=$extended_cookie; path=$path$secure|)
                 if $extended_cookie;

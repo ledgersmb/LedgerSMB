@@ -170,7 +170,6 @@ Deletes all objects attached here.
 sub cleanup {
     if ($DBH){
         $DBH->commit;
-        $DBH->disconnect;
     }
     $Locale           = LedgerSMB::Locale->get_handle(
                             $LedgerSMB::Sysconfig::language

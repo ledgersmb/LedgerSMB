@@ -16,11 +16,12 @@ This module implements inventory adjustment entry points.
 use strict;
 use warnings;
 
-use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
 use LedgerSMB::Inventory::Adjust_Line;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Template;
 
 =over
 
@@ -129,7 +130,7 @@ sub adjustment_save {
 
 sub adjustment_list {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Inventory::Adjustments->new(%$request);
+    my $report = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
     return $report->render($request);
 }
 
@@ -139,7 +140,7 @@ sub adjustment_list {
 
 sub adjustment_approve {
     my ($request) = @_;
-    my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
+    my $adjust = LedgerSMB::Inventory::Adjust->new(%$request);
     $adjust->approve;
     $request->{report_name} = 'list_inventory_counts';
     return LedgerSMB::Scripts::reports::start_report($request);
@@ -153,7 +154,7 @@ sub adjustment_approve {
 
 sub adjustment_delete {
     my ($request) = @_;
-    my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
+    my $adjust = LedgerSMB::Inventory::Adjust->new(%$request);
     $adjust->delete;
     $request->{report_name} = 'list_inventory_counts';
     return LedgerSMB::Scripts::reports::start_report($request);
