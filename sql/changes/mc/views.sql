@@ -1,16 +1,17 @@
 
-drop view cash_impact cascade;
+drop view if exists cash_impact cascade;
 
 
 
 CREATE VIEW cash_impact AS
-SELECT id, '1'::numeric AS portion, 'gl' as rel, gl.transdate FROM gl
+SELECT id, '1'::numeric
+ AS portion, 'gl' as rel, gl.transdate FROM gl
 UNION ALL
-SELECT id, CASE WHEN gl.amount_bc = 0 THEN 0 -- avoid div by 0
-                WHEN gl.transdate = ac.transdate
-                     THEN 1 + sum(ac.amount_bc) / gl.amount_bc
-                ELSE
-                     1 - (gl.amount_bc - sum(ac.amount_bc)) / gl.amount_bc
+ SELECT id, CASE WHEN gl.amount_bc = 0 THEN 0 -- avoid div by 0
+                 WHEN gl.transdate = ac.transdate
+                      THEN 1 + sum(ac.amount_bc) / gl.amount_bc
+                 ELSE
+                      1 - (gl.amount_bc - sum(ac.amount_bc)) / gl.amount_bc
                 END , 'ar' as rel, ac.transdate
   FROM ar gl
   JOIN acc_trans ac ON ac.trans_id = gl.id

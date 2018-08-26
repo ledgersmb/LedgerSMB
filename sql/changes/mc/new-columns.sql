@@ -11,7 +11,7 @@ alter table journal_line
 alter table acc_trans
   add column amount_bc numeric,
   add column amount_tc numeric,
-  add column amount numeric;
+  add column curr char(3);
 
 alter table ar
   add column amount_bc numeric,
