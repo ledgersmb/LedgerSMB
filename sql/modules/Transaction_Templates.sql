@@ -48,8 +48,8 @@ $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION journal__delete(in_journal_id int) RETURNS void AS
 $$
+  DELETE FROM eca_invoice WHERE journal_id = in_journal_id;
   DELETE FROM journal_line WHERE journal_id = in_journal_id;
-
   DELETE FROM journal_entry WHERE id = in_journal_id;
 $$ LANGUAGE SQL;
 

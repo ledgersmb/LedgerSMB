@@ -28,10 +28,6 @@
 1.4/drop-je-functions.sql
 !1.4/templatetrans.sql
 1.4/business_unit_class_id_seq-fix.sql
-# multi currency changes
-1.5/multi-currency-schema.sql
-1.5/multi-currency-menu.sql
-1.5/multi-currency-drop-get-currencies.sql
 #1.5 changes
 !1.5/invoice-tbl-cogs-constraint.sql
 !1.5/trial_balance_cleanup.sql
@@ -80,3 +76,13 @@
 1.6/add_empty_salutation.sql
 1.6/missing-countries.sql
 1.6/constrain_default_password_duration.sql
+#
+# mc changes
+mc/new-menus.sql
+mc/new-tables.sql
+mc/new-columns.sql
+mc/changed-objects.sql
+# do data migration here...
+mc/new-constraints.sql
+mc/dropped-objects.sql
+mc/views.sql
