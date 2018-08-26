@@ -56,14 +56,13 @@ sub new {
 
 =item set_dbh
 
-Attribute _DBH builder.  Should probably have been named _set_dbh.
+Set database handle to that defined by C<LedgerSMB::App_State::DBH()>.
 
 =cut
 
 sub set_dbh {
     my ($self) = @_;
-    $self->{_DBH} =  LedgerSMB::App_State::DBH();
-    return  LedgerSMB::App_State::DBH();
+    return $self->SUPER::set_dbh(LedgerSMB::App_State::DBH());
 }
 
 =item dbh
