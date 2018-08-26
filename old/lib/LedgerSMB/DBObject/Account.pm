@@ -7,7 +7,7 @@ LedgerSMB::DBObject::Account - Base class for chart of accounts entries
 This class contains methods for managing chart of accounts entries (headings
 and accounts).
 
-=head1 INEHRITS
+=head1 INHERITS
 
 =over
 
