@@ -54,17 +54,6 @@ sub new {
     return $self;
 }
 
-=item set_dbh
-
-Set database handle to that defined by C<LedgerSMB::App_State::DBH()>.
-
-=cut
-
-sub set_dbh {
-    my ($self) = @_;
-    return $self->SUPER::set_dbh(LedgerSMB::App_State::DBH());
-}
-
 =item $self->merge(\%base, %args)
 
 Sets the values from hash 'base' in $self, optionally limited by the

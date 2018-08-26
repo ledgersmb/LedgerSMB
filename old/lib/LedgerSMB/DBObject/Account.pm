@@ -147,7 +147,8 @@ sub get {
     for my $ref (@accounts){
         bless $ref, 'LedgerSMB::DBObject::Account';
         $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', '_request']);
-        $ref->set_dbh;
+        $ref->set_dbh($self->dbh);
+
         if ($ref->{is_temp} and ($ref->{category} eq 'Q')){
             $ref->{category} = 'Qt';
         }
