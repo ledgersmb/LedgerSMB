@@ -65,19 +65,6 @@ sub set_dbh {
     return $self->SUPER::set_dbh(LedgerSMB::App_State::DBH());
 }
 
-=item dbh
-
-This is a wrapper around PGObject::Simple->dbh with the exception that we provide a
-a static/class invocation possibility as well.
-
-=cut
-
-sub dbh {
-    my ($self) = @_;
-    return $self->SUPER::dbh() if ref $self;
-    return LedgerSMB::App_State::DBH();
-}
-
 =item $self->merge(\%base, %args)
 
 Sets the values from hash 'base' in $self, optionally limited by the
