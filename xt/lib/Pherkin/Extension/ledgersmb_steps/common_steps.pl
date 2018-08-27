@@ -171,7 +171,7 @@ Given qr/a part with these properties:$/, sub {
     local $LedgerSMB::App_State::DBH = S->{ext_lsmb}->admin_dbh;
     my $account = LedgerSMB::DBObject::Account->new();
     $account->set_dbh(S->{ext_lsmb}->admin_dbh);
-    my @accounts = $account->new()->list();
+    my @accounts = $account->list();
     my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
 
     $total_props{partnumber} //= 'P-' . ($part_count++);
