@@ -325,6 +325,7 @@ sub save_temp {
     my ($department_name, $department_id) = split/--/, $form->{department};
 
     my $data = {
+        dbh => $form->{dbh},
         department_id => $department_id,
         reference => $form->{reference},
         description => $form->{description},

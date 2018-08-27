@@ -2,12 +2,12 @@
 
 LedgerSMB::DBObject::Account - Base class for chart of accounts entries
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 This class contains methods for managing chart of accounts entries (headings
 and accounts).
 
-=head1 INERITS
+=head1 INHERITS
 
 =over
 
@@ -147,7 +147,8 @@ sub get {
     for my $ref (@accounts){
         bless $ref, 'LedgerSMB::DBObject::Account';
         $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', '_request']);
-        $ref->set_dbh;
+        $ref->set_dbh($self->dbh);
+
         if ($ref->{is_temp} and ($ref->{category} eq 'Q')){
             $ref->{category} = 'Qt';
         }

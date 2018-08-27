@@ -345,7 +345,8 @@ Lists all users in the selected database
 sub list_users {
     my ($request) = @_;
     _init_db($request);
-    my $user = LedgerSMB::DBObject::User->new($request);
+    my $user = LedgerSMB::DBObject::User->new();
+    $user->set_dbh($request->{dbh});
     my $users = $user->get_all_users;
     $request->{users} = [];
     for my $u (@$users) {
@@ -1375,10 +1376,12 @@ sub edit_user_roles {
     _init_db($request)
         unless $request->{dbh};
 
-    my $admin = LedgerSMB::DBObject::Admin->new($request);
+    my $admin = LedgerSMB::DBObject::Admin->new();
+    $admin->set_dbh($request->{dbh});
     my $all_roles = $admin->get_roles($request->{database});
 
-    my $user_obj = LedgerSMB::DBObject::User->new($request);
+    my $user_obj = LedgerSMB::DBObject::User->new();
+    $user_obj->set_dbh($request->{dbh});
     $user_obj->get($request->{id});
 
     # LedgerSMB::DBObject::User doesn't retrieve the username
