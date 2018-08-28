@@ -9,6 +9,7 @@ use Digest::MD5 qw( md5_hex );
 use File::Temp qw( :seekable );
 use IO::Scalar;
 use MIME::Base64;
+use Plack::Request;
 
 use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
@@ -24,7 +25,8 @@ use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 
 
 sub test_request {
-    my $req = LedgerSMB->new();
+    my $plack_req = Plack::Request->new({});
+    my $req = LedgerSMB->new($plack_req);
 
     $req->{script} = 'script.pl';
     $req->{query_string} = 'action=rebuild';

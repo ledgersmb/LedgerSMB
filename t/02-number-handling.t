@@ -16,6 +16,7 @@ use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
 use DBI;
 use LedgerSMB::App_State;
+use Plack::Request;
 
 use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
@@ -34,7 +35,8 @@ my $form = Form->new;
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $lsmb = LedgerSMB->new;
+my $request = Plack::Request->new({});
+my $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 

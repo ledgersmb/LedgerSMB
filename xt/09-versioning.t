@@ -9,15 +9,16 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::App_State;
 use Log::Log4perl qw(:easy);
+use Plack::Request;
+
 Log::Log4perl->easy_init($OFF);
 
 $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies
 
+my $request = Plack::Request->new({});
 
-
-
-my $lsmb = LedgerSMB->new;
+my $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb, 'lsmb: defined');
 isa_ok($lsmb, 'LedgerSMB', 'lsmb: correct type');
 ok(defined $lsmb->{version}, 'lsmb: version set');
