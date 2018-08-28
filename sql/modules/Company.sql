@@ -79,7 +79,8 @@ create type eca_history_result as (
    serialnumber text,
    exchangerate numeric,
    salesperson_id int,
-   salesperson_name text
+   salesperson_name text,
+   transdate date
 );
 
 CREATE OR REPLACE FUNCTION eca__get_by_meta_number
@@ -137,7 +138,8 @@ $$
             i.serialnumber,
             case when $16 = 1 then ex.buy else ex.sell end as exchange_rate,
             ee.id as salesperson_id,
-            ep.last_name || ', ' || ep.first_name as salesperson_name
+            ep.last_name || ', ' || ep.first_name as salesperson_name,
+            a.transdate
      FROM (select * from entity_credit_account
             where meta_number = $2
            UNION
@@ -246,7 +248,7 @@ $$
 SELECT id, name, meta_number, null::int, null::text, curr, parts_id, partnumber,
        description, sum(qty), unit, null::numeric, null::numeric, null::date,
        null::text, null::numeric,
-       null::int, null::text
+       null::int, null::text, null::date
 FROM   eca__history($1, $2, $3, $4, $5, $6, $7, $8, $9,
                    $10, $11, $12, $13, $14, $15, $16, $17, $18)
  group by id, name, meta_number, curr, parts_id, partnumber, description, unit,
