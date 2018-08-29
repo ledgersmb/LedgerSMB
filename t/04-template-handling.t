@@ -13,6 +13,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
 use LedgerSMB::Template::HTML;
+use Plack::Request;
 
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
@@ -328,7 +329,8 @@ my $contact_request = {
                 ]
 }; # Company with Credit Accounts and business types.
 
-my $payment = LedgerSMB->new();
+my $request = Plack::Request->new({});
+my $payment = LedgerSMB->new($request);
 $payment->merge({
         contact_1 => 1, source_1 => 1, action=>'dispay_payments', id_1 => 1,
         id_1_1    => 1,

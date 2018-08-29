@@ -13,6 +13,7 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
+use Plack::Request;
 
 use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
@@ -28,7 +29,8 @@ my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $lsmb = LedgerSMB->new;
+my $request = Plack::Request->new({});
+my $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 

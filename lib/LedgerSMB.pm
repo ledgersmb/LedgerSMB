@@ -159,9 +159,8 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 
 sub new {
-    my ($class, $cgi_args, $script_name, $query_string,
-        $uploads, $cookies, $auth, $db, $company, $session_id,
-        $create_session_cb, $invalidate_session_cb) = @_;
+
+    my ($class, $request, $auth) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -175,18 +174,18 @@ sub new {
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
-    $self->{_uploads} = $uploads  if defined $uploads;
-    $self->{_cookies} = $cookies  if defined $cookies;
-    $self->{query_string} = $query_string if defined $query_string;
+    $self->{_uploads} = $request->uploads if defined $request->uploads;
+    $self->{_cookies} = $request->cookies if defined $request->cookies;
+    $self->{query_string} = $request->query_string if defined $request->query_string;
     $self->{_auth} = $auth;
-    $self->{script} = $script_name;
-    $self->{dbh} = $db;
-    $self->{company} = $company;
-    $self->{_session_id} = $session_id;
-    $self->{_create_session} = $create_session_cb;
-    $self->{_logout} = $invalidate_session_cb;
+    $self->{script} = $request->env->{'lsmb.script'};
+    $self->{dbh} = $request->env->{'lsmb.db'};
+    $self->{company} = $request->env->{'lsmb.company'};
+    $self->{_session_id} = $request->env->{'lsmb.session_id'};
+    $self->{_create_session} = $request->env->{'lsmb.create_session_cb'};
+    $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
 
-    $self->_process_args($cgi_args);
+    $self->_process_args($request->parameters);
     $self->_set_default_locale();
 
     return $self;

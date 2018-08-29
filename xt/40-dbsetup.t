@@ -7,6 +7,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 use strict;
 use DBI;
+use Plack::Request;
 
 # This entire test suite will be skipped unless environment
 # variable LSMB_TEST_DB is true
@@ -113,7 +114,8 @@ SKIP: {
                 or !defined $ENV{LSMB_ADMIN_FNAME}
                 or !defined $ENV{LSMB_ADMIN_LNAME});
      # Move to LedgerSMB::DBObject::Admin calls.
-     my $lsmb = LedgerSMB->new;
+     my $request = Plack::Request->new({});
+     my $lsmb = LedgerSMB->new($request);
      ok(defined $lsmb, '$lsmb defined');
      isa_ok($lsmb, 'LedgerSMB');
      $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
