@@ -679,7 +679,7 @@ sub post_bulk {
         my $contact_id = $self->{"contact_$contact_row"};
         next if (!$self->{"id_$contact_id"});
         my $invoice_array = "{}"; # Pg Array
-    for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
+        for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
             my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
             my $pay_amount =
                 ($self->{"paid_$contact_id"} eq 'all' )
@@ -692,9 +692,9 @@ sub post_bulk {
                 die "Invalid subarray: $invoice_subarray";
             }
             $invoice_subarray =~ s/[^0123456789{},.-]//;
-        if ($invoice_array eq '{}'){ # Omit comma
+            if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
-        } else {
+            } else {
                 $invoice_array =~ s/\}$/,$invoice_subarray\}/;
             }
         }
