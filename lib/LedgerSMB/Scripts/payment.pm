@@ -92,7 +92,7 @@ sub payments {
     if (!defined $payment->{batch_date}){
         $payment->error('No Batch Date!');
     }
-    my @curr = LedgerSMB::Setting->new()->get_currencies;
+    my @curr = LedgerSMB::Setting->new({'base' => $request })->get_currencies;
     $payment->{default_currency} = $curr[0];
     @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
     my $template = LedgerSMB::Template->new(
