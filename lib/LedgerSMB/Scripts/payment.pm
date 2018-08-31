@@ -68,7 +68,8 @@ use LedgerSMB::Template::UI;
 # 1:  I don't think it is a good idea to make the UI too dependant on internal
 #     code structures but I don't see a good alternative at the moment.
 # 2:  CamelCasing: -1
-# 3:  Not good to have this much duplication of code all the way down the stack.#     At the moment this is helpful because it gives us an opportunity to look
+# 3:  Not good to have this much duplication of code all the way down the stack.
+#     At the moment this is helpful because it gives us an opportunity to look
 #     at various sets of requirements and workflows, but for future versions
 #     if we don't refactor, this will turn into a bug factory.
 # 4:  Both current interfaces have issues regarding separating layers of logic
@@ -154,6 +155,17 @@ sub get_search_criteria {
 
 =cut
 
+use LedgerSMB::PSGI::Util;
+
+my $bulk_post_map = input_map(
+    [ qr/^(?<fld>id|source|memo|paid)_(?<cid>\d+)$/ => '@contacts<cid>:%<fld>' ],
+    [ qr/^contact_label_(?<cid>\d+)$/ => '@contacts<cid>:%pay_to>' ],
+    [ qr/^(?<fld>invoice_date|invnumber|due|payment|invoice|net)_(?<cid>\d+)_(?<invrow>\d+)$/
+      => '@contacts<cid>:@invoices<invrow>:%<fld>' ],
+    [ qr/(?<fld>cash_accno|ar_ap_accno)$/ => '%<fld>' ],
+    [ qr/^transdate$/ => '%date_paid' ],
+    );
+
 sub pre_bulk_post_report {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new( # printed document
@@ -165,9 +177,6 @@ sub pre_bulk_post_report {
     );
     my $cols;
     @$cols =  qw(pay_to accno source memo debits credits);
-    my $rows = [];
-    my $total_debits = 0;
-    my $total_credits = 0;
     my $heading = {
         pay_to          => $request->{_locale}->text('Pay To'),
         accno           => $request->{_locale}->text('Account Number'),
@@ -177,42 +186,27 @@ sub pre_bulk_post_report {
         memo            => $request->{_locale}->text('Memo'),
         debits           => $request->{_locale}->text('Debits'),
         credits          => $request->{_locale}->text('Credits')
-                  };
-    my $total = 0;
-    for my $crow (1 .. $request->{contact_count}){
-        my $ref;
-        my $cid = $request->{"contact_$crow"};
-        if ($request->{"id_$cid"}){
-            $ref = {pay_to    => $request->{"contact_label_$cid"},
-                    accno     => $request->{ar_ap_accno},
-                    transdate => $request->{date_paid},
-                    source    => $request->{"source_$cid"},
-                    memo      => $request->{"memo_$cid"},
-                    amount    => 0
-                   };
-            for my $invrow (1 .. $request->{"invoice_count_$cid"}){
-                 my $inv_id = $request->{"invoice_${cid}_$invrow"};
-                 $ref->{amount} +=
-                    LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
-             }
-             # If vendor, this is debit-normal so multiply by -1
-             if ($request->{account_class} == EC_VENDOR ){ # vendor
-                 $ref->{amount} *= -1;
-              }
-              if ($ref->{amount} < 0) {
-                  $ref->{debits} = $ref->{amount} * -1;
-                  $ref->{credits} = 0;
-              } else {
-                  $ref->{debits} = 0;
-                  $ref->{credits} = $ref->{amount};
-              }
-              $total_debits += $ref->{debits};
-              $total_credits += $ref->{credits};
-              push @$rows, $ref;
-              $total += $ref->{amount};
-        }
-    }
+    };
 
+    my $data = $bulk_post_map->($request);
+
+    @{$data->{contacts}} = grep { $_->{id} } @{$data->{contacts}};
+    for my $crow (@{$data->{contacts}}) {
+        $crow->{accno} = $request->{ar_ap_accno};
+        $crow->{transdate} = $request->{date_paid};
+        $crow->{amount} =
+            sum map { LedgerSMB::PGNumber->from_input($_->{payment}) }
+            @{$crow->{invoices}};
+        $crow->{amount} *= -1
+                    if ($request->{account_class} == EC_VENDOR);
+        $crow->{debits} = ($crow->{amount} < 0) ? ($crow->{amount} * -1) : 0;
+        $crow->{credits} = ($crow->{amount} > 0) ? $crow->{amount} : 0;;
+    }
+    my $rows = $data->{contacts};
+
+    my $total = sum map { $_->{amount} } @{$data->{contacts}};
+    my $total_debits = sum map { $_->{debits} } @{$data->{contacts}};
+    my $total_credits = sum map { $_->{credits} } @{$data->{contacts}};
 
     # Cash summary
     my $ref = {
@@ -422,14 +416,14 @@ sub print {
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
                 for (qw(invnumber due invoice_date)){
-                    $invhash->{$_} = $payment->{"${_}_${inv_id}"};
+                    $invhash->{$_} = $payment->{"${_}_${id}_${inv}"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
                     $invhash->{paid} = LedgerSMB::PGNumber
-                        ->from_input($payment->{"payment_${inv_id}"});
+                        ->from_input($payment->{"payment_${id}_${inv}"});
                 } elsif ($payment->{"paid_$id"} eq 'all'){
                     $invhash->{paid} = LedgerSMB::PGNumber
-                        ->from_input($payment->{"net_${inv_id}"});
+                        ->from_input($payment->{"net_${id}_${inv}"});
                 } else {
                     $payment->error('Invalid Payment Amount Option');
                 }
@@ -536,7 +530,7 @@ sub display_payments {
             $contact_to_pay += $invoice->[6];  ## no critic (ProhibitMagicNumbers) sniff
             $invoice->[7] = $invoice->[6]->to_db;  ## no critic (ProhibitMagicNumbers) sniff
 
-            my $fld = 'payment_' . $invoice->[0];
+            my $fld = "payment_$_->{contact_id}_" . $invoice->[0];
             $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
 
             $invoice->[3] = $invoice->[3]->to_output(money  => 1);  ## no critic (ProhibitMagicNumbers) sniff

@@ -353,21 +353,21 @@
                                                                                 <?lsmb i.2 ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "invoice_date_$i.0"
+                                                                                        name = "invoice_date_" _ r.contact_id _ "_$icount"
                                                                                         value = i.2 } ?>
                                                                         </td>
                                                                         <td class="invoice_list">
                                                                                 <?lsmb i.1 ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "invnumber_$i.0"
+                                                                                        name = "invnumber_" _ r.contact_id _ "_$icount"
                                                                                         value = i.1 } ?>
                                                                         </td>
                                                                         <td class="total_due_list">
                                                                                 <?lsmb i.3 ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "due_$i.0"
+                                                                                        name = "due_" _ r.contact_id _ "_$icount"
                                                                                         value = i.6 } ?>
                                                                         </td>
                                                                         <td class="paid_list">
@@ -382,8 +382,8 @@
                                                                         </td>
                                                                         <td class="to_pay_list">
                                                                                 <?lsmb PROCESS input element_data = {
-                                                                                        name = "payment_$i.0"
-                                                                                        id = "payment_$i.0"
+                                                                                        name = "payment_" _ r.contact_id _ "_$icount"
+                                 id   = "payment_$i.0"
                                                                                         value = payment.${"payment_$i.0"}
                                                                                         size = 20
                                                                                         type = "text"
@@ -394,7 +394,7 @@
                                                                                         value = i.0 } ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "net_$i.0"
+                                                                                        name = "net_" _ r.contact_id _ "_$icount"
                                                                                         value = i.7 } ?>
                                                                         </td>
                                                                 </tr>

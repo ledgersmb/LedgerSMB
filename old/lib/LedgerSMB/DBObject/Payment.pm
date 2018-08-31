@@ -751,8 +751,8 @@ sub post_bulk {
         for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
             my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
             my $pay_amount =
-                ($self->{"paid_$contact_id"} eq 'all' )
-                ? $self->{"net_$invoice_id"} : $self->{"payment_$invoice_id"};
+                ($self->{"paid_${contact_id}"} eq 'all' )
+                ? $self->{"net_${contact_id}_$invoice_row"} : $self->{"payment_${contact_id}_$invoice_row"};
             next if ! $pay_amount;
             $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount);
             $pay_amount = $pay_amount->to_output(money => 1);
