@@ -239,21 +239,6 @@ sub initialize_with_db {
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
 
-
-    my $query = q{SELECT t.extends,
-            coalesce (t.table_name, 'custom_' || extends)
-            || ':' || f.field_name as field_def
-        FROM custom_table_catalog t
-        JOIN custom_field_catalog f USING (table_id)};
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute;
-    my $ref;
-    $self->{custom_db_fields} = {};
-    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
-          $ref->{field_def};
-    }
-
     LedgerSMB::Company_Config::initialize($self);
 
     $self->get_user_info;
