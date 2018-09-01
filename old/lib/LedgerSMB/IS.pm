@@ -1305,7 +1305,8 @@ sub retrieve_invoice {
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
     $sth->finish;
     }
-    @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
+    @{$form->{currencies}} =
+        (LedgerSMB::Setting->new({base => $form}))->get_currencies;
 
     if ( $form->{id} ) {
 

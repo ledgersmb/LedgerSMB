@@ -40,7 +40,8 @@ Displays a list of configured currencies.  No inputs required or used.
 sub list_currencies {
     my ($request) = @_;
     my @currencies = LedgerSMB::Currency->list();
-    my $default_curr = LedgerSMB::Setting->new()->get('curr');
+    my $default_curr =
+        LedgerSMB::Setting->new({base => $request})->get('curr');
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         template => 'Configuration/currency',

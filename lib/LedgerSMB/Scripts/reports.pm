@@ -88,7 +88,8 @@ sub start_report {
     @{$request->{all_years}} = $request->call_procedure(
               funcname => 'date_get_all_years'
     );
-    @{$request->{currencies}} = (LedgerSMB::Setting->new)->get_currencies();
+    @{$request->{currencies}} =
+        (LedgerSMB::Setting->new({base => $request}))->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};

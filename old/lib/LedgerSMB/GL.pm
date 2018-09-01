@@ -271,7 +271,8 @@ sub transaction {
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{closedto} = $results->{'closedto'}->{'value'};
         $form->{revtrans} = $results->{'revtrans'}->{'value'};
-        @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
+        @{$form->{currencies}} =
+            (LedgerSMB::Setting->new({base => $form}))->get_currencies;
         #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $sth->finish;
 
@@ -330,7 +331,8 @@ sub transaction {
         $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $form->{closedto}  = $results->{'closedto'}->{'value'};
         $form->{revtrans}  = $results->{'revtrans'}->{'value'};
-        @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
+        @{$form->{currencies}} =
+            (LedgerSMB::Setting->new({base => $form}))->get_currencies;
         if (!$form->{transdate}){
             $form->{transdate} = $results->{'revtrans'}->{'transdate'};
         }

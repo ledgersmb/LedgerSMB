@@ -299,7 +299,7 @@ sub _main_screen {
 
     my @all_currencies =
         map { { curr => $_ } }
-        (LedgerSMB::Setting->new())->get_currencies;
+        (LedgerSMB::Setting->new({base => $request}))->get_currencies;
 
     my $default_country = LedgerSMB::Setting->get('default_country');
 

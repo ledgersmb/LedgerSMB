@@ -1016,7 +1016,8 @@ sub create_links {
             SELECT value FROM defaults
              WHERE setting_key = 'weightunit'|;
         ( $form->{weightunit} ) = $dbh->selectrow_array($query);
-        @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
+        @{$form->{currencies}} =
+            (LedgerSMB::Setting->new({base => $form}))->get_currencies;
     }
 }
 
