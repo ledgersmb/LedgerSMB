@@ -48,39 +48,10 @@ A hashref which is imported as properties of the new object.
 sub new {
     my $pkg = shift;
     my $args = (ref $_[0]) ? $_[0] : { @_ };
-    if ($args->{_DBH}) {
-        $args->{dbh} = $args->{_DBH};
-        delete $args->{_DBH};
-    };
 
     my $self = PGObject::Simple::new($pkg, %{$args->{base}});
     $self->__validate__  if $self->can('__validate__');
     return $self;
-}
-
-=item set_dbh
-
-Attribute _DBH builder.  Should probably have been named _set_dbh.
-
-=cut
-
-sub set_dbh {
-    my ($self) = @_;
-    $self->{_DBH} =  LedgerSMB::App_State::DBH();
-    return  LedgerSMB::App_State::DBH();
-}
-
-=item dbh
-
-This is a wrapper around PGObject::Simple->dbh with the exception that we provide a
-a static/class invocation possibility as well.
-
-=cut
-
-sub dbh {
-    my ($self) = @_;
-    return $self->SUPER::dbh() if ref $self;
-    return LedgerSMB::App_State::DBH();
 }
 
 =item $self->merge(\%base, %args)

@@ -143,6 +143,19 @@ sub save_as_new {
 sub _display_account_screen {
     my ($form) = @_;
     my $account = LedgerSMB::DBObject::Account->new({base => $form});
+
+    # If the base $form does not include a `dbh` element as an initialiser
+    # we must explicitly set the dbh. This will depend on how we are called.
+    #
+    # If $form is a `LedgerSMB` object reference, $form->{dbh} will be
+    # defined and no further initialisation is needed. (But note that no
+    # $form->dbh method is available).
+    #
+    # If $form is an object based on `LedgerSMB::PGOld`, $form->{dbh} will
+    # be undefined (as the internal private attribute is called `_dbh`) but
+    # we can call its $form->dbh method to obtain the datbase handle.
+    $account->dbh or $account->set_dbh($form->dbh);
+
     @{$form->{all_headings}} = $account->list_headings();
     @{$form->{all_gifi}} = $account->gifi_list();
     $form->{recon} = $account->is_recon();
