@@ -23,8 +23,9 @@ This module implements the C<Plack::Middleware> protocol.
 use strict;
 use warnings;
 
+use Carp;
 use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
- HTTP_UNAUTHORIZED );
+    HTTP_UNAUTHORIZED );
 
 =head1 METHODS
 
