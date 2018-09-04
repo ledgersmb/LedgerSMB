@@ -3,7 +3,7 @@
 use Test::More no_plan;
 use Test::Exception;
 
-use LedgerSMB::PSGI::Util;
+use LedgerSMB::Request::Helper::ParameterMap;
 
 
 my $map;
