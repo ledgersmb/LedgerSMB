@@ -164,6 +164,7 @@ my $bulk_post_map = input_map(
       => '@contacts<cid>:@invoices<invrow>:%<fld>' ],
     [ qr/(?<fld>cash_accno|ar_ap_accno)$/ => '%<fld>' ],
     [ qr/^transdate$/ => '%date_paid' ],
+    [ qr/^(?<fld>multiple)$/ => '%<fld>' ],
     );
 
 sub pre_bulk_post_report {
@@ -392,51 +393,49 @@ sub print {
     $payment->{format_amount} =
         sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(); };
 
-    if ($payment->{multiple}){
+    my $data = $bulk_post_map->($request);
+    if ($data->{multiple}){
         $payment->{checks} = [];
-        for my $line (1 .. $payment->{contact_count}){
-            my $id = $payment->{"contact_$line"};
-            next if !defined $payment->{"id_$id"};
+
+        # consider only contacts which have been explicitly selected
+        # for inclusion in the bulk payment ($contact->{id} == true-ish)
+        for my $contact (grep { $_->{id} } @{$data->{contacts}}){
             my ($check) = $payment->call_procedure(
                      funcname => 'company_get_billing_info', args => [$id]
             );
             $check->{entity_class} = $payment->{account_class};
-            $check->{id} = $id;
+            $check->{id} = $contact->{id};
             $check->{amount} = LedgerSMB::PGNumber->from_db('0');
             $check->{invoices} = [];
-            $check->{source} = $payment->{"source_$id"};
+            $check->{source} = $contact->{source};
 
             my $inv_count;
             my $check_max_invoices = $request->setting->get(
                          'check_max_invoices'
             );
-            if ($check_max_invoices > $payment->{"invoice_count_$id"}) {
-                $inv_count = $payment->{"invoice_count_$id"};
+            if ($check_max_invoices > scalar(@{$contact->{invoices}})) {
+                $inv_count = scalar(@{$contact->{invoices}});
             } else {
                 $inv_count = $check_max_invoices;
             }
 
-            for my $inv (1 .. $payment->{"invoice_count_$id"}){
-                my $invhash = {};
-                my $inv_id = $payment->{"invoice_${id}_$inv"};
-                for (qw(invnumber due invoice_date)){
-                    $invhash->{$_} = $payment->{"${_}_${id}_${inv}"};
-                }
-                if ($payment->{"paid_$id"} eq 'some'){
-                    $invhash->{paid} = LedgerSMB::PGNumber
-                        ->from_input($payment->{"payment_${id}_${inv}"});
-                } elsif ($payment->{"paid_$id"} eq 'all'){
-                    $invhash->{paid} = LedgerSMB::PGNumber
-                        ->from_input($payment->{"net_${id}_${inv}"});
+            for my $invoice (@{$contact->{invoices}}) {
+                if ($contact->{paid} eq 'some'){
+                    $invoice->{paid} = LedgerSMB::PGNumber
+                        ->from_input($invoice->{payment});
+                } elsif ($contact->{paid} eq 'all'){
+                    $invoice->{paid} = LedgerSMB::PGNumber
+                        ->from_input($invoice->{net});
                 } else {
                     $payment->error('Invalid Payment Amount Option');
                 }
-                $check->{amount} += $invhash->{paid};
-                $invhash->{paid} = $invhash->{paid}->to_output(
+                $check->{amount} += $invoice->{paid};
+                $invoice->{paid} = $invoice->{paid}->to_output(
                     format => '1000.00',
                     money => 1
                 );
-                push @{$check->{invoices}}, $invhash if $inv <= $inv_count;
+                push @{$check->{invoices}}, $invoice
+                    if scalar(@{$check->{invoices}}) <= $inv_count;
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
