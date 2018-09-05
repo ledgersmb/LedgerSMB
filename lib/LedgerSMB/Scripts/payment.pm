@@ -403,7 +403,8 @@ sub print {
         # for inclusion in the bulk payment ($contact->{id} == true-ish)
         for my $contact (grep { $_->{id} } @{$data->{contacts}}){
             my ($check) = $payment->call_procedure(
-                     funcname => 'company_get_billing_info', args => [$id]
+                funcname => 'company_get_billing_info',
+                args => [ $contact->{id} ]
             );
             $check->{entity_class} = $payment->{account_class};
             $check->{id} = $contact->{id};
