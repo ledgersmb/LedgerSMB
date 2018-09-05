@@ -59,6 +59,7 @@ use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
+use LedgerSMB::Request::Helper::ParameterMap;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -155,7 +156,6 @@ sub get_search_criteria {
 
 =cut
 
-use LedgerSMB::PSGI::Util;
 
 my $bulk_post_map = input_map(
     [ qr/^(?<fld>id|source|memo|paid)_(?<cid>\d+)$/ => '@contacts<cid>:%<fld>' ],
@@ -188,8 +188,12 @@ sub pre_bulk_post_report {
         credits          => $request->{_locale}->text('Credits')
     };
 
+    # parse the flat "request" namespace into a hierarchical structure
+    # as defined by the $bulk_post_map transform
     my $data = $bulk_post_map->($request);
 
+    # The user interface sets the 'id' field true-ish when the customer
+    # is selected for inclusion in the bulk payment
     @{$data->{contacts}} = grep { $_->{id} } @{$data->{contacts}};
     for my $crow (@{$data->{contacts}}) {
         $crow->{accno} = $request->{ar_ap_accno};
