@@ -101,6 +101,10 @@ PSGI response triplet (status, headers, body).
 Returns a hashref with the keys being system information sections,
 each being a hashref detailing configuration items with their values.
 
+=item setting
+
+Accessor method for a shared LedgerSMB::Setting instance.
+
 =back
 
 
@@ -485,6 +489,10 @@ sub system_info {
     };
 }
 
+sub setting {
+    my ($self) = @_;
+    return $self->{setting};
+}
 
 =head1 LICENSE AND COPYRIGHT
 
