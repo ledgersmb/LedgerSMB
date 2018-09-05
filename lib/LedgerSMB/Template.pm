@@ -329,7 +329,6 @@ use Carp;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
-use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
 
