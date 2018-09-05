@@ -26,7 +26,6 @@ use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Reconciliation::Summary;
 use LedgerSMB::Scripts::reports;
-use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 =over
@@ -197,8 +196,7 @@ it has been created.
 sub _display_report {
     my ($recon, $request) = @_;
     $recon->get();
-    my $setting_handle = LedgerSMB::Setting->new({base => $recon});
-    $recon->{reverse} = $setting_handle->get('reverse_bank_recs');
+    $recon->{reverse} = $request->setting->get('reverse_bank_recs');
     delete $recon->{reverse} unless $recon->{account_info}->{category}
                                     eq 'A';
     $request->close_form;
@@ -286,7 +284,7 @@ sub _display_report {
                                     + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
     $recon->{out_of_balance}->bfround(
-        LedgerSMB::Setting->get('decimal_places') * -1
+        $request->setting->get('decimal_places') * -1
     );
     $recon->{submit_enabled} = ($recon->{out_of_balance} == 0);
 
