@@ -756,7 +756,7 @@ sub post_bulk {
             $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount)
                 ->to_output(money => 1);
 
-            my $invoice_subarray = "{$invoice_id,$pay_amount}";
+            my $invoice_subarray = "{$invoice->{id},$pay_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 die "Invalid subarray: $invoice_subarray";
             }
