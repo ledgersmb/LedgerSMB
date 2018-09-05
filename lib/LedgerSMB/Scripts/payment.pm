@@ -164,6 +164,7 @@ my $bulk_post_map = input_map(
       => '@contacts<cid>:@invoices<invrow>:%<fld>' ],
     [ qr/(?<fld>cash_accno|ar_ap_accno)$/ => '%<fld>' ],
     [ qr/^transdate$/ => '%date_paid' ],
+    [ qr/^datepaid$/ => '%payment_date' ],
     [ qr/^(?<fld>multiple)$/ => '%<fld>' ],
     );
 
@@ -353,7 +354,8 @@ sub post_payments_bulk {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     if ($request->close_form){
-        $payment->post_bulk();
+        my $data = $bulk_post_map->($request);
+        $payment->post_bulk($data);
     } else {
         $payment->{notice} =
            $payment->{_locale}->text('Data not saved.  Please try again.');

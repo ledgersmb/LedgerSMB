@@ -726,7 +726,7 @@ workflow scripts.
 =cut
 
 sub post_bulk {
-    my ($self) = @_;
+    my ($self, $data) = @_;
     my $total_count = 0;
     my ($ref) = $self->call_procedure(
           funcname => 'setting_get',
@@ -743,23 +743,25 @@ sub post_bulk {
         funcname => 'job__status'
          );
     }
-    $self->{payment_date} = $self->{datepaid};
-    for my $contact_row (1 .. $self->{contact_count}){
-        my $contact_id = $self->{"contact_$contact_row"};
-        next if (!$self->{"id_$contact_id"});
+    #$self->{payment_date} = $self->{datepaid};
+    for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
-        for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
-            my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
+        for my $invoice (@{$contact->{invoices}}) {
+
             my $pay_amount =
-                ($self->{"paid_${contact_id}"} eq 'all' )
-                ? $self->{"net_${contact_id}_$invoice_row"} : $self->{"payment_${contact_id}_$invoice_row"};
+                ($contact->{"paid"} eq 'all' )
+                ? $invoice->{net} : $invoice->{payment};
             next if ! $pay_amount;
-            $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount);
-            $pay_amount = $pay_amount->to_output(money => 1);
+
+            $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount)
+                ->to_output(money => 1);
+
             my $invoice_subarray = "{$invoice_id,$pay_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 die "Invalid subarray: $invoice_subarray";
             }
+
+            # What magic happens here?!?!
             $invoice_subarray =~ s/[^0123456789{},.-]//;
             if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
@@ -768,7 +770,7 @@ sub post_bulk {
             }
         }
         $self->{transactions} = $invoice_array;
-        $self->{source} = $self->{"source_$contact_id"};
+        $self->{source} = $contact->{source};
         if ($queue_payments){
             $self->{batch_class} = BC_PAYMENT;
             $self->call_dbmethod(
