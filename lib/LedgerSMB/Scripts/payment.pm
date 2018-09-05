@@ -198,8 +198,8 @@ sub pre_bulk_post_report {
     # is selected for inclusion in the bulk payment
     @{$data->{contacts}} = grep { $_->{id} } @{$data->{contacts}};
     for my $crow (@{$data->{contacts}}) {
-        $crow->{accno} = $request->{ar_ap_accno};
-        $crow->{transdate} = $request->{date_paid};
+        $crow->{accno} = $data->{ar_ap_accno};
+        $crow->{transdate} = $request->{payment_date};
         $crow->{amount} =
             sum map { LedgerSMB::PGNumber->from_input($_->{payment}) }
             @{$crow->{invoices}};
