@@ -79,6 +79,7 @@ use LedgerSMB::Auth;
 use LedgerSMB::App_State;
 use LedgerSMB::DBH;
 use LedgerSMB::PSGI::Util;
+use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
 =head1 METHODS
@@ -190,6 +191,9 @@ sub call {
             return $extended_cookie;
         };
     }
+
+    $env->{'lsmb.setting'} = LedgerSMB::Setting->new();
+    $env->{'lsmb.setting'}->set_dbh($dbh);
 
     my $res = $self->app->($env);
     $dbh->rollback;
