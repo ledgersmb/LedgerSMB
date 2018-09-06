@@ -24,7 +24,6 @@ use Text::CSV;
 
 use LedgerSMB::Template;
 use LedgerSMB::Form;
-use LedgerSMB::Setting;
 use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
 
 our $cols = {
@@ -135,7 +134,7 @@ sub _aa_multi {
     for my $ref (@$entries){
         my $form = Form->new(); ## no critic
         $form->{dbh} = $request->{dbh};
-        my $default_currency = LedgerSMB::Setting->get('curr');
+        my $default_currency = $request->setting->get('curr');
         $form->{rowcount} = 1;
         $form->{ARAP} = uc($arap);
         $form->{batch_id} = $batch->{id};

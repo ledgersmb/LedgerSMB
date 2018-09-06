@@ -24,7 +24,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::App_State;
-use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template;
 
@@ -169,7 +168,6 @@ Shows the defaults screen
 
 sub defaults_screen{
     my ($request) = @_;
-    my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings) {
@@ -178,7 +176,7 @@ sub defaults_screen{
         }
     }
     for my $skey (@defaults){
-        $request->{$skey} = $setting_handle->get($skey);
+        $request->{$skey} = $request->setting->get($skey);
     }
 
     my @country_list = $request->call_procedure(
@@ -192,11 +190,11 @@ sub defaults_screen{
     unshift @language_code_list, {}
         if ! defined $request->{default_language};
 
-    my $expense_accounts = $setting_handle->accounts_by_link('IC_cogs');
-    my $income_accounts = $setting_handle->accounts_by_link('IC_income');
-    my $fx_loss_accounts = $setting_handle->all_accounts();
-    my $fx_gain_accounts = $setting_handle->all_accounts();
-    my $inventory_accounts = $setting_handle->accounts_by_link('IC');
+    my $expense_accounts = $request->setting->accounts_by_link('IC_cogs');
+    my $income_accounts = $request->setting->accounts_by_link('IC_income');
+    my $fx_loss_accounts = $request->setting->all_accounts();
+    my $fx_gain_accounts = $request->setting->all_accounts();
+    my $inventory_accounts = $request->setting->accounts_by_link('IC');
     my $headings =
         [$request->call_procedure(funcname => 'account__all_headings')];
     for my $ref (@$headings){
@@ -348,7 +346,6 @@ sub save_defaults {
     ){
        die $request->{_locale}->text('Access Denied');
     }
-    my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings){
@@ -358,7 +355,7 @@ sub save_defaults {
     }
     for my $skey (@defaults){
         $request->{$skey} =~ s/--.*$// if $skey =~ /accno_id/;
-        $setting_handle->set($skey, $request->{$skey});
+        $request->setting->set($skey, $request->{$skey});
     }
     return defaults_screen($request);
 }

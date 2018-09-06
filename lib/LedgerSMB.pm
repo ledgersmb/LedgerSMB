@@ -101,6 +101,10 @@ PSGI response triplet (status, headers, body).
 Returns a hashref with the keys being system information sections,
 each being a hashref detailing configuration items with their values.
 
+=item setting
+
+Accessor method for a shared LedgerSMB::Setting instance.
+
 =back
 
 
@@ -166,7 +170,8 @@ sub new {
 
     (my $package,my $filename,my $line)=caller;
 
-
+    # Properties prefixed with underscore are hidden from UI templates.
+    #
     # Some tests construct LedgerSMB objects without $auth argument
     # (in fact, without any arguments), so check for having an $auth
     # arg before trying to call methods on it.
@@ -184,6 +189,7 @@ sub new {
     $self->{_session_id} = $request->env->{'lsmb.session_id'};
     $self->{_create_session} = $request->env->{'lsmb.create_session_cb'};
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
+    $self->{_setting} = $request->env->{'lsmb.setting'};
 
     $self->_process_args($request->parameters);
     $self->_set_default_locale();
@@ -485,6 +491,10 @@ sub system_info {
     };
 }
 
+sub setting {
+    my ($self) = @_;
+    return $self->{_setting};
+}
 
 =head1 LICENSE AND COPYRIGHT
 

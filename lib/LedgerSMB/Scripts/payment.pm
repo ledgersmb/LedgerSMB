@@ -59,7 +59,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
 use LedgerSMB::Scripts::reports;
-use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 
@@ -92,7 +91,7 @@ sub payments {
     if (!defined $payment->{batch_date}){
         $payment->error('No Batch Date!');
     }
-    my @curr = LedgerSMB::Setting->new({'base' => $request })->get_currencies;
+    my @curr = $request->setting->get_currencies;
     $payment->{default_currency} = $curr[0];
     @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
     my $template = LedgerSMB::Template->new(
@@ -395,7 +394,7 @@ sub print {
             $check->{source} = $payment->{"source_$id"};
 
             my $inv_count;
-            my $check_max_invoices = LedgerSMB::Setting->get(
+            my $check_max_invoices = $request->setting->get(
                          'check_max_invoices'
             );
             if ($check_max_invoices > $payment->{"invoice_count_$id"}) {
@@ -526,7 +525,7 @@ sub display_payments {
                 or (defined $payment->{"paid_$_->{contact_id}"}
                     and $payment->{"paid_$_->{contact_id}"} eq 'some'));
 
-        my ($check_all) = LedgerSMB::Setting->get('check_payments');
+        my ($check_all) = $request->setting->get('check_payments');
         if ($payment->{account_class} == 1 and $check_all){
             $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
         }
@@ -583,12 +582,10 @@ sub payment {
     my ($request)    = @_;
     #my $locale       = $request->{_locale};
     my $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-    my $Settings = LedgerSMB::Setting->new({'base' => $request});
 
     # Lets get the currencies (this uses the $dbPayment->{account_class} property)
     my @currOptions;
-    my @arrayOptions;
-    @arrayOptions = $Settings->get_currencies();
+    my @arrayOptions = $request->setting->get_currencies();
 
     for my $ref (0 .. $#arrayOptions) {
         push @currOptions, { value => $arrayOptions[$ref],
@@ -1351,7 +1348,7 @@ receive the $Payment object with all this information.
 =cut
 
 sub print_payment {
-    my ($Payment) = @_;
+    my ($request, $Payment) = @_;
     my $locale    = $Payment->{_locale};
     $Payment->gather_printable_info();
     my $header = @{$Payment->{header_info}}[0];
@@ -1379,7 +1376,7 @@ sub print_payment {
         rows          => \@rows,
         format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
   };
-  $Payment->{templates_path} = 'templates/'.LedgerSMB::Setting::get('templates').'/';
+  $Payment->{templates_path} = 'templates/'.$request->setting->get('templates').'/';
   my $template = LedgerSMB::Template->new(
       user     => $Payment->{_user},
       locale   => $Payment->{_locale},
@@ -1402,7 +1399,7 @@ sub post_and_print_payment {
     $request->{payment_id} = &post_payment($request);
     my $locale       = $request->{_locale};
     my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-    return print_payment($Payment);
+    return print_payment($request, $Payment);
 }
 
 =item use_overpayment
@@ -1417,7 +1414,6 @@ sub use_overpayment {
     my ($request) = @_;
     my $locale    = $request->{_locale};
     my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
-    my $Settings = LedgerSMB::Setting->new({'base' => $request});
     my @arrayOptions;
     my @entities;
 
@@ -1439,7 +1435,7 @@ sub use_overpayment {
     }
 
     my @currOptions;
-    @arrayOptions = $Settings->get_currencies();
+    @arrayOptions = $request->setting->get_currencies();
 
     for my $ref (0 .. $#arrayOptions) {
         push @currOptions, { value => $arrayOptions[$ref],
