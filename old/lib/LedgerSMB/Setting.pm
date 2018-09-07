@@ -1,18 +1,47 @@
-=head1 NAME
-
-LedgerSMB::Setting - LedgerSMB class for managing Business Locations
-
-=head1 SYNOPSIS
-
-This module creates object instances based on LedgerSMB's in-database ORM.
-
-=cut
-
 package LedgerSMB::Setting;
+
 use LedgerSMB::App_State;
 use base qw(LedgerSMB::PGOld Exporter);
 use strict;
 use warnings;
+
+=head1 NAME
+
+LedgerSMB::Setting - Interact with LedgerSMB company settings.
+
+=head1 SYNOPSIS
+
+    use LedgerSMB::Setting;
+
+    $setting = LedgerSMB::Setting->new();
+    $setting->set_dbh($dbh);
+
+    # Write to the defaults table
+    $setting->set('company_name' => 'Bar Foo')
+
+    # Get from the defaults table
+    $name = $setting->get('company_name');
+
+    # Display all accounts
+    $accounts = $setting->all_accounts;
+    foreach my $account (@{$accounts}) {
+        print $account->{description} . "\n";
+    }
+
+    # Display all AR tax accounts
+    $accounts = $setting->accounts_by_link('AR_tax');
+    foreach my $account (@{$accounts}) {
+        print $account->{description} . "\n";
+    }
+
+    # Get defined currencies
+    @currencies = $setting->get_currencies;
+
+=head1 EXPORTS
+
+C<increment_process>
+
+=cut
 
 our @EXPORT_OK = qw( increment_process );
 
