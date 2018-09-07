@@ -14,8 +14,6 @@ use base qw(LedgerSMB::PGOld Exporter);
 use strict;
 use warnings;
 
-our $VERSION = '1.0.0';
-
 our @EXPORT_OK = qw( increment_process );
 
 =head1 METHODS
