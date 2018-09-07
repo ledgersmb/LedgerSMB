@@ -88,7 +88,7 @@ sub increment {
                                              args => [$key]) ;
     my $value = $retval->{setting_increment};
 
-    my $var = increment_process($value, $self, $myconfig);
+    my $var = increment_process($value, $self);
 
     $self->{value} = $var if $self->{key};
     return $var;
