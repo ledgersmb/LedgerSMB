@@ -499,8 +499,8 @@ sub setting {
 
     unless($self->{_setting}) {
         $self->{dbh} or croak(
-            "cannot initialise LedgerSMB::Setting object -".
-            "database handler is undefined"
+            'cannot initialise LedgerSMB::Setting object -'.
+            'database handler is undefined'
         );
         $self->{_setting} = LedgerSMB::Setting->new();
         $self->{_setting}->set_dbh($self->{dbh});
