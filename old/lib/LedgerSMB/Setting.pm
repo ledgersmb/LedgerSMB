@@ -73,7 +73,11 @@ sub get {
 
 =head2 increment($myconfig, $key)
 
-TODO
+Reads the given setting C<key> from the C<defaults> table, increments it,
+updating the database, and returns the new value.
+
+Only the last block of digits in any text is incremented. Any text
+is ignored and left unchanged.
 
 =cut
 
