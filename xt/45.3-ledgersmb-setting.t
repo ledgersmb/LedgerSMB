@@ -81,7 +81,7 @@ is($setting->get('TEST_SETTING_KEY'), 'new-test-value', 'retrieved updated setti
 # Order of returned list is important as first element indicates default
 ok($setting->set('curr', 'EUR:CAD:SEK:GBP'), 'set currencies');
 my @currencies = $setting->get_currencies;
-is_deeply(\@currencies, [qw( EUR CAD SEK GBP )], 'get currencies ok'); 
+is_deeply(\@currencies, [qw( EUR CAD SEK GBP )], 'get currencies ok');
 
 # Getting all accounts
 $accounts = $setting->all_accounts;
