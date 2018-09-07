@@ -101,12 +101,14 @@ PSGI response triplet (status, headers, body).
 Returns a hashref with the keys being system information sections,
 each being a hashref detailing configuration items with their values.
 
-=item setting
+=item setting()
 
-Accessor method for a shared LedgerSMB::Setting instance.
+Accessor method and lazy initialisation for a shared LedgerSMB::Setting
+instance.
+
+Returns a reference to an initialised LedgerSMB::Setting instance.
 
 =back
-
 
 
 =head1 Copyright (C) 2006-2017, The LedgerSMB core team.
@@ -151,6 +153,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 our $VERSION = '1.7.0-dev';
@@ -493,6 +496,16 @@ sub system_info {
 
 sub setting {
     my ($self) = @_;
+
+    unless($self->{_setting}) {
+        $self->{dbh} or croak(
+            'cannot initialise LedgerSMB::Setting object -'.
+            'database handler is undefined'
+        );
+        $self->{_setting} = LedgerSMB::Setting->new();
+        $self->{_setting}->set_dbh($self->{dbh});
+    }
+
     return $self->{_setting};
 }
 
@@ -508,5 +521,3 @@ your software.
 
 
 1;
-
-
