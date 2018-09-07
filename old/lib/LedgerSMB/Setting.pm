@@ -1,56 +1,10 @@
-
 =head1 NAME
 
 LedgerSMB::Setting - LedgerSMB class for managing Business Locations
 
-=head1 SYOPSIS
+=head1 SYNOPSIS
 
 This module creates object instances based on LedgerSMB's in-database ORM.
-
-=head1 METHODS
-
-The following method is static:
-
-=over
-
-=item new ($LedgerSMB object);
-
-=back
-
-The following methods are passed through to stored procedures:
-
-=over
-
-=item get ($self->{key})
-
-=item set ($self->{key}, $self->{value})
-
-=item increment ($self->{key})
-
-=item all_accounts()
-
-=item accounts_by_link($link)
-
-=item get_currencies()
-
-Returns a list of all accounts on the system.
-
-=item parse_increment ($self->{key})
-
-This function updates a default entry in the database, incrimenting the last
-set of digits not including <?lsmb ?> tags or non-digits, and then parses the
-returned value, doing tag substitution.  The final value is then returned by
-the function.
-
-=back
-
-The above list may grow over time, and may depend on other installed modules.
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This file is licensed under the Gnu General Public License version 2, or at your
-option any later version.  A copy of the license should have been included with
-your software.
 
 =cut
 
@@ -63,6 +17,17 @@ use warnings;
 our $VERSION = '1.0.0';
 
 our @EXPORT_OK = qw( increment_process );
+
+=head1 METHODS
+
+Inherits from L<LedgerSMB::PGOld>
+
+=head2 get($key)
+
+Retrieve the value of the specified C<key> from the database C<defaults>
+table.
+
+=cut
 
 sub get {
     my $self = shift;
@@ -78,6 +43,12 @@ sub get {
     }
     return undef;
 }
+
+=head2 increment($myconfig, $key)
+
+TODO
+
+=cut
 
 sub increment {
 
@@ -96,8 +67,17 @@ sub increment {
     return $var;
 }
 
-# Increment processing routine, used by only related classes.
-#
+=head2 increment_process
+
+Increment processing subroutine (NOT an object method), used by only related classes.
+
+This function updates a default entry in the database, incrementing the last
+set of digits not including <?lsmb ?> tags or non-digits, and then parses the
+returned value, doing tag substitution.  The final value is then returned by
+the function.
+
+=cut
+
 sub increment_process{
     my ($value, $self ) = @_;
 # check for and replace
@@ -186,12 +166,24 @@ sub increment_process{
     return $var;
 }
 
+=head2 get_currencies()
+
+Returns an array of currencies defined for the current company.
+
+=cut
+
 sub get_currencies {
     my $self = shift;
     my @data = $self->call_dbmethod(funcname => 'setting__get_currencies');
     $self->{currencies} = $data[0]->{setting__get_currencies};
     return @{$self->{currencies}};
 }
+
+=head2 set($key, $value)
+
+Update the C<defaults> database table with the specified key/value pair.
+
+=cut
 
 sub set {
     my ($self, $key, $value) = @_;
@@ -200,6 +192,15 @@ sub set {
     return $self->call_procedure(funcname => 'setting__set',
                               args => [$key, $value]);
 }
+
+=head2 accounts_by_link($link_description)
+
+Returns an arrayref containing all accounts having the specified
+C<link_description> (AP, AR, AR_tax, IC_cogs etc).
+
+Useful for populating drop-down lists.
+
+=cut
 
 sub accounts_by_link {
     my ($self, $link) = @_;
@@ -210,6 +211,12 @@ sub accounts_by_link {
     }
     return \@results;
 }
+
+=head2 all_accounts()
+
+Returns an arrayref containing all accounts.
+
+=cut
 
 sub all_accounts {
     my ($self) = @_;
@@ -222,5 +229,13 @@ sub all_accounts {
     }
     return \@results;
 }
+
+=head1 Copyright (C) 2007-2018, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 1;
