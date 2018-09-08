@@ -208,14 +208,14 @@ sub post {
 Deletes the batch with C<id> matching the current object's C<batch_id>
 attribute and all vouchers under it.
 
-Returns the C<id> of the deleted batch.
+Returns true on success.
 
 =cut
 
 sub delete {
     my ($self) = @_;
-    ($self->{delete_ref}) = $self->call_dbmethod(funcname => 'batch_delete');
-    return $self->{delete_ref};
+    my ($ref) = $self->call_dbmethod(funcname => 'batch_delete');
+    return $ref->{batch_delete};
 }
 
 =item list_vouchers
