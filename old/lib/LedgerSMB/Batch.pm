@@ -36,7 +36,18 @@ sub get_new_info {
 
 =item create
 
-Saves the batch info and populates the id hashref value with the id inserted.
+Inserts a new batch and populates the class C<id> attribute with the id of
+the inserted batch record.
+
+The following object attributes must be defined before calling this method:
+
+  * dbh
+  * batch_number [populates control_code field]
+  * batch_class  [ap|ar|gl... See batch_class table)
+  * batch_date   [populates default_date field]
+  * description
+
+This method returns the C<id> of the newly inserted batch on success.
 
 =cut
 
@@ -44,7 +55,7 @@ sub create {
     my $self = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'batch_create');
     $self->{id} = $ref->{batch_create};
-    return $ref->{id};
+    return $self->{id};
 }
 
 =item delete_voucher($id)
@@ -194,7 +205,10 @@ sub post {
 
 =item delete
 
-Deletes the unapproved batch and all vouchers under it.
+Deletes the batch with C<id> matching the current object's C<batch_id>
+attribute and all vouchers under it.
+
+Returns the C<id> of the deleted batch.
 
 =cut
 
@@ -205,6 +219,7 @@ sub delete {
 }
 
 =item list_vouchers
+
 Returns a list of all vouchers in the batch and attaches that list to
 $self->{vouchers}
 
@@ -218,7 +233,36 @@ sub list_vouchers {
 
 =item get
 
-Gets the batch and merges information with the current batch object.
+Retrieves the batch with C<id> matching the current object's C<batch_id>
+attribute, setting object properties according to the retrieved record's
+fields.
+
+The following object attributes must be defined before calling this method:
+
+  * dbh
+  * batch_id
+
+Note that the C<batch_id> attribute used to specify retrieval is different
+to the C<id> attribute used for the returned result field (though they
+will match after a successful retrieval).
+
+Returns a reference to the current object regardless of whether a matching
+batch was found. If no match was found, the object's C<id> field will be
+C<undef>.
+
+After successful retrieval, the following object attributes will be populated
+according to the retrieved record:
+
+    * id
+    * batch_class_id
+    * control_code
+    * description
+    * default_date
+    * created_by
+    * approved_on
+    * created_on
+    * locked_by
+    * approved_by
 
 =cut
 
