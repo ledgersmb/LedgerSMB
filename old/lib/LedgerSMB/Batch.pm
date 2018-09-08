@@ -4,7 +4,35 @@ LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
 
 =head1 SYNOPSIS
 
-Batch/voucher management model for LedgerSMB 1.3
+    use LedgerSMB::Batch
+
+    # Create a new batch
+    my $data = {
+        dbh => $dbh,
+        batch_number => 'TEST-001',
+        batch_class => 'ap',
+        batch_date => '2018-09-08',
+        description => 'Test Description',
+    };
+    my $batch = LedgerSMB::Batch->new({ base => $data });
+    my $id = $batch->create;
+
+    # Retrieve a batch
+    $data = {
+        dbh => $dbh,
+        batch_id => $id,
+    };
+    $batch = LedgerSMB::Batch->new({ base => $data });
+    my $result = $batch->get;
+    my $description = $result->{description};
+
+    # Delete a batch
+    $data = {
+        dbh => $dbh,
+        batch_id => $id,
+    };
+    $batch = LedgerSMB::Batch->new({ base => $data });
+    $batch->delete;
 
 =head1 METHODS
 
@@ -276,7 +304,7 @@ sub get {
 
 =back
 
-=head1 Copyright (C) 2009, The LedgerSMB core team.
+=head1 Copyright (C) 2009-2018, The LedgerSMB core team.
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
