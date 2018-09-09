@@ -17,7 +17,7 @@ This module instantiates a singleton UI template rendering engine
 use strict;
 use warnings;
 
-use parent qw(LedgerSMB::Template);
+#use parent qw(LedgerSMB::Template);
 
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
