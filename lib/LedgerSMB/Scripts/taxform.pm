@@ -30,7 +30,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -69,16 +69,10 @@ sub _taxform_screen
 {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
-
     $taxform->get_metadata();
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'taxform/add_taxform',
-        format => 'HTML'
-    );
-    return $template->render($taxform);
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'taxform/add_taxform', $taxform);
 }
 
 sub add_taxform {
@@ -193,15 +187,8 @@ sub print {
     $request->{company_telephone} = $cc->{company_phone};
     $request->{my_tax_code}       = $cc->{businessnumber};
 
-    my $template = LedgerSMB::Template->new(
-          user => $request->{_user},
-          locale => $request->{_locale},
-          path => 'UI',
-          media => 'screen',
-          template => 'taxform/summary_report',
-          format => 'PDF',
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'taxform/summary_report', $request);
 }
 
 =item list_all

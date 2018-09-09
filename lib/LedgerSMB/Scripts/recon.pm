@@ -26,7 +26,7 @@ use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Reconciliation::Summary;
 use LedgerSMB::Scripts::reports;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 =over
 
@@ -120,13 +120,9 @@ sub submit_recon_set {
     $recon->submit();
     my $can_approve = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     if ( !$can_approve ) {
-        my $template = LedgerSMB::Template->new(
-                user => $request->{_user},
-                template => 'reconciliation/submitted',
-                locale => $request->{_locale},
-                format => 'HTML',
-                path=>'UI');
-        return $template->render($recon);
+        my $template = LedgerSMB::Template::UI->new_UI;
+        return $template->render($request, 'reconciliation/submitted',
+                                 $recon);
     }
     return _display_report($recon, $request);
 }
@@ -219,13 +215,6 @@ sub _display_report {
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     $recon->get();
     $recon->{form_id} = $request->{form_id};
-    my $template = LedgerSMB::Template->new(
-        user=> $recon->{_user},
-        template => 'reconciliation/report',
-        locale => $recon->{_locale},
-        format=>'HTML',
-        path=>'UI'
-    );
     $recon->{sort_options} = [
             {id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
             {id => 'scn', label => $recon->{_locale}->text('Source')},
@@ -310,7 +299,8 @@ sub _display_report {
         $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
-    return $template->render($recon);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'reconciliation/report', $recon);
 }
 
 
@@ -328,14 +318,8 @@ sub new_report {
 
     # we can assume we're to generate the "Make a happy new report!" page.
     @{$recon->{accounts}} = $recon->get_accounts;
-    my $template = LedgerSMB::Template->new(
-        user => $recon->{_user},
-        template => 'reconciliation/upload',
-        locale => $recon->{_locale},
-        format => 'HTML',
-        path => 'UI',
-    );
-    return $template->render($recon);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'reconciliation/upload', $recon);
 }
 
 =item start_report($request)
@@ -360,14 +344,8 @@ sub start_report {
     # Why isn't this testing for errors?
     my ($report_id, $entries) = $recon->new_report($recon->import_file());
     if ($recon->{error}) {
-        my $template = LedgerSMB::Template->new(
-            user => $recon->{_user},
-            template => 'reconciliation/upload',
-            locale => $recon->{_locale},
-            format => 'HTML',
-            path => 'UI'
-            );
-        return $template->render($recon);
+        my $template = LedgerSMB::Template::UI->new_UI;
+        return $template->render($request, 'reconciliation/upload', $recon);
     }
     return _display_report($recon, $request);
 }
@@ -426,13 +404,8 @@ sub approve {
     my $code = $recon->approve($request->{report_id});
     my $template = $code == 0 ? 'reconciliation/approved'
         : 'reconciliation/report';
-    return LedgerSMB::Template->new(
-        user => $recon->{_user},
-        template => $template,
-        locale => $recon->{_locale},
-        format => 'HTML',
-        path=>'UI',
-        )->render($recon);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, $template, $recon);
 }
 
 =item pending ($self, $request, $user)
@@ -449,16 +422,9 @@ sub pending {
     my ($request) = @_;
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-    my $template;
 
-    $template= LedgerSMB::Template->new(
-        user => $request->{_user},
-        template=>'reconciliation/pending',
-        locale => $request->{_locale},
-        format=>'HTML',
-        path=>'UI'
-    );
-    return $template->render();
+    my $template= LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'reconciliation/pending', {});
 }
 
 {

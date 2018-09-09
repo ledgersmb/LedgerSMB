@@ -34,6 +34,7 @@ use LedgerSMB::PGDate;
 use LedgerSMB::Report::Timecards;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 use LedgerSMB::Timecard;
 use LedgerSMB::Timecard::Type;
 
@@ -60,13 +61,8 @@ This begins the timecard workflow.  The following may be set as a default:
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/timecards',
-        template => 'entry_filter',
-        format   => 'HTML'
-    )->render($request);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'timecards/entry_filter', $request);
 }
 
 =item display
@@ -95,14 +91,8 @@ sub display {
     my $curr = $request->setting->get('curr');
     @{$request->{currencies}} = split /:/, $curr;
     $request->{total} = ($request->{qty}//0) + ($request->{non_billable}//0);
-     my $template = LedgerSMB::Template->new(
-         user     => $request->{_user},
-         locale   => $request->{_locale},
-         path     => 'UI/timecards',
-         template => 'timecard',
-         format   => 'HTML'
-     );
-     return $template->render($request);
+     my $template = LedgerSMB::Template::UI->new_UI;
+     return $template->render($request, 'timecards/timecard', $request);
 }
 
 =item timecard_screen
@@ -130,14 +120,9 @@ sub timecard_screen {
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
-         my $template = LedgerSMB::Template->new(
-             user     => $request->{_user},
-             locale   => $request->{_locale},
-             path     => 'UI/timecards',
-             template => 'timecard-week',
-             format   => 'HTML'
-         );
-         return $template->render($request);
+         my $template = LedgerSMB::Template::UI->new_UI;
+         return
+             $template->render($request, 'timecards/timecard-week', $request);
     }
 }
 
@@ -214,7 +199,7 @@ sub print {
            $request->{partnumber}
     );
     my $timecard = LedgerSMB::Timecard->new(%$request);
-    my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => $LedgerSMB::Company_Config::settings->{templates},

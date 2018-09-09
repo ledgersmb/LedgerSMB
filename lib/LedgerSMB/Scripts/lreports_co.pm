@@ -13,11 +13,12 @@ This module holds Colombia-specific reports.
 
 =cut
 
-use LedgerSMB::Template;
-use LedgerSMB::Report::co::Caja_Diaria;
-use LedgerSMB::Report::co::Balance_y_Mayor;
 use strict;
 use warnings;
+
+use LedgerSMB::Report::co::Caja_Diaria;
+use LedgerSMB::Report::co::Balance_y_Mayor;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -33,14 +34,8 @@ Displays the filter screen for Caja Diaria
 
 sub start_caja_diaria {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/Reports/co',
-        template => 'filter_cd',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/co/filter_cd', $request);
 }
 
 =item start_bm
@@ -51,14 +46,8 @@ Displays the filter screen for Balance y Mayor
 
 sub start_bm {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/Reports/co',
-        template => 'filter_bm',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/co/filter_bm', $request);
 }
 
 =item run_caja_diaria

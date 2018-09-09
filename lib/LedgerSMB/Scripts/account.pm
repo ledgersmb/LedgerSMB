@@ -208,13 +208,8 @@ sub _display_account_screen {
             };
     }
 
-    my $template = LedgerSMB::Template->new(
-        user => $form->{_user},
-        locale => $locale,
-        format => 'HTML',
-        path   => 'UI',
-        template => 'accounts/edit');
-    return $template->render({
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($form, 'accounts/edit', {
         form => $form,
         checked => $checked,
         buttons => $buttons,

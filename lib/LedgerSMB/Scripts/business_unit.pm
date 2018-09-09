@@ -26,7 +26,7 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::PGDate;
 use LedgerSMB::Report::Listings::Business_Unit;
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 $Carp::Verbose = 1;
 
@@ -46,14 +46,9 @@ sub list_classes {
     my $lsmb_modules = LedgerSMB::App_Module->new(%$request);
     @{$request->{classes}} = $bu_class->list;
     @{$request->{modules}} = $lsmb_modules->list;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/business_units',
-        template => 'list_classes',
-        format => 'HTML'
-    );
-    return $template->render({request => $request});
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'business_units/list_classes',
+                             {request => $request});
 }
 
 =item add
@@ -100,14 +95,8 @@ sub edit {
 
 sub _display {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/business_units',
-        template => 'edit',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'business_units/edit', $request);
 
 }
 
