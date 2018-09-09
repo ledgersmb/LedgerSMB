@@ -27,7 +27,6 @@ use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
 use LedgerSMB::Report::Listings::Warehouse;
-use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 our $VERSION = '1.0';
@@ -88,8 +87,7 @@ sub start_report {
     @{$request->{all_years}} = $request->call_procedure(
               funcname => 'date_get_all_years'
     );
-    @{$request->{currencies}} =
-        (LedgerSMB::Setting->new({base => $request}))->get_currencies();
+    @{$request->{currencies}} = $request->setting->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};
@@ -108,7 +106,7 @@ sub start_report {
         funcname => 'person__list_languages'
         );
 
-    $request->{earn_id} = LedgerSMB::Setting->get('earn_id');
+    $request->{earn_id} = $request->setting->get('earn_id');
     my $template = LedgerSMB::Template->new(
         request => $request,
         user => $request->{_user},

@@ -26,7 +26,6 @@ use LedgerSMB::Entity::Location;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
-use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 our $VERSION = '1.0';

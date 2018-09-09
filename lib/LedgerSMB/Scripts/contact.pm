@@ -37,7 +37,6 @@ use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Part;
-use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 use LedgerSMB::old_code qw(dispatch);
@@ -301,9 +300,8 @@ sub _main_screen {
         map { { curr => $_ } }
         (LedgerSMB::Setting->new({base => $request}))->get_currencies;
 
-    my $default_country = LedgerSMB::Setting->get('default_country');
-
-    my ($default_language) = LedgerSMB::Setting->get('default_language');
+    my $default_country = $request->setting->get('default_country');
+    my ($default_language) = $request->setting->get('default_language');
 
     my $attach_level_options = [
         {text => $locale->text('Entity'), value => 1} ];

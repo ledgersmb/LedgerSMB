@@ -32,7 +32,6 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
 use LedgerSMB::PGDate;
 use LedgerSMB::Report::Timecards;
-use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Timecard;
@@ -94,7 +93,7 @@ sub display {
           $request->{bu_class_id}, undef, 0, $request->{transdate}
     );
     @{$request->{currencies}} =
-        (LedgerSMB::Setting->new({base => $request}))->get_currencies;
+        $request->setting->get_currencies;
     $request->{total} =
         ($request->{qty} // 0) + ($request->{non_billable} // 0);
      my $template = LedgerSMB::Template->new(
@@ -123,7 +122,7 @@ sub timecard_screen {
               $request->{bu_class_id}, undef, 0, $request->{transdate}
          );
          @{$request->{currencies}} =
-             (LedgerSMB::Setting->new({base => $request}))->get_currencies;
+             $request->setting->get_currencies;
          my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
 
          my @dates = ();

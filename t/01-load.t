@@ -57,6 +57,7 @@ my @modules =
           'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
           'LedgerSMB::File', 'LedgerSMB::Report',
+          'LedgerSMB::Request::Helper::ParameterMap',
           'LedgerSMB::Template', 'LedgerSMB::Legacy_Util',
           'LedgerSMB::Company_Config',
           'LedgerSMB::Currency', 'LedgerSMB::Database',

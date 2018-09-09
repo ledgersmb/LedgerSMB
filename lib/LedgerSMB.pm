@@ -101,8 +101,14 @@ PSGI response triplet (status, headers, body).
 Returns a hashref with the keys being system information sections,
 each being a hashref detailing configuration items with their values.
 
-=back
+=item setting()
 
+Accessor method and lazy initialisation for a shared LedgerSMB::Setting
+instance.
+
+Returns a reference to an initialised LedgerSMB::Setting instance.
+
+=back
 
 
 =head1 Copyright (C) 2006-2017, The LedgerSMB core team.
@@ -147,6 +153,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 our $VERSION = '1.7.0-dev';
@@ -166,7 +173,8 @@ sub new {
 
     (my $package,my $filename,my $line)=caller;
 
-
+    # Properties prefixed with underscore are hidden from UI templates.
+    #
     # Some tests construct LedgerSMB objects without $auth argument
     # (in fact, without any arguments), so check for having an $auth
     # arg before trying to call methods on it.
@@ -184,6 +192,7 @@ sub new {
     $self->{_session_id} = $request->env->{'lsmb.session_id'};
     $self->{_create_session} = $request->env->{'lsmb.create_session_cb'};
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
+    $self->{_setting} = $request->env->{'lsmb.setting'};
 
     $self->_process_args($request->parameters);
     $self->_set_default_locale();
@@ -237,21 +246,6 @@ sub initialize_with_db {
         $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()');
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
-    }
-
-
-    my $query = q{SELECT t.extends,
-            coalesce (t.table_name, 'custom_' || extends)
-            || ':' || f.field_name as field_def
-        FROM custom_table_catalog t
-        JOIN custom_field_catalog f USING (table_id)};
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute;
-    my $ref;
-    $self->{custom_db_fields} = {};
-    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
-          $ref->{field_def};
     }
 
     LedgerSMB::Company_Config::initialize($self);
@@ -500,6 +494,20 @@ sub system_info {
     };
 }
 
+sub setting {
+    my ($self) = @_;
+
+    unless($self->{_setting}) {
+        $self->{dbh} or croak(
+            'cannot initialise LedgerSMB::Setting object -'.
+            'database handler is undefined'
+        );
+        $self->{_setting} = LedgerSMB::Setting->new();
+        $self->{_setting}->set_dbh($self->{dbh});
+    }
+
+    return $self->{_setting};
+}
 
 =head1 LICENSE AND COPYRIGHT
 
@@ -513,5 +521,3 @@ your software.
 
 
 1;
-
-

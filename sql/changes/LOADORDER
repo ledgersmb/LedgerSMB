@@ -4,7 +4,7 @@
 # errors (legacy fixes that may error).
 # comments begin with # (but you knew that....)
 
-#1.4 fixes from the old Fixes.sql
+# 1.4 fixes from the old Fixes.sql
 1.4/menu-cleanup.sql
 !1.4/location-fixes.sql
 !1.4/batch-fixes.sql
@@ -28,7 +28,7 @@
 1.4/drop-je-functions.sql
 !1.4/templatetrans.sql
 1.4/business_unit_class_id_seq-fix.sql
-#1.5 changes
+# 1.5 changes
 !1.5/invoice-tbl-cogs-constraint.sql
 !1.5/trial_balance_cleanup.sql
 1.5/templates-last-modified.sql
@@ -59,7 +59,7 @@
 #   the migration scripts in sql/upgrade/. Don't insert any change
 #   scripts before this point, because it breaks the migrations from
 #   both LedgerSMB 1.2 & 1.3 as well as from SQL 2.8 and 3.0
-#1.6 changes
+# 1.6 changes
 1.6/drop_chart.sql
 !1.6/drop_arap_cols.sql
 1.6/drop_arap_cols.sql
@@ -86,3 +86,5 @@ mc/changed-objects.sql
 mc/new-constraints.sql
 mc/dropped-objects.sql
 mc/views.sql
+# 1.7 changes
+1.7/drop-custom-catalog.sql

@@ -11,6 +11,33 @@ Implements infrastructure to apply "schema-deltas" (schema-changes)
 exactly once. Meaning that if a change has been applied succesfully,
 it won't be applied again.
 
+Please note that the criterion 'has been applied' is determined by
+the SHA512 of the content of the schema change file.  This leaves no
+room for fixing the content of the schema change file as changing
+the content means the schema change will be applied in all upgrades,
+even if the older variant was succesfully applied (because the bug
+which the fixed content addresses wasn't triggered on some upgrades).
+
+To address the immutability concern, the following extension to the
+immutability has been devised.  When a schema change file must be
+changed/fixed, the original must be copied to a new file with an
+added suffix of an at-sign and a sequence number. Here's an example:
+
+   sql/changes/1.4/abc.sql -copy-> sql/changes/1.4/abc.sql@1
+   sql/changes/1.4/abc.sql (changed).
+
+The new file (C<abc.sql@1>) must not be added to the change mechanism's
+LOADORDER file. If another change to C<abc.sql> is required, the
+following happens:
+
+   sql/changes/1.4/abc.sql -copy-> sql/changes/1.4/abc.sql@2
+   sql/changes/1.4/abc.sql (changed again).
+
+On upgrade, this module will detect that older versions of the file
+exist and have been succesfully applied.  If that's the case, the
+schema change file will be considered to be applied.
+
+
 Note that this functionality isn't specific to LedgerSMB and mostly
 mirrors PGObject::Util::DBChange and originates from that code.
 
@@ -18,8 +45,11 @@ mirrors PGObject::Util::DBChange and originates from that code.
 
 use strict;
 use warnings;
-use Digest::SHA;
+
 use Cwd;
+use Digest::SHA;
+use File::Basename;
+use File::Find;
 
 =head1 SYNOPSIS
 
@@ -81,15 +111,23 @@ SQL content read from the change file.
 
 =cut
 
+sub _slurp {
+    my ($path) = @_;
+
+    local $! = undef;
+    open my $fh, '<', $path or
+        die 'FileError: ' . Cwd::abs_path($path) . ": $!";
+    binmode $fh, 'encoding(:UTF-8)';
+    my $content = join '', <$fh>;
+    close $fh or die 'Cannot close file ' . $path;
+
+    return $content;
+}
+
 sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
-        local $! = undef;
-        open my $fh, '<', $self->path or
-            die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
-        binmode $fh, 'encoding(:UTF-8)';
-        $self->{_content} = join '', <$fh>;
-        close $fh or die 'Cannot close file ' .  $self->path();
+        $self->{_content} = _slurp($self->path);
     }
     return $self->{_content};
 }
@@ -101,15 +139,25 @@ characters
 
 =cut
 
+sub _normalized_sha {
+    my ($content) = @_;
+
+    my $normalized =
+        join "\n",
+        grep { /\S/ }
+        map { my $string = $_; $string =~ s/--.*//; $string }
+        split /\n/, $content;
+
+    return Digest::SHA::sha512_base64($normalized);
+}
+
 sub sha {
     my ($self) = @_;
+
     return $self->{_sha} if $self->{_sha};
+
     my $content = $self->content(1); # raw
-    my $normalized = join "\n",
-                     grep { /\S/ }
-                     map { my $string = $_; $string =~ s/--.*//; $string }
-                     split /\n/, $content;
-    $self->{_sha} = Digest::SHA::sha512_base64($normalized);
+    $self->{_sha} = _normalized_sha($content);
     return $self->{_sha};
 }
 
@@ -122,13 +170,39 @@ Returns true if the current sha matches one that has been applied.
 
 sub is_applied {
     my ($self, $dbh) = @_;
-    my $sha = $self->sha;
+
+    my @shas = ($self->sha);
+    my $path = $self->path;
+    my $want_old_scripts = sub {
+        my $file = $File::Find::name;
+
+        if ($file =~ /^\Q$path@\E/) {
+            if (-f $file) {
+                push @shas, _normalized_sha(_slurp($file));
+            }
+        }
+    };
+    find({ wanted => $want_old_scripts,
+           follow => 0,
+           no_chdir => 1 }, dirname($path));
+
     my $sth = $dbh->prepare(
         'SELECT * FROM db_patches WHERE sha = ?'
-    );
-    $sth->execute($sha);
-    my $retval = int $sth->rows;
-    $sth->finish;
+        );
+
+    my $retval = 0;
+    for my $sha (@shas) {
+        $sth->execute($sha)
+            or die $sth->errstr;
+        my $rv = $sth->fetchall_arrayref
+            or die $sth->errstr;
+        $sth->finish
+            or die $sth->errstr;
+
+        $retval = scalar @$rv;
+        last if $retval;
+    }
+
     return $retval;
 }
 
@@ -370,9 +444,9 @@ Returns true if the tracking system needs to be initialized
 sub needs_init {
     my ($dbh) = @_;
     local $@ = undef;
-    my $rows = eval { $dbh->prepare(
+    my $rows = eval { my $sth = $dbh->prepare(
        'select 1 from db_patches'
-    )->execute(); };
+                          )->execute(); };
     $dbh->rollback;
     return 0 if $rows;
     return 1;

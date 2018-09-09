@@ -1187,8 +1187,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['asset_unit_class'::text, 'asset_dep_method',
                     'lsmb_module', 'business_unit', 'business_unit_class']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
-  FROM unnest(array['makemodel'::text, 'custom_field_catalog',
-                    'custom_table_catalog', 'oe_class', 'note_class']) obj;
+  FROM unnest(array['makemodel'::text, 'oe_class', 'note_class']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['account_heading'::text, 'account',
                     'acc_trans', 'account_link',
