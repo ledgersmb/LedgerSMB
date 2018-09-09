@@ -107,16 +107,25 @@ add_vouchers().
 
 sub create_vouchers {
     my ($request) = shift @_;
-    my $batch = LedgerSMB::Batch->new({base => $request});
-    $batch->{batch_class} = $request->{batch_type};
-    if ($request->close_form){
-        $batch->create;
-        return add_vouchers($batch);
-    } else {
-        $request->{notice} =
-            $request->{_locale}->text('Error creating batch.  Please try again.');
+
+    unless ($request->close_form) {
+        $request->{notice} = $request->{_locale}->text(
+            'Error creating batch.  Please try again.'
+        );
         return create_batch($request);
     }
+
+    my $batch_data = {
+        dbh => $request->{dbh},
+        batch_number => $request->{batch_number},
+        batch_class => $request->{batch_type},
+        batch_date => $request->{batch_date},
+        description => $request->{description},
+    };
+    my $batch = LedgerSMB::Batch->new({base => $batch_data});
+
+    $request->{batch_id} = $batch->create;
+    return add_vouchers($request);
 }
 
 =item add_vouchers
@@ -136,7 +145,6 @@ sub _add_vouchers_old {
 sub add_vouchers {
     my ($request) = shift @_;
 
-    my $batch = LedgerSMB::Batch->new({base => $request});
     our $vouchers_dispatch =
     {
         ap         => {script => 'ap.pl', function => 'add'},
@@ -183,7 +191,6 @@ sub add_vouchers {
                      }},
     };
 
-    $request->{batch_id} = $batch->{id};
     $request->{approved} = 0;
     $request->{transdate} = $request->{batch_date};
     delete $request->{id};
