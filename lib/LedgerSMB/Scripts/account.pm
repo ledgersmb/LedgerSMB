@@ -28,6 +28,7 @@ use LedgerSMB;
 use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::EOY;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 
 my $logger = Log::Log4perl::get_logger('LedgerSMB::DBObject::Account');
@@ -233,11 +234,10 @@ sub yearend_info {
     $eoy->list_earnings_accounts;
     $eoy->{closed_date} = $eoy->latest_closing;
     $eoy->{user} = $request->{_user};
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'accounts/yearend');
-    return $template->render({ request => $request,
-                                       eoy => $eoy});
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'accounts/yearend',
+                             { request => $request,
+                               eoy => $eoy});
 }
 
 =item post_yearend
@@ -256,11 +256,8 @@ sub post_yearend {
     my ($request) = @_;
     my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->close_books;
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'accounts/yearend_complete'
-    );
-    return $template->render($eoy);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'accounts/yearend_complete', $eoy);
 }
 
 =item close_period

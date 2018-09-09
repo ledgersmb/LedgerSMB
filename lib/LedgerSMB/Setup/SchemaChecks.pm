@@ -27,6 +27,7 @@ use Text::Markdown qw(markdown);
 
 use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our @EXPORT = ## no critic
     qw| html_formatter_context |;
@@ -63,24 +64,19 @@ sub _unpack_grid_data {
 sub _wrap_html {
     my ($request) = shift;
 
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template::UI->new_UI;
+    unshift @HTML, $template->render_string(
         $request,
-        template => 'setup/upgrade/preamble',
-        );
-    $template->render(
+        'setup/upgrade/preamble',
         {
             check_id => _check_hashid( $failing_check ),
             database => $request->{database},
             action_url => $request->get_relative_url,
         });
-    unshift @HTML, $template->{output};
 
-    $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/upgrade/epilogue',
-        );
-    $template->render();
-    push @HTML, $template->{output};
+    $template = LedgerSMB::Template::UI->new_UI;
+    push @HTML, $template->render_string($request,
+                                         'setup/upgrade/epilogue');
 
     return \@HTML;
 }
@@ -95,16 +91,15 @@ sub _format_confirm {
 
     my $seq = 0;
     while (@confirmations) {
-        my $template = LedgerSMB::Template->new_UI($request,
-                template => 'setup/upgrade/confirm',
-            );
-        $template->render(
+        my $template = LedgerSMB::Template::UI->new_UI;
+        push @HTML, $template->render_string(
+            $request,
+            'setup/upgrade/confirm',
             {
                 value => shift @confirmations,
                 description => shift @confirmations,
                 id => "confirm-$seq",
             });
-        push @HTML, $template->{output};
 
         $seq++;
     }
@@ -119,18 +114,16 @@ sub _format_describe {
     $failing_check = $check;
 
     $msg //= $check->{description};
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template::UI->new_UI;
+    push @HTML, $template->render_string(
         $request,
-        template => 'setup/upgrade/describe',
-        );
-    $template->render(
+        'setup/upgrade/describe',
         {
             title => $check->{title},
         },
         {
             description => markdown($msg),
         });
-    push @HTML, $template->{output};
 }
 
 sub _format_grid {
@@ -167,17 +160,15 @@ sub _format_grid {
         id => $args{name},
     };
 
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template::UI->new_UI;
+    push @HTML, $template->render_string(
         $request,
-        template => 'setup/upgrade/grid',
-        );
-    $template->render(
+        'setup/upgrade/grid',
         {
             attributes => $atts,
             columns => $cols,
             rows => $rows,
         });
-    push @HTML, $template->{output};
 }
 
 sub _provided {

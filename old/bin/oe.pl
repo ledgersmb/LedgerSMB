@@ -1256,10 +1256,12 @@ sub save {
 
     if ( !$form->{repost}  && $form->{id}) {
        $form->{repost} = 1;
-       my $template = LedgerSMB::Template->new_UI(
-           $form,
-           template => 'oe-save_warn',
-       );
+    my $template = LedgerSMB::Template->new(
+        format => 'HTML',
+        path => 'UI',
+        template => 'oe-save_warn',
+        user => $form->{_user},
+        locale => $form->{_locale});
 
        return LedgerSMB::Legacy_Util::render_template($template, {
           hiddens => $form
