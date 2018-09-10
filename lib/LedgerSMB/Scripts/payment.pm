@@ -136,7 +136,7 @@ sub get_search_criteria {
 
 sub pre_bulk_post_report {
     my ($request) = @_;
-    my $template = LedgerSMB::Template::UI->new( # printed document
+    my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI',
