@@ -27,7 +27,7 @@ use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
 use LedgerSMB::Report::Listings::Warehouse;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -108,17 +108,12 @@ sub start_report {
         );
 
     $request->{earn_id} = $request->setting->get('earn_id');
-    my $template = LedgerSMB::Template->new(
-        request => $request,
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/Reports/filters',
-        template => $request->{report_name},
-        format => 'HTML'
-    );
-    return $template->render($request);
-                                 # request not used for script;
-                                 # forms submit to other URLs than back to here
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request,
+                             'Reports/filters/' . $request->{report_name},
+                             $request);
+    # request not used for script;
+    # forms submit to other URLs than back to here
 }
 
 =item list_business_types

@@ -17,9 +17,11 @@ This module provides the workflow scripts for managing users and permissions.
 
 =cut
 
-use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
+use LedgerSMB::Template::UI;
+
+
 use Log::Log4perl;
 
 # I don't really like the code in this module.  The callbacks are per form which
@@ -41,13 +43,6 @@ sub list_sessions {
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     my @sessions = $admin->list_sessions();
-    my $template = LedgerSMB::Template->new(
-            user => $request->{_user},
-            template => 'form-dynatable',
-            locale => $request->{_locale},
-            format => 'HTML',
-            path=>'UI'
-    );
     my $columns;
     @$columns = qw(id username last_used locks_active drop);
     my $column_names = {
@@ -70,7 +65,8 @@ sub list_sessions {
         ++$rowcount;
     }
     $admin->{title} = $request->{_locale}->text('Active Sessions');
-    return $template->render({
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'form-dynatable', {
        form    => $admin,
        columns => $columns,
        heading => $column_heading,

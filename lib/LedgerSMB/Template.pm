@@ -114,19 +114,6 @@ Returns a list of format names, any of the following (in order) as applicable:
 =back
 
 
-=item new_UI($request, template => $file, ...)
-
-Wrapper around the constructor that sets the following properties:
-
-    path   => 'UI'
-    format => 'HTML',
-    user   => $request->{_user}
-    locale => $request->{_locale}
-
-Additionally, variables are added to the template processor as required
-by the HTML UI.
-
-
 =item render($variables, $raw_variables)
 
 Returns the LedgerSMB::Template object itself. Dies on error.
@@ -375,7 +362,7 @@ sub new {
 
     $self->{$_} = $args{$_}
         for (qw( template format language debug locale
-                 format_options output_options additional_vars ));
+                 format_options output_options ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
     if ($self->{language}){ # Language takes precedence over locale
@@ -407,35 +394,6 @@ sub new {
        or die "Failed to load module $self->{format}";
 
     return $self;
-}
-
-sub new_UI {
-    my $class = shift;
-    my $request = shift;
-
-    return $class->new(
-        @_,
-        format => 'HTML' ,
-        path => 'UI',
-        user => $request->{_user},
-        locale => $request->{_locale},
-        additional_vars => {
-            dojo_theme =>
-                ($LedgerSMB::App_State::Company_Config->{dojo_theme}
-                 || LedgerSMB::Sysconfig::dojo_theme()),
-            PRINTERS => [
-               ( map { { text => $_, value => $_ } }
-                 keys %LedgerSMB::Sysconfig::printers,
-                 {
-                    text => ($LedgerSMB::App_State::Locale ?
-                                $LedgerSMB::App_State::Locale->text('Screen')
-                                : 'Screen' ),
-                    value => 'screen'
-                 } )
-            ],
-            LIST_FORMATS => sub { return available_formats(); },
-        },
-    );
 }
 
 sub preprocess {
@@ -537,7 +495,7 @@ sub get_template_args {
     return $arghash;
 }
 
-sub _tt_url {
+sub tt_url {
     my $str = shift;
 
     $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
@@ -557,7 +515,6 @@ sub _render {
     my $self = shift;
     my $vars = shift;
     my $cvars = shift // {};
-    $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $self->{user};
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
@@ -573,7 +530,7 @@ sub _render {
                        : sub { return @_; }),
           escape => sub { return $escape->(@_); },
           text => sub { return $self->_maketext($escape, @_); },
-          tt_url => \&_tt_url,
+          tt_url => \&tt_url,
           %{$self->{additional_vars} // {}},
           %$cvars )
     };

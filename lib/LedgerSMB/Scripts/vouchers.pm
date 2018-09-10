@@ -30,7 +30,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -85,15 +85,10 @@ sub create_batch {
 
     $batch->get_search_results({mini => 1});
 
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'create_batch',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                        batch => $batch });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'create_batch',
+                             { request => $request,
+                               batch => $batch });
 }
 
 =item create_vouchers

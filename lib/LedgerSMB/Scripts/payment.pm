@@ -61,6 +61,7 @@ use LedgerSMB::Report::Invoices::Payments;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 
 # CT:  A few notes for future refactoring of this code:
@@ -94,16 +95,10 @@ sub payments {
     my @curr = $request->setting->get_currencies;
     $payment->{default_currency} = $curr[0];
     @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'payments_filter',
-        format   => 'HTML',
-    );
-
-    return $template->render({ request => $request,
-                                       payment => $payment });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payments/payments_filter',
+                             { request => $request,
+                               payment => $payment });
 }
 
 =item get_search_criteria
@@ -141,7 +136,7 @@ sub get_search_criteria {
 
 sub pre_bulk_post_report {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI',
@@ -435,7 +430,7 @@ sub print {
             );
             push @{$payment->{checks}}, $check;
         }
-        $template = LedgerSMB::Template->new(
+        $template = LedgerSMB::Template->new( # printed document
             user => $payment->{_user},
             template => 'check_multiple',
             format => uc $payment->{'format'},
@@ -560,15 +555,10 @@ sub display_payments {
         $payment->{can_print} = 1;
     }
 
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'payments_detail',
-        format   => 'HTML',
-    );
-    return $template->render({ request => $request,
-                                       payment => $payment });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payments/payments_detail',
+                             { request => $request,
+                               payment => $payment });
 }
 
 =item payment
@@ -635,14 +625,8 @@ sub payment {
         }
     };
 
-    my $template;
-    $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'payment1',
-        format   => 'HTML' );
-     return $template->render($select);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payments/payment1', $select);
 }
 
 
@@ -701,15 +685,9 @@ sub payment1_5 {
                                value => 'payment2',
                                text =>  $request->{_locale}->text('Continue')}
         };
-        my $template;
-        $template = LedgerSMB::Template->new(
-            user     => $request->{_user},
-            locale   => $request->{_locale},
-            path     => 'UI/payments',
-            template => 'payment1_5',
-            format   => 'HTML');
 
-        return $template->render($select);
+        my $template = LedgerSMB::Template::UI->new_UI;
+        return $template->render($request, 'payments/payment1_5', $select);
     }
 
 }
@@ -1142,13 +1120,8 @@ sub payment2 {
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
         unless defined $select->{selected_account};
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'payment2',
-        format => 'HTML' );
-    return $template->render($select);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payments/payment2', $select);
 }
 
 =item post_payment
@@ -1377,7 +1350,7 @@ sub print_payment {
         format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
   };
   $Payment->{templates_path} = 'templates/'.$request->setting->get('templates').'/';
-  my $template = LedgerSMB::Template->new(
+  my $template = LedgerSMB::Template->new( # printed document
       user     => $Payment->{_user},
       locale   => $Payment->{_locale},
       path     => $Payment->{templates_path},
@@ -1450,13 +1423,8 @@ sub use_overpayment {
         value => 'use_overpayment2',
         text => $locale->text('Continue')
     };
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'use_overpayment1',
-        format => 'HTML' );
-    return $template->render($ui);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payments/use_overpayment1', $ui);
 }
 
 
@@ -1781,15 +1749,8 @@ sub use_overpayment2 {
 
     $ui->{hiddens} = \@hiddens;
 
-    my $template =    LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'use_overpayment2',
-        format => 'HTML' );
-
-
-return $template->render($ui);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payments/use_overpayment2', $ui);
 }
 
 =item post_overpayment

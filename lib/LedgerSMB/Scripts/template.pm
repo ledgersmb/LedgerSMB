@@ -29,6 +29,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template;
 use LedgerSMB::Template::DB;
+use LedgerSMB::Template::UI;
 
 =head1 METHODS
 
@@ -64,15 +65,10 @@ sub display {
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} =
         [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/templates',
-        template => 'preview',
-        format   => 'HTML'
-    )->render({ request => $request,
-                template => $dbtemp,
-                %$dbtemp });
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'templates/preview', { request => $request,
+                                                  template => $dbtemp,
+                                                  %$dbtemp });
 }
 
 =head2 edit($request)
@@ -99,14 +95,9 @@ sub edit {
     $dbtemp->{languages} =
         [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
 
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/templates',
-        template => 'edit',
-        format   => 'HTML'
-    )->render({ request => $request,
-                        to_edit => $dbtemp });
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'templates/edit', { request => $request,
+                                               to_edit => $dbtemp });
 }
 
 =head2 save($request)
