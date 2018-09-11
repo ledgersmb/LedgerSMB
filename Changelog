@@ -12,7 +12,7 @@ Quality Assurance
 * POD documentation structure improvements, with automated checks (Erik H)
 
 Dependency updates
-* Dojo Toolkit (JavaScript UI tools) updated to 1.14.0 (Erik H)
+* Dojo Toolkit (JavaScript UI tools) updated to 1.14.1 (Erik H)
 
 Code cleanup
 * Removed deprecated 'custom table' and 'custom field' tables (Erik H)
