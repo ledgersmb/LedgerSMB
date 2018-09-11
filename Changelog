@@ -9,7 +9,7 @@ New functionalities
 Quality Assurance
 * Expanded checks and resolutions for schema changes (Erik H)
 * Ensure correct dependency declaration (RequireExplicitInclusion critic policy)
-* POD documentation structure improvements (Erik H)
+* POD documentation structure improvements, with automated checks (Erik H)
 
 Dependency updates
 * Dojo Toolkit (JavaScript UI tools) updated to 1.14.0 (Erik H)
@@ -20,8 +20,9 @@ Code cleanup
 * Simplified deprecated LedgerSMB::PGOld (Nick P)
 * Remove unused LedgerSMB::DBObject and LedgerSMB::PGOld methods (Nick P)
 * Remove unused configuration settings in ledgersmb.conf (Erik H)
-* Further reduction of warnings
+* Further (compared to 1.6) reduction of warnings
 * Implemented tests for LedgerSMB::File(::*) modules (Nick P)
+* Template engine simplification by separation of UI and printed docs (Erik H)
 
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
