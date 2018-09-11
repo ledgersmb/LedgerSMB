@@ -12,9 +12,7 @@
 <div class="listtop"><?lsmb text('Create New Batch') ?></div>
 <form data-dojo-type="lsmb/Form" name="create_batch" method="post" action="<?lsmb request.script ?>">
 <div class="labelledinput">
-  <label for="batch-number">
-    <?lsmb text("Batch Number") ?>
-  </label>
+  <label for="batch-number"><?lsmb text("Batch Number") ?></label>
   <div class="value">
     <?lsmb PROCESS input element_data = {
            name = "batch_number"
@@ -23,9 +21,7 @@
   </div>
 </div>
 <div class="labelledinput">
-  <label for="description">
-    <?lsmb text("Description") ?>
-  </label>
+  <label for="description"><?lsmb text("Description") ?></label>
   <div class="inputgroup">
     <?lsmb PROCESS input element_data = {
            name = "description"
@@ -34,9 +30,7 @@
   </div>
 </div>
 <div class="labelledinput">
-  <label for="batch-date">
-     <?lsmb text("Batch Date") ?>
-  </label>
+  <label for="batch-date"><?lsmb text("Batch Date") ?></label>
   <div class="inputgroup">
      <?lsmb PROCESS input element_data = {
             type = "date"
