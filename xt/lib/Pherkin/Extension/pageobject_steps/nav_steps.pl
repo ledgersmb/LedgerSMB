@@ -98,12 +98,14 @@ my %screens = (
     'unapproved inventory adjustments search screen' => ' PageObject::App::Parts::AdjustSearchUnapproved',
     'Create New Batch' => 'PageObject::App::Cash::Vouchers::Payments',
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
+    'Payments Detail' => 'PageObject::App::Cash::Vouchers::Payments::Detail',
 );
 
 Then qr/I should see the (.*) screen/, sub {
     my $page_name = $1;
     die "Unknown screen '$page_name'"
         unless exists $screens{$page_name};
+    use_module($screens{$page_name});
 
     my $page;
     S->{ext_wsl}->wait_for(
