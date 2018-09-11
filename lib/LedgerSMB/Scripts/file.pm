@@ -37,7 +37,7 @@ use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA
     FC_INTERNAL FC_INCOMING);
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our $fileclassmap = {
    FC_TRANSACTION()   => 'LedgerSMB::File::Transaction',
@@ -83,14 +83,8 @@ Show the attachment or upload screen.
 sub show_attachment_screen {
     my ($request) = @_;
     my @flds = split/\s/, $request->{additional};
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/file',
-        template => 'attachment_screen',
-        format   => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'file/attachment_screen', $request);
 }
 
 =item attach_file

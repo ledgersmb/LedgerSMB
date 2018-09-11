@@ -26,6 +26,7 @@ use LedgerSMB::PSGI::Util;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 use LedgerSMB::User;
 
 our $VERSION = 1.0;
@@ -76,11 +77,8 @@ sub __default {
 
     $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'login',
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'login', $request);
 }
 
 =item authenticate
@@ -125,11 +123,8 @@ sub login {
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
     "$request->{login} -- $request->{company}";
 
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'main',
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'main', $request);
 }
 
 =item logout
@@ -145,11 +140,8 @@ sub logout {
     $request->{callback}   = '';
 
     $request->{_logout}->();
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'logout',
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'logout', $request);
 }
 
 =item logout_js

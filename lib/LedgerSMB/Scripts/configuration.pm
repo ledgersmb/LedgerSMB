@@ -26,6 +26,7 @@ use warnings;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 sub _default_settings {
     my ($request) = @_;
@@ -304,10 +305,8 @@ sub defaults_screen {
         },
     );
 
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'Configuration/settings');
-    return $template->render({
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Configuration/settings', {
         form => $request,
         # hiddens => \%hiddens,
         selects => \%selects,
@@ -337,10 +336,8 @@ sub sequence_screen {
         }
     ++$count;
     }
-    return LedgerSMB::Template->new_UI(
-        $request,
-        template => 'Configuration/sequence'
-        )->render($request);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'Configuration/sequence', $request);
 }
 
 =item save_defaults

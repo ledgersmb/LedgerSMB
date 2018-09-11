@@ -133,34 +133,38 @@ BEGIN
                OR bu_tree.id IS NOT NULL)
        )
        SELECT a.id, a.accno,
-         coalesce(at.description, a.description) as description, a.gifi_accno,
-         case when in_from_date is null then 0 else
+         COALESCE(at.description, a.description) as description, a.gifi_accno,
+         CASE WHEN in_from_date IS NULL THEN 0 ELSE
               COALESCE(t_balance_sign,
                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
-              * (coalesce(cp.amount_bc, 0)
-              + sum(CASE WHEN ac.transdate < coalesce(in_date_from,
+              * (COALESCE(cp.amount_bc, 0)
+              + SUM(CASE WHEN ac.transdate < coalesce(in_from_date,
                                                       t_roll_forward)
                          THEN ac.amount_bc ELSE 0 END)) end,
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from,
+         SUM(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date,
+                                                     t_roll_forward)
+                                        AND coalesce(in_to_date, ac.transdate)
+                                    AND ac.amount_bc < 0 THEN ac.amount_bc * -1
+                                                      ELSE 0 END)
+            - CASE WHEN in_from_date IS NULL THEN COALESCE(cp.debits, 0)
+                                             ELSE 0 END,
+         SUM(CASE WHEN ac.transdate BETWEEN COALESCE(in_from_date,
                                                          t_roll_forward)
-                                                 AND coalesce(in_to_date,
+                                            AND COALESCE(in_to_date,
                                                          ac.transdate)
-                             AND ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE 0 END) -
-              case when in_date_from is null then coalesce(cp.debits, 0) else 0 end,
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from,
-                                                         t_roll_forward)
-                                                 AND coalesce(in_to_date,
-                                                         ac.transdate)
-                             AND ac.amount_bc > 0 THEN ac.amount_bc ELSE 0 END) +
-              case when in_date_from is null then coalesce(cp.credits, 0) else 0 end,
-              COALESCE(t_balance_sign,
-                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
-              * (coalesce(cp.amount_bc, 0) + sum(coalesce(ac.amount_bc, 0))),
-              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) < 0
-                   THEN (sum(ac.amount_bc) + coalesce(cp.amount_bc, 0)) * -1
-                   ELSE NULL END,
-              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) > 0
-                   THEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) ELSE NULL END
+                                    AND ac.amount_bc > 0 THEN ac.amount_bc
+                                                      ELSE 0 END) +
+              CASE WHEN in_from_date IS NULL THEN COALESCE(cp.credits, 0)
+                                             ELSE 0 END,
+         COALESCE(t_balance_sign,
+                  CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
+            * (COALESCE(cp.amount_bc, 0) + SUM(COALESCE(ac.amount_bc, 0))),
+         CASE WHEN SUM(ac.amount_bc) + COALESCE(cp.amount_bc, 0) < 0
+                 THEN (SUM(ac.amount_bc) + COALESCE(cp.amount_bc, 0)) * -1
+              ELSE NULL END,
+         CASE WHEN SUM(ac.amount_bc) + COALESCE(cp.amount_bc, 0) > 0
+                   THEN sum(ac.amount_bc) + COALESCE(cp.amount_bc, 0)
+              ELSE NULL END
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN account_checkpoint cp ON cp.account_id = a.id
@@ -173,9 +177,10 @@ BEGIN
         WHERE (in_accounts IS NULL OR in_accounts = '{}'
                OR a.id = ANY(in_accounts))
               AND (in_heading IS NULL OR in_heading = a.heading)
-     GROUP BY a.id, a.accno, a.description, a.category, a.gifi_accno,
-              cp.end_date, cp.account_id, cp.amount_bc, cp.debits, cp.credits
-       HAVING abs(cp.amount) > 0 or count(ac) > 0 or in_all_accounts
+     GROUP BY a.id, a.accno, COALESCE(at.description, a.description),
+              a.category, a.gifi_accno, cp.end_date, cp.account_id,
+              cp.amount_bc, cp.debits, cp.credits
+       HAVING ABS(cp.amount_bc) > 0 or COUNT(ac) > 0 or in_all_accounts
      ORDER BY a.accno;
 END;
 $$ language plpgsql;

@@ -21,7 +21,7 @@ use strict;
 use warnings;
 
 use LedgerSMB::Payroll::Income_Type;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 =head1 METHODS
 
@@ -49,14 +49,8 @@ sub show_income_type {
        funcname => 'payroll_pic__list', args => [$request->{country_id}]
     ) if $request->{country_id};
 
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payroll',
-        template => 'income',
-        format   => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payroll/income', $request);
 }
 
 =item save_income_type
@@ -97,13 +91,8 @@ sub search_income_type {
        funcname => 'location_list_country'
     );
 
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payroll',
-        template => 'income_search',
-        format   => 'HTML'
-    )->render($request);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'payroll/income_search', $request);
 }
 
 =item income_type_results

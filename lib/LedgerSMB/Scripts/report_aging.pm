@@ -123,7 +123,7 @@ sub generate_statement {
     }
     $request->{report_type} = $rtype;
     $request->{meta_number} = $old_meta;
-    my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new( # printed document
         path => 'DB',
         locale => $LedgerSMB::App_State::Locale,
         template => $request->{print_template},

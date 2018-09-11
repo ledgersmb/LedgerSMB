@@ -21,7 +21,7 @@ use LedgerSMB::Inventory::Adjust_Line;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
 use LedgerSMB::Scripts::reports;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 =over
 
@@ -33,14 +33,8 @@ This entry point specifies the screen for setting up an inventory adjustment.
 
 sub begin_adjust {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-    user => $request->{_user},
-        template => 'adjustment_setup',
-    locale => $request->{_locale},
-    path => 'UI/inventory',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'inventory/adjustment_setup', $request);
 }
 
 =item enter_adjust
@@ -51,14 +45,8 @@ This entry point specifies the screen for entering an inventory adjustment.
 
 sub enter_adjust {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-    user => $request->{_user},
-        template => 'adjustment_entry',
-    locale => $request->{_locale},
-    path => 'UI/inventory',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'inventory/adjustment_entry', $request);
 }
 
 

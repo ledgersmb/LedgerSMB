@@ -19,12 +19,12 @@ This module doesn't specify any methods.
 use strict;
 use warnings;
 
-use List::MoreUtils qw{ any };
-use Text::CSV;
-
-use LedgerSMB::Template;
 use LedgerSMB::Form;
 use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
+use LedgerSMB::Template::UI;
+
+use List::MoreUtils qw{ any };
+use Text::CSV;
 
 our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx', 'credit_fx', 'source', 'memo'],
@@ -492,18 +492,13 @@ sub begin_import {
         $template_setup->{$request->{type}}($request);
     }
 
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/import_csv',
-        template => $template_file,
-        format => 'HTML'
-    );
     # $request->{page_id} = $request->{type};
     # $request->{page_id} =~ s/_/-/;
     # $request->{page_id} .= '-import';
     $request->{page_id} = 'batch-import';
-    return $template->render({ request => $request });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'import_csv/' . $template_file,
+                             { request => $request });
 }
 
 =head2 run_import

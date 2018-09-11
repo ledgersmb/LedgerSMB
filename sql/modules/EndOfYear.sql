@@ -40,35 +40,40 @@ BEGIN
                 RAISE EXCEPTION 'Unapproved transactions in closed period';
         END IF;
 
-        SELECT max(end_date) INTO cp_date FROM account_checkpoint WHERE
-        end_date < in_end_date;
+        SELECT coalesce(max(end_date),(select min(transdate)-1
+                                         from acc_trans)) INTO cp_date
+          FROM account_checkpoint
+         WHERE end_date < in_end_date;
 
         INSERT INTO
         account_checkpoint (end_date, account_id, amount_bc,
                             amount_tc, curr, debits, credits)
-    SELECT in_end_date, account.id,
-            COALESCE(SUM (a.amount_bc),0) + coalesce(MAX (cp.amount_bc), 0),
-            COALESCE(SUM (a.amount_tc),0) + coalesce(MAX (cp.amount_tc), 0),
+        SELECT in_end_date, account.id,
+            COALESCE(a.amount_bc,0) + COALESCE(cp.amount_bc, 0),
+            COALESCE(a.amount_tc,0) + COALESCE(cp.amount_tc, 0),
             COALESCE(a.curr, cp.curr, defaults_get_defaultcurrency()),
-            COALESCE(SUM (CASE WHEN (a.amount_bc < 0) THEN a.amount_bc
-                               ELSE 0 END), 0)
-            + COALESCE(MIN (cp.debits), 0),
-            COALESCE(SUM (CASE WHEN (a.amount_bc > 0) THEN a.amount_bc
-                               ELSE 0 END), 0)
-            + COALESCE( MAX (cp.credits), 0)
-        FROM
-        (SELECT * FROM acc_trans WHERE transdate <= in_end_date AND
-         transdate > COALESCE(cp_date, '1200-01-01')) a
+            COALESCE(a.debits, 0) + COALESCE(cp.debits, 0),
+            COALESCE(a.credits, 0) + COALESCE(cp.credits, 0)
+        FROM (SELECT
+                chart_id, curr,
+                SUM(amount_bc) as amount_bc,
+                SUM(amount_tc) as amount_tc,
+                SUM(CASE WHEN (amount_bc < 0) THEN amount_bc
+                                           ELSE 0 END) as debits,
+                SUM(CASE WHEN (amount_bc > 0) THEN amount_bc
+                                           ELSE 0 END) as credits
+                  FROM acc_trans
+                 WHERE transdate <= in_end_date
+                       AND transdate > cp_date
+                 GROUP BY chart_id, curr) a
         FULL OUTER JOIN (
-                select account_id, end_date, amount_bc, curr, amount_tc,
-                       debits, credits
-                from account_checkpoint
-                WHERE end_date = cp_date
-                ) cp on (a.chart_id = cp.account_id) and (a.curr = cp.curr)
-        RIGHT JOIN account ON account.id = a.chart_id
-                              or account.id = cp.account_id
-        group by COALESCE(a.curr, cp.curr, defaults_get_defaultcurrency()),
-                 account.id;
+              SELECT account_id, end_date, amount_bc, amount_tc, debits, credits
+                FROM account_checkpoint
+                WHERE end_date = cp_date) cp
+           ON (a.chart_id = cp.account_id) and (a.curr = cp.curr)
+        RIGHT JOIN account
+           ON account.id = a.chart_id
+              OR account.id = cp.account_id;
 
         SELECT count(*) INTO ret_val FROM account_checkpoint
         where end_date = in_end_date;
@@ -89,33 +94,43 @@ CREATE OR REPLACE FUNCTION eoy_zero_accounts
 in_retention_acc_id int)
 RETURNS int AS
 $$
-DECLARE ret_val int;
+DECLARE
+   ret_val int;
+   cp_date date;
 BEGIN
         INSERT INTO gl (transdate, reference, description, approved,
                         trans_type_code)
         VALUES (in_end_date, in_reference, in_description, true, 'ye');
 
-        INSERT INTO yearend (trans_id, transdate) values (currval('id'), in_end_date);
+        INSERT INTO yearend (trans_id, transdate)
+             VALUES (currval('id'), in_end_date);
+
+        SELECT coalesce(max(end_date),
+                        (SELECT min(transdate)-1 FROM acc_trans)) INTO cp_date
+          FROM account_checkpoint;
+
         INSERT INTO acc_trans (transdate, chart_id, trans_id,
                                amount_bc, curr, amount_tc)
         SELECT in_end_date, a.chart_id, currval('id'),
-                (sum(a.amount_bc) + coalesce(max(cp.amount_bc), 0)) * -1,
-                a.curr,
-                  (sum(a.amount_bc) + coalesce(max(cp.amount_bc), 0)) * -1
-        FROM acc_trans a
-        LEFT JOIN (
-                SELECT account_id, end_date,
-                       amount_bc, curr, amount_tc
-                  FROM account_checkpoint
-                 WHERE end_date = (select max(end_date) from account_checkpoint
-                                where end_date < in_end_date)
-                ) cp on (a.chart_id = cp.account_id) and (a.curr = cp.curr)
+                (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
+                (coalesce(a.curr,cp.curr))
+                (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
+        FROM (SELECT chart_id, sum(amount_bc) as amount_bc, curr,
+                     sum(amount_tc) as amount_tc
+                FROM acc_trans a
         JOIN account acc ON (acc.id = a.chart_id)
-        WHERE a.transdate <= in_end_date
-                AND a.transdate > coalesce(cp.end_date, a.transdate - 1)
+               WHERE transdate <= in_end_date
+                     AND transdate > cp_date
                 AND (acc.category IN ('I', 'E')
                       OR acc.category = 'Q' AND acc.is_temp)
-        GROUP BY a.chart_id, a.curr;
+               GROUP BY chart_id, curr) a
+        LEFT JOIN (
+                SELECT account_id, end_date, amount_bc, curr, amount_tc
+                  FROM account_checkpoint
+                 WHERE end_date = (select max(end_date) from account_checkpoint
+                                    where end_date < in_end_date)
+                ) cp
+           ON (a.chart_id = cp.account_id) AND a.curr = cp.curr;
 
         INSERT INTO acc_trans (transdate, trans_id, chart_id,
                                amount_bc, curr, amount_tc)

@@ -37,7 +37,7 @@ use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Part;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -318,15 +318,6 @@ sub _main_screen {
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
-    # Template info and rendering
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'contact',
-        locale => $request->{_locale},
-        path => 'UI/Contact',
-        format => 'HTML'
-    );
-
     my @country_list = LedgerSMB->call_procedure(
                      funcname => 'location_list_country'
       );
@@ -337,7 +328,9 @@ sub _main_screen {
     my $roles;
     $roles = $user->list_roles if $user;
 
-    return $template->render({
+    # Template info and rendering
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Contact/contact', {
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
              entity_class => $entity_class,
@@ -826,14 +819,8 @@ sub get_pricelist {
     my $pricelist = $credit->get_pricematrix;
     $request->merge($credit) if $credit;
     $request->merge($pricelist) if $pricelist;
-    my $template = LedgerSMB::Template->new(
-                user => $request->{_user},
-                path => 'UI/Contact' ,
-                template => 'pricelist',
-                format => uc($request->{format} || 'HTML'),
-                locale => $request->{_locale},
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Contact/pricelist', $request);
 }
 
 

@@ -30,7 +30,7 @@ use warnings;
 use LedgerSMB::App_State;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Locale;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our $VERSION = 1.0;
 
@@ -50,19 +50,14 @@ sub preference_screen {
     }
     $user->get_option_data;
 
-    my $template = LedgerSMB::Template->new(
-        user     => $user,
-        locale   => $request->{_locale},
-        path     => 'UI/users',
-        template => 'preferences',
-        format   => 'HTML'
-    );
-
     my $creds = $request->{_auth}->get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
-    return $template->render({ request => $request,
-                                       user => $user });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request,
+                             'users/preferences',
+                             { request => $request,
+                               user => $user });
 }
 
 =item save_preferences

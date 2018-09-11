@@ -1073,10 +1073,12 @@ sub e_mail {
         value => 'send_email',
         text => $locale->text('Continue'),
         });
-    my $template = LedgerSMB::Template->new_UI(
-        $form,
+    my $template = LedgerSMB::Template->new(
+        format => 'HTML',
+        path => 'UI',
         template => 'io-email',
-        );
+        user => $form->{_user},
+        locale => $form->{_locale});
     LedgerSMB::Legacy_Util::render_template($template, {
         form => $form,
         print => $print_options,

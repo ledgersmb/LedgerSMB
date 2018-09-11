@@ -2,10 +2,31 @@
 Changelog for 1.7 Series
 Forthcoming
 
-Dependency updates
-* Dojo Toolkit (JavaScript UI tools) updated to 1.14.0 (Erik H)
+New functionalities
+* Deletion of template transactions (Nick P)
+* Transaction date now part of purchase history report (Chris T)
 
+Quality Assurance
+* Expanded checks and resolutions for schema changes (Erik H)
+* Ensure correct dependency declaration (RequireExplicitInclusion critic policy)
+* POD documentation structure improvements, with automated checks (Erik H)
+
+Dependency updates
+* Dojo Toolkit (JavaScript UI tools) updated to 1.14.1 (Erik H)
+
+Code cleanup
+* Removed deprecated 'custom table' and 'custom field' tables (Erik H)
+* Reduce dependencies on deprecated LedgerSMB::App_State (Nick P)
+* Simplified deprecated LedgerSMB::PGOld (Nick P)
+* Remove unused LedgerSMB::DBObject and LedgerSMB::PGOld methods (Nick P)
+* Remove unused configuration settings in ledgersmb.conf (Erik H)
+* Further (compared to 1.6) reduction of warnings
+* Implemented tests for LedgerSMB::File(::*) modules (Nick P)
+* Template engine simplification by separation of UI and printed docs (Erik H)
+
+Nick P is Nick Prater
 Erik H is Erik Huelsmann
+Chris T is Chris Travers
 
 
 Changelog for 1.6 Series
