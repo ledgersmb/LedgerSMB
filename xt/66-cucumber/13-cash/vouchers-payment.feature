@@ -13,4 +13,7 @@ Scenario: Add payments to a new batch
   When I enter "2018-01-01" into "Batch Date"
    And I press "Continue"
   Then I should see the Filtering Payments screen
+  When I enter "1001" into "Start Source Numbering At"
+   And I press "Continue"
+  Then I should see the Payments screen
 

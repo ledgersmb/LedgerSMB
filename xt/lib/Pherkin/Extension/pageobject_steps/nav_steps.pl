@@ -96,7 +96,8 @@ my %screens = (
     'search for goods & services' => ' PageObject::App::Search::GoodsServices',
     'balance sheet filter' => ' PageObject::App::Report::Filters::BalanceSheet',
     'unapproved inventory adjustments search screen' => ' PageObject::App::Parts::AdjustSearchUnapproved',
-    'Create New Batch' => 'PageObject::App::Cash::Vouchers::Payment',
+    'Create New Batch' => 'PageObject::App::Cash::Vouchers::Payments',
+    'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
 );
 
 Then qr/I should see the (.*) screen/, sub {
