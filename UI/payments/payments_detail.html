@@ -11,7 +11,7 @@
     most browsers should have no issues with them.  Furthermore, I cannot find
     any cleaner solution to embedding tabular data within tabular data than
     this -->
-<div id="payments">
+<div id="payments-detail">
 <div class="listtop"><?lsmb payment.payment_type ?></div>
  <form data-dojo-type="lsmb/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
  <!-- Moving all hidden variables to the top.  -CT -->
@@ -92,7 +92,7 @@
 <div class="container">
 
         <div id="date_row">
-                <label for="date_paid"><?lsmb text('Posting Date:') ?></label>
+                <label for="date_paid"><?lsmb text('Posting Date') ?></label>
                 <?lsmb IF payment.batch_id ?>
                         <?lsmb IF ! payment.datepaid ?><?lsmb payment.datepaid = payment.batch_date ?><?lsmb END ?>
                         <span id="date_paid"><?lsmb payment.datepaid ?></span>
@@ -107,9 +107,9 @@
         </div>
 
         <div id="date_filter_row">
-                <label for="filter_from"><?lsmb text('Filtering From:') ?></label>
+                <label for="filter_from"><?lsmb text('Filtering From') ?></label>
                 <span id="filter_from"><?lsmb payment.date_from ?></span>
-                <?lsmb text('To:') ?>
+                <label for="filter_to"><?lsmb text('To') ?></label>
                 <span id="filter_to"><?lsmb payment.date_to ?></span>
         </div>
 
@@ -125,7 +125,7 @@
 
         <div class="info" id="account_row">
                 <label for="account_info">
-                        <?lsmb text('Account:'); ?>
+                        <?lsmb text('Account'); ?>
                 </label>
                 <span id="account_info">
                         <?lsmb FOREACH a = payment.debt_accounts ?>
@@ -139,7 +139,7 @@
         <?lsmb  IF payment.default_currency != payment.currency ?>
                 <div class="info" id="exrate_row">
                         <?lsmb IF payment.fx_from_db ?>
-                                <label><?lsmb text('Exchange Rate') ?>:</label> <?lsmb payment.exchangerate ?>
+                                <label><?lsmb text('Exchange Rate') ?></label> <?lsmb payment.exchangerate ?>
                                 <?lsmb PROCESS input element_data = {
                                         name  = 'exchangerate'
                                         value = payment.exchangerate
@@ -162,7 +162,7 @@
 
         <?lsmb IF payment.business ?>
                 <div class="info">
-                        <label for="business_info"><?lsmb text('Business:') ?></label>
+                        <label for="business_info"><?lsmb text('Business') ?></label>
                         <span id="business_info">
                                 <?lsmb FOREACH b = payment.businesses ?>
                                         <?lsmb IF b.id == payment.business ?>
@@ -174,7 +174,7 @@
         <?lsmb END # if business ?>
 
         <div class="payment_type" id="payment_type_label_div">
-                <label for="filter_type_label"><?lsmb text('Payment Type:') ?></label>
+                <label for="filter_type_label"><?lsmb text('Payment Type') ?></label>
                 <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
         </div>
 

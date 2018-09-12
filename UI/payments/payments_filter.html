@@ -1,6 +1,6 @@
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
 <body id="payments-filter-body" class="lsmb <?lsmb dojo_theme ?>">
-<div id="payments">
+<div id="payments-filter">
 <div class="listtop">
         <!-- CT:  Strings for locales:
         <?lsmb text('Filtering Receipts') ?>
@@ -99,7 +99,7 @@
 <div id = "payments-filter-daterow" class = "inputgroup">
 <div class="input">
 <?lsmb PROCESS input element_data = {
-        label = text('Date From:')
+        label = text('Date From')
         type = "text"
         class = "date"
         value = payment.date_from
@@ -107,7 +107,7 @@
         size = 12
 } # ' ?></div><div class="input">
 <?lsmb PROCESS input element_data = {
-        label = text('Date To:')
+        label = text('Date To')
         type = "text"
         class = "date"
         value = payment.date_to
@@ -142,7 +142,7 @@
                 options = payment.cash_accounts
                 value_attr = "accno"
                 text_attr = "text"
-                label = pay_label _ ':'
+                label = pay_label
         } ?>
 
 <?lsmb IF payment.payment_types ?>
@@ -155,7 +155,7 @@
                 options = payment.payment_types
                 value_attr = "id"
                 text_attr = "label"
-                label = text('Payment Type:') #'
+                label = text('Payment Type') #'
         } ?>
 
 
@@ -173,7 +173,7 @@
         size = "20"
         name = "source_start"
         required = "true"
-        label = text('Start Source Numbering At:')
+        label = text('Start Source Numbering At')
 } # ?>
 </div>
 <?lsmb END ?>
