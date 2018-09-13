@@ -93,7 +93,12 @@ must be defined:
 
 sub payments {
     my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $payment_data = {
+        dbh => $request->{dbh},
+        account_class => $request->{account_class},
+        batch_id => $request->{batch_id},
+    };
+    my $payment = LedgerSMB::DBObject::Payment->new({'base' => $payment_data});
     $payment->get_metadata();
 
     my @curr = $request->setting->get_currencies;
