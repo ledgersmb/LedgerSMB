@@ -90,8 +90,29 @@ sub text_amount {
 
 =item get_metadata()
 
-Semi-private method for preparing the object for other tasks, such as displaying
-payment options.
+Prepares the object for other tasks, such as displaying payment options.
+
+Requires that the following object properties be defined:
+
+  * dbh
+  * account_class
+  * batch_id
+  * payment_type_id (optional)
+
+Sets the following object properties:
+
+  * currencies
+  * businesses
+  * payment_types
+  * debt_accounts
+  * cash_accounts
+  * batch_date
+
+Additionally if payment_type_id is set:
+
+  * payment_type_label_id
+  * payment_type_return_id
+  * payment_type_return_label
 
 =back
 
@@ -99,43 +120,50 @@ payment options.
 
 sub get_metadata {
     my ($self) = @_;
+
     $self->get_open_currencies();
     $self->{currencies} = [];
-    for my $c (@{$self->{openCurrencies}}){
+    for my $c (@{$self->{openCurrencies}}) {
         push @{$self->{currencies}}, $c->{payments_get_open_currencies};
     }
+
+    $self->{default_currency} = $self->call_dbmethod(
+        funcname => 'defaults_get_defaultcurrency'
+    )->{defaults_get_defaultcurrency};
+
     @{$self->{businesses}} = $self->call_dbmethod(
         funcname => 'business_type__list'
     );
 
-   @{$self->{payment_types}} = $self->call_dbmethod(
+    @{$self->{payment_types}} = $self->call_dbmethod(
         funcname => 'payment_type__list'
     );
 
+    if ($self->{payment_type_id}) {
+       @{$self->{payment_type_label_id}} = $self->call_dbmethod(
+           funcname => 'payment_type__get_label'
+       );
 
-    if($self->{payment_type_id})
-    {
-       @{$self->{payment_type_label_id}} =$self->call_dbmethod(
-        funcname => 'payment_type__get_label'  );
-
-       $self->{payment_type_return_id}=$self->{payment_type_label_id}->[0]->{id};
-
-       $self->{payment_type_return_label}=$self->{payment_type_label_id}->[0]->{label};
-
+       $self->{payment_type_return_id}    = $self->{payment_type_label_id}->[0]->{id};
+       $self->{payment_type_return_label} = $self->{payment_type_label_id}->[0]->{label};
     }
-
 
     @{$self->{debt_accounts}} = $self->call_dbmethod(
-        funcname => 'chart_get_ar_ap');
+        funcname => 'chart_get_ar_ap'
+    );
+
     @{$self->{cash_accounts}} = $self->call_dbmethod(
-        funcname => 'chart_list_cash');
-    for my $ref(@{$self->{cash_accounts}}){
+        funcname => 'chart_list_cash'
+    );
+    for my $ref(@{$self->{cash_accounts}}) {
         $ref->{text} = "$ref->{accno}--$ref->{description}";
     }
-    if ($self->{batch_id} && !defined $self->{batch_date}){
+
+    if ($self->{batch_id}) {
         my ($ref) = $self->call_dbmethod(funcname => 'voucher_get_batch');
-        return $self->{batch_date} = $ref->{default_date};
+        $self->{batch_date} = $ref->{default_date};
     }
+
     return;
 }
 

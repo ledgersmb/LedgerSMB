@@ -16,8 +16,6 @@ between batches and vouchers...
 
 =head1 METHODS
 
-=over
-
 =cut
 
 use strict;
@@ -55,7 +53,7 @@ our $custom_batch_types = {};
     }
 }
 
-=item create_batch
+=head2 create_batch($request)
 
 Displays the new batch screen.  Required inputs are
 
@@ -91,12 +89,33 @@ sub create_batch {
                                batch => $batch });
 }
 
-=item create_vouchers
+=head2 create_vouchers($request)
 
-Closes the form in the db, and if unsuccessful displays the batch info again.
+Creates a new voucher batch, then forwards to C<add_vouchers> to begin
+selection of transactions to add to the new batch.
 
-If successful at closing the form, it saves the batch to the db and redirects to
-add_vouchers().
+Only proceeds if the form is successfully closed. Otherwise displays the
+batch info screen again.
+
+C<$request> is a L<LedgerSMB> object reference.
+
+The request must contain:
+
+=over
+
+=item * dbh
+
+=item * batch_number [stored as the batch control_code]
+
+=item * batch_class  [ar|ap|gl... etc]
+
+=item * batch_date
+
+=item * description
+
+=back
+
+If a new batch is successfully created, C<batch_id> is added to the request.
 
 =cut
 
@@ -123,19 +142,42 @@ sub create_vouchers {
     return add_vouchers($request);
 }
 
-=item add_vouchers
-
-Redirects to a script to add vouchers for the type.  batch_type must be set.
-
-=cut
-
 sub _add_vouchers_old {
     my ($request, $entry) = @_;
+
+    $request->{approved} = 0;
+    $request->{transdate} = $request->{batch_date};
 
     return dispatch($entry->{script},
                     $entry->{function},
                     $request);
 }
+
+=head2 add_vouchers($request)
+
+Add vouchers to a batch. Forwards the request to the appropriate
+filtering screen according to the type of batch.
+
+C<$request> is a L<LedgerSMB> object reference, which must contain:
+
+=over
+
+=item * dbh
+
+=item * batch_type
+
+Must be one of: 
+C<ap>, C<ar>, C<gl>, C<sales_invoice>, C<vendor_invoice>, C<receipt>,
+C<payment>, C<payment_reversal>, C<receipt_reversal>.
+
+=item * batch_id
+
+=back
+
+C<account_class> is added to the request when C<batch_type> is one of:
+C<receipt>, C<payment>, C<payment_reversal>, C<receipt_reversal>.
+
+=cut
 
 sub add_vouchers {
     my ($request) = shift @_;
@@ -186,10 +228,6 @@ sub add_vouchers {
                      }},
     };
 
-    $request->{approved} = 0;
-    $request->{transdate} = $request->{batch_date};
-    delete $request->{id};
-
     my $entry = $vouchers_dispatch->{$request->{batch_type}};
     return _add_vouchers_old($request, $entry)
         if defined $entry->{script};
@@ -197,7 +235,7 @@ sub add_vouchers {
     return $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
-=item list_batches
+=head2 list_batches
 
 This function displays the search results.
 
@@ -219,7 +257,7 @@ sub list_batches {
                  %$request)->render($request);
 }
 
-=item get_batch
+=head2 get_batch
 
 Requires that batch_id is set.
 
@@ -237,7 +275,7 @@ sub get_batch {
                  %$request)->render($request);
 }
 
-=item single_batch_approve
+=head2 single_batch_approve
 
 Approves the single batch on the details screen.  Batch_id must be set.
 
@@ -255,7 +293,7 @@ sub single_batch_approve {
     }
 }
 
-=item single_batch_delete
+=head2 single_batch_delete
 
 Deletes the single batch on the details screen.  Batch_id must be set.
 
@@ -273,7 +311,7 @@ sub single_batch_delete {
     }
 }
 
-=item single_batch_unlock
+=head2 single_batch_unlock
 
 Unlocks the single batch on the details screen.  Batch_id must be set.
 
@@ -293,7 +331,7 @@ sub single_batch_unlock {
     }
 }
 
-=item batch_vouchers_delete
+=head2 batch_vouchers_delete
 
 Deletes selected vouchers.
 
@@ -313,7 +351,7 @@ sub batch_vouchers_delete {
     return get_batch($request);
 }
 
-=item batch_approve
+=head2 batch_approve
 
 Approves all selected batches.
 
@@ -337,7 +375,7 @@ sub batch_approve {
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item batch_unlock
+=head2 batch_unlock
 
 Unlocks selected batches
 
@@ -361,7 +399,7 @@ sub batch_unlock {
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item batch_delete
+=head2 batch_delete
 
 Deletes selected batches
 
@@ -385,7 +423,7 @@ sub batch_delete {
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item reverse_overpayment
+=head2 reverse_overpayment
 
 Adds overpayment reversal vouchers to a batch
 
@@ -453,7 +491,7 @@ my %print_dispatch = (
     },
     );
 
-=item print_batch
+=head2 print_batch
 
 Prints vouchers of a given batch.  Currently payments, receipts, ap transactions
 and gl transactions are not printed.
@@ -529,8 +567,6 @@ sub print_batch {
         return $report->render($request);
     }
 }
-
-=back
 
 =head1 CUSTOM BATCH TYPES
  custom_batch_types hash provides hooks for handling additional batch types

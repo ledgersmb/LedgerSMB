@@ -78,23 +78,29 @@ use LedgerSMB::Template::UI;
 
 =over
 
-=item payments
+=item payments($request)
 
-This method is used to set the filter screen and prints it, using the
-TT2 system.
+Prepare and display the Payments Filter screen.
+
+C<payments> is a L<LedgerSMB> object reference. The following request keys
+must be defined:
+
+  * dbh
+  * account_class
+  * batch_id
 
 =cut
 
 sub payments {
     my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $payment_data = {
+        dbh => $request->{dbh},
+        account_class => $request->{account_class},
+        batch_id => $request->{batch_id},
+    };
+    my $payment = LedgerSMB::DBObject::Payment->new({'base' => $payment_data});
     $payment->get_metadata();
-    if (!defined $payment->{batch_date}){
-        $payment->error('No Batch Date!');
-    }
-    my @curr = $request->setting->get_currencies;
-    $payment->{default_currency} = $curr[0];
-    @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
+
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'payments/payments_filter',
                              { request => $request,

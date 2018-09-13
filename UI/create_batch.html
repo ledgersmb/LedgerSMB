@@ -65,7 +65,7 @@ FOREACH item = batch.hidden;
 <?lsmb
 
 FOREACH row IN batch.search_results;
-     row.row_id = row.id _ "&amp;post_date=" _ row.default_date;
+     row.row_id = row.id;
 END;
 
 PROCESS dynatable
@@ -74,7 +74,7 @@ PROCESS dynatable
                columns = [
         { col_id='control_code', type='href', name=text('Control Number'), #'
        href_base="vouchers.pl?action=add_vouchers" _
-                   hidden_url_base _ "&amp;id=" }
+                   hidden_url_base _ "&amp;batch_id=" }
         { col_id='description', type='text', name = text('Description') }
         { col_id='created_by', type='text', name = text('Created By') } #'
         { col_id='created_on', type='text', name = text('Created On') } #'
