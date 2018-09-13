@@ -43,7 +43,7 @@
 </div>
 <?lsmb END ?>
 
-<?lsmb IF departments ?>
+<?lsmb IF payment.departments ?>
 <div id = "payments-filter-departments" class="inputgroup">
   <label for="department"><?lsmb text('Department') ?></label>
   <?lsmb PROCESS select element_data = {
@@ -70,7 +70,7 @@
         size = '15'
 } ?>
 
-<?lsmb IF businesses ?>
+<?lsmb IF payment.businesses ?>
 <div id = "payments-filter-businesses" class="inputgroup">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
   <?lsmb PROCESS select element_data = {
