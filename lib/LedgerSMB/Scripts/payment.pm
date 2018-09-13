@@ -102,7 +102,6 @@ sub payments {
     $payment->get_metadata();
 
     my @curr = $request->setting->get_currencies;
-    $payment->{default_currency} = $curr[0];
     @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
 
     my $template = LedgerSMB::Template::UI->new_UI;

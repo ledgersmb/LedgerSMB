@@ -127,6 +127,10 @@ sub get_metadata {
         push @{$self->{currencies}}, $c->{payments_get_open_currencies};
     }
 
+    $self->{default_currency} = $self->call_dbmethod(
+        funcname => 'defaults_get_defaultcurrency'
+    )->{defaults_get_defaultcurrency};
+
     @{$self->{businesses}} = $self->call_dbmethod(
         funcname => 'business_type__list'
     );
