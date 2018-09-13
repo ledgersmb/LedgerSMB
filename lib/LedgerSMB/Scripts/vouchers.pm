@@ -227,7 +227,6 @@ sub add_vouchers {
 
     $request->{approved} = 0;
     $request->{transdate} = $request->{batch_date};
-    delete $request->{id};
 
     my $entry = $vouchers_dispatch->{$request->{batch_type}};
     return _add_vouchers_old($request, $entry)
