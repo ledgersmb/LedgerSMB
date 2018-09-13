@@ -145,6 +145,9 @@ sub create_vouchers {
 sub _add_vouchers_old {
     my ($request, $entry) = @_;
 
+    $request->{approved} = 0;
+    $request->{transdate} = $request->{batch_date};
+
     return dispatch($entry->{script},
                     $entry->{function},
                     $request);
@@ -224,9 +227,6 @@ sub add_vouchers {
 
                      }},
     };
-
-    $request->{approved} = 0;
-    $request->{transdate} = $request->{batch_date};
 
     my $entry = $vouchers_dispatch->{$request->{batch_type}};
     return _add_vouchers_old($request, $entry)
