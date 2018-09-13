@@ -101,9 +101,6 @@ sub payments {
     my $payment = LedgerSMB::DBObject::Payment->new({'base' => $payment_data});
     $payment->get_metadata();
 
-    my @curr = $request->setting->get_currencies;
-    @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
-
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'payments/payments_filter',
                              { request => $request,

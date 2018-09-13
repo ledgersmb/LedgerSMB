@@ -118,16 +118,17 @@
 <div id = "payments-filter-currency-row" class="inputgroup">
 <label for="currency"><?lsmb text('Currency')?></label>
 <?lsmb
-   curr = [];
-   FOREACH c IN currencies ;
-     curr.push( { text = c, value = c } );
+   currency_list = [];
+   FOREACH c IN payment.currencies;
+     currency_list.push( { text = c, value = c } );
    END;
    PROCESS select element_data = {
         id = 'currency'
        name = 'currency'
-       options = payment.curr
+       options = currency_list
        default_values = [ payment.default_currency ]
-} ?>
+   }
+?>
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
