@@ -102,6 +102,7 @@ Requires that the following object properties be defined:
 Sets the following object properties:
 
   * currencies
+  * default_currency
   * businesses
   * payment_types
   * debt_accounts
@@ -121,15 +122,12 @@ Additionally if payment_type_id is set:
 sub get_metadata {
     my ($self) = @_;
 
+    $self->get_default_currency;
     $self->get_open_currencies();
     $self->{currencies} = [];
     for my $c (@{$self->{openCurrencies}}) {
         push @{$self->{currencies}}, $c->{payments_get_open_currencies};
     }
-
-    $self->{default_currency} = $self->call_dbmethod(
-        funcname => 'defaults_get_defaultcurrency'
-    )->{defaults_get_defaultcurrency};
 
     @{$self->{businesses}} = $self->call_dbmethod(
         funcname => 'business_type__list'
