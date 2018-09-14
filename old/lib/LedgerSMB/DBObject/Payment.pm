@@ -562,9 +562,37 @@ sub get_vc_info {
  return ${$self->{vendor_customer_info}}[0];
 }
 
-=item get_payment_detail_data
+=item get_payment_detail_data($request)
 
-This method sets appropriate project, department, etc. fields.
+This method calls C<get_metadata()> to populate various object properties.
+See that method's documentation for details.
+
+Additionally a set of contact invoices properties are set,
+filtered according to the supplied parameters.
+
+C<$request> is a L<LedgerSMB> request object.
+
+Required request parameters:
+
+  * dbh
+  * action
+  * account_class [1|2]
+  * batch_id
+  * source_start (unless account_class == 2)
+
+Optionally accepts the following filtering parameters:
+
+  * currency [e.g. 'GBP']
+  * ar_ap_accno
+  * meta_number
+
+Though the following filtering parameters appear to be available,
+they are not supported by the underlying C<payment_get_all_contact_invoices>
+database query:
+
+  * business_id
+  * date_from
+  * date_to
 
 =cut
 
