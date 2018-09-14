@@ -462,16 +462,40 @@ sub update_payments {
     return display_payments(@_);
 }
 
-=item display_payments
+=item display_payments($request)
 
 This displays the bulk payment screen with current data.
+
+C<$request> is a L<LedgerSMB> object reference.
+
+Required request parameters:
+
+  * dbh
+  * action
+  * account_class [1|2]
+  * batch_id
+  * batch_date
+  * currency
+  * source_start
+
+Optionally accepts the following filtering parameters:
+
+  * ar_ap_accno
+  * meta_number
+
+Though the following filtering parameters appear to be available,
+they are not supported by the underlying C<payment_get_all_contact_invoices>
+database query:
+
+  * business_id
+  * date_from
+  * date_to
 
 =cut
 
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
     $request->open_form();
     my $db_fx = $payment->get_exchange_rate($payment->{currency},
