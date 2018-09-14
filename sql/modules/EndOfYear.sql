@@ -112,9 +112,9 @@ BEGIN
         INSERT INTO acc_trans (transdate, chart_id, trans_id,
                                amount_bc, curr, amount_tc)
         SELECT in_end_date, a.chart_id, currval('id'),
-                (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
-                (coalesce(a.curr,cp.curr)),
-                (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
+               (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
+               coalesce(a.curr,cp.curr),
+               (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
         FROM (SELECT chart_id, sum(amount_bc) as amount_bc, curr,
                      sum(amount_tc) as amount_tc
                 FROM acc_trans a
