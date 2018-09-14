@@ -48,7 +48,7 @@ END ;
     <tr class="sectionhead">
         <th colspan="<?lsmb max_path_depth ?>"></th>
 <?lsmb FOREACH col IN report.sorted_col_ids -?>
-        <th style="white-space:pre"><?lsmb report.cheads.ids.$col.props.description ?></th>
+        <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>
     </tr>
 <?lsmb FOREACH row IN report.sorted_row_ids ;
