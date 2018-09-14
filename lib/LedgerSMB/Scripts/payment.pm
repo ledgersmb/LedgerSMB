@@ -495,11 +495,12 @@ database query:
 
 sub display_payments {
     my ($request) = @_;
+    $request->open_form();
+
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_payment_detail_data();
-    $payment->open_form();
     $payment->{exchangerate} = undef;
-    $payment->{grand_total} = 0;
+    $payment->{grand_total} = LedgerSMB::PGNumber->from_db('0');
     my $source = $request->{source_start};
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
