@@ -130,7 +130,7 @@ sub get_search_criteria {
     my $payment_data = {
         dbh => $request->{dbh},
         account_class => $request->{account_class},
-        all_months => LedgerSMB::App_State::all_months->{dropdown},
+        all_months => LedgerSMB::App_State->all_months->{dropdown},
     };
 
     # Additional data needed if this search is to create reversing vouchers
