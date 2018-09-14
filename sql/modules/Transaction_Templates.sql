@@ -27,6 +27,10 @@ $$
                $4, $4, $7, person__get_my_entity_id()) RETURNING *;
 $$ language sql;
 
+
+DROP FUNCTION IF EXISTS journal__add_line(integer, integer, numeric,
+    boolean, text, integer[]);
+
 CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric,
 in_amount_fx numeric, in_curr text,
