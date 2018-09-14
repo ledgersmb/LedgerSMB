@@ -89,61 +89,61 @@
  } ?>
 
 
-<div class="container">
+  <div class="container">
+
+    <!-- Start of heading_section -->
+    <div class="heading_section report_header">
 
         <div id="date_row">
-                <label for="date_paid"><?lsmb text('Posting Date') ?></label>
-                <?lsmb IF payment.batch_id ?>
+            <label for="date_paid"><?lsmb text('Posting Date') ?></label>
+            <?lsmb IF payment.batch_id ?>
                         <?lsmb IF ! payment.datepaid ?><?lsmb payment.datepaid = payment.batch_date ?><?lsmb END ?>
                         <span id="date_paid"><?lsmb payment.datepaid ?></span>
-                <?lsmb END ?>
-                <?lsmb INCLUDE input element_data= {
+            <?lsmb END ?>
+            <?lsmb INCLUDE input element_data= {
                         value = payment.datepaid
                         name  = "datepaid"
                         size  = 20
                         class = (payment.batch_id) ? "hidden" : "date"
                         type  = (payment.batch_id) ? "hidden" : "text"
-                } ?>
+                }
+            ?>
         </div>
 
         <?lsmb IF payment.date_from ?>
-        <div class="info" id="date_filter_from_row">
+        <div id="date_filter_from_row">
             <label for="filter_from"><?lsmb text('Filtering From') ?></label>
             <span id="filter_from"><?lsmb payment.date_from ?></span>
         </div>
         <?lsmb END ?>
+
         <?lsmb IF payment.date_to ?>
-        <div class="info" id="date_filter_to_row">
+        <div id="date_filter_to_row">
             <label for="filter_to"><?lsmb text('To') ?></label>
             <span id="filter_to"><?lsmb payment.date_to ?></span>
         </div>
         <?lsmb END ?>
 
-        <!-- the department will be shown if it was selected in the first step -->
-        <?lsmb IF payment.department.value  # Only process element if one exists. As in project above ?>
-                <div class="info">
-                        <label for="department_info"><?lsmb  text('Department')  ?></label>
-                        <span id="department_info">
-                                <?lsmb payment.department ?>
-                        </span>
-                </div>
+        <?lsmb IF payment.department.value ?>
+        <div class="info">
+            <label for="department_info"><?lsmb text('Department') ?></label>
+            <span id="department_info"><?lsmb payment.department ?></span>
+        </div>
         <?lsmb END ?>
 
-        <div class="info" id="account_row">
-                <label for="account_info">
-                        <?lsmb text('Account'); ?>
-                </label>
-                <span id="account_info">
+        <div id="account_row">
+            <label for="account_info"><?lsmb text('Account') ?></label>
+            <span id="account_info">
                         <?lsmb FOREACH a = payment.debt_accounts ?>
                                 <?lsmb IF a.accno == payment.ar_ap_accno ?>
-                                        <?lsmb a.accno ?>--<?lsmb a.description ?>
+                                        <?lsmb a.accno ?> -- <?lsmb a.description ?>
                                 <?lsmb END # If a.accno... ?>
                         <?lsmb  END # FOREACH a ?>
-                </span>
+            </span>
         </div>
 
         <?lsmb  IF payment.default_currency != payment.currency ?>
-                <div class="info" id="exrate_row">
+        <div id="exrate_row">
                         <?lsmb IF payment.fx_from_db ?>
                                 <label><?lsmb text('Exchange Rate') ?></label> <?lsmb payment.exchangerate ?>
                                 <?lsmb PROCESS input element_data = {
@@ -163,30 +163,30 @@
                                         size  = 20
                                 };
                         END ?>
-                </div>
+        </div>
         <?lsmb END ?>
 
         <?lsmb IF payment.business ?>
-                <div class="info">
-                        <label for="business_info"><?lsmb text('Business') ?></label>
-                        <span id="business_info">
+        <div id="business_row">
+            <label for="business_info"><?lsmb text('Business') ?></label>
+            <span id="business_info">
                                 <?lsmb FOREACH b = payment.businesses ?>
                                         <?lsmb IF b.id == payment.business ?>
                                                 <?lsmb b.id ?> -- <?lsmb b.description ?>
                                         <?lsmb END # if b.id... ?>
                                 <?lsmb END # foreach b ?>
-                        </span>
-                </div>
+            </span>
+        </div>
         <?lsmb END # if business ?>
 
         <?lsmb IF payment.payment_type ?>
         <div class="payment_type" id="payment_type_label_div">
-                <label for="filter_type_label"><?lsmb text('Payment Type') ?></label>
-                <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
+            <label for="filter_type_label"><?lsmb text('Payment Type') ?></label>
+            <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
         </div>
         <?lsmb END ?>
 
-        <div class="info" id="cash_account_div">
+        <div id="cash_account_div">
                 <?lsmb INCLUDE input element_data = {
                         type  = "hidden"
                         name  = "cash_accno"
@@ -195,10 +195,13 @@
                 <label><?lsmb text('Pay From') ?></label>
                 <?lsmb FOR c = cash_accounts -?>
                         <?lsmb IF c.accno == payment.cash_accno -?>
-                                <?lsmb c.accno ?>--<?lsmb c.description ?>
+                                <?lsmb c.accno ?> -- <?lsmb c.description ?>
                         <?lsmb END # if c.accno -?>
                 <?lsmb END # for c -?>
         </div>
+
+    </div>
+    <!-- end of heading_section -->
 
         <table id="payments-table">
                 <tr class="listheading">
@@ -505,9 +508,8 @@
                 } ?>
         <?lsmb END # IF can_print ?>
 
-</div>
-
-
-  </form>
   </div>
- </body>
+
+ </form>
+</div>
+</body>
