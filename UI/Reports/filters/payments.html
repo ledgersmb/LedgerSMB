@@ -33,25 +33,22 @@
                 value = account_class
         } ?>
 <div class="listtop" id="page_title"><?lsmb TITLE ?></div>
-<div class="inputrow">
-<div class="input" id="vendor_input_div">
+
+  <div class="labelledinput">
+      <label for="meta-number"><?lsmb CONTACT ?></label>
+      <div class="value">
         <?lsmb INCLUDE input element_data = {
                 name  = "meta_number"
                 value = meta_number
                 class = "text"
                 type  = "text"
                 size  = "20"
-                label = CONTACT
-        } ?><!-- CT:  Not yet working for search.
-        <?lsmb INCLUDE input element_data = {
-                name  = "name"
-                value = name
-                class = "text"
-                type  = "text"
-                size  = "20"
-                label = text('Name')
-        } ?> --></div>
-<div class="input" id="account_input_div">
+        } ?>
+       </div>
+  </div>
+  <div class="labelledinput">
+      <label for="cash-accno"><?lsmb text('Cash Account') ?></label>
+      <div class="value">
         <?lsmb
              IF !batch_id; cash_accounts.unshift({}); END;
              INCLUDE select element_data = {
@@ -60,61 +57,74 @@
                 default_values = [cash_accno]
                 class          = "account"
                 value_attr     = "accno"
-                label          = text('Cash Account') # '
-        } ?></div>
-<div class="input" id="source_input_div">
+        } ?>
+      </div>
+  </div>
+  <div class="labelledinput">
+    <label for="source"><?lsmb text('Source') ?></label>
+    <div class="value" id="source_input_div">
         <?lsmb INCLUDE input element_data = {
                 name  = "source"
                 value = source
                 class = "text"
                 type  = "text"
                 size  = "20"
-                label = text('Source')
-        } ?></div>
+        } ?>
+    </div>
+  </div>
+  <?lsmb PROCESS date_row_div ?>
+
 </div>
-<?lsmb PROCESS date_row_div ?>
+
+
 <?lsmb IF batch_id ?>
-<div class="listtop"><?lsmb text('Payment Reversal Information') ?></div>
-        <?lsmb IF batch_id -?>
-        <label for="batch_post_span"><?lsmb text('Date Reversed') ?></label>
-        <span id="batch_post_span"><?lsmb date_reversed ?></span>
-<div class="tabular col-1">
-<div class="input">
+  <div class="listtop">
+      <?lsmb text('Payment Reversal Information') ?>
+  </div>
+
+  <div class="tabular col-1">
+
+    <div class="labelledinput">
         <?lsmb INCLUDE input element_data = {
                 type  = "hidden"
-                value = date_reversed
+                value = batch_date
                 name  = "date_reversed"
         } ?>
-        <?lsmb ELSE -?>
-        <?lsmb INCLUDE input element_data = {
-                name  = "date_reversed"
-                value = date_reversed
-                type  = "text"
-                size  = "20"
-                class = "date"
-                label = text('Date Reversed') # '
-        } ?>
-        <?lsmb END # if batch_id ?></div>
-<div class="input" id="curr-exchange-div">
+      <label for="batch_post_span"><?lsmb text('Date Reversed') ?></label>
+      <span id="batch_post_span value"><?lsmb batch_date ?></span>
+
+    </div>
+
+    <?lsmb
+        currency_list = [];
+        FOREACH c IN currencies;
+            currency_list.push( { text = c, value = c } );
+        END;
+    ?>
+    <div class="input" id="curr-exchange-div">
       <?lsmb
            INCLUDE select element_data = {
               name = 'currency'
-           options = currencies
+           options = currency_list
         value_attr = id
     default_values = [default_currency]
              label = text('Currency')
-      } ?>
-      <?lsmb INCLUDE input element_data = {
+           }
+      ?>
+      <?lsmb
+           INCLUDE input element_data = {
              label = text('Exchange Rate') #'
               type = 'text'
               size = 10
               name = 'exchangerate'
              value = exchangerate
              class = 'fxrate'
-      } ?>
-</div>
-</div>
+           }
+      ?>
+    </div>
+  </div>
 <?lsmb END # if batch_id -?>
+
 <div class="button" id="search_button_div">
         <?lsmb INCLUDE button element_data = {
                 name  = "action"
@@ -124,5 +134,6 @@
                 text  = text('Search')
         } ?>
 </div>
+
 </form>
 </body>
