@@ -8,12 +8,11 @@
        PROCESS dynatable.html;
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
+<div id="create-new-batch">
 <div class="listtop"><?lsmb text('Create New Batch') ?></div>
 <form data-dojo-type="lsmb/Form" name="create_batch" method="post" action="<?lsmb request.script ?>">
 <div class="labelledinput">
-  <div class="inputgroup">
-    <?lsmb text("Batch Number") ?>
-  </div>
+  <label for="batch-number"><?lsmb text("Batch Number") ?></label>
   <div class="value">
     <?lsmb PROCESS input element_data = {
            name = "batch_number"
@@ -22,9 +21,7 @@
   </div>
 </div>
 <div class="labelledinput">
-  <div class="label">
-    <?lsmb text("Description") ?>
-  </div>
+  <label for="description"><?lsmb text("Description") ?></label>
   <div class="inputgroup">
     <?lsmb PROCESS input element_data = {
            name = "description"
@@ -33,9 +30,7 @@
   </div>
 </div>
 <div class="labelledinput">
-  <div class="label">
-     <?lsmb text("Batch Date") ?>
-  </div>
+  <label for="batch-date"><?lsmb text("Batch Date") ?></label>
   <div class="inputgroup">
      <?lsmb PROCESS input element_data = {
             type = "date"
@@ -70,7 +65,7 @@ FOREACH item = batch.hidden;
 <?lsmb
 
 FOREACH row IN batch.search_results;
-     row.row_id = row.id _ "&amp;post_date=" _ row.default_date;
+     row.row_id = row.id;
 END;
 
 PROCESS dynatable
@@ -79,12 +74,13 @@ PROCESS dynatable
                columns = [
         { col_id='control_code', type='href', name=text('Control Number'), #'
        href_base="vouchers.pl?action=add_vouchers" _
-                   hidden_url_base _ "&amp;id=" }
+                   hidden_url_base _ "&amp;batch_id=" }
         { col_id='description', type='text', name = text('Description') }
         { col_id='created_by', type='text', name = text('Created By') } #'
         { col_id='created_on', type='text', name = text('Created On') } #'
          { col_id='default_date', type='text', name = text('Post Date') } #'
        ];
 ?>
+</div>
 </body>
 </html>

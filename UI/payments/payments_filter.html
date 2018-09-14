@@ -1,6 +1,6 @@
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
 <body id="payments-filter-body" class="lsmb <?lsmb dojo_theme ?>">
-<div id="payments">
+<div id="payments-filter">
 <div class="listtop">
         <!-- CT:  Strings for locales:
         <?lsmb text('Filtering Receipts') ?>
@@ -43,7 +43,7 @@
 </div>
 <?lsmb END ?>
 
-<?lsmb IF departments ?>
+<?lsmb IF payment.departments ?>
 <div id = "payments-filter-departments" class="inputgroup">
   <label for="department"><?lsmb text('Department') ?></label>
   <?lsmb PROCESS select element_data = {
@@ -70,7 +70,7 @@
         size = '15'
 } ?>
 
-<?lsmb IF businesses ?>
+<?lsmb IF payment.businesses ?>
 <div id = "payments-filter-businesses" class="inputgroup">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
   <?lsmb PROCESS select element_data = {
@@ -99,7 +99,7 @@
 <div id = "payments-filter-daterow" class = "inputgroup">
 <div class="input">
 <?lsmb PROCESS input element_data = {
-        label = text('Date From:')
+        label = text('Date From')
         type = "text"
         class = "date"
         value = payment.date_from
@@ -107,7 +107,7 @@
         size = 12
 } # ' ?></div><div class="input">
 <?lsmb PROCESS input element_data = {
-        label = text('Date To:')
+        label = text('Date To')
         type = "text"
         class = "date"
         value = payment.date_to
@@ -118,16 +118,17 @@
 <div id = "payments-filter-currency-row" class="inputgroup">
 <label for="currency"><?lsmb text('Currency')?></label>
 <?lsmb
-   curr = [];
-   FOREACH c IN currencies ;
-     curr.push( { text = c, value = c } );
+   currency_list = [];
+   FOREACH c IN payment.currencies;
+     currency_list.push( { text = c, value = c } );
    END;
    PROCESS select element_data = {
         id = 'currency'
        name = 'currency'
-       options = payment.curr
+       options = currency_list
        default_values = [ payment.default_currency ]
-} ?>
+   }
+?>
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
@@ -142,7 +143,7 @@
                 options = payment.cash_accounts
                 value_attr = "accno"
                 text_attr = "text"
-                label = pay_label _ ':'
+                label = pay_label
         } ?>
 
 <?lsmb IF payment.payment_types ?>
@@ -155,7 +156,7 @@
                 options = payment.payment_types
                 value_attr = "id"
                 text_attr = "label"
-                label = text('Payment Type:') #'
+                label = text('Payment Type') #'
         } ?>
 
 
@@ -173,7 +174,7 @@
         size = "20"
         name = "source_start"
         required = "true"
-        label = text('Start Source Numbering At:')
+        label = text('Start Source Numbering At')
 } # ?>
 </div>
 <?lsmb END ?>
