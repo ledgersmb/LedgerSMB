@@ -67,7 +67,8 @@ BEGIN
                        AND transdate > cp_date
                  GROUP BY chart_id, curr) a
         FULL OUTER JOIN (
-              SELECT account_id, end_date, amount_bc, amount_tc, debits, credits
+              SELECT account_id, curr,
+                     end_date, amount_bc, amount_tc, debits, credits
                 FROM account_checkpoint
                 WHERE end_date = cp_date) cp
            ON (a.chart_id = cp.account_id) and (a.curr = cp.curr)

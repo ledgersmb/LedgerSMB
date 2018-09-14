@@ -63,7 +63,7 @@ $dbh->do("
 ") or BAIL_OUT 'Failed to insert account_link: ' . DBI->errstr;
 
 
-plan tests => (17);
+plan tests => 16;
 
 # Initialise Object
 $setting = LedgerSMB::Setting->new();
@@ -79,7 +79,13 @@ is($setting->get('TEST_SETTING_KEY'), 'new-test-value', 'retrieved updated setti
 
 # Getting/Setting currencies
 # Order of returned list is important as first element indicates default
-ok($setting->set('curr', 'EUR:CAD:SEK:GBP'), 'set currencies');
+$dbh->do(q{INSERT INTO currency (curr, description)
+             VALUES ('EUR','EUR'),
+                    ('CAD','CAD'),
+                    ('SEK','SEK'),
+                    ('GBP','GBP');
+         UPDATE defaults SET value = 'EUR' WHERE setting_key='curr'});
+#ok($setting->set('curr', 'EUR:CAD:SEK:GBP'), 'set currencies');
 my @currencies = $setting->get_currencies;
 is_deeply(\@currencies, [qw( EUR CAD SEK GBP )], 'get currencies ok');
 
