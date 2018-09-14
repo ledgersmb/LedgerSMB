@@ -67,7 +67,8 @@ BEGIN
                        AND transdate > cp_date
                  GROUP BY chart_id, curr) a
         FULL OUTER JOIN (
-              SELECT account_id, end_date, amount_bc, amount_tc, debits, credits
+              SELECT account_id, curr,
+                     end_date, amount_bc, amount_tc, debits, credits
                 FROM account_checkpoint
                 WHERE end_date = cp_date) cp
            ON (a.chart_id = cp.account_id) and (a.curr = cp.curr)
@@ -112,9 +113,9 @@ BEGIN
         INSERT INTO acc_trans (transdate, chart_id, trans_id,
                                amount_bc, curr, amount_tc)
         SELECT in_end_date, a.chart_id, currval('id'),
-                (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
-                (coalesce(a.curr,cp.curr)),
-                (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
+               (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
+               coalesce(a.curr,cp.curr),
+               (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
         FROM (SELECT chart_id, sum(amount_bc) as amount_bc, curr,
                      sum(amount_tc) as amount_tc
                 FROM acc_trans a

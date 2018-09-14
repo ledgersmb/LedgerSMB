@@ -37,6 +37,7 @@ use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Part;
+use LedgerSMB::Setting;
 use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
