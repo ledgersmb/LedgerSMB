@@ -106,12 +106,18 @@
                 } ?>
         </div>
 
-        <div id="date_filter_row">
-                <label for="filter_from"><?lsmb text('Filtering From') ?></label>
-                <span id="filter_from"><?lsmb payment.date_from ?></span>
-                <label for="filter_to"><?lsmb text('To') ?></label>
-                <span id="filter_to"><?lsmb payment.date_to ?></span>
+        <?lsmb IF payment.date_from ?>
+        <div class="info" id="date_filter_from_row">
+            <label for="filter_from"><?lsmb text('Filtering From') ?></label>
+            <span id="filter_from"><?lsmb payment.date_from ?></span>
         </div>
+        <?lsmb END ?>
+        <?lsmb IF payment.date_to ?>
+        <div class="info" id="date_filter_to_row">
+            <label for="filter_to"><?lsmb text('To') ?></label>
+            <span id="filter_to"><?lsmb payment.date_to ?></span>
+        </div>
+        <?lsmb END ?>
 
         <!-- the department will be shown if it was selected in the first step -->
         <?lsmb IF payment.department.value  # Only process element if one exists. As in project above ?>
@@ -173,10 +179,12 @@
                 </div>
         <?lsmb END # if business ?>
 
+        <?lsmb IF payment.payment_type ?>
         <div class="payment_type" id="payment_type_label_div">
                 <label for="filter_type_label"><?lsmb text('Payment Type') ?></label>
                 <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
         </div>
+        <?lsmb END ?>
 
         <div class="info" id="cash_account_div">
                 <?lsmb INCLUDE input element_data = {
