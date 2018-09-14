@@ -8,9 +8,6 @@ alter table account_checkpoint
         foreign key (curr) references currency (curr);
 
 alter table account_checkpoint
-  drop constraint account_checkpoint_pkey;
-
-alter table account_checkpoint
   add primary key (end_date, account_id, curr);
 
 
