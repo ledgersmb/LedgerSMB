@@ -322,6 +322,7 @@ html, body {
 #PNL td.amount {
         text-align: right;
         padding-left: 0.5em;
+        white-space: pre;
 }
 #PNL tr.separator {
         min-height: 1em;
@@ -433,6 +434,7 @@ html, body {
 
 #payments .amount {
     text-align: right;
+    white-space: pre;
 }
 
 #payments .topay_amount input,
