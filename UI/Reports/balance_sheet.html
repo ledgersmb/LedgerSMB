@@ -46,10 +46,9 @@ END ;
 </colgroup>
   <tbody>
     <tr class="report-head">
-      <th colspan="<?lsmb max_path_depth ?>"
-          style="font-weight:bold"> </th>
+      <th colspan="<?lsmb max_path_depth ?>"> </th>
       <?lsmb FOREACH col IN report.sorted_col_ids -?>
-      <th style="white-space:nowrap"><?lsmb report.cheads.ids.$col.props.description ?></th>
+      <th><?lsmb report.cheads.ids.$col.props.description ?></th>
       <?lsmb END -?>
     </tr>
 <?lsmb FOREACH row IN report.sorted_row_ids ;
