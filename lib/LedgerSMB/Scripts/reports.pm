@@ -92,8 +92,7 @@ sub start_report {
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};
-    my $periods = LedgerSMB::App_State::all_periods();
-    $request->{all_periods} = $periods->{dropdown};
+
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
