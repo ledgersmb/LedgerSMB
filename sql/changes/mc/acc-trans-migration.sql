@@ -37,7 +37,7 @@ BEGIN
     FROM defaults
    WHERE setting_key IN ('fxgain_accno_id', 'fxloss_accno_id');
 
-  CREATE TEMPORARY TABLE lines_to_delete (id int);
+  CREATE TEMPORARY TABLE lines_to_delete (id int, assoc int);
 
   FOR line IN lines
   LOOP
@@ -95,7 +95,8 @@ BEGIN
         -- to make sure to remove the 'prev' line, because we'll
         -- *update* the current line (which we absolutely *don't*
         -- want to delete
-        INSERT INTO lines_to_delete (id) VALUES (prev.entry_id);
+        INSERT INTO lines_to_delete (id, assoc)
+             VALUES (prev.entry_id, line.entry_id);
 
         IF prev.fx_transaction THEN
            DECLARE
@@ -122,6 +123,90 @@ BEGIN
         prev := line;
      END IF;
   END LOOP;
+
+  -- Lines which are included in a reconciliation report obviously
+  -- need to remain included. If only the line to be deleted is
+  -- included, switch to the line which will remain in the database.
+  -- If both lines are included, we can safely delete the reconciliation
+  -- line, because the content has been merged into the one which remains
+  UPDATE cr_report_line crl
+     SET ledger_id = (select assoc from lines_to_delete ltd
+                       where crl.ledger_id = ltd.id)
+   WHERE EXISTS (select 1 from cr_report_line cl
+                   join lines_to_delete ltd on ltd.id = cl.ledger_id)
+         AND NOT EXISTS (select 1 from cr_report_line cl
+                           join lines_to_delete ltd on cl.ledger_id = ltd.assoc);
+  DELETE FROM cr_report_line crl
+   WHERE EXISTS (select 1 from lines_to_delete ltd
+                  where ltd.id = crl.ledger_id);
+
+  -- Same reasoning above applies to 'ac_tax_form' (which links acc_trans
+  -- lines to country_tax_form
+  UPDATE ac_tax_form atf
+     SET entry_id = (select assoc from lines_to_delete ltd
+                      where atf.entry_id = ltd.id)
+   WHERE EXISTS (select 1 from ac_tax_form tf
+                   join lines_to_delete ltd on ltd.id = tf.entry_id)
+         AND NOT EXISTS (select 1 from ac_tax_form tf
+                           join lines_to_delete ltd on tf.entry_id = ltd.assoc);
+  DELETE FROM ac_tax_form atf
+   WHERE EXISTS (select 1 from lines_to_delete ltd
+                  where ltd.id = atf.entry_id);
+
+
+  -- Same reasoning above applies to 'business_unit_ac' (which links acc_trans
+  -- lines to business accounting dimensions ('reporting units')
+  UPDATE business_unit_ac bua
+     SET entry_id = (select assoc from lines_to_delete ltd
+                      where bua.entry_id = ltd.id)
+   WHERE EXISTS (select 1 from business_unit_ac ua
+                   join lines_to_delete ltd on ltd.id = ua.entry_id)
+         AND NOT EXISTS (select 1 from business_unit_ac ua
+                           join lines_to_delete ltd on ua.entry_id = ltd.assoc);
+  DELETE FROM business_unit_ac bua
+   WHERE EXISTS (select 1 from lines_to_delete ltd
+                  where ltd.id = bua.entry_id);
+
+
+  -- Same reasoning above applies to 'payment_links' (which links acc_trans
+  -- lines to various types of payments
+  UPDATE payment_links pal
+     SET entry_id = (select assoc from lines_to_delete ltd
+                      where pal.entry_id = ltd.id)
+   WHERE EXISTS (select 1 from payment_links pl
+                   join lines_to_delete ltd on ltd.id = pl.entry_id)
+         AND NOT EXISTS (select 1 from payment_links pl
+                           join lines_to_delete ltd on pl.entry_id = ltd.assoc);
+  DELETE FROM payment_links pal
+   WHERE EXISTS (select 1 from lines_to_delete ltd
+                  where ltd.id = pal.entry_id);
+
+
+  -- Same reasoning above applies to 'payment_links' (which links acc_trans
+  -- lines to various types of payments
+  UPDATE tax_extended tae
+     SET entry_id = (select assoc from lines_to_delete ltd
+                      where tae.entry_id = ltd.id)
+   WHERE EXISTS (select 1 from tax_extended te
+                   join lines_to_delete ltd on ltd.id = te.entry_id)
+         AND NOT EXISTS (select 1 from tax_extended te
+                           join lines_to_delete ltd on te.entry_id = ltd.assoc);
+  DELETE FROM tax_extended tae
+   WHERE EXISTS (select 1 from lines_to_delete ltd
+                  where ltd.id = tae.entry_id);
+
+
+  -- Same reasoning above applies to 'cr_report' (keeps records of the
+  -- highest entry_id having been considered for the reconciliation)
+  -- Except that the max_ac_id simply needs to be renumbered and that
+  -- no cr_report lines need to be removed
+  UPDATE cr_report crr
+     SET max_ac_id = (select assoc from lines_to_delete ltd
+                      where crr.max_ac_id = ltd.id)
+   WHERE EXISTS (select 1 from cr_report cr
+                   join lines_to_delete ltd on ltd.id = cr.max_ac_id);
+
+
 
   DELETE FROM payment_links
    WHERE EXISTS (SELECT 1 FROM lines_to_delete
