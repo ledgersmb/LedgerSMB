@@ -88,6 +88,8 @@ mc/currency-migration.sql
 mc/acc-trans-migration.sql
 mc/acc-checkpoint-migration.sql
 mc/aa-migration.sql
+mc/journal-migration.sql
+mc/budget-migration.sql
 mc/migrate-new-constraints.sql
 mc/new-constraints.sql
 mc/dropped-objects.sql
