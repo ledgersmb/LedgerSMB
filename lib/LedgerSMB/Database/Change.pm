@@ -462,10 +462,9 @@ therefore will be 2.0 material.
 
 Copyright (C) 2016-2018 The LedgerSMB Core Team
 
-This file may be used under the GNU General Public License version 2 or at your
-option any later version.  As part of the database framework of LedgerSMB it
-may also be moved out to the PGObject distribution on CPAN and relicensed under
-the same BSD license as the rest of that framework.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 
