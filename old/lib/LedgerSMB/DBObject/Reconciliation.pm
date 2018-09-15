@@ -451,16 +451,19 @@ sub get {
 
 =item get_accounts
 
-This is a simple wrapper around reconciliation__account_list
+This is a simple wrapper around reconciliation__account_list. It sets
+the object's C<recon_accounts> property.
 
 =cut
 
 sub get_accounts {
     my $self = shift @_;
 
-    return $self->call_dbmethod(
+    @{$self->{recon_accounts}} = $self->call_dbmethod(
         funcname=>'reconciliation__account_list',
     );
+
+    return $self->{recon_accounts};
 }
 
 =back

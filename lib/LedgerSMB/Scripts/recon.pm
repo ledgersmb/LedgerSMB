@@ -25,7 +25,6 @@ use HTTP::Status qw( HTTP_BAD_REQUEST);
 use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Reconciliation::Summary;
-use LedgerSMB::Scripts::reports;
 use LedgerSMB::Template::UI;
 
 =over
@@ -157,26 +156,36 @@ sub get_results {
     return $report->render($request);
 }
 
-=item search
+=item search($request)
 
-Displays search criteria screen
+Displays bank reconciliation report search criteria screen.
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
 
 =cut
 
 sub search {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-    if (!$recon->{hide_status}){
-            $recon->{show_approved} = 1;
-            $recon->{show_submitted} = 1;
-        }
-    @{$recon->{recon_accounts}} = $recon->get_accounts();
-    unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
-    $recon->{report_name} = 'reconciliation_search';
-    return LedgerSMB::Scripts::reports::start_report($recon);
-}
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => {
+        dbh => $request->{dbh},
+        show_approved => 1,
+        show_submitted => 1,
+    }});
 
+    $recon->get_accounts();
+    unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render(
+        $request,
+        'Reports/filters/reconciliation_search',
+        $recon
+    );
+}
 
 
 =item new_report ($self, $request, $user)
