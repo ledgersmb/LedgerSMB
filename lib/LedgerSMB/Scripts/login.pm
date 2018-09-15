@@ -76,7 +76,7 @@ sub __default {
     my ($request) = @_;
 
     $request->{stylesheet} = 'ledgersmb.css';
-    $request->{titlebar} = "LedgerSMB $request->{VERSION}";
+    $request->{titlebar} = "LedgerSMB $request->{version}";
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'login', $request);
 }
@@ -120,7 +120,7 @@ sub login {
         return __default($request);
     }
 
-    $request->{title} = "LedgerSMB $request->{VERSION} -- ".
+    $request->{title} = "LedgerSMB $request->{version} -- ".
     "$request->{login} -- $request->{company}";
 
     my $template = LedgerSMB::Template::UI->new_UI;
