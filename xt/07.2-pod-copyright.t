@@ -27,19 +27,26 @@ chomp $template_text;
 
 foreach my $file(@files) {
 
-    my $file_text = get_raw_pod_section_from_file(
-        $file,
-        'LICENSE AND COPYRIGHT'
-    );
+    SKIP: {
+        # Non-standard copyright section in this file
+        if($file eq 'lib/LedgerSMB/Scripts/payment.pm') {
+            skip "SKIPPING $file - non standard COPYRIGHT section", 2
+        }
 
-    # Copyright years vary between files. We replace them
-    # with a placeholder to allow comparison with the template.
-    $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i;
+        my $file_text = get_raw_pod_section_from_file(
+            $file,
+            'LICENSE AND COPYRIGHT'
+        );
 
-    ok($file_text, "$file pod has LICENSE AND COPYRIGHT section");
-    is(
-        trim_raw_pod_section($file_text),
-        $template_text,
-        "pod LICENSE AND COPYRIGHT section in $file matches template"
-    );
+        # Copyright years vary between files. We replace them
+        # with a placeholder to allow comparison with the template.
+        $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i;
+
+        ok($file_text, "$file pod has LICENSE AND COPYRIGHT section");
+        is(
+            trim_raw_pod_section($file_text),
+            $template_text,
+            "pod LICENSE AND COPYRIGHT section in $file matches template"
+        );
+    }
 }
