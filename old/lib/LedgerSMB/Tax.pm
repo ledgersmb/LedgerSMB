@@ -163,8 +163,16 @@ sub extract_taxes {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2006-2016 The LedgerSMB Core Team
+The original copyright notice follows:
 
-This file is licensed under the GNU General Public License version 2, or at your
-option any later version.  A copy of the license should have been included with
-your software.
+# Copyright (C) 2006-2016
+# This work contains copyrighted information from a number of sources all used
+# with permission.  It is released under the GNU General Public License
+# Version 2 or, at your option, any later version.  See COPYRIGHT file for
+# details.
+#
+# LedgerSMB
+# Small Medium Business Accounting software
+# http://www.ledgersmb.org/
+#
+#
