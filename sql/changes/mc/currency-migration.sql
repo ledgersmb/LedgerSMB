@@ -5,7 +5,7 @@ BEGIN
 
   -- Migrate 'curr' into 'currency'
   INSERT INTO currency (curr, description)
-  SELECT u.curr, u.curr
+  SELECT DISTINCT u.curr, u.curr
   FROM unnest(string_to_array((SELECT value FROM defaults
                                 WHERE setting_key = 'curr'), ':')) AS u(curr);
 
