@@ -2,6 +2,12 @@
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.5
+* Update Dojo to 1.13.3-pre; previous update broke file uploads (Erik H, #3799)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.4
 * Fix GL Save Template gives error (Nick P, #3754)
 * Fix error adding reverse payment to batch (Nick P, #3761)
