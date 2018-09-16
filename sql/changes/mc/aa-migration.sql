@@ -1,4 +1,17 @@
 
+-- Note that the aa-migration pre-checks made sure that any missing
+-- 'curr' values have been filled out by the user, in so far the
+-- transactions included lines marked as fx transactions
+
+-- Remaining lines thus must be base/default currency transactions
+
+UPDATE ar
+   SET curr = (select value from defaults where setting_key = 'curr')
+ WHERE curr IS NULL;
+
+UPDATE ap
+   SET curr = (select value from defaults where setting_key = 'curr')
+ WHERE curr IS NULL;
 
 
 UPDATE ar
