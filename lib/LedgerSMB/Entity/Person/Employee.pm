@@ -188,9 +188,11 @@ sub save {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under
-the GNU GPL version 2 or at your option any future version.  Please see the
-accompanying LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

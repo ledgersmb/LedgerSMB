@@ -63,7 +63,9 @@ sub get_by_partnumber {
 
 Copyright (C) 2015 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License version 2 or at your option any later version.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 
