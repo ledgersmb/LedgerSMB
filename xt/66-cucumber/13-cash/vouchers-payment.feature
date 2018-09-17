@@ -17,9 +17,13 @@ Scenario: Add payments to a new batch
   Then I should see the Filtering Payments screen
    And I should see the title "Filtering Payments"
   When I enter "1001" into "Start Source Numbering At"
+   And I select "2100--Accounts Payable" from the drop down "Account"
+   And I select "1060--Checking Account" from the drop down "Pay From"
    And I press "Continue"
   Then I should see the Payments Detail screen
    And I expect to see the 'date_paid' value of '2018-01-01'
+   And I expect to see the 'account_info' value of '2100 -- Accounts Payable'
+   And I expect to see the 'cash_accno' value of '1060 -- Checking Account'
 
 Scenario: Add payments to an existing batch
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
