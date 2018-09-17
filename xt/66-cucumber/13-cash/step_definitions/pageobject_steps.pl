@@ -57,5 +57,13 @@ When qr/I click on the Batch with Control Number "(.*)"/, sub {
 };
 
 
+Then qr/I should see the title "(.*)"/, sub {
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+    my $title = $1;
+
+    my $div = $page->title(title => $title);
+    ok($div, "Found title '$title'");
+};
+
 
 1;

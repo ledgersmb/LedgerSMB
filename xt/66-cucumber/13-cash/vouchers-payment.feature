@@ -15,6 +15,7 @@ Scenario: Add payments to a new batch
    And I enter "Test Batch" into "Description"
    And I press "Continue"
   Then I should see the Filtering Payments screen
+   And I should see the title "Filtering Payments"
   When I enter "1001" into "Start Source Numbering At"
    And I press "Continue"
   Then I should see the Payments Detail screen
@@ -30,6 +31,7 @@ Scenario: Add payments to an existing batch
        | Post Date      | 2018-01-01 |
   When I click on the Batch with Control Number "B-1001"
   Then I should see the Filtering Payments screen
+   And I should see the title "Filtering Payments"
   When I enter "2001" into "Start Source Numbering At"
    And I press "Continue"
   Then I should see the Payments Detail screen
