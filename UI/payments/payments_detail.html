@@ -193,11 +193,13 @@
                         value = payment.cash_accno
                 } ?>
                 <label><?lsmb text('Pay From') ?></label>
-                <?lsmb FOR c = cash_accounts -?>
+                <span id="cash_accno">
+                    <?lsmb FOR c = payment.cash_accounts -?>
                         <?lsmb IF c.accno == payment.cash_accno -?>
                                 <?lsmb c.accno ?> -- <?lsmb c.description ?>
                         <?lsmb END # if c.accno -?>
-                <?lsmb END # for c -?>
+                    <?lsmb END # for c -?>
+                </span>
         </div>
 
     </div>
