@@ -5,9 +5,116 @@ package LedgerSMB::Database::SchemaChecks::JSON;
 
 LedgerSMB::Database::SchemaChecks::JSON - Input for schema upgrades
 
+=head1 SYNOPSIS
+
+  use LedgerSMB::Database::SchemaChecks::JSON;
+  use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
+
+  my @checks = load_checks('path-to-some-file-with-checks');
+  my $out = json_formatter_context {
+     return ! run_checks( \@checks );
+  } 'path-to-directory-with-response-files';
+
+
+If any of the checks fails, C<$out> contains the path of a file containing
+the data of the failure which can be used to compose a response.
+
 =head1 DESCRIPTION
 
-Provides non-interactive input for schema upgrade precondition checks.
+This module provides a way to specify non-interactive input for
+schema upgrade precondition checks.
+
+A use-case for specifying non-interactive input would be an iterative
+process where a user is trying to migrate a database from an earlier
+version of LedgerSMB, repeating the process until all questions have
+been answered. When the process works on a backup database, the recorded
+answers can be used for the final migration.
+
+Another use-case involves simulating user input in our test suite.
+
+=head2 Composing a response file
+
+Each migration failing check wants a response. Each response is stored
+in its own file. When no response file exists, the module generates one
+populated with the data that it needs a response for.
+
+Response files are JSON files where the top-level is
+an object with the following structure:
+
+    - failure
+      - title
+      - description
+      - confirmations
+      - grids
+        - <grid1>
+          - rows
+          - options
+            - field1
+            - fieldN
+          - adjustment_fields
+    - response
+      - confirm
+      - <grid1>
+
+The data under the C<failure> key will be populated by the module
+when a failing test is detected. The data under the C<response> key
+is to be provided by the user and will be used by the module to
+resolve the data issues detected. The C<failure> section is optional.
+
+Each response must provide a C<confirm> field in the C<response> section
+which has the value of one of the keys in C<confirmations>. E.g. when
+C<confirmations> contains
+
+  [ { "abc": "Description of ABC"},
+    { "def": "Description of DEF"} ]
+
+Then the C<confirm> key could be:
+
+  "confirm": "abc",
+
+The other keys in the C<response> section depend on the names of the
+UI elements having been generated. At the moment, these can only be
+grids. The available keys are listed in the C<failure.grids> section.
+
+Each grid has a key C<adjustment_fields> which is an array of fields
+which needs to be edited for the rows to become compliant with the check.
+
+The quickest solution to generating a response is by copying the rows
+in the failure section, edit the C<adjustment_fields> columns and choose
+a C<confirm> value.
+Note that providing more than just C<adjustment_fields> in the response
+is optional, however a column called C<__pk> B<must> be provided. It's
+used to identify the rows.
+
+E.g. when the C<failure> section looks like:
+
+  {  "failure": {
+        "title": "Assert that 'a' or 'b' isn't NULL",
+        "description": "Enter a string in either 'a' or 'b'",
+        "confirmations": [
+             { "save"  : "Save" },
+             { "cancel": "Cancel"  }
+        ],
+        "grids": {
+            "adjustment_fields": [ "a", "b" ],
+            "fail_data": {
+                "rows": [
+                   { "__pk": "MQ==", "a": null, "b": null },
+                   { "__pk": "Mg==", "a": null, "b": null }
+                ]
+        }
+  }
+
+Then the response section could look like:
+
+  { "response": {
+        { "confirm": "save",
+          "fail_data": [
+               { "__pk": "MQ==", "a": "a string", "b": null },
+               { "__pk": "Mg==", "a": null, "b": "another string" }
+          ]
+        }
+  }
 
 =head1 METHODS
 
