@@ -54,9 +54,12 @@ sub _generate_json {
     my ($dir, $check) = @_;
 
     my $response_file = _response_filename($dir, $check);
-    open my $fh, '>:encoding(UTF-8)', $response_file;
-    print $fh $json->encode($cached_response->{response});
-    close $fh;
+    open my $fh, '>:encoding(UTF-8)', $response_file
+        or die "Unable to open response file '$response_file': $!";
+    print $fh $json->encode($cached_response->{response})
+        or die "Unable to write failure response to '$response_file': $!";
+    close $fh
+        or warn "Unable to close response file '$response_file': $!";
 
     return $response_file;
 }
@@ -72,10 +75,12 @@ sub _response {
 
     my $response_file = _response_filename($dir, $check);
     if (-f $response_file) {
-        open my $fh, '<:encoding(UTF-8)', $response_file;
+        open my $fh, '<:encoding(UTF-8)', $response_file
+            or die "Unable to open pre-defined response '$response_file': $!";
         local $/ = undef;
         my $content = <$fh>;
-        close $fh;
+        close $fh
+            or warn "Unable to close response file '$response_file': $!";
 
         $cached_response = {
             md5 => $hashid,
@@ -205,11 +210,11 @@ sub json_formatter_context(&$) { ## no critic
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2018 The LedgerSMB Core Team.
+Copyright (C) 2018 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.TXT for more information.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

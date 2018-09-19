@@ -30,10 +30,13 @@ my $json_dir = $dir->dirname;
 sub _slurp {
     my ($fn) = @_;
 
-    open my $fh, '<:encoding(UTF-8)', $fn;
+    open my $fh, '<:encoding(UTF-8)', $fn
+        or die "Failed to open generated response file '$fn': $!";
     local $/ = undef;
     my $content = <$fh>;
-    close $fh;
+    close $fh
+        or warn "Failed to close generated response file '$fn': $!";
+
 
     return $content;
 }
