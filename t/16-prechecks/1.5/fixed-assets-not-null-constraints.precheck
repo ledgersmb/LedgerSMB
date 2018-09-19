@@ -1,0 +1,83 @@
+{
+    'Assert fixed assets depreciation values are set (purchase_value)' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id tag purchase_value description) ], # column names...
+                 [ 1, '', undef, 'an asset' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{UPDATE "asset_item"
+                      SET "purchase_value" = ?
+                    WHERE "id" = ?},
+                      bound_params => [ '3000.12', '1' ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'save',
+                 fix_pv => [
+                     { __pk => 'MQ==', purchase_value => '3000.12' },
+                     ],
+             },
+         }
+        ],
+    'Assert fixed assets depreciation values are set (salvage_value)' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id tag salvage_value description) ], # column names...
+                 [ 1, '', undef, 'an asset' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{UPDATE "asset_item"
+                      SET "salvage_value" = ?
+                    WHERE "id" = ?},
+                      bound_params => [ '3000.12', '1' ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'save',
+                 fix_pv => [
+                     { __pk => 'MQ==', salvage_value => '3000.12' },
+                     ],
+             },
+         }
+        ],
+    'Assert fixed assets depreciation values are set (usable_life)' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id tag usable_life description) ], # column names...
+                 [ 1, '', undef, 'an asset' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{UPDATE "asset_item"
+                      SET "usable_life" = ?
+                    WHERE "id" = ?},
+                      bound_params => [ '3000.12', '1' ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'save',
+                 fix_pv => [
+                     { __pk => 'MQ==', usable_life => '3000.12' },
+                     ],
+             },
+         }
+        ],
+}
