@@ -21,6 +21,7 @@ Scenario: Add payments to a new batch
    And I should see the title "Filtering Payments"
   When I enter "1001" into "Start Source Numbering At"
    And I select "2100--Accounts Payable" from the drop down "Account"
+   And I select "USD" from the drop down "Currency"
    And I select "1060--Checking Account" from the drop down "Pay From"
    And I press "Continue"
   Then I should see the Payments Detail screen
