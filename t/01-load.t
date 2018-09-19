@@ -68,7 +68,7 @@ my @modules =
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld',
           'LedgerSMB::Setting', 'LedgerSMB::Tax', 'LedgerSMB::Upgrade_Tests',
           'LedgerSMB::Upgrade_Preparation',
-          'LedgerSMB::Upgrade::SchemaChecks::JSON',
+          'LedgerSMB::Database::SchemaChecks::JSON',
           'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
