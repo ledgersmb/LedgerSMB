@@ -91,8 +91,7 @@ sub start_report {
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};
-    my $periods = LedgerSMB::App_State::all_periods();
-    $request->{all_periods} = $periods->{dropdown};
+
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
@@ -252,7 +251,7 @@ eval { require LedgerSMB::Scripts::custom::reports };
 
 Copyright (C) 2007-2018 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

@@ -181,7 +181,6 @@ sub new {
     $self->{login} = $auth->get_credentials->{login} if defined $auth;
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
-    $self->{VERSION} = $VERSION;
     $self->{_uploads} = $request->uploads if defined $request->uploads;
     $self->{_cookies} = $request->cookies if defined $request->cookies;
     $self->{query_string} = $request->query_string if defined $request->query_string;
@@ -513,7 +512,7 @@ sub setting {
 
 Copyright (C) 2006-2018 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

@@ -85,9 +85,9 @@ mc/changed-objects.sql
 mc/drop-constraints.sql
 # do data migration here...
 mc/currency-migration.sql
+mc/aa-migration.sql
 mc/acc-trans-migration.sql
 mc/acc-checkpoint-migration.sql
-mc/aa-migration.sql
 mc/journal-migration.sql
 mc/budget-migration.sql
 mc/migrate-new-constraints.sql
