@@ -178,7 +178,7 @@ Given qr/an unpaid AP transaction with "(.*)" for \$(\d+)$/, sub {
 
     $q = $dbh->prepare("
         INSERT INTO acc_trans (trans_id, chart_id, amount, transdate)
-        SELECT ?, ?, ?, '2018-01-01'
+        VALUES (?, ?, ?, '2018-01-01')
     ");
 
     $q->execute(
