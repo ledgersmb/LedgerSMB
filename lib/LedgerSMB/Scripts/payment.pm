@@ -51,6 +51,7 @@ use warnings;
 
 use List::Util qw/sum/;
 
+use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
@@ -58,7 +59,6 @@ use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
-use LedgerSMB::Scripts::reports;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -107,30 +107,44 @@ sub payments {
                                        payment => $payment });
 }
 
-=item get_search_criteria
+=item get_search_criteria($request)
 
-Displays the payment criteria screen.  Optional inputs are
+Displays the 'Search Payments' screen.
 
-=over
+C<$request> is a L<LedgerSMB> object reference. The following keys must be
+set:
 
-=item batch_id
+  * dbh
+  * account_class
 
-=item batch_date
+Optionally the following key may be defined, if the search is to be used to
+find payments to add as vouchers to a reversing batch:
 
-=back
+  * batch_id
 
 =cut
 
 sub get_search_criteria {
     my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+
+    my $payment_data = {
+        dbh => $request->{dbh},
+        account_class => $request->{account_class},
+        all_months => LedgerSMB::App_State->all_months->{dropdown},
+    };
+
+    # Additional data needed if this search is to create reversing vouchers
+    $payment_data->{batch_id} = $request->{batch_id} if $request->{batch_id};
+
+    my $payment = LedgerSMB::DBObject::Payment->new({'base' => $payment_data});
     $payment->get_metadata();
-    if ($payment->{batch_id} && $payment->{batch_date}){
-        $payment->{date_reversed} = $payment->{batch_date};
-    }
-    @{$payment->{currencies}} = $payment->get_open_currencies();
-    $payment->{report_name} = 'payments';
-    return LedgerSMB::Scripts::reports::start_report($payment);
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render(
+        $request,
+        'Reports/filters/payments',
+        $payment
+    );
 }
 
 =item pre_bulk_post_report

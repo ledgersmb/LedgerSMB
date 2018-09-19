@@ -255,10 +255,9 @@ sub _needs_init {
 
 Copyright (C) 2016-2018 The LedgerSMB Core Team
 
-This file may be used under the terms of the GNU General Public License,
-version 2 or at your option any later version.  This file may be moved to the
-PGObject framework and licensed under the 2-clause BSD license if found to be
-generally useful.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

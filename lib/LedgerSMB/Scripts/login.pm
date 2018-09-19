@@ -76,7 +76,7 @@ sub __default {
     my ($request) = @_;
 
     $request->{stylesheet} = 'ledgersmb.css';
-    $request->{titlebar} = "LedgerSMB $request->{VERSION}";
+    $request->{titlebar} = "LedgerSMB $request->{version}";
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'login', $request);
 }
@@ -120,7 +120,7 @@ sub login {
         return __default($request);
     }
 
-    $request->{title} = "LedgerSMB $request->{VERSION} -- ".
+    $request->{title} = "LedgerSMB $request->{version} -- ".
     "$request->{login} -- $request->{company}";
 
     my $template = LedgerSMB::Template::UI->new_UI;
@@ -178,9 +178,11 @@ sub logout_js {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2009-2017 LedgerSMB Core Team. This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2009-2017 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

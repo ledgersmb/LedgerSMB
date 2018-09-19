@@ -83,9 +83,11 @@ sub run_report {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2013 The LedgerSMB Core Team.  This file may be used in accordance
-with the GNU General Public License version 2 or at your option any later
-version.  Please see the included License.txt for details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

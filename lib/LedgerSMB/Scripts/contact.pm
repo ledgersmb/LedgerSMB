@@ -62,15 +62,6 @@ for (@pluginmods){
     }
 }
 
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
-General Public License, version 2, or at your option any later version.  Please
-see the accompanying License.txt for more information.
-
-=cut
-
 =head1 METHODS
 
 =over
@@ -970,9 +961,11 @@ sub save_roles {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
-General Public License, version 2, or at your option any later version.  Please
-see the accompanying License.txt for more information.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

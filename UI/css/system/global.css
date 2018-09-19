@@ -39,6 +39,7 @@ html, body {
 .flat-hierarchy .balancesheet .report-head th {
     text-align: right;
     font-weight: bold;
+    white-space: pre;
 }
 
 .flat-hierarchy .balancesheet .section1.QL,
@@ -322,6 +323,7 @@ html, body {
 #PNL td.amount {
         text-align: right;
         padding-left: 0.5em;
+        white-space: pre;
 }
 #PNL tr.separator {
         min-height: 1em;
@@ -433,6 +435,7 @@ html, body {
 
 #payments .amount {
     text-align: right;
+    white-space: pre;
 }
 
 #payments .topay_amount input,

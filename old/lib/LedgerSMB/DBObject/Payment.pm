@@ -108,6 +108,7 @@ Sets the following object properties:
   * debt_accounts
   * cash_accounts
   * batch_date
+  * all_years
 
 Additionally if payment_type_id is set:
 
@@ -128,6 +129,10 @@ sub get_metadata {
     for my $c (@{$self->{openCurrencies}}) {
         push @{$self->{currencies}}, $c->{payments_get_open_currencies};
     }
+
+    @{$self->{all_years}} = $self->call_procedure(
+        funcname => 'date_get_all_years'
+    );
 
     @{$self->{businesses}} = $self->call_dbmethod(
         funcname => 'business_type__list'
