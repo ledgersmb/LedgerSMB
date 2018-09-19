@@ -49,26 +49,14 @@ Then qr/I should see a Batch with these values:/, sub {
 
 
 Then qr/I should see a payment line with these values:/, sub {
-
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     my $data = C->data;
     my $wanted = shift @{$data};
-    my $ok;
 
-    ROW: foreach my $element(@{$page->payment_lines}) {
-        my $row = $page->parse_payment_row($element);
-
-        TEST: foreach my $key(keys %{$wanted}) {
-            defined $row->{$key} && $row->{$key} eq $wanted->{$key}
-                or next ROW;
-        }
-
-        # Stop searching as soon as we find a matching row
-        $ok = 1;
-        last;
-    }
-
-    ok($ok, 'found a payment row with matching values');
+    ok(
+        $page->find_payment_row($wanted),
+        'found a payment row with matching values'
+    );
 };
 
 
@@ -78,6 +66,19 @@ When qr/I click on the Batch with Control Number "(.*)"/, sub {
 
     my $link = $page->batch_link(control_code => $control_code);
     ok($link->click, "clicked batch link with Control Number $control_code");
+};
+
+
+When qr/I select the payment line with these values:$/, sub {
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+    my $data = C->data;
+    my $wanted = shift @{$data};
+
+    my $row = $page->find_payment_row($wanted);
+    my $checkbox = $row->find('./td[@class="account_number"]/div/input[@type="checkbox"]');
+    my $checked = $checkbox->get_attribute('checked');
+
+    $checked && $checked eq 'true' or $checkbox->click();
 };
 
 

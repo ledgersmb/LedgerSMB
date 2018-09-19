@@ -8,7 +8,6 @@ Background:
   Given a standard test company
     And a logged in admin user
 
-
 Scenario: Add payments to a new batch
  Given a vendor 'Vendor A'
    And an unpaid AP transaction with "Vendor A" for $100
@@ -31,7 +30,13 @@ Scenario: Add payments to a new batch
    And I should see a payment line with these values:
        | Name     | Invoice Total | Source |
        | Vendor A | 100.00 USD    | 1001   |
-
+  When I select the payment line with these values:
+       | Name     | Invoice Total | Source |
+       | Vendor A | 100.00 USD    | 1001   |
+   And I press "Update"
+  Then I should see the Payments Detail screen
+   And I expect to see the 'grand_total' value of '100.00'
+   And I expect to see the 'grand_total_currency' value of 'USD'
 
 Scenario: Add payments to an existing batch
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
