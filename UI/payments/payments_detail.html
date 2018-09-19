@@ -228,7 +228,7 @@
                         <th class="payment"><?lsmb text('Details') ?></th>
                 </tr>
             </thead>
-            </tbody>
+            <tbody>
                 <?lsmb rc = 1 ?><?lsmb count = 0 ?>
                 <?lsmb FOREACH r = payment.contact_invoices ?>
                         <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
@@ -447,7 +447,7 @@
                         </tr>
                 <?lsmb END # foreach r ?>
             </tbody>
-            </tfoot>
+            <tfoot>
                 <tr class="subtotal">
                         <td>
                                 &nbsp;
