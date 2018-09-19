@@ -11,40 +11,12 @@ use Test::BDD::Cucumber::StepFile;
 Then qr/I should see a Batch with these values:/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     my $data = C->data;
-    my $batch_rows = $page->batch_rows;
-    my $ok;
+    my $wanted = shift @{$data};
 
-    #   | label          | value      |
-    #   | Control Number | B-1001     |
-    #   | Description    | Test Batch |
-    #   | Post Date      | 2018-01-01 |
-
-    my %classes = (
-        'Control Number' => 'control_code',
-        'Description'    => 'description',
-        'Post Date'      => 'default_date',
+    ok(
+        $page->find_batch_row($wanted),
+        'found a payment row with matching values'
     );
-
-    ROW: foreach my $row(@{$batch_rows}) {
-
-        TEST: foreach my $test(@{$data}) {
-            my $class = $classes{$test->{label}}
-                or BAIL_OUT "unknown field: " . $test->{label};
-
-            my $result = $row->find(sprintf(
-                './td[contains(@class, "%s") and normalize-space(.)="%s"]',
-                $class,
-                $test->{value},
-            )) or next ROW;
-        }
-
-        # If we get here, all the tests passed for this row.
-        # No need to test any more - we've found a winner.
-        $ok = 1;
-        last;
-    }
-
-    ok($ok, 'found a Batch row with matching values');
 };
 
 

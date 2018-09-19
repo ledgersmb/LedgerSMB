@@ -20,11 +20,11 @@ __PACKAGE__->self_register(
 );
 
 
-# payment_lines()
+# payment_rows()
 #
-# Returns an arrayref of rows in the table of payment lines
+# Returns an arrayref of rows in the table of payment lines.
 
-sub payment_lines {
+sub payment_rows {
     my $self = shift;
     my $rows = $self->find_all('//table[@id="payments-table"]/tbody/tr');
 
@@ -32,7 +32,7 @@ sub payment_lines {
 }
 
 
-# parse_payment_line($tr_element)
+# parse_payment_row($tr_element)
 #
 # Given a tr element representing a payment row from the payment
 # detail table, return a hashref representing the field text.
@@ -55,7 +55,7 @@ sub parse_payment_row {
 # matching those specified in supplied $wanted hashref.
 #
 # For example:
-# my $element = find_payment({
+# my $element = find_payment_row({
 #     'Source' => '1001',
 #     'Name' => 'Acme Widgets',
 #     'Invoice Total' => '100.00 USD'
@@ -65,7 +65,7 @@ sub find_payment_row {
     my $self = shift;
     my $wanted = shift;
 
-    ROW: foreach my $element(@{$self->payment_lines}) {
+    ROW: foreach my $element(@{$self->payment_rows}) {
         my $row = $self->parse_payment_row($element);
 
         TEST: foreach my $key(keys %{$wanted}) {

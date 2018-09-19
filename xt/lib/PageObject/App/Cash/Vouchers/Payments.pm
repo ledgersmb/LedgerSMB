@@ -5,7 +5,6 @@ use warnings;
 
 use Carp;
 use PageObject;
-
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
@@ -18,12 +17,6 @@ __PACKAGE__->self_register(
         id => 'create-new-batch',
     }
 );
-
-sub _verify {
-    my ($self) = @_;
-
-    return $self;
-}
 
 
 # batch_rows()
@@ -57,6 +50,56 @@ sub batch_row {
 }
 
 
+# parse_batch_row($tr_element)
+#
+# Given a tr element representing a row from the table of batches,
+# return a hashref representing the field text.
+
+sub parse_batch_row {
+    my $self = shift;
+    my $row = shift;
+    my $rv = {
+        'Control Number' => $row->find('./td[contains(@class, "control_code")]')->get_text,
+        'Description' => $row->find('./td[contains(@class, "description")]')->get_text,
+        'Post Date' => $row->find('./td[contains(@class, "default_date")]')->get_text,
+    };
+
+    return $rv;
+}
+
+
+# find_batch_row($wanted)
+#
+# Returns the batch table <tr> element with fields
+# matching those specified in supplied $wanted hashref.
+#
+# For example:
+# my $element = find_batch_row({
+#     'Control Number' => 'B-11001',
+#     'Description' => 'Batch B-11001',
+#     'Post Date' => '2018-01-01'
+# });
+
+sub find_batch_row {
+    my $self = shift;
+    my $wanted = shift;
+
+    ROW: foreach my $element(@{$self->batch_rows}) {
+        my $row = $self->parse_batch_row($element);
+
+        TEST: foreach my $key(keys %{$wanted}) {
+            defined $row->{$key} && $row->{$key} eq $wanted->{$key}
+                or next ROW;
+        }
+
+        # Stop searching as soon as we find a matching row
+        return $element;
+    }
+
+    return;
+}
+
+
 # batch_link(control_code => $control_code)
 #
 # Returns the first link from the table of existing batches having
@@ -76,7 +119,12 @@ sub batch_link {
 }
 
 
+sub _verify {
+    my ($self) = @_;
+
+    return $self;
+}
+
 
 __PACKAGE__->meta->make_immutable;
-
 1;
