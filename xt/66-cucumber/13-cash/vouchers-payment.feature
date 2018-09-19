@@ -1,13 +1,17 @@
 @weasel
 Feature: Bulk payments
-  As a LedgerSMB user I want to be able to create a new Batch of payment
-  Vouchers.
+  As a LedgerSMB user I want to be able to create a new batch of payment
+  vouchers and add a payment to that batch. I then want to review that
+  batch to see what payments it contains.
 
 Background:
   Given a standard test company
     And a logged in admin user
 
+
 Scenario: Add payments to a new batch
+ Given a vendor 'Vendor A'
+   And an unpaid AP transaction with "Vendor A" for $100
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
   Then I should see the Create New Batch screen
   When I enter "2018-01-01" into "Batch Date"
@@ -24,6 +28,10 @@ Scenario: Add payments to a new batch
    And I expect to see the 'date_paid' value of '2018-01-01'
    And I expect to see the 'account_info' value of '2100 -- Accounts Payable'
    And I expect to see the 'cash_accno' value of '1060 -- Checking Account'
+   And I should see a payment line with these values:
+       | Name     | Invoice Total | Source |
+       | Vendor A | 100.00 USD    | 1001   |
+
 
 Scenario: Add payments to an existing batch
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
