@@ -1,3 +1,5 @@
+#!perl
+
 # Database schema upgrade pre-checks
 
 use strict;
@@ -19,7 +21,7 @@ use Test::Exception;
 
 use LedgerSMB;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
-use LedgerSMB::Upgrade::SchemaChecks::JSON qw( json_formatter_context );
+use LedgerSMB::Database::SchemaChecks::JSON qw( json_formatter_context );
 
 
 my $dir = File::Temp->newdir();
@@ -46,11 +48,11 @@ sub _slurp {
 
 # _check_hashid
 
-is LedgerSMB::Upgrade::SchemaChecks::JSON::_check_hashid(
+is LedgerSMB::Database::SchemaChecks::JSON::_check_hashid(
     { title => 'a title' }
     ),
     md5_hex( 'a title' ), '_check_hashid with only a title';
-is LedgerSMB::Upgrade::SchemaChecks::JSON::_check_hashid(
+is LedgerSMB::Database::SchemaChecks::JSON::_check_hashid(
     {
         title => 'a title',
         path => 'a path',
@@ -102,7 +104,7 @@ $dbh->{mock_add_resultset} = {
         ],
 };
 
-is $LedgerSMB::Upgrade::SchemaChecks::JSON::cached_response, undef,
+is $LedgerSMB::Database::SchemaChecks::JSON::cached_response, undef,
     'undef cached response';
 
 $out = json_formatter_context {
@@ -159,7 +161,7 @@ $out = json_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } $json_dir;
 
-is $LedgerSMB::Upgrade::SchemaChecks::JSON::cached_response, undef,
+is $LedgerSMB::Database::SchemaChecks::JSON::cached_response, undef,
     'undef cached response';
 
 is _slurp($out), q!{
@@ -214,7 +216,7 @@ $out = json_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } $json_dir;
 
-is $LedgerSMB::Upgrade::SchemaChecks::JSON::cached_response, undef,
+is $LedgerSMB::Database::SchemaChecks::JSON::cached_response, undef,
     'undef cached response';
 
 is _slurp($out), q!{
@@ -232,10 +234,54 @@ is _slurp($out), q!{
 }
 !, 'print the buttons/confirmations on failure';
 
+
 ###############################################
 #
 #
-#  Fourth test: Render a grid (2-column p-key)
+#  Fourth test: Re-running third test does not accumulate 'failure' section
+#
+###############################################
+
+# Explicitly re-use third test's setup
+
+$dbh = DBI->connect('DBI:Mock:', '', '');
+$dbh->{mock_add_resultset} = {
+    sql     => 'something',
+    results => [
+        [ 'headers' ],
+        [ 'failing row' ],
+        ],
+};
+
+$out = json_formatter_context {
+    return ! run_checks($dbh, checks => \@checks);
+} $json_dir;
+
+is $LedgerSMB::Database::SchemaChecks::JSON::cached_response, undef,
+    'undef cached response';
+
+is _slurp($out), q!{
+   "failure" : {
+      "confirmations" : [
+         {
+            "abc" : "Abc"
+         },
+         {
+            "def" : "Def"
+         }
+      ]
+   },
+   "response" : {}
+}
+!, 'print the buttons/confirmations on failure';
+
+
+
+
+###############################################
+#
+#
+#  Fifth test: Render a grid (2-column p-key)
 #
 ###############################################
 
@@ -244,7 +290,7 @@ package PreCheckTests;
 
 use LedgerSMB::Database::ChangeChecks;
 
-check 'fourth title',
+check 'fifth title',
     description => q|a description|,
     query => q|something|,
     tables => {
@@ -307,6 +353,3 @@ is _slurp($out), q!{
 
 
 
-
-
-# done_testing;

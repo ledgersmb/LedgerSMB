@@ -6,7 +6,7 @@ use Getopt::Long;
 
 use LedgerSMB;
 use LedgerSMB::Database;
-use LedgerSMB::Upgrade::SchemaChecks::JSON qw( json_formatter_context );
+use LedgerSMB::Database::SchemaChecks::JSON qw( json_formatter_context );
 
 my $user;
 my $script_name = `basename $0`; chomp $script_name;

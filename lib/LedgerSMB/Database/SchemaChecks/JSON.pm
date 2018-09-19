@@ -1,9 +1,9 @@
-package LedgerSMB::Upgrade::SchemaChecks::JSON;
+package LedgerSMB::Database::SchemaChecks::JSON;
 
 
 =head1 NAME
 
-LedgerSMB::Upgrade::SchemaChecks::JSON - Input for schema upgrades
+LedgerSMB::Database::SchemaChecks::JSON - Input for schema upgrades
 
 =head1 DESCRIPTION
 
@@ -81,6 +81,8 @@ sub _response {
             md5 => $hashid,
             response => $json->decode($content),
         };
+        # make sure we're not adding to last-time's failure content
+        $cached_response->{response}->{failure} = {};
     }
     else {
         $cached_response = {
