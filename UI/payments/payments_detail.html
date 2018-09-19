@@ -206,6 +206,7 @@
     <!-- end of heading_section -->
 
         <table id="payments-table">
+            <thead>
                 <tr class="listheading">
                         <th class="account">
                                 <div class="selectall">
@@ -226,7 +227,8 @@
                         <th class="payment"><?lsmb text('Payment') ?></th>
                         <th class="payment"><?lsmb text('Details') ?></th>
                 </tr>
-
+            </thead>
+            </tbody>
                 <?lsmb rc = 1 ?><?lsmb count = 0 ?>
                 <?lsmb FOREACH r = payment.contact_invoices ?>
                         <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
@@ -444,7 +446,8 @@
                                 </td>
                         </tr>
                 <?lsmb END # foreach r ?>
-
+            </tbody>
+            </tfoot>
                 <tr class="subtotal">
                         <td>
                                 &nbsp;
@@ -461,7 +464,7 @@
                                 </span>
                         </td>
                 </tr>
-
+            </tfoot>
         </table>
 
         <?lsmb INCLUDE input element_data = {
