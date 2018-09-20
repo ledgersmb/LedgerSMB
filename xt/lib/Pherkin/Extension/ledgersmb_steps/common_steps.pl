@@ -162,8 +162,11 @@ Given qr/an unpaid AP transaction with "(.*)" for \$(\d+)$/, sub {
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
     my $q = $dbh->prepare("
-        INSERT INTO ap (invnumber, transdate, amount, netamount, duedate, curr, approved, entity_credit_account)
-        SELECT 'I-001', '2018-01-01', ?, ?, '2018-01-01', 'USD', TRUE, entity_credit_account.id
+        INSERT INTO ap (invnumber, transdate, amount_bc, netamount_bc,
+                        duedate, curr, approved, entity_credit_account,
+                        amount_tc, netamount_tc)
+        SELECT 'I-001', '2018-01-01', ?, ?, '2018-01-01', 'USD', TRUE,
+               entity_credit_account.id, ?, ?
         FROM entity
         JOIN entity_credit_account ON (
             entity_credit_account.entity_id = entity.id
@@ -173,23 +176,26 @@ Given qr/an unpaid AP transaction with "(.*)" for \$(\d+)$/, sub {
         LIMIT 1
         RETURNING ap.id
     ");
-    $q->execute($amount, $amount, $vendor_name);
+    $q->execute($amount, $amount, $amount, $amount, $vendor_name);
     my $ap_id = $q->fetchrow_hashref()->{id};
 
     $q = $dbh->prepare("
-        INSERT INTO acc_trans (trans_id, chart_id, amount, transdate)
-        VALUES (?, ?, ?, '2018-01-01')
+        INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr,
+                               amount_tc, transdate)
+        VALUES (?, ?, ?, 'USD', ?, '2018-01-01')
     ");
 
     $q->execute(
         $ap_id,
         28, # 5700--Office Supplies
         $amount * -1,
+        $amount * -1,
     );
 
     $q->execute(
         $ap_id,
         10, # 2100--Accounts Payable account
+        $amount,
         $amount,
     );
 };
