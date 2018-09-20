@@ -1,5 +1,61 @@
 #!perl
 
+
+=head1 Driver application for testing of schema change checks
+
+This application reads files (*.precheck) and executes the test scenarios
+defined in them by setting up a mock environment: The schema change checks
+I<think> they are being executed as a regular check, but everything from
+the database connection to the user-input is mocked.
+
+=head2 Definition of test scenarios in *.precheck files
+
+Each precheck test definition file is a Perl source file which holds
+exactly one hash. Note that due to the fact that it's a Perl source file
+comments can be added just as in regular Perl files.
+
+The names of the prechek files below t/16-precheck/ use the same paths
+as the schema change check files below sql/changes/ that they are tests
+for. E.g. the test file t/16-precheck/1.5/abstract_tables.precheck defines
+tests for checks defined in sql/changes/1.5/abstract_tables.sql.checks.pl.
+
+The keys of the hash correspond with the titles of the checks in the file
+to be tested. The values associated with the keys are arrays of hashes.
+Each hash in the array defines a test case for the specific check to be
+tested. These keys are supported:
+
+=over
+
+=item failure_data
+
+Defines a L<DBD::Mock> resultset (rows failing the check) for the
+query defined by the check.
+
+=item failure_session
+
+A list of L<https://metacpan.org/pod/DBD::Mock#DBD::Mock::Session|
+DBD::Mock::Session states> to be used I<after> the initial state with the
+failing query. These could be neccessary/desirable for e.g. queries issued
+as part of the C<dropdown_sql> DSL keyword.
+
+=item submit_session
+
+A list of L<https://metacpan.org/pod/DBD::Mock#DBD::Mock::Session|
+DBD::Mock::Session states> to be used to validate the correct submission
+of corrected data back to the database.
+
+=item response
+
+A hash object used to generate the response data as documented in
+L<LedgerSMB::Database::SchemaChecks::JSON>.
+
+Note that a JSON formatted data structure is printed as part of the error
+message when the response is missing to help creation of one.
+
+=back
+
+=cut
+
 use strict;
 use warnings;
 
@@ -105,27 +161,34 @@ sub _save_JSON_response_file {
 sub _run_schemacheck_test {
     my ($check, $test) = @_;
     my $dir = File::Temp->newdir;
+    my $out;
     lives_ok {
         # Most checks here aren't immediately visible:
         # the database session checks that the correct queries
         # and expected responses are being generated. When not,
         # an error is thrown, which we handle by using 'lives_ok'
         my $dbh = _create_dbh_for_failure_session($check, $test);
-        my $out = json_formatter_context {
+        $out = json_formatter_context {
             return ! run_checks($dbh, checks => [ $check ]);
         } $dir->dirname;
         ok(defined($out), 'JSON failure output was generated');
         ok(-f $out, 'JSON failure output exists');
     };
 
-    lives_ok {
-        my $dbh = _create_dbh_for_submit_session($check, $test);
-        _save_JSON_response_file($check, $test->{response}, $dir);
-        my $out = json_formatter_context {
-            return ! run_checks($dbh, checks => [ $check ]);
-        } $dir->dirname;
-        ok(! defined($out), 'No new failures occurred');
-    };
+    if ($test->{response}) {
+        lives_ok {
+            my $dbh = _create_dbh_for_submit_session($check, $test);
+            _save_JSON_response_file($check, $test->{response}, $dir);
+            $out = json_formatter_context {
+                return ! run_checks($dbh, checks => [ $check ]);
+            } $dir->dirname;
+            ok(! defined($out), 'No new failures occurred');
+        };
+    }
+    else {
+        fail 'Response defined; use failure output below to define a response';
+        diag _slurp($out);
+    }
 }
 
 
