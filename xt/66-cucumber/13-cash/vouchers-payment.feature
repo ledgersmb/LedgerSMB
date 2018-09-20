@@ -35,6 +35,7 @@ Scenario: Add payments to a new batch
        | Name     | Invoice Total | Source |
        | Vendor A | 100.00 USD    | 1001   |
    And I press "Update"
+   And I wait for the page to load
   Then I should see the Payments Detail screen
    And I expect to see the 'grand_total' value of '100.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
