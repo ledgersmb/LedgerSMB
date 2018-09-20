@@ -530,14 +530,24 @@ sub get_exchange_rate {
 
 =item get_default_currency
 
-This method gets the default currency
+This method gets the default currency from the database (as a three-character
+currency code), setting the object's C<default_currency> property to this
+value.
+
+Returns:
+The three-character default currency code (e.g. 'USD').
 
 =cut
 
 sub get_default_currency {
- my ($self) = shift @_;
- ($self->{default_currency}) = $self->call_procedure(funcname => 'defaults_get_defaultcurrency');
- return $self->{default_currency}->{defaults_get_defaultcurrency};
+    my ($self) = shift @_;
+
+    my $result = $self->call_procedure(
+        funcname => 'defaults_get_defaultcurrency'
+    );
+
+    $self->{default_currency} = $result->{defaults_get_defaultcurrency};
+    return $self->{default_currency};
 }
 
 =item get_current_date
