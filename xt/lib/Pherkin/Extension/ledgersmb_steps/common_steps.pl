@@ -278,5 +278,13 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
         if ! S->{ext_lsmb}->admin_dbh->{AutoCommit};
 };
 
+When qr/I wait (\d+) seconds?$/, sub {
+    sleep $1
+};
+
+When qr/I wait for the page to load$/, sub {
+    S->{ext_wsl}->page->body->maindiv->wait_for_content;
+};
+
 
 1;
