@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-=head1 UNIT TESTS FOR LedgerSMB::PGObject::Payment
+=head1 UNIT TESTS FOR LedgerSMB::DBObject::Payment
 
 Unit tests for the LedgerSMB::DBObject::Payment module that exercise
 interaction with a test database.
