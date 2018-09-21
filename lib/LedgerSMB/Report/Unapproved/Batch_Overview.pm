@@ -23,7 +23,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 =over
 
-=item LedgerSMB::Report;
+=item L<LedgerSMB::Report>
 
 =back
 
@@ -35,48 +35,63 @@ extends 'LedgerSMB::Report';
 
 =head1 PROPERTIES
 
-=over
+=head2 Query Filter Properties:
 
-=item columns
-
-Read-only accessor, returns a list of columns.
+Note that in all cases, undef matches everything.
 
 =over
 
-=item select
+=item description (text)
 
-Select boxes for selecting the returned items.
-
-=item id
-
-ID of transaction
-
-=item post_date
-
-Post date of transaction
-
-=item reference text
-
-Invoice number or GL reference
-
-=item description
-
-Description of transaction
-
-=item transaction_total
-
-Total of AR/AP/GL vouchers (GL vouchers credit side only is counted)
-
-=item payment_total
-
-Total of payment lines (credit side)
-
-Amount
-
-=back
+Partial match on batch C<description> field.
 
 =cut
 
+has 'description' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item class_id
+
+The batch class_id, as detailed in the C<batch_class> database
+table. (1=>AP, 2=>AR, 3=>Payment etc).
+
+=cut
+
+has class_id => (is => 'rw', isa => 'Int');
+
+=item amount_gt
+
+The batch amount must be greater than or equal to this.
+
+=cut
+
+has 'amount_gt' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item amount_lt
+
+The batch amount must be less than or equal to this.
+
+=cut
+
+has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item approved
+
+Bool:  if approved show only approved batches.  If not, show unapproved
+
+=cut
+
+has approved => (is => 'rw', 'isa' => 'Maybe[Bool]');
+
+=back
+
+
+=head1 METHODS
+
+=head2 columns()
+
+Read-only accessor, returns a list of columns.
+
+=cut
 
 sub columns {
     my ($self) = @_;
@@ -126,7 +141,7 @@ sub columns {
     return \@COLUMNS;
 }
 
-=item name
+=head2 name
 
 Returns the localized template name
 
@@ -137,7 +152,7 @@ sub name {
     return $self->_locale->text('Batch Search');
 }
 
-=item header_lines
+=head2 header_lines
 
 Returns the inputs to display on header.
 
@@ -157,7 +172,7 @@ sub header_lines {
              text => $self->_locale->text('(Locked)')}, ]
 }
 
-=item subtotal_cols
+=head2 subtotal_cols
 
 Returns list of columns for subtotals
 
@@ -172,69 +187,7 @@ sub text {
     return $self->_locale->maketext(@_);
 }
 
-=back
-
-=head2 Criteria Properties
-
-Note that in all cases, undef matches everything.
-
-=over
-
-=item reference (text)
-
-Exact match on reference or invoice number.
-
-=cut
-
-has 'reference' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item type
-
-ar for AR drafts, ap for AP drafts, gl for GL ones.
-
-=cut
-
-has 'type' => (is => 'rw', isa => 'Int');
-
-=item class_id
-
-class id associated with type
-
-=cut
-
-has class_id => (is => 'rw', isa => 'Int');
-
-=item amount_gt
-
-The amount of the draft must be greater than this for it to show up.
-
-=cut
-
-has 'amount_gt' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item amount_lt
-
-The amount of the draft must be less than this for it to show up.
-
-=cut
-
-has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item approved
-
-Bool:  if approved show only approved batches.  If not, show unapproved
-
-=cut
-
-has approved => (is => 'rw', 'isa' => 'Maybe[Bool]');
-
-=back
-
-=head1 METHODS
-
-=over
-
-=item run_report()
+=head2 run_report()
 
 Runs the report, and assigns rows to $self->rows.
 
@@ -269,7 +222,6 @@ sub run_report{
     return $self->rows(\@rows);
 }
 
-=back
 
 =head1 LICENSE AND COPYRIGHT
 
