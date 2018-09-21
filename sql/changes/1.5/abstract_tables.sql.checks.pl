@@ -72,7 +72,7 @@ strategy by clicking the 'Remove' button below.
         describe;
         grid $rows,
             name => 'fix_pv',
-            columns => [ qw( id subject note created created_by ) ];
+            columns => [ qw( id attached_by ) ];
 
 
         confirm remove => 'Remove';
@@ -117,7 +117,7 @@ strategy by clicking the 'Remove' button below.
         describe;
         grid $rows,
             name => 'fix_pv',
-            columns => [ qw( id subject note created created_by ) ];
+            columns => [ qw( id file_name description ) ];
 
 
         confirm remove => 'Remove';
@@ -213,7 +213,7 @@ case there's no backup, this information is removed irreversibly.
         describe;
         grid $rows,
             name => 'fix_pv',
-            columns => [ qw( id subject note created created_by ) ];
+            columns => [ qw( id attached_by ) ];
 
 
         confirm remove => 'Remove';
@@ -260,7 +260,7 @@ case there's no backup, this information is removed irreversibly.
         describe;
         grid $rows,
             name => 'fix_pv',
-            columns => [ qw( id subject note created created_by ) ];
+            columns => [ qw( id file_name description ) ];
 
 
         confirm remove => 'Remove';
