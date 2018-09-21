@@ -14,6 +14,7 @@ seq:
     - xt/40-dbsetup.t
     - xt/45*.t
     - xt/47*.t
+    - xt/48*.t
     - par:
       - xt/40-database.t
       - xt/41-coaload.t
