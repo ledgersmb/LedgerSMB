@@ -289,7 +289,7 @@ sub _render {
 
 
     my $testref = $self->rows;
-    $self->run_report($request) if !defined $testref;
+    $self->run_report if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
     local $@ = undef;
