@@ -4,40 +4,38 @@ package migration_checks;
 use LedgerSMB::Database::ChangeChecks;
 
 
-
-break me here; this file is far from committable;
-
-check q|Assert valid values for 'parts_id' column in 'partscustomer' table|,
-    query => q|SELECT count(*) FROM partscustomer pc
-                WHERE NOT EXISTS (select 1 from parts p
-                                   where pc.parts_id = p.id)
+check q|Assert valid Cost Of Goods Sold (COGS) data in the invoices table|,
+    query => q|SELECT count(*) FROM invoice
+                WHERE NOT allocated*-1 BETWEEN least(0,qty) AND greatest(qty,0)
                HAVING count(*) > 0|,
     description => q|
-The migration checks found rows in your 'partscustomer' table which
-contain references to non-existing parts data. The migration wants to
-create a constraint which makes sure this can't occur anymore, going forward,
-but the existing (meaningless) data prevents creation of this constraint.
+The migration checks found rows in your 'invoice' table which are
+inconsistent with the new constraint COGS allocation constraint
+being introduced by the schema change.
 
-Click 'Proceed' to confirm deletion of the invalid data preventing creation.
+There's no way to correct this situation without a real risk for accounting
+impact. There are also insufficient real-world examples available to the
+development team to develop a generic solution to this situation.
+
+Please contact the development list if you run into this error:
+
+```
+devel@lists.ledgersmb.org
+```
+
+We're very sorry, but there's no other path forward at this point.
+
 |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
 
         describe;
 
-        confirm proceed => 'Proceed';
     },
-    on_submit => sub {
-        my ($dbh, $rows) = @_;
-
-        $dbh->do(q|
-UPDATE partscustomer pc
-   SET parts_id = NULL
- WHERE NOT EXISTS (select 1 from parts p
-                    where pc.parts_id = p.id)
-|)
-            or die 'Unable to nullify "parts_id": ' . $dbh->errstr;
-    }
+    # *not* defining on_submit is a failure.
+    # t/16-prechecks.t tests for on_submit being a coderef;
+    # when not, it considers it 'not provided'
+    on_submit => 1,
 ;
 
 

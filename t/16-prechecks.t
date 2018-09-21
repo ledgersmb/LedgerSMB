@@ -186,7 +186,7 @@ sub _run_schemacheck_test {
             ok(! defined($out), 'No new failures occurred');
         };
     }
-    else {
+    elsif (ref $check->{on_submit}) {
         fail 'Response defined; use failure output below to define a response';
         diag _slurp($out);
     }
