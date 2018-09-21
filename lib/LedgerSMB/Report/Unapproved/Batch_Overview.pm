@@ -33,9 +33,6 @@ use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
-
 =head1 PROPERTIES
 
 =over
@@ -128,8 +125,6 @@ sub columns {
 
     return \@COLUMNS;
 }
-
-    # TODO:  business_units int[]
 
 =item name
 
