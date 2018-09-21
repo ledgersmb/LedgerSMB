@@ -56,7 +56,7 @@ table. (1=>AP, 2=>AR, 3=>Payment etc).
 
 =cut
 
-has class_id => (is => 'rw', isa => 'Int');
+has class_id => (is => 'rw', isa => 'Maybe[Int]');
 
 =item amount_gt
 
