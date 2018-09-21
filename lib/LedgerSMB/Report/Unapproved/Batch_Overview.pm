@@ -172,16 +172,6 @@ sub header_lines {
              text => $self->_locale->text('(Locked)')}, ]
 }
 
-=head2 subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
-}
-
 =head2 run_report()
 
 Runs the report, and assigns rows to $self->rows.
