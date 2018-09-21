@@ -33,16 +33,17 @@ query defined by the check.
 
 =item failure_session
 
-A list of L<https://metacpan.org/pod/DBD::Mock#DBD::Mock::Session|
-DBD::Mock::Session states> to be used I<after> the initial state with the
-failing query. These could be neccessary/desirable for e.g. queries issued
+A list of L<DBD::Mock::Session states|
+https://metacpan.org/pod/DBD::Mock#DBD::Mock::Session> to be used
+I<after> the initial state with the failing query. These could
+be neccessary/desirable for e.g. queries issued
 as part of the C<dropdown_sql> DSL keyword.
 
 =item submit_session
 
-A list of L<https://metacpan.org/pod/DBD::Mock#DBD::Mock::Session|
-DBD::Mock::Session states> to be used to validate the correct submission
-of corrected data back to the database.
+A list of L<DBD::Mock::Session states|
+https://metacpan.org/pod/DBD::Mock#DBD::Mock::Session> to be used to validate
+the correct submission of corrected data back to the database.
 
 =item response
 
