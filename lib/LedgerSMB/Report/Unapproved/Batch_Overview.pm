@@ -182,11 +182,6 @@ sub subtotal_cols {
     return [];
 }
 
-sub text {
-    my ($self) = @_;
-    return $self->_locale->maketext(@_);
-}
-
 =head2 run_report()
 
 Runs the report, and assigns rows to $self->rows.
