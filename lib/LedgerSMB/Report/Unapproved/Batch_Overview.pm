@@ -209,11 +209,31 @@ sub run_report{
                     value => 'batch_unlock',
                     class => 'submit',
                 }]);
+    $self->get_rows();
+    return;
+}
+
+=head2 get_rows()
+
+Queries the database for batches which fulfil the filter criteria, populating
+the object C<rows> property.
+
+For each row, the retrieved C<id> field is copied to an additional C<row_id>
+field.
+
+Returns the object's C<rows> property.
+
+=cut
+
+sub get_rows {
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'batch__search');
     for my $r (@rows){
        $r->{row_id} = $r->{id};
     }
-    return $self->rows(\@rows);
+
+    $self->rows(\@rows);
+    return $self->rows;
 }
 
 
