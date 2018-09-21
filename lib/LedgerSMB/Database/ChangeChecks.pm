@@ -9,7 +9,7 @@ use File::Spec;
 use MIME::Base64;
 
 our @EXPORT =  ## no critic
-    qw| check grid confirm describe provided save_grid dropdowns_sql |;
+    qw| check grid confirm describe provided save_grid dropdown_sql |;
 our @EXPORT_OK = qw| run_with_formatters run_checks load_checks |;
 
 our @checks;
@@ -57,7 +57,7 @@ L</FUNCTIONS> section of this document).
                  value1 => "Text 1",
                  ...,
              },
-             column2 => dropdowns_sql($dbh, "SELECT value, text FROM b_table"),
+             column2 => dropdown_sql($dbh, "SELECT value, text FROM b_table"),
            };
      },
      on_submit => sub {
@@ -374,7 +374,7 @@ by the C<query>.
 =back
 
 The on_failure coderef makes use of the user interface defining
-elements of the pre-check DSL: C<grid>, C<confirm>, C<dropdowns_sql>.
+elements of the pre-check DSL: C<grid>, C<confirm>, C<dropdown_sql>.
 
 The number of times the C<on_failure> function is executed is undefined and
 the function is likely to be run multiple times, possibly even within a single
@@ -576,7 +576,7 @@ sub grid {
     return _grid($check, @_);
 }
 
-=head2 dropdowns_sql($dbh, $query)
+=head2 dropdown_sql($dbh, $query)
 
 Expects a query with a two-column result; the first column being the values
 expected in the column to which the dropdown is applied. The second being the
@@ -588,7 +588,7 @@ above.
 
 =cut
 
-sub dropdowns_sql {
+sub dropdown_sql {
     my ($dbh, $query) = @_;
 
     my $sth = $dbh->prepare($query) or die $dbh->errstr;
