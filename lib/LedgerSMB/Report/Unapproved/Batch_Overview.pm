@@ -23,7 +23,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 =over
 
-=item LedgerSMB::Report;
+=item L<LedgerSMB::Report>
 
 =back
 
@@ -33,53 +33,65 @@ use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
-
 =head1 PROPERTIES
 
-=over
+=head2 Query Filter Properties:
 
-=item columns
-
-Read-only accessor, returns a list of columns.
+Note that in all cases, undef matches everything.
 
 =over
 
-=item select
+=item description (text)
 
-Select boxes for selecting the returned items.
-
-=item id
-
-ID of transaction
-
-=item post_date
-
-Post date of transaction
-
-=item reference text
-
-Invoice number or GL reference
-
-=item description
-
-Description of transaction
-
-=item transaction_total
-
-Total of AR/AP/GL vouchers (GL vouchers credit side only is counted)
-
-=item payment_total
-
-Total of payment lines (credit side)
-
-Amount
-
-=back
+Partial match on batch C<description> field.
 
 =cut
 
+has 'description' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item class_id
+
+The batch class_id, as detailed in the C<batch_class> database
+table. (1=>AP, 2=>AR, 3=>Payment etc).
+
+=cut
+
+has class_id => (is => 'rw', isa => 'Maybe[Int]');
+
+=item amount_gt
+
+The batch amount must be greater than or equal to this.
+
+=cut
+
+has 'amount_gt' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item amount_lt
+
+The batch amount must be less than or equal to this.
+
+=cut
+
+has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item approved
+
+Bool:  if approved show only approved batches.  If not, show unapproved
+
+=cut
+
+has approved => (is => 'rw', 'isa' => 'Maybe[Bool]');
+
+=back
+
+
+=head1 METHODS
+
+=head2 columns()
+
+Read-only accessor, returns a list of columns.
+
+=cut
 
 sub columns {
     my ($self) = @_;
@@ -129,9 +141,7 @@ sub columns {
     return \@COLUMNS;
 }
 
-    # TODO:  business_units int[]
-
-=item name
+=head2 name
 
 Returns the localized template name
 
@@ -142,7 +152,7 @@ sub name {
     return $self->_locale->text('Batch Search');
 }
 
-=item header_lines
+=head2 header_lines
 
 Returns the inputs to display on header.
 
@@ -162,84 +172,7 @@ sub header_lines {
              text => $self->_locale->text('(Locked)')}, ]
 }
 
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
-}
-
-sub text {
-    my ($self) = @_;
-    return $self->_locale->maketext(@_);
-}
-
-=back
-
-=head2 Criteria Properties
-
-Note that in all cases, undef matches everything.
-
-=over
-
-=item reference (text)
-
-Exact match on reference or invoice number.
-
-=cut
-
-has 'reference' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item type
-
-ar for AR drafts, ap for AP drafts, gl for GL ones.
-
-=cut
-
-has 'type' => (is => 'rw', isa => 'Int');
-
-=item class_id
-
-class id associated with type
-
-=cut
-
-has class_id => (is => 'rw', isa => 'Int');
-
-=item amount_gt
-
-The amount of the draft must be greater than this for it to show up.
-
-=cut
-
-has 'amount_gt' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item amount_lt
-
-The amount of the draft must be less than this for it to show up.
-
-=cut
-
-has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item approved
-
-Bool:  if approved show only approved batches.  If not, show unapproved
-
-=cut
-
-has approved => (is => 'rw', 'isa' => 'Maybe[Bool]');
-
-=back
-
-=head1 METHODS
-
-=over
-
-=item run_report()
+=head2 run_report()
 
 Runs the report, and assigns rows to $self->rows.
 
@@ -247,7 +180,6 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    $self->class_id($self->type) if $self->type;
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
@@ -267,18 +199,37 @@ sub run_report{
                     value => 'batch_unlock',
                     class => 'submit',
                 }]);
+    $self->get_rows();
+    return;
+}
+
+=head2 get_rows()
+
+Queries the database for batches which fulfil the filter criteria, populating
+the object C<rows> property.
+
+For each row, the retrieved C<id> field is copied to an additional C<row_id>
+field.
+
+Returns the object's C<rows> property.
+
+=cut
+
+sub get_rows {
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'batch__search');
     for my $r (@rows){
        $r->{row_id} = $r->{id};
     }
-    return $self->rows(\@rows);
+
+    $self->rows(\@rows);
+    return $self->rows;
 }
 
-=back
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2018 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
