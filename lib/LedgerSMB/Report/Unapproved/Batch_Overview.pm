@@ -190,7 +190,6 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    $self->class_id($self->type) if $self->type;
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
@@ -220,7 +219,7 @@ sub run_report{
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2018 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
