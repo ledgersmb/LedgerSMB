@@ -55,7 +55,7 @@ my @test_batches = (
         batch_date => '2017-11-08',
         description => 'Test Payment batch description',
     },
-   
+
 );
 
 foreach my $batch_data(@test_batches) {
@@ -68,7 +68,7 @@ foreach my $batch_data(@test_batches) {
             dbh => $dbh,
             batch_id => $batch_id,
         }});
-        $batch->post or BAIL_OUT 'Failed to post/approve test batch'; 
+        $batch->post or BAIL_OUT 'Failed to post/approve test batch';
     }
 }
 
