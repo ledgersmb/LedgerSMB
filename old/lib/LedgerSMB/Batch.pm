@@ -204,15 +204,16 @@ sub get_search_results {
 
 =item get_class_id($type)
 
-Returns the class_id of batch class specified by its label.
+Returns the class_id corresponding the the specified batch class label.
+Performs a lookup on the database C<batch_class> table.
 
 =cut
 
 sub get_class_id {
     my ($self, $type) = @_;
     my @results = $self->call_procedure(
-                                     funcname => 'batch_get_class_id',
-                                     args     => [$type]
+        funcname => 'batch_get_class_id',
+        args     => [$type]
     );
     my $result = pop @results;
     return $result->{batch_get_class_id};
@@ -220,21 +221,25 @@ sub get_class_id {
 
 =item post
 
-Posts a batch to the books and makes the vouchers show up in transaction
-reports, financial statements, and more.
+Posts the batch to the books with C<id> matching the current object's
+C<batch_id> and makes the vouchers show up in transaction reports,
+financial statements, and more. Marks the batch as approved.
+
+Returns the batch C<approved_on> date (being the current database date).
 
 =cut
 
 sub post {
     my ($self) = @_;
     ($self->{post_return_ref}) = $self->call_dbmethod(funcname => 'batch_post');
-    return $self->{post_return_ref};
+    return $self->{post_return_ref}->{batch_post};
 }
 
 =item delete
 
 Deletes the batch with C<id> matching the current object's C<batch_id>
-attribute and all vouchers under it.
+attribute and all vouchers under it. A batch cannot be deleted once it
+is approved/posted.
 
 Returns true on success.
 
