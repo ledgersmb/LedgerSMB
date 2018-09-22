@@ -267,6 +267,14 @@ $$ language sql;
 COMMENT ON FUNCTION batch_get_class_id (in_type text) IS
 $$ returns the batch class id associated with the in_type label provided.$$;
 
+CREATE OR REPLACE FUNCTION batch_get_class_name (in_class_id int) returns text AS
+$$
+SELECT class FROM batch_class WHERE id = $1;
+$$ language sql;
+
+COMMENT ON FUNCTION batch_get_class_name (in_class_id int) IS
+$$ returns the batch class name associated with the in_class_id id provided.$$;
+
 CREATE OR REPLACE FUNCTION
 batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
