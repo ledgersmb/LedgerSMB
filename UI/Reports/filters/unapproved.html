@@ -1,7 +1,6 @@
 <?lsmb PROCESS "elements.html";
        PROCESS 'report_base.html';
 
-IF search_type == 'drafts';
    batch_classes = [
        {},
        { text = text('AP'), value = 'ap'},
@@ -10,16 +9,6 @@ IF search_type == 'drafts';
    ];
    script = 'drafts.pl';
    action = 'list_drafts';
-ELSE;
-   script = 'vouchers.pl';
-   action = 'list_batches';
-   FOR CLS IN batch_classes;
-       CLS.text = CLS.class;
-       CLS.value = CLS.id;
-   END;
-   batch_classes.unshift({});
-   SHOW_APPROVED=1;
-END;
 
  ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
@@ -38,37 +27,6 @@ END;
                 default_values = [class_id]
         } ?>
 </div>
-<!--
-Commenting this section out.  Does not seem to be used by API. -CT
-
-<div class="input" id="entered_by_div">
-        <?lsmb INCLUDE select element_data = {
-                title = text('Created By') # '
-                options = users
-                value_attr = "entity_id"
-                text_attr = "username"
-                name = "created_by_eid"
-                default_values = [created_by]
-        } ?></div> -->
-<?lsmb IF SHOW_APPROVED ?>
-<div class="input" id="approved_div">
-  <?lsmb INCLUDE input element_data = {
-          name="approved"
-          id="approved-1"
-          value="1"
-          title = text("Approved")
-          type="radio"
-   };
-   INCLUDE input element_data = {
-          name="approved"
-          id="approved-0"
-          value="0"
-          title = text("Unapproved")
-          type="radio"
-          checked="CHECKED"
-   }; ?>
-</div>
-<?lsmb END ?>
 <div class="input" id="reference_div">
         <?lsmb INCLUDE input element_data = {
                 title = text('Reference') #'

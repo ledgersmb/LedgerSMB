@@ -78,3 +78,4 @@
 #
 # 1.7 changes
 1.7/drop-custom-catalog.sql
+1.7/alter-menu-attributes.sql
