@@ -76,6 +76,12 @@ use List::Util qw( first );
 my @schemacheck_tests = File::Find::Rule->new
     ->name('*.precheck')->in('t/16-prechecks');
 
+my @schemachecks = File::Find::Rule->new
+    ->name('*.checks.pl')->in('sql/changes');
+
+is(scalar(@schemachecks), scalar(@schemacheck_tests),
+   'All schema checks are tested');
+
 
 sub _slurp {
     my ($fn) = @_;
