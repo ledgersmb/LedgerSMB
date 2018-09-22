@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(26);
+    SELECT plan(29);
 
     -- Add data
 
@@ -23,6 +23,7 @@ BEGIN;
     SELECT has_function('batch_create',ARRAY['text','text','text','date']);
     SELECT has_function('batch_delete',ARRAY['integer']);
     SELECT has_function('batch_get_class_id',ARRAY['text']);
+    SELECT has_function('batch_get_class_name',ARRAY['integer']);
     SELECT has_function('batch_get_users',ARRAY['']);
     SELECT has_function('batch_list_classes',ARRAY['']);
     SELECT has_function('batch_post',ARRAY['integer']);
@@ -139,6 +140,14 @@ BEGIN;
     PREPARE test AS SELECT count(*) = 0
     FROM batch where id = currval('batch_id_seq');
     SELECT results_eq('test',ARRAY[true],'Batch is deleted');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT batch_get_class_id('payment') = 3;
+    SELECT results_eq('test',ARRAY[true],'get batch class_id from batch class name');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT batch_get_class_name(3) = 'payment';
+    SELECT results_eq('test',ARRAY[true],'get batch class name from batch class id');
     DEALLOCATE test;
 
     -- Finish the tests and clean up.
