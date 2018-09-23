@@ -1,27 +1,23 @@
 <?lsmb
     PROCESS "elements.html";
     PROCESS 'report_base.html';
-    action = 'list_batches';
 
-    FOR CLS IN batch_classes;
-        CLS.text = CLS.class;
-        CLS.value = CLS.id;
-    END;
+    # Empty item at top of batch class list - Allow any class
     batch_classes.unshift({});
 ?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="batch_search">
 <form data-dojo-type="lsmb/Form" action="vouchers.pl" method="get">
-    <div class="listtop" id="title_div"><?lsmb text('Search Unapproved Transactions') ?></div>
+    <div class="listtop" id="title_div"><?lsmb text('Search Batches') ?></div>
     <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
 
         <div class="input" id="batch_class_div">
             <?lsmb INCLUDE select element_data = {
                 title = text('Transaction Type') #'
                 options = batch_classes
-                value_attr = "value"
-                text_attr = "text"
+                value_attr = "id"
+                text_attr = "class"
                 name = "class_id"
             } ?>
         </div>
@@ -75,7 +71,7 @@
         <?lsmb INCLUDE button element_data = {
             text = text('Search')
             name = "action"
-            value = action
+            value = "list_batches"
             class = "submit"
             type = "submit"
         } ?>
