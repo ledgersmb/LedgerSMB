@@ -199,7 +199,7 @@ sub header_lines {
 
 =head2 run_report()
 
-Calls C<get_buttons> and C<get_rows> methods to query database for batches
+Calls C<get_rows> method to query database for batches
 matching our filter properties, then populate C<rows> and C<buttons>
 properties.
 
@@ -207,34 +207,31 @@ properties.
 
 sub run_report{
     my ($self) = @_;
-    $self->get_buttons();
     $self->get_rows();
     return;
 }
 
-=head2 get_buttons()
+=head2 set_buttons()
 
-Sets the object's C<buttons> property to define which buttons are shown
-on the report.
+Returns a list of buttons to be displayed at the bottom of the form.
 
-If the report includes 'approved' batches, no buttons are displayed, as
+If the report includes 'approved' batches, no buttons are returned, as
 their actions are not possible once a batch has been approved (meaning its
 vouchers have been posted to the books).
 
-Returns the object's C<buttons> property.
-
 =cut
 
-sub get_buttons {
+sub set_buttons {
     my ($self) = @_;
+    my $buttons;
 
     if($self->approved || !defined $self->approved) {
         # Results include approved batches which cannot be altered
-        $self->buttons([]);
+        $buttons = [];
     }
     else {
         # Results comprise only unapproved batches
-        $self->buttons([
+        $buttons = [
             {
                 name  => 'action',
                 type  => 'submit',
@@ -256,10 +253,10 @@ sub get_buttons {
                 value => 'batch_unlock',
                 class => 'submit',
             }
-        ]);
+        ];
     }
 
-    return $self->buttons;
+    return $buttons;
 }
 
 =head2 get_rows()
