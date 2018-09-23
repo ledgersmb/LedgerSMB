@@ -1,9 +1,6 @@
 <?lsmb
     PROCESS "elements.html";
     PROCESS 'report_base.html';
-
-    # Empty item at top of batch class list - Allow any class
-    batch_classes.unshift({});
 ?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
@@ -19,6 +16,7 @@
                 value_attr = "id"
                 text_attr = "class"
                 name = "class_id"
+                default_blank = "true"
             } ?>
         </div>
 
