@@ -76,6 +76,12 @@ use List::Util qw( first );
 my @schemacheck_tests = File::Find::Rule->new
     ->name('*.precheck')->in('t/16-prechecks');
 
+my @schemachecks = File::Find::Rule->new
+    ->name('*.checks.pl')->in('sql/changes');
+
+is(scalar(@schemachecks), scalar(@schemacheck_tests),
+   'All schema checks are tested');
+
 
 sub _slurp {
     my ($fn) = @_;
@@ -186,7 +192,7 @@ sub _run_schemacheck_test {
             ok(! defined($out), 'No new failures occurred');
         };
     }
-    else {
+    elsif (ref $check->{on_submit}) {
         fail 'Response defined; use failure output below to define a response';
         diag _slurp($out);
     }
