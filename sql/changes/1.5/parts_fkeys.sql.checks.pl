@@ -25,7 +25,7 @@ contain references to non-existing parts data. The migration wants to
 create a constraint which makes sure this can't occur anymore, going forward,
 but the existing (meaningless) data prevents creation of this constraint.
 
-Click 'Proceed' to confirm deletion of the invalid data preventing creation.
+Click 'Proceed' to confirm deletion of the invalid links.
 |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
@@ -59,7 +59,7 @@ contain references to non-existing parts data. The migration wants to
 create a constraint which makes sure this can't occur anymore, going forward,
 but the existing (meaningless) data prevents creation of this constraint.
 
-Click 'Proceed' to confirm deletion of the invalid data preventing creation.
+Click 'Proceed' to confirm deletion of the invalid links.
 |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
@@ -93,7 +93,7 @@ contain references to non-existing parts data. The migration wants to
 create a constraint which makes sure this can't occur anymore, going forward,
 but the existing (meaningless) data prevents creation of this constraint.
 
-Click 'Proceed' to confirm deletion of the invalid data preventing creation.
+Click 'Proceed' to confirm deletion of the invalid links.
 |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
