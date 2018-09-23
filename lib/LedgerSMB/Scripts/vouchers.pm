@@ -237,16 +237,22 @@ sub add_vouchers {
 
 =head2 list_batches
 
-This function displays the search results.
+This endpoint searches for batches and displays the results, by passing the
+request to L<LedgerSMB::Report::Unapproved::Batch_Overview>.
 
-No inputs are required, but amount_lt and amount_gt can specify range
-Also description can be a partial match.
+The following request parameters are accepted and are optional:
 
-empty specifies only voucherless batches
+    * class_id
+    * description
+    * amount_lt
+    * amount_gt
+    * approved
 
-approved (true or false) specifies whether the batch has been approved
+These may be used to filter the search results. If omitted or set to
+C<undef>, they have no effect on the returned results.
 
-class_id and created_by are exact matches
+See L<LedgerSMB::Report::Unapproved::Batch_Overview> for full details
+of these parameters.
 
 =cut
 

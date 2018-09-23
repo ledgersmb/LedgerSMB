@@ -35,6 +35,26 @@ extends 'LedgerSMB::Report';
 
 =head1 PROPERTIES
 
+=over
+
+=item class_name
+
+Read-only property returning the class name (e.g. 'AP', 'AR, 'Payment')
+corresponding to the specified C<class_id> filter parameter.
+
+Updated automatically when C<class_id> is set. Is C<undef> if C<class_id>
+has not been set.
+
+=cut
+
+has 'class_name' => (
+    is => 'ro',
+    isa => 'Maybe[Str]',
+    writer => '_set_class_name',
+);
+
+=back
+
 =head2 Query Filter Properties:
 
 Note that in all cases, undef matches everything.
@@ -56,7 +76,12 @@ table. (1=>AP, 2=>AR, 3=>Payment etc).
 
 =cut
 
-has class_id => (is => 'rw', isa => 'Maybe[Int]');
+has class_id => (
+    is => 'rw',
+    isa => 'Maybe[Int]',
+    predicate => 'has_class_id',
+    trigger => \&_build_class_name,
+);
 
 =item amount_gt
 
@@ -160,47 +185,78 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'batch_class',
-             text => $self->_locale->text('Batch Type')},
-            {name => 'reference',
-             text => $self->_locale->text('Reference')},
+    return [
+            {name => 'class_name',
+             text => $self->_locale->text('Transaction Type')},
+            {name => 'description',
+             text => $self->_locale->text('Description')},
             {name => 'amount_gt',
              text => $self->_locale->text('Amount Greater Than')},
             {name => 'amount_lt',
              text => $self->_locale->text('Amount Less Than')},
-            {name => 'locked',
-             text => $self->_locale->text('(Locked)')}, ]
+    ];
 }
 
 =head2 run_report()
 
-Runs the report, and assigns rows to $self->rows.
+Calls C<get_rows> method to query database for batches
+matching our filter properties, then populate C<rows> and C<buttons>
+properties.
 
 =cut
 
 sub run_report{
     my ($self) = @_;
-    $self->buttons([{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->_locale->text('Post'),
-                    value => 'batch_approve',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->_locale->text('Delete'),
-                    value => 'batch_delete',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->_locale->text('Unlock'),
-                    value => 'batch_unlock',
-                    class => 'submit',
-                }]);
     $self->get_rows();
     return;
+}
+
+=head2 set_buttons()
+
+Returns a list of buttons to be displayed at the bottom of the form.
+
+If the report includes 'approved' batches, no buttons are returned, as
+their actions are not possible once a batch has been approved (meaning its
+vouchers have been posted to the books).
+
+=cut
+
+sub set_buttons {
+    my ($self) = @_;
+    my $buttons;
+
+    if($self->approved || !defined $self->approved) {
+        # Results include approved batches which cannot be altered
+        $buttons = [];
+    }
+    else {
+        # Results comprise only unapproved batches
+        $buttons = [
+            {
+                name  => 'action',
+                type  => 'submit',
+                text  => $self->_locale->text('Post'),
+                value => 'batch_approve',
+                class => 'submit',
+            },
+            {
+                name  => 'action',
+                type  => 'submit',
+                text  => $self->_locale->text('Delete'),
+                value => 'batch_delete',
+                class => 'submit',
+            },
+            {
+                name  => 'action',
+                type  => 'submit',
+                text  => $self->_locale->text('Unlock'),
+                value => 'batch_unlock',
+                class => 'submit',
+            }
+        ];
+    }
+
+    return $buttons;
 }
 
 =head2 get_rows()
@@ -225,6 +281,27 @@ sub get_rows {
     $self->rows(\@rows);
     return $self->rows;
 }
+
+
+# PRIVATE METHODS
+
+# _build_class_name()
+#
+# Returns the class_name corresponding to the object's class_id property,
+# or undef if that is not defined. Sets the object's class_name property.
+
+sub _build_class_name {
+    my ($self, $class_id) = @_;
+    my $class_name;
+
+    if($class_id) {
+        my $r = $self->call_dbmethod(funcname => 'batch_get_class_name');
+        $class_name = $r->{batch_get_class_name};
+    }
+
+    return $self->_set_class_name($class_name);
+}
+
 
 
 =head1 LICENSE AND COPYRIGHT
