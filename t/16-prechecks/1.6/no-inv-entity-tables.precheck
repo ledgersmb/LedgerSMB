@@ -1,0 +1,42 @@
+{
+    q|Assert "inventory_report" table's columns can be upgraded| =>
+        [
+         {
+             failure_data => [
+                 [ qw(transdate ap_invoice_number ar_invoice_number ) ],
+                 [ '2018-01-01', '201801', '201802' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{INSERT INTO defaults VALUES ('inv-entity-remove', 'y')},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         },
+         {
+             failure_data => [
+                 [ qw(transdate ap_invoice_number ar_invoice_number ) ],
+                 [ '2018-01-01', '201801', '201802' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{INSERT INTO defaults VALUES ('inv-entity-retain', 'y')},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'retain',
+             },
+         }
+
+        ],
+}

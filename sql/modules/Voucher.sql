@@ -221,9 +221,11 @@ $$
                                 in_description IS NULL) AND
                         (in_created_by_eid = b.created_by OR
                                 in_created_by_eid IS NULL) AND
-                        (((in_approved = false OR in_approved IS NULL)
-                          AND approved_on IS NULL)
-                         OR (in_approved = true AND approved_on IS NOT NULL))
+                        (
+                          (in_approved = false AND approved_on IS NULL)
+                          OR (in_approved = true AND approved_on IS NOT NULL)
+                          OR in_approved IS NULL
+                        )
                         and (in_date_from IS NULL
                                 or b.default_date >= in_date_from)
                         and (in_date_to IS NULL
@@ -264,6 +266,14 @@ $$ language sql;
 
 COMMENT ON FUNCTION batch_get_class_id (in_type text) IS
 $$ returns the batch class id associated with the in_type label provided.$$;
+
+CREATE OR REPLACE FUNCTION batch_get_class_name (in_class_id int) returns text AS
+$$
+SELECT class FROM batch_class WHERE id = $1;
+$$ language sql;
+
+COMMENT ON FUNCTION batch_get_class_name (in_class_id int) IS
+$$ returns the batch class name associated with the in_class_id id provided.$$;
 
 CREATE OR REPLACE FUNCTION
 batch_search_mini

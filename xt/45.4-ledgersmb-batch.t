@@ -31,7 +31,7 @@ my $dbh = DBI->connect(
 
 
 # The test database should already have batch classes defined
-my $q = $dbh->prepare("SELECT id FROM batch_class WHERE class='ap'")
+my $q = $dbh->prepare("SELECT id FROM batch_class WHERE class='ar'")
   or BAIL_OUT 'Failed to prepare batch_class query: ' . DBI->errstr;
 $q->execute
   or BAIL_OUT 'Failed to execute batch_class query: ' . DBI->errstr;
@@ -39,14 +39,14 @@ my ($batch_class_id) = $q->fetchrow_array
   or BAIL_OUT 'Failed to retrieve batch class "ap": ' . DBI->errstr;
 
 
-plan tests => (26);
+plan tests => (31);
 
 
 # Create a batch
 $data = {
     dbh => $dbh,
     batch_number => 'TEST-001',
-    batch_class => 'ap',
+    batch_class => 'ar',
     batch_date => '2018-09-08',
     description => 'Test Description',
 };
@@ -97,7 +97,7 @@ ok($result, 'deleting a batch returns true');
 # Retrieve a non-existent batch
 $data = {
     dbh => $dbh,
-    id => $id,
+    batch_id => $id,
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
 isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object');
@@ -105,6 +105,32 @@ $result = $batch->get;
 isa_ok($result, 'LedgerSMB::Batch', 'object returned after retrieving non-existent batch');
 ok(exists $result->{id}, 'id property exists after retrieving non-existent batch');
 is($result->{id}, undef, 'retrieved batch id undef after retrieving non-existent batch');
+
+
+# Look up a batch class id
+is($batch->get_class_id('ar'), $batch_class_id, 'batch class id lookup');
+
+
+# Create and approve/post a batch
+$data = {
+    dbh => $dbh,
+    batch_number => 'TEST-002',
+    batch_class => 'ar',
+    batch_date => '2018-09-08',
+    description => 'Test Description',
+};
+$batch = LedgerSMB::Batch->new({ base => $data });
+isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object with data');
+like($id = $batch->create, qr/^\d+$/, 'batch creation returns numeric id');
+
+$data = {
+    dbh => $dbh,
+    batch_id => $id,
+};
+$batch = LedgerSMB::Batch->new({ base => $data });
+isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object');
+$result = $batch->post;
+like($result, qr/^\d{4}-\d{2}-\d{2}$/, 'batch posting returns a date');
 
 
 # Don't commit any of our changes

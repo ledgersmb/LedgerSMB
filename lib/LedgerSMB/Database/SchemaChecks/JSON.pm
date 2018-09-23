@@ -259,7 +259,12 @@ sub _provided {
 
     if (@_) {
         my $name = shift;
-        return $response->{response}->{$name};
+        if (exists $response->{response}->{$name}) {
+            return $response->{response}->{$name};
+        }
+        else {
+            die "Requested input name '$name' not in predefined response";
+        }
     }
     else {
         # we're being asked if we have content to be processed

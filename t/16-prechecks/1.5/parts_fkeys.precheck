@@ -1,0 +1,74 @@
+{
+    q|Assert valid values for 'parts_id' column in 'partscustomer' table| =>
+        [
+         {
+             failure_data => [
+                 [ qw( column ) ], # column names...
+                 [ 1 ],
+                 ],
+             submit_session =>
+                 [
+                  {
+                      statement => q{
+UPDATE partscustomer pc
+   SET parts_id = NULL
+ WHERE NOT EXISTS (select 1 from parts p
+                    where pc.parts_id = p.id)
+},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'proceed',
+             },
+         }
+        ],
+    q|Assert valid values for 'parts_id' column in 'makemodel' table| =>
+        [
+         {
+             failure_data => [
+                 [ qw( column ) ], # column names...
+                 [ 1 ],
+                 ],
+             submit_session =>
+                 [
+                  {
+                      statement => q{
+UPDATE makemodel mm
+   SET parts_id = NULL
+ WHERE NOT EXISTS (select 1 from parts p
+                    where mm.parts_id = p.id)
+},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'proceed',
+             },
+         }
+        ],
+    q|Assert valid values for 'parts_id' column in 'orderitems' table| =>
+        [
+         {
+             failure_data => [
+                 [ qw( column ) ], # column names...
+                 [ 1 ],
+                 ],
+             submit_session =>
+                 [
+                  {
+                      statement => q{
+UPDATE orderitems oi
+   SET parts_id = NULL
+ WHERE NOT EXISTS (select 1 from parts p
+                    where oi.parts_id = p.id)
+},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'proceed',
+             },
+         }
+        ],
+}

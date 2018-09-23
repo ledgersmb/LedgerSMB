@@ -17,13 +17,38 @@ LedgerSMB::DBObject::Report provides basic utility functions for reporting in
 LedgerSMB.  It is an abstract class.  Individual report types MUST inherit this
 out.
 
-Subclasses MUST define the following subroutines:
+Subclasses MUST define the following methods:
 
 =over
 
-=item get_columns
+=item header_lines
 
-This MUST return a list of hashrefs for the columns per the dynatable block.
+This must return an arrayref of the header fields to be displayed on the
+report. The array elements must be hashrefs comprising the following keys:
+
+  text - The localized header title
+  name - The request parameter to be displayed for this heading
+
+An example return value from a C<header_lines()> method might be:
+
+  [
+      {
+          text => 'Invoice Number',
+          name => 'invoice_no'
+      },
+      {
+          text => 'Date',
+          name => 'post_date'
+      }
+  ]
+
+=item name
+
+This must return the localized report name (usually displayed as a title
+for the report).
+
+=item options
+
 
 =back
 
@@ -264,7 +289,7 @@ sub _render {
 
 
     my $testref = $self->rows;
-    $self->run_report($request) if !defined $testref;
+    $self->run_report if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
     local $@ = undef;
