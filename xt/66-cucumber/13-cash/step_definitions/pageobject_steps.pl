@@ -32,12 +32,12 @@ Then qr/I should see a payment line with these values:/, sub {
 };
 
 
-When qr/I click on the Batch with Control Number "(.*)"/, sub {
+When qr/I click on the Batch with Batch Number "(.*)"/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;
-    my $control_code = $1;
+    my $batch_number = $1;
 
-    my $link = $page->batch_link(control_code => $control_code);
-    ok($link->click, "clicked batch link with Control Number $control_code");
+    my $link = $page->batch_link(batch_number => $batch_number);
+    ok($link->click, "clicked link for Batch Number $batch_number");
 };
 
 
