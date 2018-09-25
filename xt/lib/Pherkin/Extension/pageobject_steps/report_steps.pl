@@ -61,8 +61,14 @@ Then qr/I expect the '(.*)' report column to contain '(.*)' for (.*) '(.*)'/, su
 Then qr/I should see a heading "(.*)" displaying "(.*)"$/, sub {
     my $heading = $1;
     my $contents = $2;
+
+    my $found = S->{ext_wsl}->page->body->maindiv->content->find_heading({
+        Heading => $heading,
+        Contents => $contents
+    });
+
     ok(
-        find_report_heading({Heading => $heading, Contents => $contents}),
+        $found,
         "Found header '$heading' displaying '$contents'"
     );
 };
@@ -70,26 +76,16 @@ Then qr/I should see a heading "(.*)" displaying "(.*)"$/, sub {
 
 Then qr/I should see these headings:$/, sub {
     my $data = C->data;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
 
     foreach my $wanted(@{$data}) {
         ok(
-            find_report_heading($wanted),
+            $page->find_heading($wanted),
             "Found header '$wanted->{Heading}' displaying '$wanted->{Contents}'",
         );
     }
 };
 
-
-sub find_report_heading {
-    my $heading = shift;
-    my $header_div = S->{ext_wsl}->page->body->maindiv->find(
-        '//form[@id="search-report-dynatable"]'.
-        '/div[@class="heading_section"]'.
-        qq{/div[label[.="$heading->{Heading}:"]]}.
-        qq{/span[\@class="report_header" and normalize-space(.)="$heading->{Contents}"]}
-    ) or die "Matching heading not found '$heading->{Heading}' : '$heading->{Contents}'";
-    return $header_div;
-}
 
 
 1;
