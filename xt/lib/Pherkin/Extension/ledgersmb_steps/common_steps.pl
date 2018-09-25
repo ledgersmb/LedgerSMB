@@ -4,6 +4,7 @@
 use strict;
 use warnings;
 
+use LedgerSMB::Batch;
 use LedgerSMB::IR;
 use LedgerSMB::Form;
 use LedgerSMB::DBObject::Account;
@@ -276,6 +277,28 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
     }
     S->{ext_lsmb}->admin_dbh->commit
         if ! S->{ext_lsmb}->admin_dbh->{AutoCommit};
+};
+
+Given qr/(a batch|batches) with these properties:$/, sub {
+    foreach my $batch_spec (@{C->data}) {
+        my $data = {
+            dbh => S->{ext_lsmb}->admin_dbh,
+            batch_number => $batch_spec->{'Batch Number'},
+            batch_class => $batch_spec->{Type},
+            batch_date => $batch_spec->{Date},
+            description => $batch_spec->{Description},
+        };
+        my $batch = LedgerSMB::Batch->new({ base => $data });
+        my $batch_id = $batch->create;
+
+        if($batch_spec->{Approved} eq 'yes') {
+            my $data = {
+                dbh => S->{ext_lsmb}->admin_dbh,
+                batch_id => $batch_id,
+            };
+            LedgerSMB::Batch->new({ base => $data })->post;
+        }
+    }
 };
 
 When qr/I wait (\d+) seconds?$/, sub {
