@@ -170,12 +170,9 @@ must be set:
 sub search {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => {
-        dbh => $request->{dbh},
-    }});
-
+    my $recon = LedgerSMB::DBObject::Reconciliation->new();
+    $recon->set_dbh($request->{dbh});
     $recon->get_accounts();
-    unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render(

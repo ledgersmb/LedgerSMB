@@ -52,12 +52,12 @@
                         options = recon_accounts,
                         text_attr = 'name',
                         value_attr = 'id'
+                        default_blank = "true"
                 } ?>
             </div>
 
             <div class="input">
                         <?lsmb- approved_options = [
-                                {id = undef, label = undef },
                                 {id = '1', label = text('Approved') },
                                 {id = '0', label = text('Not Approved') }
                         ];
@@ -68,12 +68,12 @@
                                 text_attr = 'label',
                                 value_attr = 'id',
                                 class = 'status'
+                                default_blank = "true"
                         } -?>
             </div>
 
             <div class="input">
                         <?lsmb- submitted_options = [
-                                {id = undef, label = undef },
                                 {id = '1', label = text('Submitted') },
                                 {id = '0', label = text('Not Submitted') }
                         ];
@@ -84,6 +84,7 @@
                                 text_attr = 'label',
                                 value_attr = 'id',
                                 class = 'status'
+                                default_blank = "true"
                         } -?>
             </div>
         </div>
