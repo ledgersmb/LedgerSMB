@@ -99,6 +99,8 @@ my %screens = (
     'Create New Batch' => 'PageObject::App::Cash::Vouchers::Payments',
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
     'Payments Detail' => 'PageObject::App::Cash::Vouchers::Payments::Detail',
+    'Search Batches' => 'PageObject::App::TransactionApproval::Batches',
+    'Batch Search Report' => 'PageObject::App::Search::ReportDynatable',
 );
 
 Then qr/I should see the (.*) screen/, sub {
