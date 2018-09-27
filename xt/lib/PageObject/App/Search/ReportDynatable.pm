@@ -39,6 +39,18 @@ sub rows {
     } @rows;
 }
 
+sub find_heading {
+    my $self = shift;
+    my $heading = shift;
+    my $header_div = $self->find(
+        '//form[@id="search-report-dynatable"]'.
+        '/div[@class="heading_section"]'.
+        qq{/div[label[.="$heading->{Heading}:"]]}.
+        qq{/span[\@class="report_header" and normalize-space(.)="$heading->{Contents}"]}
+    ) or die "Matching heading not found '$heading->{Heading}' : '$heading->{Contents}'";
+    return $header_div;
+}
+
 sub _verify {
     my ($self) = @_;
 

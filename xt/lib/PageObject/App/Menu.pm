@@ -50,7 +50,10 @@ my %menu_path_pageobject_map = (
 
     "Cash > Vouchers > Payments" => 'PageObject::App::Cash::Vouchers::Payments',
 
+    "Transaction Approval > Batches" => 'PageObject::App::TransactionApproval::Batches',
     "Transaction Approval > Inventory" => 'PageObject::App::Parts::AdjustSearchUnapproved',
+
+    "Budgets > Add Budget" => 'PageObject::App::Budget',
     "Budgets > Search" => 'PageObject::App::Search::Budget',
     "HR > Employees > Search" => 'PageObject::App::Search::Contact',
 

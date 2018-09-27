@@ -59,7 +59,7 @@ sub parse_batch_row {
     my $self = shift;
     my $row = shift;
     my $rv = {
-        'Control Number' => $row->find('./td[contains(@class, "control_code")]')->get_text,
+        'Batch Number' => $row->find('./td[contains(@class, "control_code")]')->get_text,
         'Description' => $row->find('./td[contains(@class, "description")]')->get_text,
         'Post Date' => $row->find('./td[contains(@class, "default_date")]')->get_text,
     };
@@ -75,7 +75,7 @@ sub parse_batch_row {
 #
 # For example:
 # my $element = find_batch_row({
-#     'Control Number' => 'B-11001',
+#     'Batch Number' => 'B-11001',
 #     'Description' => 'Batch B-11001',
 #     'Post Date' => '2018-01-01'
 # });
@@ -100,7 +100,7 @@ sub find_batch_row {
 }
 
 
-# batch_link(control_code => $control_code)
+# batch_link(batch_number => $batch_number)
 #
 # Returns the first link from the table of existing batches having
 # the specified control_number
@@ -111,7 +111,7 @@ sub batch_link {
 
     my $row = $self->find(
         "//table[\@id='batch_list']/tbody/tr/td/a[" .
-        "  normalize-space(.)='$params{control_code}'" .
+        "  normalize-space(.)='$params{batch_number}'" .
         "]"
     );
 

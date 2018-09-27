@@ -70,6 +70,7 @@ my %screens = (
     'AP debit invoice entry' => 'PageObject::App::AP::DebitInvoice',
     'AP search' => 'PageObject::App::Search::AP',
     'Batch import' => 'PageObject::App::BatchImport',
+    'Budget' => 'PageObject::App::Budget',
     'Budget search' => 'PageObject::App::Search::Budget',
     'Employee search' => 'PageObject::App::Search::Contact',
     'Sales order search' => 'PageObject::App::Search::Order',
@@ -99,6 +100,8 @@ my %screens = (
     'Create New Batch' => 'PageObject::App::Cash::Vouchers::Payments',
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
     'Payments Detail' => 'PageObject::App::Cash::Vouchers::Payments::Detail',
+    'Search Batches' => 'PageObject::App::TransactionApproval::Batches',
+    'Batch Search Report' => 'PageObject::App::Search::ReportDynatable',
 );
 
 Then qr/I should see the (.*) screen/, sub {

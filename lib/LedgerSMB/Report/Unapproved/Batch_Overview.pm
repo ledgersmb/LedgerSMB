@@ -140,7 +140,7 @@ sub columns {
          pwidth => '4', },
 
         {col_id => 'control_code',
-         name => $self->_locale->text('Control Code'),
+         name => $self->_locale->text('Batch Number'),
          type => 'href',
          href_base => 'vouchers.pl?action=get_batch&batch_id=',
          pwidth => '3', },
