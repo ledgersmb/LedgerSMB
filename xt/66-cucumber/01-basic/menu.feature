@@ -56,7 +56,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | AR > Vouchers > AR Voucher                 |                          |
 #   | AR > Vouchers > Import AR Batch            |                          |
 #   | AR > Vouchers > Invoice Vouchers           |                          |
-#   | Budgets > Add Budget                       |                          |
+    | Budgets > Add Budget                       | Budget                   |
     | Budgets > Search                           | Budget search            |
 #   | Cash > Payment                             |                          |
 #   | Cash > Receipt                             |                          |
