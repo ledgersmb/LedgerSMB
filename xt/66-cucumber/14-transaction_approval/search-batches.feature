@@ -18,7 +18,6 @@ Scenario: Search for all unapproved batches
   When I navigate the menu and select the item at "Transaction Approval > Batches"
   Then I should see the Search Batches screen
   When I press "Search"
-   And I wait 2 seconds
   Then I should see the Batch Search Report screen
    And I should see these headings:
        | Heading             | Contents     |
@@ -40,7 +39,6 @@ Scenario: Search for batches, filtering by batch type
   Then I should see the Search Batches screen
   When I select "payment" from the drop down "Transaction Type"
    And I press "Search"
-   And I wait 2 seconds
   Then I should see the Batch Search Report screen
    And I should see these headings:
        | Heading             | Contents     |
@@ -58,7 +56,6 @@ Scenario: Search for batches, filtering by batch type
   Then I should see the Search Batches screen
   When I enter "ABC" into "Description"
    And I press "Search"
-   And I wait 2 seconds
   Then I should see the Batch Search Report screen
    And I should see these headings:
        | Heading             | Contents     |
@@ -76,7 +73,6 @@ Scenario: Search for all approved batches
   Then I should see the Search Batches screen
   When I select "Approved"
    And I press "Search"
-   And I wait 2 seconds
   Then I should see the Batch Search Report screen
    And I should see these headings:
        | Heading             | Contents     |
@@ -88,4 +84,5 @@ Scenario: Search for all approved batches
        | Amount Less Than    |              |
    And I expect the report to contain 1 row
    And I expect the 'Description' report column to contain 'Batch-4' for Batch Number 'B-1004'
+
 
