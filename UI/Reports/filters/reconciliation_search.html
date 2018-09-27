@@ -56,7 +56,6 @@
             </div>
 
             <div class="input">
-                <?lsmb IF show_approved ?>
                         <?lsmb- approved_options = [
                                 {id = undef, label = undef },
                                 {id = '1', label = text('Approved') },
@@ -70,17 +69,9 @@
                                 value_attr = 'id',
                                 class = 'status'
                         } -?>
-                <?lsmb ELSE ?>
-                <?lsmb INCLUDE input element_data = {
-                        type = "hidden",
-                        name = "approved",
-                        value = approved
-                } ?>
-                <?lsmb END ?>
             </div>
 
             <div class="input">
-                <?lsmb IF show_submitted ?>
                         <?lsmb- submitted_options = [
                                 {id = undef, label = undef },
                                 {id = '1', label = text('Submitted') },
@@ -94,13 +85,6 @@
                                 value_attr = 'id',
                                 class = 'status'
                         } -?>
-                <?lsmb ELSE ?>
-                <?lsmb INCLUDE input element_data = {
-                        type = "hidden",
-                        name = "submitted",
-                        value = submitted
-                } ?>
-                <?lsmb END ?>
             </div>
         </div>
 

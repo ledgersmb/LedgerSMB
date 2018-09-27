@@ -172,8 +172,6 @@ sub search {
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => {
         dbh => $request->{dbh},
-        show_approved => 1,
-        show_submitted => 1,
     }});
 
     $recon->get_accounts();
