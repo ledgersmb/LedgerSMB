@@ -196,6 +196,9 @@ sub _run_schemacheck_test {
         fail 'Response defined; use failure output below to define a response';
         diag _slurp($out);
     }
+    else {
+        diag "no response: $check->{title}\n\n";
+    }
 }
 
 
@@ -211,6 +214,8 @@ sub _run_schemachecks_tests {
     my $schemacheck_file = _schemacheck_file($schemacheck_test);
     my @checks = load_checks($schemacheck_file);
     my $tests = eval _slurp($schemacheck_test);
+    die "Unable to load schema checks from file $schemacheck_test: $@"
+        if defined $@ and not defined $tests;
 
     for my $test (keys %$tests) {
         my $check = first { $_->{title} eq $test } @checks;

@@ -40,7 +40,7 @@
                     WHERE EXISTS (select 1 from file_secondary_attachment d
                                    where n.id = d.id
                                   group by d.id
-                                  having count(*) > 1)}},
+                                  having count(*) > 1)},
                       results => [],
                   },
                  ],
