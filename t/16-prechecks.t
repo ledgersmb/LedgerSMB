@@ -197,7 +197,7 @@ sub _run_schemacheck_test {
         diag _slurp($out);
     }
     else {
-        diag "no response: $check->{title}\n\n";
+        note "no response: $check->{title}\n\n";
     }
 }
 
