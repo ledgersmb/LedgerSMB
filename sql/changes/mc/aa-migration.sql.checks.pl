@@ -35,9 +35,9 @@ Please add a foreign currency code to each transaction.
                          entity_credit_account ) ],
             edit_columns => [ 'curr' ],
             dropdowns => {
-                curr => dropdown_sql($dbh, ...);
+                curr => dropdown_sql($dbh, q{SELECT * FROM currency}),
                 entity_credit_account
-                    => dropdown_sql($dbh, ...);
+                    => dropdown_sql($dbh, q{SELECT id, description FROM entity_credit_account WHERE entity_class = 2}), # 2 = customer
             };
 
         confirm save => 'Save';
@@ -47,7 +47,7 @@ Please add a foreign currency code to each transaction.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'save') {
-            save_grid $rows, name => 'ar';
+            save_grid $dbh, $rows, name => 'ar';
         }
         else {
           die "Unexpected confirmation value found: $confirm";
@@ -87,9 +87,9 @@ Please add a foreign currency code to each transaction.
                          entity_credit_account ) ],
             edit_columns => [ 'curr' ],
             dropdowns => {
-                curr => dropdown_sql($dbh, ...);
+                curr => dropdown_sql($dbh, q{SELECT * FROM currency}),
                 entity_credit_account
-                    => dropdown_sql($dbh, ...);
+                    => dropdown_sql($dbh, q{SELECT id, description FROM entity_credit_account WHERE entity_class = 1}), # 1 = vendor
             };
 
         confirm save => 'Save';
@@ -99,7 +99,7 @@ Please add a foreign currency code to each transaction.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'save') {
-            save_grid $rows, name => 'ap';
+            save_grid $dbh, $rows, name => 'ap';
         }
         else {
           die "Unexpected confirmation value found: $confirm";
