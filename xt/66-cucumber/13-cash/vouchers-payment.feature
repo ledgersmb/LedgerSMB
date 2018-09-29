@@ -39,8 +39,14 @@ Scenario: Add payments to a new batch
   Then I should see the Payments Detail screen
    And I expect to see the 'grand_total' value of '100.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
+  When I press "Post"
+  Then I should see the Payment Batch Summary screen
+  When I press "Save Batch"
+  Then I should see the Filtering Payments screen
 
 Scenario: Add payments to an existing batch
+ Given a vendor 'Vendor B'
+   And an unpaid AP transaction with "Vendor B" for $25
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
   Then I should see the Create New Batch screen
    And I should see a Batch with these values:
@@ -53,3 +59,25 @@ Scenario: Add payments to an existing batch
    And I press "Continue"
   Then I should see the Payments Detail screen
    And I expect to see the 'date_paid' value of '2018-01-01'
+  When I select the payment line with these values:
+       | Name     | Invoice Total | Source |
+       | Vendor B | 25.00 USD     | 2001   |
+   And I press "Update"
+   And I wait for the page to load
+  Then I should see the Payments Detail screen
+   And I expect to see the 'grand_total' value of '25.00'
+   And I expect to see the 'grand_total_currency' value of 'USD'
+  When I press "Post"
+  Then I should see the Payment Batch Summary screen
+  When I press "Save Batch"
+  Then I should see the Filtering Payments screen
+
+Scenario: Review the contents of an existing batch
+  When I navigate the menu and select the item at "Transaction Approval > Batches"
+  Then I should see the Search Batches screen
+  When I enter "Test Batch" into "Description"
+   And I press "Search"
+  Then I should see the Batch Search Report screen
+   And I expect the report to contain 1 row
+   And I expect the 'Payment Amount' report column to contain '125.00' for Batch Number 'B-1001'
+

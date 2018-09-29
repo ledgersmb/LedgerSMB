@@ -102,6 +102,7 @@ my %screens = (
     'Payments Detail' => 'PageObject::App::Cash::Vouchers::Payments::Detail',
     'Search Batches' => 'PageObject::App::TransactionApproval::Batches',
     'Batch Search Report' => 'PageObject::App::Search::ReportDynatable',
+    'Payment Batch Summary' => 'PageObject::App::Search::ReportDynatable',
 );
 
 Then qr/I should see the (.*) screen/, sub {
