@@ -192,7 +192,10 @@ sub pre_bulk_post_report {
 
     # parse the flat "request" namespace into a hierarchical structure
     # as defined by the $bulk_post_map transform
-    my $data = $bulk_post_map->($request);
+
+    # copy the request record, because the mapper modifies the hash
+    # but we need the original request below...
+    my $data = $bulk_post_map->({ %$request });
 
     # The user interface sets the 'id' field true-ish when the customer
     # is selected for inclusion in the bulk payment
