@@ -10,7 +10,9 @@ Background:
 
 Scenario: Add payments to a new batch
  Given a vendor 'Vendor A'
-   And an unpaid AP transaction with "Vendor A" for $100
+   And an unpaid AP transaction with these values:
+       | Vendor   | Date       | Invoice Number | Amount |
+       | Vendor A | 2017-01-01 | INV100         | 100.00 |
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
   Then I should see the Create New Batch screen
   When I enter "2018-01-01" into "Batch Date"
@@ -46,7 +48,9 @@ Scenario: Add payments to a new batch
 
 Scenario: Add payments to an existing batch
  Given a vendor 'Vendor B'
-   And an unpaid AP transaction with "Vendor B" for $25
+   And an unpaid AP transaction with these values:
+       | Vendor   | Date       | Invoice Number | Amount |
+       | Vendor B | 2017-01-02 | INV101         | 25.00  |
   When I navigate the menu and select the item at "Cash > Vouchers > Payments"
   Then I should see the Create New Batch screen
    And I should see a Batch with these values:
@@ -72,6 +76,43 @@ Scenario: Add payments to an existing batch
   When I press "Save Batch"
   Then I should see the Filtering Payments screen
 
+Scenario: Add partial payment to an existing batch
+ Given a vendor 'Vendor C'
+   And an unpaid AP transaction with these values:
+       | Vendor   | Date       | Invoice Number | Amount |
+       | Vendor C | 2017-03-01 | INV103         | 250.00 |
+  When I navigate the menu and select the item at "Cash > Vouchers > Payments"
+  Then I should see the Create New Batch screen
+   And I should see a Batch with these values:
+       | Batch Number | Description | Post Date  |
+       | B-1001       | Test Batch  | 2018-01-01 |
+  When I click on the Batch with Batch Number "B-1001"
+  Then I should see the Filtering Payments screen
+  When I enter "3001" into "Start Source Numbering At"
+   And I press "Continue"
+  Then I should see the Payments Detail screen
+  When I select the payment line with these values:
+       | Name     | Invoice Total  | Source |
+       | Vendor C | 250.00 USD     | 3001   |
+   And I select "Some" on the payment line for "Vendor C"
+  Then I expect to see the Invoice Detail table for "Vendor C"
+   And I should see an invoice from "Vendor C" with these values:
+       | Date       | Invoice Number | Total  | Paid | Discount | Net Due |
+       | 2017-03-01 | INV103         | 250.00 | 0.00 | 0.00     | 250.00  |
+  When I enter "1.00" into "To Pay" for the invoice from "Vendor C" with these values:
+       | Date       | Invoice Number |
+       | 2017-03-01 | INV103         |
+   And I press "Update"
+   And I wait for the page to load
+  Then I should see the Payments Detail screen
+   And I expect to see the 'grand_total' value of '1.00'
+   And I expect to see the 'grand_total_currency' value of 'USD'
+   And I expect to see the "Contact Total" of "1.00 USD" for "Vendor C"
+  When I press "Post"
+  Then I should see the Payment Batch Summary screen
+  When I press "Save Batch"
+  Then I should see the Filtering Payments screen
+
 Scenario: Review the contents of an existing batch
   When I navigate the menu and select the item at "Transaction Approval > Batches"
   Then I should see the Search Batches screen
@@ -79,5 +120,5 @@ Scenario: Review the contents of an existing batch
    And I press "Search"
   Then I should see the Batch Search Report screen
    And I expect the report to contain 1 row
-   And I expect the 'Payment Amount' report column to contain '125.00' for Batch Number 'B-1001'
+   And I expect the 'Payment Amount' report column to contain '126.00' for Batch Number 'B-1001'
 
