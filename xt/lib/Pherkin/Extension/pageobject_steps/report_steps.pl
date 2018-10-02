@@ -13,6 +13,23 @@ When qr/I search with these parameters:/, sub {
 };
 
 
+When qr/^I select the rows? where "(.*)" is "(.*)"$/, sub {
+    my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
+    my $column = $1;
+    my $value = $2;
+
+    foreach my $row(@rows) {
+        if ($row->{$column} eq $value) {
+            my $checkbox = $row->{_element}->find(
+                './td/div/input[@type="checkbox"]'
+            );
+            my $checked = $checkbox->get_attribute('checked');
+            $checked && $checked eq 'true' or $checkbox->click;
+        }
+    }
+};
+
+
 Then qr/the Balance Sheet per (.{10}) looks like:/, sub {
     my $date = $1;
 
