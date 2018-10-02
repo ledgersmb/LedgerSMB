@@ -157,14 +157,16 @@ Given qr/a vendor '(.*)'$/, sub {
     $vendor->save;
 };
 
-Given qr/an unpaid AP transaction with "(.*)" for \$(\d+)$/, sub {
-    my $vendor_name = $1;
-    my $amount = $2;
+Given qr/an unpaid AP transaction with these values:$/, sub {
+    # Expects data in the following form:
+    # | Vendor   | Date       | Invoice Number | Amount |
+    # | Vendor C | 2017-03-01 | INV103         | 250.00 |
+    my $data = shift @{C->data};
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
     my $q = $dbh->prepare("
         INSERT INTO ap (invnumber, transdate, amount, netamount, duedate, curr, approved, entity_credit_account)
-        SELECT 'I-001', '2018-01-01', ?, ?, '2018-01-01', 'USD', TRUE, entity_credit_account.id
+        SELECT ?, ?, ?, ?, ?, 'USD', TRUE, entity_credit_account.id
         FROM entity
         JOIN entity_credit_account ON (
             entity_credit_account.entity_id = entity.id
@@ -174,24 +176,33 @@ Given qr/an unpaid AP transaction with "(.*)" for \$(\d+)$/, sub {
         LIMIT 1
         RETURNING ap.id
     ");
-    $q->execute($amount, $amount, $vendor_name);
-    my $ap_id = $q->fetchrow_hashref()->{id};
+    $q->execute(
+        $data->{'Invoice Number'},
+        $data->{'Date'},
+        $data->{'Amount'},
+        $data->{'Amount'},
+        $data->{'Date'},
+        $data->{'Vendor'},
+    );
+    my $ap_id = $q->fetchrow_hashref->{id};
 
     $q = $dbh->prepare("
         INSERT INTO acc_trans (trans_id, chart_id, amount, transdate)
-        VALUES (?, ?, ?, '2018-01-01')
+        VALUES (?, ?, ?, ?)
     ");
 
     $q->execute(
         $ap_id,
         28, # 5700--Office Supplies
-        $amount * -1,
+        $data->{'Amount'} * -1,
+        $data->{'Date'},
     );
 
     $q->execute(
         $ap_id,
         10, # 2100--Accounts Payable account
-        $amount,
+        $data->{'Amount'},
+        $data->{'Date'},
     );
 };
 
