@@ -376,8 +376,7 @@ sub batch_approve {
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->post;
     }
-    $request->{report_name} = 'unapproved';
-    $request->{search_type} = 'batches';
+    $request->{report_name} = 'batches';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
@@ -400,8 +399,7 @@ sub batch_unlock {
             $batch->unlock($request->{"row_$count"});
         }
     }
-    $request->{report_name} = 'unapproved';
-    $request->{search_type} = 'batches';
+    $request->{report_name} = 'batches';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
@@ -418,14 +416,17 @@ sub batch_delete {
         return list_batches($request);
     }
 
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    for my $count (1 .. $batch->{rowcount_}){
-        next unless $batch->{'select_' . $count};
-        $batch->{batch_id} = $batch->{"row_$count"};
-        $batch->delete;
+    foreach my $count (1 .. $request->{rowcount_}){
+        if ($request->{"select_$count"}) {
+            my $batch = LedgerSMB::Batch->new(base => {
+                dbh => $request->{dbh},
+                batch_id => $request->{"row_$count"},
+            });
+            $batch->delete;
+        }
     }
-    $request->{report_name} = 'unapproved';
-    $request->{search_type} = 'batches';
+
+    $request->{report_name} = 'batches';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
