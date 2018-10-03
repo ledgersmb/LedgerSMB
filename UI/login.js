@@ -60,7 +60,6 @@ function send_form() {
 require(["dijit/ProgressBar", "dojo/domReady"],
     function(progressbar){
         var indicator = new progressbar({
-            "style": "width: 10em",
             "id": "login-progressbar",
             "value": 100,
             "indeterminate": true
