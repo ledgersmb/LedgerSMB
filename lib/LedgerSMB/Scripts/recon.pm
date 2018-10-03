@@ -292,23 +292,30 @@ sub _display_report {
 }
 
 
-=item new_report
+=item new_report($request)
 
 Displays the new report screen.
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
 
 =cut
 
 sub new_report {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request
-    });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new();
+    $recon->set_dbh($request->{dbh});
+    $recon->get_accounts();
 
-    # we can assume we're to generate the "Make a happy new report!" page.
-    @{$recon->{accounts}} = $recon->get_accounts;
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'reconciliation/upload', $recon);
+    return $template->render(
+        $request,
+        'reconciliation/upload',
+        $recon
+    );
 }
 
 =item start_report($request)
@@ -329,7 +336,6 @@ sub start_report {
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
         base => $request
     });
-
 
     # Why isn't this testing for errors?
     my ($report_id, $entries) = $recon->new_report($recon->import_file());
