@@ -192,31 +192,26 @@ sub approve {
 
 =item new_report
 
-Creates a new report with data entered.
+Creates a new reconciliation report. Returns the id of the inserted report
+record.
+
+Expects the following object parameters:
+
+  * chart_id  (mandatory)
+  * total     (mandatory
+  * end_date  (defaults to now)
+  * recon_fx  (defaults to false)
 
 =cut
 
 sub new_report {
-
     my $self = shift @_;
-    my $total = shift @_;
-    my $month = shift @_;
 
-    # Total is in here somewhere, too
+    my $report = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
+    $self->{report_id} = $report->{reconciliation__new_report_id};
 
-    # gives us a report ID to insert with.
-    my @reports = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
-    my $report_id = $reports[0]->{reconciliation__new_report_id};
-    $self->{report_id} = $report_id;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-
-    # Now that we have this, we need to create the internal report representation.
-    # Ideally, we OUGHT to not return anything here, save the report number.
-
-
-    return ($report_id,
-            ###TODO-ISSUE-UNDECLARED-ENTRIES $entries
-        ); # returns the report ID.
+    return $self->{report_id};
 }
 
 
@@ -435,12 +430,13 @@ sub get {
         $line->{days} = $report_days{$line->{id}};
     }
     $self->{our_total} = $our_balance;
-    @{$self->{accounts}} = $self->get_accounts;
-    for (@{$self->{accounts}}){
+
+    for (@{$self->{recon_accounts}}){
        if ($_->{id} == $self->{chart_id}){
            $self->{account} = $_->{name};
        }
     }
+
     $self->{format_amount} = sub { return $self->format_amount(@_); };
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;
