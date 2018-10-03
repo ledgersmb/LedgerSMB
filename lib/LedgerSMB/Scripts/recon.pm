@@ -14,9 +14,6 @@ interfacing with the Core Logic and database layers.
 
 =cut
 
-# NOTE:  This is a first draft modification to use the current parameter type.
-# It will certainly need some fine tuning on my part.  Chris
-
 use strict;
 use warnings;
 
@@ -29,7 +26,7 @@ use LedgerSMB::Template::UI;
 
 =over
 
-=item display_report($self, $request, $user)
+=item display_report
 
 Renders out the selected report given by the incoming variable report_id.
 Returns HTML, or raises an error from being unable to find the selected
@@ -39,28 +36,9 @@ report_id.
 
 sub display_report {
     my ($request) = @_;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
     return _display_report($recon, $request);
 }
-
-=item search($self, $request, $user)
-
-Renders out a list of reports based on the search criteria passed to the
-search function.
-Meta-reports are report_id, date_range, and likely errors.
-Search criteria accepted are
-
-=over
-
-=item date_begin
-
-=item date_end
-
-=item account
-
-=item status
-
-=back
 
 =item update_recon_set
 
@@ -165,6 +143,13 @@ must be set:
 
   * dbh
 
+Search criteria accepted are
+
+  * date_begin
+  * date_end
+  * account
+  * status
+
 =cut
 
 sub search {
@@ -182,8 +167,7 @@ sub search {
     );
 }
 
-
-=item new_report ($self, $request, $user)
+=item new_report ($request)
 
 Creates a new report, from a selectable set of bank statements that have been
 received (or can be received from, depending on implementation)
@@ -318,7 +302,8 @@ sub new_report {
     my ($request) = @_;
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request, copy => 'all' });
+        base => $request
+    });
 
     # we can assume we're to generate the "Make a happy new report!" page.
     @{$recon->{accounts}} = $recon->get_accounts;
@@ -342,7 +327,8 @@ sub start_report {
 
     $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request, copy => 'all' });
+        base => $request
+    });
 
 
     # Why isn't this testing for errors?
@@ -369,17 +355,16 @@ sub delete_report {
     my ($request) = @_;
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
-                         base=>$request,
-                         copy=>'all'
+        base => $request,
     });
 
-    my $resp = $recon->delete($request->{report_id});
+    $recon->delete($request->{report_id});
 
     delete($request->{report_id});
     return search($request);
 }
 
-=item approve ($self, $request, $user)
+=item approve ($request)
 
 Requires report_id
 
@@ -402,8 +387,9 @@ sub approve {
              [ q{'report_id' parameter missing} ]
         ] if ! $request->{report_id};
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(
-        { base => $request, copy=> 'all' });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $request
+    });
 
     my $code = $recon->approve($request->{report_id});
     my $template = $code == 0 ? 'reconciliation/approved'
@@ -412,7 +398,7 @@ sub approve {
         ->render($request, $template, $recon);
 }
 
-=item pending ($self, $request, $user)
+=item pending ($request)
 
 Requires {date} and {month}, to handle the month-to-month pending transactions
 in the database. No mechanism is provided to grab ALL pending transactions
@@ -425,11 +411,12 @@ sub pending {
 
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request});
 
     my $template= LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'reconciliation/pending', {});
 }
+
 
 {
     local ($!, $@) = (undef, undef);
