@@ -50,7 +50,6 @@ sub display_report {
         base => $recon_data,
     });
 
-    $recon->get();
     return _display_report($recon, $request);
 }
 
@@ -216,6 +215,8 @@ sub _display_report {
     $recon->add_entries($recon->import_file($contents))
         if $contents && !$recon->{submitted};
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+
+
     $recon->get();
     $recon->{form_id} = $request->{form_id};
     $recon->{sort_options} = [
@@ -228,6 +229,7 @@ sub _display_report {
     if (!$recon->{line_order}){
        $recon->{line_order} = 'scn';
     }
+
     for my $field (qw/ total_cleared_credits total_cleared_debits total_uncleared_credits total_uncleared_debits /) {
       $recon->{"$field"} = LedgerSMB::PGNumber->from_input(0);
     }
@@ -236,6 +238,7 @@ sub _display_report {
        $recon->{their_total} *= -1;
        $neg_factor = -1;
     }
+
     # Credit/Debit separation (useful for some)
     for my $l (@{$recon->{report_lines}}){
         if ($l->{their_balance} > 0){
