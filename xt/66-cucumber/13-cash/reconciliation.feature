@@ -14,6 +14,5 @@ Scenario: Create new reconciliation report
    And I enter "0.00" into "Statement Balance"
    And I enter "2018-01-01" into "To Date"
    And I press "Create New Report"
-   And I wait for the page to load
   Then I should see the Reconciliation Report screen
 
