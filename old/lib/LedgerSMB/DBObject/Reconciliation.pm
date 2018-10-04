@@ -192,31 +192,26 @@ sub approve {
 
 =item new_report
 
-Creates a new report with data entered.
+Creates a new reconciliation report. Returns the id of the inserted report
+record.
+
+Expects the following object parameters:
+
+  * chart_id  (mandatory)
+  * total     (mandatory
+  * end_date  (defaults to now)
+  * recon_fx  (defaults to false)
 
 =cut
 
 sub new_report {
-
     my $self = shift @_;
-    my $total = shift @_;
-    my $month = shift @_;
 
-    # Total is in here somewhere, too
+    my $report = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
+    $self->{report_id} = $report->{reconciliation__new_report_id};
 
-    # gives us a report ID to insert with.
-    my @reports = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
-    my $report_id = $reports[0]->{reconciliation__new_report_id};
-    $self->{report_id} = $report_id;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-
-    # Now that we have this, we need to create the internal report representation.
-    # Ideally, we OUGHT to not return anything here, save the report number.
-
-
-    return ($report_id,
-            ###TODO-ISSUE-UNDECLARED-ENTRIES $entries
-        ); # returns the report ID.
+    return $self->{report_id};
 }
 
 
@@ -386,17 +381,16 @@ sub get {
     $self->{account_info} = $ref;
 
     my ($previous) = $self->call_dbmethod(funcname=>'reconciliation__previous_report_date',
-                                args => { in_chart_id => $self->{chart_id},
-                                          in_end_date => $self->{end_date}
+                                args => { chart_id => $self->{chart_id},
+                                          end_date => $self->{end_date}
                                         });
+
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
                                 args => { chart_id => $ref->{id},
                                           report_date => $previous->{end_date}
                                         });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
-    warn "$previous->{their_total} should always equal $our_balance"
-        if $previous->{their_total} != $our_balance;
 
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
@@ -435,12 +429,13 @@ sub get {
         $line->{days} = $report_days{$line->{id}};
     }
     $self->{our_total} = $our_balance;
-    @{$self->{accounts}} = $self->get_accounts;
-    for (@{$self->{accounts}}){
+
+    for (@{$self->{recon_accounts}}){
        if ($_->{id} == $self->{chart_id}){
            $self->{account} = $_->{name};
        }
     }
+
     $self->{format_amount} = sub { return $self->format_amount(@_); };
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;

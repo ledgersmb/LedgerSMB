@@ -49,6 +49,7 @@ my %menu_path_pageobject_map = (
     "AP > Reports > Customer History" => '',
 
     "Cash > Vouchers > Payments" => 'PageObject::App::Cash::Vouchers::Payments',
+    "Cash > Reconciliation" => 'PageObject::App::Cash::Reconciliation::NewReport',
 
     "Transaction Approval > Batches" => 'PageObject::App::TransactionApproval::Batches',
     "Transaction Approval > Inventory" => 'PageObject::App::Parts::AdjustSearchUnapproved',
