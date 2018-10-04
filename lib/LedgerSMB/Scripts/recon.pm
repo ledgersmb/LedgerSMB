@@ -333,7 +333,7 @@ sub new_report {
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render(
         $request,
-        'reconciliation/upload',
+        'reconciliation/new_report',
         $recon
     );
 }
