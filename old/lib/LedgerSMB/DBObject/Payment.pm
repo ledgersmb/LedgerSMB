@@ -675,62 +675,63 @@ sub get_payment_detail_data {
     return;
 }
 
-=item post_bulk
+=item post_bulk($data)
 
-This function posts the payments in bulk.  Note that queue_payments is not a
-common setting and rather this provides a hook for an add-on.
+This function posts the payments in bulk.
 
-This API was developed early in 1.3 and is likely to change for better
-encapsulation.  Currenty it uses the following structure:
-
-Within the main hashref:
+The C<$data> hashref has the following keys:
 
 =over
 
-=item contact_count
+=item contacts
 
-The number of payments.  One per contact.
-
-=item contact_$row
-
-for (1 .. contact_count), contact_$_ is the entity credit account's id
-associated with the current contact.  We will call this $contact_id below.
-
-For each contact id, we have the following, suffixed with _$contact_id:
+An arrayref of hashrefs holding details on payments per customer.
+Each customer hash holds the following keys:
 
 =over
 
-=item source
+=item id
 
-=item invoice_count
-
-Number of invoices to loop through
-
-=item invoice_${contact_id}_$row
-
-for $row in (1 .. invoice_count), each this provides the transaction id of the
-invoice.
-
-=back
-
-Each invoice has the following attributes, suffxed with
-${invoice_id}
-
-=over
-
-=item amount
+The value associated with this key indicates whether the contact
+was selected to be included in the payment batch (C<true>-ish means
+selected).
 
 =item paid
 
+This key indicates whether the outstanding amount for all invoices
+of this customer was paid (C<all>) or that only partial payment is
+to be recorded (C<some>) -- note that the latter may mean either of
+'all invoices, but only partially' as well 'only some invoices, but
+full payment'.
+
+=item source
+
+The source system identifier for the payment transaction -- will be
+used for automated reconciliation when possible.
+
+=item invoices
+
+An array reference to the invoices included in the payment, with
+a hashref per included invoice. The per-invoice hashref has the
+following keys:
+
+=over
+
 =item net
 
-=back
+The amount to be posted in case the contact is set to have
+full/complete payment (C<paid == 'all'>).
+
+=item payment
+
+The amount to be posted in case the contact is set to have
+partial payment (C<paid == 'some'>).
 
 =back
 
-In the future the payment posting API will become more standardized and the
-conversion between flat and hierarchical representation will be moved to the
-workflow scripts.
+=back
+
+=back
 
 =cut
 
