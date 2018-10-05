@@ -59,6 +59,7 @@ use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
+use LedgerSMB::Request::Helper::ParameterMap;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -68,7 +69,8 @@ use LedgerSMB::Template::UI;
 # 1:  I don't think it is a good idea to make the UI too dependant on internal
 #     code structures but I don't see a good alternative at the moment.
 # 2:  CamelCasing: -1
-# 3:  Not good to have this much duplication of code all the way down the stack.#     At the moment this is helpful because it gives us an opportunity to look
+# 3:  Not good to have this much duplication of code all the way down the stack.
+#     At the moment this is helpful because it gives us an opportunity to look
 #     at various sets of requirements and workflows, but for future versions
 #     if we don't refactor, this will turn into a bug factory.
 # 4:  Both current interfaces have issues regarding separating layers of logic
@@ -154,6 +156,18 @@ sub get_search_criteria {
 
 =cut
 
+
+my $bulk_post_map = input_map(
+    [ qr/^(?<fld>id|source|memo|paid)_(?<cid>\d+)$/ => '@contacts<cid>:%<fld>' ],
+    [ qr/^contact_label_(?<cid>\d+)$/ => '@contacts<cid>:%pay_to>' ],
+    [ qr/^(?<fld>invoice_date|invnumber|due|payment|invoice|net)_(?<cid>\d+)_(?<invrow>\d+)$/
+      => '@contacts<cid>:@invoices<invrow>:%<fld>' ],
+    [ qr/(?<fld>cash_accno|ar_ap_accno)$/ => '%<fld>' ],
+    [ qr/^transdate$/ => '%date_paid' ],
+    [ qr/^datepaid$/ => '%payment_date' ],
+    [ qr/^(?<fld>multiple)$/ => '%<fld>' ],
+    );
+
 sub pre_bulk_post_report {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new( # printed document
@@ -165,9 +179,6 @@ sub pre_bulk_post_report {
     );
     my $cols;
     @$cols =  qw(pay_to accno source memo debits credits);
-    my $rows = [];
-    my $total_debits = 0;
-    my $total_credits = 0;
     my $heading = {
         pay_to          => $request->{_locale}->text('Pay To'),
         accno           => $request->{_locale}->text('Account Number'),
@@ -177,42 +188,37 @@ sub pre_bulk_post_report {
         memo            => $request->{_locale}->text('Memo'),
         debits           => $request->{_locale}->text('Debits'),
         credits          => $request->{_locale}->text('Credits')
-                  };
-    my $total = 0;
-    for my $crow (1 .. $request->{contact_count}){
-        my $ref;
-        my $cid = $request->{"contact_$crow"};
-        if ($request->{"id_$cid"}){
-            $ref = {pay_to    => $request->{"contact_label_$cid"},
-                    accno     => $request->{ar_ap_accno},
-                    transdate => $request->{date_paid},
-                    source    => $request->{"source_$cid"},
-                    memo      => $request->{"memo_$cid"},
-                    amount    => 0
-                   };
-            for my $invrow (1 .. $request->{"invoice_count_$cid"}){
-                 my $inv_id = $request->{"invoice_${cid}_$invrow"};
-                 $ref->{amount} +=
-                    LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
-             }
-             # If vendor, this is debit-normal so multiply by -1
-             if ($request->{account_class} == EC_VENDOR ){ # vendor
-                 $ref->{amount} *= -1;
-              }
-              if ($ref->{amount} < 0) {
-                  $ref->{debits} = $ref->{amount} * -1;
-                  $ref->{credits} = 0;
-              } else {
-                  $ref->{debits} = 0;
-                  $ref->{credits} = $ref->{amount};
-              }
-              $total_debits += $ref->{debits};
-              $total_credits += $ref->{credits};
-              push @$rows, $ref;
-              $total += $ref->{amount};
-        }
-    }
+    };
 
+    # parse the flat "request" namespace into a hierarchical structure
+    # as defined by the $bulk_post_map transform
+
+    # copy the request record, because the mapper modifies the hash
+    # but we need the original request below...
+    my $data = $bulk_post_map->({ %$request });
+
+    # The user interface sets the 'id' field true-ish when the customer
+    # is selected for inclusion in the bulk payment
+    @{$data->{contacts}} = grep { $_->{id} } @{$data->{contacts}};
+    for my $crow (@{$data->{contacts}}) {
+        $crow->{accno} = $data->{ar_ap_accno};
+        $crow->{transdate} = $request->{payment_date};
+        $crow->{amount} =
+            sum map {
+                ($crow->{paid} eq 'some')
+                    ? LedgerSMB::PGNumber->from_input($_->{payment})
+                    : LedgerSMB::PGNumber->from_input($_->{net}) }
+            @{$crow->{invoices}};
+        $crow->{amount} *= -1
+                    if ($request->{account_class} == EC_VENDOR);
+        $crow->{debits} = ($crow->{amount} < 0) ? ($crow->{amount} * -1) : 0;
+        $crow->{credits} = ($crow->{amount} > 0) ? $crow->{amount} : 0;;
+    }
+    my $rows = $data->{contacts};
+
+    my $total = sum map { $_->{amount} } @{$data->{contacts}};
+    my $total_debits = sum map { $_->{debits} } @{$data->{contacts}};
+    my $total_credits = sum map { $_->{credits} } @{$data->{contacts}};
 
     # Cash summary
     my $ref = {
@@ -354,7 +360,8 @@ sub post_payments_bulk {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     if ($request->close_form){
-        $payment->post_bulk();
+        my $data = $bulk_post_map->($request);
+        $payment->post_bulk($data);
     } else {
         $payment->{notice} =
            $payment->{_locale}->text('Data not saved.  Please try again.');
@@ -394,51 +401,50 @@ sub print {
     $payment->{format_amount} =
         sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(); };
 
-    if ($payment->{multiple}){
+    my $data = $bulk_post_map->($request);
+    if ($data->{multiple}){
         $payment->{checks} = [];
-        for my $line (1 .. $payment->{contact_count}){
-            my $id = $payment->{"contact_$line"};
-            next if !defined $payment->{"id_$id"};
+
+        # consider only contacts which have been explicitly selected
+        # for inclusion in the bulk payment ($contact->{id} == true-ish)
+        for my $contact (grep { $_->{id} } @{$data->{contacts}}){
             my ($check) = $payment->call_procedure(
-                     funcname => 'company_get_billing_info', args => [$id]
+                funcname => 'company_get_billing_info',
+                args => [ $contact->{id} ]
             );
             $check->{entity_class} = $payment->{account_class};
-            $check->{id} = $id;
+            $check->{id} = $contact->{id};
             $check->{amount} = LedgerSMB::PGNumber->from_db('0');
             $check->{invoices} = [];
-            $check->{source} = $payment->{"source_$id"};
+            $check->{source} = $contact->{source};
 
             my $inv_count;
             my $check_max_invoices = $request->setting->get(
                          'check_max_invoices'
             );
-            if ($check_max_invoices > $payment->{"invoice_count_$id"}) {
-                $inv_count = $payment->{"invoice_count_$id"};
+            if ($check_max_invoices > scalar(@{$contact->{invoices}})) {
+                $inv_count = scalar(@{$contact->{invoices}});
             } else {
                 $inv_count = $check_max_invoices;
             }
 
-            for my $inv (1 .. $payment->{"invoice_count_$id"}){
-                my $invhash = {};
-                my $inv_id = $payment->{"invoice_${id}_$inv"};
-                for (qw(invnumber due invoice_date)){
-                    $invhash->{$_} = $payment->{"${_}_${inv_id}"};
-                }
-                if ($payment->{"paid_$id"} eq 'some'){
-                    $invhash->{paid} = LedgerSMB::PGNumber
-                        ->from_input($payment->{"payment_${inv_id}"});
-                } elsif ($payment->{"paid_$id"} eq 'all'){
-                    $invhash->{paid} = LedgerSMB::PGNumber
-                        ->from_input($payment->{"net_${inv_id}"});
+            for my $invoice (@{$contact->{invoices}}) {
+                if ($contact->{paid} eq 'some'){
+                    $invoice->{paid} = LedgerSMB::PGNumber
+                        ->from_input($invoice->{payment});
+                } elsif ($contact->{paid} eq 'all'){
+                    $invoice->{paid} = LedgerSMB::PGNumber
+                        ->from_input($invoice->{net});
                 } else {
                     $payment->error('Invalid Payment Amount Option');
                 }
-                $check->{amount} += $invhash->{paid};
-                $invhash->{paid} = $invhash->{paid}->to_output(
+                $check->{amount} += $invoice->{paid};
+                $invoice->{paid} = $invoice->{paid}->to_output(
                     format => '1000.00',
                     money => 1
                 );
-                push @{$check->{invoices}}, $invhash if $inv <= $inv_count;
+                push @{$check->{invoices}}, $invoice
+                    if scalar(@{$check->{invoices}}) <= $inv_count;
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
@@ -509,6 +515,13 @@ database query:
 
 sub display_payments {
     my ($request) = @_;
+    my $data = $bulk_post_map->({ %$request });
+    my %req_contact_invoices =
+        map {
+            $_->{id} => {
+                map { $_->{invoice} => $_ } @{$_->{invoices}}
+            }
+    } @{$data->{contacts}};
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_payment_detail_data();
     $request->open_form();
@@ -523,46 +536,51 @@ sub display_payments {
     $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
     my $source = $request->{source_start};
     for (@{$payment->{contact_invoices}}){
-        my $contact_total = 0;
-        my $contact_to_pay = 0;
+        my $contact_total = LedgerSMB::PGNumber->from_db(0);
+        my $contact_to_pay = LedgerSMB::PGNumber->from_db(0);
+        my $req_contact_data = $req_contact_invoices{$_->{contact_id}};
 
         for my $invoice (@{$_->{invoices}}){
+            my $req_payment_data = $req_contact_data->{$invoice->{id}};
             if (($payment->{action} ne 'update_payments')
-                  or (defined $payment->{"id_$_->{contact_id}"})){
-                $payment->{"paid_$_->{contact_id}"} = ''
-                    unless defined $payment->{"paid_$_->{contact_id}"};
+                  or (defined $request->{"id_$_->{contact_id}"})){
+                $request->{"paid_$_->{contact_id}"} = ''
+                    unless defined $request->{"paid_$_->{contact_id}"};
             }
-            $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];  ## no critic (ProhibitMagicNumbers) sniff
-            $contact_to_pay += $invoice->[6];  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[7] = $invoice->[6]->to_db;  ## no critic (ProhibitMagicNumbers) sniff
+            $invoice->{due} =
+                $invoice->{amount} - $invoice->{paid} - $invoice->{net};
+            $contact_to_pay += $invoice->{due};
+            $invoice->{to_pay} = $invoice->{due}->to_db;
 
-            my $fld = 'payment_' . $invoice->[0];
-            $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
+            $contact_total +=
+                LedgerSMB::PGNumber->from_input($req_payment_data->{payment});
 
-            $invoice->[3] = $invoice->[3]->to_output(money  => 1);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[4] = $invoice->[4]->to_output(money  => 1);
-            $invoice->[5] = $invoice->[5]->to_output(money  => 1);
-            $invoice->[6] = $invoice->[6]->to_output(money  => 1);
+            for my $fld (qw/ amount paid net due /) {
+                $invoice->{$fld} = $invoice->{$fld}->to_output(money  => 1);
+            }
 
+            my $fld = "payment_$_->{id}_$invoice->{id}";
             if ('display_payments' eq $request->{action}) {
-                $payment->{$fld} = $invoice->[6];
+                $payment->{$fld} = $invoice->{due};
             }
             else {
-                $payment->{$fld} //= 0;
                 $payment->{$fld} =
-                    LedgerSMB::PGNumber->from_input($payment->{$fld})
+                    LedgerSMB::PGNumber->from_input(
+                        $req_payment_data->{payment} // 0
+                    )
                     ->to_output(money => 1);
             }
         }
-        if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
+
+        if ($request->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;
         }
         $_->{contact_total} = $contact_total;
         $_->{to_pay} = $contact_to_pay;
         $payment->{grand_total} += $contact_total
-            if ($payment->{"id_$_->{contact_id}"}
-                or (defined $payment->{"paid_$_->{contact_id}"}
-                    and $payment->{"paid_$_->{contact_id}"} eq 'some'));
+            if ($request->{"id_$_->{contact_id}"}
+                or (defined $request->{"paid_$_->{contact_id}"}
+                    and $request->{"paid_$_->{contact_id}"} eq 'some'));
 
         my ($check_all) = $request->setting->get('check_payments');
         if ($payment->{account_class} == 1 and $check_all){
