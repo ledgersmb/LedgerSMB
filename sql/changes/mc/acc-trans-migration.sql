@@ -47,7 +47,7 @@ BEGIN
      -- one of those, it will never match the 'prev' criterion)
      IF line.chart_id = ANY(fx_accnos) THEN
         UPDATE acc_trans
-           SET amount_bc = amount,
+           SET amount_bc = coalesce(amount,0),
                amount_tc = 0,
                curr = (select curr from ar where ar.id = acc_trans.trans_id
                        union all
@@ -111,8 +111,8 @@ BEGIN
         END IF;
 
         UPDATE acc_trans
-           SET amount_tc = prev.amount,
-               amount_bc = prev.amount + line.amount,
+           SET amount_tc = coalesce(prev.amount, 0),
+               amount_bc = coalesce(prev.amount, 0) + coalesce(line.amount, 0),
                curr = (select curr from ar where ar.id = acc_trans.trans_id
                        union all
                        select curr from ap where ap.id = acc_trans.trans_id
@@ -220,24 +220,29 @@ BEGIN
    WHERE EXISTS (SELECT 1 FROM lines_to_delete
                   WHERE lines_to_delete.id = acc_trans.entry_id);
 
+
+  -- Update all lines which
+  -- a. are not related to an fx transaction; or
+  -- b. *are* related to an fx transaction, but haven't been matched and
+  --    consolidated into a single line
   UPDATE acc_trans
-     SET amount_bc = amount,
-         amount_tc = amount,
+     SET amount_bc = coalesce(amount, 0),
+         amount_tc = case fx_transaction then 0 else coalesce(amount, 0) end,
          curr = (select curr from ar where acc_trans.trans_id = ar.id)
    WHERE EXISTS (select 1 from ar where acc_trans.trans_id = ar.id)
          AND amount_bc IS NULL;
 
 
   UPDATE acc_trans
-     SET amount_bc = amount,
-         amount_tc = amount,
+     SET amount_bc = coalesce(amount, 0),
+         amount_tc = case fx_transaction then 0 else coalesce(amount, 0) end,
          curr = (select curr from ap where acc_trans.trans_id = ap.id)
    WHERE EXISTS (select 1 from ap where acc_trans.trans_id = ap.id)
          AND amount_bc IS NULL;
 
   UPDATE acc_trans
-     SET amount_bc = amount,
-         amount_tc = amount,
+     SET amount_bc = coalesce(amount, 0),
+         amount_tc = case fx_transaction then 0 else coalesce(amount, 0) end,
          curr = (select curr from gl where gl.id = acc_trans.trans_id)
    WHERE EXISTS (select 1 from gl where acc_trans.trans_id = gl.id)
          AND amount_bc IS NULL;
