@@ -185,9 +185,9 @@ Given qr/an unpaid AP transaction with these values:$/, sub {
         $data->{'Amount'},
         $data->{'Amount'},
         $data->{'Date'},
+        $data->{'Amount'},
+        $data->{'Amount'},
         $data->{'Vendor'},
-        $data->{'Amount'},
-        $data->{'Amount'},
     );
     my $ap_id = $q->fetchrow_hashref->{id};
 
