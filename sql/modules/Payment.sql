@@ -492,7 +492,8 @@ BEGIN
             disc_amount_bc numeric,   -- discount amount in
             disc_amount_tc numeric,
             fxrate numeric,
-            gain_loss_accno int);
+            gain_loss_accno int,
+            invoice_date date);
 
         FOR out_count IN
                         array_lower(in_transactions, 1) ..
@@ -515,6 +516,10 @@ BEGIN
                            SELECT entity_credit_account FROM ap
                             WHERE in_account_class = 1
                               AND bpi.id = ap.id);
+        UPDATE bulk_payments_in bpi
+           SET invoice_date = (select transdate from ar where ar.id = bpi.id
+                               union all
+                               select transdate from ap where ap.id = bpi.id);
 
         IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
             UPDATE bulk_payments_in
@@ -557,7 +562,7 @@ BEGIN
                           / (100 - eca.discount::numeric)
                           * eca.discount::numeric
                      FROM entity_credit_account eca
-                    WHERE extract('days' from age(gl.transdate))
+                    WHERE extract('days' from age(bpi.invoice_date))
                                   < eca.discount_terms
                           AND eca.discount_terms IS NOT NULL
                           AND eca.discount IS NOT NULL
@@ -570,8 +575,8 @@ BEGIN
                disc_amount_bc = disc_amount_tc * t_exchangerate;
 
 
-        select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
-        select id into t_cash_id from chart where accno = in_cash_accno;
+        select id into t_ar_ap_id from account where accno = in_ar_ap_accno;
+        select id into t_cash_id from account where accno = in_cash_accno;
 
         IF in_account_class = 1 THEN
             t_cash_sign := 1;
