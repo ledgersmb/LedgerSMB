@@ -227,7 +227,8 @@ BEGIN
   --    consolidated into a single line
   UPDATE acc_trans
      SET amount_bc = coalesce(amount, 0),
-         amount_tc = case fx_transaction then 0 else coalesce(amount, 0) end,
+         amount_tc = (case when fx_transaction then 0
+                           else coalesce(amount, 0) end),
          curr = (select curr from ar where acc_trans.trans_id = ar.id)
    WHERE EXISTS (select 1 from ar where acc_trans.trans_id = ar.id)
          AND amount_bc IS NULL;
@@ -235,14 +236,16 @@ BEGIN
 
   UPDATE acc_trans
      SET amount_bc = coalesce(amount, 0),
-         amount_tc = case fx_transaction then 0 else coalesce(amount, 0) end,
+         amount_tc = (case when fx_transaction then 0
+                           else coalesce(amount, 0) end),
          curr = (select curr from ap where acc_trans.trans_id = ap.id)
    WHERE EXISTS (select 1 from ap where acc_trans.trans_id = ap.id)
          AND amount_bc IS NULL;
 
   UPDATE acc_trans
      SET amount_bc = coalesce(amount, 0),
-         amount_tc = case fx_transaction then 0 else coalesce(amount, 0) end,
+         amount_tc = (case when fx_transaction then 0
+                           else coalesce(amount, 0) end),
          curr = (select curr from gl where gl.id = acc_trans.trans_id)
    WHERE EXISTS (select 1 from gl where acc_trans.trans_id = gl.id)
          AND amount_bc IS NULL;
