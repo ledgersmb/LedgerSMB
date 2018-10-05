@@ -8,8 +8,10 @@ New functionalities
 
 Quality Assurance
 * Expanded checks and resolutions for schema changes (Erik H)
+* Testing infrastructure and tests for schema change checks (Erik H)
 * Ensure correct dependency declaration (RequireExplicitInclusion critic policy)
 * POD documentation structure improvements, with automated checks (Erik H)
+* Expanded BDD tests, including payments, batches and approval (Nick P)
 
 Dependency updates
 * Dojo Toolkit (JavaScript UI tools) updated to 1.14.1 (Erik H)
@@ -23,6 +25,8 @@ Code cleanup
 * Further (compared to 1.6) reduction of warnings
 * Implemented tests for LedgerSMB::File(::*) modules (Nick P)
 * Template engine simplification by separation of UI and printed docs (Erik H)
+* Consistent copyright notices - with tests - on all Perl files in lib/ (Nick P)
+* Request handling cleanup by mapping 'flat' POST data into hierarchy (Erik H)
 
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
