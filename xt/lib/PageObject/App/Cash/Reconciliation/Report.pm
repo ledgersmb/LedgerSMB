@@ -19,6 +19,18 @@ __PACKAGE__->self_register(
 );
 
 
+sub find_heading {
+    my $self = shift;
+    my $heading = shift;
+    my $element = $self->find(
+        '//table[@id="report_headings"]/tbody'.
+        qq{/tr[th[normalize-space(.)="$heading->{Heading}:"]]}.
+        qq{/td[normalize-space(.)="$heading->{Contents}"]}
+    ) or die "Matching heading not found '$heading->{Heading}' : '$heading->{Contents}'";
+    return $element;
+}
+
+
 sub _verify {
     my ($self) = @_;
 
