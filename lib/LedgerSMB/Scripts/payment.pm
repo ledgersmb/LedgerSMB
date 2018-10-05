@@ -204,7 +204,10 @@ sub pre_bulk_post_report {
         $crow->{accno} = $data->{ar_ap_accno};
         $crow->{transdate} = $request->{payment_date};
         $crow->{amount} =
-            sum map { LedgerSMB::PGNumber->from_input($_->{payment}) }
+            sum map {
+                ($crow->{paid} eq 'some')
+                    ? LedgerSMB::PGNumber->from_input($_->{payment})
+                    : LedgerSMB::PGNumber->from_input($_->{net}) }
             @{$crow->{invoices}};
         $crow->{amount} *= -1
                     if ($request->{account_class} == EC_VENDOR);
@@ -512,6 +515,13 @@ database query:
 
 sub display_payments {
     my ($request) = @_;
+    my $data = $bulk_post_map->({ %$request });
+    my %req_contact_invoices =
+        map {
+            $_->{id} => {
+                map { $_->{invoice} => $_ } @{$_->{invoices}}
+            }
+    } @{$data->{contacts}};
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_payment_detail_data();
     $request->open_form();
@@ -526,46 +536,51 @@ sub display_payments {
     $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
     my $source = $request->{source_start};
     for (@{$payment->{contact_invoices}}){
-        my $contact_total = 0;
-        my $contact_to_pay = 0;
+        my $contact_total = LedgerSMB::PGNumber->from_db(0);
+        my $contact_to_pay = LedgerSMB::PGNumber->from_db(0);
+        my $req_contact_data = $req_contact_invoices{$_->{contact_id}};
 
         for my $invoice (@{$_->{invoices}}){
+            my $req_payment_data = $req_contact_data->{$invoice->{id}};
             if (($payment->{action} ne 'update_payments')
-                  or (defined $payment->{"id_$_->{contact_id}"})){
-                $payment->{"paid_$_->{contact_id}"} = ''
-                    unless defined $payment->{"paid_$_->{contact_id}"};
+                  or (defined $request->{"id_$_->{contact_id}"})){
+                $request->{"paid_$_->{contact_id}"} = ''
+                    unless defined $request->{"paid_$_->{contact_id}"};
             }
-            $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];  ## no critic (ProhibitMagicNumbers) sniff
-            $contact_to_pay += $invoice->[6];  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[7] = $invoice->[6]->to_db;  ## no critic (ProhibitMagicNumbers) sniff
+            $invoice->{due} =
+                $invoice->{amount} - $invoice->{paid} - $invoice->{net};
+            $contact_to_pay += $invoice->{due};
+            $invoice->{to_pay} = $invoice->{due}->to_db;
 
-            my $fld = "payment_$_->{contact_id}_" . $invoice->[0];
-            $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
+            $contact_total +=
+                LedgerSMB::PGNumber->from_input($req_payment_data->{payment});
 
-            $invoice->[3] = $invoice->[3]->to_output(money  => 1);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[4] = $invoice->[4]->to_output(money  => 1);
-            $invoice->[5] = $invoice->[5]->to_output(money  => 1);
-            $invoice->[6] = $invoice->[6]->to_output(money  => 1);
+            for my $fld (qw/ amount paid net due /) {
+                $invoice->{$fld} = $invoice->{$fld}->to_output(money  => 1);
+            }
 
+            my $fld = "payment_$_->{id}_$invoice->{id}";
             if ('display_payments' eq $request->{action}) {
-                $payment->{$fld} = $invoice->[6];
+                $payment->{$fld} = $invoice->{due};
             }
             else {
-                $payment->{$fld} //= 0;
                 $payment->{$fld} =
-                    LedgerSMB::PGNumber->from_input($payment->{$fld})
+                    LedgerSMB::PGNumber->from_input(
+                        $req_payment_data->{payment} // 0
+                    )
                     ->to_output(money => 1);
             }
         }
-        if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
+
+        if ($request->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;
         }
         $_->{contact_total} = $contact_total;
         $_->{to_pay} = $contact_to_pay;
         $payment->{grand_total} += $contact_total
-            if ($payment->{"id_$_->{contact_id}"}
-                or (defined $payment->{"paid_$_->{contact_id}"}
-                    and $payment->{"paid_$_->{contact_id}"} eq 'some'));
+            if ($request->{"id_$_->{contact_id}"}
+                or (defined $request->{"paid_$_->{contact_id}"}
+                    and $request->{"paid_$_->{contact_id}"} eq 'some'));
 
         my ($check_all) = $request->setting->get('check_payments');
         if ($payment->{account_class} == 1 and $check_all){

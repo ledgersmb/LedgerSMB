@@ -654,13 +654,22 @@ sub get_payment_detail_data {
         $self->{"source_$inv->{contact_id}"} = "";
         }
 
-        $inv->{invoices} //= [];
-        @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
+        $inv->{invoices} =
+            [  sort { $a->{transdate} cmp $b->{transdate} }
+               map { { id => $_->[0],
+                       invnumber => $_->[1],
+                       transdate => $_->[2],
+                       amount => $_->[3], ## no critic (ProhibitMagicNumbers)
+                       paid => $_->[4],   ## no critic (ProhibitMagicNumbers)
+                       net => $_->[5],    ## no critic (ProhibitMagicNumbers)
+                       due => $_->[6],    ## no critic (ProhibitMagicNumbers)
+                   } } @{$inv->{invoices} // []} ];
+
         for my $invoice (@{$inv->{invoices}}){
-            $invoice->[6] = LedgerSMB::PGNumber->new($invoice->[6]);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[5] = LedgerSMB::PGNumber->new($invoice->[5]);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[4] = LedgerSMB::PGNumber->new($invoice->[4]);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);  ## no critic (ProhibitMagicNumbers) sniff
+            for my $fld (qw/ due net paid amount /) {
+                $invoice->{$fld} =
+                    LedgerSMB::PGNumber->new($invoice->{$fld});
+            }
         }
     }
     return;
