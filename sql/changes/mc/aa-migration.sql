@@ -15,8 +15,8 @@ UPDATE ap
 
 
 UPDATE ar
-   SET amount_bc = amount,
-       netamount_bc = netamount;
+   SET amount_bc = coalesce(amount, 0),
+       netamount_bc = coalesce(netamount, 0);
 
 UPDATE ar
    SET amount_tc = amount_bc,
@@ -34,8 +34,8 @@ UPDATE ar
 
 
 UPDATE ap
-   SET amount_bc = amount,
-       netamount_bc = netamount;
+   SET amount_bc = coalesce(amount, 0),
+       netamount_bc = coalesce(netamount, 0);
 
 UPDATE ap
    SET amount_tc = amount_bc,
