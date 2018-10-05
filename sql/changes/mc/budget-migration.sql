@@ -8,5 +8,5 @@
 
 UPDATE budget_line
    SET curr = (select value from defaults where setting_key = 'curr'),
-       amount_tc = amount;
+       amount_tc = coalesce(amount, 0);
 
