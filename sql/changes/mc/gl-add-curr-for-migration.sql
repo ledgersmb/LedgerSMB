@@ -5,6 +5,11 @@
 -- been applied), the pre-change script creates the 'curr' column instead
 -- of this script, so it can store the result of the user input for the
 -- 'curr' values
+-- However, when the user chooses not to run the upgrade checks (which
+-- happens on schema creation (as the schema is empty anyway), we still
+-- need to create said column:
+
+ALTER TABLE gl ADD COLUMN IF NOT EXISTS curr char(3);
 
 
 -- Note that the aa-migration pre-checks made sure that any missing
@@ -17,6 +22,7 @@
 -- Note that I sure hope that *nobody* *ever* *in their right mind*
 -- used this functionality; we should provide a way out to those who
 -- did though.
+
 
 UPDATE gl
    SET curr = (select value from defaults where setting_key = 'curr')
