@@ -86,6 +86,7 @@ mc/drop-constraints.sql
 # do data migration here...
 mc/currency-migration.sql
 mc/aa-migration.sql
+mc/gl-add-curr-for-migration.sql
 mc/acc-trans-migration.sql
 mc/acc-checkpoint-migration.sql
 mc/journal-migration.sql

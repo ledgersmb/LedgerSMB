@@ -51,7 +51,9 @@ BEGIN
                amount_tc = 0,
                curr = (select curr from ar where ar.id = acc_trans.trans_id
                        union all
-                       select curr from ap where ap.id = acc_trans.trans_id)
+                       select curr from ap where ap.id = acc_trans.trans_id
+                       union all
+                       select curr from gl where gl.id = acc_trans.trans_id)
          WHERE CURRENT OF lines;
 
          prev_set := false;
@@ -113,7 +115,9 @@ BEGIN
                amount_bc = prev.amount + line.amount,
                curr = (select curr from ar where ar.id = acc_trans.trans_id
                        union all
-                       select curr from ap where ap.id = acc_trans.trans_id)
+                       select curr from ap where ap.id = acc_trans.trans_id
+                       union all
+                       select curr from gl where gl.id = acc_trans.trans_id)
          WHERE CURRENT OF lines;
 
         -- Since we consumed both this line and the 'prev' buffer,
@@ -231,20 +235,12 @@ BEGIN
    WHERE EXISTS (select 1 from ap where acc_trans.trans_id = ap.id)
          AND amount_bc IS NULL;
 
-  -- since there's no currency stored with GL transactions,
-  -- users will need to manually edit any GL transactions where one of
-  -- the lines has an fx_transaction flag set.
-  -- I seriously hope nobody ever did that!
-  -- Nonetheless, we'll provide infrastructure to untangle the mess.
   UPDATE acc_trans
      SET amount_bc = amount,
          amount_tc = amount,
-         curr = (select value from defaults where setting_key = 'curr')
-   WHERE NOT EXISTS (select 1 from gl
-                      where acc_trans.trans_id = gl.id
-                            and fx_transaction)
+         curr = (select curr from gl where gl.id = acc_trans.trans_id)
+   WHERE EXISTS (select 1 from gl where acc_trans.trans_id = gl.id)
          AND amount_bc IS NULL;
-
 
 END;
 $migrate$;
