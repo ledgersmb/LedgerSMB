@@ -414,7 +414,7 @@ sub get {
             (
                 $self->{their_balance} != '0'
                 and $self->{their_balance} != $self->{our_balance}
-            ) 
+            )
             or $line->{our_balance} == 0
         ) {
             $line->{err} = 'mismatch';
