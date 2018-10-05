@@ -640,79 +640,89 @@ sub get_payment_detail_data {
         $self->{"source_$inv->{contact_id}"} = "";
         }
 
-        $inv->{invoices} //= [];
-        @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
+        $inv->{invoices} =
+            [  sort { $a->{transdate} cmp $b->{transdate} }
+               map { { id => $_->[0],
+                       invnumber => $_->[1],
+                       transdate => $_->[2],
+                       amount => $_->[3], ## no critic (ProhibitMagicNumbers)
+                       paid => $_->[4],   ## no critic (ProhibitMagicNumbers)
+                       net => $_->[5],    ## no critic (ProhibitMagicNumbers)
+                       due => $_->[6],    ## no critic (ProhibitMagicNumbers)
+                   } } @{$inv->{invoices} // []} ];
+
         for my $invoice (@{$inv->{invoices}}){
-            $invoice->[6] = LedgerSMB::PGNumber->new($invoice->[6]);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[5] = LedgerSMB::PGNumber->new($invoice->[5]);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[4] = LedgerSMB::PGNumber->new($invoice->[4]);  ## no critic (ProhibitMagicNumbers) sniff
-            $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);  ## no critic (ProhibitMagicNumbers) sniff
+            for my $fld (qw/ due net paid amount /) {
+                $invoice->{$fld} =
+                    LedgerSMB::PGNumber->new($invoice->{$fld});
+            }
         }
     }
     return;
 }
 
-=item post_bulk
+=item post_bulk($data)
 
-This function posts the payments in bulk.  Note that queue_payments is not a
-common setting and rather this provides a hook for an add-on.
+This function posts the payments in bulk.
 
-This API was developed early in 1.3 and is likely to change for better
-encapsulation.  Currenty it uses the following structure:
-
-Within the main hashref:
+The C<$data> hashref has the following keys:
 
 =over
 
-=item contact_count
+=item contacts
 
-The number of payments.  One per contact.
-
-=item contact_$row
-
-for (1 .. contact_count), contact_$_ is the entity credit account's id
-associated with the current contact.  We will call this $contact_id below.
-
-For each contact id, we have the following, suffixed with _$contact_id:
+An arrayref of hashrefs holding details on payments per customer.
+Each customer hash holds the following keys:
 
 =over
 
-=item source
+=item id
 
-=item invoice_count
-
-Number of invoices to loop through
-
-=item invoice_${contact_id}_$row
-
-for $row in (1 .. invoice_count), each this provides the transaction id of the
-invoice.
-
-=back
-
-Each invoice has the following attributes, suffxed with
-${invoice_id}
-
-=over
-
-=item amount
+The value associated with this key indicates whether the contact
+was selected to be included in the payment batch (C<true>-ish means
+selected).
 
 =item paid
 
+This key indicates whether the outstanding amount for all invoices
+of this customer was paid (C<all>) or that only partial payment is
+to be recorded (C<some>) -- note that the latter may mean either of
+'all invoices, but only partially' as well 'only some invoices, but
+full payment'.
+
+=item source
+
+The source system identifier for the payment transaction -- will be
+used for automated reconciliation when possible.
+
+=item invoices
+
+An array reference to the invoices included in the payment, with
+a hashref per included invoice. The per-invoice hashref has the
+following keys:
+
+=over
+
 =item net
 
-=back
+The amount to be posted in case the contact is set to have
+full/complete payment (C<paid == 'all'>).
+
+=item payment
+
+The amount to be posted in case the contact is set to have
+partial payment (C<paid == 'some'>).
 
 =back
 
-In the future the payment posting API will become more standardized and the
-conversion between flat and hierarchical representation will be moved to the
-workflow scripts.
+=back
+
+=back
 
 =cut
 
 sub post_bulk {
-    my ($self) = @_;
+    my ($self, $data) = @_;
     my $total_count = 0;
     my ($ref) = $self->call_procedure(
           funcname => 'setting_get',
@@ -729,23 +739,25 @@ sub post_bulk {
         funcname => 'job__status'
          );
     }
-    $self->{payment_date} = $self->{datepaid};
-    for my $contact_row (1 .. $self->{contact_count}){
-        my $contact_id = $self->{"contact_$contact_row"};
-        next if (!$self->{"id_$contact_id"});
+    #$self->{payment_date} = $self->{datepaid};
+    for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
-        for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
-            my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
+        for my $invoice (@{$contact->{invoices}}) {
+
             my $pay_amount =
-                ($self->{"paid_$contact_id"} eq 'all' )
-                ? $self->{"net_$invoice_id"} : $self->{"payment_$invoice_id"};
+                ($contact->{"paid"} eq 'all' )
+                ? $invoice->{net} : $invoice->{payment};
             next if ! $pay_amount;
-            $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount);
-            $pay_amount = $pay_amount->to_output(money => 1);
-            my $invoice_subarray = "{$invoice_id,$pay_amount}";
+
+            $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount)
+                ->to_output(money => 1);
+
+            my $invoice_subarray = "{$invoice->{invoice},$pay_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 die "Invalid subarray: $invoice_subarray";
             }
+
+            # What magic happens here?!?!
             $invoice_subarray =~ s/[^0123456789{},.-]//;
             if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
@@ -754,7 +766,7 @@ sub post_bulk {
             }
         }
         $self->{transactions} = $invoice_array;
-    $self->{source} = $self->{"source_$contact_id"};
+        $self->{source} = $contact->{source};
         if ($queue_payments){
             $self->{batch_class} = BC_PAYMENT;
              $self->call_dbmethod(

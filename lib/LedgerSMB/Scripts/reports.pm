@@ -242,8 +242,10 @@ sub reverse_overpayment {
 
 
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { require LedgerSMB::Scripts::custom::reports };
+{
+    local $@ = undef;
+    eval { require LedgerSMB::Scripts::custom::reports };
+}
 
 =back
 

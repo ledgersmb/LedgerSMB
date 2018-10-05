@@ -1,5 +1,6 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
+<div id="reconciliation">
 <?lsmb IF check.unapproved_transactions
 ?><div class="warning"><a href="drafts.pl?action=list_drafts&amp;to_date=<?lsmb end_date ?>"><?lsmb text('There are [_1] unapproved transactions before the end date of this report.',check.unapproved_transactions)
 ?></a></div>
@@ -23,7 +24,6 @@
         END;
     END;
 END ?>
-<div id="reconciliation">
 <form data-dojo-type="lsmb/Reconciliation" action="recon.pl" method="post" enctype="multipart/form-data">
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
 <table class="info">
