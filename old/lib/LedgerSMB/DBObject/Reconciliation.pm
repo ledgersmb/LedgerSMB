@@ -450,8 +450,6 @@ sub get {
        }
     }
 
-    $self->{format_amount} = sub { return $self->format_amount(@_); };
-
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;
        return $self->{mismatch_their_total} *= -1;
