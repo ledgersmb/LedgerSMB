@@ -47,7 +47,7 @@ sub call {
     my $req = Plack::Request->new($env);
     my $res = $self->app->($env);
 
-    my $cookie = eval { $req->parameters->get_one('request.download-cookie'); };
+    my $cookie = $req->parameters->get('request.download-cookie');
     my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
     my $path = $env->{SCRIPT_NAME};
     $path =~ s|[^/]*$||g;
