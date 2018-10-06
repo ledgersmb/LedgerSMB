@@ -61,8 +61,7 @@ sub call {
         unless use_module($module);
 
     my $req = Plack::Request->new($env);
-    my $action_name =
-        eval { $req->parameters->get_one('action') } // '__default';
+    my $action_name = $req->parameters->get('action') // '__default';
     my $action = $module->can($action_name);
     return  LedgerSMB::PSGI::Util::internal_server_error(
         "Action Not Defined: $action_name"

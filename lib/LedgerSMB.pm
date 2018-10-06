@@ -308,14 +308,12 @@ sub upload {
         return map { $_->basename } $self->{_uploads}->values;
     }
 
-    # Hash::MultiValue croaks when the key doesn't exist;
-    # we want it to return C<undef> instead.
-    my $tmpfname = eval { $self->{_uploads}->get_one($name)->path };
-    return undef unless defined $tmpfname;
+    my $upload = $self->{_uploads}->get($name) or return undef;
+    my $tmpfname = $upload->path;
 
     my $headers = HTTP::Headers::Fast->new(
-        Content_Type => $self->{_uploads}->get_one($name)->content_type
-        );
+        Content_Type => $upload->content_type
+    );
     my $encoding = ':bytes';
     my $charset = $headers->content_type_charset;
     if ($charset) {
