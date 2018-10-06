@@ -102,6 +102,18 @@ When qr/^I enter "(.*)" into "To Pay" for the invoice from "(.*)" with these val
 };
 
 
+When qr/^I change the "Ending Statement Balance" to "(.*)"$/, sub {
+    my $amount = $1;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+
+    my $input = $page->find('//input[@id="their-total"]')
+        or die 'failed to find input field for Ending Statement Balance';
+
+    $input->clear;
+    $input->send_keys($amount);
+};
+
+
 Then qr/^I expect to see the Invoice Detail table for "(.*)"$/, sub {
     my $vendor = $1;
     my $page = S->{ext_wsl}->page->body->maindiv->content;
