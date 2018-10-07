@@ -192,120 +192,57 @@ it has been created.
 
 sub _display_report {
     my ($recon, $request) = @_;
+    my $neg_factor;
 
-    $recon->get_accounts;
-    $recon->{reverse} = $request->setting->get('reverse_bank_recs');
-    delete $recon->{reverse} unless $recon->{account_info}->{category}
-                                    eq 'A';
     $request->close_form;
     $request->open_form;
+
+    $recon->{form_id} = $request->{form_id};
+    $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    $recon->{decimal_places} = $request->setting->get('decimal_places');
+    _set_sort_options($recon, $request);
+
+    $recon->get_accounts;
+    $recon->get;
     $recon->unapproved_checks;
 
-    my $contents = '';
-    {
-        my $handle = eval { $request->upload('csv_file') };
-
-        local $/ = undef;
-        $contents = <$handle> if defined $handle;
-    }
-
-    # An empty string is recognized by the entry-importer (ISO20022)
-    # as a file name (due to absense of '<' and '>'); only call it
-    # when there's actual content to handle.
-    $recon->add_entries($recon->import_file($contents))
-        if $contents && !$recon->{submitted};
-    $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
-
-
-    $recon->get();
-    $recon->{form_id} = $request->{form_id};
-    $recon->{sort_options} = [
-            {id => 'clear_time', label => $request->{_locale}->text('Clear date')},
-            {id => 'scn', label => $request->{_locale}->text('Source')},
-            {id => 'post_date', label => $request->{_locale}->text('Post Date')},
-            {id => 'our_balance', label => $request->{_locale}->text('Our Balance')},
-            {id => 'their_balance', label => $request->{_locale}->text('Their Balance')},
-    ];
-    if (!$recon->{line_order}){
-       $recon->{line_order} = 'scn';
-    }
-
-    for my $field (qw/ total_cleared_credits total_cleared_debits total_uncleared_credits total_uncleared_debits /) {
-      $recon->{"$field"} = LedgerSMB::PGNumber->from_input(0);
-    }
-    my $neg_factor = 1;
-    if ($recon->{account_info}->{category} =~ /(A|E)/){
+    if ($recon->{account_info}->{category} =~ /^(A|E)$/){
        $recon->{their_total} *= -1;
        $neg_factor = -1;
     }
-
-    # Credit/Debit separation (useful for some)
-    for my $l (@{$recon->{report_lines}}){
-        if ($l->{their_balance} > 0){
-           $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{their_credits} = $l->{their_balance};
-        }
-        else {
-           $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{their_debits} = $l->{their_balance}->bneg;
-        }
-        if ($l->{our_balance} > 0){
-           $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{our_credits} = $l->{our_balance};
-        }
-        else {
-           $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{our_debits} = $l->{our_balance}->bneg;
-        }
-        if ($l->{cleared}){
-             $recon->{total_cleared_credits}->badd($l->{our_credits});
-             $recon->{total_cleared_debits}->badd($l->{our_debits});
-        } else {
-             $recon->{total_uncleared_credits}->badd($l->{our_credits});
-             $recon->{total_uncleared_debits}->badd($l->{our_debits});
-        }
-        for my $amt_name (qw/ our_ their_ /) {
-            for my $bal_type (qw/ balance credits debits/) {
-                $l->{"$amt_name$bal_type"} = $l->{"$amt_name$bal_type"}->to_output(money=>1);
-            }
-        }
+    else {
+        $neg_factor = 1;
     }
 
-    $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
-
-    $recon->{statement_gl_calc} = $neg_factor *
-                                    ($recon->{their_total}
-                                    + $recon->{outstanding_total}
-                                    + $recon->{mismatch_our_total});
-
-    $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
-    $recon->{out_of_balance}->bfround(
-        $request->setting->get('decimal_places') * -1
-    );
-    $recon->{submit_enabled} = ($recon->{out_of_balance} == 0);
-
-    # Check if only one entry could explain the difference
-    if ( !$recon->{submit_enabled}) {
-        for my $l (@{$recon->{report_lines}}){
-            $l->{suspect} = $l->{our_credits} == -$recon->{out_of_balance}
-                         || $l->{our_debits}  ==  $recon->{out_of_balance}
-                         ? 1 : 0;
-        }
+    if ($recon->{account_info}->{category} eq 'A') {
+        $recon->{reverse} = $request->setting->get('reverse_bank_recs');
     }
+
+    _process_upload($recon, $request) unless $recon->{submitted};
+
+    $recon->build_totals;
+    $recon->build_statement_gl_calc;
+    $recon->build_variance;
+    _highlight_suspect_rows($recon);
+
+    $recon->{submit_enabled} = ($recon->{variance} == 0);
+
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
-      for my $bal_type (qw/ credits debits/) {
-         $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
-      }
+        for my $bal_type (qw/ credits debits/) {
+            $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
+        }
     }
-    $recon->{their_total} = $recon->{their_total} * $neg_factor;
+    $recon->{their_total} *= $neg_factor;
 
-    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total /) {
-      $recon->{"$field"} = $recon->{"$field"}->to_output(money=>1);
+    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance /) {
+        $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
-    for my $field (qw/ our_total beginning_balance out_of_balance /) {
-        $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
-        $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
+
+    for my $field (qw/ our_total beginning_balance /) {
+        $recon->{$field} ||= LedgerSMB::PGNumber->from_db(0);
+        $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
+
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'reconciliation/report', $recon);
 }
@@ -479,6 +416,80 @@ sub pending {
         }
     }
 };
+
+
+# _process_upload($recon, $request)
+#
+# If the request data includes a csv_file upload, import it and
+# apply the contents to the current reconciliation report.
+
+sub _process_upload {
+    my ($recon, $request) = @_;
+    my $contents;
+    {
+        my $handle = eval { $request->upload('csv_file') };
+        local $/ = undef;
+        $contents = <$handle> if defined $handle;
+    }
+
+    # An empty string is recognized by the entry-importer (ISO20022)
+    # as a file name (due to absense of '<' and '>'); only call it
+    # when there's actual content to handle.
+    if ($contents) {
+        $recon->add_entries($recon->import_file($contents));
+    }
+
+    return;
+}
+
+
+# _set_sort_options($recon, $request)
+#
+# Define the available sort options for display on a reconciliation report.
+# Set a default sort order, if otherwise unspecified.
+
+sub _set_sort_options {
+    my ($recon, $request) = @_;
+
+    $recon->{sort_options} = [
+            {id => 'clear_time', label => $request->{_locale}->text('Clear date')},
+            {id => 'scn', label => $request->{_locale}->text('Source')},
+            {id => 'post_date', label => $request->{_locale}->text('Post Date')},
+            {id => 'our_balance', label => $request->{_locale}->text('Our Balance')},
+            {id => 'their_balance', label => $request->{_locale}->text('Their Balance')},
+    ];
+
+    $recon->{line_order} ||= 'scn';
+    return;
+}
+
+
+# _highlight_suspect_rows
+#
+# If there is a variance in the report, highlight any rows which
+# exactly match the variance, to help identify if a single row is
+# responsible for the mismatch.
+#
+# Does nothing if the variance is zero.
+
+sub _highlight_suspect_rows {
+    my ($recon) = @_;
+
+    if ($recon->{variance} == 0) {
+        # No differences to highlight    
+        return;
+    }
+
+    # Check if only one entry could explain the difference
+    for my $l (@{$recon->{report_lines}}){
+        $l->{suspect} = $l->{our_credits} == -$recon->{variance}
+                     || $l->{our_debits}  ==  $recon->{variance}
+                     ? 1 : 0;
+    }
+
+    return;
+}
+
 
 =back
 

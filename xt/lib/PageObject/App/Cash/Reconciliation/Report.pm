@@ -19,6 +19,34 @@ __PACKAGE__->self_register(
 );
 
 
+sub find_heading {
+    my $self = shift;
+    my $heading = shift;
+    my $xpath;
+
+    if($heading->{Heading} eq 'Ending Statement Balance') {
+        $xpath = (
+            '//table[@id="report_headings"]/tbody'.
+            qq{/tr[th[normalize-space(.)="$heading->{Heading}:"]]}.
+            q{/td/div[@id="widget_their-total"]/div/}.
+            qq{/input[\@value="$heading->{Contents}"]}
+        );
+    }
+    else {
+        $xpath = (
+            '//table[@id="report_headings"]/tbody'.
+            qq{/tr[th[normalize-space(.)="$heading->{Heading}:"]]}.
+            qq{/td[normalize-space(.)="$heading->{Contents}"]}
+        );
+    }
+
+    my $element = $self->find($xpath)
+        or die "Matching heading not found '$heading->{Heading}' : '$heading->{Contents}'";
+
+    return $element;
+}
+
+
 sub _verify {
     my ($self) = @_;
 

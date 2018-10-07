@@ -32,6 +32,19 @@ Then qr/I should see a payment line with these values:/, sub {
 };
 
 
+Then qr/^I should see these Reconciliation Report headings:$/, sub {
+    my $data = C->data;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+
+    foreach my $wanted(@{$data}) {
+        ok(
+            $page->find_heading($wanted),
+            "Found header '$wanted->{Heading}' displaying '$wanted->{Contents}'",
+        );
+    }
+};
+
+
 When qr/I click on the Batch with Batch Number "(.*)"/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     my $batch_number = $1;
