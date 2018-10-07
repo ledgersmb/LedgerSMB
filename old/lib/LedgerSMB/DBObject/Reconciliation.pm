@@ -53,7 +53,6 @@ use base qw(LedgerSMB::PGOld);
 use List::Util qw(sum);
 use LedgerSMB::Reconciliation::CSV;
 use LedgerSMB::PGNumber;
-use LedgerSMB::Magic qw( MONEY_EPSILON);
 
 
 # don't need new
@@ -72,10 +71,7 @@ sub update {
     my $beginning_balance = $self->{beginning_balance} // 0;
     my $total_cleared_credits = $self->{total_cleared_credits} // 0;
     my $total_cleared_debits = $self->{total_cleared_debits} // 0;
-    return $self->{submit_allowed} =
-        abs(($their_total - $beginning_balance)
-            - ($total_cleared_credits - $total_cleared_debits))
-        >= MONEY_EPSILON;
+    return;
 }
 
 sub _pre_save {
