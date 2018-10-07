@@ -44,7 +44,6 @@ our @EXPORT_OK = qw(
     JRNL_GJ
     MAX_DAYS_IN_MONTH
     MIN_PER_HOUR
-    MONEY_EPSILON
     MONTHS_PER_QUARTER
     MONTHS_PER_YEAR
     NC_ENTITY
@@ -277,8 +276,6 @@ use constant SATURDAY           => 6;
 
 =head3  LedgerSMB miscellaneous contants
 
-    MONEY_EPSILON       0.001
-
     EDIT_BUDGET_ROWS     5
     NEW_BUDGET_ROWS     25
 
@@ -287,7 +284,6 @@ a budget.
 
 =cut
 
-use constant MONEY_EPSILON      => 0.001;
 use constant EDIT_BUDGET_ROWS => 5;
 use constant NEW_BUDGET_ROWS  => 25;
 
