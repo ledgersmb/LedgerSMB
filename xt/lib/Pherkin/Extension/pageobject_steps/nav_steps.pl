@@ -105,6 +105,8 @@ my %screens = (
     'Payment Batch Summary' => 'PageObject::App::Search::ReportDynatable',
     'New Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::NewReport',
     'Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::Report',
+    'Search Reconciliation Reports' => 'PageObject::App::Search::Reconciliation',
+    'Reconciliation Search Report' => 'PageObject::App::Search::ReportDynatable',
 );
 
 Then qr/I should see the (.*) screen/, sub {
@@ -127,6 +129,11 @@ Then qr/I should see the (.*) screen/, sub {
 
 When qr/I select the "(.*)" tab/, sub {
     S->{ext_wsl}->page->find(".//*[\@role='tab' and text()='$1']")->click;
+};
+
+When qr/^I click the "(.*)" link$/, sub {
+    my $link_text = $1;
+    S->{ext_wsl}->page->find(qq{.//a[normalize-space(.)="$link_text"]})->click;
 };
 
 When qr/I open the parts screen for '(.*)'/, sub {

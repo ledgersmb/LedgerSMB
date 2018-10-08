@@ -64,7 +64,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Cash > Reports                             |                          |
 #   | Cash > Reports > Payments                  |                          |
 #   | Cash > Reports > Receipts                  |                          |
-#   | Cash > Reports > Reconciliation            |                          |
+    | Cash > Reports > Reconciliation            | Search Reconciliation Reports |
 #   | Cash > Transfer                            |                          |
 #   | Cash > Use AR Overpayment                  |                          |
 #   | Cash > Use Overpayment                     |                          |
