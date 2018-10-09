@@ -190,29 +190,10 @@ Note that currently contra accounts will show negative balances.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) returns INT as $$
 
-    -- Does some basic checks before allowing the approval to go through;
-    -- moves the approval to "cr_report_line", I guess, or some other "final" table.
-    --
-    -- Pending may just be a single flag in the database to mark that it is
-    -- not finalized. Will need to discuss with Chris.
-
     DECLARE
         current_row RECORD;
-        completed cr_report_line;
-        total_errors INT;
-        in_user TEXT;
         ac_entries int[];
     BEGIN
-        in_user := current_user;
-
-        -- so far, so good. Different user, and no errors remain. Therefore,
-        -- we can move it to completed reports.
-        --
-        -- User may not be necessary - I would think it better to use the
-        -- in_user, to note who approved the report, than the user who
-        -- filed it. This may require clunkier syntax..
-
-        --
         ac_entries := '{}';
         UPDATE cr_report SET approved = 't',
                 approved_by = person__get_my_entity_id(),

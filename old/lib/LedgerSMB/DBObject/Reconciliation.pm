@@ -154,36 +154,20 @@ sub unapproved_checks {
 
 =item approve($self,$reportid)
 
-Approves the pending report $reportid.
-Checks for error codes in the pending report, and approves the report if none
-are found.
-
-Limitations: The creating user may not approve the report.
-
-Returns 1 on success.
+Approves the specified reconciliation report and marks associated transactions
+as cleared.
 
 =cut
 
 sub approve {
+    my $self = shift;
+    my $report_id = shift;
 
-    my $self = shift @_;
-    # the user should be embedded into the $self object.
-    my $report_id = shift @_;
+    $self->call_procedure(
+        funcname => 'reconciliation__report_approve',
+        args => [$report_id],
+    );
 
-    my $code = $self->call_procedure(
-                           funcname=>'reconciliation__report_approve',
-                               args=> [$report_id]); # user
-
-    if ($code == 0) {  # no problem.
-        return $code;
-    }
-    # this is destined to change as we figure out the Error system.
-    elsif ($code == 99) {  ## no critic (ProhibitMagicNumbers) sniff
-
-        return $self->error(
-                "User $self->{user}->{name} cannot approve report, "
-                ."must be a different user.");
-    }
     return;
 }
 
