@@ -54,11 +54,11 @@ Then qr/I expect the report to contain (\d+) rows?$/, sub {
 
     # Discount final row if it contains totals
     my $final_element = pop @rows;
-    if($final_element->get_attribute('class') =~ m/listtotal/) {
+    if($final_element && $final_element->get_attribute('class') =~ m/listtotal/) {
         $row_count --;
     }
 
-    is(scalar @rows, $wanted_row_count, "report contains $wanted_row_count rows");
+    is($row_count, $wanted_row_count, "report contains $wanted_row_count rows");
 };
 
 
