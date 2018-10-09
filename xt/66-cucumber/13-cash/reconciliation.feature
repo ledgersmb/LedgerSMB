@@ -12,13 +12,13 @@ Scenario: Create new reconciliation report, update and save.
   Then I should see the New Reconciliation Report screen.
   When I select "1060 Checking Account" from the drop down "Account"
    And I enter "100.00" into "Statement Balance"
-   And I enter "2018-01-01" into "To Date"
+   And I enter "2018-01-01" into "Statement Date"
    And I press "Create New Report"
   Then I should see the Reconciliation Report screen
    And I should see these Reconciliation Report headings:
        | Heading                     | Contents              |
        | Account                     | 1060 Checking Account |
-       | Reconciliation Date         | 2018-01-01            |
+       | Statement Date              | 2018-01-01            |
        | Beginning Statement Balance | 0.00                  |
        | Ending Statement Balance    | 100.00                |
        | Variance                    | -100.00               |
@@ -32,7 +32,7 @@ Scenario: Create new reconciliation report, update and save.
    And I should see these Reconciliation Report headings:
        | Heading                     | Contents              |
        | Account                     | 1060 Checking Account |
-       | Reconciliation Date         | 2018-01-01            |
+       | Statement Date              | 2018-01-01            |
        | Beginning Statement Balance | 0.00                  |
        | Ending Statement Balance    | 101.00                |
        | Variance                    | -101.00               |
