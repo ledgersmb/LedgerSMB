@@ -152,20 +152,18 @@ sub unapproved_checks {
                     $self->call_dbmethod(funcname=>'reconciliation__check') };
 }
 
-=item approve($self,$reportid)
+=item approve
 
-Approves the specified reconciliation report and marks associated transactions
-as cleared.
+Approves the reconciliation report specified by the object's C<report_id>
+property and marks associated transactions as cleared.
 
 =cut
 
 sub approve {
     my $self = shift;
-    my $report_id = shift;
 
-    $self->call_procedure(
-        funcname => 'reconciliation__report_approve',
-        args => [$report_id],
+    $self->call_dbmethod(
+        funcname => 'reconciliation__report_approve'
     );
 
     return;
