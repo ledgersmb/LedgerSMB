@@ -377,7 +377,7 @@ sub approve {
         base => $request
     });
 
-    my $code = $recon->approve($request->{report_id});
+    my $code = $recon->approve;
     my $template = $code == 0 ? 'reconciliation/approved'
         : 'reconciliation/report';
     return LedgerSMB::Template::UI->new_UI

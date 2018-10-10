@@ -8,9 +8,10 @@ use LedgerSMB::Batch;
 use LedgerSMB::IR;
 use LedgerSMB::Form;
 use LedgerSMB::DBObject::Account;
-
+use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Credit_Account;
+use PGObject::Simple;
 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
@@ -308,6 +309,41 @@ Given qr/(a batch|batches) with these properties:$/, sub {
                 batch_id => $batch_id,
             };
             LedgerSMB::Batch->new({ base => $data })->post;
+        }
+    }
+};
+
+Given qr/^(a reconciliation report|reconciliation reports) with these properties:$/, sub {
+
+    my $db = PGObject::Simple->new();
+    $db->set_dbh(S->{ext_lsmb}->admin_dbh);
+
+    foreach my $report_spec (@{C->data}) {
+
+        my $account = $db->call_procedure(
+            funcname => 'account__get_from_accno',
+            args => [$report_spec->{'Account Number'}],
+        ) or die 'Failed to find account number ' . $report_spec->{'Account Number'};
+
+        my $recon_data = {
+            dbh => S->{ext_lsmb}->admin_dbh,
+            chart_id => $account->{id},
+            total => $report_spec->{'Statement Balance'},
+            end_date => $report_spec->{'Statement Date'},
+        };
+
+        my $recon = LedgerSMB::DBObject::Reconciliation->new({
+            base => $recon_data,
+        });
+
+        my $recon_id = $recon->new_report();
+
+        if ($report_spec->{'Submitted'} eq 'yes') {
+            $recon->submit;
+        }
+
+        if ($report_spec->{'Approved'} eq 'yes') {
+            $recon->approve;
         }
     }
 };
