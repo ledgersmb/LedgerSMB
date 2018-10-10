@@ -37,22 +37,24 @@ reconciled in a specific report.
 
 =over
 
-=item amount_from
+=item balance_from
 
-Only show reports where the amount is greater or equal to this
+Only show reports where the statement ending balance is greater or equal
+to this.
 
 =cut
 
-has amount_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
+has balance_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
               required => 0, coerce => 1);
 
-=item amount_to
+=item balance_to
 
-Only show reports where the amount is less than or equal to this
+Only show reports where the statement ending balance is less than or equal
+to this.
 
 =cut
 
-has amount_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
+has balance_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
               coerce => 1);
 
 =item account_id
@@ -77,7 +79,7 @@ has approved => (is => 'ro', isa => 'Bool', required => 0);
 If undef, show all reports, if true, show ones submitted for approval, and if
 false only show reports in progress.
 
-Note that approved being set to true and submitted bein set to false will never
+Note that approved being set to true and submitted being set to false will never
 match any reports.
 
 =cut
