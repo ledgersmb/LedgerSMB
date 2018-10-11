@@ -50,8 +50,8 @@ Scenario: Search for reconciliation report and delete it,
    And I expect the report to contain 1 row
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-01-01'
    And I expect the 'Statement Balance' report column to contain '101.00' for Statement Date '2018-01-01'
-   And I expect the 'Approved' report column to contain '0' for Statement Date '2018-01-01'
-   And I expect the 'Submitted' report column to contain '0' for Statement Date '2018-01-01'
+   And I expect the 'Approved' report column to contain '' for Statement Date '2018-01-01'
+   And I expect the 'Submitted' report column to contain '' for Statement Date '2018-01-01'
    And I expect the 'Entered By' report column to contain '1' for Statement Date '2018-01-01'
    And I expect the 'Approved By' report column to contain '' for Statement Date '2018-01-01'
   When I click the "2018-01-01" link
