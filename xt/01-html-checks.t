@@ -40,7 +40,7 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
-    open $fh, '<', $filename
+    open $fh, '<:encoding(UTF-8)', $filename
         or BAIL_OUT("failed to open $filename for reading $!");
     $is_snippet = 1
         if ($filename !~ m#(log(in|out))|main|(setup/(?!upgrade/))#
@@ -86,6 +86,12 @@ sub content_test {
                     return 0;
                 }
             },
+            'text-use-entity' => sub {
+                # As per W3C guidance, prefer characters in their normal form
+                # rather than requiring named or numeric character references.
+                # https://www.w3.org/International/questions/qa-escapes
+                return 1;
+            },
         },
     });
     $lint->parse($text);
@@ -109,6 +115,8 @@ sub content_test {
         next if ($is_snippet
                  && $error->as_string =~ m/<body> tag is required/ );
 
+use Data::Dumper;
+diag Dumper $error;
         push @reportable_errors, $error->as_string;
     }
     ok(scalar @reportable_errors == 0, "Source critique for '$filename'")
