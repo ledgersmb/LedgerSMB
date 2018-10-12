@@ -107,6 +107,8 @@ my %screens = (
     'Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::Report',
     'Search Reconciliation Reports' => 'PageObject::App::Search::Reconciliation',
     'Reconciliation Search Report' => 'PageObject::App::Search::ReportDynatable',
+    'Chart of Accounts' => 'PageObject::App::Search::ReportDynatable',
+    'Account' => 'PageObject::App::GL::Account',
 );
 
 Then qr/I should see the (.*) screen/, sub {
