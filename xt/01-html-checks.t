@@ -115,8 +115,6 @@ sub content_test {
         next if ($is_snippet
                  && $error->as_string =~ m/<body> tag is required/ );
 
-use Data::Dumper;
-diag Dumper $error;
         push @reportable_errors, $error->as_string;
     }
     ok(scalar @reportable_errors == 0, "Source critique for '$filename'")
