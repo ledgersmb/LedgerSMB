@@ -61,7 +61,7 @@ has balance_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
 
 =item account_id
 
-Show repoirts only for this specific account
+Show reports only for this specific account
 
 =cut
 
@@ -146,10 +146,10 @@ sub columns {
                 type => 'text', },
              {col_id => 'approved',
                 name => $self->Text('Approved'),
-                type => 'text', },
+                type => 'boolean_checkmark', },
              {col_id => 'submitted',
                 name => $self->Text('Submitted'),
-                type => 'text', },
+                type => 'boolean_checkmark', },
              {col_id => 'updated',
                 name => $self->Text('Last Updated'),
                 type => 'text', },
@@ -182,9 +182,9 @@ sub header_lines {
              text => $self->Text('From Date')},
             {name => 'date_to',
              text => $self->Text('To Date') },
-            {name => 'amount_from',
+            {name => 'balance_from',
              text => $self->Text('From Amount')},
-            {name => 'amount_to',
+            {name => 'balance_to',
              text => $self->Text('To Amount')}
      ];
 }
