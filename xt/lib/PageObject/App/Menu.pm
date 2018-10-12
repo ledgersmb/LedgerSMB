@@ -73,6 +73,7 @@ my %menu_path_pageobject_map = (
     "Quotations > Reports > RFQs" => 'PageObject::App::Search::Order',
 
     "General Journal > Search and GL" => 'PageObject::App::Search::GL',
+    "General Journal > Chart of Accounts" => 'PageObject::App::Search::ReportDynatable',
     "General Journal > Year End" => 'PageObject::App::Closing',
     # Time cards
     "Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',

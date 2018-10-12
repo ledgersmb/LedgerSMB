@@ -39,7 +39,7 @@
   </div>
 </div>
 <div class="inputline" id="desc-line">
-   <label class="line"><?lsmb text('Description') ?></label>
+   <label class="line" for="desc-h"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
       <?lsmb
     INCLUDE input element_data = {
@@ -124,7 +124,7 @@
 </div>
 <?lsmb END #  IF ID ?>
 <div class="inputline" id="desc-line2">
-   <label class="line"><?lsmb text('Description') ?></label>
+   <label class="line" for="desc-a"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
       <?lsmb
     INCLUDE input element_data = {
@@ -133,6 +133,7 @@
      value = form.description
       type = 'text'
      class = 'description'
+        id = 'desc-a'
     } ?>
    </div>
 </div>
