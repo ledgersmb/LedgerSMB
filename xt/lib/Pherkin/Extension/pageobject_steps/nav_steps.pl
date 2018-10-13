@@ -168,7 +168,19 @@ Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
     $actual =~ s/^\s+|\s+$//g;
     is($actual, $value,
        "value for element ($id) equals expected value ($value):" .
-        $actual);
+        $actual
+    );
+};
+
+Then qr/^I expect the "(.*)" field to contain "(.*)"$/, sub {
+    my $label = $1;
+    my $value = $2;
+    my $element = S->{ext_wsl}->page->body->maindiv->find(
+        "*labeled",
+        text => $label
+    );
+    ok($element, "found element with label '$label'");
+    is($element->value, $value, "element with label '$label' contains '$value'");
 };
 
 1;

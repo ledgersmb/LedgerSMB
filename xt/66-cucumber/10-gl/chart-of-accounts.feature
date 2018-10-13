@@ -14,6 +14,7 @@ Scenario: View the chart of accounts and change the description of an account
    And I expect the 'Description' report column to contain 'Checking Account' for Account Number '1060'
   When I click Account Number "1060"
   Then I should see the Account screen
+   And I expect the "Description" field to contain "Checking Account"
   When I enter "Cheque Account" into "Description"
    And I press "Save"
   Then I should see the Account screen
@@ -29,6 +30,7 @@ Scenario: View the chart of accounts and change the description of an account he
    And I expect the 'Description' report column to contain 'CURRENT ASSETS' for Account Number '1000'
   When I click Account Number "1000"
   Then I should see the Account screen
+   And I expect the "Description" field to contain "CURRENT ASSETS"
   When I enter "Assets" into "Description"
    And I press "Save"
   Then I should see the Account screen
