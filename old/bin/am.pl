@@ -187,11 +187,6 @@ sub gifi_footer {
         }
     }
 
-    if ( $form->{coa} ) {
-        $button{'copy_to_coa'} =
-          { ndx => 7, key => 'C', value => $locale->text('Copy to COA') };
-    }
-
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         push @{$buttons}, {
             name => 'action',
