@@ -187,7 +187,7 @@
 </div>
 <div id="accdetails">
 <div class="inputline" id="gifi-line">
-   <label class="line"><?lsmb text('GIFI') ?></label>
+   <label class="line" for="gifi-a"><?lsmb text('GIFI') ?></label>
    <div class="inputgroup">
        <?lsmb
           FOREACH g IN form.gifi_list;
@@ -195,15 +195,18 @@
           END;
           form.gifi_list.unshift({});
           INCLUDE select element_data={
-            name = 'gifi_accno'
-          default_values = [form.gifi_accno]
-            options = form.gifi_list
-           text_attr='text'
-          value_attr='accno' } ?>
+              name = 'gifi_accno'
+              default_values = [form.gifi_accno]
+              options = form.gifi_list
+              text_attr = 'text'
+              value_attr = 'accno'
+              id = 'gifi-a'
+          };
+       ?>
    </div>
 </div>
 <div class="inputline" id="acctype-line">
-   <label class="line"><?lsmb text('Account Type') ?></label>
+   <label class="line" for="category-a"><?lsmb text('Account Type') ?></label>
    <div class="inputgroup">
       <?lsmb
         a_types = [
@@ -218,6 +221,7 @@
                   name = 'category'
                options = a_types
         default_values = [form.category]
+                    id = 'category-a'
     }; ?>
   </div>
 </div>
@@ -258,7 +262,7 @@
    </div>
 </div>
 <div class="inputline" id="summary-line">
-   <label class="line"><?lsmb text('Summary account for') ?></label>
+   <label class="line" for="summary-a"><?lsmb text('Summary account for') ?></label>
    <div class="inputgroup">
    <?lsmb # fixed_asset may eventually go in here too depending on future
           # directions in development.
@@ -276,6 +280,7 @@
                name = "summary"
             options = s_accts
      default_values = [summary]
+                 id = 'summary-a'
       }; ?>
    </div>
 </div>
