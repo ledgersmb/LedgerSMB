@@ -25,7 +25,7 @@
         type = 'hidden'
 } ?>
 <div class="inputline" id="accno-line">
-  <label class="line"><?lsmb text('Account Number') ?></label>
+  <label class="line" for="accno-h"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
     <?lsmb
     INCLUDE input element_data = {
@@ -75,7 +75,34 @@
    </div>
 </div>
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
+
+<?lsmb
+    INCLUDE button element_data={
+       name = 'action',
+       value = 'save'
+       text = text('Save')
+       accesskey = 'S'
+    };
+
+    IF form.id;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'save_as_new'
+           text = text('Save as new')
+           accesskey = 'N'
+        };
+    END;
+
+    IF form.orphaned;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'delete'
+           text = text('Delete')
+           accesskey = 'D'
+        };
+    END;
+?>
+
 <hr />
 </form>
 </div>
@@ -95,7 +122,7 @@
         type = 'hidden'
 } ?>
 <div class="inputline" id="accno-line2">
-  <label class="line"><?lsmb text('Account Number') ?></label>
+  <label class="line" for="accno-a"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
     <?lsmb
     INCLUDE input element_data = {
@@ -104,6 +131,7 @@
      value = form.accno
       type = 'text'
      class = 'control-code'
+        id = "accno-a"
     } ?>
   </div>
 </div>
@@ -160,14 +188,14 @@
    <label class="line"><?lsmb text('GIFI') ?></label>
    <div class="inputgroup">
        <?lsmb
-          FOREACH g IN form.all_gifi;
+          FOREACH g IN form.gifi_list;
              g.text = g.accno _ '--' _ g.description;
           END;
-          form.all_gifi.unshift({});
+          form.gifi_list.unshift({});
           INCLUDE select element_data={
             name = 'gifi_accno'
           default_values = [form.gifi_accno]
-            options = form.all_gifi
+            options = form.gifi_list
            text_attr='text'
           value_attr='accno' } ?>
    </div>
@@ -208,14 +236,11 @@
    </div>
    <div class="inputgroup">
      <?lsmb
-        IF form.recon;
-           recon = 'CHECKED';
-        END;
         INCLUDE input element_data={
                name = 'recon'
                type = 'checkbox',
               label = text('Recon')
-            checked = recon
+            checked = form.is_recon ? 'checked' : ''
               value = '1'
         } ?>
    </div>
@@ -457,15 +482,42 @@
    </div>
 </div>
 </div> <!-- dropdown div -->
-<?lsmb FOREACH hidden IN hiddens.keys;
-        INCLUDE input element_data={
-                type = 'hidden',
-                name = hidden,
-                value = hiddens.item(hidden)
-                }; END ?>
 
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; button.id = button.value _ '-A'; INCLUDE button element_data=button; END ?>
+
+<?lsmb
+    PROCESS input element_data = {
+        value = form.id
+        name = 'id'
+        type = 'hidden'
+    };
+
+    INCLUDE button element_data={
+       name = 'action',
+       value = 'save'
+       text = text('Save')
+       accesskey = 'S'
+    };
+
+    IF form.id;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'save_as_new'
+           text = text('Save as new')
+           accesskey = 'N'
+        };
+    END;
+
+    IF form.orphaned;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'delete'
+           text = text('Delete')
+           accesskey = 'D'
+        };
+    END;
+?>
+
 <hr />
 </form>
 </div>
@@ -483,10 +535,10 @@
    PROCESS input element_data = {
        type="hidden"
        name="languagecount"
-       value=form.languages.size
+       value=languages.size
    };
    lang_index = 0;
-   FOREACH language IN form.languages;
+   FOREACH language IN languages;
      lang_index = lang_index + 1; ?>
   <tr>
     <td><?lsmb language.description ?>
