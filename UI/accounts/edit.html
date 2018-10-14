@@ -1,4 +1,16 @@
-<?lsmb PROCESS elements.html ?>
+<?lsmb
+    PROCESS elements.html;
+
+    # Build text for dropdown options
+    FOREACH h IN form.all_headings;
+        h.text = h.accno _ '--' _ h.description;
+    END;
+
+    null_heading = [{
+        id = -1,
+        text = '-- ' _ text('NONE') _ ' --'
+    }];
+?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer">
@@ -56,17 +68,10 @@
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
       <?lsmb
-    FOREACH h IN form.all_headings;
-        h.text = h.accno _ '--' _ h.description;
-    END;
-    form.all_headings.push({id = -1, text = '-- NONE --' });
-    IF (! form.account_heading);
-       form.account_heading = -1;
-    END;
     INCLUDE select element_data = {
                   name = 'parent'
-               options = form.all_headings
-        default_values = [form.account_heading]
+               options = null_heading.merge(form.all_headings)
+        default_values = [form.parent_id]
              text_attr = 'text'
             value_attr = 'id'
                  class = 'account'
@@ -140,10 +145,6 @@
    <label class="line" for="heading-a"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
       <?lsmb
-    FOREACH h IN form.all_headings;
-        h.text = h.accno _ '--' _ h.description;
-    END;
-    form.all_headings.unshift({});
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
