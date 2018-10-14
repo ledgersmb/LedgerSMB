@@ -36,6 +36,13 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.6
+* Fix search for reconciliation report by amount (Nick P)
+* Fix adding budget gives error (Nick P, #3850)
+
+Nick P is Nick Prater
+
+
 Changelog for 1.6.5
 * Update Dojo to 1.13.3-pre; previous update broke file uploads (Erik H, #3799)
 
