@@ -541,7 +541,10 @@
    FOREACH language IN languages;
      lang_index = lang_index + 1; ?>
   <tr>
-    <td><?lsmb language.description ?>
+    <td>
+      <label for="heading-languagetranslation-<?lsmb lang_index ?>">
+        <?lsmb language.description ?>
+      </label>
       <?lsmb PROCESS input element_data = {
              type="hidden"
              name = 'languagecode_' _ lang_index
@@ -552,6 +555,7 @@
                id = 'heading-languagetranslation-' _ lang_index
                class = 'translation'
                value = form.translations.${language.code}.description
+               title = text(language.description)
        } ?>
       </td>
     </tr>
@@ -573,7 +577,7 @@
     value = 'update_translations',
     type = 'submit',
     class = 'submit',
-    text = text('Save'),
+    text = text('Save Translations'),
 } ?>
 </form>
 </div>
