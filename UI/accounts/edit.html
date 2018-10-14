@@ -137,7 +137,7 @@
    </div>
 </div>
 <div class="inputline" id="heading-line2">
-   <label class="line"><?lsmb text('Heading') ?></label>
+   <label class="line" for="heading-a"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
       <?lsmb
     FOREACH h IN form.all_headings;
@@ -147,10 +147,11 @@
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
-        default_values = [form.account_heading]
+        default_values = [form.heading]
              text_attr = 'text'
             value_attr = 'id'
                  class = 'account'
+                    id = 'heading-a'
     }; ?>
    </div>
 </div>
