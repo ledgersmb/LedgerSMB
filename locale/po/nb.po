@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.6-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-09-16 20:01+0000\n"
+"POT-Creation-Date: 2018-10-14 20:10+0000\n"
 "Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2018\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -203,7 +203,7 @@ msgid "Access Denied"
 msgstr "Nektet Adgang"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:209
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:132
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:134
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:66
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:67 old/bin/aa.pl:1660
 #: old/bin/aa.pl:596 old/bin/aa.pl:660 old/bin/aa.pl:812 old/bin/ic.pl:1122
@@ -213,7 +213,7 @@ msgstr "Nektet Adgang"
 #: templates/demo_with_images/invoice.html:255
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:254 templates/xedemo/printPayment.html:44
-#: UI/accounts/edit.html:89 UI/budgetting/budget_entry.html:57
+#: UI/accounts/edit.html:94 UI/budgetting/budget_entry.html:57
 #: UI/Contact/contact.html:13 UI/Contact/divs/credit.html:188
 #: UI/Contact/divs/credit.html:189 UI/journal/journal_entry.html:111
 #: UI/orders/order.html:252 UI/payments/payment2.html:84
@@ -259,8 +259,8 @@ msgstr "Kontonr."
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:79
 #: lib/LedgerSMB/Report/Trial_Balance.pm:154
 #: lib/LedgerSMB/Scripts/payment.pm:154 old/bin/ic.pl:1021 old/bin/ic.pl:1671
-#: t/data/04-complex_template.html:558 UI/accounts/edit.html:28
-#: UI/accounts/edit.html:98 UI/Contact/divs/bank_act.html:23
+#: t/data/04-complex_template.html:558 UI/accounts/edit.html:40
+#: UI/accounts/edit.html:103 UI/Contact/divs/bank_act.html:23
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
 msgid "Account Number"
@@ -279,7 +279,7 @@ msgid "Account Title"
 msgstr "Kontotype"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:78
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:175
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:177
 msgid "Account Type"
 msgstr "Kontotype"
 
@@ -875,7 +875,7 @@ msgstr "Godkjennings  status"
 msgid "Approve"
 msgstr "Godkjenne"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:143
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:145
 #: UI/Reports/filters/gl.html:176 UI/Reports/filters/invoice_search.html:222
 #: UI/Reports/filters/reconciliation_search.html:58
 #: UI/Reports/filters/trial_balance.html:48
@@ -884,7 +884,7 @@ msgid "Approved"
 msgstr "Godkjent"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:93
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:155
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:157
 msgid "Approved By"
 msgstr "Godkjent av"
 
@@ -937,7 +937,7 @@ msgstr "Montert"
 msgid "Assemblies restocked!"
 msgstr "Monterte omplassert!"
 
-#: UI/accounts/edit.html:179 UI/Reports/filters/gl.html:135
+#: UI/accounts/edit.html:181 UI/Reports/filters/gl.html:135
 #: sql/Pg-database.sql:3832
 msgid "Asset"
 msgstr "Eiendel"
@@ -1442,7 +1442,7 @@ msgid "CC"
 msgstr "Kopi"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:129 old/bin/ic.pl:527
-#: old/bin/ic.pl:696 UI/accounts/edit.html:357
+#: old/bin/ic.pl:696 UI/accounts/edit.html:359
 msgid "COGS"
 msgstr "Varekostnad"
 
@@ -1875,7 +1875,7 @@ msgstr "Fortsett"
 msgid "Continue Previous Workflow"
 msgstr "Fortsett til forrige vindu"
 
-#: UI/accounts/edit.html:203
+#: UI/accounts/edit.html:205
 msgid "Contra"
 msgstr "Kontra"
 
@@ -2631,7 +2631,7 @@ msgstr "Avskrive alle"
 msgid "Depreciate Through"
 msgstr "Avskrive igjennom"
 
-#: lib/LedgerSMB/Scripts/asset.pm:586 UI/accounts/edit.html:426
+#: lib/LedgerSMB/Scripts/asset.pm:586 UI/accounts/edit.html:428
 #: sql/Pg-database.sql:2898
 msgid "Depreciation"
 msgstr "Avskrivning"
@@ -2737,8 +2737,8 @@ msgstr "Avskrivning vellykket"
 #: templates/xedemo/sales_quotation.html:99 templates/xedemo/timecard.html:85
 #: templates/xedemo/timecard.html:93 templates/xedemo/timecard.tex:38
 #: templates/xedemo/timecard.tex:40 templates/xedemo/work_order.html:130
-#: templates/xedemo/work_order.tex:125 UI/accounts/edit.html:42
-#: UI/accounts/edit.html:127 UI/accounts/yearend.html:41
+#: templates/xedemo/work_order.tex:125 UI/accounts/edit.html:54
+#: UI/accounts/edit.html:132 UI/accounts/yearend.html:41
 #: UI/am-gifi-form.html:15 UI/am-language-form.html:15 UI/am-sic-form.html:19
 #: UI/am-warehouse-form.html:11 UI/budgetting/budget_entry.html:26
 #: UI/budgetting/budget_entry.html:63 UI/Contact/divs/contact_info.html:31
@@ -2808,7 +2808,7 @@ msgid "Disc %"
 msgstr "Rab %"
 
 #: lib/LedgerSMB/Scripts/payment.pm:813 old/bin/ic.pl:1124
-#: UI/accounts/edit.html:296 UI/accounts/edit.html:336
+#: UI/accounts/edit.html:298 UI/accounts/edit.html:338
 #: UI/am-business-form.html:15 UI/Contact/divs/credit.html:168
 #: UI/Contact/divs/credit.html:169 UI/payments/payments_detail.html:324
 #: UI/Reports/filters/purchase_history.html:302
@@ -3268,7 +3268,7 @@ msgid "Enter employee numbers where they are missing"
 msgstr "Legg inn ansattnummer hvor de mangler"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:89
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:152
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:154
 msgid "Entered By"
 msgstr "Lagt inn av"
 
@@ -3318,7 +3318,7 @@ msgstr "miljø"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:223
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:225 lib/LedgerSMB/Report/PNL.pm:212
-#: lib/LedgerSMB/Report/PNL.pm:214 UI/accounts/edit.html:181
+#: lib/LedgerSMB/Report/PNL.pm:214 UI/accounts/edit.html:183
 #: UI/Reports/filters/gl.html:151
 msgid "Equity"
 msgstr "Egenkapital"
@@ -3328,7 +3328,7 @@ msgstr "Egenkapital"
 msgid "Equity & Liabilities"
 msgstr "Egenkapital & Gjeld"
 
-#: UI/accounts/edit.html:182
+#: UI/accounts/edit.html:184
 msgid "Equity (Temporary)"
 msgstr "Egenkapital (midlertidig)"
 
@@ -3400,8 +3400,8 @@ msgstr "Vekslingskurs mangler!"
 msgid "Expected"
 msgstr "Ventet"
 
-#: old/bin/ic.pl:660 UI/accounts/edit.html:184 UI/accounts/edit.html:396
-#: UI/accounts/edit.html:435 UI/Reports/filters/gl.html:167
+#: old/bin/ic.pl:660 UI/accounts/edit.html:186 UI/accounts/edit.html:398
+#: UI/accounts/edit.html:437 UI/Reports/filters/gl.html:167
 msgid "Expense"
 msgstr "Utgift"
 
@@ -3409,7 +3409,7 @@ msgstr "Utgift"
 msgid "Expense Account"
 msgstr "Utgiftskonto"
 
-#: UI/accounts/edit.html:309
+#: UI/accounts/edit.html:311
 msgid "Expense/Asset"
 msgstr "Utgift/Eiendel"
 
@@ -3623,11 +3623,11 @@ msgstr "Fem"
 msgid "Five Hundred"
 msgstr "Femhundre"
 
-#: UI/accounts/edit.html:417
+#: UI/accounts/edit.html:419
 msgid "Fixed Asset"
 msgstr "Faste Eiendeler"
 
-#: UI/accounts/edit.html:411 sql/Pg-database.sql:2928
+#: UI/accounts/edit.html:413 sql/Pg-database.sql:2928
 msgid "Fixed Assets"
 msgstr "Faste Eiendeler"
 
@@ -3686,13 +3686,13 @@ msgstr "Fri"
 msgid "From"
 msgstr "Fra"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:180
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:182
 msgid "From Amount"
 msgstr "Fra Beløp"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:147
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:193
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:176
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:178
 #: lib/LedgerSMB/Report/Taxform/Details.pm:108
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:106
 #: lib/LedgerSMB/Report/Timecards.pm:159
@@ -3725,7 +3725,7 @@ msgstr "Fulle Rettigheter"
 #: lib/LedgerSMB/Report/COA.pm:100 lib/LedgerSMB/Report/GL.pm:157
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:45
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:68
-#: lib/LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:159
+#: lib/LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:161
 #: UI/am-gifi-form.html:11 UI/lib/report_base.html:79
 #: UI/Reports/filters/balance_sheet.html:12
 #: UI/Reports/filters/balance_sheet.html:29 UI/Reports/filters/gl.html:273
@@ -3761,7 +3761,7 @@ msgstr "Hovedbok"
 msgid "GL Reference Number"
 msgstr "Hovedbok Referansenummer"
 
-#: UI/accounts/edit.html:444
+#: UI/accounts/edit.html:446
 msgid "Gain"
 msgstr "Overskudd"
 
@@ -3880,7 +3880,7 @@ msgstr "Personal"
 msgid "HTML Templates"
 msgstr "HTML-Maler"
 
-#: UI/accounts/edit.html:10 UI/accounts/edit.html:56 UI/accounts/edit.html:140
+#: UI/accounts/edit.html:22 UI/accounts/edit.html:68 UI/accounts/edit.html:145
 #: UI/am-sic-form.html:16
 msgid "Heading"
 msgstr "Overskrift"
@@ -4037,7 +4037,7 @@ msgstr "Inkluder betaling"
 msgid "Include in Report"
 msgstr "Inkludér i rapport"
 
-#: UI/accounts/edit.html:257
+#: UI/accounts/edit.html:259
 msgid "Include in drop-down menus"
 msgstr "Inkludér i rullegardin-menyer"
 
@@ -4052,9 +4052,9 @@ msgstr "Importer Varenummer"
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:189
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:191 lib/LedgerSMB/Report/PNL.pm:191
 #: lib/LedgerSMB/Report/PNL.pm:193 lib/LedgerSMB/Scripts/configuration.pm:89
-#: old/bin/ic.pl:523 old/bin/ic.pl:656 UI/accounts/edit.html:183
-#: UI/accounts/edit.html:266 UI/accounts/edit.html:348
-#: UI/accounts/edit.html:387 UI/Reports/filters/gl.html:159
+#: old/bin/ic.pl:523 old/bin/ic.pl:656 UI/accounts/edit.html:185
+#: UI/accounts/edit.html:268 UI/accounts/edit.html:350
+#: UI/accounts/edit.html:389 UI/Reports/filters/gl.html:159
 msgid "Income"
 msgstr "Inntekt"
 
@@ -4522,7 +4522,7 @@ msgstr "Siste Kostnad"
 msgid "Last Name"
 msgstr "Etternavn"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:149
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:151
 msgid "Last Updated"
 msgstr "Siste Oppdatering"
 
@@ -4621,7 +4621,7 @@ msgstr "Brevhode"
 msgid "Liabilities"
 msgstr "Passiva"
 
-#: UI/accounts/edit.html:180 UI/Reports/filters/gl.html:143
+#: UI/accounts/edit.html:182 UI/Reports/filters/gl.html:143
 msgid "Liability"
 msgstr "Gjeld"
 
@@ -4743,7 +4743,7 @@ msgstr "Logg ut"
 msgid "Logout Successful"
 msgstr "Logg ut Vellykket"
 
-#: UI/accounts/edit.html:453
+#: UI/accounts/edit.html:455
 msgid "Loss"
 msgstr "Tap"
 
@@ -4983,6 +4983,10 @@ msgstr "Må ha kontantkonto i parti"
 msgid "Must have credit or entity id"
 msgstr "Må ha bruker ID"
 
+#: UI/accounts/edit.html:11
+msgid "NONE"
+msgstr ""
+
 #: lib/LedgerSMB/Report/Contact/History.pm:138
 #: lib/LedgerSMB/Report/Contact/History.pm:56
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:141
@@ -5168,7 +5172,7 @@ msgstr "Ingen eksisterende kunde prisgruppe i part kunde"
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr "Ingen eksisterende leverandør prisgruppe i part leverandør"
 
-#: UI/accounts/edit.html:381
+#: UI/accounts/edit.html:383
 msgid "Non-tracking Items"
 msgstr "Ikke sporbare artikler"
 
@@ -5351,7 +5355,7 @@ msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr "OVERBETALT / FORHÅNDSBETALT / BETALT"
 
 #: lib/LedgerSMB/Scripts/budgets.pm:128 old/bin/ic.pl:707
-#: UI/accounts/edit.html:112 UI/Reports/filters/search_goods.html:118
+#: UI/accounts/edit.html:117 UI/Reports/filters/search_goods.html:118
 msgid "Obsolete"
 msgstr "Foreldet"
 
@@ -5442,7 +5446,7 @@ msgstr ""
 "Opera oppdaget. For å fullføre avlogging, vennligst lukk nettleservinduet "
 "eller slett privat/autentiseringsinformasjon"
 
-#: UI/accounts/edit.html:194
+#: UI/accounts/edit.html:196
 msgid "Options"
 msgstr "Tillegg"
 
@@ -5593,7 +5597,7 @@ msgstr "Utestående Posteringer"
 msgid "Overdue"
 msgstr "Overforfall"
 
-#: UI/accounts/edit.html:286 UI/accounts/edit.html:327
+#: UI/accounts/edit.html:288 UI/accounts/edit.html:329
 msgid "Overpayment"
 msgstr "Overbetaling"
 
@@ -5772,12 +5776,12 @@ msgstr "Betal Til"
 msgid "Pay in behalf of"
 msgstr "Betal på vegne av"
 
-#: UI/accounts/edit.html:303
+#: UI/accounts/edit.html:305
 msgid "Payables"
 msgstr "Utbetalinger"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1074 t/data/04-complex_template.html:282
-#: UI/accounts/edit.html:276 UI/accounts/edit.html:318
+#: UI/accounts/edit.html:278 UI/accounts/edit.html:320
 #: UI/Contact/divs/credit.html:210 UI/Contact/divs/credit.html:211
 #: UI/payments/payments_detail.html:213 sql/Pg-database.sql:2804
 msgid "Payment"
@@ -6565,7 +6569,7 @@ msgstr "Kviteringsresultat"
 msgid "Receipts"
 msgstr "Kvitteringer"
 
-#: UI/accounts/edit.html:260
+#: UI/accounts/edit.html:262
 msgid "Receivables"
 msgstr "Innbetalinger"
 
@@ -6581,7 +6585,7 @@ msgstr "Motta varer"
 msgid "Received"
 msgstr "Mottatt"
 
-#: UI/accounts/edit.html:216
+#: UI/accounts/edit.html:218
 msgid "Recon"
 msgstr "Avstemme"
 
@@ -6601,7 +6605,7 @@ msgstr "Avstemning dato"
 msgid "Reconciliation Report"
 msgstr "Avstemnings Rapport"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:193
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:195
 msgid "Reconciliation Reports"
 msgstr "Avstemningsrapporter"
 
@@ -6839,7 +6843,7 @@ msgstr "Retturner til Oppsett"
 msgid "Return to the login screen."
 msgstr "Retturner til Logg inn skjerm"
 
-#: old/bin/ic.pl:531 UI/accounts/edit.html:366
+#: old/bin/ic.pl:531 UI/accounts/edit.html:368
 msgid "Returns"
 msgstr "Inntekt"
 
@@ -7029,7 +7033,7 @@ msgstr "Lør"
 #: old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
 #: t/data/04-complex_template.html:620 t/data/04-complex_template.html:644
-#: UI/accounts/edit.html:523 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
+#: UI/accounts/edit.html:525 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
 #: UI/asset/edit_class.html:57 UI/asset/import_asset.html:26
 #: UI/business_units/edit.html:93 UI/business_units/edit.html:103
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:7
@@ -7813,12 +7817,12 @@ msgstr "Delstat/område:"
 msgid "Statement"
 msgstr "Oppgjør"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:139
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:141
 #: UI/reconciliation/upload.html:29
 msgid "Statement Balance"
 msgstr "Balanseoppgjør"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:135
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 msgid "Statement Date"
 msgstr "Balanse Dato"
 
@@ -7859,7 +7863,7 @@ msgstr "Anførsel status"
 msgid "Submit"
 msgstr "Avgi"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:146
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:148
 #: UI/Reports/filters/reconciliation_search.html:79
 msgid "Submitted"
 msgstr "Avgitt"
@@ -7905,7 +7909,7 @@ msgstr "Endelse"
 msgid "Summary"
 msgstr "Oppsummert"
 
-#: UI/accounts/edit.html:233
+#: UI/accounts/edit.html:235
 msgid "Summary account for"
 msgstr "Oppsummert konto for"
 
@@ -7965,8 +7969,8 @@ msgstr "Merkelappapp"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:87
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:223
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:273 old/bin/aa.pl:1620
-#: old/bin/ic.pl:539 old/bin/ic.pl:668 UI/accounts/edit.html:227
-#: UI/accounts/edit.html:375 UI/accounts/edit.html:405
+#: old/bin/ic.pl:539 old/bin/ic.pl:668 UI/accounts/edit.html:229
+#: UI/accounts/edit.html:377 UI/accounts/edit.html:407
 #: UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:316
 #: UI/Reports/filters/orders.html:179
@@ -8456,13 +8460,13 @@ msgstr "Ganger"
 msgid "To"
 msgstr "Til"
 
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:182
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:184
 msgid "To Amount"
 msgstr "Til Beløp"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:148
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:195
-#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:178
+#: lib/LedgerSMB/Report/Reconciliation/Summary.pm:180
 #: lib/LedgerSMB/Report/Taxform/Details.pm:109
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:107
 #: lib/LedgerSMB/Report/Timecards.pm:161
@@ -8606,7 +8610,7 @@ msgstr "Totalt Utestående"
 msgid "Total Paid"
 msgstr "Totalt Betalt"
 
-#: UI/accounts/edit.html:342
+#: UI/accounts/edit.html:344
 msgid "Tracking Items"
 msgstr "Spore Artikler"
 
@@ -8670,7 +8674,7 @@ msgstr "Oversettelse"
 msgid "Translation deleted!"
 msgstr "Oversettelse slettet"
 
-#: UI/accounts/edit.html:475 sql/Pg-database.sql:2836 sql/Pg-database.sql:2939
+#: UI/accounts/edit.html:477 sql/Pg-database.sql:2836 sql/Pg-database.sql:2939
 msgid "Translations"
 msgstr "Oversettelser"
 
