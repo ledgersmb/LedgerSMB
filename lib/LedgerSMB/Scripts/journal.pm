@@ -14,8 +14,6 @@ list of matching accounts in a ul/li pair
 
 =cut
 
-use LedgerSMB::Template;
-use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
 use strict;
@@ -56,15 +54,8 @@ Returns and displays the chart of accounts
 
 sub chart_of_accounts {
     my ($request) = @_;
-    for my $col(qw(accno description gifi debit_balance credit_balance)){
-        $request->{"col_$col"} = '1';
-    }
-    if ($request->is_allowed_role({allowed_roles => ['account_edit']})){
-       for my $col(qw(link edit delete)){
-           $request->{"col_$col"} = '1';
-       }
-    }
-    my $report = LedgerSMB::Report::COA->new(%$request);
+    my $report = LedgerSMB::Report::COA->new();
+    $report->set_dbh($request->{dbh});
     $report->run_report();
     return $report->render($request);
 }
