@@ -409,7 +409,7 @@ Then qr/^I expect "(.*)" to be selected for "(.*)"$/, sub {
     ok($element, "found element labeled '$label_text'");
 
     my $option = $element->find(
-        qq{//span[\@role="option" and \@aria-selected="true" and .="$option_text"]} 
+        qq{//span[\@role="option" and \@aria-selected="true" and .="$option_text"]}
     );
 
     ok($option, "Found option '$option_text' of dropdown '$label_text'");
