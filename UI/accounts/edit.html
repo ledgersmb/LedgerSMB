@@ -1,4 +1,16 @@
-<?lsmb PROCESS elements.html ?>
+<?lsmb
+    PROCESS elements.html;
+
+    # Build text for dropdown options
+    FOREACH h IN form.all_headings;
+        h.text = h.accno _ '--' _ h.description;
+    END;
+
+    null_heading = [{
+        id = -1,
+        text = '-- ' _ text('NONE') _ ' --'
+    }];
+?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer">
@@ -25,7 +37,7 @@
         type = 'hidden'
 } ?>
 <div class="inputline" id="accno-line">
-  <label class="line"><?lsmb text('Account Number') ?></label>
+  <label class="line" for="accno-h"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
     <?lsmb
     INCLUDE input element_data = {
@@ -56,17 +68,10 @@
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
       <?lsmb
-    FOREACH h IN form.all_headings;
-        h.text = h.accno _ '--' _ h.description;
-    END;
-    form.all_headings.push({id = -1, text = '-- NONE --' });
-    IF (! form.account_heading);
-       form.account_heading = -1;
-    END;
     INCLUDE select element_data = {
                   name = 'parent'
-               options = form.all_headings
-        default_values = [form.account_heading]
+               options = null_heading.merge(form.all_headings)
+        default_values = [form.parent_id]
              text_attr = 'text'
             value_attr = 'id'
                  class = 'account'
@@ -75,7 +80,34 @@
    </div>
 </div>
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
+
+<?lsmb
+    INCLUDE button element_data={
+       name = 'action',
+       value = 'save'
+       text = text('Save')
+       accesskey = 'S'
+    };
+
+    IF form.id;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'save_as_new'
+           text = text('Save as new')
+           accesskey = 'N'
+        };
+    END;
+
+    IF form.orphaned;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'delete'
+           text = text('Delete')
+           accesskey = 'D'
+        };
+    END;
+?>
+
 <hr />
 </form>
 </div>
@@ -95,7 +127,7 @@
         type = 'hidden'
 } ?>
 <div class="inputline" id="accno-line2">
-  <label class="line"><?lsmb text('Account Number') ?></label>
+  <label class="line" for="accno-a"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
     <?lsmb
     INCLUDE input element_data = {
@@ -104,6 +136,7 @@
      value = form.accno
       type = 'text'
      class = 'control-code'
+        id = "accno-a"
     } ?>
   </div>
 </div>
@@ -138,42 +171,42 @@
    </div>
 </div>
 <div class="inputline" id="heading-line2">
-   <label class="line"><?lsmb text('Heading') ?></label>
+   <label class="line" for="heading-a"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
       <?lsmb
-    FOREACH h IN form.all_headings;
-        h.text = h.accno _ '--' _ h.description;
-    END;
-    form.all_headings.unshift({});
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
-        default_values = [form.account_heading]
+        default_values = [form.heading]
              text_attr = 'text'
             value_attr = 'id'
                  class = 'account'
+                    id = 'heading-a'
     }; ?>
    </div>
 </div>
 <div id="accdetails">
 <div class="inputline" id="gifi-line">
-   <label class="line"><?lsmb text('GIFI') ?></label>
+   <label class="line" for="gifi-a"><?lsmb text('GIFI') ?></label>
    <div class="inputgroup">
        <?lsmb
-          FOREACH g IN form.all_gifi;
+          FOREACH g IN form.gifi_list;
              g.text = g.accno _ '--' _ g.description;
           END;
-          form.all_gifi.unshift({});
+          form.gifi_list.unshift({});
           INCLUDE select element_data={
-            name = 'gifi_accno'
-          default_values = [form.gifi_accno]
-            options = form.all_gifi
-           text_attr='text'
-          value_attr='accno' } ?>
+              name = 'gifi_accno'
+              default_values = [form.gifi_accno]
+              options = form.gifi_list
+              text_attr = 'text'
+              value_attr = 'accno'
+              id = 'gifi-a'
+          };
+       ?>
    </div>
 </div>
 <div class="inputline" id="acctype-line">
-   <label class="line"><?lsmb text('Account Type') ?></label>
+   <label class="line" for="category-a"><?lsmb text('Account Type') ?></label>
    <div class="inputgroup">
       <?lsmb
         a_types = [
@@ -188,6 +221,7 @@
                   name = 'category'
                options = a_types
         default_values = [form.category]
+                    id = 'category-a'
     }; ?>
   </div>
 </div>
@@ -208,14 +242,11 @@
    </div>
    <div class="inputgroup">
      <?lsmb
-        IF form.recon;
-           recon = 'CHECKED';
-        END;
         INCLUDE input element_data={
                name = 'recon'
                type = 'checkbox',
               label = text('Recon')
-            checked = recon
+            checked = form.account__is_recon ? 'checked' : ''
               value = '1'
         } ?>
    </div>
@@ -231,7 +262,7 @@
    </div>
 </div>
 <div class="inputline" id="summary-line">
-   <label class="line"><?lsmb text('Summary account for') ?></label>
+   <label class="line" for="summary-a"><?lsmb text('Summary account for') ?></label>
    <div class="inputgroup">
    <?lsmb # fixed_asset may eventually go in here too depending on future
           # directions in development.
@@ -249,6 +280,7 @@
                name = "summary"
             options = s_accts
      default_values = [summary]
+                 id = 'summary-a'
       }; ?>
    </div>
 </div>
@@ -360,13 +392,13 @@
              value = 'IC_cogs'} ?>
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_expense;IC_expense= 'CHECKED'; END;
+      <?lsmb IF form.IC_returns;IC_returns= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_returns',
               type = 'checkbox',
              label = text('Returns'),
            checked = IC_returns,
-             value = ' IC_returns'} ?>
+             value = 'IC_returns'} ?>
    </div>
    <div class="inputgroup">
       <?lsmb IF form.IC_taxpart; IC_taxpart= 'CHECKED'; END;
@@ -457,15 +489,42 @@
    </div>
 </div>
 </div> <!-- dropdown div -->
-<?lsmb FOREACH hidden IN hiddens.keys;
-        INCLUDE input element_data={
-                type = 'hidden',
-                name = hidden,
-                value = hiddens.item(hidden)
-                }; END ?>
 
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; button.id = button.value _ '-A'; INCLUDE button element_data=button; END ?>
+
+<?lsmb
+    PROCESS input element_data = {
+        value = form.id
+        name = 'id'
+        type = 'hidden'
+    };
+
+    INCLUDE button element_data={
+       name = 'action',
+       value = 'save'
+       text = text('Save')
+       accesskey = 'S'
+    };
+
+    IF form.id;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'save_as_new'
+           text = text('Save as new')
+           accesskey = 'N'
+        };
+    END;
+
+    IF form.orphaned;
+        INCLUDE button element_data={
+           name = 'action',
+           value = 'delete'
+           text = text('Delete')
+           accesskey = 'D'
+        };
+    END;
+?>
+
 <hr />
 </form>
 </div>
@@ -483,13 +542,16 @@
    PROCESS input element_data = {
        type="hidden"
        name="languagecount"
-       value=form.languages.size
+       value=languages.size
    };
    lang_index = 0;
-   FOREACH language IN form.languages;
+   FOREACH language IN languages;
      lang_index = lang_index + 1; ?>
   <tr>
-    <td><?lsmb language.description ?>
+    <td>
+      <label for="heading-languagetranslation-<?lsmb lang_index ?>">
+        <?lsmb language.description ?>
+      </label>
       <?lsmb PROCESS input element_data = {
              type="hidden"
              name = 'languagecode_' _ lang_index
@@ -500,6 +562,7 @@
                id = 'heading-languagetranslation-' _ lang_index
                class = 'translation'
                value = form.translations.${language.code}.description
+               title = text(language.description)
        } ?>
       </td>
     </tr>
@@ -521,7 +584,7 @@
     value = 'update_translations',
     type = 'submit',
     class = 'submit',
-    text = text('Save'),
+    text = text('Save Translations'),
 } ?>
 </form>
 </div>

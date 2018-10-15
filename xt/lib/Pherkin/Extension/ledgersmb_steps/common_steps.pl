@@ -348,6 +348,21 @@ Given qr/^(a reconciliation report|reconciliation reports) with these properties
     }
 };
 
+Given qr/^GIFI entries with these properties:$/, sub {
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    my $q = $dbh->prepare("
+        INSERT INTO gifi (accno, description)
+        VALUES (?,?)
+    ");
+
+    foreach my $gifi_spec (@{C->data}) {
+        $q->execute(
+            $gifi_spec->{GIFI},
+            $gifi_spec->{Description},
+        ) or die "failed to insert GIFI $gifi_spec->{GIFI} :: $gifi_spec->{Description}";
+    }
+};
+
 When qr/I wait (\d+) seconds?$/, sub {
     sleep $1
 };
@@ -356,5 +371,48 @@ When qr/I wait for the page to load$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };
 
+When qr/^I select checkbox "(.*)"$/, sub {
+    my $label = $1;
+    my $element = S->{ext_wsl}->page->find(
+        "*labeled", text => $label
+    );
+
+    ok($element, "found element with label '$label'");
+    is($element->tag_name, 'input', 'element is an <input>');
+    is($element->get_attribute('type'), 'checkbox', 'element is an checkbox');
+
+    my $checked = $element->get_attribute('checked');
+    $checked && $checked eq 'checked' or $element->click;
+};
+
+Then qr/^I expect the "(.*)" checkbox to be selected/, sub {
+    my $label = $1;
+    my $element = S->{ext_wsl}->page->find(
+        "*labeled", text => $label
+    );
+
+    ok($element, "found element with label '$label'");
+    is($element->tag_name, 'input', 'element is an <input>');
+    is($element->get_attribute('type'), 'checkbox', 'element is an checkbox');
+
+    my $checked = $element->get_attribute('checked');
+    ok($checked, 'checkbox is selected');
+};
+
+Then qr/^I expect "(.*)" to be selected for "(.*)"$/, sub {
+    my $option_text = $1;
+    my $label_text = $2;
+
+    my $element = S->{ext_wsl}->page->find(
+        "*labeled", text => $label_text
+    );
+    ok($element, "found element labeled '$label_text'");
+
+    my $option = $element->find(
+        qq{//span[\@role="option" and \@aria-selected="true" and .="$option_text"]}
+    );
+
+    ok($option, "Found option '$option_text' of dropdown '$label_text'");
+};
 
 1;
