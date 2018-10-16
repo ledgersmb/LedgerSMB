@@ -112,18 +112,6 @@ sub columns {
     return [];
 };
 
-=item header_lines
-
-Implement inherited protocol.
-Returns an empty arrayref since this is not applicable.
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
-
 =back
 
 =head1 METHODS

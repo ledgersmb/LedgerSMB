@@ -280,16 +280,6 @@ sub columns {
     ];
 }
 
-=head2 header_lines
-
-# TODO
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
 =head2 name
 
 Returns either the localized strings for "AR Outstanding" or "AP Outstanding"

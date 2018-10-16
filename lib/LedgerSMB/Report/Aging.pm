@@ -197,16 +197,6 @@ sub template {
     }
 }
 
-=item header_lines
-
-Returns the inputs to display on header.
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
 =back
 
 =head2 Criteria Properties

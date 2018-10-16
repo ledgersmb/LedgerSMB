@@ -44,14 +44,6 @@ sub columns {
     ];
 }
 
-=item header_lines
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
 =item name
 
 =cut
