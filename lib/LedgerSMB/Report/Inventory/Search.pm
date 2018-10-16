@@ -308,16 +308,6 @@ sub columns {
     ];
 }
 
-=head2 header_lines
-
-None yet
-
-=cut
-
-sub header_lines {
-   return [];
-};
-
 =head2 name
 
 Goods and Services

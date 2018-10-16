@@ -21,27 +21,6 @@ Subclasses MUST define the following methods:
 
 =over
 
-=item header_lines
-
-This must return an arrayref of the header fields to be displayed on the
-report. The array elements must be hashrefs comprising the following keys:
-
-  text - The localized header title
-  name - The request parameter to be displayed for this heading
-
-An example return value from a C<header_lines()> method might be:
-
-  [
-      {
-          text => 'Invoice Number',
-          name => 'invoice_no'
-      },
-      {
-          text => 'Date',
-          name => 'post_date'
-      }
-  ]
-
 =item name
 
 This must return the localized report name (usually displayed as a title
@@ -55,6 +34,31 @@ for the report).
 Additionally, subclasses MAY define any of the following:
 
 =over
+
+=item header_lines
+
+This must return an arrayref of the header fields to be displayed on the
+report. The array elements must be hashrefs comprising the following keys:
+
+  text - The localized header title
+  name - The request parameter to be displayed for this heading
+
+I<Report Name> and I<Company Name> are always included in the header lines
+shown on a report (they are part of the template) and do not need to be
+specified.
+
+An example return value from a C<header_lines()> method might be:
+
+  [
+      {
+          text => 'Invoice Number',
+          name => 'invoice_no'
+      },
+      {
+          text => 'Date',
+          name => 'post_date'
+      }
+  ]
 
 =item template
 
@@ -440,6 +444,18 @@ sub show_cols {
     return \@retval;
 }
 
+=item header_lines
+
+Default method that specified no header lines. Can be overridden by
+individual reports.
+
+=cut
+
+sub header_lines {
+    return [];
+}
+
+
 =over
 
 =item none
@@ -499,7 +515,7 @@ LedgerSMB::Report subclasses are written typically in a few parts:
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2018 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

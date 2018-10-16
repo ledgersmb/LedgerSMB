@@ -60,12 +60,6 @@ sub columns {
     ];
 }
 
-=head2 header_lines
-
-=cut
-
-sub header_lines { return []; }
-
 =head2 name
 
 Tax Form List

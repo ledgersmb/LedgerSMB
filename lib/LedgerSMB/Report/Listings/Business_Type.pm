@@ -58,16 +58,6 @@ sub columns {
     }];
 };
 
-=item header_lines
-
-None added
-
-=cut
-
-sub header_lines {
-    return []
-};
-
 =item name
 
 =cut
