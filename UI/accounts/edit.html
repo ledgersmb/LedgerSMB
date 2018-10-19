@@ -14,11 +14,9 @@
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer">
-<?lsmb IF !form.id OR form.charttype == 'H'; ?>
+<?lsmb IF form.charttype == 'H'; ?>
 <div data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF form.charttype == 'H'; ?>
      data-dojo-props="selected:true"
-     <?lsmb END; ?>
      title="<?lsmb text('Heading') ?>" id="H">
   <?lsmb # if we put the FORM tag as the toplevel tab element,
          # we get trouble: content gets cut off; wrap in a div
@@ -113,11 +111,9 @@
 </div>
 </div>
 <?lsmb END ?>
-<?lsmb IF !form.id OR form.charttype == 'A' ?>
+<?lsmb IF form.charttype == 'A' ?>
 <div data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF form.charttype == 'A'; ?>
      data-dojo-props="selected:true"
-     <?lsmb END; ?>
      title="<?lsmb text('Account') ?>" id="A">
   <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
