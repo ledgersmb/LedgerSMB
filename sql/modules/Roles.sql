@@ -1003,7 +1003,7 @@ SELECT lsmb__grant_perms('account_create', obj, 'INSERT')
 SELECT lsmb__grant_perms('account_create', obj, 'ALL')
   FROM unnest(array['account_id_seq'::text, 'account_heading_id_seq']) obj;
 SELECT lsmb__grant_menu('account_create', id, 'allow')
-  FROM unnest(array[137,246]) id;
+  FROM unnest(array[246]) id;
 
 SELECT lsmb__create_role('account_edit');
 SELECT lsmb__grant_perms('account_edit', obj, perm)

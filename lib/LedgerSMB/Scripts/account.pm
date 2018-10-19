@@ -30,18 +30,35 @@ use LedgerSMB::DBObject::EOY;
 use LedgerSMB::Template::UI;
 
 
-=item new
+=item new_account
 
 Displays a screen to create a new account.
 
 =cut
 
-sub new {
+sub new_account {
     my ($request) = @_;
 
     my $account = LedgerSMB::DBObject::Account->new({base => {
         dbh => $request->{dbh},
         charttype => 'A',
+    }});
+
+    return _display_account_screen($request, $account);
+}
+
+=item new_heading
+
+Displays a screen to create a new Chart of Accounts heading.
+
+=cut
+
+sub new_heading {
+    my ($request) = @_;
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        charttype => 'H',
     }});
 
     return _display_account_screen($request, $account);

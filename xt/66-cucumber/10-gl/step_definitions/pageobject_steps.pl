@@ -43,6 +43,26 @@ When qr/^I (select|deselect) every checkbox in "(.*)"$/, sub {
 };
 
 
+When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
+    my $link_text = $1;
+    my $column = $2;
+    my $value = $3;
+    my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
+
+    foreach my $row(@rows) {
+        if ($row->{$column} eq $value) {
+            my $link = $row->{_element}->find(
+                qq{.//a[.="$1"]}
+            );
+            ok($link, "found $link_text link for $column '$value'");
+            $link->click;
+            last;
+        }
+    }
+
+};
+
+
 Then qr/^I expect to see (\d+) selected checkboxes in "(.*)"$/, sub {
     my $wanted_count = $1;
     my $section = $2;

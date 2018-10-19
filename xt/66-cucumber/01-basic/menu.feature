@@ -89,7 +89,6 @@ Scenario Outline: Navigate to menu and open screen
 #   | Fixed Assets > Assets > Reports > Disposal |                          |
 #   | Fixed Assets > Assets > Reports > Net Book Value |                    |
 #   | Fixed Assets > Assets > Search Assets      |                          |
-#   | General Journal > Add Accounts             |                          |
     | General Journal > Chart of Accounts        | Chart of Accounts        |
 #   | General Journal > Import                   |                          |
 #   | General Journal > Import Chart             |                          |
