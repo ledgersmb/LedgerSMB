@@ -87,9 +87,6 @@ define([
                       //     });
                   },
                   load_link: function(href) {
-                      if (this.last_page == href) {
-                          return;
-                      }
                       this.last_page = href;
                       return this.load_form(href,{"handlesAs": "text"});
                   },
