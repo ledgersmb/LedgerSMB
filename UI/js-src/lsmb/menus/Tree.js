@@ -81,6 +81,12 @@ define(["dojo/_base/declare",
                             + location.search + '#' + url, "_blank");
             }
             else {
+                // Add timestamp to url so that it is unique.
+                // A workaround for the blocking of multiple multiple clicks
+                // for the same url (see the MainContentPane.js load_link
+                // function).
+                url += '#' + Date.now();
+
                 var mainDiv = registry.byId("maindiv");
                 mainDiv.load_link(url);
             }
