@@ -30,7 +30,7 @@ use LedgerSMB::DBObject::EOY;
 use LedgerSMB::Template::UI;
 
 
-=item new
+=item new_account
 
 Displays a screen to create a new account.
 

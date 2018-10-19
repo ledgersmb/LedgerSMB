@@ -62,7 +62,7 @@ When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
 
 };
 
- 
+
 Then qr/^I expect to see (\d+) selected checkboxes in "(.*)"$/, sub {
     my $wanted_count = $1;
     my $section = $2;

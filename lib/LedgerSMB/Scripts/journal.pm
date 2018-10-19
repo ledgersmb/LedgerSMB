@@ -129,7 +129,6 @@ sub search_purchases {
     }
 };
 
-=back
 
 =head1 LICENSE AND COPYRIGHT
 
