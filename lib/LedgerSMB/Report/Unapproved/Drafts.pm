@@ -144,16 +144,6 @@ sub header_lines {
              text => $self->Text('Amount Less Than')}, ]
 }
 
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
-}
-
 =back
 
 =head2 Criteria Properties

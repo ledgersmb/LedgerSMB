@@ -139,16 +139,6 @@ sub name {
     return $self->Text('Chart of Accounts');
 }
 
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
-}
-
 =back
 
 
