@@ -422,6 +422,7 @@ SELECT lsmb__grant_role('ar_invoice_create', 'ar_transaction_create');
 SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
   FROM unnest('{invoice,new_shipto,business_unit_inv}'::text[]) tname
  CROSS JOIN unnest('{SELECT,INSERT,UPDATE}'::text[]) ptype;
+
 SELECT lsmb__grant_menu('ar_invoice_create', 3, 'allow');
 SELECT lsmb__grant_menu('ar_invoice_create', 195, 'allow');
 
@@ -468,12 +469,14 @@ SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'INSERT');
 SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'UPDATE');
 SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'INSERT');
 SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'UPDATE');
+SELECT lsmb__grant_perms('sales_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('sales_order_create', '51', 'allow');
 
 SELECT lsmb__create_role('sales_order_edit');
 SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
+SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role(dt || '_delete')
   FROM unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
@@ -494,6 +497,7 @@ SELECT lsmb__grant_perms('sales_quotation_create', obj, 'ALL')
 SELECT lsmb__grant_perms('sales_quotation_create', obj, ptype)
   FROM unnest(array['orderitems'::text, 'business_unit_oitem']) obj,
        unnest(array['INSERT'::text, 'UPDATE']) ptype;
+SELECT lsmb__grant_perms('sales_quotation_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__grant_menu('sales_quotation_create', 68, 'allow');
 
@@ -612,12 +616,14 @@ SELECT lsmb__grant_perms('purchase_order_create', obj, ptype)
 SELECT lsmb__grant_perms('purchase_order_create', obj, 'ALL')
   FROM unnest(array['oe_id_seq'::text, 'orderitems_id_seq', 'warehouse_inventory',
                     'warehouse_inventory_entry_id_seq']) obj;
+SELECT lsmb__grant_perms('purchase_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('purchase_order_create', 52, 'allow');
 
 SELECT lsmb__create_role('purchase_order_edit');
 SELECT lsmb__grant_perms('purchase_order_edit', obj, 'DELETE')
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem',
                     'new_shipto']) obj;
+SELECT lsmb__grant_perms('purchase_order_edit', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role('rfq_create');
 SELECT lsmb__grant_role('rfq_create', 'contact_read');
@@ -628,6 +634,7 @@ SELECT lsmb__grant_perms('rfq_create', 'orderitems_id_seq', 'ALL');
 SELECT lsmb__grant_perms('rfq_create', obj, ptype)
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj,
        unnest(array['INSERT'::text, 'UPDATE']) ptype;
+SELECT lsmb__grant_perms('rfq_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role('purchase_order_list');
 SELECT lsmb__grant_role('purchase_order_list', 'contact_read');
