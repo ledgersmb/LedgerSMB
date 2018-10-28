@@ -22,7 +22,6 @@ use Try::Tiny;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
-use LedgerSMB::Scripts::employee::country;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -187,18 +186,6 @@ sub _main_screen {
                notes => $locale->text('Notes'),
                files => $locale->text('Files'),
     );
-
-    if (defined $person->{country_id}
-    && $LedgerSMB::Scripts::employee::country::country_divs{
-            $person->{country_id}
-    }){
-        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
-            $person->{country_id}
-         }}){
-             push @DIVS, $cform->{file};
-             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
-         }
-    }
 
     # DIVS contents
     my $entity_id = $company->{entity_id};
