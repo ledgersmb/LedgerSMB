@@ -935,7 +935,7 @@ sub save_roles {
     my ($request) = @_;
     my $roles = [];
 
-    $request->close_form or die "Form submission is invalid";
+    $request->close_form or die 'Form submission is invalid';
 
     foreach my $key (keys %$request) {
 
