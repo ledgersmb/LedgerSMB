@@ -5,6 +5,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb  # Target_div handling now moved to controller script -- CT -?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
+<div id="edit_contact">
 
     <?lsmb IF name ?>
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
@@ -40,5 +41,7 @@ PROCESS "dynatable.html"  ?>
       INCLUDE $INCLUDEDIV;
   END;
   ?>
+</div>
+
 </div>
 </body>
