@@ -371,8 +371,9 @@ When qr/I wait for the page to load$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };
 
-When qr/^I select checkbox "(.*)"$/, sub {
-    my $label = $1;
+When qr/^I (select|deselect) checkbox "(.*)"$/, sub {
+    my $wanted_status = ($1 eq 'select');
+    my $label = $2;
     my $element = S->{ext_wsl}->page->find(
         "*labeled", text => $label
     );
@@ -382,11 +383,15 @@ When qr/^I select checkbox "(.*)"$/, sub {
     is($element->get_attribute('type'), 'checkbox', 'element is an checkbox');
 
     my $checked = $element->get_attribute('checked');
-    $checked && $checked eq 'checked' or $element->click;
+
+    if($checked xor $wanted_status) {
+        $element->click;
+    }
 };
 
-Then qr/^I expect the "(.*)" checkbox to be selected/, sub {
+Then qr/^I expect the "(.*)" checkbox to be (selected|not selected)/, sub {
     my $label = $1;
+    my $wanted_status = $2;
     my $element = S->{ext_wsl}->page->find(
         "*labeled", text => $label
     );
@@ -396,7 +401,13 @@ Then qr/^I expect the "(.*)" checkbox to be selected/, sub {
     is($element->get_attribute('type'), 'checkbox', 'element is an checkbox');
 
     my $checked = $element->get_attribute('checked');
-    ok($checked, 'checkbox is selected');
+
+    if($wanted_status eq 'selected') {
+        ok($checked, 'checkbox is selected');
+    }
+    else {
+        ok(!$checked, 'checkbox is not selected');
+    }
 };
 
 Then qr/^I expect "(.*)" to be selected for "(.*)"$/, sub {

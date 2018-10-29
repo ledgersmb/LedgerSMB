@@ -75,7 +75,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Cash > Vouchers > Reverse Overpay          |                          |
 #   | Cash > Vouchers > Reverse Payment          |                          |
 #   | Cash > Vouchers > Reverse Receipts         |                          |
-    | Contacts > Search                          | Contact search           |
+    | Contacts > Search                          | Contact Search           |
 #   | Fixed Assets > Asset Classes               |                          |
 #   | Fixed Assets > Asset Classes > Add Class   |                          |
 #   | Fixed Assets > Asset Classes > List Classes|                          |

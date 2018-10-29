@@ -18,7 +18,7 @@ my %pages = (
     "setup admin"         => "PageObject::Setup::Admin",
     "setup user list"     => "PageObject::Setup::UsersList",
     "edit user"           => "PageObject::Setup::EditUser",
-    );
+);
 
 When qr/I navigate to the application root/, sub {
     my $module = "PageObject::App::Login";
@@ -57,7 +57,9 @@ When qr/I navigate the menu and select the item at "(.*)"/, sub {
 };
 
 my %screens = (
-    'Contact search' => 'PageObject::App::Search::Contact',
+    'Contact Search' => 'PageObject::App::Search::Contact',
+    'Contact Search Report' => 'PageObject::App::Search::ReportDynatable',
+    'Edit Contact' => 'PageObject::App::Contacts::EditContact',
     'AR transaction entry' => 'PageObject::App::AR::Transaction',
     'AR invoice entry' => 'PageObject::App::AR::Invoice',
     'AR note entry' => 'PageObject::App::AR::Note',
@@ -115,6 +117,7 @@ Then qr/I should see the (.*) screen/, sub {
     my $page_name = $1;
     die "Unknown screen '$page_name'"
         unless exists $screens{$page_name};
+
     use_module($screens{$page_name});
 
     my $page;
