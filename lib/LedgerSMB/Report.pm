@@ -3,19 +3,60 @@ package LedgerSMB::Report;
 
 =head1 NAME
 
-LedgerSMB::Report - Base Reporting Functionality for LedgerSMB
+LedgerSMB::Report - Abstract Base Reporting Class for LedgerSMB
 
 =head1 SYNPOSIS
 
-This Perl module provides base utility functions for reporting in LedgerSMB.
-This is intended to be an abstract class, never having direct instances, but
-instead inherited out to other modules.
+A minimal report might inherit and use this module as follows:
+
+    package LedgerSMB::Report::MinimalReportExample;
+    use Moose;
+    use namespace::autoclean;
+    extends 'LedgerSMB::Report';
+
+    sub name {
+        my ($self) = @_;
+        return $self->_locale->text('A Minimal Report Example');
+    }
+
+    sub columns {
+        my ($self) = @_;
+        return [
+            {
+                col_id => 'food_name',
+                type => 'text',
+                name => $self->_locale->text('Name')
+            },
+            {
+                col_id => 'food_type',
+                type => 'text',
+                name => $self->_locale->text('Food Type')
+            },
+        ];
+    }
+
+    sub run_report {
+        my ($self) = @_;
+        $self->rows([
+            {row_id => 1, name => 'apple', food_type => 'fruit'},
+            {row_id => 1, name => 'carrot', food_type => 'vegetable'},
+        ]);
+        return;
+    }
+
+
+A report could then be generated with the following:
+
+    use LedgerSMB::Report::MinimalReportExample;
+    my $report = LedgerSMB::Report::MinimalReportExample->new();
+    $report->render($request);
+
 
 =head1 DESCRIPTION
 
-LedgerSMB::DBObject::Report provides basic utility functions for reporting in
-LedgerSMB.  It is an abstract class.  Individual report types MUST inherit this
-out.
+This Perl module provides base utility functions for reporting in LedgerSMB.
+It is an abstract class, never having direct instances, but instead being
+inherited by other modules.
 
 Subclasses MUST define the following methods:
 
@@ -23,11 +64,18 @@ Subclasses MUST define the following methods:
 
 =item name
 
-This must return the localized report name (usually displayed as a title
+Must return the localized report name (usually displayed as a title
 for the report).
 
-=item options
+=item columns
 
+Must return an arrayref comprising hashes defining specifying each column
+of the report table.
+
+=item run_report
+
+Must populate the object's C<rows> property with an arrayref containing
+each record to display in the report table.
 
 =back
 
@@ -37,11 +85,11 @@ Additionally, subclasses MAY define any of the following:
 
 =item header_lines
 
-This must return an arrayref of the header fields to be displayed on the
-report. The array elements must be hashrefs comprising the following keys:
+Returns an arrayref of the header fields to be displayed on the report.
+The array elements must be hashrefs comprising the following keys:
 
   text - The localized header title
-  name - The request parameter to be displayed for this heading
+  name - The request parameter/object property name whose value is displayed
 
 I<Report Name> and I<Company Name> are always included in the header lines
 shown on a report (they are part of the template) and do not need to be
@@ -51,19 +99,19 @@ An example return value from a C<header_lines()> method might be:
 
   [
       {
-          text => 'Invoice Number',
+          text => $self->_locale->text('Invoice Number'),
           name => 'invoice_no'
       },
       {
-          text => 'Date',
+          text => $self->_locale->text('Date'),
           name => 'post_date'
       }
   ]
 
 =item template
 
-Returns the name of the template to be used.  Otherwise a generic
-UI/reports/display_report template will be used.
+Returns the name of the template to be used.  Otherwise the generic
+C<UI/reports/display_report> template will be used.
 
 =back
 
@@ -71,7 +119,6 @@ UI/reports/display_report template will be used.
 
 
 use List::Util qw{ any };
-
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Template;
@@ -81,11 +128,11 @@ use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
+
+
 =head1 PROPERTIES
 
-=over
-
-=item cols
+=head2 cols
 
 This is an array of hashrefs.  Properties for each hashref:
 
@@ -102,8 +149,16 @@ Localized name of column for labelling purposes
 
 =item type
 
-Display type of info.  May be text, href, input_text, checkbox, or radio.  For a
-report, it will typically be text or href.
+Display type for column data.  May be one of:
+
+    * text
+    * input_text
+    * hidden
+    * href
+    * input_text
+    * radio
+    * checkbox
+    * boolean_checkmark
 
 =item href_base
 
@@ -119,34 +174,33 @@ CSS class (additional) for the column.
 
 has 'cols' => (is => 'rw', isa => 'ArrayRef[HashRef[Any]]');
 
-=item rows
+=head2 rows
 
-This is an arrayref of rows.  Each row has fields with keys equal to the col_id
+This is an arrayref of rows.  Each row has fields with keys matching the col_id
 fields of the columns above.
 
 =cut
 
 has 'rows' => (is => 'rw', isa => 'ArrayRef[HashRef[Any]]');
 
-=item format
+=head2 format
 
-This is the format, and must be one used by LedgerSMB::Template.  Options
-expected for 1.4 out of the box include csv, pdf, ps, xls, xlsx and ods.  Other
-formats could be supported in the future.  If undefined, defaults html.
+This is the format, and must be one used by LedgerSMB::Template. If
+undefined, defaults to 'html'.
 
 =cut
 
 has 'format' => (is => 'rw', isa => 'Maybe[Str]');
 
-=item order_by
+=head2 order_by
 
-The column to order on.  used in providing subtotals also.
+The column to order on.  Used in providing subtotals also.
 
 =cut
 
 has order_by  => (is => 'rw', isa => 'Maybe[Str]');
 
-=item old_order_by
+=head2 old_order_by
 
 Previous order by.  Used internally to determine order direction.
 
@@ -154,23 +208,23 @@ Previous order by.  Used internally to determine order direction.
 
 has old_order_by  => (is => 'rw', isa => 'Maybe[Str]');
 
-=item order_dir
+=head2 order_dir
 
-either asc, desc, or undef.  used to determine next ordering.
+Either C<asc>, C<desc>, or undef.  Used to determine next ordering.
 
 =cut
 
 has order_dir  => (is => 'rw', isa => 'Maybe[Str]');
 
-=item order_url
+=head2 order_url
 
-Url for order redirection.  Interal only.
+Url for order redirection.  Internal only.
 
 =cut
 
 has order_url  => (is => 'rw', isa => 'Maybe[Str]');
 
-=item show_subtotals
+=head2 show_subtotals
 
 bool, determines whether to show subtotals.
 
@@ -178,7 +232,7 @@ bool, determines whether to show subtotals.
 
 has show_subtotals => (is => 'rw', isa => 'Bool');
 
-=item manual_totals
+=head2 manual_totals
 
 Defaults to false.  Shows totals for all numeric (but not int) columns.
 Typically this would be set to true in the run_report function if manual
@@ -188,16 +242,48 @@ totals are used.
 
 has manual_totals => (is => 'rw', isa => 'Bool');
 
-=item buttons
+=head2 buttons
 
-Buttons to show at the bottom of the screen
+Buttons to show at the bottom of the screen when rendering as HTML. The
+default is to display no buttons. Reports can override this by providing
+a C<set_buttons> method.
+
+Each array element from the C<buttons> property is used to initialise a
+LedgerSMB C<button> template block. See its documentation for a description
+of the various options.
+
+On the UI, pressing a button triggers a new screen to load, via the same
+module used to generate the report. The button's C<value> property specifies
+the class method to be called.
+
+Example:
+
+    sub set_buttons {
+        my $self = shift;
+        return [
+            {
+                name => 'action',
+                text => $self->_locale->text('Update'),
+                value => 'update_widget',
+            },
+            {
+                name => 'action',
+                text => $self->_locale->text('Copy'),
+                value => 'copy_widget',
+            },
+        ];
+    }
 
 =cut
 
-has buttons => (is => 'rw', isa => 'ArrayRef[Any]',
-                lazy => 1, builder => 'set_buttons');
+has buttons => (
+    is => 'rw',
+    isa => 'ArrayRef[Any]',
+    lazy => 1,
+    builder => 'set_buttons',
+);
 
-=item options
+=head2 options
 
 List of select boxes for options for buttons.
 
@@ -206,24 +292,21 @@ List of select boxes for options for buttons.
 has options => (is => 'rw', isa => 'ArrayRef[Any]',
                 default => sub {[]} );
 
-=item _locale
+=head2 _locale
 
-Locale to be used for the translation/localization of the report
+Locale to be used for the translation/localization of the report.
 
 =cut
 
 has _locale => (is => 'ro',
                 default => sub { return $LedgerSMB::App_State::Locale; } );
 
-=back
 
 =head1 METHODS
 
-=over
+=head2 set_buttons
 
-=item set_buttons
-
-This returns an empty arrayref here but can be overridden by individual
+Returns the default empty set of buttons. Can be overridden by individual
 reports.
 
 =cut
@@ -232,7 +315,8 @@ sub set_buttons {
     return [];
 }
 
-=item _exclude_from_totals
+
+=head2 _exclude_from_totals
 
 Returns a hashref with the keys pointing to true values for column id's that
 should not appear on the total row.
@@ -247,7 +331,7 @@ sub _exclude_from_totals {
 }
 
 
-=item render
+=head2 render
 
 This takes no arguments and simply renders the report as is.
 
@@ -260,6 +344,14 @@ sub render {
     return $self->_render($request, renderer => 'render');
 }
 
+
+# PRIVATE METHODS
+
+# _output_name
+#
+# Returns a base file name (without extension) for the current report.
+# Used where output is to a file or attachment.
+
 sub _output_name {
     my $self = shift;
     my $request = shift;
@@ -269,7 +361,6 @@ sub _output_name {
 
     $self->format('html')
         unless defined $self->format;
-
 
     my $name = $self->name || '';
     $name =~ s/ /_/g;
@@ -286,11 +377,14 @@ sub _output_name {
     return $name;
 }
 
+# _render
+#
+# Render the report.
+
 sub _render {
     my ($self, $request) = @_;
     my $template;
     my %args = ( @_ );
-
 
     my $testref = $self->rows;
     $self->run_report if !defined $testref;
@@ -421,7 +515,7 @@ sub _render {
                          rows => $self->rows});
 }
 
-=item show_cols
+=head2 show_cols
 
 Returns a list of columns based on selected ones from the report
 
@@ -444,9 +538,9 @@ sub show_cols {
     return \@retval;
 }
 
-=item header_lines
+=head2 header_lines
 
-Default method that specified no header lines. Can be overridden by
+Default method that specifies no header lines. Can be overridden by
 individual reports.
 
 =cut
@@ -456,31 +550,11 @@ sub header_lines {
 }
 
 
-=over
-
-=item none
-
-No start date, end date as first of the month
-
-=item month
-
-Valid for the month selected
-
-=item quarter
-
-Valid for the month selected and the two proceeding ones.
-
-=item year
-
-Valid for a year starting with the month selected.
-
-=item process_bclasses($ref)
+=head2 process_bclasses($ref)
 
 This function processes a ref for a hashref key of business_units, which holds
 an array of arrays of (class_id, bu_id) and adds keys in the form of
 bc_$class_id holding the $bu_id fields.
-
-=back
 
 =cut
 
@@ -495,23 +569,6 @@ sub process_bclasses {
     return;
 }
 
-=back
-
-=head1 WRITING REPORTS
-
-LedgerSMB::Report subclasses are written typically in a few parts:
-
-=over
-
-=item SQL or PL/PGSQL function
-
-=item Criteria Properties
-
-=item Method overrides
-
-=item Main processing function(s)
-
-=back
 
 =head1 LICENSE AND COPYRIGHT
 
