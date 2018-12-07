@@ -49,11 +49,15 @@ RETURNS SETOF defaults
 LANGUAGE SQL AS
 $$
 WITH unapproved_tx as (
-     SELECT 'unapproved_transactions'::text, count(*)::text
-       FROM (SELECT          id::text FROM ar        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT          id::text FROM ap        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT          id::text FROM gl        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT DISTINCT source   FROM acc_trans WHERE approved IS FALSE AND transdate < $1 AND chart_id = $2
+     SELECT 'unapproved_transactions'::text, sum(c)::text
+       FROM (SELECT count(*) as c FROM ar
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(*) as c FROM ap
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(*) FROM gl
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(DISTINCT source) FROM acc_trans
+              WHERE approved IS FALSE AND transdate <= $1 AND chart_id = $2
             ) tx
 ),
      unapproved_cr as (
@@ -63,6 +67,19 @@ WITH unapproved_tx as (
 )
 SELECT * FROM unapproved_tx
 UNION SELECT * FROM unapproved_cr;
+$$;
+
+COMMENT ON FUNCTION reconciliation__check(date, int) IS
+$$Checks whether there are unapproved transactions on or before the end date
+and unapproved reports before the end date provided.
+
+Note that the check for unapproved transactions should include the end date,
+because having unapproved transactions on the end date influences the outcome
+of the balance to be verified by a report.
+
+Also note that the unapproved reports check can't include the end date,
+because that would mean that if a report were in progress while this function
+is being called, that report would be included in the count.
 $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
