@@ -75,3 +75,10 @@
 1.6/add_empty_salutation.sql
 1.6/missing-countries.sql
 1.6/constrain_default_password_duration.sql
+1.6/add-recon-index.sql
+#
+# 1.7 changes
+1.7/drop-custom-catalog.sql
+1.7/alter-menu-attributes.sql
+1.7/drop-duplicate-gifi-index.sql
+1.7/drop-menu-add-accounts.sql
