@@ -36,6 +36,16 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.7
+* Fix 'Save Groups' clearing all user permissions (Nick P)
+* Fix draft deletion failing after updating recon screen (Erik H, #3904)
+* Fix reconciliation failing to add transaction after approval (Erik H, #3909)
+* Improve unapproved transactions warning in reconciliation (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.6
 * Fix search for reconciliation report by amount (Nick P)
 * Fix adding budget gives error (Nick P, #3850)
