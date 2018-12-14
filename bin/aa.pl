@@ -924,44 +924,40 @@ sub form_footer {
 
 
         %button = (
-            'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
-            'copy_to_new' => # Shares an index with copy because one or the other
-                             # must be deleted.  One can only either copy or
-                             # update, not both. --CT
-              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
+            'update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'copy_to_new' => { ndx => 2, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print'),
+              { ndx => 3, key => 'P', value => $locale->text('Print'),
                 type => 'lsmb/PrintButton' },
-            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+            'edit_and_save' => { ndx   => 4, key   => 'E', value => $locale->text('Save Draft') },
+            'post' => { ndx => 5, key => 'O', value => $locale->text('Post') },
+            'post_as_new' => { ndx => 6, key => 'O', value => $locale->text('Post') },
+            'approve' => { ndx   => 7, key   => 'O', value => $locale->text('Post') },
             'schedule' =>
-              { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+              { ndx => 8, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
-              { ndx => 8, key => 'D', value => $locale->text('Delete') },
+              { ndx => 9, key => 'D', value => $locale->text('Delete') },
             'on_hold' =>
-              { ndx => 9, key => 'O', value => $hold_text },
+              { ndx => 10, key => 'O', value => $hold_text },
             'save_info' =>
-              { ndx => 10, key => 'I', value => $locale->text('Save Info') },
+              { ndx => 11, key => 'I', value => $locale->text('Save Info') },
             'save_temp' =>
-              { ndx => 11, key => 'T', value => $locale->text('Save Template')},
+              { ndx => 12, key => 'T', value => $locale->text('Save Template')},
             'new_screen' => # Create a blank ar/ap invoice.
-             { ndx => 12, key=> 'N', value => $locale->text('New') }
+             { ndx => 13, key=> 'N', value => $locale->text('New') }
         );
         my $is_draft = 0;
         if (!$form->{approved} && !$form->{batch_id}){
            $is_draft = 1;
-           $button{approve} = {
-                   ndx   => 3,
-                   key   => 'O',
-                   value => $locale->text('Post') };
-           if ($form->is_allowed_role(['draft_modify'])){
-               $button{edit_and_save} = {
-                   ndx   => 4,
-                   key   => 'E',
-                   value => $locale->text('Save Draft') };
+           if (!$form->is_allowed_role(['draft_modify'])){
+               delete $button{edit_and_save};
            }
            delete $button{post_as_new};
            delete $button{post};
+        }
+        else {
+            delete $button{approve};
+            delete $button{edit_and_save};
         }
 
         if ($form->{separate_duties} || $form->{batch_id}){
