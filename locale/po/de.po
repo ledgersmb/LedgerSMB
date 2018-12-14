@@ -1,13 +1,14 @@
 # Translators:
-# Erik Huelsmann <ehuels@gmail.com>, 2016
-# Mikael Arhelger <mikaelarhelger@gmail.com>, 2016
 # Mikkel Høgh <mikkel@hoegh.org>, 2016
+# Erik Huelsmann <ehuels@gmail.com>, 2016
+# Mikael Arhelger <mikaelarhelger@gmail.com>, 2018
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.22-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-05-31 20:40+0000\n"
-"Last-Translator: Mikkel Høgh <mikkel@hoegh.org>, 2016\n"
+"POT-Creation-Date: 2018-12-14 11:24+0000\n"
+"Last-Translator: Mikael Arhelger <mikaelarhelger@gmail.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -276,7 +277,7 @@ msgstr "Kontotyp"
 msgid "Account [_1] not found"
 msgstr "Konto [_1] nicht gefunden"
 
-#: bin/gl.pl:614
+#: bin/gl.pl:592
 msgid "Account [_1] not found."
 msgstr "Konto [_1] nicht gefunden."
 
@@ -1458,7 +1459,7 @@ msgstr "Stornieren."
 msgid "Cancel?"
 msgstr "Abbrechen?"
 
-#: bin/gl.pl:650
+#: bin/gl.pl:628
 msgid "Cannot Repost Transaction"
 msgstr "Transaktion kann nicht umgebucht werden"
 
@@ -1503,7 +1504,7 @@ msgstr "Artikel kann nicht gelÃ¶scht werden!"
 msgid "Cannot delete order!"
 msgstr "Bestellung konnte nicht gelÃ¶scht werden!"
 
-#: bin/gl.pl:679
+#: bin/gl.pl:657
 msgid "Cannot delete posted transaction"
 msgstr "Transaktion konnte nicht gelöscht werden"
 
@@ -1519,11 +1520,11 @@ msgstr "Rechnung kann in abgeschlossener Periode nicht gebucht werden!"
 msgid "Cannot post payment for a closed period!"
 msgstr "Zahlung kann im abgeschlossenen Zeitraum nicht gebucht werden!"
 
-#: bin/aa.pl:1335 bin/gl.pl:662
+#: bin/aa.pl:1335 bin/gl.pl:640
 msgid "Cannot post transaction for a closed period!"
 msgstr "Transaktion kann in geschlossener Periode nicht gebucht werden!"
 
-#: bin/gl.pl:703
+#: bin/gl.pl:681
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr ""
@@ -1929,7 +1930,7 @@ msgstr "Kopie"
 msgid "Copy to COA"
 msgstr "Auf COA kopieren"
 
-#: bin/aa.pl:933 bin/gl.pl:272 bin/ir.pl:537 bin/is.pl:581
+#: bin/aa.pl:933 bin/gl.pl:275 bin/ir.pl:537 bin/is.pl:581
 msgid "Copy to New"
 msgstr "Als Neu kopieren"
 
@@ -5023,7 +5024,7 @@ msgstr ""
 msgid "Net Due"
 msgstr ""
 
-#: bin/aa.pl:468 bin/aa.pl:949 bin/gl.pl:270 bin/ir.pl:370 bin/ir.pl:556
+#: bin/aa.pl:468 bin/aa.pl:949 bin/gl.pl:273 bin/ir.pl:370 bin/ir.pl:556
 #: bin/is.pl:346 bin/is.pl:601 bin/oe.pl:511
 msgid "New"
 msgstr "Neu"
@@ -5589,7 +5590,7 @@ msgstr ""
 msgid "Out"
 msgstr ""
 
-#: bin/gl.pl:713
+#: bin/gl.pl:691
 msgid "Out of balance transaction!"
 msgstr "Soll und Haben sind nicht gleich!"
 
@@ -6051,7 +6052,7 @@ msgstr ""
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:258 bin/gl.pl:298
+#: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:260 bin/gl.pl:262
 #: bin/ir.pl:541 bin/ir.pl:575 bin/ir.pl:944 bin/is.pl:585 bin/is.pl:623
 #: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: UI/payments/payment2.html:476
@@ -7029,7 +7030,7 @@ msgid "Sat"
 msgstr "Sat"
 
 #: bin/aa.pl:969 bin/am.pl:67 bin/am.pl:75 bin/am.pl:86 bin/am.pl:173
-#: bin/am.pl:179 bin/gl.pl:277 bin/ic.pl:833 bin/ic.pl:842 bin/ir.pl:560
+#: bin/am.pl:179 bin/gl.pl:260 bin/ic.pl:833 bin/ic.pl:842 bin/ir.pl:560
 #: bin/is.pl:607 bin/oe.pl:634 bin/oe.pl:856 bin/pe.pl:167 bin/pe.pl:239
 #: bin/pe.pl:607 lib/LedgerSMB/Scripts/account.pm:169
 #: lib/LedgerSMB/Scripts/account.pm:182 lib/LedgerSMB/Scripts/asset.pm:453
@@ -7069,7 +7070,7 @@ msgstr "Änderungen speichern"
 msgid "Save Contact"
 msgstr "Kontakt speichern"
 
-#: bin/aa.pl:962 bin/gl.pl:260 bin/gl.pl:306 bin/ir.pl:580 bin/is.pl:628
+#: bin/aa.pl:962 bin/gl.pl:265 bin/ir.pl:580 bin/is.pl:628
 msgid "Save Draft"
 msgstr ""
 
@@ -7097,7 +7098,7 @@ msgstr ""
 msgid "Save Schedule"
 msgstr "Plan speichern"
 
-#: bin/aa.pl:947 bin/gl.pl:264
+#: bin/aa.pl:947 bin/gl.pl:267
 msgid "Save Template"
 msgstr "Vorlage speichern"
 
@@ -7109,7 +7110,7 @@ msgstr "Speichern und erneut versuchen"
 msgid "Save as New"
 msgstr "Als Neu speichern"
 
-#: bin/am.pl:68 bin/am.pl:77 bin/gl.pl:266 bin/ic.pl:834 bin/ic.pl:851
+#: bin/am.pl:68 bin/am.pl:77 bin/gl.pl:269 bin/ic.pl:834 bin/ic.pl:851
 #: bin/oe.pl:646 bin/oe.pl:859 lib/LedgerSMB/Scripts/account.pm:172
 msgid "Save as new"
 msgstr "Als Neu speichern"
@@ -7126,7 +7127,7 @@ msgstr "Speichern [_1] [_2]"
 msgid "Saving over an existing document.  Continue?"
 msgstr ""
 
-#: bin/aa.pl:906 bin/aa.pl:939 bin/gl.pl:268 bin/ir.pl:550 bin/ir.pl:946
+#: bin/aa.pl:906 bin/aa.pl:939 bin/gl.pl:271 bin/ir.pl:550 bin/ir.pl:946
 #: bin/is.pl:593 bin/is.pl:1029 bin/oe.pl:671 bin/oe.pl:855
 msgid "Schedule"
 msgstr "Planen"
@@ -8206,7 +8207,7 @@ msgstr "Vorlagenauflistung"
 msgid "Template Not Found"
 msgstr "Vorlage nicht gefunden"
 
-#: bin/aa.pl:1131 bin/gl.pl:382
+#: bin/aa.pl:1131 bin/gl.pl:360
 msgid "Template Saved!"
 msgstr "Vorlage gespeichert!"
 
@@ -8635,7 +8636,7 @@ msgstr " Transaktionsbestätigung"
 msgid "Transaction Date"
 msgstr "Transaktionsdatum"
 
-#: bin/gl.pl:656
+#: bin/gl.pl:634
 msgid "Transaction Date missing!"
 msgstr "Datum der Transaktion fehlt!"
 

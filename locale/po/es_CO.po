@@ -1,12 +1,13 @@
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2016
-# Jesus of Nazareth <brianjerezb@gmail.com>, 2018
+# Brian Jerez <brianjerezb@gmail.com>, 2018
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.22-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-05-31 20:40+0000\n"
-"Last-Translator: Jesus of Nazareth <brianjerezb@gmail.com>, 2018\n"
+"POT-Creation-Date: 2018-12-14 11:24+0000\n"
+"Last-Translator: Brian Jerez <brianjerezb@gmail.com>, 2018\n"
 "Language-Team: Spanish (Colombia) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_CO/)\n"
 "Language: es_CO\n"
@@ -273,7 +274,7 @@ msgstr "Tipo de cuenta"
 msgid "Account [_1] not found"
 msgstr ""
 
-#: bin/gl.pl:614
+#: bin/gl.pl:592
 msgid "Account [_1] not found."
 msgstr ""
 
@@ -1455,7 +1456,7 @@ msgstr ""
 msgid "Cancel?"
 msgstr ""
 
-#: bin/gl.pl:650
+#: bin/gl.pl:628
 msgid "Cannot Repost Transaction"
 msgstr ""
 
@@ -1495,7 +1496,7 @@ msgstr "¡No se puede borrar el artículo!"
 msgid "Cannot delete order!"
 msgstr "¡No se puede borrar el pedido!"
 
-#: bin/gl.pl:679
+#: bin/gl.pl:657
 msgid "Cannot delete posted transaction"
 msgstr ""
 
@@ -1511,11 +1512,11 @@ msgstr "¡No se puede registrar una factura en un periodo ya cerrado!"
 msgid "Cannot post payment for a closed period!"
 msgstr "¡No se puede registrar un pago en un periodo ya cerrado!"
 
-#: bin/aa.pl:1335 bin/gl.pl:662
+#: bin/aa.pl:1335 bin/gl.pl:640
 msgid "Cannot post transaction for a closed period!"
 msgstr "¡No se puede registrar una transacción para un periodo cerrado"
 
-#: bin/gl.pl:703
+#: bin/gl.pl:681
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr ""
@@ -1917,7 +1918,7 @@ msgstr "Copiar"
 msgid "Copy to COA"
 msgstr "Copiar al plan de cuentas"
 
-#: bin/aa.pl:933 bin/gl.pl:272 bin/ir.pl:537 bin/is.pl:581
+#: bin/aa.pl:933 bin/gl.pl:275 bin/ir.pl:537 bin/is.pl:581
 msgid "Copy to New"
 msgstr ""
 
@@ -4992,7 +4993,7 @@ msgstr ""
 msgid "Net Due"
 msgstr ""
 
-#: bin/aa.pl:468 bin/aa.pl:949 bin/gl.pl:270 bin/ir.pl:370 bin/ir.pl:556
+#: bin/aa.pl:468 bin/aa.pl:949 bin/gl.pl:273 bin/ir.pl:370 bin/ir.pl:556
 #: bin/is.pl:346 bin/is.pl:601 bin/oe.pl:511
 msgid "New"
 msgstr ""
@@ -5556,7 +5557,7 @@ msgstr ""
 msgid "Out"
 msgstr ""
 
-#: bin/gl.pl:713
+#: bin/gl.pl:691
 msgid "Out of balance transaction!"
 msgstr "Transacción fuera de Balance!"
 
@@ -6016,7 +6017,7 @@ msgstr ""
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:258 bin/gl.pl:298
+#: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:260 bin/gl.pl:262
 #: bin/ir.pl:541 bin/ir.pl:575 bin/ir.pl:944 bin/is.pl:585 bin/is.pl:623
 #: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: UI/payments/payment2.html:476
@@ -6994,7 +6995,7 @@ msgid "Sat"
 msgstr ""
 
 #: bin/aa.pl:969 bin/am.pl:67 bin/am.pl:75 bin/am.pl:86 bin/am.pl:173
-#: bin/am.pl:179 bin/gl.pl:277 bin/ic.pl:833 bin/ic.pl:842 bin/ir.pl:560
+#: bin/am.pl:179 bin/gl.pl:260 bin/ic.pl:833 bin/ic.pl:842 bin/ir.pl:560
 #: bin/is.pl:607 bin/oe.pl:634 bin/oe.pl:856 bin/pe.pl:167 bin/pe.pl:239
 #: bin/pe.pl:607 lib/LedgerSMB/Scripts/account.pm:169
 #: lib/LedgerSMB/Scripts/account.pm:182 lib/LedgerSMB/Scripts/asset.pm:453
@@ -7034,7 +7035,7 @@ msgstr ""
 msgid "Save Contact"
 msgstr ""
 
-#: bin/aa.pl:962 bin/gl.pl:260 bin/gl.pl:306 bin/ir.pl:580 bin/is.pl:628
+#: bin/aa.pl:962 bin/gl.pl:265 bin/ir.pl:580 bin/is.pl:628
 msgid "Save Draft"
 msgstr ""
 
@@ -7062,7 +7063,7 @@ msgstr ""
 msgid "Save Schedule"
 msgstr "Guardar Programación"
 
-#: bin/aa.pl:947 bin/gl.pl:264
+#: bin/aa.pl:947 bin/gl.pl:267
 msgid "Save Template"
 msgstr ""
 
@@ -7074,7 +7075,7 @@ msgstr ""
 msgid "Save as New"
 msgstr ""
 
-#: bin/am.pl:68 bin/am.pl:77 bin/gl.pl:266 bin/ic.pl:834 bin/ic.pl:851
+#: bin/am.pl:68 bin/am.pl:77 bin/gl.pl:269 bin/ic.pl:834 bin/ic.pl:851
 #: bin/oe.pl:646 bin/oe.pl:859 lib/LedgerSMB/Scripts/account.pm:172
 msgid "Save as new"
 msgstr "Guardar como nuevo"
@@ -7091,7 +7092,7 @@ msgstr ""
 msgid "Saving over an existing document.  Continue?"
 msgstr ""
 
-#: bin/aa.pl:906 bin/aa.pl:939 bin/gl.pl:268 bin/ir.pl:550 bin/ir.pl:946
+#: bin/aa.pl:906 bin/aa.pl:939 bin/gl.pl:271 bin/ir.pl:550 bin/ir.pl:946
 #: bin/is.pl:593 bin/is.pl:1029 bin/oe.pl:671 bin/oe.pl:855
 msgid "Schedule"
 msgstr "Programar Recurrencia"
@@ -8171,7 +8172,7 @@ msgstr ""
 msgid "Template Not Found"
 msgstr ""
 
-#: bin/aa.pl:1131 bin/gl.pl:382
+#: bin/aa.pl:1131 bin/gl.pl:360
 msgid "Template Saved!"
 msgstr ""
 
@@ -8595,7 +8596,7 @@ msgstr ""
 msgid "Transaction Date"
 msgstr ""
 
-#: bin/gl.pl:656
+#: bin/gl.pl:634
 msgid "Transaction Date missing!"
 msgstr "No se ha definido la fecha de la transacción"
 
