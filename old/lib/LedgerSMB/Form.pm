@@ -1189,8 +1189,12 @@ sub generate_selects {
     if ($form->{all_employee} && @{ $form->{all_employee} }) {
         $form->{selectemployee} = "";
         for (@{ $form->{all_employee} }) {
+            my $value = "$_->{name}--$_->{id}";
+            my $selected = ($form->{employee} eq $value
+                || $form->{employee} eq $_->{name}) ?
+                ' selected="selected"' : "";
             $form->{selectemployee} .=
-                qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+                qq|<option value="$value"$selected>$_->{name}</option>\n|;
         }
     }
 
