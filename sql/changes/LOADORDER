@@ -49,8 +49,7 @@
 1.5/fixed-assets-not-null-constraints.sql
 1.5/template_menu-v2.sql
 #tag: migration-target
-# Note: the schema as created up to here, is the one as required by
-#   the migration scripts in sql/upgrade/. Don't insert any change
-#   scripts before this point, because it breaks the migrations from
-#   both LedgerSMB 1.2 & 1.3 as well as from SQL 2.8 and 3.0
-#1.6 changes
+# backported from 1.6:
+1.6/add-recon-index.sql
+#
+

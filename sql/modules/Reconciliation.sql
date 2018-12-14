@@ -486,15 +486,15 @@ $$
                      OR (t_recon_fx is true
                          AND (gl.table <> 'gl'
                               OR ac.fx_transaction IS TRUE)))
-                AND (ac.entry_id > coalesce(r.max_ac_id, 0))
+                AND (ac.entry_id > (select min(entry_id) from acc_trans
+                                     where acc_trans.chart_id = r.chart_id))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table,
                 case when gl.table = 'gl' then gl.id else 1 end
         HAVING count(rl.id) = 0;
 
         UPDATE cr_report set updated = date_trunc('second', now()),
-                their_total = coalesce(in_their_total, their_total),
-                max_ac_id = (select max(entry_id) from acc_trans)
+                their_total = coalesce(in_their_total, their_total)
         where id = in_report_id;
 
     RETURN in_report_id;
