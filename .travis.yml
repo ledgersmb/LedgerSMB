@@ -48,8 +48,6 @@ matrix:
         apt:
           packages:
             - nginx postgresql-9.4-pgtap
-      env:
-        - COVERAGE=1
     - perl: '5.18'
       addons:
         postgresql: "9.4"
