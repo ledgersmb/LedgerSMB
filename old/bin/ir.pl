@@ -311,19 +311,6 @@ sub form_header {
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
-    # set option selected
-    for (qw(AP currency)) {
-        $form->{"select$_"} =~ s/ selected="selected"//;
-        $form->{"select$_"} =~
-          s/(option value="\Q$form->{$_}\E")/$1 selected="selected"/;
-    }
-
-    for (qw(vendor department)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected="selected"//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -349,9 +336,7 @@ sub form_header {
 |;
 
     if ( $form->{selectvendor} ) {
-        $vendor = qq|<select data-dojo-type="dijit/form/Select" id=vendor name=vendor>$form->{selectvendor}</select>
-                 <input type=hidden name="selectvendor" value="|
-          . $form->escape( $form->{selectvendor}, 1 ) . qq|">|;
+        $vendor = qq|<select data-dojo-type="dijit/form/Select" id=vendor name=vendor>$form->{selectvendor}</select>|;
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor value="$form->{vendor}" size=35>
