@@ -941,6 +941,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 sub update {
     $form->{nextsub} = 'update';
 
+    $form->get_regular_metadata(
+        \%myconfig,
+        $form->{vc},
+        $form->{transdate},
+        1,
+    );
+    $form->generate_selects;
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate reqdate);
 
@@ -972,6 +979,8 @@ sub update {
         $ARAP    = "AP";
     }
 
+    ( $form->{employee}, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee} && ! $form->{employee_id};
     if ( $newname = &check_name( $form->{vc} ) ) {
         if($newname>1){return;}#tshvr4 may be dropped if finalize_request() does not return here
     }
