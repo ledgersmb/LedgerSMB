@@ -1106,17 +1106,19 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 sub update {
     $form->{ARAP} = 'AR';
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
+    $form->{exchangerate} =
+      $form->parse_amount( \%myconfig, $form->{exchangerate} );
+
+    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+       for qw(transdate duedate crdate);
 
 
     $form->{taxes} = {};
-    $form->{exchangerate} =
-      $form->parse_amount( \%myconfig, $form->{exchangerate} );
+
 
     if ( $newname = &check_name(customer) ) {
         rebuild_vc('customer', $form->{transdate}, 1);
     }
-    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
-       for qw(transdate duedate crdate);
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
           ( $form->{terms} )
