@@ -1239,6 +1239,7 @@ sub update {
             }
         }
     }
+    $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
      $form->generate_selects();
      $form->{rowcount}--;
     display_form();
