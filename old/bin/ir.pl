@@ -1009,7 +1009,7 @@ sub update {
        for qw(transdate duedate crdate);
 
     if ( $newname = &check_name(vendor) ) {
-        rebuild_vc('vendor', $form->{transdate}, 1);
+        $form->rebuild_vc('vendor', $form->{transdate}, 1);
     }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
@@ -1018,7 +1018,7 @@ sub update {
             $form->{terms} * 1 )
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
-        rebuild_vc('vendor', $form->{transdate}, 1) if !$newname;
+        $form->rebuild_vc('vendor', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -1224,6 +1224,7 @@ sub update {
             }
         }
     }
+    $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
      $form->generate_selects();
      $form->{rowcount}--;
     display_form();

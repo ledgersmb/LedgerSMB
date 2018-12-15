@@ -1117,7 +1117,7 @@ sub update {
 
 
     if ( $newname = &check_name(customer) ) {
-        rebuild_vc('customer', $form->{transdate}, 1);
+        $form->rebuild_vc('customer', $form->{transdate}, 1);
     }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
@@ -1127,7 +1127,7 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
 
-        rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
+        $form->rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};

@@ -1919,6 +1919,27 @@ sub all_vc {
     $self->get_regular_metadata($myconfig, $vc, $transdate, $job);
 }
 
+=item $form->rebuild_vc()
+
+=cut
+
+sub rebuild_vc {
+    my ($self, $vc, $transdate, $job) = @_;
+
+    my ($null, %myconfig);
+    ( $null, $self->{employee_id} ) = split /--/, $self->{employee};
+    $self->all_vc(\%myconfig, $vc, $transdate, $job);
+    $self->{"select$vc"} = "";
+    for ( @{ $self->{"all_$vc"} } ) {
+        $self->{"select$vc"} .=
+          qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+    }
+    $self->{selectprojectnumber} = "";
+
+    1;
+}
+
+
 =item $form->get_regular_metadata($myconfig, $vc, $transdate, $job)
 
 This is API-compatible with all_vc.  It is a handy wrapper function that calls
