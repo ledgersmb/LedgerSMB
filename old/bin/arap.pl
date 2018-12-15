@@ -303,21 +303,6 @@ sub name_selected {
 
 }
 
-sub rebuild_vc {
-    my ($vc, $transdate, $job) = @_;
-
-    ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
-    $form->all_vc(\%myconfig, $vc, $transdate, $job);
-    $form->{"select$vc"} = "";
-    for ( @{ $form->{"all_$vc"} } ) {
-        $form->{"select$vc"} .=
-          qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-    }
-    $form->{selectprojectnumber} = "";
-
-    1;
-}
-
 sub add_transaction {
     my ($module) = @_;
 

@@ -1113,7 +1113,7 @@ sub update {
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
     if ( $newname = &check_name(customer) ) {
-        rebuild_vc('customer', $form->{transdate}, 1);
+        $form->rebuild_vc('customer', $form->{transdate}, 1);
     }
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
@@ -1125,7 +1125,7 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
 
-        rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
+        $form->rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
