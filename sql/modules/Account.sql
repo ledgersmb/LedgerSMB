@@ -510,7 +510,8 @@ BEGIN
      */
     DELETE FROM account_checkpoint
     WHERE account_id = in_id
-    AND amount = 0
+    AND amount_bc = 0
+    AND amount_tc = 0
     AND debits = 0
     AND credits = 0;
 
