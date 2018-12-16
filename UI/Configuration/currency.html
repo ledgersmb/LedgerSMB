@@ -2,13 +2,13 @@
 <?lsmb PROCESS elements.html ?>
 <?lsmb PROCESS 'dynatable-old.html' ?>
 
-<body class="<?lsmb dojo_theme ?>">
+<body>
 <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
 
 <?lsmb PROCESS 'dynatable' ?>
 <br />
 
-<form data-dojo-type="lsmb/lib/Form"
+<form data-dojo-type="lsmb/Form"
       method="post"
       action="<?lsmb form.script ?>">
   <?lsmb FOREACH hidden IN hiddens.keys;
