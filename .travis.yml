@@ -1,7 +1,7 @@
 # run on GCE build as per suggested:
 # https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
 sudo: false
-dist: trusty
+dist: xenial
 language: perl
 
 notifications:
@@ -83,19 +83,14 @@ before_install:
   - service --status-all
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  - phantomjs --version
   - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
+  - rm -rf $HOME/travis_phantomjs ;
+  - mkdir -p $HOME/travis_phantomjs ;
+  - wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
+  - tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
+  - hash -r ;
+  - export QT_QPA_PLATFORM=phantom
   - phantomjs --version
-  - if [ $(phantomjs --version) != '2.1.1' ];
-    then
-      rm -rf $HOME/travis_phantomjs ;
-      mkdir -p $HOME/travis_phantomjs ;
-      wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
-      tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
-      hash -r ;
-      export QT_QPA_PLATFORM=phantom
-      phantomjs --version ;
-    fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
