@@ -1108,25 +1108,17 @@ sub generate_selects {
                       ));
      }
 
-     if ($form->{currencies}) {
-          my %curr;
-          my @curr = @{$form->{currencies}};
-          $form->{defaultcurrency} = $curr[0];
-          foreach (@curr) {
-                $curr{$_} = 1;
-          }
-          @curr = keys %curr;
-
-        my @currencies = split /:/, $form->{currencies};
+     if (@{$form->{currencies}}) {
+        my @currencies = @{$form->{currencies}};
         $form->{defaultcurrency} = $currencies[0];
         $form->{currency} ||= $form->{defaultcurrency};
-          $form->{selectcurrency} = "";
+        $form->{selectcurrency} = "";
 
         foreach my $currency (sort @currencies) {
             my $selected = ($form->{currency} eq $currency)
-                         ? ' selected="selected"'
-                         : '';
-                $form->{selectcurrency} .=
+                ? ' selected="selected"'
+                : '';
+            $form->{selectcurrency} .=
                 "<option value=\"$currency\"$selected>$currency</option>\n";
           }
      }
