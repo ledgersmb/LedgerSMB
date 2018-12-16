@@ -97,10 +97,9 @@ Note: the returned value's 'valid_from' value may not be equal to the
 
 sub get {
     my ($self, $curr, $type, $date) = @_;
-    my ($unit) = $self->call_procedure(procname => 'exchangerate__get',
-                                            args => [$curr, $type, $date]
+    my ($unit) = $self->call_procedure(funcname => 'exchangerate__get',
+                                       args => [$curr, $type, $date]
     );
-    $self->prepare_dbhash($unit);
     return $self->new(%$unit);
 }
 
@@ -112,8 +111,7 @@ Saves the exchange rate.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'exchangerate__save'});
-    $self->prepare_dbhash($ref);
+    my ($ref) = $self->call_dbmethod(funcname => 'exchangerate__save');
     $self = $self->new($ref);
 }
 
@@ -129,12 +127,11 @@ respectively.
 
 sub list {
     my ($self, %args) = @_;
-    my @rows =  $self->call_procedure(procname => 'exchangerate__list',
+    my @rows =  $self->call_procedure(funcname => 'exchangerate__list',
                                       args => [$args{curr}, $args{type},
                                                $args{start}, $args{end},
                                                $args{offset}, $args{limit}]);
     for my $row(@rows){
-        $self->prepare_dbhash($row);
         $row = $self->new($row);
     }
     return @rows;
@@ -152,7 +149,7 @@ Note: deleting exchange rates generally doesn't make much sense as rate informat
 
 sub delete {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'exchangerate__delete'});
+    my ($ref) = $self->call_dbmethod(funcname => 'exchangerate__delete');
 }
 
 =back

@@ -63,11 +63,10 @@ returns the business unit type that corresponds to the id requested.
 
 sub get {
     my ($self, $id) = @_;
-    my @classes = $self->call_procedure(procname => 'exchangerate_type__get',
-                                            args => [$id]
+    my @classes = $self->call_procedure(funcname => 'exchangerate_type__get',
+                                        args => [$id]
         );
     my $ref = shift @classes;
-    $self->prepare_dbhash($ref);
     return $self->new($ref);
 }
 
@@ -80,7 +79,7 @@ changed in the process.
 
 sub save {
     my ($self) = @_;
-    my $id = $self->exec_method({funcname => 'exchangerate_type__save'});
+    my $id = $self->call_dbmethod(funcname => 'exchangerate_type__save');
     return $self->get($id);
 }
 
@@ -94,9 +93,8 @@ Returns a list of all exchange rate types.
 sub list {
     my ($self) = @_;
     my @classes = $self->call_procedure(
-            procname => 'exchangerate_type__list');
+            funcname => 'exchangerate_type__list');
     for my $class (@classes){
-        $self->prepare_dbhash($class);
         $class = $self->new(%$class);
     }
     return @classes;
@@ -110,7 +108,7 @@ Deletes an exchange rate type.  Such types may not have actual rates attached.
 
 sub delete {
     my ($self) = @_;
-    $self->exec_method({funcname => 'exchangerate_type__delete'});
+    $self->call_dbmethod(funcname => 'exchangerate_type__delete');
 }
 
 =back

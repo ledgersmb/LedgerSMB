@@ -53,11 +53,11 @@ returns the currency that corresponds to the id requested.
 
 sub get {
     my ($self, $id) = @_;
-    my @classes = $self->call_procedure(procname => 'currency__get',
-                                            args => [$id]
+    my @classes = $self->call_procedure(funcname => 'currency__get',
+                                        args => [$id]
         );
     my $ref = shift @classes;
-    return $self->prepare_dbhash($ref);
+    return $self->new($ref);
 }
 
 =item save
@@ -69,7 +69,7 @@ changed in the process.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'currency__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'currency__save');
     return $self->get($self->curr);
 }
 
@@ -83,9 +83,8 @@ Returns a list of all currencies.
 sub list {
     my ($self) = @_;
     my @classes = $self->call_procedure(
-            procname => 'currency__list');
+            funcname => 'currency__list');
     for my $class (@classes){
-        $self->prepare_dbhash($class);
         $class = $self->new(%$class);
     }
     return @classes;
@@ -99,7 +98,7 @@ Deletes a currency.  Such currencies may not be referenced by other entities suc
 
 sub delete {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'currency__delete'});
+    my ($ref) = $self->call_dbmethod(funcname => 'currency__delete');
 }
 
 =back
