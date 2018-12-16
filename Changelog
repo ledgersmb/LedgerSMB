@@ -2,6 +2,17 @@
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.8
+* Fix saving orders showing a permission error on a sequence (Erik H, #3889)
+* Fix employee (sales) not being saved for orders (Erik H, #3910)
+* Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
+* Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
+* Fix Post button showing on copied-to-new transaction (Erik H, #3907)
+* Fix vendor invoice looses payment's account on update (Erik H, #3890)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.7
 * Fix 'Save Groups' clearing all user permissions (Nick P)
 * Fix draft deletion failing after updating recon screen (Erik H, #3904)
