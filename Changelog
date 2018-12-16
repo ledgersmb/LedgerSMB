@@ -149,6 +149,7 @@ Changelog for 1.5.23
 * Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
 * Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
 * Fix employee (sales) not being saved for orders (Erik H, #3910)
+* Fix saving order deleting invoice shipping info (Erik H, #3933 [dataloss])
 
 Erik H is Erik Huelsmann
 
