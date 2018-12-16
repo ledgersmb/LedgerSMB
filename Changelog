@@ -143,6 +143,15 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.23
+* Fix saving orders showing a permission error on a sequence (Erik H, #3889)
+* Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
+* Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
+* Fix employee (sales) not being saved for orders (Erik H, #3910)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.22
 * Upgrade Dojo to 1.10.10 (Erik H)
 * Fix failing update scripts applying menu reorganization (Erik H, #3855)
