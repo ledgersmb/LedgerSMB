@@ -139,6 +139,7 @@ sub new {
 sub copy_to_new {
      delete $form->{reference};
      delete $form->{id};
+     delete $form->{approved};
      update();
 }
 
