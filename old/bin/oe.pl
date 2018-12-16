@@ -116,8 +116,15 @@ sub edit {
 
 sub order_links {
 
-    # retrieve order/quotation
-    OE->retrieve( \%myconfig, \%$form );
+
+    $form->generate_selects;
+
+    # create links
+    $form->create_links( module => "OE", # effectively 'none'
+             myconfig => \%myconfig,
+             vc => $form->{vc},
+             billing => 0,
+             job => 1 );
 
     # get projects, departments, languages
     $form->get_regular_metadata(
@@ -127,11 +134,8 @@ sub order_links {
         1,
     );
 
-    # currencies
-    @curr = @{$form->{currencies}};
-    $form->{currency} = $form->{defaultcurrency} unless $form->{currency};
-
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+    # retrieve order/quotation
+    OE->retrieve( \%myconfig, \%$form );
 
     $form->{oldlanguage_code} = $form->{language_code};
 
@@ -951,6 +955,12 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 sub update {
     $form->{nextsub} = 'update';
 
+    $form->get_regular_metadata(
+        \%myconfig,
+        $form->{vc},
+        $form->{transdate},
+        1,
+    );
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate reqdate);
 
@@ -982,8 +992,10 @@ sub update {
         $ARAP    = "AP";
     }
 
+    ( $form->{employee}, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee} && ! $form->{employee_id};
     if ( $newname = &check_name( $form->{vc} ) ) {
-        if($newname>1){return;}#tshvr4 may be dropped if finalize_request() does not return here
+        $form->rebuild_vc($form->{vc}, $form->{transdate}, 1);
     }
 
     # I think this is safe because the shipping or receiving is tied to the
@@ -997,6 +1009,7 @@ sub update {
             $form->{terms} * 1 )
           : $form->{reqdate};
         $form->{oldtransdate} = $form->{transdate};
+        $form->rebuild_vc($form->{vc}, $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -1170,6 +1183,8 @@ sub update {
             }
         }
     }
+    $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
+    $form->generate_selects;
     $form->{rowcount}--;
     display_form();
 }

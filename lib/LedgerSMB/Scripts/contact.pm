@@ -22,7 +22,6 @@ use Try::Tiny;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
-use LedgerSMB::Scripts::employee::country;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -188,18 +187,6 @@ sub _main_screen {
                notes => $locale->text('Notes'),
                files => $locale->text('Files'),
     );
-
-    if (defined $person->{country_id}
-    && $LedgerSMB::Scripts::employee::country::country_divs{
-            $person->{country_id}
-    }){
-        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
-            $person->{country_id}
-         }}){
-             push @DIVS, $cform->{file};
-             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
-         }
-    }
 
     # DIVS contents
     my $entity_id = $company->{entity_id};
@@ -942,18 +929,25 @@ Saves the user's permissions
 
 sub save_roles {
     my ($request) = @_;
-    if ($request->close_form){
-       my $user = LedgerSMB::Entity::User->get($request->{entity_id});
-       my $roles = [];
-       $request->{_role_prefix} = "lsmb_$request->{company}__"
-           unless defined $request->{_role_prefix};
-       for my $key(keys %$request){
-           if ($key =~ /$request->{_role_prefix}/ and $request->{$key}){
-               push @$roles, $key;
-           }
-       }
-       $user->save_roles($roles);
+    my $roles = [];
+
+    $request->close_form or die 'Form submission is invalid';
+
+    foreach my $key (keys %$request) {
+
+        # Role parameters are distinguished by a special prefix
+        $key =~ m/^role__/ or next;
+        $request->{$key} or next;
+
+        # Strip prefix to obtain 'global' role name
+        $key =~ s/^role__//;
+
+        push @$roles, $key;
     }
+
+    my $user = LedgerSMB::Entity::User->get($request->{entity_id});
+    $user->save_roles($roles);
+
     return get($request);
 }
 

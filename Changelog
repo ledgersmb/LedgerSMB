@@ -36,6 +36,39 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.8
+* Fix saving orders showing a permission error on a sequence (Erik H, #3889)
+* Fix employee (sales) not being saved for orders (Erik H, #3910)
+* Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
+* Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
+* Fix Post button showing on copied-to-new transaction (Erik H, #3907)
+* Fix vendor invoice looses payment's account on update (Erik H, #3890)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.7
+* Fix 'Save Groups' clearing all user permissions (Nick P)
+* Fix draft deletion failing after updating recon screen (Erik H, #3904)
+* Fix reconciliation failing to add transaction after approval (Erik H, #3909)
+* Improve unapproved transactions warning in reconciliation (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.6
+* Fix search for reconciliation report by amount (Nick P)
+* Fix adding budget gives error (Nick P, #3850)
+* Fix heading not displayed when editing account (Nick P)
+* Fix parent not displayed when editing account heading (Nick P)
+* Fix 'Returns' drop-down option not shown editing account (Nick P)
+* Update Dojo to 1.13.3 (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.5
 * Update Dojo to 1.13.3-pre; previous update broke file uploads (Erik H, #3799)
 
@@ -144,9 +177,26 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.23
+* Fix saving orders showing a permission error on a sequence (Erik H, #3889)
+* Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
+* Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
+* Fix employee (sales) not being saved for orders (Erik H, #3910)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.22
 * Upgrade Dojo to 1.10.10 (Erik H)
+* Fix failing update scripts applying menu reorganization (Erik H, #3855)
+* Fix template files containing object name instead of actual content (Nick P)
+* Fix voucher deletion throwing an error (Erik H, #3722)
+* Fix GL journal buttons displaying in random order (Erik H, #3860)
+* Fix aging report (typo in module name) (Erik H)
+* Fix draft deletion failing after updating recon screen (Erik H, #3904)
+* Fix reconciliation failing to add transaction after approval (Erik H, #3909)
 
+Nick P is Nick Prater
 Erik H is Erik Huelsmann
 
 

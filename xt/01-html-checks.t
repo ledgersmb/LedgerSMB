@@ -40,7 +40,7 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
-    open $fh, '<', $filename
+    open $fh, '<:encoding(UTF-8)', $filename
         or BAIL_OUT("failed to open $filename for reading $!");
     $is_snippet = 1
         if ($filename !~ m#(log(in|out))|main|(setup/(?!upgrade/))#
@@ -85,6 +85,12 @@ sub content_test {
                 else {
                     return 0;
                 }
+            },
+            'text-use-entity' => sub {
+                # As per W3C guidance, prefer characters in their normal form
+                # rather than requiring named or numeric character references.
+                # https://www.w3.org/International/questions/qa-escapes
+                return 1;
             },
         },
     });

@@ -49,11 +49,15 @@ RETURNS SETOF defaults
 LANGUAGE SQL AS
 $$
 WITH unapproved_tx as (
-     SELECT 'unapproved_transactions'::text, count(*)::text
-       FROM (SELECT          id::text FROM ar        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT          id::text FROM ap        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT          id::text FROM gl        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT DISTINCT source   FROM acc_trans WHERE approved IS FALSE AND transdate < $1 AND chart_id = $2
+     SELECT 'unapproved_transactions'::text, sum(c)::text
+       FROM (SELECT count(*) as c FROM ar
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(*) as c FROM ap
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(*) FROM gl
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(DISTINCT source) FROM acc_trans
+              WHERE approved IS FALSE AND transdate <= $1 AND chart_id = $2
             ) tx
 ),
      unapproved_cr as (
@@ -63,6 +67,19 @@ WITH unapproved_tx as (
 )
 SELECT * FROM unapproved_tx
 UNION SELECT * FROM unapproved_cr;
+$$;
+
+COMMENT ON FUNCTION reconciliation__check(date, int) IS
+$$Checks whether there are unapproved transactions on or before the end date
+and unapproved reports before the end date provided.
+
+Note that the check for unapproved transactions should include the end date,
+because having unapproved transactions on the end date influences the outcome
+of the balance to be verified by a report.
+
+Also note that the unapproved reports check can't include the end date,
+because that would mean that if a report were in progress while this function
+is being called, that report would be included in the count.
 $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
@@ -190,29 +207,10 @@ Note that currently contra accounts will show negative balances.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) returns INT as $$
 
-    -- Does some basic checks before allowing the approval to go through;
-    -- moves the approval to "cr_report_line", I guess, or some other "final" table.
-    --
-    -- Pending may just be a single flag in the database to mark that it is
-    -- not finalized. Will need to discuss with Chris.
-
     DECLARE
         current_row RECORD;
-        completed cr_report_line;
-        total_errors INT;
-        in_user TEXT;
         ac_entries int[];
     BEGIN
-        in_user := current_user;
-
-        -- so far, so good. Different user, and no errors remain. Therefore,
-        -- we can move it to completed reports.
-        --
-        -- User may not be necessary - I would think it better to use the
-        -- in_user, to note who approved the report, than the user who
-        -- filed it. This may require clunkier syntax..
-
-        --
         ac_entries := '{}';
         UPDATE cr_report SET approved = 't',
                 approved_by = person__get_my_entity_id(),
@@ -499,14 +497,14 @@ $$
                 AND ac.approved IS TRUE
                 AND ac.chart_id = t_chart_id
                 AND ac.transdate <= t_end_date
-                AND (ac.entry_id > coalesce(r.max_ac_id, 0))
+                AND (ac.entry_id > (select min(entry_id) from acc_trans
+                                     where acc_trans.chart_id = r.chart_id))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table
         HAVING count(rl.id) = 0;
 
         UPDATE cr_report set updated = date_trunc('second', now()),
-                their_total = coalesce(in_their_total, their_total),
-                max_ac_id = (select max(entry_id) from acc_trans)
+                their_total = coalesce(in_their_total, their_total)
         where id = in_report_id;
 
     RETURN in_report_id;

@@ -27,24 +27,41 @@ use Log::Log4perl;
 use LedgerSMB;
 use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::EOY;
-use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
 
-my $logger = Log::Log4perl::get_logger('LedgerSMB::DBObject::Account');
-
-
-=item new
+=item new_account
 
 Displays a screen to create a new account.
 
 =cut
 
-sub new {
+sub new_account {
     my ($request) = @_;
-    $request->{title} = $request->{_locale}->text('Add Account');
-    $request->{charttype} = 'A';
-    return _display_account_screen($request);
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        charttype => 'A',
+    }});
+
+    return _display_account_screen($request, $account);
+}
+
+=item new_heading
+
+Displays a screen to create a new Chart of Accounts heading.
+
+=cut
+
+sub new_heading {
+    my ($request) = @_;
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        charttype => 'H',
+    }});
+
+    return _display_account_screen($request, $account);
 }
 
 =item edit
@@ -57,22 +74,15 @@ Requires the id and charttype variables in the request to be set.
 
 sub edit {
     my ($request) = @_;
-    if (!defined $request->{id}){
-        $request->error('No ID provided');
-    } elsif (!defined $request->{charttype}){
-        $request->error('No Chart Type Provided');
-    }
-    $request->{chart_id} = $request->{id};
-    my $account = LedgerSMB::DBObject::Account->new({base => $request});
-    my @accounts = $account->get();
-    my $acc = shift @accounts;
-    if (!$acc){  # This should never happen.  Any occurance of this is a bug.
-         $request->error($request->{_locale}->text('Bug: No such account'));
-    }
-    $acc->{charttype} = $request->{charttype};
-    $acc->{title} = $request->{_locale}->text('Edit Account');
-    $acc->{_locale} = $request->{_locale};
-    return _display_account_screen($acc);
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        id => $request->{id},
+        charttype => $request->{charttype},
+    }});
+
+    $account = $account->get;
+    return _display_account_screen($request, $account);
 }
 
 =item save
@@ -140,82 +150,29 @@ sub save_as_new {
     return save($request);
 }
 
-# copied from AM.pm.  To be refactored.
+
 sub _display_account_screen {
-    my ($form) = @_;
-    my $account = LedgerSMB::DBObject::Account->new({base => $form});
+    my ($form, $account) = @_;
 
-    # If the base $form does not include a `dbh` element as an initialiser
-    # we must explicitly set the dbh. This will depend on how we are called.
-    #
-    # If $form is a `LedgerSMB` object reference, $form->{dbh} will be
-    # defined and no further initialisation is needed. (But note that no
-    # $form->dbh method is available).
-    #
-    # If $form is an object based on `LedgerSMB::PGOld`, $form->{dbh} will
-    # be undefined (as the internal private attribute is called `_dbh`) but
-    # we can call its $form->dbh method to obtain the datbase handle.
-    $account->dbh or $account->set_dbh($form->dbh);
+    @{$account->{all_headings}} = $account->list_headings();
+    $account->is_recon;
+    $account->gifi_list;
 
-    @{$form->{all_headings}} = $account->list_headings();
-    @{$form->{all_gifi}} = $account->gifi_list();
-    $form->{recon} = $account->is_recon();
-    my $locale = $form->{_locale};
-    my $buttons = [];
-    my $checked;
-    my $hiddens;
-    my $logger = Log::Log4perl->get_logger('');
-    $logger->debug("scripts/account.pl Locale: $locale");
-
-    foreach my $item ( split( /:/, $form->{link} ) ) {
-        $form->{$item} = 1;
+    foreach my $item ( split( /:/, $account->{link} ) ) {
+        $account->{$item} = 1;
     }
 
-    @{$form->{languages}} =
-             LedgerSMB->call_procedure(funcname => 'person__list_languages');
-
-    $hiddens->{type} = 'account';
-    $hiddens->{$_} = $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
-    $checked->{ $form->{charttype} } = 'checked';
-
-    my %button = ();
-
-    if ( $form->{id} ) {
-        $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save'),
-           id => 'action_save' };
-        $button{'save_as_new'} =
-          { ndx => 7, key => 'N', value => $locale->text('Save as new'),
-           id => 'action_save_as_new' };
-
-        if ( $form->{orphaned} ) {
-            $button{'delete'} =
-              { ndx => 16, key => 'D', value => $locale->text('Delete') };
-        }
-    }
-    else {
-        $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
-    }
-
-    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        push @{$buttons}, {
-            name => 'action',
-            value => $_,
-            accesskey => $button{$_}{key},
-            title => "$button{$_}{value} [Alt-$button{$_}{key}]",
-            text => $button{$_}{value},
-            };
-    }
+    my @languages = LedgerSMB->call_procedure(
+        funcname => 'person__list_languages'
+    );
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($form, 'accounts/edit', {
-        form => $form,
-        checked => $checked,
-        buttons => $buttons,
-        hiddens => $hiddens,
+        form => $account,
+        languages => \@languages,
     });
 }
+
 
 =item yearend_info
 

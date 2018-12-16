@@ -1198,9 +1198,13 @@ sub generate_selects {
     # sales staff
     if ($form->{all_employee} && @{ $form->{all_employee} }) {
         $form->{selectemployee} = "";
-        for ( @{ $form->{all_employee} } ) {
+        for (@{ $form->{all_employee} }) {
+            my $value = "$_->{name}--$_->{id}";
+            my $selected = ($form->{employee} eq $value
+                || $form->{employee} eq $_->{name}) ?
+                ' selected="selected"' : "";
             $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+                qq|<option value="$value"$selected>$_->{name}</option>\n|;
         }
     }
 
@@ -1754,6 +1758,27 @@ sub all_vc {
 
     $self->get_regular_metadata($myconfig, $vc, $transdate, $job);
 }
+
+=item $form->rebuild_vc()
+
+=cut
+
+sub rebuild_vc {
+    my ($self, $vc, $transdate, $job) = @_;
+
+    my ($null, %myconfig);
+    ( $null, $self->{employee_id} ) = split /--/, $self->{employee};
+    $self->all_vc(\%myconfig, $vc, $transdate, $job);
+    $self->{"select$vc"} = "";
+    for ( @{ $self->{"all_$vc"} } ) {
+        $self->{"select$vc"} .=
+          qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+    }
+    $self->{selectprojectnumber} = "";
+
+    1;
+}
+
 
 =item $form->get_regular_metadata($myconfig, $vc, $transdate, $job)
 

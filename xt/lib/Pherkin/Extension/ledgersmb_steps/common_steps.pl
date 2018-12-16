@@ -8,9 +8,10 @@ use LedgerSMB::Batch;
 use LedgerSMB::IR;
 use LedgerSMB::Form;
 use LedgerSMB::DBObject::Account;
-
+use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Credit_Account;
+use PGObject::Simple;
 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
@@ -320,6 +321,56 @@ Given qr/(a batch|batches) with these properties:$/, sub {
     }
 };
 
+Given qr/^(a reconciliation report|reconciliation reports) with these properties:$/, sub {
+
+    my $db = PGObject::Simple->new();
+    $db->set_dbh(S->{ext_lsmb}->admin_dbh);
+
+    foreach my $report_spec (@{C->data}) {
+
+        my $account = $db->call_procedure(
+            funcname => 'account__get_from_accno',
+            args => [$report_spec->{'Account Number'}],
+        ) or die 'Failed to find account number ' . $report_spec->{'Account Number'};
+
+        my $recon_data = {
+            dbh => S->{ext_lsmb}->admin_dbh,
+            chart_id => $account->{id},
+            total => $report_spec->{'Statement Balance'},
+            end_date => $report_spec->{'Statement Date'},
+        };
+
+        my $recon = LedgerSMB::DBObject::Reconciliation->new({
+            base => $recon_data,
+        });
+
+        my $recon_id = $recon->new_report();
+
+        if ($report_spec->{'Submitted'} eq 'yes') {
+            $recon->submit;
+        }
+
+        if ($report_spec->{'Approved'} eq 'yes') {
+            $recon->approve;
+        }
+    }
+};
+
+Given qr/^GIFI entries with these properties:$/, sub {
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    my $q = $dbh->prepare("
+        INSERT INTO gifi (accno, description)
+        VALUES (?,?)
+    ");
+
+    foreach my $gifi_spec (@{C->data}) {
+        $q->execute(
+            $gifi_spec->{GIFI},
+            $gifi_spec->{Description},
+        ) or die "failed to insert GIFI $gifi_spec->{GIFI} :: $gifi_spec->{Description}";
+    }
+};
+
 When qr/I wait (\d+) seconds?$/, sub {
     sleep $1
 };
@@ -328,5 +379,59 @@ When qr/I wait for the page to load$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };
 
+When qr/^I (select|deselect) checkbox "(.*)"$/, sub {
+    my $wanted_status = ($1 eq 'select');
+    my $label = $2;
+    my $element = S->{ext_wsl}->page->find(
+        "*labeled", text => $label
+    );
+
+    ok($element, "found element with label '$label'");
+    is($element->tag_name, 'input', 'element is an <input>');
+    is($element->get_attribute('type'), 'checkbox', 'element is an checkbox');
+
+    my $checked = $element->get_attribute('checked');
+
+    if($checked xor $wanted_status) {
+        $element->click;
+    }
+};
+
+Then qr/^I expect the "(.*)" checkbox to be (selected|not selected)/, sub {
+    my $label = $1;
+    my $wanted_status = $2;
+    my $element = S->{ext_wsl}->page->find(
+        "*labeled", text => $label
+    );
+
+    ok($element, "found element with label '$label'");
+    is($element->tag_name, 'input', 'element is an <input>');
+    is($element->get_attribute('type'), 'checkbox', 'element is an checkbox');
+
+    my $checked = $element->get_attribute('checked');
+
+    if($wanted_status eq 'selected') {
+        ok($checked, 'checkbox is selected');
+    }
+    else {
+        ok(!$checked, 'checkbox is not selected');
+    }
+};
+
+Then qr/^I expect "(.*)" to be selected for "(.*)"$/, sub {
+    my $option_text = $1;
+    my $label_text = $2;
+
+    my $element = S->{ext_wsl}->page->find(
+        "*labeled", text => $label_text
+    );
+    ok($element, "found element labeled '$label_text'");
+
+    my $option = $element->find(
+        qq{//span[\@role="option" and \@aria-selected="true" and .="$option_text"]}
+    );
+
+    ok($option, "Found option '$option_text' of dropdown '$label_text'");
+};
 
 1;

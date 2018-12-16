@@ -31,8 +31,6 @@ use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::App_State;
-
 
 =head1 PROPERTIES
 
@@ -141,37 +139,12 @@ sub name {
     return $self->Text('Chart of Accounts');
 }
 
-=item header_lines
-
-Returns the inputs to display on header.
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
-}
-
 =back
 
-=head2 Criteria Properties
-
-No criteria required.
 
 =head1 METHODS
 
-=over
-
-=item run_report()
+=head2 run_report()
 
 Runs the report, and assigns rows to $self->rows.
 
@@ -205,11 +178,59 @@ sub run_report{
     return $self->rows(\@rows);
 }
 
-=back
+=head2 set_buttons()
+
+Returns a set of buttons to be displayed at the bottom of the report.
+
+=cut
+
+sub set_buttons {
+    my ($self) = @_;
+    my @buttons = ();
+
+    if($self->_can_create_account) {
+        push @buttons, (
+            {
+                name  => 'action',
+                type  => 'submit',
+                text  => $self->_locale->text('Create Account'),
+                value => 'new_account',
+                class => 'submit',
+            },
+            {
+                name  => 'action',
+                type  => 'submit',
+                text  => $self->_locale->text('Create Heading'),
+                value => 'new_heading',
+                class => 'submit',
+            },
+        );
+    }
+
+    return \@buttons;
+}
+
+# PRIVATE METHODS
+
+# _can_create_account()
+#
+# Returns true if current user has create_account permissions
+
+sub _can_create_account {
+    my ($self) = @_;
+    my $r = $self->call_dbmethod(
+        funcname => 'lsmb__is_allowed_role',
+        args => {rolelist => ['account_create']}
+    );
+
+    return $r->{lsmb__is_allowed_role};
+}
+
+
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2018 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

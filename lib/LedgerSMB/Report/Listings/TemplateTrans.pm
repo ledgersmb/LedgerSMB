@@ -105,14 +105,6 @@ sub columns {
     return \@columns;
 }
 
-=head2 header_lines
-
-none
-
-=cut
-
-sub header_lines { return [] }
-
 =head2 set_buttons
 
 none

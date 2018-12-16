@@ -1130,19 +1130,21 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 }
 
 sub update {
-
+    $form->{ARAP} = 'AR';
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
-
-
-    $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
-    if ( $newname = &check_name(customer) ) {
-        rebuild_vc('customer', $form->{transdate}, 1);
-    }
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
+
+
+    $form->{taxes} = {};
+
+
+    if ( $newname = &check_name(customer) ) {
+        $form->rebuild_vc('customer', $form->{transdate}, 1);
+    }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
           ( $form->{terms} )
@@ -1151,7 +1153,7 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
 
-        rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
+        $form->rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};

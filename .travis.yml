@@ -10,6 +10,15 @@ notifications:
 
 matrix:
   include:
+    - perl: '5.28'
+      addons:
+        postgresql: '9.6'
+        apt:
+          packages:
+            - nginx postgresql-9.6-pgtap
+            - texlive-latex-recommended
+            - texlive-xetex
+      env:
     - perl: '5.26'
       addons:
         postgresql: '9.6'

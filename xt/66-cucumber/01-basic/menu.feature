@@ -64,7 +64,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Cash > Reports                             |                          |
 #   | Cash > Reports > Payments                  |                          |
 #   | Cash > Reports > Receipts                  |                          |
-#   | Cash > Reports > Reconciliation            |                          |
+    | Cash > Reports > Reconciliation            | Search Reconciliation Reports |
 #   | Cash > Transfer                            |                          |
 #   | Cash > Use AR Overpayment                  |                          |
 #   | Cash > Use Overpayment                     |                          |
@@ -75,7 +75,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Cash > Vouchers > Reverse Overpay          |                          |
 #   | Cash > Vouchers > Reverse Payment          |                          |
 #   | Cash > Vouchers > Reverse Receipts         |                          |
-    | Contacts > Search                          | Contact search           |
+    | Contacts > Search                          | Contact Search           |
 #   | Fixed Assets > Asset Classes               |                          |
 #   | Fixed Assets > Asset Classes > Add Class   |                          |
 #   | Fixed Assets > Asset Classes > List Classes|                          |
@@ -89,8 +89,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Fixed Assets > Assets > Reports > Disposal |                          |
 #   | Fixed Assets > Assets > Reports > Net Book Value |                    |
 #   | Fixed Assets > Assets > Search Assets      |                          |
-#   | General Journal > Add Accounts             |                          |
-#   | General Journal > Chart of Accounts        |                          |
+    | General Journal > Chart of Accounts        | Chart of Accounts        |
 #   | General Journal > Import                   |                          |
 #   | General Journal > Import Chart             |                          |
 #   | General Journal > Journal Entry            |                          |

@@ -68,21 +68,27 @@ link:  a list of strings representing text box identifier.
 
 sub save {
     my $self = shift @_;
+
     if (!defined $self->{contra}){
         $self->{contra} = '0';
     }
+
     if (!defined $self->{tax}) {
-    $self->{tax} = '0';
+        $self->{tax} = '0';
     }
+
     if ($self->{category} eq 'Qt'){
        $self->{is_temp} = '1';
        $self->{category} = 'Q';
     }
+
     $self->generate_links;
+
     my $func = 'account__save';
     if ($self->{charttype} and $self->{charttype} eq 'H') {
         $func = 'account_heading_save';
     }
+
     my ($id_ref) = try { $self->call_dbmethod(funcname => $func) }
                    catch {
                         if ($_ =~ /Invalid link settings:\s*Summary/){
@@ -94,7 +100,9 @@ sub save {
                             'Internal Database Error.'
                         ) . " $_";
                   };
+
     $self->{id} = $id_ref->{$func};
+
     if (defined $self->{recon}){
         $self->call_procedure(funcname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
@@ -131,32 +139,47 @@ sub save_translations {
 
 =item get()
 
-This method gets a chart of accounts entry.  It requires that the $account->{id}
-value must be properly set.
+This method gets a chart of accounts entry corresponding with the object's
+C<id> property.
+
+The following object properties are set:
+
+  * id
+  * accno
+  * gifi_accno
+  * description
+  * heading
+  * category
+  * obsolete
+  * contra
+  * is_temp
+  * tax
+  * link
+  * translations
 
 =cut
 
 sub get {
     my $self = shift @_;
     my $func = 'account_get';
+
     if ($self->{charttype} and $self->{charttype} eq 'H'){
       $func = 'account_heading_get';
     }
-    my @accounts =  $self->call_dbmethod(funcname => $func);
-    $self->{account_list} = [];
-    for my $ref (@accounts){
-        bless $ref, 'LedgerSMB::DBObject::Account';
-        $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', '_request']);
-        $ref->set_dbh($self->dbh);
 
-        if ($ref->{is_temp} and ($ref->{category} eq 'Q')){
-            $ref->{category} = 'Qt';
-        }
+    my $account = $self->call_procedure(
+        funcname => $func,
+        args => [$self->{id}],
+    );
 
-        $ref->_get_translations;
-        push (@{$self->{account_list}}, $ref);
+    if ($account->{is_temp} && $account->{category} eq 'Q') {
+        $account->{category} = 'Qt';
     }
-    return @{$self->{account_list}};
+
+    $self->merge($account);
+    $self->_get_translations;
+
+    return $self;
 }
 
 =item check_transactions()
@@ -224,7 +247,8 @@ sub list {
 
 =item gifi_list()
 
-Returns a list of all gifi codes and descriptions.
+Returns a list of all gifi codes and descriptions. Populates the object
+C<gifi_list> property.
 
 =cut
 
@@ -267,7 +291,7 @@ sub generate_links {
 
 =item list_headings
 
-Returns a list of account_heading's.  No inputs required.
+Returns a list of account_headings.  No inputs required.
 
 =cut
 

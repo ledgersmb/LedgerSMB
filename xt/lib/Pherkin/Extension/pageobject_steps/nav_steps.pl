@@ -18,7 +18,7 @@ my %pages = (
     "setup admin"         => "PageObject::Setup::Admin",
     "setup user list"     => "PageObject::Setup::UsersList",
     "edit user"           => "PageObject::Setup::EditUser",
-    );
+);
 
 When qr/I navigate to the application root/, sub {
     my $module = "PageObject::App::Login";
@@ -57,7 +57,9 @@ When qr/I navigate the menu and select the item at "(.*)"/, sub {
 };
 
 my %screens = (
-    'Contact search' => 'PageObject::App::Search::Contact',
+    'Contact Search' => 'PageObject::App::Search::Contact',
+    'Contact Search Report' => 'PageObject::App::Search::ReportDynatable',
+    'Edit Contact' => 'PageObject::App::Contacts::EditContact',
     'AR transaction entry' => 'PageObject::App::AR::Transaction',
     'AR invoice entry' => 'PageObject::App::AR::Invoice',
     'AR note entry' => 'PageObject::App::AR::Note',
@@ -105,12 +107,17 @@ my %screens = (
     'Payment Batch Summary' => 'PageObject::App::Search::ReportDynatable',
     'New Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::NewReport',
     'Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::Report',
+    'Search Reconciliation Reports' => 'PageObject::App::Search::Reconciliation',
+    'Reconciliation Search Report' => 'PageObject::App::Search::ReportDynatable',
+    'Chart of Accounts' => 'PageObject::App::Search::ReportDynatable',
+    'Account' => 'PageObject::App::GL::Account',
 );
 
 Then qr/I should see the (.*) screen/, sub {
     my $page_name = $1;
     die "Unknown screen '$page_name'"
         unless exists $screens{$page_name};
+
     use_module($screens{$page_name});
 
     my $page;
@@ -127,6 +134,11 @@ Then qr/I should see the (.*) screen/, sub {
 
 When qr/I select the "(.*)" tab/, sub {
     S->{ext_wsl}->page->find(".//*[\@role='tab' and text()='$1']")->click;
+};
+
+When qr/^I click the "(.*)" link$/, sub {
+    my $link_text = $1;
+    S->{ext_wsl}->page->find(qq{.//a[normalize-space(.)="$link_text"]})->click;
 };
 
 When qr/I open the parts screen for '(.*)'/, sub {
@@ -159,7 +171,19 @@ Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
     $actual =~ s/^\s+|\s+$//g;
     is($actual, $value,
        "value for element ($id) equals expected value ($value):" .
-        $actual);
+        $actual
+    );
+};
+
+Then qr/^I expect the "(.*)" field to contain "(.*)"$/, sub {
+    my $label = $1;
+    my $value = $2;
+    my $element = S->{ext_wsl}->page->body->maindiv->find(
+        "*labeled",
+        text => $label
+    );
+    ok($element, "found element with label '$label'");
+    is($element->value, $value, "element with label '$label' contains '$value'");
 };
 
 1;

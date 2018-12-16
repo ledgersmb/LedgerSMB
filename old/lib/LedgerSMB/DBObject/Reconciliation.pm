@@ -152,38 +152,20 @@ sub unapproved_checks {
                     $self->call_dbmethod(funcname=>'reconciliation__check') };
 }
 
-=item approve($self,$reportid)
+=item approve
 
-Approves the pending report $reportid.
-Checks for error codes in the pending report, and approves the report if none
-are found.
-
-Limitations: The creating user may not approve the report.
-
-Returns 1 on success.
+Approves the reconciliation report specified by the object's C<report_id>
+property and marks associated transactions as cleared.
 
 =cut
 
 sub approve {
+    my $self = shift;
 
-    my $self = shift @_;
-    # the user should be embedded into the $self object.
-    my $report_id = shift @_;
+    $self->call_dbmethod(
+        funcname => 'reconciliation__report_approve'
+    );
 
-    my $code = $self->call_procedure(
-                           funcname=>'reconciliation__report_approve',
-                               args=> [$report_id]); # user
-
-    if ($code == 0) {  # no problem.
-        return $code;
-    }
-    # this is destined to change as we figure out the Error system.
-    elsif ($code == 99) {  ## no critic (ProhibitMagicNumbers) sniff
-
-        return $self->error(
-                "User $self->{user}->{name} cannot approve report, "
-                ."must be a different user.");
-    }
     return;
 }
 

@@ -8,7 +8,7 @@
 
             <div class="input">
                 <?lsmb INCLUDE input element_data = {
-                        title = text('Date From'),
+                        title = text('Statement Date From'),
                         type = 'text',
                         class = 'date',
                         size = 12,
@@ -16,7 +16,7 @@
                         name = 'date_from'
                 } ?>
                 <?lsmb INCLUDE input element_data = {
-                        title = text('Date To'),
+                        title = text('Statement Date To'),
                         type = 'text',
                         class = 'date',
                         size = 12,
@@ -31,16 +31,16 @@
                         type = 'text',
                         class = 'money',
                         size = 12,
-                        value = amount_from,
-                        name = 'amount_from'
+                        value = balance_from,
+                        name = 'balance_from'
                 } ?>
                 <?lsmb INCLUDE input element_data = {
                         title = text('Amount To'),
                         type = 'text',
                         class = 'money',
                         size = 12,
-                        value = amount_to,
-                        name = 'amount_to'
+                        value = balance_to,
+                        name = 'balance_to'
                 } ?>
             </div>
 

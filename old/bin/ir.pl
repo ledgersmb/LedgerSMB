@@ -313,19 +313,6 @@ sub form_header {
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
-    # set option selected
-    for (qw(AP currency)) {
-        $form->{"select$_"} =~ s/ selected="selected"//;
-        $form->{"select$_"} =~
-          s/(option value="\Q$form->{$_}\E")/$1 selected="selected"/;
-    }
-
-    for (qw(vendor department)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected="selected"//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -351,9 +338,7 @@ sub form_header {
 |;
 
     if ( $form->{selectvendor} ) {
-        $vendor = qq|<select data-dojo-type="dijit/form/Select" id=vendor name=vendor>$form->{selectvendor}</select>
-                 <input type=hidden name="selectvendor" value="|
-          . $form->escape( $form->{selectvendor}, 1 ) . qq|">|;
+        $vendor = qq|<select data-dojo-type="dijit/form/Select" id=vendor name=vendor>$form->{selectvendor}</select>|;
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor value="$form->{vendor}" size=35>
@@ -872,7 +857,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
         $form->{"selectAP_paid_$i"} = $form->{selectAP_paid};
         $form->{"selectAP_paid_$i"} =~
-s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" selected="selected"/;
+s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AP_paid_$i"}" selected="selected"/;
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
@@ -1033,7 +1018,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 }
 
 sub update {
-     $form->{ARAP} = 'AP';
+    $form->{ARAP} = 'AP';
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
@@ -1042,7 +1027,7 @@ sub update {
        for qw(transdate duedate crdate);
 
     if ( $newname = &check_name(vendor) ) {
-        rebuild_vc('vendor', $form->{transdate}, 1);
+        $form->rebuild_vc('vendor', $form->{transdate}, 1);
     }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
@@ -1051,7 +1036,7 @@ sub update {
             $form->{terms} * 1 )
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
-        rebuild_vc('vendor', $form->{transdate}, 1) if !$newname;
+        $form->rebuild_vc('vendor', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -1230,6 +1215,7 @@ sub update {
             }
         }
     }
+    $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
      $form->generate_selects();
      $form->{rowcount}--;
     display_form();

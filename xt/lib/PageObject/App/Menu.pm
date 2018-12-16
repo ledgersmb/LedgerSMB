@@ -15,12 +15,13 @@ use namespace::autoclean;
 extends 'PageObject';
 
 __PACKAGE__->self_register(
-              'app-menu',
-              './/div[@id="menudiv"]',
-              tag_name => 'div',
-              attributes => {
-                  id => 'menudiv',
-              });
+    'app-menu',
+    './/div[@id="menudiv"]',
+    tag_name => 'div',
+    attributes => {
+        id => 'menudiv',
+    }
+);
 
 
 my %menu_path_pageobject_map = (
@@ -50,6 +51,7 @@ my %menu_path_pageobject_map = (
 
     "Cash > Vouchers > Payments" => 'PageObject::App::Cash::Vouchers::Payments',
     "Cash > Reconciliation" => 'PageObject::App::Cash::Reconciliation::NewReport',
+    "Cash > Reports > Reconciliation" => 'PageObject::App::Search::Reconciliation',
 
     "Transaction Approval > Batches" => 'PageObject::App::TransactionApproval::Batches',
     "Transaction Approval > Inventory" => 'PageObject::App::Parts::AdjustSearchUnapproved',
@@ -71,6 +73,7 @@ my %menu_path_pageobject_map = (
     "Quotations > Reports > RFQs" => 'PageObject::App::Search::Order',
 
     "General Journal > Search and GL" => 'PageObject::App::Search::GL',
+    "General Journal > Chart of Accounts" => 'PageObject::App::Search::ReportDynatable',
     "General Journal > Year End" => 'PageObject::App::Closing',
     # Time cards
     "Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',

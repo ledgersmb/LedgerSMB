@@ -273,14 +273,6 @@ sub columns {
     return $cols;
 }
 
-=head2 header_lines
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
 =head2 name
 
 =cut

@@ -31,8 +31,6 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 =cut
 
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
@@ -149,16 +147,6 @@ sub header_lines {
     my ($self) = @_;
     return [{name => 'batch_id',
              text => $self->Text('Batch ID')}, ]
-}
-
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
 }
 
 =back

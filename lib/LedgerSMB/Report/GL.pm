@@ -26,9 +26,7 @@ searching for and reporting financial transactions.
 
 =cut
 
-use LedgerSMB::App_State;
 use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
 use LedgerSMB::Report;
 
 use Moose;
@@ -216,16 +214,6 @@ sub header_lines {
              text => $self->Text('Reference')},
             {name => 'source',
              text => $self->Text('Source')}];
-}
-
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return ['debits', 'credits'];
 }
 
 =back

@@ -10,24 +10,18 @@ LedgerSMB::Scripts::journal - Web entrypoint for ajax account search.
 A script for ajax requests: accepts a search string and returns a
 list of matching accounts in a ul/li pair
 
-=head1 METHODS
-
 =cut
 
-use LedgerSMB::Template;
-use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
+use LedgerSMB::Scripts::account;
 use strict;
 use warnings;
 
-our $VERSION = '1.0';
 
-=pod
+=head1 METHODS
 
-=over
-
-=item chart_json
+=head2 chart_json
 
 Returns a json array of all accounts
 
@@ -48,7 +42,7 @@ sub chart_json {
     return $request->to_json(\@results);
 }
 
-=item chart_of_accounts
+=head2 chart_of_accounts
 
 Returns and displays the chart of accounts
 
@@ -56,20 +50,18 @@ Returns and displays the chart of accounts
 
 sub chart_of_accounts {
     my ($request) = @_;
-    for my $col(qw(accno description gifi debit_balance credit_balance)){
-        $request->{"col_$col"} = '1';
-    }
-    if ($request->is_allowed_role({allowed_roles => ['account_edit']})){
-       for my $col(qw(link edit delete)){
-           $request->{"col_$col"} = '1';
-       }
-    }
-    my $report = LedgerSMB::Report::COA->new(%$request);
+
+    my $report = LedgerSMB::Report::COA->new();
+    $report->set_dbh($request->{dbh});
     $report->run_report();
+
+    # Buttons on the Chart of Account screen are handled by a different script
+    $request->{script} = 'account.pl';
+
     return $report->render($request);
 }
 
-=item delete_account
+=head2 delete_account
 
 This deletes an account and returns to the chart of accounts screen.
 
@@ -86,7 +78,7 @@ sub delete_account {
     return chart_of_accounts($request);
 }
 
-=item search
+=head2 search
 
 Runs a search and displays results.
 
@@ -104,7 +96,7 @@ sub search {
     return LedgerSMB::Report::GL->new(%$request)->render($request);
 }
 
-=item search_purchases
+=head2 search_purchases
 
 Runs a search of AR or AP transactions and displays results.
 
@@ -137,7 +129,6 @@ sub search_purchases {
     }
 };
 
-=back
 
 =head1 LICENSE AND COPYRIGHT
 

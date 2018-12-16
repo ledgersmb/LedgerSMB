@@ -47,14 +47,6 @@ sub columns {
     }];
 }
 
-=head2 header_lines
-
-None
-
-=cut
-
-sub header_lines { return []; }
-
 =head2 name
 
 Warehouses

@@ -33,7 +33,7 @@
 
    # the elements in the 'columns' array support these attributes:
    #  - type         : can be any of 'input_text', 'href', 'hidden', 'checkbox'
-   #                   'radio', 'mirrored', 'text'
+   #                   'radio', 'mirrored', 'text', 'boolean_checkmark'
    #  - col_id       : the internal identifier for the column
    #  - class        : the (additional) css classes to be applied to the column
    #  - data_dojo_type : Dojo type for the inputs in the column
@@ -133,8 +133,14 @@ END; ?>
                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                           class=COL.class
                           value=ROW.row_id
-                          checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'radio' ?>
+                          checked=CHECKED };
+
+               ELSIF TYPE == 'boolean_checkmark';
+                   IF ROW.${COL.col_id};
+                       ?>✓<?lsmb
+                   END;
+
+               ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
                                          id=COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
