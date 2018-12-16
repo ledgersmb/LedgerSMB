@@ -839,7 +839,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
         $form->{"selectAP_paid_$i"} = $form->{selectAP_paid};
         $form->{"selectAP_paid_$i"} =~
-s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" selected="selected"/;
+s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AP_paid_$i"}" selected="selected"/;
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
