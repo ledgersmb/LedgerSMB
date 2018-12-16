@@ -3,92 +3,95 @@
 <?lsmb PROCESS 'dynatable-old.html' ?>
 
 <body class="<?lsmb dojo_theme ?>">
-<?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
 
-<?lsmb PROCESS 'dynatable' ?>
-<br />
+  <div id="system-rate">
 
-<form data-dojo-type="lsmb/Form"
-      method="post"
-      action="<?lsmb form.script ?>"
-      enctype="multipart/form-data">
-  <?lsmb FOREACH hidden IN hiddens.keys;
-                PROCESS input element_data={
+    <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
+
+    <?lsmb PROCESS 'dynatable' ?>
+    <br />
+
+    <form data-dojo-type="lsmb/Form"
+          method="post"
+          action="<?lsmb form.script ?>"
+          enctype="multipart/form-data">
+      <?lsmb FOREACH hidden IN hiddens.keys;
+             PROCESS input element_data={
                         type => 'hidden',
-              name => hidden,
-              value => hiddens.item(hidden)
-           };
-        END ?>
+                        name => hidden,
+                        value => hiddens.item(hidden)
+                  };
+             END ?>
 
-  <?lsmb PROCESS select element_data={
-         name='curr'
-         label=text('Currency')
-         options=currencies
-         text_attr='curr'
-         value_attr='curr'
-         default_values=[form.curr] } ?>
-  <?lsmb PROCESS select element_data={
-         name='rate_type'
-         label=text('Currency')
-         options=exchangerate_types
-         text_attr='description'
-         value_attr='id'
-         default_values=[form.rate_type] } ?>
-  <?lsmb PROCESS input element_data={
-         label=text('Valid from')
-         name='valid_from'
-         type='date'
-         value=form.valid_from
-         } ?>
-  <?lsmb PROCESS button element_data={
-                        text = text('Update'),
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="list_exchangerates"
-                        accesskey="U"
-                        title="Update [Alt-U]"
-         } ?>
-
-  <br />
-  <?lsmb PROCESS input element_data={
-         label=text('Rate')
-         name='rate'
+      <?lsmb PROCESS select element_data={
+             name='curr'
+             label=text('Currency')
+             options=currencies
+             text_attr='curr'
+             value_attr='curr'
+             default_values=[form.curr] } ?>
+      <?lsmb PROCESS select element_data={
+             name='rate_type'
+             label=text('Currency')
+             options=exchangerate_types
+             text_attr='description'
+             value_attr='id'
+             default_values=[form.rate_type] } ?>
+      <?lsmb PROCESS input element_data={
+             label=text('Valid from')
+             name='valid_from'
+             type='date'
+             value=form.valid_from } ?>
+      <?lsmb PROCESS button element_data={
+             text = text('Update'),
+             class="submit"
+             type="submit"
+             name="action"
+             value="list_exchangerates"
+             accesskey="U"
+             title="Update [Alt-U]"
          } ?>
 
-    <?lsmb PROCESS button element_data={
-                        text = text('Add'),
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="save_exchangerate"
-                        accesskey="S"
-                        title="Save [Alt-S]"
+      <br />
+      <?lsmb PROCESS input element_data={
+             label=text('Rate')
+             name='rate'
          } ?>
 
-  <?lsmb FOREACH button IN buttons;
-            PROCESS button element_data=button;
-         END ?>
-
-  <hr />
-
-  <?lsmb PROCESS input element_data = {
-         name = "import_file"
-         type = "file"
-         label = text('From File') #'
-         class = "file"
+      <?lsmb PROCESS button element_data={
+             text = text('Add'),
+             class="submit"
+             type="submit"
+             name="action"
+             value="save_exchangerate"
+             accesskey="S"
+             title="Save [Alt-S]"
          } ?>
 
-  <?lsmb PROCESS button element_data={
-                        text = text('Upload'),
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="upload_exchangerates"
-                        accesskey="U"
-                        title="Upload [Alt-U]"
+      <?lsmb FOREACH button IN buttons;
+             PROCESS button element_data=button;
+             END ?>
+
+      <hr />
+
+      <?lsmb PROCESS input element_data = {
+             name = "import_file"
+             type = "file"
+             label = text('From File') #'
+             class = "file"
          } ?>
 
-</form>
+      <?lsmb PROCESS button element_data={
+             text = text('Upload'),
+             class="submit"
+             type="submit"
+             name="action"
+             value="upload_exchangerates"
+             accesskey="U"
+             title="Upload [Alt-U]"
+         } ?>
+
+    </form>
+  </div>
 </body>
 </html>

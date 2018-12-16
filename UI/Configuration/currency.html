@@ -3,32 +3,35 @@
 <?lsmb PROCESS 'dynatable-old.html' ?>
 
 <body>
-<?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
 
-<?lsmb PROCESS 'dynatable' ?>
-<br />
+  <div id="system-currency">
 
-<form data-dojo-type="lsmb/Form"
-      method="post"
-      action="<?lsmb form.script ?>">
-  <?lsmb FOREACH hidden IN hiddens.keys;
-                PROCESS input element_data={
+    <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
+
+    <?lsmb PROCESS 'dynatable' ?>
+    <br />
+
+    <form data-dojo-type="lsmb/Form"
+          method="post"
+          action="<?lsmb form.script ?>">
+      <?lsmb FOREACH hidden IN hiddens.keys;
+             PROCESS input element_data={
                         type => 'hidden',
-              name => hidden,
-              value => hiddens.item(hidden)
-           };
-        END ?>
-  <?lsmb PROCESS input element_data={
-         name='curr'
-         type='text'
-         size="5"
-         } ?>
+                        name => hidden,
+                        value => hiddens.item(hidden)
+                };
+             END ?>
+      <?lsmb PROCESS input element_data={
+                        name='curr'
+                        type='text'
+                        size="5"
+                 } ?>
 
-  <?lsmb PROCESS input element_data={
-         name='description'
-         type='text'
-         } ?>
-  <?lsmb PROCESS button element_data={
+      <?lsmb PROCESS input element_data={
+                        name='description'
+                        type='text'
+                 } ?>
+      <?lsmb PROCESS button element_data={
                         text = text('Add'),
                         class="submit"
                         type="submit"
@@ -39,9 +42,10 @@
          } ?>
 
 
-  <?lsmb FOREACH button IN buttons;
-            PROCESS button element_data=button;
-         END ?>
-</form>
+      <?lsmb FOREACH button IN buttons;
+             PROCESS button element_data=button;
+             END ?>
+    </form>
+  </div>
 </body>
 </html>
