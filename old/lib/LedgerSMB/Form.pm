@@ -1099,12 +1099,12 @@ qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" val
 
 sub generate_selects {
      my ($form, $myconfig) = @_;
-     my $locale = $form->{_locale};
+     my $locale = $LedgerSMB::App_State::Locale;
 
     # currencies
      if (!$form->{currencies}){
          $form->error($locale->text(
-            'No currencies defined.  Please set these up under System/Defaults.'
+            'No currencies defined.  Please set these up under System/Currency.'
                       ));
      }
 
