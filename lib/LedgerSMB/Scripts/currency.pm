@@ -19,11 +19,11 @@ This module provides the workflow scripts for managing currencies and fx rates.
 
 =cut
 
-use LedgerSMB::Template;
 use LedgerSMB::Currency;
 use LedgerSMB::Exchangerate;
 use LedgerSMB::Exchangerate_Type;
 use LedgerSMB::Setting;
+use LedgerSMB::Template::UI;
 
 use Log::Log4perl;
 use Text::CSV;
@@ -42,20 +42,13 @@ sub list_currencies {
     my @currencies = LedgerSMB::Currency->list();
     my $default_curr =
         LedgerSMB::Setting->new({base => $request})->get('curr');
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'Configuration/currency',
-        locale => $request->{_locale},
-        format => 'HTML',
-            path=>'UI'
-    );
     my $columns;
     @$columns = qw(curr description drop);
     my $column_names = {
         curr => 'ID',
         description => 'Description',
     };
-    my $column_heading = $template->column_heading($column_names);
+    my $column_heading = $column_names;
     my $rows = [];
     my $rowcount = '0';
     my $base_url = 'currency.pl?action=delete_currency';
@@ -76,15 +69,15 @@ sub list_currencies {
         ++$rowcount;
     }
     $request->{title} = $request->{_locale}->text('Defined currencies');
-    $template->render({
-   form    => $request,
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Configuration/currency', {
+        form    => $request,
         columns => $columns,
-    heading => $column_heading,
+        heading => $column_heading,
         rows    => $rows,
         buttons => [],
         hiddens => [],
     });
-
 }
 
 =item save_currency
@@ -127,20 +120,13 @@ Displays a list of configured exchangerate types.  No inputs required or used.
 sub list_exchangerate_types {
     my ($request) = @_;
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'Configuration/ratetype',
-        locale => $request->{_locale},
-        format => 'HTML',
-            path=>'UI'
-    );
     my $columns;
     @$columns = qw(id description drop);
     my $column_names = {
         id => 'ID',
         description => 'Description',
     };
-    my $column_heading = $template->column_heading($column_names);
+    my $column_heading = $column_names;
     my $rows = [];
     my $rowcount = '0';
     my $base_url = 'currency.pl?action=delete_exchangerate_type';
@@ -154,15 +140,15 @@ sub list_exchangerate_types {
         ++$rowcount;
     }
     $request->{title} = $request->{_locale}->text('Defined exchange rate types');
-    $template->render({
-   form    => $request,
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Configuration/ratetype', {
+        form    => $request,
         columns => $columns,
-    heading => $column_heading,
+        heading => $column_heading,
         rows    => $rows,
         buttons => [],
         hiddens => [],
     });
-
 }
 
 =item save_exchangerate_type
@@ -229,20 +215,13 @@ sub _list_exchangerates {
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
     my @currencies = LedgerSMB::Currency->list();
     my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'Configuration/rate',
-        locale => $request->{_locale},
-        format => 'HTML',
-            path=>'UI'
-    );
     my $columns;
     @$columns = qw(curr rate_type valid_from rate drop);
     my $column_names = {
         id => 'ID',
         description => 'Description',
     };
-    my $column_heading = $template->column_heading($column_names);
+    my $column_heading = $column_names;
     my $rows = [];
     my $rowcount = '0';
     my $base_url = 'currency.pl?action=delete_exchangerate';
@@ -259,13 +238,14 @@ sub _list_exchangerates {
         ++$rowcount;
     }
 
-    $template->render({
-   form    => $request,
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Configuration/rate', {
+        form    => $request,
         columns => $columns,
-    heading => $column_heading,
+        heading => $column_heading,
         rows    => $rows,
-   currencies => \@currencies,
-   exchangerate_types => \@exchangerate_types,
+        currencies => \@currencies,
+        exchangerate_types => \@exchangerate_types,
         buttons => [],
         hiddens => [],
     });
