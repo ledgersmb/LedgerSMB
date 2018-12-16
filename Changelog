@@ -43,6 +43,7 @@ Changelog for 1.6.8
 * Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
 * Fix Post button showing on copied-to-new transaction (Erik H, #3907)
 * Fix vendor invoice looses payment's account on update (Erik H, #3890)
+* Fix saving order deleting invoice shipping info (Erik H, #3933 [dataloss])
 
 Erik H is Erik Huelsmann
 
