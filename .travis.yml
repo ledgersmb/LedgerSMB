@@ -28,6 +28,7 @@ matrix:
             - texlive-latex-recommended
             - texlive-xetex
       env:
+        - DOJO_BUILT=0
     - perl: '5.24'
       addons:
         postgresql: '9.5'
@@ -37,7 +38,7 @@ matrix:
             - texlive-latex-recommended
             - texlive-xetex
       env:
-        - DOJO_BUILT=0
+        - COVERAGE=1
     - perl: '5.22'
       addons:
         postgresql: "9.4"
@@ -47,23 +48,13 @@ matrix:
              - texlive-latex-recommended
              - texlive-xetex
       env:
-        - COVERAGE=1
+        - COA_TESTING=1
     - perl: '5.20'
       addons:
         postgresql: "9.4"
         apt:
           packages:
             - nginx postgresql-9.4-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
-      env:
-        - COA_TESTING=1
-    - perl: '5.18'
-      addons:
-        postgresql: "9.3"
-        apt:
-          packages:
-            - nginx postgresql-9.3-pgtap
             - texlive-latex-recommended
             - texlive-xetex
       env:
