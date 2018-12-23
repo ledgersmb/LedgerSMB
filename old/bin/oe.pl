@@ -117,8 +117,6 @@ sub edit {
 sub order_links {
 
 
-    $form->generate_selects;
-
     # create links
     $form->create_links( module => "OE", # effectively 'none'
              myconfig => \%myconfig,
@@ -133,6 +131,8 @@ sub order_links {
         $form->{transdate},
         1,
     );
+
+    $form->generate_selects;
 
     # retrieve order/quotation
     OE->retrieve( \%myconfig, \%$form );
