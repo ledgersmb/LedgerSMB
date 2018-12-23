@@ -1115,7 +1115,8 @@ sub update {
 
     $form->{taxes} = {};
 
-
+    ( $form->{employee}, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee} && ! $form->{employee_id};
     if ( $newname = &check_name(customer) ) {
         $form->rebuild_vc('customer', $form->{transdate}, 1);
     }
