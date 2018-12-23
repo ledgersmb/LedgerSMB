@@ -578,7 +578,7 @@ sub form_header {
 
     }
 
-    $form->hide_form(qw(defaultcurrency)); # taxaccounts));
+    $form->hide_form(qw(defaultcurrency taxaccounts));
 
     for ( split / /, $form->{taxaccounts} ) {
         $form->hide_form( "${_}_rate", "${_}_description" );
