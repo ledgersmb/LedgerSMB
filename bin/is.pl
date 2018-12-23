@@ -1118,6 +1118,8 @@ sub update {
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
+    ( $form->{employee}, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee} && ! $form->{employee_id};
     if ( $newname = &check_name(customer) ) {
         &rebuild_vc( customer, AR, $form->{transdate}, 1 );
     }

@@ -1498,7 +1498,7 @@ sub retrieve_invoice {
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
-                      a.person_id, e.name AS employee, a.till,
+                      a.person_id as employee_id, e.name AS employee, a.till,
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
                       a.on_hold, a.description, a.setting_sequence
