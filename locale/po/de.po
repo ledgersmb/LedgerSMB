@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.24-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-12-16 17:17+0000\n"
+"POT-Creation-Date: 2018-12-25 23:23+0000\n"
 "Last-Translator: Mikael Arhelger <mikaelarhelger@gmail.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -545,7 +545,7 @@ msgstr "Steuererklärung hinzufügen"
 msgid "Add Timecard"
 msgstr "Zeitkarte hinzufügen"
 
-#: bin/io.pl:1809
+#: bin/io.pl:1811
 msgid "Add To List"
 msgstr "Zur Liste hinzufügen"
 
@@ -1447,7 +1447,7 @@ msgstr "Steuern berechnen"
 msgid "Can't void a voided invoice!"
 msgstr "Eine stornierte Rechnung kann nicht storniert werden!"
 
-#: bin/io.pl:1813 lib/LedgerSMB/Scripts/setup.pm:138
+#: bin/io.pl:1815 lib/LedgerSMB/Scripts/setup.pm:138
 msgid "Cancel"
 msgstr "Stornieren"
 
@@ -1512,11 +1512,11 @@ msgstr "Transaktion konnte nicht gelöscht werden"
 msgid "Cannot delete quotation!"
 msgstr "Angebot konnte nicht gelÃ¶scht werden!"
 
-#: bin/ir.pl:1268 bin/is.pl:1374
+#: bin/ir.pl:1268 bin/is.pl:1376
 msgid "Cannot post invoice for a closed period!"
 msgstr "Rechnung kann in abgeschlossener Periode nicht gebucht werden!"
 
-#: bin/aa.pl:1346 bin/ir.pl:1283 bin/is.pl:1389
+#: bin/aa.pl:1346 bin/ir.pl:1283 bin/is.pl:1391
 msgid "Cannot post payment for a closed period!"
 msgstr "Zahlung kann im abgeschlossenen Zeitraum nicht gebucht werden!"
 
@@ -1814,7 +1814,7 @@ msgstr ""
 "Konflikt mit bestehenden Daten.  MÃ¶glicherweise haben Sie diese Angabe "
 "bereits gemacht?"
 
-#: bin/io.pl:1699 templates/demo/bin_list.html:110
+#: bin/io.pl:1701 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
 #: templates/demo/product_receipt.html:104
 #: templates/demo/product_receipt.tex:106
@@ -1954,7 +1954,7 @@ msgstr "Kosten der verkauften GÃ¼ter"
 msgid "Could Not Load Template from DB"
 msgstr "Die Template von der Datenbank konnte nicht geladen werden"
 
-#: bin/ir.pl:1246 bin/is.pl:1353 bin/oe.pl:1277
+#: bin/ir.pl:1246 bin/is.pl:1355 bin/oe.pl:1277
 msgid "Could not save the data.  Please try again"
 msgstr "Daten konnten nicht gespeichert werden.  Bitte versuchen Sie es erneut"
 
@@ -2189,7 +2189,7 @@ msgstr "Kundennummer"
 msgid "Customer Search"
 msgstr "Kunden suchen"
 
-#: bin/aa.pl:1314 bin/is.pl:1362 bin/oe.pl:1210 bin/pe.pl:1244
+#: bin/aa.pl:1314 bin/is.pl:1364 bin/oe.pl:1210 bin/pe.pl:1244
 msgid "Customer missing!"
 msgstr "Kunde fehlt!"
 
@@ -2671,7 +2671,7 @@ msgid "Depreciation Successful"
 msgstr "Abschreibung erfolgreich"
 
 #: bin/aa.pl:613 bin/aa.pl:664 bin/aa.pl:1520 bin/am.pl:841 bin/ic.pl:746
-#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1702
+#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1704
 #: bin/ir.pl:464 bin/is.pl:498 bin/oe.pl:1865 bin/oe.pl:2069 bin/oe.pl:2147
 #: bin/oe.pl:2181 bin/oe.pl:2430 bin/pe.pl:311 bin/pe.pl:357 bin/pe.pl:386
 #: bin/pe.pl:1038 lib/LedgerSMB/Report/Aging.pm:109
@@ -2872,7 +2872,7 @@ msgstr "Bericht zu geteilten AbgÃ¤ngen [_1] am Datum [_2]"
 msgid "Division by 0 error"
 msgstr "Division durch 0 Fehler"
 
-#: bin/io.pl:1927
+#: bin/io.pl:1929
 msgid "Do not keep field empty [_1]"
 msgstr "Feld nicht leer lassen [_1]"
 
@@ -3406,7 +3406,7 @@ msgstr "Wechselkurs"
 msgid "Exchange Rate"
 msgstr "Wechselkurs"
 
-#: bin/aa.pl:1353 bin/ir.pl:1290 bin/is.pl:1396
+#: bin/aa.pl:1353 bin/ir.pl:1290 bin/is.pl:1398
 msgid "Exchange rate for payment missing!"
 msgstr "Wechselkurs für Zahlung fehlt!"
 
@@ -3418,7 +3418,7 @@ msgstr "Wechselkurs wurde nicht definiert!"
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr "Wechselkurs stimmt nicht mit Datenbank Ã¼berein.  Ist [_1], Soll [_2]"
 
-#: bin/aa.pl:1335 bin/ir.pl:1271 bin/is.pl:1377 bin/oe.pl:1214 bin/oe.pl:1570
+#: bin/aa.pl:1335 bin/ir.pl:1271 bin/is.pl:1379 bin/oe.pl:1214 bin/oe.pl:1570
 msgid "Exchange rate missing!"
 msgstr "Wechselkurs fehlt!"
 
@@ -4233,7 +4233,7 @@ msgid "Inventory transferred!"
 msgstr "Inventar Ã¼bertragen!"
 
 #: bin/am.pl:1520 bin/io.pl:1042 bin/io.pl:1048 bin/io.pl:1169 bin/is.pl:251
-#: bin/is.pl:1400 bin/printer.pl:51 lib/LedgerSMB/Report/Aging.pm:103
+#: bin/is.pl:1402 bin/printer.pl:51 lib/LedgerSMB/Report/Aging.pm:103
 #: lib/LedgerSMB/Report/Inventory/Search.pm:278
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
@@ -4302,7 +4302,7 @@ msgstr "Rechnungserstellt"
 msgid "Invoice Date"
 msgstr "Rechnungsdatum"
 
-#: bin/aa.pl:1318 bin/io.pl:1286 bin/ir.pl:1255 bin/is.pl:1361
+#: bin/aa.pl:1318 bin/io.pl:1286 bin/ir.pl:1255 bin/is.pl:1363
 msgid "Invoice Date missing!"
 msgstr "Rechnungsdatum fehlt!"
 
@@ -5833,7 +5833,7 @@ msgstr ""
 msgid "Payment Type:"
 msgstr ""
 
-#: bin/aa.pl:1343 bin/ir.pl:1280 bin/is.pl:1386
+#: bin/aa.pl:1343 bin/ir.pl:1280 bin/is.pl:1388
 msgid "Payment date missing!"
 msgstr "Datum der Einzahlung fehlt!"
 
@@ -7279,7 +7279,7 @@ msgstr "Wähle Vorlage aus"
 msgid "Select Vendor"
 msgstr "Lieferanten wÃ¤hlen"
 
-#: bin/arapprn.pl:433 bin/is.pl:1421 bin/oe.pl:1296
+#: bin/arapprn.pl:433 bin/is.pl:1423 bin/oe.pl:1296
 msgid "Select a Printer!"
 msgstr "Drucker wÃ¤hlen!"
 
@@ -7303,7 +7303,7 @@ msgstr "Wähle aus oder gebe Benutzer an"
 msgid "Select payment"
 msgstr "Zahlung wÃ¤hlen"
 
-#: bin/arapprn.pl:89 bin/arapprn.pl:431 bin/is.pl:1419 bin/oe.pl:1294
+#: bin/arapprn.pl:89 bin/arapprn.pl:431 bin/is.pl:1421 bin/oe.pl:1294
 msgid "Select postscript or PDF!"
 msgstr "WÃ¤hle Postscript oder PDF!"
 
@@ -8751,7 +8751,7 @@ msgstr "Zweiundzwanzig"
 msgid "Two"
 msgstr "zwei"
 
-#: bin/io.pl:1696 lib/LedgerSMB/Report/Inventory/History.pm:146
+#: bin/io.pl:1698 lib/LedgerSMB/Report/Inventory/History.pm:146
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:80
 #: lib/LedgerSMB/Scripts/asset.pm:539 t/data/04-complex_template.html:384
@@ -8955,7 +8955,7 @@ msgstr "Nutzen von Forderungen Überzahlung"
 msgid "Use Overpayment"
 msgstr "Überzahlung nutzen"
 
-#: bin/io.pl:1805
+#: bin/io.pl:1807
 msgid "Use Shipto"
 msgstr "Verwenden Sie die Lieferadresse"
 
@@ -9411,7 +9411,7 @@ msgstr ""
 msgid "done"
 msgstr "Erledigt"
 
-#: bin/ir.pl:1229 bin/is.pl:1337 bin/oe.pl:1185
+#: bin/ir.pl:1229 bin/is.pl:1339 bin/oe.pl:1185
 msgid "ea"
 msgstr "ea"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.24-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-12-16 17:17+0000\n"
+"POT-Creation-Date: 2018-12-25 23:23+0000\n"
 "Last-Translator: Margus Lepmets <margus.lepmets@gmail.com>, 2018\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -543,7 +543,7 @@ msgstr "Lisa maksuvorm"
 msgid "Add Timecard"
 msgstr "Lisa ajakaart"
 
-#: bin/io.pl:1809
+#: bin/io.pl:1811
 msgid "Add To List"
 msgstr "Lisa listi"
 
@@ -1445,7 +1445,7 @@ msgstr "Arvuta maksud"
 msgid "Can't void a voided invoice!"
 msgstr "Tühistatud arvet ei saa tühistada!"
 
-#: bin/io.pl:1813 lib/LedgerSMB/Scripts/setup.pm:138
+#: bin/io.pl:1815 lib/LedgerSMB/Scripts/setup.pm:138
 msgid "Cancel"
 msgstr "Tühista"
 
@@ -1505,11 +1505,11 @@ msgstr "Kannet ei saa kustutada!"
 msgid "Cannot delete quotation!"
 msgstr "Müügipakkumist ei saa kustutada!"
 
-#: bin/ir.pl:1268 bin/is.pl:1374
+#: bin/ir.pl:1268 bin/is.pl:1376
 msgid "Cannot post invoice for a closed period!"
 msgstr "Arvet ei saa salvestada suletud perioodile!"
 
-#: bin/aa.pl:1346 bin/ir.pl:1283 bin/is.pl:1389
+#: bin/aa.pl:1346 bin/ir.pl:1283 bin/is.pl:1391
 msgid "Cannot post payment for a closed period!"
 msgstr "Makset ei saa salvestada suletud perioodile!"
 
@@ -1804,7 +1804,7 @@ msgstr "Kinnita!"
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr ""
 
-#: bin/io.pl:1699 templates/demo/bin_list.html:110
+#: bin/io.pl:1701 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
 #: templates/demo/product_receipt.html:104
 #: templates/demo/product_receipt.tex:106
@@ -1944,7 +1944,7 @@ msgstr "Müüdud kauba kulu"
 msgid "Could Not Load Template from DB"
 msgstr "Ei õnnestu laadida malli andmebaasist"
 
-#: bin/ir.pl:1246 bin/is.pl:1353 bin/oe.pl:1277
+#: bin/ir.pl:1246 bin/is.pl:1355 bin/oe.pl:1277
 msgid "Could not save the data.  Please try again"
 msgstr "Salvestamine ebaõnnestus. Palun proovige uuesti"
 
@@ -2179,7 +2179,7 @@ msgstr "Kliendi number"
 msgid "Customer Search"
 msgstr "Kliendi otsing"
 
-#: bin/aa.pl:1314 bin/is.pl:1362 bin/oe.pl:1210 bin/pe.pl:1244
+#: bin/aa.pl:1314 bin/is.pl:1364 bin/oe.pl:1210 bin/pe.pl:1244
 msgid "Customer missing!"
 msgstr "Klienti pole määratud!"
 
@@ -2658,7 +2658,7 @@ msgid "Depreciation Successful"
 msgstr ""
 
 #: bin/aa.pl:613 bin/aa.pl:664 bin/aa.pl:1520 bin/am.pl:841 bin/ic.pl:746
-#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1702
+#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1704
 #: bin/ir.pl:464 bin/is.pl:498 bin/oe.pl:1865 bin/oe.pl:2069 bin/oe.pl:2147
 #: bin/oe.pl:2181 bin/oe.pl:2430 bin/pe.pl:311 bin/pe.pl:357 bin/pe.pl:386
 #: bin/pe.pl:1038 lib/LedgerSMB/Report/Aging.pm:109
@@ -2859,7 +2859,7 @@ msgstr "Realiseerimise aruanne [_1] kuupäeval [_2]"
 msgid "Division by 0 error"
 msgstr "Viga nulliga jagamisel"
 
-#: bin/io.pl:1927
+#: bin/io.pl:1929
 msgid "Do not keep field empty [_1]"
 msgstr "Ära jära lahtrit tühjaks [_1]"
 
@@ -3390,7 +3390,7 @@ msgstr "Kurss"
 msgid "Exchange Rate"
 msgstr "Valuutakurss"
 
-#: bin/aa.pl:1353 bin/ir.pl:1290 bin/is.pl:1396
+#: bin/aa.pl:1353 bin/ir.pl:1290 bin/is.pl:1398
 msgid "Exchange rate for payment missing!"
 msgstr "Maksel ei ole valuutakurssi!"
 
@@ -3402,7 +3402,7 @@ msgstr ""
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
 
-#: bin/aa.pl:1335 bin/ir.pl:1271 bin/is.pl:1377 bin/oe.pl:1214 bin/oe.pl:1570
+#: bin/aa.pl:1335 bin/ir.pl:1271 bin/is.pl:1379 bin/oe.pl:1214 bin/oe.pl:1570
 msgid "Exchange rate missing!"
 msgstr "Valuutakurssi ei ole!"
 
@@ -4209,7 +4209,7 @@ msgid "Inventory transferred!"
 msgstr "Laoartiklid üleviidud!"
 
 #: bin/am.pl:1520 bin/io.pl:1042 bin/io.pl:1048 bin/io.pl:1169 bin/is.pl:251
-#: bin/is.pl:1400 bin/printer.pl:51 lib/LedgerSMB/Report/Aging.pm:103
+#: bin/is.pl:1402 bin/printer.pl:51 lib/LedgerSMB/Report/Aging.pm:103
 #: lib/LedgerSMB/Report/Inventory/Search.pm:278
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
@@ -4278,7 +4278,7 @@ msgstr "Arve koostamise kuupäev puudu!"
 msgid "Invoice Date"
 msgstr "Arve kuupäev"
 
-#: bin/aa.pl:1318 bin/io.pl:1286 bin/ir.pl:1255 bin/is.pl:1361
+#: bin/aa.pl:1318 bin/io.pl:1286 bin/ir.pl:1255 bin/is.pl:1363
 msgid "Invoice Date missing!"
 msgstr "Arve kuupäev puudub!"
 
@@ -5801,7 +5801,7 @@ msgstr ""
 msgid "Payment Type:"
 msgstr ""
 
-#: bin/aa.pl:1343 bin/ir.pl:1280 bin/is.pl:1386
+#: bin/aa.pl:1343 bin/ir.pl:1280 bin/is.pl:1388
 msgid "Payment date missing!"
 msgstr "Maksekuupäev puudub!"
 
@@ -7245,7 +7245,7 @@ msgstr "Vali mall mida laadida"
 msgid "Select Vendor"
 msgstr "Vali tarnija"
 
-#: bin/arapprn.pl:433 bin/is.pl:1421 bin/oe.pl:1296
+#: bin/arapprn.pl:433 bin/is.pl:1423 bin/oe.pl:1296
 msgid "Select a Printer!"
 msgstr "Vali printer!"
 
@@ -7269,7 +7269,7 @@ msgstr "Vali või sisesta kasutaja"
 msgid "Select payment"
 msgstr "Vali tasumine"
 
-#: bin/arapprn.pl:89 bin/arapprn.pl:431 bin/is.pl:1419 bin/oe.pl:1294
+#: bin/arapprn.pl:89 bin/arapprn.pl:431 bin/is.pl:1421 bin/oe.pl:1294
 msgid "Select postscript or PDF!"
 msgstr "Vali kas postscript või PDF"
 
@@ -8714,7 +8714,7 @@ msgstr "kakskümmend kaks"
 msgid "Two"
 msgstr "kaks"
 
-#: bin/io.pl:1696 lib/LedgerSMB/Report/Inventory/History.pm:146
+#: bin/io.pl:1698 lib/LedgerSMB/Report/Inventory/History.pm:146
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:80
 #: lib/LedgerSMB/Scripts/asset.pm:539 t/data/04-complex_template.html:384
@@ -8918,7 +8918,7 @@ msgstr ""
 msgid "Use Overpayment"
 msgstr ""
 
-#: bin/io.pl:1805
+#: bin/io.pl:1807
 msgid "Use Shipto"
 msgstr ""
 
@@ -9374,7 +9374,7 @@ msgstr ""
 msgid "done"
 msgstr "tehtud"
 
-#: bin/ir.pl:1229 bin/is.pl:1337 bin/oe.pl:1185
+#: bin/ir.pl:1229 bin/is.pl:1339 bin/oe.pl:1185
 msgid "ea"
 msgstr "tk"
 
