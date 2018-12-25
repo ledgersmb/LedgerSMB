@@ -168,7 +168,7 @@ use Carp;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.5.24';
+our $VERSION = '1.5.25-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
