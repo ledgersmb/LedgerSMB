@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.9-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2018-12-16 18:19+0000\n"
+"POT-Creation-Date: 2018-12-25 23:29+0000\n"
 "Last-Translator: Peeter Pärtel <peeter@sigma.ee>, 2018\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -538,7 +538,7 @@ msgstr "Lisa maksuvorm"
 msgid "Add Timecard"
 msgstr "Lisa ajakaart"
 
-#: old/bin/io.pl:1800
+#: old/bin/io.pl:1802
 msgid "Add To List"
 msgstr "Lisa listi"
 
@@ -1460,7 +1460,7 @@ msgid "Can't void a voided invoice!"
 msgstr "Tühistatud arvet ei saa tühistada!"
 
 #: lib/LedgerSMB/Scripts/setup.pm:189 lib/LedgerSMB/Scripts/setup.pm:220
-#: old/bin/io.pl:1804
+#: old/bin/io.pl:1806
 msgid "Cancel"
 msgstr "Tühista"
 
@@ -1520,11 +1520,11 @@ msgstr "Kannet ei saa kustutada!"
 msgid "Cannot delete quotation!"
 msgstr "Müügipakkumist ei saa kustutada!"
 
-#: old/bin/ir.pl:1258 old/bin/is.pl:1367
+#: old/bin/ir.pl:1258 old/bin/is.pl:1369
 msgid "Cannot post invoice for a closed period!"
 msgstr "Arvet ei saa salvestada suletud perioodile!"
 
-#: old/bin/aa.pl:1324 old/bin/ir.pl:1273 old/bin/is.pl:1382
+#: old/bin/aa.pl:1324 old/bin/ir.pl:1273 old/bin/is.pl:1384
 msgid "Cannot post payment for a closed period!"
 msgstr "Makset ei saa salvestada suletud perioodile!"
 
@@ -1784,7 +1784,7 @@ msgstr "Kinnita!"
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr ""
 
-#: old/bin/io.pl:1690 templates/demo/bin_list.html:110
+#: old/bin/io.pl:1692 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
 #: templates/demo/product_receipt.html:104
 #: templates/demo/product_receipt.tex:106
@@ -1927,7 +1927,7 @@ msgstr "Müüdud kauba kulu"
 msgid "Could Not Load Template from DB"
 msgstr "Ei õnnestu laadida malli andmebaasist"
 
-#: old/bin/ir.pl:1236 old/bin/is.pl:1346 old/bin/oe.pl:1279
+#: old/bin/ir.pl:1236 old/bin/is.pl:1348 old/bin/oe.pl:1279
 msgid "Could not save the data.  Please try again"
 msgstr "Salvestamine ebaõnnestus. Palun proovige uuesti"
 
@@ -2156,7 +2156,7 @@ msgstr "Kliendi number"
 msgid "Customer Search"
 msgstr "Kliendi otsing"
 
-#: old/bin/aa.pl:1292 old/bin/is.pl:1355 old/bin/oe.pl:1213 old/bin/pe.pl:1241
+#: old/bin/aa.pl:1292 old/bin/is.pl:1357 old/bin/oe.pl:1213 old/bin/pe.pl:1241
 msgid "Customer missing!"
 msgstr "Klienti pole määratud!"
 
@@ -2679,7 +2679,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/asset.pm:707 lib/LedgerSMB/Scripts/asset.pm:779
 #: old/bin/aa.pl:1498 old/bin/aa.pl:611 old/bin/aa.pl:662 old/bin/am.pl:779
 #: old/bin/ic.pl:1264 old/bin/ic.pl:2019 old/bin/ic.pl:2086 old/bin/ic.pl:743
-#: old/bin/io.pl:1693 old/bin/io.pl:230 old/bin/ir.pl:454 old/bin/is.pl:491
+#: old/bin/io.pl:1695 old/bin/io.pl:230 old/bin/ir.pl:454 old/bin/is.pl:491
 #: old/bin/oe.pl:1867 old/bin/oe.pl:2066 old/bin/oe.pl:2139 old/bin/oe.pl:2173
 #: old/bin/oe.pl:2417 old/bin/pe.pl:1035 old/bin/pe.pl:308 old/bin/pe.pl:354
 #: old/bin/pe.pl:383 templates/demo/bin_list.html:148
@@ -2842,7 +2842,7 @@ msgstr "Realiseerimise aruanne [_1] kuupäeval [_2]"
 msgid "Division by 0 error"
 msgstr "Viga nulliga jagamisel"
 
-#: old/bin/io.pl:1918
+#: old/bin/io.pl:1920
 msgid "Do not keep field empty [_1]"
 msgstr "Ära jära lahtrit tühjaks [_1]"
 
@@ -3367,7 +3367,7 @@ msgstr "Kurss"
 msgid "Exchange Rate"
 msgstr "Valuutakurss"
 
-#: old/bin/aa.pl:1331 old/bin/ir.pl:1280 old/bin/is.pl:1389
+#: old/bin/aa.pl:1331 old/bin/ir.pl:1280 old/bin/is.pl:1391
 msgid "Exchange rate for payment missing!"
 msgstr "Maksel ei ole valuutakurssi!"
 
@@ -3379,7 +3379,7 @@ msgstr ""
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
 
-#: old/bin/aa.pl:1313 old/bin/ir.pl:1261 old/bin/is.pl:1370 old/bin/oe.pl:1217
+#: old/bin/aa.pl:1313 old/bin/ir.pl:1261 old/bin/is.pl:1372 old/bin/oe.pl:1217
 #: old/bin/oe.pl:1572
 msgid "Exchange rate missing!"
 msgstr "Valuutakurssi ei ole!"
@@ -4175,7 +4175,7 @@ msgstr "Laoartiklid üleviidud!"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:267
 #: lib/LedgerSMB/Scripts/payment.pm:809 old/bin/am.pl:1456 old/bin/io.pl:1036
-#: old/bin/io.pl:1042 old/bin/io.pl:1160 old/bin/is.pl:1393 old/bin/is.pl:244
+#: old/bin/io.pl:1042 old/bin/io.pl:1160 old/bin/is.pl:1395 old/bin/is.pl:244
 #: old/bin/printer.pl:50 templates/demo/invoice.html:4
 #: templates/demo/invoice.tex:116 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:4
@@ -4240,7 +4240,7 @@ msgstr "Arve koostamise kuupäev puudu!"
 msgid "Invoice Date"
 msgstr "Arve kuupäev"
 
-#: old/bin/aa.pl:1296 old/bin/io.pl:1277 old/bin/ir.pl:1245 old/bin/is.pl:1354
+#: old/bin/aa.pl:1296 old/bin/io.pl:1277 old/bin/ir.pl:1245 old/bin/is.pl:1356
 msgid "Invoice Date missing!"
 msgstr "Arve kuupäev puudub!"
 
@@ -5784,7 +5784,7 @@ msgstr ""
 msgid "Payment Type:"
 msgstr ""
 
-#: old/bin/aa.pl:1321 old/bin/ir.pl:1270 old/bin/is.pl:1379
+#: old/bin/aa.pl:1321 old/bin/ir.pl:1270 old/bin/is.pl:1381
 msgid "Payment date missing!"
 msgstr "Maksekuupäev puudub!"
 
@@ -7225,7 +7225,7 @@ msgstr "Vali mall mida laadida"
 msgid "Select Vendor"
 msgstr "Vali tarnija"
 
-#: old/bin/arapprn.pl:351 old/bin/is.pl:1414 old/bin/oe.pl:1298
+#: old/bin/arapprn.pl:351 old/bin/is.pl:1416 old/bin/oe.pl:1298
 msgid "Select a Printer!"
 msgstr "Vali printer!"
 
@@ -7245,7 +7245,7 @@ msgstr "Vali arved"
 msgid "Select or Enter User"
 msgstr "Vali või sisesta kasutaja"
 
-#: old/bin/arapprn.pl:349 old/bin/arapprn.pl:88 old/bin/is.pl:1412
+#: old/bin/arapprn.pl:349 old/bin/arapprn.pl:88 old/bin/is.pl:1414
 #: old/bin/oe.pl:1296
 msgid "Select postscript or PDF!"
 msgstr "Vali kas postscript või PDF"
@@ -8689,7 +8689,7 @@ msgstr "kaks"
 #: lib/LedgerSMB/Report/Inventory/History.pm:146
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:81
-#: lib/LedgerSMB/Scripts/asset.pm:541 old/bin/io.pl:1687
+#: lib/LedgerSMB/Scripts/asset.pm:541 old/bin/io.pl:1689
 #: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:80
 #: UI/Contact/divs/address.html:120 UI/Contact/divs/contact_info.html:30
 #: UI/Contact/divs/credit.html:26 UI/Contact/divs/wage.html:8
@@ -8893,7 +8893,7 @@ msgstr ""
 msgid "Use Overpayment"
 msgstr ""
 
-#: old/bin/io.pl:1796
+#: old/bin/io.pl:1798
 msgid "Use Shipto"
 msgstr ""
 
@@ -9364,7 +9364,7 @@ msgstr "tehtud"
 msgid "e"
 msgstr ""
 
-#: old/bin/ir.pl:1219 old/bin/is.pl:1330 old/bin/oe.pl:1188
+#: old/bin/ir.pl:1219 old/bin/is.pl:1332 old/bin/oe.pl:1188
 msgid "ea"
 msgstr "tk"
 
