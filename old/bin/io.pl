@@ -1357,18 +1357,18 @@ sub print_form {
     my @vars =
       qw(name address1 address2 city state zipcode country contact phone fax email);
 
-    $shipto = 1;
+    $shipto = 0;
     # if there is no shipto fill it in from billto
     $form->get_shipto($form->{locationid}) if $form->{locationid};
     foreach my $item (@vars) {
-        if ( $form->{"shipto$item"} ) {
-            $shipto = 0;
+        if ($form->{"shipto$item"} ) {
+            $shipto = 1;
             last;
         }
     }
 
     # $logger->trace("\$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax} \$shipto=$shipto \$form->{shiptofax}=$form->{shiptofax}");
-    if ($shipto) {
+    if (! $shipto) {
         if (   $form->{formname} eq 'purchase_order'
             || $form->{formname} eq 'request_quotation' )
         {
@@ -1644,9 +1644,9 @@ sub ship_to {
                            {
                                my $checked = '';
                                $checked = 'CHECKED="CHECKED"'
-                                   if (defined $form->{location_id}
-                                       and ($form->{location_id} == $form->{"shiptolocationid_$i"}
-                                            or $form->{location_id} == $form->{"locationid_$i"}));
+                                   if ($form->{locationid}
+                                       and ($form->{locationid} == $form->{"shiptolocationid_$i"}
+                                            or $form->{locationid} == $form->{"locationid_$i"}));
 
                                 print qq|
                            <tr>
@@ -1895,7 +1895,7 @@ sub createlocations
 
          &validatelocation;
 
-         $form->{location_id} = IS->createlocation($form);
+         $form->{locationid} = IS->createlocation($form);
 
 
     }
