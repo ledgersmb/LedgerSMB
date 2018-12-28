@@ -439,12 +439,9 @@ BEGIN
                 t_heading_id := in_heading;
         END IF;
 
-    -- don't remove custom links.
+        -- Remove all links. Later we'll (re-)insert the ones we want.
         DELETE FROM account_link
-        WHERE account_id = in_id
-              and description in ( select description
-                                    from  account_link_description
-                                    where custom = 'f');
+        WHERE account_id = in_id;
 
         UPDATE account
         SET accno = in_accno,

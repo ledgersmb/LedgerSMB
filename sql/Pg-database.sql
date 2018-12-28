@@ -134,8 +134,7 @@ COMMENT ON TABLE account_link_description IS
 $$ This is a lookup table which provide basic information as to categories and
 dropdowns of accounts.  In general summary accounts cannot belong to more than
 one category (an AR summary account cannot appear in other dropdowns for
-example).  Custom fields are not overwritten when the account is edited from
-the front-end.$$;
+example).$$;
 
 INSERT INTO account_link_description (description, summary, custom)
 VALUES
