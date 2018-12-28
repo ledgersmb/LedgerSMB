@@ -167,8 +167,12 @@ BEGIN
               ELSE NULL END
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id
-    LEFT JOIN account_checkpoint cp ON cp.account_id = a.id
-              AND end_date = t_roll_forward
+    LEFT JOIN (
+         select account_id, sum(amount_bc) as amount_bc,
+                sum(debits_bc) as debits, sum(credits_bc) as credits
+         from account_checkpoint
+          where end_date = t_roll_forward
+        group by account_id) cp ON cp.account_id = a.id
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation at
               INNER JOIN user_preference up ON up.language = at.language_code
