@@ -13,6 +13,10 @@ Scenario: View the chart of accounts and change every property of an account
        | GIFI  | Description |
        | 1234  | Test GIFI   |
        | 1235  | Test GIFI 2 |
+   And Custom Flags with these properties:
+       | Description   |
+       | Custom-Flag 1 |
+       | Custom-Flag 2 |
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
@@ -30,6 +34,7 @@ Scenario: View the chart of accounts and change every property of an account
    And I select "1234--Test GIFI" from the drop down "GIFI"
    And I select "Equity" from the drop down "Account Type"
    And I select every checkbox in "Options"
+   And I select every checkbox in "Custom Flags"
    And I select every checkbox in "Include in drop-down menus"
    And I press "Save"
    And I wait for the page to load
@@ -40,12 +45,15 @@ Scenario: View the chart of accounts and change every property of an account
    And I expect "1234--Test GIFI" to be selected for "GIFI"
    And I expect "Equity" to be selected for "Account Type"
    And I expect to see 3 selected checkboxes in "Options"
+   And I expect to see 2 selected checkboxes in "Custom Flags"
    And I expect to see 20 selected checkboxes in "Include in drop-down menus"
   When I select "Inventory" from the drop down "Summary account for"
+   And I deselect every checkbox in "Custom Flags"
    And I deselect every checkbox in "Include in drop-down menus"
    And I press "Save"
    And I wait for the page to load
   Then I expect to see 0 selected checkboxes in "Include in drop-down menus"
+  Then I expect to see 0 selected checkboxes in "Custom Flags"
    And I expect "Inventory" to be selected for "Summary account for"
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
