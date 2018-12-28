@@ -178,6 +178,7 @@ The following object properties are set:
   * tax
   * link
   * translations
+  * custom_link_descriptions
 
 =cut
 
