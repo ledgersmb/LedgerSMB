@@ -43,6 +43,28 @@ sub _get_translations {
 }
 
 
+# _get_custom_account_links()
+#
+# Extracts all account_link_description records marked as 'custom' and
+# not marked as 'summary' from the database.
+#
+# Sets the `custom_link_descriptions` object property to be an arrayref
+# containing a hash for each resulting row.
+
+sub _get_custom_account_links {
+    my $self = shift;
+    my @descriptions = $self->call_dbmethod(
+        funcname => 'get_link_descriptions',
+        args => {
+            custom => 1,
+            summary => 0,
+        },
+    );
+    $self->{custom_link_descriptions} = \@descriptions;
+    return;
+}
+
+
 =over
 
 =item save()
@@ -178,6 +200,7 @@ sub get {
 
     $self->merge($account);
     $self->_get_translations;
+    $self->_get_custom_account_links;
 
     return $self;
 }
@@ -272,15 +295,21 @@ sub generate_links {
     my $is_summary = 0;
     my $is_custom = 0;
     my @links;
-    my @descriptions = $self->call_dbmethod(funcname =>
-                                          'get_link_descriptions');
+    my @descriptions = $self->call_dbmethod(
+        funcname => 'get_link_descriptions',
+        args => {
+            summary => undef,
+            custom => undef,
+        },
+    );
+
     foreach my $d (@descriptions) {
        my $l = $d->{description};
        if ($self->{$l}) {
            $is_summary++ if ($d->{summary} == 1);
            $is_custom++ if ($d->{custom} == 1);
            if ($is_summary > 1 || ($is_summary == 1 && $is_custom >=1 )) {
-                $self->error($self->{_locale}->text("Too many links on summary account!"));
+                die "Too many links on summary account.";
            }
            push (@links, $l);
         }

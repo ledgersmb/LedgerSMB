@@ -257,6 +257,22 @@
               value = '1'} ?>
    </div>
 </div>
+<?lsmb IF form.custom_link_descriptions.size ?>
+<div class="inputline" id="acc-custom-flags-line">
+    <label class="line"><?lsmb text('Custom Flags') ?></label>
+    <?lsmb FOREACH link IN form.custom_link_descriptions ?>
+    <div class="inputgroup">
+        <?lsmb INCLUDE input element_data={
+              name = link.description,
+              type = 'checkbox',
+             label = link.description,
+           checked = form.${link.description} ? 'CHECKED' : '',
+             value = link.description
+        } ?>
+    </div>
+    <?lsmb END ?>
+</div>
+<?lsmb END ?>
 <div class="inputline" id="summary-line">
    <label class="line" for="summary-a"><?lsmb text('Summary account for') ?></label>
    <div class="inputgroup">
