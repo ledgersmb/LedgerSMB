@@ -184,14 +184,11 @@ has 'pricegroup_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 =item curr
 
 The currency to use for billing this customer or for bills received from this
-vendor.
+vendor. This field is required for customers, vendors and employees.
 
 Note: we *want* to make this field required (in the database too), but due to
-the existence of the 'Inventory Entity', which is created before any currencies
-have been configured, it's impossible to set a currency on the inventory
-entity, which then makes it impossible to set a database constraint.
-So, we don't want one here: 'be strict in what you send, be liberal in what
-you accept'...
+its use for non-financial counterparties (hot/cold leads, etc), for which no
+currency is required, we can't (yet) make it so.
 
 =cut
 

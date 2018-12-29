@@ -56,8 +56,8 @@ BEGIN;
 
     INSERT INTO company (id, legal_name, entity_id) VALUES (-101, 'TEST', -101);
     INSERT INTO business (id, description) values (-101, 'test');
-    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id)
-         VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000);
+    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id, curr)
+         VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000, 'XTS');
 
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-11, '1901-01-01', 100, 110, 'inv_test1', 'XTS', -101);

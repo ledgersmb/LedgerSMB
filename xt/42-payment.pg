@@ -82,9 +82,9 @@ BEGIN;
 
     INSERT INTO entity_credit_account
                 (id, meta_number, threshold, entity_id, entity_class,
-                 business_id, ar_ap_account_id)
+                 business_id, ar_ap_account_id, curr)
          values (-101, 'TEST1', 100000, -101, 1, -101,
-                 (select id from account where accno = '00001'));
+                 (select id from account where accno = '00001'), 'XTS');
 
     INSERT INTO ap (invnumber, entity_credit_account, approved,
                     amount_bc, amount_tc, netamount_bc, curr)
