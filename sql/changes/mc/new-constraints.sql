@@ -78,8 +78,6 @@ alter table partscustomer
 
 
 alter table jcitems
-  alter column curr set not null,
+  -- jctitems's "curr" column is already NOT-NULL
   add constraint jcitems_curr_fkey
         foreign key (curr) references currency (curr);
-
-
