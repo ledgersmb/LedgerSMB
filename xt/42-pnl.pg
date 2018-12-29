@@ -47,11 +47,11 @@ BEGIN;
 
     -- Set up an ECAs, for AP.
 
-    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id) VALUES (-255, -100, 1, 'Test account 1', -511, -255);
+    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id, curr) VALUES (-255, -100, 1, 'Test account 1', -511, -255, 'XTS');
 
     INSERT INTO company (id, entity_id, legal_name) VALUES (-1024, -100, 'Testing Tax Form');
 
-    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id) VALUES (-256, -101, 1, 'Test account 2', -511, -255);
+    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id, curr) VALUES (-256, -101, 1, 'Test account 2', -511, -255, 'XTS');
 
     INSERT INTO company (id, entity_id, legal_name) VALUES (-1025, -101, 'Testing Tax Form');
 

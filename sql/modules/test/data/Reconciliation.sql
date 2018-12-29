@@ -11,10 +11,10 @@ values (-201, '-11112', 'Test Act 1', 'A',
 INSERT INTO entity (id, control_code, name, entity_class, country_id)
 values (-201, '-11111', 'Test 1', 1, 242);
 
-INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id)
-values (-201, -200, 'T-11111', 1, -1000);
-INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id)
-values (-201, -201, 'T-11112', 1, -1000);
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
+values (-201, -200, 'T-11111', 1, -1000, 'XTS');
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
+values (-201, -201, 'T-11112', 1, -1000, 'XTS');
 
 
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,

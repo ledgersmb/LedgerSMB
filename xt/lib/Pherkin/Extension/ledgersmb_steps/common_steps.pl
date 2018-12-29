@@ -154,6 +154,7 @@ Given qr/a vendor '(.*)'$/, sub {
         _dbh => $admin_dbh,
         ar_ap_account_id => $accno_ids{'2100'},
         meta_number => $vendor_name,
+        curr => 'USD',
         );
     $vendor->save;
 };
