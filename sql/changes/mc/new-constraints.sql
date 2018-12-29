@@ -13,7 +13,8 @@ alter table account_checkpoint
 
 
 alter table entity_credit_account
---  alter column curr set not null,
+  add constraint entity_credit_account_req_curr
+        check (entity_class_id IN (1, 2, 3) AND curr IS NOT NULL);
   add constraint entity_credit_account_curr_fkey
         foreign key (curr) references currency (curr);
 
