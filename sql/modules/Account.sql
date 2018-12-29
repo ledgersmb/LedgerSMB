@@ -439,12 +439,9 @@ BEGIN
                 t_heading_id := in_heading;
         END IF;
 
-    -- don't remove custom links.
+        -- Remove all links. Later we'll (re-)insert the ones we want.
         DELETE FROM account_link
-        WHERE account_id = in_id
-              and description in ( select description
-                                    from  account_link_description
-                                    where custom = 'f');
+        WHERE account_id = in_id;
 
         UPDATE account
         SET accno = in_accno,
@@ -614,14 +611,18 @@ COMMENT ON FUNCTION account__get_by_link_desc(in_description text) IS
 $$ Gets a list of accounts with a specific link description set.  For example,
 for a dropdown list.$$;
 
-CREATE OR REPLACE FUNCTION get_link_descriptions()
+DROP FUNCTION IF EXISTS get_link_descriptions();
+CREATE OR REPLACE FUNCTION get_link_descriptions(in_summary BOOLEAN, in_custom BOOLEAN)
 RETURNS SETOF account_link_description AS
 $$
-    SELECT * FROM account_link_description;
+    SELECT * FROM account_link_description
+    WHERE (in_custom IS NULL OR custom = in_custom)
+    AND (in_summary IS NULL OR summary = in_summary);
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION get_link_descriptions() IS
-$$ Gets a set of all valid account_link descriptions.$$;
+COMMENT ON FUNCTION get_link_descriptions(BOOLEAN, BOOLEAN) IS
+$$ Gets the set of possible account_link descriptions, optionally filtered by
+their `custom` or `summary` attributes.$$;
 
 CREATE OR REPLACE FUNCTION account_heading__list()
 RETURNS SETOF account_heading AS

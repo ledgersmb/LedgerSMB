@@ -26,6 +26,7 @@ When qr/^I (select|deselect) every checkbox in "(.*)"$/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     my %section_ids = (
         'Options' => 'acc-options-line',
+        'Custom Flags' => 'acc-custom-flags-line',
         'Include in drop-down menus' => 'dropdowns',
     );
 
@@ -68,6 +69,7 @@ Then qr/^I expect to see (\d+) selected checkboxes in "(.*)"$/, sub {
     my $section = $2;
     my %section_ids = (
         'Options' => 'acc-options-line',
+        'Custom Flags' => 'acc-custom-flags-line',
         'Include in drop-down menus' => 'dropdowns',
     );
 

@@ -5,6 +5,7 @@ Forthcoming
 New functionalities
 * Deletion of template transactions (Nick P)
 * Transaction date now part of purchase history report (Chris T)
+* UI allows addition and removal of custom `account_link` flags (Nick P)
 
 Quality Assurance
 * Expanded checks and resolutions for schema changes (Erik H)
