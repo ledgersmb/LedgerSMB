@@ -1052,6 +1052,9 @@ SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
                     'account_translation', 'account_heading_translation',
                     'cr_coa_to_account', 'tax']) obj;
 
+SELECT lsmb__create_role('account_link_description_create');
+SELECT lsmb__grant_perms('account_link_description_create', 'account_link_description', 'INSERT');
+
 SELECT lsmb__create_role('auditor');
 SELECT lsmb__grant_perms('auditor', 'audittrail', 'SELECT');
 

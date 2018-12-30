@@ -3,8 +3,7 @@ BEGIN;
     CREATE EXTENSION pgtap;
 
     -- Plan the tests.
-
-    SELECT plan(51);
+    SELECT plan(58);
 
     -- Add data
 
@@ -52,7 +51,7 @@ BEGIN;
     SELECT has_function('chart_list_overpayment',ARRAY['integer']);
     SELECT has_function('chart_list_search',ARRAY['text','text']);
     SELECT has_function('cr_coa_to_account_save',ARRAY['text','text']);
-    SELECT has_function('get_link_descriptions',ARRAY['']);
+    SELECT has_function('get_link_descriptions',ARRAY['boolean','boolean']);
     SELECT has_function('gifi__list',ARRAY['']);
     SELECT has_function('report__coa',ARRAY['']);
     SELECT has_function('report_trial_balance',ARRAY['date','date','integer','integer','boolean']);
@@ -75,6 +74,7 @@ BEGIN;
 --       DEALLOCATE test;
        RETURN ret;
     END $$ LANGUAGE plpgsql;
+
 
     SELECT test_account_link_description('AR_paid1', false, true);
     SELECT test_account_link_description('AP_paid1', false, true);
@@ -179,6 +179,74 @@ BEGIN;
                     WHERE accno LIKE '0%' AND description LIKE 'TEST%';
     SELECT results_eq('test',ARRAY[true],'Test AR Accounts Are Found');
     DEALLOCATE test;
+
+
+    -- Tests for get_link_descriptions function
+    DELETE FROM account_link;
+    DELETE FROM account_link_description;
+    INSERT INTO account_link_description(description, summary, custom) VALUES
+        ('Plain', false, false),
+        ('Summary', true, false),
+        ('Custom', false, true),
+        ('CustomSummary', true, true);
+
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(NULL, NULL);
+    SELECT set_eq(
+        'test',
+        ARRAY['Plain', 'Summary', 'CustomSummary', 'Custom'],
+        $$get_link_descriptions (no filter) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, NULL);
+    SELECT set_eq(
+        'test',
+        ARRAY['Summary', 'CustomSummary'],
+        $$get_link_descriptions (Summary) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, FALSE);
+    SELECT set_eq(
+        'test',
+        ARRAY['Summary'],
+        $$get_link_descriptions (Summary, not Custom) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, TRUE);
+    SELECT set_eq(
+        'test',
+        ARRAY['CustomSummary'],
+        $$get_link_descriptions (Summary + Custom) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(NULL, TRUE);
+    SELECT set_eq(
+        'test',
+        ARRAY['CustomSummary', 'Custom'],
+        $$get_link_descriptions (Custom) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(FALSE, TRUE);
+    SELECT set_eq(
+        'test',
+        ARRAY['Custom'],
+        $$get_link_descriptions (Custom, not Summary) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(FALSE, FALSE);
+    SELECT set_eq(
+        'test',
+        ARRAY['Plain'],
+        $$get_link_descriptions (Neither Custom nor Summary) returns expected records$$
+    );
+    DEALLOCATE test;
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

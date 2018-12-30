@@ -108,6 +108,8 @@ before_install:
   - npm install uglify-js@">=2.0 <3.0"
 
 install:
+  # Suppress warnings in Perl 5.28 about Locale::* being moved out of 'core'
+  - cpanm --reinstall Locale::Country Locale::Codes Locale::Language
   - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 

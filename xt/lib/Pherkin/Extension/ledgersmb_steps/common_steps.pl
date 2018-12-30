@@ -372,6 +372,20 @@ Given qr/^GIFI entries with these properties:$/, sub {
     }
 };
 
+Given qr/^Custom Flags with these properties:$/, sub {
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    my $q = $dbh->prepare("
+        INSERT INTO account_link_description (description, summary, custom)
+        VALUES (?, FALSE, TRUE)
+    ");
+
+    foreach my $row (@{C->data}) {
+        $q->execute(
+            $row->{Description},
+        ) or die "failed to insert account_link_description (Custom Flag) with description $row->{Description}";
+    }
+};
+
 When qr/I wait (\d+) seconds?$/, sub {
     sleep $1
 };

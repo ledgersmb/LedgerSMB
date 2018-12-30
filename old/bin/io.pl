@@ -1346,18 +1346,18 @@ sub print_form {
     my @vars =
       qw(name address1 address2 city state zipcode country contact phone fax email);
 
-    $shipto = 1;
+    $shipto = 0;
     # if there is no shipto fill it in from billto
     $form->get_shipto($form->{locationid}) if $form->{locationid};
     foreach my $item (@vars) {
-        if ( $form->{"shipto$item"} ) {
-            $shipto = 0;
+        if ($form->{"shipto$item"} ) {
+            $shipto = 1;
             last;
         }
     }
 
     # $logger->trace("\$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax} \$shipto=$shipto \$form->{shiptofax}=$form->{shiptofax}");
-    if ($shipto) {
+    if (! $shipto) {
         if (   $form->{formname} eq 'purchase_order'
             || $form->{formname} eq 'request_quotation' )
         {
@@ -1631,15 +1631,17 @@ sub ship_to {
 
                            for($i=1;$i<=$form->{totallocations};$i++)
                            {
-                                                      my $checked = '';
-                                                      $checked = 'CHECKED="CHECKED"' if $form->{location_id} == $form->{"shiptolocationid_$i"}
-         or $form->{location_id} == $form->{"locationid_$i"};
+                               my $checked = '';
+                               $checked = 'CHECKED="CHECKED"'
+                                   if ($form->{locationid}
+                                       and ($form->{locationid} == $form->{"shiptolocationid_$i"}
+                                            or $form->{locationid} == $form->{"locationid_$i"}));
 
                                 print qq|
                            <tr>
 
-                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio value="$i"  $checked ></td>
-                              <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
+                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked ></td>
+                              <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_$i size=12 maxlength=64 id="ad3_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
@@ -1751,7 +1753,7 @@ sub ship_to {
                      Others
                   </tr>
                 </tr>
-                      <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio value="new"></td>
+                      <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio-new" value="new"></td>
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
@@ -1882,7 +1884,7 @@ sub createlocations
 
          &validatelocation;
 
-         $form->{location_id} = IS->createlocation($form);
+         $form->{locationid} = IS->createlocation($form);
 
 
     }
