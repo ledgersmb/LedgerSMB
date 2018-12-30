@@ -154,7 +154,25 @@ sub _format_grid {
 
     $cols->{$_}->{type} = 'input_text'
         for @{$args{edit_columns}};
-    $cols = [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ];
+    my $dropdowns = $args{dropdowns};
+    for my $dropdown (keys %$dropdowns) {
+        my $map = $dropdowns->{$dropdown};
+        if ($cols->{$dropdown}->{type} eq 'text') {
+            # not an input field; resolve key to description
+            for my $row (@$rows) {
+                $row->{$dropdown} = $map->{$row->{$dropdown}};
+            }
+        }
+        elsif ($cols->{$dropdown}->{type} eq 'input_text') {
+            $cols->{$dropdown}->{type} = 'select';
+            $cols->{$dropdown}->{default_blank} = 1;
+            $cols->{$dropdown}->{options} =
+                [ map { { value => $_, text => $map->{$_} } } keys %$map ];
+        }
+        else {
+            # FAIL!
+        }
+    }
     my $atts = {
         input_prefix => $args{name},
         id => $args{name},
@@ -166,7 +184,7 @@ sub _format_grid {
         'setup/upgrade/grid',
         {
             attributes => $atts,
-            columns => $cols,
+            columns => [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ],
             rows => $rows,
         });
 }
