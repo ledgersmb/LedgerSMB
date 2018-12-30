@@ -186,7 +186,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -284,7 +284,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -382,7 +382,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -478,7 +478,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -591,7 +591,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
