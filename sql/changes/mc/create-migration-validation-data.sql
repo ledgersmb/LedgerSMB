@@ -194,7 +194,7 @@ alter table mc_migration_validation_data.trial_balances
 
 INSERT INTO mc_migration_validation_data.trial_balances
 SELECT cp.end_date, tb.*
-  FROM account_checkpoint cp,
+  FROM (select distinct end_date from account_checkpoint) cp,
        pg_temp.trial_balance__generate(
                 (select max(end_date) from account_checkpoint c
                   where c.end_date < cp.end_date), cp.end_date, null, null,
