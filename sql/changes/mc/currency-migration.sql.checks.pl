@@ -63,9 +63,9 @@ find a list here: https://www.xe.com/iso4217.php )
 
 check q|Assert 3-letter currency codes|,
     query => q|SELECT u.curr
-                 FROM unnest(string_to_array(
+                 FROM regexp_split_to_table(
                          (select value from defaults
-                           where setting_key = 'curr')), ':') as u(curr)
+                           where setting_key = 'curr'), ':') as u(curr)
                 WHERE length(u.curr) > 3|,
     description => q|
 The migration checks found that there are currency codes in the
