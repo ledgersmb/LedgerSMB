@@ -88,7 +88,7 @@ END; ?>
    <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
       <?lsmb PROCESS input element_data = {
                                  type="hidden"
-                                 name=PFK _ "row_" _ ROWCOUNT
+                                 name=PFX _ "row_" _ ROWCOUNT
              value=ROW.row_id } ?>
       <?lsmb- FOREACH COL IN columns;
             TYPE = COL.type;
