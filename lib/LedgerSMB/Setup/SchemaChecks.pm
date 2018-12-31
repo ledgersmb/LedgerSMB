@@ -174,7 +174,7 @@ sub _format_grid {
         }
     }
     my $atts = {
-        input_prefix => $args{name},
+        input_prefix => $args{name} . '_',
         id => $args{name},
     };
 
