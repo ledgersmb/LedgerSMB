@@ -49,14 +49,12 @@ sub _unpack_grid_data {
 
     my @rows = ();
     for my $rowno (1 .. $rowcount) {
+        my $rowid = $request->{"${prefix}_row_$rowno"};
         push @rows, {
-            map { $_ => $request->{"${prefix}_${_}_$rowno"} }
-               (@$columns, '--pk')
+            (map { $_ => $request->{"${prefix}_${_}_$rowno"} } @$columns),
+            __pk => $request->{"${prefix}_--pk_$rowid"}
         };
     }
-    # Rename '--pk' to '__pk', the value expected by the upgrade framework
-    # but renamed due to TT not allowing access to underscore-prefixed vars
-    $_->{__pk} = $_->{'--pk'} for @rows;
 
     return \@rows;
 }
