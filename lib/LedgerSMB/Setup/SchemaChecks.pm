@@ -51,7 +51,7 @@ sub _unpack_grid_data {
     for my $rowno (1 .. $rowcount) {
         my $rowid = $request->{"${prefix}_row_$rowno"};
         push @rows, {
-            (map { $_ => $request->{"${prefix}_${_}_$rowno"} } @$columns),
+            (map { $_ => $request->{"${prefix}_${_}_$rowid"} } @$columns),
             __pk => $request->{"${prefix}_--pk_$rowid"}
         };
     }

@@ -4,19 +4,23 @@
 -- transactions included lines marked as fx transactions
 
 -- Remaining lines thus must be base/default currency transactions
+--  If the amount is NULL, we can't set the currency, unless we set
+--  the amount to 0 (zero) [it's treated that way anyway]
 
 UPDATE ar
-   SET curr = (select value from defaults where setting_key = 'curr')
+   SET curr = (select value from defaults where setting_key = 'curr'),
+       amount = coalesce(amount, 0)
  WHERE curr IS NULL;
 
 UPDATE ap
-   SET curr = (select value from defaults where setting_key = 'curr')
+   SET curr = (select value from defaults where setting_key = 'curr'),
+       amount = coalesce(amount, 0)
  WHERE curr IS NULL;
 
 
 UPDATE ar
-   SET amount_bc = coalesce(amount, 0),
-       netamount_bc = coalesce(netamount, 0);
+   SET amount_bc = amount,
+       netamount_bc = netamount;
 
 UPDATE ar
    SET amount_tc = amount_bc,
@@ -34,8 +38,8 @@ UPDATE ar
 
 
 UPDATE ap
-   SET amount_bc = coalesce(amount, 0),
-       netamount_bc = coalesce(netamount, 0);
+   SET amount_bc = amount,
+       netamount_bc = netamount;
 
 UPDATE ap
    SET amount_tc = amount_bc,
