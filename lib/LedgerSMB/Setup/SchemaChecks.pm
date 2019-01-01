@@ -220,7 +220,8 @@ sub _provided {
         }
         else {
             # it'll be a grid.
-            return _unpack_grid_data($request, $name, $check->{columns});
+            return _unpack_grid_data($request, $name,
+                                     $check->{grids}->{$name}->{edit_columns});
         }
     }
     else {

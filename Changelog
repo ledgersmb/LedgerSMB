@@ -37,6 +37,13 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.10
+* Apply correct layout to schema upgrade pages in setup.pl (Erik H)
+* Fix iteration over row data provided in schema data fixes in setup.pl (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.9
 * Fix all addresses selected on AR/AP Invoice's Ship To screen (Erik H, #3940)
 * Fix sales tax not included in amount due on purchase invoice (Erik H, #3941)
