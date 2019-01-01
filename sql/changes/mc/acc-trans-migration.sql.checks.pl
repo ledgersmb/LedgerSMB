@@ -4,17 +4,10 @@ use LedgerSMB::Database::ChangeChecks;
 
 
 check q|Ensure that currency information is available for gl transactions|,
-    # Note that the alter table here is a 9.6-ism (IF NOT EXISTS)
-    # also note that the addition of the column will only be run if the
-    # check is run, which is only in case the actual change script hasn't.
     query => q|
-ALTER TABLE gl ADD COLUMN IF NOT EXISTS curr char(3);
-
 SELECT * FROM gl
- WHERE EXISTS (select 1 from acc_trans at where at.trans_id = gl.id
-                                                and at.fx_transaction)
+ WHERE curr IS NULL
   ORDER BY transdate, id|,
-
     description => q|
 The migration checks found that there are GL transactions marked as
 fx transactions. However, the existing schema doesn't store the
