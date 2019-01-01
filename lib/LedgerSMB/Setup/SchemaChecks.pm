@@ -49,14 +49,12 @@ sub _unpack_grid_data {
 
     my @rows = ();
     for my $rowno (1 .. $rowcount) {
+        my $rowid = $request->{"${prefix}_row_$rowno"};
         push @rows, {
-            map { $_ => $request->{"${prefix}_${_}_$rowno"} }
-               (@$columns, '--pk')
+            (map { $_ => $request->{"${prefix}_${_}_$rowno"} } @$columns),
+            __pk => $request->{"${prefix}_--pk_$rowid"}
         };
     }
-    # Rename '--pk' to '__pk', the value expected by the upgrade framework
-    # but renamed due to TT not allowing access to underscore-prefixed vars
-    $_->{__pk} = $_->{'--pk'} for @rows;
 
     return \@rows;
 }
@@ -154,9 +152,27 @@ sub _format_grid {
 
     $cols->{$_}->{type} = 'input_text'
         for @{$args{edit_columns}};
-    $cols = [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ];
+    my $dropdowns = $args{dropdowns};
+    for my $dropdown (keys %$dropdowns) {
+        my $map = $dropdowns->{$dropdown};
+        if ($cols->{$dropdown}->{type} eq 'text') {
+            # not an input field; resolve key to description
+            for my $row (@$rows) {
+                $row->{$dropdown} = $map->{$row->{$dropdown}};
+            }
+        }
+        elsif ($cols->{$dropdown}->{type} eq 'input_text') {
+            $cols->{$dropdown}->{type} = 'select';
+            $cols->{$dropdown}->{default_blank} = 1;
+            $cols->{$dropdown}->{options} =
+                [ map { { value => $_, text => $map->{$_} } } keys %$map ];
+        }
+        else {
+            # FAIL!
+        }
+    }
     my $atts = {
-        input_prefix => $args{name},
+        input_prefix => $args{name} . '_',
         id => $args{name},
     };
 
@@ -166,7 +182,7 @@ sub _format_grid {
         'setup/upgrade/grid',
         {
             attributes => $atts,
-            columns => $cols,
+            columns => [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ],
             rows => $rows,
         });
 }
@@ -196,7 +212,8 @@ sub _provided {
         }
         else {
             # it'll be a grid.
-            return _unpack_grid_data($request, $name, $check->{columns});
+            return _unpack_grid_data($request, $name,
+                                     $check->{grids}->{$name}->{edit_columns});
         }
     }
     else {

@@ -31,3 +31,13 @@ INSERT INTO currency (curr, description)
 SELECT curr, curr FROM journal_line
  WHERE curr IS NOT NULL
        AND curr NOT IN (select curr from currency);
+
+UPDATE budget_line
+   SET amount_tc = amount,
+       curr = (select value from defaults where setting_key = 'curr');
+
+INSERT INTO currency (curr, description)
+SELECT curr, curr FROM jcitems
+ WHERE curr IS NOT NULL
+       AND curr NOT IN (select curr from currency);
+

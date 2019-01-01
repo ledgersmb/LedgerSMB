@@ -33,13 +33,15 @@
 
    # the elements in the 'columns' array support these attributes:
    #  - type         : can be any of 'input_text', 'href', 'hidden', 'checkbox'
-   #                   'radio', 'mirrored', 'text', 'boolean_checkmark'
+   #                   'radio', 'mirrored', 'text', 'boolean_checkmark', 'select'
    #  - col_id       : the internal identifier for the column
    #  - class        : the (additional) css classes to be applied to the column
    #  - data_dojo_type : Dojo type for the inputs in the column
    #  - name         : the value presented in the table header for this column
    #  - href_base    : the URL base to use for 'href' typed columns
    #  - href_target  : value for the 'target' attribute of the 'a' tag
+   #  - options      : items to be selected from in case of SELECT type
+   #  - default_blank: (boolean) indicates a blank drop down item should be added
 
    # the elements in the 'tbody' hash support these attributes:
    #  - rows         : an array of hashes with the values for each column
@@ -88,7 +90,7 @@ END; ?>
    <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
       <?lsmb PROCESS input element_data = {
                                  type="hidden"
-                                 name="row_" _ ROWCOUNT
+                                 name=PFX _ "row_" _ ROWCOUNT
              value=ROW.row_id } ?>
       <?lsmb- FOREACH COL IN columns;
             TYPE = COL.type;
@@ -148,6 +150,16 @@ END; ?>
                                          class=COL.class
                                          value=ROW.row_id
                 checked=CHECKED } ?>
+         <?lsmb- ELSIF TYPE == 'select' ?>
+         <?lsmb PROCESS select element_data = {
+                text_attr='text'
+                value_attr='value'
+                id=COL.col_id _ '-' _ ROWCOUNT
+                name=PFX _ COL.col_id _ '_' _ ROWCOUNT
+                class=COL.class
+                options=COL.options
+                default_blank=COL.default_blank
+                default_values=[ROW.row_id] } ?>
          <?lsmb- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF ROW.$HREF_SFX;

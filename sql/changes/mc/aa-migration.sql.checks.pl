@@ -31,7 +31,7 @@ Please add a foreign currency code to each transaction.
         describe;
         grid $rows,
             name => 'ar',
-            columns => [ qw( invnumber curr amount netamount
+            columns => [ qw( id invnumber curr amount netamount
                          entity_credit_account ) ],
             edit_columns => [ 'curr' ],
             dropdowns => {
@@ -83,7 +83,7 @@ Please add a foreign currency code to each transaction.
         describe;
         grid $rows,
             name => 'ap',
-            columns => [ qw( invnumber curr amount netamount
+            columns => [ qw( id invnumber curr amount netamount
                          entity_credit_account ) ],
             edit_columns => [ 'curr' ],
             dropdowns => {

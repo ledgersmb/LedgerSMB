@@ -168,7 +168,7 @@ sub save {
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
 
-            $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
+            $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -536,7 +536,7 @@ sub delete {
     $query = qq|DELETE FROM orderitems WHERE trans_id = ?|;
     $sth->finish;
 
-    $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
+    $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
@@ -613,7 +613,7 @@ sub retrieve {
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
-        $query = qq|SELECT * FROM new_shipto WHERE trans_id = ?|;
+        $query = qq|SELECT * FROM new_shipto WHERE oe_id = ?|;
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
