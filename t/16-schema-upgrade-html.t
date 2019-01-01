@@ -71,10 +71,12 @@ is LedgerSMB::Setup::SchemaChecks::_check_hashid(
 is_deeply( LedgerSMB::Setup::SchemaChecks::_unpack_grid_data(
                {
                    rowcount_pfx => 2,
+                   'pfx_row_1' => 1,
                    'pfx_--pk_1' => '1 2 3',
                    'pfx_a_1' => 1,
                    'pfx_b_1' => 2,
                    'pfx_c_1' => 3,
+                   'pfx_row_2' => 2,
                    'pfx_--pk_2' => '4 5 6',
                    'pfx_a_2' => 4,
                    'pfx_b_2' => 5,
@@ -186,7 +188,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -284,7 +286,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -382,7 +384,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -478,7 +480,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -591,7 +593,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -606,7 +608,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
    </th>   <th class="c  input_text">c
    </th>   </tr>
 </thead><tbody>   <tr class=" 0">
-      <input id="row-1" type="hidden" name="row_1" value="0" />
+      <input id="gridrow-1" type="hidden" name="gridrow_1" value="0" />
       <input id="grid--pk-0" type="hidden" name="grid--pk_0" value="Y29sMQ== Y29sMg==" />      <td class="a  text">            col1      </td>      <td class="b  text">            col2      </td>      <td class="c  input_text">          <input id="c-1" type="text" name="gridc_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />      </td>   </tr>
 </tbody><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
 </table>
