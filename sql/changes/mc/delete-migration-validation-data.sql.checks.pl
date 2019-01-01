@@ -169,11 +169,11 @@ BEGIN
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN (
-         select account_id, sum(amount_bc) as amount_bc,
-                sum(debits_bc) as debits, sum(credits_bc) as credits
+         select end_date, account_id, sum(amount_bc) as amount_bc,
+                sum(debits) as debits, sum(credits) as credits
          from account_checkpoint
           where end_date = t_roll_forward
-        group by account_id) cp ON cp.account_id = a.id
+        group by end_date, account_id) cp ON cp.account_id = a.id
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation at
               INNER JOIN user_preference up ON up.language = at.language_code
@@ -218,13 +218,13 @@ SELECT coalesce(otb.balance_date, vtb.balance_date) as balance_date,
        coalesce(otb.debits,0) - coalesce(vtb.debits,0) as debits_diff,
        coalesce(otb.credits,0) - coalesce(vtb.credits,0) as credits_diff,
        coalesce(otb.ending_balance,0) - coalesce(vtb.ending_balance,0) as ending_balance_diff
-  FROM verify_trial_balances vtb
+  FROM verify_mc_trial_balances vtb
 FULL OUTER JOIN mc_migration_validation_data.trial_balances otb
   ON vtb.balance_date = otb.balance_date AND vtb.account_id = otb.account_id
- WHERE (starting_balance_diff <> 0
-        OR debits_diff <> 0
-        OR credits_diff <> 0
-        OR ending_balance_diff <> 0)
+ WHERE ((coalesce(otb.starting_balance,0) - coalesce(vtb.starting_balance,0)) <> 0
+        OR (coalesce(otb.debits,0) - coalesce(vtb.debits,0)) <> 0
+        OR (coalesce(otb.credits,0) - coalesce(vtb.credits,0)) <> 0
+        OR (coalesce(otb.ending_balance,0) - coalesce(vtb.ending_balance,0)) <> 0)
        AND NOT ((select value from defaults where setting_key = 'accept_mc') = 'yes')
   ORDER BY balance_date, account_id;
 !,
