@@ -546,6 +546,10 @@ sub _grid {
     die q{'grid' can't be called outside run_with_formatters scope};
 }
 
+# The _assert_pk function asserts that the current check (as held in
+# the '$check' variable) defines a primary key either for a table
+# named by the 'table' argument, or, by by the 'name' argument.
+#
 sub _assert_pk {
     my (%args) = @_;
 
@@ -728,6 +732,10 @@ sub save_grid {
 #
 #############################
 
+# Convert a (potentially complex) primary key to a single scalar
+# by encoding the pieces as base64 (and undefined to the reserved
+# value '[n]' (which doesn't map to any base64 value because '['
+# and ']' aren't in the base64 character set)
 sub _encode_pk {
     my ($row, $pk_fields) = @_;
 
@@ -735,6 +743,8 @@ sub _encode_pk {
                 map { $row->{$_} if exists $row->{$_}; } @$pk_fields);
 }
 
+# Convert an encoded single scalar primary key to a decoded
+# (potentially complex) primary key
 sub _decode_pk {
     my ($pk_value, $pk_fields) = @_;
 
