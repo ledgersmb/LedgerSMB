@@ -548,7 +548,7 @@ sub _grid {
 
 # The _assert_pk function asserts that the current check (as held in
 # the '$check' variable) defines a primary key either for a table
-# named by the 'table' argument, or, by by the 'name' argument.
+# named by the 'table' argument, or, by the 'name' argument.
 #
 sub _assert_pk {
     my (%args) = @_;
