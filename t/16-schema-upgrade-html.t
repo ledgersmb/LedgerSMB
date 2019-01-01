@@ -71,10 +71,12 @@ is LedgerSMB::Setup::SchemaChecks::_check_hashid(
 is_deeply( LedgerSMB::Setup::SchemaChecks::_unpack_grid_data(
                {
                    rowcount_pfx => 2,
+                   'pfx_row_1' => 1,
                    'pfx_--pk_1' => '1 2 3',
                    'pfx_a_1' => 1,
                    'pfx_b_1' => 2,
                    'pfx_c_1' => 3,
+                   'pfx_row_2' => 2,
                    'pfx_--pk_2' => '4 5 6',
                    'pfx_a_2' => 4,
                    'pfx_b_2' => 5,
