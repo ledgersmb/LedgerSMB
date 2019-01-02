@@ -58,6 +58,14 @@ L</FUNCTIONS> section of this document).
                  ...,
              },
              column2 => dropdown_sql($dbh, "SELECT value, text FROM b_table"),
+             column3 => sub {
+                 my $row = shift;
+                 # dynamically create option list for this row...
+                 return [
+                     {value => 1, text => 'Option 1'},
+                     ...,
+                 ];
+             }
            };
      },
      on_submit => sub {
@@ -529,7 +537,16 @@ should be a subset of C<columns>.
 
 I<Optional>. Contains a hashref with the keys being a subset of the
 columns for which a dropdown should be rendered and the values being
-hashrefs mapping the values of the field to descriptions.
+one of:
+
+1) A hashref mapping the values of the field to description for each
+option.
+
+2) A callback function to dynamically generate the list of options for
+each row. This should return an arrayref containing a hashref for each
+row defining C<value> and C<text> for each option. The function is called
+with a hashref argument containing key/value pairs for each field in the
+current row.
 
 A column doesn't need to be editable in order for a dropdown to be applied;
 the UI is supposed to show a read-only dropdown element when the column
