@@ -49,4 +49,4 @@ FOR EACH ROW EXECUTE PROCEDURE limit_summary_account_links();
 
 COMMENT ON TRIGGER prohibit_multiple_summary_account_links ON account_link IS
 $$Accounts can be linked with only one Summary account_link descriptor. This trigger
-enforces that constraint.$$
+enforces that constraint.$$;
