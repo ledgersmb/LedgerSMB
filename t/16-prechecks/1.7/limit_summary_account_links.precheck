@@ -16,10 +16,12 @@
             submit_session => [
                 {
                     statement => q{DELETE FROM account_link WHERE account_id = ? AND (? IS NULL OR ? != description)},
+                    bound_params => [123, 'AR', 'AR'],
                     results => [],
                 },
                 {
                     statement => q{DELETE FROM account_link WHERE account_id = ? AND (? IS NULL OR ? != description)},
+                    bound_params => [124, undef, undef],
                     results => [],
                 },
             ],
