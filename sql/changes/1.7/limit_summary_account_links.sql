@@ -10,26 +10,17 @@ CREATE OR REPLACE FUNCTION limit_summary_account_links()
 RETURNS TRIGGER AS
 $$
 BEGIN
-    -- Is the account_link we're assigning a Summary descriptor?
-    PERFORM 1
-    FROM account_link_description
-    WHERE description = NEW.description
-    AND summary IS TRUE;
-
-    -- There can only be one Summary descriptor assigned to an account.
-    IF FOUND THEN
-        IF (
-            SELECT COUNT(*) > 1
-            FROM account_link
-            JOIN account_link_description ON (
-                account_link.description = account_link_description.description
-            )
-            WHERE account_id = NEW.account_id
-            AND account_link_description.summary IS TRUE
-         )
-         THEN
-            RAISE EXCEPTION 'Account already has a summary account_link - cannot add another';
-        END IF;
+    IF (
+        SELECT COUNT(*) > 1
+        FROM account_link
+        JOIN account_link_description ON (
+            account_link.description = account_link_description.description
+        )
+        WHERE account_id = NEW.account_id
+        AND account_link_description.summary IS TRUE
+    )
+    THEN
+        RAISE EXCEPTION 'Account cannot have more than one summary account_link descriptor';
     END IF;
 
     RETURN NEW;
