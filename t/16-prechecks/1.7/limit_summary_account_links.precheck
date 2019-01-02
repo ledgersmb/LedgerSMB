@@ -1,0 +1,28 @@
+{
+    q{Check that each account is a summary for no more than one transaction type} => [
+        {
+            failure_data => [
+                ['Account', 'account_id', 'Description', 'Currently Summary For'],
+                ['0001', 123, 'Debtors Control', 'AR, IC'],
+                ['0002', 124, 'Sample Account', 'AR, IC'],
+            ],
+            response => {
+                confirm => 'proceed',
+                account_link => [
+                    {'__pk' => 'MTIz RGVidG9ycyBDb250cm9s', 'New Summary For' => 'AR' },
+                    {'__pk' => 'MTI0 U2FtcGxlIEFjY291bnQ=', 'New Summary For' => undef},
+                ],
+            },
+            submit_session => [
+                {
+                    statement => q{DELETE FROM account_link WHERE account_id = ? AND (? IS NULL OR ? != description)},
+                    results => [],
+                },
+                {
+                    statement => q{DELETE FROM account_link WHERE account_id = ? AND (? IS NULL OR ? != description)},
+                    results => [],
+                },
+            ],
+        },
+    ],
+}
