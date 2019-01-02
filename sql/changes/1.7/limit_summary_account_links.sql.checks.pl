@@ -34,8 +34,8 @@ they are a summary account for only a single transaction type, or changed
 so that they are no longer a summary account.
 
 For each account row below, please select which transaction type it should be
-a summary accout for, or leave the selection blank if the account
-should no longer be considered as a summary accout.
+a summary account for, or leave the selection blank if the account
+should no longer be considered as a summary account.
 
 These choices will not alter accounting data, but will affect which
 accounts appear in certain selection menus. After the upgrade, you may review
