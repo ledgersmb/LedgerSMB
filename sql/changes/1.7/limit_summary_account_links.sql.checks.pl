@@ -10,8 +10,7 @@ check(
         SELECT account.accno AS "Account",
                account.id AS account_id,
                account.description AS "Description",
-               string_agg(account_link.description, ', ') AS "Currently Summary For",
-'' AS "New Summary For"
+               string_agg(account_link.description, ', ') AS "Currently Summary For"
         FROM account
         JOIN account_link ON (
             account.id = account_link.account_id
