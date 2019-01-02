@@ -59,12 +59,8 @@ should be configured.
            dropdowns => {
                'New Summary For' => sub {
                    my ($row) = @_;
-                   my $q = $dbh->prepare("
-                       SELECT description AS value, description AS text
-                       FROM account_link
-                       WHERE account_id = ?
-                       ORDER BY description
-                   ");
+                   # SQL on one line because DBD::Mock tests can't handle whitespace`
+                   my $q = $dbh->prepare("SELECT description AS value, description AS text FROM account_link WHERE account_id = ? ORDER BY description");
                    $q->execute($row->{account_id});
                    return $q->fetchall_arrayref({});
                },
@@ -79,11 +75,8 @@ should be configured.
 
         if ($confirm eq 'proceed') {
             # Query to remove 'extra' summary links
-            my $q = $dbh->prepare("
-                DELETE FROM account_link
-                WHERE account_id = ?
-                AND (? IS NULL OR ? != description)
-            ");
+            # SQL on one line because DBD::Mock tests can't handle whitespace
+            my $q = $dbh->prepare("DELETE FROM account_link WHERE account_id = ? AND (? IS NULL OR ? != description)");
 
             my $provided_data = provided 'account_link';
 
