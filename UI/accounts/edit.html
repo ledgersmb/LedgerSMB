@@ -274,27 +274,36 @@
 </div>
 <?lsmb END ?>
 <div class="inputline" id="summary-line">
-   <label class="line" for="summary-a"><?lsmb text('Summary account for') ?></label>
-   <div class="inputgroup">
-   <?lsmb # fixed_asset may eventually go in here too depending on future
-          # directions in development.
-      summary = [];
-      IF form.AR; summary = 'AR'; END;
-      IF form.AP; summary = 'AP'; END;
-      IF form.IC; summary = 'IC'; END;
-      s_accts = [
-        {}
-        {text = 'AR',        value = 'AR'}
-        {text = 'AP',        value = 'AP'}
-        {text = 'Inventory', value = 'IC'}
-      ];
-      INCLUDE select element_data = {
-               name = "summary"
-            options = s_accts
-     default_values = [summary]
-                 id = 'summary-a'
-      }; ?>
-   </div>
+    <label class="line" for="summary-a"><?lsmb text('Summary account for') ?></label>
+    <div class="inputgroup">
+    <?lsmb
+        summary = [];
+
+        # Localize summary account_link descriptions
+        FOREACH account_link IN form.summary_link_descriptions;
+            IF account_link.description == 'IC';
+                # Retain historic override for Inventory
+                account_link.text = text('Inventory');
+            ELSE;
+                account_link.text = text(account_link.description);
+            END;
+
+            IF form.${account_link.description};
+                summary = account_link.description;
+            END;
+        END;
+
+        INCLUDE select element_data = {
+                   name = "summary"
+                options = form.summary_link_descriptions
+         default_values = summary
+          default_blank = 'true'
+              text_attr = 'text',
+             value_attr = 'description'
+                     id = 'summary-a'
+        };
+    ?>
+    </div>
 </div>
 </div> <!-- account details div -->
 <div id="dropdowns">
