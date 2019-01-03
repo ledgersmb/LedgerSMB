@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(19);
+    SELECT plan(21);
 
     -- Add data
 
@@ -85,6 +85,42 @@ BEGIN;
     PREPARE test AS SELECT account__obtain_balance('1520-06-01'::date, -1000) = 20000;
     SELECT results_eq('test',ARRAY[true],'account__obtain_balance (after checkpoint and transaction)');
     DEALLOCATE test;
+
+
+
+    DELETE FROM account_checkpoint;
+    INSERT INTO currency VALUES ('xts','xts');
+
+    INSERT INTO gl (id, reference, description, transdate, approved)
+    values (-1010, 'test', 'test', '1519-01-01', true); -- way in the future.
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
+                curr, amount_tc, approved)
+    values (-1010, '-1003', '1519-01-01', '10000', 'XTS', '10000', true),
+           (-1010, '-1004', '1519-01-01', '-10000', 'XTS', '-10000', true),
+           (-1010, '-1003', '1519-01-01', '10000', 'xts', '1', true),
+           (-1010, '-1004', '1519-01-01', '-10000', 'xts', '-1', true);
+
+    SELECT eoy_zero_accounts('1519-01-02', 'test', 'test-zero', -1005);
+
+    PREPARE test AS SELECT chart_id, sum(amount_bc), sum(amount_tc)
+                      FROM acc_trans
+                     WHERE curr = 'XTS' AND transdate <= '1519-01-03'
+                           AND chart_id IN (-1003, -1004)
+                     GROUP BY chart_id
+                     ORDER BY chart_id;
+    SELECT results_eq('test', $$VALUES(-1004, 0::numeric, 0::numeric),(-1003, 0::numeric, 0::numeric)$$, 'XTS currency cleared');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT chart_id, sum(amount_bc), sum(amount_tc)
+                      FROM acc_trans
+                     WHERE curr = 'xts' AND transdate <= '1519-01-03'
+                           AND chart_id IN (-1003, -1004)
+                     GROUP BY chart_id
+                     ORDER BY chart_id;
+    SELECT results_eq('test', $$VALUES(-1004, 0::numeric, 0::numeric),(-1003, 0::numeric, 0::numeric)$$, '"xts" currency cleared');
+    DEALLOCATE test;
+
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
