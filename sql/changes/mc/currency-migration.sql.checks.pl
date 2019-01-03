@@ -112,7 +112,8 @@ here: https://www.xe.com/iso4217.php )
 
             # We replace the original values with (hopefully)
             # 3-letter currency codes.
-            my %map = map {  { $_->{curr} => $_->{value} } } @$rows;
+            my %map = map {  { $_->{curr} => $_->{value} } }
+                @{(provided 'valid_curr')};
 
             my $sth = $dbh->prepare(q{select value from defaults
                                        where setting_key = 'curr'})
