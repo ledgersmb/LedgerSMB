@@ -1127,12 +1127,12 @@ day with the same source number, and optionally the same voucher id.$$;
 DROP FUNCTION IF EXISTS payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
         in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int);
+        in_voucher_id int, in_exchangerate numeric, in_currency char(3));
 
 CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
         in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int, in_exchangerate numeric, in_currency char(3))
+        in_voucher_id int)
 RETURNS INT
 AS $$
 DECLARE
@@ -1246,7 +1246,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
         in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int, in_exchangerate numeric, char(3)) IS $$
+        in_voucher_id int) IS $$
 Reverses a payment.  All fields are mandatory except batch_id and voucher_id
 because they determine the identity of the payment to be reversed.
 $$;
