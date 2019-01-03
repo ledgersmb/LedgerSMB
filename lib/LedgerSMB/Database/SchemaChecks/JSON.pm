@@ -49,8 +49,12 @@ an object with the following structure:
         - <grid1>
           - rows
           - options
-            - field1
-            - fieldN
+            - row1 
+              - field1
+                - option1
+                - optionN
+              - fieldN
+            - rowN
           - adjustment_fields
     - response
       - confirm
@@ -163,6 +167,7 @@ sub _generate_json {
     my $response_file = _response_filename($dir, $check);
     open my $fh, '>:encoding(UTF-8)', $response_file
         or die "Unable to open response file '$response_file': $!";
+
     print $fh $json->encode($cached_response->{response})
         or die "Unable to write failure response to '$response_file': $!";
     close $fh
@@ -243,9 +248,29 @@ sub _format_grid {
                     @cols{@columns} = @{$_}{@columns};
                     \%cols } @$rows ],
     };
+
     if ($args{dropdowns}) {
-        $response->{failure}->{grids}->{$args{name}}->{options} =
-            $args{dropdowns};
+        $response->{failure}->{grids}->{$args{name}}->{options} = [
+             map {
+                my $row = $_;
+                my %row_fields;
+
+                foreach my $field (keys %{$args{dropdowns}}) {
+                    my $dropdown = $args{dropdowns}->{$field};
+
+                    if (ref $dropdown && ref $dropdown eq 'CODE') {
+                        # Flatten array into simple unordered key/value hash pairs
+                        $row_fields{$field} = {
+                            map { $_->{value} => $_->{text} } @{&$dropdown($row)}
+                        };
+                    }
+                    else {
+                        $row_fields{$field} = $dropdown;
+                    }
+                }
+                \%row_fields;
+            } @$rows
+        ];
     }
 }
 

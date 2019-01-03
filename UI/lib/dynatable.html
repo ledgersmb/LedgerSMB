@@ -150,14 +150,21 @@ END; ?>
                                          class=COL.class
                                          value=ROW.row_id
                 checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'select' ?>
-         <?lsmb PROCESS select element_data = {
+         <?lsmb- ELSIF TYPE == 'select';
+                # ROW is passed as an argument if COL.options is a callback
+                # function, which allows dropdown options to be dynamically
+                # customised to each row. The ROW argument is harmlessly
+                # ignored by Template Toolkit if COL.options is a static
+                # arrayref common to every row.
+                OPTION_LIST = COL.options(ROW);
+
+                PROCESS select element_data = {
                 text_attr='text'
                 value_attr='value'
                 id=COL.col_id _ '-' _ ROWCOUNT
                 name=PFX _ COL.col_id _ '_' _ ROW.row_id
                 class=COL.class
-                options=COL.options
+                options=OPTION_LIST
                 default_blank=COL.default_blank
                 default_values=[ROW.row_id] } ?>
          <?lsmb- ELSIF TYPE == 'href';

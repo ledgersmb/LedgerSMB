@@ -58,6 +58,14 @@ L</FUNCTIONS> section of this document).
                  ...,
              },
              column2 => dropdown_sql($dbh, "SELECT value, text FROM b_table"),
+             column3 => sub {
+                 my $row = shift;
+                 # dynamically create option list for this row...
+                 return [
+                     {value => 1, text => 'Option 1'},
+                     ...,
+                 ];
+             }
            };
      },
      on_submit => sub {
@@ -529,7 +537,16 @@ should be a subset of C<columns>.
 
 I<Optional>. Contains a hashref with the keys being a subset of the
 columns for which a dropdown should be rendered and the values being
-hashrefs mapping the values of the field to descriptions.
+one of:
+
+1) A hashref mapping the values of the field to description for each
+option.
+
+2) A callback function to dynamically generate the list of options for
+each row. This should return an arrayref containing a hashref for each
+row defining C<value> and C<text> for each option. The function is called
+with a hashref argument containing key/value pairs for each field in the
+current row.
 
 A column doesn't need to be editable in order for a dropdown to be applied;
 the UI is supposed to show a read-only dropdown element when the column
@@ -546,6 +563,10 @@ sub _grid {
     die q{'grid' can't be called outside run_with_formatters scope};
 }
 
+# The _assert_pk function asserts that the current check (as held in
+# the '$check' variable) defines a primary key either for a table
+# named by the 'table' argument, or, by the 'name' argument.
+#
 sub _assert_pk {
     my (%args) = @_;
 
@@ -667,6 +688,22 @@ defaults to the value provided in the C<name> argument.
 I<Optional>. Overrides the value of the columns to be saved as would
 have been taken from the associated grid declaration.
 
+=item column_transforms
+
+I<Optional>. A hash with as its keys names of columns to be included
+when saving the data from the grid. The values of the hash elements
+may be a code reference which will be executed for each saved row,
+or something else, in which case that value is taken to be constant
+for all rows.
+
+The code reference receives as its first argument the value of
+the input parameter by the same name received from the grid, if
+such a parameter exists.
+
+Note that column_transforms can be declared for columns in the
+set of C<edit_columns> as well as any other existing column in
+the table to be updated.
+
 =back
 
 =cut
@@ -692,7 +729,22 @@ sub save_grid {
     my $pk = $check->{tables}->{$args{table} // $name}->{prim_key};
     $pk = (ref $pk) ? $pk : [ $pk ];
 
-    my @fields = @{$args{edit_columns}};
+    my $column_transforms = $args{column_transforms};
+    my %transforms = (
+        # For edit_columns, we need a transform which simply returns
+        # the provided input value.
+        map { $_ => sub { return $_[0]; } } (@{$args{edit_columns}}),
+        # For column_transforms, we may either receive a code reference
+        # which we'll execute with the provided input value as its argument
+        # or we have a something else, in which case we generate a coderef
+        # which returns that something else on each invocation.
+        map { $_ => (ref $column_transforms->{$_} eq 'CODE')
+                   ? $column_transforms->{$_}
+               : sub { return $column_transforms->{$_} } }
+           (keys %$column_transforms )
+    );
+
+    my @fields = keys %transforms;
     my $set_fields = join(', ',
                           map { $dbh->quote_identifier($_) . ' = ?' }
                           @fields);
@@ -712,8 +764,9 @@ sub save_grid {
         # provided replacement data for it. That way, the unsafe channel
         # can't be used to overwrite good data.
 
-        $sth->execute((map { $ui_rows{$row->{__pk}}->{$_} } @fields),
-                      (map { $row->{$_} } @$pk ))
+        $sth->execute(
+            (map { $transforms{$_}->($ui_rows{$row->{__pk}}->{$_}) } @fields),
+            (map { $row->{$_} } @$pk ))
             or die $sth->errstr;
     }
 }
@@ -728,6 +781,10 @@ sub save_grid {
 #
 #############################
 
+# Convert a (potentially complex) primary key to a single scalar
+# by encoding the pieces as base64 (and undefined to the reserved
+# value '[n]' (which doesn't map to any base64 value because '['
+# and ']' aren't in the base64 character set)
 sub _encode_pk {
     my ($row, $pk_fields) = @_;
 
@@ -735,6 +792,8 @@ sub _encode_pk {
                 map { $row->{$_} if exists $row->{$_}; } @$pk_fields);
 }
 
+# Convert an encoded single scalar primary key to a decoded
+# (potentially complex) primary key
 sub _decode_pk {
     my ($pk_value, $pk_fields) = @_;
 

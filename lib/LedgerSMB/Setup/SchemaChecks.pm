@@ -164,8 +164,13 @@ sub _format_grid {
         elsif ($cols->{$dropdown}->{type} eq 'input_text') {
             $cols->{$dropdown}->{type} = 'select';
             $cols->{$dropdown}->{default_blank} = 1;
-            $cols->{$dropdown}->{options} =
-                [ map { { value => $_, text => $map->{$_} } } keys %$map ];
+            if (ref $map eq 'CODE') {
+                $cols->{$dropdown}->{options} = $map;
+            }
+            else {
+                $cols->{$dropdown}->{options} =
+                    [ map { { value => $_, text => $map->{$_} } } keys %$map ];
+            }
         }
         else {
             # FAIL!
