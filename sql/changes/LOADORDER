@@ -84,3 +84,4 @@
 1.7/drop-menu-add-accounts.sql
 1.7/drop-max_ac_id.sql
 1.7/limit_summary_account_links.sql
+1.7/rename-menu-option-gl-search.sql
