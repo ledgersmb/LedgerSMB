@@ -37,6 +37,20 @@ values (-1001, '-1000000001', 'Test cases only', 'A', (select id from account_he
 INSERT INTO account(id, accno, description, category, heading, contra)
 values (-1002, '-1000000002', 'Test cases only', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
+select account_heading_save(NULL, '00000000000000000000E', 'TEST', NULL);
+select account_heading_save(NULL, '00000000000000000000I', 'TEST', NULL);
+select account_heading_save(NULL, '00000000000000000000Q', 'TEST', NULL);
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-1003, '-1000000003', 'Test cases only (E)', 'E', (select id from account_heading WHERE accno  = '00000000000000000000E'), false);
+
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-1004, '-1000000004', 'Test cases only (I)', 'I', (select id from account_heading WHERE accno  = '00000000000000000000I'), false);
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-1005, '-1000000005', 'Test cases only (Q)', 'Q', (select id from account_heading WHERE accno  = '00000000000000000000Q'), false);
+
 CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as
 $$
 SELECT id FROM account WHERE accno = $1;

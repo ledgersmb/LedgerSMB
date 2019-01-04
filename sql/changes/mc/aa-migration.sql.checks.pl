@@ -18,7 +18,6 @@ which are marked as foreign currency transactions, yet they lack
 a currency code.
 
 Please add a foreign currency code to each transaction.
-
 |,
     tables => {
         ar => {
@@ -47,7 +46,10 @@ Please add a foreign currency code to each transaction.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'save') {
-            save_grid $dbh, $rows, name => 'ar';
+            save_grid $dbh, $rows, name => 'ar',
+                column_transforms => {
+                    amount => 0.00,
+            };
         }
         else {
           die "Unexpected confirmation value found: $confirm";
@@ -70,7 +72,6 @@ which are marked as foreign currency transactions, yet they lack
 a currency code.
 
 Please add a foreign currency code to each transaction.
-
 |,
     tables => {
         ap => {
@@ -99,7 +100,10 @@ Please add a foreign currency code to each transaction.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'save') {
-            save_grid $dbh, $rows, name => 'ap';
+            save_grid $dbh, $rows, name => 'ap',
+                column_transforms => {
+                    amount => 0.00,
+            };
         }
         else {
           die "Unexpected confirmation value found: $confirm";

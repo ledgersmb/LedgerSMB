@@ -30,9 +30,9 @@
                  [
                   {
                       statement => q{UPDATE "ar"
-                      SET "curr" = ?
+                      SET "amount" = ?, "curr" = ?
                     WHERE "id" = ?},
-                      bound_params => [ 'EUR', 11 ],
+                      bound_params => [ 0, 'EUR', 11 ],
                       results => [],
                   },
                  ],
@@ -78,9 +78,9 @@
                  [
                   {
                       statement => q{UPDATE "ap"
-                      SET "curr" = ?
+                      SET "amount" = ?, "curr" = ?
                     WHERE "id" = ?},
-                      bound_params => [ 'EUR', 11 ],
+                      bound_params => [ 0, 'EUR', 11 ],
                       results => [],
                   },
                  ],
