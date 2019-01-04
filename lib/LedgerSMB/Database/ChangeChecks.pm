@@ -733,18 +733,17 @@ sub save_grid {
     my %transforms = (
         # For edit_columns, we need a transform which simply returns
         # the provided input value.
-        map { $_ => sub { return $_[0]; } } (@{$args{edit_columns}}),
+        (map { $_ => sub { return $_[0]; } } @{$args{edit_columns}}),
         # For column_transforms, we may either receive a code reference
         # which we'll execute with the provided input value as its argument
         # or we have a something else, in which case we generate a coderef
         # which returns that something else on each invocation.
-        map { $_ => (ref $column_transforms->{$_} eq 'CODE')
-                   ? $column_transforms->{$_}
-               : sub { return $column_transforms->{$_} } }
-           (keys %$column_transforms )
-    );
-
-    my @fields = keys %transforms;
+        (map { $_ => ((ref $column_transforms->{$_} eq 'CODE')
+                     ? $column_transforms->{$_}
+                     : sub { return $column_transforms->{$_} }) }
+           keys %{$column_transforms} )
+        );
+    my @fields = sort keys %transforms;
     my $set_fields = join(', ',
                           map { $dbh->quote_identifier($_) . ' = ?' }
                           @fields);
