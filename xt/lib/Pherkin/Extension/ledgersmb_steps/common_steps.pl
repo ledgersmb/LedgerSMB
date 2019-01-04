@@ -367,12 +367,14 @@ Given qr/^Custom Flags with these properties:$/, sub {
     my $dbh = S->{ext_lsmb}->admin_dbh;
     my $q = $dbh->prepare("
         INSERT INTO account_link_description (description, summary, custom)
-        VALUES (?, FALSE, TRUE)
+        VALUES (?, ?, TRUE)
     ");
 
     foreach my $row (@{C->data}) {
+        my $is_summary = (lc $row->{Summary} eq 'yes' ? 1 : 0);
         $q->execute(
             $row->{Description},
+            $is_summary,
         ) or die "failed to insert account_link_description (Custom Flag) with description $row->{Description}";
     }
 };
