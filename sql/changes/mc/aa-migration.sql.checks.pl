@@ -112,4 +112,94 @@ Please add a foreign currency code to each transaction.
 ;
 
 
+check q|Assert all required AP exchange rates are available|,
+    query => q|SELECT * FROM exchangerate e
+                WHERE coalesce(sell,0) = 0
+                  AND EXISTS (select 1 from ap
+                               where ap.transdate = e.transdate
+                                 and ap.curr = e.curr)|,
+    description => q|
+The migration checks found that some exchange rates are missing or
+0 (zero). These rates are required for correct migration AP items.
+
+Please provide the correct rates in the table below. If you don't know
+the correct rates for your situation, [the historical rates provided by
+grandtrunk.net](http://currencies.apps.grandtrunk.net/) may prove
+useful.
+|,
+    tables => {
+        exchangerate => {
+            prim_key => [ qw/ curr transdate / ],
+        },
+    },
+    on_failure => sub {
+        my ($dbh, $rows) = @_;
+
+        describe;
+        grid $rows,
+            name => 'exchangerate',
+            columns => [ qw| curr transdate buy sell | ],
+            edit_columns => [ 'sell' ];
+
+        confirm save => 'Save';
+    },
+    on_submit => sub {
+        my ($dbh, $rows) = @_;
+        my $confirm = provided 'confirm';
+
+        if ($confirm eq 'save') {
+            save_grid $dbh, $rows, name => 'exchangerate';
+        }
+        else {
+          die "Unexpected confirmation value found: $confirm";
+        }
+};
+
+
+check q|Assert all required AR exchange rates are available|,
+    query => q|SELECT * FROM exchangerate e
+                WHERE coalesce(buy,0) = 0
+                  AND EXISTS (select 1 from ar
+                               where ar.transdate = e.transdate
+                                 and ar.curr = e.curr)|,
+    description => q|
+The migration checks found that some exchange rates are missing or
+zero. These rates are required for correct migration of the AR items.
+
+Please provide the correct rates in the table below. If you don't know
+the correct rates for your situation, [the historical rates provided by
+grandtrunk.net](http://currencies.apps.grandtrunk.net/) may prove
+useful.
+|,
+    tables => {
+        exchangerate => {
+            prim_key => [ qw/ curr transdate / ],
+        },
+    },
+    on_failure => sub {
+        my ($dbh, $rows) = @_;
+
+        describe;
+        grid $rows,
+            name => 'exchangerate',
+            columns => [ qw| curr transdate buy sell | ],
+            edit_columns => [ 'buy' ];
+
+        confirm save => 'Save';
+    },
+    on_submit => sub {
+        my ($dbh, $rows) = @_;
+        my $confirm = provided 'confirm';
+
+        if ($confirm eq 'save') {
+            save_grid $dbh, $rows, name => 'exchangerate';
+        }
+        else {
+          die "Unexpected confirmation value found: $confirm";
+        }
+};
+
+
+
+
 1;
