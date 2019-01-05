@@ -399,8 +399,8 @@ sub save {
     if ($did_insert) {
         $query = qq|
             UPDATE oe SET
-                amount = ?,
-                netamount = ?,
+                amount_tc = ?,
+                netamount_tc = ?,
                 taxincluded = ?
             WHERE id = ?|;
         @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} );
@@ -413,8 +413,8 @@ sub save {
                 ordnumber = ?,
                 quonumber = ?,
                 transdate = ?,
-                amount = ?,
-                netamount = ?,
+                amount_tc = ?,
+                netamount_tc = ?,
                 reqdate = ?,
                 taxincluded = ?,
                 shippingpoint = ?,
@@ -588,7 +588,7 @@ sub retrieve {
                 pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
                 o.person_id AS employee_id,
                 o.entity_credit_account, vc.name as legal_name,
-                o.amount AS invtotal, o.closed, o.reqdate,
+                o.amount_tc AS invtotal, o.closed, o.reqdate,
                 o.quonumber, o.language_code,
                 o.ponumber, cr.entity_class,
                 ns.location_id as locationid
