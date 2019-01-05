@@ -1705,6 +1705,7 @@ sub ship_receive {
 }
 
 sub display_ship_receive {
+    &order_links;
      $form->generate_selects(\%myconfig);
 
     $vclabel = ucfirst $form->{vc};
