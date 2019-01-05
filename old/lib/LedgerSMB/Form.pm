@@ -2266,6 +2266,7 @@ sub create_links {
         # get amounts from individual entries
         $query = qq|
          SELECT c.accno, c.description, a.source, a.amount_tc as amount,
+                (a.amount_bc/a.amount_tc)::numeric as exchangerate,
                 a.memo,a.entry_id, a.transdate, a.cleared,
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
@@ -2275,7 +2276,7 @@ sub create_links {
             WHERE a.trans_id = ?
 --          AND a.fx_transaction = '0'
                         GROUP BY c.accno, c.description, a.source, a.amount_tc,
-                                a.memo,a.entry_id, a.transdate, a.cleared
+                           a.amount_bc, a.memo,a.entry_id, a.transdate, a.cleared
             ORDER BY transdate|;
 
         $sth = $dbh->prepare($query);
@@ -2290,11 +2291,6 @@ sub create_links {
             for my $aref (@{$ref->{bu_lines}}){
                 $ref->{"b_unit_$aref->[0]"} = $aref->[1];
             }
-            $ref->{exchangerate} = $self->get_exchangerate(
-                $self->{currency},
-                $ref->{transdate},
-                $fld
-            );
 
             if ($self->{reverse}){
                 $ref->{amount} *= -1;
