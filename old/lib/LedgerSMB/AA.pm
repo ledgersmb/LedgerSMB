@@ -373,8 +373,6 @@ sub post_transaction {
    $sth = $dbh->prepare($query) or $form->dberror($query);
    $sth->execute(@queryargs) or $form->dberror($query);
    ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
-   my @queries = $form->run_custom_queries( $table, 'INSERT' );
-
 
     if (defined $form->{approved}) {
         if (!$form->{approved} && $form->{batch_id}){
