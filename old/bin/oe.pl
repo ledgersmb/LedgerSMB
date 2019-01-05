@@ -955,6 +955,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 sub update {
     $form->{nextsub} = 'update';
 
+    &order_links;
     $form->get_regular_metadata(
         \%myconfig,
         $form->{vc},
