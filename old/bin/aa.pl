@@ -713,7 +713,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
               ? $form->format_amount(\%myconfig, $form->{"amount_$i"}
                                                   * $form->{exchangerate},2)
               : '')  . qq|</td>
-     <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
+     <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
       $description
           $taxformcheck
       $project|;
@@ -1164,7 +1164,7 @@ sub update {
     my $display = shift;
     $form->open_form() unless $form->check_form();
     $is_update = 1;
-
+    &create_links;
         $form->{invtotal} = 0;
 
         $form->{exchangerate} =
