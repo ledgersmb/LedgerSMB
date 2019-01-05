@@ -65,6 +65,28 @@ sub _get_custom_account_links {
 }
 
 
+# _get_summary_account_links()
+#
+# Extracts all account_link_description records marked as 'summary',
+# including those marked as 'custom' from the database.
+#
+# Sets the `summary_link_descriptions` object property to be an arrayref
+# containing a hash for each resulting row.
+
+sub _get_summary_account_links {
+    my $self = shift;
+    my @descriptions = $self->call_dbmethod(
+        funcname => 'get_link_descriptions',
+        args => {
+            custom => undef,
+            summary => 1,
+        },
+    );
+    $self->{summary_link_descriptions} = \@descriptions;
+    return;
+}
+
+
 =over
 
 =item save()
@@ -179,6 +201,7 @@ The following object properties are set:
   * link
   * translations
   * custom_link_descriptions
+  * summary_link_descriptions
 
 =cut
 
@@ -202,6 +225,7 @@ sub get {
     $self->merge($account);
     $self->_get_translations;
     $self->_get_custom_account_links;
+    $self->_get_summary_account_links;
 
     return $self;
 }
@@ -284,17 +308,17 @@ sub gifi_list {
 
 =item generate_links()
 
-A mostly-private method for generating and checking whether link data is valid.
+Returns an arrayref containing account_link descriptions corresponding with
+those present and true in the request parameters.
 
-This is usually done (automatically) in preparation for saving the information
-to the database.
+The LedgerSMB UI does not allow an account to be a 'summary' for more than one
+descriptor. This is implied by the user interface and enforced at the database
+level.
 
 =cut
 
 sub generate_links {
-    my $self= shift @_;
-    my $is_summary = 0;
-    my $is_custom = 0;
+    my $self = shift;
     my @links;
     my @descriptions = $self->call_dbmethod(
         funcname => 'get_link_descriptions',
@@ -307,11 +331,6 @@ sub generate_links {
     foreach my $d (@descriptions) {
        my $l = $d->{description};
        if ($self->{$l}) {
-           $is_summary++ if ($d->{summary} == 1);
-           $is_custom++ if ($d->{custom} == 1);
-           if ($is_summary > 1 || ($is_summary == 1 && $is_custom >=1 )) {
-                die "Too many links on summary account.";
-           }
            push (@links, $l);
         }
      }

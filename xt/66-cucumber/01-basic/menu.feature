@@ -93,7 +93,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | General Journal > Import                   |                          |
 #   | General Journal > Import Chart             |                          |
 #   | General Journal > Journal Entry            |                          |
-    | General Journal > Search and GL            | GL search                |
+    | General Journal > Search                   | GL search                |
     | Goods and Services > Add Assembly          | assembly entry           |
 #   | Goods and Services > Add Group             |                          |
     | Goods and Services > Add Overhead          | overhead entry           |
