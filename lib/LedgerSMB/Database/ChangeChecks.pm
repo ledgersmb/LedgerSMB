@@ -232,6 +232,10 @@ sub _run_check {
 
         $check->{grids} = { map { $_->{name} => $_ } @grids };
         $check->{on_submit}->($dbh, \@rows);
+        if (! $dbh->{AutoCommit}) {
+            $dbh->commit
+                or die 'Unable to commit ChangeCheck data updates: ' . $dbh->errstr;
+        }
 
         @rows =
             $dbh->selectall_array(
