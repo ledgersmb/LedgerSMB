@@ -477,6 +477,13 @@ BEGIN
         SELECT * INTO t_defaultcurr
           FROM defaults_get_defaultcurrency();
 
+
+        IF in_account_class = 1 THEN
+            t_cash_sign := 1;
+        ELSE
+            t_cash_sign := -1;
+        END IF;
+
         IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
                 t_exchangerate := 1;
         END IF;
@@ -578,11 +585,6 @@ BEGIN
         select id into t_ar_ap_id from account where accno = in_ar_ap_accno;
         select id into t_cash_id from account where accno = in_cash_accno;
 
-        IF in_account_class = 1 THEN
-            t_cash_sign := 1;
-        ELSE
-            t_cash_sign := -1;
-        END IF;
 
 
 -- Given an open item, created on an earlier date, at an FX rate of '2',
@@ -653,7 +655,7 @@ BEGIN
              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
               voucher_id, transdate, source)
            SELECT id, gain_loss_accno,
-                  (amount_tc + amount_bc) * t_cash_sign *
+                  amount_tc * t_cash_sign *
                      (t_exchangerate - fxrate),
                   in_currency, 0,
                   CASE WHEN t_voucher_id IS NULL THEN true
