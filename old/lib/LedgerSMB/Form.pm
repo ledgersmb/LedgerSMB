@@ -2269,7 +2269,7 @@ sub create_links {
         # get amounts from individual entries
         $query = qq|
          SELECT c.accno, c.description, a.source, a.amount_tc as amount,
-                (a.amount_bc/a.amount_tc)::numeric as exchangerate,
+                case when a.amount_tc = 0 then 0 else (a.amount_bc/a.amount_tc)::numeric end as exchangerate,
                 a.memo,a.entry_id, a.transdate, a.cleared,
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
