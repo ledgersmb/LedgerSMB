@@ -136,10 +136,10 @@ BEGIN
   UPDATE cr_report_line crl
      SET ledger_id = (select assoc from lines_to_delete ltd
                        where crl.ledger_id = ltd.id)
-   WHERE EXISTS (select 1 from cr_report_line cl
-                   join lines_to_delete ltd on ltd.id = cl.ledger_id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = crl.ledger_id)
          AND NOT EXISTS (select 1 from cr_report_line cl
-                           join lines_to_delete ltd on cl.ledger_id = ltd.assoc);
+                           join lines_to_delete ltd on cl.ledger_id = ltd.assoc
+                          where ltd.id = crl.ledger_id);
   DELETE FROM cr_report_line crl
    WHERE EXISTS (select 1 from lines_to_delete ltd
                   where ltd.id = crl.ledger_id);
@@ -149,10 +149,10 @@ BEGIN
   UPDATE ac_tax_form atf
      SET entry_id = (select assoc from lines_to_delete ltd
                       where atf.entry_id = ltd.id)
-   WHERE EXISTS (select 1 from ac_tax_form tf
-                   join lines_to_delete ltd on ltd.id = tf.entry_id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = atf.entry_id)
          AND NOT EXISTS (select 1 from ac_tax_form tf
-                           join lines_to_delete ltd on tf.entry_id = ltd.assoc);
+                           join lines_to_delete ltd on tf.entry_id = ltd.assoc
+                          where ltd.id = atf.entry_id);
   DELETE FROM ac_tax_form atf
    WHERE EXISTS (select 1 from lines_to_delete ltd
                   where ltd.id = atf.entry_id);
@@ -163,10 +163,10 @@ BEGIN
   UPDATE business_unit_ac bua
      SET entry_id = (select assoc from lines_to_delete ltd
                       where bua.entry_id = ltd.id)
-   WHERE EXISTS (select 1 from business_unit_ac ua
-                   join lines_to_delete ltd on ltd.id = ua.entry_id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = bua.entry_id)
          AND NOT EXISTS (select 1 from business_unit_ac ua
-                           join lines_to_delete ltd on ua.entry_id = ltd.assoc);
+                           join lines_to_delete ltd on ua.entry_id = ltd.assoc
+                          where bua.entry_id = ltd.id);
   DELETE FROM business_unit_ac bua
    WHERE EXISTS (select 1 from lines_to_delete ltd
                   where ltd.id = bua.entry_id);
@@ -177,10 +177,10 @@ BEGIN
   UPDATE payment_links pal
      SET entry_id = (select assoc from lines_to_delete ltd
                       where pal.entry_id = ltd.id)
-   WHERE EXISTS (select 1 from payment_links pl
-                   join lines_to_delete ltd on ltd.id = pl.entry_id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = pal.entry_id)
          AND NOT EXISTS (select 1 from payment_links pl
-                           join lines_to_delete ltd on pl.entry_id = ltd.assoc);
+                           join lines_to_delete ltd on pl.entry_id = ltd.assoc
+                          where pal.entry_id = ltd.id);
   DELETE FROM payment_links pal
    WHERE EXISTS (select 1 from lines_to_delete ltd
                   where ltd.id = pal.entry_id);
@@ -191,10 +191,10 @@ BEGIN
   UPDATE tax_extended tae
      SET entry_id = (select assoc from lines_to_delete ltd
                       where tae.entry_id = ltd.id)
-   WHERE EXISTS (select 1 from tax_extended te
-                   join lines_to_delete ltd on ltd.id = te.entry_id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = tae.entry_id)
          AND NOT EXISTS (select 1 from tax_extended te
-                           join lines_to_delete ltd on te.entry_id = ltd.assoc);
+                           join lines_to_delete ltd on te.entry_id = ltd.assoc
+                          where tae.entry_id = ltd.id);
   DELETE FROM tax_extended tae
    WHERE EXISTS (select 1 from lines_to_delete ltd
                   where ltd.id = tae.entry_id);
@@ -206,15 +206,10 @@ BEGIN
   -- no cr_report lines need to be removed
   UPDATE cr_report crr
      SET max_ac_id = (select assoc from lines_to_delete ltd
-                      where crr.max_ac_id = ltd.id)
-   WHERE EXISTS (select 1 from cr_report cr
-                   join lines_to_delete ltd on ltd.id = cr.max_ac_id);
+                       where crr.max_ac_id = ltd.id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = crr.max_ac_id);
 
 
-
-  DELETE FROM payment_links
-   WHERE EXISTS (SELECT 1 FROM lines_to_delete
-                  WHERE lines_to_delete.id = payment_links.entry_id);
 
   DELETE FROM acc_trans
    WHERE EXISTS (SELECT 1 FROM lines_to_delete
