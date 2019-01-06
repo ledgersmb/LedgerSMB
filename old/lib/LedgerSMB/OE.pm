@@ -718,7 +718,8 @@ sub retrieve {
             # multiply by exchangerate
             $ref->{sellprice} =
               $form->round_amount(
-                $ref->{sellprice} * $form->{ $form->{currency} },
+                $ref->{sellprice} *
+                  ( $form->{ $form->{currency} } // 1),
                 $decimalplaces );
 
             for (qw(listprice lastcost)) {
