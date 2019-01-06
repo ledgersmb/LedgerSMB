@@ -673,7 +673,7 @@ sub retrieve {
           || $form->dberror($query);
 
         # foreign exchange rates
-        &exchangerate_defaults( $dbh, $form );
+        &exchangerate_defaults;
 
         # query for price matrix
         my $pmh = PriceMatrix::price_matrix_query( $dbh, $form );
@@ -754,54 +754,7 @@ sub retrieve {
 }
 
 sub exchangerate_defaults {
-    my ( $dbh2, $form ) = @_;
-    $dbh = $form->{dbh};
-    my $var;
-    my $buysell = ( $form->{vc} eq "customer" ) ? "buy" : "sell";
-
-    # get default currencies
-    my $query = qq|
-      SELECT substr(value,1,3) FROM defaults
-         WHERE setting_key = 'curr'|;
-    ( $form->{defaultcurrency} ) =
-      $dbh->selectrow_array($query);
-    @{$form->{currencies}} =
-        (LedgerSMB::Setting->new({base => $form}))->get_currencies;
-
-    $query = qq|
-        SELECT $buysell
-        FROM exchangerate
-        WHERE curr = ?
-        AND transdate = ?|;
-    my $eth1 = $dbh->prepare($query) || $form->dberror($query);
-    $query = qq~
-        SELECT max(transdate || ' ' || $buysell || ' ' || curr)
-        FROM exchangerate
-        WHERE curr = ?~;
-    my $eth2 = $dbh->prepare($query) || $form->dberror($query);
-
-    # get exchange rates for transdate or max
-    foreach my $var ( grep {! $_ eq $form->{defaultcurrency} }
-                      @{$form->{currencies}} ) {
-        $eth1->execute( $var, $form->{transdate} );
-        my @exchangelist;
-        @exchangelist = $eth1->fetchrow_array;
-        $form->db_parse_numeric(sth=>$eth1, arrayref=>\@exchangelist);
-        $form->{$var} = shift @array;
-        if ( !$form->{$var} ) {
-            $eth2->execute($var);
-            @exchangelist = $eth2->fetchrow_array;
-            $form->db_parse_numeric(sth=>$eth2, arrayref=>\@exchangelist);
-
-            ( $form->{$var} ) = @exchangelist;
-            ( $null, $form->{$var} ) = split / /, $form->{$var};
-            $form->{$var} = 1 unless $form->{$var};
-            $eth2->finish;
-        }
-        $eth1->finish;
-    }
-
-    $form->{ $form->{currency} } = $form->{exchangerate}
+    $form->{ $form->{currency} } = ($form->{exchangerate} // 0)
       if $form->{exchangerate};
     $form->{ $form->{currency} } ||= 1;
     $form->{ $form->{defaultcurrency} } = 1;
@@ -2015,7 +1968,7 @@ sub get_soparts {
     ( $form->{transdate} ) = $dbh->selectrow_array($query);
 
     # foreign exchange rates
-    &exchangerate_defaults( $dbh, $form );
+    &exchangerate_defaults;
 
 }
 
@@ -2115,7 +2068,7 @@ sub generate_orders {
     my $dbh = $form->{dbh};
 
     # foreign exchange rates
-    &exchangerate_defaults( $dbh, $form );
+    &exchangerate_defaults;
 
     my $amount;
     my $netamount;
