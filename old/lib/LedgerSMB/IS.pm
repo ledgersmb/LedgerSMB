@@ -1315,6 +1315,7 @@ sub retrieve_invoice {
         $query = qq|
                SELECT a.invnumber, a.ordnumber, a.quonumber,
                       a.transdate,
+                      case when a.amount_tc = 0 then 1 else a.amount_bc/a.amount_tc end as exchangerate,
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
@@ -1334,6 +1335,7 @@ sub retrieve_invoice {
         $form->db_parse_numeric(sth=> $sth, hashref=>$ref_);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
+        $form->{ $form->{currency} } = $form->{exchangerate};
 
         my $tax_sth = $dbh->prepare(
                   qq| SELECT amount_bc as amount, source, memo, tax_basis,
