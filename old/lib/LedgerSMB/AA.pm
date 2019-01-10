@@ -723,28 +723,17 @@ sub get_name {
         # acc_trans.approved is only false in the case of batch payments which
         # have not yet been approved.  Unapproved transactions set approved on
         # the ar or ap record level.  --CT
-        $query = qq|
-                SELECT sum(used) FROM (
-        SELECT SUM(ac.amount)
-                       * CASE WHEN '$arap' = 'ar' THEN -1 ELSE 1 END as used
-          FROM $arap a
-                  JOIN acc_trans ac ON a.id = ac.trans_id and ac.approved
-                  JOIN account_link al ON al.account_id = ac.chart_id
-                                       AND al.description IN ('AR', 'AP')
-         WHERE entity_credit_account = ?
-                 UNION
-                SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
-                  FROM oe o
-             LEFT JOIN exchangerate e ON o.transdate = e.transdate
-                                      AND o.curr = e.curr
-                 WHERE not closed and oe_class_id in (1, 2)
-                       and entity_credit_account = ?) s|;
+
+        $query = q|SELECT credit_limit__used(?)|;
 
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{"$form->{vc}_id"}, $form->{"$form->{vc}_id"})
+        $sth->execute( $form->{"$form->{vc}_id"})
            || $form->dberror($query);
         my ($credit_rem) = $sth->fetchrow_array;
-        ( $form->{creditremaining} ) -= LedgerSMB::PGNumber->new($credit_rem);
+        $credit_rem = LedgerSMB::PGNumber->new($credit_rem // 0);
+        $form->{creditremaining} =
+            ($credit_rem && $credit_rem->is_nan) ? 'Currency rate missing'
+            : ($form->{creditremaining} - $credit_rem);
 
         $sth->finish;
     }

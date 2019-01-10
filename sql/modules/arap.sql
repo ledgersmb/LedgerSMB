@@ -138,6 +138,63 @@ $$
      GROUP BY entity_name, meta_number, entity_id, currency;
 $$ language sql;
 
+
+
+CREATE OR REPLACE FUNCTION credit_limit__used(in_eca int)
+RETURNS numeric AS
+$$
+
+  SELECT sum(total.used)     /
+         CASE WHEN (SELECT curr
+                     FROM entity_credit_account
+                    WHERE id = in_eca) =
+                   (SELECT value
+                      FROM defaults
+                     WHERE setting_key = 'curr') THEN
+             (SELECT coalesce(rate, 'NaN'::numeric) AS rate
+                FROM exchangerate_default
+               WHERE rate_type = 1
+                 AND current_date BETWEEN valid_from AND valid_to
+                 AND curr = (SELECT curr FROM entity_credit_account
+                              WHERE id = in_eca))
+         ELSE 1 END AS used_tc
+   FROM (
+     SELECT sum(ac.amount_bc *
+                CASE WHEN al.description = 'AR' THEN -1 ELSE 1 END) AS used
+       FROM (select id, entity_credit_account from ap union
+             select id, entity_credit_account from ar) a
+       JOIN acc_trans ac ON ac.trans_id = a.id
+       JOIN account_link al ON al.account_id = ac.chart_id
+      WHERE al.description IN ('AR', 'AP')
+        AND ac.approved
+        AND a.entity_credit_account = in_eca
+      UNION ALL
+     SELECT sum(o.amount_tc * coalesce(e.rate, 'NaN'::numeric))
+       FROM oe o
+       LEFT JOIN (SELECT rate, curr
+                    FROM exchangerate_default
+                   WHERE rate_type = 1
+                     AND current_date BETWEEN valid_from AND valid_to ) e
+            ON o.curr = e.curr
+      WHERE o.entity_credit_account = in_eca
+   ) total;
+$$ language sql;
+
+
+COMMENT ON FUNCTION credit_limit__used(int) IS
+$$This function returns the amount outstanding with the entity credit account
+passed as the argument, accounted in the entity_credit_account's indicated
+preferred currency - using the exchange rates for the server's concept
+of "today".
+
+The "amount outstanding" is defined as the total of all unpaid invoice
+amounts and all open (interpreted as unfulfilled) orders.
+
+In case the required exchange rate(s) are missing, the function returns
+'NaN'::numeric. In case there is no outstanding balance, the amount returned
+may be either 0 (zero) or NULL.
+$$;
+
 --tshvr4 first attempt to mimic AA.pm,sub post_transaction in PLPGSQL function begin
 --this is still trial and error
 --see also sql/modules/Invoice.sql
