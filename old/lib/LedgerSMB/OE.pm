@@ -725,7 +725,7 @@ sub retrieve {
             for (qw(listprice lastcost)) {
                 $ref->{$_} =
                   $form->round_amount(
-                    $ref->{$_} / $form->{ $form->{currency} },
+                    $ref->{$_} / ($form->{ $form->{currency} } // 1),
                     $decimalplaces );
             }
 
