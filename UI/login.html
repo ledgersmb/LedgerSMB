@@ -57,7 +57,8 @@
                          label='_none_'
                          title=text('User Name')
                          value = login
-                         accesskey="l" } #' ?>
+                         accesskey="l"
+                         tabindex=1 } #' ?>
                 </div>
                 <div>
                   <?lsmb PROCESS input
@@ -69,7 +70,8 @@
                          label='_none_'
                          title=text('Password')
                          value = ''
-                         accesskey="p" } ?>
+                         accesskey="p"
+                         tabindex=2 } ?>
                 </div>
               </div>
               <?lsmb PROCESS input
@@ -81,7 +83,8 @@
                      label='_none_'
                      title=text('Company')
                      value = company
-                     accesskey="c" } ?>
+                     accesskey="c"
+                     tabindex=3 } ?>
             </div>
           </div>
           <?lsmb PROCESS button
@@ -91,7 +94,8 @@
                  value="login"
                  accesskey="l"
                  id="action-login"
-                 text=text('Login') } ?>
+                 text=text('Login')
+                 tabindex=4 } ?>
           </div>
           </div>
         </div>
