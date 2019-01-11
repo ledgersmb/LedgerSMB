@@ -1969,7 +1969,7 @@ sub get_regular_metadata {
     $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
-    $self->all_business_units( $transdate, $vc );
+    $self->all_business_units( $transdate, $self->{"${vc}_id"} );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
     $self->all_languages();
 }
