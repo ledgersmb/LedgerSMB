@@ -164,7 +164,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -256,7 +256,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -348,7 +348,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -438,7 +438,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -545,7 +545,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="css/setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
