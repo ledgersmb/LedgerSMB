@@ -40,8 +40,11 @@ Released 2018-06-10
 Changelog for 1.6.10
 * Apply correct layout to schema upgrade pages in setup.pl (Erik H)
 * Fix iteration over row data provided in schema data fixes in setup.pl (Erik H)
+* Fix schema upgrade with multiple failing checks looping infinitely (Erik H)
+* Improve wording of correction instructions of schema check failure (Nick P)
 
 Erik H is Erik Huelsmann
+Nick P is Nick Prater
 
 
 Changelog for 1.6.9
