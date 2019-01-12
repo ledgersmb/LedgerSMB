@@ -1337,6 +1337,7 @@ sub post {
     ($name) = split /--/, $form->{ $form->{vc} };
     if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}|
          and $form->{"old$form->{vc}"} ne $name) {
+        $form->info('Data changed on Post; form recalculated. Please re-post.');
         &update;
         $form->finalize_request();
     }
