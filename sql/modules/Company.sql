@@ -167,31 +167,37 @@ LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
     WHERE (e.name ilike '%' || in_name || '%' or in_name is null)
-          and (in_contact_info is null
-               or exists (select 1 from eca_to_contact
-                           where credit_id = eca.id
-                             and contact ilike '%' || in_contact_info || '%'))
---          and (($4 is null and $5 is null and $6 is null and $7 is null)
---               or eca.id in
---                  (select credit_id from eca_to_location
---                    where location_id in
---                          (select id from location
---                            where ($4 is null or line_one ilike '%' || $4 || '%'
---                                   or line_two ilike '%' || $4 || '%')
---                                  and ($5 is null or city
---                                                     ilike '%' || $5 || '%')
---                                  and ($6 is null or state
---                                                    ilike '%' || $6 || '%')
---                                  and ($7 is null or mail_code
---                                                    ilike '%' || $7 || '%')
---                                  and ($10 is null or country_id = $10))
---                   )
---              )
---          and (a.transdate >= $11 or $11 is null)
---          and (a.transdate <= $12 or $12 is null)
---          and (eca.startdate >= $14 or $14 is null)
---          and (eca.startdate <= $15 or $15 is null)
---          and (a.notes @@ plainto_tsquery($9) or $9 is null)
+      and (in_contact_info is null
+           or exists (select 1 from eca_to_contact
+                       where credit_id = eca.id
+                         and contact ilike '%' || in_contact_info || '%'))
+      and ((in_address_line is null
+            and in_city is null
+            and in_state is null
+            and in_zip is null
+            and in_country_id is null)
+           or exists (select 1 from eca_to_location etl
+                       where etl.credit_id = eca.id
+                         and exists (select 1 from location l
+                                      where l.id = etl.location_id
+                                        and (in_address_line is null
+                                             or line_one ilike '%' || in_address_line || '%'
+                                             or line_two ilike '%' || in_address_line || '%')
+                                        and (in_city is null
+                                             or city ilike '%' || in_city || '%')
+                                        and (in_state is null
+                                             or state ilike '%' || in_state || '%')
+                                        and (in_zip is null
+                                             or mail_code ilike '%' || in_zip || '%')
+                                        and (in_country_id is null
+                                             or country_id = in_country_id))
+                     )
+          )
+          and (a.transdate >= in_from_date or in_from_date is null)
+          and (a.transdate <= in_to_date or in_to_date is null)
+          and (eca.startdate >= in_start_from or in_start_from is null)
+          and (eca.startdate <= in_start_to or in_start_to is null)
+          and (a.notes @@ plainto_tsquery(in_notes) or in_notes is null)
  ORDER BY eca.meta_number, p.partnumber;
 $$ LANGUAGE SQL;
 
