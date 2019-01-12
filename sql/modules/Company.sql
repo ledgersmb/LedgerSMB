@@ -141,33 +141,29 @@ $$
             ep.last_name || ', ' || ep.first_name as salesperson_name,
             a.transdate
      FROM (select * from entity_credit_account
-            where meta_number = in_meta_number
-           UNION
-          select * from entity_credit_account WHERE in_meta_number is null
-          ) eca  -- broken into unions for performance
+            where (in_meta_number is null or meta_number = in_meta_number)) eca
      join entity e on eca.entity_id = e.id
      JOIN (
-           SELECT * FROM arap
+           SELECT a.*, i.parts_id, i.qty, i.description, i.unit,
+                  i.discount, i.deliverydate, i.serialnumber, i.sellprice
+             FROM arap a
+             JOIN invoice i ON a.id = i.trans_id
            union
-           select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-             from oe
+           select o.ordnumber, o.curr, o.transdate, o.entity_credit_account,
+                  o.id, o.person_id, o.notes, oi.parts_id, oi.qty,
+                  oi.description, oi.unit, oi.discount, oi.reqdate,
+                  oi.serialnumber, oi.sellprice
+             from oe o
+             join orderitems oi on o.id = oi.trans_id
             where ((in_type = 'o' and quotation is not true)
                    or (in_type = 'q' and quotation is true))
-              and ((in_entity_class = 1 and oe.oe_class_id IN (2, 4))
-                   or (in_entity_class = 2 and oe.oe_class_id IN (1, 3)))
+              and ((in_entity_class = 1 and o.oe_class_id IN (2, 4))
+                   or (in_entity_class = 2 and o.oe_class_id IN (1, 3)))
               and ((in_inc_open and not closed)
                    or (in_inc_closed and closed))
           ) a ON (a.entity_credit_account = eca.id)
-     JOIN ( select id, trans_id, parts_id, qty, description, unit, discount,
-                   deliverydate, serialnumber, sellprice
-             FROM  invoice where in_type = 'i'
-            union
-            select id, trans_id, parts_id, qty, description, unit, discount,
-                   reqdate, serialnumber, sellprice
-             FROM orderitems where in_type <> 'i'
-          ) i on i.trans_id = a.id
-     JOIN parts p ON (p.id = i.parts_id)
+     JOIN parts p ON (p.id = a.parts_id)
+LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
     -- these filters don't perform as well on large databases
