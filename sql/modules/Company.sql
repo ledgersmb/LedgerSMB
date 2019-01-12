@@ -151,37 +151,14 @@ $$
            union
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
-           from oe
-           where (in_entity_class = 1 and oe.oe_class_id = 2 and in_type = 'o'
-                  and quotation is not true)
-                  and ((in_inc_open and not closed)
-                       or (in_inc_closed and closed))
-           union
-           select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where (in_entity_class = 2 and oe.oe_class_id = 1 and in_type = 'o'
-                  and quotation is not true)
-                  and ((in_inc_open and not closed)
-                       or (in_inc_closed and closed))
-           union
-           select quonumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where(in_entity_class = 1 and oe.oe_class_id = 4 and in_type = 'q'
-                and quotation is true)
-                  and ((in_inc_open and not closed)
-                       or (in_inc_closed and closed))
-           union
-           select quonumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where(in_entity_class = 2 and oe.oe_class_id = 4 and in_type = 'q'
-                 and quotation is true)
-                  and ((in_inc_open and not closed)
-                       or (in_inc_closed and closed))
-          ) a ON (a.entity_credit_account = eca.id) -- broken into unions
-                                                    -- for performance
+             from oe
+            where ((in_type = 'o' and quotation is not true)
+                   or (in_type = 'q' and quotation is true))
+              and ((in_entity_class = 1 and oe.oe_class_id IN (2, 4))
+                   or (in_entity_class = 2 and oe.oe_class_id IN (1, 3)))
+              and ((in_inc_open and not closed)
+                   or (in_inc_closed and closed))
+          ) a ON (a.entity_credit_account = eca.id)
      JOIN ( select id, trans_id, parts_id, qty, description, unit, discount,
                    deliverydate, serialnumber, sellprice
              FROM  invoice where in_type = 'i'
