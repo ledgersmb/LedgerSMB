@@ -1131,7 +1131,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
     $form->{ARAP} = 'AR';
-    &invoice_links;
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
@@ -1338,6 +1337,11 @@ sub update {
             }
         }
     }
+    $form->create_links( module => "AR",
+             myconfig => \%myconfig,
+             vc => "customer",
+             billing => 1,
+             job => 1 );
     $form->generate_selects(\%myconfig);
     $form->{rowcount}--;
     display_form();

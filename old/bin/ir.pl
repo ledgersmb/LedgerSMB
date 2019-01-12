@@ -1019,7 +1019,6 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 
 sub update {
     $form->{ARAP} = 'AP';
-    &invoice_links;
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
@@ -1216,7 +1215,11 @@ sub update {
             }
         }
     }
-    $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
+    $form->create_links( module => "AP",
+             myconfig => \%myconfig,
+             vc => "vendor",
+             billing => 1,
+             job => 1 );
      $form->generate_selects();
      $form->{rowcount}--;
     display_form();

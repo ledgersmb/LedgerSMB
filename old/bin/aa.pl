@@ -1164,7 +1164,6 @@ sub update {
     my $display = shift;
     $form->open_form() unless $form->check_form();
     $is_update = 1;
-    &create_links;
         $form->{invtotal} = 0;
 
         $form->{exchangerate} =
@@ -1260,6 +1259,7 @@ sub update {
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
 
+    &create_links;
     $form->generate_selects(\%myconfig);
     &display_form;
 
