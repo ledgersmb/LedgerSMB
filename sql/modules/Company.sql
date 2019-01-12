@@ -166,11 +166,11 @@ $$
 LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
-    -- these filters don't perform as well on large databases
     WHERE (e.name ilike '%' || in_name || '%' or in_name is null)
-          and (in_contact_info is null or eca.id in
-                 (select credit_id from eca_to_contact
-                   where contact ilike '%' || in_contact_info || '%'))
+          and (in_contact_info is null
+               or exists (select 1 from eca_to_contact
+                           where credit_id = eca.id
+                             and contact ilike '%' || in_contact_info || '%'))
 --          and (($4 is null and $5 is null and $6 is null and $7 is null)
 --               or eca.id in
 --                  (select credit_id from eca_to_location
