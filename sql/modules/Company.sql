@@ -112,10 +112,10 @@ $$
              JOIN acc_trans ON ar.id  = acc_trans.trans_id
              JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AR'
-            where $16 = 2 and $13 = 'i'
+            where in_entity_class = 2 and in_type = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount_bc) = 0)
-                      or ($18 and 0 <> sum(acc_trans.amount_bc)))
+                  having ((in_inc_open and sum(acc_trans.amount_bc) = 0)
+                      or (in_inc_closed and 0 <> sum(acc_trans.amount_bc)))
             UNION ALL
            select invnumber, ap.curr, ap.transdate, entity_credit_account, id,
                   person_id, notes
@@ -123,10 +123,10 @@ $$
              JOIN acc_trans ON ap.id  = acc_trans.trans_id
              JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AP'
-            where $16 = 1 and $13 = 'i'
+            where in_entity_class = 1 and in_type = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount_bc) = 0) or
-                       ($18 and sum(acc_trans.amount_bc) <> 0))
+                  having ((in_inc_open and sum(acc_trans.amount_bc) = 0)
+                      or (in_inc_closed and 0 <> sum(acc_trans.amount_bc)))
      )
      SELECT eca.id, e.name, eca.meta_number,
             a.id as invoice_id, a.invnumber, a.curr::text,
@@ -141,9 +141,9 @@ $$
             ep.last_name || ', ' || ep.first_name as salesperson_name,
             a.transdate
      FROM (select * from entity_credit_account
-            where meta_number = $2
+            where meta_number = in_meta_number
            UNION
-          select * from entity_credit_account WHERE $2 is null
+          select * from entity_credit_account WHERE in_meta_number is null
           ) eca  -- broken into unions for performance
      join entity e on eca.entity_id = e.id
      JOIN (
@@ -152,48 +152,52 @@ $$
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
            from oe
-           where ($16= 1 and oe.oe_class_id = 2 and $13 = 'o'
+           where (in_entity_class = 1 and oe.oe_class_id = 2 and in_type = 'o'
                   and quotation is not true)
-                  and (($17 and not closed) or ($18 and closed))
+                  and ((in_inc_open and not closed)
+                       or (in_inc_closed and closed))
            union
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
            from oe
-           where ($16= 2 and oe.oe_class_id = 1 and $13 = 'o'
+           where (in_entity_class = 2 and oe.oe_class_id = 1 and in_type = 'o'
                   and quotation is not true)
-                  and (($17 and not closed) or ($18 and closed))
+                  and ((in_inc_open and not closed)
+                       or (in_inc_closed and closed))
            union
            select quonumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
            from oe
-           where($16= 1 and oe.oe_class_id = 4 and $13 = 'q'
+           where(in_entity_class = 1 and oe.oe_class_id = 4 and in_type = 'q'
                 and quotation is true)
-                  and (($17 and not closed) or ($18 and closed))
+                  and ((in_inc_open and not closed)
+                       or (in_inc_closed and closed))
            union
            select quonumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
            from oe
-           where($16= 2 and oe.oe_class_id = 4 and $13 = 'q'
+           where(in_entity_class = 2 and oe.oe_class_id = 4 and in_type = 'q'
                  and quotation is true)
-                  and (($17 and not closed) or ($18 and closed))
+                  and ((in_inc_open and not closed)
+                       or (in_inc_closed and closed))
           ) a ON (a.entity_credit_account = eca.id) -- broken into unions
                                                     -- for performance
      JOIN ( select id, trans_id, parts_id, qty, description, unit, discount,
                    deliverydate, serialnumber, sellprice
-             FROM  invoice where $13 = 'i'
+             FROM  invoice where in_type = 'i'
             union
             select id, trans_id, parts_id, qty, description, unit, discount,
                    reqdate, serialnumber, sellprice
-             FROM orderitems where $13 <> 'i'
+             FROM orderitems where in_type <> 'i'
           ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
     -- these filters don't perform as well on large databases
-    WHERE (e.name ilike '%' || $1 || '%' or $1 is null)
-          and ($3 is null or eca.id in
+    WHERE (e.name ilike '%' || in_name || '%' or in_name is null)
+          and (in_contact_info is null or eca.id in
                  (select credit_id from eca_to_contact
-                   where contact ilike '%' || $3 || '%'))
+                   where contact ilike '%' || in_contact_info || '%'))
 --          and (($4 is null and $5 is null and $6 is null and $7 is null)
 --               or eca.id in
 --                  (select credit_id from eca_to_location
