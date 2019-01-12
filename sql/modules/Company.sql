@@ -91,12 +91,15 @@ SELECT * FROM entity_credit_account
  WHERE entity_class = $2 AND meta_number = $1;
 $$ language sql;
 
+
 DROP FUNCTION IF EXISTS eca__history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
  in_start_from date, in_start_to date, in_entity_class int,
  in_inc_open bool, in_inc_closed bool);
+
+
 CREATE OR REPLACE FUNCTION eca__history
 (in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
@@ -166,7 +169,7 @@ $$
 LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
-    WHERE (e.name ilike '%' || in_name || '%' or in_name is null)
+    WHERE (e.name ilike '%' || in_name_part || '%' or in_name_part is null)
       and (in_contact_info is null
            or exists (select 1 from eca_to_contact
                        where credit_id = eca.id
