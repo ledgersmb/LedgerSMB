@@ -210,6 +210,15 @@ BEGIN
    WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.id = crr.max_ac_id);
 
 
+  -- Save some data for migration validation later on
+  DROP TABLE IF EXISTS mc_migration_validation_data.deleted_transaction_lines_counts;
+
+  CREATE TABLE mc_migration_validation_data.deleted_transaction_lines_counts
+  AS
+  SELECT trans_id, count(*) as line_count
+    FROM acc_trans a
+   WHERE EXISTS (select 1 from lines_to_delete ltd where a.entry_id = ltd.id)
+   GROUP BY trans_id;
 
   DELETE FROM acc_trans
    WHERE EXISTS (SELECT 1 FROM lines_to_delete
@@ -244,6 +253,8 @@ BEGIN
          curr = (select curr from gl where gl.id = acc_trans.trans_id)
    WHERE EXISTS (select 1 from gl where acc_trans.trans_id = gl.id)
          AND amount_bc IS NULL;
+
+
 
 END;
 $migrate$;

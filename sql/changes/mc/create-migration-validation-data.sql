@@ -201,3 +201,9 @@ SELECT cp.end_date, tb.*
                 'none', null, null, 't'::boolean, 't'::boolean) tb;
 
 
+
+CREATE TABLE mc_migration_validation_data.payment_link_counts AS
+SELECT trans_id, count(*) as link_count
+  FROM acc_trans a
+  JOIN payment_links pl ON a.entry_id = pl.entry_id
+ GROUP BY trans_id;

@@ -264,3 +264,45 @@ https://ledgersmb.org/content/commercial-support
             $dbh->do(q{INSERT INTO defaults (setting_key, value) VALUES ('accept_mc', 'yes');});
         }
     };
+
+
+check q|Assert that payments links counts are within bounds (per transaction)|,
+    query => q|
+       SELECT new.trans_id,
+              plc.link_count - coalesce(dtlc.line_count, 0) as lower_bound, new.link_count, plc.link_count as upper_bound
+         FROM (select trans_id, count(*) as link_count
+                 from acc_trans a join payment_links pl
+                      on a.entry_id = pl.entry_id
+                group by trans_id) new
+         FULL OUTER JOIN mc_migration_validation_data.payment_link_counts plc
+                    ON plc.trans_id = new.trans_id
+          LEFT JOIN mc_migration_validation_data.deleted_transaction_lines_counts dtlc
+                    ON dtlc.trans_id = new.trans_id
+        WHERE NOT new.link_count BETWEEN plc.link_count - coalesce(dtlc.line_count, 0) AND plc.link_count
+|,
+    description => q|
+One of the checks executed after the migration has completed,
+has detected a problem: the actual count of "payment links"
+falls outside the validation boundaries for one or more records.
+
+The failing data is listed in the table below. To overcome
+this situation, please contact the LedgerSMB project at
+devel@lists.ledgersmb.org or contact a LedgerSMB consultant.
+
+We're sorry, but the migration cannot continue.
+
+|,
+    on_failure => sub {
+        my ($dbh, $rows) = @_;
+
+        describe;
+
+        grid $rows,
+            name => 'failing_lines',
+            columns => [ qw| trans_id lower_bound link_count upper_bound | ];
+
+        confirm cancel => 'Cancel';
+    },
+    on_submit => sub { };
+
+1;
