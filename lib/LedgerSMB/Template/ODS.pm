@@ -740,6 +740,15 @@ sub _format_cleanup_handler {
     return shift @style_stack;
 }
 
+
+# _ods_process($output, $template)
+#
+# If $output is a scalar, it is interpreted as a filename into which
+# the rendered template will be written.
+#
+# If $output is a scalar reference, the rendered template will be written
+# into the referenced scalar and no file will be rendered to disk.
+
 sub _ods_process {
     my ($output, $template) = @_;
     my $workdir = File::Temp->newdir;
@@ -753,9 +762,12 @@ sub _ods_process {
     else {
         $fn = $output;
     }
-    $ods = ooDocument(file => $fn,
-                      create => 'spreadsheet',
-                      work_dir => $workdir );
+
+    odfWorkingDirectory($workdir->dirname);
+    $ods = ooDocument(
+        file => $fn,
+        create => 'spreadsheet',
+    );
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
