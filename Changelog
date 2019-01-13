@@ -7,6 +7,8 @@ Changelog for 1.6.10
 * Fix iteration over row data provided in schema data fixes in setup.pl (Erik H)
 * Fix schema upgrade with multiple failing checks looping infinitely (Erik H)
 * Improve wording of correction instructions of schema check failure (Nick P)
+* Respect tempdir when rendering ODS template (don't use current dir) (Nick P)
+* Add user feedback when invoice needs recalculation before posting (Erik H)
 
 Erik H is Erik Huelsmann
 Nick P is Nick Prater
