@@ -9,6 +9,7 @@ check q|Assert that the migration was succesfull by verifying trial balances|,
     query => q!
 -- creating in pg_temp is similar to "CREATE TEMPORARY"
 -- except that the latter doesn't exist for types
+drop type if exists pg_temp.tb_row cascade;
 create type pg_temp.tb_row AS (
    account_id int,
    account_number text,
