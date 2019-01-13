@@ -72,24 +72,16 @@ BEGIN
           AND prev.chart_id = line.chart_id
           AND prev.transdate = line.transdate
           -- deliberately skipped 'amount'
-          AND ((prev.source is null and line.source is null)
-               OR prev.source = line.source)
-          AND ((prev.cleared is null and line.cleared is null)
-               OR prev.cleared = line.cleared)
+          AND (coalesce(prev.source, '') = coalesce(line.source, ''))
+          AND (prev.cleared is not distinct from line.cleared)
           AND (NOT coalesce(prev.fx_transaction, false)) =
-              coalesce(line.fx_transaction, false)
-          AND ((prev.memo is null and line.memo is null)
-               OR prev.memo = line.memo)
-          AND ((prev.invoice_id is null and line.invoice_id is null)
-               OR prev.invoice_id = line.invoice_id)
-          AND ((prev.approved is null and line.approved is null)
-               OR prev.approved = line.approved)
-          AND ((prev.cleared_on is null and line.cleared_on is null)
-               OR prev.cleared_on = line.cleared_on)
-          AND ((prev.reconciled_on is null and line.reconciled_on is null)
-               OR prev.reconciled_on = line.reconciled_on)
-          AND ((prev.voucher_id is null and line.voucher_id is null)
-               OR prev.voucher_id = line.voucher_id)
+               coalesce(line.fx_transaction, false)
+          AND (coalesce(prev.memo, '') = coalesce(prev.memo, ''))
+          AND (prev.invoice_id is not distinct from line.invoice_id)
+          AND (prev.approved is not distinct from line.approved)
+          AND (prev.cleared_on is not distinct from line.cleared_on)
+          AND (prev.reconciled_on is not distinct from line.reconciled_on)
+          AND (prev.voucher_id is not distinct from line.voucher_id)
           AND (prev.entry_id + 1) = line.entry_id THEN
 
         -- before potentially switching them around (loosing track of
