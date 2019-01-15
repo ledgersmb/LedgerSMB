@@ -84,10 +84,10 @@ $dbh->do(q{INSERT INTO currency (curr, description)
                     ('CAD','CAD'),
                     ('SEK','SEK'),
                     ('GBP','GBP');
-         UPDATE defaults SET value = 'EUR' WHERE setting_key='curr'});
+         INSERT INTO defaults VALUES ('curr', 'EUR'); });
 #ok($setting->set('curr', 'EUR:CAD:SEK:GBP'), 'set currencies');
 my @currencies = $setting->get_currencies;
-is_deeply(\@currencies, [qw( EUR CAD SEK GBP )], 'get currencies ok');
+is_deeply(\@currencies, [qw( EUR CAD GBP SEK )], 'get currencies ok');
 
 # Getting all accounts
 $accounts = $setting->all_accounts;

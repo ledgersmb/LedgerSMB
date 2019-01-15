@@ -51,11 +51,14 @@ $$Retrieves a currency and its description using the currency indicator.$$;
 CREATE OR REPLACE FUNCTION currency__list()
 RETURNS SETOF currency AS
 $$
-   SELECT * FROM currency;
+  select c.* from currency c
+    left join (select value as curr from defaults where setting_key = 'curr') d
+         on c.curr = d.curr
+   order by case when c.curr = d.curr then 1 else 2 end, c.curr;
 $$ language sql;
 
 COMMENT ON FUNCTION currency__list() IS
-$$Returns all currencies.$$;
+$$Returns all currencies, default currency first.$$;
 
 
 --- #######   Rate types
