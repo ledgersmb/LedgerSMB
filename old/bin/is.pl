@@ -924,7 +924,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
     <td>
       <table width=100% id="invoice-payments-table">
     <tr class=listheading>
-      <th colspan=6 class=listheading>| . $locale->text('Payments') . qq|</th>
+      <th colspan=7 class=listheading>| . $locale->text('Payments') . qq|</th>
     </tr>
 |;
 
@@ -932,12 +932,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         @column_index = qw(datepaid source memo paid AR_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate AR_paid);
+        @column_index = qw(datepaid source memo paid exchangerate paidfx AR_paid);
     }
 
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
+    $column_data{paidfx}       = "<th>" . $form->{defaultcurrency} . "</th>";
     $column_data{AR_paid}      = "<th>" . $locale->text('Account') . "</th>";
     $column_data{source}       = "<th>" . $locale->text('Source') . "</th>";
     $column_data{memo}         = "<th>" . $locale->text('Memo') . "</th>";
@@ -965,6 +966,10 @@ s/option value="\Q$form->{"AR_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" 
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
+        $form->{"paidfx_$i"} =
+            $form->format_amount(
+                \%myconfig,
+                $form->{"paid_$i"} * $form->{"exchangerate_$i"}, 2 );
         $form->{"paid_$i"} =
           $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
         $form->{"exchangerate_$i"} =
@@ -989,6 +994,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
         $column_data{paid} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size="11" value="$form->{"paid_$i"}"></td>|;
         $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;
+        $column_data{paidfx} = qq|<td align="center">$form->{"paidfx_$i"}</td>|;
         $column_data{AR_paid} =
 qq|<td align="center"><select data-dojo-type="dijit/form/Select" name="AR_paid_$i" id="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =

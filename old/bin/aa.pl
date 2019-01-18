@@ -814,12 +814,13 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         @column_index = qw(datepaid source memo paid ARAP_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate ARAP_paid);
+        @column_index = qw(datepaid source memo paid exchangerate paidfx ARAP_paid);
     }
 
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
+    $column_data{paidfx}       = "<th>" . $form->{defaultcurrency} . "</th>";
     $column_data{ARAP_paid}    = "<th>" . $locale->text('Account') . "</th>";
     $column_data{source}       = "<th>" . $locale->text('Source') . "</th>";
     $column_data{memo}         = "<th>" . $locale->text('Memo') . "</th>";
@@ -851,6 +852,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
           s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/\1 selected="selected"/;
 
         # format amounts
+        $form->{"paidfx_$i"} = $form->format_amount(
+            \%myconfig,
+            $form->{"paid_$i"} * $form->{"exchangerate_$i"} , 2 );
         $form->{"paid_$i"} =
           $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
         $form->{"exchangerate_$i"} =
@@ -875,6 +879,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id
         $column_data{ARAP_paid} =
 qq|<td align=center><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
+        $column_data{paidfx} = qq|<td align=center>$form->{"paidfx_$i"}</td>|;
         $column_data{datepaid} =
 qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
         $column_data{source} =
