@@ -36,7 +36,7 @@ BEGIN
 
       INSERT INTO exchangerate_default
            (rate_type, curr, valid_from, valid_to, rate)
-      SELECT v_rate_type, curr, transdate, transdate + '23:59:59'::time, buy
+      SELECT v_rate_type, curr, transdate, transdate, buy
         FROM exchangerate;
     END;
   END IF;
@@ -53,7 +53,7 @@ BEGIN
 
       INSERT INTO exchangerate_default
            (rate_type, curr, valid_from, valid_to, rate)
-      SELECT v_rate_type, curr, transdate, transdate + '23:59:59'::time, sell
+      SELECT v_rate_type, curr, transdate, transdate, sell
         FROM exchangerate;
     END;
   END IF;

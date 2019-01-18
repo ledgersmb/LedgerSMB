@@ -32,7 +32,7 @@ CREATE TABLE exchangerate_default (
   rate_type int not null references exchangerate_type(id),
   curr char(3) not null references currency(curr),
   valid_from date not null,
-  valid_to timestamp default 'infinity'::timestamp,
+  valid_to date not null default 'infinity'::date,
   rate numeric,
   PRIMARY KEY (rate_type, curr, valid_from)
 );
