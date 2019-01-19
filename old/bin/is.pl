@@ -755,9 +755,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         if ($form->{manual_tax}){
              $tax .= qq|<tr class="listtop">
                       <td>&nbsp</td>
-                      <th align="center">|.$locale->text('Amount').qq|</th>
+                      <th align="center">|.$locale->text('Amount').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
-                      <th align="center">|.$locale->text('Basis').qq|</th>
+                      <th align="center">|.$locale->text('Basis').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
                     </tr>|;
@@ -818,8 +818,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                 <tr>
                   <th align=right>$form->{"${taccno}_description"}</th>
                   <td align=right>$form->{"${taccno}_total"}</td>
+                  <td>$form->{currency}</td>
                 </tr>|;
             }
+            $tax .= q|<tr><td>&nbsp;</td></tr>|;
         }
         $form->{invsubtotal} =
           $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
@@ -827,11 +829,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         $subtotal = qq|
           <tr>
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-      <td align=right>$form->{invsubtotal}</td>| .
+      <td align=right>$form->{invsubtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
-         ? ("<td align=right>".$form->format_amount( \%myconfig,
+       ? ("<tr><th align=right>&nbsp;</th><td align=right>".$form->format_amount( \%myconfig,
                                          $form->{invsubtotal}
-                                        * $form->{exchangerate}, 2)."</td>")
+                                        * $form->{exchangerate}, 2)."</td><td>$form->{defaultcurrency}</td></tr>")
          : '')
       . qq|</tr>
 |;
@@ -894,22 +896,22 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
       </td>
       <td align=right>
         <table>
+          $subtotal
+              <tr><td>&nbsp;</td></tr>
               <tr><th align="center"
                       colspan="2">|.$locale->text('Calculate Taxes').qq|</th>
+                   <td colspan="3">$manual_tax</td>
               </tr>
               <tr>
-                   <td colspan="3">$manual_tax</td>|.
-    (($form->{currency} ne $form->{defaultcurrency})
-         ? "<tr><th colspan=2></th><th>$form->{defaultcurrency}</th></tr>" : '') . qq|</tr>
-          $subtotal
+                <td>&nbsp;</td>
+              </tr>
           $tax
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
-      <td align=right>$form->{invtotal}</td>| .
+      <td align=right>$form->{invtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
-       ? "<td align=right>$invtotal_bc</td>" : '')
+       ? "<tr><td><!-- total --></td><td align=right>$invtotal_bc</td><td>$form->{defaultcurrency}</td></tr>" : '')
       . qq|
-          </tr>
           $taxincluded
         </table>
       </td>

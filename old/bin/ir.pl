@@ -642,12 +642,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
              $tax .= qq|
                  <tr class="listtop">
                       <td>&nbsp</td>
-                      <th align="center">|.$locale->text('Amount').qq|</th>
+                      <th align="center">|.$locale->text('Amount').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
-                      <th align="center">|.$locale->text('Basis').qq|</th>
+                      <th align="center">|.$locale->text('Basis').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
-                      <td>&nbsp</td>
                     </tr>|;
         }
         foreach my $item (keys %{$form->{taxes}}) {
@@ -714,6 +713,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                 <tr>
               <th align=right>$form->{"${item}_description"}</th>
               <td align=right>$item_total_formatted</td>
+              <td>$form->{currency}</td>
                 </tr>
 |;
             }
@@ -729,12 +729,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $subtotal = qq|
           <tr>
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-      <td align=right>$form->{invsubtotal}</td>| .
+      <td align=right>$form->{invsubtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
-       ? "<td align=right>$invsubtotal_bc</td>" : '')
-      . qq|
-          </tr>
-|;
+       ? "<tr><td><!-- subtotal --></td><td align=right>$invsubtotal_bc</td><td>$form->{defaultcurrency}</td></tr>" : '');
 
     }
 
@@ -785,27 +782,23 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
       <td align=right valign="top">
         $taxincluded <br/>
         <table>
-              <tr><th align="center" colspan="2">|.
-              $locale->text('Calculate Taxes').qq|</th></tr>
-              <tr>
-                   <td colspan=2>$manual_tax</td>
-               </tr>| .
-              (($form->{currency} ne $form->{defaultcurrency})
-               ? "<tr><td colspan=2></td><td align=right>$form->{defaultcurrency}</td></tr>" : '')
-              . qq|</tr>
-
           $subtotal
+              <tr><td>&nbsp;</td></tr>
+              <tr><th align="center" colspan="2">|.
+              $locale->text('Calculate Taxes').qq|</th>
+                   <td colspan=3>$manual_tax</td>
+               </tr>
+               <tr><td>&nbsp;</td></tr>
           $tax
+          <tr><td>&nbsp;</td></tr>
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
-      <td align=right>$form->{invtotal}</td>| .
+      <td align=right>$form->{invtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
-       ? ("<td align=right>" . $form->format_amount( \%myconfig,
+       ? ("<tr><td><!-- total --></td><td align=right>" . $form->format_amount( \%myconfig,
                                                      $form->{invtotal}
                                                      * $form->{exchangerate}, 2)
-          . "</td>") : '') . qq|
-
-          </tr>
+          . "</td><td>$form->{defaultcurrency}</td></tr>") : '') . qq|
         </table>
       </td>
     </tr>
