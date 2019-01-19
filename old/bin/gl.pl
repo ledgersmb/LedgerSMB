@@ -393,7 +393,7 @@ sub display_row {
             $form->{totaldebit}  += $form->{"debit_$i"};
             $form->{totalcredit} += $form->{"credit_$i"};
 
-            for (qw(debit debit_fx credit credix_fx)) {
+            for (qw(debit debit_fx credit credit_fx)) {
                 $form->{"${_}_$i"} = ($form->{"${_}_$i"})
                     ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
                     : "";
