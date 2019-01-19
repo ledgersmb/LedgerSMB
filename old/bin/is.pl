@@ -153,6 +153,7 @@ sub invoice_links {
         ));
     }
     @curr = @{$form->{currencies}};
+    $form->{defaultcurrency} = $curr[0];
 
     for (@curr) { $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n" }
 
@@ -163,10 +164,6 @@ sub invoice_links {
         }
     }
     ###TODO 20151108; end of merge region
-
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
 
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};

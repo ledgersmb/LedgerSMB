@@ -161,11 +161,9 @@ sub invoice_links {
                             ));
     }
     @curr = @{$form->{currencies}};
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
-
-    @curr = split /:/, $form->{currencies};
     $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
+
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
 
     if ( @{ $form->{all_vendor} } ) {
         unless ( $form->{vendor_id} ) {
