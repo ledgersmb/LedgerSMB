@@ -302,7 +302,7 @@
      <?lsmb END ?>
         <tr class="listtotal">
           <th>&nbsp;</th>
-             <th class="listheading">&nbsp;</th>
+             <th>&nbsp;</th>
           <th class="listtotal debitsubtotal" align="right">
                         <?lsmb form.totaldebit ?>
           </th>
@@ -314,6 +314,11 @@
           <th>&nbsp;</th>
           <?lsmb IF form.projectset == 1 ?>
           <th class="listheading">&nbsp;</th>
+          <?lsmb END ?>
+          <?lsmb FOREACH cls IN form.bu_class ?>
+              <?lsmb IF form.b_units.${cls.id} ?>
+          <th>&nbsp;</th>
+               <?lsmb END ?>
           <?lsmb END ?>
         </tr>
 
