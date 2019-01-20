@@ -30,40 +30,40 @@ matrix:
       env:
     - perl: '5.24'
       addons:
-        postgresql: '9.5'
+        postgresql: '9.6'
         apt:
           packages:
-            - nginx postgresql-9.5-pgtap
+            - nginx postgresql-9.6-pgtap
             - texlive-latex-recommended
             - texlive-xetex
       env:
         - DOJO_BUILT=0
     - perl: '5.22'
       addons:
-        postgresql: "9.4"
+        postgresql: "9.6"
         apt:
           packages:
-             - nginx postgresql-9.4-pgtap
+             - nginx postgresql-9.6-pgtap
              - texlive-latex-recommended
              - texlive-xetex
       env:
         - COVERAGE=1
     - perl: '5.20'
       addons:
-        postgresql: "9.4"
+        postgresql: "9.6"
         apt:
           packages:
-            - nginx postgresql-9.4-pgtap
+            - nginx postgresql-9.6-pgtap
             - texlive-latex-recommended
             - texlive-xetex
       env:
         - COA_TESTING=1
     - perl: '5.18'
       addons:
-        postgresql: "9.3"
+        postgresql: "9.6"
         apt:
           packages:
-            - nginx postgresql-9.3-pgtap
+            - nginx postgresql-9.6-pgtap
             - texlive-latex-recommended
             - texlive-xetex
       env:

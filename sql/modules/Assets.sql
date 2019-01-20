@@ -84,7 +84,7 @@ $$
                                       start_depreciation),
                   get_fractional_year(coalesce(max(report_date),
                                                start_depreciation),
-                                      $2),
+                                $2),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
@@ -656,7 +656,7 @@ $$
    SELECT ai.id, ai.tag, ai.description, ai.start_depreciation,
           adm.short_name, ai.usable_life
            - months_passed(ai.start_depreciation,
-                           coalesce(max(r.report_date),
+                                  coalesce(max(r.report_date),
                                     ai.start_depreciation))/ 12,
           ai.purchase_value - ai.salvage_value, ai.salvage_value, max(r.report_date),
           sum(rl.amount), ai.purchase_value - coalesce(sum(rl.amount), 0)
@@ -761,8 +761,10 @@ $$
 GROUP BY asset_report.id, asset_report.report_date;
 
   INSERT
-    INTO acc_trans (chart_id, trans_id, amount, approved, transdate)
+    INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
+                    approved, transdate)
   SELECT a.dep_account_id, currval('id')::int, sum(r.accum_depreciation) * -1,
+         defaults_get_defaultcurrency(), sum(r.accum_depreciation) * -1,
          TRUE, r.disposed_on
     FROM asset_report__get_disposal($1) r
     JOIN asset_item a ON (r.id = a.id)
@@ -770,17 +772,21 @@ GROUP BY a.dep_account_id, r.disposed_on;
 
   -- GAIN is negative since it is a debit
   INSERT
-    INTO acc_trans (chart_id, trans_id, amount, approved, transdate)
+    INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
+                    approved, transdate)
   SELECT case when sum(r.gain_loss) > 0 THEN $3 else $2 end,
-         currval('id')::int, sum(r.gain_loss),
+         currval('id')::int, sum(r.gain_loss), defaults_get_defaultcurrency(),
+         sum(r.gain_loss),
          TRUE, r.disposed_on
     FROM asset_report__get_disposal($1) r
     JOIN asset_item ai ON (r.id = ai.id)
 GROUP BY r.disposed_on;
 
   INSERT
-    INTO acc_trans (chart_id, trans_id, amount, approved, transdate)
+    INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
+                    approved, transdate)
   SELECT a.asset_account_id, currval('id')::int, sum(r.purchase_value),
+         defaults_get_defaultcurrency(), sum(r.purchase_value),
          TRUE, r.disposed_on
     FROM asset_report__get_disposal($1) r
     JOIN asset_item a ON (r.id = a.id)
@@ -1134,8 +1140,12 @@ select 'Asset Report ' || in_id, 'Asset Disposal Report for ' || report_date,
  FROM asset_report where id = in_id;
 
 -- REMOVING ASSETS FROM ACCOUNT (Credit)
-insert into acc_trans (trans_id, chart_id, amount, approved, transdate)
+insert into acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
+                       approved, transdate)
 SELECT currval('id'), a.asset_account_id,
+       a.purchase_value
+       * (coalesce(t_disposed_percent, m.percent_disposed)/100),
+       defaults_get_defaultcurrency(),
        a.purchase_value
        * (coalesce(t_disposed_percent, m.percent_disposed)/100),
        true, r.report_date
@@ -1147,8 +1157,12 @@ SELECT currval('id'), a.asset_account_id,
  WHERE r.id = in_id;
 
 -- REMOVING ACCUM DEP. (Debit)
-INSERT into acc_trans (trans_id, chart_id, amount, approved, transdate)
+INSERT into acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
+                       approved, transdate)
 SELECT currval('id'), a.dep_account_id,
+       sum(dl.amount) * -1
+       * (coalesce(t_disposed_percent, m.percent_disposed)/100),
+       defaults_get_defaultcurrency(),
        sum(dl.amount) * -1
        * (coalesce(t_disposed_percent, m.percent_disposed)/100),
        true, r.report_date
@@ -1165,8 +1179,11 @@ SELECT currval('id'), a.dep_account_id,
 group by a.dep_account_id, m.percent_disposed, r.report_date;
 
 -- INSERT asset/proceeds (Debit, credit for negative values)
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, transdate)
-SELECT currval('id'), in_asset_acct, coalesce(l.amount, 0) * -1, true, r.report_date
+INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
+                       approved, transdate)
+SELECT currval('id'), in_asset_acct, coalesce(l.amount, 0) * -1,
+       defaults_get_defaultcurrency(), coalesce(l.amount, 0) * -1,
+       true, r.report_date
  FROM  asset_item a
  JOIN  asset_report_line l ON (l.asset_id = a.id)
  JOIN  asset_report r ON (r.id = l.report_id)
@@ -1175,11 +1192,13 @@ SELECT currval('id'), in_asset_acct, coalesce(l.amount, 0) * -1, true, r.report_
  WHERE r.id = in_id;
 
 -- INSERT GAIN/LOSS (Credit for gain, debit for loss)
-INSERT INTO acc_trans(trans_id, chart_id, amount, approved, transdate)
+INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc,
+                      approved, transdate)
 select currval('id'),
             CASE WHEN sum(amount) > 0 THEN in_loss_acct
             else in_gain_acct
         END,
+        sum(amount) * -1, defaults_get_defaultcurrency(),
         sum(amount) * -1 , true,
         retval.report_date
   FROM acc_trans

@@ -7,6 +7,16 @@ New functionalities
 * Transaction date now part of purchase history report (Chris T)
 * UI allows addition and removal of custom `account_link` flags (Nick P)
 
+Improved foreign currency support
+* Multiple rates per day per currency; from a single rate (Erik H)
+  - Reversing a transaction from a closed-period on a day with different rate
+  - Bank transfers with different banks on the same day with bank's fx rate
+* Multiple currencies in a single general ledger transaction (Erik H)
+  - Posting an opening balance with all currencies in 1 transaction
+  - Transferring between foreign currencies on e.g. Paypal in 1 transaction
+* Fixed copying of invoice copies fx rate without option to change (Erik H)
+* UI showing foreign and default currency amounts in transactions (Erik H)
+
 Quality Assurance
 * Expanded checks and resolutions for schema changes (Erik H)
 * Testing infrastructure and tests for schema change checks (Erik H)
@@ -15,7 +25,7 @@ Quality Assurance
 * Expanded BDD tests, including payments, batches and approval (Nick P)
 
 Dependency updates
-* Dojo Toolkit (JavaScript UI tools) updated to 1.14.1 (Erik H)
+* Dojo Toolkit (JavaScript UI tools) updated to 1.14.2 (Erik H)
 
 Code cleanup
 * Removed deprecated 'custom table' and 'custom field' tables (Erik H)

@@ -87,8 +87,7 @@ sub start_report {
     @{$request->{all_years}} = $request->call_procedure(
               funcname => 'date_get_all_years'
     );
-    my $curr = $request->setting->get('curr');
-    @{$request->{currencies}} = split /:/, $curr;
+    @{$request->{currencies}} = $request->setting->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};
@@ -111,8 +110,8 @@ sub start_report {
     return $template->render($request,
                              'Reports/filters/' . $request->{report_name},
                              $request);
-    # request not used for script;
-    # forms submit to other URLs than back to here
+                                 # request not used for script;
+                                 # forms submit to other URLs than back to here
 }
 
 =item list_business_types

@@ -499,6 +499,10 @@ html, body {
     padding-bottom: 0;
 }
 
+.no-fx-transaction .fx-row {
+    display: none;
+}
+
 #top_menu .dijitTreeIcon {
     background-image: none;
     width: 0

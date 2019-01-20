@@ -154,6 +154,7 @@ Given qr/a vendor '(.*)'$/, sub {
         _dbh => $admin_dbh,
         ar_ap_account_id => $accno_ids{'2100'},
         meta_number => $vendor_name,
+        curr => 'USD',
         );
     $vendor->save;
 };
@@ -166,8 +167,11 @@ Given qr/an unpaid AP transaction with these values:$/, sub {
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
     my $q = $dbh->prepare("
-        INSERT INTO ap (invnumber, transdate, amount, netamount, duedate, curr, approved, entity_credit_account)
-        SELECT ?, ?, ?, ?, ?, 'USD', TRUE, entity_credit_account.id
+        INSERT INTO ap (invnumber, transdate, amount_bc, netamount_bc,
+                        duedate, curr, approved, entity_credit_account,
+                        amount_tc, netamount_tc)
+        SELECT ?, ?, ?, ?, ?, 'USD', TRUE,
+               entity_credit_account.id, ?, ?
         FROM entity
         JOIN entity_credit_account ON (
             entity_credit_account.entity_id = entity.id
@@ -183,18 +187,22 @@ Given qr/an unpaid AP transaction with these values:$/, sub {
         $data->{'Amount'},
         $data->{'Amount'},
         $data->{'Date'},
+        $data->{'Amount'},
+        $data->{'Amount'},
         $data->{'Vendor'},
     );
     my $ap_id = $q->fetchrow_hashref->{id};
 
     $q = $dbh->prepare("
-        INSERT INTO acc_trans (trans_id, chart_id, amount, transdate)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO acc_trans (trans_id, chart_id, amount_bc,
+                               curr, amount_tc, transdate)
+        VALUES (?, ?, ?, 'USD', ?, ?)
     ");
 
     $q->execute(
         $ap_id,
         28, # 5700--Office Supplies
+        $data->{'Amount'} * -1,
         $data->{'Amount'} * -1,
         $data->{'Date'},
     );
@@ -202,6 +210,7 @@ Given qr/an unpaid AP transaction with these values:$/, sub {
     $q->execute(
         $ap_id,
         10, # 2100--Accounts Payable account
+        $data->{'Amount'},
         $data->{'Amount'},
         $data->{'Date'},
     );

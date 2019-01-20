@@ -205,8 +205,9 @@ Returns an array of currencies defined for the current company.
 
 sub get_currencies {
     my $self = shift;
-    my @data = $self->call_dbmethod(funcname => 'setting__get_currencies');
-    $self->{currencies} = $data[0]->{setting__get_currencies};
+    @{$self->{currencies}} =
+        map { $_->{curr} }
+        $self->call_procedure(funcname => 'currency__list');
     return @{$self->{currencies}};
 }
 

@@ -1133,7 +1133,14 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '7960'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'SEK:EUR:USD');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('SEK', 'SEK'),
+      ('EUR', 'EUR'),
+      ('USD', 'USD');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'SEK');
+
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 

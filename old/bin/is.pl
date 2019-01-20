@@ -152,10 +152,18 @@ sub invoice_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
-
-    @curr = split /:/, $form->{currencies};
+    @curr = @{$form->{currencies}};
     $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
+
+    for (@curr) { $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n" }
+
+    ###TODO 20151108: came with merge from 1.4-mc; incorrectly?
+    if ( @{ $form->{all_customer} } ) {
+        unless ( $form->{customer_id} ) {
+            $form->{customer_id} = $form->{all_customer}->[0]->{id};
+        }
+    }
+    ###TODO 20151108; end of merge region
 
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
@@ -747,9 +755,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         if ($form->{manual_tax}){
              $tax .= qq|<tr class="listtop">
                       <td>&nbsp</td>
-                      <th align="center">|.$locale->text('Amount').qq|</th>
+                      <th align="center">|.$locale->text('Amount').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
-                      <th align="center">|.$locale->text('Basis').qq|</th>
+                      <th align="center">|.$locale->text('Basis').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
                     </tr>|;
@@ -810,8 +818,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                 <tr>
                   <th align=right>$form->{"${taccno}_description"}</th>
                   <td align=right>$form->{"${taccno}_total"}</td>
+                  <td>$form->{currency}</td>
                 </tr>|;
             }
+            $tax .= q|<tr><td>&nbsp;</td></tr>|;
         }
         $form->{invsubtotal} =
           $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
@@ -819,8 +829,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         $subtotal = qq|
           <tr>
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-        <td align=right>$form->{invsubtotal}</td>
-          </tr>
+      <td align=right>$form->{invsubtotal}</td><td>$form->{currency}</td></tr>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? ("<tr><th align=right>&nbsp;</th><td align=right>".$form->format_amount( \%myconfig,
+                                         $form->{invsubtotal}
+                                        * $form->{exchangerate}, 2)."</td><td>$form->{defaultcurrency}</td></tr>")
+         : '')
+      . qq|</tr>
 |;
 
     }
@@ -828,6 +843,12 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
     $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    my $invtotal_bc;
+    $invtotal_bc =
+        $form->format_amount( \%myconfig,
+                              $form->{invtotal} * $form->{exchangerate}, 2)
+        if $form->{currency} ne $form->{defaultcurrency};
+
 
     my $hold;
     my $hold_button_text;
@@ -875,18 +896,22 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
       </td>
       <td align=right>
         <table>
+          $subtotal
+              <tr><td>&nbsp;</td></tr>
               <tr><th align="center"
                       colspan="2">|.$locale->text('Calculate Taxes').qq|</th>
+                   <td colspan="3">$manual_tax</td>
               </tr>
               <tr>
-                   <td colspan="3">$manual_tax</td>
-               </tr>
-          $subtotal
+                <td>&nbsp;</td>
+              </tr>
           $tax
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
-        <td align=right>$form->{invtotal}</td>
-          </tr>
+      <td align=right>$form->{invtotal}</td><td>$form->{currency}</td></tr>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? "<tr><td><!-- total --></td><td align=right>$invtotal_bc</td><td>$form->{defaultcurrency}</td></tr>" : '')
+      . qq|
           $taxincluded
         </table>
       </td>
@@ -898,7 +923,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
     <td>
       <table width=100% id="invoice-payments-table">
     <tr class=listheading>
-      <th colspan=6 class=listheading>| . $locale->text('Payments') . qq|</th>
+      <th colspan=7 class=listheading>| . $locale->text('Payments') . qq|</th>
     </tr>
 |;
 
@@ -906,12 +931,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         @column_index = qw(datepaid source memo paid AR_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate AR_paid);
+        @column_index = qw(datepaid source memo paid exchangerate paidfx AR_paid);
     }
 
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
+    $column_data{paidfx}       = "<th>" . $form->{defaultcurrency} . "</th>";
     $column_data{AR_paid}      = "<th>" . $locale->text('Account') . "</th>";
     $column_data{source}       = "<th>" . $locale->text('Source') . "</th>";
     $column_data{memo}         = "<th>" . $locale->text('Memo') . "</th>";
@@ -939,6 +965,10 @@ s/option value="\Q$form->{"AR_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" 
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
+        $form->{"paidfx_$i"} =
+            $form->format_amount(
+                \%myconfig,
+                $form->{"paid_$i"} * $form->{"exchangerate_$i"}, 2 );
         $form->{"paid_$i"} =
           $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
         $form->{"exchangerate_$i"} =
@@ -963,6 +993,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
         $column_data{paid} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size="11" value="$form->{"paid_$i"}"></td>|;
         $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;
+        $column_data{paidfx} = qq|<td align="center">$form->{"paidfx_$i"}</td>|;
         $column_data{AR_paid} =
 qq|<td align="center"><select data-dojo-type="dijit/form/Select" name="AR_paid_$i" id="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =
@@ -1132,30 +1163,12 @@ sub update {
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
-            $form->{exchangerate} = $exchangerate
-              if (
-                $form->{forex} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,$form->{currency},
-                        $form->{transdate}, 'buy'
-                    )
-                )
-              );
         }
 
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
         delete $form->{exchangerate};
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig,         $form->{currency},
-                    $form->{transdate}, 'buy'
-                )
-            )
-          );
     }
 
     $j = 1;
@@ -1169,15 +1182,6 @@ sub update {
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
             }
 
-            $form->{"exchangerate_$j"} = $exchangerate
-              if (
-                $form->{"forex_$j"} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,             $form->{currency},
-                        $form->{"datepaid_$j"}, 'buy'
-                    )
-                )
-              );
             if ( $j++ != $i ) {
                 for (qw(datepaid source memo cleared paid exchangerate forex)) {
                     delete $form->{"${_}_$i"};
@@ -1338,6 +1342,11 @@ sub update {
             }
         }
     }
+    $form->create_links( module => "AR",
+             myconfig => \%myconfig,
+             vc => "customer",
+             billing => 1,
+             job => 1 );
     $form->generate_selects(\%myconfig);
     $form->{rowcount}--;
     display_form();

@@ -3,6 +3,10 @@ CREATE TEMPORARY TABLE test_result (
         success bool
 );
 
+-- from https://en.wikipedia.org/wiki/ISO_4217
+INSERT INTO currency (curr, description)
+VALUES ('XTS', 'Code reserved for testing purposes');
+
 INSERT INTO entity (id, name, entity_class, control_code, country_id)
 VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
 
@@ -33,7 +37,38 @@ values (-1001, '-1000000001', 'Test cases only', 'A', (select id from account_he
 INSERT INTO account(id, accno, description, category, heading, contra)
 values (-1002, '-1000000002', 'Test cases only', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
+select account_heading_save(NULL, '00000000000000000000E', 'TEST', NULL);
+select account_heading_save(NULL, '00000000000000000000I', 'TEST', NULL);
+select account_heading_save(NULL, '00000000000000000000Q', 'TEST', NULL);
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-1003, '-1000000003', 'Test cases only (E)', 'E', (select id from account_heading WHERE accno  = '00000000000000000000E'), false);
+
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-1004, '-1000000004', 'Test cases only (I)', 'I', (select id from account_heading WHERE accno  = '00000000000000000000I'), false);
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-1005, '-1000000005', 'Test cases only (Q)', 'Q', (select id from account_heading WHERE accno  = '00000000000000000000Q'), false);
+
 CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as
 $$
 SELECT id FROM account WHERE accno = $1;
 $$ language sql;
+
+CREATE OR REPLACE FUNCTION test_insert_default_currency() returns boolean as
+$$
+BEGIN
+   PERFORM * FROM defaults WHERE setting_key = 'curr';
+
+   IF NOT FOUND THEN
+      INSERT INTO defaults
+      VALUES ('curr', 'XTS');
+      RETURN 'f'::boolean;
+   ELSE
+      RETURN 't'::boolean;
+   END IF;
+END;
+$$ language plpgsql;
+
+select test_insert_default_currency();

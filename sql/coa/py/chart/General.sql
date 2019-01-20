@@ -266,7 +266,14 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '5.340'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'PYG:USD:EUR');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('PYG', 'PYG'),
+      ('USD', 'USD'),
+      ('EUR', 'EUR');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'PYG');
+
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --

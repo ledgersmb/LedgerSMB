@@ -92,11 +92,10 @@ pager = less
 
 [CodeLayout::ProhibitTrailingWhitespace]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
-    
+
 [CodeLayout::ProhibitHardTabs]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
     allow_leading_tabs = 0
-
 
 [Modules::ProhibitAutomaticExportation]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
@@ -183,5 +182,6 @@ pager = less
 # LSMB is more application than lib
 #[Modules::RequireVersionVar]
 
-# Policy fails on methods.
-#[Subroutines::ProhibitBuiltinHomonyms]
+# Too many methods
+[Subroutines::ProhibitBuiltinHomonyms]
+    set_themes = lsmb_reject

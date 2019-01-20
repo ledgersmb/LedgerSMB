@@ -46,31 +46,35 @@ BEGIN
          WHERE end_date < in_end_date;
 
         INSERT INTO
-           account_checkpoint (end_date, account_id, amount, debits, credits)
+        account_checkpoint (end_date, account_id, amount_bc,
+                            amount_tc, curr, debits, credits)
         SELECT in_end_date, account.id,
-            COALESCE(a.amount,0) + COALESCE(cp.amount, 0),
+            COALESCE(a.amount_bc,0) + COALESCE(cp.amount_bc, 0),
+            COALESCE(a.amount_tc,0) + COALESCE(cp.amount_tc, 0),
+            COALESCE(a.curr, cp.curr, defaults_get_defaultcurrency()),
             COALESCE(a.debits, 0) + COALESCE(cp.debits, 0),
             COALESCE(a.credits, 0) + COALESCE(cp.credits, 0)
         FROM (SELECT
-                chart_id,
-                SUM(amount) as amount,
-                SUM(CASE WHEN (amount < 0) THEN amount
+                chart_id, curr,
+                SUM(amount_bc) as amount_bc,
+                SUM(amount_tc) as amount_tc,
+                SUM(CASE WHEN (amount_bc < 0) THEN amount_bc
                                            ELSE 0 END) as debits,
-                SUM(CASE WHEN (amount > 0) THEN amount
+                SUM(CASE WHEN (amount_bc > 0) THEN amount_bc
                                            ELSE 0 END) as credits
                   FROM acc_trans
                  WHERE transdate <= in_end_date
                        AND transdate > cp_date
-                 GROUP BY chart_id) a
+                 GROUP BY chart_id, curr) a
         FULL OUTER JOIN (
-              SELECT account_id, end_date, amount, debits, credits
+              SELECT account_id, curr,
+                     end_date, amount_bc, amount_tc, debits, credits
                 FROM account_checkpoint
                 WHERE end_date = cp_date) cp
-           ON (a.chart_id = cp.account_id)
+           ON (a.chart_id = cp.account_id) and (a.curr = cp.curr)
         RIGHT JOIN account
            ON account.id = a.chart_id
               OR account.id = cp.account_id;
-
 
         SELECT count(*) INTO ret_val FROM account_checkpoint
         where end_date = in_end_date;
@@ -97,7 +101,7 @@ DECLARE
 BEGIN
         INSERT INTO gl (transdate, reference, description, approved,
                         trans_type_code)
-             VALUES (in_end_date, in_reference, in_description, true, 'ye');
+        VALUES (in_end_date, in_reference, in_description, true, 'ye');
 
         INSERT INTO yearend (trans_id, transdate)
              VALUES (currval('id'), in_end_date);
@@ -106,28 +110,36 @@ BEGIN
                         (SELECT min(transdate)-1 FROM acc_trans)) INTO cp_date
           FROM account_checkpoint;
 
-        INSERT INTO acc_trans (transdate, chart_id, trans_id, amount)
+        INSERT INTO acc_trans (transdate, chart_id, trans_id,
+                               amount_bc, curr, amount_tc)
         SELECT in_end_date, a.chart_id, currval('id'),
-                (coalesce(a.amount, 0) + coalesce(cp.amount, 0)) * -1
-        FROM (SELECT chart_id, sum(amount) as amount
+               (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
+               coalesce(a.curr,cp.curr),
+               (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
+        FROM (SELECT chart_id, sum(amount_bc) as amount_bc, curr,
+                     sum(amount_tc) as amount_tc
                 FROM acc_trans a
-                JOIN account acc ON (acc.id = a.chart_id)
+        JOIN account acc ON (acc.id = a.chart_id)
                WHERE transdate <= in_end_date
                      AND transdate > cp_date
-                     AND (acc.category IN ('I', 'E')
-                          OR acc.category = 'Q' AND acc.is_temp)
-               GROUP BY chart_id) a
+                AND (acc.category IN ('I', 'E')
+                      OR acc.category = 'Q' AND acc.is_temp)
+               GROUP BY chart_id, curr) a
         LEFT JOIN (
-                SELECT account_id, end_date, amount
+                SELECT account_id, end_date, amount_bc, curr, amount_tc
                   FROM account_checkpoint
                  WHERE end_date = (select max(end_date) from account_checkpoint
                                     where end_date < in_end_date)
                 ) cp
-           ON (a.chart_id = cp.account_id);
+           ON (a.chart_id = cp.account_id) AND a.curr = cp.curr;
 
-        INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)
+        INSERT INTO acc_trans (transdate, trans_id, chart_id,
+                               amount_bc, curr, amount_tc)
         SELECT in_end_date, currval('id'), in_retention_acc_id,
-                coalesce(sum(amount) * -1, 0)
+               coalesce(sum(amount_bc) * -1, 0),
+               -- post only default currency in retained earnings
+               defaults_get_defaultcurrency(),
+               coalesce(sum(amount_tc) * -1, 0)
         FROM acc_trans WHERE trans_id = currval('id');
 
 
@@ -191,9 +203,10 @@ BEGIN
                 FROM gl WHERE id = (select trans_id from yearend
                         where transdate = in_end_date and reversed is not true);
 
-                INSERT INTO acc_trans (chart_id, amount, transdate, trans_id,
-                        approved)
-                SELECT chart_id, amount * -1, in_end_date, currval('id'), true
+                INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
+                                       transdate, trans_id, approved)
+                SELECT chart_id, amount_bc * -1, curr, amount_tc * -1,
+                       in_end_date, currval('id'), true
                 FROM acc_trans where trans_id = (select trans_id from yearend
                         where transdate = in_end_date and reversed is not true);
 
@@ -238,14 +251,14 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 RETURNS numeric AS
 $$
 WITH cp AS (
-  SELECT amount, end_date, account_id
+  SELECT amount_bc, end_date, account_id
     FROM account_checkpoint
    WHERE account_id = in_account_id
      AND end_date <= in_transdate
 ORDER BY end_date DESC LIMIT 1
 ),
 ac AS (
-  SELECT acc_trans.amount
+  SELECT acc_trans.amount_bc
     FROM acc_trans
     JOIN (select id from ar where approved
           union select id from ap where approved
@@ -256,9 +269,9 @@ ac AS (
      AND chart_id = in_account_id)
 
  SELECT coalesce((select sum(amount)
-                    from (select sum(amount) as amount from cp
+                    from (select sum(amount_bc) as amount from cp
                           union all
-                          select sum(amount) from ac) as a),
+                          select sum(amount_bc) from ac) as a),
                  0);
 $$ LANGUAGE SQL;
 
