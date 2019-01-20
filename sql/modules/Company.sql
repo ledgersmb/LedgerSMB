@@ -91,12 +91,15 @@ SELECT * FROM entity_credit_account
  WHERE entity_class = $2 AND meta_number = $1;
 $$ language sql;
 
+
 DROP FUNCTION IF EXISTS eca__history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
  in_start_from date, in_start_to date, in_entity_class int,
  in_inc_open bool, in_inc_closed bool);
+
+
 CREATE OR REPLACE FUNCTION eca__history
 (in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
@@ -112,10 +115,10 @@ $$
              JOIN acc_trans ON ar.id  = acc_trans.trans_id
              JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AR'
-            where $16 = 2 and $13 = 'i'
+            where in_entity_class = 2 and in_type = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount_bc) = 0)
-                      or ($18 and 0 <> sum(acc_trans.amount_bc)))
+                  having ((in_inc_open and sum(acc_trans.amount_bc) = 0)
+                      or (in_inc_closed and 0 <> sum(acc_trans.amount_bc)))
             UNION ALL
            select invnumber, ap.curr, ap.transdate, entity_credit_account, id,
                   person_id, notes
@@ -123,98 +126,80 @@ $$
              JOIN acc_trans ON ap.id  = acc_trans.trans_id
              JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AP'
-            where $16 = 1 and $13 = 'i'
+            where in_entity_class = 1 and in_type = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount_bc) = 0) or
-                       ($18 and sum(acc_trans.amount_bc) <> 0))
+                  having ((in_inc_open and sum(acc_trans.amount_bc) = 0)
+                      or (in_inc_closed and 0 <> sum(acc_trans.amount_bc)))
      )
      SELECT eca.id, e.name, eca.meta_number,
             a.id as invoice_id, a.invnumber, a.curr::text,
             p.id AS parts_id, p.partnumber,
-            i.description,
-            i.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END,
-            i.unit::text, i.sellprice, i.discount,
-            i.deliverydate,
-            i.serialnumber,
+            a.description,
+            a.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END,
+            a.unit::text, a.sellprice, a.discount,
+            a.deliverydate,
+            a.serialnumber,
             null::numeric as exchange_rate,
             ee.id as salesperson_id,
             ep.last_name || ', ' || ep.first_name as salesperson_name,
             a.transdate
      FROM (select * from entity_credit_account
-            where meta_number = $2
-           UNION
-          select * from entity_credit_account WHERE $2 is null
-          ) eca  -- broken into unions for performance
+            where (in_meta_number is null or meta_number = in_meta_number)) eca
      join entity e on eca.entity_id = e.id
      JOIN (
-           SELECT * FROM arap
+           SELECT a.*, i.parts_id, i.qty, i.description, i.unit,
+                  i.discount, i.deliverydate, i.serialnumber, i.sellprice
+             FROM arap a
+             JOIN invoice i ON a.id = i.trans_id
            union
-           select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where ($16= 1 and oe.oe_class_id = 2 and $13 = 'o'
-                  and quotation is not true)
-                  and (($17 and not closed) or ($18 and closed))
-           union
-           select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where ($16= 2 and oe.oe_class_id = 1 and $13 = 'o'
-                  and quotation is not true)
-                  and (($17 and not closed) or ($18 and closed))
-           union
-           select quonumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where($16= 1 and oe.oe_class_id = 4 and $13 = 'q'
-                and quotation is true)
-                  and (($17 and not closed) or ($18 and closed))
-           union
-           select quonumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe
-           where($16= 2 and oe.oe_class_id = 4 and $13 = 'q'
-                 and quotation is true)
-                  and (($17 and not closed) or ($18 and closed))
-          ) a ON (a.entity_credit_account = eca.id) -- broken into unions
-                                                    -- for performance
-     JOIN ( select id, trans_id, parts_id, qty, description, unit, discount,
-                   deliverydate, serialnumber, sellprice
-             FROM  invoice where $13 = 'i'
-            union
-            select id, trans_id, parts_id, qty, description, unit, discount,
-                   reqdate, serialnumber, sellprice
-             FROM orderitems where $13 <> 'i'
-          ) i on i.trans_id = a.id
-     JOIN parts p ON (p.id = i.parts_id)
+           select o.ordnumber, o.curr, o.transdate, o.entity_credit_account,
+                  o.id, o.person_id, o.notes, oi.parts_id, oi.qty,
+                  oi.description, oi.unit, oi.discount, oi.reqdate,
+                  oi.serialnumber, oi.sellprice
+             from oe o
+             join orderitems oi on o.id = oi.trans_id
+            where ((in_type = 'o' and quotation is not true)
+                   or (in_type = 'q' and quotation is true))
+              and ((in_entity_class = 1 and o.oe_class_id IN (2, 4))
+                   or (in_entity_class = 2 and o.oe_class_id IN (1, 3)))
+              and ((in_inc_open and not closed)
+                   or (in_inc_closed and closed))
+          ) a ON (a.entity_credit_account = eca.id)
+     JOIN parts p ON (p.id = a.parts_id)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
-    -- these filters don't perform as well on large databases
-    WHERE (e.name ilike '%' || $1 || '%' or $1 is null)
-          and ($3 is null or eca.id in
-                 (select credit_id from eca_to_contact
-                   where contact ilike '%' || $3 || '%'))
---          and (($4 is null and $5 is null and $6 is null and $7 is null)
---               or eca.id in
---                  (select credit_id from eca_to_location
---                    where location_id in
---                          (select id from location
---                            where ($4 is null or line_one ilike '%' || $4 || '%'
---                                   or line_two ilike '%' || $4 || '%')
---                                  and ($5 is null or city
---                                                     ilike '%' || $5 || '%')
---                                  and ($6 is null or state
---                                                    ilike '%' || $6 || '%')
---                                  and ($7 is null or mail_code
---                                                    ilike '%' || $7 || '%')
---                                  and ($10 is null or country_id = $10))
---                   )
---              )
---          and (a.transdate >= $11 or $11 is null)
---          and (a.transdate <= $12 or $12 is null)
---          and (eca.startdate >= $14 or $14 is null)
---          and (eca.startdate <= $15 or $15 is null)
---          and (a.notes @@ plainto_tsquery($9) or $9 is null)
+    WHERE (e.name ilike '%' || in_name_part || '%' or in_name_part is null)
+      and (in_contact_info is null
+           or exists (select 1 from eca_to_contact
+                       where credit_id = eca.id
+                         and contact ilike '%' || in_contact_info || '%'))
+      and ((in_address_line is null
+            and in_city is null
+            and in_state is null
+            and in_zip is null
+            and in_country_id is null)
+           or exists (select 1 from eca_to_location etl
+                       where etl.credit_id = eca.id
+                         and exists (select 1 from location l
+                                      where l.id = etl.location_id
+                                        and (in_address_line is null
+                                             or line_one ilike '%' || in_address_line || '%'
+                                             or line_two ilike '%' || in_address_line || '%')
+                                        and (in_city is null
+                                             or city ilike '%' || in_city || '%')
+                                        and (in_state is null
+                                             or state ilike '%' || in_state || '%')
+                                        and (in_zip is null
+                                             or mail_code ilike '%' || in_zip || '%')
+                                        and (in_country_id is null
+                                             or country_id = in_country_id))
+                     )
+          )
+          and (a.transdate >= in_from_date or in_from_date is null)
+          and (a.transdate <= in_to_date or in_to_date is null)
+          and (eca.startdate >= in_start_from or in_start_from is null)
+          and (eca.startdate <= in_start_to or in_start_to is null)
+          and (a.notes @@ plainto_tsquery(in_notes) or in_notes is null)
  ORDER BY eca.meta_number, p.partnumber;
 $$ LANGUAGE SQL;
 
