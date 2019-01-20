@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(11);
+    SELECT plan(13);
 
     -- Add data
 
@@ -28,6 +28,7 @@ BEGIN;
 
     --- COMMON SETUP
 
+    insert into currency values ('xts', 'xts');
     insert into users (entity_id, username, id)
     values (-200, '_test1', -200);
     INSERT INTO session (users_id, last_used, token)
@@ -38,12 +39,19 @@ BEGIN;
     WITH a (accno, description, category) as (
      values ('00001'::text, 'testing AP'::text, 'L'::text ),
            ('00002', 'testing AP cost', 'E'),
-           ('00003', 'testing cash', 'A')
+           ('00003', 'testing cash', 'A'),
+           ('00004', 'fx gain', 'I'),
+           ('00005', 'fx loss', 'E')
     )
     INSERT INTO account (accno, description, category, heading)
     SELECT a.accno, a.description, a.category, h.id
     FROM account_heading h
     JOIN a ON h.accno = '000000000000000000000';
+
+    INSERT INTO defaults VALUES ('fxgain_accno_id',
+           (select id from account where accno = '00004'));
+    INSERT INTO defaults VALUES ('fxloss_accno_id',
+           (select id from account where accno = '00005'));
 
     INSERT INTO account_link (account_id, description)
     SELECT id, 'AP' FROM account WHERE accno = '00001'
@@ -52,48 +60,75 @@ BEGIN;
     UNION
     SELECT id, 'AP_paid' FROM account WHERE accno = '00003';
 
-    INSERT INTO exchangerate (transdate, curr, buy, sell)
-    VALUES ('1901-01-01', 'XTS', 1.10, 1.10),
-           ('1901-01-02', 'XTS', 1.0, 1.0);
-
     -- TEST 1: payment_post() with fx rate 1.1
 
     INSERT INTO company (id, legal_name, entity_id) VALUES (-101, 'TEST', -101);
     INSERT INTO business (id, description) values (-101, 'test');
-    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id)
-         VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000);
+    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id, curr)
+         VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000, 'xts');
 
-    INSERT INTO ap (id, transdate, amount, invnumber, curr, entity_credit_account)
-         VALUES (-11, '1901-01-01', 100, 'inv_test1', 'XTS', -101);
-    INSERT INTO acc_trans (trans_id, transdate, amount, fx_transaction, approved, chart_id)
-         VALUES (-11, '1901-01-01', 100, 'f', 't', (select id from account where accno = '00001')),
-                (-11, '1901-01-01',  10, 't', 't', (select id from account where accno = '00001'));
+    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-11, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
+    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
+         VALUES (-11, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001'));
 
     -- Pay the invoice in full
     SELECT * FROM
-      payment_post('1901-01-01', 1, -101, 'XTS', NULL,
+        payment_post('1901-01-01', 1, -101, 'xts', 1.10, NULL,
          'This gl movement is a consequence of a payment transaction',
          ARRAY[(SELECT id FROM account WHERE accno = '00003')],
-         ARRAY[100], NULL, ARRAY['cash '], ARRAY[NULL],
+         ARRAY[110], NULL, ARRAY['cash '], ARRAY[NULL],
          ARRAY[-11], NULL, NULL, NULL, NULL, NULL, NULL, 't');
     --     ARRAY[-11], ARRAY[], ARRAY[], ARRAY[], ARRAY[], ARRAY[], NULL, 't');
 
     -- Run tests
 
-    PREPARE test AS SELECT sum(amount) = 0
+    --TODO: 0.01? Ain't that dependent of the country
+    PREPARE test AS SELECT abs(sum(amount_bc)) < 0.01
                         from acc_trans
                        where trans_id = -11
                          and chart_id = (select id from account where accno = '00001');
     SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = 0
+    --TODO: 0.01? Ain't that dependent of the country
+    PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
                         from acc_trans
                        where trans_id = -11
-                         and chart_id = (select id from account where accno = '00001'
-                                         and not fx_transaction);
+                         and chart_id = (select id from account where accno = '00001');
     SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid');
     DEALLOCATE test;
+
+
+    -- Test 2: payment_bulk_post
+
+    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-12, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
+    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
+         VALUES (-12, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001'));
+
+
+    SELECT payment_bulk_post(ARRAY[ARRAY[-12,110]],
+                             batch_create('TestBatch', 'TestBatch',
+                             'payment', -- payment
+                             '1901-01-03'::date), 'source', null, -- unused
+                             '00001', '00003',
+                             '1901-01-03'::date, 1, 1.10, 'xts');
+
+    PREPARE test AS SELECT abs(sum(amount_bc)) < 0.01
+                        from acc_trans
+                       where trans_id = -12
+                         and chart_id = (select id from account where accno = '00001');
+    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
+                        from acc_trans
+                       where trans_id = -12
+                         and chart_id = (select id from account where accno = '00001');
+    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid');
+    DEALLOCATE test;
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

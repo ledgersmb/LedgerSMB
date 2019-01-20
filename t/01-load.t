@@ -60,9 +60,12 @@ my @modules =
           'LedgerSMB::Request::Helper::ParameterMap',
           'LedgerSMB::Template', 'LedgerSMB::Template::UI',
           'LedgerSMB::Legacy_Util',
-          'LedgerSMB::Company_Config', 'LedgerSMB::Database',
+          'LedgerSMB::Company_Config',
+          'LedgerSMB::Currency', 'LedgerSMB::Database',
           'LedgerSMB::Database::ChangeChecks', 'LedgerSMB::Database::Config',
+          'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
+          'LedgerSMB::IIAA',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld',
@@ -159,6 +162,7 @@ my @modules =
           'LedgerSMB::Report::co::Balance_y_Mayor',
           'LedgerSMB::Report::co::Caja_Diaria',
           'LedgerSMB::Scripts::budget_reports',
+          'LedgerSMB::Scripts::currency',
           'LedgerSMB::Scripts::parts',
           'LedgerSMB::Scripts::contact_reports', 'LedgerSMB::Scripts::file',
           'LedgerSMB::Scripts::inv_reports', 'LedgerSMB::Scripts::lreports_co',
@@ -221,10 +225,19 @@ SKIP: {
     eval { require XML::Twig };
     skip 'XML::Twig not installed', 1 if $@;
 
+
     eval { require OpenOffice::OODoc };
     skip 'OpenOffice::OODoc not installed', 1 if $@;
 
     use_ok('LedgerSMB::Template::ODS');
+}
+
+ SKIP: {
+     eval { require XML::Twig; require OpenOffice::OODoc; };
+
+     skip 'XML::Twig or OpenOffice::OODoc not installed', 1 if $@;
+
+     use_ok('LedgerSMB::Template::ODS');
 }
 
 SKIP: {

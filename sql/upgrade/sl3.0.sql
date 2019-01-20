@@ -147,39 +147,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION pg_temp.defaults_get_defaultcurrency()
-RETURNS char(3) AS
-$$
-           SELECT substr(value,1,3)
-           FROM defaults
-           WHERE setting_key = 'curr';
-$$ language sql;
-
-CREATE OR REPLACE FUNCTION pg_temp.currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int)
-RETURNS NUMERIC AS
-$$
-DECLARE
-    out_exrate exchangerate.buy%TYPE;
-    default_currency char(3);
-
-    BEGIN
-        SELECT * INTO default_currency  FROM pg_temp.defaults_get_defaultcurrency();
-        IF default_currency = in_currency THEN
-           RETURN 1;
-        END IF;
-        IF in_account_class = 2 THEN
-          SELECT buy INTO out_exrate
-          FROM exchangerate
-          WHERE transdate = in_date AND curr = in_currency;
-        ELSE
-          SELECT sell INTO out_exrate
-          FROM exchangerate
-          WHERE transdate = in_date AND curr = in_currency;
-        END IF;
-        RETURN out_exrate;
-    END;
-$$ language plpgsql;
-
 CREATE OR REPLACE FUNCTION pg_temp.setting__increment_base(in_raw_var text)
 returns varchar language plpgsql as $$
 declare raw_value VARCHAR;
@@ -391,7 +358,7 @@ CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
    in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
-    SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+    SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
         JOIN transactions t ON t.id = ac.trans_id AND t.approved
@@ -864,9 +831,14 @@ SELECT pg_temp.f_insert_count('sqnumber');
 SELECT pg_temp.f_insert_count('vendornumber');
 SELECT pg_temp.f_insert_count('vinumber');
 
+--TODO: Do we need that for MC?
 INSERT INTO defaults(setting_key,value)
     SELECT 'curr',array_to_string(array_agg(curr),':')
     FROM :slschema.curr;
+
+INSERT INTO currency(curr,description)
+    SELECT curr,curr
+    FROM  :slschema.curr;
 
 CREATE OR REPLACE FUNCTION pg_temp.f_insert_account(skey varchar(20)) RETURNS VOID AS
 $$
@@ -931,9 +903,12 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 
 ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
+--TODO: Handle amount_tc and netamount_tc
 insert into ar
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount, netamount,
+        id, invnumber, transdate, taxincluded,
+        amount_bc, netamount_bc,
+        amount_tc, netamount_tc,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
@@ -944,6 +919,8 @@ SELECT
         customer.credit_id,
         (select entity_id from :slschema.employee WHERE id = ar.employee_id),
         ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
+        CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
+        CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
@@ -960,7 +937,8 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
 insert into ap
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount, netamount,
+        id, invnumber, transdate, taxincluded, amount_bc, netamount_bc,
+        amount_tc, netamount_tc,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
@@ -972,6 +950,8 @@ SELECT
         (select entity_id from :slschema.employee
                 WHERE id = ap.employee_id),
         ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
+        CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
+        CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
@@ -995,21 +975,37 @@ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             deliverydate, serialnumber
        FROM :slschema.invoice;
 
-INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount, transdate,
-                       source, cleared, fx_transaction,
+ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
+
+update :slschema.acc_trans
+  set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
+
+INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
+                       transdate, source, cleared,
                        memo, approved, cleared_on, voucher_id, invoice_id)
- SELECT lsmb_entry_id, acc_trans.trans_id,
-        (SELECT id
-           FROM account
-          WHERE accno = :slschema.acc_trans.accno),
-        amount, transdate, source,
-        cleared IS NOT NULL,
-        fx_transaction, memo, approved, cleared, vr_id, invoice.id
-   FROM :slschema.acc_trans
-LEFT JOIN :slschema.invoice ON acc_trans.id = invoice.id
-                      AND acc_trans.trans_id = invoice.trans_id
+ SELECT lsmb_entry_id, ac.trans_id,
+        (select id
+           from account
+          where accno = (select accno
+                           from :slschema.chart
+                          where chart.id = ac.chart_id)),
+        CASE WHEN fx_transaction THEN 0 ELSE amount END,
+        CASE WHEN fx_transaction THEN amount ELSE 0 END,
+        xx.curr,
+        transdate, source,
+        CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END,
+        memo, approved, cleared, vr_id, invoice.id
+   FROM :slschema.acc_trans ac
+   JOIN (
+                    SELECT id,curr
+                    FROM (      SELECT id,curr FROM sl30.ap
+                          UNION SELECT id,curr FROM sl30.ar
+                          UNION SELECT id,curr FROM sl30.gl) xx
+   ) xx ON xx.id=ac.trans_id
+   LEFT JOIN :slschema.invoice ON ac.id = invoice.id
+                              AND ac.trans_id = invoice.trans_id
   WHERE chart_id IS NOT NULL
-    AND acc_trans.trans_id IN (SELECT id FROM transactions);
+    AND ac.trans_id IN (SELECT id FROM transactions);
 
 --Payments
 
@@ -1021,8 +1017,6 @@ CREATE OR REPLACE FUNCTION pg_temp.payment_migrate
 RETURNS INT AS $$
     DECLARE var_payment_id int;
     DECLARE var_employee int;
-    DECLARE default_currency char(3);
-    DECLARE current_exchangerate numeric;
     DECLARE var_account_class int;
     DECLARE var_datepaid date;
     DECLARE var_curr char(3);
@@ -1033,9 +1027,6 @@ RETURNS INT AS $$
     DECLARE var_entity_credit_account int;
 BEGIN
     var_account_class = 1; -- AP
-
-    SELECT * INTO default_currency  FROM pg_temp.defaults_get_defaultcurrency();
-    SELECT * INTO current_exchangerate FROM pg_temp.currency_get_exchangerate(var_curr, var_datepaid, var_account_class);
 
     SELECT INTO var_employee p.id
     FROM users u
@@ -1239,7 +1230,7 @@ INSERT INTO eca_tax (eca_id, chart_id)
      ON vt.vendor_id = v.id;
 
 INSERT
-  INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
+  INTO oe(id, ordnumber, transdate, amount_tc, netamount_tc, reqdate, taxincluded,
        shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
        intnotes, shipvia, language_code, ponumber, terms,
        entity_credit_account, oe_class_id)
@@ -1273,8 +1264,6 @@ SELECT oi.id, 1, oe.department_id
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
 SELECT id, 2, project_id + 1000 FROM :slschema.orderitems
  WHERE project_id > 0  and  project_id in (select id from :slschema.project);
-
-INSERT INTO exchangerate select * from :slschema.exchangerate;
 
 INSERT INTO status SELECT * FROM :slschema.status; -- may need to comment this one out sometimes
 

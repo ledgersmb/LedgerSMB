@@ -347,7 +347,14 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '775140000'));
 
 INSERT INTO defaults (setting_key, value) VALUES ('invnumber', '1000');
-INSERT INTO defaults (setting_key, value) VALUES ('curr', 'PLN:USD:EUR');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('PLN', 'PLN'),
+      ('USD', 'USD'),
+      ('EUR', 'EUR');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'PLN');
+
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
 UPDATE defaults SET value = '1000' WHERE setting_key = 'sonumber';

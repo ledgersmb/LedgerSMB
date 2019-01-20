@@ -282,7 +282,7 @@ RETURNS SETOF budget_variance_report
 AS
 $$
    WITH agg_account (amount, id, transdate)
-        AS ( SELECT ac.amount *
+        AS ( SELECT ac.amount_bc *
                     CASE WHEN a.contra THEN -1 ELSE 1 END *
                     CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END
                     AS amount,

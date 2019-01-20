@@ -17,7 +17,7 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('journal__add',ARRAY['text','text','integer','date','boolean','boolean','text']);
-    SELECT has_function('journal__add_line',ARRAY['integer','integer','numeric','boolean','text','integer[]']);
+    SELECT has_function('journal__add_line',ARRAY['integer','integer','numeric', 'numeric', 'text', 'boolean','text','integer[]']);
     SELECT has_function('journal__delete',ARRAY['integer']);
     SELECT has_function('journal__get_entry',ARRAY['integer']);
     SELECT has_function('journal__get_invoice',ARRAY['integer']);

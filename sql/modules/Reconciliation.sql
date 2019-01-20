@@ -185,7 +185,7 @@ CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
    in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
-    SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+    SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
     JOIN (      SELECT id FROM ar WHERE approved
@@ -469,13 +469,8 @@ $$
                     THEN gl.ref
                     ELSE ac.source END,
                0,
-               sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
-                                 THEN 1
-                                 WHEN t_recon_fx and gl.table = 'ap'
-                                 THEN ex.sell
-                                 WHEN t_recon_fx and gl.table = 'ar'
-                                 THEN ex.buy
-                            END) AS amount,
+               sum(CASE WHEN t_recon_fx THEN amount_tc
+                        ELSE amount_bc END) AS amount,
                         (select entity_id from users
                         where username = CURRENT_USER),
                 ac.voucher_id, min(ac.entry_id), ac.transdate
@@ -498,20 +493,14 @@ $$
                         AND ac.voucher_id IS NULL)
                         OR (rl.voucher_id = ac.voucher_id)))
         LEFT JOIN cr_report r ON r.id = in_report_id
-        LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
         WHERE ac.cleared IS FALSE
                 AND ac.approved IS TRUE
                 AND ac.chart_id = t_chart_id
                 AND ac.transdate <= t_end_date
-                AND (t_recon_fx is not true
-                     OR (t_recon_fx is true
-                         AND (gl.table <> 'gl'
-                              OR ac.fx_transaction IS TRUE)))
                 AND (ac.entry_id > (select min(entry_id) from acc_trans
                                      where acc_trans.chart_id = r.chart_id))
         GROUP BY gl.ref, ac.source, ac.transdate,
-                ac.memo, ac.voucher_id, gl.table,
-                case when gl.table = 'gl' then gl.id else 1 end
+                ac.memo, ac.voucher_id, gl.table
         HAVING count(rl.id) = 0;
 
         UPDATE cr_report set updated = date_trunc('second', now()),
@@ -617,8 +606,8 @@ CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) returns numeric as
 $$
         SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
-                        IN ('A', 'E') THEN sum(a.amount) * -1
-                ELSE sum(a.amount) END
+                        IN ('A', 'E') THEN sum(a.amount_bc) * -1
+                ELSE sum(a.amount_bc) END
         FROM acc_trans a
         JOIN (
                 SELECT id FROM ar

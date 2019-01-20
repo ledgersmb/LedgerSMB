@@ -55,7 +55,8 @@ sub _default_settings {
               { name => 'company_license_number',
                 label =>  $locale->text('Company License Number') },
               { name => 'curr',
-                label => $locale->text('Currencies (colon-separated)')},
+        label => $locale->text('Currencies'),
+        type => 'SELECT_ONE', },
               { name => 'weightunit', label => $locale->text('Weight Unit') },
               { name => 'default_country',
                 label => $locale->text('Default Country'),
@@ -147,9 +148,9 @@ sub _default_settings {
               { name => 'min_empty',
                 label => $locale->text('Min Empty Lines') },
               { name => 'default_buyexchange',
-                label => $locale->text('Use web service for current Buy Exchange Rates'),
+                label => $locale->text('Use web service for current exchange rates'),
                 type => 'YES_NO',
-                info => ['Buy rates can be provided automatically to the application by using a web service and providing current date and origin and destination currencies.',
+                info => ['Rates can be provided automatically to the application by using a web service and providing current date and origin and destination currencies.',
                          'Please review the terms and conditions for the $1 before use.']
                 },
               ] },
@@ -167,8 +168,10 @@ Shows the defaults screen
 
 =cut
 
-sub defaults_screen{
+sub defaults_screen {
     my ($request) = @_;
+
+    my @curr = map { { curr => $_ } } $request->setting->get_currencies();
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings) {
@@ -232,6 +235,13 @@ sub defaults_screen{
             text_attr      => 'text',
             value_attr     => 'id',
             default_values => [$request->{'earn_id'}],
+        },
+        'curr' => {
+            name => 'curr',
+            options => \@curr,
+            default_values => [$request->{curr}],
+            text_attr => 'curr',
+            value_attr => 'curr',
         },
         'fxloss_accno_id' => {
             name           => 'fxloss_accno_id',

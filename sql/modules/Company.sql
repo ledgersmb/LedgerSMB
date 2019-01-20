@@ -106,7 +106,7 @@ CREATE OR REPLACE FUNCTION eca__history
 RETURNS SETOF  eca_history_result AS
 $$
      WITH arap AS (
-       select  invnumber, curr, ar.transdate, entity_credit_account, id,
+       select  invnumber, ar.curr, ar.transdate, entity_credit_account, id,
                    person_id, notes
              FROM ar
              JOIN acc_trans ON ar.id  = acc_trans.trans_id
@@ -114,10 +114,10 @@ $$
                   and l.description = 'AR'
             where $16 = 2 and $13 = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount) = 0)
-                      or ($18 and 0 <> sum(acc_trans.amount)))
+                  having (($17 and sum(acc_trans.amount_bc) = 0)
+                      or ($18 and 0 <> sum(acc_trans.amount_bc)))
             UNION ALL
-           select invnumber, curr, ap.transdate, entity_credit_account, id,
+           select invnumber, ap.curr, ap.transdate, entity_credit_account, id,
                   person_id, notes
              FROM ap
              JOIN acc_trans ON ap.id  = acc_trans.trans_id
@@ -125,8 +125,8 @@ $$
                   and l.description = 'AP'
             where $16 = 1 and $13 = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount) = 0) or
-                       ($18 and sum(acc_trans.amount) <> 0))
+                  having (($17 and sum(acc_trans.amount_bc) = 0) or
+                       ($18 and sum(acc_trans.amount_bc) <> 0))
      )
      SELECT eca.id, e.name, eca.meta_number,
             a.id as invoice_id, a.invnumber, a.curr::text,
@@ -136,7 +136,7 @@ $$
             i.unit::text, i.sellprice, i.discount,
             i.deliverydate,
             i.serialnumber,
-            case when $16 = 1 then ex.buy else ex.sell end as exchange_rate,
+            null::numeric as exchange_rate,
             ee.id as salesperson_id,
             ep.last_name || ', ' || ep.first_name as salesperson_name,
             a.transdate
@@ -187,7 +187,6 @@ $$
              FROM orderitems where $13 <> 'i'
           ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
-LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
     -- these filters don't perform as well on large databases
@@ -292,32 +291,32 @@ CREATE OR REPLACE FUNCTION contact__search
 RETURNS SETOF contact_search_result AS $$
 
    WITH entities_matching_name AS (
-      SELECT legal_name, sic_code, entity_id
-        FROM company
-       WHERE in_name_part IS NULL
+                      SELECT legal_name, sic_code, entity_id
+                        FROM company
+                       WHERE in_name_part IS NULL
              OR legal_name @@ plainto_tsquery(in_name_part)
              OR legal_name ilike in_name_part || '%'
-       UNION ALL
-      SELECT coalesce(first_name, '') || ' '
+                      UNION ALL
+                     SELECT coalesce(first_name, '') || ' '
              || coalesce(middle_name, '')
              || ' ' || coalesce(last_name, ''), null, entity_id
-        FROM person
+                       FROM person
        WHERE in_name_part IS NULL
              OR coalesce(first_name, '') || ' ' || coalesce(middle_name, '')
                 || ' ' || coalesce(last_name, '')
-                @@ plainto_tsquery(in_name_part)
+                             @@ plainto_tsquery(in_name_part)
    ),
    matching_eca_contacts AS (
        SELECT credit_id
          FROM eca_to_contact
         WHERE (in_contact_info IS NULL
                OR contact = ANY(in_contact_info))
-              AND (in_contact IS NULL
+                        AND (in_contact IS NULL
                    OR description @@ plainto_tsquery(in_contact))
    ),
    matching_entity_contacts AS (
        SELECT entity_id
-         FROM entity_to_contact
+                                           FROM entity_to_contact
         WHERE (in_contact_info IS NULL
                OR contact = ANY(in_contact_info))
               AND (in_contact IS NULL
@@ -340,7 +339,7 @@ RETURNS SETOF contact_search_result AS $$
                    OR EXISTS (select 1 from country
                                where name ilike '%' || in_country || '%'
                                   or short_name ilike '%' || in_country || '%'))
-   )
+                       )
    SELECT e.id, e.control_code, ec.id, ec.meta_number,
           ec.description, ec.entity_class,
           c.legal_name, c.sic_code, b.description , ec.curr::text
@@ -388,7 +387,7 @@ LEFT JOIN business b ON (ec.business_id = b.id)
                                   and note @@ plainto_tsquery(in_notes)))
            AND (in_users IS NULL OR NOT in_users
                 OR EXISTS (select 1 from users where entity_id = e.id))
-    ORDER BY legal_name;
+               ORDER BY legal_name;
 $$ language sql;
 
 

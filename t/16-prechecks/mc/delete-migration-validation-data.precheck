@@ -1,0 +1,36 @@
+{
+    q|Assert that the migration was succesfull by verifying trial balances| =>
+        [
+         {
+             failure_data => [
+                 [ qw( balance_date account_id starting_balance_diff
+                         debits_diff credits_diff ending_balance_diff ) ],
+                 [ '1200-01-01', 1, 0, 3, 5, 5 ],
+                 ],
+             failure_session =>
+                 [
+                  {
+                      statement => q{select id as account_id, description from account},
+                      results => [
+                          [ qw/ account_id description / ],
+                          [ 1, 'desc1' ],
+                          [ 2, 'desc2' ],
+                          ],
+                  },
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement =>
+                          q{INSERT INTO defaults (setting_key, value) VALUES ('accept_mc', 'yes')},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'accept',
+             },
+         },
+        ],
+}

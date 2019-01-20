@@ -6,6 +6,8 @@
 # arguments for pgTAP integration
 --source pgTAP
 --pgtap-option suffix=.pg
+#--pgtap-option dbname=lsmbtestdb
+#--pgtap-option username=postgres
 # arguments for pherkin integration
 --source Feature
 --feature-option extensions=.feature

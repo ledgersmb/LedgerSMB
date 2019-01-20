@@ -514,20 +514,6 @@ sub get_sources {
  return @{$self->{cash_sources}};
 }
 
-=item get_exchange_rate(currency, date)
-
-This method gets the exchange rate for the specified currency and date
-
-=cut
-
-sub get_exchange_rate {
- my ($self) = shift @_;
- ($self->{currency}, $self->{date}) = @_;
- ($self->{exchangerate}) = $self->call_dbmethod(funcname => 'currency_get_exchangerate');
-  return $self->{exchangerate}->{currency_get_exchangerate};
-
-}
-
 =item get_default_currency
 
 This method gets the default currency from the database (as a three-character
@@ -783,7 +769,7 @@ sub post_bulk {
         $self->{source} = $contact->{source};
         if ($queue_payments){
             $self->{batch_class} = BC_PAYMENT;
-            $self->call_dbmethod(
+             $self->call_dbmethod(
                  funcname => 'payment_bulk_queue'
              );
         } else {
@@ -805,23 +791,6 @@ sub post_payment {
  $self->{currency} = $self->{curr};
 
 
- if ("$self->{currency}" ne $self->get_default_currency()) {
-   # First we have to check for an exchangerate on this date
-   my $db_exchangerate = $self->get_exchange_rate($self->{curr},$self->{datepaid});
-   if (!$db_exchangerate) {
-   # We have to set the exchangerate
-
-   $self->call_procedure(funcname => 'payments_set_exchangerate',  args => ["$self->{account_class}", $self->{exrate} ,"$self->{curr}", "$self->{datepaid}"]);
-
-
-
-   }
-   elsif ($db_exchangerate != $self->{exrate} )
-   {
-   # Something went wrong
-   $self->error($self->{_locale}->text("Exchange rate inconsistency with database.  Got [_1], expected [_2]", $self->{exrate}, $db_exchangerate));
-   }
- }
  for (@{$self->{amount}}){
     $_ = $_->bstr if ref $_;
  }
