@@ -134,11 +134,11 @@ $$
      SELECT eca.id, e.name, eca.meta_number,
             a.id as invoice_id, a.invnumber, a.curr::text,
             p.id AS parts_id, p.partnumber,
-            i.description,
-            i.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END,
-            i.unit::text, i.sellprice, i.discount,
-            i.deliverydate,
-            i.serialnumber,
+            a.description,
+            a.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END,
+            a.unit::text, a.sellprice, a.discount,
+            a.deliverydate,
+            a.serialnumber,
             null::numeric as exchange_rate,
             ee.id as salesperson_id,
             ep.last_name || ', ' || ep.first_name as salesperson_name,
@@ -166,7 +166,6 @@ $$
                    or (in_inc_closed and closed))
           ) a ON (a.entity_credit_account = eca.id)
      JOIN parts p ON (p.id = a.parts_id)
-LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
     WHERE (e.name ilike '%' || in_name_part || '%' or in_name_part is null)
