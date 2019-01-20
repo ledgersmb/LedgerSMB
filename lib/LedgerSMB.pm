@@ -156,7 +156,7 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
-our $VERSION = '1.7.0-dev';
+our $VERSION = '1.7.0-alpha1';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 my $json = JSON::MaybeXS->new( pretty => 1,
