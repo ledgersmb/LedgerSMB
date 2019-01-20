@@ -49,7 +49,7 @@ Scenario Outline: Navigate to menu and open screen
     | AR > Credit Note                           | AR note entry            |
     | AR > Import Batch                          | Batch import             |
 #   | AR > Reports > AR Aging                    |                          |
-#   | AR > Reports > Customer History            |                          |
+    | AR > Reports > Customer History            | Purchase History Search  |
 #   | AR > Reports > Outstanding                 |                          |
     | AR > Sales Invoice                         | AR invoice entry         |
     | AR > Search                                | AR search                |

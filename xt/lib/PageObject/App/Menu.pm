@@ -37,7 +37,7 @@ my %menu_path_pageobject_map = (
     "AR > Search" => 'PageObject::App::Search::AR',
     "AR > Reports > Outstanding" => '',
     "AR > Reports > AR Aging" => '',
-    "AR > Reports > Customer History" => '',
+    "AR > Reports > Customer History" => 'PageObject::App::AR::PurchaseHistorySearch',
 
     "AP > Add Transaction" => 'PageObject::App::AP::Transaction',
     "AP > Import Batch" => 'PageObject::App::BatchImport',
