@@ -67,7 +67,7 @@
                         <div id="userpass">
                             <div class="inputrow">
                                 <label id="s-user-label" for="s-user" class="username">DB admin login</label>
-          <select id="s-user" class="username" title="DB admin login" name="s_user" size="15" data-dojo-type="dijit/form/ComboBox" data-dojo-props="value:'', placeHolder:'Select or Enter User'">
+          <select id="s-user" class="username" title="DB admin login" name="s_user" size="15" tabindex="1" data-dojo-type="dijit/form/ComboBox" data-dojo-props="value:'', placeHolder:'Select or Enter User'">
             
             <option  id="s-user-1" value="lsmb_dbadmin" >lsmb_dbadmin</option><option  id="s-user-2" value="postgres" >postgres</option>
           </select>
@@ -75,13 +75,13 @@
                             <div class="inputrow">
                                 <label id="s-password-label" for="s-password" class="password">Password</label>
       
-          <input id="s-password" class="password" title="Password" type="password" name="s_password" size="15" data-dojo-type="dijit/form/ValidationTextBox" />
+          <input id="s-password" class="password" title="Password" type="password" name="s_password" size="15" data-dojo-type="dijit/form/ValidationTextBox" tabindex="2" />
                             </div>
                         </div>
                         <div class="inputrow">
                             <label id="database-label" for="database" class="database">Database</label>
       
-          <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />
+          <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" tabindex="3" maxlength="255" />
                         </div>
                     </div>
                     <div class="inputrow"
@@ -89,10 +89,12 @@
                         <button data-dojo-type="lsmb/SetupLoginButton"
                                 class="submit"
                                 data-dojo-props="action:'login'"
+                                tabindex="4"
                             >Login</button>
                         <button data-dojo-type="lsmb/SetupLoginButton"
                                 class="submit"
                                 data-dojo-props="action:'create_db'"
+                                tabindex="5"
                             >Create</button>
                     </div>
                 </div>
