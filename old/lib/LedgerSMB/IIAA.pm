@@ -56,41 +56,44 @@ SELECT payment_post(?, ?, ?, ?, ?,
         or $form->dberror($dbh->errstr);
 
     # add paid transactions
-    for my $i ( 1 .. $form->{paidaccounts} ) {
+    if ($form->{paidaccounts} and $form->{paidaccounts} > 0) {
+        for my $i ( 1 .. $form->{paidaccounts} ) {
 
-        if ( $form->{"paid_$i"} ) {
-            # variables in same order as arguments of payment_post sproc
-            my $datepaid = $form->{"datepaid_$i"};
-            my $eca_class = ($form->{vc} eq 'vendor') ? 1 : 2;
-            my $eca_id = $form->{"$form->{vc}_id"};
-            my $curr = $form->{currency};
-            my $exchangerate;
-            # no 'notes'
-            # no 'gl description'
-            my ($cashaccno) = split( /--/, $form->{"$form->{ARAP}_paid_$i"} );
-            my $amount =
-                LedgerSMB::PGNumber->from_input($form->{"paid_$i"})->to_db;
-            # no 'cash approved'
-            my $source = $form->{"source_$i"};
-            my $memo = $form->{"memo_$i"};
-            my $trans_id = $form->{id};
-            # none of the in_op_*
-            # ###Verify that there's no overpayment going on!!
+            if ( $form->{"paid_$i"} ) {
+                # variables in same order as arguments of payment_post sproc
+                my $datepaid = $form->{"datepaid_$i"};
+                my $eca_class = ($form->{vc} eq 'vendor') ? 1 : 2;
+                my $eca_id = $form->{"$form->{vc}_id"};
+                my $curr = $form->{currency};
+                my $exchangerate;
+                # no 'notes'
+                # no 'gl description'
+                my ($cashaccno) = split( /--/, $form->{"$form->{ARAP}_paid_$i"} );
+                my $amount =
+                    LedgerSMB::PGNumber->from_input($form->{"paid_$i"})->to_db;
+                # no 'cash approved'
+                my $source = $form->{"source_$i"};
+                my $memo = $form->{"memo_$i"};
+                my $trans_id = $form->{id};
+                # none of the in_op_*
+                # ###Verify that there's no overpayment going on!!
 
-            if ( $form->{currency} eq $form->{defaultcurrency} ) {
-                $exchangerate = 1;
+                if ( $form->{currency} eq $form->{defaultcurrency} ) {
+                    $exchangerate = 1;
+                }
+                else {
+                    $exchangerate =
+                        $form->parse_amount( $myconfig,
+                                             $form->{"exchangerate_$i"} )->to_db();
+                }
+
+                $sth->execute($datepaid, $eca_class, $eca_id, $curr,
+                              $exchangerate, undef, undef, $cashaccno,
+                              [$amount], [0],
+                              [$source], [$memo], [$trans_id], undef, undef,
+                              undef, undef, undef, undef, 0)
+                    or $form->dberror($sth->errstr);
             }
-            else {
-                $exchangerate =
-                    $form->parse_amount( $myconfig,
-                                         $form->{"exchangerate_$i"} )->to_db();
-            }
-
-            $sth->execute($datepaid, $eca_class, $eca_id, $curr, $exchangerate,
-                          undef, undef, $cashaccno, [$amount], [0],
-                          [$source], [$memo], [$trans_id], undef, undef,
-                          undef, undef, undef, undef, 0)
-                or $form->dberror($sth->errstr);
         }
     }
 }

@@ -197,7 +197,7 @@ sub post_invoice {
             }
             $pth->finish;
 
-            if ( $form->{"projectnumber_$i"} ne "" ) {
+            if ( ($form->{"projectnumber_$i"} // "") ne "" ) {
                 ( $null, $project_id ) =
                   split /--/, $form->{"projectnumber_$i"};
             }
