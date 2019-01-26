@@ -83,7 +83,7 @@ $$ language plpgsql;
 
 DROP TYPE IF EXISTS journal_search_result CASCADE;
 CREATE TYPE journal_search_result AS (
-id bigint,
+id int,
 reference text,
 description text,
 entry_type int,
@@ -96,7 +96,7 @@ entity_class text,
 nextdate date
 );
 
-CREATE OR REPLACE FUNCTION journal__search(
+DROP FUNCTION IF EXISTS  journal__search(
 in_reference text,
 in_description text,
 in_entry_type int,
@@ -107,45 +107,49 @@ in_is_template bool,
 in_meta_number text,
 in_entity_class int,
 in_recurring bool
+);
+
+
+CREATE OR REPLACE FUNCTION journal__search(
+in_reference text,
+in_description text,
+in_entry_type int,
+in_transaction_date date,
+in_approved bool,
+in_is_template bool,
+in_meta_number text,
+in_entity_class int,
+in_recurring bool
 ) RETURNS SETOF journal_search_result AS $$
-DECLARE retval journal_search_result;
-BEGIN
-        FOR retval IN
-                SELECT j.id, j.reference, j.description, j.journal,
-                        j.post_date, j.approved,
-                        j.is_template, eca.meta_number,
-                        e.name, ec.class,
-                        coalesce(
-                          r.startdate + 0, -- r.recurring_interval,
-                          j.post_date )
-                FROM journal_entry j
-                LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
-                LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
-                LEFT JOIN entity e ON (eca.entity_id = e.id)
-                LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
-                LEFT JOIN recurring r ON j.id = r.id
-                WHERE (in_reference IS NULL OR in_reference = j.reference) AND
-                        (in_description IS NULL
-                                or in_description = j.description) AND
-                        (in_entry_type is null or in_entry_type = j.journal)
-                        and (in_transaction_date is null
-                                or in_transaction_date = j.post_date) and
-                        j.approved = coalesce(in_approved, true) and
-                        j.is_template = coalesce(in_is_template, false) and
-                        (in_department_id is null
-                                or j.department_id = in_department_id) and
-                        (in_meta_number is null
-                                or eca.meta_number = in_meta_number) and
-                        (in_entity_class is null
-                                or eca.entity_class = in_entity_class) AND
-                        (in_recurring IS NOT TRUE OR
-                                coalesce(r.startdate, r.nextdate) <= now()::date
-                        )
-        LOOP
-                RETURN NEXT retval;
-        END LOOP;
-END;
-$$ language plpgsql;
+    SELECT  j.id, j.reference, j.description, j.journal,
+            j.post_date, j.approved,
+            j.is_template, eca.meta_number,
+            e.name, ec.class,
+            coalesce(
+              r.startdate + 0, -- r.recurring_interval,
+              j.post_date )
+    FROM journal_entry j
+    LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
+    LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
+    LEFT JOIN entity e ON (eca.entity_id = e.id)
+    LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
+    LEFT JOIN recurring r ON j.id = r.id
+    WHERE (in_reference IS NULL OR in_reference = j.reference) AND
+            (in_description IS NULL
+                    or in_description = j.description) AND
+            (in_entry_type is null or in_entry_type = j.journal)
+            and (in_transaction_date is null
+                    or in_transaction_date = j.post_date) and
+            j.approved = coalesce(in_approved, true) and
+            j.is_template = coalesce(in_is_template, false) and
+            (in_meta_number is null
+                    or eca.meta_number = in_meta_number) and
+            (in_entity_class is null
+                    or eca.entity_class = in_entity_class) AND
+            (in_recurring IS NOT TRUE OR
+                    coalesce(r.startdate, r.nextdate) <= now()::date
+            );
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION journal__get_invoice(in_id int) RETURNS eca_invoice AS
 $$
