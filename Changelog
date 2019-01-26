@@ -8,9 +8,10 @@ New functionalities
 * UI allows addition and removal of custom `account_link` flags (Nick P)
 
 Improved foreign currency support
-* Multiple rates per day per currency; from a single rate (Erik H)
+* Multiple rates per day per currency (Erik H)
   - Reversing a transaction from a closed-period on a day with different rate
   - Bank transfers with different banks on the same day with bank's fx rate
+  - Migration from systems which support per-transaction or per-line fx rates
 * Multiple currencies in a single general ledger transaction (Erik H)
   - Posting an opening balance with all currencies in 1 transaction
   - Transferring between foreign currencies on e.g. Paypal in 1 transaction
