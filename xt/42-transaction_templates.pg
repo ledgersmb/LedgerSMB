@@ -26,7 +26,7 @@ BEGIN;
 --  SELECT has_function('journal__save_recurring',ARRAY['text','date','interval','integer','integer']);
     SELECT has_function('journal__save_recurring_print',ARRAY['integer','text','text']);
 --  SELECT has_function('journal__increment_recurring',ARRAY['integer','date']);
-    SELECT has_function('journal__search',ARRAY['text','text','integer','date','boolean','integer','boolean','text','integer','boolean']);
+    SELECT has_function('journal__search',ARRAY['text','text','integer','date','boolean','boolean','text','integer','boolean']);
     SELECT has_function('journal__validate_entry',ARRAY['integer']);
 
     -- Run tests
