@@ -108,3 +108,4 @@ mc/delete-migration-validation-data.sql
 1.7/limit_summary_account_links.sql
 1.7/rename-menu-option-gl-search.sql
 1.7/to-location-pkeys-optimization.sql
+1.7/fix-oe-person_id-fkey.sql
