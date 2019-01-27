@@ -796,10 +796,8 @@ sub recurring_transactions {
 
     $form->sort_order();
 
-    my @column_index = qw(ndx reference description);
-
-    push @column_index,
-      qw(nextdate enddate id amount curr repeat howmany recurringemail recurringprint);
+    my @column_index = qw(ndx reference description nextdate enddate id amount
+                          curr repeat howmany recurringemail recurringprint);
 
     $column_header{reference} = {
         text => $locale->text('Reference'),
