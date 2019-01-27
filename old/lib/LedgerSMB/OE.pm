@@ -181,13 +181,11 @@ sub save {
     my $did_insert = 0;
     if ( !$form->{id} ) {
         $query = qq|SELECT nextval('oe_id_seq')|;
-        $sth   = $dbh->prepare($query);
+        $sth   = $dbh->prepare($query) || $form->dberror($query);
         $sth->execute || $form->dberror($query);
         ( $form->{id} ) = $sth->fetchrow_array;
         $sth->finish;
 
-        my $uid = localtime;
-        $uid .= "$$";
         if ( !$form->{reqdate} ) {
             $form->{reqdate} = undef;
         }
@@ -199,7 +197,6 @@ sub save {
             $form->{closed} = 'f';
         }
 
-        # $form->{id} is safe because it is only pulled *from* the db.
         $query = qq|
             INSERT INTO oe
                 (id, ordnumber, quonumber, transdate,
@@ -208,12 +205,13 @@ sub save {
                 person_id, language_code, ponumber, terms,
                 quotation, oe_class_id, entity_credit_account)
             VALUES
-                ($form->{id}, ?, ?,
-                ?, ?, ?,
-                ?, ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?)|;
+                (?, ?, ?,
+                 ?, ?, ?,
+                 ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?,
+                 ?, ?, ?)|;
         @queryargs = (
+            $form->{id},
             $form->{ordnumber},     $form->{quonumber},
             $form->{transdate},     $form->{reqdate},
             $form->{shippingpoint}, $form->{shipvia},
@@ -447,10 +445,10 @@ sub save {
             $form->{terms},         $form->{id}
         );
     }
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $form->dberror($query);
 
     $form->{ordtotal} = $amount;
-    $sth->execute(@queryargs) || $form->error($query);
+    $sth->execute(@queryargs) || $form->dberror($query);
 
     # add shipto
     $form->{name} = $form->{ $form->{vc} };
