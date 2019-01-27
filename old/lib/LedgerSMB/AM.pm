@@ -640,8 +640,9 @@ sub recurring_transactions {
     my $sortorder = $form->sort_order( \@a );
 
     $query = qq|
-           SELECT 'ar' AS module, 'ar' AS transaction, a.invoice,
-                  e.name AS description, a.amount,
+           SELECT case when a.invoice then 'is' else 'ar' end AS module,
+                  'ar' AS transaction,
+                  e.name AS description, a.amount_tc as amount,
                           extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
@@ -649,7 +650,7 @@ sub recurring_transactions {
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue,
                   'customer' AS vc,
-                  ex.buy AS exchangerate, a.curr,
+                 a.curr,
                       (s.nextdate IS NULL OR s.nextdate > s.enddate)
                           AS expired
              FROM recurring s
@@ -659,20 +660,19 @@ sub recurring_transactions {
              JOIN entity e ON (eca.entity_id = e.id)
         LEFT JOIN recurringemail se ON (se.id = s.id)
         LEFT JOIN recurringprint sp ON (sp.id = s.id)
-        LEFT JOIN exchangerate ex
-                  ON (ex.curr = a.curr AND a.transdate = ex.transdate)
 
             UNION
 
-          SELECT 'ap' AS module, 'ap' AS transaction, a.invoice,
-                  e.name AS description, a.amount,
+          SELECT case when a.invoice then 'ir' else 'ap' end AS module,
+                 'ap' AS transaction,
+                  e.name AS description, a.amount_tc,
                           extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, 'vendor' AS vc,
-                  ex.sell AS exchangerate, a.curr,
+                  a.curr,
                   (s.nextdate IS NULL OR s.nextdate > s.enddate)
                   AS expired
              FROM recurring s
@@ -682,23 +682,21 @@ sub recurring_transactions {
              JOIN entity e ON (eca.entity_id = e.id)
         LEFT JOIN recurringemail se ON (se.id = s.id)
         LEFT JOIN recurringprint sp ON (sp.id = s.id)
-        LEFT JOIN exchangerate ex ON
-                  (ex.curr = a.curr AND a.transdate = ex.transdate)
 
             UNION
 
-           SELECT 'gl' AS module, 'gl' AS transaction, FALSE AS invoice,
-                  a.description, (SELECT SUM(ac.amount)
+           SELECT 'gl' AS module, 'gl' AS transaction,
+                  a.description, (SELECT SUM(ac.amount_bc)
              FROM acc_trans ac
             WHERE ac.trans_id = a.id
-              AND ac.amount > 0) AS amount,
+              AND ac.amount_bc > 0) AS amount,
                           extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, '' AS vc,
-                  '1' AS exchangerate, $defaultcurrency AS curr,
+                  $defaultcurrency AS curr,
                   (s.nextdate IS NULL OR s.nextdate > s.enddate)
                   AS expired
              FROM recurring s
@@ -708,8 +706,8 @@ sub recurring_transactions {
 
             UNION
 
-           SELECT 'oe' AS module, 'so' AS transaction, FALSE AS invoice,
-                  e.name AS description, a.amount,
+           SELECT 'oe' AS module, 'so' AS transaction,
+                  e.name AS description, a.amount_tc as amount,
                           extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
@@ -717,7 +715,7 @@ sub recurring_transactions {
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue,
                   'customer' AS vc,
-                  ex.buy AS exchangerate, a.curr,
+                  a.curr,
                   (s.nextdate IS NULL OR s.nextdate > s.enddate)
                   AS expired
              FROM recurring s
@@ -725,21 +723,19 @@ sub recurring_transactions {
              JOIN entity e ON (a.entity_id = e.id)
         LEFT JOIN recurringemail se ON (se.id = s.id)
         LEFT JOIN recurringprint sp ON (sp.id = s.id)
-        LEFT JOIN exchangerate ex ON
-                  (ex.curr = a.curr AND a.transdate = ex.transdate)
             WHERE a.quotation = '0'
 
             UNION
 
-           SELECT 'oe' AS module, 'po' AS transaction, FALSE AS invoice,
-                  e.name AS description, a.amount,
+           SELECT 'oe' AS module, 'po' AS transaction,
+                  e.name AS description, a.amount_tc as amount,
                           extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, 'vendor' AS vc,
-                  ex.sell AS exchangerate, a.curr,
+                  a.curr,
                   (s.nextdate IS NULL OR s.nextdate > s.enddate)
                   AS expired
              FROM recurring s
@@ -747,8 +743,6 @@ sub recurring_transactions {
              JOIN entity e ON (a.entity_id = e.id)
         LEFT JOIN recurringemail se ON (se.id = s.id)
         LEFT JOIN recurringprint sp ON (sp.id = s.id)
-        LEFT JOIN exchangerate ex ON
-                  (ex.curr = a.curr AND a.transdate = ex.transdate)
             WHERE a.quotation = '0'
 
          ORDER BY $sortorder|;
@@ -763,7 +757,6 @@ sub recurring_transactions {
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 
-        $ref->{exchangerate} ||= 1;
         $form->db_parse_numeric(sth => $sth, hashref => $ref);
 
         if ( $ref->{years} ) {

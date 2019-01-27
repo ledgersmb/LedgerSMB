@@ -881,19 +881,11 @@ sub recurring_transactions {
               : $locale->text('Next Number');
             $column_data{reference} = {
                 text => $reference,
-                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
                 };
 
             my $module = "$ref->{module}.pl";
             my $type   = "";
-            if ( $ref->{module} eq 'ar' ) {
-                $module = "is.pl" if $ref->{invoice};
-                $ref->{amount} /= $ref->{exchangerate};
-            }
-            if ( $ref->{module} eq 'ap' ) {
-                $module = "ir.pl" if $ref->{invoice};
-                $ref->{amount} /= $ref->{exchangerate};
-            }
             if ( $ref->{module} eq 'oe' ) {
                 $type =
                   ( $ref->{vc} eq 'customer' )
@@ -989,19 +981,6 @@ sub edit_recurring {
 "$form->{script}?action=recurring_transactions&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->{type} = "transaction";
-
-    if ( $form->{module} eq 'ar' ) {
-        if ( $form->{invoice} ) {
-            $form->{type}   = "invoice";
-            $form->{module} = "is";
-        }
-    }
-    if ( $form->{module} eq 'ap' ) {
-        if ( $form->{invoice} ) {
-            $form->{type}   = "invoice";
-            $form->{module} = "ir";
-        }
-    }
 
     if ( $form->{module} eq 'oe' ) {
         %tr = (
