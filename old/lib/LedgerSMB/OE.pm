@@ -181,7 +181,7 @@ sub save {
     my $did_insert = 0;
     if ( !$form->{id} ) {
         $query = qq|SELECT nextval('oe_id_seq')|;
-        $sth   = $dbh->prepare($query);
+        $sth   = $dbh->prepare($query) || $form->dberror($query);
         $sth->execute || $form->dberror($query);
         ( $form->{id} ) = $sth->fetchrow_array;
         $sth->finish;
@@ -447,10 +447,10 @@ sub save {
             $form->{terms},         $form->{id}
         );
     }
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $form->dberror($query);
 
     $form->{ordtotal} = $amount;
-    $sth->execute(@queryargs) || $form->error($query);
+    $sth->execute(@queryargs) || $form->dberror($query);
 
     # add shipto
     $form->{name} = $form->{ $form->{vc} };
