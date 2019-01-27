@@ -1084,8 +1084,6 @@ sub process_transactions {
             ) {
                 $form->{$_} = $pt->{$_};
             }
-            $form->db_init(\%myconfig);
-
             # post, print, email
             if ( $pt->{arid} || $pt->{apid} || $pt->{oeid} ) {
                 if ( $pt->{arid} || $pt->{apid} ) {
