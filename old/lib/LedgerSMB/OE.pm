@@ -186,8 +186,6 @@ sub save {
         ( $form->{id} ) = $sth->fetchrow_array;
         $sth->finish;
 
-        my $uid = localtime;
-        $uid .= "$$";
         if ( !$form->{reqdate} ) {
             $form->{reqdate} = undef;
         }
