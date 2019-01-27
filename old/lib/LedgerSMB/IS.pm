@@ -1260,6 +1260,7 @@ sub post_invoice {
         $form->{customer_id},   $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
+        $form->{duedate},
         $form->{shippingpoint}, $form->{shipvia},
         $form->{terms},         $form->{notes},
         $form->{intnotes},      $form->{taxincluded},

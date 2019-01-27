@@ -796,10 +796,8 @@ sub recurring_transactions {
 
     $form->sort_order();
 
-    my @column_index = qw(ndx reference description);
-
-    push @column_index,
-      qw(nextdate enddate id amount curr repeat howmany recurringemail recurringprint);
+    my @column_index = qw(ndx reference description nextdate enddate id amount
+                          curr repeat howmany recurringemail recurringprint);
 
     $column_header{reference} = {
         text => $locale->text('Reference'),
@@ -883,19 +881,11 @@ sub recurring_transactions {
               : $locale->text('Next Number');
             $column_data{reference} = {
                 text => $reference,
-                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
                 };
 
             my $module = "$ref->{module}.pl";
             my $type   = "";
-            if ( $ref->{module} eq 'ar' ) {
-                $module = "is.pl" if $ref->{invoice};
-                $ref->{amount} /= $ref->{exchangerate};
-            }
-            if ( $ref->{module} eq 'ap' ) {
-                $module = "ir.pl" if $ref->{invoice};
-                $ref->{amount} /= $ref->{exchangerate};
-            }
             if ( $ref->{module} eq 'oe' ) {
                 $type =
                   ( $ref->{vc} eq 'customer' )
@@ -992,19 +982,6 @@ sub edit_recurring {
 
     $form->{type} = "transaction";
 
-    if ( $form->{module} eq 'ar' ) {
-        if ( $form->{invoice} ) {
-            $form->{type}   = "invoice";
-            $form->{module} = "is";
-        }
-    }
-    if ( $form->{module} eq 'ap' ) {
-        if ( $form->{invoice} ) {
-            $form->{type}   = "invoice";
-            $form->{module} = "ir";
-        }
-    }
-
     if ( $form->{module} eq 'oe' ) {
         %tr = (
             so => sales_order,
@@ -1084,8 +1061,6 @@ sub process_transactions {
             ) {
                 $form->{$_} = $pt->{$_};
             }
-            $form->db_init(\%myconfig);
-
             # post, print, email
             if ( $pt->{arid} || $pt->{apid} || $pt->{oeid} ) {
                 if ( $pt->{arid} || $pt->{apid} ) {
