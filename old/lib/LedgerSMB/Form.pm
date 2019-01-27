@@ -3378,24 +3378,25 @@ If invnumber is not set, updates it.  Used when gapless numbering is in effect
 
 sub update_invnumber {
     my $self = shift;
-    my $sth = $LedgerSMB::App_State::DBH->prepare(
-        'select invnumber from ar where id = ?'
-    );
-    $sth->execute($self->{id}) or $self->error($sth->errstr);
-    my ($invnumber) = $sth->fetchrow_array
-        or $self->error($sth->errstr);
+    my $query = 'select invnumber from ar where id = ?';
+    my $sth = $LedgerSMB::App_State::DBH->prepare($query)
+        or $self->dberror($query);
+    $sth->execute($self->{id}) or $self->dberror($query);
+    my ($invnumber) = $sth->fetchrow_array;
+    $self->dberror($query) if $sth->err;
+
     return if defined $invnumber or !$sth->rows;
     $sth->finish;
-    $sth = $LedgerSMB::App_State::DBH->prepare(
-      'update ar set invnumber = ? where id = ?'
-    );
+    $query = 'update ar set invnumber = ? where id = ?';
+    $sth = $LedgerSMB::App_State::DBH->prepare($query)
+        or $self->dberror($query);
     $sth->execute(
         $self->update_defaults(
             $LedgerSMB::App_State::User,
             'sinumber'
         ),
         $self->{id}
-    );
+    ) or $self->dberror($query);
 }
 
 =item $form->db_prepare_vars(var1, var2, ..., varI<n>)
