@@ -302,7 +302,7 @@ sub apply {
     $dbh->do(q{
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
             VALUES(now(), ?, ?, ?, ?)
-    }, undef, $self->sha, $self->path, $state, $errstr);
+    }, undef, $self->sha, $self->path, $state // 0, $errstr // '');
     $dbh->commit if (! $dbh->{AutoCommit});
 
     if ($errstr) {
