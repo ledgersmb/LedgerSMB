@@ -662,8 +662,6 @@ create table location_class_to_entity_class (
   entity_class int not null references entity_class(id)
 );
 
-GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
-
 COMMENT ON TABLE location_class_to_entity_class IS
 $$This determines which location classes go with which entity classes$$;
 
@@ -3717,8 +3715,6 @@ SELECT 'last_year', 'Last Year',
        ((extract('YEAR' from now()) - 1)::text || '-01-01')::date as date_from
 ;
 
-GRANT SELECT ON periods TO public;
-
 CREATE TABLE asset_unit_class (
         id int not null unique,
         class text primary key
@@ -4896,8 +4892,6 @@ select c.id, c.accno, coalesce(at.description, c.description),
          ON c.id = at.trans_id
 group by c.id, c.accno, coalesce(at.description, c.description), c.category,
          c.heading, c.gifi_accno, c.contra, c.tax;
-
-GRANT SELECT ON chart TO public;
 
 COMMENT ON VIEW chart IS $$Compatibility chart for 1.2 and earlier.$$;
 
