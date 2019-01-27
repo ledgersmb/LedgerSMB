@@ -199,7 +199,6 @@ sub save {
             $form->{closed} = 'f';
         }
 
-        # $form->{id} is safe because it is only pulled *from* the db.
         $query = qq|
             INSERT INTO oe
                 (id, ordnumber, quonumber, transdate,
@@ -208,12 +207,13 @@ sub save {
                 person_id, language_code, ponumber, terms,
                 quotation, oe_class_id, entity_credit_account)
             VALUES
-                ($form->{id}, ?, ?,
-                ?, ?, ?,
-                ?, ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?)|;
+                (?, ?, ?,
+                 ?, ?, ?,
+                 ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?,
+                 ?, ?, ?)|;
         @queryargs = (
+            $form->{id},
             $form->{ordnumber},     $form->{quonumber},
             $form->{transdate},     $form->{reqdate},
             $form->{shippingpoint}, $form->{shipvia},
