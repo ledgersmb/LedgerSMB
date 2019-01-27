@@ -21,7 +21,7 @@ $ENV{LSMB_NEW_DB} or BAIL_OUT('LSMB_NEW_DB is not set');
 
 my $temp = $ENV{TEMP} || '/tmp/';
 
-plan tests => 19;
+plan tests => 22;
 $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 
 my $db = LedgerSMB::Database->new({
@@ -35,7 +35,24 @@ ok($db->create, 'Database Created')
   || BAIL_OUT('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
 ok($db->apply_changes, 'applied changes');
+my $patch_log_dbh = $db->connect;
+my $patch_log_sth =
+    $patch_log_dbh->prepare('select count(*) from db_patch_log')
+    or BAIL_OUT $patch_log_dbh->errstr;
+$patch_log_sth->execute or BAIL_OUT $patch_log_sth->errstr;
+my ($log_count) = $patch_log_sth->fetchrow_array;
+ok(($log_count > 1), 'Applied patches are logged');
+
+$patch_log_sth =
+    $patch_log_dbh->prepare('select count(*) from db_patches')
+    or BAIL_OUT $patch_log_dbh->errstr;
+$patch_log_sth->execute or BAIL_OUT $patch_log_sth->errstr;
+my ($patch_count) = $patch_log_sth->fetchrow_array;
+ok(($patch_count > 1), 'Applied patches are recorded in db_patches table');
+is($patch_count, $log_count, 'Patch and log counts are equal; all patches apply first time around');
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
+$patch_log_sth->finish;
+$patch_log_dbh->disconnect; # Without disconnecting, the copy below fails...
 
 if (!$ENV{LSMB_INSTALL_DB}){
 
