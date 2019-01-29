@@ -339,7 +339,7 @@ sub create_links {
     # this works only if all taxes are checked
 
     if ( !$form->{oldinvtotal} ) { # first round loading (or amount was 0)
-        for (@taxaccounts) { $form->{ "calctax_" . $_->account } = 1 }
+        for (@taxaccounts) { $form->{ "calctax_" . $_->{account} } = 1 }
     }
 
     $form->{rowcount}++ if ( $form->{id} || !$form->{rowcount} );
@@ -437,6 +437,9 @@ sub form_header {
         <th align=right>| . $locale->text('Exchange Rate') . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=10 value=$form->{exchangerate}></td>
 |;
+    }
+     else {
+         $exchangerate .= q|<input name=exchangerate type=hidden value=1>|;
     }
     $exchangerate .= qq|
 </tr>
