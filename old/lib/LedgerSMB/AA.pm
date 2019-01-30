@@ -129,7 +129,8 @@ sub post_transaction {
         #tshvr HV parse first or problem at aa.pl create_links $form->{"${akey}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}=$form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml; 123,45 * -1  gives 123 !!
         $form->{"tax_$accno"}=$form->parse_amount($myconfig,$form->{"tax_$accno"});
         $form->{"tax_$accno"} *= -1 if $form->{reverse};
-        $fxtax += $tax{fxamount}{$accno} = $form->{"tax_$accno"};
+        $tax{fxamount}{$accno} = $form->{"tax_$accno"};
+        $fxtax += $tax{fxamount}{$accno};
         $tax += $tax{fxamount}{$accno};
         $amount = $tax{fxamount}{$accno} * $form->{exchangerate};
         $tax{amount}{$accno} = $form->round_amount( $amount - $diff, 2 );
@@ -140,7 +141,7 @@ sub post_transaction {
             push @{ $form->{acc_trans}{taxes} },
               {
                 accno          => $accno,
-            amount_bc      => $amount,
+            amount_bc      => $tax{amount}{$accno},
             amount_tc      => $tax{fxamount}{$accno},
             curr           => $form->{currency},
                 project_id     => undef,
@@ -460,15 +461,15 @@ sub post_transaction {
             $query = qq|
                 INSERT INTO acc_trans
                         (trans_id, chart_id, amount_bc, curr, amount_tc,
-                            transdate, fx_transaction)
+                            transdate)
                      VALUES (?, (SELECT id FROM account
                               WHERE accno = ?),
-                        ?, ?, ?, ?, ?)|;
+                        ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id}, $ref->{accno}, $ref->{amount_bc} * $ml,
                 $form->{currency}, $ref->{amount_tc} * $ml,
-                $form->{transdate}, $ref->{fx_transaction}
+                $form->{transdate}
             );
             $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
