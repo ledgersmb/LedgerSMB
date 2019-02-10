@@ -226,9 +226,9 @@ my %part_props = (
     expense_accno => '5010',
     );
 
-Given qr/a part with these properties:$/, sub {
-    my %props = map { $_->{name} => $_->{value} } @{C->data};
-    my %total_props = (%part_props, %props);
+
+sub _create_part {
+    my ($props) = @_;
 
     local $LedgerSMB::App_State::DBH = S->{ext_lsmb}->admin_dbh;
     my $account = LedgerSMB::DBObject::Account->new();
@@ -236,17 +236,17 @@ Given qr/a part with these properties:$/, sub {
     my @accounts = $account->list();
     my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
 
-    $total_props{partnumber} //= 'P-' . ($part_count++);
+    $props->{partnumber} //= 'P-' . ($part_count++);
     my $dbh = S->{ext_lsmb}->admin_dbh;
     my @keys;
     my @values;
     my @placeholders;
 
-    $total_props{$_} = $accno_ids{$total_props{$_}}
-       for grep { m/accno/ } keys %total_props;
+    $props->{$_} = $accno_ids{$props->{$_}}
+       for grep { m/accno/ } keys %$props;
 
-    for my $key (keys %total_props) {
-        push @values, $total_props{$key};
+    for my $key (keys %$props) {
+        push @values, $props->{$key};
         $key =~ s/accno$/accno_id/g;
         push @keys, $key;
         push @placeholders, '?';
@@ -258,6 +258,23 @@ Given qr/a part with these properties:$/, sub {
       INSERT INTO parts ($keys)
         VALUES ($placeholders)
 |, undef, @values);
+
+}
+
+Given qr/a part "([^\"]+)"$/, sub {
+    my $partnumber = $1;
+    my %total_props = (%part_props,
+                       partnumber => $partnumber,
+        );
+
+    _create_part(\%total_props);
+};
+
+Given qr/a part with these properties:$/, sub {
+    my %props = map { $_->{name} => $_->{value} } @{C->data};
+    my %total_props = (%part_props, %props);
+
+    _create_part(\%total_props);
 };
 
 my $invnumber = 0;
