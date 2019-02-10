@@ -139,7 +139,7 @@ on 'develop' => sub {
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Test::Trap';
-    requires 'Weasel', '0.17';
+    requires 'Weasel', '0.18';
     requires 'Weasel::Driver::Selenium2', '0.05';
     requires 'Weasel::Widgets::Dojo';
 };
