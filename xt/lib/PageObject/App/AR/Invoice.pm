@@ -5,6 +5,8 @@ use warnings;
 
 use Carp;
 use PageObject;
+use PageObject::App::Invoices::Lines;
+use PageObject::App::Invoices::Header;
 
 use Moose;
 use namespace::autoclean;
@@ -36,6 +38,21 @@ sub select_customer {
     $elem->send_keys($customer);
 
     $self->find("*button", text => "Update")->click;
+}
+
+sub header {
+    my ($self) = @_;
+
+    $self->verify;
+    return $self->find('*invoice-header',
+                       widget_args => [ counterparty_type => 'customer' ]);
+}
+
+sub lines {
+    my ($self) = @_;
+
+    $self->verify;
+    return $self->find('*invoice-lines');
 }
 
 __PACKAGE__->meta->make_immutable;

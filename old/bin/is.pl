@@ -431,7 +431,7 @@ sub form_header {
   <tr height="5"></tr>
   <tr>
     <td>
-      <table width=100%>
+      <table id="invoice-header" width=100%>
     <tr valign=top>
       <td>
         <table>

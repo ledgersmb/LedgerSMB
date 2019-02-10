@@ -13,6 +13,13 @@ extends 'PageObject';
 
 use PageObject::App;
 
+__PACKAGE__->self_register(
+              'invoice-line',
+              './/tbody[@data-dojo-type="lsmb/InvoiceLine"]',
+              tag_name => 'tbody',
+              attributes => {
+                  'data-dojo-type' => 'lsmb/InvoiceLine',
+              });
 
 sub _verify {
     my ($self) = @_;
@@ -36,6 +43,11 @@ my %field_map = (
 sub field_value {
     my ($self, $label, $new_value) = @_;
 
+    my $id = $self->get_attribute('id');
+    $id =~ s/^line-//;
+
+    return $self->find(
+        './/*[@name="' . $field_map{$label} . qq{_${id}"]})->value;
 }
 
 
