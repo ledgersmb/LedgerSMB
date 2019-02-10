@@ -40,6 +40,37 @@ Given qr/(a nonexistent|an existing) company named "(.*)"/, sub {
         if S->{'nonexistent company'};
 };
 
+my %company_settings_map = (
+    'Max per dropdown' => 'vclimit',
+    );
+
+Given qr/the following company configuration settings:$/, sub {
+    my $config => C->data;
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    my $sth = $dbh->prepare('select * from defaults');
+    $sth->execute;
+    my $active = $sth->fetchall_hashref('setting_key');
+
+    for my $conf (@$config) {
+        if (exists $company_settings_map{$conf->{setting}}) {
+            $conf->{setting} = $company_settings_map{$conf->{setting}};
+        }
+    }
+
+    my $stu =
+        $dbh->prepare('update defaults set value = ? where setting_key = ?');
+    my $sti =
+        $dbh->prepare('insert into defaults (setting_key, value) values (?,?)');
+    for my $conf (@$config) {
+        if (exists $active->{$conf->{setting}}) {
+            $stu->execute($conf->{value}, $conf->{setting});
+        }
+        else {
+            $sti->execute($conf->{setting}, $conf->{value});
+        }
+    }
+};
+
 Given qr/(a nonexistent|an existing) user named "(.*)"/, sub {
     my $role = $2;
     S->{"the user"} = $role;
