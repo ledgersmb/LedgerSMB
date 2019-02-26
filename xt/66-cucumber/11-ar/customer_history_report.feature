@@ -4,7 +4,7 @@ Feature: Customer History Report
   of customers to generate a report, filtering by various parameters.
 
 Background:
-  Given a standard test company
+  Given a standard test company named "standard-customer-history"
     And a logged in admin user
 
 Scenario: 
@@ -16,5 +16,5 @@ Scenario:
    And I should see these headings:
        | Heading             | Contents         |
        | Report Name         | Purchase History |
-       | Company             | standard-0   |
+       | Company             | standard-customer-history   |
 
