@@ -9,7 +9,7 @@ Background:
     And a logged in admin user
 
 Scenario: Add payments to a new batch
- Given a vendor 'Vendor A'
+ Given a vendor "Vendor A"
    And an unpaid AP transaction with these values:
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor A | 2017-01-01 | INV100         | 100.00 |
@@ -47,7 +47,7 @@ Scenario: Add payments to a new batch
   Then I should see the Filtering Payments screen
 
 Scenario: Add payments to an existing batch
- Given a vendor 'Vendor B'
+ Given a vendor "Vendor B"
    And an unpaid AP transaction with these values:
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor B | 2017-01-02 | INV101         | 25.00  |
@@ -77,7 +77,7 @@ Scenario: Add payments to an existing batch
   Then I should see the Filtering Payments screen
 
 Scenario: Add partial payment to an existing batch
- Given a vendor 'Vendor C'
+ Given a vendor "Vendor C"
    And an unpaid AP transaction with these values:
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor C | 2017-03-01 | INV103         | 250.00 |

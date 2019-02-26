@@ -129,7 +129,7 @@ my $entity_counter = 0;
 my $vendor_counter = 0;
 my $customer_counter = 0;
 
-Given qr/a vendor '(.*)'$/, sub {
+Given qr/a vendor "(.*)"$/, sub {
     my $vendor_name = $1;
     my $control_code = 'V-' . ($vendor_counter++);
     my $admin_dbh = S->{ext_lsmb}->admin_dbh;

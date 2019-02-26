@@ -11,7 +11,7 @@ Scenario: Adjusting recorded inventory down (to a lower count)
 # Note: we need a way to list inventory; 'part_edit' isn't that role...
 #     And a logged in user with 'part_edit' rights
      And a logged in admin
-     And a vendor 'v1'
+     And a vendor "v1"
      And a part with these properties:
        | name       | value          |
        | partnumber | P001           |
