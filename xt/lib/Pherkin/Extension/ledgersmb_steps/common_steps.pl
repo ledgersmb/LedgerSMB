@@ -19,13 +19,14 @@ use Test::BDD::Cucumber::StepFile;
 
 my $company_seq = 0;
 
-Given qr/a (fresh )?standard test company/, sub {
+Given qr/a (fresh )?standard test company(?: named "(.*)")?/, sub {
     my $fresh_required = $1;
+    my $company = $2;
 
     S->{ext_lsmb}->ensure_template;
 
     if (! S->{"the company"} || $fresh_required) {
-        my $company = "standard-" . $company_seq++;
+        $company //= "standard-" . $company_seq++;
         S->{ext_lsmb}->create_from_template($company);
     }
 };

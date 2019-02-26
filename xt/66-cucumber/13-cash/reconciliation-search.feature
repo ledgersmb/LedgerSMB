@@ -4,7 +4,7 @@ Feature: Reconciliation Report Search
   reports according to various attributes.
 
 Background:
-  Given a standard test company
+  Given a standard test company named "standard-recon-test"
     And a logged in admin user
 
 Scenario: Default search with no filter
@@ -41,7 +41,7 @@ Scenario: Filter by "Statement Date From"
    And I should see these headings:
        | Heading             | Contents               |
        | Report Name         | Reconciliation Reports |
-       | Company             | standard-0             |
+       | Company             | standard-recon-test             |
        | From Date           | 2018-02-01             |
        | To Date             |                        |
        | From Amount         |                        |
@@ -59,7 +59,7 @@ Scenario: Filter by "Statement Date To"
    And I should see these headings:
        | Heading             | Contents               |
        | Report Name         | Reconciliation Reports |
-       | Company             | standard-0             |
+       | Company             | standard-recon-test             |
        | From Date           |                        |
        | To Date             | 2018-02-01             |
        | From Amount         |                        |
@@ -75,7 +75,7 @@ Scenario: Filter by "Amount From"
   Then I should see the Reconciliation Search Report screen
        | Heading             | Contents               |
        | Report Name         | Reconciliation Reports |
-       | Company             | standard-0             |
+       | Company             | standard-recon-test             |
        | From Date           |                        |
        | To Date             |                        |
        | From Amount         | 1000.01                |
@@ -92,7 +92,7 @@ Scenario: Filter by "Amount To"
   Then I should see the Reconciliation Search Report screen
        | Heading             | Contents               |
        | Report Name         | Reconciliation Reports |
-       | Company             | standard-0             |
+       | Company             | standard-recon-test             |
        | From Date           |                        |
        | To Date             |                        |
        | From Amount         |                        |

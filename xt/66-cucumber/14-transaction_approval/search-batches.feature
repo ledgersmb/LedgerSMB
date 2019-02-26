@@ -5,7 +5,7 @@ Feature: Search Batches
   presented as a list.
 
 Background:
-  Given a standard test company
+  Given a standard test company named "standard-batch-test"
     And a logged in admin user
 
 Scenario: Search for all unapproved batches
@@ -22,7 +22,7 @@ Scenario: Search for all unapproved batches
    And I should see these headings:
        | Heading             | Contents     |
        | Report Name         | Batch Search |
-       | Company             | standard-0   |
+       | Company             | standard-batch-test   |
        | Transaction Type    |              |
        | Description         |              |
        | Amount Greater Than |              |
@@ -43,7 +43,7 @@ Scenario: Search for batches, filtering by batch type
    And I should see these headings:
        | Heading             | Contents     |
        | Report Name         | Batch Search |
-       | Company             | standard-0   |
+       | Company             | standard-batch-test   |
        | Transaction Type    | payment      |
        | Description         |              |
        | Amount Greater Than |              |
@@ -60,7 +60,7 @@ Scenario: Search for batches, filtering by batch type
    And I should see these headings:
        | Heading             | Contents     |
        | Report Name         | Batch Search |
-       | Company             | standard-0   |
+       | Company             | standard-batch-test   |
        | Transaction Type    |              |
        | Description         | ABC          |
        | Amount Greater Than |              |
@@ -77,7 +77,7 @@ Scenario: Search for all approved batches
    And I should see these headings:
        | Heading             | Contents     |
        | Report Name         | Batch Search |
-       | Company             | standard-0   |
+       | Company             | standard-batch-test   |
        | Transaction Type    |              |
        | Description         |              |
        | Amount Greater Than |              |
