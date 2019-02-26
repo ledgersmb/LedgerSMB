@@ -126,19 +126,20 @@ Given qr/a logged in user with these rights:/, sub {
 
 
 my $entity_counter = 0;
-my $vendor_counter = 0;
+my $vc_counter = 0;
 my $customer_counter = 0;
 
-Given qr/a vendor "(.*)"$/, sub {
-    my $vendor_name = $1;
-    my $control_code = 'V-' . ($vendor_counter++);
+Given qr/a (vendor|customer) "(.*)"$/, sub {
+    my $vc = $1;
+    my $vc_name = $2;
+    my $control_code = uc(substr($vc,0,1)) . '-' . ($vc_counter++);
     my $admin_dbh = S->{ext_lsmb}->admin_dbh;
     my $company = LedgerSMB::Entity::Company->new(
         country_id => 1,
         control_code => $control_code,
-        legal_name => $vendor_name,
-        name => $vendor_name,
-        entity_class => 1,
+        legal_name => $vc_name,
+        name => $vc_name,
+        entity_class => ($vc eq 'vendor' ? 1 : 2),
         _dbh => $admin_dbh,
         );
     $company = $company->save;
@@ -149,15 +150,14 @@ Given qr/a vendor "(.*)"$/, sub {
     my @accounts = $account->list();
     my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
 
-    my $vendor = LedgerSMB::Entity::Credit_Account->new(
+    LedgerSMB::Entity::Credit_Account->new(
         entity_id => $company->entity_id,
-        entity_class => 1,
+        entity_class => ($vc eq 'vendor' ? 1 : 2),
         _dbh => $admin_dbh,
-        ar_ap_account_id => $accno_ids{'2100'},
-        meta_number => $vendor_name,
+        ar_ap_account_id => $accno_ids{($vc eq 'vendor' ? '2100' : '1200')},
+        meta_number => $vc_name,
         curr => 'USD',
-        );
-    $vendor->save;
+        )->save;
 };
 
 Given qr/an unpaid AP transaction with these values:$/, sub {
