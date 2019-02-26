@@ -44,6 +44,11 @@ sub all_lines {
     return $self->find_all('*invoice-line');
 }
 
+sub empty_lines {
+    my ($self) = @_;
+
+    return grep { $_->field_value('Number') eq '' } $self->all_lines;
+}
 
 __PACKAGE__->meta->make_immutable;
 

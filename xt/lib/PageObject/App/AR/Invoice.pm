@@ -28,6 +28,13 @@ sub _verify {
     return $self;
 }
 
+sub update {
+    my ($self) = @_;
+
+    $self->find("*button", text => "Update")->click;
+    $self->session->page->body->maindiv->wait_for_content;
+}
+
 sub select_customer {
     my ($self, $customer) = @_;
 
@@ -37,7 +44,7 @@ sub select_customer {
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->find("*button", text => "Update")->click;
+    $self->update;
 }
 
 sub header {

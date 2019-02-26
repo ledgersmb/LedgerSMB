@@ -46,8 +46,17 @@ sub field_value {
     my $id = $self->get_attribute('id');
     $id =~ s/^line-//;
 
-    return $self->find(
-        './/*[@name="' . $field_map{$label} . qq{_${id}"]})->value;
+    my $field = $self->find(
+        qq{.//*[\@id="$field_map{$label}_${id}"]});
+    my $rv = $field->value;
+
+    if (defined $new_value) {
+        $field->click;
+        $field->clear;
+        $field->send_keys($new_value);
+    }
+
+    return $rv;
 }
 
 
