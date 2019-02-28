@@ -47,7 +47,7 @@ sub all_lines {
 sub empty_lines {
     my ($self) = @_;
 
-    return grep { $_->field_value('Number') eq '' } $self->all_lines;
+    return grep { $_->is_empty } $self->all_lines;
 }
 
 __PACKAGE__->meta->make_immutable;

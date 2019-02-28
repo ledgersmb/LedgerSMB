@@ -84,4 +84,37 @@ Then qr/I expect to see these invoice header fields and values/, sub {
     }
 };
 
+Then qr/I expect to see an invoice with these lines/, sub {
+    my $expected_lines = C->data;
+    my $actual_lines =
+        S->{ext_wsl}->page->body->maindiv->content->lines->all_lines;
+
+    while (1) {
+        my $expected_line = shift @{$expected_lines};
+        my $actual_line = shift @{$actual_lines};
+
+        if (! $expected_line && ! $actual_line) {
+            last;
+        }
+        elsif (! $expected_line && $actual_line->is_empty) {
+            continue;
+        }
+        elsif (! $expected_line) { # actual_line isn't empty
+            fail('all actual lines are expected');
+        }
+        elsif ($expected_line &&
+               (! $actual_line || $actual_line->is_empty)) {
+            fail('invoice has fewer lines than expected');
+        }
+        else { # expected_line isn't empty and neither is actual_line
+            for my $field (keys %$expected_line) {
+                is($actual_line->field_value($field),
+                   $expected_line->{$field},
+                   qq{Actual value for field $field matches expectation});
+            }
+        }
+    }
+};
+
+
 1;
