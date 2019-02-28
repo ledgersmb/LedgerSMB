@@ -71,7 +71,7 @@ sub field_value {
     $rv = ''
         if ($field->tag_name eq 'input'
             && $field->get_attribute('type') eq 'checkbox'
-            && ! $field->get_selected);
+            && ! $field->selected);
 
     if (defined $new_value) {
         $field->click;
