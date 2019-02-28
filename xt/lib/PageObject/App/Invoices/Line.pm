@@ -63,7 +63,9 @@ sub field_value {
     }
 
     my $field = $self->find(
-        qq{.//*[\@id="$field_map{$label}_${id}"]});
+        qq{.//*[\@id="$field_map{$label}_${id}"]})
+        // $self->find(qq{.//input[\@type="hidden" and
+                                   \@name="$field_map{$label}_${id}"]});
     die "Invoice line column $field_map{$label}_${id} not found"
         if not defined $field;
     my $rv = $field->value;
