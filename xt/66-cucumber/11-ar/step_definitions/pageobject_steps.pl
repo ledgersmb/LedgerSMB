@@ -97,7 +97,7 @@ Then qr/I expect to see an invoice with these lines/, sub {
             last;
         }
         elsif (! $expected_line && $actual_line->is_empty) {
-            continue;
+            next;
         }
         elsif (! $expected_line) { # actual_line isn't empty
             fail('all actual lines are expected');
