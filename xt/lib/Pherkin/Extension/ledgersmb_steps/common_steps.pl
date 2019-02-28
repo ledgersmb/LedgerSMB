@@ -45,7 +45,7 @@ my %company_settings_map = (
     );
 
 Given qr/the following company configuration settings:$/, sub {
-    my $config => C->data;
+    my $config = C->data;
     my $dbh = S->{ext_lsmb}->admin_dbh;
     my $sth = $dbh->prepare('select * from defaults');
     $sth->execute;

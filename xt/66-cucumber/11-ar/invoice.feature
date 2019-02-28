@@ -20,9 +20,6 @@ Background:
 
 
 Scenario: Creation of a new sales invoice, no taxes
-   Given the following company configuration settings:
-       | setting          | value    |
-       | Max per dropdown | 99999    |
     When I open the sales invoice entry screen
     Then I expect to see an invoice with 1 empty line
      And I expect to see these invoice header fields and values
