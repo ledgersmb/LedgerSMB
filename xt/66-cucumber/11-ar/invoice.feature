@@ -13,7 +13,7 @@ Background:
      And a service "s1"
      And a part "p1"
 
-@wip
+
 Scenario: Creation of a new sales invoice
    Given the following company configuration settings:
        | setting          | value    |
@@ -36,19 +36,6 @@ Scenario: Creation of a new sales invoice
     When I select customer "Customer 2"
      And I add an invoice line with part "p1"
     Then I expect to see an invoice with these lines:
-      | Item | part | description | Qty | Unit | OH | Price | Disc | Extended | TaxForm | Delivery | Notes | Serial No. |
-      | 1    | p1   | part 1      | 0   |      |    | 0.00  |    0 | 0.00     |         |          |       |            |
-     And I expect to see an invoice with these document properties:
-      | name            | value      |
-      | Invoice Created | <today>    |
-      | Due Date        | <today>    |
-      | Order Number    |            |
-      | PO Number       |            |
-      | Invoice Number  |            |
-      | Description     |            |
-      | Currency        | USD        |
-      | Shipping Point  |            |
-      | Ship via        |            |
-      | Notes           |            |
-      | Internal notes  |            |
+      | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
+      | 1    | p1     |             | 0   |      |    | 0.00  | 0 | 0.00     |         |               |       |            |
 
