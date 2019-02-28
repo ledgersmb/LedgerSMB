@@ -108,6 +108,10 @@ Then qr/I expect to see an invoice with these lines/, sub {
         }
         else { # expected_line isn't empty and neither is actual_line
             for my $field (keys %$expected_line) {
+                S->{ext_wsl}->wait_for(
+                    sub {
+                        return $actual_line->field_value($field) eq $expected_line->{$field};
+                    });
                 is($actual_line->field_value($field),
                    $expected_line->{$field},
                    qq{Actual value for field $field matches expectation});
