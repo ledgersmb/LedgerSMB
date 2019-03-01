@@ -144,7 +144,7 @@ sub approve {
 
 sub display_row {
     my $numrows = shift;
-    my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+    my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty} // 0;
     my $lsmb_module;
     my $desc_disabled = "";
     $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
@@ -180,7 +180,7 @@ sub display_row {
           if $form->{"select$_"};
     }
 
-    if ( $form->{language_code} ne $form->{oldlanguage_code} ) {
+    if ( ($form->{language_code} // '') ne ($form->{oldlanguage_code} // '') ) {
 
         # rebuild partsgroup
         $l{language_code} = $form->{language_code};
@@ -277,11 +277,14 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $spc = substr( $myconfig{numberformat}, -3, 1 );
     foreach my $i ( 1 .. max($numrows, $min_lines)) {
         $desc_disabled = '' if $i == $numrows;
-        if ( $spc eq '.' ) {
-            ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};
-        }
-        else {
-            ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
+        $dec = '';
+        if ($form->{"sellprice_$i"}) {
+            if ( $spc eq '.' ) {
+                ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};
+            }
+            else {
+                ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
+            }
         }
         my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
         $dec = length $dec;
@@ -331,6 +334,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
              . qq|<input type="hidden" name="description_$i"
                         value="$form->{"description_$i"}" /></td>|
         } else {
+            $form->{"description_$i"} //= '';
             $column_data{description} =
                 qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
                             id="description_$i" name="description_$i"
@@ -360,6 +364,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             }
         }
 
+        $form->{"${delvar}_$i"} //= '';
         $delivery = qq|
           <td colspan=2 nowrap>
              <b>${$delvar}</b>
@@ -411,10 +416,13 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
                  <input type="hidden" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
+            $skunumber //= '';
+            $form->{"partnumber_$i"} //= '';
             $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
 qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,channel: '/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
+        $form->{"onhand_$i"} //= '';
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
@@ -423,6 +431,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
             qq|<td align=right class="ship"><input data-dojo-type="dijit/form/TextBox" name="ship_$i" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
           . qq|"></td>|;
+        $form->{"unit_$i"} //= '';
         $column_data{unit} =
           qq|<td class="unit"><input data-dojo-type="dijit/form/TextBox" name="unit_$i" size=5 value="$form->{"unit_$i"}"></td>|;
         $column_data{sellprice} =
@@ -438,6 +447,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
             qq|<td align=right class="linetotal">|
           . $form->format_amount( \%myconfig, $linetotal, 2 )
           . qq|</td>|;
+        $form->{"bin_$i"} //= '';
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
         $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
         $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
@@ -462,10 +472,13 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
             $form->hide_form("${_}_$i");
         }
 
-        $form->{selectprojectnumber} =~ s/ selected="selected"//;
-        $form->{selectprojectnumber} =~
-          s/(<option value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
+        if ($form->{selectprojectnumber}) {
+            $form->{selectprojectnumber} =~ s/ selected="selected"//;
+            $form->{selectprojectnumber} =~
+                s/(<option value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
+        }
 
+        $project = '';
         $project = qq|
                 <b>$projectnumber</b>
         <select data-dojo-type="dijit/form/Select" id="projectnumber-$i" name="projectnumber_$i">$form->{selectprojectnumber}</select>
@@ -473,12 +486,12 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
 
         if ( ( $rows = $form->numtextrows( $form->{"notes_$i"}, 36, 6 ) ) > 1 )
         {
-            $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} );
+            $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} ) // '';
             $notes =
 qq|<td><textarea data-dojo-type="dijit/form/Textarea" name="notes_$i" rows=$rows cols=36 wrap=soft>$form->{"notes_$i"}</textarea></td>|;
         }
         else {
-            $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} );
+            $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} ) // '';
             $notes =
 qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
         }
@@ -519,8 +532,10 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value=
 
         $skunumber = "";
 
-        for ( split / /, $form->{"taxaccounts_$i"} ) {
-            $form->{"${_}_base"} += $linetotal;
+        if ($form->{"taxaccounts_$i"}) {
+            for ( split / /, $form->{"taxaccounts_$i"} ) {
+                $form->{"${_}_base"} += $linetotal;
+            }
         }
 
         $form->{invsubtotal} += $linetotal;
@@ -642,7 +657,7 @@ sub display_form {
     $numrows    = ++$form->{rowcount};
     $subroutine = "display_row";
 
-    if ( $form->{item} eq 'part' ) {
+    if (defined $form->{item} && $form->{item} eq 'part' ) {
 
         # create makemodel rows
         &makemodel_row( ++$form->{makemodel_rows} );
@@ -652,7 +667,7 @@ sub display_form {
         $numrows    = ++$form->{customer_rows};
         $subroutine = "customer_row";
     }
-    if ( $form->{item} eq 'assembly' ) {
+    if (defined $form->{item} &&  $form->{item} eq 'assembly' ) {
 
         # create makemodel rows
         &makemodel_row( ++$form->{makemodel_rows} );
@@ -660,13 +675,13 @@ sub display_form {
         $numrows    = ++$form->{customer_rows};
         $subroutine = "customer_row";
     }
-    if ( $form->{item} eq 'service' ) {
+    if (defined $form->{item} &&  $form->{item} eq 'service' ) {
         &vendor_row( ++$form->{vendor_rows} );
 
         $numrows    = ++$form->{customer_rows};
         $subroutine = "customer_row";
     }
-    if ( $form->{item} eq 'labor' ) {
+    if (defined $form->{item} &&  $form->{item} eq 'labor' ) {
         $numrows = 0;
     }
 

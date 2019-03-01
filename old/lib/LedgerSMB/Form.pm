@@ -294,9 +294,10 @@ Note that recurring transaction support depends on this function escaping ','.
 sub escape {
     my ( $self, $str, $beenthere ) = @_;
 
+    return if not defined $str;
     # for Apache 2 we escape strings twice
-    if (
-        ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
+    if ($ENV{SERVER_SIGNATURE}
+        && ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
         && !$beenthere
     ) {
         $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;  ## no critic (ProhibitMagicNumbers) sniff
