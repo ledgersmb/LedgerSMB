@@ -221,14 +221,14 @@ sub create_links {
 
     my $vc = $form->{vc};
     AA->get_name( \%myconfig, \%$form )
-            unless $form->{"old$vc"} eq $form->{$vc}
+            unless ($from->{"old$vc"} and $form->{$vc} and $form->{"old$vc"} eq $form->{$vc})
                     or $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/;
 
-    $form->{currency} =~ s/ //g;
+    $form->{currency} =~ s/ //g if $form->{currency};
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    if ($form->{"$form->{vc}"} !~ /--/){
+    if ($form->{"$form->{vc}"} && $form->{"$form->{vc}"} !~ /--/){
         $form->{"old$form->{vc}"} = $form->{$form->{vc}} . '--' . $form->{"$form->{vc}_id"};
     } else {
         $form->{"old$form->{vc}"} = $form->{$form->{vc}};
@@ -253,6 +253,7 @@ sub create_links {
 
 
         # if there is a value we have an old entry
+        if ($form->{acc_trans}{$key}) {
         foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
 
 
@@ -330,6 +331,7 @@ sub create_links {
                 }
             }
         }
+        }
     }
 
     $form->{paidaccounts} = 1 if not defined $form->{paidaccounts};
@@ -357,7 +359,7 @@ sub create_links {
     # readonly
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1
-          if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
+          if $myconfig{acs} && $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
     delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
@@ -449,8 +451,10 @@ sub form_header {
     if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) - 1 ) < 2 ) {
         $rows = 2;
     }
+    $form->{notes} //= '';
     $notes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
+    $form->{intnotes} //= '';
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
 
@@ -464,7 +468,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
           </tr>
 | if $form->{selectdepartment};
 
-    $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
+    $n = ( ($form->{creditremaining} // 0) < 0 ) ? "0" : "1";
 
     $name =
       ( $form->{"select$form->{vc}"} )

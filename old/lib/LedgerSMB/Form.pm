@@ -217,7 +217,7 @@ sub open_form {
     my ($self) = @_;
     my @results ;
 
-    if ($self->{form_id} =~ '^\s*$'){
+    if ($self->{form_id} && $self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
 
@@ -253,7 +253,7 @@ sub check_form {
 
 sub close_form {
     my ($self) = @_;
-    if ($self->{form_id} =~ '^\s*$'){
+    if ($self->{form_id} && $self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
 
@@ -478,6 +478,8 @@ sub numtextrows {
     my ( $self, $str, $cols, $maxrows ) = @_;
 
     my $rows = 0;
+
+    return 0 if ! defined $str;
 
     for ( split /\n/, $str ) {
         $rows += int( ( (length) - 2 ) / $cols ) + 1;
@@ -1184,7 +1186,7 @@ sub generate_selects {
         $form->{selectlanguage} = "<option></option>\n";
         for ( @{ $form->{all_language} } ) {
                 my $value = $_->{code};
-                my $selected = ($form->{language} eq $value) ?
+                my $selected = ($form->{language} && $form->{language} eq $value) ?
                      ' selected="selected"' : "";
             $form->{selectlanguage} .=
               qq|<option value="$value"$selected>$_->{description}</option>\n|;
@@ -1714,7 +1716,7 @@ sub all_vc {
 
     $sth->finish;
 
-    if ( $count < $myconfig->{vclimit} ) {
+    if ( $count < ($myconfig->{vclimit} // 0) ) {
 
         $self->{"${vc}_id"} *= 1;
 
@@ -1746,8 +1748,8 @@ sub all_vc {
 
     # get self
     if ( !$self->{employee_id} ) {
-        ( $self->{employee}, $self->{employee_id} ) = split /--/,
-          $self->{employee};
+        $self->{employee} //= '';
+        ( $self->{employee}, $self->{employee_id} ) = split /--/, $self->{employee};
         ( $self->{employee}, $self->{employee_id} ) = $self->get_employee
           unless $self->{employee_id};
     }
@@ -2120,7 +2122,7 @@ sub create_links {
               ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
-    $self->{id} = undef if $self->{id} eq '';
+    $self->{id} = undef if $self->{id} && $self->{id} eq '';
     $sth->execute( "%" . "$module%", $self->{id}) || $self->dberror($query);
 
     $self->{accounts} = "";
