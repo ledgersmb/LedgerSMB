@@ -162,7 +162,8 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB');
 my $json = JSON::MaybeXS->new( pretty => 1,
                                utf8 => 1,
                                indent => 1,
-                               convert_blessed => 1);
+                               convert_blessed => 1,
+                               allow_bigint => 1);
 
 
 sub new {
