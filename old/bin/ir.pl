@@ -116,8 +116,7 @@ sub add {
         $form->{reverse} = 0;
     }
 
-    $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&type=$form->{type}"
       unless $form->{callback};
     &invoice_links;
     &prepare_invoice;
@@ -165,7 +164,7 @@ sub invoice_links {
 
     for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
 
-    if ( @{ $form->{all_vendor} } ) {
+    if ( $form->{all_vendor} && @{ $form->{all_vendor} } ) {
         unless ( $form->{vendor_id} ) {
             $form->{vendor_id} = $form->{all_vendor}->[0]->{id};
         }
@@ -186,6 +185,8 @@ sub invoice_links {
           if $form->{department_id};
      }
 
+    $form->{vendor} //= '';
+    $form->{vendor_id} //= '';
     $form->{oldvendor}    = "$form->{vendor}--$form->{vendor_id}";
     $form->{oldtransdate} = $form->{transdate};
 
@@ -202,6 +203,7 @@ sub invoice_links {
         }
 
         if ( $key eq "AP_paid" ) {
+            if ( $form->{acc_trans}{$key} ) {
             foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AP_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
@@ -221,6 +223,7 @@ sub invoice_links {
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{cleared};
 
                 $form->{paidaccounts} = $i;
+            }
             }
         }
         else {
@@ -242,7 +245,7 @@ sub invoice_links {
           $form->datetonum( \%myconfig, $form->{closedto} ) );
 
     if ( !$form->{readonly} ) {
-        $form->{readonly} = 1 if $myconfig{acs} =~ /AP--Vendor Invoice/;
+        $form->{readonly} = 1 if $myconfig{acs} && $myconfig{acs} =~ /AP--Vendor Invoice/;
     }
 
      $form->generate_selects(\%myconfig);
@@ -1239,7 +1242,7 @@ sub post {
     $form->isblank( "vendor",    $locale->text('Vendor missing!') );
 
     # if the vendor changed get new values
-    if ( &check_name(vendor) ) {
+    if ( &check_name('vendor') ) {
         &update;
         $form->finalize_request();
     }

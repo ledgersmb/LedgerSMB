@@ -384,6 +384,8 @@ sub hide_form {
     if (@_) {
 
         for (@_) {
+            next if not defined $self->{$_};
+
             print qq|<input type="hidden" name="$_" value="|
               . $self->quote( $self->{$_} )
               . qq|" />\n|;
@@ -2576,25 +2578,27 @@ sub get_partsgroup {
                      FROM partsgroup pg
                      JOIN parts p ON (p.partsgroup_id = pg.id)|;
 
-    my $where;
+    my $where = '';
     my $sortorder = "partsgroup";
 
-    if ( $p->{searchitems} eq 'part' ) {
-        $where = qq| WHERE (p.inventory_accno_id > 0
-                       AND p.income_accno_id > 0)|;
-    }
-    elsif ($p->{searchitems} eq 'service') {
-        $where = qq| WHERE p.inventory_accno_id IS NULL|;
-    }
-    elsif ($p->{searchitems} eq 'assembly') {
-        $where = qq| WHERE p.assembly = '1'|;
-    }
-    elsif ($p->{searchitems} eq 'labor') {
-        $where =
-          qq| WHERE p.inventory_accno_id > 0 AND p.income_accno_id IS NULL|;
-    }
-    elsif ($p->{searchitems} eq 'nolabor') {
-        $where = qq| WHERE p.income_accno_id > 0|;
+    if ( $p->{searchitems} ) {
+        if ( $p->{searchitems} eq 'part' ) {
+            $where = qq| WHERE (p.inventory_accno_id > 0
+                                AND p.income_accno_id > 0)|;
+        }
+        elsif ($p->{searchitems} eq 'service') {
+            $where = qq| WHERE p.inventory_accno_id IS NULL|;
+        }
+        elsif ($p->{searchitems} eq 'assembly') {
+            $where = qq| WHERE p.assembly = '1'|;
+        }
+        elsif ($p->{searchitems} eq 'labor') {
+            $where =
+                qq| WHERE p.inventory_accno_id > 0 AND p.income_accno_id IS NULL|;
+        }
+        elsif ($p->{searchitems} eq 'nolabor') {
+            $where = qq| WHERE p.income_accno_id > 0|;
+        }
     }
 
     if ( $p->{all} ) {
