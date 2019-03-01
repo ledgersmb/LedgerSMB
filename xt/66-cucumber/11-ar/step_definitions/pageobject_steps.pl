@@ -53,12 +53,18 @@ When qr/I select customer "(.*)"/, sub {
 When qr/I add an invoice line with (?:part|service) "(.+)"/, sub {
     my $part = $1;
 
-    my $page = S->{ext_wsl}->page->body->maindiv->content;
-    my @empty = $page->lines->empty_lines;
+    my $session = S->{ext_wsl};
+    my $inv = $session->page->body->maindiv->content;
+    my @empty = $inv->lines->empty_lines;
     my $empty = shift @empty;
 
     $empty->field_value('Number', $part);
-    $page->update;
+    ###TODO: this requires the part to have a description:
+    $session->wait_for(
+        sub {
+            return ($empty->field_value('Description') ne '');
+        });
+    $inv->update;
 };
 
 Then qr/I expect to see an invoice with (\d+) (empty )?lines?/, sub {
