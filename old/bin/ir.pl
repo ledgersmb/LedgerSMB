@@ -1023,7 +1023,7 @@ sub update {
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
 
-    if ( $newname = &check_name(vendor) ) {
+    if ( $newname = &check_name('vendor') ) {
         $form->rebuild_vc('vendor', $form->{transdate}, 1);
     }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {

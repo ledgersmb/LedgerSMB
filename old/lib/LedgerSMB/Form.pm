@@ -318,6 +318,8 @@ Returns the unencoded form of the URI-encoded $str.
 sub unescape {
     my ( $self, $str ) = @_;
 
+    return if ! defined $str;
+
     $str =~ tr/+/ /;
     $str =~ s/\\$//;
 
@@ -327,7 +329,6 @@ sub unescape {
     $str =~ s/\r?\n/\n/g;
 
     $str;
-
 }
 
 =item $form->quote($str);
@@ -2400,17 +2401,18 @@ sub lastname_used {
     }
 
     my $sth;
-    if ( $self->{type} =~ /_order/ ) {
+    if ($self->{type} && $self->{type} =~ /_order/ ) {
         $arap  = 'oe';
         $where = "quotation = '0'";
     }
 
-    if ( $self->{type} =~ /_quotation/ ) {
+    if ($self->{type} && $self->{type} =~ /_quotation/ ) {
         $arap  = 'oe';
         $where = "quotation = '1'";
     }
 
     $where = "AND $where " if $where;
+    $where //= '';
     my $query = qq|
         SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
             current_date + ct.terms AS duedate,

@@ -286,7 +286,7 @@ sub name_selected {
 
     # delete all the new_ variables
     foreach my $i ( 1 .. $form->{lastndx} ) {
-        for (qw(id, name)) { delete $form->{"new_${_}_$i"} }
+        for (qw(id name)) { delete $form->{"new_${_}_$i"} }
     }
 
     for (qw(ndx lastndx nextsub)) { delete $form->{$_} }
@@ -803,10 +803,10 @@ sub continue        { &{ $form->{nextsub} }; }
 sub continuenew     {$form->{rowcount}--; &setlocation_id;  &{ $form->{nextsub} }; }
 sub updatenew       {&createlocations;}
 sub gl_transaction  { &add }
-sub ar_transaction  { &add_transaction(ar) }
-sub ap_transaction  { &add_transaction(ap) }
-sub sales_invoice_  { &add_transaction(is) }
-sub vendor_invoice_ { &add_transaction(ir) }
+sub ar_transaction  { &add_transaction('ar') }
+sub ap_transaction  { &add_transaction('ap') }
+sub sales_invoice_  { &add_transaction('is') }
+sub vendor_invoice_ { &add_transaction('ir') }
 
 
 1;

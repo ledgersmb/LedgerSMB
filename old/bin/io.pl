@@ -1234,7 +1234,6 @@ sub print_form {
 
     if ($form->test_should_get_images){
         my $file = LedgerSMB::File->new();
-        my @files;
         my $fc;
         if ($inv eq 'inv') {
            $fc = 1;

@@ -121,14 +121,15 @@ sub new_screen {
 sub add {
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add"
       unless $form->{callback};
-    if ($form->{type} eq "credit_note"){
+    if (defined $form->{type}
+        and $form->{type} eq "credit_note"){
         $form->{reverse} = 1;
         $form->{subtype} = 'credit_note';
         $form->{type} = 'transaction';
-    } elsif ($form->{type} eq 'debit_note'){
+    } elsif (defined $form->{type}
+             and $form->{type} eq 'debit_note'){
         $form->{reverse} = 1;
         $form->{subtype} = 'debit_note';
         $form->{type} = 'transaction';
@@ -852,7 +853,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->{"select$form->{ARAP}_paid_$i"} =
           $form->{"select$form->{ARAP}_paid"};
         $form->{"select$form->{ARAP}_paid_$i"} =~
-          s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/\1 selected="selected"/;
+          s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/$1 selected="selected"/;
 
         # format amounts
         $form->{"paidfx_$i"} = $form->format_amount(
@@ -1131,7 +1132,7 @@ sub save_temp {
              push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,
                    amount => $amount,
-                   cleared => false,
+                   cleared => 'false',
                   };
         }
     }
