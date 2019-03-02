@@ -36,6 +36,10 @@ When qr/I navigate to the (.*) page/, sub {
     S->{page} = $pages{$page}->open(S->{ext_wsl})->verify;
 };
 
+When qr/I wait for the page to load$/, sub {
+    S->{ext_wsl}->page->body->maindiv->wait_for_content;
+};
+
 Then qr/I should see the (.*) page/, sub {
     my $page_name = $1;
     die "Unknown page '$page_name'"

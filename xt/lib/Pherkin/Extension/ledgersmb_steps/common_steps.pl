@@ -393,10 +393,6 @@ When qr/I wait (\d+) seconds?$/, sub {
     sleep $1
 };
 
-When qr/I wait for the page to load$/, sub {
-    S->{ext_wsl}->page->body->maindiv->wait_for_content;
-};
-
 When qr/^I (select|deselect) checkbox "(.*)"$/, sub {
     my $wanted_status = ($1 eq 'select');
     my $label = $2;
