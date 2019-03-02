@@ -607,6 +607,7 @@ sub get_name {
             + c.terms"
       : "current_date + c.terms";
 
+    $form->{"$form->{vc}_id"} //= 0;
     $form->{"$form->{vc}_id"} *= 1;
 
 

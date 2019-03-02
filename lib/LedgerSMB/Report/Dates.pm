@@ -213,7 +213,9 @@ sub _get_from_date {
 
 sub _get_to_date {
     my ($self) = @_;
-    if ($self->interval eq 'none' or not defined $self->from_date){
+    if (not defined $self->interval
+        or $self->interval eq 'none'
+        or not defined $self->from_date){
         return LedgerSMB::PGDate->from_db();
     }
     my $dateobj = $self->from_date;

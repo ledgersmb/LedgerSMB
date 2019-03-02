@@ -92,7 +92,7 @@ print 'Set-Cookie: '
     if $form->{"request.download-cookie"};
 
 
-$locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+$locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
 
@@ -150,10 +150,7 @@ try {
         binmode STDOUT, ':utf8';
         binmode STDERR, ':utf8';
         # window title bar, user info
-        $form->{titlebar} =
-            "LedgerSMB "
-            . $locale->text('Version')
-            . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
+        $form->{titlebar} = ''; # Not needed anymore: the SPA already has a title(bar)
 
         &{ $form->{action} };
         LedgerSMB::App_State::cleanup();

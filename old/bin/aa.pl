@@ -121,14 +121,15 @@ sub new_screen {
 sub add {
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add"
       unless $form->{callback};
-    if ($form->{type} eq "credit_note"){
+    if (defined $form->{type}
+        and $form->{type} eq "credit_note"){
         $form->{reverse} = 1;
         $form->{subtype} = 'credit_note';
         $form->{type} = 'transaction';
-    } elsif ($form->{type} eq 'debit_note'){
+    } elsif (defined $form->{type}
+             and $form->{type} eq 'debit_note'){
         $form->{reverse} = 1;
         $form->{subtype} = 'debit_note';
         $form->{type} = 'transaction';
@@ -220,14 +221,14 @@ sub create_links {
 
     my $vc = $form->{vc};
     AA->get_name( \%myconfig, \%$form )
-            unless $form->{"old$vc"} eq $form->{$vc}
-                    or $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/;
+            unless ($from->{"old$vc"} and $form->{$vc} and $form->{"old$vc"} eq $form->{$vc})
+                    or ($form->{"old$vc"} and $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/);
 
-    $form->{currency} =~ s/ //g;
+    $form->{currency} =~ s/ //g if $form->{currency};
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    if ($form->{"$form->{vc}"} !~ /--/){
+    if ($form->{"$form->{vc}"} && $form->{"$form->{vc}"} !~ /--/){
         $form->{"old$form->{vc}"} = $form->{$form->{vc}} . '--' . $form->{"$form->{vc}_id"};
     } else {
         $form->{"old$form->{vc}"} = $form->{$form->{vc}};
@@ -252,6 +253,7 @@ sub create_links {
 
 
         # if there is a value we have an old entry
+        if ($form->{acc_trans}{$key}) {
         foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
 
 
@@ -329,6 +331,7 @@ sub create_links {
                 }
             }
         }
+        }
     }
 
     $form->{paidaccounts} = 1 if not defined $form->{paidaccounts};
@@ -356,14 +359,14 @@ sub create_links {
     # readonly
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1
-          if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
+          if $myconfig{acs} && $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
     delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
 }
 
 sub form_header {
-     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty} // 0;
 
     $title = $form->{title};
     $form->all_business_units($form->{transdate},
@@ -448,8 +451,10 @@ sub form_header {
     if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) - 1 ) < 2 ) {
         $rows = 2;
     }
+    $form->{notes} //= '';
     $notes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
+    $form->{intnotes} //= '';
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
 
@@ -461,9 +466,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
         </td>
           </tr>
-| if $form->{selectdepartment};
+        | if $form->{selectdepartment};
+     $department //= '';
 
-    $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
+    $n = ( ($form->{creditremaining} // 0) < 0 ) ? "0" : "1";
 
     $name =
       ( $form->{"select$form->{vc}"} )
@@ -688,8 +694,10 @@ $form->open_status_div($status_div_id) . qq|
 
         $project = qq|
       <td align=right><select data-dojo-type="dijit/form/Select" id="projectnumber_$i" name="projectnumber_$i">$form->{"selectprojectnumber_$i"}</select></td>
-| if $form->{selectprojectnumber};
+            | if $form->{selectprojectnumber};
+        $project //= '';
 
+        $form->{"description_$i"} //= '';
         if ( ( $rows = $form->numtextrows( $form->{"description_$i"}, 40 ) ) >
             1 )
         {
@@ -839,8 +847,10 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 ";
 
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
-    $form->{"select$form->{ARAP}_paid"} =~ /($form->{cash_accno}--[^<]*)/;
-    $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
+    if (defined $form->{cash_accno}) {
+        $form->{"select$form->{ARAP}_paid"} =~ /($form->{cash_accno}--[^<]*)/;
+        $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
+    }
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
@@ -852,12 +862,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->{"select$form->{ARAP}_paid_$i"} =
           $form->{"select$form->{ARAP}_paid"};
         $form->{"select$form->{ARAP}_paid_$i"} =~
-          s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/\1 selected="selected"/;
+          s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/$1 selected="selected"/;
 
         # format amounts
         $form->{"paidfx_$i"} = $form->format_amount(
             \%myconfig,
-            $form->{"paid_$i"} * $form->{"exchangerate_$i"} , 2 );
+            ($form->{"paid_$i"} // 0) * ($form->{"exchangerate_$i"} // 1) , 2 );
         $form->{"paid_$i"} =
           $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
         $form->{"exchangerate_$i"} =
@@ -877,6 +887,9 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" size=10 val
 
         $form->hide_form("forex_$i");
 
+        $form->{"datepaid_$i"} //= '';
+        $form->{"source_$i"} //= '';
+        $form->{"memo_$i"} //= '';
         $column_data{paid} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
         $column_data{ARAP_paid} =
@@ -995,7 +1008,7 @@ sub form_footer {
                 delete $button{$_};
             }
 
-            if ( $transdate && ($transdate <= $closedto) ) {
+            if ( $closedto && $transdate && ($transdate <= $closedto) ) {
                 for ( "post","save_info") {
                     delete $button{$_};
                 }
@@ -1131,7 +1144,7 @@ sub save_temp {
              push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,
                    amount => $amount,
-                   cleared => false,
+                   cleared => 'false',
                   };
         }
     }

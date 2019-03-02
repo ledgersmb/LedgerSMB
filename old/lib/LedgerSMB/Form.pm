@@ -217,7 +217,7 @@ sub open_form {
     my ($self) = @_;
     my @results ;
 
-    if ($self->{form_id} =~ '^\s*$'){
+    if ($self->{form_id} && $self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
 
@@ -253,7 +253,7 @@ sub check_form {
 
 sub close_form {
     my ($self) = @_;
-    if ($self->{form_id} =~ '^\s*$'){
+    if ($self->{form_id} && $self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
 
@@ -294,9 +294,10 @@ Note that recurring transaction support depends on this function escaping ','.
 sub escape {
     my ( $self, $str, $beenthere ) = @_;
 
+    return if not defined $str;
     # for Apache 2 we escape strings twice
-    if (
-        ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
+    if ($ENV{SERVER_SIGNATURE}
+        && ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
         && !$beenthere
     ) {
         $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;  ## no critic (ProhibitMagicNumbers) sniff
@@ -318,6 +319,8 @@ Returns the unencoded form of the URI-encoded $str.
 sub unescape {
     my ( $self, $str ) = @_;
 
+    return if ! defined $str;
+
     $str =~ tr/+/ /;
     $str =~ s/\\$//;
 
@@ -327,7 +330,6 @@ sub unescape {
     $str =~ s/\r?\n/\n/g;
 
     $str;
-
 }
 
 =item $form->quote($str);
@@ -383,6 +385,8 @@ sub hide_form {
     if (@_) {
 
         for (@_) {
+            next if not defined $self->{$_};
+
             print qq|<input type="hidden" name="$_" value="|
               . $self->quote( $self->{$_} )
               . qq|" />\n|;
@@ -477,6 +481,8 @@ sub numtextrows {
     my ( $self, $str, $cols, $maxrows ) = @_;
 
     my $rows = 0;
+
+    return 0 if ! defined $str;
 
     for ( split /\n/, $str ) {
         $rows += int( ( (length) - 2 ) / $cols ) + 1;
@@ -1183,7 +1189,7 @@ sub generate_selects {
         $form->{selectlanguage} = "<option></option>\n";
         for ( @{ $form->{all_language} } ) {
                 my $value = $_->{code};
-                my $selected = ($form->{language} eq $value) ?
+                my $selected = ($form->{language} && $form->{language} eq $value) ?
                      ' selected="selected"' : "";
             $form->{selectlanguage} .=
               qq|<option value="$value"$selected>$_->{description}</option>\n|;
@@ -1713,7 +1719,7 @@ sub all_vc {
 
     $sth->finish;
 
-    if ( $count < $myconfig->{vclimit} ) {
+    if ( $count < ($myconfig->{vclimit} // 0) ) {
 
         $self->{"${vc}_id"} *= 1;
 
@@ -1745,8 +1751,8 @@ sub all_vc {
 
     # get self
     if ( !$self->{employee_id} ) {
-        ( $self->{employee}, $self->{employee_id} ) = split /--/,
-          $self->{employee};
+        $self->{employee} //= '';
+        ( $self->{employee}, $self->{employee_id} ) = split /--/, $self->{employee};
         ( $self->{employee}, $self->{employee_id} ) = $self->get_employee
           unless $self->{employee_id};
     }
@@ -2119,7 +2125,7 @@ sub create_links {
               ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
-    $self->{id} = undef if $self->{id} eq '';
+    $self->{id} = undef if $self->{id} && $self->{id} eq '';
     $sth->execute( "%" . "$module%", $self->{id}) || $self->dberror($query);
 
     $self->{accounts} = "";
@@ -2400,17 +2406,18 @@ sub lastname_used {
     }
 
     my $sth;
-    if ( $self->{type} =~ /_order/ ) {
+    if ($self->{type} && $self->{type} =~ /_order/ ) {
         $arap  = 'oe';
         $where = "quotation = '0'";
     }
 
-    if ( $self->{type} =~ /_quotation/ ) {
+    if ($self->{type} && $self->{type} =~ /_quotation/ ) {
         $arap  = 'oe';
         $where = "quotation = '1'";
     }
 
     $where = "AND $where " if $where;
+    $where //= '';
     my $query = qq|
         SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
             current_date + ct.terms AS duedate,
@@ -2572,25 +2579,27 @@ sub get_partsgroup {
                      FROM partsgroup pg
                      JOIN parts p ON (p.partsgroup_id = pg.id)|;
 
-    my $where;
+    my $where = '';
     my $sortorder = "partsgroup";
 
-    if ( $p->{searchitems} eq 'part' ) {
-        $where = qq| WHERE (p.inventory_accno_id > 0
-                       AND p.income_accno_id > 0)|;
-    }
-    elsif ($p->{searchitems} eq 'service') {
-        $where = qq| WHERE p.inventory_accno_id IS NULL|;
-    }
-    elsif ($p->{searchitems} eq 'assembly') {
-        $where = qq| WHERE p.assembly = '1'|;
-    }
-    elsif ($p->{searchitems} eq 'labor') {
-        $where =
-          qq| WHERE p.inventory_accno_id > 0 AND p.income_accno_id IS NULL|;
-    }
-    elsif ($p->{searchitems} eq 'nolabor') {
-        $where = qq| WHERE p.income_accno_id > 0|;
+    if ( $p->{searchitems} ) {
+        if ( $p->{searchitems} eq 'part' ) {
+            $where = qq| WHERE (p.inventory_accno_id > 0
+                                AND p.income_accno_id > 0)|;
+        }
+        elsif ($p->{searchitems} eq 'service') {
+            $where = qq| WHERE p.inventory_accno_id IS NULL|;
+        }
+        elsif ($p->{searchitems} eq 'assembly') {
+            $where = qq| WHERE p.assembly = '1'|;
+        }
+        elsif ($p->{searchitems} eq 'labor') {
+            $where =
+                qq| WHERE p.inventory_accno_id > 0 AND p.income_accno_id IS NULL|;
+        }
+        elsif ($p->{searchitems} eq 'nolabor') {
+            $where = qq| WHERE p.income_accno_id > 0|;
+        }
     }
 
     if ( $p->{all} ) {
