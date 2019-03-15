@@ -16,8 +16,8 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('location_list_class',ARRAY['']);
-    SELECT has_function('location_list_country',ARRAY['']);
+    SELECT has_function('location_list_class','{}'::text[]);
+    SELECT has_function('location_list_country','{}'::text[]);
     SELECT has_function('location_save',ARRAY['integer','text','text','text','text','text','text','integer']);
     SELECT has_function('location__get',ARRAY['integer']);
     SELECT has_function('location_delete',ARRAY['integer']);

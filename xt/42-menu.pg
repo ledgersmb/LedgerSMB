@@ -16,7 +16,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('menu_generate',ARRAY['']);
+    SELECT has_function('menu_generate','{}'::text[]);
     SELECT has_function('menu_children',ARRAY['integer']);
     SELECT has_function('menu_insert',ARRAY['integer','integer','text']);
 

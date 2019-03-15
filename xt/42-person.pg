@@ -16,10 +16,10 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('person__get_my_entity_id',ARRAY['']);
-    SELECT has_function('person__get_my_id',ARRAY['']);
-    SELECT has_function('person__list_languages',ARRAY['']);
-    SELECT has_function('person__list_salutations',ARRAY['']);
+    SELECT has_function('person__get_my_entity_id','{}'::text[]);
+    SELECT has_function('person__get_my_id','{}'::text[]);
+    SELECT has_function('person__list_languages','{}'::text[]);
+    SELECT has_function('person__list_salutations','{}'::text[]);
     SELECT has_function('person__save',ARRAY['integer','integer','text','text','text','integer','date','text']);
     SELECT has_function('person__list_locations',ARRAY['integer']);
     SELECT has_function('person__list_contacts',ARRAY['integer']);

@@ -21,39 +21,39 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('account__all_headings',ARRAY['']);
+    SELECT has_function('account__all_headings','{}'::text[]);
     SELECT has_function('account__delete',ARRAY['integer']);
     SELECT has_function('account__delete_translation',ARRAY['integer','text']);
     SELECT has_function('account__get_by_link_desc',ARRAY['text']);
     SELECT has_function('account__get_from_accno',ARRAY['text']);
     SELECT has_function('account_get',ARRAY['integer']);
-    SELECT has_function('account__get_taxes',ARRAY['']);
+    SELECT has_function('account__get_taxes','{}'::text[]);
     SELECT has_function('account_has_transactions',ARRAY['integer']);
-    SELECT has_function('account_heading__check_tree',ARRAY['']);
+    SELECT has_function('account_heading__check_tree','{}'::text[]);
     SELECT has_function('account_heading__delete',ARRAY['integer']);
     SELECT has_function('account_heading__delete_translation',ARRAY['integer','text']);
-    SELECT has_function('account_heading__list',ARRAY['']);
+    SELECT has_function('account_heading__list','{}'::text[]);
     SELECT has_function('account_heading__list_translations',ARRAY['integer']);
     SELECT has_function('account_heading__save_translation',ARRAY['integer','text','text']);
     SELECT has_function('account_heading_get',ARRAY['integer']);
-    SELECT has_function('account_heading_list',ARRAY['']);
+    SELECT has_function('account_heading_list','{}'::text[]);
     SELECT has_function('account_heading_save',ARRAY['integer','text','text','integer']);
     SELECT has_function('account__is_recon',ARRAY['text']);
-    SELECT has_function('account__list_by_heading',ARRAY['']);
+    SELECT has_function('account__list_by_heading','{}'::text[]);
     SELECT has_function('account__list_translations',ARRAY['integer']);
     SELECT has_function('account__save',ARRAY['integer','text','text','character','text','integer','boolean','boolean','text[]','boolean','boolean']);
     SELECT has_function('account__save_tax',ARRAY['integer','date','numeric','numeric','numeric','text','integer','integer','date']);
     SELECT has_function('account__save_translation',ARRAY['integer','text','text']);
     SELECT has_function('chart_get_ar_ap',ARRAY['integer']);
-    SELECT has_function('chart_list_all',ARRAY['']);
+    SELECT has_function('chart_list_all','{}'::text[]);
     SELECT has_function('chart_list_cash',ARRAY['integer']);
     SELECT has_function('chart_list_discount',ARRAY['integer']);
     SELECT has_function('chart_list_overpayment',ARRAY['integer']);
     SELECT has_function('chart_list_search',ARRAY['text','text']);
     SELECT has_function('cr_coa_to_account_save',ARRAY['text','text']);
     SELECT has_function('get_link_descriptions',ARRAY['boolean','boolean']);
-    SELECT has_function('gifi__list',ARRAY['']);
-    SELECT has_function('report__coa',ARRAY['']);
+    SELECT has_function('gifi__list','{}'::text[]);
+    SELECT has_function('report__coa','{}'::text[]);
     SELECT has_function('report_trial_balance',ARRAY['date','date','integer','integer','boolean']);
 
     -- Prepare specific data
