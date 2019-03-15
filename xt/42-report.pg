@@ -16,7 +16,7 @@ BEGIN;
 
     -- Validate required functions
 
---    SELECT has_function('business_type__list',ARRAY['']);
+--    SELECT has_function('business_type__list','{}'::text[]);
     SELECT has_function('report__aa_outstanding',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
     SELECT has_function('report__aa_outstanding_details',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
     SELECT has_function('report__aa_transactions',ARRAY['integer','integer','text','text','integer','integer','text','text','text','text','text','text','text','date','date','boolean','boolean','integer','boolean','boolean','boolean','text']);

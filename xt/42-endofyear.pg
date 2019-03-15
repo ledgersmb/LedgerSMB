@@ -19,11 +19,11 @@ BEGIN;
 
     SELECT has_function('account__obtain_balance',ARRAY['date','integer']);
     SELECT has_function('account__obtain_starting_balance',ARRAY['date','integer']);
-    SELECT has_function('eoy__latest_checkpoint',ARRAY['']);
+    SELECT has_function('eoy__latest_checkpoint','{}'::text[]);
     SELECT has_function('eoy__reopen_books_at',ARRAY['date']);
     SELECT has_function('eoy_close_books',ARRAY['date','text','text','integer']);
     SELECT has_function('eoy_create_checkpoint',ARRAY['date']);
-    SELECT has_function('eoy_earnings_accounts',ARRAY['']);
+    SELECT has_function('eoy_earnings_accounts','{}'::text[]);
     SELECT has_function('eoy_reopen_books',ARRAY['date']);
     SELECT has_function('eoy_zero_accounts',ARRAY['date','text','text','integer']);
 
