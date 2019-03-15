@@ -23,7 +23,7 @@ BEGIN;
     SELECT has_function('timecard__report',ARRAY['integer[]','text','integer','date','date','boolean','boolean','integer']);
     SELECT has_function('timecard__allocate',ARRAY['integer','numeric']);
     SELECT has_function('timecard_type__get',ARRAY['integer']);
-    SELECT has_function('timecard_type__list',ARRAY['']);
+    SELECT has_function('timecard_type__list','{}'::text[]);
 
     -- Run tests
 

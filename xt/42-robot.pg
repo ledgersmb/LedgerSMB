@@ -16,7 +16,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('robot__get_my_entity_id',ARRAY['']);
+    SELECT has_function('robot__get_my_entity_id','{}'::text[]);
     SELECT has_function('robot__save',ARRAY['integer','text','text','text','integer']);
     SELECT has_function('robot__list_notes',ARRAY['integer']);
 

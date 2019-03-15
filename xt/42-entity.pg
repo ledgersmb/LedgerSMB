@@ -17,7 +17,7 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('entity_save',ARRAY['integer','text','integer']);
-    SELECT has_function('entity__list_classes',ARRAY['']);
+    SELECT has_function('entity__list_classes','{}'::text[]);
     SELECT has_function('entity__get',ARRAY['integer']);
     SELECT has_function('eca__get_entity',ARRAY['integer']);
     SELECT has_function('entity__get_bank_account',ARRAY['integer']);

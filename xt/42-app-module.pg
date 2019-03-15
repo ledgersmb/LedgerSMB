@@ -17,7 +17,7 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('lsmb_module__get',ARRAY['integer']);
-    SELECT has_function('lsmb_module__list',ARRAY['']);
+    SELECT has_function('lsmb_module__list','{}'::text[]);
 
     -- Run tests
 

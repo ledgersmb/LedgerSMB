@@ -27,7 +27,7 @@ BEGIN;
     SELECT has_function('file__get_for_template',ARRAY['integer','integer']);
     SELECT has_function('file__list_by',ARRAY['integer','integer']);
     SELECT has_function('file__get',ARRAY['integer','integer']);
-    SELECT has_function('file_links_vrebuild',ARRAY['']);
+    SELECT has_function('file_links_vrebuild','{}'::text[]);
     SELECT has_function('file__list_links',ARRAY['integer','integer']);
 
     -- Run tests
