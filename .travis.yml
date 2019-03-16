@@ -5,6 +5,13 @@ notifications:
   webhooks: https://ledgersmb.org/webhook/travis_ci_notifications
 
 
+addons:
+  apt:
+    packages: &default_packages
+      - nginx
+      - texlive-latex-recommended
+      - texlive-xetex
+
 matrix:
   include:
     - perl: '5.28'
@@ -12,27 +19,24 @@ matrix:
         postgresql: '9.6'
         apt:
           packages:
-            - nginx postgresql-9.6-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
     - perl: '5.26'
       addons:
         postgresql: '9.6'
         apt:
           packages:
-            - nginx postgresql-9.6-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
     - perl: '5.24'
       addons:
         postgresql: '9.6'
         apt:
           packages:
-            - nginx postgresql-9.6-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
         - DOJO_BUILT=0
     - perl: '5.22'
@@ -40,9 +44,8 @@ matrix:
         postgresql: "9.6"
         apt:
           packages:
-             - nginx postgresql-9.6-pgtap
-             - texlive-latex-recommended
-             - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
         - COVERAGE=1
     - perl: '5.20'
@@ -50,9 +53,8 @@ matrix:
         postgresql: "9.6"
         apt:
           packages:
-            - nginx postgresql-9.6-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
         - COA_TESTING=1
     - perl: '5.18'
@@ -60,9 +62,8 @@ matrix:
         postgresql: "9.6"
         apt:
           packages:
-            - nginx postgresql-9.6-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
         - DB_TESTING=1
 
