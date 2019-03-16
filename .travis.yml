@@ -4,6 +4,24 @@ language: perl
 notifications:
   webhooks: https://ledgersmb.org/webhook/travis_ci_notifications
 
+env:
+  global:
+    - RELEASE_TESTING=1
+    - PGUSER=postgres
+    - PGPASSWORD=test
+    - LSMB_TEST_DB=1
+    - LSMB_NEW_DB=lsmbinstalltest
+    - LSMB_BASE_URL="http://127.0.0.1:5000"
+    - PSGI_BASE_URL="http://127.0.0.1:5001"
+    - HARNESS_RULESFILE="t/testrules.yml"
+    - PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
+    - PATH="$HOME/locallib/bin:$PATH"
+    - PERL_LOCAL_LIB_ROOT="$HOME/locallib${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
+    - PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+    - PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
+    - PERL_MB_OPT="--install_base=$HOME/locallib"
+    - QT_QPA_PLATFORM=phantom
+    - DEVEL_COVER_OPTIONS="+ignore,\"\.lttc\$\""
 
 addons:
   apt:
@@ -82,7 +100,6 @@ before_install:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
   - phantomjs --version
-  - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
   - phantomjs --version
   - if [ $(phantomjs --version) != '2.1.1' ];
     then
@@ -91,18 +108,12 @@ before_install:
       wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
       tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
       hash -r ;
-      export QT_QPA_PLATFORM=phantom
       phantomjs --version ;
     fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
   - perl -V
-  - export PERL_LOCAL_LIB_ROOT="$HOME/locallib${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
-  - export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
-  - export PATH="$HOME/locallib/bin:$PATH"
-  - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
-  - export PERL_MB_OPT="--install_base=$HOME/locallib"
   - npm install uglify-js@">=2.0 <3.0"
 
 install:
@@ -119,7 +130,6 @@ before_script:
   - cp doc/conf/ledgersmb.conf.default ledgersmb.conf
   - cp t/.proverc ./
   - coverage-setup
-  - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib -Iold/lib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
@@ -130,13 +140,7 @@ before_script:
   - utils/diagnostics/t/01-system-resources.t
 
 script:
-  - RELEASE_TESTING=1
-     PGUSER=postgres PGPASSWORD=test
-     LSMB_TEST_DB=1 LSMB_NEW_DB=lsmbinstalltest
-     LSMB_BASE_URL="http://127.0.0.1:5000"
-     PSGI_BASE_URL="http://127.0.0.1:5001"
-     HARNESS_RULESFILE="t/testrules.yml"
-    prove --jobs $(test-jobs) --recurse
+  - prove --jobs $(test-jobs) --recurse
           --pgtap-option dbname=lsmbinstalltest
           --pgtap-option username=postgres
           --feature-option tags=~@wip
