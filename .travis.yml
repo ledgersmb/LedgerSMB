@@ -91,7 +91,6 @@ before_cache:
 cache:
   directories:
     - $HOME/locallib
-    - $HOME/travis_phantomjs
     - $HOME/dojo_archive
 
 before_install:
@@ -99,17 +98,6 @@ before_install:
   - service --status-all
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  - phantomjs --version
-  - phantomjs --version
-  - if [ $(phantomjs --version) != '2.1.1' ];
-    then
-      rm -rf $HOME/travis_phantomjs ;
-      mkdir -p $HOME/travis_phantomjs ;
-      wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
-      tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
-      hash -r ;
-      phantomjs --version ;
-    fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
