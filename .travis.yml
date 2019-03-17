@@ -1,3 +1,17 @@
+
+# On your fork, you can configure build logs to be written to an
+# AWS S3 bucket by making sure the following variables have been
+# set in your Travis CI repository settings page:
+#
+# - AWS_ACCESS_KEY_ID (display value in build log: No)
+# - AWS_SECRET_ACCESS_KEY (display value in build log: No)
+# - AWS_DEFAULT_REGION (display value in build log: Yes)
+# - LSMB_AWS_UPLOAD_BUCKET (display value in build log: Yes)
+#
+# AWS_DEFAULT_REGION should be the region hosting your S3 bucket
+# LSMB_AWS_UPLOAD_BUCKET should contain the name of the bucket to upload into
+
+
 dist: trusty
 language: perl
 
@@ -26,6 +40,7 @@ env:
 addons:
   apt:
     packages: &default_packages
+      - python-pip
       - nginx
       - texlive-latex-recommended
       - texlive-xetex
@@ -103,6 +118,7 @@ before_install:
   - build-perl 2>/dev/null
   - perl -V
   - npm install uglify-js@">=2.0 <3.0"
+  - pip install awscli --upgrade --user
 
 install:
   # Suppress warnings in Perl 5.28 about Locale::* being moved out of 'core'
@@ -129,6 +145,10 @@ before_script:
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
+  - |
+    mkdir screens
+    sed -i -e 's/post-step: 0/post-step: 1/' t/.pherkin.yaml
+    sed -i -e 's/# logging_dir:/logging_dir:/' t/.pherkin.yaml
 
 script:
   - prove --jobs $(test-jobs) --recurse
@@ -137,16 +157,28 @@ script:
           --feature-option tags=~@wip
           t/ xt/
 
+after_script:
+  # display the available resources
+  - utils/diagnostics/t/01-system-resources.t
+  - |
+    if [ -n "$AWS_ACCESS_KEY_ID" ];
+    then
+       (cd "$HOME/built-dist/ledgersmb/screens"
+        aws_url="s3://$LSMB_AWS_UPLOAD_BUCKET/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER"
+        aws s3 cp --recursive --acl public-read ./ "$aws_url/screens"
+        aws s3 cp --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
+        aws s3 cp --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
+        aws s3 cp --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
+    fi
+
 after_success:
-  - >
+  - |
     if [ "$COVERAGE" == "1" ] ; then
        curl http://localhost:5001/stop.pl ;
        while [ -n "$(jobs -r | grep ledgersmb-server.psgi)" ] ; do sleep 1; echo -n "." ; done ;
        echo "" ;
     fi
   - coverage-report
-  # display the available resources
-  - utils/diagnostics/t/01-system-resources.t
   # try and force the github camo.githubusercontent.com cache to refresh our badges
   # with no arguments, this only refreshes the badge assests linked to by the default page shown when visiting
   # https://github.com/ledgersmb/LedgerSMB
@@ -155,20 +187,23 @@ after_success:
   - utils/test/github-badge-cache-buster.sh
 
 after_failure:
-  # display the available resources
-  - utils/diagnostics/t/01-system-resources.t
-  - echo ===============================
-  - echo === dmesg                   ===
-  - echo ===============================
-  - cat /var/log/dmesg
-  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
-  - echo ===============================
-  - echo === /tmp/plackup-access.log ===
-  - echo ===============================
-  - cat /tmp/plackup-access.log
-  - echo
-  - echo ===============================
-  - echo === /tmp/plackup-error.log ===
-  - echo ===============================
-  - cat /tmp/plackup-error.log
-  - echo
+  - |
+    if [ -z "$AWS_ACCESS_KEY_ID" ]
+    then
+      echo ===============================
+      echo === dmesg                   ===
+      echo ===============================
+      cat /var/log/dmesg
+      # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
+      echo ===============================
+      echo === /tmp/plackup-access.log ===
+      echo ===============================
+      cat /tmp/plackup-access.log
+      echo
+      echo ===============================
+      echo === /tmp/plackup-error.log ===
+      echo ===============================
+      cat /tmp/plackup-error.log
+      echo
+    fi
+ 
