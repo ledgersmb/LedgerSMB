@@ -2298,7 +2298,9 @@ sub create_links {
             $self->db_parse_numeric(sth=>$sth, hashref=>$ref);#tshvr
 
             for my $aref (@{$ref->{bu_lines}}){
-                $ref->{"b_unit_$aref->[0]"} = $aref->[1];
+                if ($aref && $aref->[0]) {
+                    $ref->{"b_unit_$aref->[0]"} = $aref->[1];
+                }
             }
 
             if ($self->{reverse}){
