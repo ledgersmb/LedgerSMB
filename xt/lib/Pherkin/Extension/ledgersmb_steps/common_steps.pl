@@ -40,6 +40,37 @@ Given qr/(a nonexistent|an existing) company named "(.*)"/, sub {
         if S->{'nonexistent company'};
 };
 
+my %company_settings_map = (
+    'Max per dropdown' => 'vclimit',
+    );
+
+Given qr/the following company configuration settings:$/, sub {
+    my $config = C->data;
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    my $sth = $dbh->prepare('select * from defaults');
+    $sth->execute;
+    my $active = $sth->fetchall_hashref('setting_key');
+
+    for my $conf (@$config) {
+        if (exists $company_settings_map{$conf->{setting}}) {
+            $conf->{setting} = $company_settings_map{$conf->{setting}};
+        }
+    }
+
+    my $stu =
+        $dbh->prepare('update defaults set value = ? where setting_key = ?');
+    my $sti =
+        $dbh->prepare('insert into defaults (setting_key, value) values (?,?)');
+    for my $conf (@$config) {
+        if (exists $active->{$conf->{setting}}) {
+            $stu->execute($conf->{value}, $conf->{setting});
+        }
+        else {
+            $sti->execute($conf->{setting}, $conf->{value});
+        }
+    }
+};
+
 Given qr/(a nonexistent|an existing) user named "(.*)"/, sub {
     my $role = $2;
     S->{"the user"} = $role;
@@ -226,9 +257,9 @@ my %part_props = (
     expense_accno => '5010',
     );
 
-Given qr/a part with these properties:$/, sub {
-    my %props = map { $_->{name} => $_->{value} } @{C->data};
-    my %total_props = (%part_props, %props);
+
+sub _create_part {
+    my ($props) = @_;
 
     local $LedgerSMB::App_State::DBH = S->{ext_lsmb}->admin_dbh;
     my $account = LedgerSMB::DBObject::Account->new();
@@ -236,17 +267,17 @@ Given qr/a part with these properties:$/, sub {
     my @accounts = $account->list();
     my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
 
-    $total_props{partnumber} //= 'P-' . ($part_count++);
+    $props->{partnumber} //= 'P-' . ($part_count++);
     my $dbh = S->{ext_lsmb}->admin_dbh;
     my @keys;
     my @values;
     my @placeholders;
 
-    $total_props{$_} = $accno_ids{$total_props{$_}}
-       for grep { m/accno/ } keys %total_props;
+    $props->{$_} = $accno_ids{$props->{$_}}
+       for grep { m/accno/ } keys %$props;
 
-    for my $key (keys %total_props) {
-        push @values, $total_props{$key};
+    for my $key (keys %$props) {
+        push @values, $props->{$key};
         $key =~ s/accno$/accno_id/g;
         push @keys, $key;
         push @placeholders, '?';
@@ -258,6 +289,23 @@ Given qr/a part with these properties:$/, sub {
       INSERT INTO parts ($keys)
         VALUES ($placeholders)
 |, undef, @values);
+
+}
+
+Given qr/a part "([^\"]+)"$/, sub {
+    my $partnumber = $1;
+    my %total_props = (%part_props,
+                       partnumber => $partnumber,
+        );
+
+    _create_part(\%total_props);
+};
+
+Given qr/a part with these properties:$/, sub {
+    my %props = map { $_->{name} => $_->{value} } @{C->data};
+    my %total_props = (%part_props, %props);
+
+    _create_part(\%total_props);
 };
 
 my $invnumber = 0;

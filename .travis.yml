@@ -125,7 +125,7 @@ install:
   # Further more is there a warning regarding redifinition of JSON::PP::Boolean
   # which is fixed in 4.03 (so, reinstall, in order to get to newest)
   - cpanm --reinstall --notest Locale::Country Locale::Codes Locale::Language JSON::PP
-  - cpanm --quiet --notest Cpanel::JSON::XS
+  - cpanm Cpanel::JSON::XS~3.0206
   - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 
