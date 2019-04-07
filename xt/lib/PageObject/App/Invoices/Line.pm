@@ -47,6 +47,14 @@ my %field_map = (
     'Serial No.'    => 'serialnumber',
     );
 
+sub field {
+    my ($self, $label) = @_;
+
+    my $id = $self->get_attribute('id');
+    $id =~ s/^line-//;
+    return $self->find(qq{.//*[\@id="$field_map{$label}_${id}"]});
+}
+
 sub field_value {
     my ($self, $label, $new_value) = @_;
 
@@ -63,9 +71,9 @@ sub field_value {
     }
 
     my $field = $self->find(
-        qq{.//*[\@id="$field_map{$label}_${id}"]})
-        // $self->find(qq{.//input[\@type="hidden" and
-                                   \@name="$field_map{$label}_${id}"]});
+        qq{.//*[\@id="$field_map{$label}_${id}"]
+           | .//input[\@type="hidden" and
+                      \@name="$field_map{$label}_${id}"]});
     die "Invoice line column $field_map{$label}_${id} not found"
         if not defined $field;
     my $rv = $field->value;

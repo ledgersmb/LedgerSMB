@@ -37,11 +37,7 @@ Scenario: Creation of a new sales invoice, no taxes
        | PO Number       |          |
     When I select customer "Customer 2"
      And I add an invoice line with part "p1"
-    Then I expect to see an invoice with these lines:
-       | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
-       | 1    | p1     | Part 1      | 0   |      |    | 0.00  | 0 | 0.00     |         |               |       |            |
-    When I press "Update"
-     And I wait for the page to load
-    Then I expect to see an invoice with these lines:
+    Then I expect to see an invoice with these lines
        | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
        | 1    | p1     | Part 1      | 1   | ea   | 0  | 30.00 | 0 | 30.00    |         |               |       |            |
+     And I expect to see the invoice subtotal of 30.00 and total of 30.00 without taxes

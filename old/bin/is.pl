@@ -787,7 +787,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                # Note that the screens may be not wide enough to display
                # this in the normal way so we have to change the layout of the
                # notes fields. --CT
-               $tax .= qq|<tr>
+               $tax .= qq|<tr class="invoice-manual-tax">
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
@@ -815,7 +815,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                            $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
                 next if !$form->{"${taccno}_total"};
                 $tax .= qq|
-                <tr>
+                <tr class="invoice-auto-tax">
                   <th align=right>$form->{"${taccno}_description"}</th>
                   <td align=right>$form->{"${taccno}_total"}</td>
                   <td>$form->{currency}</td>
@@ -827,7 +827,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
           $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
 
         $subtotal = qq|
-          <tr>
+          <tr class="invoice-subtotal">
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
       <td align=right>$form->{invsubtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
@@ -906,7 +906,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                 <td>&nbsp;</td>
               </tr>
           $tax
-          <tr>
+          <tr class="invoice-total">
         <th align=right>| . $locale->text('Total') . qq|</th>
       <td align=right>$form->{invtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
