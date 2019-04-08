@@ -41,3 +41,25 @@ Scenario: Creation of a new sales invoice, no taxes
        | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
        | 1    | p1     | Part 1      | 1   | ea   | 0  | 30.00 | 0 | 30.00    |         |               |       |            |
      And I expect to see the invoice subtotal of 30.00 and total of 30.00 without taxes
+     And I expect to see 1 empty payment line
+    When I post the invoice
+    Then I expect to see these invoice header fields and values
+       | name            | value    |
+       | Invoice Created | $$today |
+       | Invoice Date    | $$today |
+       | Due Date        | $$today |
+       | Record in       | 1200--Accounts Receivables |
+       | Currency        | USD      |
+       | Description     |          |
+       | Shipping Point  |          |
+       | Ship via        |          |
+       | Invoice Number  | 2        |
+       | Order Number    |          |
+       | PO Number       |          |
+     And I expect to see an invoice with these lines
+       | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
+       | 1    | p1     | Part 1      | 1   | ea   | -1 | 30.00 | 0 | 30.00    |         |               |       |            |
+     And I expect to see the invoice subtotal of 30.00 and total of 30.00 without taxes
+###TODO:
+#     And I expect to see 1 empty payment line
+## For some reason, there are 2 empty payment lines?!

@@ -847,7 +847,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $form->hide_form("cleared_$i");
 
         print qq|
-    <tr>
+    <tr class="invoice-payment">
 |;
 
         $form->{"selectAP_paid_$i"} = $form->{selectAP_paid};
