@@ -7,6 +7,7 @@ use Carp;
 use PageObject;
 use PageObject::App::Invoices::Lines;
 use PageObject::App::Invoices::Header;
+use PageObject::App::Invoices::Payments;
 
 use Moose;
 use namespace::autoclean;
@@ -35,6 +36,34 @@ sub update {
     $self->session->page->body->maindiv->wait_for_content;
 }
 
+sub _post_btn {
+    my ($self) = @_;
+
+    my $outer = $self->find('.//span[contains(@widgetid,"action-post-")]
+                             | .//span[contains(@widgetid,"action-approve-")]');
+    my $lbl_id = $outer->get_attribute('widgetid');
+    my $label = $self->find(qq{//span[\@id="${lbl_id}_label"]});
+    return $label;
+}
+
+sub _post_btn_text {
+    my ($self) = @_;
+
+    return $self->_post_btn->get_text;
+}
+
+sub post {
+    my ($self) = @_;
+    if ($self->_post_btn_text eq 'Save') {
+        # 2-step in case separation of duties is enabled
+        $self->_post_btn->click;
+        $self->session->page->body->maindiv->wait_for_content;
+    }
+
+    $self->session->page->body->maindiv->content->_post_btn->click;
+    $self->session->page->body->maindiv->wait_for_content;
+}
+
 sub select_customer {
     my ($self, $customer) = @_;
 
@@ -60,6 +89,14 @@ sub lines {
 
     $self->verify;
     return $self->find('*invoice-lines');
+}
+
+sub payments {
+    my ($self) = @_;
+
+    $self->verify;
+    return $self->find('*invoice-payments',
+                       widget_args => [ counterparty_type => 'customer' ]);
 }
 
 sub _extract_total {

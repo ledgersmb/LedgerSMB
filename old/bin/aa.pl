@@ -816,9 +816,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     <th class=listheading>| . $locale->text('Payments') . qq|</th>
   </tr>
 
-  <tr id="invoice-payments-table">
+  <tr>
     <td>
-      <table width=100%>
+      <table width=100% id="invoice-payments-table">
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
@@ -836,9 +836,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $column_data{source}       = "<th>" . $locale->text('Source') . "</th>";
     $column_data{memo}         = "<th>" . $locale->text('Memo') . "</th>";
 
-    print "
+    print qq|
         <tr>
-";
+|;
 
     for (@column_index) { print "$column_data{$_}\n" }
 
@@ -855,9 +855,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
         $form->hide_form("cleared_$i");
 
-        print "
-        <tr>
-";
+        print q|
+        <tr class="invoice-payment">
+|;
 
         $form->{"select$form->{ARAP}_paid_$i"} =
           $form->{"select$form->{ARAP}_paid"};

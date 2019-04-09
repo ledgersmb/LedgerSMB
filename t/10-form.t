@@ -267,7 +267,7 @@ is($form->sort_order($aryref, {name => 0, projectnumber => 3, startdate => 1}),
 ## $form->print_button checks
 $form = Form->new;
 @r = trap{$form->print_button({'pear' => {'key' => 'P', 'value' => 'Pears'}}, 'pear')};
-is($trap->stdout, "<button data-dojo-type=\"dijit/form/Button\" class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" accesskey=\"P\" title=\"Pears [Alt-P]\">Pears</button>\n", 'print_button');
+is($trap->stdout, "<button data-dojo-type=\"dijit/form/Button\" class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" id=\"action-pear-1\" accesskey=\"P\" title=\"Pears [Alt-P]\">Pears</button>\n", 'print_button');
 
 ## $form->like checks
 $form = Form->new;

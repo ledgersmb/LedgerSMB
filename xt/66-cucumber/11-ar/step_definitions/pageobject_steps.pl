@@ -68,6 +68,14 @@ When qr/I add an invoice line with (?:part|service) "(.+)"/, sub {
     $inv->update;
 };
 
+When qr/I post the invoice/, sub {
+
+    my $session = S->{ext_wsl};
+    my $inv = $session->page->body->maindiv->content;
+    $inv->post;
+
+};
+
 Then qr/I expect to see an invoice with (\d+) (empty )?lines?/, sub {
     my ($count, $empty) = ($1, $2);
 
@@ -97,7 +105,7 @@ Then qr/I expect to see an invoice with these lines/, sub {
         S->{ext_wsl}->page->body->maindiv->content->lines->all_lines;
 
     while (1) {
-         my $expected_line = shift @{$expected_lines};
+        my $expected_line = shift @{$expected_lines};
         my $actual_line = shift @{$actual_lines};
 
         if (! $expected_line && ! $actual_line) {
@@ -184,6 +192,55 @@ Then qr/I expect to see the invoice(?: subtotal of ([^\s]+) and)? total of ([^\s
                            qq{Actual tax $field matches expected value});
                     }
                 }
+            }
+        }
+    }
+};
+
+Then qr/I expect to see (\d+) (empty )?payment lines?/, sub {
+    my ($count, $empty) = ($1, $2);
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+    ###TODO: verify this is an invoice!
+
+    $page = $page->payments;
+    my @payments = $page->payment_lines;
+    if ($empty) {
+        @payments = grep { $_->is_empty } @payments;
+    }
+    is(scalar(@payments), $count, 'Expected number of lines matches actual');
+};
+
+Then qr/I expect to see these payment lines/, sub {
+    my $expected_payments = C->data;
+    my $actual_payments =
+        S->{ext_wsl}->page->body->maindiv->content->payments->payment_lines;
+
+    while (1) {
+        my $expected_line = shift @{$expected_payments};
+        my $actual_line = shift @{$actual_payments};
+
+        if (! $expected_line && ! $actual_line) {
+            last;
+        }
+        elsif (! $expected_line && $actual_line->is_empty) {
+            next;
+        }
+        elsif (! $expected_line) {
+            fail('all actual lines in the list of expected lines');
+        }
+        elsif ($expected_line &&
+               (! $actual_line || $actual_line->is_empty)) {
+            fail('all expected lines present as actual lines');
+        }
+        else { # $expected_line isn't empty and neither is $actual_line
+           for my $field (keys %$expected_line) {
+               S->{ext_wsl}->wait_for(
+                    sub {
+                        return $actual_line->field_value($field) eq $expected_line->{$field};
+                    });
+                is($actual_line->field_value($field),
+                   $expected_line->{$field},
+                   qq{Actual value for field $field matches expectation});
             }
         }
     }
