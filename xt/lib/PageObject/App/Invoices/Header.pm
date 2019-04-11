@@ -45,6 +45,7 @@ sub field_value {
         'Invoice Number' => 'invnumber',
         'Order Number'   => 'ordnumber',
         'PO Number'      => 'ponumber',
+        'SO Number'      => 'ponumber',
         'Invoice Created'=> 'crdate',
         'Invoice Date'   => 'transdate',
         'Due Date'       => 'duedate',

@@ -70,8 +70,7 @@ sub field_value {
         return $oh->get_text;
     }
 
-    my $field = $self->find(
-        qq{.//*[\@id="$field_map{$label}_${id}"]
+    my $field = $self->find(qq{.//*[\@id="$field_map{$label}_${id}"]
            | .//input[\@type="hidden" and
                       \@name="$field_map{$label}_${id}"]});
     die "Invoice line column $field_map{$label}_${id} not found"
