@@ -342,7 +342,7 @@ sub form_header {
         $vendor = qq|<select data-dojo-type="dijit/form/Select" id=vendor name=vendor>$form->{selectvendor}</select>|;
     }
     else {
-        $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor value="$form->{vendor}" size=35>
+        $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor id=vendor value="$form->{vendor}" size=35>
                  <a href="login.pl?action=login&company=$form->{company}#contact.pl?action=add&entity_class=1"
                   target="new" id="new-contact">[|
                  .  $locale->text('New') . qq|]</a>|;
@@ -390,12 +390,12 @@ sub form_header {
   <tr height="5"></tr>
   <tr>
     <td>
-      <table width=100%>
+      <table width=100% id="invoice-header">
         <tr valign=top>
       <td>
         <table>
           <tr>
-        <th align=right nowrap>| . $locale->text('Vendor') . qq|</th>
+        <th align=right nowrap><label for="vendor">| . $locale->text('Vendor') . qq|</label></th>
         <td colspan=3>$vendor</td>
 
         <input type=hidden name=vendor_id value=$form->{vendor_id}>
@@ -730,7 +730,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                                   2);
 
         $subtotal = qq|
-          <tr>
+          <tr class="invoice-subtotal">
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
       <td align=right>$form->{invsubtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
@@ -794,7 +794,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                <tr><td>&nbsp;</td></tr>
           $tax
           <tr><td>&nbsp;</td></tr>
-          <tr>
+          <tr class="invoice-total">
         <th align=right>| . $locale->text('Total') . qq|</th>
       <td align=right>$form->{invtotal}</td><td>$form->{currency}</td></tr>| .
       (($form->{currency} ne $form->{defaultcurrency})
