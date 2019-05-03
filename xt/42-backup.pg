@@ -16,7 +16,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('lsmb__clear_role_backup',ARRAY['']);
+    SELECT has_function('lsmb__clear_role_backup','{}'::text[]);
 
     -- Run tests
 

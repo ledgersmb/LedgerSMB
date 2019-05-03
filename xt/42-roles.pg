@@ -26,7 +26,7 @@ BEGIN;
     SELECT has_function('lsmb__grant_role',ARRAY['text','text']);
     SELECT has_function('lsmb__is_allowed_role',ARRAY['text[]']);
     SELECT has_function('quote_ident_array',ARRAY['text[]']);
-    SELECT has_function('tg_enforce_perms_eclass',ARRAY['']);
+    SELECT has_function('tg_enforce_perms_eclass','{}'::text[]);
 
     -- This function is vulnerable to SQL injection but it is transient for the
     -- purposes of these test cases. In particular it is intended only to ensure

@@ -62,7 +62,7 @@ BEGIN;
     SELECT has_function('inventory_adjust__list',ARRAY['date','date','boolean']);
     SELECT has_function('inventory_adjust__get',ARRAY['integer']);
     SELECT has_function('inventory_adjust__get_lines',ARRAY['integer']);
-    SELECT has_function('warehouse__list',ARRAY['']);
+    SELECT has_function('warehouse__list','{}'::text[]);
     SELECT has_function('goods__history',ARRAY['date','date','text','text','text','boolean','boolean','boolean','boolean','boolean','boolean']);
 
     -- Set specific data

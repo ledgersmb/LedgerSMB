@@ -25,7 +25,7 @@ BEGIN;
     SELECT has_function('business_unit_class__save',ARRAY['integer','text','boolean','integer']);
     SELECT has_function('business_unit_class__save_modules',ARRAY['integer','integer[]']);
     SELECT has_function('business_unit_get',ARRAY['integer']);
-    SELECT has_function('eca_bu_trigger',ARRAY['']);
+    SELECT has_function('eca_bu_trigger','{}'::text[]);
 
     -- Run tests
 

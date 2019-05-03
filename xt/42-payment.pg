@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(42);
+    SELECT plan(41);
 
     -- Add data
 
@@ -21,8 +21,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('business_type__list',ARRAY['']);
-    SELECT has_function('currency_get_exchangerate',ARRAY['character','date','integer']);
+    SELECT has_function('business_type__list','{}'::text[]);
     SELECT has_function('overpayment__reverse',ARRAY['integer','date','integer','integer','numeric','character']);
     SELECT has_function('payment_bulk_post',ARRAY['numeric[]','integer','text','numeric','text','text','date','integer','numeric','text']);
     SELECT has_function('payment_gather_header_info',ARRAY['integer','integer']);
@@ -46,7 +45,7 @@ BEGIN;
     SELECT has_function('payments_get_open_currencies',ARRAY['integer']);
     SELECT has_function('payments_set_exchangerate',ARRAY['integer','numeric','character','date']);
     SELECT has_function('payment_type__get_label',ARRAY['integer']);
-    SELECT has_function('payment_type__list',ARRAY['']);
+    SELECT has_function('payment_type__list','{}'::text[]);
 
     -- Add specific data
 

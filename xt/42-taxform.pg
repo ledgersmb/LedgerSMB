@@ -59,8 +59,8 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('tax_form__get',ARRAY['integer']);
-    SELECT has_function('tax_form__list_all',ARRAY['']);
-    SELECT has_function('tax_form__list_ext',ARRAY['']);
+    SELECT has_function('tax_form__list_all','{}'::text[]);
+    SELECT has_function('tax_form__list_ext','{}'::text[]);
     SELECT has_function('tax_form__save',ARRAY['integer','integer','text','boolean','boolean']);
 
     -- Basic setup

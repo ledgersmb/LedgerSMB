@@ -18,7 +18,7 @@ BEGIN;
 
     SELECT has_function('trial_balance__generate',ARRAY['date','date','integer','integer[]','text','integer[]','integer','boolean','boolean']);
     SELECT has_function('trial_balance__heading_accounts',ARRAY['integer[]']);
-    SELECT has_function('trial_balance__list_headings',ARRAY['']);
+    SELECT has_function('trial_balance__list_headings','{}'::text[]);
 
     -- Run tests
 

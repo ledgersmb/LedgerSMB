@@ -20,7 +20,7 @@ BEGIN;
     SELECT has_function('parts__search_lite',ARRAY['text','text']);
     SELECT has_function('parts__get_by_id',ARRAY['integer']);
     SELECT has_function('parts__get_by_partnumber',ARRAY['text']);
-    SELECT has_function('pricegroups__list',ARRAY['']);
+    SELECT has_function('pricegroups__list','{}'::text[]);
 
     -- Basic setup
 

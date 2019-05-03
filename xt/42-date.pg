@@ -16,7 +16,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('date_get_all_years',ARRAY['']);
+    SELECT has_function('date_get_all_years','{}'::text[]);
     SELECT has_function('is_leapyear',ARRAY['date']);
     SELECT has_function('leap_days',ARRAY['integer','integer']);
     SELECT has_function('next_leap_year_calc',ARRAY['date','boolean']);
@@ -25,7 +25,7 @@ BEGIN;
     SELECT has_function('is_same_year',ARRAY['date','date']);
     SELECT has_function('is_same_month',ARRAY['date','date']);
     SELECT has_function('get_fractional_month',ARRAY['date','date']);
-    SELECT has_function('periods_get',ARRAY['']);
+    SELECT has_function('periods_get','{}'::text[]);
 
     -- Run tests
 
