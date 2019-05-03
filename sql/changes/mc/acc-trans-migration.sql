@@ -132,6 +132,16 @@ BEGIN
          AND NOT EXISTS (select 1 from cr_report_line cl
                            join lines_to_delete ltd on cl.ledger_id = ltd.assoc
                           where ltd.id = crl.ledger_id);
+  UPDATE cr_report_line crl
+     SET our_balance = our_balance
+                     + (select our_balance from cr_report_line cl
+                           join lines_to_delete ltd on cl.ledger_id = ltd.id
+                          where ltd.id = crl.ledger_id or ltd.assoc = crl.ledger_id),
+         their_balance = their_balance
+                       + (select their_balance from cr_report_line cl
+                           join lines_to_delete ltd on cl.ledger_id = ltd.id
+                          where ltd.id = crl.ledger_id or ltd.assoc = crl.ledger_id)
+   WHERE EXISTS (select 1 from lines_to_delete ltd where ltd.assoc = crl.ledger_id);
   DELETE FROM cr_report_line crl
    WHERE EXISTS (select 1 from lines_to_delete ltd
                   where ltd.id = crl.ledger_id);
@@ -250,4 +260,3 @@ BEGIN
 
 END;
 $migrate$;
-
