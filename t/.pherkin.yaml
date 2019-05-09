@@ -9,7 +9,7 @@ default:
       Pherkin::Extension::Weasel:
          default_session: selenium
          screenshots_dir: screens
-         logging_dir: screens
+         logging_dir: logs
          screenshot_events:
            pre-step: 0
            post-step: 1

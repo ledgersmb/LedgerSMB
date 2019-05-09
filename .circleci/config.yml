@@ -1,0 +1,418 @@
+version: 2.1
+
+#TODO: To enable matrix, Consider https://github.com/winksaville/circleci-matrix
+
+# Define defaults
+_defaults: &defaults
+    working_directory: &working_directory ~/project
+
+    # Make sure that .profile is sourced for Perlbrew
+    shell: /bin/bash --login -eo pipefail
+
+# Define aliases for simplification
+aliases:
+  - &step_attach_workspace
+    attach_workspace:
+      at: *working_directory
+
+  # Save and restore cache go along
+  # Cache to speed-up next runs
+  - &save_main_cache
+    paths:
+      - .
+    key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+    name: Saving LSMB built
+
+  - &restore_main_cache
+    key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+    name: Restoring LSMB built
+
+  - &save_dojo_cache
+    paths:
+      - .
+    key: v1-dojo-{{ .Environment.CIRCLE_SHA1 }}
+    name: Saving LSMB Dojo built
+
+  - &restore_dojo_cache
+    key: v1-dojo-{{ .Environment.CIRCLE_SHA1 }}
+    name: Restoring LSMB Dojo built
+
+  # Keep for following jobs in this run
+  - &persist_to_workspace
+      root: *working_directory
+      paths:
+        - .
+
+# Reuseable commands
+commands:
+  prove:
+    steps:
+      - run:
+          command: |
+            sed -i -E -e "s/(step[^a-z]) 0/\1 1/g" t/.pherkin.yaml;
+            mkdir -p /tmp/test-results/logs
+      - run: prove --recurse
+                   --pgtap-option dbname=lsmbinstalltest
+                   --pgtap-option username=postgres
+                   --feature-option tags=~@wip t/ xt/
+                   --formatter TAP::Formatter::JUnit
+                   --harness=TAP::Filter=MyFilter
+                   --timer
+                   > /dev/null # To stop JUnit from being dumped on stdout too.
+      - run:
+          command: |
+            mkdir -p /tmp/artifact/logs/screens;
+            cp logs/* /tmp/artifact/logs || 1;
+            cp screens/* /tmp/artifact/logs/screens || 1;
+          when: on_fail
+      - store_artifacts:
+          path: /tmp/artifact/
+      - store_test_results:
+          path: /tmp/test-results
+  start_plackup:
+    description: "Start plackup"
+    steps:
+      #- restore_cache: *restore_main_cache
+      - *step_attach_workspace
+      # Freshen up CPAN
+      - run:
+          command: |
+            cpanm --quiet --notest \
+              --with-develop \
+              --with-feature=starman \
+              --with-feature=latex-pdf-images \
+              --with-feature=latex-pdf-ps \
+              --with-feature=openoffice \
+              --with-feature=xls \
+              --with-feature=edi \
+              --installdeps .
+      #Patch to quiet the Pherkin::Extension::Weasel warnings
+      - run:
+          command: |
+            perl=`perl -e 'print substr($^V, 1)'`;
+            cp utils/TAP/Filter/MyFilter.pm ~/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl/TAP/Filter/
+      - run:
+          command: |
+            if [ "${DOJO_BUILT}" != "" ]; then sed -i -r -e "s/#dojo_built *= *[0-9]+/dojo_built=${DOJO_BUILT}/" ledgersmb.conf ; fi;
+            plackup -I$HOME/project/lib -I$HOME/project/old/lib \
+                    --port 5762 \
+                    $HOME/project/bin/ledgersmb-server.psgi
+          background: true
+  start_proxy:
+    description: "Start the proxy"
+    parameters:
+      proxy:
+        type: string
+        default: nginx
+    steps:
+      - run:
+          command: |
+            /usr/local/bin/<< parameters.proxy >>.sh
+          background: true
+
+# Define executors
+executors:
+  test:
+    parameters:
+      perl:
+        type: string
+        default: latest
+      postgres:
+        type: string
+        default: latest
+      browser:
+        type: string
+        default: chrome
+      coverage:
+        type: integer
+        default: 0
+      dojo:
+        type: integer
+        default: 0
+    docker:
+      - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
+      - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
+      - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
+    environment:
+      BROWSER: << parameters.browser >>
+      COVERAGE: << parameters.coverage >>
+      RELEASE_TESTING: 1
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: test
+      LSMB_TEST_DB: 1
+      LSMB_NEW_DB: lsmbinstalltest
+      LSMB_BASE_URL: http://127.0.0.1:5000
+      PSGI_BASE_URL: http://127.0.0.1:5001
+      HARNESS_RULESFILE: t/testrules.yml
+      DEBUG: browserless/chrome*
+      DOJO_BUILT: << parameters.dojo >>
+      PERL_TEST_HARNESS_DUMP_TAP: /tmp/test-results/logs
+      ALLOW_PASSING_TODOS: 1
+
+
+# Define jobs
+jobs:
+  base:
+    <<: *defaults
+    docker:
+    # using custom image, see .circleci/images/primary/Dockerfile
+      - image: ledgersmb/ledgersmb_circleci-primary
+    steps:
+    - checkout
+    - run:
+        name: Pull related Git repositories
+        command: |
+          git submodule sync
+          git submodule update --init
+    #- restore_cache: *restore_main_cache
+    - run: mkdir -p logs screens;
+    - run: cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+    #- save_cache: *save_main_cache
+    - persist_to_workspace: *persist_to_workspace
+
+  make_dojo:
+    <<: *defaults
+    docker:
+    # using custom image, see .circleci/images/primary/Dockerfile
+      - image: ledgersmb/ledgersmb_circleci-perl:5.28
+        name: lsmb
+    steps:
+      - start_plackup
+      - run: mkdir /tmp/artifacts
+      - run: make dojo
+      - run: cp UI/js/build-report.txt /tmp/artifacts
+      - persist_to_workspace: *persist_to_workspace
+      - store_artifacts:
+          path: /tmp/artifacts
+
+  test_nodojo:
+    <<: *defaults
+    executor:
+      name: test
+      perl: "5.28"
+      postgres: "11"
+      browser: phantomjs
+      dojo: 0
+    steps:
+      - start_plackup
+      - start_proxy
+      - prove
+
+  perl528_pg11_chrome:
+    <<: *defaults
+    environment:
+      COVERAGE: 1
+    executor:
+      name: test
+      perl: "5.28"
+      postgres: "11"
+      browser: chrome
+    steps:
+      - start_plackup
+      - start_proxy
+      - prove
+
+  perl528_pg11_chrome_lighttpd:
+    <<: *defaults
+    environment:
+      COVERAGE: 1
+    executor:
+      name: test
+      perl: "5.28"
+      postgres: "11"
+      browser: chrome
+    steps:
+      - start_plackup
+      - start_proxy:
+          proxy: lighttpd
+      - prove
+
+  perl528_pg11_firefox:
+    <<: *defaults
+    executor:
+      name: test
+      perl: "5.28"
+      postgres: "11"
+      browser: firefox
+    steps:
+      - start_plackup
+      - start_proxy
+      - prove
+
+#  perl530_pg11_phantomjs:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.30"
+#      postgres: "11"
+#      browser: phantomjs
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl526_pg11_chrome:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.26"
+#      postgres: "11"
+#      browser: chrome
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl524_pg11_chrome:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.24"
+#      postgres: "11"
+#      browser: chrome
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl522_pg11_chrome:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.22"
+#      postgres: "11"
+#      browser: chrome
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl528_pg11_chrome:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.28"
+#      postgres: "11"
+#      browser: chrome
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl528_pg10_firefox:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.28"
+#      postgres: "10"
+#      browser: firefox
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl528_pg96_firefox:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.28"
+#      postgres: "96"
+#      browser: firefox
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+#  perl528_pg95_firefox:
+#    <<: *defaults
+#    executor:
+#      name: test
+#      perl: "5.28"
+#      postgres: "95"
+#      browser: firefox
+#    steps:
+#      - start_plackup
+#      - start_proxy
+#      - prove
+
+  deploy:
+    <<: *defaults
+    docker:
+      - image: ledgersmb/ledgersmb_circleci-primary
+    steps:
+    - run: echo "Add deploy steps"
+
+# Workflows
+# Tests multiple browsers, coverage and dojo
+workflows:
+  workflow:
+    jobs:
+      - base
+
+      - make_dojo:
+          requires:
+            - base
+
+      - test_nodojo:
+          requires:
+            - base
+
+      - perl528_pg11_chrome:
+          requires:
+            - make_dojo
+
+      - perl528_pg11_chrome_lighttpd:
+          requires:
+            - make_dojo
+
+      - perl528_pg11_firefox:
+          requires:
+            - make_dojo
+
+#      - perl528_pg11_phantomjs:
+#          requires:
+#            - make_dojo
+
+#      - perl528_pg11_chrome:
+#          requires:
+#            - make_dojo
+
+#      - perl526_pg11_chrome:
+#          requires:
+#            - make_dojo
+
+#      - perl524_pg11_chrome:
+#          requires:
+#            - make_dojo
+
+#      - perl522_pg11_chrome:
+#          requires:
+#            - make_dojo
+
+#      - perl528_pg10_firefox:
+#          requires:
+#            - make_dojo
+
+#      - perl528_pg96_firefox:
+#          requires:
+#            - make_dojo
+
+#      - perl528_pg95_firefox:
+#          requires:
+#            - make_dojo
+
+      - deploy:
+          requires:
+            - test_nodojo
+            - perl528_pg11_chrome
+            - perl528_pg11_chrome_lighttpd
+            - perl528_pg11_firefox
+#            - perl528_pg11_phantomjs
+#            - perl530_pg11_chrome
+#            - perl526_pg11_chrome
+#            - perl524_pg11_chrome
+#            - perl522_pg11_chrome
+#            - perl528_pg10_firefox
+#            - perl528_pg96_firefox
+#            - perl528_pg95_firefox
