@@ -27,13 +27,6 @@ sub _verify {
     return $self;
 }
 
-
-sub _verify {
-    my ($self) = @_;
-
-    return $self;
-}
-
 sub update {
     my ($self) = @_;
 
