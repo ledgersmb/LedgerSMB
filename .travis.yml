@@ -142,7 +142,8 @@ before_script:
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib -Iold/lib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
   - utils/test/Is_LSMB_running.sh --early # fail early if starman is not running (can be skipped based on reponame or owner by setting an array in the script)
   - nginx -c /tmp/nginx.conf
-  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
+  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -E -e "s/^#?dojo_built *= *[0-9]+/dojo_built=${DOJO_BUILT}/" ledgersmb.conf ; fi
+  - if [ "${DOJO_BUILT}" == "0" ]; then rm -rf UI/js; fi
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
   - |
