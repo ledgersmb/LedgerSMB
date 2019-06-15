@@ -15,5 +15,3 @@
 --ext=.t
 --ext=.pg
 --ext=.feature
-# Filter out Test skipped due to failure in previous step
---harness=TAP::Filter=MyFilter
