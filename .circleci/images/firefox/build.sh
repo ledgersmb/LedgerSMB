@@ -1,4 +1,4 @@
 #!/bin/bash -x
 
-DOCKER_BUILDKIT=1 docker build -t ylavoie/ledgersmb_circleci-firefox .
-docker push ylavoie/ledgersmb_circleci-firefox
+DOCKER_BUILDKIT=1 docker build -t ledgersmb/ledgersmb_circleci-firefox .
+docker push ledgersmb/ledgersmb_circleci-firefox

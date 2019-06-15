@@ -1,4 +1,4 @@
 #!/bin/bash -x
 
-docker build -t ylavoie/ledgersmb_circleci-chrome .
-docker push ylavoie/ledgersmb_circleci-chrome
+docker build -t ledgersmb/ledgersmb_circleci-chrome .
+docker push ledgersmb/ledgersmb_circleci-chrome

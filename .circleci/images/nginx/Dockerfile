@@ -1,4 +1,4 @@
-FROM        ylavoie/ledgersmb_circleci-primary
+FROM        ledgersmb/ledgersmb_circleci-primary
 MAINTAINER  LedgerSMB  devel@lists.ledgersmb.org
 
 USER root
