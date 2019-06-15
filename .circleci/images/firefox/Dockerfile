@@ -1,5 +1,5 @@
 ARG PROTOCOL=json
-FROM ylavoie/ledgersmb_circleci-primary AS primary
+FROM ledgersmb/ledgersmb_circleci-primary AS primary
 MAINTAINER  LedgerSMB  devel@lists.ledgersmb.org
 # We build here the 2 firefox versions
 # Select either json or webdriver

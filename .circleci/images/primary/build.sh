@@ -1,4 +1,4 @@
 #!/bin/bash -x
 
-docker build -t ylavoie/ledgersmb_circleci-primary .
-docker push ylavoie/ledgersmb_circleci-primary
+docker build -t ledgersmb/ledgersmb_circleci-primary .
+docker push ledgersmb/ledgersmb_circleci-primary
