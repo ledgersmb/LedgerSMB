@@ -1,3 +1,7 @@
+---
+name: Bug report
+about: Bugs
+---
 
 When registering an issue, please take the following directions
 into account to help the project best organize its work and be
