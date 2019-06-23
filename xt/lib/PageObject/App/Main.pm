@@ -46,8 +46,21 @@ sub content {
     return $self->_get_content;
 }
 
+sub _wait_for_valid_content {
+    my ($self) = @_;
+
+    $self->session->wait_for(
+        sub {
+            my $class = $self->get_attribute('class');
+            return scalar( grep { $_ eq 'done-parsing' }
+                           split /\s+/, $class);
+        });
+}
+
 sub _build_content {
     my ($self) = @_;
+
+    $self->_wait_for_valid_content;
 
     my @found = $self->find_all('./*'); # find any immediate child
     die "#maindiv is expected to have exactly one child node, found " . scalar(@found) .
@@ -69,22 +82,20 @@ sub wait_for_content {
     $self->clear_content;
 
     $self->session->wait_for(
+        # removed content
         sub {
-            if ($old_content) {
-                my $gone = 1;
-                try {
-                    my $tagname = $old_content->tag_name;
-                    # When successfully accessing the tag
-                    #  it's not out of scope yet...
-                    $gone = 0 if defined $tagname;
-                };
-                $old_content = undef if $gone;
-                return 0;
-            }
-            my $elem = $self->session->page->find('#maindiv.done-parsing',
-                                                  scheme => 'css');
-            return ($elem && $elem->is_displayed) ? 1 : 0;
+            my $gone = 1;
+            try {
+                my $tagname = $old_content->tag_name;
+                # When successfully accessing the tag
+                #  it's not out of scope yet...
+                $gone = 0 if defined $tagname;
+            };
+
+            return $gone;
         });
+    $self->_wait_for_valid_content;
+
     return $self->content;
 }
 
