@@ -4,6 +4,9 @@ use strict;
 use warnings;
 
 use Carp;
+# We want to suppress UTF-8 output warnings
+use open ':std', ':encoding(utf8)';
+
 use Module::Runtime qw(use_module);
 
 use Moose;
