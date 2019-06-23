@@ -117,7 +117,17 @@ sub click_menu {
            "$tgt_class can be 'use'-d dynamically");
 
         my $item = $self->find("//*[\@id='top_menu']");
-        ok($item, "Menu tree loaded");
+        ok($item, "Menu tree loading");
+
+        $self->session->wait_for(
+            sub {
+                my $class = $self->get_attribute('class');
+                return scalar( grep { $_ eq 'done-parsing' }
+                               split /\s+/, $class);
+            });
+        ok(scalar( grep { $_ eq 'done-parsing' }
+                   split /\s+/, $self->get_attribute('class')),
+           "Menu tree fully loaded");
 
         for my $path (@$paths) {
             $self->session->wait_for(

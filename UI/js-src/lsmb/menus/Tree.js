@@ -7,10 +7,11 @@ define(["dojo/_base/declare",
         "dojo/store/JsonRest", "dojo/store/Observable",
         "dojo/store/Memory",
         "dijit/Tree", "dijit/tree/ObjectStoreModel",
-        "dijit/registry"
+        "dijit/registry",
+        "dojo/dom-class"
        ], function(declare, on, lang, event, mouse, array,
                    JsonRest, Observable, Memory, Tree, ObjectStoreModel,
-                   registry
+                   registry, domClass
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
@@ -56,6 +57,12 @@ define(["dojo/_base/declare",
             this.own(
                 on(this.containerNode, "mousedown",
                    lang.hitch(this, this.__onClick)));
+        },
+        onLoad: function() {
+            this.inherited(arguments);
+
+            var self = this;
+            domClass.add("menudiv","done-parsing");
         },
         onClick: function(item, node, event){
             // regular handling of non-leafs
