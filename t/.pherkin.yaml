@@ -12,7 +12,7 @@ default:
          logging_dir: screens
          screenshot_events:
            pre-step: 0
-           post-step: 0
+           post-step: 1
            pre-scenario: 0
            post-scenario: 0
          sessions:

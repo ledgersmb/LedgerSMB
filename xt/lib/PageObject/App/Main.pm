@@ -76,9 +76,9 @@ sub _build_content {
 
 # Note: copy of PageObject::Root::wait_for_body()
 sub wait_for_content {
-    my ($self) = @_;
-    my $old_content;
-    $old_content = $self->content if $self->has_content;
+    my ($self, %args) = @_;
+    my $old_content = $args{replaces};
+    $old_content //= $self->content if $self->has_content;
     $self->clear_content;
 
     $self->session->wait_for(
