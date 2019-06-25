@@ -106,6 +106,7 @@ sub _verify {
 sub click_menu {
     my ($self, $paths) = @_;
 
+    my $maindiv = $self->session->page->body->maindiv->find('./*');
     subtest "Menu '" . join(' > ', @$paths) . "' useable" => sub {
 
         my $tgt_class = $menu_path_pageobject_map{join(' > ', @$paths)};
@@ -140,7 +141,8 @@ sub click_menu {
         }
     };
 
-    return $self->session->page->body->maindiv->wait_for_content;
+    return $self->session->page->body->
+        maindiv->wait_for_content(replaces => $maindiv);
 }
 
 

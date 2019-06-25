@@ -36,6 +36,13 @@ When qr/I navigate to the (.*) page/, sub {
     S->{page} = $pages{$page}->open(S->{ext_wsl})->verify;
 };
 
+When qr/^I update the page$/, sub {
+    my $maindiv = S->{ext_wsl}->page->body->maindiv->find('./*');
+    S->{ext_wsl}->page->body->maindiv
+        ->find('*button', text => 'Update')->click;
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
+};
+
 When qr/I wait for the page to load$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };

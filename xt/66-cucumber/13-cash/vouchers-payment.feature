@@ -36,8 +36,7 @@ Scenario: Add payments to a new batch
   When I select the payment line with these values:
        | Name     | Invoice Total | Source |
        | Vendor A | 100.00 USD    | 1001   |
-   And I press "Update"
-   And I wait for the page to load
+   And I update the page
   Then I should see the Payments Detail screen
    And I expect to see the 'grand_total' value of '100.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
@@ -66,8 +65,7 @@ Scenario: Add payments to an existing batch
   When I select the payment line with these values:
        | Name     | Invoice Total | Source |
        | Vendor B | 25.00 USD     | 2001   |
-   And I press "Update"
-   And I wait for the page to load
+   And I update the page
   Then I should see the Payments Detail screen
    And I expect to see the 'grand_total' value of '25.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
@@ -102,8 +100,7 @@ Scenario: Add partial payment to an existing batch
   When I enter "1.00" into "To Pay" for the invoice from "Vendor C" with these values:
        | Date       | Invoice Number |
        | 2017-03-01 | INV103         |
-   And I press "Update"
-   And I wait for the page to load
+   And I update the page
   Then I should see the Payments Detail screen
    And I expect to see the 'grand_total' value of '1.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
