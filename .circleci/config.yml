@@ -55,10 +55,6 @@ commands:
                    --pgtap-option dbname=lsmbinstalltest
                    --pgtap-option username=postgres
                    --feature-option tags=~@wip t/ xt/
-                   --formatter TAP::Formatter::JUnit
-                   --harness=TAP::Filter=MyFilter
-                   --timer
-                   > /dev/null # To stop JUnit from being dumped on stdout too.
       - run:
           command: |
             mkdir -p /tmp/artifact/logs/screens;
