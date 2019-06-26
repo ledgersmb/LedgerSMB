@@ -58,6 +58,7 @@ sub _build_admin_dbh {
                              RaiseError => 1,
                              AutoCommit => 1,
                            });
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     return $dbh;
 }
@@ -79,6 +80,7 @@ sub pre_feature {
                              RaiseError => 1,
                              AutoCommit => 1,
                            });
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     $self->db($db);
     $self->super_dbh($dbh);
