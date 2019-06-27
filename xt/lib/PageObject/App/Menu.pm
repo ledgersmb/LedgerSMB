@@ -117,18 +117,21 @@ sub click_menu {
         ok(use_module($tgt_class),
            "$tgt_class can be 'use'-d dynamically");
 
-        my $item = $self->find("//*[\@id='top_menu']");
+        my $item =
+            $self->find("//*[\@id='top_menu']//*[\@role='tree']/parent::*");
         ok($item, "Menu tree loaded");
 
+        my $role = 'tree';
         for my $path (@$paths) {
             $self->session->wait_for(
                 sub {
-                    my $xpath = ".//div[contains(\@class, 'dijitTreeNodeContainer')]" .
-                        "//div[contains(\@class, 'dijitTreeNode')" .
-                        " and .//span[\@role='treeitem'" .
-                        " and text()='$path']]";
-                    $item = $item->find($xpath);
-                    return $item;
+                    my $xpath = "./*[\@role='$role']" .
+                                "/*[\@role='presentation'" .
+                                " and .//*[\@role='treeitem' and text()='$path']]";
+                    my $item1 = $item->find($xpath);
+                    my $valid = $item1 && ($item1->get_text ne '');
+                    $item = $item1 if $valid;
+                    return $valid;
                 });
 
             my $label = $item->get_attribute('id') . '_label';
