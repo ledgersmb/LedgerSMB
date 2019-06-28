@@ -122,15 +122,17 @@ sub click_menu {
 
         for my $path (@$paths) {
             my $prev = $item;
+            my $next;
             $self->session->wait_for(
                 sub {
                     my $xpath = ".//div[contains(\@class, 'dijitTreeNodeContainer')]" .
                         "//div[contains(\@class, 'dijitTreeNode')" .
                         " and .//span[\@role='treeitem'" .
                         " and text()='$path']]";
-                    $item = $item->find($xpath);
-                    return $item;
+                    $next = $item->find($xpath);
+                    return $next;
                 });
+            $item = $next;
 
             my $label = $item->get_attribute('id') . '_label';
             ok($label,"Found label $label");
