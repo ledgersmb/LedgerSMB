@@ -102,6 +102,15 @@ define(["dojo/_base/declare",
             var node = dijit.getEnclosingWidget(e.target);
             var item = node.item;
             this.onClick(item, node, e);
+        },
+        _load: function(){
+            this.inherited(arguments);
+            this.expandChildrenDeferred.then(lang.hitch(this, function(){
+                // we need the root node to update its class as our
+                // test suite depends on the node state indicating the
+                // children have loaded...
+                this.rootNode._setStateClass();
+            }));
         }
     });
 });
