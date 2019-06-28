@@ -120,7 +120,8 @@ sub click_menu {
         my $item = $self->find("//*[\@id='top_menu']//*[\@id='dijit__TreeNode_0']");
         ok($item, "Menu tree loaded");
 
-        for my $path (@$paths) {
+        for my $i (0 .. $#$paths) {
+            my $path = $paths->[$i];
             my $prev = $item;
             my $next;
             $self->session->wait_for(
@@ -141,11 +142,14 @@ sub click_menu {
             ok($submenu,"Submenu found " . $submenu->get_text);
 
             $submenu->click;
-            $self->session->wait_for(
-                sub {
-                    return scalar(grep { $_ eq 'dijitLoaded' }
-                                  split /\s+/, ($prev->get_attribute('class') // ''));
-                });
+
+            if ($i < $#$paths) {
+                $self->session->wait_for(
+                    sub {
+                        return scalar(grep { $_ eq 'dijitLoaded' }
+                                      split /\s+/, ($prev->get_attribute('class') // ''));
+                    });
+            }
         }
     };
 
