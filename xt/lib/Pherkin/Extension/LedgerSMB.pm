@@ -184,9 +184,12 @@ sub create_template {
     $db->load_coa({ country => 'us',
                     chart => 'General.sql' });
 
+    # NOTE: $db is connected with the template, *not* with the
+    #  test database (which means we can't use $self->super_dbh!)
     my $dbh = $db->connect({ PrintError => 0,
                              RaiseError => 1,
                              AutoCommit => 0 });
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     my $emp = $self->create_employee(dbh => $dbh);
     my $user = $self->create_user(dbh => $dbh,
