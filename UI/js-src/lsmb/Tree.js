@@ -1578,7 +1578,7 @@ define([
                         // tags:
                         //              protected
                         var tmp = [];
-                        for(var domNode = this.domNode; 
+                        for(var domNode = this.domNode;
                             domNode && domNode.tagName && domNode.tagName.toUpperCase() !== 'IFRAME';
                             domNode = domNode.parentNode) {
                             tmp.push({
