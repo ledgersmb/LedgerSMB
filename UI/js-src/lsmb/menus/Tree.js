@@ -6,7 +6,7 @@ define(["dojo/_base/declare",
         "dojo/_base/array",
         "dojo/store/JsonRest", "dojo/store/Observable",
         "dojo/store/Memory",
-        "dijit/Tree", "dijit/tree/ObjectStoreModel",
+        "lsmb/Tree", "dijit/tree/ObjectStoreModel",
         "dijit/registry"
        ], function(declare, on, lang, event, mouse, array,
                    JsonRest, Observable, Memory, Tree, ObjectStoreModel,
