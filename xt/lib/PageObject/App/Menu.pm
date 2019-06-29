@@ -153,8 +153,11 @@ sub click_menu {
         }
     };
 
-    return $self->session->page->body->
+    print STDERR "maindiv: $maindiv\n";
+    my $rv = $self->session->page->body->
         maindiv->wait_for_content(replaces => $maindiv);
+    print STDERR "done waiting: $rv\n";
+    return $rv;
 }
 
 
