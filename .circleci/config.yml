@@ -57,9 +57,10 @@ commands:
                    --feature-option tags=~@wip t/ xt/
       - run:
           command: |
-            mkdir -p /tmp/artifact/logs/screens;
+            mkdir -p /tmp/artifact/logs;
+            mkdir -p /tmp/artifact/screens;
             cp logs/* /tmp/artifact/logs || 1;
-            cp screens/* /tmp/artifact/logs/screens || 1;
+            cp screens/* /tmp/artifact/screens || 1;
           when: on_fail
       - store_artifacts:
           path: /tmp/artifact/
