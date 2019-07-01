@@ -59,9 +59,9 @@ commands:
           command: |
             mkdir -p /tmp/artifact/logs;
             mkdir -p /tmp/artifact/screens;
-            cp logs/* /tmp/artifact/logs || 1;
-            cp screens/* /tmp/artifact/screens || 1;
-          when: on_fail
+            cp logs/* /tmp/artifact/logs || true;
+            cp screens/* /tmp/artifact/screens || true;
+          when: always
       - store_artifacts:
           path: /tmp/artifact/
       - store_test_results:
