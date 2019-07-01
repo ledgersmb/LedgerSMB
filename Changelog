@@ -23,10 +23,7 @@ Quality Assurance
 * Testing infrastructure and tests for schema change checks (Erik H)
 * Ensure correct dependency declaration (RequireExplicitInclusion critic policy)
 * POD documentation structure improvements, with automated checks (Erik H)
-* Expanded BDD tests, including payments, batches and approval (Nick P)
-
-Dependency updates
-* Dojo Toolkit (JavaScript UI tools) updated to 1.14.2 (Erik H)
+* Expanded BDD tests, including payments, batches and approval (Nick P, Erik H)
 
 Code cleanup
 * Removed deprecated 'custom table' and 'custom field' tables (Erik H)
@@ -39,6 +36,16 @@ Code cleanup
 * Template engine simplification by separation of UI and printed docs (Erik H)
 * Consistent copyright notices - with tests - on all Perl files in lib/ (Nick P)
 * Request handling cleanup by mapping 'flat' POST data into hierarchy (Erik H)
+
+Dependency updates
+* Dojo Toolkit (JavaScript UI tools) updated to 1.15.0 (Erik H)
+* Minimum Perl (tested) version increased to 5.18 (from 5.14)
+* Plack web glue library minimum >= 1.0031
+* PGObject::Simple::Role minimum updated to 2.0.2 (from 1.13.2)
+* Cpanel::JSON::XS minimum >= 3.0206
+* JSON::PP >= 2.00
+* [New] File::Find::Rule
+* [New] Text::CSV
 
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
