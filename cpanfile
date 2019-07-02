@@ -126,7 +126,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
-    requires 'Pherkin::Extension::Weasel', '0.08';
+    requires 'Pherkin::Extension::Weasel', '0.09';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
@@ -142,5 +142,6 @@ on 'develop' => sub {
     requires 'Test::Trap';
     requires 'Weasel', '0.24';
     requires 'Weasel::Driver::Selenium2', '0.07';
+    requires 'Weasel::Session', '0.11';
     requires 'Weasel::Widgets::Dojo';
 };
