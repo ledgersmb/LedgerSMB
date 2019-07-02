@@ -117,47 +117,36 @@ sub click_menu {
         ok(use_module($tgt_class),
            "$tgt_class can be 'use'-d dynamically");
 
-        my $item = $self->find("//*[\@id='top_menu']//*[\@id='dijit__TreeNode_0']");
+        my $item = $self->find("//*[\@id='top_menu']//*[\@role='tree']/parent::*");
         ok($item, "Menu tree loaded");
 
-        for my $i (0 .. $#$paths) {
-            my $path = $paths->[$i];
-            my $prev = $item;
-            my $next;
+        my $role = 'tree';
+        for my $path (@$paths) {
             $self->session->wait_for(
                 sub {
-                    my $xpath = ".//div[contains(\@class, 'dijitTreeNodeContainer')]" .
-                        "//div[contains(\@class, 'dijitTreeNode')" .
-                        " and .//span[\@role='treeitem'" .
-                        " and text()='$path']]";
-                    $next = $item->find($xpath);
-                    return $next;
+                    my $xpath = "./*[\@role='$role']" .
+                                "/*[\@role='presentation'" .
+                                " and .//*[\@role='treeitem' and text()='$path']]";
+                    my $item1 = $item->find($xpath);
+                    my $valid = $item1 && ($item1->get_text ne '');
+                    $item = $item1 if $valid;
+                    return $valid;
                 });
-            $item = $next;
 
             my $label = $item->get_attribute('id') . '_label';
             ok($label,"Found label $label");
 
-            my $submenu = $item->find("//*[\@id='$label']");
-            ok($submenu,"Submenu found " . $submenu->get_text);
+            my $submenu = $item->find(".//*[\@id='$label']");
+            my $text = $submenu->get_text;
+            ok($submenu && $text,"Submenu found '" . $text . "'");
 
             $submenu->click;
-
-            if ($i < $#$paths) {
-                $self->session->wait_for(
-                    sub {
-                        return scalar(grep { $_ eq 'dijitLoaded' }
-                                      split /\s+/, ($prev->get_attribute('class') // ''));
-                    });
-            }
+            $role = 'group';
         }
     };
 
-    print STDERR "maindiv: $maindiv\n";
-    my $rv = $self->session->page->body->
+    return $self->session->page->body->
         maindiv->wait_for_content(replaces => $maindiv);
-    print STDERR "done waiting: $rv\n";
-    return $rv;
 }
 
 
