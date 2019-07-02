@@ -83,10 +83,12 @@ commands:
               --with-feature=xls \
               --with-feature=edi \
               --installdeps .
-      #Patch to quiet the Pherkin::Extension::Weasel warnings
+      #Patch to ensure JSONWIRE compatibility for newer Firefox
       - run:
           command: |
             perl=`perl -e 'print substr($^V, 1)'`;
+            sudo wget https://raw.githubusercontent.com/ylavoie/weasel-driver-selenium2/force-selenium-v2/lib/Weasel/Driver/Selenium2.pm \
+              -O ~/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl/Weasel/Driver/Selenium2.pm;
             cp utils/TAP/Filter/MyFilter.pm ~/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl/TAP/Filter/
       - run:
           command: |
