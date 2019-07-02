@@ -3,13 +3,14 @@ MAINTAINER  ylavoie@yveslavoie.com
 
 # Perl version
 ARG perl=5.28.0
+ARG SHA=LATEST
 
 ENV HOME /home/circleci
 SHELL ["/bin/bash", "-c"]
 
 USER root
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
-    apt-get -qyy install perlbrew && \
+    apt-get -qyy install perlbrew jq && \
     apt-get -qqy autoremove && \
     apt-get -qqy autoclean && \
     rm -rf /var/lib/apt/lists/*
@@ -17,12 +18,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
 USER circleci
 WORKDIR $HOME
 
-# Install LedgerSMB
-RUN cd && \
-  git clone -b master https://github.com/ledgersmb/LedgerSMB.git project
-
 # install the standalone perlbrew
-RUN perlbrew init --shell=/bin/bash && \
+RUN cd && \
+    perlbrew init --shell=/bin/bash && \
     source ~/perl5/perlbrew/etc/bashrc && \
     perlbrew install-patchperl && \
     perlbrew install --notest -j 4 $perl && \
@@ -30,6 +28,11 @@ RUN perlbrew init --shell=/bin/bash && \
     perlbrew install-cpanm && \
     echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.profile && \
     cpanm inc::Module::Install Starman
+
+# Install LedgerSMB
+RUN cd && \
+    SHA=${SHA} \
+    git clone -b master https://github.com/ledgersmb/LedgerSMB.git project
 
 RUN cd ~/project && \
   source ~/perl5/perlbrew/etc/bashrc && \
