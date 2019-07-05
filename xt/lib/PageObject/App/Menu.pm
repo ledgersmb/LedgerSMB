@@ -134,9 +134,10 @@ sub click_menu {
             my $label = $item->get_attribute('id') . '_label';
             ok($label,"Found label $label");
 
-            my $submenu = $item->find("//*[\@id='$label']");
-            ok($submenu,"Submenu found " . $submenu->get_text);
+            my $submenu = $item->find(".//*[\@id='$label']");
+            my $text = $submenu->get_text;
 
+            ok($submenu && $text,"Submenu found '" . $text . "'");
             $submenu->click;
         }
     };

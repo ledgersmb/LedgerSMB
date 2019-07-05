@@ -24,28 +24,29 @@ sub _build_body {
 }
 
 sub wait_for_body {
-    my ($self) = @_;
-    my $old_body;
-    $old_body = $self->body if $self->has_body;
+    my ($self, %args) = @_;
+    my $old_body = $args{replaces};
+    $old_body //= $self->body if $self->has_body;
     $self->clear_body;
 
+    my $gone = $old_body ? 0 : 1;
     $self->session->wait_for(
         sub {
-            if ($old_body) {
-                my $gone = 1;
+            if (not $gone) {
+                my $tagname;
                 try {
-                    my $tagname = $old_body->tag_name;
+                    $tagname = $old_body->tag_name;
                     # When successfully accessing the tag
                     #  it's not out of scope yet...
-                    $gone = 0 if defined $tagname;
                 };
-                $old_body = undef if $gone;
-                return 0; # Not done yet
+                $gone = ! defined $tagname;
+                return 0;
             }
             else {
-                return $self->find('body.done-parsing', scheme => 'css') ? 1 : 0;
+                return $self->session->page->find('body.done-parsing', scheme => 'css');
             }
         });
+
     return $self->body;
 }
 
