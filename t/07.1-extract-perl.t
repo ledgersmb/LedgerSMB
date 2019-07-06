@@ -78,6 +78,7 @@ for my $test (@tests) {
 
     # Produce a PO file
     my ($stderr,$exit) = capture_stderr {
+        local $ENV{PERL5OPT} = undef;
         system("echo \"$testfile\" | utils/devel/extract-perl > $pofile");
     };
     my @stat = stat $pofile;
