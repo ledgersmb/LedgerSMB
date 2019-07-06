@@ -79,7 +79,6 @@ matrix:
             - *default_packages
             - postgresql-9.6-pgtap
       env:
-        - COVERAGE=1
     - perl: '5.20'
       addons:
         postgresql: "9.6"
