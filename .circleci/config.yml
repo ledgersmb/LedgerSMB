@@ -19,10 +19,6 @@ commands:
     steps:
       - run:
           command: |
-            mkdir -p logs
-            mkdir -p screens
-      - run:
-          command: |
              if [ "x$COVERAGE" == "x1" ]
              then
                export PERL5OPT="$PERL5OPT -MDevel::Cover"
