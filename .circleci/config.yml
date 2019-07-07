@@ -29,6 +29,7 @@ commands:
              prove --recurse -j 2 \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
+                   --pgtap-option psql=.circleci/psql-wrap \
                    --feature-option tags=~@wip t/ xt/
       - run:
           command: |
