@@ -232,6 +232,12 @@ sub get_dispatch_table {
 }
 
 
+sub _sanity_checks {
+    my $checks = LedgerSMB::Database->verify_helpers(helpers => [ 'psql' ]);
+
+    die q{Unable to execute 'psql'} unless $checks->{psql};
+}
+
 
 sub login {
     use LedgerSMB::Locale;
@@ -247,7 +253,7 @@ sub login {
     my $version_info = $database->get_info();
 
     _init_db($request);
-    sanity_checks($database);
+    _sanity_checks();
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
@@ -293,19 +299,6 @@ sub login {
     }
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/confirm_operation', $request);
-}
-
-=item sanity_checks
-Checks for common setup issues and errors if admin tasks cannot be completed/
-
-=cut
-
-sub sanity_checks {
-    my ($database) = @_;
-    `psql --help` || die LedgerSMB::App_State::Locale()->text(
-                                 'psql not found.'
-                              );
-    return;
 }
 
 =item list_databases
