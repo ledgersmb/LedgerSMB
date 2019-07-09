@@ -141,7 +141,9 @@ sub click_menu {
             my $text = $submenu->get_text;
 
             ok($submenu && $text,"Submenu found '" . $text . "'");
-            $submenu->click;
+            my $expanded =  $submenu->get_attribute('aria-expanded') // 'false';
+            $submenu->click unless $expanded eq 'true';
+            $role = 'group';
         }
     };
 
