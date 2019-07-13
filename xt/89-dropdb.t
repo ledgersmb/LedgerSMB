@@ -26,7 +26,12 @@ ok(open (my $DBLOCK, '<', $lock_file), 'Opened db lock file')
 my $db = <$DBLOCK>;
 chomp($db);
 cmp_ok($db, 'eq', $ENV{LSMB_NEW_DB}, 'Got expected db name out') &&
-ok(!system ("dropdb $ENV{LSMB_NEW_DB}"), 'dropped db') &&
+do {
+   local $ENV{PERL5OPT} = undef;
+   local $ENV{PERL5LIB} = undef;
+
+   ok(!system ("dropdb $ENV{LSMB_NEW_DB}"), 'dropped db')
+} &&
 ok(close ($DBLOCK), 'Closed db lock file') &&
 ok(unlink ("$temp/LSMB_TEST_DB"), 'Removed test db lockfile');
 

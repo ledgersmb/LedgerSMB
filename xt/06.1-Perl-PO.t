@@ -39,6 +39,8 @@ for my $file (@on_disk) {
 
         # Produce a PO file
         my $stderr = capture_stderr {
+            local $ENV{PERL5OPT} = undef;
+            #clear PERL5OPTS; we don't want to inherit it from the testing environment
             system("echo \"$file\" | utils/devel/extract-perl >/dev/null");
         };
         for my $err (split /\n/, $stderr) {
