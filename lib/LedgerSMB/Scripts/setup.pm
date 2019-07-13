@@ -140,7 +140,7 @@ sub _init_db {
     } if ! defined $request->{dbh};
     $LedgerSMB::App_State::DBH = $request->{dbh};
 
-    return $database;
+    return (undef, $database);
 }
 
 =item login
@@ -252,7 +252,9 @@ sub login {
 
     my $version_info = $database->get_info();
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     _sanity_checks();
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} eq 'does not exist'){
@@ -329,7 +331,9 @@ Lists all users in the selected database
 
 sub list_users {
     my ($request) = @_;
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     my $user = LedgerSMB::DBObject::User->new();
     $user->set_dbh($request->{dbh});
     my $users = $user->get_all_users;
@@ -528,7 +532,9 @@ sub load_templates {
 
     die 'Invalid request' if not exists $templates->{$request->{template_dir}};
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbh = $request->{dbh};
 
     for my $template (@{$templates->{$request->{template_dir}}}) {
@@ -608,7 +614,9 @@ Displays the upgrade information screen,
 
 sub upgrade_info {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $retval = 0;
@@ -704,7 +712,9 @@ sub _applicable_upgrade_tests {
 
 sub upgrade {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
 
@@ -856,7 +866,9 @@ script.
 sub fix_tests{
     my ($request) = @_;
 
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbinfo = $database->get_info();
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
@@ -1086,7 +1098,9 @@ sub _render_new_user {
     # mapping going. --CT
 
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     $request->{dbh}->{AutoCommit} = 0;
 
     if ( $request->{coa_lc} ) {
@@ -1111,7 +1125,9 @@ sub save_user {
     use LedgerSMB::Entity::User;
     use LedgerSMB::PGDate;
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     $request->{dbh}->{AutoCommit} = 0;
 
     $request->{control_code} = $request->{employeenumber};
@@ -1247,7 +1263,8 @@ sub process_and_run_upgrade_script {
 
 sub run_upgrade {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     my $dbh = $request->{dbh};
     my $dbinfo = $database->get_info();
@@ -1282,7 +1299,8 @@ sub run_upgrade {
 
 sub run_sl28_migration {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
@@ -1300,7 +1318,8 @@ sub run_sl28_migration {
 
 sub run_sl30_migration {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
@@ -1328,8 +1347,10 @@ sub create_initial_user {
 sub edit_user_roles {
     my ($request) = @_;
 
-    _init_db($request)
+    my $reauth;
+    ($reauth) = _init_db($request)
         unless $request->{dbh};
+    return $reauth if $reauth;
 
     my $admin = LedgerSMB::DBObject::Admin->new();
     $admin->set_dbh($request->{dbh});
@@ -1366,7 +1387,9 @@ sub edit_user_roles {
 sub save_user_roles {
     my ($request) = @_;
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     $request->{user_id} = $request->{id};
     my $admin = LedgerSMB::DBObject::Admin->new(base => $request, copy=>'all');
     my $roles = [];
@@ -1386,7 +1409,9 @@ sub save_user_roles {
 sub reset_password {
     my ($request) = @_;
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     my $user = LedgerSMB::DBObject::User->new(base => $request, copy=>'all');
     my $result = $user->save();
 
@@ -1414,7 +1439,8 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 
 sub force{
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     my $test = first { $_->name eq $request->{check} }
                     LedgerSMB::Upgrade_Tests->get_tests();
@@ -1450,7 +1476,13 @@ between versions on a stable branch (typically upgrading)
 
 sub rebuild_modules {
     my ($request, $database) = @_;
-    $database //= _init_db($request);
+
+    if (not defined $database) {
+        my ($reauth, $db) = _init_db($request);
+        return $reauth if $reauth;
+
+        $database = $db;
+    }
 
     # The order is important here:
     #  New modules should be able to depend on the latest changes
@@ -1479,7 +1511,9 @@ Gets the statistics info and shows the complete screen.
 
 sub complete {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $temp = $database->loader_log_filename();
     $request->{lsmb_info} = $database->stats();
     my $template = LedgerSMB::Template::UI->new_UI;
@@ -1494,7 +1528,8 @@ Asks the various modules for system and version info, showing the result
 
 sub system_info {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     # the intent here is to get a much more sophisticated system which
     # asks registered modules for their system and dependency info
