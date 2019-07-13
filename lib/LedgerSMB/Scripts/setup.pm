@@ -1120,7 +1120,9 @@ sub save_user {
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
-    try { $user->create($request->{password}); }
+
+    my $rerendered_user =
+        try { $user->create($request->{password}); 0 }
     catch {
         if ($_ =~ /duplicate user/i){
            $request->{dbh}->rollback;
@@ -1129,11 +1131,15 @@ sub save_user {
             );
            $request->{pls_import} = 1;
 
+           # return from the 'catch' block
            return _render_user($request);
        } else {
            die $_;
        }
     };
+    return $rerendered_user if $rerendered_user;
+
+
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(funcname => 'admin__get_roles')
