@@ -86,7 +86,7 @@ sub _init_db {
     } if ! defined $request->{dbh};
     $LedgerSMB::App_State::DBH = $request->{dbh};
 
-    return $database;
+    return (undef, $database);
 }
 
 =item login
@@ -178,7 +178,9 @@ sub login {
 
     my $version_info = $database->get_info();
 
-    _init_db($request);
+    ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     sanity_checks($database);
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} eq 'does not exist'){
@@ -274,6 +276,9 @@ Lists all users in the selected database
 
 sub list_users {
     my ($request) = @_;
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     _init_db($request);
     my $user = LedgerSMB::DBObject::User->new($request);
     my $users = $user->get_all_users;
@@ -500,7 +505,9 @@ and not the user creation screen.
 sub load_templates {
     my ($request) = @_;
     my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbh = $request->{dbh};
     opendir(DIR, $dir);
     while (my $fname = readdir(DIR)){
@@ -579,7 +586,9 @@ Displays the upgrade information screen,
 
 sub upgrade_info {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
 
@@ -645,7 +654,9 @@ sub _applicable_upgrade_tests {
 
 sub upgrade {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my @selectable_values = ();
@@ -766,7 +777,9 @@ script.
 sub fix_tests{
     my ($request) = @_;
 
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $dbinfo = $database->get_info();
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
@@ -962,7 +975,9 @@ sub _render_new_user {
     # mapping going. --CT
 
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}}
@@ -1009,7 +1024,9 @@ sub save_user {
     use LedgerSMB::Entity::User;
     use LedgerSMB::PGDate;
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     $request->{dbh}->{AutoCommit} = 0;
 
     $request->{control_code} = $request->{employeenumber};
@@ -1157,7 +1174,8 @@ sub process_and_run_upgrade_script {
 
 sub run_upgrade {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     my $dbh = $request->{dbh};
     my $dbinfo = $database->get_info();
@@ -1191,7 +1209,8 @@ sub run_upgrade {
 
 sub run_sl28_migration {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
     my $rc = 0;
 
     my $dbh = $request->{dbh};
@@ -1211,7 +1230,8 @@ sub run_sl28_migration {
 
 sub run_sl30_migration {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
     my $rc = 0;
 
     my $dbh = $request->{dbh};
@@ -1261,8 +1281,10 @@ sub create_initial_user {
 sub edit_user_roles {
     my ($request) = @_;
 
-    _init_db($request)
+    my $reauth;
+    ($reauth) = _init_db($request)
         unless $request->{dbh};
+    return $reauth if $reauth;
 
     my $admin = LedgerSMB::DBObject::Admin->new($request);
     my $all_roles = $admin->get_roles($request->{database});
@@ -1302,7 +1324,9 @@ sub edit_user_roles {
 sub save_user_roles {
     my ($request) = @_;
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     $request->{user_id} = $request->{id};
     my $admin = LedgerSMB::DBObject::Admin->new(base => $request, copy=>'all');
     my $roles = [];
@@ -1322,7 +1346,9 @@ sub save_user_roles {
 sub reset_password {
     my ($request) = @_;
 
-    _init_db($request);
+    my ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+
     my $user = LedgerSMB::DBObject::User->new(base => $request, copy=>'all');
     my $result = $user->save();
 
@@ -1352,7 +1378,8 @@ between versions on a stable branch (typically upgrading)
 
 sub rebuild_modules {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
 
     # The order is important here:
     #  New modules should be able to depend on the latest changes
@@ -1371,7 +1398,9 @@ Gets the info and adds shows the complete screen.
 
 sub complete {
     my ($request) = @_;
-    my $database = _init_db($request);
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
     my $temp = $database->loader_log_filename();
     $request->{lsmb_info} = $database->stats();
     my $template = LedgerSMB::Template->new(
