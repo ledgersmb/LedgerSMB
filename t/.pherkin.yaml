@@ -22,6 +22,7 @@ default:
              # Need a long retry timeout because instrumenting
              # old code takes loooong when running coverage testing
              retry_timeout: 120
+             poll_delay: 0.1
              driver:
                 drv_name: Weasel::Driver::Selenium2
                 wait_timeout: 3000

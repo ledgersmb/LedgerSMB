@@ -142,5 +142,6 @@ on 'develop' => sub {
     requires 'Test::Trap';
     requires 'Weasel', '0.21';
     requires 'Weasel::Driver::Selenium2', '0.07';
-    requires 'Weasel::Widgets::Dojo';
+    requires 'Weasel::Session', '0.11';
+    requires 'Weasel::Widgets::Dojo', '0.04';
 };
