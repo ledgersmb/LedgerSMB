@@ -144,7 +144,7 @@ before_script:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
   - |
-    mkdir screens
+    mkdir screens logs
     sed -i -e 's/post-step: 0/post-step: 1/' t/.pherkin.yaml
     sed -i -e 's/# logging_dir:/logging_dir:/' t/.pherkin.yaml
 
@@ -161,7 +161,7 @@ after_script:
   - |
     if [ -n "$AWS_ACCESS_KEY_ID" ];
     then
-       (cd "$HOME/built-dist/ledgersmb/screens"
+       (cd "$HOME/built-dist/ledgersmb/"
         aws_url="s3://$LSMB_AWS_UPLOAD_BUCKET/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER"
         aws s3 cp --recursive --acl public-read ./ "$aws_url/screens"
         aws s3 cp --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
