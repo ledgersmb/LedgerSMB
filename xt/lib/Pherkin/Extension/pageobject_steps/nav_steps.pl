@@ -188,7 +188,7 @@ Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
                                 or \@alt="$id"]
         |);
     ok(defined $elm, "value-defining element ($id) found");
-    my $actual = $elm->get_text;
+    my $actual = $elm->get_text || $elm->get_attribute('value');
     $actual =~ s/^\s+|\s+$//g;
     is($actual, $value,
        "value for element ($id) equals expected value ($value):" .
