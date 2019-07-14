@@ -257,7 +257,7 @@ sub login {
 
     my $version_info = $database->get_info();
 
-    my ($reauth) = _init_db($request);
+    ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
     _sanity_checks();
