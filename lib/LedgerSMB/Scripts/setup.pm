@@ -38,12 +38,17 @@ use Version::Compare;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
+use LedgerSMB::Entity::User;
+use LedgerSMB::Entity::Person::Employee;
+use LedgerSMB::Locale;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Mailer;
+use LedgerSMB::PGDate;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
@@ -53,6 +58,7 @@ use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
+
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
@@ -240,7 +246,6 @@ sub _sanity_checks {
 
 
 sub login {
-    use LedgerSMB::Locale;
     my ($request) = @_;
     if (!$request->{database}){
         return list_databases($request);
@@ -399,8 +404,6 @@ Runs the backup.  If backup_type is set to email, emails the
 =cut
 
 sub run_backup {
-    use LedgerSMB::Company_Config;
-
     my $request = shift @_;
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
@@ -965,8 +968,6 @@ coa_lc not set:  Select the coa location code
 =cut
 
 sub select_coa {
-    use LedgerSMB::Sysconfig;
-
     my ($request) = @_;
     my $coa_data = LedgerSMB::Database::Config->new->charts_of_accounts;
 
@@ -1107,9 +1108,6 @@ sub save_user {
     my ($request) = @_;
     $request->{entity_class} = EC_EMPLOYEE;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
-    use LedgerSMB::Entity::Person::Employee;
-    use LedgerSMB::Entity::User;
-    use LedgerSMB::PGDate;
 
     _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
