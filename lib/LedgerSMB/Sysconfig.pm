@@ -21,6 +21,10 @@ use warnings;
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
+# After Perl 5.20 is the minimum required version,
+# we can drop the restriction on the match vars
+# because 5.20 doesn't copy the data (but uses
+# string slices)
 use English qw(-no_match_vars);
 
 
