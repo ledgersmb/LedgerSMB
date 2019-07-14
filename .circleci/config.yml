@@ -1,0 +1,164 @@
+version: 2.1
+
+#TODO: To enable matrix, Consider https://github.com/winksaville/circleci-matrix
+
+# Define defaults
+_defaults: &defaults
+    # Make sure that .profile is sourced for Perlbrew
+    shell: /bin/bash --login -eo pipefail
+
+# Define aliases for simplification
+aliases:
+  - &store_artifacts
+    store_artifacts:
+      path: /tmp/artifact/
+
+# Reuseable commands
+commands:
+  prove:
+    steps:
+      - run:
+          command: |
+             if [ "x$COVERAGE" == "x1" ]
+             then
+               export PERL5OPT="$PERL5OPT -MDevel::Cover"
+               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+             fi
+             echo $PERL5OPT
+             echo $PERL5LIB
+             prove --recurse -j 2 \
+                   --pgtap-option dbname=lsmbinstalltest \
+                   --pgtap-option username=postgres \
+                   --pgtap-option psql=.circleci/psql-wrap \
+                   --feature-option tags=~@wip t/ xt/
+      - run:
+          command: |
+            mkdir -p /tmp/artifact/logs;
+            mkdir -p /tmp/artifact/screens;
+            cp logs/* /tmp/artifact/logs || true;
+            cp screens/* /tmp/artifact/screens || true;
+          when: always
+      - run:
+          name: Upload coverage data
+          command: |
+            if [ "x$COVERAGE" == "x1" ];
+            then
+              cover -report coveralls
+              cover -report text > /tmp/artifact/coverage.txt
+            fi
+      - *store_artifacts
+  prep_env:
+    description: "Prepare environment"
+    steps:
+      - checkout
+      - run:
+          name: Pull related Git repositories
+          command: |
+            git submodule sync
+            git submodule update --init
+      # Freshen up CPAN
+      - run:
+          name: Refresh modules from CPAN
+          command: |
+            cpanm --quiet --notest \
+              --with-develop \
+              --with-feature=starman \
+              --with-feature=latex-pdf-images \
+              --with-feature=latex-pdf-ps \
+              --with-feature=openoffice \
+              --with-feature=xls \
+              --with-feature=edi \
+              --installdeps .
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              cpanm --quiet --notest \
+                    Devel::Cover \
+                    Devel::Cover::Report::Coveralls
+            fi
+      - run:
+          name: Set up dirs and files
+          command: |
+            mkdir -p logs screens;
+            cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+  start_plackup:
+    description: "Start plackup"
+    steps:
+      - run:
+          command: |
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              export PERL5OPT="$PERL5OPT -MDevel::Cover"
+              export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+            fi
+            echo $PERL5OPT
+            echo $PERL5LIB
+            plackup -I$HOME/project/lib -I$HOME/project/old/lib \
+                    --port 5001 \
+                    $HOME/project/bin/ledgersmb-server.psgi
+          background: true
+  start_proxy:
+    description: "Start the proxy"
+    parameters:
+      proxy:
+        type: string
+        default: nginx
+    steps:
+      - run:
+          command: |
+            /usr/local/bin/<< parameters.proxy >>.sh
+          background: true
+
+# Define executors
+executors:
+  test:
+    parameters:
+      perl:
+        type: string
+        default: latest
+      postgres:
+        type: string
+        default: latest
+      browser:
+        type: string
+        default: chrome
+      coverage:
+        type: integer
+        default: 1
+    docker:
+      - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
+      - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
+      - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
+    environment:
+      COVERAGE: << parameters.coverage >>
+      DEVEL_COVER_OPTIONS: -ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0
+      RELEASE_TESTING: 1
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: test
+      LSMB_TEST_DB: 1
+      LSMB_NEW_DB: lsmbinstalltest
+      LSMB_BASE_URL: http://127.0.0.1:5000
+      PSGI_BASE_URL: http://127.0.0.1:5001
+      HARNESS_RULESFILE: t/testrules.yml
+
+# Define jobs
+jobs:
+  test_nodojo:
+    <<: *defaults
+    executor:
+      name: test
+      perl: "5.28"
+      postgres: "11"
+      browser: phantomjs
+    steps:
+      - prep_env
+      - start_plackup
+      - start_proxy
+      - prove
+
+# Workflows
+# Tests multiple browsers, coverage and dojo
+workflows:
+  workflow:
+    jobs:
+      - test_nodojo
