@@ -8,7 +8,8 @@ default:
          db_name: postgres
       Pherkin::Extension::Weasel:
          default_session: selenium
-         screenshots_dir: screens
+#         screenshots_dir: screens
+#         logging_dir: logs
          screenshot_events:
            pre-step: 0
            post-step: 0
