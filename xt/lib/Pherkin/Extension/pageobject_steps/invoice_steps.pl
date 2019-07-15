@@ -13,21 +13,41 @@ use LedgerSMB::PGDate;
 
 use Module::Runtime qw(use_module);
 use PageObject::App::Login;
-use PageObject::App::AP::Invoice;
+use PageObject::App::AR::Invoice;
 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-Transform qr/^table:/, sub {
+Transform qr/^table:name,value/, sub {
     my ($c, $data) = @_;
 
     for my $row (@$data) {
-        for my $key (keys %$row) {
-            if ($row->{$key} eq '$$today') {
-                $row->{$key} = LedgerSMB::PGDate->today->to_output;
-            }
+        if (exists $row->{value} and $row->{value} eq '$$today') {
+            $row->{value} = LedgerSMB::PGDate->today->to_output;
         }
     }
+};
+
+When qr/I open the sales invoice entry screen/, sub {
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
+
+    S->{ext_wsl}->page->body->menu->click_menu(\@path);
+    S->{ext_wsl}->page->body->verify;
+};
+
+When qr/I open the AR transaction entry screen/, sub {
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
+
+    S->{ext_wsl}->page->body->menu->click_menu(\@path);
+    S->{ext_wsl}->page->body->verify;
+};
+
+When qr/I select customer "(.*)"/, sub {
+    my $customer = $1;
+
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+    $page->select_customer($customer);
+
 };
 
 When qr/I open the purchase invoice entry screen/, sub {
@@ -51,6 +71,7 @@ When qr/I select vendor "(.*)"/, sub {
     $page->select_vendor($customer);
 
 };
+
 
 When qr/I add an invoice line with (?:part|service) "(.+)"/, sub {
     my $part = $1;
@@ -126,7 +147,7 @@ Then qr/I expect to see an invoice with these lines/, sub {
         else { # expected_line isn't empty and neither is actual_line
            for my $field (keys %$expected_line) {
                S->{ext_wsl}->wait_for(
-                   sub {
+                    sub {
                         return $actual_line->field_value($field) eq $expected_line->{$field};
                     });
                 is($actual_line->field_value($field),
