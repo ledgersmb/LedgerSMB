@@ -27,6 +27,10 @@ sub _verify {
     return $self;
 }
 
+sub _counterparty {
+    return 'vendor';
+}
+
 sub select_vendor {
     my ($self, $vendor) = @_;
 

@@ -61,7 +61,7 @@ sub header {
 
     $self->verify;
     return $self->find('*invoice-header',
-                       widget_args => [ counterparty_type => 'vendor' ]);
+                       widget_args => [ counterparty_type => $self->_counterparty ]);
 }
 
 sub lines {
@@ -76,7 +76,7 @@ sub payments {
 
     $self->verify;
     return $self->find('*invoice-payments',
-                       widget_args => [ counterparty_type => 'vendor' ]);
+                       widget_args => [ counterparty_type => $self->_counterparty ]);
 }
 
 sub _extract_total {
