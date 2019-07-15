@@ -21,8 +21,12 @@ commands:
           command: |
              if [ "x$COVERAGE" == "x1" ]
              then
+               perl=`perl -e 'print substr($^V, 1)'`;
                export PERL5OPT="$PERL5OPT -MDevel::Cover"
-               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+               export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl/x86_64-linux${PERL5LIB+:}$PERL5LIB"
+               export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl${PERL5LIB+:}$PERL5LIB"
+               export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/$perl/x86_64-linux${PERL5LIB+:}$PERL5LIB"
+               export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/$perl${PERL5LIB+:}$PERL5LIB"
              fi
              echo $PERL5OPT
              echo $PERL5LIB
@@ -87,8 +91,12 @@ commands:
           command: |
             if [ "x$COVERAGE" == "x1" ]
             then
+              perl=`perl -e 'print substr($^V, 1)'`;
               export PERL5OPT="$PERL5OPT -MDevel::Cover"
-              export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+              export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl/x86_64-linux${PERL5LIB+:}$PERL5LIB"
+              export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/site_perl/$perl${PERL5LIB+:}$PERL5LIB"
+              export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/$perl/x86_64-linux${PERL5LIB+:}$PERL5LIB"
+              export PERL5LIB="$HOME/perl5/perlbrew/perls/perl-$perl/lib/$perl${PERL5LIB+:}$PERL5LIB"
             fi
             echo $PERL5OPT
             echo $PERL5LIB
