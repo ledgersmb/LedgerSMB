@@ -21,12 +21,12 @@ commands:
           command: |
              if [ "x$COVERAGE" == "x1" ]
              then
-               export PERL5OPT="$PERL5OPT -MDevel::Cover"
-               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+               # Turn off Perl warnings
+               export PROVE="perl -X -MDevel::Cover=-silent,1 `which prove`"
+             else
+               export PROVE=prove
              fi
-             echo $PERL5OPT
-             echo $PERL5LIB
-             prove --recurse -j 2 \
+             $PROVE --recurse -j 2 \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
                    --pgtap-option psql=.circleci/psql-wrap \
@@ -87,12 +87,11 @@ commands:
           command: |
             if [ "x$COVERAGE" == "x1" ]
             then
-              export PERL5OPT="$PERL5OPT -MDevel::Cover"
-              export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+              export PLACKUP="perl -X -MDevel::Cover=-silent,1 `which plackup`"
+            else
+              export PLACKUP=plackup
             fi
-            echo $PERL5OPT
-            echo $PERL5LIB
-            plackup -I$HOME/project/lib -I$HOME/project/old/lib \
+            $PLACKUP -I$HOME/project/lib -I$HOME/project/old/lib \
                     --port 5001 \
                     $HOME/project/bin/ledgersmb-server.psgi
           background: true
