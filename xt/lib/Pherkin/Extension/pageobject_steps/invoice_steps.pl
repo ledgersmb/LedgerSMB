@@ -22,8 +22,10 @@ Transform qr/^table:/, sub {
     my ($c, $data) = @_;
 
     for my $row (@$data) {
-        if (exists $row->{value} and $row->{value} eq '$$today') {
-            $row->{value} = LedgerSMB::PGDate->today->to_output;
+        for my $col (sort keys %$row) {
+            if (exists $row->{$col} and $row->{$col} eq '$$today') {
+                $row->{$col} = LedgerSMB::PGDate->today->to_output;
+            }
         }
     }
 };
