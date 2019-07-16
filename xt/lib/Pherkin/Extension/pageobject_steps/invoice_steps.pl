@@ -145,7 +145,8 @@ Then qr/I expect to see an invoice with these lines/, sub {
             fail('invoice has fewer lines than expected');
         }
         else { # expected_line isn't empty and neither is actual_line
-           for my $field (keys %$expected_line) {
+            for my $field (sort keys %$expected_line) {
+                print STDERR "searching field $field\n";
                S->{ext_wsl}->wait_for(
                     sub {
                         return $actual_line->field_value($field) eq $expected_line->{$field};
