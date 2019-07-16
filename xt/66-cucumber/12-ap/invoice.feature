@@ -10,7 +10,6 @@ Background:
      And a logged in admin
      And a vendor "Vendor 1"
      And a vendor "Vendor 2"
-     And a service "s1"
      And a part with these properties:
        | name        | value    |
        | partnumber  | p1       |
