@@ -18,7 +18,7 @@ use PageObject::App::AR::Invoice;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-Transform qr/^table:name,value/, sub {
+Transform qr/^table:/, sub {
     my ($c, $data) = @_;
 
     for my $row (@$data) {
