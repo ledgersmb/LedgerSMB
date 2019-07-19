@@ -13,10 +13,10 @@ extends 'PageObject';
 
 __PACKAGE__->self_register(
               'app-main-initial',
-              './/div[@id="flicker-container"]',
+              './/div[@id="welcome"]',
               tag_name => 'div',
               attributes => {
-                  id => 'flicker-container',
+                  id => 'welcome',
               });
 
 
