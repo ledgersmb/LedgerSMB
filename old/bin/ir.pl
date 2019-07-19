@@ -448,15 +448,14 @@ sub form_header {
           </table>
         </td>
           <tr>
-        <th align=right>| . $locale->text('Record in') . qq|</th>
+        <th align=right><label for="AP">| . $locale->text('Record in') . qq|</label></th>
         <td colspan=3><select data-dojo-type="dijit/form/Select" id=AP name=AP>$form->{selectAP}</select></td>
           </tr>
               $department
           $exchangerate
             <tr>
-               <th align="right" nowrap>| . $locale->text('Description') . qq|
-               </th>
-               <td><input data-dojo-type="dijit/form/TextBox" type="text" name="description" size="40"
+               <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label></th>
+               <td><input data-dojo-type="dijit/form/TextBox" type="text" id="description" name="description" size="40"
                    value="| . $form->{description} . qq|" /></td>
             </tr>
         </table>
@@ -464,30 +463,30 @@ sub form_header {
       <td align=right>
         <table>
           <tr>
-        <th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=invnumber size=20 value="$form->{invnumber}">
+        <th align=right nowrap><label for="invnumber">| . $locale->text('Invoice Number') . qq|</label></th>
+        <td><input data-dojo-type="dijit/form/TextBox" id=invnumber name=invnumber size=20 value="$form->{invnumber}">
                    | .  $form->sequence_dropdown('vinumber') . qq|</td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=ordnumber size=20 value="$form->{ordnumber}"></td>
+        <th align=right nowrap><label for="ordnumber">| . $locale->text('Order Number') . qq|</label></th>
+        <td><input data-dojo-type="dijit/form/TextBox" id=ordnumber name=ordnumber size=20 value="$form->{ordnumber}"></td>
 <input type=hidden name=quonumber value="$form->{quonumber}">
           </tr>
               <tr>
-                <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
+                <th align=right nowrap><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" id=crdate name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
               </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
+        <th align=right nowrap><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
+        <th align=right nowrap><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('SO Number') . qq|</th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
+        <th align=right nowrap><label for="ponumber">| . $locale->text('SO Number') . qq|</label></th>
+        <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
         </table>
       </td>
