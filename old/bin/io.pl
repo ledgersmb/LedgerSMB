@@ -367,8 +367,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         $form->{"${delvar}_$i"} //= '';
         $delivery = qq|
           <td colspan=2 nowrap>
-             <b>${$delvar}</b>
-             <input class="date" data-dojo-type="lsmb/DateTextBox" id="${delvar}_$i" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
+             <b><label for="deliverydate_$i">${$delvar}</label></b>
+             <input class="date" data-dojo-type="lsmb/DateTextBox" id="deliverydate_$i" name="deliverydate_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
           </td>
 |;
 
@@ -413,7 +413,7 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
 </td>|;
            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"}
-                 <input type="hidden" name="partnumber_$i"
+                 <input type="hidden" id="partnumber_$i" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $skunumber //= '';

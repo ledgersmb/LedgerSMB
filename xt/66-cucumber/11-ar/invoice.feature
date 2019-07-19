@@ -61,4 +61,3 @@ Scenario: Creation of a new sales invoice, no taxes
      And I expect to see the invoice subtotal of 30.00 and total of 30.00 without taxes
 ###TODO:
 #     And I expect to see 1 empty payment line
-## For some reason, there are 2 empty payment lines?!
