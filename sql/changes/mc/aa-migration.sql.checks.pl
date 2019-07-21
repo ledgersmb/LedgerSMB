@@ -114,7 +114,7 @@ Please add a foreign currency code to each transaction.
 
 check q|Assert all required AP exchange rates are available|,
     query => q|SELECT * FROM exchangerate e
-                WHERE coalesce(buy,0) = 0
+                WHERE coalesce(sell,0) = 0
                   AND EXISTS (select 1 from ap
                                where ap.transdate = e.transdate
                                  and ap.curr = e.curr)|,
@@ -158,7 +158,7 @@ useful.
 
 check q|Assert all required AR exchange rates are available|,
     query => q|SELECT * FROM exchangerate e
-                WHERE coalesce(sell,0) = 0
+                WHERE coalesce(buy,0) = 0
                   AND EXISTS (select 1 from ar
                                where ar.transdate = e.transdate
                                  and ar.curr = e.curr)|,
