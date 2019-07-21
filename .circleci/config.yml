@@ -21,11 +21,8 @@ commands:
           command: |
              if [ "x$COVERAGE" == "x1" ]
              then
-               export PERL5OPT="$PERL5OPT -MDevel::Cover"
-               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+               export HARNESS_PERL_SWITCHES="-X -MDevel::Cover"
              fi
-             echo $PERL5OPT
-             echo $PERL5LIB
              prove --recurse -j 2 \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
@@ -87,11 +84,8 @@ commands:
           command: |
             if [ "x$COVERAGE" == "x1" ]
             then
-              export PERL5OPT="$PERL5OPT -MDevel::Cover"
-              export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+              export HARNESS_PERL_SWITCHES="-X -MDevel::Cover"
             fi
-            echo $PERL5OPT
-            echo $PERL5LIB
             plackup -I$HOME/project/lib -I$HOME/project/old/lib \
                     --port 5001 \
                     $HOME/project/bin/ledgersmb-server.psgi
@@ -130,7 +124,7 @@ executors:
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
-      DEVEL_COVER_OPTIONS: -ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0
+      DEVEL_COVER_OPTIONS: -ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0,-silent,1
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres
