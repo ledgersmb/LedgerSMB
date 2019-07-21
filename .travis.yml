@@ -161,11 +161,16 @@ after_script:
     then
        (cd "$HOME/built-dist/ledgersmb/"
         aws_url="s3://$LSMB_AWS_UPLOAD_BUCKET/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER"
-        aws s3 cp --recursive --acl public-read ./screens/ "$aws_url/screens"
-        aws s3 cp --recursive --acl public-read ./logs/ "$aws_url/logs"
-        aws s3 cp --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
-        aws s3 cp --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
-        aws s3 cp --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
+        aws s3 cp --quiet --recursive --acl public-read ./ "$aws_url/screens"
+        aws s3 cp --quiet --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
+        aws s3 cp --quiet --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
+        aws s3 cp --quiet --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
+       echo Test results can be viewed from http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/index.html
+       echo plackup logs from:
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/plackup-access.log
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/plackup-error.log
+       echo dmesg info from:
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/dmesg
     fi
 
 after_success:
