@@ -40,7 +40,18 @@ env:
 addons:
   apt:
     packages: &default_packages
-      - python-pip
+      # Install awscli dependencies from the package repo
+      - python3-pip
+      - python3-pyasn1
+      - python3-urllib3
+      - python3-yaml
+      - python3-dateutil
+      - python3-six
+      - python3-jmespath
+      - python3-botocore
+      - python3-rsa
+      - python3-docutils
+      - python3-colorama
       - nginx
       - texlive-latex-recommended
       - texlive-xetex
@@ -116,7 +127,7 @@ before_install:
   - build-perl 2>/dev/null
   - perl -V
   - npm install uglify-js@">=2.0 <3.0"
-  - pip install awscli --upgrade --user
+  - pip3 install awscli --upgrade --user
 
 install:
   # Suppress warnings in Perl 5.28 about Locale::* being moved out of 'core'
@@ -161,10 +172,16 @@ after_script:
     then
        (cd "$HOME/built-dist/ledgersmb/"
         aws_url="s3://$LSMB_AWS_UPLOAD_BUCKET/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER"
-        aws s3 cp --recursive --acl public-read ./ "$aws_url/screens"
-        aws s3 cp --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
-        aws s3 cp --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
-        aws s3 cp --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
+        aws s3 cp --quiet --recursive --acl public-read ./ "$aws_url/screens"
+        aws s3 cp --quiet --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
+        aws s3 cp --quiet --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
+        aws s3 cp --quiet --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
+       echo Test results can be viewed from http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/index.html
+       echo plackup logs from:
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/plackup-access.log
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/plackup-error.log
+       echo dmesg info from:
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/dmesg
     fi
 
 after_success:
