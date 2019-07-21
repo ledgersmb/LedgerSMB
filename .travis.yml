@@ -40,7 +40,7 @@ env:
 addons:
   apt:
     packages: &default_packages
-      - python-pip
+      - python3-pip
       - nginx
       - texlive-latex-recommended
       - texlive-xetex
@@ -116,7 +116,7 @@ before_install:
   - build-perl 2>/dev/null
   - perl -V
   - npm install uglify-js@">=2.0 <3.0"
-  - pip install awscli --upgrade --user
+  - pip3 install awscli --upgrade --user
 
 install:
   # Suppress warnings in Perl 5.28 about Locale::* being moved out of 'core'
