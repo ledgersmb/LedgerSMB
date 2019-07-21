@@ -40,7 +40,18 @@ env:
 addons:
   apt:
     packages: &default_packages
+      # Install awscli dependencies from the package repo
       - python3-pip
+      - python3-pyasn1
+      - python3-urllib3
+      - python3-yaml
+      - python3-dateutil
+      - python3-six
+      - python3-jmespath
+      - python3-botocore
+      - python3-rsa
+      - python3-docutils
+      - python3-colorama
       - nginx
       - texlive-latex-recommended
       - texlive-xetex
