@@ -373,6 +373,27 @@ html, body {
   width: 4em;
 }
 
+#PNL th[colspan="5"].indent {
+  width: 5em;
+}
+
+#PNL th[colspan="6"].indent {
+  width: 6em;
+}
+
+#PNL th[colspan="7"].indent {
+  width: 7em;
+}
+
+#PNL th[colspan="8"].indent {
+  width: 8em;
+}
+
+#PNL th[colspan="9"].indent {
+  width: 9em;
+}
+
+
 #PNL td.heading1,
 #PNL th.heading1 {
   font-weight: bold;
