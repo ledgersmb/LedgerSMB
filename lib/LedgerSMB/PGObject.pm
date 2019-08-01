@@ -31,6 +31,7 @@ use namespace::autoclean;
 with 'PGObject::Simple::Role' => { -excludes => [qw(_get_dbh _get_schema _get_prefix)], };
 
 use LedgerSMB::App_State;
+use LedgerSMB::Sysconfig;
 
 # nulls come back from the db as undefs.
 # we have not put this in the main PGObject module because
@@ -51,7 +52,7 @@ around BUILDARGS => sub {
 };
 
 sub _get_dbh { return LedgerSMB::App_State::DBH() }
-sub _get_schema { return 'public' } # can be overridden
+sub _get_schema { return LedgerSMB::Sysconfig::db_namespace() }
 sub _get_prefix { return '' } # can be overridden
 
 1;
