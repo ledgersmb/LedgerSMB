@@ -27,8 +27,8 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
 }
 
 if ($run_tests){
-	plan tests => 12;
-	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+        plan tests => 12;
+        $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
 my $db = LedgerSMB::Database->new({
