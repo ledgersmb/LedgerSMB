@@ -23,6 +23,7 @@ my $temp = $ENV{TEMP} || '/tmp/';
 
 plan tests => 22;
 $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+$LedgerSMB::Sysconfig::db_namespace = 'altschema';
 
 my $db = LedgerSMB::Database->new({
          dbname       => $ENV{LSMB_NEW_DB},
