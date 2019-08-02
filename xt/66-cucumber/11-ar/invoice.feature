@@ -7,7 +7,6 @@ Feature: AR transaction document handling
 
 Background:
    Given a standard test company
-     And a logged in admin
      And a customer "Customer 1"
      And a customer "Customer 2"
      And a part with these properties:
@@ -16,6 +15,7 @@ Background:
        | description | Part 1   |
        | sellprice   | 30       |
        | unit        | ea       |
+     And a logged in admin
 
 
 Scenario: Creation of a new sales invoice, no taxes
