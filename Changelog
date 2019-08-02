@@ -55,6 +55,16 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.11
+* Add CSS indentation to hierarchical financial statements (Erik H)
+* Fix random setup.pl errors due to assumed-available credentials (Erik H)
+* Fix failure in setup.pl when initial user exists in the database (Erik H)
+* Fix SQL Ledger version-comparisons when upgrading to LedgerSMB (Yves L)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.6.10
 * Apply correct layout to schema upgrade pages in setup.pl (Erik H)
 * Fix iteration over row data provided in schema data fixes in setup.pl (Erik H)
