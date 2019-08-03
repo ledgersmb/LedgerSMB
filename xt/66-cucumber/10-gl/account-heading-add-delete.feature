@@ -8,7 +8,7 @@ Background:
   Given a standard test company
     And a logged in admin user
 
-Scenario: Add a new account
+Scenario: Add a new account heading
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
@@ -19,7 +19,11 @@ Scenario: Add a new account
    And I press "Save"
   Then I should see the Account screen
 
-Scenario: Delete the account from the chart of accounts
+Scenario: Delete the account heading from the chart of accounts
+ Given a gl account heading with these properties:
+    | Property       | Value       |
+    | Account Number | H0001       |
+    | Description    | New Heading |
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 79 rows

@@ -97,7 +97,7 @@ Scenario: Create a new account based on an existing account
 Scenario: Create a new heading based on an existing heading
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
-   And I expect the report to contain 79 rows
+   And I expect the report to contain 78 rows
   When I click Account Number "1000"
   Then I should see the Account screen
   When I select the "Heading" tab
@@ -107,6 +107,6 @@ Scenario: Create a new heading based on an existing heading
   Then I should see the Account screen
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
-   And I expect the report to contain 80 rows
+   And I expect the report to contain 79 rows
    And I expect the 'Description' report column to contain 'New Heading' for Account Number 'TEST-2'
 

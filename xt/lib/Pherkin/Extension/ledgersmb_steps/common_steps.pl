@@ -596,5 +596,57 @@ INSERT INTO parts (partnumber, description, unit, listprice, sellprice,
     $sth->execute($part, $part);
 };
 
+Given qr/a gl account with these properties:$/, sub {
+    my %map = (
+        'Account Number' => 'accno',
+        'Description' => 'description',
+        'Category' => 'category',
+        'Heading' => 'heading',
+        );
+
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    for my $row (@{C->data}) {
+        if ($row->{Property} eq 'Heading') {
+            my ($headno) = split(/--/, $row->{Value});
+            my ($heading) = $dbh->selectall_array(
+                q{select id from account_heading where accno = ?},
+                { Slice => {} }, $headno);
+            $row->{Value} = $heading->{id};
+        }
+    }
+
+    my $placeholders = join(', ', map { '?' } @{C->data});
+    my $fieldnames = join(', ', map { $map{$_->{Property}} } @{C->data});
+    $dbh->do(qq{insert into account ($fieldnames) values ($placeholders)},
+             undef, map { $_->{Value} } @{C->data})
+        or die $dbh->errstr;
+};
+
+
+Given qr/a gl account heading with these properties:$/, sub {
+    my %map = (
+        'Account Number' => 'accno',
+        'Description' => 'description',
+        'Heading' => 'heading',
+        );
+
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    for my $row (@{C->data}) {
+        if ($row->{Property} eq 'Heading') {
+            my ($headno) = split(/--/, $row->{Value});
+            my ($heading) = $dbh->selectall_array(
+                q{select id from account_heading where accno = ?},
+                { Slice => {} }, $headno);
+            $row->{Value} = $heading->{id};
+        }
+    }
+
+    my $placeholders = join(', ', map { '?' } @{C->data});
+    my $fieldnames = join(', ', map { $map{$_->{Property}} } @{C->data});
+    $dbh->do(qq{insert into account_heading ($fieldnames) values ($placeholders)},
+             undef, map { $_->{Value} } @{C->data})
+        or die $dbh->errstr;
+};
+
 
 1;
