@@ -18,7 +18,7 @@ Background:
      And a logged in admin
 
 
-Scenario: Creation of a new sales invoice, no taxes
+Scenario: Creation of a new purchase invoice, no taxes
     When I open the purchase invoice entry screen
     Then I expect to see an invoice with 1 empty line
      And I expect to see these invoice header fields and values
@@ -33,11 +33,13 @@ Scenario: Creation of a new sales invoice, no taxes
        | Order Number    |          |
        | SO Number       |          |
     When I select vendor "Vendor 2"
-     And I add an invoice line with part "p1"
+     And I add an invoice line with part "p1" with these values:
+       | name            | value    |
+       | Price           | 25.00    |
     Then I expect to see an invoice with these lines
        | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
-       | 1    | p1     | Part 1      | 1   | ea   | 0  |  0.00 | 0 |  0.00    |         |               |       |            |
-     And I expect to see the invoice subtotal of 0.00 and total of 0.00 without taxes
+       | 1    | p1     | Part 1      | 1   | ea   | 0  | 25.00 | 0 | 25.00    |         |               |       |            |
+     And I expect to see the invoice subtotal of 25.00 and total of 25.00 without taxes
      And I expect to see 1 empty payment line
     When I post the invoice
     Then I expect to see these invoice header fields and values
@@ -53,8 +55,24 @@ Scenario: Creation of a new sales invoice, no taxes
        | SO Number       |          |
      And I expect to see an invoice with these lines
        | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
-       | 1    | p1     | Part 1      | 1   | ea   |  1 |  0.00 | 0 |  0.00    |         | $$today       |       |            |
-     And I expect to see the invoice subtotal of 0.00 and total of 0.00 without taxes
-###TODO:
-#     And I expect to see 1 empty payment line
-## For some reason, there are 2 empty payment lines?!
+       | 1    | p1     | Part 1      | 1   | ea   |  1 |  25.00 | 0 |  25.00    |         | $$today       |       |            |
+     And I expect to see the invoice subtotal of 25.00 and total of 25.00 without taxes
+
+Scenario: Creation of a new purchase invoice, with taxes
+   Given part "p1" with this tax:
+       | Tax account          |
+       | 2150--Sales Tax      |
+     And vendor "Vendor 1" with this tax:
+       | Tax account          |
+       | 2150--Sales Tax      |
+    When I open the purchase invoice entry screen
+     And I select vendor "Vendor 1"
+     And I add an invoice line with part "p1" with these values:
+       | name  | value |
+       | Price | 25.00 |
+    Then I expect to see an invoice with these lines
+       | Item | Number | Description | Qty | Unit | OH | Price | % | Extended | TaxForm | Delivery Date | Notes | Serial No. |
+       | 1    | p1     | Part 1      | 1   | ea   | 0  | 25.00 | 0 | 25.00    |         |               |       |            |
+     And I expect to see the invoice subtotal of 25.00 and total of 26.25 with these taxes:
+       | description | amount |
+       | Sales Tax   | 1.25   |
