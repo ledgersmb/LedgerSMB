@@ -41,6 +41,9 @@ Scenario: Create new reconciliation report, update and save.
   Then I should see the Search Reconciliation Reports screen
 
 Scenario: Search for reconciliation report and delete it,
+ Given reconciliation reports with these properties:
+       | Account Number | Statement Date | Statement Balance | Approved | Submitted |
+       | 1060           | 2018-01-01     | 101.00            | no       | no        |
   When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I press "Search"

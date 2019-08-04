@@ -192,6 +192,25 @@ Given qr/a (vendor|customer) "(.*)"$/, sub {
         )->save;
 };
 
+
+Given qr/a (\w+) batch with these properties:$/, sub {
+    my $batch_class = $1;
+    my %map = (
+        'Batch Date' => 'batch_date',
+        'Batch Number' => 'batch_number',
+        'Description' => 'description',
+        );
+
+    my $batch_data = {
+        dbh => S->{ext_lsmb}->admin_dbh,
+        batch_class => $batch_class,
+        map { $map{$_->{Property}} => $_->{Value} } @{C->data},
+    };
+    my $batch = LedgerSMB::Batch->new({base => $batch_data});
+    $batch->create;
+};
+
+
 Given qr/an unpaid AP transaction with these values:$/, sub {
     # Expects data in the following form:
     # | Vendor   | Date       | Invoice Number | Amount |
