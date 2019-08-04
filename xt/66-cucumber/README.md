@@ -66,6 +66,65 @@ The code consists of the following components:
    * self-registering Weasel::WidgetHandler-s and Weasel::FindExpander-s,
      keeping DOM-tree knowledge local to the PageObject
 
+## Structure of feature files
+
+The general structure of feature files is well documented elsewhere on
+the web ((See https://cucumber.io/docs/gherkin/reference/)[https://cucumber.io/docs/gherkin/reference/]).
+The general structure consists of N sections:
+
+ * Feature (only one section allowed)
+ * Background (optional; only a single background allowed)
+ * Scenario (at least one, but potentially many)
+
+The `Feature` section describes the feature being tested. There's no need
+to be terse: this is for documentation purposes and sets the boundaries
+of what will be tested in the scenarios.
+
+The `Background` section (when available) specifies steps to be prepended
+to every scenario in the feature file.
+
+The `Scenario` sections test the various behaviours of the feature. There
+are several best practices for writing scenarios:
+
+ * Each scenario tests one behaviour
+ * Each scenario is independent from others
+   which means that scenarios can be run without requiring
+   the others to run as well, in any specific sequence
+
+To achieve independence, each scenario runs in its own copy of the
+test database.
+
+### Tagging features and scenarios
+
+Tags can be used to classify scenarios. By tagging a feature, all
+scenarios within that feature will be applied the given tag. Tags
+are at-sign prefixed words on the line before the `Feature:` or
+`Scenario:` keyword. E.g.:
+
+```plain
+@weasel
+Feature: Bulk payments
+
+@wip
+Scenario: Add payments to a new batch
+```
+
+The following tags are available:
+
+ * `@weasel`  
+   This tag signals to the Weasel plugin to expect browser-based
+   tests (and thus to initialize the browser environment)
+ * `@wip`  
+   This tag signals to the test framework that the test isn't done
+   and should be skipped during Continuous Integration test runs
+ * `@one-db`  
+   This tag signals to the LedgerSMB plugin that all the scenarios
+   in this feature should run against the same database. This is a
+   performance optimization which should *only* be applied when the
+   tests don't modify the database they're running againsts. That way
+   independence of scenarios within the feature is maintained.
+
+
 # DOM tree mapping
 
 The DOM tree's root element (`html`), maps to PageObject::Root, by
