@@ -47,7 +47,7 @@ sub list_users {
     my $btn = $self->find('*button', text => "List Users");
     $btn->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $btn);
 }
 
 sub add_user {
@@ -55,7 +55,7 @@ sub add_user {
     my $btn = $self->find('*button', text => "Add User");
     $btn->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $btn);
 }
 
 sub copy_company {
@@ -66,7 +66,7 @@ sub copy_company {
     my $btn = $self->find('*button', text => "Copy");
     $btn->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $btn);
 }
 
 sub create_database {
@@ -111,7 +111,7 @@ sub create_database {
     my $btn = $page->find('*button', text => "Load Templates");
     $btn->click;
 
-     $self->session->page->wait_for_body;
+    $self->session->page->wait_for_body(replaces => $btn);
     return $self->session->page->body;
 }
 
