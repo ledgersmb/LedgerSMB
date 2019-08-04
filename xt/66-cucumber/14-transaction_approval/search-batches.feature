@@ -6,15 +6,15 @@ Feature: Search Batches
 
 Background:
   Given a standard test company named "standard-batch-test"
-    And a logged in admin user
-
-Scenario: Search for all unapproved batches
- Given batches with these properties:
+    And batches with these properties:
        | Type    | Date       | Batch Number | Description | Approved |
        | ap      | 2018-01-01 | B-1001       | Batch-1     | no       |
        | ar      | 2018-02-01 | B-1002       | Batch-ABC-2 | no       |
        | payment | 2018-03-01 | B-1003       | Batch-3     | no       |
        | payment | 2018-04-01 | B-1004       | Batch-4     | yes      |
+    And a logged in admin user
+
+Scenario: Search for all unapproved batches
   When I navigate the menu and select the item at "Transaction Approval > Batches"
   Then I should see the Search Batches screen
   When I press "Search"
