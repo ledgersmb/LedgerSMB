@@ -192,6 +192,25 @@ Given qr/a (vendor|customer) "(.*)"$/, sub {
         )->save;
 };
 
+
+Given qr/a (\w+) batch with these properties:$/, sub {
+    my $batch_class = $1;
+    my %map = (
+        'Batch Date' => 'batch_date',
+        'Batch Number' => 'batch_number',
+        'Description' => 'description',
+        );
+
+    my $batch_data = {
+        dbh => S->{ext_lsmb}->admin_dbh,
+        batch_class => $batch_class,
+        map { $map{$_->{Property}} => $_->{Value} } @{C->data},
+    };
+    my $batch = LedgerSMB::Batch->new({base => $batch_data});
+    $batch->create;
+};
+
+
 Given qr/an unpaid AP transaction with these values:$/, sub {
     # Expects data in the following form:
     # | Vendor   | Date       | Invoice Number | Amount |
@@ -594,6 +613,58 @@ INSERT INTO parts (partnumber, description, unit, listprice, sellprice,
                               where al.description = 'IC_expense' limit 1))
 |);
     $sth->execute($part, $part);
+};
+
+Given qr/a gl account with these properties:$/, sub {
+    my %map = (
+        'Account Number' => 'accno',
+        'Description' => 'description',
+        'Category' => 'category',
+        'Heading' => 'heading',
+        );
+
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    for my $row (@{C->data}) {
+        if ($row->{Property} eq 'Heading') {
+            my ($headno) = split(/--/, $row->{Value});
+            my ($heading) = $dbh->selectall_array(
+                q{select id from account_heading where accno = ?},
+                { Slice => {} }, $headno);
+            $row->{Value} = $heading->{id};
+        }
+    }
+
+    my $placeholders = join(', ', map { '?' } @{C->data});
+    my $fieldnames = join(', ', map { $map{$_->{Property}} } @{C->data});
+    $dbh->do(qq{insert into account ($fieldnames) values ($placeholders)},
+             undef, map { $_->{Value} } @{C->data})
+        or die $dbh->errstr;
+};
+
+
+Given qr/a gl account heading with these properties:$/, sub {
+    my %map = (
+        'Account Number' => 'accno',
+        'Description' => 'description',
+        'Heading' => 'heading',
+        );
+
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    for my $row (@{C->data}) {
+        if ($row->{Property} eq 'Heading') {
+            my ($headno) = split(/--/, $row->{Value});
+            my ($heading) = $dbh->selectall_array(
+                q{select id from account_heading where accno = ?},
+                { Slice => {} }, $headno);
+            $row->{Value} = $heading->{id};
+        }
+    }
+
+    my $placeholders = join(', ', map { '?' } @{C->data});
+    my $fieldnames = join(', ', map { $map{$_->{Property}} } @{C->data});
+    $dbh->do(qq{insert into account_heading ($fieldnames) values ($placeholders)},
+             undef, map { $_->{Value} } @{C->data})
+        or die $dbh->errstr;
 };
 
 

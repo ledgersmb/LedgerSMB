@@ -6,14 +6,14 @@ Feature: Reconciliation Report Search
 Background:
   Given a standard test company named "standard-recon-test"
     And a logged in admin user
-
-Scenario: Default search with no filter
- Given reconciliation reports with these properties:
+    And reconciliation reports with these properties:
        | Account Number | Statement Date | Statement Balance | Approved | Submitted |
        | 1060           | 2018-01-01     | 1000.00           | no       | no        |
        | 1060           | 2018-02-01     | 1000.01           | no       | yes       |
        | 1060           | 2018-03-01     | 1000.02           | yes      | yes       |
        | 1065           | 2018-01-01     | 100.00            | no       | no        |
+
+Scenario: Default search with no filter
  When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I press "Search"

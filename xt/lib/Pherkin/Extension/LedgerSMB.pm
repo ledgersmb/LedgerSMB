@@ -19,6 +19,7 @@ use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
 use Test::BDD::Cucumber::Extension;
+use List::Util qw(any);
 
 use Moose;
 use namespace::autoclean;
@@ -105,8 +106,11 @@ sub pre_scenario {
     $stash->{ext_lsmb} = $self;
     $stash->{"the admin"} = $self->admin_user_name;
     $stash->{"the admin password"} = $self->admin_user_password;
-    $stash->{"the company"} = $self->last_feature_stash->{"the company"}
-        if $self->last_feature_stash->{"the company"};
+
+    if ($self->last_feature_stash->{"the company"}
+        && any { $_ eq 'one-db' } @{$scenario->tags}) {
+        $stash->{"the company"} = $self->last_feature_stash->{"the company"};
+    }
 }
 
 
@@ -232,8 +236,8 @@ sub create_from_template {
 sub ensure_nonexisting_company {
     my ($self, $company) = @_;
 
-    $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
     $self->_clear_admin_dbh;
+    $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
 }
 
 sub ensure_nonexisting_user {

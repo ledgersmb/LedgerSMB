@@ -18,8 +18,17 @@ Scenario: Add a new account
    And I enter "New Account" into "Description"
    And I press "Save"
   Then I should see the Account screen
+  When I navigate the menu and select the item at "General Journal > Chart of Accounts"
+  Then I should see the Chart of Accounts screen
+   And I expect the report to contain 79 rows
 
 Scenario: Delete the account from the chart of accounts
+ Given a gl account with these properties:
+    | Property       | Value                |
+    | Account Number | T0001                |
+    | Description    | New Account          |
+    | Category       | A                    |
+    | Heading        | 1000--CURRENT ASSETS |
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 79 rows
