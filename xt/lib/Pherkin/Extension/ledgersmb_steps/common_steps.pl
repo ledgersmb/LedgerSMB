@@ -328,6 +328,31 @@ Given qr/a part with these properties:$/, sub {
     _create_part(\%total_props);
 };
 
+Given qr/(?:part|service) "([^\"]+)" with (this tax|these taxes):$/, sub {
+    my $partnumber = $1;
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+
+    my ($row) = $dbh->selectall_array(
+        q{select * from parts where partnumber = ?},
+        { Slice => {} }, $partnumber);
+    my $partid = $row->{id};
+    $dbh->do(q{delete from partstax where parts_id = ?}, {}, $partid)
+        or die $dbh->errstr;
+
+    for my $tax (@{C->data}) {
+        $tax = $tax->{'Tax account'} // $tax->{accno};
+        if ($tax =~ m/--/) {
+            ($tax) = split(/--/, $tax);
+        }
+        ($row) = $dbh->selectall_array(
+            q{select * from account where accno = ?},
+            { Slice => {} }, $tax);
+        $dbh->do(q{insert into partstax (parts_id, chart_id) values (?, ?)},
+                 undef, $partid, $row->{id})
+            or die $dbh->errstr;
+    }
+};
+
 my $invnumber = 0;
 
 Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub {
@@ -567,6 +592,34 @@ Given qr/a customer named "(.*)"/, sub {
         VALUES (?, ?, ?, ?, ?)), {}, $company->id, 2, 3, 'USD', 'M001');
     $dbh->commit;
 
+};
+
+
+Given qr/(customer|vendor) "([^\"]+)" with (this tax|these taxes):$/, sub {
+    my $entity_type = $1;
+    my $metanumber = $2;
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+
+    my ($row) = $dbh->selectall_array(
+        q{select * from entity_credit_account
+           where meta_number = ? and entity_class = ?},
+        { Slice => {} }, $metanumber, ($entity_type eq 'vendor') ? 1 : 2);
+    my $eca_id = $row->{id};
+    $dbh->do(q{delete from eca_tax where eca_id = ?}, {}, $eca_id)
+        or die $dbh->errstr;
+
+    for my $tax (@{C->data}) {
+        $tax = $tax->{'Tax account'} // $tax->{accno};
+        if ($tax =~ m/--/) {
+            ($tax) = split(/--/, $tax);
+        }
+        ($row) = $dbh->selectall_array(
+            q{select * from account where accno = ?},
+            { Slice => {} }, $tax);
+        $dbh->do(q{insert into eca_tax (eca_id, chart_id) values (?, ?)},
+                 undef, $eca_id, $row->{id})
+            or die $dbh->errstr;
+    }
 };
 
 

@@ -711,11 +711,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                 $form->{"${taccno}_total"} =
                     $form->round_amount($form->{taxes}{$item}, 2);
                 my $item_total_formatted=$form->format_amount(\%myconfig,$form->{"${item}_total"},2,0);
-                    $tax .= qq|
-                <tr>
-              <th align=right>$form->{"${item}_description"}</th>
-              <td align=right>$item_total_formatted</td>
-              <td>$form->{currency}</td>
+                $tax .= qq|
+                <tr class="invoice-auto-tax">
+                  <th align=right>$form->{"${item}_description"}</th>
+                  <td align=right>$item_total_formatted</td>
+                  <td>$form->{currency}</td>
                 </tr>
 |;
             }

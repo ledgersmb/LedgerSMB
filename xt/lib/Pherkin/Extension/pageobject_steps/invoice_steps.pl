@@ -78,13 +78,15 @@ When qr/I select vendor "(.*)"/, sub {
 };
 
 
-When qr/I add an invoice line with (?:part|service) "(.+)"/, sub {
+When qr/I add an invoice line with (?:part|service) "(.+)"( with these values:)?$/, sub {
     my $part = $1;
+    my $has_data = $2;
 
     my $session = S->{ext_wsl};
     my $inv = $session->page->body->maindiv->content;
     my @empty = $inv->lines->empty_lines;
     my $empty = shift @empty;
+    my $item = $empty->field_value('Item');
 
     $empty->field_value('Number', $part);
     $empty->field('Item')->click;
@@ -94,6 +96,15 @@ When qr/I add an invoice line with (?:part|service) "(.+)"/, sub {
             return ($empty->field_value('Description') ne '');
         });
     $inv->update;
+    if ($has_data) {
+        $inv = $session->page->body->maindiv->content;
+        my ($line) =
+            grep { $_->field_value('Item') eq $item } $inv->lines->all_lines;
+        for my $row (@{C->data}) {
+            $line->field_value($row->{name}, $row->{value});
+        }
+        $inv->update;
+    }
 };
 
 When qr/I post the invoice/, sub {
