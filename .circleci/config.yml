@@ -21,10 +21,11 @@ commands:
           command: |
              if [ "x$COVERAGE" == "x1" ]
              then
-               export PERL5OPT="$PERL5OPT -MDevel::Cover"
+               export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover"
                export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
              fi
              echo $PERL5OPT
+             echo $HARNESS_PERL_SWITCHES
              echo $PERL5LIB
              prove --recurse -j 2 \
                    --pgtap-option dbname=lsmbinstalltest \
@@ -87,6 +88,8 @@ commands:
           command: |
             if [ "x$COVERAGE" == "x1" ]
             then
+              # Note that this is deliberately different from the 'prove'
+              # invocation
               export PERL5OPT="$PERL5OPT -MDevel::Cover"
               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
             fi
