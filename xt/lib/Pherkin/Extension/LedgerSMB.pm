@@ -236,8 +236,8 @@ sub create_from_template {
 sub ensure_nonexisting_company {
     my ($self, $company) = @_;
 
-    $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
     $self->_clear_admin_dbh;
+    $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
 }
 
 sub ensure_nonexisting_user {
