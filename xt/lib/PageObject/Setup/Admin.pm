@@ -5,6 +5,7 @@ use warnings;
 
 use Carp;
 use PageObject;
+use Test::More;
 
 use Moose;
 use namespace::autoclean;
@@ -47,7 +48,7 @@ sub list_users {
     my $btn = $self->find('*button', text => "List Users");
     $btn->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $btn);
 }
 
 sub add_user {
@@ -55,7 +56,7 @@ sub add_user {
     my $btn = $self->find('*button', text => "Add User");
     $btn->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $btn);
 }
 
 sub copy_company {
@@ -66,7 +67,7 @@ sub copy_company {
     my $btn = $self->find('*button', text => "Copy");
     $btn->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $btn);
 }
 
 sub create_database {
@@ -85,19 +86,21 @@ sub create_database {
 
     # Confirm database creation
     $page->find('*button', text => "Yes")->click;
+    ok('Yes-button clicked on initial confirmation');
 
     $page->find('#setup-select-coa.done-parsing', scheme => 'css');
     $page->find('*labeled', text => "Country Code")
         ->find_option($param{"Country code"})
         ->click;
     $page->find('*button', text => "Next")->click;
+    ok('Next-button clicked after country selection');
 
-    $page->find('*labeled', text => "Chart of accounts");
     $page->find('#setup-select-coa.done-parsing', scheme => 'css');
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
     $page->find('*button', text => "Next")->click;
+    ok('Next-button clicked after CoA selection');
 
     # assert we're on the "Load Templates" page now
     $page->find('#setup-template-info.done-parsing', scheme => 'css');
@@ -110,8 +113,9 @@ sub create_database {
 
     my $btn = $page->find('*button', text => "Load Templates");
     $btn->click;
+    ok('Load Templates-button clicked after templates selection');
 
-     $self->session->page->wait_for_body;
+    $self->session->page->wait_for_body(replaces => $btn);
     return $self->session->page->body;
 }
 
