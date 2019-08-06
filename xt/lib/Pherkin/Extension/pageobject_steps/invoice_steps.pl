@@ -40,7 +40,7 @@ When qr/I open the sales invoice entry screen/, sub {
 };
 
 When qr/I open the AR transaction entry screen/, sub {
-    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Add Transaction';
 
     my $content = S->{ext_wsl}->page->body->maindiv->content;
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
@@ -52,7 +52,6 @@ When qr/I select customer "(.*)"/, sub {
 
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     $page->select_customer($customer);
-
 };
 
 When qr/I open the purchase invoice entry screen/, sub {
@@ -63,7 +62,7 @@ When qr/I open the purchase invoice entry screen/, sub {
 };
 
 When qr/I open the AP transaction entry screen/, sub {
-    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AP > Vendor Invoice';
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AP > Add Transaction';
 
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
     S->{ext_wsl}->page->body->verify;
@@ -115,7 +114,7 @@ When qr/I post the invoice/, sub {
 
 };
 
-Then qr/I expect to see an invoice with (\d+) (empty )?lines?/, sub {
+Then qr/I expect to see (?:an invoice|a transaction) with (\d+) (empty )?lines?/, sub {
     my ($count, $empty) = ($1, $2);
 
     my $page = S->{ext_wsl}->page->body->maindiv->content;
@@ -125,7 +124,7 @@ Then qr/I expect to see an invoice with (\d+) (empty )?lines?/, sub {
     is(scalar(@lines), $count, 'Expected number of lines matches actual');
 };
 
-Then qr/I expect to see these invoice header fields and values/, sub {
+Then qr/I expect to see these (?:invoice|transaction) header fields and values/, sub {
     my $data = C->data;
 
     my $header = S->{ext_wsl}->page->body->maindiv->content->header;
