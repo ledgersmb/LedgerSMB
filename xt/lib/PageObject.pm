@@ -35,7 +35,7 @@ sub self_register {
 sub open {
     my ($class, $session) = @_;
 
-    my $body = shift @{$session->page->find_all('body')};
+    my $body = shift @{$session->page->find_all('//body')};
     $session->get($class->url);
 
     $session->page->wait_for_body(replaces => $body);
