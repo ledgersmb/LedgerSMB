@@ -125,6 +125,8 @@ IF FORMATS.grep('ODS').size()
      ?>">[<?lsmb text('CSV') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
      PROCESS dynatable
+       attributes = { id = 'pricematrixgroup'
+                      input_prefix = 'grp_' }
          tbody = { rows = pricematrix_pricegroup };
        END ?>
 </form>

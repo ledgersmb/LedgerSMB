@@ -108,7 +108,7 @@ END; ?>
           <?lsmb- IF TYPE == 'input_text' -?>
           <?lsmb
                  PROCESS input element_data = {
-                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="text"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
@@ -116,7 +116,7 @@ END; ?>
                                           value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSIF TYPE == 'password';
                  PROCESS input element_data = {
-                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="password"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
@@ -130,7 +130,7 @@ END; ?>
                    END;
                    ?>
          <?lsmb PROCESS input element_data = {
-                          id=COL.col_id _ '-' _ ROWCOUNT
+                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                           type="checkbox"
                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                           class=COL.class
@@ -144,7 +144,7 @@ END; ?>
 
                ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
-                                         id=COL.col_id _ '-' _ ROWCOUNT
+                                         id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class
@@ -161,7 +161,7 @@ END; ?>
                 PROCESS select element_data = {
                 text_attr='text'
                 value_attr='value'
-                id=COL.col_id _ '-' _ ROWCOUNT
+                id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                 name=PFX _ COL.col_id _ '_' _ ROW.row_id
                 class=COL.class
                 options=OPTION_LIST
@@ -225,7 +225,7 @@ END; ?>
        <?lsmb
           IF TYPE == 'input_text' -?>
        <?lsmb PROCESS input element_data = {
-                                  id=COL.col_id _ '-' _ ROWCOUNT
+                                  id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                   type="text"
                                   class=COL.class
                                   "data-dojo-type"=DOJO
@@ -240,7 +240,7 @@ END; ?>
                    END;
                    ?>
           <?lsmb PROCESS input element_data = {
-                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="checkbox"
                                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                                           class=COL.class
@@ -248,7 +248,7 @@ END; ?>
                                           checked=CHECKED } ?>
          <?lsmb- ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
-                                         id=COL.col_id _ '-' _ ROWCOUNT
+                                         id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class
