@@ -172,7 +172,8 @@ after_script:
     then
        (cd "$HOME/built-dist/ledgersmb/"
         aws_url="s3://$LSMB_AWS_UPLOAD_BUCKET/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER"
-        aws s3 cp --quiet --recursive --acl public-read ./ "$aws_url/screens"
+        aws s3 cp --quiet --recursive --acl public-read ./screens "$aws_url/logs/screens"
+        aws s3 cp --quiet --recursive --acl public-read ./logs "$aws_url/logs/html"
         aws s3 cp --quiet --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
         aws s3 cp --quiet --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
         aws s3 cp --quiet --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
