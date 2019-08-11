@@ -132,11 +132,12 @@ sub psgi_app {
         $request->{dbh}->commit if defined $request->{dbh};
     }
     catch {
+        my $error = $_;
+
         # Explicitly roll back, because middleware may require the
         # database connection to be in a working state (e.g. DisableBackbutton)
         $request->{dbh}->rollback
             if $request->{dbh};
-        my $error = $_;
         if ($error !~ /^Died at/) {
             $env->{'psgix.logger'}->({
                 level => 'error',
