@@ -34,6 +34,15 @@ commands:
                    --feature-option tags=~@wip t/ xt/
       - run:
           command: |
+            curl $PSGI_BASE_URL/stop.pl || true
+            while [ ! -e plackup-done ];
+            do
+              echo -n "."
+              sleep 1
+            done
+            echo " done"
+      - run:
+          command: |
             mkdir -p /tmp/artifact/logs;
             mkdir -p /tmp/artifact/screens;
             cp logs/* /tmp/artifact/logs || true;
@@ -98,6 +107,8 @@ commands:
             plackup -I$HOME/project/lib -I$HOME/project/old/lib \
                     --port 5001 \
                     $HOME/project/bin/ledgersmb-server.psgi
+            echo "Plackup done!"
+            touch plackup-done
           background: true
   start_proxy:
     description: "Start the proxy"
