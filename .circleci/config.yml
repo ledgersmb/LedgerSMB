@@ -31,11 +31,9 @@ commands:
              if [ "x$COVERAGE" == "x1" ]
              then
                export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
-               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
              fi
              echo $PERL5OPT
              echo $HARNESS_PERL_SWITCHES
-             echo $PERL5LIB
              prove --recurse -j 2 \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
@@ -105,13 +103,6 @@ commands:
     steps:
       - run:
           command: |
-            if [ "x$COVERAGE" == "x1" ]
-            then
-              # Note that this is deliberately different from the 'prove'
-              # invocation
-              export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
-            fi
-            echo $PERL5LIB
             PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" plackup -I$HOME/project/lib -I$HOME/project/old/lib \
                     -s Starlet --max-workers 2 --port 5762 \
                     $HOME/project/bin/ledgersmb-server.psgi
