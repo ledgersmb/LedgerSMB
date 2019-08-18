@@ -7,6 +7,7 @@ Changelog for 1.6.11
 * Fix random setup.pl errors due to assumed-available credentials (Erik H)
 * Fix failure in setup.pl when initial user exists in the database (Erik H)
 * Fix SQL Ledger version-comparisons when upgrading to LedgerSMB (Yves L)
+* Fix regression when running in a schema other than 'public' (Erik H)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
