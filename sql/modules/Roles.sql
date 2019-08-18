@@ -119,7 +119,9 @@ BEGIN
 END;
 $$;
 
-GRANT ALL ON SCHEMA public TO public;
+GRANT SELECT ON periods TO public; -- 'periods' is a view in Pg-database
+GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
+
 
 \echo BASE ROLES
 SELECT lsmb__create_role('base_user');
