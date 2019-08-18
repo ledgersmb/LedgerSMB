@@ -134,7 +134,8 @@ install:
   # Further more is there a warning regarding redifinition of JSON::PP::Boolean
   # which is fixed in 4.03 (so, reinstall, in order to get to newest)
   - cpanm --reinstall --notest Locale::Country Locale::Codes Locale::Language JSON::PP
-  - cpanm Cpanel::JSON::XS~3.0206
+  - cpanm --quiet --notest Cpanel::JSON::XS~3.0206
+  - cpanm --quiet --notest Starlet
   - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 
@@ -148,7 +149,7 @@ before_script:
   - coverage-setup
   - sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
-  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib -Iold/lib --port 5001 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
+  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -s Starlet --max-workers 2 -Ilib -Iold/lib --port 5001 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
   - nginx -c /tmp/nginx.conf
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
