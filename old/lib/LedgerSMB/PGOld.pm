@@ -26,6 +26,7 @@ use warnings;
 
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
+use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 
@@ -131,7 +132,7 @@ sub is_allowed_role {
 }
 
 sub _get_schema {
-    return 'public';
+    return LedgerSMB::Sysconfig::db_namespace();
 }
 
 =back
