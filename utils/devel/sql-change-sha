@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use lib 'lib';
+use LedgerSMB::Database::Change;
+
+=head1 SYNOPSIS
+
+   utils/devel/sql-change-sha sql/changes/1.5/open_forms_callers.sql
+   # prints:
+   #   sql/changes/1.5/open_forms_callers.sql -> ke63Vj9L87jBNBhn3SgzIAtT2WQ3GBjowM24pRtt4H1a13PmUd3hW9T+VQCsPUF2UDXWs9pMIPbOEE/l7kNROA
+
+=head1 DESCRIPTION
+
+This is a utility to print (from the command-line) the SHA that will be
+generated for a schema change file; the value returned is the same as
+what would have been stored in the 'sha' column of the 'db_patches' table.
+
+=cut
+
+for my $path (@ARGV) {
+    my $change = LedgerSMB::Database::Change->new($path);
+
+    print $path . ' -> ' . $change->sha . "\n";
+}
