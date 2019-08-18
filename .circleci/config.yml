@@ -88,6 +88,7 @@ commands:
               --with-feature=xls \
               --with-feature=edi \
               --installdeps .
+            cpanm --notest Starlet
             if [ "x$COVERAGE" == "x1" ]
             then
               cpanm --quiet --notest \
@@ -114,7 +115,7 @@ commands:
             echo $PERL5OPT
             echo $PERL5LIB
             plackup -I$HOME/project/lib -I$HOME/project/old/lib \
-                    --port 5001 \
+                    -s Starlet --max-workers 2 --port 5001 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
