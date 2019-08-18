@@ -228,6 +228,12 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.25
+* Fix regression when running in a schema other than 'public' (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.24
 * Fix all addresses selected on AR/AP Invoice's Ship To screen (Erik H, #3940)
 * Fix sales tax not included in amount due on purchase invoice (Erik H, #3941)
