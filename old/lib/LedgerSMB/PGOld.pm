@@ -22,6 +22,7 @@ use warnings;
 
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
+use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 
@@ -85,6 +86,19 @@ sub is_allowed_role {
     );
     return $access->{lsmb__is_allowed_role};
 }
+
+=item $self->funcschema()
+
+
+
+=cut
+
+sub funcschema {
+    my ($self) = @_;
+
+    return LedgerSMB::Sysconfig::db_namespace();
+}
+
 
 =back
 
