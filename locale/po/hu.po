@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-01-20 14:31+0000\n"
+"POT-Creation-Date: 2019-08-18 21:05+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Hungarian (https://www.transifex.com/ledgersmb/teams/58325/"
 "hu/)\n"
@@ -194,7 +194,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1009
+#: lib/LedgerSMB/Scripts/setup.pm:1022
 msgid "Access Denied"
 msgstr "Hozzáférés megtagadva"
 
@@ -1467,7 +1467,7 @@ msgstr ""
 msgid "Cancel the <b>whole migration</b>"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:264
+#: lib/LedgerSMB/Scripts/setup.pm:266
 msgid "Cancel?"
 msgstr "Megszakítja a műveletet?"
 
@@ -1982,7 +1982,7 @@ msgstr ""
 msgid "Create Batch"
 msgstr "Köteg készítése"
 
-#: lib/LedgerSMB/Scripts/setup.pm:245
+#: lib/LedgerSMB/Scripts/setup.pm:247
 msgid "Create Database?"
 msgstr "Új cégadatbázis létrehozása?"
 
@@ -2238,11 +2238,11 @@ msgstr ""
 msgid "Database component"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:244
+#: lib/LedgerSMB/Scripts/setup.pm:246
 msgid "Database does not exist."
 msgstr "Az adatbázis nem létezik."
 
-#: lib/LedgerSMB/Scripts/setup.pm:973
+#: lib/LedgerSMB/Scripts/setup.pm:986
 msgid "Database exists."
 msgstr ""
 
@@ -2851,7 +2851,7 @@ msgstr "Dokumentum"
 msgid "Document Type"
 msgstr "Dokumentum típusa"
 
-#: lib/LedgerSMB/Scripts/setup.pm:473
+#: lib/LedgerSMB/Scripts/setup.pm:478
 msgid "Don't know what to do with backup"
 msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 
@@ -3321,7 +3321,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:432
+#: lib/LedgerSMB/Scripts/setup.pm:437
 msgid "Error creating backup file"
 msgstr "Hiba történt a biztonsági mentés fájl létrehozása során"
 
@@ -3333,7 +3333,7 @@ msgstr "Hiba történt a köteg létrehozásakor. Kérem próbálja újra."
 msgid "Error from Function:"
 msgstr "Hiba a funkcióban:"
 
-#: lib/LedgerSMB/Scripts/setup.pm:517
+#: lib/LedgerSMB/Scripts/setup.pm:522
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3703,7 +3703,7 @@ msgstr "Kezdő dátum"
 msgid "Full"
 msgstr "Teljes"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1110
+#: lib/LedgerSMB/Scripts/setup.pm:1123
 msgid "Full Permissions"
 msgstr "Teljes jogosultság"
 
@@ -4101,7 +4101,7 @@ msgstr "Belső feljegyzés"
 msgid "Invalid Reporting Basis"
 msgstr "Valótlan jelentés alap"
 
-#: lib/LedgerSMB/Scripts/setup.pm:428
+#: lib/LedgerSMB/Scripts/setup.pm:433
 msgid "Invalid backup request"
 msgstr "Érvénytelen biztonsági mentés kérés"
 
@@ -4705,7 +4705,7 @@ msgstr ""
 msgid "Login"
 msgstr "Belépés"
 
-#: lib/LedgerSMB/Scripts/setup.pm:975
+#: lib/LedgerSMB/Scripts/setup.pm:988
 msgid "Login?"
 msgstr ""
 
@@ -4765,7 +4765,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1109
+#: lib/LedgerSMB/Scripts/setup.pm:1122
 msgid "Manage Users"
 msgstr "Felhasználók kezelése"
 
@@ -5082,7 +5082,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1111
+#: lib/LedgerSMB/Scripts/setup.pm:1124
 msgid "No changes"
 msgstr ""
 
@@ -8795,7 +8795,7 @@ msgstr ""
 msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:262
+#: lib/LedgerSMB/Scripts/setup.pm:264
 msgid "Unknown database found."
 msgstr "Ismeretlen adatbázist találtam."
 
@@ -8926,7 +8926,7 @@ msgstr "Felhasználó"
 msgid "User Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1184
+#: lib/LedgerSMB/Scripts/setup.pm:1203
 msgid "User already exists. Import?"
 msgstr "A felhasználó már létezik. Beolvassa az adatait?"
 
@@ -9429,7 +9429,7 @@ msgstr ""
 msgid "production"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:299
+#: lib/LedgerSMB/Scripts/setup.pm:301
 msgid "psql not found."
 msgstr ""
 

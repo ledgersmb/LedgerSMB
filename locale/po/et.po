@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-01-20 14:31+0000\n"
+"POT-Creation-Date: 2019-08-18 21:05+0000\n"
 "Last-Translator: Peeter Pärtel <peeter@sigma.ee>, 2018\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -195,7 +195,7 @@ msgstr "Summa"
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1009
+#: lib/LedgerSMB/Scripts/setup.pm:1022
 msgid "Access Denied"
 msgstr "Ligipääs keelatud"
 
@@ -1468,7 +1468,7 @@ msgstr "Tühista"
 msgid "Cancel the <b>whole migration</b>"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:264
+#: lib/LedgerSMB/Scripts/setup.pm:266
 msgid "Cancel?"
 msgstr "Tühista?"
 
@@ -1984,7 +1984,7 @@ msgstr "Loo"
 msgid "Create Batch"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:245
+#: lib/LedgerSMB/Scripts/setup.pm:247
 msgid "Create Database?"
 msgstr "Lisame andmebaasi?"
 
@@ -2240,11 +2240,11 @@ msgstr "Andmebaasi administraatori kasutajatunnused"
 msgid "Database component"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:244
+#: lib/LedgerSMB/Scripts/setup.pm:246
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:973
+#: lib/LedgerSMB/Scripts/setup.pm:986
 msgid "Database exists."
 msgstr "Andmebaas eksisteerib."
 
@@ -2854,7 +2854,7 @@ msgstr "Dokument"
 msgid "Document Type"
 msgstr "Dokumendi tüüp"
 
-#: lib/LedgerSMB/Scripts/setup.pm:473
+#: lib/LedgerSMB/Scripts/setup.pm:478
 msgid "Don't know what to do with backup"
 msgstr "Ei tea, mida teha varukoopiaga"
 
@@ -3324,7 +3324,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:432
+#: lib/LedgerSMB/Scripts/setup.pm:437
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3336,7 +3336,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:517
+#: lib/LedgerSMB/Scripts/setup.pm:522
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3706,7 +3706,7 @@ msgstr "Alates"
 msgid "Full"
 msgstr "Kõik"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1110
+#: lib/LedgerSMB/Scripts/setup.pm:1123
 msgid "Full Permissions"
 msgstr "Kõik õigused"
 
@@ -4104,7 +4104,7 @@ msgstr "Sisemärkused"
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:428
+#: lib/LedgerSMB/Scripts/setup.pm:433
 msgid "Invalid backup request"
 msgstr ""
 
@@ -4704,7 +4704,7 @@ msgstr "Sisse logimine. Palun oodake."
 msgid "Login"
 msgstr "Logi sisse"
 
-#: lib/LedgerSMB/Scripts/setup.pm:975
+#: lib/LedgerSMB/Scripts/setup.pm:988
 msgid "Login?"
 msgstr "Logi välja?"
 
@@ -4764,7 +4764,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1109
+#: lib/LedgerSMB/Scripts/setup.pm:1122
 msgid "Manage Users"
 msgstr "Kasutajate haldamine"
 
@@ -5081,7 +5081,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1111
+#: lib/LedgerSMB/Scripts/setup.pm:1124
 msgid "No changes"
 msgstr ""
 
@@ -8788,7 +8788,7 @@ msgstr ""
 msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:262
+#: lib/LedgerSMB/Scripts/setup.pm:264
 msgid "Unknown database found."
 msgstr "Tundmatu andmebaas leitud."
 
@@ -8919,7 +8919,7 @@ msgstr "Kasutaja"
 msgid "User Name"
 msgstr "Kasutajanimi"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1184
+#: lib/LedgerSMB/Scripts/setup.pm:1203
 msgid "User already exists. Import?"
 msgstr "Kasutaja juba eksisteerib. Kas importida?"
 
@@ -9424,7 +9424,7 @@ msgstr "püsiviide"
 msgid "production"
 msgstr "tootmine"
 
-#: lib/LedgerSMB/Scripts/setup.pm:299
+#: lib/LedgerSMB/Scripts/setup.pm:301
 msgid "psql not found."
 msgstr "psql ei leitud."
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-01-20 14:31+0000\n"
+"POT-Creation-Date: 2019-08-18 21:05+0000\n"
 "Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
@@ -196,7 +196,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1009
+#: lib/LedgerSMB/Scripts/setup.pm:1022
 msgid "Access Denied"
 msgstr "Accesso negato"
 
@@ -1469,7 +1469,7 @@ msgstr "Annulla"
 msgid "Cancel the <b>whole migration</b>"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:264
+#: lib/LedgerSMB/Scripts/setup.pm:266
 msgid "Cancel?"
 msgstr "Annullo?"
 
@@ -1984,7 +1984,7 @@ msgstr "Crea"
 msgid "Create Batch"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:245
+#: lib/LedgerSMB/Scripts/setup.pm:247
 msgid "Create Database?"
 msgstr ""
 
@@ -2240,11 +2240,11 @@ msgstr ""
 msgid "Database component"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:244
+#: lib/LedgerSMB/Scripts/setup.pm:246
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:973
+#: lib/LedgerSMB/Scripts/setup.pm:986
 msgid "Database exists."
 msgstr ""
 
@@ -2853,7 +2853,7 @@ msgstr ""
 msgid "Document Type"
 msgstr "Tipo documento"
 
-#: lib/LedgerSMB/Scripts/setup.pm:473
+#: lib/LedgerSMB/Scripts/setup.pm:478
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -3323,7 +3323,7 @@ msgstr "Attività (temporanea)"
 msgid "Equity to Liabilities"
 msgstr "Attivita a Passività"
 
-#: lib/LedgerSMB/Scripts/setup.pm:432
+#: lib/LedgerSMB/Scripts/setup.pm:437
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3335,7 +3335,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:517
+#: lib/LedgerSMB/Scripts/setup.pm:522
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3705,7 +3705,7 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1110
+#: lib/LedgerSMB/Scripts/setup.pm:1123
 msgid "Full Permissions"
 msgstr ""
 
@@ -4103,7 +4103,7 @@ msgstr "Note interne"
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:428
+#: lib/LedgerSMB/Scripts/setup.pm:433
 msgid "Invalid backup request"
 msgstr "Richiesta non valida di backup"
 
@@ -4705,7 +4705,7 @@ msgstr ""
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:975
+#: lib/LedgerSMB/Scripts/setup.pm:988
 msgid "Login?"
 msgstr ""
 
@@ -4765,7 +4765,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1109
+#: lib/LedgerSMB/Scripts/setup.pm:1122
 msgid "Manage Users"
 msgstr "Gestione utenti"
 
@@ -5082,7 +5082,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1111
+#: lib/LedgerSMB/Scripts/setup.pm:1124
 msgid "No changes"
 msgstr "Invariato"
 
@@ -8787,7 +8787,7 @@ msgstr ""
 msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:262
+#: lib/LedgerSMB/Scripts/setup.pm:264
 msgid "Unknown database found."
 msgstr "Trovato database sconosciuto."
 
@@ -8918,7 +8918,7 @@ msgstr "Utente"
 msgid "User Name"
 msgstr "Nome utente"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1184
+#: lib/LedgerSMB/Scripts/setup.pm:1203
 msgid "User already exists. Import?"
 msgstr ""
 
@@ -9421,7 +9421,7 @@ msgstr ""
 msgid "production"
 msgstr "produzione"
 
-#: lib/LedgerSMB/Scripts/setup.pm:299
+#: lib/LedgerSMB/Scripts/setup.pm:301
 msgid "psql not found."
 msgstr "psql non trovato"
 

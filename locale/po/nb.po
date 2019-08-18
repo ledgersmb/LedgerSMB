@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-01-20 14:31+0000\n"
+"POT-Creation-Date: 2019-08-18 21:05+0000\n"
 "Last-Translator: Håvard Sørli <havard@sorli.no>, 2018\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -199,7 +199,7 @@ msgstr "Akkumulert Sum"
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1009
+#: lib/LedgerSMB/Scripts/setup.pm:1022
 msgid "Access Denied"
 msgstr "Nektet Adgang"
 
@@ -1478,7 +1478,7 @@ msgstr "Avbryt"
 msgid "Cancel the <b>whole migration</b>"
 msgstr "Avbryt <b>hele overføringen</b>"
 
-#: lib/LedgerSMB/Scripts/setup.pm:264
+#: lib/LedgerSMB/Scripts/setup.pm:266
 msgid "Cancel?"
 msgstr "Avbryt?"
 
@@ -1996,7 +1996,7 @@ msgstr "Opprett"
 msgid "Create Batch"
 msgstr "Opprett Gruppe"
 
-#: lib/LedgerSMB/Scripts/setup.pm:245
+#: lib/LedgerSMB/Scripts/setup.pm:247
 msgid "Create Database?"
 msgstr "Opprett Database"
 
@@ -2252,11 +2252,11 @@ msgstr "Database administrator rettigheter"
 msgid "Database component"
 msgstr "Database komponent"
 
-#: lib/LedgerSMB/Scripts/setup.pm:244
+#: lib/LedgerSMB/Scripts/setup.pm:246
 msgid "Database does not exist."
 msgstr "Databasen eksisterer ikke"
 
-#: lib/LedgerSMB/Scripts/setup.pm:973
+#: lib/LedgerSMB/Scripts/setup.pm:986
 msgid "Database exists."
 msgstr "Databasen eksister."
 
@@ -2865,7 +2865,7 @@ msgstr "Dokument"
 msgid "Document Type"
 msgstr "Dokumenttype"
 
-#: lib/LedgerSMB/Scripts/setup.pm:473
+#: lib/LedgerSMB/Scripts/setup.pm:478
 msgid "Don't know what to do with backup"
 msgstr "Vet ikke hva jeg skal gjøre med backup"
 
@@ -3337,7 +3337,7 @@ msgstr "Egenkapital (midlertidig)"
 msgid "Equity to Liabilities"
 msgstr "Egenkapital til Gjeld"
 
-#: lib/LedgerSMB/Scripts/setup.pm:432
+#: lib/LedgerSMB/Scripts/setup.pm:437
 msgid "Error creating backup file"
 msgstr "Feil ved kreering av backup fil"
 
@@ -3349,7 +3349,7 @@ msgstr "Feil ved kreering av Gruppe fil. Prøv igjen."
 msgid "Error from Function:"
 msgstr "Feil fra Funksjon "
 
-#: lib/LedgerSMB/Scripts/setup.pm:517
+#: lib/LedgerSMB/Scripts/setup.pm:522
 msgid "Error while opening directory: [_1]"
 msgstr "Feil ved åpning av Mappe: [_1]"
 
@@ -3719,7 +3719,7 @@ msgstr "Fra Dato"
 msgid "Full"
 msgstr "Full"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1110
+#: lib/LedgerSMB/Scripts/setup.pm:1123
 msgid "Full Permissions"
 msgstr "Fulle Rettigheter"
 
@@ -4121,7 +4121,7 @@ msgstr "Interne notater"
 msgid "Invalid Reporting Basis"
 msgstr "Invalid Rapport Grunnlag"
 
-#: lib/LedgerSMB/Scripts/setup.pm:428
+#: lib/LedgerSMB/Scripts/setup.pm:433
 msgid "Invalid backup request"
 msgstr "Invalid backup forespørsel"
 
@@ -4732,7 +4732,7 @@ msgstr "Logg inn. Vent litt"
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:975
+#: lib/LedgerSMB/Scripts/setup.pm:988
 msgid "Login?"
 msgstr "Login?"
 
@@ -4794,7 +4794,7 @@ msgstr ""
 "Forsikre deg om at alle navn kun består av alfanumeriske tegn (og "
 "understreker) og er minst ett tegn langt"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1109
+#: lib/LedgerSMB/Scripts/setup.pm:1122
 msgid "Manage Users"
 msgstr "Behandle Brukere"
 
@@ -5111,7 +5111,7 @@ msgstr "Ingen NULL Ansattnummer"
 msgid "No Old Password"
 msgstr "Ikke noe gammelt passord"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1111
+#: lib/LedgerSMB/Scripts/setup.pm:1124
 msgid "No changes"
 msgstr "Ingen forandringer"
 
@@ -8855,7 +8855,7 @@ msgstr ""
 msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr "Ukjent diagram type; skulle være H(Overskrift)/A(Konto)"
 
-#: lib/LedgerSMB/Scripts/setup.pm:262
+#: lib/LedgerSMB/Scripts/setup.pm:264
 msgid "Unknown database found."
 msgstr "Ukjent database funnet"
 
@@ -8986,7 +8986,7 @@ msgstr "Bruker"
 msgid "User Name"
 msgstr "Bruker Navn"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1184
+#: lib/LedgerSMB/Scripts/setup.pm:1203
 msgid "User already exists. Import?"
 msgstr "Bruker eksisterer allerede. Importer?"
 
@@ -9491,7 +9491,7 @@ msgstr "permalink"
 msgid "production"
 msgstr "produksjon"
 
-#: lib/LedgerSMB/Scripts/setup.pm:299
+#: lib/LedgerSMB/Scripts/setup.pm:301
 msgid "psql not found."
 msgstr "psql ikke funnet"
 
