@@ -180,6 +180,7 @@ sub _run_schemacheck_test {
         } $dir->dirname;
         ok(defined($out), 'JSON failure output was generated');
         ok(-f $out, 'JSON failure output exists');
+        $dbh->disconnect;
     };
 
     if ($test->{response}) {
@@ -189,6 +190,7 @@ sub _run_schemacheck_test {
             $out = json_formatter_context {
                 return ! run_checks($dbh, checks => [ $check ]);
             } $dir->dirname;
+            $dbh->disconnect;
             ok(! defined($out), 'No new failures occurred');
         };
     }
