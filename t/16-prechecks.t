@@ -133,7 +133,7 @@ sub _create_dbh_for_failure_session {
 
 sub _create_dbh_for_submit_session {
     my ($check, $test) = @_;
-    my $dbh = DBI->connect('dbi:Mock:', '', '', { PrintError => 0 });
+    my $dbh = DBI->connect('dbi:Mock:', '', '', { RaiseError => 1 });
     $test->{submit_session} //= [];
     my $session = DBD::Mock::Session->new(
         'sess',
@@ -143,6 +143,11 @@ sub _create_dbh_for_submit_session {
         },
         @{$test->{failure_session}},
         @{$test->{submit_session}},
+        # Check returns no further failing rows:
+        {
+            statement => $check->{query},
+            results => [],
+        },
         );
     $dbh->{mock_session} = $session;
 
