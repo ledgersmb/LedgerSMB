@@ -65,18 +65,6 @@ use LedgerSMB::Form;
 
 
 
-sub form_info_func {
-        return $_[0];
-}
-
-sub form_error_func {
-        print $_[0];
-}
-
-sub redirect {
-        print "redirected\n";
-}
-
 sub capture_stdout (&) { ## no critic (ProhibitSubroutinePrototypes)
     my $block = shift;
     local *STDOUT;
@@ -87,6 +75,8 @@ sub capture_stdout (&) { ## no critic (ProhibitSubroutinePrototypes)
     $block->();
     return $output;
 }
+
+
 
 my $form = Form->new;
 my %myconfig;
