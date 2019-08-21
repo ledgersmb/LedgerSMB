@@ -3,33 +3,27 @@
 use strict;
 use warnings;
 
-
-#use Test::More 'no_plan';
 use Test::More;
-use Test::Trap qw(trap $trap);
-use Math::BigFloat;
+use Test::Exception;
 
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
 use LedgerSMB::App_State;
 
+use Math::BigFloat;
 use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
 
 
-my $no_format_message = qr/LedgerSMB::PGNumber No Format Set/;
-my $nan_message       = qr/LedgerSMB::PGNumber Invalid Number/;
-my @r;
 my $form = Form->new;
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
 
-@r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
-is($trap->exit, undef,
-    'form: No numberformat set, invalid amount (NaN check)');
-cmp_ok($trap->die, , '=~', $no_format_message,
-    'lsmb: No numberformat set, invalid amount message (NaN check)');
+throws_ok {
+    $form->format_amount({'apples' => '1000.00'}, 'foo', 2)
+} qr/LedgerSMB::PGNumber No Format Set/,
+    'lsmb: No numberformat set, invalid amount message (NaN check)';
 my $expected;
 foreach my $value (
     '0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
@@ -264,9 +258,6 @@ foreach my $format (0 .. $#formats) {
         "form: Empty string returns 0");
     cmp_ok($form->parse_amount(\%myconfig), '==', 0,
         "form: undef string returns 0");
-    @r = trap{$form->parse_amount(\%myconfig, 'foo')};
-    is($trap->exit, undef,
-        'form: Invalid string gives NaN exit');
 }
 
 done_testing;
