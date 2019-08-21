@@ -219,26 +219,30 @@ sub _run_schemacheck_tests {
 sub _run_schemachecks_tests {
     my ($schemacheck_test) = @_;
     my $schemacheck_file = _schemacheck_file($schemacheck_test);
-    my @checks = load_checks($schemacheck_file);
-    my $tests = eval _slurp($schemacheck_test);
-    die "Unable to load schema checks from file $schemacheck_test: $@"
-        if defined $@ and not defined $tests;
+    subtest $schemacheck_file => sub {
+        my @checks = load_checks($schemacheck_file);
+        my $tests = eval _slurp($schemacheck_test);
+        die "Unable to load schema checks from file $schemacheck_test: $@"
+            if defined $@ and not defined $tests;
 
-    for my $test (keys %$tests) {
-        my $check = first { $_->{title} eq $test } @checks;
-        ok( defined($check),
-            "Found check for which tests ($test) have been"
-            . " defined in $schemacheck_file");
+        for my $test (keys %$tests) {
+            my $check = first { $_->{title} eq $test } @checks;
+            ok( defined($check),
+                "Found check for which tests ($test) have been"
+                . " defined in $schemacheck_file");
 
-        if ($check) {
-            _run_schemacheck_tests($check, $tests->{$test});
+            if ($check) {
+                _run_schemacheck_tests($check, $tests->{$test});
+            }
         }
     }
 }
 
 
 if (@schemacheck_tests) {
-    _run_schemachecks_tests($_) for @schemacheck_tests;
+    eval {
+        _run_schemachecks_tests($_) for @schemacheck_tests;
+    };
     done_testing;
 }
 else {
