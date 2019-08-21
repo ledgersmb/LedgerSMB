@@ -3,48 +3,27 @@
 use strict;
 use warnings;
 
-$ENV{REQUEST_METHOD} = 'GET';
-     # Suppress warnings from LedgerSMB::_process_cookies
+use Test::More;
+use Test::Exception;
 
-#use Test::More 'no_plan';
-use Test::More tests => 374;
-use Test::Trap qw(trap $trap);
-use Math::BigFloat;
-
-use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
-use DBI;
 use LedgerSMB::App_State;
-use Plack::Request;
 
+use Math::BigFloat;
 use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
 
-my $skipdbtests = 1;
 
-$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:')
-    if defined $ENV{PGPASSWORD} && $ENV{PGPASSWORD};
-
-$skipdbtests = 0 if $LedgerSMB::App_State::DBH;
-
-my $no_format_message = qr/LedgerSMB::PGNumber No Format Set/;
-my $nan_message       = qr/LedgerSMB::PGNumber Invalid Number/;
-my @r;
 my $form = Form->new;
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $request = Plack::Request->new({});
-my $lsmb = LedgerSMB->new($request);
-ok(defined $lsmb);
-isa_ok($lsmb, 'LedgerSMB');
 
-@r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
-is($trap->exit, undef,
-    'form: No numberformat set, invalid amount (NaN check)');
-cmp_ok($trap->die, , '=~', $no_format_message,
-    'lsmb: No numberformat set, invalid amount message (NaN check)');
+throws_ok {
+    $form->format_amount({'apples' => '1000.00'}, 'foo', 2)
+} qr/LedgerSMB::PGNumber No Format Set/,
+    'lsmb: No numberformat set, invalid amount message (NaN check)';
 my $expected;
 foreach my $value (
     '0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
@@ -237,7 +216,6 @@ foreach my $format (0 .. $#formats) {
 
     cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
          "form: Empty string returns 0");
-    @r = trap{$form->parse_amount(\%myconfig, 'foo')};
 }
 
 foreach my $format (0 .. $#formats) {
@@ -280,7 +258,6 @@ foreach my $format (0 .. $#formats) {
         "form: Empty string returns 0");
     cmp_ok($form->parse_amount(\%myconfig), '==', 0,
         "form: undef string returns 0");
-    @r = trap{$form->parse_amount(\%myconfig, 'foo')};
-    is($trap->exit, undef,
-        'form: Invalid string gives NaN exit');
 }
+
+done_testing;

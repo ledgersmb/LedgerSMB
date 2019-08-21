@@ -139,7 +139,6 @@ on 'develop' => sub {
     requires 'Test::Harness', '3.36';
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
-    requires 'Test::Trap';
     requires 'Weasel', '0.21';
     requires 'Weasel::Driver::Selenium2', '0.07';
     requires 'Weasel::Session', '0.11';
