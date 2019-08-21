@@ -258,10 +258,10 @@ https://ledgersmb.org/content/commercial-support
         my ($dbh, $rows) = @_;
         my $confirm = provided 'confirm';
 
-        if ($confirm = 'accept') {
+        if ($confirm eq 'accept') {
             # Cause the query above to return zero rows, indicating success
             # to the caller.
-            $dbh->do(q{INSERT INTO defaults (setting_key, value) VALUES ('accept_mc', 'yes');});
+            $dbh->do(q{INSERT INTO defaults (setting_key, value) VALUES ('accept_mc', 'yes')});
         }
     };
 

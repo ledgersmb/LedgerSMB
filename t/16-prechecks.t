@@ -133,7 +133,7 @@ sub _create_dbh_for_failure_session {
 
 sub _create_dbh_for_submit_session {
     my ($check, $test) = @_;
-    my $dbh = DBI->connect('dbi:Mock:', '', '', { PrintError => 0 });
+    my $dbh = DBI->connect('dbi:Mock:', '', '', { RaiseError => 1 });
     $test->{submit_session} //= [];
     my $session = DBD::Mock::Session->new(
         'sess',
@@ -143,6 +143,11 @@ sub _create_dbh_for_submit_session {
         },
         @{$test->{failure_session}},
         @{$test->{submit_session}},
+        # Check returns no further failing rows:
+        {
+            statement => $check->{query},
+            results => [],
+        },
         );
     $dbh->{mock_session} = $session;
 
@@ -180,6 +185,7 @@ sub _run_schemacheck_test {
         } $dir->dirname;
         ok(defined($out), 'JSON failure output was generated');
         ok(-f $out, 'JSON failure output exists');
+        $dbh->disconnect;
     };
 
     if ($test->{response}) {
@@ -189,6 +195,7 @@ sub _run_schemacheck_test {
             $out = json_formatter_context {
                 return ! run_checks($dbh, checks => [ $check ]);
             } $dir->dirname;
+            $dbh->disconnect;
             ok(! defined($out), 'No new failures occurred');
         };
     }
@@ -212,26 +219,30 @@ sub _run_schemacheck_tests {
 sub _run_schemachecks_tests {
     my ($schemacheck_test) = @_;
     my $schemacheck_file = _schemacheck_file($schemacheck_test);
-    my @checks = load_checks($schemacheck_file);
-    my $tests = eval _slurp($schemacheck_test);
-    die "Unable to load schema checks from file $schemacheck_test: $@"
-        if defined $@ and not defined $tests;
+    subtest $schemacheck_file => sub {
+        my @checks = load_checks($schemacheck_file);
+        my $tests = eval _slurp($schemacheck_test);
+        die "Unable to load schema checks from file $schemacheck_test: $@"
+            if defined $@ and not defined $tests;
 
-    for my $test (keys %$tests) {
-        my $check = first { $_->{title} eq $test } @checks;
-        ok( defined($check),
-            "Found check for which tests ($test) have been"
-            . " defined in $schemacheck_file");
+        for my $test (keys %$tests) {
+            my $check = first { $_->{title} eq $test } @checks;
+            ok( defined($check),
+                "Found check for which tests ($test) have been"
+                . " defined in $schemacheck_file");
 
-        if ($check) {
-            _run_schemacheck_tests($check, $tests->{$test});
+            if ($check) {
+                _run_schemacheck_tests($check, $tests->{$test});
+            }
         }
     }
 }
 
 
 if (@schemacheck_tests) {
-    _run_schemachecks_tests($_) for @schemacheck_tests;
+    eval {
+        _run_schemachecks_tests($_) for @schemacheck_tests;
+    };
     done_testing;
 }
 else {
