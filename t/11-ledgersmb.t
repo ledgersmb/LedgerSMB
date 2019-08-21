@@ -20,14 +20,6 @@ my $lsmb;
 my $request = Plack::Request->new({});
 
 
-sub redirect {
-        print "redirected\n";
-}
-
-sub lsmb_error_func {
-        print $_[0];
-}
-
 ##table of subroutine tests
 ##new
 ##call_procedure
