@@ -58,8 +58,12 @@ use warnings;
 
 use Test::More 'no_plan';
 use Math::BigFloat;
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB::Form;
+
+
 
 sub form_info_func {
         return $_[0];
