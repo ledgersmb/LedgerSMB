@@ -26,7 +26,7 @@ env:
     - LSMB_TEST_DB=1
     - LSMB_NEW_DB=lsmbinstalltest
     - LSMB_BASE_URL="http://127.0.0.1:5000"
-    - PSGI_BASE_URL="http://127.0.0.1:5001"
+    - PSGI_BASE_URL="http://127.0.0.1:5762"
     - HARNESS_RULESFILE="t/testrules.yml"
     - PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
     - PATH="$HOME/locallib/bin:$PATH"
@@ -149,7 +149,7 @@ before_script:
   - coverage-setup
   - sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
-  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -s Starlet --max-workers 2 -Ilib -Iold/lib --port 5001 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
+  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -s Starlet --max-workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
   - nginx -c /tmp/nginx.conf
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
@@ -189,7 +189,7 @@ after_script:
 after_success:
   - |
     if [ "$COVERAGE" == "1" ] ; then
-       curl http://localhost:5001/stop.pl ;
+       curl http://localhost:5762/stop.pl ;
        while [ -n "$(jobs -r | grep ledgersmb-server.psgi)" ] ; do sleep 1; echo -n "." ; done ;
        echo "" ;
     fi
