@@ -3,10 +3,11 @@
 use Module::CPANfile;
 use File::Find;
 
-use Test::Needs {
-    Test::Dependencies => '0.23',
-};
-Test::Dependencies->import(exclude => [ qw/ PageObject LedgerSMB / ], style => 'light');
+use Test2::Require::Module 'Test::Dependencies' => '0.23';
+
+
+use Test::Dependencies (exclude => [ qw/ PageObject LedgerSMB / ],
+                        style => 'light');
 
 my $file = Module::CPANfile->load;
 
