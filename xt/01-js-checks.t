@@ -1,10 +1,8 @@
 #!perl
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use File::Find;
-use Test::More;
 
 my @on_disk = ();
 
@@ -21,7 +19,7 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines);
     open $fh, '<', $filename
-        or BAIL_OUT("failed to open $filename $!");
+        or die "failed to open $filename $!";
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;
         push @trailing_space_lines, ($.) if / $/;
@@ -34,5 +32,5 @@ sub content_test {
         if @trailing_space_lines;
 }
 
-content_test($_) for @on_disk;
+lives { content_test($_) } for @on_disk;
 done_testing;

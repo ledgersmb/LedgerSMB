@@ -2,8 +2,12 @@
 
 use strict;
 use warnings;
-use Test::More;
+
 use File::Find;
+
+use Test2::V0;
+use Test2::Util qw/pkg_to_file/;
+use Test2::Tools::Spec;
 
 my @on_disk;
 sub collect {
@@ -31,8 +35,6 @@ my @exception_modules =
      # and Spreadsheet::WriteExcel
      'LedgerSMB::Template::XLSX',
 
-     # Exclude because tested conditionally on CGI::Emulate::PSGI way below
-     'LedgerSMB::PSGI',
      # Exclude because tested conditionally on X12::Parser way below
      'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
 
@@ -107,6 +109,7 @@ my @modules =
           'LedgerSMB::old_code', 'LedgerSMB::Part',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
+          'LedgerSMB::PSGI',
           'LedgerSMB::PSGI::Preloads', 'LedgerSMB::PSGI::Util',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
@@ -202,71 +205,53 @@ for (@on_disk) {
         if ! defined($modules{$_});
 }
 
-ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
-    or diag ('Missing in test: ', explain \@untested_modules);
+is(\@untested_modules, [], 'All on-disk modules are tested');
 
-use_ok('LedgerSMB::Sysconfig')
-    || BAIL_OUT(q{System Configuration couldn't be loaded!});
+use Test2::Require::Module 'LedgerSMB::Sysconfig';
+#use ok 'LedgerSMB::Sysconfig'
+#    or BAIL_OUT(q{System Configuration couldn't be loaded!});
+
 my @to_sort = map { rand() } 0 .. $#modules;
 @modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {
-    use_ok($module);
-}
-SKIP: {
-    eval{ require Template::Plugin::Latex} ||
-    skip 'Template::Plugin::Latex not installed', 1;
-    eval{ require Template::Latex} ||
-    skip 'Template::Latex not installed', 1;
+    my $f = pkg_to_file($module);
+    tests required_modules => { iso => 1, async => 1 }, sub {
+        ok eval { require $f; 1 }, $f;
 
-    use_ok('LedgerSMB::Template::LaTeX');
+    };
 }
 
-SKIP: {
-    eval { require XML::Twig };
-    skip 'XML::Twig not installed', 1 if $@;
+tests feature_latex_modules => { iso => 1, async => 1 }, sub {
+    use Test2::Require::Module 'Template::Plugin::Latex';
+    use Test2::Require::Module 'Template::Latex';
 
+    my $f = pkg_to_file('LedgerSMB::Template::LaTeX');
+    ok eval { require $f; 1 }, $@;
+};
 
-    eval { require OpenOffice::OODoc };
-    skip 'OpenOffice::OODoc not installed', 1 if $@;
+tests feature_ods_modules => { iso => 1, async => 1 }, sub {
+    use Test2::Require::Module 'XML::Twig';
+    use Test2::Require::Module 'OpenOffice::OODoc';
 
-    use_ok('LedgerSMB::Template::ODS');
-}
+    my $f = pkg_to_file('LedgerSMB::Template::ODS');
+    ok eval { require $f; 1 }, $@;
+};
 
- SKIP: {
-     eval { require XML::Twig; require OpenOffice::OODoc; };
+tests feature_edi_modules => { iso => 1, async => 1 }, sub {
+    use Test2::Require::Module 'X12::Parser';
 
-     skip 'XML::Twig or OpenOffice::OODoc not installed', 1 if $@;
-
-     use_ok('LedgerSMB::Template::ODS');
-}
-
-SKIP: {
-        eval { require CGI::Emulate::PSGI };
-
-        skip 'CGI::Emulate::PSGI not installed', 1 if $@;
-        use_ok('LedgerSMB::PSGI');
-}
-
-SKIP: {
-    eval { require X12::Parser };
-
-    skip 'X12::Parser not installed', 3 if $@;
     for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
-        use_ok($_);
+        my $f = pkg_to_file($_);
+        ok eval { require $f; 1 }, $@;
     }
-}
+};
 
-SKIP: {
-    eval { require Excel::Writer::XLSX };
-    skip 'Excel::Writer::XLSX not installed', 1 if $@;
+tests feature_xls_modules => { iso => 1, async => 1 }, sub {
+    use Test2::Require::Module 'Excel::Writer::XLSX';
+    use Test2::Require::Module 'Spreadsheet::WriteExcel';
 
-
-    eval { require Spreadsheet::WriteExcel };
-    skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
-
-    for ('LedgerSMB::Template::XLSX') {
-        use_ok($_);
-    }
-}
+    my $f = pkg_to_file('LedgerSMB::Template::XLSX');
+    ok eval { require $f; 1 }, $@;
+};
 
 done_testing;

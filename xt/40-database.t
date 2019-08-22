@@ -1,19 +1,14 @@
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::Exception;
-use Test::More;
-
 
 use LedgerSMB::Database;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 
-
-plan skip_all => 'LSMB_TEST_DB not set'
+skip_all( 'LSMB_TEST_DB not set' )
     if not $ENV{LSMB_TEST_DB};
 
 
@@ -59,9 +54,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data'
                                });
-throws_ok { $db->create_and_load }
+like( dies { $db->create_and_load; },
           qr/(APPLICATION ERROR|Specified file does not exist)/,
-    'Database creation fails on missing schema file';
+    'Database creation fails on missing schema file');
 
 #
 # missing schema file's directory
@@ -73,9 +68,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/missing-directory'
                                });
-throws_ok { $db->create_and_load }
+like( dies { $db->create_and_load; },
           qr/(APPLICATION ERROR|Specified file does not exist)/,
-     'Database creation fails on missing schema';
+     'Database creation fails on missing schema');
 
 
 
@@ -94,8 +89,8 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/no-defaults-table'
                                });
-throws_ok { $db->create_and_load } qr/Base schema failed to load/,
-    'Database creation fails on missing defaults table';
+like( dies { $db->create_and_load; }, qr/Base schema failed to load/,
+    'Database creation fails on missing defaults table');
 
 
 
@@ -112,9 +107,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/schema-failure'
                                });
-throws_ok { $db->create_and_load }
+like( dies { $db->create_and_load; },
           qr/(ERROR:\s*relation "defal" does not exist|error running command)/,
-    'Database creation fails on base schema load failure';
+    'Database creation fails on base schema load failure');
 
 
 
@@ -132,8 +127,8 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/module-failure-1'
                                });
-throws_ok { $db->create_and_load } qr/Module FaultyModule.sql failed to load/,
-    'Database creation fails when a module fails to load (empty module)';
+like( dies { $db->create_and_load; }, qr/Module FaultyModule.sql failed to load/,
+    'Database creation fails when a module fails to load (empty module)');
 
 
 
@@ -144,9 +139,9 @@ $db = LedgerSMB::Database->new({
     password   => $ENV{PGPASSWORD},
     source_dir => './xt/data/40-database/module-failure-2'
                                });
-throws_ok { $db->create_and_load }
+like( dies { $db->create_and_load; },
         qr/(ERROR:\s*function "fail_me" already exists|error running command)/,
-    'Database creation fails when a module fails to load (syntax error)';
+    'Database creation fails when a module fails to load (syntax error)');
 
 
 

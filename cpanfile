@@ -114,6 +114,7 @@ feature 'debug', "Debug pane" =>
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
     requires 'App::Prove', '3.36';
+    requires 'Capture::Tiny';
     requires 'DBD::Mock';
     requires 'File::Util';
     requires 'HTML::Lint';

@@ -5,13 +5,13 @@ use warnings;
 
 use lib 'xt/41-coaload';
 
-use Test::Most; # To check missing
+use Test2::V0;
 
 use Test::Class::Moose::Load qw(xt/41-coaload);
 use Test::Class::Moose::Runner;
 
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
-plan skip_all => (join ', ', @missing) . ' not set' if @missing;
+skip_all((join ', ', @missing) . ' not set') if @missing;
 
 use File::Find::Rule;
 

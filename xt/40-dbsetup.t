@@ -1,11 +1,11 @@
 # Database setup tests.
 
-use Test::More;
+use Test2::V0;
+
 use LedgerSMB::Database;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
-use strict;
 use DBI;
 use Plack::Request;
 
@@ -21,7 +21,6 @@ $ENV{LSMB_NEW_DB} or BAIL_OUT('LSMB_NEW_DB is not set');
 
 my $temp = $ENV{TEMP} || '/tmp/';
 
-plan tests => 22;
 $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 $LedgerSMB::Sysconfig::db_namespace = 'altschema';
 
@@ -180,3 +179,4 @@ SKIP: {
         'Ran GIFI Script');
 }
 
+done_testing;

@@ -1,13 +1,10 @@
 #!/usr/bin/perl
 
-use Test::More (tests => 7);
+use Test2::V0;
 use MIME::Base64;
-use strict;
-use warnings;
 
-BEGIN{
-use_ok('LedgerSMB::Auth');
-};
+use ok 'LedgerSMB::Auth';
+
 my $colonpasswd = 'Test:Test2';
 my $pluspasswd = 'Test+Test2';
 my $excpasswd = 'Test!Test2';
@@ -40,3 +37,5 @@ $got_creds = LedgerSMB::Auth::factory(
     )->get_credentials;
 is($got_creds->{login}, $username, 'username returned');
 is($got_creds->{password}, $excpasswd, 'username returned');
+
+done_testing;

@@ -9,11 +9,9 @@ isn't for localization.
 
 =cut
 
-use strict;
-use warnings;
-use utf8;
+use Test2::V0;
+use Test2::Tools::Spec;
 
-use Test::More;
 use File::Find;
 use Capture::Tiny ':all';
 
@@ -29,11 +27,9 @@ sub collect {
 }
 find(\&collect, '.');
 
-plan tests => scalar @on_disk;
-
 for my $file (@on_disk) {
 
-    subtest $file => sub {
+    tests $file => { async => 1 }, sub {
 
         my $errors = 0;
 
@@ -51,3 +47,6 @@ for my $file (@on_disk) {
         ok(!$errors,$file) if !$errors;
     }
 }
+
+
+done_testing;

@@ -6,19 +6,19 @@
 # These include parsing the current test files, and creating 997 docs in
 # response.
 #
-use Test::More;
+
+use Test2::V0;
+
 use LedgerSMB::Form;
 eval {
 require LedgerSMB::X12;
 require LedgerSMB::X12::EDI850;
 require LedgerSMB::X12::EDI894;
 };
-plan skip_all => 'X12::Parser not installed' if $@;
+skip_all 'X12::Parser not installed' if $@;
 
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
-
-plan tests => 5;
 
 
 my $e850t1 = LedgerSMB::X12::EDI850->new(message => 't/data/sample_po.edi');
@@ -33,3 +33,4 @@ my $e850t2 = LedgerSMB::X12::EDI850->new(message => 't/data/sample_po1.edi');
 
 #print Dumper($e850t2->order) . "\n";
 
+done_testing;

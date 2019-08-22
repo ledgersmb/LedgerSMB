@@ -1,12 +1,10 @@
 #!perl
 
-use strict;
-use warnings;
+
+use Test2::V0;
+use Test2::Require::Module 'HTML::Lint::Pluggable';
 
 use File::Find;
-use Test::More;
-eval "use  HTML::Lint::Pluggable";
-plan skip_all => "HTML::Lint::Pluggable not available" if $@;
 
 my @on_disk = ();
 
@@ -117,9 +115,9 @@ sub content_test {
 
         push @reportable_errors, $error->as_string;
     }
-    ok(scalar @reportable_errors == 0, "Source critique for '$filename'")
-       or diag(join("\n", @reportable_errors));
+    is(join("\n", @reportable_errors), '', "Source critique for '$filename'");
 }
 
 content_test($_) for @on_disk;
+
 done_testing;

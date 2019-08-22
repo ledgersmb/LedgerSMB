@@ -8,11 +8,9 @@ just the mime type functionality.
 =cut
 
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::More;
 use LedgerSMB::File;
 
 
@@ -23,10 +21,9 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 1, PrintError => 0 }
-) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
+) or die "Can't connect to template database: " . DBI->errstr;
 
 
-plan tests => (14);
 
 
 # Test detection of mime type from file extension
@@ -69,3 +66,4 @@ my $content = 'This is scalar reference content.';
 ok(ref $file->content(\$content), 'Scalar reference content accepted');
 is(${$file->content}, 'This is scalar reference content.', 'Scalar reference content returned ok');
 
+done_testing;

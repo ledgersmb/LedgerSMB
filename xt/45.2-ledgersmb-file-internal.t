@@ -8,11 +8,9 @@ LedgerSMB::File.
 =cut
 
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::More;
 use LedgerSMB::File::Internal;
 use LedgerSMB::Magic qw(FC_INTERNAL);
 use PGObject::Util::DBAdmin;
@@ -30,7 +28,7 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 1, PrintError => 0 }
-) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
+) or die "Can't connect to template database: " . DBI->errstr;
 
 # Make a working copy of the template database
 # We can't use a transation to make and rollback our changes as we
@@ -38,7 +36,7 @@ my $dbh = DBI->connect(
 # In a transaction, the timestamps will be identical.
 $dbh->do("DROP DATABASE IF EXISTS $test_db");
 $dbh->do("CREATE DATABASE $test_db WITH TEMPLATE $ENV{LSMB_NEW_DB}")
-    or BAIL_OUT "Failed to create new database $test_db for tests" . DBI->errstr;
+    or die "Failed to create new database $test_db for tests" . DBI->errstr;
 
 # Connect to the new working copy
 $dbh = DBI->connect(
@@ -46,14 +44,12 @@ $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 1, PrintError => 0 }
-) or BAIL_OUT "Can't connect to working database: " . DBI->errstr;
+) or die "Can't connect to working database: " . DBI->errstr;
 
 # Include plain text files in file output for invoice templates
 $dbh->do("UPDATE mime_type SET invoice_include = TRUE WHERE mime_type='text/plain'")
-    or BAIL_OUT "Can't set mime type for inclusion on invoices";
+    or die "Can't set mime type for inclusion on invoices";
 
-
-plan tests => (72);
 
 #
 #######################################
@@ -83,7 +79,7 @@ $dbh->do("
         'LSMB-FILE-TEST',
         1  -- Ascension Island
     )
-") or BAIL_OUT "Failed to insert test entity: " . DBI->errstr;
+") or die "Failed to insert test entity: " . DBI->errstr;
 
 $dbh->do("
     INSERT INTO users(
@@ -92,7 +88,7 @@ $dbh->do("
     )
     SELECT SESSION_USER, id FROM entity
     WHERE name = 'LSMB-FILE-TEST'
-") or BAIL_OUT "Failed to insert test user: " . DBI->errstr;
+") or die "Failed to insert test user: " . DBI->errstr;
 
 
 # Store a new 'internal' file
@@ -288,7 +284,9 @@ $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 1, PrintError => 0 }
-) or BAIL_OUT "Can't reconnect to template database: " . DBI->errstr;
+) or die "Can't reconnect to template database: " . DBI->errstr;
 
 $dbh->do("DROP DATABASE $test_db")
-    or BAIL_OUT "Can't drop test database: " . DBI->errstr;
+    or die "Can't drop test database: " . DBI->errstr;
+
+done_testing;

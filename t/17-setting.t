@@ -1,9 +1,7 @@
-use Test::More tests => 4;
+
+use Test2::V0;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
-use strict;
-
-use warnings;
 
 {
   no strict 'refs'; # avoiding addming more dependencies
@@ -30,3 +28,5 @@ use warnings;
 
   is(LedgerSMB::Setting->get('database'), '123', 'got mocked value back');
 }
+
+done_testing;
