@@ -115,7 +115,7 @@ commands:
             echo $PERL5OPT
             echo $PERL5LIB
             plackup -I$HOME/project/lib -I$HOME/project/old/lib \
-                    -s Starlet --max-workers 2 --port 5001 \
+                    -s Starlet --max-workers 2 --port 5762 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
@@ -162,7 +162,7 @@ executors:
       LSMB_TEST_DB: 1
       LSMB_NEW_DB: lsmbinstalltest
       LSMB_BASE_URL: http://127.0.0.1:5000
-      PSGI_BASE_URL: http://127.0.0.1:5001
+      PSGI_BASE_URL: http://127.0.0.1:5762
       HARNESS_RULESFILE: t/testrules.yml
 
 # Define jobs
