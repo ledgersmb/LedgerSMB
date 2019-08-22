@@ -30,7 +30,7 @@ commands:
           command: |
              if [ "x$COVERAGE" == "x1" ]
              then
-               export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover"
+               export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
                export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
              fi
              echo $PERL5OPT
@@ -112,7 +112,7 @@ commands:
               export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
             fi
             echo $PERL5LIB
-            PERL5OPT="$PERL5OPT -MDevel::Cover" plackup -I$HOME/project/lib -I$HOME/project/old/lib \
+            PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" plackup -I$HOME/project/lib -I$HOME/project/old/lib \
                     -s Starlet --max-workers 2 --port 5762 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
@@ -152,7 +152,7 @@ executors:
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
-      DEVEL_COVER_OPTIONS: -ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0
+#      DEVEL_COVER_OPTIONS: 
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres
