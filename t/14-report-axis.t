@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More (tests => 10);
-use strict;
-use warnings;
+use Test2::V0;
 
 use LedgerSMB::Report::Axis;
 
@@ -14,8 +12,8 @@ ok($axis->map_path(['b','c']) == 5, 'sub-item of existing element');
 ok($axis->map_path(['b','c','d','f']) == 9, 'sub path of existing path');
 ok($axis->map_path(['b','c','d','e']) == 11, 'second leaf in existing path');
 
-is_deeply($axis->sort(), [1, 4, 6, 8, 11, 9, 7, 5, 3], 'tree-order sorted row-IDs');
-is_deeply($axis->tree(),
+is($axis->sort(), [1, 4, 6, 8, 11, 9, 7, 5, 3], 'tree-order sorted row-IDs');
+is($axis->tree(),
           {
               'a' => {
                   'children' => {},
@@ -108,8 +106,10 @@ is_deeply($axis->tree(),
           'tree structure');
 
 $axis->id_props(3, { desc => 'Desc' });
-is_deeply($axis->id_props(3), { desc => 'Desc' },
+is($axis->id_props(3), { desc => 'Desc' },
           'properties returned correctly');
-is_deeply($axis->id_props(3), { desc => 'Desc' },
+is($axis->id_props(3), { desc => 'Desc' },
           "props getter didn't overwrite props");
 ok(! defined $axis->id_props(1), "unset props return undefined");
+
+done_testing;

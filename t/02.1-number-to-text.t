@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More 'no_plan';
+use Test2::V0;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Num2text;
 
@@ -22,3 +22,6 @@ my %english = (
 my $en = LedgerSMB::Num2text->new('en');
 $en->init;
 is($en->num2text($_, 1) , $english{$_}, "$_ -> $english{$_}, Plain") for keys %english;
+
+
+done_testing;

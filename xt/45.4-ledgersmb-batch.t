@@ -9,11 +9,9 @@ Currently tests only creation, retrieval and deletion.
 
 =cut
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::More;
 use LedgerSMB::Batch;
 
 
@@ -27,19 +25,17 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 0, PrintError => 0 }
-) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
+) or die "Can't connect to template database: " . DBI->errstr;
 
 
 # The test database should already have batch classes defined
 my $q = $dbh->prepare("SELECT id FROM batch_class WHERE class='ar'")
-  or BAIL_OUT 'Failed to prepare batch_class query: ' . DBI->errstr;
+  or die 'Failed to prepare batch_class query: ' . DBI->errstr;
 $q->execute
-  or BAIL_OUT 'Failed to execute batch_class query: ' . DBI->errstr;
+  or die 'Failed to execute batch_class query: ' . DBI->errstr;
 my ($batch_class_id) = $q->fetchrow_array
-  or BAIL_OUT 'Failed to retrieve batch class "ap": ' . DBI->errstr;
+  or die 'Failed to retrieve batch class "ap": ' . DBI->errstr;
 
-
-plan tests => (31);
 
 
 # Create a batch
@@ -51,7 +47,7 @@ $data = {
     description => 'Test Description',
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
-isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object with data');
+isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object with data');
 $id = $batch->create;
 ok($id, 'batch creation returns true');
 like($id, qr/^\d+$/, 'batch creation returns numeric id');
@@ -64,9 +60,9 @@ $data = {
     batch_id => $id,
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
-isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object');
+isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->get;
-isa_ok($result, 'LedgerSMB::Batch', 'object returned after retrieving batch');
+isa_ok($result, ['LedgerSMB::Batch'], 'object returned after retrieving batch');
 is($result->{id}, $id, 'retrieved batch id matches requested id');
 is($result->{id}, $batch->{batch_id}, 'retrieved id property');
 is($result->{description}, 'Test Description', 'retrieved description');
@@ -89,7 +85,7 @@ $data = {
     batch_id => $id,
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
-isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object');
+isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->delete;
 ok($result, 'deleting a batch returns true');
 
@@ -100,9 +96,9 @@ $data = {
     batch_id => $id,
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
-isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object');
+isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->get;
-isa_ok($result, 'LedgerSMB::Batch', 'object returned after retrieving non-existent batch');
+isa_ok($result, ['LedgerSMB::Batch'], 'object returned after retrieving non-existent batch');
 ok(exists $result->{id}, 'id property exists after retrieving non-existent batch');
 is($result->{id}, undef, 'retrieved batch id undef after retrieving non-existent batch');
 
@@ -120,7 +116,7 @@ $data = {
     description => 'Test Description',
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
-isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object with data');
+isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object with data');
 like($id = $batch->create, qr/^\d+$/, 'batch creation returns numeric id');
 
 $data = {
@@ -128,10 +124,13 @@ $data = {
     batch_id => $id,
 };
 $batch = LedgerSMB::Batch->new({ base => $data });
-isa_ok($batch, 'LedgerSMB::Batch', 'instantiated object');
+isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->post;
 like($result, qr/^\d{4}-\d{2}-\d{2}$/, 'batch posting returns a date');
 
 
 # Don't commit any of our changes
 $dbh->rollback;
+
+
+done_testing;

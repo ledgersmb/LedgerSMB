@@ -7,11 +7,9 @@ interaction with a test database.
 
 =cut
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::More;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
 
@@ -24,7 +22,7 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 0, PrintError => 0 }
-) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
+) or die "Can't connect to template database: " . DBI->errstr;
 
 # Needed until LedgerSMB::Setting->get() is refactored to use its
 # class dbh, rather than App_State
@@ -32,7 +30,7 @@ LedgerSMB::App_State::set_DBH($dbh);
 
 # Add some sample accounts
 $dbh->do("INSERT INTO account_heading (accno) VALUES ('0000')")
-   or BAIL_OUT 'Failed to insert test account: ' . DBI->errstr;
+   or die 'Failed to insert test account: ' . DBI->errstr;
 
 my $heading_id = $dbh->last_insert_id(
     undef,
@@ -44,30 +42,30 @@ my $heading_id = $dbh->last_insert_id(
 my $q = $dbh->prepare("
     INSERT INTO account (accno, description, category, heading)
     VALUES (?, ?, 'A', ?)
-") or BAIL_OUT 'Failed to prepare query to insert accounts: ' . DBI->errstr;
+") or die 'Failed to prepare query to insert accounts: ' . DBI->errstr;
 
 $q->execute('1001', 'ACCOUNT-1001', $heading_id)
-   or BAIL_OUT 'Failed to insert test account: ' . DBI->errstr;
+   or die 'Failed to insert test account: ' . DBI->errstr;
 $q->execute('1002', 'ACCOUNT-1002', $heading_id)
-   or BAIL_OUT 'Failed to insert test account: ' . DBI->errstr;
+   or die 'Failed to insert test account: ' . DBI->errstr;
 
 # Add sample account link
 $dbh->do("
     INSERT INTO account_link_description (description, summary, custom)
     VALUES ('TEST_DESCRIPTION', FALSE, FALSE)
-") or BAIL_OUT 'Failed to insert account_link_description: ' . DBI->errstr;
+") or die 'Failed to insert account_link_description: ' . DBI->errstr;
 
 $dbh->do("
     INSERT INTO account_link (account_id, description)
     SELECT MAX(id), 'TEST_DESCRIPTION' FROM account
-") or BAIL_OUT 'Failed to insert account_link: ' . DBI->errstr;
+") or die 'Failed to insert account_link: ' . DBI->errstr;
 
 
 plan tests => 16;
 
 # Initialise Object
 $setting = LedgerSMB::Setting->new();
-isa_ok($setting, 'LedgerSMB::Setting', 'instantiated object');
+isa_ok($setting, ['LedgerSMB::Setting'], 'instantiated object');
 ok($setting->set_dbh($dbh), 'set dbh');
 
 # Getting/Setting keys in the defaults table
@@ -87,7 +85,7 @@ $dbh->do(q{INSERT INTO currency (curr, description)
          INSERT INTO defaults VALUES ('curr', 'EUR'); });
 #ok($setting->set('curr', 'EUR:CAD:SEK:GBP'), 'set currencies');
 my @currencies = $setting->get_currencies;
-is_deeply(\@currencies, [qw( EUR CAD GBP SEK )], 'get currencies ok');
+is(\@currencies, [qw( EUR CAD GBP SEK )], 'get currencies ok');
 
 # Getting all accounts
 $accounts = $setting->all_accounts;
@@ -108,3 +106,6 @@ is($setting->get('TEST_SETTING_KEY'), 'A-123-1235-B', 'increment round-trip from
 
 # Don't commit any of our changes
 $dbh->rollback;
+
+
+done_testing;

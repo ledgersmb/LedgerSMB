@@ -3,8 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More;
-use Test::Exception;
+use Test2::V0;
 
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
@@ -20,10 +19,10 @@ my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
 
-throws_ok {
-    $form->format_amount({'apples' => '1000.00'}, 'foo', 2)
-} qr/LedgerSMB::PGNumber No Format Set/,
-    'lsmb: No numberformat set, invalid amount message (NaN check)';
+like(
+    dies { $form->format_amount({'apples' => '1000.00'}, 'foo', 2) },
+    qr/LedgerSMB::PGNumber No Format Set/,
+    'lsmb: No numberformat set, invalid amount message (NaN check)');
 my $expected;
 foreach my $value (
     '0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
@@ -46,12 +45,12 @@ foreach my $value (
     foreach my $places ('-1', '-2') {
         Math::BigFloat->round_mode('+inf');
         $expected = Math::BigFloat->new($value)->ffround(-($places-1));
-        is($form->round_amount($value, $places), $expected,
+        ok($form->round_amount($value, $places) == $expected,
            "form: $value to $places decimal places - $expected");
 
         Math::BigFloat->round_mode('-inf');
         $expected = Math::BigFloat->new(-$value)->ffround(-($places-1));
-        is($form->round_amount(-$value, $places), $expected,
+        ok($form->round_amount(-$value, $places) == $expected,
            "form: -$value to $places decimal places - $expected");
     }
 }

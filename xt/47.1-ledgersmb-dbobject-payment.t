@@ -7,11 +7,9 @@ interaction with a test database.
 
 =cut
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::More;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::Setting;
 
@@ -23,24 +21,23 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 0, PrintError => 0 }
-) or BAIL_OUT "Can't connect to template database: " . DBI->errstr;
+) or die "Can't connect to template database: " . DBI->errstr;
 
 my $setting = LedgerSMB::Setting->new()
-    or BAIL_OUT('Failed to initialise LedgerSMB::Setting object');
+    or die('Failed to initialise LedgerSMB::Setting object');
 $setting->set_dbh($dbh)
-    or BAIL_OUT('Failed to initialise LedgerSMB::Setting dbh');
+    or die('Failed to initialise LedgerSMB::Setting dbh');
 $setting->set('curr', 'EUR')
-    or BAIL_OUT('Failed to initialise default currency');
+    or die('Failed to initialise default currency');
 
 
-plan tests => (4);
 
 # Initialise Object
 $payment = LedgerSMB::DBObject::Payment->new({base => {
     dbh => $dbh,
     account_class => 1,
 }});
-isa_ok($payment, 'LedgerSMB::DBObject::Payment', 'instantiated object');
+isa_ok($payment, ['LedgerSMB::DBObject::Payment'], 'instantiated object');
 ok($payment->set_dbh($dbh), 'set dbh');
 
 is($payment->get_default_currency(), 'EUR', 'get_default_currency returns expected currency code');
@@ -49,3 +46,6 @@ is($payment->{default_currency}, 'EUR', 'object `default_currency` property set 
 
 # Don't commit any of our changes
 $dbh->rollback;
+
+
+done_testing;

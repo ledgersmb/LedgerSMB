@@ -1,9 +1,6 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-
-use Test::More tests => 12;
+use Test2::V0;
 
 use LedgerSMB;
 use LedgerSMB::Form;
@@ -20,13 +17,13 @@ my $request = Plack::Request->new({});
 
 my $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb, 'lsmb: defined');
-isa_ok($lsmb, 'LedgerSMB', 'lsmb: correct type');
+isa_ok($lsmb, ['LedgerSMB'], 'lsmb: correct type');
 ok(defined $lsmb->{version}, 'lsmb: version set');
 ok(defined $lsmb->{dbversion}, 'lsmb: dbversion set');
 
 my $form = Form->new;
 ok(defined $form, 'form: defined');
-isa_ok($form, 'Form', 'form: correct type');
+isa_ok($form, ['Form'], 'form: correct type');
 ok(defined $form->{version}, 'form: version set');
 ok(defined $form->{dbversion}, 'form: dbversion set');
 
@@ -36,8 +33,9 @@ is($lsmb->{dbversion}, $form->{dbversion}, 'LedgerSMB and Form dbversions match'
 my @dparts;
 my @lparts;
 my $age;
-SKIP: {
-    skip 'LedgerSMB is trunk', 1 if $lsmb->{version} =~ /trunk$/i;
+
+
+if ($lsmb->{version} !~ /trunk$/i) {
     $lsmb->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
     $lsmb->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
     @dparts = split /\./, $lsmb->{dbversion};
@@ -57,8 +55,8 @@ SKIP: {
     }
     ok($age == 0, 'lsmb: version >= dbversion');
 }
-SKIP: {
-    skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
+
+if ($form->{version} !~ /trunk$/i) {
     $form->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
     $form->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
     @dparts = split /\./, $form->{dbversion};
@@ -78,3 +76,5 @@ SKIP: {
     }
     ok($age == 0, 'form: version >= dbversion');
 }
+
+done_testing;

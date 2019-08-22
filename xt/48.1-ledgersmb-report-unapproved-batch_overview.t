@@ -7,11 +7,9 @@ that exercise interaction with a test database.
 
 =cut
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use DBI;
-use Test::More;
 use LedgerSMB::Batch;
 use LedgerSMB::Report::Unapproved::Batch_Overview
 
@@ -25,7 +23,7 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 0, PrintError => 0 }
-) or BAIL_OUT q{Can't connect to template database: } . DBI->errstr;
+) or die q{Can't connect to template database: } . DBI->errstr;
 
 
 # Create test batches in database for us to query
@@ -61,24 +59,22 @@ my @test_batches = (
 foreach my $batch_data(@test_batches) {
     my $batch = LedgerSMB::Batch->new({ base => $batch_data });
     $batch->set_dbh($dbh);
-    my $batch_id = $batch->create or BAIL_OUT 'Failed to create test batch';
+    my $batch_id = $batch->create or die 'Failed to create test batch';
 
     if($batch_data->{__POST}) {
         $batch = LedgerSMB::Batch->new({ base => {
             dbh => $dbh,
             batch_id => $batch_id,
         }});
-        $batch->post or BAIL_OUT 'Failed to post/approve test batch';
+        $batch->post or die 'Failed to post/approve test batch';
     }
 }
 
 
-plan tests => (36);
-
 
 # Initialise Object
 $report = LedgerSMB::Report::Unapproved::Batch_Overview->new();
-isa_ok($report, 'LedgerSMB::Report::Unapproved::Batch_Overview', 'instantiated object');
+isa_ok($report, ['LedgerSMB::Report::Unapproved::Batch_Overview'], 'instantiated object');
 ok($report->set_dbh($dbh), 'set dbh');
 
 # Query with no filter
@@ -135,3 +131,5 @@ is($report->approved(undef), undef, 'reset approved filter');
 
 # Don't commit any of our changes
 $dbh->rollback;
+
+done_testing;

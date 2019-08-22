@@ -17,7 +17,7 @@ LedgerSMB::Database::ChangeChecks
 
 
 
-use Test::More;
+use Test2::V0;
 
 use LedgerSMB;
 use LedgerSMB::Database;
@@ -31,11 +31,11 @@ use Carp::Always;
 
 my $dbh = DBI->connect("dbi:Pg:dbname=$ENV{LSMB_NEW_DB}", undef, undef,
                        { AutoCommit => 1, PrintError => 0 })
-    or BAIL_OUT "Can't connect to template database: " . DBI->errstr;;
+    or die "Can't connect to template database: " . DBI->errstr;;
 
 $dbh->do(q{set client_min_messages = 'warning'});
 $dbh->do(qq{DROP DATABASE IF EXISTS $ENV{LSMB_NEW_DB}_43_upgrades})
-    or BAIL_OUT "Can't drop old test database: " . DBI->errstr;
+    or die "Can't drop old test database: " . DBI->errstr;
 $dbh->disconnect;
 
 LedgerSMB::Database->new(dbname => "$ENV{LSMB_NEW_DB}_43_upgrades")
@@ -44,7 +44,7 @@ LedgerSMB::Database->new(dbname => "$ENV{LSMB_NEW_DB}_43_upgrades")
 
 $dbh = DBI->connect(qq{dbi:Pg:dbname=$ENV{LSMB_NEW_DB}_43_upgrades},
               undef, undef, { AutoCommit => 0, PrintError => 0 })
-    or BAIL_OUT "Can't connect to test database";
+    or die "Can't connect to test database";
 
 ####### End: Create test run conditions
 
@@ -250,11 +250,11 @@ $dbh->disconnect;
 
 $dbh = DBI->connect("dbi:Pg:dbname=$ENV{LSMB_NEW_DB}", undef, undef,
                        { AutoCommit => 1, PrintError => 0 })
-    or BAIL_OUT "Can't connect to template database: " . DBI->errstr;;
+    or die "Can't connect to template database: " . DBI->errstr;;
 
 $dbh->do(q{set client_min_messages = 'warning'});
 $dbh->do(qq{DROP DATABASE IF EXISTS $ENV{LSMB_NEW_DB}_43_upgrades})
-    or BAIL_OUT "Can't drop old test database: " . DBI->errstr;
+    or die "Can't drop old test database: " . DBI->errstr;
 $dbh->disconnect;
 
 

@@ -57,11 +57,7 @@ message when the response is missing to help creation of one.
 
 =cut
 
-use strict;
-use warnings;
-
-use Test::More;
-use Test::Exception;
+use Test2::V0;
 
 use DBI;
 use DBD::Mock::Session;
@@ -174,7 +170,7 @@ sub _run_schemacheck_test {
     my ($check, $test) = @_;
     my $dir = File::Temp->newdir;
     my $out;
-    lives_ok {
+    ok lives {
         # Most checks here aren't immediately visible:
         # the database session checks that the correct queries
         # and expected responses are being generated. When not,
@@ -189,7 +185,7 @@ sub _run_schemacheck_test {
     };
 
     if ($test->{response}) {
-        lives_ok {
+        ok lives {
             my $dbh = _create_dbh_for_submit_session($check, $test);
             _save_JSON_response_file($check, $test->{response}, $dir);
             $out = json_formatter_context {

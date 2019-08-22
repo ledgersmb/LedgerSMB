@@ -5,23 +5,19 @@
 # Checks POD coverage.
 #
 
-use strict;
-use warnings;
-
-use Test::More; # plan automatically generated below
-use File::Find;
-use File::Util;
+use Test2::V0;
+use Test2::Tools::Spec;
 
 # Only test with perl versions >= 5.20. Earlier versions of perl
 # handle constants in a way which causes Test::Pod::Coverage to
 # consider them naked subroutines.
-eval{require 5.20.0} or plan skip_all => 'perl version < 5.20.0';
+use Test2::Require::Perl 'v5.20';
+use Test2::Require::Module 'Test::Pod::Coverage';
 
+use Test::Pod::Coverage;
 
-eval "use Test::Pod::Coverage";
-if ($@){
-    plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
-}
+use File::Find;
+use File::Util;
 
 
 my @on_disk;
@@ -56,8 +52,6 @@ find(\&collect, 'lib');
     grep { ! m#^lib/LedgerSMB/Sysconfig.pm# } # LedgerSMB::Sysconfig false fail
     @on_disk;
 
-plan tests => scalar(@on_disk);
-
 # Copied from 01-load.t
 my @exception_modules =
     (
@@ -70,9 +64,6 @@ my @exception_modules =
      # Exclude because tested conditionally on Excel::Writer::XLSX
      # and Spreadsheet::WriteExcel
      'LedgerSMB::Template::XLSX',
-
-     # Exclude because tested conditionally on CGI::Emulate::PSGI way below
-     'LedgerSMB::PSGI',
 
      # Exclude because tested conditionally on X12::Parser way below
      'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
@@ -98,54 +89,38 @@ for my $f (@on_disk) {
 }
 
 
-SKIP: {
-    eval{ require Template::Plugin::Latex} ||
-    skip 'Template::Plugin::Latex not installed', 1;
-    eval{ require Template::Latex} ||
-    skip 'Template::Latex not installed', 1;
+tests feature_latex_modules => sub {
+    use Test2::Require::Module 'Template::Plugin::Latex';
+    use Test2::Require::Module 'Template::Latex';
 
     my $f = 'LedgerSMB::Template::LaTeX';
     pod_coverage_ok($f, { also_private => $also_private{$f} });
-}
+};
 
-SKIP: {
-    eval { require Excel::Writer::XLSX };
-    skip 'Excel::Writer::XLSX not installed', 1 if $@;
-
-    eval { require Spreadsheet::WriteExcel };
-    skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
+tests feature_xls_modules => sub {
+    use Test2::Require::Module 'Excel::Writer::XLSX';
+    use Test2::Require::Module 'Spreadsheet::WriteExcel';
 
     my $f = 'LedgerSMB::Template::XLSX';
     pod_coverage_ok($f, { also_private => $also_private{$f} });
-}
+};
 
-SKIP: {
-    eval { require XML::Twig };
-    skip 'XML::Twig not installed', 1 if $@;
-
-    eval { require OpenOffice::OODoc };
-    skip 'OpenOffice::OODoc not installed', 1 if $@;
+tests feature_ods_modules => sub {
+    use Test2::Require::Module 'XML::Twig';
+    use Test2::Require::Module 'OpenOffice::OODoc';
 
     my $f = 'LedgerSMB::Template::ODS';
     pod_coverage_ok($f, { also_private => $also_private{$f} });
-}
+};
 
-SKIP: {
-    eval { require CGI::Emulate::PSGI };
+tests feature_edi_modules => sub {
+    use Test2::Require::Module 'X12::Parser';
 
-    skip 'CGI::Emulate::PSGI not installed', 1 if $@;
-    my $f = 'LedgerSMB::PSGI';
-    pod_coverage_ok($f, { also_private => $also_private{$f} });
-}
-
-SKIP: {
-    eval { require X12::Parser };
-
-    skip 'X12::Parser not installed', 3 if $@;
     for my $f ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850',
                'LedgerSMB::X12::EDI894') {
         pod_coverage_ok($f, { also_private => $also_private{$f} });
     }
-}
+};
 
 
+done_testing;

@@ -2,8 +2,7 @@
 
 # Database schema upgrade pre-checks
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use Data::Dumper;
 use DBI;
@@ -15,9 +14,6 @@ use Plack::Request;
 
 use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
-
-use Test::More 'no_plan';
-use Test::Exception;
 
 use LedgerSMB;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
@@ -95,7 +91,7 @@ check 'first title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok(lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -148,7 +144,7 @@ check 'second title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -203,7 +199,7 @@ check 'third title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -315,7 +311,7 @@ check 'fifth title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -356,3 +352,4 @@ is _slurp($out), q!{
 
 
 
+done_testing;

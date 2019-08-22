@@ -6,18 +6,18 @@ LedgerSMB::Template::DBProvider
 
 =cut
 
+use Test2::V0;
+
 use Template;
 use LedgerSMB::Database;
 use LedgerSMB::Template::DBProvider;
-use Test::More;
 
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB LSMB_TEST_DB));
-plan skip_all => (join ', ', @missing) . ' not set' if @missing;
+skip_all((join ', ', @missing) . ' not set') if @missing;
 
-plan tests => 14;
 
 =head1 TEST PLAN
 
@@ -163,3 +163,6 @@ is($output, 'Hello yo, ....', 'Template include loaded and processed');
 
 $dbh->rollback;
 $dbh->disconnect;
+
+
+done_testing;

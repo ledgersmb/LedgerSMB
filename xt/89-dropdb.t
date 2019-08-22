@@ -1,28 +1,23 @@
-use Test::More;
-use strict;
+
+use Test2::V0;
+
 use DBI;
 
 my $temp = $ENV{TEMP} || '/tmp/';
-my $run_tests = 6;
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
   if (!defined $ENV{$evar}){
-      $run_tests = 0;
-      plan skip_all => "$evar not set";
+      skip_all "$evar not set";
   }
 }
 if ($ENV{LSMB_INSTALL_DB}){
-   $run_tests = 0;
-   plan skip_all => 'LSMB_INSTALL_DB SET';
+   skip_all 'LSMB_INSTALL_DB SET';
 }
 
-if ($run_tests){
-    plan tests => $run_tests;
-    $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-}
+$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 
 my $lock_file = "$temp/LSMB_TEST_DB";
 ok(open (my $DBLOCK, '<', $lock_file), 'Opened db lock file')
-  || BAIL_OUT("could not open lock file $lock_file: \$!=$!, \$@=$@");
+  || die("could not open lock file $lock_file: \$!=$!, \$@=$@");
 my $db = <$DBLOCK>;
 chomp($db);
 cmp_ok($db, 'eq', $ENV{LSMB_NEW_DB}, 'Got expected db name out') &&
@@ -53,3 +48,5 @@ while (my $ref = $sth_getroles->fetchrow_hashref('NAME_lc')){
 $dbh->commit;
 
 is($rc, 0, 'Roles dropped');
+
+done_testing;

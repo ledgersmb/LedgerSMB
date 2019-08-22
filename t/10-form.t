@@ -56,7 +56,7 @@
 use strict;
 use warnings;
 
-use Test::More 'no_plan';
+use Test2::V0;
 use Math::BigFloat;
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
@@ -201,16 +201,16 @@ $ENV{LSMB_NOHEAD} = 0;
 $form = Form->new;
 @ary = ('projectnumber', 'description', 'name', 'startdate');
 $form->{sort} = 'name';
-is_deeply([$form->sort_columns(@ary)],
+is([$form->sort_columns(@ary)],
         ['name', 'projectnumber', 'description', 'startdate'],
         'sort_column: sort name');
 $form->{sort} = 'apple';
-is_deeply([$form->sort_columns(@ary)], ['apple', @ary],
+is([$form->sort_columns(@ary)], ['apple', @ary],
         'sort_column: sort non-existent');
 is($form->sort_columns, 0,
         'sort_column: sort, no columns');
 delete $form->{sort};
-is_deeply([$form->sort_columns(@ary)], \@ary,
+is([$form->sort_columns(@ary)], \@ary,
         'sort_column: sort unset');
 
 ## $form->sort_order checks
@@ -280,3 +280,6 @@ is(capture_stdout { eval { $form->redirect;}; },
 $form->{callback} = 1;
 is(capture_stdout { eval { $form->redirect;}; }, "", 'redirect: callback, no message redirect');
 is(capture_stdout { eval { $form->redirect("hello world\n")}; }, "", 'redirect: callback and message redirect');
+
+
+done_testing;

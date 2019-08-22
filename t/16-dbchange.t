@@ -6,8 +6,9 @@ LedgerSMB::Database::Change
 
 =cut
 
+use Test2::V0;
+
 use LedgerSMB::Database::Change;
-use Test::More;
 
 use DBI;
 use File::Find;
@@ -149,12 +150,12 @@ ok($test4->is_applied($dbh), 'an older version of test4 is applied');
 
 =cut
 
-is_deeply([ LedgerSMB::Database::Change::_combine_statement_blocks(
+is([ LedgerSMB::Database::Change::_combine_statement_blocks(
             'begin;', 'a;', 'b;', 'commit;') ],
           [ 'a;b;' ],
           'Combine into single transaction');
 
-is_deeply([ LedgerSMB::Database::Change::_combine_statement_blocks(
+is([ LedgerSMB::Database::Change::_combine_statement_blocks(
               'a;','begin;','b;', 'c;' ,'commit;','d;') ],
           [ 'a;', 'b;c;', 'd;' ],
           'Combine into multiple transactions');
@@ -170,7 +171,7 @@ comparing a cleaned-up result.
 $test1->{_content} = "aa;\n b; c; \nbegin; d; e; commit;";
 $test1->{properties}->{no_transactions} = 1;
 
-is_deeply([ $test1->_split_statements() ],
+is([ $test1->_split_statements() ],
           ['aa;', 'b;', 'c;', 'begin;', 'd;', 'e;', 'commit;'],
           'Split statements');
 
@@ -183,7 +184,7 @@ sub collect {
 find(\&collect, 'sql/changes/');
 
 for my $change (@changes) {
-    open $fh, "<:encoding(UTF-8)", $change
+    open my $fh, "<:encoding(UTF-8)", $change
         or BAIL_OUT("Can't open: $change ($!, $@)");
     my $content;
     {

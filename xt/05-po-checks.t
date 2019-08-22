@@ -1,13 +1,9 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-
-use Test::More;
-
+use Test2::V0;
 
 if (`which msgfmt` eq "") {
-    plan skip_all => "'msgfmt' not installed";
+    skip_all "'msgfmt' not installed";
     exit 0;
 }
 

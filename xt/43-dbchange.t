@@ -4,9 +4,9 @@ LedgerSMB::Database::Change
 
 =cut
 
+use Test2::V0;
+
 use LedgerSMB::Database::Change;
-use Test::Exception;
-use Test::More;
 use DBI;
 
 #

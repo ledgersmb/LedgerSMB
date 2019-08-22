@@ -1,7 +1,12 @@
 # Database schema upgrade pre-checks
 
-use strict;
-use warnings;
+
+use Test2::V0 qw(!check); # ChangeChecks imports 'check'
+
+
+use LedgerSMB::Database::ChangeChecks qw( :DEFAULT run_with_formatters
+       run_checks load_checks );
+
 
 use Data::Dumper;
 use DBI;
@@ -9,12 +14,7 @@ use File::Temp qw( :seekable );
 use IO::Scalar;
 use MIME::Base64;
 
-use Test::More 'no_plan';
-use Test::Exception;
 
-
-use LedgerSMB::Database::ChangeChecks qw( :DEFAULT run_with_formatters
-       run_checks load_checks );
 
 
 #
@@ -54,19 +54,19 @@ HEREDOC
 
 
 my $fh = IO::Scalar->new(\$tests);
-lives_and(sub { is scalar &load_checks($fh), 0 },
+ok( lives { is scalar &load_checks($fh), 0; } ,
           'Loading empty checks from file-handle');
 
 
 my $th = File::Temp->new();
 print $th $tests;
 $th->flush;
-lives_and(sub { is scalar &load_checks($th->filename), 0 },
+ok( lives { is scalar &load_checks($th->filename), 0; },
           'Loading empty checks from file');
 close $th or die "Failed to close empty test file: $!";
 
 
-throws_ok(sub { &load_checks('/tmp/non-existant') },
+like( dies { &load_checks('/tmp/non-existant'); },
           qr/Schema-upgrade pre-check failed/,
           'Loading from non-existant file fails');
 
@@ -87,7 +87,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { is scalar &load_checks($fh), 1 },
+ok( lives { is scalar &load_checks($fh), 1; },
           'Loading a single check from file-handle');
 
 
@@ -115,7 +115,7 @@ check 'title2',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { is scalar &load_checks($fh), 2 },
+ok( lives { is scalar &load_checks($fh), 2; },
           'Loading two checks from file-handle');
 
 
@@ -143,7 +143,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-throws_ok(sub { &load_checks($fh) },
+like( dies { &load_checks($fh); },
           qr/^Multiple checks with the same name not supported/,
           'Loading two equally named checks from file-handle');
 
@@ -171,7 +171,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-throws_ok(sub { &load_checks($fh) }, qr/doesn't define a description/,
+like( dies { &load_checks($fh); }, qr/doesn't define a description/,
     '"check" keyword bails without a description');
 
 
@@ -189,7 +189,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-throws_ok(sub { &load_checks($fh) }, qr/doesn't define a query/,
+like( dies { &load_checks($fh); }, qr/doesn't define a query/,
     '"check" keyword bails without a query');
 
 
@@ -208,7 +208,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-throws_ok(sub { &load_checks($fh) }, qr/doesn't define 'on_submit'/,
+like( dies { &load_checks($fh); }, qr/doesn't define 'on_submit'/,
     '"check" keyword bails without an "on_submit"');
 
 
@@ -227,7 +227,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-throws_ok(sub { &load_checks($fh) }, qr/doesn't define 'on_failure'/,
+like( dies { &load_checks($fh); }, qr/doesn't define 'on_failure'/,
     '"check" keyword bails without an "on_failure"');
 
 
@@ -251,7 +251,7 @@ $dbh->{mock_add_resultset} = {
         ],
 };
 
-lives_and( sub {
+ok( lives {
     is &run_checks( $dbh,
                     checks => [
                         {
@@ -259,7 +259,7 @@ lives_and( sub {
                             on_failure => sub { die 'on_failure called?!' },
                         },
                     ]
-        ), 1
+        ), 1;
     }, 'single completed check');
 
 
@@ -280,7 +280,7 @@ $dbh->{mock_add_resultset} = {
         ],
 };
 
-lives_and( sub {
+ok( lives {
     is &run_checks( $dbh,
                     checks => [
                         {
@@ -294,7 +294,7 @@ lives_and( sub {
                                 sub { die 'on_failure (2) called?!' },
                         },
                     ]
-        ), 1
+        ), 1;
            }, 'multiple completed checks');
 
 
@@ -313,7 +313,7 @@ $dbh->{mock_add_resultset} = {
 my $result = undef;
 
 run_with_formatters {
-    lives_and {
+    ok(lives {
         is &run_checks( $dbh,
                         checks => [
                             {
@@ -321,8 +321,8 @@ run_with_formatters {
                                 on_failure => sub { $result = 'called'; },
                             },
                         ]
-            ), 0
-    } 'single failed check: indicates failure';
+            ), 0;
+    }, 'single failed check: indicates failure');
 } {
     confirm => sub {},
     describe => sub {},
@@ -347,7 +347,7 @@ $dbh->{mock_add_resultset} = {
 
 $result = [];
 run_with_formatters {
-    lives_and {
+    ok( lives {
         is &run_checks( $dbh,
                         checks => [
                             {
@@ -361,8 +361,8 @@ run_with_formatters {
                                     sub { die 'on_failure (2) called?!' },
                             },
                         ]
-            ), 0
-    } 'multiple checks, first failing';
+            ), 0;
+    }, 'multiple checks, first failing');
 } {
     confirm => sub {},
     describe => sub {},
@@ -371,7 +371,7 @@ run_with_formatters {
 };
 
 # second "on_failure" not called: processing aborted after first one
-is_deeply $result, [ 'called 1' ],
+is $result, [ 'called 1' ],
     'multiple checks, first failing; "on_failure" called';
 
 
@@ -395,7 +395,7 @@ $dbh->{mock_add_resultset} = {
 
 $result = [];
 run_with_formatters {
-    lives_and {
+    ok( lives {
         is &run_checks( $dbh,
                         checks => [
                             {
@@ -409,8 +409,8 @@ run_with_formatters {
                                     sub { push @$result, 'called 2' },
                             },
                         ]
-            ), 0
-    } 'multiple checks, first failing';
+            ), 0;
+    }, 'multiple checks, first failing');
 } {
     confirm => sub {},
     describe => sub {},
@@ -419,7 +419,7 @@ run_with_formatters {
 };
 
 # first "on_failure" not called: query succeeded.
-is_deeply $result, [ 'called 2' ],
+is $result, [ 'called 2' ],
     'multiple checks, first failing; "on_failure" called';
 
 
@@ -439,22 +439,22 @@ is_deeply $result, [ 'called 2' ],
     };
 
 
-    throws_ok { confirm(); } qr/can't be called outside/,
-         '"confirm" throws error outside formatter-context';
-    throws_ok { describe(); } qr/can't be called outside/,
-         '"describe" throws error outside formatter-context';
-    throws_ok { grid [], name => 'a'; } qr/can't be called outside/,
-         '"grid" throws error outside formatter-context';
-    throws_ok { LedgerSMB::Database::ChangeChecks::provided(); }
+    like( dies { confirm(); }, qr/can't be called outside/,
+         '"confirm" throws error outside formatter-context');
+    like( dies { describe(); }, qr/can't be called outside/,
+         '"describe" throws error outside formatter-context');
+    like( dies { grid [], name => 'a'; }, qr/can't be called outside/,
+         '"grid" throws error outside formatter-context');
+    like( dies { LedgerSMB::Database::ChangeChecks::provided(); },
          qr/can't be called outside/,
-        '"provided" throws error outside formatter-context';
+        '"provided" throws error outside formatter-context');
 
     run_with_formatters {
-        lives_ok { confirm(); } '"confirm" runs inside formatter-context';
-        lives_ok { describe(); } '"describe" runs inside formatter-context';
-        lives_ok { grid [], name => 'a'; }
+        ok lives { confirm(); }, '"confirm" runs inside formatter-context';
+        ok lives { describe(); }, '"describe" runs inside formatter-context';
+        ok lives { grid [], name => 'a'; },
                  '"grid" runs inside formatter-context';
-        lives_ok { LedgerSMB::Database::ChangeChecks::provided(); }
+        ok lives { LedgerSMB::Database::ChangeChecks::provided(); },
         '"provided" runs inside formatter-context';
     } {
         confirm => sub {},
@@ -473,10 +473,10 @@ is_deeply $result, [ 'called 2' ],
 {
     local $LedgerSMB::Database::ChangeChecks::check = 'the-check';
     run_with_formatters {
-        lives_and { is LedgerSMB::Database::ChangeChecks::provided(), 1,
-                    '"provided" without arguments'; }
-        lives_and { is LedgerSMB::Database::ChangeChecks::provided('name'),
-                    'name', '"provided" with argument'; }
+        ok lives { is LedgerSMB::Database::ChangeChecks::provided(), 1,
+                    '"provided" without arguments'; };
+        ok lives { is LedgerSMB::Database::ChangeChecks::provided('name'),
+                    'name', '"provided" with argument'; };
     } {
         confirm => sub {},
         describe => sub {},
@@ -504,7 +504,7 @@ $dbh->{mock_add_resultset} = [
 
 $result = 'failed';
 run_with_formatters {
-    lives_and {
+    ok lives {
         is &run_checks( $dbh,
                         checks => [
                             {
@@ -513,8 +513,8 @@ run_with_formatters {
                                 on_submit => sub { $result = 'success' },
                             },
                         ]
-            ), 1
-    } 'No call to "on_failure" when data "provided"';
+            ), 1;
+    }, 'No call to "on_failure" when data "provided"';
 } {
     confirm => sub {},
     describe => sub {},
@@ -587,7 +587,7 @@ $stmt =~ s/\s+/ /g;
 
 is $stmt, q{UPDATE "abc" SET "d" = ? WHERE "a" = ?},
     'Found the correct update statement';
-is_deeply $sql_history->bound_params, [ 'b', 'w' ],
+is $sql_history->bound_params, [ 'b', 'w' ],
     'Found the correct bound parameters';
 
 done_testing;

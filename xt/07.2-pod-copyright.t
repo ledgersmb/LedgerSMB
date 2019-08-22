@@ -5,32 +5,32 @@
 # Checks that every pod file has a LICENSE AND COPYRIGHT section
 # matching a template in `xt/data/07.2-license-and-copyright.template`.
 
-use strict;
-use warnings;
+use Test2::V0;
+use Test2::Require::Module 'Test::Pod' => '1.00';
+use Test::Pod;
 
 use Perl::Critic::Utils::POD qw(
     get_raw_pod_section_from_file
     trim_raw_pod_section
 );
 use File::Slurp;
-use Test::More;
-use Test::Pod;
+
 
 # perhaps we want to add 'old', 't', 'xt'?
 my @files = all_pod_files('lib');
-plan tests => scalar(@files) * 2;
 
 my $template_file = 'xt/data/07.2-license-and-copyright.template';
 my $template_text = read_file($template_file)
-    or BAIL_OUT "Couldn't read template text from $template_file";
+    or die "Couldn't read template text from $template_file";
 chomp $template_text;
 
 foreach my $file(@files) {
 
-    SKIP: {
+    {
+        my $todo;
         # Non-standard copyright section in this file
         if($file eq 'lib/LedgerSMB/Scripts/payment.pm') {
-            skip "SKIPPING $file - non standard COPYRIGHT section", 2
+            $todo = todo "SKIPPING $file - non standard COPYRIGHT section";
         }
 
         my $file_text = get_raw_pod_section_from_file(
@@ -50,3 +50,5 @@ foreach my $file(@files) {
         );
     }
 }
+
+done_testing;

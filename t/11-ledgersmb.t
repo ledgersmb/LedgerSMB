@@ -3,8 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More 'no_plan';
-use Test::Exception;
+use Test2::V0;
 use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
@@ -31,7 +30,7 @@ my $utfstr;
 my @r;
 
 ok(defined $lsmb);
-isa_ok($lsmb, 'LedgerSMB');
+isa_ok($lsmb, ['LedgerSMB']);
 
 # $lsmb->escape checks
 $lsmb = LedgerSMB->new($request);
@@ -41,7 +40,7 @@ utf8::decode($utfstr);
 # $lsmb->new checks
 $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb, 'new: blank, defined');
-isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
+isa_ok($lsmb, ['LedgerSMB'], 'new: blank, correct type');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 
@@ -101,3 +100,5 @@ $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
+
+done_testing;

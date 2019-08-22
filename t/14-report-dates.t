@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More;
-use strict;
-use warnings;
+use Test2::V0;
 
 use Data::Dumper;
 
@@ -282,4 +280,4 @@ use LedgerSMB::Report::Balance_Sheet;
        'b/s, 1 cmp by dates, to date cmp 1');
 }
 
-done_testing();
+done_testing;

@@ -1,9 +1,10 @@
 #!perl
 
 BEGIN {
+    use Test2::V0;
+
     use lib 'xt/lib';
     use LedgerSMB;
-    use Test::More;
     use LedgerSMB::Template;
     use LedgerSMB::Sysconfig;
     use LedgerSMB::DBTest;
@@ -28,15 +29,14 @@ LedgerSMB::App_State::set_Locale(LedgerSMB::Locale->get_handle('en'));
 no warnings 'redefine';
 
 if (defined $ENV{LSMB_TEST_DB}){
-        if (defined $ENV{LSMB_NEW_DB}){
-                $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-        }
-        if (!defined $ENV{PGDATABASE}){
-                die "Oops...  LSMB_TEST_DB set but no db selected!";
-        }
-        plan 'no_plan';
+    if (defined $ENV{LSMB_NEW_DB}){
+        $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+    }
+    if (!defined $ENV{PGDATABASE}){
+        die "Oops...  LSMB_TEST_DB set but no db selected!";
+    }
 } else {
-        plan skip_all => 'Skipping, LSMB_TEST_DB environment variable not set.';
+    skip_all 'Skipping, LSMB_TEST_DB environment variable not set.';
 }
 
 @test_request_data = do { 'xt/data/62-request-data' } ; # Import test case hashes
@@ -126,6 +126,9 @@ for my $test (@$test_request_data){
         ok($dbh->rollback, "$test->{_test_id}: rollback");
 }
 
+done_testing;
+
+
 package LedgerSMB::Template;
 use Test::More;
 # Don't render templates.  Just return so we can run tests on data structures.
@@ -166,3 +169,4 @@ sub error {
     $self->{_error} = shift;
     $self->{_died} = 1;
 }
+
