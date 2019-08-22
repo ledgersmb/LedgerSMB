@@ -133,7 +133,6 @@ on 'develop' => sub {
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.57';
     requires 'Test::Dependencies', '0.20';
-    requires 'Test::Exception';
     requires 'Test::Harness', '3.36';
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
