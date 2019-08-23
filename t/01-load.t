@@ -6,8 +6,10 @@ use warnings;
 use File::Find;
 
 use Test2::V0;
-use Test2::Util qw/pkg_to_file/;
 use Test2::Tools::Spec;
+
+
+####### Test setup
 
 my @on_disk;
 sub collect {
@@ -22,34 +24,34 @@ sub collect {
 }
 find(\&collect, 'lib/LedgerSMB/', 'old/lib/LedgerSMB/');
 
+my %tested = ( 'LedgerSMB::Sysconfig' => 1 );
+my %on_disk;
+sub module_loads {
+    my ($module, @required_modules) = @_;
 
-my @exception_modules =
-    (
-     # Exclude because tested conditionally on Template::Plugin::Latex way below
-     'LedgerSMB::Template::LaTeX',
+    return if $tested{$module}; # don't test twice
 
-     # Exclude because tested conditionally on XML::Twig way below
-     'LedgerSMB::Template::ODS',
+    $tested{$module} = 1;
+    delete $on_disk{$module};
 
-     # Exclude because tested conditionally on Excel::Writer::XLSX
-     # and Spreadsheet::WriteExcel
-     'LedgerSMB::Template::XLSX',
+    tests modules_loadable => { iso => 1, async => 1 }, sub {
+        for (@required_modules) {
+            eval "require $_"
+                or skip_all "Test missing required module '$_'";
+        }
 
-     # Exclude because tested conditionally on X12::Parser way below
-     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+        ok eval("require $module"), $@;
+    };
+}
 
-     # Exclude because tested first to see if tests can succeed at all
-     'LedgerSMB::Sysconfig',
 
-     # Exclude because currently broken
-     #@@@TODO: 1.5 release blocker!
-    );
-
-# USE STATEMENTS BELOW AS HELPERS TO REFRESH THE TABLE
-#use Data::Dumper;
-#print STDERR Dumper(\@on_disk);
 my @modules =
     (
+     'LedgerSMB::Sysconfig',
+     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+     'LedgerSMB::Template::XLSX',
+     'LedgerSMB::Template::ODS',
+     'LedgerSMB::Template::LaTeX',
           'LedgerSMB::App_State',
           'LedgerSMB::DBH', 'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer',
@@ -195,63 +197,31 @@ my @modules =
           'LedgerSMB::Magic',
     );
 
-my %modules;
-$modules{$_} = 1 for @modules;
-$modules{$_} = 1 for @exception_modules;
+%on_disk = map { $_ => 1 } @on_disk;
 
-my @untested_modules;
-for (@on_disk) {
-    push @untested_modules, $_
-        if ! defined($modules{$_});
-}
 
-is(\@untested_modules, [], 'All on-disk modules are tested');
+########### The actual tests
+
 
 use Test2::Require::Module 'LedgerSMB::Sysconfig';
-#use ok 'LedgerSMB::Sysconfig'
-#    or BAIL_OUT(q{System Configuration couldn't be loaded!});
+delete $on_disk{'LedgerSMB::Sysconfig'};
 
-my @to_sort = map { rand() } 0 .. $#modules;
-@modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
-for my $module (@modules) {
-    my $f = pkg_to_file($module);
-    tests required_modules => { iso => 1, async => 1 }, sub {
-        ok eval { require $f; 1 }, $f;
+module_loads 'LedgerSMB::Template::ODS' => qw( XML::Twig OpenOffice::OODoc );
 
-    };
+module_loads
+    'LedgerSMB::Template::LaTeX' => qw( Template::Plugin::Latex Template::Latex );
+
+module_loads
+    'LedgerSMB::Template::XLSX' => qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
+
+for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
+    module_loads $_ => qw( X12::Parser );
 }
 
-tests feature_latex_modules => { iso => 1, async => 1 }, sub {
-    use Test2::Require::Module 'Template::Plugin::Latex';
-    use Test2::Require::Module 'Template::Latex';
+for my $module (@modules) {
+    module_loads $module;
+}
 
-    my $f = pkg_to_file('LedgerSMB::Template::LaTeX');
-    ok eval { require $f; 1 }, $@;
-};
-
-tests feature_ods_modules => { iso => 1, async => 1 }, sub {
-    use Test2::Require::Module 'XML::Twig';
-    use Test2::Require::Module 'OpenOffice::OODoc';
-
-    my $f = pkg_to_file('LedgerSMB::Template::ODS');
-    ok eval { require $f; 1 }, $@;
-};
-
-tests feature_edi_modules => { iso => 1, async => 1 }, sub {
-    use Test2::Require::Module 'X12::Parser';
-
-    for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
-        my $f = pkg_to_file($_);
-        ok eval { require $f; 1 }, $@;
-    }
-};
-
-tests feature_xls_modules => { iso => 1, async => 1 }, sub {
-    use Test2::Require::Module 'Excel::Writer::XLSX';
-    use Test2::Require::Module 'Spreadsheet::WriteExcel';
-
-    my $f = pkg_to_file('LedgerSMB::Template::XLSX');
-    ok eval { require $f; 1 }, $@;
-};
+is([ keys %on_disk ], [], 'All on-disk modules have been tested');
 
 done_testing;
