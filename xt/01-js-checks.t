@@ -4,6 +4,11 @@ use Test2::V0;
 
 use File::Find;
 
+
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes source code checks};
+}
+
 my @on_disk = ();
 
 sub collect {
