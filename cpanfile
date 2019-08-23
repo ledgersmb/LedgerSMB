@@ -113,7 +113,7 @@ feature 'debug', "Debug pane" =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
-    requires 'App::Prove', '3.36';
+    requires 'App::Prove', '3.41'; # parallel testing of pipe and socket sources
     requires 'Capture::Tiny';
     requires 'DBD::Mock';
     requires 'File::Util';
@@ -133,7 +133,7 @@ on 'develop' => sub {
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.58';
     requires 'Test::Dependencies', '0.20';
-    requires 'Test::Harness', '3.36';
+    requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Weasel', '0.21';
