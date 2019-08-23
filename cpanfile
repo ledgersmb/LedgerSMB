@@ -96,20 +96,6 @@ feature 'xls', "Microsoft Excel" =>
         requires 'Excel::Writer::XLSX';
 };
 
-feature 'debug', "Debug pane" =>
-    sub {
-        recommends 'Devel::NYTProf';    # No explicit require for debug pane, handled internaly
-        recommends 'Module::Versions';  # No explicit require for debug pane, handled internaly
-        recommends 'Plack::Middleware::Debug::DBIProfile';              # Optional
-        recommends 'Plack::Middleware::Debug::DBITrace';                # Optional
-        recommends 'Plack::Middleware::Debug::LazyLoadModules';         # Optional
-        recommends 'Plack::Middleware::Debug::Log4perl';                # Optional
-        recommends 'Plack::Middleware::Debug::Profiler::NYTProf';       # Optional
-        recommends 'Plack::Middleware::Debug::TraceENV';                # Optional
-        recommends 'Plack::Middleware::Debug::W3CValidate';             # Optional
-        recommends 'Plack::Middleware::InteractiveDebugger';            # Optional
-};
-
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
@@ -140,4 +126,19 @@ on 'develop' => sub {
     requires 'Weasel::Driver::Selenium2', '0.07';
     requires 'Weasel::Session', '0.11';
     requires 'Weasel::Widgets::Dojo', '0.04';
+
+    feature 'debug', "Debug pane" =>
+        sub {
+              # No explicit require for debug pane, handled internaly
+            recommends 'Devel::NYTProf';
+            recommends 'Module::Versions';
+            recommends 'Plack::Middleware::Debug::DBIProfile';
+            recommends 'Plack::Middleware::Debug::DBITrace';
+            recommends 'Plack::Middleware::Debug::LazyLoadModules';
+            recommends 'Plack::Middleware::Debug::Log4perl';
+            recommends 'Plack::Middleware::Debug::Profiler::NYTProf';
+            recommends 'Plack::Middleware::Debug::TraceENV';
+            recommends 'Plack::Middleware::Debug::W3CValidate';
+            recommends 'Plack::Middleware::InteractiveDebugger';
+    };
 };
