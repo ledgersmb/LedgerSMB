@@ -6,7 +6,6 @@ use warnings;
 use File::Find;
 
 use Test2::V0;
-use Test2::Util qw/pkg_to_file/;
 use Test2::Tools::Spec;
 
 my @on_disk;
@@ -208,16 +207,12 @@ for (@on_disk) {
 is(\@untested_modules, [], 'All on-disk modules are tested');
 
 use Test2::Require::Module 'LedgerSMB::Sysconfig';
-#use ok 'LedgerSMB::Sysconfig'
-#    or BAIL_OUT(q{System Configuration couldn't be loaded!});
 
 my @to_sort = map { rand() } 0 .. $#modules;
 @modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {
-    my $f = pkg_to_file($module);
     tests required_modules => { iso => 1, async => 1 }, sub {
-        ok eval { require $f; 1 }, $f;
-
+        ok eval("require $module"), "Can 'require $module'";
     };
 }
 
@@ -225,24 +220,22 @@ tests feature_latex_modules => { iso => 1, async => 1 }, sub {
     use Test2::Require::Module 'Template::Plugin::Latex';
     use Test2::Require::Module 'Template::Latex';
 
-    my $f = pkg_to_file('LedgerSMB::Template::LaTeX');
-    ok eval { require $f; 1 }, $@;
+    ok eval("require LedgerSMB::Template::LaTeX"), $@;
 };
 
 tests feature_ods_modules => { iso => 1, async => 1 }, sub {
     use Test2::Require::Module 'XML::Twig';
     use Test2::Require::Module 'OpenOffice::OODoc';
 
-    my $f = pkg_to_file('LedgerSMB::Template::ODS');
-    ok eval { require $f; 1 }, $@;
+    ok eval("require LedgerSMB::Template::ODS"), $@;
 };
 
 tests feature_edi_modules => { iso => 1, async => 1 }, sub {
     use Test2::Require::Module 'X12::Parser';
 
     for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
-        my $f = pkg_to_file($_);
-        ok eval { require $f; 1 }, $@;
+        ok eval("require $_"), "Can require $_";
+        note($@);
     }
 };
 
@@ -250,8 +243,7 @@ tests feature_xls_modules => { iso => 1, async => 1 }, sub {
     use Test2::Require::Module 'Excel::Writer::XLSX';
     use Test2::Require::Module 'Spreadsheet::WriteExcel';
 
-    my $f = pkg_to_file('LedgerSMB::Template::XLSX');
-    ok eval { require $f; 1 }, $@;
+    ok eval("require LedgerSMB::Template::XLSX"), $@;
 };
 
 done_testing;
