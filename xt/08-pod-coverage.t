@@ -20,6 +20,8 @@ use File::Find;
 use File::Util;
 
 
+#### Test setup
+
 my @on_disk;
 
 
@@ -52,31 +54,46 @@ find(\&collect, 'lib');
     grep { ! m#^lib/LedgerSMB/Sysconfig.pm# } # LedgerSMB::Sysconfig false fail
     @on_disk;
 
-# Copied from 01-load.t
-my @exception_modules =
-    (
-     # Exclude because tested conditionally on Template::Plugin::Latex way below
-     'LedgerSMB::Template::LaTeX',
-
-     # Exclude because tested conditionally on XML::Twig way below
-     'LedgerSMB::Template::ODS',
-
-     # Exclude because tested conditionally on Excel::Writer::XLSX
-     # and Spreadsheet::WriteExcel
-     'LedgerSMB::Template::XLSX',
-
-     # Exclude because tested conditionally on X12::Parser way below
-     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
-
-     # Exclude, reports functions which don't exist
-     'LedgerSMB::Sysconfig',
-    );
-
 
 my %also_private = (
     'LedgerSMB::Scripts::payment' => [ qr/(^p\_)|(_p$)/ ],
     'LedgerSMB::DBObject::Payment' => [ qr/^(format_ten_|num2text_)/ ],
     );
+
+my %tested;
+sub module_covered {
+    my ($module, @required_modules) = @_;
+
+    return if $tested{$module}; # don't test twice
+
+    $tested{$module} = 1;
+
+    tests modules_covered => sub {
+        for (@required_modules) {
+            eval "require $_"
+                or skip_all "Test missing required module '$_'";
+        }
+
+        pod_coverage_ok($module, { also_private => $also_private{$module} });
+    };
+}
+
+
+##### The actual tests
+
+
+module_covered 'LedgerSMB::Template::ODS' => qw( XML::Twig OpenOffice::OODoc );
+
+module_covered
+    'LedgerSMB::Template::LaTeX' => qw( Template::Plugin::Latex Template::Latex );
+
+module_covered
+    'LedgerSMB::Template::XLSX' => qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
+
+for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
+    module_covered $_ => qw( X12::Parser );
+}
+
 
 my $sep = File::Util::SL();
 for my $f (@on_disk) {
@@ -84,43 +101,7 @@ for my $f (@on_disk) {
     $f =~ s#lib/##g;
     $f =~ s#\Q$sep\E#::#g;
 
-    pod_coverage_ok($f, { also_private => $also_private{$f} })
-        unless grep { $f eq $_ } @exception_modules;
+    module_covered $f;
 }
-
-
-tests feature_latex_modules => sub {
-    use Test2::Require::Module 'Template::Plugin::Latex';
-    use Test2::Require::Module 'Template::Latex';
-
-    my $f = 'LedgerSMB::Template::LaTeX';
-    pod_coverage_ok($f, { also_private => $also_private{$f} });
-};
-
-tests feature_xls_modules => sub {
-    use Test2::Require::Module 'Excel::Writer::XLSX';
-    use Test2::Require::Module 'Spreadsheet::WriteExcel';
-
-    my $f = 'LedgerSMB::Template::XLSX';
-    pod_coverage_ok($f, { also_private => $also_private{$f} });
-};
-
-tests feature_ods_modules => sub {
-    use Test2::Require::Module 'XML::Twig';
-    use Test2::Require::Module 'OpenOffice::OODoc';
-
-    my $f = 'LedgerSMB::Template::ODS';
-    pod_coverage_ok($f, { also_private => $also_private{$f} });
-};
-
-tests feature_edi_modules => sub {
-    use Test2::Require::Module 'X12::Parser';
-
-    for my $f ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850',
-               'LedgerSMB::X12::EDI894') {
-        pod_coverage_ok($f, { also_private => $also_private{$f} });
-    }
-};
-
 
 done_testing;
