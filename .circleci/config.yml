@@ -108,7 +108,7 @@ commands:
           command: |
             echo $PWD
             PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" plackup -I$HOME/project/lib -I$HOME/project/old/lib \
-                    -s Starlet --max-workers 2 --port 5762 \
+                    -s HTTP::Server::PSGI --port 5762 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
