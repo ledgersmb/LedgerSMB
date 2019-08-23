@@ -17,7 +17,7 @@ Scenario: Add translations for an account heading description
    And I expect the "French" field to contain ""
   When I enter "Ingresos por ventas" into "Spanish"
    And I enter "Revenu de vente" into "French"
-   And I press "Save Translations"
+   And I save the translations
   Then I should see the Account screen
   When I select the "Translations" tab
   Then I expect the "Spanish" field to contain "Ingresos por ventas"

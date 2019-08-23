@@ -179,6 +179,12 @@ When qr/I open the parts screen for '(.*)'/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };
 
+When qr/^I save the translations$/, sub {
+    my $btn = S->{ext_wsl}->page->body->maindiv->find('*button', text => 'Save Translations');
+    $btn->click;
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $btn);
+};
+
 Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
     my $id = $1;
     my $value = $2;
