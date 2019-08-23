@@ -30,12 +30,14 @@ commands:
           command: |
              if [ "x$COVERAGE" == "x1" ]
              then
-               export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0,-silent,0"
+               export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
              fi
              echo $PERL5OPT
              echo $HARNESS_PERL_SWITCHES
              echo $PWD
-             prove --verbose --recurse \
+             # Coverage explicitly without parallellism to prevent resource contention
+             # when Devel::Cover writes coverage database on process-exit
+             prove --recurse \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
                    --pgtap-option psql=.circleci/psql-wrap \

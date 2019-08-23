@@ -34,7 +34,7 @@ sub module_loads {
     $tested{$module} = 1;
     delete $on_disk{$module};
 
-    tests modules_loadable => { iso => 1, async => 1 }, sub {
+    tests modules_loadable => { iso => 1, async => (! $ENV{COVERAGE}) }, sub {
         for (@required_modules) {
             eval "require $_"
                 or skip_all "Test missing required module '$_'";

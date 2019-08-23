@@ -29,7 +29,7 @@ find(\&collect, '.');
 
 for my $file (@on_disk) {
 
-    tests $file => { async => 1 }, sub {
+    tests $file => { async => (! $ENV{COVERAGE}) }, sub {
 
         my $errors = 0;
 
