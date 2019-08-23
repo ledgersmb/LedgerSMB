@@ -16,6 +16,10 @@ use Perl::Critic::Utils::POD qw(
 use File::Slurp;
 
 
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes POD checks};
+}
+
 # perhaps we want to add 'old', 't', 'xt'?
 my @files = all_pod_files('lib');
 

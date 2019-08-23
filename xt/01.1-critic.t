@@ -8,6 +8,11 @@ use File::Find;
 use Perl::Critic;
 use Perl::Critic::Violation;
 
+
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes source code checks};
+}
+
 my @on_disk;
 
 

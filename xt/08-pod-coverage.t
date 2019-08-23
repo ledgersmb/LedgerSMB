@@ -19,6 +19,10 @@ use Test::Pod::Coverage;
 use File::Find;
 use File::Util;
 
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes POD checks};
+}
+
 
 #### Test setup
 

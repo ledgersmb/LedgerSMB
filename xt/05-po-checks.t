@@ -2,6 +2,10 @@
 
 use Test2::V0;
 
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes PO content checks};
+}
+
 if (`which msgfmt` eq "") {
     skip_all "'msgfmt' not installed";
     exit 0;
