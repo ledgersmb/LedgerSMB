@@ -7,8 +7,6 @@ use Moose;
 use namespace::autoclean;
 extends 'Weasel::Element::Document';
 
-use Try::Tiny;
-
 has body => (is => 'rw',
              isa => 'PageObject',
              required => 0,
@@ -29,17 +27,14 @@ sub wait_for_body {
     $old_body //= $self->body if $self->has_body;
     $self->clear_body;
 
-    my $gone = $old_body ? 0 : 1;
     $self->session->wait_for(
         sub {
-            if (not $gone) {
-                my $tagname;
-                try {
-                    $tagname = $old_body->tag_name;
-                    # When successfully accessing the tag
-                    #  it's not out of scope yet...
+            if ($old_body) {
+                # In case of an exception, eval returns 'undef'
+                $old_body = eval {
+                    $old_body->tag_name;
+                    $old_body;
                 };
-                $gone = ! defined $tagname;
                 return 0;
             }
             else {
