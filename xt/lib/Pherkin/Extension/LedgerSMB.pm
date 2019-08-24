@@ -322,5 +322,46 @@ INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
     }
 }
 
+
+my $part_count = 0;
+
+sub create_part {
+    my ($self, $props) = @_;
+
+    local $LedgerSMB::App_State::DBH = $self->admin_dbh;
+    my $account = LedgerSMB::DBObject::Account->new();
+    $account->set_dbh($self->admin_dbh);
+    my @accounts = $account->list();
+    my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
+
+    $props->{partnumber} //= 'P-' . ($part_count++);
+    my $dbh = $self->admin_dbh;
+    my @keys;
+    my @values;
+    my @placeholders;
+
+    $props->{$_} = $accno_ids{$props->{$_}}
+       for grep { m/accno/ } keys %$props;
+
+    for my $key (keys %$props) {
+        push @values, $props->{$key};
+        $key =~ s/accno$/accno_id/g;
+        push @keys, $key;
+        push @placeholders, '?';
+    }
+    my $keys = join ',', @keys;
+    my $placeholders = join ',', @placeholders;
+
+    $dbh->do(qq|
+      INSERT INTO parts ($keys)
+        VALUES ($placeholders)
+|, undef, @values);
+
+}
+
+
+
+
+
 __PACKAGE__->meta->make_immutable(inline_constructor => 0);
 1;
