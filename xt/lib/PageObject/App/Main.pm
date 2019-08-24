@@ -84,15 +84,13 @@ sub wait_for_content {
     $self->session->wait_for(
         # removed content
         sub {
-            my $gone = 1;
-            try {
-                my $tagname = $old_content->tag_name;
-                # When successfully accessing the tag
-                #  it's not out of scope yet...
-                $gone = 0 if defined $tagname;
+            # In case of an exception, eval returns 'undef'
+            $old_content = eval {
+                $old_content->tag_name;
+                $old_content;
             };
 
-            return $gone;
+            return not defined $old_content;
         });
     $self->_wait_for_valid_content;
 
