@@ -3,13 +3,14 @@ MAINTAINER  ylavoie@yveslavoie.com
 
 # Perl version
 ARG perl=5.28.0
+ARG SHA=LATEST
 
 ENV HOME /home/circleci
 SHELL ["/bin/bash", "-c"]
 
 USER root
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -qyy install perlbrew && \
+    apt-get -qyy install perlbrew jq && \
     apt-get -qqy autoremove && \
     apt-get -qqy autoclean && \
     rm -rf /var/lib/apt/lists/*
@@ -17,22 +18,21 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
 USER circleci
 WORKDIR $HOME
 
-# Build time variables
-ENV NODE_PATH /usr/lib/node_modules
-
-# Install LedgerSMB
-RUN cd && \
-  git clone -b master https://github.com/ledgersmb/LedgerSMB.git project
-
 # install the standalone perlbrew
-RUN perlbrew init --shell=/bin/bash && \
+RUN cd && \
+    perlbrew init --shell=/bin/bash && \
     source ~/perl5/perlbrew/etc/bashrc && \
     perlbrew install-patchperl && \
-    perlbrew install --notest -j 4 $perl && \
+    perlbrew install --notest --noman -j 4 $perl && \
     perlbrew use perl-$perl && \
     perlbrew install-cpanm && \
     echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.profile && \
     cpanm inc::Module::Install Starman
+
+# Install LedgerSMB
+RUN cd && \
+    SHA=${SHA} \
+    git clone -b master https://github.com/ledgersmb/LedgerSMB.git project
 
 RUN cd ~/project && \
   source ~/perl5/perlbrew/etc/bashrc && \
@@ -50,26 +50,30 @@ RUN cd ~/project && \
 RUN cd ~/project && \
   source ~/perl5/perlbrew/etc/bashrc && \
   perlbrew use perl-$perl && \
-  cpanm --quiet --notest Dancer2 Dancer2::Session::Cookie Dancer2::Plugin::Auth::Extensible \
-                         URL::Encode URL::Encode::XS \
-                         Pod::ProjectDocs \
-                         Devel::Cover Devel::Cover::Report::Coveralls \
-                         Dist::Zilla \
-                         Locale::Country
+  cpanm --quiet --notest \
+        Dancer2 Dancer2::Session::Cookie Dancer2::Plugin::Auth::Extensible \
+        URL::Encode URL::Encode::XS \
+        Pod::ProjectDocs \
+        Devel::Cover Devel::Cover::Report::Coveralls \
+        Dist::Zilla \
+        Locale::Country
 
-RUN   eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && \
-  source ~/perl5/perlbrew/etc/bashrc && \
+RUN source ~/perl5/perlbrew/etc/bashrc && \
   perlbrew use perl-$perl && \
-  cd /tmp && git clone git://github.com/pjlsergeant/test-bdd-cucumber-perl.git -b match-mode && \
+  cd /tmp && git clone git://github.com/pherkin/test-bdd-cucumber-perl.git && \
   cd test-bdd-cucumber-perl && ( dzil authordeps --missing | cpanm --notest ) && ( dzil listdeps --missing --author | cpanm --notest ) && \
   dzil install && rm -rf ~/.cpanm && \
   cd ~/ && rm -rf /tmp/test-bdd-cucumber-perl && rm -rf project && mkdir project
+
+RUN source ~/perl5/perlbrew/etc/bashrc && \
+  perlbrew use perl-$perl && \
+  cpanm --quiet --notest Imager
 
 USER root
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
   (wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -) && \
   DEBIAN_FRONTEND=noninteractive apt-get -y update && \
-  DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-client && \
+  apt-get -y install postgresql-client && \
   apt-get -qqy autoremove && \
   apt-get -qqy autoclean && \
   rm -rf /var/lib/apt/lists/*
