@@ -141,13 +141,16 @@ executors:
       coverage:
         type: integer
         default: 1
+      CIRCLE_PROJECT_USERNAME:
+        type: string
+        default: ${CIRCLE_PROJECT_USERNAME:-ledgersmb}
     docker:
-      - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
-      - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
-      - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
+      - image: << parameters.CIRCLE_PROJECT_USERNAME >>/ledgersmb_circleci-perl:<< parameters.perl >>
+      - image: << parameters.CIRCLE_PROJECT_USERNAME >>/ledgersmb_circleci-postgres:<< parameters.postgres >>
+      - image: << parameters.CIRCLE_PROJECT_USERNAME >>/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
-#      DEVEL_COVER_OPTIONS: 
+#      DEVEL_COVER_OPTIONS:
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres
@@ -160,6 +163,25 @@ executors:
 
 # Define jobs
 jobs:
+  ci_images:
+    <<: *defaults
+    docker:
+      - image: circleci/node:6.17.1-stretch
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Log into Docker Hub
+          command: |
+            echo "$DOCKER_HUB_PWD" | docker login -u "$DOCKER_HUB_USER_ID" --password-stdin;
+      - run:
+          name: Freshen up circleci custom images if the PR altered them
+          command: |
+            for image in $( git log --name-only --oneline -1 | grep -e '^\.circleci\/images' | cut -d "/" -f3 | sort -u ); do
+              pushd .circleci/images/$image;
+              ./build.sh;
+              popd;
+            done
   test_nodojo:
     <<: *defaults
     executor:
@@ -178,4 +200,8 @@ jobs:
 workflows:
   workflow:
     jobs:
-      - test_nodojo
+      - ci_images
+
+      - test_nodojo:
+          requires:
+            - ci_images
