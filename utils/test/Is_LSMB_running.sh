@@ -15,20 +15,20 @@ fi
 
 
 # This script tests the plack/Starman application server.
-# By default this is assumed to listen on http://localhost:5001,
+# By default this is assumed to listen on http://localhost:5762,
 # but can be overridden with the $PSGI_BASE_URL environment variable.
 #
 # Note that this may be different to the address used to serve users,
 # which is often provided by a proxy and specified as $LSMB_BASE_URL.
-psgi_base_url=${PSGI_BASE_URL:-http://localhost:5001}
+psgi_base_url=${PSGI_BASE_URL:-http://localhost:5762}
 
 # Extract the port to check Starman
 url_without_port=${psgi_base_url%:[[:digit:]]*}
 psgi_port=${psgi_base_url#$url_without_port}
 psgi_port=${psgi_port#:}  # strip colon
 
-# Default to port 5001
-psgi_port=${psgi_port:-5001}
+# Default to port 5762
+psgi_port=${psgi_port:-5762}
 
 
 # You can add to either of these two variables to skip this test during travis setup.
@@ -83,7 +83,7 @@ HELP() {
 
 	ENVIRONMENT VARIABLES
 	    PSGI_BASE_URL : Sets the base url used to check lsmb
-	                    default: http://localhost:5001
+	                    default: http://localhost:5762
 	EOF
     exit $E;
 }
@@ -161,7 +161,7 @@ WaitForPlackup() {
         pgrep -f 'plackup' >/dev/null
         curl --max-time 60 --connect-timeout 60 --fail --silent $psgi_base_url/setup.pl 2>&1 >/dev/null && {
             httpdrunning=true;
-            echo "starman/plackup responded after $i * 0.1 seconds"; 
+            echo "starman/plackup responded after $i * 0.1 seconds";
             break;
         } #|| echo -en "\r$i"
         sleep 0.1;
