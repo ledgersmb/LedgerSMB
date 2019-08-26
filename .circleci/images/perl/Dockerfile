@@ -1,4 +1,5 @@
-FROM        ylavoie/ledgersmb_circleci-primary
+ARG         REPOSITORY=ledgersmb
+FROM        $REPOSITORY/ledgersmb_circleci-primary
 MAINTAINER  ylavoie@yveslavoie.com
 
 # Perl version
