@@ -27,8 +27,8 @@ require Plack::Middleware::Pod
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
-die "Library verification failed (found $version from '$path', expected 1.7)"
-    unless $version =~ /^1\.7\./;
+die "Library verification failed (found $version from '$path', expected 1.8)"
+    unless $version =~ /^1\.8\./;
 
 # Report to the console what type of dojo we are running
 if ( $LedgerSMB::Sysconfig::dojo_built) {
