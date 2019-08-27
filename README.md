@@ -47,10 +47,10 @@ below.
 
 ## Client
 
-A [Dojo 1.14 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
-is all that's required on the client (except IE8 and 9); it includes Chrome as
-of version 13, FireFox as of 3.6 and MS Internet Explorer as of version 10 and
-a wide range of mobile browsers.
+A [Dojo 1.15 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
+is all that's required on the client (except IE8 and 9); it includes all
+current versions of Chrome and FireFox as of 3.6, as well as MS Internet
+Explorer as of version 10 and a wide range of mobile browsers.
 
 # Quick start (Docker compose)
 
@@ -284,7 +284,7 @@ as well as in the Transifex project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2018 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2019 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
