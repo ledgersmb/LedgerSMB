@@ -10,8 +10,8 @@ ENV HOME /home/circleci
 SHELL ["/bin/bash", "-c"]
 
 USER root
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
-    apt-get -qyy install perlbrew jq && \
+RUN apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qyy install perlbrew jq && \
     apt-get -qqy autoremove && \
     apt-get -qqy autoclean && \
     rm -rf /var/lib/apt/lists/*
@@ -73,8 +73,8 @@ RUN source ~/perl5/perlbrew/etc/bashrc && \
 USER root
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
   (wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -) && \
-  DEBIAN_FRONTEND=noninteractive apt-get -y update && \
-  apt-get -y install postgresql-client && \
+  apt-get -y update && \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-client && \
   apt-get -qqy autoremove && \
   apt-get -qqy autoclean && \
   rm -rf /var/lib/apt/lists/*
@@ -110,9 +110,8 @@ RUN mkdir -p /tmp && \
 # Install proxies. They should be in their own image but CircleCI doesn't
 # support bind mounts and proxies need access to UI
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update && \
-    apt-get --no-install-recommends --yes install nginx lighttpd && \
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends --yes install nginx lighttpd && \
     apt-get -qqy autoremove && \
     apt-get -qqy autoclean && \
     rm -rf /var/lib/apt/lists/*
