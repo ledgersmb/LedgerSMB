@@ -1,9 +1,12 @@
+#!perl
 # Database setup tests.
 
 use Test2::V0;
 
-use LedgerSMB::Database;
 use LedgerSMB;
+use LedgerSMB::App_State;
+use LedgerSMB::Database;
+use LedgerSMB::DBH;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 use DBI;
@@ -22,7 +25,7 @@ $ENV{LSMB_NEW_DB} or bail_out('LSMB_NEW_DB is not set');
 my $temp = $ENV{TEMP} || '/tmp/';
 
 $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-$LedgerSMB::Sysconfig::db_namespace = 'altschema';
+#$LedgerSMB::Sysconfig::db_namespace = 'altschema';
 
 my $db = LedgerSMB::Database->new({
          dbname       => $ENV{LSMB_NEW_DB},
@@ -35,6 +38,7 @@ ok($db->create, 'Database Created')
   || bail_out('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
 ok($db->apply_changes, 'applied changes');
+
 my $patch_log_dbh = $db->connect;
 my $patch_log_sth =
     $patch_log_dbh->prepare('select count(*) from db_patch_log')
@@ -53,6 +57,16 @@ is($patch_count, $log_count, 'Patch and log counts are equal; all patches apply 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 $patch_log_sth->finish;
 $patch_log_dbh->disconnect; # Without disconnecting, the copy below fails...
+
+my $version;
+LedgerSMB::App_State::run_with_state sub {
+    $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
+    $LedgerSMB::App_State::DBH->disconnect;
+}, DBH => $db->connect;
+ok(! $version,
+   q{Database matches required version ('require_version' returns false)})
+        or bail_out(q{LedgerSMB::DBH reports incorrect database version - no use continuing});
+
 
 if (!$ENV{LSMB_INSTALL_DB}){
 
