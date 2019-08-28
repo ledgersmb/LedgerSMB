@@ -17,7 +17,7 @@ defined $ENV{LSMB_TEST_DB} or plan skip_all => 'LSMB_TEST_DB is not set';
 # the database used in running these tests. Unless LSMB_INSTALL_DB is true,
 # the database will be created when this test is run and later dropped
 # by xt/89-dropdb.t
-$ENV{LSMB_NEW_DB} or BAIL_OUT('LSMB_NEW_DB is not set');
+$ENV{LSMB_NEW_DB} or bail_out('LSMB_NEW_DB is not set');
 
 my $temp = $ENV{TEMP} || '/tmp/';
 
@@ -32,21 +32,21 @@ my $db = LedgerSMB::Database->new({
 
 # Manual tests
 ok($db->create, 'Database Created')
-  || BAIL_OUT('Database could not be created! ');
+  || bail_out('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
 ok($db->apply_changes, 'applied changes');
 my $patch_log_dbh = $db->connect;
 my $patch_log_sth =
     $patch_log_dbh->prepare('select count(*) from db_patch_log')
-    or BAIL_OUT $patch_log_dbh->errstr;
-$patch_log_sth->execute or BAIL_OUT $patch_log_sth->errstr;
+    or bail_out $patch_log_dbh->errstr;
+$patch_log_sth->execute or bail_out $patch_log_sth->errstr;
 my ($log_count) = $patch_log_sth->fetchrow_array;
 ok(($log_count > 1), 'Applied patches are logged');
 
 $patch_log_sth =
     $patch_log_dbh->prepare('select count(*) from db_patches')
-    or BAIL_OUT $patch_log_dbh->errstr;
-$patch_log_sth->execute or BAIL_OUT $patch_log_sth->errstr;
+    or bail_out $patch_log_dbh->errstr;
+$patch_log_sth->execute or bail_out $patch_log_sth->errstr;
 my ($patch_count) = $patch_log_sth->fetchrow_array;
 ok(($patch_count > 1), 'Applied patches are recorded in db_patches table');
 is($patch_count, $log_count, 'Patch and log counts are equal; all patches apply first time around');
@@ -60,11 +60,11 @@ if (!$ENV{LSMB_INSTALL_DB}){
     # whether to drop LSMB_TEST_DB
     my $dblock_file = "$temp/LSMB_TEST_DB";
     open (my $DBLOCK, '>', $dblock_file)
-        or BAIL_OUT("failed to open $dblock_file for writing : $!");
+        or bail_out("failed to open $dblock_file for writing : $!");
     print $DBLOCK $ENV{LSMB_NEW_DB}
-        or BAIL_OUT("failed writing to $dblock_file : $!");
+        or bail_out("failed writing to $dblock_file : $!");
     close ($DBLOCK)
-        or BAIL_OUT("failed to close $dblock_file after writing $!");
+        or bail_out("failed to close $dblock_file after writing $!");
 }
 
 # Validate that we can copy the database

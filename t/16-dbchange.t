@@ -185,7 +185,7 @@ find(\&collect, 'sql/changes/');
 
 for my $change (@changes) {
     open my $fh, "<:encoding(UTF-8)", $change
-        or BAIL_OUT("Can't open: $change ($!, $@)");
+        or bail_out("Can't open: $change ($!, $@)");
     my $content;
     {
         local $/;

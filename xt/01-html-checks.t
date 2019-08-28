@@ -45,7 +45,7 @@ sub content_test {
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
     open $fh, '<:encoding(UTF-8)', $filename
-        or BAIL_OUT("failed to open $filename for reading $!");
+        or bail_out("failed to open $filename for reading $!");
     $is_snippet = 1
         if ($filename !~ m#(log(in|out))|main|(setup/(?!upgrade/))#
             || $filename =~ m#setup/ui-db-credentials#);
