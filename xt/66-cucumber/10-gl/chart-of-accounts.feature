@@ -46,7 +46,7 @@ Scenario: View the chart of accounts and change every property of an account
    And I expect "Equity" to be selected for "Account Type"
    And I expect to see 3 selected checkboxes in "Options"
    And I expect to see 2 selected checkboxes in "Custom Flags"
-   And I expect to see 20 selected checkboxes in "Include in drop-down menus"
+   And I expect to see 22 selected checkboxes in "Include in drop-down menus"
   When I select "Custom Summary" from the drop down "Summary account for"
    And I deselect every checkbox in "Custom Flags"
    And I deselect every checkbox in "Include in drop-down menus"
