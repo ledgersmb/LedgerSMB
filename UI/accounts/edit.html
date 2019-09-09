@@ -283,6 +283,16 @@ INCLUDE 'ui-header.html'
      } ?>
    </div>
    <div class="inputgroup">
+      <?lsmb IF form.AR_tax; AR_tax = 'CHECKED'; END;
+          INCLUDE input element_data={
+              name = 'AR_tax',
+              type = 'checkbox',
+             label = text('Tax'),
+           checked = AR_tax,
+             value = 'AR_tax'
+     } ?>
+   </div>
+   <div class="inputgroup">
       <?lsmb IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AR_overpayment',
@@ -324,6 +334,16 @@ INCLUDE 'ui-header.html'
              value = 'AP_paid'} ?>
    </div>
    <div class="inputgroup">
+      <?lsmb IF form.AP_tax; AP_tax = 'CHECKED'; END;
+          INCLUDE input element_data={
+              name = 'AP_tax',
+              type = 'checkbox',
+             label = text('Tax'),
+           checked = AP_tax,
+             value = 'AP_tax'
+     } ?>
+   </div>
+   <div class="inputgroup">
       <?lsmb IF form.AP_overpayment; AP_overpayment= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AP_overpayment',
@@ -363,15 +383,6 @@ INCLUDE 'ui-header.html'
              value = 'IC_cogs'} ?>
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_expense;IC_expense= 'CHECKED'; END;
-         INCLUDE input element_data={
-              name = 'IC_returns',
-              type = 'checkbox',
-             label = text('Returns'),
-           checked = IC_returns,
-             value = ' IC_returns'} ?>
-   </div>
-   <div class="inputgroup">
       <?lsmb IF form.IC_taxpart; IC_taxpart= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_taxpart',
@@ -379,6 +390,15 @@ INCLUDE 'ui-header.html'
              label = text('Tax'),
            checked = IC_taxpart,
              value = 'IC_taxpart'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_returns;IC_returns= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_returns',
+              type = 'checkbox',
+             label = text('Returns'),
+           checked = IC_returns,
+             value = 'IC_returns'} ?>
    </div>
 </div>
 <div class="inputline" id="services-line">
