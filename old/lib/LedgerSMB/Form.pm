@@ -180,8 +180,8 @@ sub new {
             split(/:/, $self->{cookie});
     }
 
-    $self->{version}   = "1.7.0";
-    $self->{dbversion} = "1.7.0";
+    $self->{version}   = "1.7.0-rc1";
+    $self->{dbversion} = "1.7.0-rc1";
 
     bless $self, $type;
 
