@@ -91,7 +91,14 @@ SELECT payment_post(?, ?, ?, ?, ?,
                               $exchangerate, undef, undef, $cashaccno,
                               [$amount], [0],
                               [$source], [$memo], [$trans_id], undef, undef,
-                              undef, undef, undef, undef, 0)
+                              undef, undef, undef, undef,
+
+                              # Post payment lines as 'approved':
+                              # the total transaction will be approved at some
+                              # point; at that point, all lines will be
+                              # considered to be approved too (unless they are
+                              # explicitly *not* approved).
+                              1)
                     or $form->dberror($sth->errstr);
             }
         }
