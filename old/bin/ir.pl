@@ -102,6 +102,7 @@ sub new_screen {
 
 
 sub add {
+    $form->{ARAP} = 'AP';
     if ($form->{type} eq 'debit_invoice'){
         $form->{title} = $locale->text('Add Debit Invoice');
         $form->{subtype} = 'debit_invoice';
@@ -1225,7 +1226,7 @@ sub update {
 }
 
 sub post {
-
+    $form->{ARAP} = 'AP';
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
              'Could not save the data.  Please try again'
