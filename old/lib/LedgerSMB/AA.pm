@@ -489,7 +489,7 @@ sub post_transaction {
                            ?, ?, ?, ?)|;
         @queryargs =
             ( $form->{id}, $accno,
-              $invamount, $form->{currency},
+              $invamount * -1 * $ml, $form->{currency},
               $invamount * -1 * $ml / $form->{exchangerate},
             $form->{transdate} );
 

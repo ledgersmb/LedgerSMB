@@ -93,6 +93,7 @@ sub new_screen {
 
 
 sub add {
+    $form->{ARAP} = 'AR';
     if ($form->{type} eq 'credit_invoice'){
         $form->{title} = $locale->text('Add Credit Invoice');
         $form->{subtype} = 'credit_invoice';
@@ -1353,6 +1354,7 @@ sub update {
 }
 
 sub post {
+    $form->{ARAP} = 'AR';
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
                 'Could not save the data.  Please try again'
