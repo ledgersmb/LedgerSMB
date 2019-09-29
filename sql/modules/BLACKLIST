@@ -131,7 +131,6 @@ file_links_vrebuild
 form_check
 form_close
 form_open
-full_ilike_match
 get_default_lang
 get_link_descriptions
 gifi__list

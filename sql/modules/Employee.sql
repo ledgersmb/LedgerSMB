@@ -225,8 +225,8 @@ $$
                                 coalesce(in_enddateto, 'infinity'::timestamp)
                         AND coalesce(enddate, 'infinity'::timestamp) >=
                                 coalesce(in_enddatefrom, '-infinity'::timestamp)
-                        AND (name ~*~ in_name
-                            OR note ~*~ in_notes)
+                        AND (name ilike '%' || in_name || '%'
+                            OR note ilike '%' || in_notes || '%')
                         AND (sales = 't' OR coalesce(in_sales, 'f') = 'f')
 $$ language sql;
 
