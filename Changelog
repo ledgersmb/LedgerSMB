@@ -55,6 +55,12 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.12
+* Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.11
 * Add CSS indentation to hierarchical financial statements (Erik H)
 * Fix random setup.pl errors due to assumed-available credentials (Erik H)
