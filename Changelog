@@ -2,6 +2,12 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.26
+* Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.25
 * Fix regression when running in a schema other than 'public' (Erik H)
 
