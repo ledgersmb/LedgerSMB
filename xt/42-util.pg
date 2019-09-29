@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(13);
+    SELECT plan(12);
 
     -- Add data
 
@@ -19,7 +19,6 @@ BEGIN;
     SELECT has_function('array_endswith',ARRAY['anyelement','anyarray']);
     SELECT has_function('array_splice_from',ARRAY['anyelement','anyarray']);
     SELECT has_function('array_splice_to',ARRAY['anyelement','anyarray']);
-    SELECT has_function('full_ilike_match',ARRAY['text','text']);
     SELECT has_function('get_default_lang','{}'::text[]);
     SELECT has_function('in_tree',ARRAY['integer','tree_record[]']);
     SELECT has_function('in_tree',ARRAY['integer[]','tree_record[]']);
