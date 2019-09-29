@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.12-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-08-18 21:05+0000\n"
+"POT-Creation-Date: 2019-09-29 19:27+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Greek (https://www.transifex.com/ledgersmb/teams/58325/el/)\n"
 "Language: el\n"
@@ -1430,7 +1430,7 @@ msgid "CC"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:129 old/bin/ic.pl:527
-#: old/bin/ic.pl:696 UI/accounts/edit.html:359
+#: old/bin/ic.pl:696 UI/accounts/edit.html:379
 msgid "COGS"
 msgstr ""
 
@@ -2616,7 +2616,7 @@ msgstr ""
 msgid "Depreciate Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:586 UI/accounts/edit.html:428
+#: lib/LedgerSMB/Scripts/asset.pm:586 UI/accounts/edit.html:448
 #: sql/Pg-database.sql:2898
 msgid "Depreciation"
 msgstr ""
@@ -2793,7 +2793,7 @@ msgid "Disc %"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:813 old/bin/ic.pl:1124
-#: UI/accounts/edit.html:298 UI/accounts/edit.html:338
+#: UI/accounts/edit.html:308 UI/accounts/edit.html:358
 #: UI/am-business-form.html:15 UI/Contact/divs/credit.html:168
 #: UI/Contact/divs/credit.html:169 UI/payments/payments_detail.html:324
 #: UI/Reports/filters/purchase_history.html:302
@@ -3383,8 +3383,8 @@ msgstr ""
 msgid "Expected"
 msgstr ""
 
-#: old/bin/ic.pl:660 UI/accounts/edit.html:186 UI/accounts/edit.html:398
-#: UI/accounts/edit.html:437 UI/Reports/filters/gl.html:167
+#: old/bin/ic.pl:660 UI/accounts/edit.html:186 UI/accounts/edit.html:418
+#: UI/accounts/edit.html:457 UI/Reports/filters/gl.html:167
 msgid "Expense"
 msgstr "Έξοδα"
 
@@ -3392,7 +3392,7 @@ msgstr "Έξοδα"
 msgid "Expense Account"
 msgstr ""
 
-#: UI/accounts/edit.html:311
+#: UI/accounts/edit.html:321
 msgid "Expense/Asset"
 msgstr "Έξοδο/Πάγιο"
 
@@ -3606,11 +3606,11 @@ msgstr ""
 msgid "Five Hundred"
 msgstr ""
 
-#: UI/accounts/edit.html:419
+#: UI/accounts/edit.html:439
 msgid "Fixed Asset"
 msgstr ""
 
-#: UI/accounts/edit.html:413 sql/Pg-database.sql:2928
+#: UI/accounts/edit.html:433 sql/Pg-database.sql:2928
 msgid "Fixed Assets"
 msgstr ""
 
@@ -3744,7 +3744,7 @@ msgstr ""
 msgid "GL Reference Number"
 msgstr ""
 
-#: UI/accounts/edit.html:446
+#: UI/accounts/edit.html:466
 msgid "Gain"
 msgstr ""
 
@@ -4035,8 +4035,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:191 lib/LedgerSMB/Report/PNL.pm:191
 #: lib/LedgerSMB/Report/PNL.pm:193 lib/LedgerSMB/Scripts/configuration.pm:89
 #: old/bin/ic.pl:523 old/bin/ic.pl:656 UI/accounts/edit.html:185
-#: UI/accounts/edit.html:268 UI/accounts/edit.html:350
-#: UI/accounts/edit.html:389 UI/Reports/filters/gl.html:159
+#: UI/accounts/edit.html:268 UI/accounts/edit.html:370
+#: UI/accounts/edit.html:409 UI/Reports/filters/gl.html:159
 msgid "Income"
 msgstr "Εισόδημα"
 
@@ -4711,7 +4711,7 @@ msgstr "Εξαγωγή"
 msgid "Logout Successful"
 msgstr ""
 
-#: UI/accounts/edit.html:455
+#: UI/accounts/edit.html:475
 msgid "Loss"
 msgstr ""
 
@@ -5138,7 +5138,7 @@ msgstr ""
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
-#: UI/accounts/edit.html:383
+#: UI/accounts/edit.html:403
 msgid "Non-tracking Items"
 msgstr ""
 
@@ -5559,7 +5559,7 @@ msgstr ""
 msgid "Overdue"
 msgstr ""
 
-#: UI/accounts/edit.html:288 UI/accounts/edit.html:329
+#: UI/accounts/edit.html:298 UI/accounts/edit.html:349
 msgid "Overpayment"
 msgstr ""
 
@@ -5738,12 +5738,12 @@ msgstr ""
 msgid "Pay in behalf of"
 msgstr ""
 
-#: UI/accounts/edit.html:305
+#: UI/accounts/edit.html:315
 msgid "Payables"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1074 t/data/04-complex_template.html:282
-#: UI/accounts/edit.html:278 UI/accounts/edit.html:320
+#: UI/accounts/edit.html:278 UI/accounts/edit.html:330
 #: UI/Contact/divs/credit.html:210 UI/Contact/divs/credit.html:211
 #: UI/payments/payments_detail.html:213 sql/Pg-database.sql:2804
 msgid "Payment"
@@ -6792,7 +6792,7 @@ msgstr ""
 msgid "Return to the login screen."
 msgstr ""
 
-#: old/bin/ic.pl:531 UI/accounts/edit.html:368
+#: old/bin/ic.pl:531 UI/accounts/edit.html:397
 msgid "Returns"
 msgstr ""
 
@@ -6982,7 +6982,7 @@ msgstr ""
 #: old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
 #: t/data/04-complex_template.html:620 t/data/04-complex_template.html:644
-#: UI/accounts/edit.html:525 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
+#: UI/accounts/edit.html:545 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
 #: UI/asset/edit_class.html:57 UI/asset/import_asset.html:26
 #: UI/business_units/edit.html:93 UI/business_units/edit.html:103
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:7
@@ -7917,7 +7917,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:223
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:273 old/bin/aa.pl:1618
 #: old/bin/ic.pl:539 old/bin/ic.pl:668 UI/accounts/edit.html:229
-#: UI/accounts/edit.html:377 UI/accounts/edit.html:407
+#: UI/accounts/edit.html:288 UI/accounts/edit.html:339
+#: UI/accounts/edit.html:388 UI/accounts/edit.html:427
 #: UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:316
 #: UI/Reports/filters/orders.html:179
@@ -8543,7 +8544,7 @@ msgstr ""
 msgid "Total Paid"
 msgstr ""
 
-#: UI/accounts/edit.html:344
+#: UI/accounts/edit.html:364
 msgid "Tracking Items"
 msgstr ""
 
@@ -8607,7 +8608,7 @@ msgstr ""
 msgid "Translation deleted!"
 msgstr ""
 
-#: UI/accounts/edit.html:477 sql/Pg-database.sql:2836 sql/Pg-database.sql:2939
+#: UI/accounts/edit.html:497 sql/Pg-database.sql:2836 sql/Pg-database.sql:2939
 msgid "Translations"
 msgstr ""
 
