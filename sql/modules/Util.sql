@@ -124,32 +124,7 @@ AS $$
    SELECT $2[array_upper($2,1)]=$1;
 $$ IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION full_ilike_match(seek text, source text)
-   RETURNS BOOL
-   LANGUAGE SQL
-AS $$
-select seek ilike '%' || source || '%';
-$$;
-
-DO $$
-
-BEGIN
-
-PERFORM * FROM pg_operator where oprname = '~*~';
-
-IF NOT FOUND THEN
-
-CREATE OPERATOR ~*~ (
-    procedure = full_ilike_match,
-    leftarg = 'text',
-    rightarg = 'text'
-);
-
-END IF;
-
-END;
-
-$$ LANGUAGE PLPGSQL;
+DROP OPERATOR IF EXISTS ~*~ (text, text);
 
 CREATE OR REPLACE FUNCTION lsmb__min_date() RETURNS date
 LANGUAGE SQL AS
