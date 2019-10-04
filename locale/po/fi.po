@@ -1,16 +1,15 @@
-#
 # Translators:
-# Copyright (c) 2002, 2006
-# Juha Eerola <juhaeerola@outlook.com>, 2017
+# Jon Musse <jonthemusse@gmail.com>, 2019
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+# Juha Eerola <juhaeerola@outlook.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Finnish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
-"fi/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Juha Eerola <juhaeerola@outlook.com>, 2019\n"
+"Language-Team: Finnish (https://www.transifex.com/ledgersmb/teams/58325/fi/)\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1181,12 +1180,12 @@ msgstr ""
 #: templates/demo_with_images/invoice.tex:177 templates/xedemo/invoice.html:203
 #: templates/xedemo/invoice.tex:172 UI/Reports/filters/gl.html:285
 msgid "Balance"
-msgstr "Tase"
+msgstr "Saldo"
 
 #: UI/Reports/balance_sheet.html:25 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:7 sql/Pg-database.sql:2835
 msgid "Balance Sheet"
-msgstr "Taselaskelma"
+msgstr "Tase"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:288
 msgid "Balance sheet"
@@ -1219,9 +1218,8 @@ msgid "Bar Code"
 msgstr "Viivakoodi"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Valuutta"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -1283,7 +1281,7 @@ msgstr ""
 
 #: UI/io-email.html:23
 msgid "Bcc"
-msgstr "Näkymätön kopio"
+msgstr "Piilokopio"
 
 #: old/bin/arap.pl:777 old/bin/io.pl:1442
 msgid "Bcc: [_1]"
@@ -1384,7 +1382,7 @@ msgstr "Yritys"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:44
 msgid "Business Number"
-msgstr "Y-numero"
+msgstr "Y-tunnus"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:80 UI/Contact/divs/credit.html:236
 #: UI/Contact/divs/credit.html:237
@@ -3278,9 +3276,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Maan nimi"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -6565,7 +6562,7 @@ msgstr ""
 
 #: old/bin/am.pl:786 UI/am-list-recurring.html:11 sql/Pg-database.sql:2923
 msgid "Recurring Transactions"
-msgstr "Toistuvat siirrit"
+msgstr "Toistuvat siirrot"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:131
 #: lib/LedgerSMB/Report/Budget/Search.pm:83 lib/LedgerSMB/Report/GL.pm:214
@@ -9091,11 +9088,11 @@ msgstr "Varasto"
 
 #: old/bin/am.pl:768
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Varasto poistettu"
 
 #: old/bin/am.pl:761
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Varasto tallennettu"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2879
 msgid "Warehouses"
@@ -9441,6 +9438,3 @@ msgstr "odottamaton virhe"
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Version"
-#~ msgstr "Versio"

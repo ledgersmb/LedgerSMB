@@ -1,15 +1,15 @@
-#
 # Translators:
-# ylavoie <ylavoie@yveslavoie.com>, 2016
+# ylavoie <ylavoie@yveslavoie.com>, 2019
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: French (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/"
-"language/fr_CA/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
+"Language-Team: French (Canada) (https://www.transifex.com/ledgersmb/"
+"teams/58325/fr_CA/)\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1218,9 +1218,8 @@ msgid "Bar Code"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Devise"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -3279,9 +3278,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Nom du pays"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -4473,7 +4471,7 @@ msgstr "Langue enregistrée!"
 
 #: old/bin/pe.pl:483
 msgid "Languages not defined!"
-msgstr "Langues non définis!"
+msgstr "Langues non définies!"
 
 #: t/data/04-complex_template.html:67
 msgid "Last"
@@ -7738,7 +7736,7 @@ msgstr ""
 
 #: old/bin/io.pl:1633
 msgid "State"
-msgstr "Etat"
+msgstr "État"
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:83
 #: UI/Contact/divs/address.html:166 UI/Reports/filters/contact_search.html:99
@@ -9094,11 +9092,11 @@ msgstr "Entrepôt"
 
 #: old/bin/am.pl:768
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Entrepôt supprimé"
 
 #: old/bin/am.pl:761
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Entrepôt enregistré"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2879
 msgid "Warehouses"
@@ -9444,9 +9442,6 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Version"
-#~ msgstr "Version"
 
 #~ msgid "psql not found."
 #~ msgstr "psql non disponible."

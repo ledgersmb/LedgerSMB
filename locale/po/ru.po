@@ -1,16 +1,15 @@
-#
 # Translators:
-# Olena Fesiuk <o.fesiuk@gmail.com>, 2016
-# Максим Дронь <dronmax@gmail.com>, 2016
+# Максим Дронь <dronmax@gmail.com>, 2019
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+# Olena Fesiuk <o.fesiuk@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Russian (http://www.transifex.com/ledgersmb/ledgersmb/language/"
-"ru/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Olena Fesiuk <o.fesiuk@gmail.com>, 2019\n"
+"Language-Team: Russian (https://www.transifex.com/ledgersmb/teams/58325/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1225,9 +1224,8 @@ msgid "Bar Code"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Валюта"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -3285,9 +3283,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Наименование организации"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -9100,11 +9097,11 @@ msgstr "Склад"
 
 #: old/bin/am.pl:768
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Склад удален!"
 
 #: old/bin/am.pl:761
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Склад сохранен!"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2879
 msgid "Warehouses"
@@ -9450,6 +9447,3 @@ msgstr "неожиданная ошибка"
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Version"
-#~ msgstr "Версия"

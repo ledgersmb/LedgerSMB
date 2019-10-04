@@ -1,15 +1,14 @@
-#
 # Translators:
-# Ferruccio Zamuner <nonsolosoft@diff.org>, 2016
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+# Ferruccio Zamuner <nonsolosoft@diff.org>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Italian (http://www.transifex.com/ledgersmb/ledgersmb/language/"
-"it/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2019\n"
+"Language-Team: Italian (https://www.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1221,9 +1220,8 @@ msgid "Bar Code"
 msgstr "Codice a barre"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Valuta"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -3280,9 +3278,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Codice Entità"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -9445,9 +9442,6 @@ msgstr "errore inaspettato!"
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Version"
-#~ msgstr "Versione"
 
 #~ msgid "psql not found."
 #~ msgstr "psql non trovato"

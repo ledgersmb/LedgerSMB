@@ -1,14 +1,15 @@
-#
 # Translators:
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+# István Pongrácz <pongracz.istvan@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Hungarian (http://www.transifex.com/ledgersmb/ledgersmb/"
-"language/hu/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: István Pongrácz <pongracz.istvan@gmail.com>, 2019\n"
+"Language-Team: Hungarian (https://www.transifex.com/ledgersmb/teams/58325/"
+"hu/)\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -117,7 +118,7 @@ msgstr "Új szállító utalvány"
 
 #: UI/import_csv/import_inventory_csv.html:17
 msgid "AP account"
-msgstr ""
+msgstr "Szállító számla"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:280 lib/LedgerSMB/Upgrade_Tests.pm:496
 msgid "AP account available when vendors defined"
@@ -168,7 +169,7 @@ msgstr "Új vevő utalvány"
 
 #: UI/import_csv/import_inventory_csv.html:8
 msgid "AR account"
-msgstr ""
+msgstr "Vevő számla"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:259 lib/LedgerSMB/Upgrade_Tests.pm:475
 msgid "AR account available when customers defined"
@@ -281,12 +282,12 @@ msgstr "Számla [_1] nem található"
 
 #: old/bin/gl.pl:584
 msgid "Account [_1] not found."
-msgstr ""
+msgstr "Számla [_1] nem található."
 
 #: UI/Reports/filters/balance_sheet.html:223
 #: UI/Reports/filters/income_statement.html:270
 msgid "Account category"
-msgstr "Számla kategóriák"
+msgstr "Számla kategória"
 
 #: old/bin/am.pl:132
 msgid "Account does not exist!"
@@ -606,7 +607,7 @@ msgstr "Cím:"
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
 msgid "Address: [_1]"
-msgstr ""
+msgstr "Cím: [_1]"
 
 #: lib/LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:3
@@ -1217,9 +1218,8 @@ msgid "Bar Code"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Pénznem"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -3276,9 +3276,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Egység kódja"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -7720,9 +7719,8 @@ msgid "Start Source Numbering At"
 msgstr ""
 
 #: UI/setup/complete.html:13
-#, fuzzy
 msgid "Start using LedgerSMB"
-msgstr "Kezdje használni a LedgerSMB-t"
+msgstr ""
 
 #: old/bin/arap.pl:573 UI/Reports/filters/purchase_history.html:109
 msgid "Startdate"
@@ -7795,7 +7793,7 @@ msgstr "Saját termék bevét"
 
 #: UI/users/preferences.html:20
 msgid "Strength"
-msgstr ""
+msgstr "Erősség"
 
 #: UI/users/preferences.html:81
 msgid "Stylesheet"
@@ -9452,6 +9450,3 @@ msgstr "váratlan hiba!"
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr "felhasznál egy túlfizetést"
-
-#~ msgid "Version"
-#~ msgstr "Verzió"

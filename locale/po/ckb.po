@@ -1,15 +1,14 @@
-#
 # Translators:
-# Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2017
+# Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Central Kurdish (http://www.transifex.com/ledgersmb/ledgersmb/"
-"language/ckb/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2019\n"
+"Language-Team: Central Kurdish (https://www.transifex.com/ledgersmb/"
+"teams/58325/ckb/)\n"
 "Language: ckb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

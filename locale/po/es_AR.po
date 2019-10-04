@@ -1,14 +1,14 @@
-#
 # Translators:
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Spanish (Argentina) (http://www.transifex.com/ledgersmb/"
-"ledgersmb/language/es_AR/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
+"Language-Team: Spanish (Argentina) (https://www.transifex.com/ledgersmb/"
+"teams/58325/es_AR/)\n"
 "Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1217,9 +1217,8 @@ msgid "Bar Code"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Moneda"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -3280,9 +3279,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Nombre"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -6859,7 +6857,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:167
 msgid "SQL-Ledger database detected."
-msgstr ""
+msgstr "Base de datos SQL-Ledger detectada."
 
 #: UI/payments/payment1.html:45
 msgid "SSN"
@@ -9096,11 +9094,11 @@ msgstr "Deposito"
 
 #: old/bin/am.pl:768
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Deposito eliminado!"
 
 #: old/bin/am.pl:761
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Deposito guardado!"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2879
 msgid "Warehouses"
@@ -9177,11 +9175,11 @@ msgstr "Orden de Trabajo"
 
 #: lib/LedgerSMB/Scripts/setup.pm:169
 msgid "Would you like to migrate the database?"
-msgstr ""
+msgstr "Le gustaria migrar la base de datos?"
 
 #: lib/LedgerSMB/Scripts/setup.pm:172
 msgid "Would you like to upgrade the database?"
-msgstr ""
+msgstr "Le gustaria actualizar la base de datos?"
 
 #: UI/Contact/pricelist.html:109 UI/Reports/aging_report.html:120
 #: UI/Reports/display_report.html:87

@@ -1,14 +1,15 @@
-#
 # Translators:
+# Rami Assi <ramiassi@gmail.com>, 2019
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Arabic (Egypt) (http://www.transifex.com/ledgersmb/ledgersmb/"
-"language/ar_EG/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
+"Language-Team: Arabic (Egypt) (https://www.transifex.com/ledgersmb/"
+"teams/58325/ar_EG/)\n"
 "Language: ar_EG\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,11 +129,11 @@ msgstr ""
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2848
 msgid "AR"
-msgstr "عملاء"
+msgstr "موردين"
 
 #: sql/Pg-database.sql:2795
 msgid "AR Aging"
-msgstr "كشوفات حسابات العملاء"
+msgstr "كشوفات حسابات الموردين"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:109
 msgid "AR Invoice"
@@ -1218,9 +1219,8 @@ msgid "Bar Code"
 msgstr "باركود"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "عملة"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -1884,7 +1884,7 @@ msgstr "نسخ"
 
 #: UI/setup/confirm_operation.html:46
 msgid "Copy"
-msgstr "نسخة"
+msgstr "نسخ"
 
 #: old/bin/am.pl:176
 msgid "Copy to COA"
@@ -3277,9 +3277,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "اسم الدولة"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -7348,7 +7347,7 @@ msgstr "رقم تسلسلي"
 #: UI/Reports/filters/search_goods.html:42
 #: UI/Reports/filters/search_goods.html:372
 msgid "Serial Number"
-msgstr "رقم  مسلسل"
+msgstr "رقم تسلسلي"
 
 #: templates/demo/bin_list.html:149
 #: templates/demo_with_images/bin_list.html:149
@@ -7500,7 +7499,7 @@ msgstr "شحن الى"
 #: templates/xedemo/sales_quotation.html:76
 #: templates/xedemo/sales_quotation.tex:79 UI/orders/order.html:67
 msgid "Ship via"
-msgstr "شحن من خلال"
+msgstr "شحن بواسطة"
 
 #: lib/LedgerSMB/Entity/Location.pm:116 UI/Contact/divs/address.html:45
 #: sql/Pg-database.sql:672 sql/Pg-database.sql:2918
@@ -7680,7 +7679,7 @@ msgstr ""
 
 #: UI/lib/report_base.html:71
 msgid "Standard"
-msgstr "اساس"
+msgstr "معيار"
 
 #: lib/LedgerSMB/Report/Listings/SIC.pm:63
 msgid "Standard Industrial Codes"
@@ -7845,7 +7844,7 @@ msgstr "تم التسليم"
 #: UI/Reports/filters/invoice_search.html:391
 #: UI/Reports/filters/orders.html:194
 msgid "Subtotal"
-msgstr "اجمالى"
+msgstr "إجمالى فرعي"
 
 #: UI/Configuration/sequence.html:13
 msgid "Suffix"
@@ -7936,7 +7935,7 @@ msgstr "كود الضريبة"
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:112 UI/Contact/divs/credit.html:264
 #: UI/Contact/divs/credit.html:265
 msgid "Tax Form"
-msgstr "ضريبة من"
+msgstr "استمارة ضريبة"
 
 #: old/bin/aa.pl:676
 msgid "Tax Form Applied"
@@ -7974,7 +7973,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:314 UI/Contact/divs/credit.html:315
 #: UI/orders/order.html:232
 msgid "Tax Included"
-msgstr "الضريبة المضافة"
+msgstr "الضريبة داخلة"
 
 #: UI/Contact/divs/company.html:116
 msgid "Tax Number/SSN"
@@ -8696,7 +8695,7 @@ msgstr ""
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
-msgstr "تحديث"
+msgstr "تعديل"
 
 #: UI/Reports/filters/batches.html:35 UI/Reports/filters/gl.html:181
 #: UI/Reports/filters/invoice_search.html:229
@@ -9383,7 +9382,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1646
 msgid "is lesser than 0"
-msgstr "أصغر من الصفر"
+msgstr "أصغر من الصفر0"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1640
 msgid "is lesser than the amount to be paid"
@@ -9440,6 +9439,3 @@ msgstr "خطأ غير متوقع!"
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Version"
-#~ msgstr "نسخة"

@@ -1,15 +1,15 @@
-#
 # Translators:
-# Mikkel Høgh <mikkel@hoegh.org>, 2016
+# Mikkel Høgh <mikkel@hoegh.org>, 2019
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+# Søren Bro Thygesen <sbrothy@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Danish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
-"da/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Søren Bro Thygesen <sbrothy@gmail.com>, 2019\n"
+"Language-Team: Danish (https://www.transifex.com/ledgersmb/teams/58325/da/)\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -395,7 +395,7 @@ msgstr "Nyt produkt"
 
 #: lib/LedgerSMB/Scripts/asset.pm:197
 msgid "Add Asset"
-msgstr "Tilføj Aktiv"
+msgstr "Nyt Aktiv"
 
 #: lib/LedgerSMB/Scripts/asset.pm:97
 msgid "Add Asset Class"
@@ -403,11 +403,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2888
 msgid "Add Assets"
-msgstr "Tilføj Aktiver"
+msgstr "Nye Aktiver"
 
 #: sql/Pg-database.sql:2913
 msgid "Add Budget"
-msgstr "Tilføj Budget"
+msgstr "Nyt Budget"
 
 #: old/bin/am.pl:274 sql/Pg-database.sql:2840
 msgid "Add Business"
@@ -435,7 +435,7 @@ msgstr "Ny kunde"
 
 #: old/bin/is.pl:102
 msgid "Add Customer Return"
-msgstr "Ny Kunde Returnering"
+msgstr "Tilføj Kunde Returnering"
 
 #: old/bin/ir.pl:107 old/bin/ir.pl:137
 msgid "Add Debit Invoice"
@@ -1222,9 +1222,8 @@ msgid "Bar Code"
 msgstr "Stregkode"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Base Currency"
-msgstr "Valuta"
+msgstr ""
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
@@ -3281,9 +3280,8 @@ msgid "Entity Credit Account"
 msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
-#, fuzzy
 msgid "Entity Name"
-msgstr "Firmanavn"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -9094,11 +9092,11 @@ msgstr "Lager"
 
 #: old/bin/am.pl:768
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Lager slettet!"
 
 #: old/bin/am.pl:761
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Lager gemt!"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2879
 msgid "Warehouses"
@@ -9444,6 +9442,3 @@ msgstr "uventet fejl!"
 #: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Version"
-#~ msgstr "Version"

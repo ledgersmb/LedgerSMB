@@ -1,15 +1,15 @@
-#
 # Translators:
-# Nick Prater <nick.github@npbroadcast.com>, 2018
+# Erik Huelsmann <ehuels@gmail.com>, 2019
+# Nick Prater <nick.github@npbroadcast.com>, 2019
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
-"PO-Revision-Date: 2019-01-21 05:20+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/ledgersmb/"
-"ledgersmb/language/en_GB/)\n"
+"POT-Creation-Date: 2019-10-04 14:22+0000\n"
+"Last-Translator: Nick Prater <nick.github@npbroadcast.com>, 2019\n"
+"Language-Team: English (United Kingdom) (https://www.transifex.com/ledgersmb/"
+"teams/58325/en_GB/)\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
