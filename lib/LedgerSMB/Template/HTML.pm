@@ -21,7 +21,6 @@ use warnings;
 use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::App_State;
 
 my $binmode = ':utf8';
 my $extension = 'html';

@@ -129,7 +129,7 @@ try {
                        . ": Locale not loaded: $!\n" );
     }
 
-    $LedgerSMB::App_State::Locale = $locale;
+    $form->{_locale} = $locale;
     # pull in the main code
     $logger->trace("requiring old/bin/$form->{script}");
     require "old/bin/$form->{script}";

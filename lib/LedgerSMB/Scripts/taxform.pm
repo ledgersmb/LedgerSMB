@@ -22,7 +22,6 @@ information depending on what one clicks.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::TaxForm;
 use LedgerSMB::DBObject::Date;
@@ -133,7 +132,7 @@ sub _generate_report {
 
 sub generate_report {
     my ($request) = @_;
-    die LedgerSMB::App_State::Locale()->text('No tax form selected')
+    die $request->{_locale}->text('No tax form selected')
         unless $request->{tax_form_id};
     my $report = _generate_report($request);
     return $report->render($request);
