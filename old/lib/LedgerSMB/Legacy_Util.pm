@@ -130,8 +130,6 @@ sub _output_template_http {
         # Let's see about caching.
         $cache = 0 if LedgerSMB::Setting->get('disable_back');
     }
-    # clean up after getting the (last) setting
-    LedgerSMB::App_State::cleanup();
 
     my $disposition = '';
     my $name = $self->{output_options}{filename};

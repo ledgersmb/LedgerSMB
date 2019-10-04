@@ -161,27 +161,6 @@ sub set_DBH {
 
 =head1 METHODS
 
-=head2 cleanup
-
-Deletes all objects attached here.
-
-=cut
-
-sub cleanup {
-    if ($DBH){
-        $DBH->commit;
-    }
-    $Locale           = LedgerSMB::Locale->get_handle(
-                            $LedgerSMB::Sysconfig::language
-                        );
-    $User             = {};
-    $Company_Settings = {};
-    $DBH = undef;
-    $DBName = undef;
-    delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
-    return;
-}
-
 =head2 run_with_state($state, &block)
 
 Runs the block with the App_State parameters passed in C<$state>,
