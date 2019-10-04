@@ -23,7 +23,6 @@ This module does not specify any methods.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;

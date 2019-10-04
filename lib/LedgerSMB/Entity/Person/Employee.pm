@@ -43,9 +43,6 @@ use LedgerSMB::Entity::Person;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 extends 'LedgerSMB::Entity::Person';
 
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
-
 =head1 PROPERTIES
 
 =over

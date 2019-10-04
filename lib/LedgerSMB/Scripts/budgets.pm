@@ -14,7 +14,6 @@ Budget workflow scripts.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Budget;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
@@ -43,7 +42,7 @@ sub new_budget {
     my ($request) = @_;
     $request->{rowcount} ||= 0;
     my $budget = LedgerSMB::Budget->new($request);
-    return _render_screen($budget);
+    return _render_screen($budget, $request->{_locale});
 }
 
 
@@ -52,7 +51,7 @@ sub new_budget {
 # Prepares and renders screen with budget info.
 
 sub _render_screen {
-    my ($budget) = @_;
+    my ($budget, $locale) = @_;
     my $additional_rows = EDIT_BUDGET_ROWS;
     $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
@@ -96,13 +95,13 @@ sub _render_screen {
     if (!$budget->{id}){
        $budget->{buttons} = [
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Update'),
+                 text => $locale->text('Update'),
                  type => 'submit',
                 value => 'update',
                 class => 'submit',
              },
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Save'),
+                 text => $locale->text('Save'),
                  type => 'submit',
                 value => 'save',
                 class => 'submit',
@@ -111,13 +110,13 @@ sub _render_screen {
      } elsif (!$budget->{approved_by}){
          $budget->{buttons} = [
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Approve'),
+                 text => $locale->text('Approve'),
                  type => 'submit',
                 value => 'approve',
                 class => 'submit',
              },
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Reject'),
+                 text => $locale->text('Reject'),
                  type => 'submit',
                 value => 'reject',
                 class => 'submit',
@@ -126,7 +125,7 @@ sub _render_screen {
      } else {
          $budget->{buttons} = [
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Obsolete'),
+                 text => $locale->text('Obsolete'),
                  type => 'submit',
                 value => 'obsolete',
                 class => 'submit',
@@ -187,7 +186,7 @@ sub view_budget {
         $row->{account_id} = "$account->{accno}--$account->{description}";
         push @{$budget->{display_rows}}, $row;
     }
-    return _render_screen($budget);
+    return _render_screen($budget, $request->{_locale});
 }
 
 =item save

@@ -37,8 +37,6 @@ use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
-use LedgerSMB::App_State;
-
 =head1 PROPERTIES
 
 =head2 id int

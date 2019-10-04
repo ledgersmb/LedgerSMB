@@ -16,7 +16,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Entity;
 use LedgerSMB::Entity::Company;
@@ -125,7 +124,7 @@ sub generate_statement {
     $request->{meta_number} = $old_meta;
     my $template = LedgerSMB::Template->new( # printed document
         path => 'DB',
-        locale => $LedgerSMB::App_State::Locale,
+        locale => $request->{_locale},
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},

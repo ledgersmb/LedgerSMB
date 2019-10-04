@@ -25,7 +25,6 @@ use strict;
 use warnings;
 
 use LedgerSMB;
-use LedgerSMB::App_State;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template;
 use LedgerSMB::Template::DB;
@@ -88,7 +87,7 @@ sub edit {
     $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) }
         unless $dbtemp;
 
-    die $LedgerSMB::App_State::Locale->text('Template Not Found')
+    die $request->{_locale}->text('Template Not Found')
        unless $dbtemp;
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};
@@ -135,7 +134,7 @@ sub upload {
     # the template name and extension. Is this appropriate/necessary?
     die 'No content' unless $fdata;
     my $testname = $request->{template_name} . '.' . $request->{format};
-    die LedgerSMB::App_State::Locale()->text(
+    die $request->{_locale}->text(
                 'Unexpected file name, expected [_1], got [_2]',
                  $testname, $upload->basename)
           unless $upload->basename eq $testname;

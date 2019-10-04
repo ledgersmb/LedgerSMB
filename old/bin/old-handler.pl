@@ -129,7 +129,7 @@ try {
                        . ": Locale not loaded: $!\n" );
     }
 
-    $LedgerSMB::App_State::Locale = $locale;
+    $form->{_locale} = $locale;
     # pull in the main code
     $logger->trace("requiring old/bin/$form->{script}");
     require "old/bin/$form->{script}";
@@ -153,8 +153,8 @@ try {
         $form->{titlebar} = ''; # Not needed anymore: the SPA already has a title(bar)
 
         &{ $form->{action} };
-        LedgerSMB::App_State::cleanup();
-
+        $LedgerSMB::App_State::DBH->commit;
+        delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
     }
     else {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
@@ -167,9 +167,8 @@ catch  {
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
     $form->{_error} = 1;
-    $LedgerSMB::App_State::DBH = undef;
+    delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
     _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
-    LedgerSMB::App_State::cleanup();
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow

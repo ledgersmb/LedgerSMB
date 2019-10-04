@@ -27,7 +27,6 @@ and defaults to indefinite validity.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Locale;
 use LedgerSMB::Template::UI;
@@ -72,7 +71,6 @@ sub save_preferences {
     $request->{_user}->{language} = $request->{language};
     my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;
-    $LedgerSMB::App_State::Locale = $locale;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
     $user->{dateformat} =~ s/$slash/\//g;
     if ($user->{confirm_password}){

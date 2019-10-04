@@ -570,7 +570,7 @@ sub open_status_div {
         $class = "new";
     }
 
-    my $status = $LedgerSMB::App_State::Locale->text(
+    my $status = $self->{_locale}->text(
         'Action: [_1], ID: [_2]',
         $self->{action},
         $self->{id}
@@ -630,7 +630,7 @@ sub _redirect {
     }
 
     $self->error(
-        LedgerSMB::App_State::Locale->text(
+        $self->{_locale}->text(
             "[_1]:[_2]:[_3]: Invalid Redirect",
             __FILE__,
             __LINE__,
@@ -1111,7 +1111,7 @@ qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" val
 
 sub generate_selects {
      my ($form, $myconfig) = @_;
-     my $locale = $LedgerSMB::App_State::Locale;
+     my $locale = $form->{_locale};
 
     # currencies
      if (!$form->{currencies}){
@@ -1268,9 +1268,9 @@ sub generate_selects {
     if ( ${LedgerSMB::Sysconfig::latex} ) {
         $form->{selectformat} .= qq|
             <option value="postscript">|
-                . $LedgerSMB::App_State::Locale->text('Postscript')
+                . $form->{_locale}->text('Postscript')
                 . qq|<option value="pdf">|
-                . $LedgerSMB::App_State::Locale->text('PDF');
+                . $form->{_locale}->text('PDF');
     }
 
     # warehouse
