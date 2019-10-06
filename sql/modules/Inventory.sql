@@ -36,8 +36,8 @@ BEGIN
         FROM parts p
         LEFT JOIN c ON c.part_used = t_parts_id
         JOIN invoice i ON (i.parts_id = p.id OR i.parts_id = c.current_part_id)
-        JOIN (select id, transdate from ar
-                UNION select id, transdate from ap) a ON (i.trans_id = a.id)
+        JOIN (select id, transdate from transactions) a
+             ON (i.trans_id = a.id)
 
         WHERE (p.partnumber = in_partnumber
                 or p.partnumber like in_partnumber || ' %')

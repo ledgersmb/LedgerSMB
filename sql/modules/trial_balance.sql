@@ -66,11 +66,7 @@ BEGIN
                          );
     ELSIF in_from_date IS NULL THEN
        SELECT min(transdate) - 1 INTO t_roll_forward
-         FROM (select min(transdate) as transdate from ar
-                union ALL
-               select min(transdate) from ap
-                union all
-               select min(transdate) from gl
+         FROM (select min(transdate) as transdate from transactions
                 union all
                select min(transdate) from acc_trans) gl;
 

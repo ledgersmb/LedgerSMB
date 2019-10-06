@@ -261,9 +261,8 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
 invoice_sum AS (
 SELECT a.transdate, sum(i.qty) as qty, i.parts_id
   FROM invoice i
-  JOIN (select id, transdate from ar WHERE APPROVED
-         union
-        select id, transdate FROM ap WHERE APPROVED) a ON i.trans_id = a.id
+  JOIN (select id, transdate from transactions
+         where approved) a ON i.trans_id = a.id
  GROUP BY a.transdate, i.parts_id
 ),
 order_sum AS (
