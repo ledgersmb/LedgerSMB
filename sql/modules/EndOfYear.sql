@@ -28,11 +28,8 @@ BEGIN
 
         SELECT count(*) into approval_check
         FROM acc_trans ac
-        JOIN (
-                select id, approved, transdate FROM ar UNION
-                SELECT id, approved, transdate FROM gl UNION
-                SELECT id, approved, transdate FROM ap
-        ) gl ON (gl.id = ac.trans_id)
+        JOIN (select id, approved, transdate from transactions
+             ) gl ON (gl.id = ac.trans_id)
         WHERE (ac.approved IS NOT TRUE AND ac.transdate <= in_end_date)
                 OR (gl.approved IS NOT TRUE AND gl.transdate <= in_end_date);
 
@@ -260,9 +257,8 @@ ORDER BY end_date DESC LIMIT 1
 ac AS (
   SELECT acc_trans.amount_bc
     FROM acc_trans
-    JOIN (select id from ar where approved
-          union select id from ap where approved
-          union select id from gl where approved) a on acc_trans.trans_id = a.id
+    JOIN (select id from transactions where approved) a
+          on acc_trans.trans_id = a.id
   LEFT JOIN cp ON acc_trans.chart_id = cp.account_id
    WHERE (cp.end_date IS NULL OR transdate > cp.end_date)
      AND transdate <= in_transdate

@@ -66,11 +66,7 @@ BEGIN
                          );
     ELSIF in_from_date IS NULL THEN
        SELECT min(transdate) - 1 INTO t_roll_forward
-         FROM (select min(transdate) as transdate from ar
-                union ALL
-               select min(transdate) from ap
-                union all
-               select min(transdate) from gl
+         FROM (select min(transdate) as transdate from transactions
                 union all
                select min(transdate) from acc_trans) gl;
 
@@ -117,9 +113,7 @@ BEGIN
             )
        SELECT ac.transdate, ac.amount_bc, ac.chart_id
          FROM acc_trans ac
-         JOIN (SELECT id, approved FROM ar UNION ALL
-               SELECT id, approved FROM ap UNION ALL
-               SELECT id, approved FROM gl) gl
+         JOIN (SELECT id, approved FROM transactions) gl
                    ON ac.trans_id = gl.id
                      AND (in_approved is null
                           OR (gl.approved = in_approved

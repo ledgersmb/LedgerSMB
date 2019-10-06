@@ -537,9 +537,8 @@ BEGIN
 
 
         UPDATE bulk_payments_in bpi
-           SET invoice_date = (select transdate from ar where ar.id = bpi.id
-                               union all
-                               select transdate from ap where ap.id = bpi.id);
+           SET invoice_date = (select transdate from transactions trn
+                                where trn.id = bpi.id);
 
         IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
             UPDATE bulk_payments_in

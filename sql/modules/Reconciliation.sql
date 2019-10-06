@@ -80,7 +80,7 @@ of the balance to be verified by a report.
 Also note that the unapproved reports check can't include the end date,
 because that would mean that if a report were in progress while this function
 is being called, that report would be included in the count.
-$$;
+$$; -- '
 
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
 RETURNS bool language sql as $$
@@ -188,10 +188,7 @@ $$
     SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
-    JOIN (      SELECT id FROM ar WHERE approved
-          UNION SELECT id FROM ap WHERE approved
-          UNION SELECT id FROM gl WHERE approved
-          ) g ON g.id = ac.trans_id
+    JOIN (select id from transactions where approved) g ON g.id = ac.trans_id
     WHERE c.id = $1 AND cleared
       AND ac.approved IS true
       AND ac.transdate <= in_report_date
@@ -609,16 +606,8 @@ $$
                         IN ('A', 'E') THEN sum(a.amount_bc) * -1
                 ELSE sum(a.amount_bc) END
         FROM acc_trans a
-        JOIN (
-                SELECT id FROM ar
-                WHERE approved is true
-                UNION
-                SELECT id FROM ap
-                WHERE approved is true
-                UNION
-                SELECT id FROM gl
-                WHERE approved is true
-        ) gl ON a.trans_id = gl.id
+        JOIN ( SELECT id FROM transactions WHERE approved IS true
+             ) gl ON a.trans_id = gl.id
         WHERE a.approved IS TRUE
                 AND a.chart_id = in_account_id
                 AND a.transdate <= in_date;

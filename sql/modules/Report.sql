@@ -382,9 +382,8 @@ SELECT a.id, a.accno, a.description,
  LEFT
  JOIN acc_trans ac ON ac.chart_id = a.id
  LEFT
- JOIN (select id, approved from ar UNION
-       SELECT id, approved from ap UNION
-       SELECT id, approved FROM gl) gl ON ac.trans_id = gl.id
+ JOIN (select id, approved from transactions) gl
+       ON ac.trans_id = gl.id
 WHERE gl.approved and ac.approved
       and ac.transdate <= $2
 GROUP BY a.id, a.accno, a.description

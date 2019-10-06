@@ -47,11 +47,7 @@ BEGIN
                                     ELSE ac.amount_bc * -1
                                     END)
                                 FROM acc_trans ac
-                                JOIN (select id, approved FROM ap
-                                        UNION ALL
-                                        select id, approved FROM gl
-                                        UNION ALL
-                                        select id, approved FROM ar) g
+                                JOIN (select id, approved FROM transactions) g
                                         ON (g.id = ac.trans_id)
                                 JOIN account c ON (c.id = ac.chart_id)
                                 WHERE ac.transdate <= in_date_to
@@ -692,9 +688,8 @@ $$
 WITH ac (chart_id, amount_bc) AS (
      SELECT chart_id, sum(amount_bc)
        FROM acc_trans
-       JOIN (select id, approved from ar union all
-             select id, approved from ap union all
-             select id, approved from gl) gl ON gl.id = acc_trans.trans_id
+       JOIN (select id, approved from transactions) gl
+             ON gl.id = acc_trans.trans_id
       WHERE acc_trans.approved and gl.approved
       GROUP BY chart_id
 ),
