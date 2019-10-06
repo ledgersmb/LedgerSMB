@@ -517,8 +517,6 @@ BEGIN
         END LOOP;
 
         UPDATE bulk_payments_in bpi
-           SET payment_id = nextval('payment_id_seq');
-        UPDATE bulk_payments_in bpi
            SET eca_id =
                   (SELECT entity_credit_account FROM ar
                             WHERE in_account_class = 2
@@ -527,6 +525,17 @@ BEGIN
                            SELECT entity_credit_account FROM ap
                             WHERE in_account_class = 1
                               AND bpi.id = ap.id);
+        -- generate 1 payment per eca
+        WITH eca_payment AS (
+           SELECT eca_id, nextval('payment_id_seq') payment_id
+             FROM bulk_payments_in
+            GROUP BY eca_id
+        )
+        UPDATE bulk_payments_in bpi
+           SET payment_id = (select payment_id from eca_payment ep
+                              where bpi.eca_id = ep.eca_id);
+
+
         UPDATE bulk_payments_in bpi
            SET invoice_date = (select transdate from ar where ar.id = bpi.id
                                union all
@@ -712,6 +721,8 @@ COMMENT ON FUNCTION payment_bulk_post
         in_exchangerate numeric, in_currency text)
 IS
 $$ This posts the payments for large batch workflows.
+
+
 
 Note that in_transactions is a two-dimensional numeric array.  Of each
 sub-array, the first element is the (integer) transaction id, and the second
