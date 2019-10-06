@@ -330,6 +330,10 @@ BEGIN;
      WHERE b.id = :batch_id ;
     SELECT results_eq('test', array[2::int],
                       'There are 2 journal lines as there are 2 payment links');
+    DEALLOCATE test;
+
+    -- test that the command runs ok.
+    SELECT batch_delete(:batch_id);
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
