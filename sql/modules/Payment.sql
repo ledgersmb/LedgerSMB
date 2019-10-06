@@ -493,7 +493,9 @@ BEGIN
 
         CREATE TEMPORARY TABLE bulk_payments_in (
             id int,                   -- AR/AP id
+            payment_id int,           -- payment.id
             eca_id int,               -- entity_credit_account.id
+            entry_id int,             -- acc_trans.entry_id
             amount_bc numeric,        -- amount in local currency (current rate)
             amount_tc numeric,        -- amount in foreign currency
             disc_amount_bc numeric,   -- discount amount in
@@ -523,6 +525,17 @@ BEGIN
                            SELECT entity_credit_account FROM ap
                             WHERE in_account_class = 1
                               AND bpi.id = ap.id);
+        -- generate 1 payment per eca
+        WITH eca_payment AS (
+           SELECT eca_id, nextval('payment_id_seq') payment_id
+             FROM bulk_payments_in
+            GROUP BY eca_id
+        )
+        UPDATE bulk_payments_in bpi
+           SET payment_id = (select payment_id from eca_payment ep
+                              where bpi.eca_id = ep.eca_id);
+
+
         UPDATE bulk_payments_in bpi
            SET invoice_date = (select transdate from ar where ar.id = bpi.id
                                union all
@@ -609,36 +622,59 @@ BEGIN
 --   If the discount amount were to be valued at the original rate,
 --   the FX effect should be calculated based on the current payment amount
 
+        -- The 'id' values were allocated above
+        INSERT INTO payment (id, reference, payment_class, payment_date,
+                             entity_credit_id, employee_id, currency, notes)
+        SELECT payment_id, (select invnumber from ar where ar.id = bpi.id
+                            union
+                            select invnumber from ap where ap.id = bpi.id),
+               in_account_class, in_payment_date, eca_id,
+               person__get_my_id(), in_currency, 'generated from bulk payment'
+          FROM bulk_payments_in bpi;
 
         -- Insert cash side @ current fx rate
+        UPDATE bulk_payments_in
+           SET entry_id = nextval('acc_trans_entry_id_seq')
+         WHERE amount_tc <> 0;
         INSERT INTO acc_trans
              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-              voucher_id, transdate, source)
+              voucher_id, transdate, source, entry_id)
            SELECT id, t_cash_id, amount_bc * t_cash_sign,
                   in_currency, amount_tc * t_cash_sign,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
-                  t_voucher_id, in_payment_date, in_source
+                  t_voucher_id, in_payment_date, in_source, entry_id
              FROM bulk_payments_in  where amount_tc <> 0;
+        INSERT INTO payment_links (payment_id, entry_id, type)
+        SELECT payment_id, entry_id, 1 FROM bulk_payments_in
+         WHERE amount_tc <> 0;
 
         -- Insert discount @ current fx rate
+        UPDATE bulk_payments_in
+           SET entry_id = nextval('acc_trans_entry_id_seq')
+         WHERE disc_amount_bc <> 0;
         INSERT INTO acc_trans
                (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-               voucher_id, transdate, source)
+               voucher_id, transdate, source, entry_id)
         SELECT bpi.id, eca.discount_account_id,
                disc_amount_bc * t_cash_sign, in_currency,
                disc_amount_tc * t_cash_sign,
                CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
-               t_voucher_id, in_payment_date, in_source
+               t_voucher_id, in_payment_date, in_source, entry_id
           FROM bulk_payments_in bpi
           JOIN entity_credit_account eca ON bpi.eca_id = eca.id
          WHERE bpi.disc_amount_bc <> 0;
+        INSERT INTO payment_links (payment_id, entry_id, type)
+        SELECT payment_id, entry_id, 1 FROM bulk_payments_in
+         WHERE disc_amount_bc <> 0;
 
         -- Insert AR/AP amount @ orginal rate
+        UPDATE bulk_payments_in
+           SET entry_id = nextval('acc_trans_entry_id_seq');
         INSERT INTO acc_trans
                (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-               voucher_id, transdate, source)
+               voucher_id, transdate, source, entry_id)
         SELECT bpi.id, t_ar_ap_id,
                (bpi.amount_tc + bpi.disc_amount_tc)
                   * t_cash_sign * -1 * bpi.fxrate, in_currency,
@@ -646,23 +682,31 @@ BEGIN
                   * t_cash_sign * -1,
                CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
-               t_voucher_id, in_payment_date, in_source
+               t_voucher_id, in_payment_date, in_source, entry_id
           FROM bulk_payments_in bpi
           JOIN entity_credit_account eca ON bpi.eca_id = eca.id;
+        INSERT INTO payment_links (payment_id, entry_id, type)
+        SELECT payment_id, entry_id, 1 FROM bulk_payments_in;
 
         -- Insert fx gain/loss effects, if applicable
+        UPDATE bulk_payments_in
+           SET entry_id = nextval('acc_trans_entry_id_seq')
+         WHERE gain_loss_accno IS NOT NULL;
         INSERT INTO acc_trans
              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-              voucher_id, transdate, source)
+              voucher_id, transdate, source, entry_id)
            SELECT id, gain_loss_accno,
                   amount_tc * t_cash_sign *
                      (t_exchangerate - fxrate),
                   in_currency, 0,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
-                  t_voucher_id, in_payment_date, in_source
+                  t_voucher_id, in_payment_date, in_source, entry_id
              FROM bulk_payments_in
             WHERE gain_loss_accno IS NOT NULL;
+        INSERT INTO payment_links (payment_id, entry_id, type)
+        SELECT payment_id, entry_id, 1 FROM bulk_payments_in
+         WHERE gain_loss_accno IS NOT NULL;
 
         DROP TABLE bulk_payments_in;
         perform unlock_all();
@@ -677,6 +721,8 @@ COMMENT ON FUNCTION payment_bulk_post
         in_exchangerate numeric, in_currency text)
 IS
 $$ This posts the payments for large batch workflows.
+
+
 
 Note that in_transactions is a two-dimensional numeric array.  Of each
 sub-array, the first element is the (integer) transaction id, and the second

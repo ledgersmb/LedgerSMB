@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(40);
+    SELECT plan(43);
 
     -- Add data
 
@@ -98,6 +98,9 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Payment Batch created');
     DEALLOCATE test;
 
+    SELECT currval('batch_id_seq') as batch_id
+    \gset
+
     -- Test contact invoice selection (payment__get_all_contact_invoices())
 
     INSERT INTO ap (invnumber, entity_credit_account, approved,
@@ -142,7 +145,7 @@ BEGIN;
                            (select id from account where accno = '00002'));
 
     INSERT INTO voucher (trans_id, batch_class, batch_id)
-                 VALUES (currval('id'), 1, currval('batch_id_seq'));
+                 VALUES (currval('id'), 1, :batch_id);
 
     CREATE FUNCTION test_convert_array(anyarray) RETURNS text AS $$
         SELECT array_to_string($1, '::');
@@ -153,7 +156,7 @@ BEGIN;
       FROM (
         SELECT invoices
           FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                        NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
+                        NULL, (:batch_id)::int, '00001', 'TEST1')
         ) p;
     SELECT results_eq('test',ARRAY[true],'Batch Voucher In Payment Selection');
     DEALLOCATE test;
@@ -222,13 +225,15 @@ BEGIN;
     INSERT INTO ap (invnumber, entity_credit_account, approved,
                     amount_bc, amount_tc, netamount_bc, curr, transdate)
             values ('test_reverse', -101, true, '1', '1', '1',
-                    'XTS', now()::date);
+                    'XTS', now()::date)
+       returning id as invoice_id
+    \gset
 
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr, amount_tc,
                            trans_id, chart_id)
                    VALUES (true, now()::date, '1', 'XTS', '1', currval('id'),
                            (select id from account where accno = '00001AP2')),
-                          (true, now()::date, '-1', 'XTS', '-1', currval('id'),
+                          (true, now()::date, '-1', 'XTS', '-1', :invoice_id,
                            (select id from account where accno = '00002'));
 
 
@@ -245,7 +250,7 @@ BEGIN;
                         array[(select id from account where accno = '00003')],
                         array[1]::numeric[], array[true]::bool[],
                         array['pmt-rev-src1']::text[], NULL,
-                        array[currval('id')]::int[],
+                        array[:invoice_id]::int[],
                         -- overpayments section
                         null, null, null, null, null, null,
                         -- approved:
@@ -281,6 +286,54 @@ BEGIN;
     SELECT results_eq('test', array[true],
                       'AP ');
     DEALLOCATE test;
+
+
+    -- bulk post payment
+    SELECT batch_create('test3', 'test3', 'payment', now()::date) as batch_id
+    \gset
+    INSERT INTO ap (invnumber, entity_credit_account, approved,
+                    amount_bc, amount_tc, netamount_bc, curr, transdate)
+            values ('test_bulk', -101, true, '1', '1', '1',
+                    'XTS', now()::date)
+       returning id as invoice_id
+    \gset
+    SELECT payment_bulk_post(ARRAY[ARRAY[(:invoice_id)::numeric, 1::numeric]]::numeric[],
+                             (:batch_id)::int, 'bulk'::text, 0::numeric, '00001'::text, '00003'::text, now()::date,
+                             1::int, 1::numeric, 'XTS'::text);
+    SELECT currval('payment_id_seq') as payment_id
+    \gset
+
+    PREPARE test AS
+    SELECT count(*)::int FROM payment
+     WHERE reference = 'test_bulk' and notes = 'generated from bulk payment';
+    SELECT results_eq('test', array[1::int],
+                      'After payment, the payment table contains a record');
+    DEALLOCATE test;
+
+    SELECT id as payment_id FROM payment
+     WHERE reference = 'test_bulk' and notes = 'generated from bulk payment'
+    \gset
+
+
+
+    PREPARE test AS
+    SELECT count(*)::int FROM payment_links
+     WHERE payment_id = :payment_id ;
+    SELECT results_eq('test', array[2::int],
+                      'There are 2 links: the cash account and the ap account line');
+    DEALLOCATE test;
+
+    PREPARE test AS
+    SELECT count(*)::int FROM acc_trans a
+                    JOIN voucher v ON v.id = a.voucher_id
+                    JOIN batch b ON v.batch_id = b.id
+     WHERE b.id = :batch_id ;
+    SELECT results_eq('test', array[2::int],
+                      'There are 2 journal lines as there are 2 payment links');
+    DEALLOCATE test;
+
+    -- test that the command runs ok.
+    SELECT batch_delete(:batch_id);
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

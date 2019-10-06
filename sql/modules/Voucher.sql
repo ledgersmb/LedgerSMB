@@ -434,6 +434,7 @@ CREATE OR REPLACE FUNCTION batch_delete(in_batch_id int) RETURNS int AS
 $$
 DECLARE
         t_transaction_ids int[];
+        t_payment_ids int[];
 BEGIN
         -- Adjust AR/AP tables for payment and payment reversal vouchers
         -- voucher_id is only set in acc_trans on payment/receipt vouchers and
@@ -447,6 +448,22 @@ BEGIN
                (select entry_id from acc_trans where voucher_id in
                        (select id from voucher where batch_id = in_batch_id)
                );
+
+        SELECT as_array(payment_id) INTO t_payment_ids
+          FROM payment_links
+         WHERE EXISTS (select 1 from payment_links p join acc_trans a
+                           on p.entry_id = a.entry_id
+                        where a.voucher_id IN (select id from voucher
+                                                where batch_id = in_batch_id));
+        DELETE FROM payment_links
+         WHERE EXISTS (select 1 from payment_links p join acc_trans a
+                           on p.entry_id = a.entry_id
+                        where a.voucher_id IN (select id from voucher
+                                                where batch_id = in_batch_id));
+        DELETE FROM payment
+         WHERE id = any(t_payment_ids)
+               AND NOT EXISTS (select 1 from payment_links
+                                where payment_id = id);
 
         DELETE FROM acc_trans WHERE voucher_id IN
                 (select id FROM voucher where batch_id = in_batch_id);
