@@ -47,11 +47,7 @@ BEGIN
                                     ELSE ac.amount_bc * -1
                                     END)
                                 FROM acc_trans ac
-                                JOIN (select id, approved FROM ap
-                                        UNION ALL
-                                        select id, approved FROM gl
-                                        UNION ALL
-                                        select id, approved FROM ar) g
+                                JOIN (select id, approved FROM transactions) g
                                         ON (g.id = ac.trans_id)
                                 JOIN account c ON (c.id = ac.chart_id)
                                 WHERE ac.transdate <= in_date_to

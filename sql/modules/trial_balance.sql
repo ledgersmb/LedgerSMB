@@ -117,9 +117,7 @@ BEGIN
             )
        SELECT ac.transdate, ac.amount_bc, ac.chart_id
          FROM acc_trans ac
-         JOIN (SELECT id, approved FROM ar UNION ALL
-               SELECT id, approved FROM ap UNION ALL
-               SELECT id, approved FROM gl) gl
+         JOIN (SELECT id, approved FROM transactions) gl
                    ON ac.trans_id = gl.id
                      AND (in_approved is null
                           OR (gl.approved = in_approved
