@@ -31,7 +31,6 @@ Saving permissions:
 use Moose;
 use namespace::autoclean;
 use Try::Tiny;
-use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
