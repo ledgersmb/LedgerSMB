@@ -163,7 +163,7 @@ BEGIN
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN (
          select account_id, sum(amount_bc) as amount_bc,
-                sum(debits_bc) as debits, sum(credits_bc) as credits
+                sum(debits) as debits, sum(credits) as credits
          from account_checkpoint
           where end_date = t_roll_forward
         group by account_id) cp ON cp.account_id = a.id
@@ -176,7 +176,7 @@ BEGIN
                OR a.id = ANY(in_accounts))
               AND (in_heading IS NULL OR in_heading = a.heading)
      GROUP BY a.id, a.accno, COALESCE(at.description, a.description),
-              a.category, a.gifi_accno, cp.end_date, cp.account_id,
+              a.category, a.gifi_accno, cp.account_id,
               cp.amount_bc, cp.debits, cp.credits
        HAVING ABS(cp.amount_bc) > 0 or COUNT(ac) > 0 or in_all_accounts
      ORDER BY a.accno;
