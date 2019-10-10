@@ -417,15 +417,18 @@ sub run_backup {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
+    my $backuptype;
     my $backupfile;
     my $mimetype;
 
     if ($request->{backup} eq 'roles') {
         $backupfile = $database->backup_globals;
+        $backuptype = 'roles';
         $mimetype = 'text/x-sql';
     }
     elsif ($request->{backup} eq 'db') {
         $backupfile = $database->backup;
+        $backuptype = 'db';
         $mimetype   = 'application/octet-stream';
     }
     else {
@@ -445,7 +448,7 @@ sub run_backup {
         );
         $mail->attach(
             mimetype => $mimetype,
-            filename => 'ledgersmb-backup.sqlc',
+            filename => "ledgersmb-$backuptype-" . time . '.sqlc',
             file     => $backupfile,
         );
         $mail->send;
@@ -454,7 +457,7 @@ sub run_backup {
         return $template->render($request, 'setup/complete', $request);
     }
     elsif ($request->{backup_type} eq 'browser') {
-        my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
+        my $attachment_name = "ledgersmb-$backuptype-" . time . '.sqlc';
         return sub {
             my $responder = shift;
 
