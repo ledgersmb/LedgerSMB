@@ -427,8 +427,15 @@ DROP FUNCTION IF EXISTS payment_bulk_post
         in_payment_date date, in_account_class int,
         in_exchangerate numeric, in_curr text);
 
-CREATE OR REPLACE FUNCTION payment_bulk_post
+DROP FUNCTION IF EXISTS payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
+        in_ar_ap_accno text, in_cash_accno text,
+        in_payment_date date, in_account_class int,
+        in_exchangerate numeric, in_currency text);
+
+
+CREATE OR REPLACE FUNCTION payment_bulk_post
+(in_transactions numeric[], in_batch_id int, in_source text,
         in_ar_ap_accno text, in_cash_accno text,
         in_payment_date date, in_account_class int,
         in_exchangerate numeric, in_currency text)
@@ -714,7 +721,7 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION payment_bulk_post
-(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
+(in_transactions numeric[], in_batch_id int, in_source text,
         in_ar_ap_accno text, in_cash_accno text,
         in_payment_date date, in_account_class int,
         in_exchangerate numeric, in_currency text)
@@ -748,8 +755,7 @@ DROP FUNCTION IF EXISTS payment_post
  in_ovp_payment_id                int[],
  in_approved                      bool);
 
---TODO 1.5 parameter in_cash_approved not used in function, use it or drop it?
-CREATE OR REPLACE FUNCTION payment_post
+DROP FUNCTION IF EXISTS payment_post
 (in_datepaid                      date,
  in_account_class                 int,
  in_entity_credit_id                     int,
@@ -760,6 +766,28 @@ CREATE OR REPLACE FUNCTION payment_post
  in_cash_account_id               int[],
  in_amount                        numeric[],
  in_cash_approved                 bool[],
+ in_source                        text[],
+ in_memo                          text[],
+ in_transaction_id                int[],
+ in_op_amount                     numeric[],
+ in_op_cash_account_id            int[],
+ in_op_source                     text[],
+ in_op_memo                       text[],
+ in_op_account_id                 int[],
+ in_ovp_payment_id                int[],
+ in_approved                      bool);
+
+
+CREATE OR REPLACE FUNCTION payment_post
+(in_datepaid                      date,
+ in_account_class                 int,
+ in_entity_credit_id                     int,
+ in_curr                          char(3),
+ in_exchangerate          numeric,
+ in_notes                         text,
+ in_gl_description                text,
+ in_cash_account_id               int[],
+ in_amount                        numeric[],
  in_source                        text[],
  in_memo                          text[],
  in_transaction_id                int[],
@@ -1007,7 +1035,6 @@ COMMENT ON FUNCTION payment_post
  in_gl_description                text,
  in_cash_account_id               int[],
  in_amount                        numeric[],
- in_cash_approved                 bool[],
  in_source                        text[],
  in_memo                          text[],
  in_transaction_id                int[],

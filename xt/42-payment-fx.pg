@@ -74,11 +74,25 @@ BEGIN;
 
     -- Pay the invoice in full
     SELECT * FROM
-        payment_post('1901-01-01', 1, -101, 'xts', 1.10, NULL,
-         'This gl movement is a consequence of a payment transaction',
-         ARRAY[(SELECT id FROM account WHERE accno = '00003')],
-         ARRAY[110], NULL, ARRAY['cash '], ARRAY[NULL],
-         ARRAY[-11], NULL, NULL, NULL, NULL, NULL, NULL, 't');
+        payment_post('1901-01-01', -- datepaid
+                     1,            -- account_class
+                     -101,         -- entity_credit_id
+                     'xts',
+                     1.10,
+                     NULL,         -- notes
+                     'This gl movement is a consequence of a payment transaction',
+                     ARRAY[(SELECT id FROM account WHERE accno = '00003')], -- cash_account_id
+                     ARRAY[110],       -- amount
+                     ARRAY['cash '],   -- source
+                     ARRAY[NULL],      -- memo
+                     ARRAY[-11],       -- transaction_id
+                     NULL,  -- op_amount
+                     NULL,  -- op_cash_account_id
+                     NULL,  -- op_source
+                     NULL,  -- op_memo
+                     NULL,  -- op_account_id
+                     NULL,  -- ovp_payment_id
+                     't');  -- approved
     --     ARRAY[-11], ARRAY[], ARRAY[], ARRAY[], ARRAY[], ARRAY[], NULL, 't');
 
     -- Run tests
@@ -111,7 +125,7 @@ BEGIN;
     SELECT payment_bulk_post(ARRAY[ARRAY[-12,110]],
                              batch_create('TestBatch', 'TestBatch',
                              'payment', -- payment
-                             '1901-01-03'::date), 'source', null, -- unused
+                             '1901-01-03'::date), 'source',
                              '00001', '00003',
                              '1901-01-03'::date, 1, 1.10, 'xts');
 
