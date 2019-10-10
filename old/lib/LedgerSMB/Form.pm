@@ -2254,7 +2254,7 @@ sub create_links {
     $query = qq|SELECT a.accno, a.description, as_array(l.description) as link
                   FROM account a
                   JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
-                 WHERE (l.description LIKE ?) OR a.tax
+                 WHERE (l.description LIKE ? OR a.tax)
                        AND (a.id in (select acc_trans.chart_id
                                        FROM acc_trans
                                       WHERE trans_id = coalesce(?, -1))
