@@ -22,7 +22,7 @@ BEGIN;
 
     SELECT has_function('business_type__list','{}'::text[]);
     SELECT has_function('overpayment__reverse',ARRAY['integer','date','integer','integer','numeric','character']);
-    SELECT has_function('payment_bulk_post',ARRAY['numeric[]','integer','text','numeric','text','text','date','integer','numeric','text']);
+    SELECT has_function('payment_bulk_post',ARRAY['numeric[]','integer','text','text','text','date','integer','numeric','text']);
     SELECT has_function('payment_gather_header_info',ARRAY['integer','integer']);
     SELECT has_function('payment_gather_line_info',ARRAY['integer','integer']);
     SELECT has_function('payment_get_all_accounts',ARRAY['integer']);
@@ -38,7 +38,7 @@ BEGIN;
     SELECT has_function('payment_get_unused_overpayment',ARRAY['integer','integer','integer']);
     SELECT has_function('payment_get_vc_info',ARRAY['integer','integer']);
     SELECT has_function('payment__overpayments_list',ARRAY['date','date','text','text','text']);
-    SELECT has_function('payment_post',ARRAY['date','integer','integer','character','numeric','text','text','integer[]','numeric[]','boolean[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
+    SELECT has_function('payment_post',ARRAY['date','integer','integer','character','numeric','text','text','integer[]','numeric[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
     SELECT has_function('payment__reverse',ARRAY['text','date','integer','text','date','integer','integer','integer']);
     SELECT has_function('payment__search',ARRAY['text','date','date','integer','text','integer','character','text']);
     SELECT has_function('payments_get_open_currencies',ARRAY['integer']);
@@ -248,7 +248,7 @@ BEGIN;
 
     SELECT payment_post(now()::date, 1, -101, 'XTS', 1, 'notes', 'description',
                         array[(select id from account where accno = '00003')],
-                        array[1]::numeric[], array[true]::bool[],
+                        array[1]::numeric[],
                         array['pmt-rev-src1']::text[], NULL,
                         array[:invoice_id]::int[],
                         -- overpayments section
@@ -298,7 +298,7 @@ BEGIN;
        returning id as invoice_id
     \gset
     SELECT payment_bulk_post(ARRAY[ARRAY[(:invoice_id)::numeric, 1::numeric]]::numeric[],
-                             (:batch_id)::int, 'bulk'::text, 0::numeric, '00001'::text, '00003'::text, now()::date,
+                             (:batch_id)::int, 'bulk'::text, '00001'::text, '00003'::text, now()::date,
                              1::int, 1::numeric, 'XTS'::text);
     SELECT currval('payment_id_seq') as payment_id
     \gset
