@@ -111,3 +111,4 @@ mc/delete-migration-validation-data.sql
 1.7/fix-oe-person_id-fkey.sql
 # 1.8 changes
 1.8/add-transdate-to-transactions.sql
+1.8/update-payment-tables-documentation.sql
