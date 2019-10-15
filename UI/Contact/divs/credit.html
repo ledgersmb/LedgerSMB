@@ -289,7 +289,7 @@ PROCESS dynatable
         <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
 
             <?lsmb checked = "";
-                   IF credit_act.tax_ids.grep("^${tx.id}$").size == 1;
+                   IF credit_act.tax_ids.grep("^${tx.id}\$").size == 1;
                        checked = "CHECKED";
                    END;
                    INCLUDE input label_pos=1
