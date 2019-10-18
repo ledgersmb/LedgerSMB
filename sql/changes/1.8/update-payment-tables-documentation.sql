@@ -16,9 +16,9 @@ payment is entered for 2 invoices (INV1 @ 10USD, INV2 @ 20USD), one might
 expect it to be recorded as
 
   +----------+--------+-------+---------+------+
-  | trans_id | amount | DB/CR | account | ref  |
+  | trans_id | amount | DT/CR | account | ref  |
   +----------+--------+-------+---------+------+
-  |  25      |  30.00 | DB    | Bank    |      |
+  |  25      |  30.00 | DT    | Bank    |      |
   |  25      |  10.00 | CR    | AR      | INV1 |
   |  25      |  20.00 | CR    | AR      | INV2 |
   +----------+--------+-------+---------+------+
@@ -127,6 +127,10 @@ COMMENT ON COLUMN payment_links.type IS $$
 Note that fx difference lines are expected to be included in the list of
 references for types 0 and 1.
 
-Note that every acc_trans entry is expected be in exactly one payment_link
-record.
+Note that an `entry_id` associated with type '2' can not also be in the
+table with a type '1' or '0'.
+
+Note that an `entry_id` associated with type '1' may also be in the table
+with a type '0': this happens when the payment originates from an overpayment
+balance (as opposed to originating from a direct payment).
 $$;
