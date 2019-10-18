@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-28 09:30+0000\n"
+"POT-Creation-Date: 2019-10-18 12:21+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2223,7 +2223,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:955
+#: lib/LedgerSMB/Scripts/setup.pm:958
 msgid "Database exists."
 msgstr ""
 
@@ -2832,7 +2832,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:475
+#: lib/LedgerSMB/Scripts/setup.pm:478
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -3302,7 +3302,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:431
+#: lib/LedgerSMB/Scripts/setup.pm:434
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3676,7 +3676,7 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1071
+#: lib/LedgerSMB/Scripts/setup.pm:1074
 msgid "Full Permissions"
 msgstr ""
 
@@ -4074,7 +4074,7 @@ msgstr ""
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:427
+#: lib/LedgerSMB/Scripts/setup.pm:430
 msgid "Invalid backup request"
 msgstr ""
 
@@ -4090,7 +4090,7 @@ msgstr ""
 msgid "Invalid redirect"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:989 lib/LedgerSMB/Scripts/setup.pm:996
+#: lib/LedgerSMB/Scripts/setup.pm:992 lib/LedgerSMB/Scripts/setup.pm:999
 msgid "Invalid request"
 msgstr ""
 
@@ -4683,7 +4683,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:957
+#: lib/LedgerSMB/Scripts/setup.pm:960
 msgid "Login?"
 msgstr ""
 
@@ -4739,7 +4739,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1070
+#: lib/LedgerSMB/Scripts/setup.pm:1073
 msgid "Manage Users"
 msgstr ""
 
@@ -5056,7 +5056,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1072
+#: lib/LedgerSMB/Scripts/setup.pm:1075
 msgid "No changes"
 msgstr ""
 
@@ -8902,7 +8902,7 @@ msgstr ""
 msgid "User Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1144
+#: lib/LedgerSMB/Scripts/setup.pm:1147
 msgid "User already exists. Import?"
 msgstr ""
 
