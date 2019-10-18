@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-29 19:27+0000\n"
+"POT-Creation-Date: 2019-10-18 11:53+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Hungarian (https://www.transifex.com/ledgersmb/teams/58325/"
 "hu/)\n"
@@ -194,7 +194,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1022
+#: lib/LedgerSMB/Scripts/setup.pm:1025
 msgid "Access Denied"
 msgstr "Hozzáférés megtagadva"
 
@@ -2242,7 +2242,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr "Az adatbázis nem létezik."
 
-#: lib/LedgerSMB/Scripts/setup.pm:986
+#: lib/LedgerSMB/Scripts/setup.pm:989
 msgid "Database exists."
 msgstr ""
 
@@ -2851,7 +2851,7 @@ msgstr "Dokumentum"
 msgid "Document Type"
 msgstr "Dokumentum típusa"
 
-#: lib/LedgerSMB/Scripts/setup.pm:478
+#: lib/LedgerSMB/Scripts/setup.pm:481
 msgid "Don't know what to do with backup"
 msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 
@@ -3321,7 +3321,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:437
+#: lib/LedgerSMB/Scripts/setup.pm:440
 msgid "Error creating backup file"
 msgstr "Hiba történt a biztonsági mentés fájl létrehozása során"
 
@@ -3333,7 +3333,7 @@ msgstr "Hiba történt a köteg létrehozásakor. Kérem próbálja újra."
 msgid "Error from Function:"
 msgstr "Hiba a funkcióban:"
 
-#: lib/LedgerSMB/Scripts/setup.pm:522
+#: lib/LedgerSMB/Scripts/setup.pm:525
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3703,7 +3703,7 @@ msgstr "Kezdő dátum"
 msgid "Full"
 msgstr "Teljes"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1123
+#: lib/LedgerSMB/Scripts/setup.pm:1126
 msgid "Full Permissions"
 msgstr "Teljes jogosultság"
 
@@ -4101,7 +4101,7 @@ msgstr "Belső feljegyzés"
 msgid "Invalid Reporting Basis"
 msgstr "Valótlan jelentés alap"
 
-#: lib/LedgerSMB/Scripts/setup.pm:433
+#: lib/LedgerSMB/Scripts/setup.pm:436
 msgid "Invalid backup request"
 msgstr "Érvénytelen biztonsági mentés kérés"
 
@@ -4705,7 +4705,7 @@ msgstr ""
 msgid "Login"
 msgstr "Belépés"
 
-#: lib/LedgerSMB/Scripts/setup.pm:988
+#: lib/LedgerSMB/Scripts/setup.pm:991
 msgid "Login?"
 msgstr ""
 
@@ -4765,7 +4765,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1122
+#: lib/LedgerSMB/Scripts/setup.pm:1125
 msgid "Manage Users"
 msgstr "Felhasználók kezelése"
 
@@ -5082,7 +5082,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1124
+#: lib/LedgerSMB/Scripts/setup.pm:1127
 msgid "No changes"
 msgstr ""
 
@@ -8927,7 +8927,7 @@ msgstr "Felhasználó"
 msgid "User Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1203
+#: lib/LedgerSMB/Scripts/setup.pm:1206
 msgid "User already exists. Import?"
 msgstr "A felhasználó már létezik. Beolvassa az adatait?"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-29 19:27+0000\n"
+"POT-Creation-Date: 2019-10-18 11:53+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -197,7 +197,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1022
+#: lib/LedgerSMB/Scripts/setup.pm:1025
 msgid "Access Denied"
 msgstr "Toegang geweigerd"
 
@@ -2247,7 +2247,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr "Database bestaat niet."
 
-#: lib/LedgerSMB/Scripts/setup.pm:986
+#: lib/LedgerSMB/Scripts/setup.pm:989
 msgid "Database exists."
 msgstr "Database bestaat al."
 
@@ -2857,7 +2857,7 @@ msgstr "Document"
 msgid "Document Type"
 msgstr "Document Type"
 
-#: lib/LedgerSMB/Scripts/setup.pm:478
+#: lib/LedgerSMB/Scripts/setup.pm:481
 msgid "Don't know what to do with backup"
 msgstr "Onbekend welke aktie met backup"
 
@@ -3329,7 +3329,7 @@ msgstr "Eigenvermogen (Tijdelijk)"
 msgid "Equity to Liabilities"
 msgstr "Eigen vermogen naar passiva"
 
-#: lib/LedgerSMB/Scripts/setup.pm:437
+#: lib/LedgerSMB/Scripts/setup.pm:440
 msgid "Error creating backup file"
 msgstr "Fout in aanmaken backup bestand"
 
@@ -3341,7 +3341,7 @@ msgstr "Fout in aanmaken groep. Probeer opniew."
 msgid "Error from Function:"
 msgstr "Functionele fout"
 
-#: lib/LedgerSMB/Scripts/setup.pm:522
+#: lib/LedgerSMB/Scripts/setup.pm:525
 msgid "Error while opening directory: [_1]"
 msgstr "Fout bij het openen van de directory [_1]"
 
@@ -3711,7 +3711,7 @@ msgstr "Vanaf datum"
 msgid "Full"
 msgstr "Volledig"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1123
+#: lib/LedgerSMB/Scripts/setup.pm:1126
 msgid "Full Permissions"
 msgstr "Systeem administrateur"
 
@@ -4112,7 +4112,7 @@ msgstr "Interne Opmerkingen"
 msgid "Invalid Reporting Basis"
 msgstr "Geen geldige rapportage basis"
 
-#: lib/LedgerSMB/Scripts/setup.pm:433
+#: lib/LedgerSMB/Scripts/setup.pm:436
 msgid "Invalid backup request"
 msgstr "Ongeldige backup verzoek"
 
@@ -4721,7 +4721,7 @@ msgstr "Inloggen..."
 msgid "Login"
 msgstr "Aanmelden"
 
-#: lib/LedgerSMB/Scripts/setup.pm:988
+#: lib/LedgerSMB/Scripts/setup.pm:991
 msgid "Login?"
 msgstr "Inloggen?"
 
@@ -4783,7 +4783,7 @@ msgstr ""
 "Controleer dat iedere naam alleen bestaat uit alfanumerieke karakters (en "
 "lage streep) en minimaal een karakter lang is"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1122
+#: lib/LedgerSMB/Scripts/setup.pm:1125
 msgid "Manage Users"
 msgstr "Toekennen bevoegdheden aan gebruikers"
 
@@ -5102,7 +5102,7 @@ msgstr "Werknemer NUMMER (moet ingevuld worden!)"
 msgid "No Old Password"
 msgstr "Geen huidig wachtwoord"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1124
+#: lib/LedgerSMB/Scripts/setup.pm:1127
 msgid "No changes"
 msgstr "Geen veranderingen"
 
@@ -8960,7 +8960,7 @@ msgstr "Gebruiker"
 msgid "User Name"
 msgstr "Gebruikersnaam"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1203
+#: lib/LedgerSMB/Scripts/setup.pm:1206
 msgid "User already exists. Import?"
 msgstr "Gebruiker bestaat al    Importeer?"
 

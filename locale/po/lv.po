@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-29 19:27+0000\n"
+"POT-Creation-Date: 2019-10-18 11:53+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Latvian (https://www.transifex.com/ledgersmb/teams/58325/lv/)\n"
 "Language: lv\n"
@@ -193,7 +193,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1022
+#: lib/LedgerSMB/Scripts/setup.pm:1025
 msgid "Access Denied"
 msgstr ""
 
@@ -2241,7 +2241,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:986
+#: lib/LedgerSMB/Scripts/setup.pm:989
 msgid "Database exists."
 msgstr ""
 
@@ -2850,7 +2850,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:478
+#: lib/LedgerSMB/Scripts/setup.pm:481
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -3320,7 +3320,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:437
+#: lib/LedgerSMB/Scripts/setup.pm:440
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3332,7 +3332,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:522
+#: lib/LedgerSMB/Scripts/setup.pm:525
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3702,7 +3702,7 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1123
+#: lib/LedgerSMB/Scripts/setup.pm:1126
 msgid "Full Permissions"
 msgstr ""
 
@@ -4100,7 +4100,7 @@ msgstr "Iekšējās piezīmes"
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:433
+#: lib/LedgerSMB/Scripts/setup.pm:436
 msgid "Invalid backup request"
 msgstr ""
 
@@ -4700,7 +4700,7 @@ msgstr ""
 msgid "Login"
 msgstr "Pieteikties"
 
-#: lib/LedgerSMB/Scripts/setup.pm:988
+#: lib/LedgerSMB/Scripts/setup.pm:991
 msgid "Login?"
 msgstr ""
 
@@ -4760,7 +4760,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1122
+#: lib/LedgerSMB/Scripts/setup.pm:1125
 msgid "Manage Users"
 msgstr ""
 
@@ -5077,7 +5077,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1124
+#: lib/LedgerSMB/Scripts/setup.pm:1127
 msgid "No changes"
 msgstr ""
 
@@ -8914,7 +8914,7 @@ msgstr "Lietotājs"
 msgid "User Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1203
+#: lib/LedgerSMB/Scripts/setup.pm:1206
 msgid "User already exists. Import?"
 msgstr ""
 

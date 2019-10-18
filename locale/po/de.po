@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-09-29 19:27+0000\n"
+"POT-Creation-Date: 2019-10-18 11:53+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -197,7 +197,7 @@ msgstr "Acc_trans Summe"
 
 #: lib/LedgerSMB.pm:417 lib/LedgerSMB.pm:418
 #: lib/LedgerSMB/Scripts/configuration.pm:335
-#: lib/LedgerSMB/Scripts/setup.pm:1022
+#: lib/LedgerSMB/Scripts/setup.pm:1025
 msgid "Access Denied"
 msgstr "Zugriff verweigert"
 
@@ -2254,7 +2254,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr "Datenbank existiert nicht."
 
-#: lib/LedgerSMB/Scripts/setup.pm:986
+#: lib/LedgerSMB/Scripts/setup.pm:989
 msgid "Database exists."
 msgstr "Datenbank existiert."
 
@@ -2864,7 +2864,7 @@ msgstr "Dokument"
 msgid "Document Type"
 msgstr "Dokumententyp"
 
-#: lib/LedgerSMB/Scripts/setup.pm:478
+#: lib/LedgerSMB/Scripts/setup.pm:481
 msgid "Don't know what to do with backup"
 msgstr "Unklar was mit Sicherungskopie geschehen soll"
 
@@ -3336,7 +3336,7 @@ msgstr "Eigenkapital (temporär)"
 msgid "Equity to Liabilities"
 msgstr "Eigenkapital zu Verbindlichkeiten"
 
-#: lib/LedgerSMB/Scripts/setup.pm:437
+#: lib/LedgerSMB/Scripts/setup.pm:440
 msgid "Error creating backup file"
 msgstr "Fehler beim erstellen der Sicherungsdatei"
 
@@ -3348,7 +3348,7 @@ msgstr "Fehler bei erstellen von Posten.  Bitte versuchen Sie es erneut."
 msgid "Error from Function:"
 msgstr "Fehler aus Funktion:"
 
-#: lib/LedgerSMB/Scripts/setup.pm:522
+#: lib/LedgerSMB/Scripts/setup.pm:525
 msgid "Error while opening directory: [_1]"
 msgstr "Fehler beim Öffnen des Verzeichnisses: [_1]"
 
@@ -3719,7 +3719,7 @@ msgstr "Von Datum"
 msgid "Full"
 msgstr "Voll"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1123
+#: lib/LedgerSMB/Scripts/setup.pm:1126
 msgid "Full Permissions"
 msgstr "Volle Rechte"
 
@@ -4120,7 +4120,7 @@ msgstr "Interne Notizen"
 msgid "Invalid Reporting Basis"
 msgstr "Ungültige Berichtsgrundlage"
 
-#: lib/LedgerSMB/Scripts/setup.pm:433
+#: lib/LedgerSMB/Scripts/setup.pm:436
 msgid "Invalid backup request"
 msgstr "Ungültige Sicherungsanfrage"
 
@@ -4731,7 +4731,7 @@ msgstr ""
 msgid "Login"
 msgstr "Anmelden"
 
-#: lib/LedgerSMB/Scripts/setup.pm:988
+#: lib/LedgerSMB/Scripts/setup.pm:991
 msgid "Login?"
 msgstr ""
 
@@ -4791,7 +4791,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1122
+#: lib/LedgerSMB/Scripts/setup.pm:1125
 msgid "Manage Users"
 msgstr "Benutzer verwalten"
 
@@ -5108,7 +5108,7 @@ msgstr "Keine Null Mitarbeiternummer"
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1124
+#: lib/LedgerSMB/Scripts/setup.pm:1127
 msgid "No changes"
 msgstr ""
 
@@ -8951,7 +8951,7 @@ msgstr "Benutzer"
 msgid "User Name"
 msgstr "Benutzername"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1203
+#: lib/LedgerSMB/Scripts/setup.pm:1206
 msgid "User already exists. Import?"
 msgstr "Benutzer besteht bereits. Importieren?"
 
