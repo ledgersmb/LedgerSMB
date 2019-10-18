@@ -407,7 +407,8 @@ sub print {
 
         # consider only contacts which have been explicitly selected
         # for inclusion in the bulk payment ($contact->{id} == true-ish)
-        for my $contact (grep { $_->{id} } @{$data->{contacts}}){
+        for my $contact (sort { $a->{source} <=> $b->{source}  }
+                         grep { $_->{id} } @{$data->{contacts}}){
             my ($check) = $payment->call_procedure(
                 funcname => 'company_get_billing_info',
                 args => [ $contact->{id} ]
