@@ -2,6 +2,13 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.1
+* Generate unique names for backups
+* Fix tax checkmarks in contact screen sometimes being selected after save
+* Fix tax accounts inclusion in posted AR/AP transactions
+* Fix SQL error when running trial balance report
+* Fix assets and expenses with incorrect signs in GIFI balance and PnL
+
 
 Changelog for 1.7.0
 
