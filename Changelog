@@ -2,6 +2,14 @@
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.13
+* Generate unique names for backups (Erik H)
+* Fix incorrect tax checkmarks in contact screen after save (Erik H)
+* Fix tax accounts inclusion in posted AR/AP transactions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.12
 * Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
 
