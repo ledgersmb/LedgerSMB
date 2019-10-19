@@ -225,7 +225,6 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
                         where rll.entry_id = ac.entry_id
                               and rl.cleared
                               and rl.report_id = in_report_id);
-
         return 1;
     END;
 
