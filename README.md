@@ -30,10 +30,10 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.7; the planned next
-minor release. Please check the system requirements for [the 1.5 old stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.5#system-requirements)
-and [current 1.6 version](https://github.com/ledgersmb/LedgerSMB/tree/1.6#system-requirements).
+Note that these are the system requirements for LedgerSMB 1.8; the planned next
+minor release. Please check the system requirements for [the 1.6 old stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.6#system-requirements)
+and [current 1.7 version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system-requirements).
 
 ## Server
 
@@ -57,7 +57,7 @@ Explorer as of version 10 and a wide range of mobile browsers.
 The quickest way to get the Docker image up and running is by using the
 docker-compose file available through the GitHub repository at:
 
-https://github.com/ledgersmb/ledgersmb-docker/blob/1.6/docker-compose.yml
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.7/docker-compose.yml
 
 which sets up both the LedgerSMB image and a supporting database image for
 production purposes (i.e. with persistent (database) data, with the
