@@ -111,24 +111,35 @@ foreign currency difference lines on ar/ap items and means that the lines
 linked to a single payment must be balanced. $$;
 
 COMMENT ON COLUMN payment_links.type IS $$
- * A type '0' means the link is referencing an ar/ap  and was created
-   using an overpayment movement after the receipt was created
- * A type '1' means the link is referencing an ar/ap and  was made
-   on the payment creation, its not the product of an overpayment movement
- * A type '2' means the link is not referencing an ar/ap and it is the product
-   of the overpayment logic
+ * A type '0' means that the referenced `acc_trans` line is part of an
+   allocation of an overpayment to invoices (or a reversal thereof).
+   A 'type 0' link exists only on the acc_trans line which modifies the
+   overpayment account.
+ * A type '1' means that the referenced `acc_trans` line is part of an
+   allocation to an invoice. This may either be a through an incoming
+   payment/receipt or through an allocation of an overpayment.
+   All lines in the payment/allocation have a 'type 1' link.
+ * A type '2' means that the referenced `acc_trans` line is part of
+   an overpayment creation transaction.
 
  With this idea in order we can do the following
 
- To get the payment amount we will sum the entries with type > 0.
- To get the used amount we will sum the entries with type < 2.
- The overpayment account can be obtained from the entries with type = 2.
+ To get the payment amount on an invoice we will sum the entries
+ on the AR/AP account given a specific `trans_id` with type = 1.
+ To get the total received/paid amount, we will sum the entries
+ on the cash account where type > 0.
+ To get the used amount of an overpayment, we will sum the entries
+ with type = 0 on the overpayment account, given a specific (over)payment id.
+ The overpayment amount can be obtained from the entries with type = 2.
 
 Note that fx difference lines are expected to be included in the list of
-references for types 0 and 1.
+references for types 1.
 
 Note that an `entry_id` associated with type '2' can not also be in the
 table with a type '1' or '0'.
+
+Note that both type '1' and '2' link to all `acc_trans` lines involved in the
+payment.
 
 Note that an `entry_id` associated with type '1' may also be in the table
 with a type '0': this happens when the payment originates from an overpayment
