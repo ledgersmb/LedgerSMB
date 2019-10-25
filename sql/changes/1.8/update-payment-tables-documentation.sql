@@ -138,10 +138,14 @@ references for types 1.
 Note that an `entry_id` associated with type '2' can not also be in the
 table with a type '1' or '0'.
 
-Note that both type '1' and '2' link to all `acc_trans` lines involved in the
-payment.
+Note that type '1' and '2' collectively link to all `acc_trans` lines involved
+in the payment. (But type '0' refers to lines of *other* payments.)
 
 Note that an `entry_id` associated with type '1' may also be in the table
 with a type '0': this happens when the payment originates from an overpayment
 balance (as opposed to originating from a direct payment).
+
+Note that type '2' cannot be used in reversal transactions, because '2' designates
+an opening position. To make sure the overpayment position will be considered closed,
+a type '0' should be used.
 $$;
