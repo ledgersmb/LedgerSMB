@@ -43,36 +43,39 @@ sub list_sessions {
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     my @sessions = $admin->list_sessions();
-    my $columns;
-    @$columns = qw(id username last_used locks_active drop);
     my $column_names = {
         id => 'ID',
         username => 'Username',
         last_used => 'Last Used',
         locks_active => 'Transactions Locked'
     };
-    my $column_heading = _column_heading($request, $column_names);
-    my $rows = [];
-    my $rowcount = '0';
+    my $columns = [
+        map {
+            { type => 'text',
+              col_id => $_,
+              name => $column_names->{$_}
+            }  } qw(id username last_used locks_active) ];
     my $base_url = 'admin.pl?action=delete_session';
-    for my $s (@sessions) {
-        $s->{i} = $rowcount % 2;
-        $s->{drop} = {
-            href =>"$base_url&session_id=$s->{id}",
-            text => '[' . $request->{_locale}->text('delete') . ']',
+    push @$columns,
+        {
+            type => 'href',
+            col_id => 'drop',
+            href_base => "$base_url&session_id=",
+            name => ''
         };
-        push @$rows, $s;
-        ++$rowcount;
+    for my $s (@sessions) {
+        $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
+        $s->{row_id} = $s->{id};
     }
-    $admin->{title} = $request->{_locale}->text('Active Sessions');
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'form-dynatable', {
-       form    => $admin,
-       columns => $columns,
-       heading => $column_heading,
-       rows    => $rows,
-       buttons => [],
-       hiddens => [],
+    return $template->render($request, 'Reports/display_report', {
+        name    => $request->{_locale}->text('Active Sessions'),
+        script  => 'admin.pl',
+        form    => $admin,
+        columns => $columns,
+        rows    => \@sessions,
+        buttons => [],
+        hiddens => [],
     });
 }
 
