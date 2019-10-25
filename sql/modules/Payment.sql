@@ -867,109 +867,108 @@ BEGIN
 
 
    SELECT currval('payment_id_seq') INTO var_payment_id;
-     IF (array_upper(in_cash_account_id, 1) > 0) THEN
-        FOR out_count IN
-                        array_lower(in_cash_account_id, 1) ..
-                        array_upper(in_cash_account_id, 1)
-        LOOP
-       -- Insert cash account side of the payment
-       -- Each payment can have its own cash account set through the UI
-            INSERT INTO acc_trans
-          (chart_id, amount_bc, curr, amount_tc, trans_id,
-           transdate, approved, source, memo)
-                VALUES (in_cash_account_id[out_count],
-                        in_amount[out_count]*current_exchangerate*sign,
-                        in_curr,
-                        in_amount[out_count]*sign,
-                        in_transaction_id[out_count],
-                        in_datepaid,
-                        coalesce(in_approved, true),
-                        in_source[out_count],
-                        in_memo[out_count]);
-       -- Link the ledger line to the payment record
-                INSERT INTO payment_links
-                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-
-       IF (in_ovp_payment_id IS NOT NULL
+   IF (array_upper(in_cash_account_id, 1) > 0) THEN
+      FOR out_count IN
+                      array_lower(in_cash_account_id, 1) ..
+                      array_upper(in_cash_account_id, 1)
+      LOOP
+        -- Insert cash account side of the payment
+        -- Each payment can have its own cash account set through the UI
+        INSERT INTO acc_trans
+               (chart_id, amount_bc, curr, amount_tc, trans_id,
+                transdate, approved, source, memo)
+              VALUES (in_cash_account_id[out_count],
+                      in_amount[out_count]*current_exchangerate*sign,
+                      in_curr,
+                      in_amount[out_count]*sign,
+                      in_transaction_id[out_count],
+                      in_datepaid,
+                      coalesce(in_approved, true),
+                      in_source[out_count],
+                      in_memo[out_count]);
+        -- Link the ledger line to the payment record
+        INSERT INTO payment_links
+             VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+        IF (in_ovp_payment_id IS NOT NULL
            AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
-         -- mark the current transaction as being the consequence of an overpayment
-         -- (lowering the customer account balance)
-         INSERT INTO payment_links
-         VALUES (in_ovp_payment_id[out_count],
-                 currval('acc_trans_entry_id_seq'), 0);
+          -- mark the current transaction as being the consequence of an overpayment
+          -- (lowering the customer account balance)
+          INSERT INTO payment_links
+                VALUES (in_ovp_payment_id[out_count],
+                        currval('acc_trans_entry_id_seq'), 0);
        END IF;
+      END LOOP;
 
+      -- HANDLE THE AR/AP ACCOUNTS
+      -- OBTAIN THE ACCOUNT AND EXCHANGERATE FROM THERE
+      FOR out_count IN
+                   array_lower(in_transaction_id, 1) ..
+                   array_upper(in_transaction_id, 1)
+      LOOP
+        SELECT chart_id, amount_bc/amount_tc
+               INTO var_account_id, old_exchangerate
+          FROM acc_trans as ac
+          JOIN account_link as l ON (l.account_id = ac.chart_id)
+         WHERE trans_id = in_transaction_id[out_count]
+               AND ( l.description in ('AR', 'AP'));
 
-        END LOOP;
-
-          -- HANDLE THE AR/AP ACCOUNTS
-          -- OBTAIN THE ACCOUNT AND EXCHANGERATE FROM THERE
-        FOR out_count IN
-                     array_lower(in_transaction_id, 1) ..
-                     array_upper(in_transaction_id, 1)
-       LOOP
-               SELECT chart_id, amount_bc/amount_tc
-                INTO var_account_id, old_exchangerate
-               FROM acc_trans as ac
-                JOIN account_link as l ON (l.account_id = ac.chart_id)
-                WHERE
-                trans_id = in_transaction_id[out_count] AND
-                ( l.description in ('AR', 'AP'));
         -- Now we post the AP/AR transaction
-         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
-                                trans_id, transdate, approved, source, memo)
-                VALUES (var_account_id,
-                    in_amount[out_count]*old_exchangerate*sign*-1,
-                    in_curr,
-                    in_amount[out_count]*sign*-1,
-                              in_transaction_id[out_count],
-                    in_datepaid,
-                    coalesce(in_approved, true),
-                              in_source[out_count],
-                    in_memo[out_count]);
+        INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
+                               trans_id, transdate, approved, source, memo)
+              VALUES (var_account_id,
+                      in_amount[out_count]*old_exchangerate*sign*-1,
+                      in_curr,
+                      in_amount[out_count]*sign*-1,
+                      in_transaction_id[out_count],
+                      in_datepaid,
+                      coalesce(in_approved, true),
+                      in_source[out_count],
+                      in_memo[out_count]);
+        -- Link the ledger line to the payment record
+        INSERT INTO payment_links
+              VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
 
-         -- Calculate the gain/loss on the transaction
-         -- everything above depends on this being an AR/AP posting
-         -- the PNL posting and decision to post a gain or loss does not
-         --  --> incorporate sign here instead of when posting.
-         fx_gain_loss_amount :=
-             in_amount[out_count]*sign*(old_exchangerate-current_exchangerate);
+        -- Calculate the gain/loss on the transaction
+        -- everything above depends on this being an AR/AP posting
+        -- the PNL posting and decision to post a gain or loss does not
+        --  --> incorporate sign here instead of when posting.
+        fx_gain_loss_amount :=
+            in_amount[out_count]*sign*(old_exchangerate-current_exchangerate);
 
-         IF (fx_gain_loss_amount > 0) THEN
-            SELECT value::int INTO gain_loss_accno_id
-              FROM defaults
-             WHERE setting_key = 'fxgain_accno_id';
-         ELSIF (fx_gain_loss_amount < 0) THEN
-            SELECT value::int INTO gain_loss_accno_id
-              FROM defaults
-             WHERE setting_key = 'fxloss_accno_id';
+        IF (fx_gain_loss_amount > 0) THEN
+          SELECT value::int INTO gain_loss_accno_id
+            FROM defaults
+           WHERE setting_key = 'fxgain_accno_id';
+        ELSIF (fx_gain_loss_amount < 0) THEN
+          SELECT value::int INTO gain_loss_accno_id
+            FROM defaults
+           WHERE setting_key = 'fxloss_accno_id';
         END IF;
-         IF gain_loss_accno_id IS NOT NULL THEN
-         INSERT INTO acc_trans
-                 (chart_id, amount_bc, curr, amount_tc,
-                  trans_id, transdate, approved, source)
-              -- In this transaction we can't use the default currency,
-              -- because by definition the tc and bc amounts are the same.
-            VALUES (gain_loss_accno_id,
-                    fx_gain_loss_amount,
-                    in_curr,
-                    0, -- the transaction currency side is zero by definition
-                    in_transaction_id[out_count],
-                    in_datepaid,
-                    coalesce(in_approved, true),
-                    in_source[out_count]);
+        IF gain_loss_accno_id IS NOT NULL THEN
+          INSERT INTO acc_trans
+                   (chart_id, amount_bc, curr, amount_tc,
+                    trans_id, transdate, approved, source)
+                -- In this transaction we can't use the default currency,
+                -- because by definition the tc and bc amounts are the same.
+                VALUES (gain_loss_accno_id,
+                  fx_gain_loss_amount,
+                  in_curr,
+                  0, -- the transaction currency side is zero by definition
+                  in_transaction_id[out_count],
+                  in_datepaid,
+                  coalesce(in_approved, true),
+                  in_source[out_count]);
 
-        -- Now we set the links
-         INSERT INTO payment_links
+          INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-         END IF;
+        END IF;
       END LOOP;
    END IF;
 
 
    --
    -- HANDLE THE OVERPAYMENTS NOW
-  IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
+   IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
        INSERT INTO gl (reference, description, transdate,
                        person_id, notes, approved, trans_type_code)
               VALUES (setting_increment('glnumber'),
@@ -978,14 +977,14 @@ BEGIN
        SELECT currval('id') INTO var_gl_id;
 
        UPDATE payment SET gl_id = var_gl_id
-       WHERE id = var_payment_id;
+        WHERE id = var_payment_id;
 
-        FOR out_count IN
+       FOR out_count IN
                         array_lower(in_op_cash_account_id, 1) ..
                         array_upper(in_op_cash_account_id, 1)
-        LOOP
-        -- Cash account side of the transaction
-        INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
+       LOOP
+         -- Cash account side of the transaction
+         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
                                trans_id, transdate, approved, source, memo)
                 VALUES (in_op_cash_account_id[out_count],
                      in_op_amount[out_count]*current_exchangerate*sign,
@@ -996,17 +995,17 @@ BEGIN
                      coalesce(in_approved, true),
                      in_op_source[out_count],
                      in_op_memo[out_count]);
-                INSERT INTO payment_links
-                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
+         INSERT INTO payment_links
+              VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
 
-        END LOOP;
+       END LOOP;
 
-        -- NOW LETS HANDLE THE OVERPAYMENT ACCOUNTS
-        FOR out_count IN
+       -- NOW LETS HANDLE THE OVERPAYMENT ACCOUNTS
+       FOR out_count IN
                      array_lower(in_op_account_id, 1) ..
                      array_upper(in_op_account_id, 1)
-        LOOP
-        INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
+       LOOP
+         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
                                transdate, approved, source, memo)
                 VALUES (in_op_account_id[out_count],
                      in_op_amount[out_count]*current_exchangerate*sign*-1,
@@ -1017,9 +1016,9 @@ BEGIN
                      coalesce(in_approved, true),
                      in_op_source[out_count],
                      in_op_memo[out_count]);
-                INSERT INTO payment_links
+         INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
-        END LOOP;
+       END LOOP;
  END IF;
  return var_payment_id;
 END;
@@ -1048,8 +1047,9 @@ COMMENT ON FUNCTION payment_post
 $$ Posts a payment.  in_op_* arrays are cross-indexed with eachother.
 Other arrays are cross-indexed with eachother.
 
-This API will probably change in 1.4 as we start looking at using more custom
-complex types and arrays of those (requires Pg 8.4 or higher).
+The 'in_cash_account_id's are the "cash side" of the payment; i.e. this can
+be a bank current account, overpayment account or a suspense account associated
+with a bank current account.
 $$;
 
 
