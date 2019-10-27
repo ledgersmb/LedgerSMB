@@ -859,7 +859,7 @@ s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AP_paid_$i"}" 
         $form->{"paidfx_$i"} =
             $form->format_amount(
                 \%myconfig,
-                $form->{"paid_$i"} * $form->{"exchangerate_$i"}, 2 );
+                $form->{"paid_$i"} * ($form->{"exchangerate_$i"} // 1), 2 );
         $form->{"paid_$i"} =
           $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
         $form->{"exchangerate_$i"} =
