@@ -1159,7 +1159,8 @@ sub post_invoice {
 
     if ($form->{manual_tax}){
         my $ac_sth = $dbh->prepare(
-              "INSERT INTO acc_trans (chart_id, trans_id, amount, source, memo)
+              "INSERT INTO acc_trans (chart_id, trans_id, transdate,
+                                      amount, source, memo)
                     VALUES ((select id from account where accno = ?),
                             ?, ?, ?, ?)"
         );
@@ -1182,7 +1183,8 @@ sub post_invoice {
             my $fx_taxbasis = $taxbasis * $fx;
             $form->{receivables} -= $fx_taxamount;
             $invamount += $fx_taxamount;
-            $ac_sth->execute($taccno, $form->{id}, $fx_taxamount,
+            $ac_sth->execute($taccno, $form->{id}, $form->{transdate},
+                             $fx_taxamount,
                              $form->{"mt_ref_$taccno"},
                              $form->{"mt_desc_$taccno"})
                 || $form->dberror();
