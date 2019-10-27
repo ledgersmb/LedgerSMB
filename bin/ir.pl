@@ -684,7 +684,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                    !defined $form->{"mt_amount_$item"}){
                    $form->{"mt_amount_$item"} =
                            $form->{"mt_rate_$item"}
-                           * $form->{"mt_basis_$item"};
+                           * ($form->{"mt_basis_$item"} // 0);
                }
                else
                {

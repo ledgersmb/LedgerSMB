@@ -777,7 +777,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                    !defined $form->{"mt_amount_$item"}){
                    $form->{"mt_amount_$item"} =
                            $form->{"mt_rate_$item"}
-                           * $form->{"mt_basis_$item"};
+                           * ($form->{"mt_basis_$item"} // 0);
                }
                $form->{invtotal} += $form->round_amount(
                                          $form->parse_amount( \%myconfig,  $form->{"mt_amount_$item"}), 2);
