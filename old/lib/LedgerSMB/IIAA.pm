@@ -112,10 +112,10 @@ sub post_form_manual_tax {
     my $invamount = 0;
 
     my $ac_sth = $dbh->prepare(
-        "INSERT INTO acc_trans (chart_id, trans_id,
+        "INSERT INTO acc_trans (chart_id, trans_id, transdate,
                                 amount_bc, curr, amount_tc, source, memo)
                     VALUES ((select id from account where accno = ?),
-                            ?, ?, ?, ?, ?, ?)"
+                            ?, ?, ?, ?, ?, ?, ?)"
         ) or $form->dberror($dbh->errstr);
     my $tax_sth = $dbh->prepare(
         "INSERT INTO tax_extended (entry_id, tax_basis, rate)
@@ -135,7 +135,8 @@ sub post_form_manual_tax {
         my $fx_taxbasis = $taxbasis * $fx;
         $form->{$pay_rec} += $fx_taxamount * $sign * -1;
         $invamount += $fx_taxamount;
-        $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * $sign,
+        $ac_sth->execute($taccno, $form->{id}, $form->{transdate},
+                         $fx_taxamount * $sign,
                          $form->{defaultcurrency},
                          $fx_taxamount * $sign,
                          $form->{"mt_ref_$taccno"},
