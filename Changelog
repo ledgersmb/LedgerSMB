@@ -1,4 +1,18 @@
                                                         -*- fundamental -*-
+
+Changelog for 1.8 Series
+forthcoming
+
+Changelog for 1.8.0
+
+Changed functionalities
+* Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
+
+Code cleanup
+* Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
+* Replace unnecessary UNION selects on ar/ap/gl by select on transactions
+
+
 Changelog for 1.7 Series
 2019-10-04
 
