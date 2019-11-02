@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-10-18 12:21+0000\n"
+"POT-Creation-Date: 2019-11-02 15:59+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Arabic (Egypt) (https://www.transifex.com/ledgersmb/"
 "teams/58325/ar_EG/)\n"
@@ -769,7 +769,7 @@ msgid "Amount Budgetted"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:240
-#: lib/LedgerSMB/Scripts/payment.pm:852 lib/LedgerSMB/Scripts/payment.pm:857
+#: lib/LedgerSMB/Scripts/payment.pm:853 lib/LedgerSMB/Scripts/payment.pm:858
 #: old/bin/aa.pl:1644 templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -836,15 +836,15 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1282
+#: lib/LedgerSMB/Scripts/payment.pm:1283
 msgid "Applied discount"
 msgstr "خصومات مطبقة"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1930
+#: lib/LedgerSMB/Scripts/payment.pm:1931
 msgid "Applied discount by an overpayment"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:850
+#: lib/LedgerSMB/Scripts/payment.pm:851
 msgid "Apply Disc"
 msgstr "تطبيق الخصم"
 
@@ -1829,8 +1829,8 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1476 lib/LedgerSMB/Scripts/payment.pm:681
-#: lib/LedgerSMB/Scripts/payment.pm:743 old/bin/aa.pl:1747 old/bin/arap.pl:266
+#: lib/LedgerSMB/Scripts/payment.pm:1477 lib/LedgerSMB/Scripts/payment.pm:682
+#: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
 #: old/bin/ic.pl:1763 old/bin/ic.pl:2045 old/bin/ic.pl:2194 old/bin/ic.pl:953
 #: old/bin/io.pl:1089 old/bin/io.pl:627 old/bin/oe.pl:1550 old/bin/oe.pl:2065
 #: old/bin/oe.pl:2561 old/bin/pe.pl:1183 old/bin/pe.pl:327 old/bin/pe.pl:746
@@ -2248,7 +2248,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:93
 #: lib/LedgerSMB/Scripts/asset.pm:498 lib/LedgerSMB/Scripts/payment.pm:186
-#: lib/LedgerSMB/Scripts/payment.pm:846 old/bin/aa.pl:831 old/bin/ir.pl:826
+#: lib/LedgerSMB/Scripts/payment.pm:847 old/bin/aa.pl:831 old/bin/ir.pl:826
 #: old/bin/is.pl:938 old/bin/oe.pl:1533 old/bin/pe.pl:1025
 #: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
 #: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
@@ -2785,7 +2785,7 @@ msgstr ""
 msgid "Disc %"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:849 old/bin/ic.pl:1124
+#: lib/LedgerSMB/Scripts/payment.pm:850 old/bin/ic.pl:1124
 #: UI/accounts/edit.html:360 UI/accounts/edit.html:410
 #: UI/am-business-form.html:15 UI/Contact/divs/credit.html:168
 #: UI/Contact/divs/credit.html:169 UI/payments/payments_detail.html:340
@@ -3342,7 +3342,7 @@ msgid "Exch"
 msgstr "سعر  الصرف"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:118
-#: lib/LedgerSMB/Scripts/payment.pm:856 old/bin/aa.pl:440 old/bin/ir.pl:332
+#: lib/LedgerSMB/Scripts/payment.pm:857 old/bin/aa.pl:440 old/bin/ir.pl:332
 #: old/bin/is.pl:333 old/bin/oe.pl:1537 old/bin/oe.pl:352 old/bin/oe.pl:360
 #: UI/orders/order.html:53 UI/payments/payment2.html:147
 #: UI/payments/payments_detail.html:148 UI/payments/payments_detail.html:157
@@ -3355,7 +3355,7 @@ msgstr "سعر الصرف"
 msgid "Exchange rate for payment missing!"
 msgstr "سعر الصرف للمدفوعات غير موجود"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1191
+#: lib/LedgerSMB/Scripts/payment.pm:1192
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -4158,7 +4158,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:281
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:172
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
-#: lib/LedgerSMB/Scripts/payment.pm:845 old/bin/am.pl:1465 old/bin/io.pl:1040
+#: lib/LedgerSMB/Scripts/payment.pm:846 old/bin/am.pl:1465 old/bin/io.pl:1040
 #: old/bin/io.pl:1046 old/bin/io.pl:1166 old/bin/is.pl:1407 old/bin/is.pl:253
 #: old/bin/printer.pl:50 templates/demo/invoice.html:4
 #: templates/demo/invoice.tex:116 templates/demo/printPayment.html:41
@@ -4803,7 +4803,7 @@ msgid "May "
 msgstr "مايو"
 
 #: lib/LedgerSMB/Report/GL.pm:128 lib/LedgerSMB/Scripts/payment.pm:188
-#: lib/LedgerSMB/Scripts/payment.pm:851 old/bin/aa.pl:837 old/bin/ir.pl:652
+#: lib/LedgerSMB/Scripts/payment.pm:852 old/bin/aa.pl:837 old/bin/ir.pl:652
 #: old/bin/ir.pl:832 old/bin/is.pl:763 old/bin/is.pl:944
 #: templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
@@ -5094,7 +5094,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1337
+#: lib/LedgerSMB/Scripts/payment.pm:1338
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -5627,7 +5627,7 @@ msgstr "رقم بوليصة الشحن غير موجود"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:235
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:281
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:145
-#: lib/LedgerSMB/Scripts/payment.pm:848 old/bin/aa.pl:1638
+#: lib/LedgerSMB/Scripts/payment.pm:849 old/bin/aa.pl:1638
 #: templates/demo/invoice.html:190 templates/demo/invoice.tex:175
 #: templates/demo_with_images/invoice.html:193
 #: templates/demo_with_images/invoice.tex:174 templates/xedemo/invoice.html:192
@@ -5736,7 +5736,7 @@ msgstr ""
 msgid "Payables"
 msgstr "المدفوعات"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1110 t/data/04-complex_template.html:282
+#: lib/LedgerSMB/Scripts/payment.pm:1111 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:330 UI/accounts/edit.html:382
 #: UI/Contact/divs/credit.html:210 UI/Contact/divs/credit.html:211
 #: UI/payments/payments_detail.html:227 sql/Pg-database.sql:2801
@@ -6518,7 +6518,7 @@ msgstr "شحن وارد"
 msgid "Receive Merchandise"
 msgstr "استلام بضاعة"
 
-#: lib/LedgerSMB/Scripts/payment.pm:913
+#: lib/LedgerSMB/Scripts/payment.pm:914
 msgid "Received"
 msgstr ""
 
@@ -7067,7 +7067,7 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:600 lib/LedgerSMB/Template/UI.pm:96
+#: lib/LedgerSMB/Scripts/payment.pm:601 lib/LedgerSMB/Template/UI.pm:96
 #: old/bin/printer.pl:130 UI/lib/utilities.html:45
 msgid "Screen"
 msgstr "الشاشة"
@@ -8273,11 +8273,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1208
+#: lib/LedgerSMB/Scripts/payment.pm:1209
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1917
+#: lib/LedgerSMB/Scripts/payment.pm:1918
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -8431,7 +8431,7 @@ msgstr ""
 msgid "To my browser"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:905
+#: lib/LedgerSMB/Scripts/payment.pm:906
 msgid "To pay"
 msgstr ""
 
@@ -8467,7 +8467,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:103
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:99
 #: lib/LedgerSMB/Scripts/asset.pm:503 lib/LedgerSMB/Scripts/payment.pm:227
-#: lib/LedgerSMB/Scripts/payment.pm:847 old/bin/aa.pl:1631 old/bin/ir.pl:798
+#: lib/LedgerSMB/Scripts/payment.pm:848 old/bin/aa.pl:1631 old/bin/ir.pl:798
 #: old/bin/is.pl:911 old/bin/oe.pl:834 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
@@ -8890,7 +8890,7 @@ msgstr ""
 msgid "Use Shipto"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1795
+#: lib/LedgerSMB/Scripts/payment.pm:1796
 msgid "Use overpayment/prepayment"
 msgstr ""
 
@@ -9376,19 +9376,19 @@ msgstr "في شهور"
 msgid "in years"
 msgstr "في سنوات"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1945
+#: lib/LedgerSMB/Scripts/payment.pm:1946
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1646
+#: lib/LedgerSMB/Scripts/payment.pm:1647
 msgid "is lesser than 0"
 msgstr "أصغر من الصفر0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1640
+#: lib/LedgerSMB/Scripts/payment.pm:1641
 msgid "is lesser than the amount to be paid"
 msgstr "أصغر من الكمية الواجب دفعها"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1902
+#: lib/LedgerSMB/Scripts/payment.pm:1903
 msgid "is null"
 msgstr ""
 
@@ -9436,6 +9436,6 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "خطأ غير متوقع!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1954 lib/LedgerSMB/Scripts/payment.pm:1973
+#: lib/LedgerSMB/Scripts/payment.pm:1955 lib/LedgerSMB/Scripts/payment.pm:1974
 msgid "use of an overpayment"
 msgstr ""
