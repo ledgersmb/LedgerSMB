@@ -362,6 +362,15 @@ IF t_inv.qty + t_inv.allocated = 0 THEN
    return 0;
 END IF;
 
+PERFORM 1 FROM parts
+         WHERE t_inv.parts_id = parts.id
+               AND parts.inventory_accno_id IS NOT NULL;
+
+IF NOT FOUND THEN
+   -- the part doesn't have an associated inventory account: it's a service.
+   return 0;
+END IF;
+
 SELECT * INTO t_ap FROM ap WHERE id = t_inv.trans_id;
 
 IF t_inv.qty < 0 THEN -- normal COGS
