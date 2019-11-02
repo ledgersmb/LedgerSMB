@@ -89,6 +89,7 @@ Released 2018-06-10
 Changelog for 1.6.14
 * Fix invoice screens crashing on manual tax with 0% tax rate (Erik H)
 * Fix manual tax lines posted on current instead of transaction date (Erik H)
+* Fix SQL error in reversal of services in AP invoice (Erik H)
 
 Erik H is Erik Huelsmann
 
