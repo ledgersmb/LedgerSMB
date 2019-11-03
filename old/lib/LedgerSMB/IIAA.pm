@@ -135,15 +135,18 @@ sub post_form_manual_tax {
         my $fx_taxbasis = $taxbasis * $fx;
         $form->{$pay_rec} += $fx_taxamount * $sign * -1;
         $invamount += $fx_taxamount;
-        $ac_sth->execute($taccno, $form->{id}, $form->{transdate},
-                         $fx_taxamount * $sign,
-                         $form->{defaultcurrency},
-                         $fx_taxamount * $sign,
-                         $form->{"mt_ref_$taccno"},
-                         $form->{"mt_desc_$taccno"})
-            or $form->dberror($ac_sth->errstr);
-        $tax_sth->execute($fx_taxbasis * $sign, $taxrate)
-            or $form->dberror($tax_sth->errstr);
+
+        if ($fx_taxamount != 0 or $fx_taxbasis != 0) {
+            $ac_sth->execute($taccno, $form->{id}, $form->{transdate},
+                             $fx_taxamount * $sign,
+                             $form->{defaultcurrency},
+                             $fx_taxamount * $sign,
+                             $form->{"mt_ref_$taccno"},
+                             $form->{"mt_desc_$taccno"})
+                or $form->dberror($ac_sth->errstr);
+            $tax_sth->execute($fx_taxbasis * $sign, $taxrate)
+                or $form->dberror($tax_sth->errstr);
+        }
     }
     $ac_sth->finish;
     $tax_sth->finish;
