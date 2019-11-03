@@ -127,9 +127,7 @@ sub _calc_taxes {
             $form->{tax_obj}{$_->account} = $_;
             $form->{taxes}{$_->account} = 0 if ! $form->{taxes}{$_->account};
             $form->{taxes}{$_->account} += $_->value;
-            if ($_->value){
-               $form->{taxbasis}{$_->account} += $linetotal;
-            }
+            $form->{taxbasis}{$_->account} += $linetotal;
         }
     }
 }
