@@ -32,7 +32,7 @@ BEGIN;
     SELECT has_function('asset__search',array['integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric']);
     SELECT has_function('asset_class__get_asset_accounts','{}'::text[]);
     SELECT has_function('asset_class__get_dep_accounts','{}'::text[]);
-    SELECT has_function('asset__save',array['integer', 'integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric', 'date', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer']);
+    SELECT has_function('asset__save',array['integer', 'integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric', 'date', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer']);
     SELECT has_function('asset_item__search',array['integer', 'integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric', 'date', 'integer', 'integer', 'integer', 'integer', 'integer']);
     SELECT has_function('asset_class__get_dep_method',array['integer']);
     SELECT has_function('asset_report__save',array['integer', 'date', 'integer', 'integer', 'boolean']);
