@@ -1444,6 +1444,7 @@ qq|$form->{script}?action=edit&id=$form->{"id_$i"}&login=$form->{login}&sessioni
 }
 
 sub update {
+    &link_part;
     if ( $form->{item} eq "assembly" ) {
 
         $i = $form->{assembly_rows};
