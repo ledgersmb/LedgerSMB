@@ -202,8 +202,10 @@ Begin
         WHERE asset_report.id = in_report_id
         GROUP BY asset_report.id, asset_report.report_date;
 
-        INSERT INTO acc_trans (trans_id, chart_id, transdate, approved, amount)
-        SELECT gl.id, a.exp_account_id, r.report_date, true, sum(amount) * -1
+        INSERT INTO acc_trans (trans_id, chart_id, transdate, approved,
+                              amount_bc, curr, amount_tc)
+        SELECT gl.id, a.exp_account_id, r.report_date, true, sum(amount) * -1,
+               defaults_get_defaultcurrency(), sum(amount) * -1
         FROM asset_report r
         JOIN asset_report_line l ON (r.id = l.report_id)
         JOIN asset_item a ON (l.asset_id = a.id)
@@ -211,8 +213,10 @@ Begin
         WHERE r.id = in_report_id
         GROUP BY gl.id, r.report_date, a.exp_account_id;
 
-        INSERT INTO acc_trans (trans_id, chart_id, transdate, approved, amount)
-        SELECT gl.id, a.dep_account_id, r.report_date, true, sum(amount)
+        INSERT INTO acc_trans (trans_id, chart_id, transdate, approved,
+                               amount_bc, curr, amount_tc)
+        SELECT gl.id, a.dep_account_id, r.report_date, true, sum(amount),
+               defaults_get_defaultcurrency(), sum(amount)
         FROM asset_report r
         JOIN asset_report_line l ON (r.id = l.report_id)
         JOIN asset_item a ON (l.asset_id = a.id)
@@ -1195,11 +1199,11 @@ SELECT currval('id'), in_asset_acct, coalesce(l.amount, 0) * -1,
 INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc,
                       approved, transdate)
 select currval('id'),
-            CASE WHEN sum(amount) > 0 THEN in_loss_acct
+            CASE WHEN sum(amount_bc) > 0 THEN in_loss_acct
             else in_gain_acct
         END,
-        sum(amount) * -1, defaults_get_defaultcurrency(),
-        sum(amount) * -1 , true,
+        sum(amount_bc) * -1, defaults_get_defaultcurrency(),
+        sum(amount_tc) * -1 , true,
         retval.report_date
   FROM acc_trans
   WHERE trans_id = currval('id');
