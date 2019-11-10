@@ -111,7 +111,7 @@ LOOP
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
        return ARRAY[t_alloc, t_cogs];
-   ELSIF (in_qty + t_alloc) <= t_avail THEN
+   ELSIF (in_qty - t_alloc) <= t_avail THEN
        UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
         WHERE id = t_inv.id;
        t_cogs := t_cogs + (in_qty - t_alloc) * t_inv.sellprice;
