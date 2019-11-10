@@ -282,7 +282,7 @@ sub _display_report {
                                     ($recon->{their_total}
                                     + $recon->{outstanding_total}
                                     + $recon->{mismatch_our_total});
-    $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
+    $recon->{out_of_balance} = ($recon->{their_total} // 0) - ($recon->{our_total} // 0);
     $recon->{out_of_balance}->bfround(
         LedgerSMB::Setting->get('decimal_places') * -1
     );
