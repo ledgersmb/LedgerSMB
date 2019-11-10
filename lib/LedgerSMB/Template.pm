@@ -520,6 +520,7 @@ sub _render {
     my $unescape = $format->can('unescape');
     my $cleanvars = {
         ( %{preprocess($vars, $escape)},
+          LIST_FORMATS => sub { return available_formats(); },
           UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
                        : sub { return @_; }),
           escape => sub { return $escape->(@_); },
