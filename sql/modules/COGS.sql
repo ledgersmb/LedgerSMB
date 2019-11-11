@@ -162,12 +162,12 @@ LOOP
    ELSIF t_alloc = in_qty THEN
        return ARRAY[t_alloc, t_cogs];
    ELSIF (in_qty - t_alloc) <= -1 * (t_inv.qty + t_inv.allocated) THEN
-       raise notice 'partial reversal';
+       -- 'partial reversal';
        UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
         WHERE id = t_inv.id;
        return ARRAY[in_qty * -1, t_cogs + (in_qty - t_alloc) * t_inv.sellprice];
    ELSE
-       raise notice 'total reversal';
+       -- 'total reversal';
        UPDATE invoice SET allocated = qty * -1
         WHERE id = t_inv.id;
        t_alloc := t_alloc - (t_inv.qty + t_inv.allocated);
@@ -406,7 +406,6 @@ ELSE -- reversal
      FROM parts p
     WHERE id = t_inv.parts_id;
    retval := r_cogs[1];
-   raise notice 'cogs reversal returned %', r_cogs;
 
 END IF;
 
