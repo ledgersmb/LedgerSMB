@@ -2,6 +2,15 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.3
+* Fix regression in fixed assets module due to Multi Currency support (#4195)
+* Fix 'constraint not deferrable' error in fixed assets disposal (#4195)
+* Stop posting manual tax lines with zero amount and zero base amount (#4196)
+* Fix incorrect currency setup error on 'Update' in part screen (#4198)
+* Fix occasional COGS error on invoice posting (#4200)
+* Fix regression with missing download links on reports (#4206)
+
+
 Changelog for 1.7.2
 * Fix invoice screens crashing on manual tax with 0% tax rate (#4176)
 * Fix manual tax lines posted on current instead of transaction date (#4180)
