@@ -205,6 +205,13 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.29
+* Fix occasional COGS error on invoice posting (Erik H)
+* Fix failure on first reconciliation report for an account (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.28
 * Fix invoice screens crashing on manual tax with 0% tax rate (Erik H)
 * Fix manual tax lines posted on current instead of transaction date (Erik H)
