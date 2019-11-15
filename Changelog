@@ -22,6 +22,7 @@ Changelog for 1.7.3
 * Stop posting manual tax lines with zero amount and zero base amount (#4196)
 * Fix incorrect currency setup error on 'Update' in part screen (#4198)
 * Fix occasional COGS error on invoice posting (#4200)
+* Fix occasional COGS error on invoice reversal posting (#4213)
 * Fix regression with missing download links on reports (#4206)
 
 
