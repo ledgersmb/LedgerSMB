@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.7.3-dev\n"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-11-02 15:59+0000\n"
+"POT-Creation-Date: 2019-11-15 19:22+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Latvian (https://www.transifex.com/ledgersmb/teams/58325/lv/)\n"
 "Language: lv\n"
@@ -250,7 +250,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:87
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:82
 #: lib/LedgerSMB/Report/Trial_Balance.pm:156
-#: lib/LedgerSMB/Scripts/payment.pm:184 old/bin/ic.pl:1021 old/bin/ic.pl:1671
+#: lib/LedgerSMB/Scripts/payment.pm:184 old/bin/ic.pl:1021 old/bin/ic.pl:1672
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:38
 #: UI/accounts/edit.html:126 UI/Contact/divs/bank_act.html:23
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
@@ -367,7 +367,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
 #: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/am.pl:1496
-#: old/bin/ic.pl:2097 UI/Configuration/currency.html:35
+#: old/bin/ic.pl:2098 UI/Configuration/currency.html:35
 #: UI/Configuration/rate.html:62 UI/Configuration/ratetype.html:28
 msgid "Add"
 msgstr "Pievienot"
@@ -586,7 +586,7 @@ msgstr ""
 msgid "Added id [_1]"
 msgstr ""
 
-#: old/bin/aa.pl:615 old/bin/arap.pl:172 old/bin/ic.pl:1674 old/bin/ir.pl:443
+#: old/bin/aa.pl:615 old/bin/arap.pl:172 old/bin/ic.pl:1675 old/bin/ir.pl:443
 #: old/bin/is.pl:482 old/bin/oe.pl:453 old/bin/pe.pl:665
 #: UI/Contact/divs/address.html:81 UI/Contact/divs/address.html:126
 #: UI/Reports/filters/contact_search.html:89
@@ -916,7 +916,7 @@ msgstr ""
 msgid "Assembled"
 msgstr ""
 
-#: old/bin/ic.pl:2217
+#: old/bin/ic.pl:2218
 msgid "Assemblies restocked!"
 msgstr "Komplektācijas papildinātas!"
 
@@ -1312,7 +1312,7 @@ msgid "Billion"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
-#: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2090
+#: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2091
 #: old/bin/ic.pl:490 old/bin/io.pl:242 old/bin/oe.pl:1854
 #: templates/demo/bin_list.html:154 templates/demo/bin_list.tex:109
 #: templates/demo/pick_list.html:116 templates/demo/pick_list.tex:102
@@ -1493,7 +1493,7 @@ msgstr ""
 msgid "Cannot create Service; Income account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:1988
+#: old/bin/ic.pl:1989
 msgid "Cannot delete item!"
 msgstr "Vienību nevar izdzēst!"
 
@@ -1542,7 +1542,7 @@ msgstr "Nevar saglabāt tāmi"
 msgid "Cannot save taxes!"
 msgstr ""
 
-#: old/bin/ic.pl:2220
+#: old/bin/ic.pl:2221
 msgid "Cannot stock assemblies!"
 msgstr "Nevar papildināt komplektāciju!"
 
@@ -1601,7 +1601,7 @@ msgstr ""
 msgid "Check"
 msgstr "Čeks"
 
-#: old/bin/ic.pl:2026
+#: old/bin/ic.pl:2027
 msgid "Check Inventory"
 msgstr "Čeku inventūra"
 
@@ -1829,7 +1829,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1477 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
-#: old/bin/ic.pl:1763 old/bin/ic.pl:2045 old/bin/ic.pl:2194 old/bin/ic.pl:953
+#: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:953
 #: old/bin/io.pl:1089 old/bin/io.pl:627 old/bin/oe.pl:1550 old/bin/oe.pl:2065
 #: old/bin/oe.pl:2561 old/bin/pe.pl:1183 old/bin/pe.pl:327 old/bin/pe.pl:746
 #: old/bin/pe.pl:916 UI/asset/begin_approval.html:65
@@ -2663,7 +2663,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:367
 #: lib/LedgerSMB/Scripts/asset.pm:652 lib/LedgerSMB/Scripts/asset.pm:717
 #: old/bin/aa.pl:1509 old/bin/aa.pl:624 old/bin/aa.pl:675 old/bin/am.pl:808
-#: old/bin/ic.pl:1264 old/bin/ic.pl:2019 old/bin/ic.pl:2086 old/bin/ic.pl:743
+#: old/bin/ic.pl:1264 old/bin/ic.pl:2020 old/bin/ic.pl:2087 old/bin/ic.pl:743
 #: old/bin/io.pl:1700 old/bin/io.pl:230 old/bin/ir.pl:458 old/bin/is.pl:500
 #: old/bin/oe.pl:1847 old/bin/oe.pl:2046 old/bin/oe.pl:2119 old/bin/oe.pl:2153
 #: old/bin/oe.pl:2397 old/bin/pe.pl:1035 old/bin/pe.pl:308 old/bin/pe.pl:354
@@ -4135,12 +4135,12 @@ msgstr ""
 msgid "Inventory and COGS"
 msgstr ""
 
-#: old/bin/ic.pl:1806
+#: old/bin/ic.pl:1807
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr "Krājuma daudzumam jābūt nullei pirms jūs varat atcelt šo komplektāciju!"
 
-#: old/bin/ic.pl:1805
+#: old/bin/ic.pl:1806
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 
@@ -4332,7 +4332,7 @@ msgstr ""
 msgid "Item"
 msgstr ""
 
-#: old/bin/ic.pl:1985
+#: old/bin/ic.pl:1986
 msgid "Item deleted!"
 msgstr "Vienība izdzēsts!"
 
@@ -5244,7 +5244,7 @@ msgstr ""
 msgid "Null model numbers"
 msgstr ""
 
-#: old/bin/ic.pl:1261 old/bin/ic.pl:2013 old/bin/ic.pl:2082 old/bin/ic.pl:742
+#: old/bin/ic.pl:1261 old/bin/ic.pl:2014 old/bin/ic.pl:2083 old/bin/ic.pl:742
 #: old/bin/io.pl:227 old/bin/oe.pl:1844 old/bin/pe.pl:265 old/bin/pe.pl:347
 #: old/bin/pe.pl:379 templates/demo/bin_list.html:147
 #: templates/demo/invoice.html:140 templates/demo/invoice.tex:139
@@ -6312,7 +6312,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/History.pm:89
 #: lib/LedgerSMB/Report/Inventory/History.pm:158
 #: lib/LedgerSMB/Report/Inventory/Search.pm:297 old/bin/ic.pl:1256
-#: old/bin/ic.pl:2093 old/bin/io.pl:233 old/bin/oe.pl:1850 old/bin/oe.pl:2132
+#: old/bin/ic.pl:2094 old/bin/io.pl:233 old/bin/oe.pl:1850 old/bin/oe.pl:2132
 #: old/bin/pe.pl:1038 templates/demo/bin_list.html:151
 #: templates/demo/bin_list.tex:108 templates/demo/invoice.html:143
 #: templates/demo/invoice.tex:142 templates/demo/packing_list.html:123
@@ -6364,7 +6364,7 @@ msgstr "Skaits"
 msgid "Quantity"
 msgstr ""
 
-#: old/bin/ic.pl:2210
+#: old/bin/ic.pl:2211
 msgid "Quantity exceeds available units to stock!"
 msgstr "Skaits pārsniedz noliktavā esošo priekšmetu skaitu"
 
@@ -6447,7 +6447,7 @@ msgstr "Tāmes pieprasījuma numurs"
 msgid "RFQs"
 msgstr "Tāmes pieprasījumu"
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2095
+#: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2096
 #: old/bin/ic.pl:483 UI/Reports/filters/search_goods.html:300
 msgid "ROP"
 msgstr "Pasūtīšanas limits"
@@ -7215,7 +7215,7 @@ msgstr ""
 msgid "Select by Default:"
 msgstr ""
 
-#: old/bin/arap.pl:181 old/bin/ic.pl:1680 old/bin/pe.pl:669
+#: old/bin/arap.pl:181 old/bin/ic.pl:1681 old/bin/pe.pl:669
 msgid "Select from one of the names below"
 msgstr "Atlasīt vienu no sekojošiem nosaukumiem"
 
@@ -7775,7 +7775,7 @@ msgstr ""
 msgid "Stock"
 msgstr "Krājums"
 
-#: old/bin/ic.pl:1995 old/bin/ic.pl:2102 sql/Pg-database.sql:2935
+#: old/bin/ic.pl:1996 old/bin/ic.pl:2103 sql/Pg-database.sql:2935
 msgid "Stock Assembly"
 msgstr "Komplektācijas krājumā"
 
@@ -9278,11 +9278,11 @@ msgstr ""
 msgid "[_1] [_2] Transaction"
 msgstr ""
 
-#: old/bin/ic.pl:1638
+#: old/bin/ic.pl:1639
 msgid "[_1]: Customer not on file!"
 msgstr ""
 
-#: old/bin/ic.pl:1560
+#: old/bin/ic.pl:1561
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
