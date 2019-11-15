@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.7.3-dev\n"
+"Project-Id-Version: LedgerSMB 1.7.3\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2019-11-15 19:22+0000\n"
 "MIME-Version: 1.0\n"
