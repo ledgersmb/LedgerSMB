@@ -288,6 +288,7 @@ Released 2016-12-24
 
 Changelog for 1.5.29
 * Fix occasional COGS error on invoice posting (Erik H)
+* Fix occasional COGS error on invoice reversal posting (Erik H)
 * Fix failure on first reconciliation report for an account (Erik H)
 
 Erik H is Erik Huelsmann
