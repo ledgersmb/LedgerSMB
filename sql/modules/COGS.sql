@@ -41,7 +41,7 @@ FOR t_inv IN
      WHERE allocated + qty > 0 and a.approved and parts_id = in_parts_id
    ORDER BY a.transdate ASC, a.id ASC, i.id ASC
 LOOP
-   t_reallocated := greatest(in_qty - t_alloc, t_inv.qty + t_inv.allocated);
+   t_reallocated := least(t_alloc - in_qty, t_inv.qty + t_inv.allocated);
    UPDATE invoice
       SET allocated = allocated - t_reallocated
     WHERE id = t_inv.id;
