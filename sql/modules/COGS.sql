@@ -142,6 +142,7 @@ CREATE OR REPLACE FUNCTION cogs__reverse_ap
 (in_parts_id int, in_qty numeric) RETURNS numeric[] AS
 $$
 DECLARE t_alloc numeric :=0;
+        t_realloc numeric;
         t_inv invoice;
         t_cogs numeric :=0;
         retval numeric[];
@@ -157,29 +158,23 @@ FOR t_inv IN
      WHERE qty + allocated < 0 AND parts_id = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
+   t_realloc := least(in_qty - t_alloc, -1 * (t_inv.allocated + t_inv.qty));
+   UPDATE invoice SET allocated = allocated + t_realloc
+    WHERE id = t_inv.id;
+   t_alloc := t_alloc + t_realloc;
+   t_cogs := t_cogs + t_realloc * t_inv.sellprice;
+
    IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
-       return ARRAY[t_alloc, t_cogs];
-   ELSIF (in_qty - t_alloc) <= -1 * (t_inv.qty + t_inv.allocated) THEN
-       -- 'partial reversal';
-       UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
-        WHERE id = t_inv.id;
-       return ARRAY[in_qty * -1, t_cogs + (in_qty - t_alloc) * t_inv.sellprice];
-   ELSE
-       -- 'total reversal';
-       UPDATE invoice SET allocated = qty * -1
-        WHERE id = t_inv.id;
-       t_alloc := t_alloc - (t_inv.qty + t_inv.allocated);
-       t_cogs := t_cogs - (t_inv.qty + t_inv.allocated) * t_inv.sellprice;
+       return ARRAY[-1 * t_alloc, t_cogs];
    END IF;
 END LOOP;
-
-RETURN ARRAY[t_alloc, t_cogs];
 
 RAISE EXCEPTION 'TOO FEW TO ALLOCATE';
 END;
 $$ LANGUAGE PLPGSQL;
+
 
 COMMENT ON FUNCTION cogs__reverse_ap (in_parts_id int, in_qty numeric) IS
 $$ This function iterates through invoice rows attached to ap transactions and
