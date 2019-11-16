@@ -486,8 +486,6 @@ $$
                      OR (t_recon_fx is true
                          AND (gl.table <> 'gl'
                               OR ac.fx_transaction IS TRUE)))
-                AND (ac.entry_id > (select min(entry_id) from acc_trans
-                                     where acc_trans.chart_id = r.chart_id))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table,
                 case when gl.table = 'gl' then gl.id else 1 end
