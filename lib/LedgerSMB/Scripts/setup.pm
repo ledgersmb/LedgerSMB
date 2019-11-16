@@ -792,38 +792,52 @@ verify_check => md5_hex($check->test_query),
     my @skip_keys = grep /^skip_/, keys %$request;
     $hiddens->{@skip_keys} = $request->{@skip_keys};
 
+    my $cols = [];
+    for my $column (@{$check->display_cols // []}) {
+        my $selectable_value = $selectable_values{$column};
+
+        if (grep { $column eq $_ } @{$check->columns // []}) {
+            if ( defined $selectable_value && @$selectable_value ) {
+                push @$cols, {
+                    col_id => $column,
+                    name => $column,
+                    type => 'select',
+                    options => $selectable_value,
+                    default_blank => ( 1 != @$selectable_value ),
+                };
+            }
+            else {
+                push @$cols, {
+                    col_id => $column,
+                    name => $column,
+                    type => 'input_text',
+                };
+            }
+        }
+        else {
+            push @$cols, {
+                col_id => $column,
+                name => $column,
+                type => 'text',
+            };
+        }
+    };
+    push @$cols, {
+        col_id => 'id',
+        type => 'hidden',
+    };
+
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-      my $count = 1+scalar(@$rows);
-
-      for my $column (@{$check->columns // []}) {
-        my $selectable_value = $selectable_values{$column};
-        my $name = $column . '_' . $count;
-        $row->{$column} =
-           ( defined $selectable_value && @$selectable_value )
-           ? { select => {
-                   name => $name,
-                   default_values => $row->{$column} // '',
-                   id => $count,
-                   options => $selectable_value,
-                   default_blank => ( 1 != @$selectable_value )
-           } }
-           : { input => {
-                   name => $name,
-                   value => $row->{$column} // '',
-                   type => 'text',
-                   size => 15,
-          } };
-      };
-      $hiddens->{"id_$count"} =
-          join(',', map { MIME::Base64::encode(($row->{$_} // ''), '')}
-                    @{$check->id_columns});
-      push @$rows, $row;
+        $row->{row_id} = 1+@$rows;
+        $row->{id} =
+            join(',', map { MIME::Base64::encode(($row->{$_} // ''), '')}
+                 @{$check->id_columns});
+        push @$rows, $row;
     }
     $hiddens->{count} = scalar(@$rows);
     $sth->finish();
 
-    my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my %buttons = map { $_ => 1 } @{$check->buttons};
     my $enabled_buttons;
     for (
@@ -856,13 +870,12 @@ verify_check => md5_hex($check->test_query),
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/migration_step', {
            form               => $request,
-           heading            => $heading,
            headers            => [$request->{_locale}->maketext($check->display_name),
                                   $request->{_locale}->maketext($check->instructions)],
-           columns            => $check->display_cols,
+           columns            => $cols,
            rows               => $rows,
-           hiddens            => $hiddens,
            buttons            => $enabled_buttons,
+           hiddens            => $hiddens,
            include_stylesheet => 'setup/stylesheet.css',
     });
 }
