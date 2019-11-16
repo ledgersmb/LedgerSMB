@@ -497,8 +497,6 @@ $$
                 AND ac.approved IS TRUE
                 AND ac.chart_id = t_chart_id
                 AND ac.transdate <= t_end_date
-                AND (ac.entry_id > (select min(entry_id) from acc_trans
-                                     where acc_trans.chart_id = r.chart_id))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table
         HAVING count(rl.id) = 0;
