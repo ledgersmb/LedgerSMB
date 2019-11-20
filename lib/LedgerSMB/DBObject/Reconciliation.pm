@@ -386,7 +386,8 @@ sub get {
                                 args => { chart_id => $ref->{id},
                                           report_date => $previous->{end_date} });
 
-    my $our_balance = $ref->{reconciliation__get_cleared_balance};
+    my $our_balance = $ref->{reconciliation__get_cleared_balance} // 0;
+
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
