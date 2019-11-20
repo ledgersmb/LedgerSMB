@@ -394,7 +394,7 @@ sub get {
                                           report_date => $previous->{end_date}
                                         });
 
-    my $our_balance = $ref->{reconciliation__get_cleared_balance};
+    my $our_balance = $ref->{reconciliation__get_cleared_balance} // 0;
     warn "$previous->{their_total} should always equal $our_balance"
         if $previous->{their_total} != $our_balance;
 
