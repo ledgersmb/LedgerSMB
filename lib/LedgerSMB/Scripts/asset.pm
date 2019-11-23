@@ -608,24 +608,76 @@ sub report_details {
     } elsif ($report->{report_class} == RC_PARTIAL_DISPOSAL ) {
       return partial_disposal_details($report);
     }
-    my @cols = qw(tag start_depreciation purchase_value method_short_name
-                 usable_life basis prior_through prior_dep dep_this_time
-                 dep_ytd dep_total);
-    $report->{title} = $locale->text('Report [_1] on date [_2]',
-                     $report->{id}, $report->{report_date}->to_output);
-    my $header = {
-                            tag => $locale->text('Tag'),
-             start_depreciation => $locale->text('Dep. Starts'),
-                 purchase_value =>$locale->text('Aquired Value'),
-              method_short_name =>$locale->text('Dep. Method'),
-                    usable_life =>$locale->text('Est. Life'),
-                          basis =>$locale->text('Dep. Basis'),
-                  prior_through =>$locale->text('Prior Through'),
-                      prior_dep =>$locale->text('Prior Dep.'),
-                  dep_this_time =>$locale->text('Dep. this run'),
-                        dep_ytd =>$locale->text('Dep. YTD'),
-                      dep_total =>$locale->text('Total Accum. Dep.'),
-    };
+    my $cols = [
+        {
+            col_id => 'tag',
+            name   => $locale->text('Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'start_depreciation',
+            name   => $locale->text('Dep. Starts'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'method_short_name',
+            name   => $locale->text('Dep. Method'),
+            type   => 'text',
+        },
+        {
+            col_id => 'usable_life',
+            name   => $locale->text('Est. Life'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'basis',
+            name   => $locale->text('Dep. Basis'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'prior_through',
+            name   => $locale->text('Prior Through'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'prior_dep',
+            name   => $locale->text('Prior Dep.'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'dep_this_time',
+            name   => $locale->text('Dep. this run'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'dep_ytd',
+            name   => $locale->text('Dep. YTD'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'dep_total',
+            name   => $locale->text('Total Accum. Dep.'),
+            type   => 'text',
+            class  => 'amount',
+        }
+        ];
+
+    my $title =
+        $locale->text('Report [_1] on date [_2]',
+                      $report->{id}, $report->{report_date}->to_output);
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
         for my $amt (qw(purchase_value basis prior_dep dep_this_time dep_ytd
@@ -642,13 +694,13 @@ sub report_details {
                    value => 'report_details_approve'
                    },
     ];
+    $report->{hiddens} = { id => $report->{id} };
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'form-dynatable', {
-                       form => $report,
-                    columns => \@cols,
-                    heading => $header,
+    return $template->render($request, 'Reports/display_report', {
+                    request => $report,
+                       name => $title,
+                    columns => $cols,
                        rows => $rows,
-                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
