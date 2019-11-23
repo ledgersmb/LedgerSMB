@@ -1179,7 +1179,8 @@ SELECT lsmb__grant_perms('assets_depreciate', 'asset_report_id_seq', 'ALL');
 SELECT lsmb__grant_perms('assets_depreciate', 'asset_report', 'UPDATE');
 SELECT lsmb__grant_perms('assets_depreciate', obj, ptype)
   FROM unnest(array['SELECT'::text, 'INSERT']) ptype,
-       unnest(array['asset_report'::text, 'asset_report_line', 'asset_item',
+       unnest(array['asset_report'::text, 'asset_report_line',
+                    'asset_item', 'asset_rl_to_disposal_method',
                     'asset_class']) obj;
 
 SELECT lsmb__grant_menu('assets_depreciate', 238, 'allow');
