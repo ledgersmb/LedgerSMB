@@ -360,93 +360,90 @@ sub display_report {
     my ($request, $report) = @_;
     $report->get_metadata;
     my $locale = $request->{_locale};
-    my $cols = [];
-    @$cols = qw(select tag description purchase_date purchase_value);
-    my $heading = {
-       tag            =>  $locale->text('Asset Tag') ,
-       description    =>  $locale->text('Description') ,
-       purchase_date  =>  $locale->text('Purchase Date') ,
-       purchase_value =>  $locale->text('Purchase Value') ,
-       amount         =>  $locale->text('Proceeds'),
-       dm             =>  $locale->text('Disposal Method'),
-       percent        =>  $locale->text('Percent'),
-   };
+    my @disp_methods = (
+        map { { text => $_->{label},
+                value => $_->{id} } } @{$report->{disp_methods}} );
+    my $cols = [
+        {
+            col_id => 'asset',
+            type   => 'checkbox',
+        },
+        {
+            col_id => 'tag',
+            name   => $locale->text('Asset Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'purchase_date',
+            name   => $locale->text('Purchase Date'),
+            type   => 'text',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Purchase Value'),
+            type   => 'text',
+        },
+        ];
    my $rows = [];
    my $hiddens = {};
    my $count = 0;
-   for my $asset (@{$report->{assets}}){
-       push @$rows,
-            { select         => {input => { name    => "asset_$count",
-                                            checked => $asset->{checked},
-                                            type    => 'checkbox',
-                                            value   => '1',
-                                          },
-                                },
-              tag            => $asset->{tag},
-              description    => $asset->{description},
-              purchase_date  => $asset->{purchase_date},
-              purchase_value => $asset->{purchase_value},
-              dm             => {select => { name       => "dm_$asset->{id}",
-                                             options    => $report->{disp_methods},
-                                             text_attr  => 'label',
-                                             value_attr => 'id',
-                                           },
-                                },
+    for my $asset (@{$report->{assets}}){
+        $asset->{row_id} = $asset->{id};
+        push @$rows, $asset;
+   }
+    my $buttons = [
+        { name  => 'action',
+          text  => $locale->text('Save'),
+          value => 'report_save',
+          class => 'submit',
+          type  => 'submit',
+        },
+        ];
+    my $title;
+    if ($request->{depreciation}){
+       $title = $locale->text('Asset Depreciation Report');
+    } else {
+        $title = $locale->text('Asset Disposal Report');
 
-              amount         => {input => { name  => "amount_$asset->{id}",
-                                            type  => 'text',
-                                            class => 'amount',
-                                            value => $request->{"amount_$asset->{id}"},
-                                            size  => 20,
-                                            # requiring proceeds works around
-                                            # a problem of NULL amounts ending
-                                            # up in the database, resulting in
-                                            # approval trying to post NULL into
-                                            # the amount field in the gl table
-                                            required => 1,
-                                          },
-                                },
-              percent        => {input => { name  => "percent_$asset->{id}",
-                                            type  => 'text',
-                                            class => 'percent',
-                                            value => $request->{"percent_$asset->{id}"},
-                                            size  => 6,
-                                          },
-                                },
-            };
-       $hiddens->{"id_$count"} = $asset->{id};
-       ++$count;
-   }
-   $request->{rowcount} = $count;
-   my $buttons = [
-      { name  => 'action',
-        text  => $locale->text('Save'),
-        value => 'report_save',
-        class => 'submit',
-        type  => 'submit',
-      },
-   ];
-   if ($request->{depreciation}){
-       $request->{title} = $locale->text('Asset Depreciation Report');
-   } else {
-       $request->{title} = $locale->text('Asset Disposal Report');
-       push @$cols, 'dm', 'amount';
-       $hiddens->{report_class} = $request->{report_class};
-   }
-   if ($request->{report_class} == RC_PARTIAL_DISPOSAL ){
-       $request->{title} = $locale->text('Asset Partial Disposal Report');
-       push @$cols, 'percent';
-   }
-   for my $hide (qw(exp_account_id gain_account_id loss_account_id report_date
-                 asset_class rowcount depreciation))
-   {
-       $hiddens->{$hide} = $request->{$hide};
-   }
+        push @$cols, ({
+            col_id  => 'dm',
+            name    => $locale->text('Disposal Method'),
+            type    => 'select',
+            options => \@disp_methods,
+        },
+        {
+            col_id  => 'amount',
+            name    => $locale->text('Proceeds'),
+            type    => 'input_text',
+            class   => 'amount',
+        });
+        $hiddens->{report_class} = $request->{report_class};
+    }
+    if ($request->{report_class} == RC_PARTIAL_DISPOSAL ){
+        $title = $locale->text('Asset Partial Disposal Report');
+        push @$cols, {
+            col_id  => 'percent',
+            name    => $locale->text('Percent'),
+            type    => 'input_text',
+            class   => 'percent',
+        };
+    }
+    for my $hide (qw(exp_account_id gain_account_id loss_account_id report_date
+                  asset_class rowcount depreciation))
+    {
+        $hiddens->{$hide} = $request->{$hide};
+    }
+    $request->{hiddens} = $hiddens;
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'form-dynatable', {
-                        form => $request,
+    return $template->render($request, 'Reports/display_report', {
+                        name => $title,
+                     request => $request,
                      columns => $cols,
-                     heading => $heading,
                         rows => $rows,
                      hiddens => $hiddens,
                      buttons => $buttons,
@@ -488,26 +485,8 @@ sub report_results {
     my $locale = $request->{_locale};
     my $ar = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $ar->get_metadata;
-    $ar->{title} = $locale->text('Report Results');
+    my $title = $locale->text('Report Results');
     my @results = $ar->search;
-    my $cols = [];
-    @$cols = qw(select id report_date type asset_class entered_at
-                   approved_at total);
-    my $header = {
-                        id => $locale->text('ID'),
-               report_date => $locale->text('Date'),
-                      type => $locale->text('Type'),
-               asset_class => $locale->text('Asset Class'),
-                entered_at => $locale->text('Entered at'),
-               approved_at => $locale->text('Approved at'),
-                     total => $locale->text('Total'),
-    };
-    my $rows = [];
-    my $hiddens = {
-        gain_acct => $request->{gain_acct},
-        loss_acct => $request->{loss_acct},
-    };
-    my $count = 0;
     my $base_href = 'asset.pl?action=report_details&'.
                      "expense_acct=$ar->{expense_acct}";
     if ($ar->{depreciation}){
@@ -516,34 +495,78 @@ sub report_results {
              $base_href .= "&gain_acct=$ar->{gain_acct}&loss_acct=".
                             "$ar->{loss_acct}";
     }
+    $base_href .= '&id=';
+    my $cols = [
+        {
+            col_id => 'select',
+            type   => 'checkbox',
+        },
+        {
+            col_id    => 'id',
+            name      => $locale->text('ID'),
+            type      => 'href',
+            href_base => $base_href,
+        },
+        {
+            col_id => 'report_date',
+            name   => $locale->text('Date'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'type',
+            name   => $locale->text('Type'),
+            type   => 'text',
+        },
+        {
+            col_id => 'asset_class',
+            name   => $locale->text('Asset Class'),
+            type   => 'text',
+        },
+        {
+            col_id => 'entered_at',
+            name   => $locale->text('Entered at'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'approved_at',
+            name   => $locale->text('Approved at'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'total',
+            name   => $locale->text('Total'),
+            type   => 'amount',
+        },
+        ];
+    my $rows = [];
+    my $hiddens = {
+        gain_acct => $request->{gain_acct},
+        loss_acct => $request->{loss_acct},
+    };
+    my $count = 0;
     for my $r (@results){
         next if (($r->{report_class} != 1 and $ar->{depreciation})
                  or ($r->{report_class} == 1 and not $ar->{depreciation}));
         $hiddens->{"id_$count"} = $r->{id};
         my $ref = {
-              select         => {input => { name    => "report_$count",
-                                            checked => $r->{checked},
-                                            type    => 'checkbox',
-                                            value   => $r->{id},
-                                          },
-                                },
-               id             => {href => $base_href . '&id='.$r->{id},
-                                  text => $r->{id},
-                                 },
-               report_date    => $r->{report_date},
-               entered_at     => $r->{entered_at},
-               approved_at    => $r->{approved_at},
-               total          => $r->{total}->to_output(money => 1),
+            select         => 0,
+            row_id         => $r->{id},
+            id             => $r->{id},
+            type           => (($r->{report_class} == 1)
+                               ? $locale->text('Depreciation')
+                               : $locale->text('Disposal')),
+            report_date    => $r->{report_date},
+            entered_at     => $r->{entered_at},
+            approved_at    => $r->{approved_at},
+            total          => $r->{total}->to_output(money => 1),
         };
         for my $ac (@{$ar->{asset_classes}}){
             if ($ac->{id} == $r->{asset_class}){
                 $ref->{asset_class} = $ac->{label};
             }
-        }
-        if ($r->{report_class} == 1){
-           $ref->{type} = $locale->text('Depreciation');
-        } else {
-           $ref->{type} = $locale->text('Disposal');
         }
         push @$rows, $ref;
         ++$count;
@@ -556,14 +579,14 @@ sub report_results {
                    name  => 'action',
                    value => 'report_results_approve'
                    },
-    ];
+        ];
+    $ar->{hiddens} = $hiddens;
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'form-dynatable', {
-         form    => $ar,
-         heading => $header,
+    return $template->render($request, 'Reports/display_report', {
+         request => $ar,
+            name => $title,
          rows    => $rows,
          columns => $cols,
-         hiddens  => $hiddens,
         buttons  => $buttons,
    });
 }
@@ -801,10 +824,10 @@ a report to be approved.
 
 sub report_results_approve {
     my ($request) = @_;
-    for my $l (0 .. $request->{rowcount}){
-        if ($request->{"report_$l"}){
+    for my $l (0 .. $request->{rowcount_}){
+        if ($request->{"select_$l"}){
             my $approved = LedgerSMB::DBObject::Asset_Report->new({base => $request});
-            $approved->{id} = $request->{"report_$l"};
+            $approved->{id} = $request->{"select_$l"};
             $approved->approve;
         }
     }

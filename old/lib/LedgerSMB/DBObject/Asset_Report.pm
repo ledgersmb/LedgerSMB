@@ -101,9 +101,9 @@ sub save {
         $self->call_dbmethod(funcname => $dep->{sproc});
     } else {
        my ($ref) = $self->call_dbmethod(funcname => 'asset_report__begin_disposal');
-       for my $i (0 .. $self->{rowcount}){
-           if ($self->{"asset_$i"} == 1){
-              my $id = $self->{"id_$i"};
+       for my $i (0 .. $self->{rowcount_}){
+           if ($self->{"asset_$i"}){
+              my $id = $self->{"asset_$i"};
               $self->call_procedure(funcname => 'asset_report__dispose',
                                args => [$ref->{id},
                                         $id,
