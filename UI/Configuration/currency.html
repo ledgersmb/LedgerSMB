@@ -1,6 +1,6 @@
 <?lsmb PROCESS 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?>
-<?lsmb PROCESS 'dynatable-old.html' ?>
+<?lsmb PROCESS 'dynatable.html' ?>
 
 <body>
 
@@ -8,7 +8,8 @@
 
     <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
 
-    <?lsmb PROCESS 'dynatable' ?>
+    <?lsmb PROCESS 'dynatable' tbody = { rows = rows }
+            attributes = { width = '100%' } ?>
     <br />
 
     <form data-dojo-type="lsmb/Form"
