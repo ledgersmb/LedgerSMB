@@ -717,35 +717,74 @@ sub partial_disposal_details {
     my $locale = $request->{_locale};
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
-    my @cols = qw(tag begin_depreciation purchase_value description
-                 percent_disposed disposed_acquired_value
-                 percent_remaining remaining_aquired_value);
-    $report->{title} = $locale->text('Partial Disposal Report [_1] on date [_2]',
+    my $cols = [
+        {
+            col_id => 'tag',
+            name   => $locale->text('Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'begin_depreciation',
+            name   => $locale->text('Dep. Starts'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'percent_disposed',
+            name   => $locale->text('Percent Disposed'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'disposed_acquired_value',
+            name   => $locale->text('Disp. Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'percent_remaining',
+            name   => $locale->text('Percent Remaining'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'remaining_aquired_value',
+            name   => $locale->text('Aquired Value Remaining'),
+            type   => 'text',
+            class  => 'amount',
+        },
+#        #@@TODO Gain/Loss isn't part of partial disposals.... (#4231)
+#        {
+#            col_id => 'gain_loss',
+#            name   => $locale->text('Gain/Loss'),
+#            type   => 'text',
+#            class  => 'amount',
+#        },
+        ];
+    my $title = $locale->text('Partial Disposal Report [_1] on date [_2]',
                         $report->{id}, $report->{report_date});
-    my $header = {
-                   tag                => $locale->text('Tag'),
-                   description        => $locale->text('Description'),
-                   begin_depreciation => $locale->text('Dep. Starts'),
-                   purchase_value     => $locale->text('Aquired Value'),
-                   percent_disposed   => $locale->text('Percent Disposed'),
-                   disposed_acquired_value =>
-                                   $locale->text('Disp. Aquired Value'),
-                   percent_remaining  => $locale->text('Percent Remaining'),
-                   remaining_aquired_value =>
-                                   $locale->text('Aquired Value Remaining')
-    };
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
-        for my $amt (qw(purchase_value adj_basis disposed_acquired_value
-                        remaining_aquired_value percent_disposed
-                        percent_remaining)
-        ){
+        for my $amt (qw(purchase_value disposed_acquired_value
+                     remaining_aquired_value percent_disposed
+                     percent_remaining)){
              $r->{$amt} = $r->{$amt}->to_output(money => 1);
         }
-        $r->{gain_loss} = $r->{gain_loss}->to_output(
-                                                    money => 1,
-                                               neg_format => '-'
-        );
+#        $r->{gain_loss} = $r->{gain_loss}->to_output(
+#                                                    money => 1,
+#                                               neg_format => '-'
+#        );
         push @$rows, $r;
     }
     my $buttons = [{
@@ -755,17 +794,19 @@ sub partial_disposal_details {
                    name =>  'action',
                    value => 'disposal_details_approve'
                    },
-    ];
+        ];
+    $report->{hiddens} = {
+        id => $report->{id},
+        gain_acct => $report->{gain_acct},
+        loss_acct => $report->{loss_acct},
+    };
+
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'form-dynatable', {
-                       form => $report,
-                    columns => \@cols,
-                    heading => $header,
+    return $template->render($request, 'Reports/display_report', {
+                    request => $report,
+                       name => $title,
+                    columns => $cols,
                        rows => $rows,
-                    hiddens => { id => $report->{id},
-                          gain_acct => $report->{gain_acct},
-                          loss_acct => $report->{loss_acct},
-                               },
                     buttons => $buttons
     });
 }
