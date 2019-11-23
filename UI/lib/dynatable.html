@@ -52,6 +52,7 @@
    #    - ${col_id}_href_suffix : the URL fragment to be appended to the
    #                              href_base value specified by ${col_id}
    #                              when that's an 'href' typed column
+   #    - ${col_id}_NOHREF     : boolean suppressing 'href'; using 'text'
 
    # the elements in the 'tfoot' hash support these attributes:
    #  - rows         : an array of hashes with the values for each column
@@ -94,8 +95,10 @@ END; ?>
              value=ROW.row_id } ?>
       <?lsmb- FOREACH COL IN columns;
             TYPE = COL.type;
-            IF ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden';
-            TYPE = 'text';
+            NOHREF = COL.col_id _ "_NOHREF";
+            IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
+               OR (ROW.$NOHREF AND TYPE == 'href');
+              TYPE = 'text';
             END;
           IF TYPE == 'hidden';
       NAME = PFX _ COL.col_id _ '_' _ ROW.row_id; ?>
