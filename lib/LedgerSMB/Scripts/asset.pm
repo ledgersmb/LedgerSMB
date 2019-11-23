@@ -824,30 +824,72 @@ sub disposal_details {
     my $locale = $request->{_locale};
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
-    my @cols = qw(tag description start_dep disposed_on dm purchase_value
-                 accum_depreciation adj_basis disposal_amt gain_loss);
-    $report->{title} = $locale->text('Disposal Report [_1] on date [_2]',
-                     $report->{id}, $report->{report_date});
-    my $header = {
-                            tag => $locale->text('Tag'),
-                    description => $locale->text('Description'),
-                      start_dep => $locale->text('Dep. Starts'),
-                    disposed_on => $locale->text('Disposal Date'),
-                 purchase_value => $locale->text('Aquired Value'),
-                             dm => $locale->text('D M'),
-             accum_depreciation => $locale->text('Accum. Depreciation'),
-                   disposal_amt => $locale->text('Proceeds'),
-                      adj_basis => $locale->text('Adjusted Basis'),
-                      gain_loss => $locale->text('Gain (Loss)'),
-    };
+    my $cols = [
+        {
+            col_id => 'tag',
+            name   => $locale->text('Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'start_dep',
+            name   => $locale->text('Dep. Starts'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'disposed_on',
+            name   => $locale->text('Disposal Date'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'dm',
+            name   => $locale->text('D M'),
+            type   => 'text',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'accum_depreciation',
+            name   => $locale->text('Accum. Depreciation'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'adj_basis',
+            name   => $locale->text('Adjusted Basis'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'disposal_amt',
+            name   => $locale->text('Proceeds'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'gain_loss',
+            name   => $locale->text('Gain (Loss)'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        ];
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
         for my $amt (qw(purchase_value adj_basis accum_depreciation
-                        disposal_amt)
+                        disposal_amt gain_loss)
         ){
              $r->{$amt} = $r->{$amt}->to_output(money  => 1);
         }
-        $r->{gain_loss} = $r->{gain_loss}->to_output(money => 1, neg_format => '-');
         push @$rows, $r;
     }
     my $buttons = [{
@@ -857,17 +899,20 @@ sub disposal_details {
                    name =>  'action',
                    value => 'disposal_details_approve'
                    },
-    ];
+        ];
+    $report->{hiddens} = {
+        id        => $report->{id},
+        gain_acct => $report->{gain_acct},
+        loss_acct => $report->{loss_acct},
+    };
+    my $title = $locale->text('Disposal Report [_1] on date [_2]',
+                     $report->{id}, $report->{report_date});
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'form-dynatable', {
-                       form => $report,
-                    columns => \@cols,
-                    heading => $header,
+    return $template->render($request, 'Reports/display_report', {
+                       name => $title,
+                    request => $report,
+                    columns => $cols,
                        rows => $rows,
-                    hiddens => { id => $report->{id},
-                          gain_acct => $report->{gain_acct},
-                          loss_acct => $report->{loss_acct},
-                               },
                     buttons => $buttons
     });
 }
