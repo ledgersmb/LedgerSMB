@@ -42,41 +42,42 @@ sub list_currencies {
     my @currencies = LedgerSMB::Currency->list();
     my $default_curr =
         LedgerSMB::Setting->new({base => $request})->get('curr');
-    my $columns;
-    @$columns = qw(curr description drop);
-    my $column_names = {
-        curr => 'ID',
-        description => 'Description',
-    };
-    my $column_heading = $column_names;
+    my $columns = [
+        {
+            col_id => 'curr',
+            name   => 'ID',
+            type   => 'text',
+        },
+        {
+            col_id => 'description',
+            name   => $request->{_locale}->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'drop',
+            type   => 'href',
+            href_base => 'currency.pl?action=delete_currency&curr=',
+        },
+        ];
     my $rows = [];
-    my $rowcount = '0';
-    my $base_url = 'currency.pl?action=delete_currency';
     for my $s (@currencies) {
-        $s->{i} = $rowcount % 2;
+        $s->{row_id} = $s->{curr};
         if ($s->{curr} eq $default_curr) {
-           $s->{drop} = {
-               text => '(' . $request->{_locale}->text('default') . ')',
-           };
+            $s->{drop_NOHREF} = 1;
+            $s->{drop} = '(' . $request->{_locale}->text('default') . ')';
         }
         else {
-           $s->{drop} = {
-               href =>"$base_url&curr=$s->{curr}",
-               text => '[' . $request->{_locale}->text('delete') . ']',
-           };
+            $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
         }
         push @$rows, $s;
-        ++$rowcount;
     }
-    $request->{title} = $request->{_locale}->text('Defined currencies');
+    my $title = $request->{_locale}->text('Defined currencies');
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Configuration/currency', {
-        form    => $request,
+        name    => $title,
+        request => $request,
         columns => $columns,
-        heading => $column_heading,
         rows    => $rows,
-        buttons => [],
-        hiddens => [],
     });
 }
 
@@ -120,34 +121,42 @@ Displays a list of configured exchangerate types.  No inputs required or used.
 sub list_exchangerate_types {
     my ($request) = @_;
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
-    my $columns;
-    @$columns = qw(id description drop);
-    my $column_names = {
-        id => 'ID',
-        description => 'Description',
-    };
-    my $column_heading = $column_names;
+    my $columns = [
+        {
+            col_id => 'id',
+            name   => 'ID',
+            type   => 'text',
+        },
+        {
+            col_id => 'description',
+            name   => $request->{_locale}->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'drop',
+            type   => 'href',
+            href_base => 'currency.pl?action=delete_exchangerate_type&id='
+        },
+        ];
     my $rows = [];
-    my $rowcount = '0';
-    my $base_url = 'currency.pl?action=delete_exchangerate_type';
     for my $s (@exchangerate_types) {
-        $s->{i} = $rowcount % 2;
-        $s->{drop} = {
-            href =>"$base_url&id=$s->{id}",
-            text => '[' . $request->{_locale}->text('delete') . ']',
-        } if ! $s->{builtin};
+        $s->{row_id} = $s->{id};
+        if ($s->{builtin}) {
+            $s->{drop_NOHREF} = $s->{builtin};
+        }
+        else {
+            $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
+        }
         push @$rows, $s;
-        ++$rowcount;
     }
-    $request->{title} = $request->{_locale}->text('Defined exchange rate types');
+    my $title = $request->{_locale}->text('Defined exchange rate types');
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Configuration/ratetype', {
-        form    => $request,
+        name    => $title,
+        request => $request,
         columns => $columns,
-        heading => $column_heading,
         rows    => $rows,
         buttons => [],
-        hiddens => [],
     });
 }
 
@@ -215,39 +224,55 @@ sub _list_exchangerates {
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
     my @currencies = LedgerSMB::Currency->list();
     my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
-    my $columns;
-    @$columns = qw(curr rate_type valid_from rate drop);
-    my $column_names = {
-        id => 'ID',
-        description => 'Description',
-    };
-    my $column_heading = $column_names;
-    my $rows = [];
-    my $rowcount = '0';
     my $base_url = 'currency.pl?action=delete_exchangerate';
+    my $columns = [
+        {
+            col_id => 'curr',
+            name   => 'ID'
+        },
+        {
+            col_id => 'rate_type',
+            name   => $request->{_locale}->text('Rate Type'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'valid_from',
+            name   => $request->{_locale}->text('Valid From'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'rate',
+            name   => $request->{_locale}->text('Rate'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'drop',
+            href_base => $base_url,
+        },
+        ];
+    my $rows = [];
     for my $s (@$exchangerates) {
-        $s->{i} = $rowcount % 2;
         $s->{rate} = $s->{rate}->to_output();
-        $s->{drop} = {
-            href =>"$base_url&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output(),
-            text => '[' . $request->{_locale}->text('delete') . ']',
-        };
+        $s->{drop_href_suffix} = "&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output();
+        $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
+
         # Translate here, because the URL above depends on the rate_type_id!
         $s->{rate_type} = $rate_types{$s->{rate_type}};
         push @$rows, $s;
-        ++$rowcount;
     }
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Configuration/rate', {
-        form    => $request,
-        columns => $columns,
-        heading => $column_heading,
-        rows    => $rows,
+        name       => '',
+        request    => $request,
+        columns    => $columns,
+        rows       => $rows,
         currencies => \@currencies,
+        buttons    => [],
         exchangerate_types => \@exchangerate_types,
-        buttons => [],
-        hiddens => [],
     });
 
 }

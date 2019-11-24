@@ -170,25 +170,51 @@ my $bulk_post_map = input_map(
 
 sub pre_bulk_post_report {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new( # printed document
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'form-dynatable',
-        format   => ($request->{report_format}) ? $request->{report_format} : 'HTML',
-    );
-    my $cols;
-    @$cols =  qw(pay_to accno source memo debits credits);
-    my $heading = {
-        pay_to          => $request->{_locale}->text('Pay To'),
-        accno           => $request->{_locale}->text('Account Number'),
-        acc_description => $request->{_locale}->text('Account Title'),
-        transdate       => $request->{_locale}->text('Date'),
-        source          => $request->{_locale}->text('Source'),
-        memo            => $request->{_locale}->text('Memo'),
-        debits           => $request->{_locale}->text('Debits'),
-        credits          => $request->{_locale}->text('Credits')
-    };
+    my $cols = [
+        {
+            col_id => 'pay_to',
+            name => $request->{_locale}->text('Pay To'),
+            type => 'text',
+        },
+        {
+            col_id => 'accno',
+            name => $request->{_locale}->text('Account Number'),
+            type => 'text',
+        },
+        {
+            col_id => 'acc_description',
+            name => $request->{_locale}->text('Account Title'),
+            type => 'text',
+        },
+        {
+            col_id => 'transdate',
+            name => $request->{_locale}->text('Date'),
+            type => 'text',
+            class => 'date',
+        },
+        {
+            col_id => 'source',
+            name => $request->{_locale}->text('Source'),
+            type => 'text',
+        },
+        {
+            col_id => 'memo',
+            name => $request->{_locale}->text('Memo'),
+            type => 'text',
+        },
+        {
+            col_id => 'debits',
+            name => $request->{_locale}->text('Debits'),
+            type => 'text',
+            class => 'amount',
+        },
+        {
+            col_id => 'credits',
+            name => $request->{_locale}->text('Credits'),
+            type => 'text',
+            class => 'amount',
+        },
+        ];
 
     # parse the flat "request" namespace into a hierarchical structure
     # as defined by the $bulk_post_map transform
@@ -252,14 +278,16 @@ sub pre_bulk_post_report {
     }];
     delete $request->{$_}
        for qw(action dbh);
-    return $template->render({
-        form => $request,
-        hiddens => $request,
-        columns => $cols,
-        heading => $heading,
-        rows    => $rows,
-        buttons => $buttons,
-    });
+    $request->{hiddens} = { %$request }; # prevent circular reference
+    delete $request->{form_id};
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/display_report',
+                             {
+                                 request => $request,
+                                 columns => $cols,
+                                 rows    => $rows,
+                                 buttons => $buttons,
+                             });
 }
 
 
