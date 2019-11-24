@@ -125,3 +125,7 @@ td.dijitStretch {
     color: white;
     margin-left: 1px;
 }
+
+td.transdate, td.duedate, td.datepaid {
+   white-space: nowrap!important;
+}
