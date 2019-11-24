@@ -286,6 +286,16 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.30
+* Include first transsaction on account in reconciliation report (Erik H)
+* Fix COGS error when posting AP invoice reversal (Erik H)
+* Fix error in reconciliation in case no prior balance exists (Erik H)
+* Fix write access error thrown on fixed assets disposal (Erik H)
+* Correctly calculate tax basis amount even for 0% taxes (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.29
 * Fix occasional COGS error on invoice posting (Erik H)
 * Fix occasional COGS error on invoice reversal posting (Erik H)
