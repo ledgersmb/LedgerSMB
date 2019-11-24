@@ -136,6 +136,7 @@ sub _render_screen {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
+    $budget->{_locale} = $locale;
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($budget, 'budgetting/budget_entry', $budget);
 }

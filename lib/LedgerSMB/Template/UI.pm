@@ -88,16 +88,6 @@ sub new_UI {
                 dojo_theme =>
                     ($LedgerSMB::App_State::Company_Config->{dojo_theme}
                      || LedgerSMB::Sysconfig::dojo_theme()),
-                PRINTERS => [
-                    ( map { { text => $_, value => $_ } }
-                      keys %LedgerSMB::Sysconfig::printers,
-                      {
-                          text => ($LedgerSMB::App_State::Locale ?
-                                   $LedgerSMB::App_State::Locale->text('Screen')
-                                   : 'Screen' ),
-                          value => 'screen'
-                      } )
-                    ],
                 LIST_FORMATS => sub {
                     return LedgerSMB::Template::available_formats();
                 },
@@ -139,6 +129,14 @@ sub render_string {
                 $vars,
                 \&LedgerSMB::Template::HTML::escape)},
           %{$self->{standard_vars}},
+          PRINTERS => [
+              ( map { { text => $_, value => $_ } }
+                keys %LedgerSMB::Sysconfig::printers,
+                {
+                    text  => $request->{_locale}->text('Screen'),
+                    value => 'screen'
+                } )
+          ],
           text => sub {
               if ($vars->{locale}) {
                   return LedgerSMB::Locale->get_handle($vars->{locale})
