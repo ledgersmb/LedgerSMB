@@ -876,7 +876,7 @@ verify_check => md5_hex($check->test_query),
            rows               => $rows,
            buttons            => $enabled_buttons,
            hiddens            => $hiddens,
-           include_stylesheet => 'setup/stylesheet.css',
+           include_stylesheet => 'setup.css',
     });
 }
 
