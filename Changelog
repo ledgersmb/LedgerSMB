@@ -2,6 +2,14 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.4
+* Fix COGS failure when posting AP invoice reversal (#4218)
+* Include first transaction on account in reconciliation (#4221)
+* Fix error on reconciliation when no prior balance available (#4224)
+* Fix SQL write access error when posting fixed assets disposal (#4230)
+* Correctly calculate the tax basis amount even for 0% taxes ($4240)
+
+
 Changelog for 1.7.3
 * Fix regression in fixed assets module due to Multi Currency support (#4195)
 * Fix 'constraint not deferrable' error in fixed assets disposal (#4195)
