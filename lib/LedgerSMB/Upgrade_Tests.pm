@@ -1064,15 +1064,15 @@ push @tests, __PACKAGE__->new(
 
 
 push @tests, __PACKAGE__->new(
-    test_query => 'select parts_id, credit_id, pricegroup_id
+    test_query => 'select parts_id, customer_id, pricegroup_id
                      from partscustomer
                     where not exists (select 1
                                         from pricegroup
                                        where id = pricegroup_id)
-                                        and pricegroup_id <> 0',
+                      and pricegroup_id <> 0',
     display_name => marktext('Non-existing customer pricegroups in partscustomer'),
     name => 'partscustomer_pricegroups_exist',
-    display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
+    display_cols => ['parts_id', 'customer_id', 'pricegroup_id'],
  instructions => marktext(
                    'Please fix the pricegroup data in your partscustomer table (no UI available)'),
     table => 'partscustomer',
@@ -1243,7 +1243,7 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
 
 ### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
-#     test_query => "select parts_id, credit_id, pricegroup_id
+#     test_query => "select *
 #                      from partsvendor
 #                     where not exists (select 1
 #                                         from pricegroup
