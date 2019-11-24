@@ -11,6 +11,8 @@ Changed functionalities
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
 * Replace unnecessary UNION selects on ar/ap/gl by select on transactions
+* Remove legacy infrastructure to generate table-formatted report output
+* Remove unmaintained ability from Makefile to install dependencies
 
 
 Changelog for 1.7 Series
