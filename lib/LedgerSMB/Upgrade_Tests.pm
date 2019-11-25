@@ -590,7 +590,7 @@ push @tests, __PACKAGE__->new(
 #     test_query => "select * from customer where arap_accno_id is null",
 #   display_name => marktext('Empty AR account'),
 #           name => 'no_null_ar_accounts',
-#   display_cols => [ 'id', 'name', 'contact' ],
+#   display_cols => [ 'name', 'contact' ],
 #   instructions => marktext("Please correct the empty AR accounts"),
 #        appname => 'sql-ledger',
 #    min_version => '2.7',
@@ -601,7 +601,7 @@ push @tests, __PACKAGE__->new(
 #     test_query => "select * from vendor where arap_accno_id is null",
 #   display_name => marktext('Empty AP account'),
 #           name => 'no_null_ap_accounts',
-#   display_cols => [ 'id', 'name', 'contact' ],
+#   display_cols => [ 'name', 'contact' ],
 #   instructions => marktext("Please correct the empty AP accounts"),
 #        appname => 'sql-ledger',
 #    min_version => '2.7',
@@ -676,7 +676,7 @@ push @tests,__PACKAGE__->new(
                    where customernumber is null',
     display_name => marktext('Empty customernumbers'),
     name => 'no_empty_customernumbers',
-    display_cols => ['id', 'customernumber', 'name'],
+    display_cols => ['customernumber', 'name'],
  instructions => marktext(
                    'Please make sure there are no empty customer numbers.'),
    columns => ['customernumber'],
@@ -699,7 +699,7 @@ push @tests,__PACKAGE__->new(
                       ) a},
       display_name => marktext('Empty businesses'),
               name => 'no_businesses',
-      display_cols => ['id', 'description', 'discount'],
+      display_cols => ['description', 'discount'],
       instructions => marktext(
                        'Undefined businesses.<br>
 Please make sure business used by vendors and constomers are defined.<br>
@@ -733,7 +733,7 @@ push @tests, __PACKAGE__->new(
                  ORDER BY name',
     display_name => marktext('Vendor not in a business'),
     name => 'no_business_for_vendor',
-    display_cols => ['id', 'name', 'business_id'],
+    display_cols => ['name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
                    'LedgerSMB vendors must be assigned to a valid business.<br>
@@ -756,7 +756,7 @@ push @tests, __PACKAGE__->new(
                  ORDER BY name',
     display_name => marktext('Customer not in a business'),
     name => 'no_business_for_customer',
-    display_cols => ['id', 'name', 'business_id'],
+    display_cols => ['name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
                    'LedgerSMB customers must be assigned to a valid business.<br>
@@ -779,7 +779,7 @@ push @tests, __PACKAGE__->new(
                  ORDER BY name',
     display_name => marktext('Vendor not in a business'),
     name => 'no_business_for_vendor',
-    display_cols => ['id', 'name', 'business_id'],
+    display_cols => ['name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
                    'LedgerSMB vendors must be assigned to a valid business.<br>
@@ -802,7 +802,7 @@ push @tests, __PACKAGE__->new(
                  ORDER BY name',
     display_name => marktext('Customer not in a business'),
     name => 'no_business_for_customer',
-    display_cols => ['id', 'name', 'business_id'],
+    display_cols => ['name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
                    'LedgerSMB customers must be assigned to a valid business.<br>
@@ -883,7 +883,7 @@ push @tests,__PACKAGE__->new(
                     order by customernumber',
     display_name => marktext('Double customernumbers'),
     name => 'no_double_customernumbers',
-    display_cols => ['id', 'customernumber', 'name'],
+    display_cols => ['customernumber', 'name'],
  instructions => marktext(
                    'Please make all customer numbers unique'),
    columns => ['customernumber'],
@@ -899,7 +899,7 @@ push @tests,__PACKAGE__->new(
                    where vendornumber is null',
     display_name => marktext('Empty vendornumbers'),
     name => 'no_empty_vendornumbers',
-    display_cols => ['id', 'vendornumber', 'name'],
+    display_cols => ['vendornumber', 'name'],
  instructions => marktext(
                    'Please make sure there are no empty vendor numbers.'),
    columns => ['vendornumber'],
@@ -918,7 +918,7 @@ push @tests,__PACKAGE__->new(
                                              having count(*) > 1)',
     display_name => marktext('Double vendornumbers'),
     name => 'no_double_vendornumbers',
-    display_cols => ['id', 'vendornumber', 'name'],
+    display_cols => ['vendornumber', 'name'],
  instructions => marktext(
                    'Please make all vendor numbers unique'),
    columns => ['vendornumber'],
@@ -934,7 +934,7 @@ push @tests, __PACKAGE__->new(
                     where employeenumber is null',
     display_name => marktext('Null employee numbers'),
     name => 'no_null_employeenumbers',
-    display_cols => ['id', 'login', 'name', 'employeenumber'],
+    display_cols => ['login', 'name', 'employeenumber'],
  instructions => marktext(
                    'Please make sure all employees have an employee number'),
    columns => ['employeenumber'],
@@ -953,7 +953,7 @@ push @tests, __PACKAGE__->new(
                                               having count(*) > 1)',
     display_name => marktext('Null employee numbers'),
     name => 'no_duplicate_employeenumbers',
-    display_cols => ['id', 'login', 'name', 'employeenumber'],
+    display_cols => ['login', 'name', 'employeenumber'],
    columns => ['employeenumber'],
  instructions => marktext(
                    'Please make all employee numbers unique'),
@@ -974,7 +974,7 @@ push @tests, __PACKAGE__->new(
                    order by invnumber',
     display_name => marktext('Non-unique invoice numbers'),
     name => 'no_duplicate_ar_invoicenumbers',
-    display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
+    display_cols => ['invnumber', 'transdate', 'duedate', 'datepaid',
                      'ordnumber', 'quonumber', 'approved'],
    columns => ['invnumber'],
  instructions => marktext(
@@ -997,7 +997,7 @@ push @tests, __PACKAGE__->new(
                  ORDER BY invnumber},
     display_name => marktext('Non-unique invoice numbers detected'),
     name => 'no_duplicate_ap_invoicenumbers',
-    display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
+    display_cols => ['invnumber', 'transdate', 'duedate', 'datepaid',
                      'ordnumber', 'quonumber', 'approved'],
    columns => ['invnumber'],
  instructions => marktext(
@@ -1185,7 +1185,7 @@ push @tests, __PACKAGE__->new(
                   order by ac.cleared,id, ac.transdate, ap.datepaid},
   display_name => marktext('Invalid or suspect cleared delays'),
           name => 'invalid_cleared_dates',
-  display_cols => ['name', 'id', 'datepaid', 'transdate', 'cleared', 'delay', 'amount'],
+  display_cols => ['name', 'datepaid', 'transdate', 'cleared', 'delay', 'amount'],
  instructions => marktext(
                    'Suspect or invalid cleared delays have been detected. Please review the dates in the original application'),
       buttons => ['Cancel', 'Skip'],
@@ -1215,7 +1215,7 @@ push @tests, __PACKAGE__->new(
                  ORDER BY trans_id, ac.id, accno, transdate),
   display_name => marktext('Unneeded Reconciliations'),
           name => 'reconciliation_on_unrelated_accounts',
-  display_cols => ['trans_id', 'id', 'memo', 'amount', 'description',
+  display_cols => ['trans_id', 'memo', 'amount', 'description',
                    'accno', 'account', 'link', 'category', 'cleared', 'approved'],
        columns => ['cleared'],
     id_columns => ['lsmb_entry_id'],
