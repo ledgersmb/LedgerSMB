@@ -227,8 +227,6 @@ sub invoice_links {
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
     $form->{AR} = $form->{AR_1} unless $form->{id};
-    $form->{transdate} = $form->{current_date} if (!$form->{transdate});
-    $form->{crdate} = $form->{current_date} if (!$form->{crdate});
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
@@ -528,11 +526,11 @@ sub form_header {
           </tr>
           <tr class="crdate-row">
         <th align=right><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr class="transdate-row">
         <th align=right><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr>
         <th align=right><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>

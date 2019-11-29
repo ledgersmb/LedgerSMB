@@ -10,6 +10,7 @@ define([
         [DateTextBox],
         {
           _formattedValue: null,
+          defaultIsToday: false,
           constructor: function(params, srcNodeRef) {
             this._formattedValue = srcNodeRef.value;
 
@@ -50,23 +51,31 @@ define([
             }
           },
           postMixInProperties: function() {
-            this.inherited(arguments);
-            if (this._formattedValue &&
-                (! this.value || ! isoDate.test(this.value))) {
-              /* This code purely compensates for the fact that most LedgerSMB
-                 server code sends the date according to the user's selected
-                 preference, instead of in ISO format, which the widget
-                 expects */
-              this.value = this.parse(this._formattedValue, this.constraints);
-            }
+              this.inherited(arguments);
+              if (this._formattedValue &&
+                  (! this.value || ! isoDate.test(this.value))) {
+                  /* This code purely compensates for the fact that most
+                     LedgerSMB server code sends the date according to the
+                     user's selected preference, instead of in ISO format,
+                     which the widget expects */
+                  this.value = this.parse(this._formattedValue,
+                                          this.constraints);
+              }
+              if ((this.value === undefined || isNaN(this.value))
+                  && this.defaultIsToday) {
+                  this.value = new Date();
+              }
           },
-            parse: function(value, constraints) {
-                if (! isoDate.test(value)) {
-                    return this.inherited(arguments);
-                }
-                return locale.parse(value,
-                                    { datePattern: "yyyy-MM-dd", selector: "date" });
-            }
+          parse: function(value, constraints) {
+              if (! isoDate.test(value)) {
+                  return this.inherited(arguments);
+              }
+              return locale.parse(value,
+                                  {
+                                      datePattern: "yyyy-MM-dd",
+                                      selector: "date"
+                                  });
+          }
         });
     }
     );

@@ -2322,7 +2322,7 @@ sub create_links {
         }
     }
 
-    for (qw(separate_duties current_date curr closedto revtrans lock_description)) {
+    for (qw(separate_duties curr closedto revtrans lock_description)) {
         if ($_ eq 'closedto'){
             $query = qq|
                 SELECT value::date FROM defaults

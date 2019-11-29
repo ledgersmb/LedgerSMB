@@ -562,10 +562,6 @@ sub retrieve {
     my $var;
     my $ref;
 
-    $query = qq|
-      SELECT current_date FROM defaults
-         WHERE setting_key = 'curr'|;
-    ( $form->{transdate} ) = $dbh->selectrow_array($query);
     @{$form->{currencies}} =
         (LedgerSMB::Setting->new({base => $form}))->get_currencies;
     $form->{defaultcurrency} = $form->{currencies}->[0];
