@@ -1294,18 +1294,6 @@ sub retrieve_invoice {
 
     my $query;
 
-    if ( ! $form->{id} ) {
-        $query = qq|
-         SELECT current_date AS transdate
-              FROM defaults
-             WHERE setting_key = 'curr'|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
-    for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-    $sth->finish;
-    }
     @{$form->{currencies}} =
         (LedgerSMB::Setting->new({base => $form}))->get_currencies;
 

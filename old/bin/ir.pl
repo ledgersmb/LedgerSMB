@@ -475,11 +475,11 @@ sub form_header {
           </tr>
               <tr>
                 <th align=right nowrap><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-                <td><input class="date" data-dojo-type="lsmb/DateTextBox" id=crdate name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" id=crdate name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate} data-dojo-props="defaultIsToday:true"></td>
               </tr>
           <tr>
         <th align=right nowrap><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>

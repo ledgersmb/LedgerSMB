@@ -718,8 +718,8 @@ sub retrieve_invoice {
                      WHERE c.id = (SELECT value::int FROM defaults
                                     WHERE setting_key =
                                           'fxloss_accno_id'))
-                   AS fxloss_accno,
-                   current_date AS transdate|;
+                   AS fxloss_accno
+|;
     }
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);

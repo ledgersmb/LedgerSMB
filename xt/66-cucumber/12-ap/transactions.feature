@@ -16,9 +16,9 @@ Scenario: Creation of a new AP transaction, no taxes
      And I select vendor "Vendor 1"
     Then I expect to see these transaction header fields and values
        | name            | value    |
-       | Invoice Created |          |
+       | Invoice Created | $$today  |
        | Invoice Date    | $$today  |
-       | Due Date        |          |
+       | Due Date        | $$today  |
        | Currency        | USD      |
        | Description     |          |
        | Invoice Number  |          |

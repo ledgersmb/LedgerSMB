@@ -16,9 +16,9 @@ Scenario: Creation of a new AR transaction, no taxes
      And I select customer "Customer 1"
     Then I expect to see these transaction header fields and values
        | name            | value    |
-       | Invoice Created |          |
+       | Invoice Created | $$today  |
        | Invoice Date    | $$today  |
-       | Due Date        |          |
+       | Due Date        | $$today  |
        | Currency        | USD      |
        | Description     |          |
        | Invoice Number  |          |

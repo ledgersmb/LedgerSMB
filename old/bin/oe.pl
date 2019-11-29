@@ -403,7 +403,7 @@ sub form_header {
           </tr>
           <tr class="transdate-row">
         <th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox"name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox"name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr class="reqdate-row">
         <th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>
@@ -494,7 +494,7 @@ sub form_header {
         $ordnumber .= qq|
           <tr class="transdate-row">
         <th align=right nowrap>| . $locale->text('Quotation Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr>
         <th align=right nowrap=true>$reqlabel</th>
@@ -1397,7 +1397,6 @@ sub invoice {
         # check if we need a new exchangerate
         $buysell = ( $form->{type} eq 'sales_order' ) ? "buy" : "sell";
 
-        $orddate = $form->current_date( \%myconfig );
         $exchangerate = "";
 
         if ( !$exchangerate ) {
@@ -1411,7 +1410,6 @@ sub invoice {
 
     OE->save( \%myconfig, \%$form );
 
-    $form->{transdate} = $form->current_date( \%myconfig );
     $form->{duedate} =
       $form->current_date( \%myconfig, $form->{transdate}, $form->{terms} * 1 );
 
