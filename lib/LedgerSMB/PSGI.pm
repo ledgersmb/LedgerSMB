@@ -222,7 +222,20 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
-        for  (@LedgerSMB::Sysconfig::newscripts);
+        for  (grep { $_ ne 'setup.pl' } @LedgerSMB::Sysconfig::newscripts);
+
+        mount '/setup.pl' => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::AuthenticateSession',
+                domain => 'setup';
+            enable '+LedgerSMB::Middleware::DisableBackButton';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
+            $psgi_app;
+        };
 
         mount '/stop.pl' => sub { exit; }
             if $coverage;

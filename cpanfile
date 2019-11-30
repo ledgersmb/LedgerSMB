@@ -51,6 +51,7 @@ requires 'Plack::Middleware::ReverseProxy';
 requires 'Plack::Request';
 requires 'Plack::Request::WithEncoding';
 requires 'Plack::Util';
+requires 'Plack::Util::Accessor';
 requires 'Template', '2.14';
 requires 'Text::CSV';
 requires 'Template::Parser';
