@@ -66,7 +66,7 @@ sub _build_credentials {
     return \%rv;
 }
 
-=item get_credentials
+=item get_credentials(domain, company)
 
 Gets credentials from the 'HTTP_AUTHORIZATION' environment variable which must
 be passed in as per the standards of HTTP basic authentication.
@@ -76,7 +76,7 @@ Returns a hashref with the keys of login and password.
 =cut
 
 sub get_credentials {
-    my ($self, $domain) = @_;
+    my ($self, $domain, $company) = @_;
     # We ignore domain, but other auth providers may choose to use it
 
     return $self->credentials;
