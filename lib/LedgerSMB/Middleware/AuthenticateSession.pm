@@ -73,6 +73,7 @@ use parent qw ( Plack::Middleware );
 use DBI;
 use Plack::Request;
 use Plack::Util;
+use Plack::Util::Accessor qw( domain );
 
 use LedgerSMB;
 use LedgerSMB::Auth;
@@ -132,7 +133,9 @@ sub call {
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $env->{'lsmb.company'};
 
-    my $creds = LedgerSMB::Auth::factory($env)->get_credentials;
+    my $creds = LedgerSMB::Auth::factory($env)->get_credentials(
+        $self->domain,
+        $env->{'lsmb.company'});
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $creds->{login} && $creds->{password};
     my $dbh = $env->{'lsmb.db'} =
