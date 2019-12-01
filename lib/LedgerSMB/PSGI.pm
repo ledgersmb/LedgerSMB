@@ -99,11 +99,8 @@ in LedgerSMB::Scripts::*.
 
 sub psgi_app {
     my $env = shift;
-
-    my $auth = LedgerSMB::Auth::factory($env);
-
     my $psgi_req = Plack::Request::WithEncoding->new($env);
-    my $request = LedgerSMB->new($psgi_req, $auth);
+    my $request = LedgerSMB->new($psgi_req, $env->{'lsmb.auth'});
 
     $request->{action} = $env->{'lsmb.action_name'};
     my $res;

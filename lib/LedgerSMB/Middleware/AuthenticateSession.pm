@@ -95,11 +95,17 @@ Implements C<Plack::Middleware->call()>.
 sub call {
     my $self = shift;
     my ($env) = @_;
-
-    return $self->app->($env)
-        if ! $env->{'lsmb.want_db'};
-
     my $req = Plack::Request->new($env);
+
+    if (not $env->{'lsmb.want_db'}) {
+        $env->{'lsmb.company'} =
+            $req->parameters->get('database');
+        $env->{'lsmb.auth'} =  LedgerSMB::Auth::factory($env);
+        $env->{'lsmb.auth'}->get_credentials($self->domain,
+                                             $env->{'lsmb.company'});
+        return $self->app->($env)
+    }
+
     my $cookie_name = LedgerSMB::Sysconfig::cookie_name;
     my $session_cookie =
         $env->{'lsmb.want_cleared_session'} ? ''
@@ -133,7 +139,8 @@ sub call {
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $env->{'lsmb.company'};
 
-    my $creds = LedgerSMB::Auth::factory($env)->get_credentials(
+    $env->{'lsmb.auth'} = LedgerSMB::Auth::factory($env);
+    my $creds = $env->{'lsmb.auth'}->get_credentials(
         $self->domain,
         $env->{'lsmb.company'});
     return LedgerSMB::PSGI::Util::unauthorized()
