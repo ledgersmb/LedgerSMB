@@ -209,6 +209,8 @@ sub new {
     }
 
     $self->{_auth} = LedgerSMB::Auth::factory(\%ENV);
+    # initialize domain and company (values will be cached)
+    $self->{_auth}->get_credentials(undef, $self->{company});
     $self;
 }
 
