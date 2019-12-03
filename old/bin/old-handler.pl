@@ -153,7 +153,7 @@ try {
         $form->{titlebar} = ''; # Not needed anymore: the SPA already has a title(bar)
 
         &{ $form->{action} };
-        $LedgerSMB::App_State::DBH->commit;
+        $form->{dbh}->commit;
         delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
     }
     else {
@@ -162,20 +162,25 @@ try {
     }
 }
 catch  {
-  # We have an exception here because otherwise we always get an exception
-  # when output terminates.  A mere 'die' will no longer trigger an automatic
-  # error, but die 'foo' will map to $form->error('foo')
-  # -- CT
+    # We have an exception here because otherwise we always get an exception
+    # when output terminates.  A mere 'die' will no longer trigger an automatic
+    # error, but die 'foo' will map to $form->error('foo')
+    # -- CT
+    my $err = $_;
     $form->{_error} = 1;
     delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
-    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    if ($err =~ /^Died/i or $err =~ /^exit at /) {
+        $form->{dbh}->commit if defined $form->{dbh};
+    }
+    else {
+        $form->{dbh}->rollback if defined $form->{dbh};
+        _error($form, "'$err'");
+    }
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
-$form->{dbh}->commit if defined $form->{dbh};
-$form->{dbh}->disconnect()
-    if defined $form->{dbh};
+$form->{dbh}->disconnect() if defined $form->{dbh};
 
 # end
 
