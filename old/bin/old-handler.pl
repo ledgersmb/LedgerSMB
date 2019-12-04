@@ -154,7 +154,6 @@ try {
 
         &{ $form->{action} };
         LedgerSMB::App_State::cleanup();
-
     }
     else {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
@@ -162,21 +161,23 @@ try {
     }
 }
 catch  {
-  # We have an exception here because otherwise we always get an exception
-  # when output terminates.  A mere 'die' will no longer trigger an automatic
-  # error, but die 'foo' will map to $form->error('foo')
-  # -- CT
+    # We have an exception here because otherwise we always get an exception
+    # when output terminates.  A mere 'die' will no longer trigger an automatic
+    # error, but die 'foo' will map to $form->error('foo')
+    # -- CT
+    my $err = $_;
     $form->{_error} = 1;
-    $LedgerSMB::App_State::DBH = undef;
-    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    unless ( $_ =~ /^Died/i or $err =~ /^exit at / ) {
+        $form->{dbh}->rollback if $form->{dbh};
+        $LedgerSMB::App_State::DBH = undef;
+        _error($form, "'$err'");
+    }
     LedgerSMB::App_State::cleanup();
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
-$form->{dbh}->commit if defined $form->{dbh};
-$form->{dbh}->disconnect()
-    if defined $form->{dbh};
+$form->{dbh}->disconnect() if defined $form->{dbh};
 
 # end
 
