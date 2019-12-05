@@ -4,16 +4,33 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
+DROP FUNCTION IF EXISTS file__get_mime_type(int, text);
+
 CREATE OR REPLACE FUNCTION file__get_mime_type
  (in_mime_type_id int, in_mime_type_text text)
 RETURNS mime_type AS
 $$
-select * from mime_type
- where ($1 IS NULL OR id = $1) AND ($2 IS NULL OR mime_type = $2);
-$$ language sql;
+DECLARE
+   r mime_type;
+BEGIN
+  select * into r from mime_type
+   where ($1 IS NULL OR id = $1) AND ($2 IS NULL OR mime_type = $2);
+
+  if not found and in_mime_type_id is null and in_mime_type_text is not null then
+    insert into mime_type (mime_type_text) values (in_mime_type_text)
+    returning * into r;
+  end if;
+
+  return r;
+END;
+$$ language plpgsql;
 
 COMMENT ON FUNCTION file__get_mime_type(in_mime_type_id int, in_mime_type text) IS
-$$Retrieves mime type information associated with a file object.$$;
+$$Retrieves mime type reference data or creates it.
+
+Note that the reference data isn''t created when in_mime_type_id is
+not null or that in_mime_type_text is null.
+$$;
 
 CREATE OR REPLACE FUNCTION file__attach_to_tx
 (in_content bytea, in_mime_type_id int, in_file_name text,
