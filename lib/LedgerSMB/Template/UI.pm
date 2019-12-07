@@ -58,26 +58,26 @@ sub new_UI {
     croak 'called LedgerSMB::Template::UI::new_UI with args while it takes none'
         if @_;
 
-   if (!defined $engine) {
-        $engine = Template->new(
-            ### TODO: These should be configurable absolute paths
-            INCLUDE_PATH => [ 'UI/', 'UI/lib/' ],
-            ENCODING => 'utf8',
-            TRIM => 1,
-            START_TAG => quotemeta('<?lsmb'),
-            END_TAG => quotemeta('?>'),
-            DELIMITER => ';',
-            COMPILE_EXT => '.lttc',
-            COMPILE_DIR =>
-               File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
-                                    File::Spec->tmpdir ),
-            )
-            or die Template->error;
-    }
-
-    my $escape = \&LedgerSMB::Template::HTML::escape;
-    my $unescape = \&LedgerSMB::Template::HTML::unescape;
     if (! defined $singleton) {
+        if (!defined $engine) {
+            $engine = Template->new(
+                ### TODO: These should be configurable absolute paths
+                INCLUDE_PATH => [ 'UI/', 'UI/lib/' ],
+                ENCODING => 'utf8',
+                TRIM => 1,
+                START_TAG => quotemeta('<?lsmb'),
+                END_TAG => quotemeta('?>'),
+                DELIMITER => ';',
+                COMPILE_EXT => '.lttc',
+                COMPILE_DIR =>
+                   File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
+                                        File::Spec->tmpdir ),
+                )
+                or die Template->error;
+        }
+
+        my $escape = \&LedgerSMB::Template::HTML::escape;
+        my $unescape = \&LedgerSMB::Template::HTML::unescape;
         $singleton = bless {
             standard_vars => {
                 UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
@@ -130,8 +130,8 @@ sub render_string {
                 \&LedgerSMB::Template::HTML::escape)},
           %{$self->{standard_vars}},
           PRINTERS => [
-              ( map { { text => $_, value => $_ } }
-                keys %LedgerSMB::Sysconfig::printers,
+              ( ( map { { text => $_, value => $_ } }
+                  keys %LedgerSMB::Sysconfig::printers ),
                 {
                     text  => $request->{_locale}->text('Screen'),
                     value => 'screen'

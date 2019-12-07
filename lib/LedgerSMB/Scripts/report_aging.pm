@@ -144,7 +144,7 @@ sub generate_statement {
         LedgerSMB::Legacy_Util::render_template($template, {
              statements => \@statements });
         $request->{module_name}='gl';
-        $request->{report_type}='aging';
+        $request->{report_name}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);
     }
     # Unreachable
