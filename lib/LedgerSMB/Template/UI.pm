@@ -130,8 +130,8 @@ sub render_string {
                 \&LedgerSMB::Template::HTML::escape)},
           %{$self->{standard_vars}},
           PRINTERS => [
-              ( map { { text => $_, value => $_ } }
-                keys %LedgerSMB::Sysconfig::printers,
+              ( ( map { { text => $_, value => $_ } }
+                  keys %LedgerSMB::Sysconfig::printers ),
                 {
                     text  => $request->{_locale}->text('Screen'),
                     value => 'screen'
