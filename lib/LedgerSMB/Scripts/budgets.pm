@@ -43,7 +43,7 @@ sub new_budget {
     my ($request) = @_;
     $request->{rowcount} ||= 0;
     my $budget = LedgerSMB::Budget->new($request);
-    return _render_screen($budget);
+    return _render_screen($budget, $request->{_locale});
 }
 
 
@@ -52,7 +52,7 @@ sub new_budget {
 # Prepares and renders screen with budget info.
 
 sub _render_screen {
-    my ($budget) = @_;
+    my ($budget, $locale) = @_;
     my $additional_rows = EDIT_BUDGET_ROWS;
     $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
@@ -137,6 +137,7 @@ sub _render_screen {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
+    $budget->{_locale} = $locale;
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($budget, 'budgetting/budget_entry', $budget);
 }
@@ -187,7 +188,7 @@ sub view_budget {
         $row->{account_id} = "$account->{accno}--$account->{description}";
         push @{$budget->{display_rows}}, $row;
     }
-    return _render_screen($budget);
+    return _render_screen($budget, $request->{_locale});
 }
 
 =item save
