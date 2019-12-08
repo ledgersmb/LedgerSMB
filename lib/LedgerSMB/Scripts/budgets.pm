@@ -42,7 +42,7 @@ sub new_budget {
     my ($request) = @_;
     $request->{rowcount} ||= 0;
     my $budget = LedgerSMB::Budget->new($request);
-    return _render_screen($budget, $request->{_locale});
+    return _render_screen($request, $budget);
 }
 
 
@@ -51,7 +51,7 @@ sub new_budget {
 # Prepares and renders screen with budget info.
 
 sub _render_screen {
-    my ($budget, $locale) = @_;
+    my ($request, $budget) = @_;
     my $additional_rows = EDIT_BUDGET_ROWS;
     $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
@@ -95,13 +95,13 @@ sub _render_screen {
     if (!$budget->{id}){
        $budget->{buttons} = [
              {   name => 'action',
-                 text => $locale->text('Update'),
+                 text => $request->{_locale}->text('Update'),
                  type => 'submit',
                 value => 'update',
                 class => 'submit',
              },
              {   name => 'action',
-                 text => $locale->text('Save'),
+                 text => $request->{_locale}->text('Save'),
                  type => 'submit',
                 value => 'save',
                 class => 'submit',
@@ -110,13 +110,13 @@ sub _render_screen {
      } elsif (!$budget->{approved_by}){
          $budget->{buttons} = [
              {   name => 'action',
-                 text => $locale->text('Approve'),
+                 text => $request->{_locale}->text('Approve'),
                  type => 'submit',
                 value => 'approve',
                 class => 'submit',
              },
              {   name => 'action',
-                 text => $locale->text('Reject'),
+                 text => $request->{_locale}->text('Reject'),
                  type => 'submit',
                 value => 'reject',
                 class => 'submit',
@@ -125,7 +125,7 @@ sub _render_screen {
      } else {
          $budget->{buttons} = [
              {   name => 'action',
-                 text => $locale->text('Obsolete'),
+                 text => $request->{_locale}->text('Obsolete'),
                  type => 'submit',
                 value => 'obsolete',
                 class => 'submit',
@@ -136,9 +136,8 @@ sub _render_screen {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
-    $budget->{_locale} = $locale;
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($budget, 'budgetting/budget_entry', $budget);
+    return $template->render($request, 'budgetting/budget_entry', $budget);
 }
 
 =item update
@@ -187,7 +186,7 @@ sub view_budget {
         $row->{account_id} = "$account->{accno}--$account->{description}";
         push @{$budget->{display_rows}}, $row;
     }
-    return _render_screen($budget, $request->{_locale});
+    return _render_screen($request, $budget);
 }
 
 =item save
