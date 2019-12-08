@@ -139,6 +139,14 @@ sub render_string {
                 $vars,
                 \&LedgerSMB::Template::HTML::escape)},
           %{$self->{standard_vars}},
+          PRINTERS => [
+              ( ( map { { text => $_, value => $_ } }
+                  keys %LedgerSMB::Sysconfig::printers ),
+                {
+                    text  => $request->{_locale}->text('Screen'),
+                    value => 'screen'
+                } )
+          ],
           text => sub {
               if ($vars->{locale}) {
                   return LedgerSMB::Locale->get_handle($vars->{locale})
