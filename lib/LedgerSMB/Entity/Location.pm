@@ -23,7 +23,6 @@ attached either to the entity (person or company) or credit account
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
-use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES

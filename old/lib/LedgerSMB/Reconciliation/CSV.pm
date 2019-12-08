@@ -18,7 +18,6 @@ use LedgerSMB::Reconciliation::ISO20022;
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use Try::Tiny;
 use base qw(LedgerSMB::PGOld);
 

@@ -27,7 +27,6 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
-use LedgerSMB::App_State;
 
 
 =head1 PROPERTIES

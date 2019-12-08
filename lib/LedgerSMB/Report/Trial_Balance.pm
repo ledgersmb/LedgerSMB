@@ -27,7 +27,6 @@ We can also retrieve a previous report from the database and run it:
 
 use Moose;
 use namespace::autoclean;
-use LedgerSMB::App_State;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 

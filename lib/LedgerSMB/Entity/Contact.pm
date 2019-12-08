@@ -23,7 +23,6 @@ companies in LedgerSMB.
 
 use Moose;
 use namespace::autoclean;
-use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
