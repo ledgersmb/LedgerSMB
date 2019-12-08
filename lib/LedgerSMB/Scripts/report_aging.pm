@@ -145,7 +145,7 @@ sub generate_statement {
                 DBNAME     => $request->{company},
             });
     } else {
-        LedgerSMB::Legacy_Util::render_template($template, {
+        LedgerSMB::Legacy_Util::render_template($template, $request, {
              statements => \@statements });
         $request->{module_name}='gl';
         $request->{report_name}='aging';

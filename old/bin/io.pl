@@ -1092,7 +1092,7 @@ sub e_mail {
         template => 'io-email',
         user => $form->{_user},
         locale => $form->{_locale});
-    LedgerSMB::Legacy_Util::render_template($template, {
+    LedgerSMB::Legacy_Util::render_template($template, $form, {
         form => $form,
         print => $print_options,
         hiddens => \%hiddens,
@@ -1513,7 +1513,8 @@ sub print_form {
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         );
-    LedgerSMB::Legacy_Util::render_template($template, $form, $form->{media});
+    LedgerSMB::Legacy_Util::render_template($template, $form, $form,
+                                            $form->{media});
 
     # if we got back here restore the previous form
     if ( %$old_form ) {
