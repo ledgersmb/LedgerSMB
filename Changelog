@@ -2,6 +2,14 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.5
+* Fix failure to save tax forms (#4252)
+* Fix failure to undo database edits when surrounding code fails (#4253)
+* Allow uploads of files with MIME types unavailable in the database (#1949)
+* Fix failure to render (AR/AP) aging report (#4259, #4260)
+* Separate authentication domains for setup.pl and login.pl (#4247)
+
+
 Changelog for 1.7.4
 * Fix COGS failure when posting AP invoice reversal (#4218)
 * Include first transaction on account in reconciliation (#4221)
