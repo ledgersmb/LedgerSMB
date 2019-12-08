@@ -88,7 +88,7 @@ sub post_invoice {
     if ($form->{id}){
         delete_invoice($self, $myconfig, $form);
     }
-    my $dbh = $LedgerSMB::App_State::DBH;
+    my $dbh = $form->{dbh};
     $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
       if $form->should_update_defaults('invnumber');
 

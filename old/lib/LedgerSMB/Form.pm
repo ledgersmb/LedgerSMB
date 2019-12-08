@@ -1336,12 +1336,10 @@ sub db_init {
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     my $dbname = $self->{company};
-    $self->{dbh} = LedgerSMB::App_State::DBH;
-
     my $creds = $self->{_auth}->get_credentials;
-    $self->{dbh} ||= LedgerSMB::DBH->connect($self->{company},
-                                             $creds->{login},
-                                             $creds->{password});
+    $self->{dbh} = LedgerSMB::DBH->connect($self->{company},
+                                           $creds->{login},
+                                           $creds->{password});
 
     _credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
@@ -1387,7 +1385,6 @@ sub db_init {
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
     $sth->finish();
-    $LedgerSMB::App_State::DBH = $self->{dbh};
     LedgerSMB::Company_Config::initialize($self);
     $logger->trace("end");
 }
@@ -3238,7 +3235,7 @@ sub update_defaults {
         );
     }
 
-    my $dbh = LedgerSMB::App_State::DBH;
+    my $dbh = $self->{dbh};
 
     #if ( !$self ) { #if !$self, previous statement would already have failed!
     #    $dbh = $_[3];
@@ -3414,7 +3411,7 @@ If invnumber is not set, updates it.  Used when gapless numbering is in effect
 sub update_invnumber {
     my $self = shift;
     my $query = 'select invnumber from ar where id = ?';
-    my $sth = $LedgerSMB::App_State::DBH->prepare($query)
+    my $sth = $self->{dbh}->prepare($query)
         or $self->dberror($query);
     $sth->execute($self->{id}) or $self->dberror($query);
     my ($invnumber) = $sth->fetchrow_array;
@@ -3423,7 +3420,7 @@ sub update_invnumber {
     return if defined $invnumber or !$sth->rows;
     $sth->finish;
     $query = 'update ar set invnumber = ? where id = ?';
-    $sth = $LedgerSMB::App_State::DBH->prepare($query)
+    $sth = $self->{dbh}->prepare($query)
         or $self->dberror($query);
     $sth->execute(
         $self->update_defaults(
