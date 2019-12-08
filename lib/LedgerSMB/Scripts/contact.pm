@@ -168,7 +168,7 @@ sub _main_screen {
     $request->{target_div} ||= 'person_div' if defined $person;
     $request->{target_div} ||= 'company_div';
 
-    my @all_years =  LedgerSMB->call_procedure(
+    my @all_years =  $request->call_procedure(
               funcname => 'date_get_all_years'
     );
 
@@ -191,7 +191,7 @@ sub _main_screen {
     # DIVS contents
     my $entity_id = $company->{entity_id};
     $entity_id ||= $person->{entity_id};
-    my @pricegroups = LedgerSMB->call_procedure(
+    my @pricegroups = $request->call_procedure(
         funcname => 'pricegroups__list'
     );
     my @credit_list =
@@ -236,21 +236,21 @@ sub _main_screen {
                                                  $credit_act->{id});
 
     # Globals for the template
-    my @salutations = LedgerSMB->call_procedure(
+    my @salutations = $request->call_procedure(
                 funcname => 'person__list_salutations'
     );
-    my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
+    my @all_taxes = $request->call_procedure(funcname => 'account__get_taxes');
 
     my $arap_class = $entity_class || '0';
     $arap_class = 2 unless $arap_class == 1;
-    my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
+    my @ar_ap_acc_list = $request->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
 
-    my @cash_acc_list = LedgerSMB->call_procedure(funcname => 'chart_list_cash',
+    my @cash_acc_list = $request->call_procedure(funcname => 'chart_list_cash',
                                            args => [$entity_class]);
 
     my @discount_acc_list =
-         LedgerSMB->call_procedure(funcname => 'chart_list_discount',
+         $request->call_procedure(funcname => 'chart_list_discount',
                                      args => [$entity_class]);
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
@@ -262,7 +262,7 @@ sub _main_screen {
 
 #
     my @language_code_list =
-             LedgerSMB->call_procedure(funcname => 'person__list_languages');
+             $request->call_procedure(funcname => 'person__list_languages');
 
     for my $ref (@language_code_list){
         $ref->{text} = "$ref->{description}";
@@ -270,10 +270,10 @@ sub _main_screen {
 
     my @location_class_list =
        grep { $_->{class} =~ m/^(?:Billing|Sales|Shipping)$/ }
-            LedgerSMB->call_procedure(funcname => 'location_list_class');
+            $request->call_procedure(funcname => 'location_list_class');
 
     my @business_types =
-               LedgerSMB->call_procedure(funcname => 'business_type__list');
+               $request->call_procedure(funcname => 'business_type__list');
 
     my @all_currencies =
         map { { curr => $_ } }
@@ -297,10 +297,10 @@ sub _main_screen {
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
-    my @country_list = LedgerSMB->call_procedure(
+    my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
       );
-    my @entity_classes = LedgerSMB->call_procedure(
+    my @entity_classes = $request->call_procedure(
                       funcname => 'entity__list_classes'
     );
 

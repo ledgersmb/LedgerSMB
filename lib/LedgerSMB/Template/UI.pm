@@ -39,7 +39,7 @@ our @pre_render_cbs = (
         $vars->{locale} = $vars->{language} // $vars->{locale}
                           // $request->{_locale};
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
-        if ($vars->{DBNAME} && LedgerSMB::App_State::DBH()) {
+        if ($vars->{DBNAME} && $LedgerSMB::App_State::Company_Config) {
             $vars->{SETTINGS} = {
                 (%$LedgerSMB::App_State::Company_Config,)
             };

@@ -371,7 +371,7 @@ sub call_procedure {
     my %args = @_;
     $args{funcschema} ||= $LedgerSMB::Sysconfig::db_namespace;
     $args{funcname} ||= $args{procname};
-    $args{dbh} = LedgerSMB::App_State::DBH();
+    $args{dbh} = $self->{dbh};
     $args{args} ||= [];
     return PGObject->call_procedure(%args);
 }
@@ -397,7 +397,7 @@ sub dberror{
    my $self = shift @_;
    my $state_error = {};
    my $locale = $self->{_locale};
-   my $dbh = $LedgerSMB::App_State::DBH;
+   my $dbh = $self->{_dbh};
    $state_error = {
             '42883' => $locale->text('Internal Database Error'),
             '42501' => $locale->text('Access Denied'),

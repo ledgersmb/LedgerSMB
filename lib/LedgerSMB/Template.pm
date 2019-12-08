@@ -513,7 +513,7 @@ sub _render {
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
         %$LedgerSMB::App_State::Company_Config,
-    } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
+    } if $vars->{DBNAME} && $LedgerSMB::App_State::Company_Config;
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');

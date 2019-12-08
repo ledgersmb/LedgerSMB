@@ -162,7 +162,7 @@ sub _display_account_screen {
         $account->{$item} = 1;
     }
 
-    my @languages = LedgerSMB->call_procedure(
+    my @languages = $form->call_procedure(
         funcname => 'person__list_languages'
     );
 
