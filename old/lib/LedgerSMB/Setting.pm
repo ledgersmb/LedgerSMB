@@ -61,9 +61,9 @@ sub get {
     my ($key) = @_;
     $key = $self->{key} unless $key;
     my ($hashref) = __PACKAGE__->call_procedure(
-                                             dbh => LedgerSMB::App_State::DBH(),
-                                        funcname => 'setting_get',
-                                            args => [$key]) ;
+        dbh      => $self->{dbh},
+        funcname => 'setting_get',
+        args     => [$key]) ;
     if (defined($hashref)) {
         $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
         return $hashref->{value};
