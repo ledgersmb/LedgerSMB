@@ -164,7 +164,8 @@ sub save {
     } elsif ($self->entity_id){
         ($ref) = $self->call_dbmethod(funcname => 'entity__save_contact');
     } else {
-        die $LedgerSMB::App_State::Locale->text('Must have credit or entity id');
+        # No translation required: error targetting programmers, not users
+        die 'Must have credit or entity id';
     }
     $ref->{class_id} = $ref->{contact_class_id};
     return __PACKAGE__->new($ref);

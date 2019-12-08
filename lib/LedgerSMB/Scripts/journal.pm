@@ -51,7 +51,7 @@ Returns and displays the chart of accounts
 sub chart_of_accounts {
     my ($request) = @_;
 
-    my $report = LedgerSMB::Report::COA->new();
+    my $report = LedgerSMB::Report::COA->new(_locale => $request->{_locale});
     $report->set_dbh($request->{dbh});
     $report->run_report();
 
