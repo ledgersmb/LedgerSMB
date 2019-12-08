@@ -41,7 +41,7 @@ our @pre_render_cbs = (
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
         if ($vars->{DBNAME} && $LedgerSMB::App_State::Company_Config) {
             $vars->{SETTINGS} = {
-                (%$LedgerSMB::App_State::Company_Config,)
+                (%{$request->{_company_config}},)
             };
         }
     },
@@ -85,9 +85,6 @@ sub new_UI {
                 escape => $escape,
                 tt_url => \&LedgerSMB::Template::tt_url,
 
-                dojo_theme =>
-                    ($LedgerSMB::App_State::Company_Config->{dojo_theme}
-                     || LedgerSMB::Sysconfig::dojo_theme()),
                 LIST_FORMATS => sub {
                     return LedgerSMB::Template::available_formats();
                 },
@@ -129,6 +126,9 @@ sub render_string {
                 $vars,
                 \&LedgerSMB::Template::HTML::escape)},
           %{$self->{standard_vars}},
+          dojo_theme => (
+              $request->{_company_config}->{dojo_theme}
+              || LedgerSMB::Sysconfig::dojo_theme()),
           PRINTERS => [
               ( ( map { { text => $_, value => $_ } }
                   keys %LedgerSMB::Sysconfig::printers ),

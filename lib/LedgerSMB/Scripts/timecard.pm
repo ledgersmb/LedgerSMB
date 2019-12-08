@@ -28,7 +28,6 @@ use DateTime;
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
 use LedgerSMB::PGDate;
 use LedgerSMB::Report::Timecards;
@@ -203,7 +202,7 @@ sub print {
     my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => $LedgerSMB::Company_Config::settings->{templates},
+        path     => $request->{_company_config}->{templates},
         template => 'timecard',
         format   => $request->{format} || 'HTML',
         output_options => {

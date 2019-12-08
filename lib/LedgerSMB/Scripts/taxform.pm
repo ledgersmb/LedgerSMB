@@ -22,7 +22,6 @@ information depending on what one clicks.
 use strict;
 use warnings;
 
-use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::TaxForm;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Form;
@@ -182,7 +181,7 @@ sub print {
 
     # Business settings for 1099
     #
-    my $cc = $LedgerSMB::Company_Config::settings;
+    my $cc = $request->{_company_config};
     $request->{company_name}      = $cc->{company_name};
     $request->{company_address}   = $cc->{company_address};
     $request->{company_telephone} = $cc->{company_phone};
