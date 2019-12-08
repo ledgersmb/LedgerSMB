@@ -44,12 +44,6 @@ Stores a LedgerSMB::User object for the currently logged in user.
 =cut
 
 
-our $Company_Settings;
-
-=item Company_Settings
-
-Hashref for storing connection-specific settings for the application.
-
 =item DBH
 
 Database handle for current connection
@@ -125,22 +119,6 @@ sub set_Locale {
     return $Locale = shift;
 }
 
-=item Company_Settings
-
-=cut
-
-sub Company_Settings {
-    return $Company_Settings;
-}
-
-=item set_Company_Settings
-
-=cut
-
-sub set_Company_Settings {
-    return $Company_Settings = shift;
-}
-
 =item DBH
 
 =cut
@@ -172,12 +150,10 @@ sub run_with_state {
     my $block = shift;
     my $state = { @_ };
 
-    local ($DBH, $DBName, $User, $Company_Settings,
-           $Locale, $ENV{LSMB_ALWAYS_MONEY})
+    local ($DBH, $DBName, $User, $Locale, $ENV{LSMB_ALWAYS_MONEY})
         = ($state->{DBH} // $DBH,
            $state->{DBName} // $DBName,
            $state->{User} // $User,
-           $state->{Company_Settings} // $Company_Settings,
            $state->{Locale} // $Locale,
            $ENV{LSMB_ALWAYS_MONEY});
 

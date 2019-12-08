@@ -309,6 +309,7 @@ use warnings;
 use Carp;
 
 use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
@@ -512,8 +513,8 @@ sub _render {
     $vars->{USER} = $self->{user};
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
-        %$LedgerSMB::App_State::Company_Config,
-    } if $vars->{DBNAME} && $LedgerSMB::App_State::Company_Config;
+        %$LedgerSMB::Company_Config::settings,
+    } if $vars->{DBNAME} && $LedgerSMB::Company_Config::settings;
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');

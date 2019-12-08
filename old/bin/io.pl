@@ -1027,7 +1027,7 @@ sub create_form {
 sub e_mail {
     LedgerSMB::Company_Config->initialize();
     my %hiddens;
-    my $cc = $LedgerSMB::App_State::Company_Config;
+    my $cc = $LedgerSMB::Company_Config::settings;
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
