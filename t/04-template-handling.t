@@ -7,6 +7,7 @@ use Test2::V0;
 
 use File::Temp;
 use LedgerSMB;
+use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
@@ -366,6 +367,7 @@ SKIP: {
     );
     LedgerSMB::Legacy_Util::render_template(
         $template,
+        bless {}, 'LedgerSMB::Form';
         {},
         'test',
     );
