@@ -52,7 +52,6 @@ use warnings;
 use List::Util qw/sum/;
 
 use LedgerSMB::App_State;
-use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
@@ -1295,9 +1294,10 @@ sub post_payment {
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
      my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($LedgerSMB::Company_Config::decimal_places)
+     my $decimals = $request->{_company_config}->{decimal_places};
+     if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($decimals)
             <
-          $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
+          $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($decimals)
      ){
                 # We need to store all the overpayments
                 # so we can use it on a new payment2 screen

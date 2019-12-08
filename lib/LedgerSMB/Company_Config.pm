@@ -34,7 +34,6 @@ use strict;
 use warnings;
 use base qw(LedgerSMB);
 use LedgerSMB::Setting;
-use LedgerSMB::App_State;
 
 my @company_settings = qw(templates businessnumber weightunit curr
                           default_email_from default_email_to
@@ -55,7 +54,7 @@ sub initialize{
    $settings->{curr} = [ split (/:/, $settings->{curr}) ];
    $settings->{default_currency} = $settings->{curr}->[0];
 
-   return $LedgerSMB::App_State::Company_Config = $settings;
+   return $settings;
 }
 
 =head1 LICENSE AND COPYRIGHT

@@ -38,7 +38,6 @@ use Version::Compare;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
 use LedgerSMB::DBObject::Admin;

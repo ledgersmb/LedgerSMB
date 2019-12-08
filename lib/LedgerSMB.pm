@@ -248,7 +248,8 @@ sub initialize_with_db {
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
 
-    LedgerSMB::Company_Config::initialize($self);
+    $self->{_company_config} =
+        LedgerSMB::Company_Config::initialize($self);
 
     $self->get_user_info;
 
