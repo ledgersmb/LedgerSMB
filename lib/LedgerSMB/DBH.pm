@@ -59,32 +59,6 @@ sub connect {
     return $dbh;
 }
 
-=head2 set_datestyle
-
-This is used for old code, to set the datetyle for input.  It is not needed
-for new code because of PGDate support to/from the db.  For this reason, once
-order entry is removed, we should probably remove support for it.
-
-=cut
-
-sub set_datestyle {
-    my $dbh = LedgerSMB::App_State::DBH;
-    my $datequery = 'select dateformat from user_preference join users using(id)
-                      where username = CURRENT_USER';
-    my $date_sth = $dbh->prepare($datequery);
-    $date_sth->execute;
-    my ($datestyle) = $date_sth->fetchrow_array;
-    my %date_query = (
-        'mm/dd/yyyy' => 'set DateStyle to \'SQL, US\'',
-        'mm-dd-yyyy' => 'set DateStyle to \'POSTGRES, US\'',
-        'dd/mm/yyyy' => 'set DateStyle to \'SQL, EUROPEAN\'',
-        'dd-mm-yyyy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
-        'dd.mm.yyyy' => 'set DateStyle to \'GERMAN\''
-    );
-    $dbh->do( $date_query{ $datestyle } ) if $date_query{ $datestyle };
-    return;
-}
-
 =head2 require_version($version)
 
 Checks for a setting called 'ignore_version' and returns immediately if this is

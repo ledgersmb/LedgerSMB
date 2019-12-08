@@ -1356,7 +1356,7 @@ sub db_init {
     _credential_prompt if ! $self->{_new_session_cookie_value};
 
     LedgerSMB::App_State::set_DBH($dbh);
-    LedgerSMB::DBH->set_datestyle;
+    _set_datestyle($dbh);
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
@@ -1392,6 +1392,26 @@ sub db_init {
     LedgerSMB::Company_Config::initialize($self);
     $logger->trace("end");
 }
+
+sub _set_datestyle {
+    my $dbh = shift;
+    my $datequery = 'select dateformat from user_preference join users using(id)
+                      where username = CURRENT_USER';
+    my $date_sth = $dbh->prepare($datequery);
+    $date_sth->execute;
+    my ($datestyle) = $date_sth->fetchrow_array;
+    my %date_query = (
+        'mm/dd/yyyy' => 'set DateStyle to \'SQL, US\'',
+        'mm-dd-yyyy' => 'set DateStyle to \'POSTGRES, US\'',
+        'dd/mm/yyyy' => 'set DateStyle to \'SQL, EUROPEAN\'',
+        'dd-mm-yyyy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
+        'dd.mm.yyyy' => 'set DateStyle to \'GERMAN\''
+    );
+    $dbh->do( $date_query{ $datestyle } ) if $date_query{ $datestyle };
+    return;
+}
+
+
 
 =item $form->is_allowed_role($rolelist)
 

@@ -180,7 +180,7 @@ sub view_budget {
         } else {
             $row->{credit} = $line->{amount};
         }
-        my ($account) = $budget->call_procedure(
+        my ($account) = $request->call_procedure(
                           funcname => 'account_get',
                               args => [$line->{account_id}]
         );
