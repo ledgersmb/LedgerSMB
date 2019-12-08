@@ -60,7 +60,7 @@ sub get {
     my $self = shift;
     my ($key) = @_;
     $key = $self->{key} unless $key;
-    my ($hashref) = __PACKAGE__->call_procedure(
+    my ($hashref) = $self->call_procedure(
         dbh      => $self->{dbh},
         funcname => 'setting_get',
         args     => [$key]) ;
