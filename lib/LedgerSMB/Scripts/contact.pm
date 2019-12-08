@@ -462,6 +462,7 @@ sub dispatch_legacy {
     my $entry = $dispatch->{$request->{action}};
     return dispatch($entry->{script},
                     'add',
+                    $request->{_user},
                     { %{$entry->{data}},
                       script => $entry->{script},
                       action => 'add',

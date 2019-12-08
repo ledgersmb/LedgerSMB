@@ -57,6 +57,7 @@ Wraps a "call" to old code, returning a PSGI triplet for the response.
 sub dispatch {
     my $script = shift;
     my $entrypoint = shift;
+    my $user = shift;
     my $form_args = shift;
     my @entrypoint_args = @_;
 
@@ -77,7 +78,7 @@ sub dispatch {
             local *STDOUT = $stdout;
             $lsmb_legacy::form = Form->new();
             $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
-            %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
+            %lsmb_legacy::myconfig = %$user;
 
             # This is a forked process, but we're using the parent's
             # database handle. Don't destroy the database handle when
