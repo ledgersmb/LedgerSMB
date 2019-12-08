@@ -15,7 +15,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use Carp;
 use DBI;

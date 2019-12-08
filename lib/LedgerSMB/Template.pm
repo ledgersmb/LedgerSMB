@@ -308,7 +308,6 @@ use strict;
 use warnings;
 use Carp;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;

@@ -35,6 +35,7 @@ use Try::Tiny;
 use base qw(Exporter);
 our @EXPORT_OK = qw(dispatch);
 
+use LedgerSMB::App_State;
 
 # make sure the package exists after 'use'-ing this module:
 
