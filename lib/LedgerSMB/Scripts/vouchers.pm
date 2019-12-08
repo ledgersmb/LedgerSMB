@@ -150,6 +150,7 @@ sub _add_vouchers_old {
 
     return dispatch($entry->{script},
                     $entry->{function},
+                    $request->{_user},
                     $request);
 }
 
@@ -528,6 +529,7 @@ sub print_batch {
                 dispatch(
                     $entry->{script},
                     $entry->{entrypoint},
+                    $request->{_user},
                     { %$request },
                     # entrypoint's arguments:
                     $_,

@@ -159,7 +159,8 @@ callback.
 sub generate {
     my ($request) = @_;
 
-    return dispatch('oe.pl', 'generate_purchase_orders', $request);
+    return dispatch('oe.pl', 'generate_purchase_orders',
+                    $request->{_user}, $request);
 }
 
 =back

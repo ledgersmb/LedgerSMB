@@ -69,6 +69,7 @@ sub view {
         unless $script;
 
     return dispatch($script, $entry->{function},
+                    $request->{_user},
                     { %$request, script => $script },
                     # $entry->{function}'s arguments:
                     $transtemplate, $journal_type);
