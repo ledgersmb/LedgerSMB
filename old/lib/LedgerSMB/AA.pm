@@ -80,7 +80,7 @@ sub post_transaction {
     $form->{crdate} ||= 'now';
 
     # connect to database
-    my $dbh = $LedgerSMB::App_State::DBH;
+    my $dbh = $form->{dbh};
 
     my $query;
     my $sth;

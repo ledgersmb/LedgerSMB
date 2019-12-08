@@ -77,8 +77,8 @@ This method returns true if the user's password will expire soon
 sub will_expire_soon {
     my ($self) = @_;
     my ($pw_expires) = $self->call_dbmethod(
-          dbh => LedgerSMB::App_State::DBH(),
-          funcname => 'user__expires_soon');
+        dbh => $self->{dbh},
+        funcname => 'user__expires_soon');
     $self->{expires_soon} = $pw_expires->{'user__expires_soon'};
     return $self->{expires_soon};
 }
