@@ -16,7 +16,6 @@ This module holds common workflow routines for reports.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
@@ -89,8 +88,7 @@ sub start_report {
     );
     @{$request->{currencies}} = $request->setting->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
-    my $months = LedgerSMB::App_State::all_months();
-    $request->{all_months} = $months->{dropdown};
+    $request->{all_months} = $request->all_months->{dropdown};
 
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');

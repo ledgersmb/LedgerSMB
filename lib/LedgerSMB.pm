@@ -108,6 +108,24 @@ instance.
 
 Returns a reference to an initialised LedgerSMB::Setting instance.
 
+=item all_months()
+
+Returns hashref of localized date data with following members:
+
+=over
+
+=item dropdown
+
+Month information in drop down format.
+
+=item hashref
+
+Month info in hashref format in 01 => January format
+
+=back
+
+=cut
+
 =back
 
 
@@ -506,6 +524,33 @@ sub setting {
 
     return $self->{_setting};
 }
+
+sub all_months {
+    my ($self) = @_;
+    my $i18n = $self->{_locale};
+    my $months = {
+     '01' => $i18n->text('January'),
+     '02' => $i18n->text('February'),
+     '03' => $i18n->text('March'),
+     '04' => $i18n->text('April'),
+     '05' => $i18n->text('May'),
+     '06' => $i18n->text('June'),
+     '07' => $i18n->text('July'),
+     '08' => $i18n->text('August'),
+     '09' => $i18n->text('September'),
+     '10' => $i18n->text('October'),
+     '11' => $i18n->text('November'),
+     '12' => $i18n->text('December'),
+    };
+
+    my $for_dropdown = [];
+    my $as_hashref = {};
+    for my $key (sort {$a cmp $b} keys %$months){
+        push @$for_dropdown, {text => $months->{$key}, value => $key};
+    }
+    return { as_hashref => $months, dropdown=> $for_dropdown };
+}
+
 
 =head1 LICENSE AND COPYRIGHT
 

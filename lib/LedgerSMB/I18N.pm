@@ -36,7 +36,7 @@ sub _build_locale {
         $locale = LedgerSMB::Locale->get_handle($self->language);
     }
 
-    return ($locale) ? $locale : LedgerSMB::App_State->Locale;
+    return $locale // $self->{_locale};
 }
 
 =head1 METHODS
