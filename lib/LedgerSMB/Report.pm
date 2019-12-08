@@ -512,7 +512,10 @@ sub _render {
                     order_url => $self->order_url,
                       buttons => $self->buttons,
                       options => $self->options,
-                         rows => $self->rows});
+                         rows => $self->rows,
+
+                       DBNAME => $request->{company},
+                      });
 }
 
 =head2 show_cols

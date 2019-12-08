@@ -1369,7 +1369,6 @@ sub db_init {
     $sth->execute;
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
-    $LedgerSMB::App_State::DBName = $dbname;
 
     $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults

@@ -52,14 +52,6 @@ Database handle for current connection
 
 our $DBH;
 
-=item DBName
-
-name of the database connecting to
-
-=cut
-
-our $DBName;
-
 =back
 
 Each of the above has an accessor function of the same name which reads the
@@ -70,22 +62,6 @@ The direct access approach is deprecated and is likely to go away in 1.5 with
 the variables above given a "my" scope instead of an "our" one.
 
 =over
-
-=item DBName
-
-=cut
-
-sub DBName {
-    return $DBName;
-}
-
-=item set_DBName
-
-=cut
-
-sub set_DBName {
-    return $DBName = shift;
-}
 
 =item User
 
@@ -150,9 +126,8 @@ sub run_with_state {
     my $block = shift;
     my $state = { @_ };
 
-    local ($DBH, $DBName, $User, $Locale, $ENV{LSMB_ALWAYS_MONEY})
+    local ($DBH, $User, $Locale, $ENV{LSMB_ALWAYS_MONEY})
         = ($state->{DBH} // $DBH,
-           $state->{DBName} // $DBName,
            $state->{User} // $User,
            $state->{Locale} // $Locale,
            $ENV{LSMB_ALWAYS_MONEY});

@@ -123,7 +123,6 @@ sub psgi_app {
                 $res = LedgerSMB::PSGI::Util::template_to_psgi($res);
             }
         }, DBH     => $env->{'lsmb.db'},
-           DBName  => $env->{'lsmb.company'},
            Locale  => $request->{_locale};
 
         $request->{dbh}->commit if defined $request->{dbh};

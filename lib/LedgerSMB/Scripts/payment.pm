@@ -492,8 +492,12 @@ sub print {
             output_options => {
                filename => 'printed-checks',
             },
-        );
-        return $template->render($payment);
+            );
+        return $template->render(
+            {
+                DBNAME   => $request->{company},
+                %$payment,
+            });
     } else {
 
     }
@@ -1437,7 +1441,11 @@ sub print_payment {
       path     => $Payment->{templates_path},
       template => 'printPayment',
       format => 'HTML' );
-  return $template->render($select); ###TODO: psgi-render-to-attachment
+  return $template->render(
+      {
+          DBNAME => $request->{company},
+          %$select,
+      }); ###TODO: psgi-render-to-attachment
 }
 
 =item post_and_print_payment

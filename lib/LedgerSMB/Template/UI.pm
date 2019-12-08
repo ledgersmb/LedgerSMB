@@ -35,11 +35,11 @@ our @pre_render_cbs = (
     sub {
         my ($request, $template, $vars, $cvars) = @_;
         $vars->{USER} = $request->{_user};
-        $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
+        $vars->{DBNAME} = $request->{company};
         $vars->{locale} = $vars->{language} // $vars->{locale}
                           // $request->{_locale};
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
-        if ($vars->{DBNAME} && $LedgerSMB::App_State::Company_Config) {
+        if ($request->{company} && $LedgerSMB::App_State::Company_Config) {
             $vars->{SETTINGS} = {
                 (%{$request->{_company_config}},)
             };
