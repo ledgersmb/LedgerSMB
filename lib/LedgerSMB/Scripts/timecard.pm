@@ -212,6 +212,7 @@ sub print {
     );
 
     if (lc($request->{media}) eq 'screen') {
+        $request->{DBNAME} = $request->{company};
         return $template->render($request);
     }
     else {

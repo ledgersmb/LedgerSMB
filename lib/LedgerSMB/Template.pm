@@ -511,7 +511,6 @@ sub _render {
     my $vars = shift;
     my $cvars = shift // {};
     $vars->{USER} = $self->{user};
-    $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
         %$LedgerSMB::Company_Config::settings,
     } if $vars->{DBNAME} && $LedgerSMB::Company_Config::settings;

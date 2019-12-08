@@ -139,7 +139,11 @@ sub generate_statement {
        return;
 
     } elsif ($request->{media} eq 'screen'){
-        return $template->render({statements => \@statements});
+        return $template->render(
+            {
+                statements => \@statements,
+                DBNAME     => $request->{company},
+            });
     } else {
         LedgerSMB::Legacy_Util::render_template($template, {
              statements => \@statements });
