@@ -298,8 +298,7 @@ Locale to be used for the translation/localization of the report.
 
 =cut
 
-has _locale => (is => 'ro',
-                default => sub { return $LedgerSMB::App_State::Locale; } );
+has _locale => (is => 'ro');
 
 
 =head1 METHODS
