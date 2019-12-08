@@ -21,7 +21,6 @@ use warnings;
 use Try::Tiny;
 
 use LedgerSMB;
-use LedgerSMB::App_State;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -348,7 +347,7 @@ sub _main_screen {
            business_types => \@business_types,
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
-               all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
+               all_months =>  $request->all_months->{dropdown},
           default_country => $default_country,
          default_language => $default_language
     });

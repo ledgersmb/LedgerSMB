@@ -24,8 +24,6 @@ BEGIN {
 # LedgerSMB::Template contains render and _http_output
 # LedgerSMB contains error
 
-LedgerSMB::App_State::set_Locale(LedgerSMB::Locale->get_handle('en'));
-
 no warnings 'redefine';
 
 if (defined $ENV{LSMB_TEST_DB}){
