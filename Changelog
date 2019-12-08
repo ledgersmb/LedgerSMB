@@ -8,11 +8,15 @@ Changelog for 1.8.0
 Changed functionalities
 * Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
 
+Bugs fixed
+* Default dates sometimes off by a day (before or after the current day)
+
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
 * Replace unnecessary UNION selects on ar/ap/gl by select on transactions
 * Remove legacy infrastructure to generate table-formatted report output
 * Remove unmaintained ability from Makefile to install dependencies
+* Moved authentication for 'setup.pl' to itself, making it stand-alone
 
 
 Changelog for 1.7 Series
