@@ -24,13 +24,7 @@ use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 use LedgerSMB::App_State;
-use LedgerSMB::Locale;
 with 'LedgerSMB::PGObject';
-
-my $locale = $LedgerSMB::App_State::Locale;
-if (!$locale){
-   $locale = LedgerSMB::Locale->get_handle('en');
-}
 
 =head1 PROPERTIES
 
@@ -110,11 +104,6 @@ The name of the class that goes with the id.  This is not set until
 $self->set_class_name is called.
 
 =cut
-
-our %classes = ( 1 => $locale->text('Billing'),
-                 2 => $locale->text('Sales'),
-                 3 => $locale->text('Shipping'),  ## no critic (ProhibitMagicNumbers) sniff
-);
 
 has 'class_name' => (is => 'rw', isa => 'Str', required => 0);
 

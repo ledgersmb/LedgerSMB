@@ -171,7 +171,6 @@ Return codes:
 =cut
 
 sub save {
-
     my $self = shift @_;
     my $user = $self->get();
 
@@ -179,7 +178,7 @@ sub save {
     my ($ref) = try { $self->call_dbmethod(funcname=>'admin__save_user') }
                 catch {
                    if ($_ =~ /No password/){
-                      die LedgerSMB::App_State::Locale->text(
+                      die $self->{_locale}->text(
                              'Password required'
                       );
                    } elsif ($_ =~/Duplicate user/){

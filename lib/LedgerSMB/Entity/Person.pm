@@ -40,9 +40,6 @@ use namespace::autoclean;
 extends 'LedgerSMB::Entity';
 use LedgerSMB::MooseTypes;
 
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
-
 =head1 PROPERTIES
 
 =over
@@ -94,28 +91,12 @@ Salutation id.  These are fixed as:
  (6 rows)
 
 It is highly recommended that this is used, but for backward compatibility and
-upgrade reasons it is not enforced at this time.  This may change at some point as our user interface does not allow this to be left blank.
+upgrade reasons it is not enforced at this time.  This may change at some point
+as our user interface does not allow this to be left blank.
 
 =cut
 
 has 'salutation_id' => (is => 'rw', isa => 'Int');
-
-=item salutations
-
-Constant hashref of above salutations, key is id.
-
-=cut
-
-sub salutations {
-    return {
-       '1' => $locale->text('Dr.'),
-       '2' => $locale->text('Miss.'),
-       '3' => $locale->text('Mr.'),
-       '4' => $locale->text('Mrs.'),
-       '5' => $locale->text('Ms.'),
-       '6' => $locale->text('Sir.'),
-    };
-}
 
 =item created
 
