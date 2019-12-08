@@ -314,7 +314,7 @@ sub display_form
       template => 'journal_entry',
       format => 'HTML' );
 
-  LedgerSMB::Legacy_Util::render_template($template, {
+  LedgerSMB::Legacy_Util::render_template($template, $form, {
             form => $form,
             buttons => \@buttons,
             hiddens => \%hiddens,

@@ -1272,7 +1272,7 @@ sub save {
         user => $form->{_user},
         locale => $form->{_locale});
 
-       return LedgerSMB::Legacy_Util::render_template($template, {
+       return LedgerSMB::Legacy_Util::render_template($template, $form, {
           hiddens => $form
        });
     }

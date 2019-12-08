@@ -366,6 +366,7 @@ SKIP: {
     );
     LedgerSMB::Legacy_Util::render_template(
         $template,
+        {}, # $form
         {},
         'test',
     );
