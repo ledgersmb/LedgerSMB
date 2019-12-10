@@ -60,10 +60,11 @@ sub get {
     my $self = shift;
     my ($key) = @_;
     $key = $self->{key} unless $key;
-    my ($hashref) = __PACKAGE__->call_procedure(
-                                             dbh => LedgerSMB::App_State::DBH(),
-                                        funcname => 'setting_get',
-                                            args => [$key]) ;
+    my $dbh = ref $self ? $self->{dbh} : LedgerSMB::App_State::DBH();
+    my ($hashref) = $self->call_procedure(
+        dbh => $dbh,
+        funcname => 'setting_get',
+        args => [$key]);
     if (defined($hashref)) {
         $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
         return $hashref->{value};

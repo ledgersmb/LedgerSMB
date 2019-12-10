@@ -49,10 +49,11 @@ our $VERSION = 1.0;
 our $settings = {};
 
 sub initialize{
-   my ($self) = @_;
-   $settings = { map {$_ => LedgerSMB::Setting->get($_) } @company_settings };
-   $settings->{curr} = [ split (/:/, $settings->{curr}) ];
-   $settings->{default_currency} = $settings->{curr}->[0];
+    my ($request) = @_;
+    my $s = LedgerSMB::Setting->new({base => { dbh => $request->{dbh} }});
+    $settings = { map {$_ => $s->get($_) } @company_settings };
+    $settings->{curr} = [ split (/:/, $settings->{curr}) ];
+    $settings->{default_currency} = $settings->{curr}->[0];
 
    return $settings;
 }

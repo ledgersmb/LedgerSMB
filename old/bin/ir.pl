@@ -279,7 +279,7 @@ sub prepare_invoice {
             $form->{"discount_$i"} =
               $form->format_amount( \%myconfig, $form->{"discount_$i"} * 100 );
 
-            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
+            my $moneyplaces = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
             my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
             $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
@@ -408,7 +408,7 @@ sub form_header {
         <td colspan=3>
           <table>
             <tr> |;
-      if (LedgerSMB::Setting->get('show_creditlimit')){
+      if (LedgerSMB::Setting->new({base=>$form})->get('show_creditlimit')){
           print qq|
               <th nowrap>| . $locale->text('Credit Limit') . qq|</th>
               <td>|
