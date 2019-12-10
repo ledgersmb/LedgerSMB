@@ -76,6 +76,7 @@ use Try::Tiny;
 use Carp;
 use DBI;
 use LWP::Simple;
+use Symbol;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -655,8 +656,9 @@ sub _redirect {
 
     $lsmb_legacy::form = $form;
     require "old/bin/$script";
-    no strict 'refs';
-    &{ "lsmb_legacy::$form->{action}" };
+
+    my $ref = qualify_to_ref $form->{action}, 'lsmb_legacy';
+    &{ $ref };
 
 }
 

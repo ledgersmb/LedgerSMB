@@ -30,6 +30,7 @@ use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
 use POSIX 'SEEK_SET';
+use Symbol;
 use Try::Tiny;
 
 use base qw(Exporter);
@@ -107,9 +108,8 @@ sub dispatch {
                 $entrypoint->(@entrypoint_args);
             }
             else {
-                no strict 'refs';
-                &{"lsmb_legacy::$entrypoint"}($lsmb_legacy::form,
-                                              $lsmb_legacy::locale);
+                my $ref = qualify_to_ref $entrypoint, 'lsmb_legacy';
+                &{$ref}($lsmb_legacy::form, $lsmb_legacy::locale);
             }
         };
         exit;
