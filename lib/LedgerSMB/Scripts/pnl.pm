@@ -31,6 +31,7 @@ use LedgerSMB::Report::PNL::Product;
 use LedgerSMB::Report::PNL::ECA;
 use LedgerSMB::Report::PNL::Invoice;
 use LedgerSMB::Report;
+use LedgerSMB::Setting;
 
 use LedgerSMB::PGDate;
 use strict;
