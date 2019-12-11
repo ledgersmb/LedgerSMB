@@ -307,7 +307,6 @@ sub name {
 
 sub run_report {
     my $self = shift;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     my $procname = 'report__aa_outstanding';
     if ($self->is_detailed){
        $procname .= '_details';

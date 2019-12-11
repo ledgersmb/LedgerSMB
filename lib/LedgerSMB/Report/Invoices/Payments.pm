@@ -225,7 +225,6 @@ sub run_report{
     my ($self) = @_;
     die $self->Text('Must have cash account in batch')
         if $self->batch_id and not defined $self->cash_accno;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     my @rows = $self->call_dbmethod(funcname => 'payment__search');
     my $count = 1;
     for my $r(@rows){
