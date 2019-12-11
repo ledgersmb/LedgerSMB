@@ -418,7 +418,7 @@ sub form_header {
 
         $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
 
-        if (LedgerSMB::Setting->get('show_creditlimit')){
+        if (LedgerSMB::Setting->new({base=>$form})->get('show_creditlimit')){
         $creditremaining = qq|
           <tr>
         <td></td>

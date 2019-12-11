@@ -1153,7 +1153,7 @@ sub _render_new_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     if ( $request->{coa_lc} ) {
-        LedgerSMB::Setting->set('default_country',$request->{coa_lc});
+        LedgerSMB::Setting->new({base=>$request})->set('default_country',$request->{coa_lc});
     }
     return _render_user($request);
 }
@@ -1335,7 +1335,8 @@ sub run_upgrade {
         $request->{only_templates} = 1;
     }
 
-    my $templates = LedgerSMB::Setting->get('templates');
+    my $templates = LedgerSMB::Setting->new({base=>{dbh=>$dbh}})
+        ->get('templates');
     if ($templates){
        $request->{template_dir} = $templates;
        return load_templates($request);

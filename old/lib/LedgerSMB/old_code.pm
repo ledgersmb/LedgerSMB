@@ -85,8 +85,6 @@ sub dispatch {
             # This is a forked process, but we're using the parent's
             # database handle. Don't destroy the database handle when
             # this forked process exits, so the parent can continue using it.
-            $LedgerSMB::App_State::DBH->{AutoInactiveDestroy} = 1;
-
             {
                 # Note that we're only loading this code *after* the fork,
                 # so, we're only ever "polluting" the namespaces of the

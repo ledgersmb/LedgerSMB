@@ -284,7 +284,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
             }
         }
-        my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
+        my $moneyplaces = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
         $dec = length $dec;
         $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
         $form->{"precision_$i"} = $decimalplaces;

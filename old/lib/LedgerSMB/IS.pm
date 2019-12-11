@@ -334,7 +334,7 @@ sub invoice_details {
 
             my ($dec) = ( $sellprice =~ /\.(\d+)/ );
             $dec = length $dec;
-            my $dp = LedgerSMB::Setting->get('decimal_places');
+            my $dp = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
             my $decimalplaces = ( $dec > $dp ) ? $dec : $dp;
 
             my $discount = $form->round_amount(
@@ -890,7 +890,7 @@ sub post_invoice {
             my $fxsellprice =
               $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
 
-            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
+            my $moneyplaces = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
             my $decimalplaces = ($form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;

@@ -52,15 +52,14 @@ sub call {
         my $res = shift;
         my ($status, $headers, $body) = @$res;
 
-        # Binding App_State::DBH is a contrived way of getting
-        # the database handle into LedgerSMB::Setting
-        local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
         push @$headers, (
             'Cache-Control' => join(', ',
                                     qw| no-store  no-cache  must-revalidate
                                         post-check=0 pre-check=0 false|),
             'Pragma' => 'no-cache'
-        ) if LedgerSMB::Setting->get('disable_back');
+        ) if LedgerSMB::Setting->new({base => { dbh => $env->{'lsmb.db'} }})
+            ->get('disable_back');
+
     });
 }
 

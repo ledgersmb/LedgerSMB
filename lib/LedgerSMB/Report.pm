@@ -501,8 +501,8 @@ sub _render {
     my $render = $template->can($args{renderer});
     return &$render($template,
                       {report => $self,
-                 company_name => LedgerSMB::Setting->get('company_name'),
-              company_address => LedgerSMB::Setting->get('company_address'),
+                 company_name => LedgerSMB::Setting->new({base => $request})->get('company_name'),
+              company_address => LedgerSMB::Setting->new({base => $request})->get('company_address'),
                       request => $request,
                     new_heads => $replace_hnames,
                          name => $self->name,

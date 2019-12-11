@@ -43,8 +43,12 @@ sub connect {
     return undef if $username eq 'logout';
 
     my $dbh = DBI->connect("dbi:Pg:dbname=$company", $username, $password,
-           { PrintError => 0, AutoCommit => 0,
-             pg_enable_utf8 => 1, pg_server_prepare => 0 })
+                           { PrintError => 0, AutoCommit => 0,
+                             # From the DBI docs:
+                             #   It is strongly recommended that
+                             #   AutoInactiveDestroy is enabled on all new code
+                             AutoInactiveDestroy => 1,
+                             pg_enable_utf8 => 1, pg_server_prepare => 0 })
         or return undef;
 
     $dbh->do(q{set client_min_messages = 'warning'});
