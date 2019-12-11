@@ -1358,7 +1358,7 @@ sub db_init {
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
-    LedgerSMB::DBH->require_version($self->{version}) if $self->{version};
+    LedgerSMB::DBH->require_version($dbh, $self->{version}) if $self->{version};
 
     my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults

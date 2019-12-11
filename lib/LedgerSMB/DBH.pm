@@ -75,13 +75,14 @@ zero-downtime upgrades.
 =cut
 
 sub require_version {
-    my ($self, $expected_version) = @_;
+    my ($self, $dbh, $expected_version) = @_;
     $expected_version ||= $self; # handling ::require_version($version) syntax
 
-    my $ignore_version = LedgerSMB::Setting->get('ignore_version');
+    my $ignore_version =
+        LedgerSMB::Setting->new({base=>{dbh=>$dbh}})->get('ignore_version');
     return if $ignore_version;
 
-    my $version = LedgerSMB::Setting->get('version');
+    my $version = LedgerSMB::Setting->new({base=>{dbh=>$dbh}})->get('version');
 
     if ($expected_version eq $version) {
         return '';
