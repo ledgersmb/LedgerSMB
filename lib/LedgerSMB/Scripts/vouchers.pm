@@ -279,7 +279,10 @@ sub get_batch {
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
     return LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request)->render($request);
+                 %$request,
+        default_language => LedgerSMB::Setting->new({base=>$request})
+                               ->get('default_language'),
+        )->render($request);
 }
 
 =head2 single_batch_approve
