@@ -161,10 +161,8 @@ sub call {
 
     my $extended_cookie = '';
     if (! $env->{'lsmb.dbonly'}) {
-        my $version;
-        LedgerSMB::App_State::run_with_state sub {
-            $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
-        }, DBH => $dbh;
+        my $version =
+            LedgerSMB::DBH->require_version($dbh, $LedgerSMB::VERSION);
         if ($version) {
             return LedgerSMB::PSGI::Util::incompatible_database(
                 $LedgerSMB::VERSION, $version);

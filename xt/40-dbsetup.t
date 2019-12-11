@@ -59,10 +59,9 @@ $patch_log_sth->finish;
 $patch_log_dbh->disconnect; # Without disconnecting, the copy below fails...
 
 my $version;
-LedgerSMB::App_State::run_with_state sub {
-    $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
-    $LedgerSMB::App_State::DBH->disconnect;
-}, DBH => $db->connect;
+my $dbh = $db->connect;
+$version = LedgerSMB::DBH->require_version($dbh, $LedgerSMB::VERSION);
+$dbh->disconnect;
 ok(! $version,
    q{Database matches required version ('require_version' returns false)})
         or bail_out(q{LedgerSMB::DBH reports incorrect database version - no use continuing});
