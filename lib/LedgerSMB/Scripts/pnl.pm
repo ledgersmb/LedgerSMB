@@ -38,7 +38,8 @@ use warnings;
 
 sub generate_income_statement {
     my ($request) = @_;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
+    local $ENV{LSMB_ALWAYS_MONEY} =
+        LedgerSMB::Setting->new({base=>$request})->get('decimal_places');
 
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
