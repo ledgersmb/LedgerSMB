@@ -13,7 +13,7 @@ Called via lsmb-handler.pl:
 
 =head1 DESCRIPTION
 
-This module provides workflow logic for producing various reports regaridng 
+This module provides workflow logic for producing various reports regarding
 profit and loss.
 
 =head1 METHODS
@@ -39,8 +39,6 @@ use warnings;
 
 sub generate_income_statement {
     my ($request) = @_;
-    local $ENV{LSMB_ALWAYS_MONEY} =
-        LedgerSMB::Setting->new({base=>$request})->get('decimal_places');
 
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){

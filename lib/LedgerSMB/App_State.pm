@@ -102,10 +102,10 @@ sub run_with_state {
     my $block = shift;
     my $state = { @_ };
 
-    local ($DBH, $User, $ENV{LSMB_ALWAYS_MONEY})
-        = ($state->{DBH} // $DBH,
-           $state->{User} // $User,
-           $ENV{LSMB_ALWAYS_MONEY});
+    local ($DBH, $User) = (
+        $state->{DBH} // $DBH,
+        $state->{User} // $User,
+        );
 
     return $block->();
 }

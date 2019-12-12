@@ -25,6 +25,7 @@ use Number::Format;
 use PGObject::Type::BigFloat;
 
 use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
 use LedgerSMB::Setting;
 use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 
@@ -222,7 +223,6 @@ Specifies the negative format
 sub to_output {
     my $self = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
-    $args{money} = 1 if defined $ENV{LSMB_ALWAYS_MONEY};
     my $is_neg = $self->is_neg;
 
     my $format = ($args{format}) ? $args{format}
@@ -230,7 +230,8 @@ sub to_output {
     die 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
 
     my $places = undef;
-    $places = $ENV{LSMB_ALWAYS_MONEY} if $args{money};
+    $places = $LedgerSMB::Company_Config::settings->{decimal_places}
+       if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
     my $str = $self->bstr;
     my $dplaces = $places;

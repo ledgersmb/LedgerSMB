@@ -19,6 +19,8 @@ use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
+use Scalar::Util 'blessed';
+
 use LedgerSMB::Report::Axis;
 
 =head1 CRITERIA PROPERTIES
@@ -227,6 +229,20 @@ before '_render' => sub {
 
     $self->sorted_row_ids($self->rheads->sort);
     $self->sorted_col_ids($self->cheads->sort);
+
+    for my $row_id (@{$self->sorted_row_ids}) {
+        next if $self->rheads->id_props($row_id)->{section_for};
+
+        for my $col_id (@{$self->sorted_col_ids}) {
+            next if $self->cheads->id_props($col_id)->{section_for};
+
+            my $val = $self->cell_value($row_id, $col_id);
+            if (blessed $val and $val->can('to_output')) {
+                $self->cell_value($row_id, $col_id,
+                    $val->to_output(money => 1));
+            }
+        }
+    }
 };
 
 =head1 LICENSE AND COPYRIGHT
