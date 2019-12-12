@@ -26,6 +26,7 @@ use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
 use LedgerSMB::Report::Listings::Warehouse;
+use LedgerSMB::Setting;
 use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
@@ -182,7 +183,6 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::reports');
 
 sub generate_balance_sheet {
     my ($request) = @_;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,

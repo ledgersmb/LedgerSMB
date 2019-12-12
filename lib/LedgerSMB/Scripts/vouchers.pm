@@ -27,6 +27,7 @@ use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
+use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;
 
@@ -279,7 +280,10 @@ sub get_batch {
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
     return LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request)->render($request);
+                 %$request,
+        default_language => LedgerSMB::Setting->new({base=>$request})
+                               ->get('default_language'),
+        )->render($request);
 }
 
 =head2 single_batch_approve

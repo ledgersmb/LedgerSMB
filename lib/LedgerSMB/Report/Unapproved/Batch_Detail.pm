@@ -79,7 +79,16 @@ Description of transaction
 Total on voucher.  For AR/AP amount, this is the total of the AR/AP account
 before payments.  For payments, receipts, and GL, it is the sum of the credits.
 
+=item default_language
+
+Default language to be selected.
+
+=cut
+
+has default_language => (is => 'ro', isa => 'Maybe[Str]');
+
 =back
+
 
 =cut
 
@@ -171,6 +180,54 @@ has 'batch_id' => (is => 'rw', isa => 'Int');
 
 =over
 
+=item  set_buttons()
+
+=cut
+
+sub set_buttons {
+    my ($self) = @_;
+
+    return [
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Post Batch'),
+            value => 'single_batch_approve',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Delete Batch'),
+            value => 'single_batch_delete',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Delete Vouchers'),
+            value => 'batch_vouchers_delete',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Unlock Batch'),
+            value => 'single_batch_unlock',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Print Batch'),
+            value => 'print_batch',
+            class => 'submit',
+        },
+        ];
+}
+
+
+
 =item run_report()
 
 Runs the report, and assigns rows to $self->rows.
@@ -180,7 +237,6 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my %lhash = LedgerSMB::DBObject::User->country_codes();
-    my ($default_language) = LedgerSMB::Setting->get('default_language');
     my $locales = [ map { { text => $lhash{$_}, value => $_ } }
                     sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
                   ];
@@ -192,46 +248,13 @@ sub run_report{
     $self->options([{
        name => 'language',
        options => $locales,
-       default_value => [$default_language],
+       default_value => [$self->default_language],
     }, {
        name => 'media',
        options => $printer,
     },
     ]);
 
-    $self->buttons([{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->Text('Post Batch'),
-                    value => 'single_batch_approve',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->Text('Delete Batch'),
-                    value => 'single_batch_delete',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->Text('Delete Vouchers'),
-                    value => 'batch_vouchers_delete',
-                    class => 'submit',
-                },
-                {
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->Text('Unlock Batch'),
-                    value => 'single_batch_unlock',
-                    class => 'submit',
-                },
-                {
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $self->Text('Print Batch'),
-                    value => 'print_batch',
-                    class => 'submit',
-                }, ]);
     my @rows = $self->call_dbmethod(funcname => 'voucher__list');
     for my $ref (@rows){
         my $script;
@@ -243,7 +266,8 @@ sub run_report{
            '9' => 'ir',
         };
         $script = $class_to_script->{lc($ref->{batch_class_id})};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}" if $script;
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}"
+            if $script;
     }
     return $self->rows(\@rows);
 }

@@ -154,7 +154,6 @@ try {
 
         &{ $form->{action} };
         $form->{dbh}->commit;
-        delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
     }
     else {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
@@ -168,7 +167,6 @@ catch  {
     # -- CT
     my $err = $_;
     $form->{_error} = 1;
-    delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
     if ($err =~ /^Died/i or $err =~ /^exit at /) {
         $form->{dbh}->commit if defined $form->{dbh};
     }
