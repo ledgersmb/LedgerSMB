@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-11-29 10:59+0000\n"
+"POT-Creation-Date: 2019-12-13 16:15+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Spanish (El Salvador) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_SV/)\n"
@@ -337,7 +337,7 @@ msgstr ""
 msgid "Accum. Depreciation"
 msgstr ""
 
-#: old/lib/LedgerSMB/Form.pm:574 UI/lib/elements.html:440
+#: old/lib/LedgerSMB/Form.pm:576 UI/lib/elements.html:440
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
@@ -5070,7 +5070,7 @@ msgstr ""
 msgid "No changes"
 msgstr ""
 
-#: old/lib/LedgerSMB/Form.pm:1119
+#: old/lib/LedgerSMB/Form.pm:1121
 msgid "No currencies defined.  Please set these up under System/Currency."
 msgstr ""
 
@@ -5106,7 +5106,7 @@ msgstr ""
 msgid "No report specified"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/taxform.pm:136
+#: lib/LedgerSMB/Scripts/taxform.pm:138
 msgid "No tax form selected"
 msgstr ""
 
@@ -5565,7 +5565,7 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1273
+#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1275
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:111
 #: UI/Reports/balance_sheet.html:115 UI/Reports/display_report.html:75
 #: UI/Reports/PNL.html:100
@@ -6037,7 +6037,7 @@ msgstr ""
 msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1271
+#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1273
 msgid "Postscript"
 msgstr "Postscript"
 
@@ -7067,8 +7067,9 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:601 lib/LedgerSMB/Template/UI.pm:96
-#: old/bin/printer.pl:130 UI/lib/utilities.html:45
+#: lib/LedgerSMB/Scripts/payment.pm:601 lib/LedgerSMB/Template/UI.pm:146
+#: lib/LedgerSMB/Template/UI.pm:96 old/bin/printer.pl:130
+#: UI/lib/utilities.html:45
 msgid "Screen"
 msgstr "Pantalla"
 
@@ -9288,11 +9289,11 @@ msgstr ""
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
-#: old/lib/LedgerSMB/Form.pm:634
+#: old/lib/LedgerSMB/Form.pm:636
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr ""
 
-#: old/bin/old-handler.pl:161
+#: old/bin/old-handler.pl:160
 msgid "action not defined!"
 msgstr ""
 
