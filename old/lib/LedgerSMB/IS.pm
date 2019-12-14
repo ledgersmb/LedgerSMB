@@ -42,7 +42,6 @@ use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
-use LedgerSMB::App_State;
 use LedgerSMB::Num2text;
 use LedgerSMB::IIAA;
 use Log::Log4perl;
