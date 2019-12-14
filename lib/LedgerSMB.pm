@@ -124,7 +124,29 @@ Month info in hashref format in 01 => January format
 
 =back
 
-=cut
+
+=item report_renderer_ui
+
+Returns a code reference to render a report on the UI - pass as the
+named argument 'renderer' to the C<LedgerSMB::Report->render> method.
+
+  my $report = LedgerSMB::Report
+  $report->render($request, renderer => $request->report_renderer_ui);
+
+
+=item report_renderer_doc
+
+Returns a code reference to render a report as a document - pass as the
+named argument 'renderer' to the C<LedgerSMB::Report->render> method.
+
+  my $report = LedgerSMB::Report
+  $report->render($request, renderer => $request->report_renderer_doc);
+
+
+=item render_report($report)
+
+Renders the report as a document or UI element, depending on whether
+the request's C<format> property has a non-false value.
 
 =back
 
@@ -173,6 +195,7 @@ use LedgerSMB::User;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.8.0-dev';
 
@@ -551,6 +574,51 @@ sub all_months {
     return { as_hashref => $months, dropdown=> $for_dropdown };
 }
 
+sub report_renderer_ui {
+  my ($request) = @_;
+  my $ui = LedgerSMB::Template::UI->new_UI;
+
+  return sub {
+      my ($template_name, $report, $vars, $cvars) = @_;
+
+      return $ui->render($request, $template_name, $vars, $cvars);
+  };
+}
+
+sub report_renderer_doc {
+    my ($request) = @_;
+
+    return sub {
+        my ($template_name, $report, $vars, $cvars) = @_;
+        my $template = LedgerSMB::Template->new(
+            template => $template_name,
+            user     => $LedgerSMB::App_State::User,
+            path     => 'UI',  # TODO: we want to make this 'DB'
+            format   => uc($request->{format} || 'HTML'),
+            output_options => {
+                filename => $report->output_name($request),
+            },
+            );
+
+        return $template->render($vars, $cvars);
+    };
+}
+
+
+sub render_report {
+    my ($request, $report) = @_;
+
+    my $renderer;
+    if ($request->{format}) {
+        # render as (stand alone) document
+        $renderer = $request->report_renderer_doc;
+    }
+    else {
+        # render as UI element
+        $renderer = $request->report_renderer_ui;
+    }
+    return $report->render($request, renderer => $renderer);
+}
 
 =head1 LICENSE AND COPYRIGHT
 

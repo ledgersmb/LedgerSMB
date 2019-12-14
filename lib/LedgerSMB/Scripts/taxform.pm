@@ -119,24 +119,18 @@ package.
 
 =cut
 
-sub _generate_report {
+sub generate_report {
     my ($request) = @_;
+    die $request->{_locale}->text('No tax form selected')
+        unless $request->{tax_form_id};
+
     my $report;
     if ($request->{meta_number}){
         $report = LedgerSMB::Report::Taxform::Details->new(%$request);
     } else {
         $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
     }
-    return $report;
-}
-
-
-sub generate_report {
-    my ($request) = @_;
-    die $request->{_locale}->text('No tax form selected')
-        unless $request->{tax_form_id};
-    my $report = _generate_report($request);
-    return $report->render($request);
+    return $request->render_report($report);
 }
 
 =item save
@@ -199,8 +193,9 @@ Lists all tax forms.
 
 sub list_all {
     my $request= shift;
-    my $report = LedgerSMB::Report::Taxform::List->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Taxform::List->new(%$request)
+        );
 }
 
 =back

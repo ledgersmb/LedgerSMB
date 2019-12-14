@@ -128,7 +128,7 @@ sub search {
            value => 'generate',
         }]);
     }
-    return $report->render($request);
+    return $request->render_report($report);
 }
 
 =item combine

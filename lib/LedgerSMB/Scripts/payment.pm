@@ -316,7 +316,7 @@ inputs currently expected include
 
 sub get_search_results {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Invoices::Payments->new(%$request);
+
     $request->{hiddens} = {
         batch_id => $request->{batch_id},
       cash_accno => $request->{cash_accno},
@@ -325,7 +325,9 @@ sub get_search_results {
    date_reversed => $request->{date_reversed},
    account_class => $request->{account_class},
     };
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Invoices::Payments->new(%$request)
+        );
 }
 
 =item reverse_payments

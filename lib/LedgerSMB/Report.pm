@@ -330,9 +330,14 @@ sub _exclude_from_totals {
 }
 
 
-=head2 render
+=head2 render(renderer => \&renderer($template_name, $report, $vars, $clean_vars) )
 
 This takes no arguments and simply renders the report as is.
+
+C<&renderer> is a function of 4 arguments. The difference between C<$vars> and
+C<$clean_vars> is that the latter are already HTML-safely encoded whereas
+the former are not (and therefor will be encoded before being inserted into
+the template).
 
 =cut
 
@@ -340,18 +345,17 @@ sub render {
     my $self = shift;
     my $request = shift;
 
-    return $self->_render($request, renderer => 'render');
+    return $self->_render($request, renderer => 'render', @_);
 }
 
 
-# PRIVATE METHODS
+=head2 output_name($request)
 
-# _output_name
-#
-# Returns a base file name (without extension) for the current report.
-# Used where output is to a file or attachment.
+Returns the suggested file name to be used to store the report.
 
-sub _output_name {
+=cut
+
+sub output_name {
     my $self = shift;
     my $request = shift;
 
@@ -375,6 +379,8 @@ sub _output_name {
 
     return $name;
 }
+
+# PRIVATE METHODS
 
 # _render
 #
@@ -488,33 +494,26 @@ sub _render {
         my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
         return [map { +{ %$_, %{shift @newlines} } } @$lines ];
     };
-    $template = LedgerSMB::Template->new(
-        user => $LedgerSMB::App_State::User,
-        locale => $self->locale,
-        path => 'UI',
-        output_options => {
-            filename => $self->_output_name($request),
-        },
-        template => $template,
-        format => uc($request->{format} || 'HTML'),
-    );
-    my $render = $template->can($args{renderer});
-    return &$render($template,
-                      {report => $self,
-                 company_name => LedgerSMB::Setting->new({base => $request})->get('company_name'),
-              company_address => LedgerSMB::Setting->new({base => $request})->get('company_address'),
-                      request => $request,
-                    new_heads => $replace_hnames,
-                         name => $self->name,
-                       hlines => $self->header_lines,
-                      columns => $columns,
-                    order_url => $self->order_url,
-                      buttons => $self->buttons,
-                      options => $self->options,
-                         rows => $self->rows,
 
-                       DBNAME => $request->{company},
-                      });
+    my $setting = LedgerSMB::Setting->new({base => $request});
+    return $args{renderer}->(
+        $template, $self,
+        {
+            report          => $self,
+            company_name    => $setting->get('company_name'),
+            company_address => $setting->get('company_address'),
+            request         => $request,
+            new_heads       => $replace_hnames,
+            name            => $self->name,
+            hlines          => $self->header_lines,
+            columns         => $columns,
+            order_url       => $self->order_url,
+            buttons         => $self->buttons,
+            options         => $self->options,
+            rows            => $self->rows,
+
+            DBNAME          => $request->{company},
+        });
 }
 
 =head2 show_cols

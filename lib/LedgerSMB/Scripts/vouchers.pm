@@ -261,8 +261,9 @@ of these parameters.
 sub list_batches {
     my ($request) = @_;
     $request->open_form;
-    return LedgerSMB::Report::Unapproved::Batch_Overview->new(
-                 %$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Unapproved::Batch_Overview->new(%$request)
+        );
 }
 
 =head2 get_batch
@@ -275,15 +276,16 @@ Displays all vouchers from the batch by type, and includes amount.
 
 sub get_batch {
     my ($request)  = @_;
+    my $setting =  LedgerSMB::Setting->new({base=>$request});
     $request->open_form;
 
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
-    return LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request,
-        default_language => LedgerSMB::Setting->new({base=>$request})
-                               ->get('default_language'),
-        )->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Unapproved::Batch_Detail->new(
+            default_language => $setting->get('default_language'),
+            %$request,
+        ));
 }
 
 =head2 single_batch_approve
@@ -577,7 +579,7 @@ sub print_batch {
         };
     }
     else {
-        return $report->render($request);
+        return $request->render_report($report);
     }
 }
 

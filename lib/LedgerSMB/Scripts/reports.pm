@@ -121,8 +121,9 @@ Lists the business types.  No inputs expected or used.
 
 sub list_business_types {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Business_Type->new(%$request)
+        );
 }
 
 =item list_gifi
@@ -133,8 +134,9 @@ List the gifi entries.  No inputs expected or used.
 
 sub list_gifi {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::GIFI->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::GIFI->new(%$request)
+        );
 }
 
 =item list_warehouse
@@ -144,8 +146,10 @@ List the warehouse entries.  No inputs expected or used.
 =cut
 
 sub list_warehouse {
-    return LedgerSMB::Report::Listings::Warehouse->new(%{$_[0]})
-        ->render($_[0]);
+    my ($request) = @_;
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Warehouse->new(%$request)
+        );
 }
 
 =item list_language
@@ -156,8 +160,9 @@ List language entries.  No inputs expected or used.
 
 sub list_language {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::Language->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Language->new(%$request)
+        );
 }
 
 =item list_sic
@@ -168,8 +173,9 @@ Lists sic codes
 
 sub list_sic {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::SIC->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::SIC->new(%$request)
+        );
 }
 
 =item generate_balance_sheet
@@ -199,7 +205,7 @@ sub generate_balance_sheet {
         $cmp->run_report;
         $rpt->add_comparison($cmp);
     }
-    return $rpt->render($request);
+    return $request->render_report($rpt);
 }
 
 =item search_overpayments
@@ -210,12 +216,13 @@ Searches overpayments based on inputs.
 
 sub search_overpayments {
     my ($request) = @_;
-    my $hiddens = {};
-    $hiddens->{$_} = $request->{$_} for qw(batch_id currency exchangerate
-                                        post_date batch_class account_class);
-    $request->{hiddens} = $hiddens;
-    return LedgerSMB::Report::Listings::Overpayments->new(%$request)
-        ->render($request);
+    $request->{hiddens}->{$_} = $request->{$_}
+        for qw(batch_id currency exchangerate
+               post_date batch_class account_class);
+
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Overpayments->new(%$request)
+        );
 }
 
 =item reverse_overpayment

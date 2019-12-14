@@ -18,10 +18,12 @@ which have not been approved yet.
 
 =cut
 
-use LedgerSMB::DBObject::Draft;
-use LedgerSMB::Template;
 use strict;
 use warnings;
+
+use LedgerSMB::DBObject::Draft;
+use LedgerSMB::Report::Unapproved::Drafts;
+use LedgerSMB::Template;
 
 our $VERSION = '0.1';
 
@@ -136,11 +138,11 @@ amount_ge: total greater than or equal to
 
 sub list_drafts {
     my ($request) = @_;
-    use LedgerSMB::Report::Unapproved::Drafts;
-    my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
+
     $request->open_form;
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Unapproved::Drafts->new(%$request)
+        );
 }
 
 

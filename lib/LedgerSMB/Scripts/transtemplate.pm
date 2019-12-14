@@ -128,8 +128,9 @@ Lists all transaction templates
 
 sub list {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
+        );
 }
 
 =item delete
@@ -147,8 +148,9 @@ sub delete {
             if $request->{"row_select_$row"};
         delete $request->{"row_select_$row"};
     }
-    return LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
+        );
 }
 
 =back

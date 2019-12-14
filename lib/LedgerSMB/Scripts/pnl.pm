@@ -71,7 +71,7 @@ sub generate_income_statement {
             $rpt->add_comparison($cmp);
         }
     }
-    return $rpt->render($request);
+    return $request->render_report($rpt);
 }
 
 =back

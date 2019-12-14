@@ -36,9 +36,9 @@ use LedgerSMB::Scripts::reports;
 
 sub search_adj{
     my ($request) = @_;
-    my $rpt = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
-    $rpt->run_report;
-    return $rpt->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Inventory::Search_Adj->new(%$request)
+        );
 }
 
 =item adj_detail
@@ -50,9 +50,9 @@ Shows adjustment details
 sub adj_detail {
     my ($request) = @_;
     $request->{hiddens} = { id => $request->{id}};
-    my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
-    $rpt->run_report;
-    return $rpt->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Inventory::Adj_Details->new(%$request)
+        );
 }
 
 =item approve
