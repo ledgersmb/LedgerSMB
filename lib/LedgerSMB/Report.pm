@@ -495,10 +495,11 @@ sub _render {
         return [map { +{ %$_, %{shift @newlines} } } @$lines ];
     };
 
-    if (ref $args{renderer}) {
-        my $setting = LedgerSMB::Setting->new({base => $request});
-        return $args{renderer}->($template, $self, {
-            report => $self,
+    my $setting = LedgerSMB::Setting->new({base => $request});
+    return $args{renderer}->(
+        $template, $self,
+        {
+            report          => $self,
             company_name    => $setting->get('company_name'),
             company_address => $setting->get('company_address'),
             request         => $request,
@@ -512,37 +513,7 @@ sub _render {
             rows            => $self->rows,
 
             DBNAME          => $request->{company},
-                           });
-    }
-    else {
-        $template = LedgerSMB::Template->new(
-            user => $LedgerSMB::App_State::User,
-            locale => $self->locale,
-            path => 'UI',
-            output_options => {
-                filename => $self->output_name($request),
-            },
-            template => $template,
-            format => uc($request->{format} || 'HTML'),
-            );
-        my $render = $template->can($args{renderer});
-        return &$render($template,
-                        {report => $self,
-                   company_name => LedgerSMB::Setting->new({base => $request})->get('company_name'),
-                company_address => LedgerSMB::Setting->new({base => $request})->get('company_address'),
-                        request => $request,
-                      new_heads => $replace_hnames,
-                           name => $self->name,
-                         hlines => $self->header_lines,
-                        columns => $columns,
-                      order_url => $self->order_url,
-                        buttons => $self->buttons,
-                        options => $self->options,
-                           rows => $self->rows,
-
-                         DBNAME => $request->{company},
-                        });
-    }
+        });
 }
 
 =head2 show_cols
