@@ -592,7 +592,7 @@ sub report_renderer_doc {
         my ($template_name, $report, $vars, $cvars) = @_;
         my $template = LedgerSMB::Template->new(
             template => $template_name,
-            user     => $LedgerSMB::App_State::User,
+            user     => $request->{_user},
             path     => 'UI',  # TODO: we want to make this 'DB'
             format   => uc($request->{format} || 'HTML'),
             output_options => {
