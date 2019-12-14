@@ -47,7 +47,7 @@ use LedgerSMB::Num2text;
 use LedgerSMB::IIAA;
 use Log::Log4perl;
 
-use LedgerSMB::IS qw(BC_SALES_INVOICE);
+use LedgerSMB::Magic qw(BC_SALES_INVOICE);
 
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');

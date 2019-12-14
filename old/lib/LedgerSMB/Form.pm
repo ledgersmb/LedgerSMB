@@ -62,8 +62,6 @@ use strict;
 use LedgerSMB::Sysconfig;
 use List::Util qw(first);
 use Time::Local;
-use Cwd;
-use File::Copy;
 use LedgerSMB::Company_Config;
 use LedgerSMB::PGNumber;
 use Log::Log4perl;
