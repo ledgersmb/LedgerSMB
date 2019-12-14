@@ -113,12 +113,10 @@ the function.
 sub increment_process{
     my ($value, $self ) = @_;
 # check for and replace
-# <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
 # <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
 # <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
 # <?lsmb PHONE ?> for customer and vendors
 
-    my $myconfig = $LedgerSMB::App_State::User;
     my $dbvar = $value;
     my $var   = $value;
     my $str;
@@ -132,16 +130,6 @@ sub increment_process{
             last unless $1;
             $param = $1;
             $str   = "";
-
-            if ( $param =~ /<\?lsmb date \?>/i ) {
-                $str = (
-                    $self->split_date(
-                        $myconfig->{dateformat},
-                        $self->{transdate}
-                    )
-                )[0];
-                $var =~ s/$param/$str/;
-            }
 
             if ( $param =~
 /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i
@@ -174,20 +162,6 @@ sub increment_process{
 
                 $var =~ s/$param/$str/;
                 $var =~ s/\W//g if $fld eq 'phone';
-            }
-
-            if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-        # SC: XXX Does this even work anymore?
-                my $p = $param;
-                $p =~ s/lsmb//;
-                $p =~ s/[^YyMmDd]//g;
-                my %d = ( yy => 1, mm => 2, dd => 3 );
-                my $str = $p;
-
-                my @a = $self->split_date( $myconfig->{dateformat},
-                    $self->{transdate} );
-                for my $k( keys %d ) { $str =~ s/$k/$a[ $d{$k} ]/i}
-                $var =~ s/\Q$param\E/$str/i;
             }
 
             if ( $param =~ /<\?lsmb curr/i ) {
