@@ -19,7 +19,6 @@ use warnings;
 
 #use parent qw(LedgerSMB::Template);
 
-use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
@@ -39,7 +38,7 @@ our @pre_render_cbs = (
         $vars->{locale} = $vars->{language} // $vars->{locale}
                           // $request->{_locale};
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
-        if ($request->{company} && $LedgerSMB::App_State::Company_Config) {
+        if ($request->{company} && $request->{_company_config}) {
             $vars->{SETTINGS} = {
                 (%{$request->{_company_config}},)
             };
