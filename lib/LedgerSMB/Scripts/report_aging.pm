@@ -48,9 +48,9 @@ sub run_report{
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::Report::Aging->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Aging->new(%$request)
+        );
 }
 
 

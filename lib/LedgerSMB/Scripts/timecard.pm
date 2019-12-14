@@ -231,8 +231,9 @@ This generates a report of timecards.
 
 sub timecard_report{
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Timecards->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Timecards->new(%$request)
+        );
 }
 
 =item generate_order

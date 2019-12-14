@@ -146,8 +146,9 @@ Displays a list of all asset classes.  No inputs required.
 
 sub asset_category_results {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::Asset_Class->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Asset_Class->new(%$request)
+        );
 }
 
 =item edit_asset_class
@@ -236,8 +237,9 @@ be set.
 
 sub asset_results {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::Asset->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Asset->new(%$request)
+        );
 }
 
 =item asset_save
@@ -984,8 +986,9 @@ No inputs required or used.
 
 sub display_nbv {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Assets::Net_Book_Value->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Assets::Net_Book_Value->new(%$request)
+        );
 }
 
 =item begin_import

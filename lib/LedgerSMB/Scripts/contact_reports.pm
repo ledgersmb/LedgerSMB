@@ -32,9 +32,9 @@ Runs the search report and displays it
 sub search{
     my ($request) = @_;
 
-    my $report = LedgerSMB::Report::Contact::Search->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Contact::Search->new(%$request)
+        );
 }
 
 =item history
@@ -46,9 +46,9 @@ Runs the purchase history report and displays it
 sub history {
     my ($request) = @_;
 
-    my $report = LedgerSMB::Report::Contact::History->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Contact::History->new(%$request)
+        );
 }
 
 =back

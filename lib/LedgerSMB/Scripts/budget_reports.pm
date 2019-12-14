@@ -33,9 +33,9 @@ more.
 sub search {
     my ($request) = @_;
     LedgerSMB::Report::Budget::Search->prepare_criteria($request);
-    my $report = LedgerSMB::Report::Budget::Search->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Budget::Search->new(%$request)
+        );
 }
 
 =item variance_report
@@ -48,9 +48,9 @@ vs amounts used.
 sub variance_report {
     my ($request) = @_;
     my $id = $request->{id};
-    my $report = LedgerSMB::Report::Budget::Variance->for_budget_id($id);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Budget::Variance->for_budget_id($id)
+        );
 }
 
 =back

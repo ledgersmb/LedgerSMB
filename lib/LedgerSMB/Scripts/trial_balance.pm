@@ -49,9 +49,10 @@ sub run {
                                  grep {$_ =~ /business_/}
                                  keys %$request];
     delete $request->{business_units}
-           unless scalar @{$request->{business_units}};
-    return LedgerSMB::Report::Trial_Balance->new(%$request)
-        ->render($request);
+    unless scalar @{$request->{business_units}};
+    return $request->render_report(
+        LedgerSMB::Report::Trial_Balance->new(%$request)
+        );
 }
 
 =back

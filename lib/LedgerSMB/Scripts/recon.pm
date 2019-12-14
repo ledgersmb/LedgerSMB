@@ -143,8 +143,9 @@ Displays the search results
 
 sub get_results {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Reconciliation::Summary->new(%$request)
+        );
 }
 
 =item search($request)

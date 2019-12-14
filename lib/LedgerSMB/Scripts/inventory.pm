@@ -19,7 +19,6 @@ use warnings;
 use LedgerSMB::Inventory::Adjust;
 use LedgerSMB::Inventory::Adjust_Line;
 use LedgerSMB::Report::Inventory::Search_Adj;
-use LedgerSMB::Report::Inventory::Adj_Details;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Template::UI;
 
@@ -118,8 +117,10 @@ sub adjustment_save {
 
 sub adjustment_list {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
-    return $report->render($request);
+
+    return $request->render_report(
+        LedgerSMB::Report::Inventory::Search_Adj->new(%$request)
+        );
 }
 
 =item adjustment_approve

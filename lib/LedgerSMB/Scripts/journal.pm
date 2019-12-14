@@ -12,8 +12,10 @@ list of matching accounts in a ul/li pair
 
 =cut
 
+use LedgerSMB::DBObject::Account;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
+use LedgerSMB::Report::Contact::Purchase;
 use LedgerSMB::Scripts::account;
 use strict;
 use warnings;
@@ -51,14 +53,13 @@ Returns and displays the chart of accounts
 sub chart_of_accounts {
     my ($request) = @_;
 
-    my $report = LedgerSMB::Report::COA->new(_locale => $request->{_locale});
-    $report->set_dbh($request->{dbh});
-    $report->run_report();
-
     # Buttons on the Chart of Account screen are handled by a different script
     $request->{script} = 'account.pl';
 
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::COA->new(_locale => $request->{_locale},
+                                    dbh => $request->{dbh})
+        );
 }
 
 =head2 delete_account
@@ -72,7 +73,7 @@ occurs to here.
 
 sub delete_account {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Account;
+
     my $account =  LedgerSMB::DBObject::Account->new({base => $request});
     $account->delete;
     return chart_of_accounts($request);
@@ -93,7 +94,9 @@ sub search {
                if $request->{"business_unit_$count"};
     }
     #tshvr4 trying to mix in period from_month from_year interval
-    return LedgerSMB::Report::GL->new(%$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::GL->new(%$request)
+        );
 }
 
 =head2 search_purchases
@@ -104,15 +107,15 @@ Runs a search of AR or AP transactions and displays results.
 
 sub search_purchases {
     my ($request) = @_;
-    use LedgerSMB::Report::Contact::Purchase;
+
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Contact::Purchase->new(%$request)
+        );
 }
 
 

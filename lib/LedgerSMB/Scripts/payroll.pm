@@ -21,6 +21,7 @@ use strict;
 use warnings;
 
 use LedgerSMB::Payroll::Income_Type;
+use LedgerSMB::Report::Payroll::Income_Types;
 use LedgerSMB::Template::UI;
 
 =head1 METHODS
@@ -103,9 +104,9 @@ Displays income type search results
 
 sub income_type_results {
     my ($request) = @_;
-    use LedgerSMB::Report::Payroll::Income_Types;
-    return LedgerSMB::Report::Payroll::Income_Types
-        ->new(%$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Payroll::Income_Types->new(%$request)
+        );
 }
 
 =back

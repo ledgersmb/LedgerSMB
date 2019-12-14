@@ -58,9 +58,9 @@ Runs a Caja Diaria and displays results.
 
 sub run_caja_diaria {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::co::Caja_Diaria->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::co::Caja_Diaria->new(%$request)
+        );
 }
 
 =item run_bm
@@ -71,9 +71,9 @@ Runs Balance y Mayor and displays results.
 
 sub run_bm {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::co::Balance_y_Mayor->new(%$request)
+        );
 }
 
 
