@@ -52,7 +52,7 @@ $| = 1;
 
 binmode (STDIN, ':utf8');
 binmode (STDOUT, ':utf8');
-use LedgerSMB;
+
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
@@ -60,7 +60,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::Sysconfig;
 
-use Data::UUID;
 use Log::Log4perl;
 
 $form = Form->new;
