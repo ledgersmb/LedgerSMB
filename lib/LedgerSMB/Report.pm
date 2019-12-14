@@ -119,7 +119,6 @@ C<UI/reports/display_report> template will be used.
 
 
 use List::Util qw{ any };
-use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Template;
 use LedgerSMB::Setting;

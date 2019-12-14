@@ -22,7 +22,6 @@ use warnings;
 
 use base qw(LedgerSMB::PGOld);
 
-use LedgerSMB::App_State;
 
 =head1 METHODS
 

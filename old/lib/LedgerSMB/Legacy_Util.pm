@@ -15,7 +15,6 @@ specified output method.
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
