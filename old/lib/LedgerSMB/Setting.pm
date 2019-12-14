@@ -1,6 +1,5 @@
 package LedgerSMB::Setting;
 
-use LedgerSMB::App_State;
 use base qw(LedgerSMB::PGOld Exporter);
 use strict;
 use warnings;
@@ -60,7 +59,7 @@ sub get {
     my $self = shift;
     my ($key) = @_;
     $key = $self->{key} unless $key;
-    my $dbh = ref $self ? $self->{dbh} : LedgerSMB::App_State::DBH();
+    my $dbh = $self->{dbh};
     my ($hashref) = $self->call_procedure(
         dbh => $dbh,
         funcname => 'setting_get',
