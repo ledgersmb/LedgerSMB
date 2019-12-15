@@ -117,8 +117,7 @@ sub psgi_app {
             }
 
             $res = $env->{'lsmb.action'}->($request);
-        }, DBH     => $env->{'lsmb.db'},
-           Locale  => $request->{_locale};
+        }, DBH     => $env->{'lsmb.db'};
 
         $request->{dbh}->commit if defined $request->{dbh};
     }
