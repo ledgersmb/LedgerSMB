@@ -600,7 +600,30 @@ sub report_renderer_doc {
             },
             );
 
-        return $template->render($vars, $cvars);
+        $template->render($vars, $cvars);
+
+        my $charset = '';
+        $charset = '; charset=utf-8'
+                          if $template->{mimetype} =~ m!^text/!;
+
+        # $request->{mimetype} set by format
+        my $headers = [
+            'Content-Type' => "$template->{mimetype}$charset",
+            ];
+
+        # Use the same Content-Disposition criteria as _http_output()
+        my $name = $template->{output_options}->{filename};
+        if ($name) {
+            $name =~ s#^.*/##;
+            push @$headers,
+                ( 'Content-Disposition' =>
+                  qq{attachment; filename="$name"} );
+        }
+
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body); ## no critic
+
+        return [ HTTP_OK, $headers, [ $body ] ];
     };
 }
 
