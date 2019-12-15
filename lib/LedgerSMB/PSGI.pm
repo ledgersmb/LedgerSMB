@@ -117,11 +117,6 @@ sub psgi_app {
             }
 
             $res = $env->{'lsmb.action'}->($request);
-
-            if (ref $res && ref $res eq 'LedgerSMB::Template') {
-                # We got an evaluated template instead of a PSGI triplet...
-                $res = LedgerSMB::PSGI::Util::template_to_psgi($res);
-            }
         }, DBH     => $env->{'lsmb.db'},
            Locale  => $request->{_locale};
 
