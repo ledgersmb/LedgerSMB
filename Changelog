@@ -17,6 +17,8 @@ Code cleanup
 * Remove legacy infrastructure to generate table-formatted report output
 * Remove unmaintained ability from Makefile to install dependencies
 * Moved authentication for 'setup.pl' to itself, making it stand-alone
+* Removed use of LSMB_ALWAYS_MONEY environment variable
+* Replaced 'no strict "refs"' with use of Symbol module
 
 
 Changelog for 1.7 Series
