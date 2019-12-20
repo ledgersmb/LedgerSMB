@@ -214,6 +214,7 @@ sub _list_exchangerates {
     my ($request, $exchangerates) = @_;
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
     my @currencies = LedgerSMB::Currency->list();
+    shift @currencies; # Remove the default currency
     my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
     my $columns;
     @$columns = qw(curr rate_type valid_from rate drop);
