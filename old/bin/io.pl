@@ -447,7 +447,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
           . qq|</td>|;
         $form->{"bin_$i"} //= '';
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
-        $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
+        $column_data{onhand} = qq|<td class="onhand">|. $form->format_amount( \%myconfig, $form->{"onhand_$i"}) . qq|</td>|;
         $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" id="taxformcheck_$i" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
 <tbody data-dojo-type="lsmb/InvoiceLine"
