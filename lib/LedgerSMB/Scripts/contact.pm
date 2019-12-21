@@ -299,9 +299,11 @@ sub _main_screen {
     my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
       );
-    my @entity_classes = $request->call_procedure(
-                      funcname => 'entity__list_classes'
-    );
+    my @entity_classes =
+        map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
+        $request->call_procedure(
+            funcname => 'entity__list_classes'
+        );
 
     my $roles;
     $roles = $user->list_roles if $user;
