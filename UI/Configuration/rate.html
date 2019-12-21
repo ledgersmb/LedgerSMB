@@ -29,10 +29,10 @@
              options=currencies
              text_attr='curr'
              value_attr='curr'
-             default_values=[form.curr] } ?>
+             default_blank=1 } ?>
       <?lsmb PROCESS select element_data={
              name='rate_type'
-             label=text('Currency')
+             label=text('Rate type')
              options=exchangerate_types
              text_attr='description'
              value_attr='id'
