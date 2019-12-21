@@ -1,3 +1,9 @@
+textarea#intnotes,
+textarea#notes {
+    /* Prevent notes fields taking up endless screen estate */
+    max-height: 15em;
+}
+
 div.input {
     float: left;
 }
