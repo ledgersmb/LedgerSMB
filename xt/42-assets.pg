@@ -9,8 +9,8 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
-    \i sql/modules/test/Assets.sql
+    \i xt/data/42-pg/Base.sql
+    \i xt/data/42-pg/Assets.sql
 
     \set asset_report_type_depreciation 1
     \set asset_report_type_full_disposal 2

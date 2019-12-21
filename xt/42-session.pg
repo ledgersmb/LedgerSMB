@@ -10,8 +10,8 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
-    \i sql/modules/test/data/Reconciliation.sql
+    \i xt/data/42-pg/Base.sql
+    \i xt/data/42-pg/Reconciliation.sql
 
     -- Validate required tables
 
