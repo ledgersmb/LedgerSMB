@@ -76,7 +76,7 @@ sub _default_settings {
                 label => $locale->text('Password Duration (days)')
               },
               { name => 'session_timeout',
-        label => $locale->text('Session Timeout'), },
+        label => $locale->text('Session Timeout (e.g. "90 minutes")'), },
               { name => 'never_logout',
                 label => $locale->text('Only Timeout Locks'),
                 type => 'YES_NO', },
