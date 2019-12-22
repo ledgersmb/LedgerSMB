@@ -36,8 +36,7 @@ our @pre_render_cbs = (
         my ($request, $template, $vars, $cvars) = @_;
         $vars->{USER} = $request->{_user};
         $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
-        $vars->{locale} = $vars->{language} // $vars->{locale}
-                          // $request->{_locale};
+        $vars->{locale} = $vars->{language} // $vars->{locale};
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
         if ($vars->{DBNAME} && LedgerSMB::App_State::DBH()) {
             $vars->{SETTINGS} = {
@@ -128,12 +127,19 @@ be HTML encoded and ready for inclusion in the generated HTML output.
 
 sub render_string {
     my ($self, $request, $template, $vars, $cvars) = @_;
+    my $locale;
     $vars //= {};
 
     for my $cb (@pre_render_cbs) {
         $cb->($request, $template, $vars, $cvars);
     }
 
+    if ($vars->{locale}) {
+        $locale = LedgerSMB::Locale->get_handle($vars->{locale});
+    }
+    elsif ($request->{_locale}) {
+        $locale = $request->{_locale};
+    }
     my $cleanvars = {
         ( %{LedgerSMB::Template::preprocess(
                 $vars,
@@ -148,9 +154,8 @@ sub render_string {
                 } )
           ],
           text => sub {
-              if ($vars->{locale}) {
-                  return LedgerSMB::Locale->get_handle($vars->{locale})
-                      ->maketext(@_);
+              if ($locale) {
+                  return $locale->maketext(@_);
               }
               else {
                   return shift;
