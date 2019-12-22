@@ -60,6 +60,7 @@ Other variables that are set will be passed through to the underlying template.
 
 sub start_report {
     my ($request) = @_;
+    my $locale = $request->{_locale};
     if ($request->{module_name}){
         $request->{class_id} = 0 unless $request->{class_id};
         $request->{control_code} = '' unless $request->{control_code};
@@ -74,9 +75,11 @@ sub start_report {
             }
         }
     }
-    @{$request->{entity_classes}} = $request->call_procedure(
+    @{$request->{entity_classes}} =
+        map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
+        $request->call_procedure(
                       funcname => 'entity__list_classes'
-    );
+        );
     @{$request->{heading_list}} =  $request->call_procedure(
                       funcname => 'account_heading_list');
     @{$request->{account_list}} =  $request->call_procedure(
