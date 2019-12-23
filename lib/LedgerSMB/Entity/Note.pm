@@ -58,6 +58,14 @@ If set this indicates this has been saved to the db.
 
 has 'id' => (is =>'ro', isa => 'Int', required => 0);
 
+=item created
+
+Timestamp of creation of the note.
+
+=cut
+
+has 'created' => (is => 'ro', required => 0);
+
 =item created_by
 
 If set this indicates the username (login) of the user who created
