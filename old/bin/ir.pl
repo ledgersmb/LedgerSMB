@@ -369,7 +369,10 @@ sub form_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div($status_div_id) . qq|
-<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
+<form method="post"
+      id="invoice"
+      data-dojo-type="lsmb/Invoice"
+      action="$form->{script}" >
 |;
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
@@ -1221,7 +1224,9 @@ sub update {
              billing => 1,
              job => 1 );
      $form->generate_selects();
-     $form->{rowcount}--;
+    check_form();
+
+    $form->{rowcount}--;
     display_form();
 }
 
