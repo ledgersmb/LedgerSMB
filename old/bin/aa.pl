@@ -668,7 +668,8 @@ $form->open_status_div($status_div_id) . qq|
 |;
 
     print qq|
-    <tr>
+    <thead>
+    <tr class="listheading">
       <th>| . $locale->text('Amount') . qq|</th>
      <th>| . (($form->{currency} ne $form->{defaultcurrency}) ? $form->{defaultcurrency} : '') . qq|</th>
       <th>| . $locale->text('Account') . qq|</th>
@@ -680,7 +681,8 @@ $form->open_status_div($status_div_id) . qq|
         }
     }
     print qq|
-    </tr>
+    </th>
+    </thead>
 |;
 
 
