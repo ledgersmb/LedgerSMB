@@ -29,6 +29,7 @@ use warnings;
 use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
+use Log::Log4perl;
 use POSIX 'SEEK_SET';
 use Symbol;
 use Try::Tiny;
@@ -76,9 +77,15 @@ sub dispatch {
         # exit() below.
         try {
             local *STDOUT = $stdout;
+            my $script_module = $script;
+            $script_module =~ s/\.pl//;
             $lsmb_legacy::form = Form->new();
             $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
+            $lsmb_legacy::logger = Log::Log4perl->get_logger("lsmb.$script_module.$lsmb_legacy::form->{action}");
             %lsmb_legacy::myconfig = %$user;
+            $lsmb_legacy::form->{_locale} =
+                $lsmb_legacy::locale =
+                LedgerSMB::Locale->get_handle( $user->{language} );
 
             # This is a forked process, but we're using the parent's
             # database handle. Don't destroy the database handle when
@@ -105,8 +112,11 @@ sub dispatch {
             }
             else {
                 my $ref = qualify_to_ref $entrypoint, 'lsmb_legacy';
-                &{$ref}($lsmb_legacy::form, $lsmb_legacy::locale);
+                &{*{$ref}}($lsmb_legacy::form, $lsmb_legacy::locale);
             }
+        }
+        catch {
+            warn "Error dispatching call to old code: $_\n";
         };
         exit;
     }
