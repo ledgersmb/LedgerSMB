@@ -1347,6 +1347,8 @@ sub update {
              billing => 1,
              job => 1 );
     $form->generate_selects(\%myconfig);
+    check_form();
+
     $form->{rowcount}--;
     display_form();
 }
