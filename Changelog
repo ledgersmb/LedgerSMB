@@ -2,6 +2,14 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.6
+* Disallow rate entry for the default currency (#4236)
+* Fix formatting on-hand (OH) column on orders to follow user settings (#3334)
+* Fix UI translation other than the menu, regressed from 1.6 (#4293)
+* Fix missing 'Entered At' date in contact notes (#2822)
+* Fix removal of lines from orders and vendor invoices on entry (#3703)
+
+
 Changelog for 1.7.5
 * Fix failure to save tax forms (#4252)
 * Fix failure to undo database edits when surrounding code fails (#4253)
