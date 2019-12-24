@@ -128,6 +128,15 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.17
+* Allow uploading of attachments with unknown mime-types (Erik H)
+* Fix formatting on-hand (OH) column on orders to follow user settings (Erik H)
+* Fix migration of assembly data from SQL Ledger 3.2 (Yves L)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.6.16
 * Include first transsaction on account in reconciliation report (Erik H)
 * Fix COGS error when posting AP invoice reversal (Erik H)
