@@ -563,8 +563,10 @@ sub form_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div($status_div_id) . qq|
-<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
-
+<form method="post"
+      id="invoice"
+      data-dojo-type="lsmb/Invoice"
+      action="$form->{script}" >
 |;
 
     if ($form->{notice}){
@@ -1191,6 +1193,8 @@ sub update {
     }
     $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
     $form->generate_selects;
+    check_form();
+
     $form->{rowcount}--;
     display_form();
 }

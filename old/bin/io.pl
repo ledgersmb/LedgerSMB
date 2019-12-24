@@ -399,7 +399,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         }
 
         $column_data{runningnumber} =
-          qq|<td class="runningnumber"><input data-dojo-type="dijit/form/TextBox" id="runningnumber_$i" name="runningnumber_$i" size=3 value=$i></td>|;
+          qq|<td class="runningnumber"><input data-dojo-attach-point="runningnumber" data-dojo-type="dijit/form/TextBox" id="runningnumber_$i" name="runningnumber_$i" size="3" value="$i"></td>|;
         if ($form->{"partnumber_$i"}){
             $column_data{deleteline} = qq|
 <td rowspan="2" valign="middle">
