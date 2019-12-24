@@ -897,7 +897,7 @@ SELECT pg_temp.f_insert_account('fxloss_accno_id');
 -- "earn_id" = ?
 
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
-SELECT id, parts_id, qty, bom, adj  FROM :slschema.assembly;
+SELECT aid, parts_id, qty, bom, adj  FROM :slschema.assembly;
 
 ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 
