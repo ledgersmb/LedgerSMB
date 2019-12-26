@@ -606,7 +606,7 @@ sub form_header {
         if ($form->{separate_duties} or $form->{batch_id}){
            $button{'post'}->{value} = $locale->text('Save');
         }
-       delete $button{void} if $form->{invnumber} =~ /-VOID/;
+        delete $button{void} if $form->{invnumber} =~ /-VOID/;
 
         if ( $form->{id} ) {
 
@@ -640,7 +640,6 @@ sub form_header {
 
         }
         else {
-
             if ( $transdate > $closedto ) {
                 # Added on_hold, by Aurynn.
                 for ( "update", "ship_to", "post",
@@ -652,9 +651,11 @@ sub form_header {
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
-
             elsif ($closedto) {
                 %button = ();
+            }
+            else {
+                for ( keys %button ) { delete $button{$_} unless $_ eq 'update' };
             }
         }
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
