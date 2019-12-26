@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -18,7 +19,7 @@ BEGIN;
 
     SELECT has_function('trial_balance__generate',ARRAY['date','date','integer','integer[]','text','integer[]','integer','boolean','boolean']);
     SELECT has_function('trial_balance__heading_accounts',ARRAY['integer[]']);
-    SELECT has_function('trial_balance__list_headings',ARRAY['']);
+    SELECT has_function('trial_balance__list_headings','{}'::text[]);
 
     -- Run tests
 

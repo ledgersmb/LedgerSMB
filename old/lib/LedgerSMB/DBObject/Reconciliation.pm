@@ -50,9 +50,9 @@ use strict;
 use warnings;
 
 use base qw(LedgerSMB::PGOld);
+use List::Util qw(sum);
 use LedgerSMB::Reconciliation::CSV;
 use LedgerSMB::PGNumber;
-use LedgerSMB::Magic qw( MONEY_EPSILON);
 
 
 # don't need new
@@ -71,10 +71,7 @@ sub update {
     my $beginning_balance = $self->{beginning_balance} // 0;
     my $total_cleared_credits = $self->{total_cleared_credits} // 0;
     my $total_cleared_debits = $self->{total_cleared_debits} // 0;
-    return $self->{submit_allowed} =
-        abs(($their_total - $beginning_balance)
-            - ($total_cleared_credits - $total_cleared_debits))
-        >= MONEY_EPSILON;
+    return;
 }
 
 sub _pre_save {
@@ -155,68 +152,45 @@ sub unapproved_checks {
                     $self->call_dbmethod(funcname=>'reconciliation__check') };
 }
 
-=item approve($self,$reportid)
+=item approve
 
-Approves the pending report $reportid.
-Checks for error codes in the pending report, and approves the report if none
-are found.
-
-Limitations: The creating user may not approve the report.
-
-Returns 1 on success.
+Approves the reconciliation report specified by the object's C<report_id>
+property and marks associated transactions as cleared.
 
 =cut
 
 sub approve {
+    my $self = shift;
 
-    my $self = shift @_;
-    # the user should be embedded into the $self object.
-    my $report_id = shift @_;
+    $self->call_dbmethod(
+        funcname => 'reconciliation__report_approve'
+    );
 
-    my $code = $self->call_procedure(
-                           funcname=>'reconciliation__report_approve',
-                               args=> [$report_id]); # user
-
-    if ($code == 0) {  # no problem.
-        return $code;
-    }
-    # this is destined to change as we figure out the Error system.
-    elsif ($code == 99) {  ## no critic (ProhibitMagicNumbers) sniff
-
-        return $self->error(
-                "User $self->{user}->{name} cannot approve report, "
-                ."must be a different user.");
-    }
     return;
 }
 
 =item new_report
 
-Creates a new report with data entered.
+Creates a new reconciliation report. Returns the id of the inserted report
+record.
+
+Expects the following object parameters:
+
+  * chart_id  (mandatory)
+  * total     (mandatory
+  * end_date  (defaults to now)
+  * recon_fx  (defaults to false)
 
 =cut
 
 sub new_report {
-
     my $self = shift @_;
-    my $total = shift @_;
-    my $month = shift @_;
 
-    # Total is in here somewhere, too
+    my $report = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
+    $self->{report_id} = $report->{reconciliation__new_report_id};
 
-    # gives us a report ID to insert with.
-    my @reports = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
-    my $report_id = $reports[0]->{reconciliation__new_report_id};
-    $self->{report_id} = $report_id;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-
-    # Now that we have this, we need to create the internal report representation.
-    # Ideally, we OUGHT to not return anything here, save the report number.
-
-
-    return ($report_id,
-            ###TODO-ISSUE-UNDECLARED-ENTRIES $entries
-        ); # returns the report ID.
+    return $self->{report_id};
 }
 
 
@@ -386,17 +360,16 @@ sub get {
     $self->{account_info} = $ref;
 
     my ($previous) = $self->call_dbmethod(funcname=>'reconciliation__previous_report_date',
-                                args => { in_chart_id => $self->{chart_id},
-                                          in_end_date => $self->{end_date}
+                                args => { chart_id => $self->{chart_id},
+                                          end_date => $self->{end_date}
                                         });
+
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
                                 args => { chart_id => $ref->{id},
                                           report_date => $previous->{end_date}
                                         });
 
-    my $our_balance = $ref->{reconciliation__get_cleared_balance};
-    warn "$previous->{their_total} should always equal $our_balance"
-        if $previous->{their_total} != $our_balance;
+    my $our_balance = $ref->{reconciliation__get_cleared_balance} // 0;
 
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
@@ -410,57 +383,206 @@ sub get {
     $self->{their_balance} //= 0;   # Report maybe empty
 
     for my $line (@{$self->{report_lines}}){
-        if ($line->{cleared}){
+
+        if ($line->{cleared}) {
             $our_balance += ($neg * $line->{our_balance});
             $self->{cleared_total} += ($neg * $line->{our_balance});
-        }elsif (($self->{their_balance} != '0'
-                 and $self->{their_balance} != $self->{our_balance})
-                or $line->{our_balance} == 0){
+        }
+        elsif (
+            (
+                $self->{their_balance} != '0'
+                and $self->{their_balance} != $self->{our_balance}
+            )
+            or $line->{our_balance} == 0
+        ) {
             $line->{err} = 'mismatch';
             $self->{mismatch_our_total} += $line->{our_balance};
             $self->{mismatch_their_total} += $line->{their_balance};
+
             if ($line->{our_balance} < 0){
                 $self->{mismatch_our_debits} += -$line->{our_balance};
-            } else {
+            }
+            else {
                 $self->{mismatch_our_credits} += $line->{our_balance};
             }
+
             if ($line->{their_balance} < 0){
                 $self->{mismatch_their_debits} += -$line->{their_balance};
-            } else {
+            }
+            else {
                 $self->{mismatch_their_credits} += $line->{their_balance};
             }
-        } else {
+        }
+        else {
             $self->{outstanding_total} += $line->{our_balance};
         }
+
         $line->{days} = $report_days{$line->{id}};
     }
+
     $self->{our_total} = $our_balance;
-    @{$self->{accounts}} = $self->get_accounts;
-    for (@{$self->{accounts}}){
+
+    for (@{$self->{recon_accounts}}){
        if ($_->{id} == $self->{chart_id}){
            $self->{account} = $_->{name};
        }
     }
-    $self->{format_amount} = sub { return $self->format_amount(@_); };
+
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;
        return $self->{mismatch_their_total} *= -1;
     }
+
     return;
 }
 
+
+=item build_totals
+
+Iterates through all lines in the current reconciliation report, setting
+the following elements for each:
+
+  * their_credits
+  * their_debits
+  * our_credits
+  * our_debits
+
+Builds the report totals:
+
+  * total_cleared_credits
+  * total_cleared_debits
+  * total_uncleared_credits
+  * total_uncleared_debits
+
+=cut
+
+sub build_totals {
+    my $self = shift;
+
+    # Zero report totals
+    for my $field (qw(
+        total_cleared_credits
+        total_cleared_debits
+        total_uncleared_credits
+        total_uncleared_debits
+    )) {
+        $self->{$field} = LedgerSMB::PGNumber->from_input(0);
+    }
+
+    # Iterate through each line of the report
+    for my $l (@{$self->{report_lines}}){
+
+        # Separate 'their' credits and debits
+        if ($l->{their_balance} > 0){
+           $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{their_credits} = $l->{their_balance};
+        }
+        else {
+           $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{their_debits} = $l->{their_balance}->bneg;
+        }
+
+        # Separate 'our' credits and debits
+        if ($l->{our_balance} > 0){
+           $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{our_credits} = $l->{our_balance};
+        }
+        else {
+           $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{our_debits} = $l->{our_balance}->bneg;
+        }
+
+        # Format line amounts for display
+        # (Shouldn't this be done in the template rather than in code?)
+        for my $element (qw/our_balance our_credits our_debits their_balance their_credits their_debits/) {
+            $l->{$element} = $l->{$element}->to_output(money => 1);
+        }
+
+        # Update report totals
+        if ($l->{cleared}){
+             $self->{total_cleared_credits}->badd($l->{our_credits});
+             $self->{total_cleared_debits}->badd($l->{our_debits});
+        }
+        else {
+             $self->{total_uncleared_credits}->badd($l->{our_credits});
+             $self->{total_uncleared_debits}->badd($l->{our_debits});
+        }
+    }
+}
+
+
+=item build_variance
+
+Calculates and sets the object's C<variance> property, rounding it to
+the specified number of decimal places.
+
+Returns the calculated variance.
+
+Requires that the following object properties are set:
+
+    * their_total
+    * our_total
+    * decimal_places
+
+=cut
+
+sub build_variance {
+    my $self = shift;
+    $self->{variance} = $self->{their_total} - $self->{our_total};
+    $self->{variance}->bfround(
+        $self->{decimal_places} * -1
+    );
+
+    return $self->{variance};
+}
+
+
+=item build_statement_gl_calc
+
+Calculates and sets the object's C<statement_gl_calc> property.
+
+Returns the calculated statement_gl_calc.
+
+Requries that the following object properties are set:
+
+    * their_total
+    * outstanding_total
+    * mismatch_our_total
+
+=cut
+
+sub build_statement_gl_calc {
+    my $self = shift;
+
+    $self->{statement_gl_calc} = sum(
+        $self->{their_total},
+        $self->{outstanding_total},
+        $self->{mismatch_our_total},
+    );
+
+    if ($self->{account_info}->{category} =~ /^(A|E)$/) {
+       $self->{statement_gl_calc} *= -1;
+    }
+
+    return $self->{statement_gl_calc};
+}
+
+
 =item get_accounts
 
-This is a simple wrapper around reconciliation__account_list
+This is a simple wrapper around reconciliation__account_list. It sets
+the object's C<recon_accounts> property.
 
 =cut
 
 sub get_accounts {
     my $self = shift @_;
 
-    return $self->call_dbmethod(
+    @{$self->{recon_accounts}} = $self->call_dbmethod(
         funcname=>'reconciliation__account_list',
     );
+
+    return $self->{recon_accounts};
 }
 
 =back

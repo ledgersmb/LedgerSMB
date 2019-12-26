@@ -46,8 +46,7 @@ END ;
 </colgroup>
   <tbody>
     <tr class="report-head">
-      <th colspan="<?lsmb max_path_depth ?>"
-          style="font-weight:bold"> </th>
+      <th colspan="<?lsmb max_path_depth ?>"> </th>
       <?lsmb FOREACH col IN report.sorted_col_ids -?>
       <th><?lsmb report.cheads.ids.$col.props.description ?></th>
       <?lsmb END -?>
@@ -74,17 +73,17 @@ END ;
                      '"';
                   END ?>>
   <?lsmb IF path_prefix_len > 0 ?>
-  <th colspan="<?lsmb path_prefix_len ?>"></th>
+  <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th>
   <?lsmb END ?>
   <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
 <?lsmb IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;
   report.rheads.ids.$head_id.props.account_description; ?>
-</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>></th>
+</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
 <?lsmb ELSE -?>
 <?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
-<?lsmb report.rheads.ids.$row.props.account_number ?> - <?lsmb END; -?>
-<th><?lsmb report.rheads.ids.$row.props.account_desc ?></th>
+<?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
+<?lsmb report.rheads.ids.$row.props.account_desc ?></th>
 <?lsmb FOREACH col IN report.sorted_col_ids -?>
   <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number

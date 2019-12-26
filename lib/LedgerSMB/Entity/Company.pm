@@ -1,11 +1,14 @@
+
+package LedgerSMB::Entity::Company;
+
 =head1 NAME
 
 LedgerSMB::Entity::Company -- Company (business) handling for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-This handles the overall data management for companies as customers, vendors, sales
-leads etc.
+This handles the overall data management for companies as customers, vendors,
+sales leads etc.
 
 =head1 INHERITS
 
@@ -17,7 +20,6 @@ leads etc.
 
 =cut
 
-package LedgerSMB::Entity::Company;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Entity';
@@ -140,11 +142,13 @@ sub save {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under the GNU GPL
-version 2 or at your option any future version.  Please see the accompanying LICENSE
-file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -1,3 +1,9 @@
+textarea#intnotes,
+textarea#notes {
+    /* Prevent notes fields taking up endless screen estate */
+    max-height: 15em;
+}
+
 div.input {
     float: left;
 }
@@ -39,6 +45,7 @@ html, body {
 .flat-hierarchy .balancesheet .report-head th {
     text-align: right;
     font-weight: bold;
+    white-space: pre;
 }
 
 .flat-hierarchy .balancesheet .section1.QL,
@@ -322,6 +329,7 @@ html, body {
 #PNL td.amount {
         text-align: right;
         padding-left: 0.5em;
+        white-space: pre;
 }
 #PNL tr.separator {
         min-height: 1em;
@@ -353,6 +361,66 @@ html, body {
 }
 #PNL h1, h2 {
        text-align: center;
+}
+
+#PNL th[colspan="1"].indent {
+  width: 1em;
+}
+
+#PNL th[colspan="2"].indent {
+  width: 2em;
+}
+
+#PNL th[colspan="3"].indent {
+  width: 3em;
+}
+
+#PNL th[colspan="4"].indent {
+  width: 4em;
+}
+
+#PNL th[colspan="5"].indent {
+  width: 5em;
+}
+
+#PNL th[colspan="6"].indent {
+  width: 6em;
+}
+
+#PNL th[colspan="7"].indent {
+  width: 7em;
+}
+
+#PNL th[colspan="8"].indent {
+  width: 8em;
+}
+
+#PNL th[colspan="9"].indent {
+  width: 9em;
+}
+
+
+#PNL td.heading1,
+#PNL th.heading1 {
+  font-weight: bold;
+  padding-bottom: 1em;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+#PNL td.heading2,
+#PNL th.heading2 {
+  font-weight: bold;
+  font-style: italic;
+}
+
+#PNL table.balancesheet {
+  margin-top: 2em;
+  border-top: 1px solid black;
+}
+
+#PNL .amount {
+  padding-left: 0.5em;
 }
 
 /****** Reconciliation ****/
@@ -433,6 +501,7 @@ html, body {
 
 #payments .amount {
     text-align: right;
+    white-space: pre;
 }
 
 #payments .topay_amount input,
@@ -494,6 +563,10 @@ html, body {
     outline: none;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.no-fx-transaction .fx-row {
+    display: none;
 }
 
 #top_menu .dijitTreeIcon {

@@ -1,14 +1,16 @@
+
+package LedgerSMB::Part;
+
 =head1 NAME
 
 LedgerSMB::Part - Good/Service class for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This is currently a shell class pending rewrite of old code.
 
 =cut
 
-package LedgerSMB::Part;
 use strict;
 use warnings;
 
@@ -57,11 +59,13 @@ sub get_by_partnumber {
     )[0];
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2015 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License version 2 or at your option any later version.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -19,6 +19,7 @@ use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
 use Test::BDD::Cucumber::Extension;
+use List::Util qw(any);
 
 use Moose;
 use namespace::autoclean;
@@ -58,6 +59,7 @@ sub _build_admin_dbh {
                              RaiseError => 1,
                              AutoCommit => 1,
                            });
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     return $dbh;
 }
@@ -79,6 +81,7 @@ sub pre_feature {
                              RaiseError => 1,
                              AutoCommit => 1,
                            });
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     $self->db($db);
     $self->super_dbh($dbh);
@@ -103,8 +106,11 @@ sub pre_scenario {
     $stash->{ext_lsmb} = $self;
     $stash->{"the admin"} = $self->admin_user_name;
     $stash->{"the admin password"} = $self->admin_user_password;
-    $stash->{"the company"} = $self->last_feature_stash->{"the company"}
-        if $self->last_feature_stash->{"the company"};
+
+    if ($self->last_feature_stash->{"the company"}
+        && any { $_ eq 'one-db' } @{$scenario->tags}) {
+        $stash->{"the company"} = $self->last_feature_stash->{"the company"};
+    }
 }
 
 
@@ -182,13 +188,16 @@ sub create_template {
     $db->load_coa({ country => 'us',
                     chart => 'General.sql' });
 
+    # NOTE: $db is connected with the template, *not* with the
+    #  test database (which means we can't use $self->super_dbh!)
     my $dbh = $db->connect({ PrintError => 0,
                              RaiseError => 1,
                              AutoCommit => 0 });
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     my $emp = $self->create_employee(dbh => $dbh);
     my $user = $self->create_user(dbh => $dbh,
-                                  entity_id => $emp->entity_id,
+        entity_id => $emp->entity_id,
                                   username => $admin);
 
     my $roles;
@@ -227,8 +236,8 @@ sub create_from_template {
 sub ensure_nonexisting_company {
     my ($self, $company) = @_;
 
-    $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
     $self->_clear_admin_dbh;
+    $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
 }
 
 sub ensure_nonexisting_user {
@@ -272,8 +281,12 @@ SELECT id
 |);
 
     for my $line (@$lines) {
-        $line->{amount} = ($line->{credit} || 0) - ($line->{debit} || 0);
-        delete $line->{$_} for (qw/ credit debit /);
+        $line->{amount_bc} =
+            ($line->{credit_bc} || 0) - ($line->{debit_bc} || 0);
+        $line->{amount_tc} =
+            ($line->{credit_tc} || 0) - ($line->{debit_tc} || 0)
+            if exists $line->{credit_tc} || exists $line->{debit_tc};
+        delete $line->{$_} for (qw/ credit_bc credit_tc debit_bc debit_tc /);
 
         next if $line->{account_id};
 
@@ -297,15 +310,58 @@ INSERT INTO gl(transdate, person_id)
 
     my $line_sth = $self->admin_dbh->prepare(
         qq|
-INSERT INTO acc_trans(trans_id, transdate, chart_id, amount)
-     VALUES (?, ?, ?, ?)
+INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
+     VALUES (?, ?, ?, ?, ?, ?)
 |);
     for my $line (@$lines) {
         $line_sth->execute($trans_id, $posting_date,
-                           $line->{account_id}, $line->{amount})
+                           $line->{account_id}, $line->{amount_bc},
+                           $line->{curr} // 'USD',
+                           $line->{amount_tc} // $line->{amount_bc})
             or die "Failed to insert 'acc_trans' table row: " . $line_sth->errstr;
     }
 }
+
+
+my $part_count = 0;
+
+sub create_part {
+    my ($self, $props) = @_;
+
+    local $LedgerSMB::App_State::DBH = $self->admin_dbh;
+    my $account = LedgerSMB::DBObject::Account->new();
+    $account->set_dbh($self->admin_dbh);
+    my @accounts = $account->list();
+    my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
+
+    $props->{partnumber} //= 'P-' . ($part_count++);
+    my $dbh = $self->admin_dbh;
+    my @keys;
+    my @values;
+    my @placeholders;
+
+    $props->{$_} = $accno_ids{$props->{$_}}
+       for grep { m/accno/ } keys %$props;
+
+    for my $key (keys %$props) {
+        push @values, $props->{$key};
+        $key =~ s/accno$/accno_id/g;
+        push @keys, $key;
+        push @placeholders, '?';
+    }
+    my $keys = join ',', @keys;
+    my $placeholders = join ',', @placeholders;
+
+    $dbh->do(qq|
+      INSERT INTO parts ($keys)
+        VALUES ($placeholders)
+|, undef, @values);
+
+}
+
+
+
+
 
 __PACKAGE__->meta->make_immutable(inline_constructor => 0);
 1;

@@ -51,14 +51,18 @@ sub call {
     $env->{'psgix.logger'} = sub {
         my $args = shift;
         my $level = $args->{level};
-        my $msg = $args->{msg};
+        my $msg = $args->{message};
+
+        return if ! defined $msg;
 
         local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
         $msg =~ s/\n/\\n/g;
         $logger->$level($msg);
     };
     local $SIG{__WARN__} = sub {
-        my $msg = shift // '';
+        my $msg = shift;
+
+        return if ! defined $msg;
 
         local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
         $msg =~ s/\n/\\n/g;
@@ -68,11 +72,11 @@ sub call {
     return $self->app->($env);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2017 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

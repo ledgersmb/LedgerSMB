@@ -1,30 +1,33 @@
-=pod
+
+package LedgerSMB::Scripts::import_csv;
 
 =head1 NAME
 
 LedgerSMB::Scripts::import_csv - web entry points for various csv uploads
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 This is a module that demonstrates how to set up scripts for importing bulk
 data.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =cut
 
-package LedgerSMB::Scripts::import_csv;
 use strict;
 use warnings;
+
+use LedgerSMB::Form;
+use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
+use LedgerSMB::Template::UI;
 
 use List::MoreUtils qw{ any };
 use Text::CSV;
 
-use LedgerSMB::Template;
-use LedgerSMB::Form;
-use LedgerSMB::Setting;
-use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
-
 our $cols = {
-   gl       =>  ['accno', 'debit', 'credit', 'source', 'memo'],
+   gl       =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx', 'credit_fx', 'source', 'memo'],
    ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description',
                  'invnumber', 'transdate'],
    ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description',
@@ -129,9 +132,9 @@ sub _aa_multi {
         }
     }
     for my $ref (@$entries){
-        my $form = Form->new();
+        my $form = Form->new(); ## no critic
         $form->{dbh} = $request->{dbh};
-        my $default_currency = LedgerSMB::Setting->get('curr');
+        my $default_currency = $request->setting->get('curr');
         $form->{rowcount} = 1;
         $form->{ARAP} = uc($arap);
         $form->{batch_id} = $batch->{id};
@@ -159,7 +162,9 @@ sub _aa_multi {
         ($form->{vendor_id}) = $sth->fetchrow_array;
         $form->{customer_id} = $form->{vendor_id};
 
-        AA->post_transaction($request->{_user}, $form);
+        # The 'AA' package is used as 'LedgerSMB::AA'
+        # which is a problem for Perl::Critic
+        AA->post_transaction($request->{_user}, $form); ## no critic
     }
     return 1;
 }
@@ -168,8 +173,8 @@ sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
     use LedgerSMB::IS;
     use LedgerSMB::IR;
-    my $ar_form = Form->new();
-    my $ap_form = Form->new();
+    my $ar_form = Form->new(); ## no critic
+    my $ap_form = Form->new(); ## no critic
     my $dbh = $request->{dbh};
 
     $ar_form->{dbh} = $ap_form->{dbh} = $dbh;
@@ -237,8 +242,10 @@ sub _inventory_single_date {
     $ap_form->{vendor_id} = $ap_eca->{id};
 
     # POST
-    IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
-    IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
+    IS->post_invoice(undef, $ar_form) ## no critic
+        if $ar_form->{rowcount};
+    IR->post_invoice(undef, $ap_form) ## no critic
+        if $ap_form->{rowcount};
 
     $ar_form->{id} = 'NULL'
         if ! $ar_form->{id};
@@ -268,7 +275,7 @@ sub _process_ap_multi {
 sub _process_gl {
     use LedgerSMB::GL;
     my ($request, $entries) = @_;
-    my $form = Form->new();
+    my $form = Form->new(); ## no critic
     $form->{reference} = $request->{reference};
     $form->{description} = $request->{description};
     $form->{transdate} = $request->{transdate};
@@ -296,8 +303,8 @@ sub _process_gl {
         }
         ++$form->{rowcount};
     }
-    return GL->post_transaction($request->{_user}, $form,
-                         $request->{_locale});
+    return GL->post_transaction( ## no critic
+        $request->{_user}, $form, $request->{_locale});
 }
 
 sub _process_chart {
@@ -462,10 +469,9 @@ sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->upload('import_file');
-
     my $csv = Text::CSV->new;
     $csv->header($handle);
-    @{$self->{import_entries}} = $csv->getlines_all($handle);
+    $self->{import_entries} = $csv->getline_all($handle);
 
     return @{$self->{import_entries}};
 }
@@ -486,18 +492,13 @@ sub begin_import {
         $template_setup->{$request->{type}}($request);
     }
 
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/import_csv',
-        template => $template_file,
-        format => 'HTML'
-    );
     # $request->{page_id} = $request->{type};
     # $request->{page_id} =~ s/_/-/;
     # $request->{page_id} .= '-import';
     $request->{page_id} = 'batch-import';
-    return $template->render({ request => $request });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'import_csv/' . $template_file,
+                             { request => $request });
 }
 
 =head2 run_import
@@ -523,11 +524,13 @@ sub run_import {
     return begin_import($request);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2008-2013 The LedgerSMB Core Team.  This file may be re-used in
-accordance with the GNU General Public License (GNU GPL) v2 or at your option
-any later version.  Please see the included LICENSE.txt for more details.
+Copyright (C) 2008-2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

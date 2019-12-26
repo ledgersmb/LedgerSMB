@@ -1,12 +1,16 @@
 #!perl
 
-use strict;
-use warnings;
+
+use Test2::V0;
+use Test2::Require::Module 'HTML::Lint::Pluggable';
 
 use File::Find;
-use Test::More;
-eval "use  HTML::Lint::Pluggable";
-plan skip_all => "HTML::Lint::Pluggable not available" if $@;
+
+
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes source code checks};
+}
+
 
 my @on_disk = ();
 
@@ -40,8 +44,8 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
-    open $fh, '<', $filename
-        or BAIL_OUT("failed to open $filename for reading $!");
+    open $fh, '<:encoding(UTF-8)', $filename
+        or bail_out("failed to open $filename for reading $!");
     $is_snippet = 1
         if ($filename !~ m#(log(in|out))|main|(setup/(?!upgrade/))#
             || $filename =~ m#setup/ui-db-credentials#);
@@ -86,6 +90,12 @@ sub content_test {
                     return 0;
                 }
             },
+            'text-use-entity' => sub {
+                # As per W3C guidance, prefer characters in their normal form
+                # rather than requiring named or numeric character references.
+                # https://www.w3.org/International/questions/qa-escapes
+                return 1;
+            },
         },
     });
     $lint->parse($text);
@@ -111,9 +121,9 @@ sub content_test {
 
         push @reportable_errors, $error->as_string;
     }
-    ok(scalar @reportable_errors == 0, "Source critique for '$filename'")
-       or diag(join("\n", @reportable_errors));
+    is(join("\n", @reportable_errors), '', "Source critique for '$filename'");
 }
 
 content_test($_) for @on_disk;
+
 done_testing;

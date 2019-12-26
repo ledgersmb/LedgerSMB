@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Unapproved::Drafts;
+
 =head1 NAME
 
 LedgerSMB::Report::Unapproved::Drafts - Unapproved Drafts (single
@@ -24,7 +27,6 @@ transactions.
 
 =cut
 
-package LedgerSMB::Report::Unapproved::Drafts;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -72,38 +74,39 @@ Amount
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
     {col_id => 'select',
        name => '',
        type => 'checkbox' },
 
     {col_id => 'type',
-       name => LedgerSMB::Report::text('Type'),
+       name => $self->Text('Type'),
        type => 'text' },
 
     {col_id => 'id',
-       name => LedgerSMB::Report::text('ID'),
+       name => $self->Text('ID'),
        type => 'href',
      pwidth => 1, },
 
     {col_id => 'transdate',
-       name => LedgerSMB::Report::text('Date'),
+       name => $self->Text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'reference',
-       name => LedgerSMB::Report::text('Reference'),
+       name => $self->Text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => LedgerSMB::Report::text('AR/AP/GL Amount'),
+       name => $self->Text('AR/AP/GL Amount'),
        type => 'text',
       money => 1,
      pwidth => '2', },
@@ -119,7 +122,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Draft Search');
+    my ($self) = @_;
+    return $self->Text('Draft Search');
 }
 
 =item header_lines
@@ -129,24 +133,15 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'type',
-             text => LedgerSMB::Report::text('Draft Type')},
+             text => $self->Text('Draft Type')},
             {name => 'reference',
-             text => LedgerSMB::Report::text('Reference')},
+             text => $self->Text('Reference')},
             {name => 'amount_gt',
-             text => LedgerSMB::Report::text('Amount Greater Than')},
+             text => $self->Text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => LedgerSMB::Report::text('Amount Less Than')}, ]
-}
-
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
+             text => $self->Text('Amount Less Than')}, ]
 }
 
 =back
@@ -200,16 +195,17 @@ has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
 =cut
 
 sub set_buttons {
-return [
+    my ($self) = @_;
+    return [
       {name => 'action',
        type => 'submit',
-       text => LedgerSMB::Report::text('Approve'),
+       text => $self->Text('Approve'),
       value => 'approve',
       class => 'submit', },
 
       {name => 'action',
        type => 'submit',
-       text => LedgerSMB::Report::text('Delete'),
+       text => $self->Text('Delete'),
       value => 'delete',
       class => 'submit', },
     ];
@@ -239,11 +235,13 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

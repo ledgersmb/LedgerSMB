@@ -1,6 +1,8 @@
 #!perl
 
-use Test::More;
+use Test2::V0;
+
+
 use LedgerSMB::Upgrade_Tests;
 
 my @tests = sort { $a->{appname}     cmp $b->{appname}     or
@@ -9,7 +11,6 @@ my @tests = sort { $a->{appname}     cmp $b->{appname}     or
                    $a->{max_version} cmp $b->{max_version}
                  } LedgerSMB::Upgrade_Tests->get_tests();
 
-plan tests => scalar @tests;
 
 sub _validate_displayed_key {
     my ($test,@keys) = @_;
@@ -25,7 +26,7 @@ for my $test (@tests){
             if $test->{selectable_values};
 
         _validate_displayed_key($test,@{$test->{columns}})
-            if @{$test->{columns}};
+            if $test->{columns} and @{$test->{columns}};
 
         for my $btn (keys %{$test->{tooltips}}) {
             ok grep( /^$btn$/, @{$test->{buttons}}),
@@ -33,3 +34,5 @@ for my $test (@tests){
         }
     }
 }
+
+done_testing;

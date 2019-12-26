@@ -216,8 +216,8 @@ PROCESS dynatable
           <td> <?lsmb INCLUDE select element_data = {
                         name = 'curr'
                         options = all_currencies
-                        text_attr = 'text'
-                        value_attr = 'text'
+                        text_attr = 'curr'
+                        value_attr = 'curr'
                         default_values = [credit_act.curr]
                         title = text('Currency')
                         label = text('Currency')
@@ -270,7 +270,7 @@ PROCESS dynatable
            IF NOT credit_act.language_code;
                 credit_act.language_code = default_language;
            END;
-           INCLUDE select element_data = {
+           INCLUDE select_language element_data = {
                 title = text("Language")
                 label = text("Language")
                 name = "language_code"
@@ -289,7 +289,7 @@ PROCESS dynatable
         <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
 
             <?lsmb checked = "";
-                   IF credit_act.tax_ids.grep("^${tx.id}$").size == 1;
+                   IF credit_act.tax_ids.grep("^${tx.id}\$").size == 1;
                        checked = "CHECKED";
                    END;
                    INCLUDE input label_pos=1

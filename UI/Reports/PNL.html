@@ -46,7 +46,7 @@ END ;
 </colgroup>
 <tbody>
     <tr class="sectionhead">
-        <th colspan="<?lsmb max_path_depth+1 ?>"></th>
+        <th colspan="<?lsmb max_path_depth ?>"></th>
 <?lsmb FOREACH col IN report.sorted_col_ids -?>
         <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>
@@ -56,30 +56,34 @@ END ;
    path_prefix_len = path_depth - 1;
    path_suffix_len = max_path_depth - path_prefix_len;
    IF report.rheads.ids.$row.props.account_type == 'H' ;
-     class = 'class="heading' _ path_depth _ '"';
-     clazz = "heading" _ path_depth;
+     class = 'class="heading' _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type _ '"';
+     clazz = "heading" _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type;
    ELSIF report.rheads.ids.$row.props.section_for ;
-     class = 'class="section' _ path_depth _ '"';
-     clazz = "section" _ path_depth;
-   ELSE ;
-     class = '';
-     clazz = '';
+     row_id = report.rheads.ids.$row.props.section_for ;
+     class = 'class="section' _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category _ '"';
+     clazz = "section" _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category;
+   ELSE;
+     class = 'class="account"';
+     clazz = 'account';
    END;
  ?>
-<tr class="<?lsmb clazz ?>">
+<tr <?lsmb class; IF report.rheads.ids.$row.props.account_number;
+                     ' data-lsmb-account="';
+                     report.rheads.ids.$row.props.account_number;
+                     '"';
+                  END ?>>
   <?lsmb IF path_prefix_len > 0 ?>
-  <th colspan="<?lsmb path_prefix_len ?>"></th>
+  <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th>
   <?lsmb END ?>
   <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
 <?lsmb IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;
   report.rheads.ids.$head_id.props.account_description; ?>
-</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>></th>
-<?lsmb ELSE ?>
-
+</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
+<?lsmb ELSE -?>
 <?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
-<?lsmb report.rheads.ids.$row.props.account_number -?> - <?lsmb
-END; -?><th><?lsmb report.rheads.ids.$row.props.account_description ?></th>
+<?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
+<?lsmb report.rheads.ids.$row.props.account_description ?></th>
 <?lsmb FOREACH col IN report.sorted_col_ids -?>
   <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number

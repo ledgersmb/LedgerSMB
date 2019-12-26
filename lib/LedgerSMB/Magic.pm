@@ -44,7 +44,6 @@ our @EXPORT_OK = qw(
     JRNL_GJ
     MAX_DAYS_IN_MONTH
     MIN_PER_HOUR
-    MONEY_EPSILON
     MONTHS_PER_QUARTER
     MONTHS_PER_YEAR
     NC_ENTITY
@@ -73,6 +72,13 @@ our @EXPORT_OK = qw(
 
 LedgerSMB::Magic - Magic number constants for LedgerSMB
 
+=head1 DESCRIPTION
+
+I<LedgerSMB::Magic> is a library of constants used by the
+LedgerSMB system.  Mostly, these are peculiar to LedgerSMB,
+but where a small part of of a published code is used, the
+constants may be found here rather than separate modules.
+
 =head1 SYNOPSIS
 
  use LedgerSMB::Magic qw( EC_EMPLOYEE );
@@ -81,12 +87,9 @@ LedgerSMB::Magic - Magic number constants for LedgerSMB
      print "This entity  is an employee.";
  }
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-I<LedgerSMB::Magic> is a library of constants used by the
-LedgerSMB system.  Mostly, these are peculiar to LedgerSMB,
-but where a small part of of a published code is used, the
-constants may be found here rather than separate modules.
+This module doesn't specify any (public) methods.
 
 =head1  ACCEPTED NUMERIC LITERALS
 
@@ -273,8 +276,6 @@ use constant SATURDAY           => 6;
 
 =head3  LedgerSMB miscellaneous contants
 
-    MONEY_EPSILON       0.001
-
     EDIT_BUDGET_ROWS     5
     NEW_BUDGET_ROWS     25
 
@@ -283,7 +284,6 @@ a budget.
 
 =cut
 
-use constant MONEY_EPSILON      => 0.001;
 use constant EDIT_BUDGET_ROWS => 5;
 use constant NEW_BUDGET_ROWS  => 25;
 
@@ -318,5 +318,14 @@ Are more organized.
 
 =cut
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2017-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 1;

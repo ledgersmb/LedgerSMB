@@ -1,4 +1,4 @@
-@one-db @weasel
+@one-db @weasel @weasel-one-session
 Feature: correct operation of the menu and immediate linked pages
   As an end-user, I want to be able to navigate the menu and open
   the screens from the available links. If my authorizations
@@ -49,14 +49,14 @@ Scenario Outline: Navigate to menu and open screen
     | AR > Credit Note                           | AR note entry            |
     | AR > Import Batch                          | Batch import             |
 #   | AR > Reports > AR Aging                    |                          |
-#   | AR > Reports > Customer History            |                          |
+    | AR > Reports > Customer History            | Purchase History Search  |
 #   | AR > Reports > Outstanding                 |                          |
     | AR > Sales Invoice                         | AR invoice entry         |
     | AR > Search                                | AR search                |
 #   | AR > Vouchers > AR Voucher                 |                          |
 #   | AR > Vouchers > Import AR Batch            |                          |
 #   | AR > Vouchers > Invoice Vouchers           |                          |
-#   | Budgets > Add Budget                       |                          |
+    | Budgets > Add Budget                       | Budget                   |
     | Budgets > Search                           | Budget search            |
 #   | Cash > Payment                             |                          |
 #   | Cash > Receipt                             |                          |
@@ -64,7 +64,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Cash > Reports                             |                          |
 #   | Cash > Reports > Payments                  |                          |
 #   | Cash > Reports > Receipts                  |                          |
-#   | Cash > Reports > Reconciliation            |                          |
+    | Cash > Reports > Reconciliation            | Search Reconciliation Reports |
 #   | Cash > Transfer                            |                          |
 #   | Cash > Use AR Overpayment                  |                          |
 #   | Cash > Use Overpayment                     |                          |
@@ -75,7 +75,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Cash > Vouchers > Reverse Overpay          |                          |
 #   | Cash > Vouchers > Reverse Payment          |                          |
 #   | Cash > Vouchers > Reverse Receipts         |                          |
-    | Contacts > Search                          | Contact search           |
+    | Contacts > Search                          | Contact Search           |
 #   | Fixed Assets > Asset Classes               |                          |
 #   | Fixed Assets > Asset Classes > Add Class   |                          |
 #   | Fixed Assets > Asset Classes > List Classes|                          |
@@ -89,12 +89,11 @@ Scenario Outline: Navigate to menu and open screen
 #   | Fixed Assets > Assets > Reports > Disposal |                          |
 #   | Fixed Assets > Assets > Reports > Net Book Value |                    |
 #   | Fixed Assets > Assets > Search Assets      |                          |
-#   | General Journal > Add Accounts             |                          |
-#   | General Journal > Chart of Accounts        |                          |
+    | General Journal > Chart of Accounts        | Chart of Accounts        |
 #   | General Journal > Import                   |                          |
 #   | General Journal > Import Chart             |                          |
 #   | General Journal > Journal Entry            |                          |
-    | General Journal > Search and GL            | GL search                |
+    | General Journal > Search                   | GL search                |
     | Goods and Services > Add Assembly          | assembly entry           |
 #   | Goods and Services > Add Group             |                          |
     | Goods and Services > Add Overhead          | overhead entry           |

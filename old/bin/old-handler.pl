@@ -52,7 +52,7 @@ $| = 1;
 
 binmode (STDIN, ':utf8');
 binmode (STDOUT, ':utf8');
-use LedgerSMB;
+
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
@@ -60,7 +60,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::Sysconfig;
 
-use Data::UUID;
 use Log::Log4perl;
 
 $form = Form->new;
@@ -92,7 +91,7 @@ print 'Set-Cookie: '
     if $form->{"request.download-cookie"};
 
 
-$locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+$locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
 
@@ -129,7 +128,7 @@ try {
                        . ": Locale not loaded: $!\n" );
     }
 
-    $LedgerSMB::App_State::Locale = $locale;
+    $form->{_locale} = $locale;
     # pull in the main code
     $logger->trace("requiring old/bin/$form->{script}");
     require "old/bin/$form->{script}";
@@ -150,14 +149,10 @@ try {
         binmode STDOUT, ':utf8';
         binmode STDERR, ':utf8';
         # window title bar, user info
-        $form->{titlebar} =
-            "LedgerSMB "
-            . $locale->text('Version')
-            . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
+        $form->{titlebar} = ''; # Not needed anymore: the SPA already has a title(bar)
 
         &{ $form->{action} };
-        LedgerSMB::App_State::cleanup();
-
+        $form->{dbh}->commit;
     }
     else {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
@@ -165,21 +160,24 @@ try {
     }
 }
 catch  {
-  # We have an exception here because otherwise we always get an exception
-  # when output terminates.  A mere 'die' will no longer trigger an automatic
-  # error, but die 'foo' will map to $form->error('foo')
-  # -- CT
+    # We have an exception here because otherwise we always get an exception
+    # when output terminates.  A mere 'die' will no longer trigger an automatic
+    # error, but die 'foo' will map to $form->error('foo')
+    # -- CT
+    my $err = $_;
     $form->{_error} = 1;
-    $LedgerSMB::App_State::DBH = undef;
-    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
-    LedgerSMB::App_State::cleanup();
+    if ($err =~ /^Died/i or $err =~ /^exit at /) {
+        $form->{dbh}->commit if defined $form->{dbh};
+    }
+    else {
+        $form->{dbh}->rollback if defined $form->{dbh};
+        _error($form, "'$err'");
+    }
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
-$form->{dbh}->commit if defined $form->{dbh};
-$form->{dbh}->disconnect()
-    if defined $form->{dbh};
+$form->{dbh}->disconnect() if defined $form->{dbh};
 
 # end
 

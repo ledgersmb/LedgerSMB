@@ -3,7 +3,7 @@
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
    # Defaults for input attributes
   input_keys = ['type', 'name', 'disabled', 'size', 'value',
-        'data-dojo-type','data-dojo-props', 'required']
+        'data-dojo-type','data-dojo-props', 'required', 'tabindex']
 
   # ELEMENT DEFAULTS
 
@@ -246,7 +246,11 @@
           ?>
           <?lsmb PROCESS auto_label  # Process element label. ?>
           <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
-            <?lsmb IF default_blank; "<option></option>"; END; ?>
+            <?lsmb IF default_blank;
+                     option_data={};
+                     PROCESS option parent_id=parent_id, optindex = optindex;
+                     optindex=optindex+1 ;
+                   END ?>
             <?lsmb  # Build options.
               FOREACH optionds IN element_data.options;
                   option_data = {};
@@ -464,3 +468,19 @@ END ?>
     </div>
   <?lsmb END;
 END ?>
+
+<?lsmb BLOCK select_language;
+    IF ! element_data.default_values || element_data.default_values.size == 0 ;
+       element_data.default_values = [ SETTINGS.default_language ] ;
+    END ;
+    INCLUDE select element_data=element_data ;
+  END ;
+   ?>
+
+<?lsmb BLOCK select_country;
+    IF ! element_data.default_values || element_data.default_values.size == 0 ;
+       element_data.default_values = [ SETTINGS.default_country ] ;
+    END ;
+    PROCESS select element_data=element_data ;
+  END ;
+   ?>

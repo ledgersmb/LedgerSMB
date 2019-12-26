@@ -1,14 +1,14 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
-
-    SELECT plan(51);
+    SELECT plan(58);
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -22,39 +22,39 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('account__all_headings',ARRAY['']);
+    SELECT has_function('account__all_headings','{}'::text[]);
     SELECT has_function('account__delete',ARRAY['integer']);
     SELECT has_function('account__delete_translation',ARRAY['integer','text']);
     SELECT has_function('account__get_by_link_desc',ARRAY['text']);
     SELECT has_function('account__get_from_accno',ARRAY['text']);
     SELECT has_function('account_get',ARRAY['integer']);
-    SELECT has_function('account__get_taxes',ARRAY['']);
+    SELECT has_function('account__get_taxes','{}'::text[]);
     SELECT has_function('account_has_transactions',ARRAY['integer']);
-    SELECT has_function('account_heading__check_tree',ARRAY['']);
+    SELECT has_function('account_heading__check_tree','{}'::text[]);
     SELECT has_function('account_heading__delete',ARRAY['integer']);
     SELECT has_function('account_heading__delete_translation',ARRAY['integer','text']);
-    SELECT has_function('account_heading__list',ARRAY['']);
+    SELECT has_function('account_heading__list','{}'::text[]);
     SELECT has_function('account_heading__list_translations',ARRAY['integer']);
     SELECT has_function('account_heading__save_translation',ARRAY['integer','text','text']);
     SELECT has_function('account_heading_get',ARRAY['integer']);
-    SELECT has_function('account_heading_list',ARRAY['']);
+    SELECT has_function('account_heading_list','{}'::text[]);
     SELECT has_function('account_heading_save',ARRAY['integer','text','text','integer']);
     SELECT has_function('account__is_recon',ARRAY['text']);
-    SELECT has_function('account__list_by_heading',ARRAY['']);
+    SELECT has_function('account__list_by_heading','{}'::text[]);
     SELECT has_function('account__list_translations',ARRAY['integer']);
     SELECT has_function('account__save',ARRAY['integer','text','text','character','text','integer','boolean','boolean','text[]','boolean','boolean']);
     SELECT has_function('account__save_tax',ARRAY['integer','date','numeric','numeric','numeric','text','integer','integer','date']);
     SELECT has_function('account__save_translation',ARRAY['integer','text','text']);
     SELECT has_function('chart_get_ar_ap',ARRAY['integer']);
-    SELECT has_function('chart_list_all',ARRAY['']);
+    SELECT has_function('chart_list_all','{}'::text[]);
     SELECT has_function('chart_list_cash',ARRAY['integer']);
     SELECT has_function('chart_list_discount',ARRAY['integer']);
     SELECT has_function('chart_list_overpayment',ARRAY['integer']);
     SELECT has_function('chart_list_search',ARRAY['text','text']);
     SELECT has_function('cr_coa_to_account_save',ARRAY['text','text']);
-    SELECT has_function('get_link_descriptions',ARRAY['']);
-    SELECT has_function('gifi__list',ARRAY['']);
-    SELECT has_function('report__coa',ARRAY['']);
+    SELECT has_function('get_link_descriptions',ARRAY['boolean','boolean']);
+    SELECT has_function('gifi__list','{}'::text[]);
+    SELECT has_function('report__coa','{}'::text[]);
     SELECT has_function('report_trial_balance',ARRAY['date','date','integer','integer','boolean']);
 
     -- Prepare specific data
@@ -75,6 +75,7 @@ BEGIN;
 --       DEALLOCATE test;
        RETURN ret;
     END $$ LANGUAGE plpgsql;
+
 
     SELECT test_account_link_description('AR_paid1', false, true);
     SELECT test_account_link_description('AP_paid1', false, true);
@@ -118,13 +119,14 @@ BEGIN;
 --CONTEXT:  SQL statement "INSERT INTO account_link (account_id, description)
 --                VALUES (t_id, t_link.val)"
 
-    INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id)
-    values (-100, 'test1', -100, 1, -1000);
+    INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id, curr)
+    values (-100, 'test1', -100, 1, -1000, 'XTS');
 
-    INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id, curr)
-    VALUES ('TEST', '0', '0', -100, -100, 'USD');
-    INSERT INTO acc_trans (trans_id, chart_id, amount)
-    VALUES (-100, (select id from account where accno = '00002'), '0');
+    INSERT INTO ap (invnumber, netamount_bc, amount_bc, entity_credit_account,
+                    id, curr, netamount_tc, amount_tc)
+    VALUES ('TEST', '0', '0', -100, -100, 'XTS', 0, 0);
+    INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc)
+    VALUES (-100, (select id from account where accno = '00002'), '0', 'XTS', 0);
 
     -- Run tests
 
@@ -178,6 +180,74 @@ BEGIN;
                     WHERE accno LIKE '0%' AND description LIKE 'TEST%';
     SELECT results_eq('test',ARRAY[true],'Test AR Accounts Are Found');
     DEALLOCATE test;
+
+
+    -- Tests for get_link_descriptions function
+    DELETE FROM account_link;
+    DELETE FROM account_link_description;
+    INSERT INTO account_link_description(description, summary, custom) VALUES
+        ('Plain', false, false),
+        ('Summary', true, false),
+        ('Custom', false, true),
+        ('CustomSummary', true, true);
+
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(NULL, NULL);
+    SELECT set_eq(
+        'test',
+        ARRAY['Plain', 'Summary', 'CustomSummary', 'Custom'],
+        $$get_link_descriptions (no filter) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, NULL);
+    SELECT set_eq(
+        'test',
+        ARRAY['Summary', 'CustomSummary'],
+        $$get_link_descriptions (Summary) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, FALSE);
+    SELECT set_eq(
+        'test',
+        ARRAY['Summary'],
+        $$get_link_descriptions (Summary, not Custom) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, TRUE);
+    SELECT set_eq(
+        'test',
+        ARRAY['CustomSummary'],
+        $$get_link_descriptions (Summary + Custom) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(NULL, TRUE);
+    SELECT set_eq(
+        'test',
+        ARRAY['CustomSummary', 'Custom'],
+        $$get_link_descriptions (Custom) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(FALSE, TRUE);
+    SELECT set_eq(
+        'test',
+        ARRAY['Custom'],
+        $$get_link_descriptions (Custom, not Summary) returns expected records$$
+    );
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT description FROM get_link_descriptions(FALSE, FALSE);
+    SELECT set_eq(
+        'test',
+        ARRAY['Plain'],
+        $$get_link_descriptions (Neither Custom nor Summary) returns expected records$$
+    );
+    DEALLOCATE test;
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

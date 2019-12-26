@@ -1,0 +1,43 @@
+{
+    q|Ensure that currency information is available for gl transactions| =>
+        [
+         {
+             failure_data => [
+                 [ qw( id transdate reference curr description notes ) ],
+                 [ 22, '2018-01-01', 'GL-001', undef, 'Desc', undef ],
+                 ],
+             failure_session =>
+                 [
+                  {
+                      statement => q{SELECT * FROM currency},
+                      results => [
+                          [ qw( curr description ) ],
+                          [ 'EUR', 'EUR' ],
+                          [ 'USD', 'USD' ],
+                          ],
+                  },
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{UPDATE "gl"
+                      SET "curr" = ?
+                    WHERE "id" = ?},
+                      bound_params => [ 'USD', 22 ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'save',
+                 'gl' => [
+                     {
+                         '__pk' => 'MjI=',
+                         'curr' => 'USD',
+                     },
+                     ],
+             },
+         },
+        ],
+}

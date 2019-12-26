@@ -27,31 +27,27 @@ BEGIN
                         SELECT c.id, c.accno, c.description,
                                 SUM(CASE WHEN ac.transdate < in_datefrom
                                               AND c.category IN ('I', 'L', 'Q')
-                                    THEN ac.amount
-                                    ELSE ac.amount * -1
+                                    THEN ac.amount_bc
+                                    ELSE ac.amount_bc * -1
                                     END),
                                 SUM(CASE WHEN ac.transdate >= in_date_from
-                                              AND ac.amount > 0
-                                    THEN ac.amount
+                                              AND ac.amount_bc > 0
+                                    THEN ac.amount_bc
                                     ELSE 0 END),
                                 SUM(CASE WHEN ac.transdate >= in_date_from
-                                              AND ac.amount < 0
-                                    THEN ac.amount
+                                              AND ac.amount_bc < 0
+                                    THEN ac.amount_bc
                                     ELSE 0 END) * -1,
                                 SUM(CASE WHEN ac.transdate >= in_date_from
                                         AND c.charttype IN ('I')
-                                    THEN ac.amount
+                                    THEN ac.amount_bc
                                     WHEN ac.transdate >= in_date_from
                                               AND c.category IN ('I', 'L', 'Q')
-                                    THEN ac.amount
-                                    ELSE ac.amount * -1
+                                    THEN ac.amount_bc
+                                    ELSE ac.amount_bc * -1
                                     END)
                                 FROM acc_trans ac
-                                JOIN (select id, approved FROM ap
-                                        UNION ALL
-                                        select id, approved FROM gl
-                                        UNION ALL
-                                        select id, approved FROM ar) g
+                                JOIN (select id, approved FROM transactions) g
                                         ON (g.id = ac.trans_id)
                                 JOIN account c ON (c.id = ac.chart_id)
                                 WHERE ac.transdate <= in_date_to
@@ -254,12 +250,27 @@ $$ language sql;
 COMMENT ON FUNCTION account__get_taxes() IS
 $$ Returns set of accounts where the tax attribute is true.$$;
 
-DROP FUNCTION IF EXISTS account_get(int);
+
+
+DROP TYPE IF EXISTS account_config CASCADE;
+CREATE TYPE account_config AS (
+  id int,
+  accno text,
+  description text,
+  is_temp bool,
+  category CHAR(1),
+  gifi_accno text,
+  heading int,
+  contra bool,
+  tax bool,
+  obsolete bool,
+  link text
+);
 
 DROP FUNCTION IF EXISTS account_get(int);
-CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account AS
+CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account_config AS
 $$
-select c.*
+select c.*, concat_colon(l.description) as link
   from account c
   left join account_link l
     ON (c.id = l.account_id)
@@ -424,12 +435,9 @@ BEGIN
                 t_heading_id := in_heading;
         END IF;
 
-    -- don't remove custom links.
+        -- Remove all links. Later we'll (re-)insert the ones we want.
         DELETE FROM account_link
-        WHERE account_id = in_id
-              and description in ( select description
-                                    from  account_link_description
-                                    where custom = 'f');
+        WHERE account_id = in_id;
 
         UPDATE account
         SET accno = in_accno,
@@ -495,7 +503,8 @@ BEGIN
      */
     DELETE FROM account_checkpoint
     WHERE account_id = in_id
-    AND amount = 0
+    AND amount_bc = 0
+    AND amount_tc = 0
     AND debits = 0
     AND credits = 0;
 
@@ -599,14 +608,18 @@ COMMENT ON FUNCTION account__get_by_link_desc(in_description text) IS
 $$ Gets a list of accounts with a specific link description set.  For example,
 for a dropdown list.$$;
 
-CREATE OR REPLACE FUNCTION get_link_descriptions()
+DROP FUNCTION IF EXISTS get_link_descriptions();
+CREATE OR REPLACE FUNCTION get_link_descriptions(in_summary BOOLEAN, in_custom BOOLEAN)
 RETURNS SETOF account_link_description AS
 $$
-    SELECT * FROM account_link_description;
+    SELECT * FROM account_link_description
+    WHERE (in_custom IS NULL OR custom = in_custom)
+    AND (in_summary IS NULL OR summary = in_summary);
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION get_link_descriptions() IS
-$$ Gets a set of all valid account_link descriptions.$$;
+COMMENT ON FUNCTION get_link_descriptions(BOOLEAN, BOOLEAN) IS
+$$ Gets the set of possible account_link descriptions, optionally filtered by
+their `custom` or `summary` attributes.$$;
 
 CREATE OR REPLACE FUNCTION account_heading__list()
 RETURNS SETOF account_heading AS
@@ -672,13 +685,11 @@ CREATE TYPE coa_entry AS (
 
 CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
 $$
-
-WITH ac (chart_id, amount) AS (
-     SELECT chart_id, sum(amount)
+WITH ac (chart_id, amount_bc) AS (
+     SELECT chart_id, sum(amount_bc)
        FROM acc_trans
-       JOIN (select id, approved from ar union all
-             select id, approved from ap union all
-             select id, approved from gl) gl ON gl.id = acc_trans.trans_id
+       JOIN (select id, approved from transactions) gl
+             ON gl.id = acc_trans.trans_id
       WHERE acc_trans.approved and gl.approved
       GROUP BY chart_id
 ),
@@ -711,9 +722,9 @@ ta(account_id) AS (
   GROUP BY 1
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
-       CASE WHEN sum(ac.amount) < 0 THEN sum(ac.amount) * -1
+       CASE WHEN sum(ac.amount_bc) < 0 THEN sum(amount_bc) * -1
             ELSE null::numeric END,
-       CASE WHEN sum(ac.amount) > 0 THEN sum(ac.amount)
+       CASE WHEN sum(ac.amount_bc) > 0 THEN sum(amount_bc)
             ELSE null::numeric END,
        count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(ta.*), l.link
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno

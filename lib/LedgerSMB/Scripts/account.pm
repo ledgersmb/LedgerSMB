@@ -1,19 +1,11 @@
 
 package LedgerSMB::Scripts::account;
-use Template;
-use LedgerSMB::DBObject::Account;
-use LedgerSMB::DBObject::EOY;
-use Log::Log4perl;
-use strict;
-use warnings;
-
-=pod
 
 =head1 NAME
 
 LedgerSMB:Scripts::accounts - web entry points for managing GL accounts
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module contains the workflows for managing chart of accounts entries.
 
@@ -27,21 +19,49 @@ maintainable.
 
 =cut
 
+use strict;
+use warnings;
 
-my $logger = Log::Log4perl::get_logger('LedgerSMB::DBObject::Account');
+use Log::Log4perl;
+
+use LedgerSMB;
+use LedgerSMB::DBObject::Account;
+use LedgerSMB::DBObject::EOY;
+use LedgerSMB::Template::UI;
 
 
-=item new
+=item new_account
 
 Displays a screen to create a new account.
 
 =cut
 
-sub new {
+sub new_account {
     my ($request) = @_;
-    $request->{title} = $request->{_locale}->text('Add Account');
-    $request->{charttype} = 'A';
-    return _display_account_screen($request);
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        charttype => 'A',
+    }});
+
+    return _display_account_screen($request, $account);
+}
+
+=item new_heading
+
+Displays a screen to create a new Chart of Accounts heading.
+
+=cut
+
+sub new_heading {
+    my ($request) = @_;
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        charttype => 'H',
+    }});
+
+    return _display_account_screen($request, $account);
 }
 
 =item edit
@@ -54,22 +74,15 @@ Requires the id and charttype variables in the request to be set.
 
 sub edit {
     my ($request) = @_;
-    if (!defined $request->{id}){
-        $request->error('No ID provided');
-    } elsif (!defined $request->{charttype}){
-        $request->error('No Chart Type Provided');
-    }
-    $request->{chart_id} = $request->{id};
-    my $account = LedgerSMB::DBObject::Account->new({base => $request});
-    my @accounts = $account->get();
-    my $acc = shift @accounts;
-    if (!$acc){  # This should never happen.  Any occurance of this is a bug.
-         $request->error($request->{_locale}->text('Bug: No such account'));
-    }
-    $acc->{charttype} = $request->{charttype};
-    $acc->{title} = $request->{_locale}->text('Edit Account');
-    $acc->{_locale} = $request->{_locale};
-    return _display_account_screen($acc);
+
+    my $account = LedgerSMB::DBObject::Account->new({base => {
+        dbh => $request->{dbh},
+        id => $request->{id},
+        charttype => $request->{charttype},
+    }});
+
+    $account = $account->get;
+    return _display_account_screen($request, $account);
 }
 
 =item save
@@ -137,74 +150,29 @@ sub save_as_new {
     return save($request);
 }
 
-# copied from AM.pm.  To be refactored.
+
 sub _display_account_screen {
-    my ($form) = @_;
-    my $account = LedgerSMB::DBObject::Account->new({base => $form});
-    @{$form->{all_headings}} = $account->list_headings();
-    @{$form->{all_gifi}} = $account->gifi_list();
-    $form->{recon} = $account->is_recon();
-    my $locale = $form->{_locale};
-    my $buttons = [];
-    my $checked;
-    my $hiddens;
-    my $logger = Log::Log4perl->get_logger('');
-    $logger->debug("scripts/account.pl Locale: $locale");
+    my ($form, $account) = @_;
 
-    foreach my $item ( split( /:/, $form->{link} ) ) {
-        $form->{$item} = 1;
+    @{$account->{all_headings}} = $account->list_headings();
+    $account->is_recon;
+    $account->gifi_list;
+
+    foreach my $item ( split( /:/, $account->{link} ) ) {
+        $account->{$item} = 1;
     }
 
-    @{$form->{languages}} =
-             LedgerSMB->call_procedure(funcname => 'person__list_languages');
+    my @languages = $form->call_procedure(
+        funcname => 'person__list_languages'
+    );
 
-    $hiddens->{type} = 'account';
-    $hiddens->{$_} = $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
-    $checked->{ $form->{charttype} } = 'checked';
-
-    my %button = ();
-
-    if ( $form->{id} ) {
-        $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save'),
-           id => 'action_save' };
-        $button{'save_as_new'} =
-          { ndx => 7, key => 'N', value => $locale->text('Save as new'),
-           id => 'action_save_as_new' };
-
-        if ( $form->{orphaned} ) {
-            $button{'delete'} =
-              { ndx => 16, key => 'D', value => $locale->text('Delete') };
-        }
-    }
-    else {
-        $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
-    }
-
-    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        push @{$buttons}, {
-            name => 'action',
-            value => $_,
-            accesskey => $button{$_}{key},
-            title => "$button{$_}{value} [Alt-$button{$_}{key}]",
-            text => $button{$_}{value},
-            };
-    }
-
-    my $template = LedgerSMB::Template->new(
-        user => $form->{_user},
-        locale => $locale,
-        format => 'HTML',
-        path   => 'UI',
-        template => 'accounts/edit');
-    return $template->render({
-        form => $form,
-        checked => $checked,
-        buttons => $buttons,
-        hiddens => $hiddens,
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($form, 'accounts/edit', {
+        form => $account,
+        languages => \@languages,
     });
 }
+
 
 =item yearend_info
 
@@ -218,11 +186,10 @@ sub yearend_info {
     $eoy->list_earnings_accounts;
     $eoy->{closed_date} = $eoy->latest_closing;
     $eoy->{user} = $request->{_user};
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'accounts/yearend');
-    return $template->render({ request => $request,
-                                       eoy => $eoy});
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'accounts/yearend',
+                             { request => $request,
+                               eoy => $eoy});
 }
 
 =item post_yearend
@@ -241,11 +208,8 @@ sub post_yearend {
     my ($request) = @_;
     my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->close_books;
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'accounts/yearend_complete'
-    );
-    return $template->render($eoy);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'accounts/yearend_complete', $eoy);
 }
 
 =item close_period
@@ -283,11 +247,13 @@ sub reopen_books {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2009 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -1,35 +1,46 @@
 # Database schema upgrade pre-checks
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use Data::Dumper;
 use DBI;
 use Digest::MD5 qw( md5_hex );
 use File::Temp qw( :seekable );
 use IO::Scalar;
-use Log::Log4perl qw( :easy );
 use MIME::Base64;
+use Plack::Request;
 
-use Test::More 'no_plan';
-use Test::Exception;
-
+use Log::Log4perl qw( :easy );
+Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 
 
-Log::Log4perl->easy_init($OFF);
 
 
 sub test_request {
-    my $req = LedgerSMB->new();
+    my $plack_req = Plack::Request->new({});
+    my $req = LedgerSMB->new($plack_req);
 
     $req->{script} = 'script.pl';
     $req->{query_string} = 'action=rebuild';
 
     return $req;
+}
+
+
+sub filter_js_src {
+
+    # Given an array ref of rendered html lines,
+    # perform in-place substitution of javascript paths
+    # so that differences between built and unbuilt dojo
+    # installations are ignored.
+    my $lines = shift;
+    foreach my $line(@{$lines}) {
+        $line =~ s|"js-src/|"js/|g;
+    }
 }
 
 
@@ -55,13 +66,15 @@ is LedgerSMB::Setup::SchemaChecks::_check_hashid(
 
 # _unpack_grid_data
 
-is_deeply( LedgerSMB::Setup::SchemaChecks::_unpack_grid_data(
+is( LedgerSMB::Setup::SchemaChecks::_unpack_grid_data(
                {
                    rowcount_pfx => 2,
+                   'pfx_row_1' => 1,
                    'pfx_--pk_1' => '1 2 3',
                    'pfx_a_1' => 1,
                    'pfx_b_1' => 2,
                    'pfx_c_1' => 3,
+                   'pfx_row_2' => 2,
                    'pfx_--pk_2' => '4 5 6',
                    'pfx_a_2' => 4,
                    'pfx_b_2' => 5,
@@ -73,14 +86,12 @@ is_deeply( LedgerSMB::Setup::SchemaChecks::_unpack_grid_data(
                 b => 2,
                 c => 3,
                 __pk => '1 2 3',
-                '--pk' => '1 2 3',
             },
             {
                 a => 4,
                 b => 5,
                 c => 6,
                 __pk => '4 5 6',
-                '--pk' => '4 5 6',
             }
            ], '');
 
@@ -118,8 +129,8 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
-          'Loading a single check from file-handle');
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
+    'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
 $dbh->{mock_add_resultset} = {
@@ -134,13 +145,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -150,7 +160,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -166,13 +176,9 @@ is join("\n", @$out), q{<!DOCTYPE html>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
         
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -215,7 +221,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -231,13 +237,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -247,7 +252,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -263,13 +268,9 @@ is join("\n", @$out), q{<!DOCTYPE html>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
         
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -312,8 +313,8 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
-          'Loading a single check from file-handle');
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
+           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
 $dbh->{mock_add_resultset} = {
@@ -328,13 +329,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -344,7 +344,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -360,13 +360,9 @@ is join("\n", @$out), q{<!DOCTYPE html>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
         
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -407,7 +403,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -423,13 +419,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -439,7 +434,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -455,13 +450,9 @@ is join("\n", @$out), q{<!DOCTYPE html>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
         
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -519,7 +510,7 @@ check 'title',
 HEREDOC
 
 $fh = IO::Scalar->new(\$tests);
-lives_and(sub { @checks = load_checks($fh); is scalar @checks, 1 },
+ok(lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
 $dbh = DBI->connect('DBI:Mock:', '', '');
@@ -535,13 +526,12 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
+filter_js_src($out);
 is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="-1" />
-                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         
         
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
@@ -551,7 +541,7 @@ is join("\n", @$out), q{<!DOCTYPE html>
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
         
         
-            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+            <link rel="stylesheet" href="css/setup.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -567,13 +557,9 @@ is join("\n", @$out), q{<!DOCTYPE html>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
         
-
-        
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<body>
+<body class="claro">
   <form method="POST"
         enctype="multipart/form-data"
         action="script.pl?action=rebuild">
@@ -588,8 +574,8 @@ is join("\n", @$out), q{<!DOCTYPE html>
    </th>   <th class="c  input_text">c
    </th>   </tr>
 </thead><tbody>   <tr class=" 0">
-      <input id="row-1" type="hidden" name="row_1" value="0" />
-      <input id="grid--pk-0" type="hidden" name="grid--pk_0" value="Y29sMQ== Y29sMg==" />      <td class="a  text">            col1      </td>      <td class="b  text">            col2      </td>      <td class="c  input_text">          <input id="c-1" type="text" name="gridc_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />      </td>   </tr>
+      <input id="grid-row-1" type="hidden" name="grid_row_1" value="0" />
+      <input id="grid---pk-0" type="hidden" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" />      <td class="a  text">            col1      </td>      <td class="b  text">            col2      </td>      <td class="c  input_text">          <input id="grid_c-1" type="text" name="grid_c_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />      </td>   </tr>
 </tbody><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
 </table>
 </form>

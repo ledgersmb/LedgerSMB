@@ -1,0 +1,52 @@
+<?lsmb PROCESS 'ui-header.html' ?>
+<?lsmb PROCESS elements.html ?>
+<?lsmb PROCESS 'dynatable.html' ?>
+
+<body>
+
+  <div id="system-currency">
+
+    <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
+
+    <?lsmb PROCESS 'dynatable' tbody = { rows = rows }
+            attributes = { width = '100%' } ?>
+    <br />
+
+    <form data-dojo-type="lsmb/Form"
+          method="post"
+          action="<?lsmb form.script ?>">
+      <?lsmb FOREACH hidden IN hiddens.keys;
+             PROCESS input element_data={
+                        type => 'hidden',
+                        name => hidden,
+                        value => hiddens.item(hidden)
+                };
+             END ?>
+      <?lsmb PROCESS input element_data={
+                        name='curr'
+                        type='text'
+                        size="5"
+                 } ?>
+
+      <?lsmb PROCESS input element_data={
+                        name='description'
+                        type='text'
+                 } ?>
+      <?lsmb PROCESS button element_data={
+                        text = text('Add'),
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="save_currency"
+                        accesskey="S"
+                        title="Save [Alt-S]"
+         } ?>
+
+
+      <?lsmb FOREACH button IN buttons;
+             PROCESS button element_data=button;
+             END ?>
+    </form>
+  </div>
+</body>
+</html>

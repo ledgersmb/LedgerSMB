@@ -183,7 +183,7 @@
         </div>
         <div>
                 <?lsmb IF !country_id; country_id = default_country; END -?>
-                <?lsmb INCLUDE select element_data = {
+                <?lsmb INCLUDE select_country element_data = {
                         id = "address-country-select"
                         text_attr = "name"
                         value_attr = "id"

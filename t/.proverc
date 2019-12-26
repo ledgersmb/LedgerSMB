@@ -8,7 +8,6 @@
 --pgtap-option suffix=.pg
 # arguments for pherkin integration
 --source Feature
---feature-option extensions=.feature
 # which files to run?
 --ext=.t
 --ext=.pg

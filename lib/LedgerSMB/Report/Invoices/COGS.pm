@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::COGS;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::COGS - FIFO COGS Reports for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Invoices::COGS - FIFO COGS Reports for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::COGS;
 use namespace::autoclean;
 use Moose;
 extends 'LedgerSMB::Report';
@@ -80,53 +82,54 @@ This report supports the following columns:
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       { col_id => 'invnumber',
           type => 'href',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Invoice Number'),
+          name => $self->Text('Invoice Number'),
      href_base => 'ir.pl?action=edit&id=', },
 
       { col_id => 'transdate',
           type => 'text',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Invoice Date'), },
+          name => $self->Text('Invoice Date'), },
 
       { col_id => 'partnumber',
           type => 'href',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Part Number'),
+          name => $self->Text('Part Number'),
      href_base => 'ic.pl?action=edit&id=', },
 
       { col_id => 'description',
           type => 'text',
         pwidth => 3,
-          name => LedgerSMB::Report::text('Part'), },
+          name => $self->Text('Part'), },
 
       { col_id => 'onhand',
           type => 'text',
         pwidth => 1,
-          name => LedgerSMB::Report::text('On Hand'), },
+          name => $self->Text('On Hand'), },
 
       { col_id => 'qty',
           type => 'text',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Quantity'), },
+          name => $self->Text('Quantity'), },
 
       { col_id => 'total_value',
           type => 'text',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Total'), },
+          name => $self->Text('Total'), },
 
       { col_id => 'allocated',
           type => 'text',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Allocated'), },
+          name => $self->Text('Allocated'), },
 
       { col_id => 'cogs_sold',
           type => 'text',
         pwidth => 1,
-          name => LedgerSMB::Report::text('COGS'), },
+          name => $self->Text('COGS'), },
 
     ];
 }
@@ -149,15 +152,16 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [
        { name => 'from_date',
-         text => LedgerSMB::Report::text('Start Date'), },
+         text => $self->Text('Start Date'), },
        { name => 'to_date',
-         text => LedgerSMB::Report::text('End Date'), },
+         text => $self->Text('End Date'), },
        { name => 'partnumber',
-         text => LedgerSMB::Report::text('Part Number'), },
+         text => $self->Text('Part Number'), },
        { name => 'description',
-         text => LedgerSMB::Report::text('Part Description'), },
+         text => $self->Text('Part Description'), },
     ];
 }
 
@@ -167,7 +171,10 @@ Line Item COGS Report
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Line Item COGS Report'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Line Item COGS Report');
+}
 
 =head1 METHODS
 
@@ -187,13 +194,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.TXT for more information.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

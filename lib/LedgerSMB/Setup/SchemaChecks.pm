@@ -5,10 +5,14 @@ package LedgerSMB::Setup::SchemaChecks;
 
 LedgerSMB::Setup::SchemaChecks - UI for schema checks run from setup.pl
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Provides the UI for schema upgrade precondition checks when run from
 setup.pl.
+
+=head1 METHODS
+
+This module doesn't specify any methods.
 
 =head1 FUNCTIONS
 
@@ -23,6 +27,7 @@ use Text::Markdown qw(markdown);
 
 use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 our @EXPORT = ## no critic
     qw| html_formatter_context |;
@@ -44,14 +49,12 @@ sub _unpack_grid_data {
 
     my @rows = ();
     for my $rowno (1 .. $rowcount) {
+        my $rowid = $request->{"${prefix}_row_$rowno"};
         push @rows, {
-            map { $_ => $request->{"${prefix}_${_}_$rowno"} }
-               (@$columns, '--pk')
+            (map { $_ => $request->{"${prefix}_${_}_$rowid"} } @$columns),
+            __pk => $request->{"${prefix}_--pk_$rowid"}
         };
     }
-    # Rename '--pk' to '__pk', the value expected by the upgrade framework
-    # but renamed due to TT not allowing access to underscore-prefixed vars
-    $_->{__pk} = $_->{'--pk'} for @rows;
 
     return \@rows;
 }
@@ -59,24 +62,19 @@ sub _unpack_grid_data {
 sub _wrap_html {
     my ($request) = shift;
 
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template::UI->new_UI;
+    unshift @HTML, $template->render_string(
         $request,
-        template => 'setup/upgrade/preamble',
-        );
-    $template->render(
+        'setup/upgrade/preamble',
         {
             check_id => _check_hashid( $failing_check ),
             database => $request->{database},
             action_url => $request->get_relative_url,
         });
-    unshift @HTML, $template->{output};
 
-    $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/upgrade/epilogue',
-        );
-    $template->render();
-    push @HTML, $template->{output};
+    $template = LedgerSMB::Template::UI->new_UI;
+    push @HTML, $template->render_string($request,
+                                         'setup/upgrade/epilogue');
 
     return \@HTML;
 }
@@ -91,16 +89,15 @@ sub _format_confirm {
 
     my $seq = 0;
     while (@confirmations) {
-        my $template = LedgerSMB::Template->new_UI($request,
-                template => 'setup/upgrade/confirm',
-            );
-        $template->render(
+        my $template = LedgerSMB::Template::UI->new_UI;
+        push @HTML, $template->render_string(
+            $request,
+            'setup/upgrade/confirm',
             {
                 value => shift @confirmations,
                 description => shift @confirmations,
                 id => "confirm-$seq",
             });
-        push @HTML, $template->{output};
 
         $seq++;
     }
@@ -115,18 +112,16 @@ sub _format_describe {
     $failing_check = $check;
 
     $msg //= $check->{description};
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template::UI->new_UI;
+    push @HTML, $template->render_string(
         $request,
-        template => 'setup/upgrade/describe',
-        );
-    $template->render(
+        'setup/upgrade/describe',
         {
             title => $check->{title},
         },
         {
             description => markdown($msg),
         });
-    push @HTML, $template->{output};
 }
 
 sub _format_grid {
@@ -157,23 +152,44 @@ sub _format_grid {
 
     $cols->{$_}->{type} = 'input_text'
         for @{$args{edit_columns}};
-    $cols = [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ];
+    my $dropdowns = $args{dropdowns};
+    for my $dropdown (keys %$dropdowns) {
+        my $map = $dropdowns->{$dropdown};
+        if ($cols->{$dropdown}->{type} eq 'text') {
+            # not an input field; resolve key to description
+            for my $row (@$rows) {
+                $row->{$dropdown} = $map->{$row->{$dropdown}};
+            }
+        }
+        elsif ($cols->{$dropdown}->{type} eq 'input_text') {
+            $cols->{$dropdown}->{type} = 'select';
+            $cols->{$dropdown}->{default_blank} = 1;
+            if (ref $map eq 'CODE') {
+                $cols->{$dropdown}->{options} = $map;
+            }
+            else {
+                $cols->{$dropdown}->{options} =
+                    [ map { { value => $_, text => $map->{$_} } } keys %$map ];
+            }
+        }
+        else {
+            # FAIL!
+        }
+    }
     my $atts = {
-        input_prefix => $args{name},
+        input_prefix => $args{name} . '_',
         id => $args{name},
     };
 
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template::UI->new_UI;
+    push @HTML, $template->render_string(
         $request,
-        template => 'setup/upgrade/grid',
-        );
-    $template->render(
+        'setup/upgrade/grid',
         {
             attributes => $atts,
-            columns => $cols,
+            columns => [ map { $cols->{$_} } ('__pk', @{$args{columns}}) ],
             rows => $rows,
         });
-    push @HTML, $template->{output};
 }
 
 sub _provided {
@@ -201,7 +217,8 @@ sub _provided {
         }
         else {
             # it'll be a grid.
-            return _unpack_grid_data($request, $name, $check->{columns});
+            return _unpack_grid_data($request, $name,
+                                     $check->{grids}->{$name}->{edit_columns});
         }
     }
     else {
@@ -239,13 +256,13 @@ sub html_formatter_context(&$) { ## no critic
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2018 The LedgerSMB Core Team.
+Copyright (C) 2018 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.TXT for more information.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

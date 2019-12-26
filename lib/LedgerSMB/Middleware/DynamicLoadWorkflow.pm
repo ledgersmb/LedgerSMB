@@ -25,8 +25,9 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use Module::Runtime qw/ use_module /;
 use List::Util qw{ none any };
+use Module::Runtime qw/ use_module /;
+use Plack::Request;
 
 use LedgerSMB::PSGI::Util;
 
@@ -60,8 +61,7 @@ sub call {
         unless use_module($module);
 
     my $req = Plack::Request->new($env);
-    my $action_name =
-        eval { $req->parameters->get_one('action') } // '__default';
+    my $action_name = $req->parameters->get('action') // '__default';
     my $action = $module->can($action_name);
     return  LedgerSMB::PSGI::Util::internal_server_error(
         "Action Not Defined: $action_name"
@@ -99,11 +99,11 @@ sub call {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2017 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

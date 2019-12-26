@@ -286,7 +286,7 @@ sub name_selected {
 
     # delete all the new_ variables
     foreach my $i ( 1 .. $form->{lastndx} ) {
-        for (qw(id, name)) { delete $form->{"new_${_}_$i"} }
+        for (qw(id name)) { delete $form->{"new_${_}_$i"} }
     }
 
     for (qw(ndx lastndx nextsub)) { delete $form->{$_} }
@@ -301,21 +301,6 @@ sub name_selected {
 
     &update(1);
 
-}
-
-sub rebuild_vc {
-    my ($vc, $transdate, $job) = @_;
-
-    ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
-    $form->all_vc(\%myconfig, $vc, $transdate, $job);
-    $form->{"select$vc"} = "";
-    for ( @{ $form->{"all_$vc"} } ) {
-        $form->{"select$vc"} .=
-          qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-    }
-    $form->{selectprojectnumber} = "";
-
-    1;
 }
 
 sub add_transaction {
@@ -818,10 +803,10 @@ sub continue        { &{ $form->{nextsub} }; }
 sub continuenew     {$form->{rowcount}--; &setlocation_id;  &{ $form->{nextsub} }; }
 sub updatenew       {&createlocations;}
 sub gl_transaction  { &add }
-sub ar_transaction  { &add_transaction(ar) }
-sub ap_transaction  { &add_transaction(ap) }
-sub sales_invoice_  { &add_transaction(is) }
-sub vendor_invoice_ { &add_transaction(ir) }
+sub ar_transaction  { &add_transaction('ar') }
+sub ap_transaction  { &add_transaction('ap') }
+sub sales_invoice_  { &add_transaction('is') }
+sub vendor_invoice_ { &add_transaction('ir') }
 
 
 1;

@@ -1,14 +1,15 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
-    SELECT plan(13);
+    SELECT plan(12);
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -19,16 +20,15 @@ BEGIN;
     SELECT has_function('array_endswith',ARRAY['anyelement','anyarray']);
     SELECT has_function('array_splice_from',ARRAY['anyelement','anyarray']);
     SELECT has_function('array_splice_to',ARRAY['anyelement','anyarray']);
-    SELECT has_function('full_ilike_match',ARRAY['text','text']);
-    SELECT has_function('get_default_lang',ARRAY['']);
+    SELECT has_function('get_default_lang','{}'::text[]);
     SELECT has_function('in_tree',ARRAY['integer','tree_record[]']);
     SELECT has_function('in_tree',ARRAY['integer[]','tree_record[]']);
     SELECT has_function('invoice__get_by_vendor_number',ARRAY['text','text']);
     SELECT has_function('lsmb__decompose_timestamp',ARRAY['timestamp with time zone']);
-    SELECT has_function('lsmb__max_date',ARRAY['']);
-    SELECT has_function('lsmb__min_date',ARRAY['']);
+    SELECT has_function('lsmb__max_date','{}'::text[]);
+    SELECT has_function('lsmb__min_date','{}'::text[]);
     SELECT has_function('parse_date',ARRAY['date']);
-    SELECT has_function('warehouse__list_all',ARRAY['']);
+    SELECT has_function('warehouse__list_all','{}'::text[]);
 
     -- Run tests
 

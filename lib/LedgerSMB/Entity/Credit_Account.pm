@@ -1,8 +1,11 @@
+
+package LedgerSMB::Entity::Credit_Account;
+
 =head1 NAME
 
 LedgerSMB::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 To get by ID:
 
@@ -27,7 +30,6 @@ and the like.
 
 =cut
 
-package LedgerSMB::Entity::Credit_Account;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -182,14 +184,11 @@ has 'pricegroup_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 =item curr
 
 The currency to use for billing this customer or for bills received from this
-vendor.
+vendor. This field is required for customers, vendors and employees.
 
 Note: we *want* to make this field required (in the database too), but due to
-the existence of the 'Inventory Entity', which is created before any currencies
-have been configured, it's impossible to set a currency on the inventory
-entity, which then makes it impossible to set a database constraint.
-So, we don't want one here: 'be strict in what you send, be liberal in what
-you accept'...
+its use for non-financial counterparties (hot/cold leads, etc), for which no
+currency is required, we can't (yet) make it so.
 
 =cut
 
@@ -441,11 +440,13 @@ sub save_pricematrix {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team. This file may be reused under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the attached LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

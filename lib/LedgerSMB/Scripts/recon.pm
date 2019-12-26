@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Scripts::recon;
 
 =head1 NAME
 
 LedgerSMB::Scripts::recon - web entry points for reconciliation workflow
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This module acts as the UI controller class for Reconciliation. It controls
 interfacing with the Core Logic and database layers.
@@ -13,54 +14,44 @@ interfacing with the Core Logic and database layers.
 
 =cut
 
-# NOTE:  This is a first draft modification to use the current parameter type.
-# It will certainly need some fine tuning on my part.  Chris
-
-package LedgerSMB::Scripts::recon;
-
-use LedgerSMB::Template;
-use LedgerSMB::DBObject::Reconciliation;
-use HTTP::Status qw( HTTP_BAD_REQUEST);
-use LedgerSMB::Setting;
-use LedgerSMB::Scripts::reports;
-use LedgerSMB::Report::Reconciliation::Summary;
 use strict;
 use warnings;
 
+use HTTP::Status qw( HTTP_BAD_REQUEST);
+
+use LedgerSMB::DBObject::Reconciliation;
+use LedgerSMB::PGNumber;
+use LedgerSMB::Report::Reconciliation::Summary;
+use LedgerSMB::Template::UI;
+
 =over
 
-=item display_report($self, $request, $user)
+=item display_report($request)
 
-Renders out the selected report given by the incoming variable report_id.
-Returns HTML, or raises an error from being unable to find the selected
-report_id.
+Retrieves and displays the specified reconciliation report.
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
+  * report_id
 
 =cut
 
 sub display_report {
     my ($request) = @_;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
+
+    my $recon_data = {
+        dbh => $request->{dbh},
+        report_id => $request->{report_id}
+    };
+
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $recon_data,
+    });
+
     return _display_report($recon, $request);
 }
-
-=item search($self, $request, $user)
-
-Renders out a list of reports based on the search criteria passed to the
-search function.
-Meta-reports are report_id, date_range, and likely errors.
-Search criteria accepted are
-
-=over
-
-=item date_begin
-
-=item date_end
-
-=item account
-
-=item status
-
-=back
 
 =item update_recon_set
 
@@ -119,13 +110,9 @@ sub submit_recon_set {
     $recon->submit();
     my $can_approve = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     if ( !$can_approve ) {
-        my $template = LedgerSMB::Template->new(
-                user => $request->{_user},
-                template => 'reconciliation/submitted',
-                locale => $request->{_locale},
-                format => 'HTML',
-                path=>'UI');
-        return $template->render($recon);
+        my $template = LedgerSMB::Template::UI->new_UI;
+        return $template->render($request, 'reconciliation/submitted',
+                                 $recon);
     }
     return _display_report($recon, $request);
 }
@@ -143,7 +130,7 @@ sub save_recon_set {
         $recon->save();
         return search($request);
     } else {
-        $recon->{notice} = $recon->{_locale}->text('Data not saved.  Please update again.');
+        $recon->{notice} = $request->{_locale}->text('Data not saved.  Please update again.');
         return _display_report($recon, $request);
     }
 }
@@ -156,33 +143,45 @@ Displays the search results
 
 sub get_results {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Reconciliation::Summary->new(%$request)
+        );
 }
 
-=item search
+=item search($request)
 
-Displays search criteria screen
+Displays bank reconciliation report search criteria screen.
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
+
+Search criteria accepted are
+
+  * date_begin
+  * date_end
+  * account
+  * status
 
 =cut
 
 sub search {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-    if (!$recon->{hide_status}){
-            $recon->{show_approved} = 1;
-            $recon->{show_submitted} = 1;
-        }
-    @{$recon->{recon_accounts}} = $recon->get_accounts();
-    unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
-    $recon->{report_name} = 'reconciliation_search';
-    return LedgerSMB::Scripts::reports::start_report($recon);
+    my $recon = LedgerSMB::DBObject::Reconciliation->new();
+    $recon->set_dbh($request->{dbh});
+    $recon->get_accounts();
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render(
+        $request,
+        'Reports/filters/reconciliation_search',
+        $recon
+    );
 }
 
-
-
-=item new_report ($self, $request, $user)
+=item new_report ($recon, $request)
 
 Creates a new report, from a selectable set of bank statements that have been
 received (or can be received from, depending on implementation)
@@ -194,148 +193,105 @@ it has been created.
 
 sub _display_report {
     my ($recon, $request) = @_;
-    $recon->get();
-    my $setting_handle = LedgerSMB::Setting->new({base => $recon});
-    $recon->{reverse} = $setting_handle->get('reverse_bank_recs');
-    delete $recon->{reverse} unless $recon->{account_info}->{category}
-                                    eq 'A';
+    my $neg_factor;
+
     $request->close_form;
     $request->open_form;
+
+    $recon->{form_id} = $request->{form_id};
+    $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    $recon->{decimal_places} = $request->setting->get('decimal_places');
+    _set_sort_options($recon, $request);
+
+    $recon->get_accounts;
+    $recon->get;
     $recon->unapproved_checks;
 
-    my $contents = '';
-    {
-        my $handle = eval { $request->upload('csv_file') };
-
-        local $/ = undef;
-        $contents = <$handle> if defined $handle;
-    }
-
-    # An empty string is recognized by the entry-importer (ISO20022)
-    # as a file name (due to absense of '<' and '>'); only call it
-    # when there's actual content to handle.
-    $recon->add_entries($recon->import_file($contents))
-        if $contents && !$recon->{submitted};
-    $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
-    $recon->get();
-    $recon->{form_id} = $request->{form_id};
-    my $template = LedgerSMB::Template->new(
-        user=> $recon->{_user},
-        template => 'reconciliation/report',
-        locale => $recon->{_locale},
-        format=>'HTML',
-        path=>'UI'
-    );
-    $recon->{sort_options} = [
-            {id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
-            {id => 'scn', label => $recon->{_locale}->text('Source')},
-            {id => 'post_date', label => $recon->{_locale}->text('Post Date')},
-            {id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
-            {id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
-    ];
-    if (!$recon->{line_order}){
-       $recon->{line_order} = 'scn';
-    }
-    for my $field (qw/ total_cleared_credits total_cleared_debits total_uncleared_credits total_uncleared_debits /) {
-      $recon->{"$field"} = LedgerSMB::PGNumber->from_input(0);
-    }
-    my $neg_factor = 1;
-    if ($recon->{account_info}->{category} =~ /(A|E)/){
+    if ($recon->{account_info}->{category} =~ /^(A|E)$/){
        $recon->{their_total} *= -1;
        $neg_factor = -1;
     }
-    # Credit/Debit separation (useful for some)
-    for my $l (@{$recon->{report_lines}}){
-        if ($l->{their_balance} > 0){
-           $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{their_credits} = $l->{their_balance};
-        }
-        else {
-           $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{their_debits} = $l->{their_balance}->bneg;
-        }
-        if ($l->{our_balance} > 0){
-           $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{our_credits} = $l->{our_balance};
-        }
-        else {
-           $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{our_debits} = $l->{our_balance}->bneg;
-        }
-        if ($l->{cleared}){
-             $recon->{total_cleared_credits}->badd($l->{our_credits});
-             $recon->{total_cleared_debits}->badd($l->{our_debits});
-        } else {
-             $recon->{total_uncleared_credits}->badd($l->{our_credits});
-             $recon->{total_uncleared_debits}->badd($l->{our_debits});
-        }
-        for my $amt_name (qw/ our_ their_ /) {
-            for my $bal_type (qw/ balance credits debits/) {
-                $l->{"$amt_name$bal_type"} = $l->{"$amt_name$bal_type"}->to_output(money=>1);
-            }
-        }
+    else {
+        $neg_factor = 1;
     }
 
-    $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
-
-  $recon->{statement_gl_calc} = $neg_factor *
-                                    ($recon->{their_total}
-                                    + $recon->{outstanding_total}
-                                    + $recon->{mismatch_our_total});
-    $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
-    $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
-
-    # Check if only one entry could explain the difference
-    if ( !$recon->{submit_enabled}) {
-        for my $l (@{$recon->{report_lines}}){
-            $l->{suspect} = $l->{our_credits} == -$recon->{out_of_balance}
-                         || $l->{our_debits}  ==  $recon->{out_of_balance}
-                         ? 1 : 0;
-        }
+    if ($recon->{account_info}->{category} eq 'A') {
+        $recon->{reverse} = $request->setting->get('reverse_bank_recs');
     }
+
+    _process_upload($recon, $request) unless $recon->{submitted};
+
+    $recon->build_totals;
+    $recon->build_statement_gl_calc;
+    $recon->build_variance;
+    _highlight_suspect_rows($recon);
+
+    $recon->{submit_enabled} = ($recon->{variance} == 0);
+
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
-      for my $bal_type (qw/ credits debits/) {
-         $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
-      }
+        for my $bal_type (qw/ credits debits/) {
+            $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
+        }
     }
-    $recon->{their_total} = $recon->{their_total} * $neg_factor;
+    $recon->{their_total} *= $neg_factor;
 
-    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total /) {
-      $recon->{"$field"} = $recon->{"$field"}->to_output(money=>1);
+    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance /) {
+        $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
-    for my $field (qw/ our_total beginning_balance out_of_balance /) {
-        $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
-        $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
+
+    for my $field (qw/ our_total beginning_balance /) {
+        $recon->{$field} ||= LedgerSMB::PGNumber->from_db(0);
+        $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
-    return $template->render($recon);
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'reconciliation/report', $recon);
 }
 
 
-=item new_report
+=item new_report($request)
 
-Displays the new report screen.
+Displays the Create New Report screen, allowing the user to input parameters
+for the creation of a new reconcilition report..
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
 
 =cut
 
 sub new_report {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request, copy => 'all' });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new();
+    $recon->set_dbh($request->{dbh});
+    $recon->get_accounts();
 
-    # we can assume we're to generate the "Make a happy new report!" page.
-    @{$recon->{accounts}} = $recon->get_accounts;
-    my $template = LedgerSMB::Template->new(
-        user => $recon->{_user},
-        template => 'reconciliation/upload',
-        locale => $recon->{_locale},
-        format => 'HTML',
-        path => 'UI',
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render(
+        $request,
+        'reconciliation/new_report',
+        $recon
     );
-    return $template->render($recon);
 }
 
 =item start_report($request)
+
+Creates a new reconciliation report in the database, using the supplied
+parameters and displays the blank report.
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
+  * chart_id  [the account to be reconciled]
+  * end_date  [the end date]
+  * total     [the end balance]
+
+Optionally the following request key may be set:
+
+  * recon_fx  [boolean, default false]
 
 =cut
 
@@ -349,23 +305,25 @@ sub start_report {
         ));
     }
 
-    $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
+    my $recon_data = {
+        dbh => $request->{dbh},
+        chart_id => $request->{chart_id},
+        end_date => $request->{end_date},
+        total => $request->{total},
+        recon_fx => $request->{recon_fx},
+    };
+
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request, copy => 'all' });
+        base => $recon_data,
+    });
 
+    # Insert new report into database
+    $recon->new_report;
 
-    # Why isn't this testing for errors?
-    my ($report_id, $entries) = $recon->new_report($recon->import_file());
-    if ($recon->{error}) {
-        my $template = LedgerSMB::Template->new(
-            user => $recon->{_user},
-            template => 'reconciliation/upload',
-            locale => $recon->{_locale},
-            format => 'HTML',
-            path => 'UI'
-            );
-        return $template->render($recon);
-    }
+    # Format ending balance as a PGNumber - required for display
+    $recon->{their_total} = LedgerSMB::PGNumber->from_input($request->{total});
+    delete $recon->{total};
+
     return _display_report($recon, $request);
 }
 
@@ -384,17 +342,16 @@ sub delete_report {
     my ($request) = @_;
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
-                         base=>$request,
-                         copy=>'all'
+        base => $request,
     });
 
-    my $resp = $recon->delete($request->{report_id});
+    $recon->delete($request->{report_id});
 
     delete($request->{report_id});
     return search($request);
 }
 
-=item approve ($self, $request, $user)
+=item approve ($request)
 
 Requires report_id
 
@@ -417,22 +374,18 @@ sub approve {
              [ q{'report_id' parameter missing} ]
         ] if ! $request->{report_id};
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(
-        { base => $request, copy=> 'all' });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $request
+    });
 
-    my $code = $recon->approve($request->{report_id});
+    my $code = $recon->approve;
     my $template = $code == 0 ? 'reconciliation/approved'
         : 'reconciliation/report';
-    return LedgerSMB::Template->new(
-        user => $recon->{_user},
-        template => $template,
-        locale => $recon->{_locale},
-        format => 'HTML',
-        path=>'UI',
-        )->render($recon);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, $template, $recon);
 }
 
-=item pending ($self, $request, $user)
+=item pending ($request)
 
 Requires {date} and {month}, to handle the month-to-month pending transactions
 in the database. No mechanism is provided to grab ALL pending transactions
@@ -445,18 +398,12 @@ sub pending {
 
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-    my $template;
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request});
 
-    $template= LedgerSMB::Template->new(
-        user => $request->{_user},
-        template=>'reconciliation/pending',
-        locale => $request->{_locale},
-        format=>'HTML',
-        path=>'UI'
-    );
-    return $template->render();
+    my $template= LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'reconciliation/pending', {});
 }
+
 
 {
     local ($!, $@) = (undef, undef);
@@ -470,14 +417,92 @@ sub pending {
         }
     }
 };
-1;
+
+
+# _process_upload($recon, $request)
+#
+# If the request data includes a csv_file upload, import it and
+# apply the contents to the current reconciliation report.
+
+sub _process_upload {
+    my ($recon, $request) = @_;
+    my $contents;
+    {
+        my $handle = eval { $request->upload('csv_file') };
+        local $/ = undef;
+        $contents = <$handle> if defined $handle;
+    }
+
+    # An empty string is recognized by the entry-importer (ISO20022)
+    # as a file name (due to absense of '<' and '>'); only call it
+    # when there's actual content to handle.
+    if ($contents) {
+        $recon->add_entries($recon->import_file($contents));
+    }
+
+    return;
+}
+
+
+# _set_sort_options($recon, $request)
+#
+# Define the available sort options for display on a reconciliation report.
+# Set a default sort order, if otherwise unspecified.
+
+sub _set_sort_options {
+    my ($recon, $request) = @_;
+
+    $recon->{sort_options} = [
+            {id => 'clear_time', label => $request->{_locale}->text('Clear date')},
+            {id => 'scn', label => $request->{_locale}->text('Source')},
+            {id => 'post_date', label => $request->{_locale}->text('Post Date')},
+            {id => 'our_balance', label => $request->{_locale}->text('Our Balance')},
+            {id => 'their_balance', label => $request->{_locale}->text('Their Balance')},
+    ];
+
+    $recon->{line_order} ||= 'scn';
+    return;
+}
+
+
+# _highlight_suspect_rows
+#
+# If there is a variance in the report, highlight any rows which
+# exactly match the variance, to help identify if a single row is
+# responsible for the mismatch.
+#
+# Does nothing if the variance is zero.
+
+sub _highlight_suspect_rows {
+    my ($recon) = @_;
+
+    if ($recon->{variance} == 0) {
+        # No differences to highlight    
+        return;
+    }
+
+    # Check if only one entry could explain the difference
+    for my $l (@{$recon->{report_lines}}){
+        $l->{suspect} = $l->{our_credits} == -$recon->{variance}
+                     || $l->{our_debits}  ==  $recon->{variance}
+                     ? 1 : 0;
+    }
+
+    return;
+}
+
 
 =back
 
-=head1 Copyright (C) 2007, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-This file is licensed under the Gnu General Public License version 2, or at your
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

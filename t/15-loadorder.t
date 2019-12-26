@@ -6,10 +6,11 @@ LedgerSMB::Database::Loadorder
 
 =cut
 
+use Test2::V0;
+
 use Data::Dumper;
 
 use LedgerSMB::Database::Loadorder;
-use Test::More tests => 18;
 
 =head1 TEST PLAN
 
@@ -59,7 +60,7 @@ $loadorder =
 
 @scripts = map { my $s = $_->path; $s =~ s|t/data/loadorder/||;
                  $s; } $loadorder->scripts;
-is_deeply(\@scripts, ['test1.sql', 'test2.sql', 'test1.sql'],
+is(\@scripts, ['test1.sql', 'test2.sql', 'test1.sql'],
    '3 scripts before "ignore-from-here" tag');
 
 $loadorder =
@@ -73,3 +74,5 @@ $loadorder =
                                         upto_tag => 'ignore-me-too');
 
 is(scalar $loadorder->scripts, 3, '3 scripts before "ignore-from-here" tag');
+
+done_testing;

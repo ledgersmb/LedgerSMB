@@ -1,30 +1,44 @@
+
+package LedgerSMB::PGNumber;
+
 =head1 NAME
 
 LedgerSMB::PGNumber - Number handling and serialization to database
 
+=head1 DESCRIPTION
+
+This is a wrapper class for handling a database interface for numeric (int,
+float, numeric) data types to/from the database and to/from user input.
+
+This extends PGObject::Type::BigFloat which further extends
+Math::BigFloat and can be used in this way.
+
 =cut
 
-package LedgerSMB::PGNumber;
-# try using the GMP library for Math::BigFloat for speed
-use Math::BigFloat try => 'GMP';
-use base qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
+use base qw(PGObject::Type::BigFloat);
+
+# try using the GMP library for Math::BigFloat for speed
+use Math::BigFloat try => 'GMP';
 use Number::Format;
+use PGObject::Type::BigFloat;
+
+use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
 use LedgerSMB::Setting;
 use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 
 __PACKAGE__->register(registry => 'default',
     types => [qw(float4 float8 float numeric), 'double precision']);
 
+our ($accuracy, $precision, $round_mode, $div_scale);
 
-=head1 SYNPOSIS
-
-This is a wrapper class for handling a database interface for numeric (int,
-float, numeric) data types to/from the database and to/from user input.
-
-This extends PBObject::Type::BigFloat which further extends LedgerSMB::PGNumber and
-can be used in this way.
+# Same initialization as PGObject::Type::BigFloat
+# which works around Math::BigFloat's weird idea of OO
+$accuracy = $precision = undef;
+$round_mode = 'even';
+$div_scale = 40;
 
 =head1 INHERITS
 
@@ -124,7 +138,7 @@ my $lsmb_neg_formats = {
 
 =back
 
-=head1 IO METHODS
+=head1 METHODS
 
 =over
 
@@ -209,7 +223,6 @@ Specifies the negative format
 sub to_output {
     my $self = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
-    $args{money} = 1 if $ENV{LSMB_ALWAYS_MONEY};
     my $is_neg = $self->is_neg;
 
     my $format = ($args{format}) ? $args{format}
@@ -217,7 +230,8 @@ sub to_output {
     die 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
 
     my $places = undef;
-    $places = LedgerSMB::Setting->get('decimal_places') if $args{money};
+    $places = $LedgerSMB::Company_Config::settings->{decimal_places}
+       if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
     my $str = $self->bstr;
     my $dplaces = $places;
@@ -250,13 +264,17 @@ sub to_sort {
     return $_[0]->bstr;
 }
 
-1;
-
 =back
 
-=head1 Copyright (C) 2011, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-This file is licensed under the Gnu General Public License version 2, or at your
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
+=cut
+
+
+1;

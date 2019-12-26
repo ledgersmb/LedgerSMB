@@ -1,0 +1,11 @@
+{
+    q|Assert valid Cost Of Goods Sold (COGS) data in the invoices table| =>
+        [
+         {
+             failure_data => [
+                 [ qw( column ) ], # column names...
+                 [ 1 ],
+                 ],
+         }
+        ],
+ }

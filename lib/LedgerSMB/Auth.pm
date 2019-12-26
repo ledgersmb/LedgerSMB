@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Auth;
 
 =head1 NAME
 
 LedgerSMB::Auth - Provides an abstraction layer for authentication.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This routine provides an abstraction layer for authentication.  The current
 application only ships with a simple authentication layer using
@@ -48,8 +49,6 @@ login data is available.
 
 =cut
 
-package LedgerSMB::Auth;
-
 use strict;
 use warnings;
 
@@ -67,17 +66,13 @@ sub factory {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-#
-# Copyright (C) 2006-2017
-# This work contains copyrighted information from a number of sources all used
-# with permission.  It is released under the GNU General Public License
-# Version 2 or, at your option, any later version.  See COPYRIGHT file for
-# details.
+Copyright (C) 2006-2017 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

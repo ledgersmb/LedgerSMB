@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::Transactions;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::Transactions - AR/AP Transactions Reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::Transactions;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -242,19 +244,19 @@ sub columns {
     my $meta_number_label;
     my $entity_name_label;
     if ($self->entity_class == 1){
-       $meta_number_label = LedgerSMB::Report::text('Vendor Account');
-       $entity_name_label = LedgerSMB::Report::text('Vendor');
+       $meta_number_label = $self->Text('Vendor Account');
+       $entity_name_label = $self->Text('Vendor');
     } elsif ($self->entity_class == 2){
-       $meta_number_label = LedgerSMB::Report::text('Customer Account');
-       $entity_name_label = LedgerSMB::Report::text('Customer');
+       $meta_number_label = $self->Text('Customer Account');
+       $entity_name_label = $self->Text('Customer');
     }
 
     return [
        { col_id => 'id',
-           name => LedgerSMB::Report::text('ID'),
+           name => $self->Text('ID'),
            type => 'text'},
        { col_id => 'transdate',
-           name => LedgerSMB::Report::text('Date'),
+           name => $self->Text('Date'),
            type => 'text'},
        { col_id => 'meta_number',
            name => $meta_number_label,
@@ -264,59 +266,48 @@ sub columns {
        href_base =>'contact.pl?action=get&entity_class='.$self->entity_class,
            type => 'href', },
        { col_id => 'invnumber',
-           name => LedgerSMB::Report::text('Invoice'),
+           name => $self->Text('Invoice'),
            type => 'href'},
        { col_id => 'netamount',
-           name => LedgerSMB::Report::text('Amount'),
+           name => $self->Text('Amount'),
            type => 'text'},
        { col_id => 'tax',
-           name => LedgerSMB::Report::text('Tax'),
+           name => $self->Text('Tax'),
            type => 'text'},
        { col_id => 'amount',
-           name => LedgerSMB::Report::text('Total'),
+           name => $self->Text('Total'),
            type => 'text'},
        { col_id => 'paid',
-           name => LedgerSMB::Report::text('Paid'),
+           name => $self->Text('Paid'),
            type => 'text'},
        { col_id => 'due',
-           name => LedgerSMB::Report::text('Due'),
+           name => $self->Text('Due'),
            type => 'text'},
        { col_id => 'last_payment',
-           name => LedgerSMB::Report::text('Date Paid'),
+           name => $self->Text('Date Paid'),
            type => 'text'},
        { col_id => 'due_date',
-           name => LedgerSMB::Report::text('Due Date'),
+           name => $self->Text('Due Date'),
            type => 'text'},
        { col_id => 'notes',
-           name => LedgerSMB::Report::text('Notes'),
+           name => $self->Text('Notes'),
            type => 'text'},
        { col_id => 'till',
-           name => LedgerSMB::Report::text('Till'),
+           name => $self->Text('Till'),
            type => 'text'},
        { col_id => 'salesperson',
-           name => LedgerSMB::Report::text('Salesperson'),
+           name => $self->Text('Salesperson'),
            type => 'text'},
        { col_id => 'manager',
-           name => LedgerSMB::Report::text('Manager'),
+           name => $self->Text('Manager'),
            type => 'text'},
        { col_id => 'shipping_point',
-           name => LedgerSMB::Report::text('Shipping Point'),
+           name => $self->Text('Shipping Point'),
            type => 'text'},
        { col_id => 'ship_via',
-           name => LedgerSMB::Report::text('Ship Via'),
+           name => $self->Text('Ship Via'),
            type => 'text'},
     ];
-}
-
-
-=head2 header_lines
-
-# TODO
-
-=cut
-
-sub header_lines {
-    return [];
 }
 
 =head2 name
@@ -327,8 +318,8 @@ sub header_lines {
 
 sub name {
     my $self = shift;
-    return LedgerSMB::Report::text('Search AP') if $self->entity_class == 1;
-    return LedgerSMB::Report::text('Search AR') if $self->entity_class == 2;
+    return $self->Text('Search AP') if $self->entity_class == 1;
+    return $self->Text('Search AR') if $self->entity_class == 2;
     return;
 }
 
@@ -343,7 +334,6 @@ This runs the report and sets the $report->rows.
 
 sub run_report {
     my $self = shift;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__aa_transactions');
     for my $r(@rows){
@@ -360,11 +350,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

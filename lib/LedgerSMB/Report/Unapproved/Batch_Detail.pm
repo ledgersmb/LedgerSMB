@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Unapproved::Batch_Detail;
+
 =head1 NAME
 
 LedgerSMB::Report::Unapproved::Batch_Detail - List Vouchers by Batch
@@ -28,16 +31,13 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 =cut
 
-package LedgerSMB::Report::Unapproved::Batch_Detail;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
+
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
-
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::Setting;
-
 
 =head1 PROPERTIES
 
@@ -79,44 +79,54 @@ Description of transaction
 Total on voucher.  For AR/AP amount, this is the total of the AR/AP account
 before payments.  For payments, receipts, and GL, it is the sum of the credits.
 
+=item default_language
+
+Default language to be selected.
+
+=cut
+
+has default_language => (is => 'ro', isa => 'Maybe[Str]');
+
 =back
+
 
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
     {col_id => 'select',
        name => '',
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => LedgerSMB::Report::text('ID'),
+       name => $self->Text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'batch_class',
-       name => LedgerSMB::Report::text('Batch Class'),
+       name => $self->Text('Batch Class'),
        type => 'text',
      pwidth => 2, },
 
     {col_id => 'default_date',
-       name => LedgerSMB::Report::text('Date'),
+       name => $self->Text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'Reference',
-       name => LedgerSMB::Report::text('Reference'),
+       name => $self->Text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => LedgerSMB::Report::text('Amount'),
+       name => $self->Text('Amount'),
        type => 'text',
       money => 1,
      pwidth => '2', },
@@ -132,7 +142,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Voucher List');
+    my ($self) = @_;
+    return $self->Text('Voucher List');
 }
 
 =item header_lines
@@ -142,18 +153,9 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'batch_id',
-             text => LedgerSMB::Report::text('Batch ID')}, ]
-}
-
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return [];
+             text => $self->Text('Batch ID')}, ]
 }
 
 =back
@@ -178,6 +180,54 @@ has 'batch_id' => (is => 'rw', isa => 'Int');
 
 =over
 
+=item  set_buttons()
+
+=cut
+
+sub set_buttons {
+    my ($self) = @_;
+
+    return [
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Post Batch'),
+            value => 'single_batch_approve',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Delete Batch'),
+            value => 'single_batch_delete',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Delete Vouchers'),
+            value => 'batch_vouchers_delete',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Unlock Batch'),
+            value => 'single_batch_unlock',
+            class => 'submit',
+        },
+        {
+            name  => 'action',
+            type  => 'submit',
+            text  => $self->Text('Print Batch'),
+            value => 'print_batch',
+            class => 'submit',
+        },
+        ];
+}
+
+
+
 =item run_report()
 
 Runs the report, and assigns rows to $self->rows.
@@ -187,7 +237,6 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my %lhash = LedgerSMB::DBObject::User->country_codes();
-    my ($default_language) = LedgerSMB::Setting->get('default_language');
     my $locales = [ map { { text => $lhash{$_}, value => $_ } }
                     sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
                   ];
@@ -199,46 +248,13 @@ sub run_report{
     $self->options([{
        name => 'language',
        options => $locales,
-       default_value => [$default_language],
+       default_value => [$self->default_language],
     }, {
        name => 'media',
        options => $printer,
     },
     ]);
 
-    $self->buttons([{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => LedgerSMB::Report::text('Post Batch'),
-                    value => 'single_batch_approve',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => LedgerSMB::Report::text('Delete Batch'),
-                    value => 'single_batch_delete',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => LedgerSMB::Report::text('Delete Vouchers'),
-                    value => 'batch_vouchers_delete',
-                    class => 'submit',
-                },
-                {
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => LedgerSMB::Report::text('Unlock Batch'),
-                    value => 'single_batch_unlock',
-                    class => 'submit',
-                },
-                {
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => LedgerSMB::Report::text('Print Batch'),
-                    value => 'print_batch',
-                    class => 'submit',
-                }, ]);
     my @rows = $self->call_dbmethod(funcname => 'voucher__list');
     for my $ref (@rows){
         my $script;
@@ -250,18 +266,21 @@ sub run_report{
            '9' => 'ir',
         };
         $script = $class_to_script->{lc($ref->{batch_class_id})};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}" if $script;
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}"
+            if $script;
     }
     return $self->rows(\@rows);
 }
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

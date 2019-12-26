@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Scripts::asset;
 
 =head1 NAME
 
 LedgerSMB::Scripts::asset - web entry points for fixed assets accounting
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 Asset Management workflow script
 
@@ -14,17 +15,20 @@ Asset Management workflow script
 
 =cut
 
-package LedgerSMB::Scripts::asset;
-use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
-use LedgerSMB::Template;
+use strict;
+use warnings;
+
+use Text::CSV;
+
 use LedgerSMB::DBObject::Asset_Class;
 use LedgerSMB::DBObject::Asset;
 use LedgerSMB::DBObject::Asset_Report;
+use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
+use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Assets::Net_Book_Value;
 use LedgerSMB::Report::Listings::Asset_Class;
 use LedgerSMB::Report::Listings::Asset;
-use strict;
-use warnings;
+use LedgerSMB::Template::UI;
 
 our @file_columns = qw(tag purchase_date description asset_class location vendor
                       invoice department asset_account purchase_value
@@ -45,14 +49,9 @@ set defaults here.
 
 sub begin_depreciation_all {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'begin_depreciation_all',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/begin_depreciation_all',
+                             { request => $request });
 }
 
 =item depreciate_all
@@ -77,14 +76,8 @@ sub depreciate_all {
         $dep->save;
     }
     $request->{message} = $request->{_locale}->text('Depreciation Successful');
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'info',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'info', { request => $request });
 }
 
 =item asset_category_screen
@@ -107,15 +100,10 @@ sub asset_category_screen {
           $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
      }
      $ac->get_metadata;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'edit_class',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                       asset_class => $ac });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/edit_class',
+                             { request => $request,
+                               asset_class => $ac });
 }
 
 =item asset_category_save
@@ -141,17 +129,13 @@ Displays the asset category search screen
 
 sub asset_category_search {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'search_class',
-        format => 'HTML'
-    );
     my $ac = LedgerSMB::DBObject::Asset_Class->new();
     $ac->get_metadata;
-    return $template->render({ request => $request,
-                                       asset_class => $ac });
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/search_class',
+                             { request => $request,
+                               asset_class => $ac });
 }
 
 =item asset_category_results
@@ -162,8 +146,9 @@ Displays a list of all asset classes.  No inputs required.
 
 sub asset_category_results {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::Asset_Class->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Asset_Class->new(%$request)
+        );
 }
 
 =item edit_asset_class
@@ -212,15 +197,10 @@ sub asset_screen {
     }
     $asset->{title} = $request->{_locale}->text('Add Asset')
                  unless $asset->{title};
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'edit_asset',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                       asset => $asset });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/edit_asset',
+                             { request => $request,
+                               asset => $asset });
 }
 
 =item asset_search
@@ -240,15 +220,10 @@ sub asset_search {
     unshift @{$asset->{departments}}, {};
     unshift @{$asset->{asset_accounts}}, {};
     unshift @{$asset->{dep_accounts}}, {};
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'search_asset',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                       asset => $asset });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/search_asset',
+                             { request => $request,
+                               asset => $asset });
 }
 
 =item asset_results
@@ -262,8 +237,9 @@ be set.
 
 sub asset_results {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::Asset->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Asset->new(%$request)
+        );
 }
 
 =item asset_save
@@ -309,15 +285,10 @@ sub new_report {
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get_metadata;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'begin_report',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                       report => $report });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/begin_report',
+                             { request => $request,
+                               report => $report });
 }
 
 =item report_init
@@ -391,99 +362,90 @@ sub display_report {
     my ($request, $report) = @_;
     $report->get_metadata;
     my $locale = $request->{_locale};
-    my $cols = [];
-    @$cols = qw(select tag description purchase_date purchase_value);
-    my $heading = {
-       tag            =>  $locale->text('Asset Tag') ,
-       description    =>  $locale->text('Description') ,
-       purchase_date  =>  $locale->text('Purchase Date') ,
-       purchase_value =>  $locale->text('Purchase Value') ,
-       amount         =>  $locale->text('Proceeds'),
-       dm             =>  $locale->text('Disposal Method'),
-       percent        =>  $locale->text('Percent'),
-   };
+    my @disp_methods = (
+        map { { text => $_->{label},
+                value => $_->{id} } } @{$report->{disp_methods}} );
+    my $cols = [
+        {
+            col_id => 'asset',
+            type   => 'checkbox',
+        },
+        {
+            col_id => 'tag',
+            name   => $locale->text('Asset Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'purchase_date',
+            name   => $locale->text('Purchase Date'),
+            type   => 'text',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Purchase Value'),
+            type   => 'text',
+        },
+        ];
    my $rows = [];
    my $hiddens = {};
    my $count = 0;
-   for my $asset (@{$report->{assets}}){
-       push @$rows,
-            { select         => {input => { name    => "asset_$count",
-                                            checked => $asset->{checked},
-                                            type    => 'checkbox',
-                                            value   => '1',
-                                          },
-                                },
-              tag            => $asset->{tag},
-              description    => $asset->{description},
-              purchase_date  => $asset->{purchase_date},
-              purchase_value => $asset->{purchase_value},
-              dm             => {select => { name       => "dm_$asset->{id}",
-                                             options    => $report->{disp_methods},
-                                             text_attr  => 'label',
-                                             value_attr => 'id',
-                                           },
-                                },
+    for my $asset (@{$report->{assets}}){
+        $asset->{row_id} = $asset->{id};
+        push @$rows, $asset;
+   }
+    my $buttons = [
+        { name  => 'action',
+          text  => $locale->text('Save'),
+          value => 'report_save',
+          class => 'submit',
+          type  => 'submit',
+        },
+        ];
+    my $title;
+    if ($request->{depreciation}){
+       $title = $locale->text('Asset Depreciation Report');
+    } else {
+        $title = $locale->text('Asset Disposal Report');
 
-              amount         => {input => { name  => "amount_$asset->{id}",
-                                            type  => 'text',
-                                            class => 'amount',
-                                            value => $request->{"amount_$asset->{id}"},
-                                            size  => 20,
-                                            # requiring proceeds works around
-                                            # a problem of NULL amounts ending
-                                            # up in the database, resulting in
-                                            # approval trying to post NULL into
-                                            # the amount field in the gl table
-                                            required => 1,
-                                          },
-                                },
-              percent        => {input => { name  => "percent_$asset->{id}",
-                                            type  => 'text',
-                                            class => 'percent',
-                                            value => $request->{"percent_$asset->{id}"},
-                                            size  => 6,
-                                          },
-                                },
-            };
-       $hiddens->{"id_$count"} = $asset->{id};
-       ++$count;
-   }
-   $request->{rowcount} = $count;
-   my $buttons = [
-      { name  => 'action',
-        text  => $locale->text('Save'),
-        value => 'report_save',
-        class => 'submit',
-        type  => 'submit',
-      },
-   ];
-   if ($request->{depreciation}){
-       $request->{title} = $locale->text('Asset Depreciation Report');
-   } else {
-       $request->{title} = $locale->text('Asset Disposal Report');
-       push @$cols, 'dm', 'amount';
-       $hiddens->{report_class} = $request->{report_class};
-   }
-   if ($request->{report_class} == RC_PARTIAL_DISPOSAL ){
-       $request->{title} = $locale->text('Asset Partial Disposal Report');
-       push @$cols, 'percent';
-   }
-   for my $hide (qw(exp_account_id gain_account_id loss_account_id report_date
-                 asset_class rowcount depreciation))
-   {
-       $hiddens->{$hide} = $request->{$hide};
-   }
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
-    return $template->render({
-                        form => $request,
+        push @$cols, ({
+            col_id  => 'dm',
+            name    => $locale->text('Disposal Method'),
+            type    => 'select',
+            options => \@disp_methods,
+        },
+        {
+            col_id  => 'amount',
+            name    => $locale->text('Proceeds'),
+            type    => 'input_text',
+            class   => 'amount',
+        });
+        $hiddens->{report_class} = $request->{report_class};
+    }
+    if ($request->{report_class} == RC_PARTIAL_DISPOSAL ){
+        $title = $locale->text('Asset Partial Disposal Report');
+        push @$cols, {
+            col_id  => 'percent',
+            name    => $locale->text('Percent'),
+            type    => 'input_text',
+            class   => 'percent',
+        };
+    }
+    for my $hide (qw(exp_account_id gain_account_id loss_account_id report_date
+                  asset_class rowcount depreciation))
+    {
+        $hiddens->{$hide} = $request->{$hide};
+    }
+    $request->{hiddens} = $hiddens;
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/display_report', {
+                        name => $title,
+                     request => $request,
                      columns => $cols,
-                     heading => $heading,
                         rows => $rows,
                      hiddens => $hiddens,
                      buttons => $buttons,
@@ -506,15 +468,10 @@ sub search_reports {
     $request->{title} = $request->{_locale}->text('Search reports');
     my $ar = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $ar->get_metadata;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'begin_approval',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                       asset_report => $ar });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/begin_approval',
+                             { request => $request,
+                               asset_report => $ar });
 }
 
 =item report_results
@@ -530,26 +487,8 @@ sub report_results {
     my $locale = $request->{_locale};
     my $ar = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $ar->get_metadata;
-    $ar->{title} = $locale->text('Report Results');
+    my $title = $locale->text('Report Results');
     my @results = $ar->search;
-    my $cols = [];
-    @$cols = qw(select id report_date type asset_class entered_at
-                   approved_at total);
-    my $header = {
-                        id => $locale->text('ID'),
-               report_date => $locale->text('Date'),
-                      type => $locale->text('Type'),
-               asset_class => $locale->text('Asset Class'),
-                entered_at => $locale->text('Entered at'),
-               approved_at => $locale->text('Approved at'),
-                     total => $locale->text('Total'),
-    };
-    my $rows = [];
-    my $hiddens = {
-        gain_acct => $request->{gain_acct},
-        loss_acct => $request->{loss_acct},
-    };
-    my $count = 0;
     my $base_href = 'asset.pl?action=report_details&'.
                      "expense_acct=$ar->{expense_acct}";
     if ($ar->{depreciation}){
@@ -558,34 +497,78 @@ sub report_results {
              $base_href .= "&gain_acct=$ar->{gain_acct}&loss_acct=".
                             "$ar->{loss_acct}";
     }
+    $base_href .= '&id=';
+    my $cols = [
+        {
+            col_id => 'select',
+            type   => 'checkbox',
+        },
+        {
+            col_id    => 'id',
+            name      => $locale->text('ID'),
+            type      => 'href',
+            href_base => $base_href,
+        },
+        {
+            col_id => 'report_date',
+            name   => $locale->text('Date'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'type',
+            name   => $locale->text('Type'),
+            type   => 'text',
+        },
+        {
+            col_id => 'asset_class',
+            name   => $locale->text('Asset Class'),
+            type   => 'text',
+        },
+        {
+            col_id => 'entered_at',
+            name   => $locale->text('Entered at'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'approved_at',
+            name   => $locale->text('Approved at'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'total',
+            name   => $locale->text('Total'),
+            type   => 'amount',
+        },
+        ];
+    my $rows = [];
+    my $hiddens = {
+        gain_acct => $request->{gain_acct},
+        loss_acct => $request->{loss_acct},
+    };
+    my $count = 0;
     for my $r (@results){
         next if (($r->{report_class} != 1 and $ar->{depreciation})
                  or ($r->{report_class} == 1 and not $ar->{depreciation}));
         $hiddens->{"id_$count"} = $r->{id};
         my $ref = {
-              select         => {input => { name    => "report_$count",
-                                            checked => $r->{checked},
-                                            type    => 'checkbox',
-                                            value   => $r->{id},
-                                          },
-                                },
-               id             => {href => $base_href . '&id='.$r->{id},
-                                  text => $r->{id},
-                                 },
-               report_date    => $r->{report_date},
-               entered_at     => $r->{entered_at},
-               approved_at    => $r->{approved_at},
-               total          => $r->{total}->to_output(money => 1),
+            select         => 0,
+            row_id         => $r->{id},
+            id             => $r->{id},
+            type           => (($r->{report_class} == 1)
+                               ? $locale->text('Depreciation')
+                               : $locale->text('Disposal')),
+            report_date    => $r->{report_date},
+            entered_at     => $r->{entered_at},
+            approved_at    => $r->{approved_at},
+            total          => $r->{total}->to_output(money => 1),
         };
         for my $ac (@{$ar->{asset_classes}}){
             if ($ac->{id} == $r->{asset_class}){
                 $ref->{asset_class} = $ac->{label};
             }
-        }
-        if ($r->{report_class} == 1){
-           $ref->{type} = $locale->text('Depreciation');
-        } else {
-           $ref->{type} = $locale->text('Disposal');
         }
         push @$rows, $ref;
         ++$count;
@@ -598,20 +581,14 @@ sub report_results {
                    name  => 'action',
                    value => 'report_results_approve'
                    },
-    ];
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
-    return $template->render({
-         form    => $ar,
-         heading => $header,
+        ];
+    $ar->{hiddens} = $hiddens;
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/display_report', {
+         request => $ar,
+            name => $title,
          rows    => $rows,
          columns => $cols,
-         hiddens  => $hiddens,
         buttons  => $buttons,
    });
 }
@@ -633,24 +610,76 @@ sub report_details {
     } elsif ($report->{report_class} == RC_PARTIAL_DISPOSAL ) {
       return partial_disposal_details($report);
     }
-    my @cols = qw(tag start_depreciation purchase_value method_short_name
-                 usable_life basis prior_through prior_dep dep_this_time
-                 dep_ytd dep_total);
-    $report->{title} = $locale->text('Report [_1] on date [_2]',
-                     $report->{id}, $report->{report_date}->to_output);
-    my $header = {
-                            tag => $locale->text('Tag'),
-             start_depreciation => $locale->text('Dep. Starts'),
-                 purchase_value =>$locale->text('Aquired Value'),
-              method_short_name =>$locale->text('Dep. Method'),
-                    usable_life =>$locale->text('Est. Life'),
-                          basis =>$locale->text('Dep. Basis'),
-                  prior_through =>$locale->text('Prior Through'),
-                      prior_dep =>$locale->text('Prior Dep.'),
-                  dep_this_time =>$locale->text('Dep. this run'),
-                        dep_ytd =>$locale->text('Dep. YTD'),
-                      dep_total =>$locale->text('Total Accum. Dep.'),
-    };
+    my $cols = [
+        {
+            col_id => 'tag',
+            name   => $locale->text('Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'start_depreciation',
+            name   => $locale->text('Dep. Starts'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'method_short_name',
+            name   => $locale->text('Dep. Method'),
+            type   => 'text',
+        },
+        {
+            col_id => 'usable_life',
+            name   => $locale->text('Est. Life'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'basis',
+            name   => $locale->text('Dep. Basis'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'prior_through',
+            name   => $locale->text('Prior Through'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'prior_dep',
+            name   => $locale->text('Prior Dep.'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'dep_this_time',
+            name   => $locale->text('Dep. this run'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'dep_ytd',
+            name   => $locale->text('Dep. YTD'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'dep_total',
+            name   => $locale->text('Total Accum. Dep.'),
+            type   => 'text',
+            class  => 'amount',
+        }
+        ];
+
+    my $title =
+        $locale->text('Report [_1] on date [_2]',
+                      $report->{id}, $report->{report_date}->to_output);
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
         for my $amt (qw(purchase_value basis prior_dep dep_this_time dep_ytd
@@ -659,14 +688,6 @@ sub report_details {
         }
         push @$rows, $r;
     }
-    my $template = LedgerSMB::Template->new(
-          request => $request,
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
     my $buttons = [{
                    text  => $locale->text('Approve'),
                    type  => 'submit',
@@ -675,12 +696,13 @@ sub report_details {
                    value => 'report_details_approve'
                    },
     ];
-    return $template->render({
-                       form => $report,
-                    columns => \@cols,
-                    heading => $header,
+    $report->{hiddens} = { id => $report->{id} };
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/display_report', {
+                    request => $report,
+                       name => $title,
+                    columns => $cols,
                        rows => $rows,
-                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
@@ -697,45 +719,76 @@ sub partial_disposal_details {
     my $locale = $request->{_locale};
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
-    my @cols = qw(tag begin_depreciation purchase_value description
-                 percent_disposed disposed_acquired_value
-                 percent_remaining remaining_aquired_value);
-    $report->{title} = $locale->text('Partial Disposal Report [_1] on date [_2]',
+    my $cols = [
+        {
+            col_id => 'tag',
+            name   => $locale->text('Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'begin_depreciation',
+            name   => $locale->text('Dep. Starts'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'percent_disposed',
+            name   => $locale->text('Percent Disposed'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'disposed_acquired_value',
+            name   => $locale->text('Disp. Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'percent_remaining',
+            name   => $locale->text('Percent Remaining'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'remaining_aquired_value',
+            name   => $locale->text('Aquired Value Remaining'),
+            type   => 'text',
+            class  => 'amount',
+        },
+#        #@@TODO Gain/Loss isn't part of partial disposals.... (#4231)
+#        {
+#            col_id => 'gain_loss',
+#            name   => $locale->text('Gain/Loss'),
+#            type   => 'text',
+#            class  => 'amount',
+#        },
+        ];
+    my $title = $locale->text('Partial Disposal Report [_1] on date [_2]',
                         $report->{id}, $report->{report_date});
-    my $header = {
-                   tag                => $locale->text('Tag'),
-                   description        => $locale->text('Description'),
-                   begin_depreciation => $locale->text('Dep. Starts'),
-                   purchase_value     => $locale->text('Aquired Value'),
-                   percent_disposed   => $locale->text('Percent Disposed'),
-                   disposed_acquired_value =>
-                                   $locale->text('Disp. Aquired Value'),
-                   percent_remaining  => $locale->text('Percent Remaining'),
-                   remaining_aquired_value =>
-                                   $locale->text('Aquired Value Remaining')
-    };
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
-        for my $amt (qw(purchase_value adj_basis disposed_acquired_value
-                        remaining_aquired_value percent_disposed
-                        percent_remaining)
-        ){
+        for my $amt (qw(purchase_value disposed_acquired_value
+                     remaining_aquired_value percent_disposed
+                     percent_remaining)){
              $r->{$amt} = $r->{$amt}->to_output(money => 1);
         }
-        $r->{gain_loss} = $r->{gain_loss}->to_output(
-                                                    money => 1,
-                                               neg_format => '-'
-        );
+#        $r->{gain_loss} = $r->{gain_loss}->to_output(
+#                                                    money => 1,
+#                                               neg_format => '-'
+#        );
         push @$rows, $r;
     }
-    my $template = LedgerSMB::Template->new(
-          request => $request,
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
     my $buttons = [{
                    text  => $locale->text('Approve'),
                    type  => 'submit',
@@ -743,16 +796,19 @@ sub partial_disposal_details {
                    name =>  'action',
                    value => 'disposal_details_approve'
                    },
-    ];
-    return $template->render({
-                       form => $report,
-                    columns => \@cols,
-                    heading => $header,
+        ];
+    $report->{hiddens} = {
+        id => $report->{id},
+        gain_acct => $report->{gain_acct},
+        loss_acct => $report->{loss_acct},
+    };
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/display_report', {
+                    request => $report,
+                       name => $title,
+                    columns => $cols,
                        rows => $rows,
-                    hiddens => { id => $report->{id},
-                          gain_acct => $report->{gain_acct},
-                          loss_acct => $report->{loss_acct},
-                               },
                     buttons => $buttons
     });
 }
@@ -770,40 +826,74 @@ sub disposal_details {
     my $locale = $request->{_locale};
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
-    my @cols = qw(tag description start_dep disposed_on dm purchase_value
-                 accum_depreciation adj_basis disposal_amt gain_loss);
-    $report->{title} = $locale->text('Disposal Report [_1] on date [_2]',
-                     $report->{id}, $report->{report_date});
-    my $header = {
-                            tag => $locale->text('Tag'),
-                    description => $locale->text('Description'),
-                      start_dep => $locale->text('Dep. Starts'),
-                    disposed_on => $locale->text('Disposal Date'),
-                 purchase_value => $locale->text('Aquired Value'),
-                             dm => $locale->text('D M'),
-             accum_depreciation => $locale->text('Accum. Depreciation'),
-                   disposal_amt => $locale->text('Proceeds'),
-                      adj_basis => $locale->text('Adjusted Basis'),
-                      gain_loss => $locale->text('Gain (Loss)'),
-    };
+    my $cols = [
+        {
+            col_id => 'tag',
+            name   => $locale->text('Tag'),
+            type   => 'text',
+        },
+        {
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'start_dep',
+            name   => $locale->text('Dep. Starts'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'disposed_on',
+            name   => $locale->text('Disposal Date'),
+            type   => 'text',
+            class  => 'date',
+        },
+        {
+            col_id => 'dm',
+            name   => $locale->text('D M'),
+            type   => 'text',
+        },
+        {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'accum_depreciation',
+            name   => $locale->text('Accum. Depreciation'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'adj_basis',
+            name   => $locale->text('Adjusted Basis'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'disposal_amt',
+            name   => $locale->text('Proceeds'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
+            col_id => 'gain_loss',
+            name   => $locale->text('Gain (Loss)'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        ];
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
         for my $amt (qw(purchase_value adj_basis accum_depreciation
-                        disposal_amt)
+                        disposal_amt gain_loss)
         ){
              $r->{$amt} = $r->{$amt}->to_output(money  => 1);
         }
-        $r->{gain_loss} = $r->{gain_loss}->to_output(money => 1, neg_format => '-');
         push @$rows, $r;
     }
-    my $template = LedgerSMB::Template->new(
-        request => $request,
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
     my $buttons = [{
                    text  => $locale->text('Approve'),
                    type  => 'submit',
@@ -811,16 +901,20 @@ sub disposal_details {
                    name =>  'action',
                    value => 'disposal_details_approve'
                    },
-    ];
-    return $template->render({
-                       form => $report,
-                    columns => \@cols,
-                    heading => $header,
+        ];
+    $report->{hiddens} = {
+        id        => $report->{id},
+        gain_acct => $report->{gain_acct},
+        loss_acct => $report->{loss_acct},
+    };
+    my $title = $locale->text('Disposal Report [_1] on date [_2]',
+                     $report->{id}, $report->{report_date});
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/display_report', {
+                       name => $title,
+                    request => $report,
+                    columns => $cols,
                        rows => $rows,
-                    hiddens => { id => $report->{id},
-                          gain_acct => $report->{gain_acct},
-                          loss_acct => $report->{loss_acct},
-                               },
                     buttons => $buttons
     });
 }
@@ -870,10 +964,10 @@ a report to be approved.
 
 sub report_results_approve {
     my ($request) = @_;
-    for my $l (0 .. $request->{rowcount}){
-        if ($request->{"report_$l"}){
+    for my $l (0 .. $request->{rowcount_}){
+        if ($request->{"select_$l"}){
             my $approved = LedgerSMB::DBObject::Asset_Report->new({base => $request});
-            $approved->{id} = $request->{"report_$l"};
+            $approved->{id} = $request->{"select_$l"};
             $approved->approve;
         }
     }
@@ -892,8 +986,9 @@ No inputs required or used.
 
 sub display_nbv {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Assets::Net_Book_Value->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Assets::Net_Book_Value->new(%$request)
+        );
 }
 
 =item begin_import
@@ -906,14 +1001,8 @@ No inputs required.
 
 sub begin_import {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'import_asset',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'asset/import_asset', $request);
 }
 
 =item run_import
@@ -934,9 +1023,9 @@ sub _import_file {
     my $handle = $request->upload('import_file');
     my $csv = Text::CSV->new;
     $csv->header($handle);
-    my @import_entries = $csv->getlines_all($handle);
+    my $import_entries = $csv->getline_all($handle);
 
-    return @import_entries;
+    return @$import_entries;
 }
 
 
@@ -1037,8 +1126,6 @@ sub run_import {
     }
 };
 
-1;
-
 =back
 
 =head1 CUSTOMIZATION NOTES
@@ -1046,10 +1133,15 @@ sub run_import {
 The handling of CSV imports of fixed assets is handled by @file_columns.  This
 can be set in a custom/ file.
 
-=head1 Copyright (C) 2010, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-This file is licensed under the Gnu General Public License version 2, or at your
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

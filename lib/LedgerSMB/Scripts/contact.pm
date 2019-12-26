@@ -1,12 +1,13 @@
 
-=pod
+
+package LedgerSMB::Scripts::contact;
 
 =head1 NAME
 
 LedgerSMB::Scripts::contact - LedgerSMB class defining the Controller
 functions, template instantiation and rendering for customer editing and display.
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This module is the UI controller for the customer, vendor, etc functions; it
 
@@ -14,12 +15,12 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 =cut
 
-package LedgerSMB::Scripts::contact;
-
 use strict;
 use warnings;
 
-use LedgerSMB::Part;
+use Try::Tiny;
+
+use LedgerSMB;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -33,10 +34,9 @@ use LedgerSMB::Entity::Note;
 use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
-use LedgerSMB::App_State;
+use LedgerSMB::Part;
 use LedgerSMB::Setting;
-use LedgerSMB::Template;
-use Try::Tiny;
+use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -59,15 +59,6 @@ for (@pluginmods){
         }
     }
 }
-
-
-=head1 COPYRIGHT
-
-Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
-General Public License, version 2, or at your option any later version.  Please
-see the accompanying License.txt for more information.
-
-=cut
 
 =head1 METHODS
 
@@ -176,7 +167,7 @@ sub _main_screen {
     $request->{target_div} ||= 'person_div' if defined $person;
     $request->{target_div} ||= 'company_div';
 
-    my @all_years =  LedgerSMB->call_procedure(
+    my @all_years =  $request->call_procedure(
               funcname => 'date_get_all_years'
     );
 
@@ -196,22 +187,10 @@ sub _main_screen {
                files => $locale->text('Files'),
     );
 
-    if (defined $person->{country_id}
-    && $LedgerSMB::Scripts::employee::country::country_divs{
-            $person->{country_id}
-    }){
-        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
-            $person->{country_id}
-         }}){
-             push @DIVS, $cform->{file};
-             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
-         }
-    }
-
     # DIVS contents
     my $entity_id = $company->{entity_id};
     $entity_id ||= $person->{entity_id};
-    my @pricegroups = LedgerSMB->call_procedure(
+    my @pricegroups = $request->call_procedure(
         funcname => 'pricegroups__list'
     );
     my @credit_list =
@@ -256,21 +235,21 @@ sub _main_screen {
                                                  $credit_act->{id});
 
     # Globals for the template
-    my @salutations = LedgerSMB->call_procedure(
+    my @salutations = $request->call_procedure(
                 funcname => 'person__list_salutations'
     );
-    my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
+    my @all_taxes = $request->call_procedure(funcname => 'account__get_taxes');
 
     my $arap_class = $entity_class || '0';
     $arap_class = 2 unless $arap_class == 1;
-    my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
+    my @ar_ap_acc_list = $request->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
 
-    my @cash_acc_list = LedgerSMB->call_procedure(funcname => 'chart_list_cash',
+    my @cash_acc_list = $request->call_procedure(funcname => 'chart_list_cash',
                                            args => [$entity_class]);
 
     my @discount_acc_list =
-         LedgerSMB->call_procedure(funcname => 'chart_list_discount',
+         $request->call_procedure(funcname => 'chart_list_discount',
                                      args => [$entity_class]);
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
@@ -282,7 +261,7 @@ sub _main_screen {
 
 #
     my @language_code_list =
-             LedgerSMB->call_procedure(funcname => 'person__list_languages');
+             $request->call_procedure(funcname => 'person__list_languages');
 
     for my $ref (@language_code_list){
         $ref->{text} = "$ref->{description}";
@@ -290,29 +269,23 @@ sub _main_screen {
 
     my @location_class_list =
        grep { $_->{class} =~ m/^(?:Billing|Sales|Shipping)$/ }
-            LedgerSMB->call_procedure(funcname => 'location_list_class');
+            $request->call_procedure(funcname => 'location_list_class');
 
     my @business_types =
-               LedgerSMB->call_procedure(funcname => 'business_type__list');
+               $request->call_procedure(funcname => 'business_type__list');
 
-    my ($curr_list) =
-          LedgerSMB->call_procedure(funcname => 'setting__get_currencies');
+    my @all_currencies =
+        map { { curr => $_ } }
+        (LedgerSMB::Setting->new({base => $request}))->get_currencies;
 
-    my @all_currencies;
-    for my $curr (@{$curr_list->{'setting__get_currencies'}}){
-        push @all_currencies, { text => $curr};
-    }
-
-    my $default_country = LedgerSMB::Setting->get('default_country');
-
-    my ($default_language) = LedgerSMB::Setting->get('default_language');
+    my $default_country = $request->setting->get('default_country');
+    my ($default_language) = $request->setting->get('default_language');
 
     my $attach_level_options = [
         {text => $locale->text('Entity'), value => 1} ];
     push@{$attach_level_options},
         {text => $locale->text('Credit Account'),
          value => 3} if $credit_act->{id};
-    ;
 
 
     local $@ = undef;
@@ -323,26 +296,21 @@ sub _main_screen {
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
-    # Template info and rendering
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'contact',
-        locale => $request->{_locale},
-        path => 'UI/Contact',
-        format => 'HTML'
-    );
-
-    my @country_list = LedgerSMB->call_procedure(
+    my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
       );
-    my @entity_classes = LedgerSMB->call_procedure(
-                      funcname => 'entity__list_classes'
-    );
+    my @entity_classes =
+        map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
+        $request->call_procedure(
+            funcname => 'entity__list_classes'
+        );
 
     my $roles;
     $roles = $user->list_roles if $user;
 
-    return $template->render({
+    # Template info and rendering
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Contact/contact', {
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
              entity_class => $entity_class,
@@ -381,7 +349,7 @@ sub _main_screen {
            business_types => \@business_types,
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
-               all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
+               all_months =>  $request->all_months->{dropdown},
           default_country => $default_country,
          default_language => $default_language
     });
@@ -495,6 +463,7 @@ sub dispatch_legacy {
     my $entry = $dispatch->{$request->{action}};
     return dispatch($entry->{script},
                     'add',
+                    $request->{_user},
                     { %{$entry->{data}},
                       script => $entry->{script},
                       action => 'add',
@@ -831,14 +800,8 @@ sub get_pricelist {
     my $pricelist = $credit->get_pricematrix;
     $request->merge($credit) if $credit;
     $request->merge($pricelist) if $pricelist;
-    my $template = LedgerSMB::Template->new(
-                user => $request->{_user},
-                path => 'UI/Contact' ,
-                template => 'pricelist',
-                format => uc($request->{format} || 'HTML'),
-                locale => $request->{_locale},
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Contact/pricelist', $request);
 }
 
 
@@ -968,28 +931,37 @@ Saves the user's permissions
 
 sub save_roles {
     my ($request) = @_;
-    if ($request->close_form){
-       my $user = LedgerSMB::Entity::User->get($request->{entity_id});
-       my $roles = [];
-       $request->{_role_prefix} = "lsmb_$request->{company}__"
-           unless defined $request->{_role_prefix};
-       for my $key(keys %$request){
-           if ($key =~ /$request->{_role_prefix}/ and $request->{$key}){
-               push @$roles, $key;
-           }
-       }
-       $user->save_roles($roles);
+    my $roles = [];
+
+    $request->close_form or die 'Form submission is invalid';
+
+    foreach my $key (keys %$request) {
+
+        # Role parameters are distinguished by a special prefix
+        $key =~ m/^role__/ or next;
+        $request->{$key} or next;
+
+        # Strip prefix to obtain 'global' role name
+        $key =~ s/^role__//;
+
+        push @$roles, $key;
     }
+
+    my $user = LedgerSMB::Entity::User->get($request->{entity_id});
+    $user->save_roles($roles);
+
     return get($request);
 }
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
-General Public License, version 2, or at your option any later version.  Please
-see the accompanying License.txt for more information.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

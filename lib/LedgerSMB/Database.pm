@@ -1,4 +1,6 @@
 
+package LedgerSMB::Database;
+
 =head1 NAME
 
 LedgerSMB::Database - APIs for database creation and management.
@@ -26,25 +28,24 @@ C<PGObject::Util::DBAdmin>.
 =cut
 
 
-package LedgerSMB::Database;
-
 use strict;
 use warnings;
 
 use DateTime;
+use DBD::Pg;
 use DBI;
 use File::Spec;
+use File::Temp;
 use Log::Log4perl;
 use Moose;
 use namespace::autoclean;
 
 extends 'PGObject::Util::DBAdmin';
 
+use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
 
-
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 our $VERSION = '1.2';
 
@@ -424,6 +425,8 @@ sub load_base_schema {
 
 Loads or reloads sql modules from $loadorder
 
+Returns true when succesful, dies upon error.
+
 =cut
 
 sub load_modules {
@@ -499,6 +502,8 @@ sub load_coa {
 =head2 $db->create_and_load();
 
 Creates a database and then loads it.
+
+Returns true when successful, dies on error.
 
 =cut
 
@@ -666,11 +671,13 @@ sub run_file_with_logs {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-This module is copyright (C) 2007-2018, the LedgerSMB Core Team and subject to
-the GNU General Public License (GPL) version 2, or at your option, any later
-version.  See the COPYRIGHT and LICENSE files for more information.
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

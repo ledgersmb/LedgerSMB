@@ -1,11 +1,11 @@
 
-=pod
+package LedgerSMB::Scripts::login;
 
 =head1 NAME
 
 LedgerSMB:Scripts::login - web entry points for session creation/termination
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This script contains the request handlers for logging in and out of LedgerSMB.
 
@@ -15,21 +15,19 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 
 =cut
 
+use strict;
+use warnings;
 
-package LedgerSMB::Scripts::login;
+use HTTP::Status qw( HTTP_OK ) ;
+use Try::Tiny;
 
 use LedgerSMB::Locale;
-use HTTP::Status qw( HTTP_OK ) ;
-
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 use LedgerSMB::User;
-
-use Try::Tiny;
-
-use strict;
-use warnings;
 
 our $VERSION = 1.0;
 
@@ -78,12 +76,9 @@ sub __default {
     my ($request) = @_;
 
     $request->{stylesheet} = 'ledgersmb.css';
-    $request->{titlebar} = "LedgerSMB $request->{VERSION}";
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'login',
-    );
-    return $template->render($request);
+    $request->{titlebar} = "LedgerSMB $request->{version}";
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'login', $request);
 }
 
 =item authenticate
@@ -125,7 +120,11 @@ sub login {
         return __default($request);
     }
 
-    return LedgerSMB::Scripts::menu::root_doc($request);
+    $request->{title} = "LedgerSMB $request->{version} -- ".
+    "$request->{login} -- $request->{company}";
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'main', $request);
 }
 
 =item logout
@@ -141,11 +140,8 @@ sub logout {
     $request->{callback}   = '';
 
     $request->{_logout}->();
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'logout',
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'logout', $request);
 }
 
 =item logout_js
@@ -180,11 +176,13 @@ sub logout_js {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2009-2017 LedgerSMB Core Team. This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2009-2017 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

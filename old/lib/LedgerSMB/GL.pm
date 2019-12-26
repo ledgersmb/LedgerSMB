@@ -40,6 +40,7 @@ LedgerSMB:GL - General Ledger backend code
 package GL;
 
 use LedgerSMB::File;
+use LedgerSMB::Setting;
 
 =over
 
@@ -94,11 +95,11 @@ sub post_transaction {
 
             # delete individual transactions
             $query = qq|
-                DELETE FROM acc_trans WHERE trans_id = $id|;
+            DELETE FROM acc_trans WHERE trans_id = $id|;
 
             $dbh->do($query) || $form->dberror($query);
             $query = qq|
-                DELETE FROM voucher WHERE trans_id = $id
+            DELETE FROM voucher WHERE trans_id = $id
                                             and batch_class = 5|;
 
             $dbh->do($query) || $form->dberror($query);
@@ -107,36 +108,32 @@ sub post_transaction {
 
     if ( !$form->{id} ) {
 
-        my $uid = localtime;
-        $uid .= "$$";
-
         $query = qq|
-        INSERT INTO gl (reference)
-             VALUES ('$uid')|;
+      INSERT INTO gl (reference, description, notes, transdate)
+           VALUES (?, ?, ?, ?)
+      RETURNING id|;
 
         $sth = $dbh->prepare($query);
-        $sth->execute() || $form->dberror($query);
+        $sth->execute($form->{reference}, $form->{description},
+                      $form->{notes}, $form->{transdate})
+            || $form->dberror($query);
 
-        $query = qq|
-            SELECT id
-              FROM gl
-             WHERE reference = '$uid'|;
-
-        ( $form->{id} ) = $dbh->selectrow_array($query);
+        ( $form->{id} ) = $dbh->selectrow_array($query, {},
+            $form->{reference}, $form->{description},
+            $form->{notes}, $form->{transdate});
     }
 
     ( $null, $department_id ) = split /--/, $form->{department};
     $department_id *= 1;
 
-    $form->{reference} ||= $form->{id};
-
-    $query = qq|
-        UPDATE gl
-           SET reference = | . $dbh->quote( $form->{reference} ) . qq|,
-              description = | . $dbh->quote( $form->{description} ) . qq|,
-              notes = | . $dbh->quote( $form->{notes} ) . qq|,
-              transdate = ?
-        WHERE id = ?|;
+    if (! $form->{reference} ) {
+        $form->{reference} = $form->{id};
+        $dbh->do(qq|
+UPDATE gl
+   SET reference = ?
+ WHERE id = ?|, {}, $form->{reference}, $form->{id})
+            or $form->dberror($dbh->errstr);
+    }
 
     if (defined $form->{approved}) {
         my $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
@@ -153,42 +150,64 @@ sub post_transaction {
            $form->error('Approved Batch') if $bref->{approved_by};
            $form->error('Locked Batch') if $bref->{locked_by};
            my $query = qq|
-            INSERT INTO voucher (batch_id, trans_id, batch_class)
-            VALUES (?, ?, (select id FROM batch_class
-                                    WHERE class = ?))|;
+         INSERT INTO voucher (batch_id, trans_id, batch_class)
+         VALUES (?, ?, (select id FROM batch_class
+                                 WHERE class = ?))|;
            my $sth2 = $dbh->prepare($query);
            $sth2->execute($form->{batch_id}, $form->{id}, 'gl') ||
                 $form->dberror($query);
        }
     }
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{transdate}, $form->{id} )
-      || $form->dberror($query);
 
     my $amount = 0;
     my $posted = 0;
     my $debit;
     my $credit;
 
-    $b_sth = $dbh->prepare(
-            qq|INSERT INTO business_unit_ac (entry_id, class_id, bu_id) | .
-            qq|VALUES (currval('acc_trans_entry_id_seq'), ?, ?)|
-    );
+    $b_sth = $dbh->prepare(qq|
+            INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+            VALUES (currval('acc_trans_entry_id_seq'), ?, ?)|
+        ) or $form->dberror($dbh->errstr);
+    my $s_sth = $dbh->prepare( qq|
+            SELECT count(*) from account where accno = ?|
+        ) or $form->dberror($dbh->errstr);
+    my $l_sth = $dbh->prepare( qq|
+            INSERT INTO acc_trans
+                        (trans_id, chart_id, amount_bc, curr, amount_tc,
+                         transdate, source,
+                         memo, cleared)
+                VALUES  (?, (SELECT id
+                               FROM account
+                              WHERE accno = ? ),
+                       ?, ?, ?, ?, ?, ?, ?)|
+        ) or $form->dberror($dbh->errstr);
+
     # insert acc_trans transactions
     foreach my $i ( 0 .. $form->{rowcount} ) {
 
         $debit  = $form->parse_amount( $myconfig, $form->{"debit_$i"} );
         $credit = $form->parse_amount( $myconfig, $form->{"credit_$i"} );
+        $debit_fx  =
+            $form->parse_amount( $myconfig, $form->{"debit_fx_$i"} );
+        $credit_fx =
+            $form->parse_amount( $myconfig, $form->{"credit_fx_$i"} );
+
 
         # extract accno
         ($accno) = split( /--/, $form->{"accno_$i"} );
+
+        $form->error($locale->text("Can't post credits and debits on one line."))
+            if ($debit && $credit);
+
         if ($credit) {
             $amount = $credit;
+            $amount_fx = $credit_fx;
             $posted = 0;
         }
 
         if ($debit) {
             $amount = $debit * -1;
+            $amount_fx = $debit_fx * -1;
             $posted = 0;
         }
 
@@ -197,35 +216,28 @@ sub post_transaction {
 
             ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
             $project_id ||= undef;
-            $query = qq|SELECT count(*) from account where accno = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute($accno);
-            my ($count) = $sth->fetchrow_array();
+            $s_sth->execute($accno)
+                or $form->dberror($s_sth->errstr);
+            my ($count) = $s_sth->fetchrow_array()
+                or $form->dberror($s_sth->errstr);
             if ($count == 0){
-                 $form->error($locale->text('Account [_1] not found', $accno));
+                 $form->error($locale->text('Account [_1] not found',
+                                            $accno));
             }
 
-            $query = qq|
-                INSERT INTO acc_trans
-                            (trans_id, chart_id, amount,
-                            transdate, source,
-                            fx_transaction, memo, cleared)
-                    VALUES  (?, (SELECT id
-                                   FROM account
-                                  WHERE accno = ? ),
-                           ?, ?, ?, ?, ?, ?)|;
-            $sth = $dbh->prepare($query);
-            $sth->execute(
+            $l_sth->execute(
                 $form->{id},                  $accno,
-                $amount,                      $form->{transdate},
+                $amount,                      $form->{"curr_$i"},
+                $amount_fx,                   $form->{transdate},
                 $form->{"source_$i"},
-                ($form->{"fx_transaction_$i"} || 0), $form->{"memo_$i"},
+                $form->{"memo_$i"},
                 ($form->{"cleared_$i"} || 0)
-            ) || $form->dberror($query);
+                ) or $form->dberror($l_sth->errstr);
             for my $cls(@{$form->{bu_class}}){
                 if ($form->{"b_unit_$cls->{id}_$i"}){
                     $b_sth->execute($cls->{id},
-                                     $form->{"b_unit_$cls->{id}_$i"});
+                                    $form->{"b_unit_$cls->{id}_$i"})
+                        or $form->dberror($b_sth->errstr);
                 }
             }
             $posted = 1;
@@ -247,11 +259,11 @@ sub transaction {
     if ( $form->{id} ) {
 
         $query = "SELECT setting_key, value
-                    FROM defaults
-                    WHERE setting_key IN
-                        ('closedto',
-                        'revtrans',
-                        'separate_duties')";
+               FROM defaults
+               WHERE setting_key IN
+                  ('closedto',
+                  'revtrans',
+                  'separate_duties')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -259,15 +271,17 @@ sub transaction {
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{closedto} = $results->{'closedto'}->{'value'};
         $form->{revtrans} = $results->{'revtrans'}->{'value'};
+        @{$form->{currencies}} =
+            (LedgerSMB::Setting->new({base => $form}))->get_currencies;
         #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $sth->finish;
 
         $query = qq|SELECT g.*
-                      FROM gl g
-                     WHERE g.id = ?|;
+                 FROM gl g
+                WHERE g.id = ?|;
 
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
+        $sth = $dbh->prepare($query) || $form->dberror($dbh->errstr);
+        $sth->execute( $form->{id} ) || $form->dberror($sth->errstr);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
@@ -293,10 +307,8 @@ sub transaction {
             while ($buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
                  $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
             }
-
-            if ( $ref->{fx_transaction} ) {
-                $form->{transfer} = 1;
-            }
+            $form->{fx_transaction} ||=
+                ($ref->{curr} ne $form->{currencies}->[0]);
             push @{ $form->{GL} }, $ref;
         }
         # get recurring transaction
@@ -306,11 +318,11 @@ sub transaction {
     else {
 
         $query = "SELECT current_date AS transdate, setting_key, value
-                    FROM defaults
-                    WHERE setting_key IN
-                        ('closedto',
-                        'separate_duties',
-                        'revtrans')";
+               FROM defaults
+               WHERE setting_key IN
+                  ('closedto',
+                  'separate_duties',
+                  'revtrans')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -319,6 +331,8 @@ sub transaction {
         $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $form->{closedto}  = $results->{'closedto'}->{'value'};
         $form->{revtrans}  = $results->{'revtrans'}->{'value'};
+        @{$form->{currencies}} =
+            (LedgerSMB::Setting->new({base => $form}))->get_currencies;
         if (!$form->{transdate}){
             $form->{transdate} = $results->{'revtrans'}->{'transdate'};
         }
@@ -328,14 +342,14 @@ sub transaction {
 
     # get chart of accounts
     $query = qq|SELECT id,accno,description
-                  FROM account
-              ORDER BY accno|;
+              FROM account
+           ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-    $ref->{accstyle}=$ref->{accno}."--".$ref->{description};
+   $ref->{accstyle}=$ref->{accno}."--".$ref->{description};
         push @{ $form->{all_accno} }, $ref;
     }
 
@@ -358,14 +372,14 @@ sub get_all_acc_dep_pro
    my $dbh = $form->{dbh};
 
     $query = qq|SELECT id,accno,description
-                  FROM account
-              ORDER BY accno|;
+              FROM account
+           ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-    $ref->{accstyle}=$ref->{accno}."--".$ref->{description};
+   $ref->{accstyle}=$ref->{accno}."--".$ref->{description};
         push @{ $form->{all_accno} }, $ref;
     }
 

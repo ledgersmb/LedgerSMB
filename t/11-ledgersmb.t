@@ -3,28 +3,21 @@
 use strict;
 use warnings;
 
-use Test::More 'no_plan';
-use Test::Exception;
-use Test::Trap qw(trap $trap);
+use Test2::V0;
 use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB;
 use LedgerSMB::App_State;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+use Plack::Request;
+
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 
 my $lsmb;
+my $request = Plack::Request->new({});
 
-
-sub redirect {
-        print "redirected\n";
-}
-
-sub lsmb_error_func {
-        print $_[0];
-}
 
 ##table of subroutine tests
 ##new
@@ -32,22 +25,22 @@ sub lsmb_error_func {
 ##merge
 
 
-$lsmb = LedgerSMB->new();
+$lsmb = LedgerSMB->new($request);
 my $utfstr;
 my @r;
 
 ok(defined $lsmb);
-isa_ok($lsmb, 'LedgerSMB');
+isa_ok($lsmb, ['LedgerSMB']);
 
 # $lsmb->escape checks
-$lsmb = LedgerSMB->new();
+$lsmb = LedgerSMB->new($request);
 $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
 
 # $lsmb->new checks
-$lsmb = LedgerSMB->new();
+$lsmb = LedgerSMB->new($request);
 ok(defined $lsmb, 'new: blank, defined');
-isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
+isa_ok($lsmb, ['LedgerSMB'], 'new: blank, correct type');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 
@@ -55,7 +48,7 @@ ok(defined $lsmb->{version}, 'new: blank, version defined');
 SKIP: {
         skip 'Skipping call_procedure tests, no db specified', 5
                 if !defined $ENV{PGDATABASE};
-        $lsmb = LedgerSMB->new();
+        $lsmb = LedgerSMB->new($request);
         my $pghost = "";
         $pghost = ";host=" . $ENV{PGHOST}
             if $ENV{PGHOST} && $ENV{PGHOST} ne 'localhost';
@@ -90,20 +83,22 @@ SKIP: {
 }
 
 # $lsmb->merge checks
-$lsmb = LedgerSMB->new();
+$lsmb = LedgerSMB->new($request);
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'keys' => ['apple', 'pear']);
 ok(!defined $lsmb->{peach}, 'merge: Did not add unselected key');
 is($lsmb->{apple}, 1, 'merge: Added unselected key apple');
 is($lsmb->{pear}, 2, 'merge: Added unselected key pear');
 
-$lsmb = LedgerSMB->new();
+$lsmb = LedgerSMB->new($request);
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3});
 is($lsmb->{apple}, 1, 'merge: No key, added apple');
 is($lsmb->{pear}, 2, 'merge: No key, added pear');
 is($lsmb->{peach}, 3, 'merge: No key, added peach');
 
-$lsmb = LedgerSMB->new();
+$lsmb = LedgerSMB->new($request);
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
+
+done_testing;

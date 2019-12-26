@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::Outstanding;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::Outstanding - Outstanding Invoice Reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::Outstanding;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -160,22 +162,22 @@ has on_hold => (is => 'ro', isa => 'Bool', required => 0);
 
 sub columns {
     my ($self, $request) = @_;
-    my $inv_label = LedgerSMB::Report::text('# Invoices');
+    my $inv_label = $self->Text('# Invoices');
     my $details_url = $request->get_relative_url;
     $details_url =~ s/is_detailed=0/is_detailed=1/;
     $details_url =~ s/meta_number=[^&]*//;
     my $inv_type = 'href';
     my $inv_href_base = $details_url . '&meta_number=';
     if ($self->is_detailed){
-        $inv_label = LedgerSMB::Report::text('Invoice');
+        $inv_label = $self->Text('Invoice');
         $inv_type = 'href';
         $inv_href_base = '';
     }
     my $entity_label;
     if ($self->entity_class == 1){
-       $entity_label = LedgerSMB::Report::text('Vendor');
+       $entity_label = $self->Text('Vendor');
     } elsif ($self->entity_class == 2){
-       $entity_label = LedgerSMB::Report::text('Customer');
+       $entity_label = $self->Text('Customer');
     } else {
        die 'invalid entity class';
     }
@@ -185,11 +187,11 @@ sub columns {
            type => 'text',
          pwidth => 1, },
         {col_id => 'transdate',
-           name => LedgerSMB::Report::text('Date'),
+           name => $self->Text('Date'),
            type => 'text',
          pwidth => 4, },
         {col_id => 'id',
-           name => LedgerSMB::Report::text('ID'),
+           name => $self->Text('ID'),
            type => 'text',
          pwidth => 2, },
         {col_id => 'invnumber',
@@ -198,15 +200,15 @@ sub columns {
       href_base => $inv_href_base,
          pwidth => 10, },
         {col_id => 'ordnumber',
-           name => LedgerSMB::Report::text('Order'),
+           name => $self->Text('Order'),
            type => 'text',
          pwidth => 10, },
         {col_id => 'ponumber',
-           name => LedgerSMB::Report::text('PO Number'),
+           name => $self->Text('PO Number'),
            type => 'text',
          pwidth => 10, },
         {col_id => 'meta_number',
-           name => LedgerSMB::Report::text('Account'),
+           name => $self->Text('Account'),
            type => 'text',
          pwidth => 10, },
         {col_id => 'entity_name',
@@ -215,77 +217,67 @@ sub columns {
       href_base => 'contact.pl?action=edit&',
          pwidth => 15, },
         {col_id => 'netamount',
-           name => LedgerSMB::Report::text('Amount'),
+           name => $self->Text('Amount'),
            type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'tax',
-           name => LedgerSMB::Report::text('Tax'),
+           name => $self->Text('Tax'),
            type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'amount',
-           name => LedgerSMB::Report::text('Total'),
+           name => $self->Text('Total'),
            type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'paid',
-           name => LedgerSMB::Report::text('Paid'),
+           name => $self->Text('Paid'),
            type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'due',
-           name => LedgerSMB::Report::text('Amount Due'),
+           name => $self->Text('Amount Due'),
            type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'curr',
-           name => LedgerSMB::Report::text('Curr'),
+           name => $self->Text('Curr'),
            type => 'text',
          pwidth => 8, },
         {col_id => 'last_paydate',
-           name => LedgerSMB::Report::text('Date Paid'),
+           name => $self->Text('Date Paid'),
            type => 'text',
          pwidth => 8, },
         {col_id => 'duedate',
-           name => LedgerSMB::Report::text('Due Date'),
+           name => $self->Text('Due Date'),
            type => 'text',
          pwidth => 8, },
         {col_id => 'notes',
-           name => LedgerSMB::Report::text('Notes'),
+           name => $self->Text('Notes'),
            type => 'text',
          pwidth => 15, },
         {col_id => 'till',
-           name => LedgerSMB::Report::text('Till'),
+           name => $self->Text('Till'),
            type => 'text',
          pwidth => 8, },
         {col_id => 'employee_name',
-           name => LedgerSMB::Report::text('Salesperson'),
+           name => $self->Text('Salesperson'),
            type => 'text',
          pwidth => 10, },
         {col_id => 'manager_name',
-           name => LedgerSMB::Report::text('Manager'),
+           name => $self->Text('Manager'),
            type => 'text',
          pwidth => 10, },
         {col_id => 'shipping_point',
-           name => LedgerSMB::Report::text('Shipping Point'),
+           name => $self->Text('Shipping Point'),
            type => 'text',
          pwidth => 10, },
         {col_id => 'ship_via',
-           name => LedgerSMB::Report::text('Ship Via'),
+           name => $self->Text('Ship Via'),
            type => 'text',
          pwidth => 10, },
     ];
-}
-
-=head2 header_lines
-
-# TODO
-
-=cut
-
-sub header_lines {
-    return [];
 }
 
 =head2 name
@@ -297,9 +289,9 @@ Returns either the localized strings for "AR Outstanding" or "AP Outstanding"
 sub name {
     my $self = shift;
     if ($self->entity_class == 1) {
-        return LedgerSMB::Report::text('AP Outstanding');
+        return $self->Text('AP Outstanding');
     } elsif ($self->entity_class == 2) {
-        return LedgerSMB::Report::text('AR Outstanding');
+        return $self->Text('AR Outstanding');
     }
 }
 
@@ -315,7 +307,6 @@ sub name {
 
 sub run_report {
     my $self = shift;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     my $procname = 'report__aa_outstanding';
     if ($self->is_detailed){
        $procname .= '_details';
@@ -341,11 +332,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

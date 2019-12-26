@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -17,14 +18,14 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('account__all_headings',ARRAY['']);
+    SELECT has_function('account__all_headings','{}'::text[]);
     SELECT has_function('company__get_all_accounts',ARRAY['integer','integer']);
     SELECT has_function('company_get_billing_info',ARRAY['integer']);
     SELECT has_function('company__get_by_cc',ARRAY['text']);
     SELECT has_function('company__get',ARRAY['integer']);
-    SELECT has_function('company__next_id',ARRAY['']);
+    SELECT has_function('company__next_id','{}'::text[]);
     SELECT has_function('company__save',ARRAY['text','integer','text','text','integer','text','integer','text','text']);
-    SELECT has_function('contact_class__list',ARRAY['']);
+    SELECT has_function('contact_class__list','{}'::text[]);
     SELECT has_function('contact__search',ARRAY['integer','text','text[]','text','text','text','text','text','text','date','date','integer','text','text','text','boolean']);
     SELECT has_function('eca__delete_contact',ARRAY['integer','integer','text']);
     SELECT has_function('eca__delete_location',ARRAY['integer','integer','integer']);
@@ -59,8 +60,8 @@ BEGIN;
     SELECT has_function('entity__save_contact',ARRAY['integer','integer','text','text','text','integer']);
     SELECT has_function('entity__save_notes',ARRAY['integer','text','text']);
     SELECT has_function('list_taxforms',ARRAY['integer']);
-    SELECT has_function('pricegroup__list',ARRAY['']);
-    SELECT has_function('sic__list',ARRAY['']);
+    SELECT has_function('pricegroup__list','{}'::text[]);
+    SELECT has_function('sic__list','{}'::text[]);
 
     -- Run tests
 
@@ -73,7 +74,7 @@ BEGIN;
 
     PREPARE test AS SELECT
         eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
-                0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD',
+                0, 0, 0, 'test-123', NULL, NULL, NULL, 'XTS',
                 now()::date, now()::date,
                 0, -1000, NULL, NULL, NULL, NULL)
         IS NOT NULL;

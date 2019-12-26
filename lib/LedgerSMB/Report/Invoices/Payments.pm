@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Invoices::Payments;
+
 =head1 NAME
 
 LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
@@ -9,7 +12,6 @@ LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Invoices::Payments;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -110,15 +112,15 @@ sub columns {
     my ($self) = @_;
     my $meta_number;
     if ($self->entity_class == 1){
-       $meta_number = LedgerSMB::Report::text('Vendor Number');
+       $meta_number = $self->Text('Vendor Number');
     } elsif ($self->entity_class == 2){
-       $meta_number = LedgerSMB::Report::text('Customer Number');
+       $meta_number = $self->Text('Customer Number');
     } else {
         die 'Invalid entity class';
     }
     my $cols =  [
         {col_id => 'select',
-           name => LedgerSMB::Report::text('Selected'),
+           name => $self->Text('Selected'),
            type => 'checkbox'},
         {col_id => 'credit_id',
            type => 'hidden', },
@@ -132,25 +134,25 @@ sub columns {
            type => 'hidden', },
         {col_id => 'date_paid',
            type => 'text',
-           name => LedgerSMB::Report::text('Date Paid'), },
+           name => $self->Text('Date Paid'), },
         {col_id => 'amount',
            type => 'text',
-           name => LedgerSMB::Report::text('Total Paid'), },
+           name => $self->Text('Total Paid'), },
         {col_id => 'source',
            type => 'text',
-           name => LedgerSMB::Report::text('Source'), },
+           name => $self->Text('Source'), },
         {col_id => 'meta_number',
            name => $meta_number,
            type => 'text', },
         {col_id => 'company_paid',
            type => 'text',
-           name => LedgerSMB::Report::text('Company Name'), },
+           name => $self->Text('Company Name'), },
         {col_id => 'batch_description',
            type => 'text',
-           name => LedgerSMB::Report::text('Batch Description'), },
+           name => $self->Text('Batch Description'), },
         {col_id => 'batch_control',
            type => 'text',
-           name => LedgerSMB::Report::text('Batch'), },
+           name => $self->Text('Batch'), },
     ];
     shift @$cols unless $self->batch_id;
     return $cols;
@@ -180,19 +182,19 @@ sub header_lines {
     my ($self) = @_;
     my $meta_number;
     if ($self->entity_class == 1){
-       $meta_number = LedgerSMB::Report::text('Vendor Number');
+       $meta_number = $self->Text('Vendor Number');
     } elsif ($self->entity_class == 2){
-       $meta_number = LedgerSMB::Report::text('Customer Number');
+       $meta_number = $self->Text('Customer Number');
     } else {
         die 'Invalid entity class';
     }
     return [{name => 'meta_number', text => $meta_number },
             {name => 'cash_accno',
-             text => LedgerSMB::Report::text('Account Number') },
+             text => $self->Text('Account Number') },
             {name => 'from_date',
-             text => LedgerSMB::Report::text('From Date')},
+             text => $self->Text('From Date')},
             {name => 'to_date',
-             text => LedgerSMB::Report::text('To Date')}
+             text => $self->Text('To Date')}
            ];
 }
 
@@ -204,8 +206,8 @@ Either "Payment Results" or "Receipt Results" depending on entity_class
 
 sub name {
     my ($self) = @_;
-    return LedgerSMB::Report::text('Payment Results') if 1 == $self->entity_class;
-    return LedgerSMB::Report::text('Receipt Results') if 2 == $self->entity_class;
+    return $self->Text('Payment Results') if 1 == $self->entity_class;
+    return $self->Text('Receipt Results') if 2 == $self->entity_class;
     die 'Invalid Entity Class';
 }
 
@@ -221,9 +223,8 @@ Runs the report and sets $self->rows
 
 sub run_report{
     my ($self) = @_;
-    die LedgerSMB::Report::text('Must have cash account in batch')
+    die $self->Text('Must have cash account in batch')
         if $self->batch_id and not defined $self->cash_accno;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     my @rows = $self->call_dbmethod(funcname => 'payment__search');
     my $count = 1;
     for my $r(@rows){
@@ -233,7 +234,7 @@ sub run_report{
     }
     $self->rows(\@rows);
     $self->buttons([{
-        text => LedgerSMB::Report::text('Reverse Payments'),
+        text => $self->Text('Reverse Payments'),
         name => 'action',
         type => 'submit',
        class => 'submit',
@@ -244,7 +245,13 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

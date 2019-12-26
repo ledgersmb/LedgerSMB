@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Business_Unit;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Business_Unit - List Business Reporting Units
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::Business_Unit - List Business Reporting Units
 
 =cut
 
-package LedgerSMB::Report::Listings::Business_Unit;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -49,33 +51,26 @@ has id => (is => 'ro', isa => 'Int');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       { col_id => 'control_code',
           type => 'href',
      href_base => 'business_unit.pl?action=edit&id=',
-          name => LedgerSMB::Report::text('Control Code') },
+          name => $self->Text('Control Code') },
 
       { col_id => 'description',
           type => 'text',
-          name => LedgerSMB::Report::text('Description') },
+          name => $self->Text('Description') },
 
       { col_id => 'start_date',
           type => 'text',
-          name => LedgerSMB::Report::text('Start Date') },
+          name => $self->Text('Start Date') },
 
       { col_id => 'end_date',
           type => 'text',
-          name => LedgerSMB::Report::text('End Date') },
+          name => $self->Text('End Date') },
     ];
 }
-
-=head2 header_lines
-
-None.
-
-=cut
-
-sub header_lines { return [] };
 
 =head2 name
 
@@ -83,7 +78,10 @@ Business Units List
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Business Unit List'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Business Unit List');
+}
 
 =head1 METHODS
 
@@ -100,11 +98,13 @@ sub run_report {
     ]);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the included LICENSE.TXT for more information.
+Copyright (C) 2014 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

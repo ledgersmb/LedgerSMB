@@ -40,6 +40,7 @@ LedgerSMB::OE - Order Entry
 
 package OE;
 use LedgerSMB::Tax;
+use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Num2text;
 use Log::Log4perl;
@@ -167,7 +168,7 @@ sub save {
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
 
-            $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
+            $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -180,13 +181,11 @@ sub save {
     my $did_insert = 0;
     if ( !$form->{id} ) {
         $query = qq|SELECT nextval('oe_id_seq')|;
-        $sth   = $dbh->prepare($query);
+        $sth   = $dbh->prepare($query) || $form->dberror($query);
         $sth->execute || $form->dberror($query);
         ( $form->{id} ) = $sth->fetchrow_array;
         $sth->finish;
 
-        my $uid = localtime;
-        $uid .= "$$";
         if ( !$form->{reqdate} ) {
             $form->{reqdate} = undef;
         }
@@ -198,7 +197,6 @@ sub save {
             $form->{closed} = 'f';
         }
 
-        # $form->{id} is safe because it is only pulled *from* the db.
         $query = qq|
             INSERT INTO oe
                 (id, ordnumber, quonumber, transdate,
@@ -207,12 +205,13 @@ sub save {
                 person_id, language_code, ponumber, terms,
                 quotation, oe_class_id, entity_credit_account)
             VALUES
-                ($form->{id}, ?, ?,
-                ?, ?, ?,
-                ?, ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?)|;
+                (?, ?, ?,
+                 ?, ?, ?,
+                 ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?,
+                 ?, ?, ?)|;
         @queryargs = (
+            $form->{id},
             $form->{ordnumber},     $form->{quonumber},
             $form->{transdate},     $form->{reqdate},
             $form->{shippingpoint}, $form->{shipvia},
@@ -383,10 +382,7 @@ sub save {
         $form->{exchangerate} = 1;
     }
     else {
-        $exchangerate =
-          $form->check_exchangerate( $myconfig, $form->{currency},
-            $form->{transdate},
-            ( $form->{vc} eq 'customer' ) ? 'buy' : 'sell' );
+        $exchangerate = "";
     }
 
     $form->{exchangerate} =
@@ -401,8 +397,8 @@ sub save {
     if ($did_insert) {
         $query = qq|
             UPDATE oe SET
-                amount = ?,
-                netamount = ?,
+                amount_tc = ?,
+                netamount_tc = ?,
                 taxincluded = ?
             WHERE id = ?|;
         @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} );
@@ -415,8 +411,8 @@ sub save {
                 ordnumber = ?,
                 quonumber = ?,
                 transdate = ?,
-                amount = ?,
-                netamount = ?,
+                amount_tc = ?,
+                netamount_tc = ?,
                 reqdate = ?,
                 taxincluded = ?,
                 shippingpoint = ?,
@@ -444,15 +440,15 @@ sub save {
             $form->{shipvia},       $form->{notes},
             $form->{intnotes},      $form->{currency},
             $form->{closed},        $quotation,
-            $form->{person_id},
+            $form->{employee_id},
             $form->{language_code}, $form->{ponumber},
             $form->{terms},         $form->{id}
         );
     }
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $form->dberror($query);
 
     $form->{ordtotal} = $amount;
-    $sth->execute(@queryargs) || $form->error($query);
+    $sth->execute(@queryargs) || $form->dberror($query);
 
     # add shipto
     $form->{name} = $form->{ $form->{vc} };
@@ -463,17 +459,6 @@ sub save {
     # save printed, emailed, queued
 
     $form->save_status($dbh);
-
-    if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-        if ( $form->{vc} eq 'customer' ) {
-            $form->update_exchangerate( $dbh, $form->{currency},
-                $form->{transdate}, $form->{exchangerate}, 0 );
-        }
-        if ( $form->{vc} eq 'vendor' ) {
-            $form->update_exchangerate( $dbh, $form->{currency},
-                $form->{transdate}, 0, $form->{exchangerate} );
-        }
-    }
 
     if ( $form->{type} =~ /_order$/ ) {
 
@@ -549,7 +534,7 @@ sub delete {
     $query = qq|DELETE FROM orderitems WHERE trans_id = ?|;
     $sth->finish;
 
-    $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
+    $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
@@ -577,10 +562,9 @@ sub retrieve {
     my $var;
     my $ref;
 
-    $query = qq|
-        SELECT value, current_date FROM defaults
-         WHERE setting_key = 'curr'|;
-    ( $form->{currencies}, $form->{transdate} ) = $dbh->selectrow_array($query);
+    @{$form->{currencies}} =
+        (LedgerSMB::Setting->new({base => $form}))->get_currencies;
+    $form->{defaultcurrency} = $form->{currencies}->[0];
 
     $query = qq|
         SELECT value FROM defaults
@@ -598,16 +582,14 @@ sub retrieve {
                 pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
                 o.person_id AS employee_id,
                 o.entity_credit_account, vc.name as legal_name,
-                o.amount AS invtotal, o.closed, o.reqdate,
+                o.amount_tc AS invtotal, o.closed, o.reqdate,
                 o.quonumber, o.language_code,
                 o.ponumber, cr.entity_class,
                 ns.location_id as locationid
             FROM oe o
             JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
             JOIN entity vc ON (cr.entity_id = vc.id)
-            LEFT JOIN person pe ON (o.person_id = pe.id)
-            LEFT JOIN entity_employee e
-                                  ON (pe.entity_id = e.entity_id)
+            LEFT JOIN person pe ON (o.person_id = pe.entity_id)
                         LEFT JOIN new_shipto ns ON ns.oe_id = o.id
             WHERE o.id = ?|;
         $sth = $dbh->prepare($query);
@@ -625,7 +607,7 @@ sub retrieve {
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
-        $query = qq|SELECT * FROM new_shipto WHERE trans_id = ?|;
+        $query = qq|SELECT * FROM new_shipto WHERE oe_id = ?|;
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -685,7 +667,7 @@ sub retrieve {
           || $form->dberror($query);
 
         # foreign exchange rates
-        &exchangerate_defaults( $dbh, $form );
+        &exchangerate_defaults;
 
         # query for price matrix
         my $pmh = PriceMatrix::price_matrix_query( $dbh, $form );
@@ -730,13 +712,14 @@ sub retrieve {
             # multiply by exchangerate
             $ref->{sellprice} =
               $form->round_amount(
-                $ref->{sellprice} * $form->{ $form->{currency} },
+                $ref->{sellprice} *
+                  ( $form->{ $form->{currency} } // 1),
                 $decimalplaces );
 
             for (qw(listprice lastcost)) {
                 $ref->{$_} =
                   $form->round_amount(
-                    $ref->{$_} / $form->{ $form->{currency} },
+                    $ref->{$_} / ($form->{ $form->{currency} } // 1),
                     $decimalplaces );
             }
 
@@ -765,55 +748,10 @@ sub retrieve {
 }
 
 sub exchangerate_defaults {
-    my ( $dbh2, $form ) = @_;
-    $dbh = $form->{dbh};
-    my $var;
-    my $buysell = ( $form->{vc} eq "customer" ) ? "buy" : "sell";
-
-    # get default currencies
-    my $query = qq|
-        SELECT substr(value,1,3), value FROM defaults
-         WHERE setting_key = 'curr'|;
-    ( $form->{defaultcurrency}, $form->{currencies} ) =
-      $dbh->selectrow_array($query);
-
-    $query = qq|
-        SELECT $buysell
-        FROM exchangerate
-        WHERE curr = ?
-        AND transdate = ?|;
-    my $eth1 = $dbh->prepare($query) || $form->dberror($query);
-    $query = qq~
-        SELECT max(transdate || ' ' || $buysell || ' ' || curr)
-        FROM exchangerate
-        WHERE curr = ?~;
-    my $eth2 = $dbh->prepare($query) || $form->dberror($query);
-
-    # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
-        $eth1->execute( $var, $form->{transdate} );
-        my @exchangelist;
-        @exchangelist = $eth1->fetchrow_array;
-        $form->db_parse_numeric(sth=>$eth1, arrayref=>\@exchangelist);
-        $form->{$var} = shift @array;
-        if ( !$form->{$var} ) {
-            $eth2->execute($var);
-            @exchangelist = $eth2->fetchrow_array;
-            $form->db_parse_numeric(sth=>$eth2, arrayref=>\@exchangelist);
-
-            ( $form->{$var} ) = @exchangelist;
-            ( $null, $form->{$var} ) = split / /, $form->{$var};
-            $form->{$var} = 1 unless $form->{$var};
-            $eth2->finish;
-        }
-        $eth1->finish;
-    }
-
-    $form->{ $form->{currency} } = $form->{exchangerate}
+    $form->{ $form->{currency} } = ($form->{exchangerate} // 0)
       if $form->{exchangerate};
     $form->{ $form->{currency} } ||= 1;
     $form->{ $form->{defaultcurrency} } = 1;
-
 }
 
 sub order_details {
@@ -1329,6 +1267,10 @@ sub order_details {
                 @{ $form->{tax} },
                 $form->{"${item}_tax"} =
                   $form->format_amount( $myconfig, $taxamount, 2 )
+            );
+            push(
+                @{ $form->{taxsummary} },
+                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
             );
 
             push( @{ $form->{taxdescription} },
@@ -2020,7 +1962,7 @@ sub get_soparts {
     ( $form->{transdate} ) = $dbh->selectrow_array($query);
 
     # foreign exchange rates
-    &exchangerate_defaults( $dbh, $form );
+    &exchangerate_defaults;
 
 }
 
@@ -2120,7 +2062,7 @@ sub generate_orders {
     my $dbh = $form->{dbh};
 
     # foreign exchange rates
-    &exchangerate_defaults( $dbh, $form );
+    &exchangerate_defaults;
 
     my $amount;
     my $netamount;
@@ -2258,11 +2200,11 @@ sub generate_orders {
                 ordnumber = ?,
                 transdate = current_date,
                 entity_id = ?,
-                amount = ?,
-                netamount = ?,
+                amount_tc = ?,
+                netamount_tc = ?,
                 taxincluded = ?,
                 curr = ?,
-                person_id = (select id from person where entity_id = ?),
+                person_id = ?,
                 department_id = ?,
                 ponumber = ?
             WHERE id = ?|;

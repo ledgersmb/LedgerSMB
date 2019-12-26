@@ -1,10 +1,13 @@
 #!perl
 
-use strict;
-use warnings;
+use Test2::V0;
 
 use File::Find;
-use Test::More;
+
+
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes source code checks};
+}
 
 my @on_disk = ();
 
@@ -21,7 +24,7 @@ sub content_test {
 
     my ($fh, @tab_lines, @trailing_space_lines);
     open $fh, '<', $filename
-        or BAIL_OUT("couldn't open $filename for reading $!");
+        or die "couldn't open $filename for reading $!";
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;
         push @trailing_space_lines, ($.) if / $/;
@@ -34,5 +37,5 @@ sub content_test {
         if @trailing_space_lines;
 }
 
-content_test($_) for @on_disk;
+lives { content_test($_) } for @on_disk;
 done_testing;

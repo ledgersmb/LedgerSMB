@@ -9,13 +9,16 @@ isn't for localization.
 
 =cut
 
-use strict;
-use warnings;
-use utf8;
+use Test2::V0;
+use Test2::Tools::Spec;
 
-use Test::More;
 use File::Find;
 use Capture::Tiny ':all';
+
+
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes source code translation string checks};
+}
 
 my @on_disk;
 sub collect {
@@ -29,16 +32,16 @@ sub collect {
 }
 find(\&collect, '.');
 
-plan tests => scalar @on_disk;
-
 for my $file (@on_disk) {
 
-    subtest $file => sub {
+    tests $file => { async => (! $ENV{COVERAGE}) }, sub {
 
         my $errors = 0;
 
         # Produce a PO file
         my $stderr = capture_stderr {
+            local $ENV{PERL5OPT} = undef;
+            #clear PERL5OPTS; we don't want to inherit it from the testing environment
             system("echo \"$file\" | utils/devel/extract-perl >/dev/null");
         };
         for my $err (split /\n/, $stderr) {
@@ -49,3 +52,6 @@ for my $file (@on_disk) {
         ok(!$errors,$file) if !$errors;
     }
 }
+
+
+done_testing;

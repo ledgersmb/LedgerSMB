@@ -1,62 +1,111 @@
-# run on GCE build as per suggested:
-# https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
-sudo: false
+
+# On your fork, you can configure build logs to be written to an
+# AWS S3 bucket by making sure the following variables have been
+# set in your Travis CI repository settings page:
+#
+# - AWS_ACCESS_KEY_ID (display value in build log: No)
+# - AWS_SECRET_ACCESS_KEY (display value in build log: No)
+# - AWS_DEFAULT_REGION (display value in build log: Yes)
+# - LSMB_AWS_UPLOAD_BUCKET (display value in build log: Yes)
+#
+# AWS_DEFAULT_REGION should be the region hosting your S3 bucket
+# LSMB_AWS_UPLOAD_BUCKET should contain the name of the bucket to upload into
+
+
 dist: trusty
 language: perl
 
 notifications:
   webhooks: https://ledgersmb.org/webhook/travis_ci_notifications
 
+env:
+  global:
+    - RELEASE_TESTING=1
+    - PGUSER=postgres
+    - PGPASSWORD=test
+    - LSMB_TEST_DB=1
+    - LSMB_NEW_DB=lsmbinstalltest
+    - LSMB_BASE_URL="http://127.0.0.1:5000"
+    - PSGI_BASE_URL="http://127.0.0.1:5762"
+    - HARNESS_RULESFILE="t/testrules.yml"
+    - PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
+    - PATH="$HOME/locallib/bin:$PATH"
+    - PERL_LOCAL_LIB_ROOT="$HOME/locallib${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
+    - PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+    - PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
+    - PERL_MB_OPT="--install_base=$HOME/locallib"
+    - QT_QPA_PLATFORM=phantom
+    - DEVEL_COVER_OPTIONS="+ignore,\"\.lttc\$\""
+
+addons:
+  apt:
+    packages: &default_packages
+      # Install awscli dependencies from the package repo
+      - python3-pip
+      - python3-pyasn1
+      - python3-urllib3
+      - python3-yaml
+      - python3-dateutil
+      - python3-six
+      - python3-jmespath
+      - python3-botocore
+      - python3-rsa
+      - python3-docutils
+      - python3-colorama
+      - nginx
+      - texlive-latex-recommended
+      - texlive-xetex
 
 matrix:
   include:
+    - perl: '5.28'
+      addons:
+        postgresql: '9.6'
+        apt:
+          packages:
+            - *default_packages
+            - postgresql-9.6-pgtap
+      env:
     - perl: '5.26'
       addons:
         postgresql: '9.6'
         apt:
           packages:
-            - nginx postgresql-9.6-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
     - perl: '5.24'
       addons:
-        postgresql: '9.5'
+        postgresql: '9.6'
         apt:
           packages:
-            - nginx postgresql-9.5-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
-        - DOJO_BUILT=0
     - perl: '5.22'
       addons:
-        postgresql: "9.4"
+        postgresql: "9.6"
         apt:
           packages:
-             - nginx postgresql-9.4-pgtap
-             - texlive-latex-recommended
-             - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
-        - COVERAGE=1
     - perl: '5.20'
       addons:
-        postgresql: "9.4"
+        postgresql: "9.6"
         apt:
           packages:
-            - nginx postgresql-9.4-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
         - COA_TESTING=1
     - perl: '5.18'
       addons:
-        postgresql: "9.3"
+        postgresql: "9.6"
         apt:
           packages:
-            - nginx postgresql-9.3-pgtap
-            - texlive-latex-recommended
-            - texlive-xetex
+            - *default_packages
+            - postgresql-9.6-pgtap
       env:
         - DB_TESTING=1
 
@@ -66,7 +115,6 @@ before_cache:
 cache:
   directories:
     - $HOME/locallib
-    - $HOME/travis_phantomjs
     - $HOME/dojo_archive
 
 before_install:
@@ -74,32 +122,21 @@ before_install:
   - service --status-all
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
-  - phantomjs --version
-  - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
-  - phantomjs --version
-  - if [ $(phantomjs --version) != '2.1.1' ];
-    then
-      rm -rf $HOME/travis_phantomjs ;
-      mkdir -p $HOME/travis_phantomjs ;
-      wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
-      tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
-      hash -r ;
-      export QT_QPA_PLATFORM=phantom
-      phantomjs --version ;
-    fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
   - perl -V
-  - export PERL_LOCAL_LIB_ROOT="$HOME/locallib${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
-  - export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
-  - export PATH="$HOME/locallib/bin:$PATH"
-  - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
-  - export PERL_MB_OPT="--install_base=$HOME/locallib"
   - npm install uglify-js@">=2.0 <3.0"
+  - pip3 install awscli --upgrade --user
 
 install:
-  - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-images --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
+  # Suppress warnings in Perl 5.28 about Locale::* being moved out of 'core'
+  # Further more is there a warning regarding redifinition of JSON::PP::Boolean
+  # which is fixed in 4.03 (so, reinstall, in order to get to newest)
+  - cpanm --reinstall --notest Locale::Country Locale::Codes Locale::Language JSON::PP
+  - cpanm --quiet --notest Cpanel::JSON::XS~3.0206
+  - cpanm --quiet --notest Starlet
+  - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 
 before_script:
@@ -107,43 +144,56 @@ before_script:
   - cd ${HOME}/built-dist
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
-  - cp conf/ledgersmb.conf.default ledgersmb.conf
+  - cp doc/conf/ledgersmb.conf.default ledgersmb.conf
   - cp t/.proverc ./
   - coverage-setup
-  - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
-  - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
+  - sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
-  - #PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi >/dev/null 2>/dev/null &
-  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
-  - utils/test/Is_LSMB_running.sh --early # fail early if starman is not running (can be skipped based on reponame or owner by setting an array in the script)
+  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -s Starlet --max-workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
   - nginx -c /tmp/nginx.conf
-  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
+  - |
+    mkdir screens logs
+    sed -i -e 's/post-step: 0/post-step: 1/' t/.pherkin.yaml
+    sed -i -e 's/# logging_dir:/logging_dir:/' t/.pherkin.yaml
 
 script:
-  - RELEASE_TESTING=1
-     PGUSER=postgres PGPASSWORD=test
-     LSMB_TEST_DB=1 LSMB_NEW_DB=lsmbinstalltest
-     LSMB_BASE_URL="http://127.0.0.1:5000"
-     PSGI_BASE_URL="http://127.0.0.1:5001"
-     HARNESS_RULESFILE="t/testrules.yml"
-    prove --jobs $(test-jobs) --recurse
+  - prove --jobs $(test-jobs) --recurse
           --pgtap-option dbname=lsmbinstalltest
           --pgtap-option username=postgres
           --feature-option tags=~@wip
           t/ xt/
 
+after_script:
+  # display the available resources
+  - utils/diagnostics/t/01-system-resources.t
+  - |
+    if [ -n "$AWS_ACCESS_KEY_ID" ];
+    then
+       (cd "$HOME/built-dist/ledgersmb/"
+        aws_url="s3://$LSMB_AWS_UPLOAD_BUCKET/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER"
+        aws s3 cp --quiet --recursive --acl public-read ./screens "$aws_url/logs/screens"
+        aws s3 cp --quiet --recursive --acl public-read ./logs "$aws_url/logs/html"
+        aws s3 cp --quiet --acl public-read /var/log/dmesg "$aws_url/logs/dmesg"
+        aws s3 cp --quiet --acl public-read /tmp/plackup-access.log "$aws_url/logs/plackup-access.log"
+        aws s3 cp --quiet --acl public-read /tmp/plackup-error.log "$aws_url/logs/plackup-error.log" )
+       echo Test results can be viewed from http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/index.html
+       echo plackup logs from:
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/plackup-access.log
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/plackup-error.log
+       echo dmesg info from:
+       echo   http://$LSMB_AWS_UPLOAD_BUCKET.s3.amazonaws.com/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER/logs/dmesg
+    fi
+
 after_success:
-  - >
+  - |
     if [ "$COVERAGE" == "1" ] ; then
-       curl http://localhost:5001/stop.pl ;
+       curl http://localhost:5762/stop.pl ;
        while [ -n "$(jobs -r | grep ledgersmb-server.psgi)" ] ; do sleep 1; echo -n "." ; done ;
        echo "" ;
     fi
   - coverage-report
-  # display the available resources
-  - utils/diagnostics/t/01-system-resources.t
   # try and force the github camo.githubusercontent.com cache to refresh our badges
   # with no arguments, this only refreshes the badge assests linked to by the default page shown when visiting
   # https://github.com/ledgersmb/LedgerSMB
@@ -152,20 +202,23 @@ after_success:
   - utils/test/github-badge-cache-buster.sh
 
 after_failure:
-  # display the available resources
-  - utils/diagnostics/t/01-system-resources.t
-  - echo ===============================
-  - echo === dmesg                   ===
-  - echo ===============================
-  - cat /var/log/dmesg
-  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
-  - echo ===============================
-  - echo === /tmp/plackup-access.log ===
-  - echo ===============================
-  - cat /tmp/plackup-access.log
-  - echo
-  - echo ===============================
-  - echo === /tmp/plackup-error.log ===
-  - echo ===============================
-  - cat /tmp/plackup-error.log
-  - echo
+  - |
+    if [ -z "$AWS_ACCESS_KEY_ID" ]
+    then
+      echo ===============================
+      echo === dmesg                   ===
+      echo ===============================
+      cat /var/log/dmesg
+      # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
+      echo ===============================
+      echo === /tmp/plackup-access.log ===
+      echo ===============================
+      cat /tmp/plackup-access.log
+      echo
+      echo ===============================
+      echo === /tmp/plackup-error.log ===
+      echo ===============================
+      cat /tmp/plackup-error.log
+      echo
+    fi
+ 

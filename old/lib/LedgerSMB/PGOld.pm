@@ -6,10 +6,6 @@ LedgerSMB::PGOld - Old DBObject replacement for 1.3-era LedgerSMB code
 
 This is like DBObject but uses the PGObject::Simple for base functionality.
 
-=head1 METHODS
-
-See PGObject::Simple
-
 =cut
 
 # This is temporary until we can get rid of it.  Basically the following
@@ -25,77 +21,37 @@ use strict;
 use warnings;
 
 use base 'PGObject::Simple';
-use LedgerSMB::App_State;
+use LedgerSMB::Sysconfig;
 
 =head1 METHODS
+
+See PGObject::Simple
 
 =over
 
 =item new(%args)
-=item rew(\%args)
 
 Constructor.
+
+Recognized arguments are:
+
+=over
+
+=item base
+
+A hashref which is imported as properties of the new object.
+
+=back
 
 =cut
 
 sub new {
     my $pkg = shift;
     my $args = (ref $_[0]) ? $_[0] : { @_ };
-    if ($args->{_DBH}) {
-        $args->{dbh} = $args->{_DBH};
-        delete $args->{_DBH};
-    };
-    my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
-    my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
-    $self =  PGObject::Simple::new($pkg, %$self);
+
+    my $self = PGObject::Simple::new($pkg, %{$args->{base}});
     $self->__validate__  if $self->can('__validate__');
     return $self;
-}
-
-=item set_dbh
-
-Attribute _DBH builder.  Should probably have been named _set_dbh.
-
-=cut
-
-sub set_dbh {
-    my ($self) = @_;
-    $self->{_DBH} =  LedgerSMB::App_State::DBH();
-    return  LedgerSMB::App_State::DBH();
-}
-
-=item dbh
-
-This is a wrapper around PGObject::Simple->dbh with the exception that we provide a
-a static/class invocation possibility as well.
-
-=cut
-
-sub dbh {
-    my ($self) = @_;
-    return $self->SUPER::dbh() if ref $self;
-    return LedgerSMB::App_State::DBH();
-}
-
-sub _parse_array {
-    my ($self, $value) = @_;
-    return @$value if ref $value eq 'ARRAY';
-    return if !defined $value;
-    # No longer needed since we require DBD::Pg 2.x
-}
-
-sub _db_array_scalars {
-    my $self = shift @_;
-    my @args = @_;
-    return \@args;
-    # No longer needed since we require DBD::Pg 2.x
-}
-
-sub _db_array_literal {
-    my $self = shift @_;
-    my @args = @_;
-    return \@args;
-    # No longer needed since we require DBD::Pg 2.x
 }
 
 =item $self->merge(\%base, %args)
@@ -130,9 +86,18 @@ sub is_allowed_role {
     return $access->{lsmb__is_allowed_role};
 }
 
-sub _get_schema {
-    return 'public';
+=item $self->funcschema()
+
+
+
+=cut
+
+sub funcschema {
+    my ($self) = @_;
+
+    return LedgerSMB::Sysconfig::db_namespace();
 }
+
 
 =back
 

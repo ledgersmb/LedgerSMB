@@ -5,36 +5,43 @@ define(["dojo/_base/declare",
         "dojo/mouse",
         "dojo/_base/array",
         "dojo/store/JsonRest", "dojo/store/Observable",
-        "dojo/store/Memory", "dojo/store/Cache",
-        "dijit/Tree", "dijit/tree/ObjectStoreModel"
+        "dojo/store/Memory",
+        "dijit/Tree", "dijit/tree/ObjectStoreModel",
+        "dijit/registry"
        ], function(declare, on, lang, event, mouse, array,
-                   JsonRest, Observable, Memory, Cache, Tree, ObjectStoreModel
+                   JsonRest, Observable, Memory, Tree, ObjectStoreModel,
+                   registry
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
         var restStore = new JsonRest({
-            target:      "menu.pl?action=menuitems_json&",
+            target:      "menu.pl?action=menuitems_json",
             idProperty: "id"
         });
         var memoryStore = new Memory({idProperty: "id"});
-        var store = new Cache(restStore, memoryStore);
+        memoryStore = new Observable(memoryStore);
 
-        // initialize the store with the full menu
-        var results = store.query({});
-
-        // give store Observable interface so Tree can track updates
-        store = new Observable(store);
-
+       var complete = false;
         // create model to interface Tree to store
         var model = new ObjectStoreModel({
-            store: store,
+            store: memoryStore,
             labelAttr: 'label',
             mayHaveChildren: function(item){ return item.menu; },
             getChildren: function(object, onComplete, onError){
-                onComplete(memoryStore.query({parent: object.id}));
-             },
+                if (complete) {
+                    onComplete(memoryStore.query({parent: object.id}));
+                }
+                else {
+                    restStore.query({}).then(
+                        function(items){
+                            memoryStore.setData(items);
+                            onComplete(memoryStore.query({parent: object.id}));
+                        }, function(){ onError(); });
+                    complete = true;
+                }
+            },
             getRoot: function(onItem, onError){
-                store.get(0).then(onItem, onError);
+                onItem({ id: 0 });
             }
         });
 
@@ -45,6 +52,7 @@ define(["dojo/_base/declare",
         postCreate: function() {
             this.inherited(arguments);
 
+            var self = this;
             this.own(
                 on(this.containerNode, "mousedown",
                    lang.hitch(this, this.__onClick)));
@@ -73,7 +81,14 @@ define(["dojo/_base/declare",
                             + location.search + '#' + url, "_blank");
             }
             else {
-                location.hash = url;
+                // Add timestamp to url so that it is unique.
+                // A workaround for the blocking of multiple multiple clicks
+                // for the same url (see the MainContentPane.js load_link
+                // function).
+                url += '#' + Date.now();
+
+                var mainDiv = registry.byId("maindiv");
+                mainDiv.load_link(url);
             }
         },
         __onClick: function(e) {

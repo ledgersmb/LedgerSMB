@@ -1,11 +1,11 @@
 
-=pod
+package LedgerSMB::Auth::DB;
 
 =head1 NAME
 
 LedgerSMB::Auth::DB - Standard Authentication DB module.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This is the standard DB-based module for authentication.  Uses HTTP basic
 authentication.
@@ -15,8 +15,6 @@ authentication.
 =over
 
 =cut
-
-package LedgerSMB::Auth::DB;
 
 use strict;
 use warnings;
@@ -68,35 +66,35 @@ sub _build_credentials {
     return \%rv;
 }
 
-=item get_credentials
+=item get_credentials([domain, company])
 
 Gets credentials from the 'HTTP_AUTHORIZATION' environment variable which must
 be passed in as per the standards of HTTP basic authentication.
 
 Returns a hashref with the keys of login and password.
 
+Note that the object needs to cache the domain and company values supplied
+on the first invocation. Further invocations to this method may return a
+cached response from the first invocation.
+
 =cut
 
 sub get_credentials {
-    my ($self, $domain) = @_;
-    # We ignore domain, but other auth providers may choose to use it
+    my ($self, $domain, $company) = @_;
+    # We ignore domain and company, but other auth providers may use it
 
     return $self->credentials;
 }
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-#
-# Copyright (C) 2006-2017
-# This work contains copyrighted information from a number of sources all used
-# with permission.  It is released under the GNU General Public License
-# Version 2 or, at your option, any later version.  See COPYRIGHT file for
-# details.
+Copyright (C) 2006-2017 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

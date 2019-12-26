@@ -1,0 +1,14 @@
+#!/bin/bash
+
+call_psql () {
+  local PERL5OPT=
+  local PERL5LIB=
+
+  psql "$@"
+
+  return $?
+}
+
+call_psql "$@"
+exit $?
+

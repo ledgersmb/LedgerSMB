@@ -1,16 +1,32 @@
-#  This is the new configuration file for LedgerSMB.  Eventually all system
-# configuration directives will go here,  This will probably not fully replace
-# the ledgersmb.conf until 1.3, however.
 
 package LedgerSMB::Sysconfig;
+
+=head1 NAME
+
+LedgerSMB::Sysconfig - LedgerSMB configuration management
+
+=head1 DESCRIPTION
+
+LedgerSMB configuration management
+
+=head1 METHODS
+
+This module doesn't specify any methods.
+
+=cut
+
 use strict;
 use warnings;
 
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
+# After Perl 5.20 is the minimum required version,
+# we can drop the restriction on the match vars
+# because 5.20 doesn't copy the data (but uses
+# string slices)
 use English qw(-no_match_vars);
-
+use Symbol;
 
 
 =head2 die_pretty $line_1, $line_2, $line_N;
@@ -119,28 +135,34 @@ sub def {
     $docs{$sec}->{$key} = $args{doc};
     {
 
-        ## no critic (ProhibitNoStrict)
-        no strict 'refs';           ## no critic (ProhibitProlongedStrictureOverride ) # sniff  # needed as we use the contents of a variable as the main variable name
+        my $ref = qualify_to_ref $name;
         no warnings 'redefine';     ## no critic ( ProhibitNoWarnings ) # sniff
-        ${$name} = $cfg->val($sec, $key, $default);     # get the value of config key $section.$key.  If it doesn't exist use $default instead
+
+        # get the value of config key $section.$key.
+        #  If it doesn't exist use $default instead
+        ${*{$ref}} = $cfg->val($sec, $key, $default);
         if (defined $suffix) {
-            ${$name} = "${$name}$suffix";               # Append a value suffix if defined, probably something like $EUID or $PID etc
+            # Append a value suffix if defined,
+            # probably something like $EUID or $PID etc
+            ${*{$ref}} = "${$name}$suffix";
         }
 
-        ${$name} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );  # If an environment variable is associated and currently defined, override the configfile and default with the ENV VAR
+        # If an environment variable is associated and currently defined,
+        #  override the configfile and default with the ENV VAR
+        ${*{$ref}} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );
 
         # If an environment variable is associated, set it  based on the
         # current value (taken from the config file, default, or pre-existing
         #  env var.
-        $ENV{$envvar} = ${$name}    ## no critic   # sniff
-            if $envvar && defined ${$name};
+        $ENV{$envvar} = ${*{$ref}}    ## no critic   # sniff
+            if $envvar && defined ${*{$ref}};
 
         # create a functional interface
-        *{$name} = sub {
+        *{$ref} = sub {
             my ($nv) = @_; # new value to be assigned
-            my $cv = ${$name};
+            my $cv = ${*{$ref}};
 
-            ${$name} = $nv if scalar(@_) > 0;
+            ${*{$ref}} = $nv if scalar(@_) > 0;
             return $cv;
         };
     }
@@ -281,11 +303,6 @@ def 'dojo_theme',
     default => 'claro',
     doc => q{};
 
-def 'dojo_location',
-    section => 'main',
-    default => ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js',
-    doc => q{};
-
 def 'force_username_case',
     section => 'main',
     default => undef,  # don't force case
@@ -338,11 +355,6 @@ def 'cache_templates',
     doc => q{};
 
 ### SECTION  ---   paths
-
-def 'cssdir',
-    section => 'main', # SHOULD BE 'paths' ????
-    default => 'css/',
-    doc => q{};
 
 # Path to the translation files
 def 'localepath',
@@ -477,7 +489,7 @@ our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
 #
 our @newscripts = qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
-   configuration.pl contact.pl contact_reports.pl drafts.pl
+   configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl
    file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
    journal.pl login.pl lreports_co.pl menu.pl order.pl parts.pl payment.pl
    payroll.pl pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl
@@ -588,5 +600,16 @@ sub override_defaults {
 }
 
 override_defaults;
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2006-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;

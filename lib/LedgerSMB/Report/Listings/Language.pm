@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Language;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Language - List languages for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Report::Listings::Language - List languages for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Language;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -39,25 +41,18 @@ None
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
       col_id => 'code',
         type => 'href',
    href_base => 'am.pl?action=edit_language&code=',
-        name => LedgerSMB::Report::text('Code'), },
+        name => $self->Text('Code'), },
 
     { col_id => 'description',
         type => 'text',
-        name => LedgerSMB::Report::text('Description'), },
+        name => $self->Text('Description'), },
     ];
 }
-
-=head2 header_lines
-
-None
-
-=cut
-
-sub header_lines { return []; }
 
 =head2 name
 
@@ -65,7 +60,10 @@ Languages
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Language'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Language');
+}
 
 =head1 METHODS
 
@@ -82,11 +80,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2013 The LedgerSMB Core Team.  This file may be reused in
-accordance with the GNU General Public License (GNU GPL) version 2.0 or, at your
-option, any later version.  Please see the LICENSE.TXT included.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

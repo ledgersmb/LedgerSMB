@@ -33,13 +33,15 @@
 
    # the elements in the 'columns' array support these attributes:
    #  - type         : can be any of 'input_text', 'href', 'hidden', 'checkbox'
-   #                   'radio', 'mirrored', 'text'
+   #                   'radio', 'mirrored', 'text', 'boolean_checkmark', 'select'
    #  - col_id       : the internal identifier for the column
    #  - class        : the (additional) css classes to be applied to the column
    #  - data_dojo_type : Dojo type for the inputs in the column
    #  - name         : the value presented in the table header for this column
    #  - href_base    : the URL base to use for 'href' typed columns
    #  - href_target  : value for the 'target' attribute of the 'a' tag
+   #  - options      : items to be selected from in case of SELECT type
+   #  - default_blank: (boolean) indicates a blank drop down item should be added
 
    # the elements in the 'tbody' hash support these attributes:
    #  - rows         : an array of hashes with the values for each column
@@ -50,6 +52,7 @@
    #    - ${col_id}_href_suffix : the URL fragment to be appended to the
    #                              href_base value specified by ${col_id}
    #                              when that's an 'href' typed column
+   #    - ${col_id}_NOHREF     : boolean suppressing 'href'; using 'text'
 
    # the elements in the 'tfoot' hash support these attributes:
    #  - rows         : an array of hashes with the values for each column
@@ -88,12 +91,14 @@ END; ?>
    <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
       <?lsmb PROCESS input element_data = {
                                  type="hidden"
-                                 name="row_" _ ROWCOUNT
+                                 name=PFX _ "row_" _ ROWCOUNT
              value=ROW.row_id } ?>
       <?lsmb- FOREACH COL IN columns;
             TYPE = COL.type;
-            IF ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden';
-            TYPE = 'text';
+            NOHREF = COL.col_id _ "_NOHREF";
+            IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
+               OR (ROW.$NOHREF AND TYPE == 'href');
+              TYPE = 'text';
             END;
           IF TYPE == 'hidden';
       NAME = PFX _ COL.col_id _ '_' _ ROW.row_id; ?>
@@ -106,7 +111,7 @@ END; ?>
           <?lsmb- IF TYPE == 'input_text' -?>
           <?lsmb
                  PROCESS input element_data = {
-                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="text"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
@@ -114,7 +119,7 @@ END; ?>
                                           value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSIF TYPE == 'password';
                  PROCESS input element_data = {
-                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="password"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
@@ -128,20 +133,43 @@ END; ?>
                    END;
                    ?>
          <?lsmb PROCESS input element_data = {
-                          id=COL.col_id _ '-' _ ROWCOUNT
+                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                           type="checkbox"
                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                           class=COL.class
                           value=ROW.row_id
-                          checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'radio' ?>
+                          checked=CHECKED };
+
+               ELSIF TYPE == 'boolean_checkmark';
+                   IF ROW.${COL.col_id};
+                       ?>✓<?lsmb
+                   END;
+
+               ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
-                                         id=COL.col_id _ '-' _ ROWCOUNT
+                                         id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class
                                          value=ROW.row_id
                 checked=CHECKED } ?>
+         <?lsmb- ELSIF TYPE == 'select';
+                # ROW is passed as an argument if COL.options is a callback
+                # function, which allows dropdown options to be dynamically
+                # customised to each row. The ROW argument is harmlessly
+                # ignored by Template Toolkit if COL.options is a static
+                # arrayref common to every row.
+                OPTION_LIST = COL.options(ROW);
+
+                PROCESS select element_data = {
+                text_attr='text'
+                value_attr='value'
+                id=PFX _ COL.col_id _ '-' _ ROWCOUNT
+                name=PFX _ COL.col_id _ '_' _ ROW.row_id
+                class=COL.class
+                options=OPTION_LIST
+                default_blank=COL.default_blank
+                default_values=[ROW.row_id] } ?>
          <?lsmb- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF ROW.$HREF_SFX;
@@ -200,7 +228,7 @@ END; ?>
        <?lsmb
           IF TYPE == 'input_text' -?>
        <?lsmb PROCESS input element_data = {
-                                  id=COL.col_id _ '-' _ ROWCOUNT
+                                  id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                   type="text"
                                   class=COL.class
                                   "data-dojo-type"=DOJO
@@ -215,7 +243,7 @@ END; ?>
                    END;
                    ?>
           <?lsmb PROCESS input element_data = {
-                                          id=COL.col_id _ '-' _ ROWCOUNT
+                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="checkbox"
                                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                                           class=COL.class
@@ -223,7 +251,7 @@ END; ?>
                                           checked=CHECKED } ?>
          <?lsmb- ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
-                                         id=COL.col_id _ '-' _ ROWCOUNT
+                                         id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class

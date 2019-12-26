@@ -115,7 +115,7 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
 <div class="input_line" id="person-country-div">
 <div class="input_group solo">
        <?lsmb country_list.unshift({}) ?>
-                <?lsmb INCLUDE select element_data = {
+                <?lsmb INCLUDE select_country element_data = {
                         text_attr = "name"
                         value_attr = "id"
                         default_values = [employee.country_id]

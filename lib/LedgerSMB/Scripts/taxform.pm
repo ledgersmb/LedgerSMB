@@ -1,8 +1,11 @@
+
+package LedgerSMB::Scripts::taxform;
+
 =head1 NAME
 
 LedgerSMB::Scripts::taxform - LedgerSMB handler for reports on tax forms.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Implement the ability to do end-of-year reporting on vendors as to how
 much was recorded as reportable.
@@ -16,20 +19,16 @@ information depending on what one clicks.
 
 =cut
 
-package LedgerSMB::Scripts::taxform;
-
 use strict;
 use warnings;
 
-use LedgerSMB::Company_Config;
-use LedgerSMB::Template;
 use LedgerSMB::DBObject::TaxForm;
 use LedgerSMB::DBObject::Date;
-use LedgerSMB::Template;
 use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -68,16 +67,10 @@ sub _taxform_screen
 {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
-
     $taxform->get_metadata();
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'taxform/add_taxform',
-        format => 'HTML'
-    );
-    return $template->render($taxform);
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'taxform/add_taxform', $taxform);
 }
 
 sub add_taxform {
@@ -92,7 +85,9 @@ This retrieves and edits a tax form.  Requires that id be set.
 
 sub edit {
     my ($request) = @_;
-    my $tf = LedgerSMB::DBObject::TaxForm->new(%$request)->get($request->{id});
+    my $tf =
+        LedgerSMB::DBObject::TaxForm->new({base => $request})
+        ->get($request->{id});
     $request->merge($tf);
     return _taxform_screen($request);
 }
@@ -124,24 +119,18 @@ package.
 
 =cut
 
-sub _generate_report {
+sub generate_report {
     my ($request) = @_;
+    die $request->{_locale}->text('No tax form selected')
+        unless $request->{tax_form_id};
+
     my $report;
     if ($request->{meta_number}){
         $report = LedgerSMB::Report::Taxform::Details->new(%$request);
     } else {
         $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
     }
-    return $report;
-}
-
-
-sub generate_report {
-    my ($request) = @_;
-    die $LedgerSMB::App_State::Locale->text('No tax form selected')
-        unless $request->{tax_form_id};
-    my $report = _generate_report($request);
-    return $report->render($request);
+    return $request->render_report($report);
 }
 
 =item save
@@ -186,21 +175,14 @@ sub print {
 
     # Business settings for 1099
     #
-    my $cc = $LedgerSMB::Company_Config::settings;
+    my $cc = $request->{_company_config};
     $request->{company_name}      = $cc->{company_name};
     $request->{company_address}   = $cc->{company_address};
     $request->{company_telephone} = $cc->{company_phone};
     $request->{my_tax_code}       = $cc->{businessnumber};
 
-    my $template = LedgerSMB::Template->new(
-          user => $request->{_user},
-          locale => $request->{_locale},
-          path => 'UI',
-          media => 'screen',
-          template => 'taxform/summary_report',
-          format => 'PDF',
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'taxform/summary_report', $request);
 }
 
 =item list_all
@@ -211,17 +193,12 @@ Lists all tax forms.
 
 sub list_all {
     my $request= shift;
-    my $report = LedgerSMB::Report::Taxform::List->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Taxform::List->new(%$request)
+        );
 }
 
 =back
-
-=head1 Copyright (C) 2010 The LedgerSMB Core Team
-
-Licensed under the GNU General Public License version 2 or later (at your
-option).  For more information please see the included LICENSE and COPYRIGHT
-files.
 
 =cut
 
@@ -237,4 +214,16 @@ files.
         }
     }
 };
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2010-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 1;

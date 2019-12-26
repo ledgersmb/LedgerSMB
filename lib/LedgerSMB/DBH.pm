@@ -1,3 +1,6 @@
+
+package LedgerSMB::DBH;
+
 =head1 NAME
 
 LedgerSMB::DBH - Database Connection Routines for LedgerSMB
@@ -8,12 +11,10 @@ LedgerSMB::DBH - Database Connection Routines for LedgerSMB
 
 =cut
 
-package LedgerSMB::DBH;
 use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use Carp;
 use DBI;
@@ -21,6 +22,10 @@ use DBI;
 =head1 DESCRIPTION
 
 Sets up and manages the db connection.  This returns a DBI database handle.
+
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
 
 =head1 FUNCTIONS
 
@@ -38,8 +43,12 @@ sub connect {
     return undef if $username eq 'logout';
 
     my $dbh = DBI->connect("dbi:Pg:dbname=$company", $username, $password,
-           { PrintError => 0, AutoCommit => 0,
-             pg_enable_utf8 => 1, pg_server_prepare => 0 })
+                           { PrintError => 0, AutoCommit => 0,
+                             # From the DBI docs:
+                             #   It is strongly recommended that
+                             #   AutoInactiveDestroy is enabled on all new code
+                             AutoInactiveDestroy => 1,
+                             pg_enable_utf8 => 1, pg_server_prepare => 0 })
         or return undef;
 
     $dbh->do(q{set client_min_messages = 'warning'});
@@ -51,32 +60,6 @@ sub connect {
     }
 
     return $dbh;
-}
-
-=head2 set_datestyle
-
-This is used for old code, to set the datetyle for input.  It is not needed
-for new code because of PGDate support to/from the db.  For this reason, once
-order entry is removed, we should probably remove support for it.
-
-=cut
-
-sub set_datestyle {
-    my $dbh = LedgerSMB::App_State::DBH;
-    my $datequery = 'select dateformat from user_preference join users using(id)
-                      where username = CURRENT_USER';
-    my $date_sth = $dbh->prepare($datequery);
-    $date_sth->execute;
-    my ($datestyle) = $date_sth->fetchrow_array;
-    my %date_query = (
-        'mm/dd/yyyy' => 'set DateStyle to \'SQL, US\'',
-        'mm-dd-yyyy' => 'set DateStyle to \'POSTGRES, US\'',
-        'dd/mm/yyyy' => 'set DateStyle to \'SQL, EUROPEAN\'',
-        'dd-mm-yyyy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
-        'dd.mm.yyyy' => 'set DateStyle to \'GERMAN\''
-    );
-    $dbh->do( $date_query{ $datestyle } ) if $date_query{ $datestyle };
-    return;
 }
 
 =head2 require_version($version)
@@ -92,13 +75,14 @@ zero-downtime upgrades.
 =cut
 
 sub require_version {
-    my ($self, $expected_version) = @_;
+    my ($self, $dbh, $expected_version) = @_;
     $expected_version ||= $self; # handling ::require_version($version) syntax
 
-    my $ignore_version = LedgerSMB::Setting->get('ignore_version');
+    my $ignore_version =
+        LedgerSMB::Setting->new({base=>{dbh=>$dbh}})->get('ignore_version');
     return if $ignore_version;
 
-    my $version = LedgerSMB::Setting->get('version');
+    my $version = LedgerSMB::Setting->new({base=>{dbh=>$dbh}})->get('version');
 
     if ($expected_version eq $version) {
         return '';
@@ -108,13 +92,13 @@ sub require_version {
     }
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014-2017 The LedgerSMB Core Team.
+Copyright (C) 2014-2017 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License,
-version 2 or at your option any later version.  Please see the included
-LICENSE.txt for more information.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

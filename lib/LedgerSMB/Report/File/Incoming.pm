@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::File::Incoming;
+
 =head1 NAME
 
 LedgerSMB::Report::File::Incoming - Files for LSMB processes.
@@ -8,7 +11,6 @@ LedgerSMB::Report::File::Incoming - Files for LSMB processes.
 
 =cut
 
-package LedgerSMB::Report::File::Incoming;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -60,14 +62,6 @@ sub columns {
          name => text('Uploaded By'), },
     ];
 }
-
-=head2 header_lines
-
-None
-
-=cut
-
-sub header_lines { return []; }
 
 =head2 name
 
@@ -125,13 +119,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.txt file for more information.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

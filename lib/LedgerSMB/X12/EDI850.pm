@@ -1,16 +1,26 @@
+
+package LedgerSMB::X12::EDI850;
+
 =head1 NAME
 
 LedgerSMB::X12::EDI850 - Conversion class for X12 850 files to LedgerSMB
 structures
+
+=head1 DESCRIPTION
+
+This module processes X12 EDI 850 purchase orders and can present them in
+structures compatible with LedgerSMB's order entry system.  The API is simple.
 
 =head1 SYNOPSIS
 
  my $edi = LedgerSMB::X12::EDI850->new(message => 'message.edi');
  my $form = $edi->order;
 
-=cut
+=head1 METHODS
 
-package LedgerSMB::X12::EDI850;
+This module doesn't specify any methods.
+
+=cut
 
 use strict;
 use warnings;
@@ -30,11 +40,6 @@ sub _config {
     return $pkg_dir->file('cf', '850.cf')->stringify;
 }
 
-=head1 DESCRIPTION
-
-This module processes X12 EDI 850 purchase orders and can present them in
-structures compatible with LedgerSMB's order entry system.  The API is simple.
-
 =head1 PROPERTIES
 
 =over
@@ -53,7 +58,10 @@ sub _order {
     my ($self) = @_;
     $self->parse;
     my $sep = $self->parser->get_element_separator;
-    my $form = Form->new;
+    # Suppressing critic for the line below: We *did* include
+    # but as LedgerSMB::Form (which is the module), but the module
+    # creates the package called 'Form' (not 'LedgerSMB::Form')
+    my $form = Form->new; ## no critic
     my $sender_idx;
     my $sender_id;
 
@@ -133,8 +141,18 @@ sub _order {
 
 =back
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2013-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
 
 1;

@@ -1,6 +1,14 @@
+
+package LedgerSMB::Scripts::vouchers;
+
 =head1 NAME
 
 LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
+
+=head1 DESCRIPTION
+
+TODO: This would be a great place to describe the roles and differences
+between batches and vouchers...
 
 =head1 SYNPOSIS
 
@@ -8,11 +16,7 @@ LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 
 =head1 METHODS
 
-=over
-
 =cut
-
-package LedgerSMB::Scripts::vouchers;
 
 use strict;
 use warnings;
@@ -23,8 +27,9 @@ use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
+use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -42,13 +47,14 @@ our $custom_batch_types = {};
         unless ( do $do_ ) {
             if ($! or $@) {
                 warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (vouchers.pm - first)\n\n" );
+                die (  'Status: 500 Internal server error ('
+                        . __FILE__ . '.pm - ' . __LINE__ . ")\n\n" );
             }
         }
     }
-};
+}
 
-=item create_batch
+=head2 create_batch($request)
 
 Displays the new batch screen.  Required inputs are
 
@@ -78,58 +84,106 @@ sub create_batch {
 
     $batch->get_search_results({mini => 1});
 
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'create_batch',
-        format => 'HTML'
-    );
-    return $template->render({ request => $request,
-                                        batch => $batch });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'create_batch',
+                             { request => $request,
+                               batch => $batch });
 }
 
-=item create_vouchers
+=head2 create_vouchers($request)
 
-Closes the form in the db, and if unsuccessful displays the batch info again.
+Creates a new voucher batch, then forwards to C<add_vouchers> to begin
+selection of transactions to add to the new batch.
 
-If successful at closing the form, it saves the batch to the db and redirects to
-add_vouchers().
+Only proceeds if the form is successfully closed. Otherwise displays the
+batch info screen again.
+
+C<$request> is a L<LedgerSMB> object reference.
+
+The request must contain:
+
+=over
+
+=item * dbh
+
+=item * batch_number [stored as the batch control_code]
+
+=item * batch_class  [ar|ap|gl... etc]
+
+=item * batch_date
+
+=item * description
+
+=back
+
+If a new batch is successfully created, C<batch_id> is added to the request.
 
 =cut
 
 sub create_vouchers {
     my ($request) = shift @_;
-    my $batch = LedgerSMB::Batch->new({base => $request});
-    $batch->{batch_class} = $request->{batch_type};
-    if ($request->close_form){
-        $batch->create;
-        return add_vouchers($batch);
-    } else {
-        $request->{notice} =
-            $request->{_locale}->text('Error creating batch.  Please try again.');
+
+    unless ($request->close_form) {
+        $request->{notice} = $request->{_locale}->text(
+            'Error creating batch.  Please try again.'
+        );
         return create_batch($request);
     }
+
+    my $batch_data = {
+        dbh => $request->{dbh},
+        batch_number => $request->{batch_number},
+        batch_class => $request->{batch_type},
+        batch_date => $request->{batch_date},
+        description => $request->{description},
+    };
+    my $batch = LedgerSMB::Batch->new({base => $batch_data});
+
+    $request->{batch_id} = $batch->create;
+    return add_vouchers($request);
 }
-
-=item add_vouchers
-
-Redirects to a script to add vouchers for the type.  batch_type must be set.
-
-=cut
 
 sub _add_vouchers_old {
     my ($request, $entry) = @_;
 
+    $request->{approved} = 0;
+    $request->{transdate} = $request->{batch_date};
+
     return dispatch($entry->{script},
                     $entry->{function},
+                    $request->{_user},
                     $request);
 }
+
+=head2 add_vouchers($request)
+
+Add vouchers to a batch. Forwards the request to the appropriate
+filtering screen according to the type of batch.
+
+C<$request> is a L<LedgerSMB> object reference, which must contain:
+
+=over
+
+=item * dbh
+
+=item * batch_type
+
+Must be one of: 
+C<ap>, C<ar>, C<gl>, C<sales_invoice>, C<vendor_invoice>, C<receipt>,
+C<payment>, C<payment_reversal>, C<receipt_reversal>.
+
+=item * batch_id
+
+=back
+
+C<account_class> is added to the request when C<batch_type> is one of:
+C<receipt>, C<payment>, C<payment_reversal>, C<receipt_reversal>.
+
+=cut
 
 sub add_vouchers {
     my ($request) = shift @_;
 
-    my $batch = LedgerSMB::Batch->new({base => $request});
     our $vouchers_dispatch =
     {
         ap         => {script => 'ap.pl', function => 'add'},
@@ -176,11 +230,6 @@ sub add_vouchers {
                      }},
     };
 
-    $request->{batch_id} = $batch->{id};
-    $request->{approved} = 0;
-    $request->{transdate} = $request->{batch_date};
-    delete $request->{id};
-
     my $entry = $vouchers_dispatch->{$request->{batch_type}};
     return _add_vouchers_old($request, $entry)
         if defined $entry->{script};
@@ -188,29 +237,36 @@ sub add_vouchers {
     return $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
-=item list_batches
+=head2 list_batches
 
-This function displays the search results.
+This endpoint searches for batches and displays the results, by passing the
+request to L<LedgerSMB::Report::Unapproved::Batch_Overview>.
 
-No inputs are required, but amount_lt and amount_gt can specify range
-Also description can be a partial match.
+The following request parameters are accepted and are optional:
 
-empty specifies only voucherless batches
+    * class_id
+    * description
+    * amount_lt
+    * amount_gt
+    * approved
 
-approved (true or false) specifies whether the batch has been approved
+These may be used to filter the search results. If omitted or set to
+C<undef>, they have no effect on the returned results.
 
-class_id and created_by are exact matches
+See L<LedgerSMB::Report::Unapproved::Batch_Overview> for full details
+of these parameters.
 
 =cut
 
 sub list_batches {
     my ($request) = @_;
     $request->open_form;
-    return LedgerSMB::Report::Unapproved::Batch_Overview->new(
-                 %$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Unapproved::Batch_Overview->new(%$request)
+        );
 }
 
-=item get_batch
+=head2 get_batch
 
 Requires that batch_id is set.
 
@@ -220,15 +276,19 @@ Displays all vouchers from the batch by type, and includes amount.
 
 sub get_batch {
     my ($request)  = @_;
+    my $setting =  LedgerSMB::Setting->new({base=>$request});
     $request->open_form;
 
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
-    return LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Unapproved::Batch_Detail->new(
+            default_language => $setting->get('default_language'),
+            %$request,
+        ));
 }
 
-=item single_batch_approve
+=head2 single_batch_approve
 
 Approves the single batch on the details screen.  Batch_id must be set.
 
@@ -246,7 +306,7 @@ sub single_batch_approve {
     }
 }
 
-=item single_batch_delete
+=head2 single_batch_delete
 
 Deletes the single batch on the details screen.  Batch_id must be set.
 
@@ -264,7 +324,7 @@ sub single_batch_delete {
     }
 }
 
-=item single_batch_unlock
+=head2 single_batch_unlock
 
 Unlocks the single batch on the details screen.  Batch_id must be set.
 
@@ -284,13 +344,13 @@ sub single_batch_unlock {
     }
 }
 
-=item batch_voucher_delete
+=head2 batch_vouchers_delete
 
 Deletes selected vouchers.
 
 =cut
 
-sub batch_voucher_delete {
+sub batch_vouchers_delete {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
@@ -304,7 +364,7 @@ sub batch_voucher_delete {
     return get_batch($request);
 }
 
-=item batch_approve
+=head2 batch_approve
 
 Approves all selected batches.
 
@@ -323,12 +383,11 @@ sub batch_approve {
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->post;
     }
-    $request->{report_name} = 'unapproved';
-    $request->{search_type} = 'batches';
+    $request->{report_name} = 'batches';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item batch_unlock
+=head2 batch_unlock
 
 Unlocks selected batches
 
@@ -347,12 +406,11 @@ sub batch_unlock {
             $batch->unlock($request->{"row_$count"});
         }
     }
-    $request->{report_name} = 'unapproved';
-    $request->{search_type} = 'batches';
+    $request->{report_name} = 'batches';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item batch_delete
+=head2 batch_delete
 
 Deletes selected batches
 
@@ -365,18 +423,21 @@ sub batch_delete {
         return list_batches($request);
     }
 
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    for my $count (1 .. $batch->{rowcount_}){
-        next unless $batch->{'select_' . $count};
-        $batch->{batch_id} = $batch->{"row_$count"};
-        $batch->delete;
+    foreach my $count (1 .. $request->{rowcount_}){
+        if ($request->{"select_$count"}) {
+            my $batch = LedgerSMB::Batch->new(base => {
+                dbh => $request->{dbh},
+                batch_id => $request->{"row_$count"},
+            });
+            $batch->delete;
+        }
     }
-    $request->{report_name} = 'unapproved';
-    $request->{search_type} = 'batches';
+
+    $request->{report_name} = 'batches';
     return LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item reverse_overpayment
+=head2 reverse_overpayment
 
 Adds overpayment reversal vouchers to a batch
 
@@ -404,46 +465,47 @@ my %print_dispatch = (
        script => 'ar.pl',
        entrypoint => sub {
            my ($voucher, $request) = @_;
-           $lsmb_legacy::form->{ARAP} = 'AR';
-           $lsmb_legacy::form->{arap} = 'ar';
-           $lsmb_legacy::form->{vc} = 'customer';
-           $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+           $lsmb_legacy::form->{ARAP} = 'AR'; ## no critic
+           $lsmb_legacy::form->{arap} = 'ar'; ## no critic
+           $lsmb_legacy::form->{vc} = 'customer'; ## no critic
+           $lsmb_legacy::form->{id} = $voucher->{transaction_id} ## no critic
                 if ref $voucher;
-           $lsmb_legacy::form->{formname} = 'ar_transaction';
+           $lsmb_legacy::form->{formname} = 'ar_transaction'; ## no critic
 
-           lsmb_legacy::create_links();
-           $lsmb_legacy::form->{media} = $request->{media};
-           lsmb_legacy::print();
+           lsmb_legacy::create_links(); ## no critic
+           $lsmb_legacy::form->{media} = $request->{media}; ## no critic
+           lsmb_legacy::print(); ## no critic
        }
     },
     BC_SALES_INVOICE() => {
         script => 'is.pl',
         entrypoint => sub {
             my ($voucher, $request) = @_;
-            $lsmb_legacy::form->{formname} = 'invoice';
-            $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+            $lsmb_legacy::form->{formname} = 'invoice'; ## no critic
+            $lsmb_legacy::form->{id} = ## no critic
+                $voucher->{transaction_id}
                                if ref $voucher;
 
-            lsmb_legacy::create_links();
-            $lsmb_legacy::form->{media} = $request->{media};
-            lsmb_legacy::print();
+            lsmb_legacy::create_links(); ## no critic
+            $lsmb_legacy::form->{media} = $request->{media}; ## no critic
+            lsmb_legacy::print(); ## no critic
         }
     },
    BC_VENDOR_INVOICE() => {
        script => 'is.pl',
        entrypoint => sub {
            my ($voucher, $request) = @_;
-           $lsmb_legacy::form->{formname} = 'product_receipt';
-           $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+           $lsmb_legacy::form->{formname} = 'product_receipt'; ## no critic
+           $lsmb_legacy::form->{id} = $voucher->{transaction_id} ## no critic
                 if ref $voucher;
 
-           lsmb_legacy::create_links();
-           lsmb_legacy::print();
+           lsmb_legacy::create_links(); ## no critic
+           lsmb_legacy::print(); ## no critic
        }
     },
     );
 
-=item print_batch
+=head2 print_batch
 
 Prints vouchers of a given batch.  Currently payments, receipts, ap transactions
 and gl transactions are not printed.
@@ -473,6 +535,7 @@ sub print_batch {
                 dispatch(
                     $entry->{script},
                     $entry->{entrypoint},
+                    $request->{_user},
                     { %$request },
                     # entrypoint's arguments:
                     $_,
@@ -490,42 +553,35 @@ sub print_batch {
         `$zipcmd`;
 
         my $file_path = "$dirname.zip";
-        open my $zip, '<', $file_path
-            or die "Failed to open temporary zip file $file_path : $!";
-        binmode $zip, ':bytes';
-        unlink $file_path;
 
-        return [
-            HTTP_OK,
-            [
-                'Content-Type' => 'application/zip',
-                'Content-Disposition' =>
-                    'attachment; filename="batch-'
-                    . $request->{batch_id} . '.zip"',
-            ],
-            $zip
-        ];
+        return sub {
+            my $responder = shift;
+
+            open my $zip, '<:bytes', $file_path
+                or die "Failed to open temporary zip file $file_path : $!";
+
+            $responder->(
+                [
+                 HTTP_OK,
+                 [
+                  'Content-Type' => 'application/zip',
+                  'Content-Disposition' =>
+                      'attachment; filename="batch-'
+                      . $request->{batch_id} . '.zip"',
+                 ],
+                 $zip   # the file-handle
+                ]);
+
+            close $zip
+                or warn "Failed to close temporary zip file $file_path : $!";
+            unlink $file_path
+                or warn "Failed to unlink temporary zip file $file_path : $!";
+        };
     }
     else {
-        return $report->render($request);
+        return $request->render_report($report);
     }
 }
-
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/vouchers.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (vouchers.pm - end)\n\n" );
-            }
-        }
-    }
-};
-1;
-
-=back
 
 =head1 CUSTOM BATCH TYPES
  custom_batch_types hash provides hooks for handling additional batch types
@@ -549,10 +605,15 @@ maps to the selection stored proc
       {map_to       => 1,
       select_method => 'custom_sample_ap_select'};
 
-=head1 Copyright (C) 2009, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-This file is licensed under the Gnu General Public License version 2, or at your
+Copyright (C) 2009-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+
+1;

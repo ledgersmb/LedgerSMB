@@ -53,7 +53,7 @@ RETURNS SETOF voucher_list AS
 $$
                 SELECT v.id, a.invoice, a.invnumber, e.name,
                         v.batch_id, v.trans_id,
-                        a.amount, a.transdate, 'Payable', v.batch_class
+                        a.amount_bc, a.transdate, 'Payable', v.batch_class
                 FROM voucher v
                 JOIN ap a ON (v.trans_id = a.id)
                 JOIN entity_credit_account eca
@@ -65,7 +65,7 @@ $$
                 UNION
                 SELECT v.id, a.invoice, a.invnumber, e.name,
                         v.batch_id, v.trans_id,
-                        a.amount, a.transdate, 'Receivable', v.batch_class
+                        a.amount_bc, a.transdate, 'Receivable', v.batch_class
                 FROM voucher v
                 JOIN ar a ON (v.trans_id = a.id)
                 JOIN entity_credit_account eca
@@ -79,8 +79,8 @@ $$
                 SELECT v.id, false, a.source,
                         cr.meta_number || '--'  || co.legal_name ,
                         v.batch_id, v.trans_id,
-                        sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
-                             ELSE a.amount  END), a.transdate,
+                        sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount_bc * -1
+                             ELSE a.amount_bc  END), a.transdate,
                         CASE WHEN bc.class = 'payment' THEN 'Payment'
                              WHEN bc.class = 'payment_reversal'
                              THEN 'Payment Reversal'
@@ -102,8 +102,8 @@ $$
                 UNION ALL
                 SELECT v.id, false, a.source, a.memo,
                         v.batch_id, v.trans_id,
-                        CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
-                             ELSE sum(a.amount)  END, a.transdate,
+                        CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount_bc) * -1
+                             ELSE sum(a.amount_bc)  END, a.transdate,
                         CASE WHEN bc.class = 'receipt' THEN 'Receipt'
                              WHEN bc.class = 'receipt_reversal'
                              THEN 'Receipt Reversal'
@@ -124,11 +124,11 @@ $$
                 UNION ALL
                 SELECT v.id, false, g.reference, g.description,
                         v.batch_id, v.trans_id,
-                        sum(a.amount), g.transdate, 'GL', v.batch_class
+                        sum(a.amount_bc), g.transdate, 'GL', v.batch_class
                 FROM voucher v
                 JOIN gl g ON (g.id = v.trans_id)
                 JOIN acc_trans a ON (v.trans_id = a.trans_id)
-                WHERE a.amount > 0
+                WHERE a.amount_bc > 0
                         AND v.batch_id = in_batch_id
                         AND v.batch_class IN (select id from batch_class
                                         where class = 'gl')
@@ -186,19 +186,19 @@ $$
                 SELECT b.id, c.class, b.control_code, b.description, u.username,
                         b.created_on, b.default_date,
                         sum(
-                                CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
-                                     THEN al.amount
+                                CASE WHEN vc.id = 5 AND al.amount_bc < 0 -- GL
+                                     THEN al.amount_bc
                                      WHEN vc.id  = 1
-                                     THEN ap.amount
+                                     THEN ap.amount_bc
                                      WHEN vc.id = 2
-                                     THEN ar.amount
+                 THEN ar.amount_bc
                                      ELSE 0
                                 END) AS transaction_total,
                         sum(
-                                CASE WHEN l.description = 'AR' AND vc.id IN (6, 7)
-                                     THEN al.amount
-                                     WHEN l.description = 'AP' AND vc.id IN (3, 4)
-                                     THEN al.amount * -1
+                                CASE WHEN alc.description = 'AR' AND vc.id IN (6, 7)
+                                     THEN al.amount_bc
+                                     WHEN alc.description = 'AP' AND vc.id IN (3, 4)
+                                     THEN al.amount_bc * -1
                                      ELSE 0
                                 END
                            ) AS payment_total,
@@ -214,16 +214,18 @@ $$
                         ((vc.id = 5 AND v.trans_id = al.trans_id) OR
                                 (vc.id IN (3, 4, 6, 7)
                                         AND al.voucher_id = v.id))
-                LEFT JOIN account_link l ON (al.chart_id = l.account_id)
+                LEFT JOIN account_link alc ON (al.chart_id = alc.account_id)
                 WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
                         (b.description LIKE
                                 '%' || in_description || '%' OR
                                 in_description IS NULL) AND
                         (in_created_by_eid = b.created_by OR
                                 in_created_by_eid IS NULL) AND
-                        (((in_approved = false OR in_approved IS NULL)
-                          AND approved_on IS NULL)
-                         OR (in_approved = true AND approved_on IS NOT NULL))
+                        (
+                          (in_approved = false AND approved_on IS NULL)
+                          OR (in_approved = true AND approved_on IS NOT NULL)
+                          OR in_approved IS NULL
+                        )
                         and (in_date_from IS NULL
                                 or b.default_date >= in_date_from)
                         and (in_date_to IS NULL
@@ -232,13 +234,13 @@ $$
                         b.control_code, b.default_date
                 HAVING
                         (in_amount_gt IS NULL OR
-                        sum(coalesce(ar.amount, ap.amount,
-                                al.amount))
+                        sum(coalesce(ar.amount_bc, ap.amount_bc,
+                                al.amount_bc))
                         >= in_amount_gt)
                         AND
                         (in_amount_lt IS NULL OR
-                        sum(coalesce(ar.amount, ap.amount,
-                                al.amount))
+                        sum(coalesce(ar.amount_bc, ap.amount_bc,
+                                al.amount_bc))
                         <= in_amount_lt)
                 ORDER BY b.control_code, b.description
 
@@ -264,6 +266,14 @@ $$ language sql;
 
 COMMENT ON FUNCTION batch_get_class_id (in_type text) IS
 $$ returns the batch class id associated with the in_type label provided.$$;
+
+CREATE OR REPLACE FUNCTION batch_get_class_name (in_class_id int) returns text AS
+$$
+SELECT class FROM batch_class WHERE id = $1;
+$$ language sql;
+
+COMMENT ON FUNCTION batch_get_class_name (in_class_id int) IS
+$$ returns the batch class name associated with the in_class_id id provided.$$;
 
 CREATE OR REPLACE FUNCTION
 batch_search_mini
@@ -424,6 +434,7 @@ CREATE OR REPLACE FUNCTION batch_delete(in_batch_id int) RETURNS int AS
 $$
 DECLARE
         t_transaction_ids int[];
+        t_payment_ids int[];
 BEGIN
         -- Adjust AR/AP tables for payment and payment reversal vouchers
         -- voucher_id is only set in acc_trans on payment/receipt vouchers and
@@ -437,6 +448,22 @@ BEGIN
                (select entry_id from acc_trans where voucher_id in
                        (select id from voucher where batch_id = in_batch_id)
                );
+
+        SELECT as_array(payment_id) INTO t_payment_ids
+          FROM payment_links
+         WHERE EXISTS (select 1 from payment_links p join acc_trans a
+                           on p.entry_id = a.entry_id
+                        where a.voucher_id IN (select id from voucher
+                                                where batch_id = in_batch_id));
+        DELETE FROM payment_links
+         WHERE EXISTS (select 1 from payment_links p join acc_trans a
+                           on p.entry_id = a.entry_id
+                        where a.voucher_id IN (select id from voucher
+                                                where batch_id = in_batch_id));
+        DELETE FROM payment
+         WHERE id = any(t_payment_ids)
+               AND NOT EXISTS (select 1 from payment_links
+                                where payment_id = id);
 
         DELETE FROM acc_trans WHERE voucher_id IN
                 (select id FROM voucher where batch_id = in_batch_id);

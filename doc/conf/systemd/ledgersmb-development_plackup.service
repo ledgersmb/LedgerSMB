@@ -1,0 +1,47 @@
+# Place this in /etc/systemd/system/ledgersmb-development_plackup.service
+# systemctl enable ledgersmb-development_plackup
+# service start ledgersmb-development_plackup
+
+[Unit]
+Description=LedgerSMB Plack Development
+After=network.target
+
+[Service]
+WorkingDirectory=WORKING_DIR
+
+#If you do not want a log file, comment this and remove the access_log option below
+Environment=LOG=/var/log/ledgersmb/ledgersmb-development_plackup.log
+
+# In case you installed dependencies into a 'local::lib'
+# make sure you set the PERL5LIB environment variable
+#Environment=PERL5LIB=/path/to/local-lib/lib/perl5
+
+# Be sure to set a user and group below
+# which don't have write access to the directories
+# holding the LedgerSMB sources
+User=ledgersmb
+Group=ledgersmb
+
+# Use --Reload to monitor files changes and restart the server
+# The list below is exhaustive, change it to suit your needs
+# Make sure that Linux::Inotify2 is included in your Perl environment, file
+# monitoring is a performance killer otherwise.
+ExecStart=/usr/bin/plackup           \
+     -I lib                          \
+     -I old/lib                      \
+    --listen localhost:5762          \
+    --workers 1                      \
+    --access-log $LOG                \
+    --server HTTP::Server::PSGI      \
+    --env development                \
+    --Reload "lib, old/lib"          \
+    utils/devel/ledgersmb-server-development.psgi
+#
+# Take note that the --reload and --Reload switches monitors different
+# directories. reload monitors also base and all its subdirectories,
+# so we use only Reload.
+#
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

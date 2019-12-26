@@ -444,7 +444,13 @@ id FROM account WHERE accno = '340'));
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '655000'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('EUR', 'EUR'),
+      ('USD', 'USD');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
+
 
 commit;
 UPDATE account

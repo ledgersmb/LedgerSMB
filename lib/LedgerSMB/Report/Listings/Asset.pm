@@ -1,6 +1,14 @@
+
+package LedgerSMB::Report::Listings::Asset;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
+
+=head1 DESCRIPTION
+
+Implements a listing of individual assets from the fixed asset accounting
+subledger.
 
 =head1 SYNPOSIS
 
@@ -8,7 +16,6 @@ LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Asset;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -77,22 +84,23 @@ has salvage_value   => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
      { col_id => 'tag',
-         name => LedgerSMB::Report::text('Tag'),
+         name => $self->Text('Tag'),
          type => 'href',
     href_base => 'asset.pl?action=asset_edit&id=', },
     {  col_id => 'description',
-         name => LedgerSMB::Report::text('Description'),
+         name => $self->Text('Description'),
          type => 'text', },
     {  col_id => 'purchase_date',
-         name => LedgerSMB::Report::text('Purchase Date'),
+         name => $self->Text('Purchase Date'),
          type => 'text', },
     {  col_id => 'purchase_value',
-         name => LedgerSMB::Report::text('Purchase Value'),
+         name => $self->Text('Purchase Value'),
          type => 'text', },
     {  col_id => 'usable_life',
-         name => LedgerSMB::Report::text('Usable Life'),
+         name => $self->Text('Usable Life'),
          type => 'text', },
    ];
 }
@@ -115,12 +123,13 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return  [
-     { name => 'tag',         text => LedgerSMB::Report::text('Tag') },
-     { name => 'description', text => LedgerSMB::Report::text('Description') },
-     {name => 'purchase_date',text => LedgerSMB::Report::text('Purchase Date')},
+     { name => 'tag',         text => $self->Text('Tag') },
+     { name => 'description', text => $self->Text('Description') },
+     {name => 'purchase_date',text => $self->Text('Purchase Date')},
      {name => 'purchase_value',
-        text => LedgerSMB::Report::text('Purchase Value') },
+        text => $self->Text('Purchase Value') },
    ];
 }
 
@@ -130,7 +139,10 @@ Asset Listing
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Asset Listing') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Asset Listing');
+}
 
 =head1 METHODS
 
@@ -139,7 +151,7 @@ sub name { return LedgerSMB::Report::text('Asset Listing') }
 =cut
 
 sub run_report {
-    my ($self, $request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'asset__search');
     for my $r(@rows){
        $r->{row_id} = $r->{id};
@@ -147,13 +159,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.txt for details
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

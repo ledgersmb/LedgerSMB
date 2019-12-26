@@ -81,7 +81,14 @@ INSERT INTO defaults (setting_key, value) values ('fxgain_accno_id',
         (select id from account where accno = '4450'));
 INSERT INTO defaults (setting_key, value) values ('fxloss_accno_id',
         (select id from account where accno = '4450'));
-INSERT INTO defaults (setting_key, value) values ('curr', 'CAD:USD:EUR');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('CAD', 'CAD'),
+      ('USD', 'USD'),
+      ('EUR', 'EUR');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'CAD');
+
 INSERT INTO defaults (setting_key, value) values ('weightunit', 'kg');
 --
 commit;

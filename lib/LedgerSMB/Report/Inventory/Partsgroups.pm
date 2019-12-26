@@ -1,6 +1,13 @@
+
+package LedgerSMB::Report::Inventory::Partsgroups;
+
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
+LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search
+
+=head1 DESCRIPTION
+
+Implements a listing of parts groups
 
 =head1 SYNOPSIS
 
@@ -9,7 +16,6 @@ LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Partsgroups;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -42,10 +48,11 @@ has partsgroup => (is => 'ro', isa => 'Str', required => '0');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{col_id => 'partsgroup',
                type => 'href',
           href_base => 'pe.pl?action=edit&type=partsgroup&id=',
-               name => LedgerSMB::Report::text('Group') }];
+               name => $self->Text('Group') }];
 }
 
 =head2 header_lines
@@ -59,8 +66,9 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'partsgroup',
-             text => LedgerSMB::Report::text('Partsgroup') }];
+             text => $self->Text('Partsgroup') }];
 }
 
 =head2 name
@@ -70,7 +78,8 @@ Partsgroups
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Partsgroups');
+    my ($self) = @_;
+    return $self->Text('Partsgroups');
 }
 
 =head1 METHODS
@@ -88,7 +97,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

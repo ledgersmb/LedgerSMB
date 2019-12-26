@@ -5,10 +5,13 @@ use warnings;
 
 use Carp;
 use PageObject;
+use PageObject::App::Invoices::Lines;
+use PageObject::App::Invoices::Header;
+use PageObject::App::Invoices::Payments;
 
 use Moose;
 use namespace::autoclean;
-extends 'PageObject';
+extends 'PageObject::App::Invoice';
 
 __PACKAGE__->self_register(
               'ar-invoice',
@@ -26,6 +29,10 @@ sub _verify {
     return $self;
 }
 
+sub _counterparty {
+    return 'customer';
+}
+
 sub select_customer {
     my ($self, $customer) = @_;
 
@@ -35,8 +42,9 @@ sub select_customer {
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->find("*button", text => "Update")->click;
+    $self->update;
 }
+
 
 __PACKAGE__->meta->make_immutable;
 

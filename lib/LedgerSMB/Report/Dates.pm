@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Dates;
+
 =head1 NAME
 
 LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
@@ -8,11 +11,13 @@ LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Dates;
-use Moose::Role;
-use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 use LedgerSMB::Magic qw( MONTHS_PER_QUARTER );
+use LedgerSMB::PGDate;
+
+use Moose::Role;
+use namespace::autoclean;
+
 =head1 DESCRIPTION
 
 This handles standard date controls in reports.  It just adds properties to
@@ -208,7 +213,9 @@ sub _get_from_date {
 
 sub _get_to_date {
     my ($self) = @_;
-    if ($self->interval eq 'none' or not defined $self->from_date){
+    if (not defined $self->interval
+        or $self->interval eq 'none'
+        or not defined $self->from_date){
         return LedgerSMB::PGDate->from_db();
     }
     my $dateobj = $self->from_date;
@@ -251,11 +258,13 @@ before 'run_report' => sub {
 };
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -4,7 +4,35 @@ LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
 
 =head1 SYNOPSIS
 
-Batch/voucher management model for LedgerSMB 1.3
+    use LedgerSMB::Batch
+
+    # Create a new batch
+    my $data = {
+        dbh => $dbh,
+        batch_number => 'TEST-001',
+        batch_class => 'ap',
+        batch_date => '2018-09-08',
+        description => 'Test Description',
+    };
+    my $batch = LedgerSMB::Batch->new({ base => $data });
+    my $id = $batch->create;
+
+    # Retrieve a batch
+    $data = {
+        dbh => $dbh,
+        batch_id => $id,
+    };
+    $batch = LedgerSMB::Batch->new({ base => $data });
+    my $result = $batch->get;
+    my $description = $result->{description};
+
+    # Delete a batch
+    $data = {
+        dbh => $dbh,
+        batch_id => $id,
+    };
+    $batch = LedgerSMB::Batch->new({ base => $data });
+    $batch->delete;
 
 =head1 METHODS
 
@@ -36,7 +64,18 @@ sub get_new_info {
 
 =item create
 
-Saves the batch info and populates the id hashref value with the id inserted.
+Inserts a new batch and populates the class C<id> attribute with the id of
+the inserted batch record.
+
+The following object attributes must be defined before calling this method:
+
+  * dbh
+  * batch_number [populates control_code field]
+  * batch_class  [ap|ar|gl... See batch_class table)
+  * batch_date   [populates default_date field]
+  * description
+
+This method returns the C<id> of the newly inserted batch on success.
 
 =cut
 
@@ -44,7 +83,7 @@ sub create {
     my $self = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'batch_create');
     $self->{id} = $ref->{batch_create};
-    return $ref->{id};
+    return $self->{id};
 }
 
 =item delete_voucher($id)
@@ -165,15 +204,16 @@ sub get_search_results {
 
 =item get_class_id($type)
 
-Returns the class_id of batch class specified by its label.
+Returns the class_id corresponding the the specified batch class label.
+Performs a lookup on the database C<batch_class> table.
 
 =cut
 
 sub get_class_id {
     my ($self, $type) = @_;
     my @results = $self->call_procedure(
-                                     funcname => 'batch_get_class_id',
-                                     args     => [$type]
+        funcname => 'batch_get_class_id',
+        args     => [$type]
     );
     my $result = pop @results;
     return $result->{batch_get_class_id};
@@ -181,30 +221,38 @@ sub get_class_id {
 
 =item post
 
-Posts a batch to the books and makes the vouchers show up in transaction
-reports, financial statements, and more.
+Posts the batch to the books with C<id> matching the current object's
+C<batch_id> and makes the vouchers show up in transaction reports,
+financial statements, and more. Marks the batch as approved.
+
+Returns the batch C<approved_on> date (being the current database date).
 
 =cut
 
 sub post {
     my ($self) = @_;
     ($self->{post_return_ref}) = $self->call_dbmethod(funcname => 'batch_post');
-    return $self->{post_return_ref};
+    return $self->{post_return_ref}->{batch_post};
 }
 
 =item delete
 
-Deletes the unapproved batch and all vouchers under it.
+Deletes the batch with C<id> matching the current object's C<batch_id>
+attribute and all vouchers under it. A batch cannot be deleted once it
+is approved/posted.
+
+Returns true on success.
 
 =cut
 
 sub delete {
     my ($self) = @_;
-    ($self->{delete_ref}) = $self->call_dbmethod(funcname => 'batch_delete');
-    return $self->{delete_ref};
+    my ($ref) = $self->call_dbmethod(funcname => 'batch_delete');
+    return $ref->{batch_delete};
 }
 
 =item list_vouchers
+
 Returns a list of all vouchers in the batch and attaches that list to
 $self->{vouchers}
 
@@ -218,7 +266,36 @@ sub list_vouchers {
 
 =item get
 
-Gets the batch and merges information with the current batch object.
+Retrieves the batch with C<id> matching the current object's C<batch_id>
+attribute, setting object properties according to the retrieved record's
+fields.
+
+The following object attributes must be defined before calling this method:
+
+  * dbh
+  * batch_id
+
+Note that the C<batch_id> attribute used to specify retrieval is different
+to the C<id> attribute used for the returned result field (though they
+will match after a successful retrieval).
+
+Returns a reference to the current object regardless of whether a matching
+batch was found. If no match was found, the object's C<id> field will be
+C<undef>.
+
+After successful retrieval, the following object attributes will be populated
+according to the retrieved record:
+
+    * id
+    * batch_class_id
+    * control_code
+    * description
+    * default_date
+    * created_by
+    * approved_on
+    * created_on
+    * locked_by
+    * approved_by
 
 =cut
 
@@ -232,7 +309,7 @@ sub get {
 
 =back
 
-=head1 Copyright (C) 2009, The LedgerSMB core team.
+=head1 Copyright (C) 2009-2018, The LedgerSMB core team.
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

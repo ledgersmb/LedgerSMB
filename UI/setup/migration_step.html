@@ -1,7 +1,7 @@
 <?lsmb INCLUDE "ui-header.html"
        stylesheet="ledgersmb.css";
        PROCESS elements.html;
-       PROCESS 'dynatable-old.html' ?>
+       PROCESS 'dynatable.html' ?>
 
 <body id="setup-migration_step" class="lsmb <?lsmb dojo_theme?>">
   <div class="setupconsole">
@@ -19,7 +19,7 @@
              ?></div>
     <?lsmb END ?>
 
-    <?lsmb PROCESS 'dynatable' ?>
+    <?lsmb PROCESS 'dynatable' tbody = { rows = rows } ?>
     <br />
 
     <?lsmb FOREACH hidden IN hiddens.keys;

@@ -3,45 +3,25 @@
 use strict;
 use warnings;
 
-$ENV{REQUEST_METHOD} = 'GET';
-     # Suppress warnings from LedgerSMB::_process_cookies
+use Test2::V0;
 
-#use Test::More 'no_plan';
-use Test::More tests => 374;
-use Test::Trap qw(trap $trap);
-use Math::BigFloat;
-
-use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
-use DBI;
 use LedgerSMB::App_State;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+use Math::BigFloat;
+use Log::Log4perl qw( :easy );
+Log::Log4perl->easy_init($OFF);
 
 
-my $skipdbtests = 1;
-
-$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:')
-    if defined $ENV{PGPASSWORD} && $ENV{PGPASSWORD};
-
-$skipdbtests = 0 if $LedgerSMB::App_State::DBH;
-
-my $no_format_message = qr/LedgerSMB::PGNumber No Format Set/;
-my $nan_message       = qr/LedgerSMB::PGNumber Invalid Number/;
-my @r;
 my $form = Form->new;
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $lsmb = LedgerSMB->new;
-ok(defined $lsmb);
-isa_ok($lsmb, 'LedgerSMB');
 
-@r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
-is($trap->exit, undef,
-    'form: No numberformat set, invalid amount (NaN check)');
-cmp_ok($trap->die, , '=~', $no_format_message,
+like(
+    dies { $form->format_amount({'apples' => '1000.00'}, 'foo', 2) },
+    qr/LedgerSMB::PGNumber No Format Set/,
     'lsmb: No numberformat set, invalid amount message (NaN check)');
 my $expected;
 foreach my $value (
@@ -65,12 +45,12 @@ foreach my $value (
     foreach my $places ('-1', '-2') {
         Math::BigFloat->round_mode('+inf');
         $expected = Math::BigFloat->new($value)->ffround(-($places-1));
-        is($form->round_amount($value, $places), $expected,
+        ok($form->round_amount($value, $places) == $expected,
            "form: $value to $places decimal places - $expected");
 
         Math::BigFloat->round_mode('-inf');
         $expected = Math::BigFloat->new(-$value)->ffround(-($places-1));
-        is($form->round_amount(-$value, $places), $expected,
+        ok($form->round_amount(-$value, $places) == $expected,
            "form: -$value to $places decimal places - $expected");
     }
 }
@@ -235,7 +215,6 @@ foreach my $format (0 .. $#formats) {
 
     cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
          "form: Empty string returns 0");
-    @r = trap{$form->parse_amount(\%myconfig, 'foo')};
 }
 
 foreach my $format (0 .. $#formats) {
@@ -278,7 +257,6 @@ foreach my $format (0 .. $#formats) {
         "form: Empty string returns 0");
     cmp_ok($form->parse_amount(\%myconfig), '==', 0,
         "form: undef string returns 0");
-    @r = trap{$form->parse_amount(\%myconfig, 'foo')};
-    is($trap->exit, undef,
-        'form: Invalid string gives NaN exit');
 }
+
+done_testing;

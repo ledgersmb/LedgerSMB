@@ -5,7 +5,7 @@
 
 use strict;
 use warnings;
-use Test::More;
+use Test2::V0;
 use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
@@ -13,8 +13,10 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+use Plack::Request;
+
+use Log::Log4perl qw( :easy );
+Log::Log4perl->easy_init($OFF);
 
 
 $ENV{REQUEST_METHOD} = 'GET';
@@ -27,7 +29,8 @@ my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $lsmb = LedgerSMB->new;
+my $request = Plack::Request->new({});
+my $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 

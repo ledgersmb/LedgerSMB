@@ -1,8 +1,11 @@
+
+package LedgerSMB::Scripts::reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::reports - Common Report workflows
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module holds common workflow routines for reports.
 
@@ -10,22 +13,21 @@ This module holds common workflow routines for reports.
 
 =cut
 
-package LedgerSMB::Scripts::reports;
+use strict;
+use warnings;
 
-use LedgerSMB::Template;
+use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Report::Balance_Sheet;
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::GIFI;
-use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
+use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Setting;
-use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
-use strict;
-use warnings;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -58,6 +60,7 @@ Other variables that are set will be passed through to the underlying template.
 
 sub start_report {
     my ($request) = @_;
+    my $locale = $request->{_locale};
     if ($request->{module_name}){
         $request->{class_id} = 0 unless $request->{class_id};
         $request->{control_code} = '' unless $request->{control_code};
@@ -72,9 +75,11 @@ sub start_report {
             }
         }
     }
-    @{$request->{entity_classes}} = $request->call_procedure(
+    @{$request->{entity_classes}} =
+        map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
+        $request->call_procedure(
                       funcname => 'entity__list_classes'
-    );
+        );
     @{$request->{heading_list}} =  $request->call_procedure(
                       funcname => 'account_heading_list');
     @{$request->{account_list}} =  $request->call_procedure(
@@ -85,13 +90,10 @@ sub start_report {
     @{$request->{all_years}} = $request->call_procedure(
               funcname => 'date_get_all_years'
     );
-    my $curr = LedgerSMB::Setting->get('curr');
-    @{$request->{currencies}} = split /:/, $curr;
+    @{$request->{currencies}} = $request->setting->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
-    my $months = LedgerSMB::App_State::all_months();
-    $request->{all_months} = $months->{dropdown};
-    my $periods = LedgerSMB::App_State::all_periods();
-    $request->{all_periods} = $periods->{dropdown};
+    $request->{all_months} = $request->all_months->{dropdown};
+
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
@@ -105,16 +107,11 @@ sub start_report {
         funcname => 'person__list_languages'
         );
 
-    $request->{earn_id} = LedgerSMB::Setting->get('earn_id');
-    my $template = LedgerSMB::Template->new(
-        request => $request,
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/Reports/filters',
-        template => $request->{report_name},
-        format => 'HTML'
-    );
-    return $template->render($request);
+    $request->{earn_id} = $request->setting->get('earn_id');
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request,
+                             'Reports/filters/' . $request->{report_name},
+                             $request);
                                  # request not used for script;
                                  # forms submit to other URLs than back to here
 }
@@ -127,8 +124,9 @@ Lists the business types.  No inputs expected or used.
 
 sub list_business_types {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Business_Type->new(%$request)
+        );
 }
 
 =item list_gifi
@@ -139,8 +137,9 @@ List the gifi entries.  No inputs expected or used.
 
 sub list_gifi {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::GIFI->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::GIFI->new(%$request)
+        );
 }
 
 =item list_warehouse
@@ -150,8 +149,10 @@ List the warehouse entries.  No inputs expected or used.
 =cut
 
 sub list_warehouse {
-    return LedgerSMB::Report::Listings::Warehouse->new(%{$_[0]})
-        ->render($_[0]);
+    my ($request) = @_;
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Warehouse->new(%$request)
+        );
 }
 
 =item list_language
@@ -162,8 +163,9 @@ List language entries.  No inputs expected or used.
 
 sub list_language {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::Language->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Language->new(%$request)
+        );
 }
 
 =item list_sic
@@ -174,8 +176,9 @@ Lists sic codes
 
 sub list_sic {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::SIC->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::SIC->new(%$request)
+        );
 }
 
 =item generate_balance_sheet
@@ -189,7 +192,6 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::reports');
 
 sub generate_balance_sheet {
     my ($request) = @_;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
@@ -206,7 +208,7 @@ sub generate_balance_sheet {
         $cmp->run_report;
         $rpt->add_comparison($cmp);
     }
-    return $rpt->render($request);
+    return $request->render_report($rpt);
 }
 
 =item search_overpayments
@@ -217,12 +219,13 @@ Searches overpayments based on inputs.
 
 sub search_overpayments {
     my ($request) = @_;
-    my $hiddens = {};
-    $hiddens->{$_} = $request->{$_} for qw(batch_id currency exchangerate
-                                        post_date batch_class account_class);
-    $request->{hiddens} = $hiddens;
-    return LedgerSMB::Report::Listings::Overpayments->new(%$request)
-        ->render($request);
+    $request->{hiddens}->{$_} = $request->{$_}
+        for qw(batch_id currency exchangerate
+               post_date batch_class account_class);
+
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Overpayments->new(%$request)
+        );
 }
 
 =item reverse_overpayment
@@ -246,16 +249,23 @@ sub reverse_overpayment {
 }
 
 
+
+{
+    local $@ = undef;
+    eval { require LedgerSMB::Scripts::custom::reports };
+}
+
 =back
 
-=head1 Copyright (C) 2007 The LedgerSMB Core Team
+=head1 LICENSE AND COPYRIGHT
 
-Licensed under the GNU General Public License version 2 or later (at your
-option).  For more information please see the included LICENSE and COPYRIGHT
-files.
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { require LedgerSMB::Scripts::custom::reports };
+
 1;

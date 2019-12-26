@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -29,7 +30,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     --
     -- Validate required tables
@@ -62,7 +63,7 @@ BEGIN;
     SELECT has_function('inventory_adjust__list',ARRAY['date','date','boolean']);
     SELECT has_function('inventory_adjust__get',ARRAY['integer']);
     SELECT has_function('inventory_adjust__get_lines',ARRAY['integer']);
-    SELECT has_function('warehouse__list',ARRAY['']);
+    SELECT has_function('warehouse__list','{}'::text[]);
     SELECT has_function('goods__history',ARRAY['date','date','text','text','text','boolean','boolean','boolean','boolean','boolean','boolean']);
 
     -- Set specific data
@@ -116,13 +117,8 @@ BEGIN;
 
     INSERT INTO entity_credit_account
             (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)
-    VALUES (-1000, 1, 'cogs test1', -1000, 'USD', -1103),
-           (-2000, 2, 'cogs test2', -1000, 'USD', -1103);
-
-
-    -- patch up data that could/should have been there
-    INSERT INTO defaults
-         VALUES ('curr', 'USD:CAD:EUR');
+    VALUES (-1000, 1, 'cogs test1', -1000, 'XTS', -1103),
+           (-2000, 2, 'cogs test2', -1000, 'XTS', -1103);
 
     UPDATE parts
        SET onhand = 90

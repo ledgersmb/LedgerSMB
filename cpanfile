@@ -11,12 +11,15 @@ requires 'DBI', '1.635';
 requires 'Data::UUID';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
+requires 'File::Find::Rule';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::Headers::Fast'; # dependency of Plack too; don't need '::Fast'
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
-recommends 'Cpanel::JSON::XS';
+recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
+recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
@@ -33,21 +36,24 @@ requires 'Number::Format';
 requires 'PGObject', '1.403.2';
 # PGObject::Simple 3.0.1 breaks our file uploads
 requires 'PGObject::Simple', '>=3.0.2';
-requires 'PGObject::Simple::Role', '1.13.2';
+requires 'PGObject::Simple::Role', '2.0.2';
 requires 'PGObject::Type::BigFloat', '1.0.0';
 requires 'PGObject::Type::DateTime', '1.0.4';
 requires 'PGObject::Type::ByteString', '1.1.1';
 requires 'PGObject::Util::DBMethod';
-requires 'PGObject::Util::DBAdmin', '0.120';
-requires 'Plack';
+requires 'PGObject::Util::DBAdmin', '1.0.1';
+requires 'Plack', '1.0031';
 requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Plack::Request';
+requires 'Plack::Request::WithEncoding';
 requires 'Plack::Util';
+requires 'Plack::Util::Accessor';
 requires 'Template', '2.14';
+requires 'Text::CSV';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
@@ -64,12 +70,6 @@ feature 'starman', "Standalone Server w/Starman" =>
         requires "Starman";
 };
 
-feature 'latex-pdf-images',
-    "Size detection for images for embedding in LaTeX templates" =>
-    sub {
-        requires "Image::Size";
-};
-
 feature 'edi', "X12 EDI support" =>
     sub {
         requires 'X12::Parser';
@@ -79,6 +79,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
+        requires 'Template::Latex', '3.08';
         requires 'Template::Plugin::Latex', '3.08';
         requires 'TeX::Encode';
 };
@@ -96,24 +97,11 @@ feature 'xls', "Microsoft Excel" =>
         requires 'Excel::Writer::XLSX';
 };
 
-feature 'debug', "Debug pane" =>
-    sub {
-        recommends 'Devel::NYTProf';    # No explicit require for debug pane, handled internaly
-        recommends 'Module::Versions';  # No explicit require for debug pane, handled internaly
-        recommends 'Plack::Middleware::Debug::DBIProfile';              # Optional
-        recommends 'Plack::Middleware::Debug::DBITrace';                # Optional
-        recommends 'Plack::Middleware::Debug::LazyLoadModules';         # Optional
-        recommends 'Plack::Middleware::Debug::Log4perl';                # Optional
-        recommends 'Plack::Middleware::Debug::Profiler::NYTProf';       # Optional
-        recommends 'Plack::Middleware::Debug::TraceENV';                # Optional
-        recommends 'Plack::Middleware::Debug::W3CValidate';             # Optional
-        recommends 'Plack::Middleware::InteractiveDebugger';            # Optional
-};
-
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
-    requires 'App::Prove', '3.36';
+    requires 'App::Prove', '3.41'; # parallel testing of pipe and socket sources
+    requires 'Capture::Tiny';
     requires 'DBD::Mock';
     requires 'File::Util';
     requires 'HTML::Lint';
@@ -126,21 +114,33 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
-    requires 'Pherkin::Extension::Weasel', '0.02';
+    requires 'Pherkin::Extension::Weasel', '0.13';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
-    requires 'Test::BDD::Cucumber', '0.52';
-    requires 'Test::Class::Moose';
-    requires 'Test::Class::Moose::Role';
-    requires 'Test::Class::Moose::Role::ParameterizedInstances';
+    requires 'Test::BDD::Cucumber', '0.58';
     requires 'Test::Dependencies', '0.20';
-    requires 'Test::Exception';
-    requires 'Test::Harness', '3.36';
+    requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
-    requires 'Test::Trap';
-    requires 'Weasel', '0.11';
-    requires 'Weasel::Driver::Selenium2', '0.05';
-    requires 'Weasel::Widgets::Dojo';
+    requires 'Test2::V0';
+    requires 'Weasel', '0.21';
+    requires 'Weasel::Driver::Selenium2', '0.07';
+    requires 'Weasel::Session', '0.11';
+    requires 'Weasel::Widgets::Dojo', '0.04';
+
+    feature 'debug', "Debug pane" =>
+        sub {
+              # No explicit require for debug pane, handled internaly
+            recommends 'Devel::NYTProf';
+            recommends 'Module::Versions';
+            recommends 'Plack::Middleware::Debug::DBIProfile';
+            recommends 'Plack::Middleware::Debug::DBITrace';
+            recommends 'Plack::Middleware::Debug::LazyLoadModules';
+            recommends 'Plack::Middleware::Debug::Log4perl';
+            recommends 'Plack::Middleware::Debug::Profiler::NYTProf';
+            recommends 'Plack::Middleware::Debug::TraceENV';
+            recommends 'Plack::Middleware::Debug::W3CValidate';
+            recommends 'Plack::Middleware::InteractiveDebugger';
+    };
 };

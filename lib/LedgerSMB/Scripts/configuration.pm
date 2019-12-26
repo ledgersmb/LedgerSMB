@@ -1,18 +1,31 @@
+
+package LedgerSMB::Scripts::configuration;
+
 =head1 NAME
 
 LedgerSMB::Scripts::configuration - Configuration Workflows for LedgerSMB
+
+=head1 DESCRIPTION
+
+Implements the presenting and saving done from the screens
+System > Defaults and System > Sequences.
 
 =head1 SYNPOPSIS
 
 LedgerSMB::Scripts::configuration->can('action')->($request);
 
+=head1 METHODS
+
+This module does not specify any methods.
+
 =cut
-package LedgerSMB::Scripts::configuration;
-use LedgerSMB::Setting;
-use LedgerSMB::Setting::Sequence;
-use LedgerSMB::App_State;
+
 use strict;
 use warnings;
+
+use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 
 sub _default_settings {
     my ($request) = @_;
@@ -41,7 +54,8 @@ sub _default_settings {
               { name => 'company_license_number',
                 label =>  $locale->text('Company License Number') },
               { name => 'curr',
-                label => $locale->text('Currencies (colon-separated)')},
+                label => $locale->text('Base Currency'),
+                type => 'SELECT_ONE', },
               { name => 'weightunit', label => $locale->text('Weight Unit') },
               { name => 'default_country',
                 label => $locale->text('Default Country'),
@@ -62,7 +76,7 @@ sub _default_settings {
                 label => $locale->text('Password Duration (days)')
               },
               { name => 'session_timeout',
-        label => $locale->text('Session Timeout'), },
+        label => $locale->text('Session Timeout (e.g. "90 minutes")'), },
               { name => 'never_logout',
                 label => $locale->text('Only Timeout Locks'),
                 type => 'YES_NO', },
@@ -133,9 +147,9 @@ sub _default_settings {
               { name => 'min_empty',
                 label => $locale->text('Min Empty Lines') },
               { name => 'default_buyexchange',
-                label => $locale->text('Use web service for current Buy Exchange Rates'),
+                label => $locale->text('Use web service for current exchange rates'),
                 type => 'YES_NO',
-                info => ['Buy rates can be provided automatically to the application by using a web service and providing current date and origin and destination currencies.',
+                info => ['Rates can be provided automatically to the application by using a web service and providing current date and origin and destination currencies.',
                          'Please review the terms and conditions for the $1 before use.']
                 },
               ] },
@@ -153,9 +167,10 @@ Shows the defaults screen
 
 =cut
 
-sub defaults_screen{
+sub defaults_screen {
     my ($request) = @_;
-    my $setting_handle = LedgerSMB::Setting->new({base => $request});
+
+    my @curr = map { { curr => $_ } } $request->setting->get_currencies();
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings) {
@@ -164,7 +179,7 @@ sub defaults_screen{
         }
     }
     for my $skey (@defaults){
-        $request->{$skey} = $setting_handle->get($skey);
+        $request->{$skey} = $request->setting->get($skey);
     }
 
     my @country_list = $request->call_procedure(
@@ -178,11 +193,11 @@ sub defaults_screen{
     unshift @language_code_list, {}
         if ! defined $request->{default_language};
 
-    my $expense_accounts = $setting_handle->accounts_by_link('IC_cogs');
-    my $income_accounts = $setting_handle->accounts_by_link('IC_income');
-    my $fx_loss_accounts = $setting_handle->all_accounts();
-    my $fx_gain_accounts = $setting_handle->all_accounts();
-    my $inventory_accounts = $setting_handle->accounts_by_link('IC');
+    my $expense_accounts = $request->setting->accounts_by_link('IC_cogs');
+    my $income_accounts = $request->setting->accounts_by_link('IC_income');
+    my $fx_loss_accounts = $request->setting->all_accounts();
+    my $fx_gain_accounts = $request->setting->all_accounts();
+    my $inventory_accounts = $request->setting->accounts_by_link('IC');
     my $headings =
         [$request->call_procedure(funcname => 'account__all_headings')];
     for my $ref (@$headings){
@@ -219,6 +234,13 @@ sub defaults_screen{
             text_attr      => 'text',
             value_attr     => 'id',
             default_values => [$request->{'earn_id'}],
+        },
+        'curr' => {
+            name => 'curr',
+            options => \@curr,
+            default_values => [$request->{curr}],
+            text_attr => 'curr',
+            value_attr => 'curr',
         },
         'fxloss_accno_id' => {
             name           => 'fxloss_accno_id',
@@ -282,10 +304,8 @@ sub defaults_screen{
         },
     );
 
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'Configuration/settings');
-    return $template->render({
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Configuration/settings', {
         form => $request,
         # hiddens => \%hiddens,
         selects => \%selects,
@@ -315,10 +335,8 @@ sub sequence_screen {
         }
     ++$count;
     }
-    return LedgerSMB::Template->new_UI(
-        $request,
-        template => 'Configuration/sequence'
-        )->render($request);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'Configuration/sequence', $request);
 }
 
 =item save_defaults
@@ -334,7 +352,6 @@ sub save_defaults {
     ){
        die $request->{_locale}->text('Access Denied');
     }
-    my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings){
@@ -344,7 +361,7 @@ sub save_defaults {
     }
     for my $skey (@defaults){
         $request->{$skey} =~ s/--.*$// if $skey =~ /accno_id/;
-        $setting_handle->set($skey, $request->{$skey});
+        $request->setting->set($skey, $request->{$skey});
     }
     return defaults_screen($request);
 }
@@ -370,11 +387,13 @@ sub save_sequences {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team.  This file may be reused under the
-conditions of the GNU GPL v2 or at your option any later version.  Please see
-the accompanying LICENSE.TXT for more information.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -2,12 +2,12 @@
 
 LedgerSMB::DBObject::Account - Base class for chart of accounts entries
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 This class contains methods for managing chart of accounts entries (headings
 and accounts).
 
-=head1 INERITS
+=head1 INHERITS
 
 =over
 
@@ -43,6 +43,50 @@ sub _get_translations {
 }
 
 
+# _get_custom_account_links()
+#
+# Extracts all account_link_description records marked as 'custom' and
+# not marked as 'summary' from the database.
+#
+# Sets the `custom_link_descriptions` object property to be an arrayref
+# containing a hash for each resulting row.
+
+sub _get_custom_account_links {
+    my $self = shift;
+    my @descriptions = $self->call_dbmethod(
+        funcname => 'get_link_descriptions',
+        args => {
+            custom => 1,
+            summary => 0,
+        },
+    );
+    $self->{custom_link_descriptions} = \@descriptions;
+    return;
+}
+
+
+# _get_summary_account_links()
+#
+# Extracts all account_link_description records marked as 'summary',
+# including those marked as 'custom' from the database.
+#
+# Sets the `summary_link_descriptions` object property to be an arrayref
+# containing a hash for each resulting row.
+
+sub _get_summary_account_links {
+    my $self = shift;
+    my @descriptions = $self->call_dbmethod(
+        funcname => 'get_link_descriptions',
+        args => {
+            custom => undef,
+            summary => 1,
+        },
+    );
+    $self->{summary_link_descriptions} = \@descriptions;
+    return;
+}
+
+
 =over
 
 =item save()
@@ -68,33 +112,40 @@ link:  a list of strings representing text box identifier.
 
 sub save {
     my $self = shift @_;
+
     if (!defined $self->{contra}){
         $self->{contra} = '0';
     }
+
     if (!defined $self->{tax}) {
-    $self->{tax} = '0';
+        $self->{tax} = '0';
     }
+
     if ($self->{category} eq 'Qt'){
        $self->{is_temp} = '1';
        $self->{category} = 'Q';
     }
+
     $self->generate_links;
+
     my $func = 'account__save';
     if ($self->{charttype} and $self->{charttype} eq 'H') {
         $func = 'account_heading_save';
     }
+
     my ($id_ref) = try { $self->call_dbmethod(funcname => $func) }
                    catch {
                         if ($_ =~ /Invalid link settings:\s*Summary/){
-                            die LedgerSMB::App_State::Locale->text(
+                            die $self->{_locale}->text(
                  'Error: Cannot include summary account in other dropdown menus'
                             );
                         }
-                        die LedgerSMB::App_State::Locale->text(
-                            'Internal Database Error.'
-                        ) . " $_";
+                        # No need to translate: error meant for programmers
+                        die "Internal Database Error: $_";
                   };
+
     $self->{id} = $id_ref->{$func};
+
     if (defined $self->{recon}){
         $self->call_procedure(funcname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
@@ -131,31 +182,51 @@ sub save_translations {
 
 =item get()
 
-This method gets a chart of accounts entry.  It requires that the $account->{id}
-value must be properly set.
+This method gets a chart of accounts entry corresponding with the object's
+C<id> property.
+
+The following object properties are set:
+
+  * id
+  * accno
+  * gifi_accno
+  * description
+  * heading
+  * category
+  * obsolete
+  * contra
+  * is_temp
+  * tax
+  * link
+  * translations
+  * custom_link_descriptions
+  * summary_link_descriptions
 
 =cut
 
 sub get {
     my $self = shift @_;
     my $func = 'account_get';
+
     if ($self->{charttype} and $self->{charttype} eq 'H'){
       $func = 'account_heading_get';
     }
-    my @accounts =  $self->call_dbmethod(funcname => $func);
-    $self->{account_list} = [];
-    for my $ref (@accounts){
-        bless $ref, 'LedgerSMB::DBObject::Account';
-        $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', '_request']);
-        $ref->set_dbh;
-        if ($ref->{is_temp} and ($ref->{category} eq 'Q')){
-            $ref->{category} = 'Qt';
-        }
 
-        $ref->_get_translations;
-        push (@{$self->{account_list}}, $ref);
+    my $account = $self->call_procedure(
+        funcname => $func,
+        args => [$self->{id}],
+    );
+
+    if ($account->{is_temp} && $account->{category} eq 'Q') {
+        $account->{category} = 'Qt';
     }
-    return @{$self->{account_list}};
+
+    $self->merge($account);
+    $self->_get_translations;
+    $self->_get_custom_account_links;
+    $self->_get_summary_account_links;
+
+    return $self;
 }
 
 =item check_transactions()
@@ -223,7 +294,8 @@ sub list {
 
 =item gifi_list()
 
-Returns a list of all gifi codes and descriptions.
+Returns a list of all gifi codes and descriptions. Populates the object
+C<gifi_list> property.
 
 =cut
 
@@ -235,38 +307,39 @@ sub gifi_list {
 
 =item generate_links()
 
-A mostly-private method for generating and checking whether link data is valid.
+Returns an arrayref containing account_link descriptions corresponding with
+those present and true in the request parameters.
 
-This is usually done (automatically) in preparation for saving the information
-to the database.
+The LedgerSMB UI does not allow an account to be a 'summary' for more than one
+descriptor. This is implied by the user interface and enforced at the database
+level.
 
 =cut
 
 sub generate_links {
-    my $self= shift @_;
-    my $is_summary = 0;
-    my $is_custom = 0;
+    my $self = shift;
     my @links;
-    my @descriptions = $self->call_dbmethod(funcname =>
-                                          'get_link_descriptions');
+    my @descriptions = $self->call_dbmethod(
+        funcname => 'get_link_descriptions',
+        args => {
+            summary => undef,
+            custom => undef,
+        },
+    );
+
     foreach my $d (@descriptions) {
        my $l = $d->{description};
        if ($self->{$l}) {
-           $is_summary++ if ($d->{summary} == 1);
-           $is_custom++ if ($d->{custom} == 1);
-           if ($is_summary > 1 || ($is_summary == 1 && $is_custom >=1 )) {
-                $self->error($self->{_locale}->text("Too many links on summary account!"));
-           }
            push (@links, $l);
         }
      }
 
-     return $self->{link} = $self->_db_array_scalars(@links);
+     return $self->{link} = \@links;
 }
 
 =item list_headings
 
-Returns a list of account_heading's.  No inputs required.
+Returns a list of account_headings.  No inputs required.
 
 =cut
 

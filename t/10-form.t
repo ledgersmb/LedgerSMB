@@ -56,29 +56,31 @@
 use strict;
 use warnings;
 
-use Test::More 'no_plan';
-use Test::Trap qw(trap $trap);
+use Test2::V0;
 use Math::BigFloat;
-#use IO::String;
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB::Form;
 
-sub form_info_func {
-        return $_[0];
+
+
+sub capture_stdout (&) { ## no critic (ProhibitSubroutinePrototypes)
+    my $block = shift;
+    local *STDOUT;
+    my $output = '';
+
+    open STDOUT, '>', \$output
+        or die "Unable to redirect STDOUT: $!";
+    $block->();
+    return $output;
 }
 
-sub form_error_func {
-        print $_[0];
-}
 
-sub redirect {
-        print "redirected\n";
-}
 
 my $form = Form->new;
 my %myconfig;
 my $utfstr;
-my @r;
 my @ary;
 my $aryref;
 ok(defined $form);
@@ -155,7 +157,7 @@ cmp_ok($form->numtextrows("hello world\n12345678901234567890\n", 20, 3), '==', 2
 $form = Form->new;
 
 $form->{header} = 1;
-@r = trap{$form->hide_form('path')};
+capture_stdout { $form->hide_form('path'); }; # suppress printed output
 ok($form->{header}, 'hide_form: header flag not cleared');
 
 ## $form->info checks
@@ -163,9 +165,8 @@ $form = Form->new;
 $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{header} = 'Blah';
 
-@r = trap{$form->info('hello world')};
-like($trap->stdout, qr|<b>hello world</b>|,
-        'info: CGI, pre-set header content');
+like(capture_stdout { $form->info('hello world'); }, qr|<b>hello world</b>|,
+     'info: CGI, pre-set header content');
 
 delete $form->{header};
 $ENV{LSMB_NOHEAD} = 0;
@@ -176,8 +177,6 @@ $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{header} = 'yes';
 $form->{blank} = '    ';
 ok(!$form->isblank('version'), 'isblank: Not blank');
-is($trap->exit, undef,
-        'isblank: Blank, termination');
 
 ## $form->header checks
 $form = Form->new;
@@ -202,16 +201,16 @@ $ENV{LSMB_NOHEAD} = 0;
 $form = Form->new;
 @ary = ('projectnumber', 'description', 'name', 'startdate');
 $form->{sort} = 'name';
-is_deeply([$form->sort_columns(@ary)],
+is([$form->sort_columns(@ary)],
         ['name', 'projectnumber', 'description', 'startdate'],
         'sort_column: sort name');
 $form->{sort} = 'apple';
-is_deeply([$form->sort_columns(@ary)], ['apple', @ary],
+is([$form->sort_columns(@ary)], ['apple', @ary],
         'sort_column: sort non-existent');
 is($form->sort_columns, 0,
         'sort_column: sort, no columns');
 delete $form->{sort};
-is_deeply([$form->sort_columns(@ary)], \@ary,
+is([$form->sort_columns(@ary)], \@ary,
         'sort_column: sort unset');
 
 ## $form->sort_order checks
@@ -266,8 +265,8 @@ is($form->sort_order($aryref, {name => 0, projectnumber => 3, startdate => 1}),
 
 ## $form->print_button checks
 $form = Form->new;
-@r = trap{$form->print_button({'pear' => {'key' => 'P', 'value' => 'Pears'}}, 'pear')};
-is($trap->stdout, "<button data-dojo-type=\"dijit/form/Button\" class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" accesskey=\"P\" title=\"Pears [Alt-P]\">Pears</button>\n", 'print_button');
+is(capture_stdout {$form->print_button({'pear' => {'key' => 'P', 'value' => 'Pears'}}, 'pear');},
+   "<button data-dojo-type=\"dijit/form/Button\" class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" id=\"action-pear-1\" accesskey=\"P\" title=\"Pears [Alt-P]\">Pears</button>\n", 'print_button');
 
 ## $form->like checks
 $form = Form->new;
@@ -276,10 +275,11 @@ is($form->like('hello world'), '%hello world%', 'like');
 ## $form->redirect checks
 $form = Form->new;
 ok(!defined $form->{callback}, 'redirect: No callback set');
-@r = trap{$form->redirect};
-is($trap->stdout, "Location: login.pl\nContent-type: text/html\n\n", 'redirect: No message or callback redirect');
+is(capture_stdout { eval { $form->redirect;}; },
+   "Location: login.pl\nContent-type: text/html\n\n", 'redirect: No message or callback redirect');
 $form->{callback} = 1;
-@r = trap{$form->redirect};
-is($trap->stdout, "", 'redirect: callback, no message redirect');
-@r = trap{$form->redirect("hello world\n")};
-is($trap->stdout, "", 'redirect: callback and message redirect');
+is(capture_stdout { eval { $form->redirect;}; }, "", 'redirect: callback, no message redirect');
+is(capture_stdout { eval { $form->redirect("hello world\n")}; }, "", 'redirect: callback and message redirect');
+
+
+done_testing;

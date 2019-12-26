@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Axis;
+
 =head1 NAME
 
 LedgerSMB::Report::Axis - Models axes of financial reports
@@ -16,7 +19,6 @@ final report.
 
 =cut
 
-package LedgerSMB::Report::Axis;
 use Moose;
 use namespace::autoclean;
 
@@ -174,11 +176,13 @@ sub id_props {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2015 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2015 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

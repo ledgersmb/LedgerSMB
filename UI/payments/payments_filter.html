@@ -1,6 +1,6 @@
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
 <body id="payments-filter-body" class="lsmb <?lsmb dojo_theme ?>">
-<div id="payments">
+<div id="payments-filter">
 <div class="listtop">
         <!-- CT:  Strings for locales:
         <?lsmb text('Filtering Receipts') ?>
@@ -30,31 +30,7 @@
         type = "hidden"
         name = "batch_date"
 } ?>
-<div id = "payments-filter-categories" class="inputgroup">
-<?lsmb IF payment.projects ?>
-<div id = "payments-filter-projects" class="inputgroup">
-  <label for="project"><?lsmb text('Project') ?></label>
-  <?lsmb PROCESS select element_data = {
-                        name="project_id"
-                        id="project"
-                        options=payment.projects
-                        text_attr='projectnumber'
-                        value_attr='id' } ?>
-</div>
-<?lsmb END ?>
 
-<?lsmb IF departments ?>
-<div id = "payments-filter-departments" class="inputgroup">
-  <label for="department"><?lsmb text('Department') ?></label>
-  <?lsmb PROCESS select element_data = {
-                        name="department_id"
-                        id="department"
-                        default_blank=1
-                        options=payment.departments
-                        value_attr='id'
-                        text_attr='description' } ?>
-</div>
-<?lsmb END ?>
 
 <?lsmb IF request.account_class == 1 ?>
 <?lsmb vendor_customer_code = text("Vendor Number") # ' ?>
@@ -70,18 +46,6 @@
         size = '15'
 } ?>
 
-<?lsmb IF businesses ?>
-<div id = "payments-filter-businesses" class="inputgroup">
-  <label for="businesses"><?lsmb text('Business Class') ?></label>
-  <?lsmb PROCESS select element_data = {
-                        name="business_id"
-                        id="businesses"
-                        default_blank=1
-                        options=payment.businesses
-                        value_attr='id'
-                        text_attr='description' } ?>
-</div>
-<?lsmb END ?>
 <div class="inputgroup" id="account_input">
     <?lsmb
      FOREACH a = payment.debt_accounts;
@@ -96,40 +60,23 @@
  default_values = [payment.account]
     } ?>
 </div>
-<div id = "payments-filter-daterow" class = "inputgroup">
-<div class="input">
-<?lsmb PROCESS input element_data = {
-        label = text('Date From:')
-        type = "text"
-        class = "date"
-        value = payment.date_from
-        name = "date_from"
-        size = 12
-} # ' ?></div><div class="input">
-<?lsmb PROCESS input element_data = {
-        label = text('Date To:')
-        type = "text"
-        class = "date"
-        value = payment.date_to
-        name = "date_to"
-        size = 12
-} # ' ?></div>
-</div>
+
 <div id = "payments-filter-currency-row" class="inputgroup">
 <label for="currency"><?lsmb text('Currency')?></label>
 <?lsmb
-   curr = [];
-   FOREACH c IN currencies ;
-     curr.push( { text = c, value = c } );
+   currency_list = [];
+   FOREACH c IN payment.currencies;
+     currency_list.push( { text = c, value = c } );
    END;
    PROCESS select element_data = {
         id = 'currency'
        name = 'currency'
-       options = payment.curr
+       options = currency_list
        default_values = [ payment.default_currency ]
-} ?>
+   }
+?>
 </div>
-</div>
+
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
 
       <?lsmb
@@ -142,7 +89,7 @@
                 options = payment.cash_accounts
                 value_attr = "accno"
                 text_attr = "text"
-                label = pay_label _ ':'
+                label = pay_label
         } ?>
 
 <?lsmb IF payment.payment_types ?>
@@ -155,7 +102,7 @@
                 options = payment.payment_types
                 value_attr = "id"
                 text_attr = "label"
-                label = text('Payment Type:') #'
+                label = text('Payment Type') #'
         } ?>
 
 
@@ -172,7 +119,8 @@
         type = "text"
         size = "20"
         name = "source_start"
-        label = text('Start Source Numbering At:')
+        required = "true"
+        label = text('Start Source Numbering At')
 } # ?>
 </div>
 <?lsmb END ?>

@@ -30,6 +30,11 @@ color =  0
 pager = less
 
 
+[Documentation::RequirePodSections]
+    # Section names from Module::Starter::PBP -- Damian Conway's Best Practices
+    lib_sections = NAME | DESCRIPTION | METHODS | LICENSE AND COPYRIGHT
+    script_sections = NAME | USAGE | DESCRIPTION | LICENSE AND COPYRIGHT
+    set_themes = lsmb lsmb_new
 [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = -1 0 1 2 100
     set_themes = lsmb lsmb_wip lsmb_old_wip
@@ -87,11 +92,10 @@ pager = less
 
 [CodeLayout::ProhibitTrailingWhitespace]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
-    
+
 [CodeLayout::ProhibitHardTabs]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
     allow_leading_tabs = 0
-
 
 [Modules::ProhibitAutomaticExportation]
     set_themes = lsmb lsmb_new lsmb_old lsmb_tests
@@ -108,7 +112,7 @@ pager = less
 [Modules::RequireEndWithOne]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireExplicitInclusion]
-    set_themes = lsmb lsmb_wip
+    set_themes = lsmb lsmb_new
 [Modules::RequireExplicitPackage]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireFilenameMatchesPackage]
@@ -178,5 +182,6 @@ pager = less
 # LSMB is more application than lib
 #[Modules::RequireVersionVar]
 
-# Policy fails on methods.
-#[Subroutines::ProhibitBuiltinHomonyms]
+# Too many methods
+[Subroutines::ProhibitBuiltinHomonyms]
+    set_themes = lsmb_reject

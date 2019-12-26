@@ -2,6 +2,7 @@ BEGIN;
 
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -9,8 +10,8 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
-    \i sql/modules/test/data/Reconciliation.sql
+    \i xt/data/42-pg/Base.sql
+    \i xt/data/42-pg/Reconciliation.sql
 
     -- Validate required tables
 
@@ -28,8 +29,8 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('cr_report_block_changing_approved',ARRAY['']);
-    SELECT has_function('reconciliation__account_list',ARRAY['']);
+    SELECT has_function('cr_report_block_changing_approved','{}'::text[]);
+    SELECT has_function('reconciliation__account_list','{}'::text[]);
     SELECT has_function('reconciliation__add_entry',array['integer', 'text', 'text', 'timestamp without time zone', 'numeric']);
     SELECT has_function('reconciliation__check',array['date', 'integer']);
     SELECT has_function('reconciliation__delete_my_report',array['integer']);

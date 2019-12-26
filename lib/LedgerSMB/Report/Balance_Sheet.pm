@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Balance_Sheet;
+
 =head1 NAME
 
 LedgerSMB::Report::Balance_Sheet - The LedgerSMB Balance Sheet Report
@@ -15,7 +18,6 @@ translates data structures for the report.
 
 =cut
 
-package LedgerSMB::Report::Balance_Sheet;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report::Hierarchical';
@@ -61,7 +63,7 @@ has incl_accnos => (is => 'ro', isa => 'Bool');
 
 =back
 
-=head1 SEMI-PUBLIC METHODS
+=head1 METHODS
 
 =head2 run_report()
 
@@ -138,9 +140,9 @@ sub run_report {
         };
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
-              return { account_number => $line->{gifi_accno},
-                       account_desc => $line->{gifi_description},
-              };
+              $line->{account_number} = $line->{gifi_accno};
+              $line->{account_desc} = $line->{gifi_description};
+              return $line;
         } : ($self->legacy_hierarchy) ?
         sub { my ($line) = @_;
               if ($line->{account_type} eq 'A'
@@ -286,11 +288,13 @@ sub name {
     return $self->Text('Balance sheet');
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2013 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

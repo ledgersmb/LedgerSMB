@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Budget::Search;
+
 =head1 NAME
 
 LedgerSMB::Reports::Budget::Search - Search for Budgets
@@ -14,7 +17,6 @@ This is a basic search report for budgets.
 
 =cut
 
-package LedgerSMB::Report::Budget::Search;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -64,37 +66,38 @@ Who marked the budget obsolete
 =cut
 
 sub columns {
-   return [ {col_id => 'start_date',
+    my ($self) = @_;
+    return [ {col_id => 'start_date',
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
-               name => LedgerSMB::Report::text('Start Date') },
+               name => $self->Text('Start Date') },
 
             {col_id => 'end_date',
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
-               name => LedgerSMB::Report::text('End Date') },
+               name => $self->Text('End Date') },
 
             {col_id => 'reference',
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
-               name => LedgerSMB::Report::text('Reference') },
+               name => $self->Text('Reference') },
 
             {col_id => 'description',
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
-               name => LedgerSMB::Report::text('Description') },
+               name => $self->Text('Description') },
 
             {col_id => 'entered_by_name',
                type => 'text',
-               name => LedgerSMB::Report::text('Entered By') },
+               name => $self->Text('Entered By') },
 
             {col_id => 'approved_by_name',
                type => 'text',
-               name => LedgerSMB::Report::text('Approved By') },
+               name => $self->Text('Approved By') },
 
             {col_id => 'obsolete_by_name',
                type => 'text',
-               name => LedgerSMB::Report::text('Obsolete By') },
+               name => $self->Text('Obsolete By') },
    ];
 }
 
@@ -106,7 +109,8 @@ Returns the localized name of the template
 =cut
 
 sub name {
-   return LedgerSMB::Report::text('Budget Search Results');
+    my ($self) = @_;
+    return $self->Text('Budget Search Results');
 }
 
 =item header_lines
@@ -116,16 +120,17 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'date_from',
-             text => LedgerSMB::Report::text('Start Date')},
+             text => $self->Text('Start Date')},
             {name => 'date_to',
-             text => LedgerSMB::Report::text('End Date')},
+             text => $self->Text('End Date')},
             {name => 'accno',
-             text => LedgerSMB::Report::text('Account Number')},
+             text => $self->Text('Account Number')},
             {name => 'reference',
-             text => LedgerSMB::Report::text('Reference')},
+             text => $self->Text('Reference')},
             {name => 'source',
-             text => LedgerSMB::Report::text('Source')}];
+             text => $self->Text('Source')}];
 }
 
 =back
@@ -214,11 +219,13 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT AND LICENSE
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2011 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

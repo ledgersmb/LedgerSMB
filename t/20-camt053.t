@@ -1,6 +1,5 @@
-use strict;
-use warnings;
-use Test::More tests => 4;
+
+use Test2::V0;
 
 use LedgerSMB::FileFormats::ISO20022::CAMT053;
 
@@ -15,3 +14,5 @@ ok(! LedgerSMB::FileFormats::ISO20022::CAMT053->new(
 
 is(scalar $camt->lineitems_full(), 10, 'correct number of line items, raw');
 is(scalar $camt->lineitems_simple(), 10, 'correct number of line items, flattened');
+
+done_testing;

@@ -1,9 +1,11 @@
 
+package LedgerSMB::Scripts::menu;
+
 =head1 NAME
 
 LedgerSMB::Scripts::menu - LedgerSMB controller script for menus
 
-=head1 SYOPSIS
+=head1 DESCRIPTION
 
 This script provides a controller class for generating menus.  It can operate in
 two modes:  One creates a standard expanding menu which works with or without
@@ -14,63 +16,12 @@ devices.
 
 =cut
 
-package LedgerSMB::Scripts::menu;
-
 use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Template;
 use strict;
 use warnings;
 
 our $VERSION = '1.0';
-
-=pod
-
-=over
-
-=item __default
-
-This pseudomethod is used to trap menu clicks that come back through the file
-and route to the appropriate function.  It routes to expanding_menu.
-
-=back
-
-=cut
-
-sub __default {
-    my ($request) = @_;
-
-    return root_doc($request);
-}
-
-=pod
-
-=over
-
-=item root_doc
-
-Creates the root document.
-
-=back
-
-
-=cut
-
-sub root_doc {
-    my ($request) = @_;
-    my $template;
-
-    $request->{title} = "LedgerSMB $request->{VERSION} -- ".
-    "$request->{login} -- $request->{company}";
-
-    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
-    $menu->generate();
-
-    $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'main',
-    );
-    return $template->render($menu);
-}
 
 =pod
 
@@ -123,4 +74,17 @@ files.
         }
     }
 };
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
+
 1;

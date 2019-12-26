@@ -3,17 +3,19 @@
 use strict;
 use warnings;
 
-use Test::More 'no_plan';
-use Test::Exception;
+use Test2::V0;
 
 use File::Temp;
+use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
 use LedgerSMB::Template::HTML;
-use Log::Log4perl;
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+use Plack::Request;
+
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 
 my $template;
@@ -42,18 +44,16 @@ is(LedgerSMB::Template::preprocess('04-template', $escape), '04-template',
         'HTML, preprocess: Returned simple string unchanged');
 is(LedgerSMB::Template::preprocess('14 > 12', $escape), '14 &gt; 12',
         'HTML, preprocess: Returned properly escaped string');
-is_deeply(LedgerSMB::Template::preprocess([0, 'apple', 'mango&durian'],
-                                          $escape),
-        [0, 'apple', 'mango&amp;durian'],
-        'HTML, preprocess: Returned properly escaped array ref contents');
-is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
-                'test' => 1}, $escape),
-        {'fruit' => '&amp;veggies', 'test' => 1},
-        'HTML, preprocess: Returned properly escaped hash ref contents');
-is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
-                'test' => ['nest', 'bird', '0 < 15', 1]}, $escape),
-        {'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
-        'HTML, preprocess: Returned properly escaped nested contents');
+is(LedgerSMB::Template::preprocess([0, 'apple', 'mango&durian'], $escape),
+   [0, 'apple', 'mango&amp;durian'],
+   'HTML, preprocess: Returned properly escaped array ref contents');
+is(LedgerSMB::Template::preprocess({'fruit' => '&veggies', 'test' => 1}, $escape),
+   {'fruit' => '&amp;veggies', 'test' => 1},
+   'HTML, preprocess: Returned properly escaped hash ref contents');
+is(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
+                                        'test' => ['nest', 'bird', '0 < 15', 1]}, $escape),
+   {'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
+   'HTML, preprocess: Returned properly escaped nested contents');
 
 ####################
 ## Template tests ##
@@ -68,7 +68,7 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, new: Object creation with valid language and path');
-isa_ok($template, 'LedgerSMB::Template',
+isa_ok($template, ['LedgerSMB::Template'],
         'Template, new: Object creation with valid language and path');
 is($template->{include_path}, 't/data',
         'Template, new: Object creation with valid path overrides language');
@@ -82,7 +82,7 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, new: Object creation with locale');
-isa_ok($template, 'LedgerSMB::Template',
+isa_ok($template, ['LedgerSMB::Template'],
         'Template, new: Object creation with locale');
 
 $template = undef;
@@ -93,8 +93,9 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, new: Object creation with non-existent template');
-throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
-        'Template, render: File not found caught';
+like( dies {$template->render({'login' => 'foo'})},
+      qr/not found/,
+      'Template, render: File not found caught');
 
 #####################
 ## Rendering tests ##
@@ -114,12 +115,12 @@ SKIP: {
     );
     ok(defined $template,
         'Template, new (PDF): Object creation with format and template');
-    isa_ok($template, 'LedgerSMB::Template',
+    isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (PDF): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (PDF): Object creation with format and template');
     isa_ok($template->render({'login' => 'foo&bar'}),
-        'LedgerSMB::Template',
+        ['LedgerSMB::Template'],
         'Template, render (PDF): Simple PDF template, default filename');
     like($template->{output}, qr/^%PDF/, 'Template, render (PDF): output is PDF');
     is(
@@ -136,12 +137,12 @@ SKIP: {
     );
     ok(defined $template,
         'Template, new (PS): Object creation with format and template');
-    isa_ok($template, 'LedgerSMB::Template',
+    isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (PS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (PS): Object creation with format and template');
     isa_ok($template->render({'login' => 'foo\&bar'}),
-        'LedgerSMB::Template',
+        ['LedgerSMB::Template'],
         'Template, render (PS): Simple Postscript template, default filename');
     like($template->{output}, qr/^%!PS/, 'Template, render (PS): output is Postscript');
     is($template->{mimetype}, 'application/postscript', 'Template, render (PS): correct mimetype');
@@ -162,13 +163,15 @@ SKIP: {
     );
     ok(defined $template,
         'Template, new (XLS): Object creation with format and template');
-    isa_ok($template, 'LedgerSMB::Template',
+    isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (XLS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
-        'LedgerSMB::Template',
-        'Template, render (XLS): Simple Postscript template, default filename');
+    isa_ok($template->render({'login' => 'foo\&bar',
+                              'rows' => [],
+                              'columns' => [] }),
+        ['LedgerSMB::Template'],
+        'Template, render (XLS): Simple XLS template, default filename');
     # xls is a Microsoft BIFF format file.
     # make sure it looks like one by checking the first few header bytes.
     like($template->{output}, qr/^\xD0\xCF\x11\xE0/, 'Template, render (XLS): output is XLS');
@@ -186,13 +189,15 @@ SKIP: {
     );
     ok(defined $template,
         'Template, new (XLSX): Object creation with format and template');
-    isa_ok($template, 'LedgerSMB::Template',
+    isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (XLSX): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLSX): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
-        'LedgerSMB::Template',
-        'Template, render (XLSX): Simple Postscript template, default filename');
+    isa_ok($template->render({'login' => 'foo\&bar',
+                              'rows' => [],
+                              'columns' => []}),
+        ['LedgerSMB::Template'],
+        'Template, render (XLSX): Simple XLSX template, default filename');
     # xlsx is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (XLSX): output is XLSX');
     is(
@@ -216,13 +221,13 @@ SKIP: {
     );
     ok(defined $template,
         'Template, new (ODS): Object creation with format and template');
-    isa_ok($template, 'LedgerSMB::Template',
+    isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (ODS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (ODS): Object creation with format and template');
     isa_ok($template->render({'login' => 'foo\&bar'}),
-        'LedgerSMB::Template',
-        'Template, render (ODS): Simple Postscript template, default filename');
+        ['LedgerSMB::Template'],
+        'Template, render (ODS): Simple ODS template, default filename');
     # ods is actualy a zip file.
     like($template->{output}, qr/^PK/, 'Template, render (ODS): output is ODS');
     is(
@@ -240,7 +245,7 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, new (TXT): Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template',
+isa_ok($template, ['LedgerSMB::Template'],
        'Template, new (TXT): Object creation with format and template');
 $template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&bar.",
@@ -255,7 +260,7 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, new (CSV): Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template',
+isa_ok($template, ['LedgerSMB::Template'],
        'Template, new (CSV): Object creation with format and template');
 $template->render({'login' => 'foo&bar'});
 is($template->{output}, "account,amount,description,project",
@@ -270,7 +275,7 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, new (HTML): Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template',
+isa_ok($template, ['LedgerSMB::Template'],
        'Template, new (HTML): Object creation with format and template');
 $template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
@@ -290,7 +295,7 @@ $template = LedgerSMB::Template->new(
 );
 ok(defined $template,
         'Template, private (preprocess): Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template',
+isa_ok($template, ['LedgerSMB::Template'],
         'Template, private (preprocess): Object creation with format and template');
 
 ###################################
@@ -322,7 +327,8 @@ my $contact_request = {
                 ]
 }; # Company with Credit Accounts and business types.
 
-my $payment = LedgerSMB->new();
+my $request = Plack::Request->new({});
+my $payment = LedgerSMB->new($request);
 $payment->merge({
         contact_1 => 1, source_1 => 1, action=>'dispay_payments', id_1 => 1,
         id_1_1    => 1,
@@ -360,6 +366,7 @@ SKIP: {
     );
     LedgerSMB::Legacy_Util::render_template(
         $template,
+        {}, # $form
         {},
         'test',
     );
@@ -368,3 +375,6 @@ SKIP: {
     ok(open ($LPR_TEST, '<', $temp), 'LedgerSMB::Template::_output_lpr output file opened successfully');
     like(<$LPR_TEST>, qr/^%PDF/, 'output file is pdf');
 }
+
+
+done_testing;

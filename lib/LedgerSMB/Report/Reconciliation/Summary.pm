@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Reconciliation::Summary;
+
 =head1 NAME
 
 LedgerSMB::Report::Reconciliation::Summary - List of Reconciliation Reports for
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Reconciliation::Summary;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -37,27 +39,29 @@ reconciled in a specific report.
 
 =over
 
-=item amount_from
+=item balance_from
 
-Only show reports where the amount is greater or equal to this
+Only show reports where the statement ending balance is greater or equal
+to this.
 
 =cut
 
-has amount_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
+has balance_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
               required => 0, coerce => 1);
 
-=item amount_to
+=item balance_to
 
-Only show reports where the amount is less than or equal to this
+Only show reports where the statement ending balance is less than or equal
+to this.
 
 =cut
 
-has amount_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
+has balance_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
               coerce => 1);
 
 =item account_id
 
-Show repoirts only for this specific account
+Show reports only for this specific account
 
 =cut
 
@@ -77,7 +81,7 @@ has approved => (is => 'ro', isa => 'Bool', required => 0);
 If undef, show all reports, if true, show ones submitted for approval, and if
 false only show reports in progress.
 
-Note that approved being set to true and submitted bein set to false will never
+Note that approved being set to true and submitted being set to false will never
 match any reports.
 
 =cut
@@ -128,31 +132,32 @@ Username of the one who approved the report
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [ {col_id => 'account',
-                name => LedgerSMB::Report::text('Account'),
+                name => $self->Text('Account'),
                 type => 'text', },
              {col_id => 'end_date',
-                name => LedgerSMB::Report::text('Statement Date'),
+                name => $self->Text('Statement Date'),
                 type => 'href',
            href_base => 'recon.pl?action=display_report&report_id=', },
              {col_id => 'their_total',
-                name => LedgerSMB::Report::text('Statement Balance'),
+                name => $self->Text('Statement Balance'),
                money => 1,
                 type => 'text', },
              {col_id => 'approved',
-                name => LedgerSMB::Report::text('Approved'),
-                type => 'text', },
+                name => $self->Text('Approved'),
+                type => 'boolean_checkmark', },
              {col_id => 'submitted',
-                name => LedgerSMB::Report::text('Submitted'),
-                type => 'text', },
+                name => $self->Text('Submitted'),
+                type => 'boolean_checkmark', },
              {col_id => 'updated',
-                name => LedgerSMB::Report::text('Last Updated'),
+                name => $self->Text('Last Updated'),
                 type => 'text', },
              {col_id => 'entered_by',
-                name => LedgerSMB::Report::text('Entered By'),
+                name => $self->Text('Entered By'),
                 type => 'text', },
              {col_id => 'approved_by',
-                name => LedgerSMB::Report::text('Approved By'),
+                name => $self->Text('Approved By'),
                 type => 'text', },
           ];
 }
@@ -172,14 +177,15 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'date_from',
-             text => LedgerSMB::Report::text('From Date')},
+             text => $self->Text('From Date')},
             {name => 'date_to',
-             text => LedgerSMB::Report::text('To Date') },
-            {name => 'amount_from',
-             text => LedgerSMB::Report::text('From Amount')},
-            {name => 'amount_to',
-             text => LedgerSMB::Report::text('To Amount')}
+             text => $self->Text('To Date') },
+            {name => 'balance_from',
+             text => $self->Text('From Amount')},
+            {name => 'balance_to',
+             text => $self->Text('To Amount')}
      ];
 }
 
@@ -190,7 +196,8 @@ sub header_lines {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Reconciliation Reports');
+    my ($self) = @_;
+    return $self->Text('Reconciliation Reports');
 }
 
 =head1 METHODS
@@ -217,11 +224,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -1,6 +1,14 @@
+
+package LedgerSMB::Entity::Person;
+
 =head1 NAME
 
 LedgerSMB::Entity::Person -- Natural Person handling for LedgerSMB
+
+=head1 DESCRIPTION
+
+Derived from LedgerSMB::Entity, implements mapping of 'person' fields
+to the database.
 
 =head1 SYNOPSIS
 
@@ -27,14 +35,10 @@ To get by control code:
 
 =cut
 
-package LedgerSMB::Entity::Person;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Entity';
 use LedgerSMB::MooseTypes;
-
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -87,28 +91,12 @@ Salutation id.  These are fixed as:
  (6 rows)
 
 It is highly recommended that this is used, but for backward compatibility and
-upgrade reasons it is not enforced at this time.  This may change at some point as our user interface does not allow this to be left blank.
+upgrade reasons it is not enforced at this time.  This may change at some point
+as our user interface does not allow this to be left blank.
 
 =cut
 
 has 'salutation_id' => (is => 'rw', isa => 'Int');
-
-=item salutations
-
-Constant hashref of above salutations, key is id.
-
-=cut
-
-sub salutations {
-    return {
-       '1' => $locale->text('Dr.'),
-       '2' => $locale->text('Miss.'),
-       '3' => $locale->text('Mr.'),
-       '4' => $locale->text('Mrs.'),
-       '5' => $locale->text('Ms.'),
-       '6' => $locale->text('Sir.'),
-    };
-}
 
 =item created
 
@@ -181,11 +169,13 @@ sub save {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under the GNU GPL
-version 2 or at your option any future version.  Please see the accompanying LICENSE
-file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

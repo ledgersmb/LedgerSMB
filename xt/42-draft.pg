@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -31,45 +32,45 @@ BEGIN;
     INSERT INTO entity (id, entity_class, name, country_id)
     VALUES (-1000, 1, '__TEST', 243);
 
-    INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
-    VALUES (-1000, '_testv', 1, -1000, -1000);
-    INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
-    VALUES (-1001, '_testc', 2, -1000, -1000);
+    INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id, curr)
+    VALUES (-1000, '_testv', 1, -1000, -1000, 'XTS');
+    INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id, curr)
+    VALUES (-1001, '_testc', 2, -1000, -1000, 'XTS');
     SELECT account__save
            (NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
            false);
     SELECT account__save
            (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
            false);
-    INSERT INTO ap (invnumber, entity_credit_account, amount, netamount,
-            approved, curr)
-    select '_TEST AP', -1000, '100', '100', FALSE, 'USD';
+    INSERT INTO ap (invnumber, entity_credit_account, amount_bc, netamount_bc,
+            amount_tc, netamount_tc, approved, curr)
+    select '_TEST AP', -1000, '100', '100', '100', '100', FALSE, 'XTS';
 
-    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
-    SELECT id, currval('id'), '100', TRUE FROM account WHERE accno = '00001';
+    INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+    SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM account WHERE accno = '00001';
     INSERT INTO ac_tax_form (entry_id, reportable)
     VALUES (currval('acc_trans_entry_id_seq')::int, true);
-    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
-    SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00002';
+    INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+    SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM account WHERE accno = '00002';
     INSERT INTO ac_tax_form (entry_id, reportable)
     VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
-    INSERT INTO ar (invnumber, entity_credit_account, amount, netamount,
-            approved, curr)
-    select '_TEST AR', -1001, '100', '100', FALSE, 'USD';
+    INSERT INTO ar (invnumber, entity_credit_account, amount_bc, netamount_bc,
+           amount_tc, netamount_tc, approved, curr)
+    select '_TEST AR', -1001, '100', '100', 100, 100, FALSE, 'XTS';
 
-    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
-    SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00001';
-    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
-    SELECT id, currval('id'), '100', TRUE FROM account WHERE accno = '00002';
+    INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+    SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM account WHERE accno = '00001';
+    INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+    SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM account WHERE accno = '00002';
 
     INSERT INTO gl (reference, description, approved)
     VALUES ('_TEST GL', 'Testing GL Drafts', false);
 
-    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
-    SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00001';
-    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
-    SELECT id, currval('id'), '100', TRUE FROM account WHERE accno = '00002';
+    INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+    SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM account WHERE accno = '00001';
+    INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+    SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM account WHERE accno = '00002';
 
     -- Run tests
 

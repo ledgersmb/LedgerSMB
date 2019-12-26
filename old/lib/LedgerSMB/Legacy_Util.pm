@@ -15,13 +15,17 @@ specified output method.
 use strict;
 use warnings;
 
+use LedgerSMB::Mailer;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
+
 use Log::Log4perl;
 
 
 
 =head1 FUNCTIONS
 
-=head2 render_template($template, $variables, [$method])
+=head2 render_template($template, $form, $variables, [$method])
 
 =over
 
@@ -44,13 +48,14 @@ email|print|screen|<printer name>
 =cut
 
 sub render_template {
-    my $self = shift;
+    my $template = shift;
+    my $form = shift;
     my $vars = shift;
     my $method = shift;
 
-    my $post = $self->_render($vars);
+    my $post = $template->_render($vars);
 
-    output_template($self, (method => $method));
+    output_template($template, $form, (method => $method));
 }
 
 
@@ -79,6 +84,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub output_template {
     my $template = shift;
+    my $form = shift;
     my %args = @_;
 
     for ( keys %args ) { $template->{output_options}->{$_} = $args{$_}; };
@@ -102,7 +108,7 @@ sub output_template {
     } elsif (defined $method and $method ne '' ) {
         _output_template_lpr($template);
     } else {
-        _output_template_http($template, %args);
+        _output_template_http($template, $form, %args);
     }
     return;
 }
@@ -110,7 +116,7 @@ sub output_template {
 
 
 sub _output_template_http {
-    my ($self) = @_;
+    my ($self, $form) = @_;
     my $data = $self->{output};
     my $cache = 1; # default
 
@@ -120,13 +126,11 @@ sub _output_template_http {
     $logger->trace(sub {
         return 'output_options keys: ' . join '|', keys %{$self->{output_options}};
     });
-    if ($LedgerSMB::App_State::DBH){
+    if ($form->{dbh}){
         # we have a db connection, so are logged in.
         # Let's see about caching.
-        $cache = 0 if LedgerSMB::Setting->get('disable_back');
+        $cache = 0 if $form->get_setting('disable_back');
     }
-    # clean up after getting the (last) setting
-    LedgerSMB::App_State::cleanup();
 
     my $disposition = '';
     my $name = $self->{output_options}{filename};
@@ -222,7 +226,7 @@ sub _output_template_lpr {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2017 The LedgerSMB Core Team
+Copyright (C) 2017-2018 The LedgerSMB Core Team
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

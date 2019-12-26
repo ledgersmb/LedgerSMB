@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -25,7 +26,7 @@ BEGIN;
     SELECT has_function('business_unit_class__save',ARRAY['integer','text','boolean','integer']);
     SELECT has_function('business_unit_class__save_modules',ARRAY['integer','integer[]']);
     SELECT has_function('business_unit_get',ARRAY['integer']);
-    SELECT has_function('eca_bu_trigger',ARRAY['']);
+    SELECT has_function('eca_bu_trigger','{}'::text[]);
 
     -- Run tests
 

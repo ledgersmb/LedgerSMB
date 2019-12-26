@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Hierarchical;
+
 =head1 NAME
 
 LedgerSMB::Report::Hierarchical - Table reports with hierarchical axes
@@ -12,10 +15,11 @@ This report class is an abstract class.
 
 =cut
 
-package LedgerSMB::Report::Hierarchical;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
+
+use Scalar::Util 'blessed';
 
 use LedgerSMB::Report::Axis;
 
@@ -95,7 +99,7 @@ retrieved values.
 has sorted_col_ids => (is => 'rw');
 
 
-=head1 STATIC METHODS
+=head1 FUNCTIONS
 
 =over
 
@@ -110,21 +114,9 @@ sub columns {
     return [];
 };
 
-=item header_lines
-
-Implement inherited protocol.
-Returns an empty arrayref since this is not applicable.
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
-
 =back
 
-=head1 SEMI-PUBLIC METHODS
+=head1 METHODS
 
 =head2 cell_value($row_id, $col_id, [$value])
 
@@ -237,13 +229,29 @@ before '_render' => sub {
 
     $self->sorted_row_ids($self->rheads->sort);
     $self->sorted_col_ids($self->cheads->sort);
+
+    for my $row_id (@{$self->sorted_row_ids}) {
+        next if $self->rheads->id_props($row_id)->{section_for};
+
+        for my $col_id (@{$self->sorted_col_ids}) {
+            next if $self->cheads->id_props($col_id)->{section_for};
+
+            my $val = $self->cell_value($row_id, $col_id);
+            if (blessed $val and $val->can('to_output')) {
+                $self->cell_value($row_id, $col_id,
+                    $val->to_output(money => 1));
+            }
+        }
+    }
 };
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2013 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

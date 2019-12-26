@@ -1,6 +1,15 @@
+
+package LedgerSMB::Scripts::payroll;
+
 =head1 NAME
 
 LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
+
+=head1 DESCRIPTION
+
+This module handles the workflow routines for payroll management.  These are
+divided into three areas, namely income types, deduction types, and full payroll
+workflows.
 
 =head1 SYNPOSIS
 
@@ -8,19 +17,16 @@ LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
 
 =cut
 
-package LedgerSMB::Scripts::payroll;
-
 use strict;
 use warnings;
 
 use LedgerSMB::Payroll::Income_Type;
-use LedgerSMB::Template;
+use LedgerSMB::Report::Payroll::Income_Types;
+use LedgerSMB::Template::UI;
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-This module handles the workflow routines for payroll management.  These are
-divided into three areas, namely income types, deduction types, and full payroll
-workflows.
+This module doesn't specify any methods.
 
 =head1 ROUTINES
 
@@ -44,14 +50,8 @@ sub show_income_type {
        funcname => 'payroll_pic__list', args => [$request->{country_id}]
     ) if $request->{country_id};
 
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payroll',
-        template => 'income',
-        format   => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'payroll/income', $request);
 }
 
 =item save_income_type
@@ -92,13 +92,8 @@ sub search_income_type {
        funcname => 'location_list_country'
     );
 
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payroll',
-        template => 'income_search',
-        format   => 'HTML'
-    )->render($request);
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'payroll/income_search', $request);
 }
 
 =item income_type_results
@@ -109,9 +104,9 @@ Displays income type search results
 
 sub income_type_results {
     my ($request) = @_;
-    use LedgerSMB::Report::Payroll::Income_Types;
-    return LedgerSMB::Report::Payroll::Income_Types
-        ->new(%$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Payroll::Income_Types->new(%$request)
+        );
 }
 
 =back
@@ -136,7 +131,13 @@ sub income_type_results {
 
 =head2 Approval and Check Printing
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

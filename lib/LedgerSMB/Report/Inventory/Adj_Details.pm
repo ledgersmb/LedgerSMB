@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Adj_Details;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Adj_Details - Inventory Adjustment
@@ -10,8 +13,6 @@ Details report for LedgerSMB
  $rpt->render($request);
 
 =cut
-
-package LedgerSMB::Report::Inventory::Adj_Details;
 
 use Moose;
 use namespace::autoclean;
@@ -62,14 +63,18 @@ has source => (is => 'rw', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Inventory Adjustment Details') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Inventory Adjustment Details');
+}
 
 =item header_lines
 
 =cut
 
 sub header_lines {
-    return [{name => 'source', text => LedgerSMB::Report::text('Source') }];
+    my ($self) = @_;
+    return [{name => 'source', text => $self->Text('Source') }];
 }
 
 =item columns
@@ -77,23 +82,24 @@ sub header_lines {
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       {col_id => 'partnumber',
          type => 'href',
     href_base => 'ic.pl?action=edit&id=',
-         name => LedgerSMB::Report::text('Part Number') },
+         name => $self->Text('Part Number') },
       {col_id => 'description',
          type => 'text',
-         name => LedgerSMB::Report::text('Description') },
+         name => $self->Text('Description') },
       {col_id => 'counted',
          type => 'text',
-         name => LedgerSMB::Report::text('Counted') },
+         name => $self->Text('Counted') },
       {col_id => 'expected',
          type => 'text',
-         name => LedgerSMB::Report::text('Expected') },
+         name => $self->Text('Expected') },
       {col_id => 'variance',
          type => 'text',
-         name => LedgerSMB::Report::text('Variance') },
+         name => $self->Text('Variance') },
     ];
 }
 
@@ -106,17 +112,18 @@ This sets buttons relevant to approving the adjustments.
 =cut
 
 sub set_buttons {
+    my ($self) = @_;
     return [{
        name => 'action',
        type => 'submit',
       value => 'approve',
-       text => LedgerSMB::Report::text('Approve'),
+       text => $self->Text('Approve'),
       class => 'submit',
     },{
        name => 'action',
        type => 'submit',
       value => 'delete',
-       text => LedgerSMB::Report::text('Delete'),
+       text => $self->Text('Delete'),
       class => 'submit',
     }];
 }
@@ -175,11 +182,13 @@ sub delete {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

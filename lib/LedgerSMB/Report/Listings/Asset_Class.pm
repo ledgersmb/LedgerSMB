@@ -1,6 +1,13 @@
+
+package LedgerSMB::Report::Listings::Asset_Class;
+
 =head1 NAME
 
-LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
+LedgerSMB::Report::Listings::Asset_Class - Asset Class listings
+
+=head1 DESCRIPTION
+
+Implements a listing of fixed asset classes
 
 =head1 SYNPOSIS
 
@@ -8,7 +15,6 @@ LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Listings::Asset_Class;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -59,22 +65,23 @@ has dep_account_id    => (is => 'ro', isa => 'Int', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
    {  col_id => 'id',
-        name => LedgerSMB::Report::text('ID'),
+        name => $self->Text('ID'),
         type => 'text' },
    {  col_id => 'label',
-        name =>  LedgerSMB::Report::text('Label'),
+        name =>  $self->Text('Label'),
         type => 'href',
    href_base => 'asset.pl?action=edit_asset_class&id=', },
   {   col_id => 'method',
-        name => LedgerSMB::Report::text('Depreciation Method'),
+        name => $self->Text('Depreciation Method'),
         type => 'text' },
    {  col_id => 'asset_description',
-        name => LedgerSMB::Report::text('Asset Account'),
+        name => $self->Text('Asset Account'),
         type => 'text' },
    {  col_id => 'dep_description',
-        name => LedgerSMB::Report::text('Depreciation Account'),
+        name => $self->Text('Depreciation Account'),
         type => 'text' },
    ];
 }
@@ -86,11 +93,12 @@ Label and method
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [
        {name => 'label',
-        text => LedgerSMB::Report::text('Label') },
+        text => $self->Text('Label') },
        {name => 'method',
-        text => LedgerSMB::Report::text('Depreciation Method') },
+        text => $self->Text('Depreciation Method') },
     ];
 }
 
@@ -101,7 +109,10 @@ Asset Class List
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Asset Class List') };
+sub name {
+    my ($self) = @_;
+    return $self->Text('Asset Class List');
+};
 
 =head1 METHODS
 
@@ -120,11 +131,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2014 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the included LICENSE.txt for details.
+Copyright (C) 2014 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

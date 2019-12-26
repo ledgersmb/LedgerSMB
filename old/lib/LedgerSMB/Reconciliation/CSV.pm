@@ -18,7 +18,6 @@ use LedgerSMB::Reconciliation::ISO20022;
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use Try::Tiny;
 use base qw(LedgerSMB::PGOld);
 
@@ -60,7 +59,7 @@ sub process {
         $self->{file_upload} = 1;
         return $self->{entries};
     }
-    my $func = "parse_${LedgerSMB::App_State::DBName}_$recon->{chart_id}";
+    my $func = "parse_$self->{company}_$recon->{chart_id}";
     if ($self->can($func)){
        my @entries = $self->can($func)->($self,$contents);
        @{$self->{entries}} = @entries;

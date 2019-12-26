@@ -47,7 +47,7 @@ sub call {
     my $req = Plack::Request->new($env);
     my $res = $self->app->($env);
 
-    my $cookie = eval { $req->parameters->get_one('request.download-cookie'); };
+    my $cookie = $req->parameters->get('request.download-cookie');
     my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
     my $path = $env->{SCRIPT_NAME};
     $path =~ s|[^/]*$||g;
@@ -56,7 +56,7 @@ sub call {
             my $res = shift;
 
                 # Set the requested cookie's value
-                Plack::Util::header_set(
+                Plack::Util::header_push(
                     $res->[1], 'Set-Cookie',
                     qq|$cookie=downloaded; path=$path$secure|)
                     if $cookie;
@@ -65,11 +65,11 @@ sub call {
 
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2017 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

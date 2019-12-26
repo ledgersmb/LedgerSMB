@@ -1,11 +1,13 @@
 
+package LedgerSMB::Template::XLSX;
+
 =head1 NAME
 
 LedgerSMB::Template::XLSX - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-Microsoft Spreadsheet XLSX output.
+Implements C<LedgerSMB::Template>'s FORMATTER protocol for XLSX output.
 
 =head1 METHODS
 
@@ -13,14 +15,13 @@ Microsoft Spreadsheet XLSX output.
 
 =cut
 
-package LedgerSMB::Template::XLSX;
-
 use strict;
 use warnings;
 
 use IO::Scalar;
 use Excel::Writer::XLSX;
 use Spreadsheet::WriteExcel;
+use XML::Twig;
 
 my $binmode = undef;
 my $extension = 'xlsx';
@@ -225,12 +226,13 @@ sub mimetype {
 
 =back
 
-=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Copyright (C) 2016-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

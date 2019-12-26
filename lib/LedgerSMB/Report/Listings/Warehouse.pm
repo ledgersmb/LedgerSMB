@@ -1,6 +1,13 @@
+
+package LedgerSMB::Report::Listings::Warehouse;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Warehouse - List warehouses in LedgerSMB
+
+=head1 DESCRIPTION
+
+Implements an unfiltered listing of warehouses.
 
 =head1 SYNOPSIS
 
@@ -10,7 +17,6 @@ Since no parameters are required:
 
 =cut
 
-package LedgerSMB::Report::Listings::Warehouse;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -32,21 +38,14 @@ None
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
        col_id => 'description',
         type  => 'href',
    href_base  => 'am.pl?action=edit_warehouse&id=',
-        name  => LedgerSMB::Report::text('Description'),
+        name  => $self->Text('Description'),
     }];
 }
-
-=head2 header_lines
-
-None
-
-=cut
-
-sub header_lines { return []; }
 
 =head2 name
 
@@ -54,7 +53,10 @@ Warehouses
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Warehouses'); }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Warehouses');
+}
 
 =head1 METHODS
 
@@ -71,11 +73,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright(C) 2013 The LedgerSMB Core Team.  This file may be used in accordance
-with the GNU General Public License version 2 or at your option any later
-version.  Please see the included License.txt for details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -4,10 +4,18 @@ package LedgerSMB::PSGI;
 
 LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 
+=head1 DESCRIPTION
+
+Maps the URL name space to the various entry points.
+
 =head1 SYNOPSIS
 
  use LedgerSMB::PSGI;
  my $app = LedgerSMB::PSGI->get_app();
+
+=head1 METHODS
+
+This module doesn't specify any (public) methods.
 
 =cut
 
@@ -19,9 +27,10 @@ use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
-use HTTP::Status qw( HTTP_FOUND );
+use LedgerSMB::Sysconfig;
 
 use CGI::Emulate::PSGI;
+use HTTP::Status qw( HTTP_FOUND );
 use Try::Tiny;
 use List::Util qw{  none };
 use Scalar::Util qw{ reftype };
@@ -29,7 +38,7 @@ use Scalar::Util qw{ reftype };
 # To build the URL space
 use Plack;
 use Plack::Builder;
-use Plack::Request;
+use Plack::Request::WithEncoding;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Middleware::ReverseProxy;
@@ -37,13 +46,17 @@ use Plack::Builder::Conditionals;
 use Plack::Util;
 
 
+# After Perl 5.20 is the minimum required version,
+# we can drop the restriction on the match vars
+# because 5.20 doesn't copy the data (but uses       
+# string slices)
 use English qw(-no_match_vars);
 if ($EUID == 0) {
     die join("\n",
         'Running a Web Service as root is a security problem.',
         'If you are starting LedgerSMB as a system service,',
         'please make sure that you drop privileges as per README.md',
-        'and the example files in conf/.',
+        'and the example files in doc/conf/.',
         'The method of passing a --user argument to starman cannot',
         'be used as starman drops privileges too late, starting us as root.'
     );
@@ -86,19 +99,11 @@ in LedgerSMB::Scripts::*.
 
 sub psgi_app {
     my $env = shift;
-
-    my $auth = LedgerSMB::Auth::factory($env);
-
-    my $psgi_req = Plack::Request->new($env);
-    my $request = LedgerSMB->new(
-        $psgi_req->parameters, $env->{'lsmb.script'}, $env->{QUERY_STRING},
-        $psgi_req->uploads, $psgi_req->cookies, $auth, $env->{'lsmb.db'},
-        $env->{'lsmb.company'},
-        $env->{'lsmb.session_id'}, $env->{'lsmb.create_session_cb'},
-        $env->{'lsmb.invalidate_session_cb'});
+    my $psgi_req = Plack::Request::WithEncoding->new($env);
+    my $request = LedgerSMB->new($psgi_req, $env->{'lsmb.auth'});
 
     $request->{action} = $env->{'lsmb.action_name'};
-    my ($status, $headers, $body);
+    my $res;
     try {
         LedgerSMB::App_State::run_with_state sub {
             if ($env->{'lsmb.want_db'} && !$env->{'lsmb.dbonly'}) {
@@ -111,37 +116,32 @@ sub psgi_app {
                 };
             }
 
-            my $res = $env->{'lsmb.action'}->($request);
-
-            if (ref $res && ref $res eq 'LedgerSMB::Template') {
-                # We got an evaluated template instead of a PSGI triplet...
-                ($status, $headers, $body) =
-                    @{LedgerSMB::PSGI::Util::template_to_psgi($res)};
-            }
-            else {
-                ($status, $headers, $body) = @$res;
-            }
-        }, DBH     => $env->{'lsmb.db'},
-           DBName  => $env->{'lsmb.company'},
-           Locale  => $request->{_locale};
+            $res = $env->{'lsmb.action'}->($request);
+        }, DBH     => $env->{'lsmb.db'};
 
         $request->{dbh}->commit if defined $request->{dbh};
     }
     catch {
-        # The database setup middleware will roll back before disconnecting
         my $error = $_;
+
+        # Explicitly roll back, because middleware may require the
+        # database connection to be in a working state (e.g. DisableBackbutton)
+        $request->{dbh}->rollback
+            if $request->{dbh};
         if ($error !~ /^Died at/) {
             $env->{'psgix.logger'}->({
                 level => 'error',
-                message => $_ });
-            ($status, $headers, $body) =
-                @{LedgerSMB::PSGI::Util::internal_server_error(
-                      $_, 'Error!',
-                      $request->{dbversion}, $request->{company})};
+                message => $error });
+            $res = LedgerSMB::PSGI::Util::internal_server_error(
+                $error, 'Error!',
+                $request->{dbversion}, $request->{company});
+        }
+        else {
+            $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
         }
     };
 
-    return [ $status, $headers, $body ];
+    return $res;
 }
 
 sub _run_old {
@@ -212,7 +212,20 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
-        for  (@LedgerSMB::Sysconfig::newscripts);
+        for  (grep { $_ ne 'setup.pl' } @LedgerSMB::Sysconfig::newscripts);
+
+        mount '/setup.pl' => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::AuthenticateSession',
+                domain => 'setup';
+            enable '+LedgerSMB::Middleware::DisableBackButton';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
+            $psgi_app;
+        };
 
         mount '/stop.pl' => sub { exit; }
             if $coverage;
@@ -232,6 +245,10 @@ sub setup_url_space {
             }
         };
 
+        if (! $LedgerSMB::Sysconfig::dojo_built) {
+            mount '/js/' => Plack::App::File->new(root => 'UI/js-src')->to_app
+        }
+
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };
 
@@ -242,6 +259,15 @@ sub setup_url_space {
 
 =back
 
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2014-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
 =cut
+
 
 1;

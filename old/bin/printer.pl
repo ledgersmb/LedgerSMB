@@ -45,23 +45,23 @@ sub print_options {
         };
 
     # SC: Option values extracted from other old/bin/ scripts
-    if ($form->{type} eq 'invoice') {
+    if ($form->{type} && $form->{type} eq 'invoice') {
     push @{$options{formname}{options}}, {
         text => $locale->text('Invoice'),
         value => 'invoice',
         };
     }
-    if ($form->{type} eq 'sales_quotation') {
+    if ($form->{type} && $form->{type} eq 'sales_quotation') {
         push @{$options{formname}{options}}, {
             text => $locale->text('Quotation'),
             value => 'sales_quotation',
             };
-    } elsif ($form->{type} eq 'request_quotation') {
+    } elsif ($form->{type} && $form->{type} eq 'request_quotation') {
         push @{$options{formname}{options}}, {
             text => $locale->text('RFQ'),
             value => 'request_quotation',
             };
-    } elsif ($form->{type} eq 'sales_order') {
+    } elsif ($form->{type} && $form->{type} eq 'sales_order') {
         push @{$options{formname}{options}}, {
             text => $locale->text('Sales Order'),
             value => 'sales_order',
@@ -78,7 +78,7 @@ sub print_options {
             text => $locale->text('Packing List'),
             value => 'packing_list',
             };
-    } elsif ($form->{type} eq 'purchase_order') {
+    } elsif ($form->{type} && $form->{type} eq 'purchase_order') {
         push @{$options{formname}{options}}, {
             text => $locale->text('Purchase Order'),
             value => 'purchase_order',
@@ -87,7 +87,7 @@ sub print_options {
             text => $locale->text('Bin List'),
             value => 'bin_list',
             };
-    } elsif ($form->{type} eq 'ship_order') {
+    } elsif ($form->{type} && $form->{type} eq 'ship_order') {
         push @{$options{formname}{options}}, {
             text => $locale->text('Pick List'),
             value => 'pick_list',
@@ -96,7 +96,7 @@ sub print_options {
             text => $locale->text('Packing List'),
             value => 'packing_list',
             };
-    } elsif ($form->{type} eq 'receive_order') {
+    } elsif ($form->{type} && $form->{type} eq 'receive_order') {
         push @{$options{formname}{options}}, {
             text => $locale->text('Bin List'),
             value => 'bin_list',
@@ -111,7 +111,7 @@ sub print_options {
             value => 'shipping_label',
             };
 
-    if ( $form->{media} eq 'email' ) {
+    if ( $form->{media} && $form->{media} eq 'email' ) {
         $options{media} = {
             name => 'sendmode',
             options => [{
@@ -155,7 +155,7 @@ sub print_options {
             value => 'pdf',
             };
     }
-    if ($form->{type} eq 'invoice'){
+    if ($form->{type} && $form->{type} eq 'invoice'){
        push @{$options{format}{options}}, {
             text => '894.EDI',
             value => '894.edi',
@@ -173,11 +173,11 @@ sub print_options {
     # $locale->text('E-mailed')
     # $locale->text('Scheduled')
 
-    $options{status} = (
+    $options{status} = {
         printed   => 'Printed',
         emailed   => 'E-mailed',
         recurring => 'Scheduled'
-    );
+    };
 
     $options{groupby} = {};
     $options{groupby}{groupprojectnumber} = "checked" if $form->{groupprojectnumber};
@@ -185,7 +185,7 @@ sub print_options {
 
     $options{sortby} = {};
     for (qw(runningnumber partnumber description bin)) {
-        $options{sortby}{$_} = "checked" if $form->{sortby} eq $_;
+        $options{sortby}{$_} = "checked" if $form->{sortby} && $_ && $form->{sortby} eq $_;
     }
 
     \%options;

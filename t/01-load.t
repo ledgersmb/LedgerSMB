@@ -2,8 +2,14 @@
 
 use strict;
 use warnings;
-use Test::More;
+
 use File::Find;
+
+use Test2::V0;
+use Test2::Tools::Spec;
+
+
+####### Test setup
 
 my @on_disk;
 sub collect {
@@ -18,54 +24,59 @@ sub collect {
 }
 find(\&collect, 'lib/LedgerSMB/', 'old/lib/LedgerSMB/');
 
+my %tested = ( 'LedgerSMB::Sysconfig' => 1 );
+my %on_disk;
+sub module_loads {
+    my ($module, @required_modules) = @_;
 
-my @exception_modules =
-    (
-     # Exclude because tested conditionally on Template::Plugin::Latex way below
-     'LedgerSMB::Template::LaTeX',
+    return if $tested{$module}; # don't test twice
 
-     # Exclude because tested conditionally on XML::Twig way below
-     'LedgerSMB::Template::ODS',
+    $tested{$module} = 1;
+    delete $on_disk{$module};
 
-     # Exclude because tested conditionally on Excel::Writer::XLSX
-     # and Spreadsheet::WriteExcel
-     'LedgerSMB::Template::XLSX',
+    tests modules_loadable => { iso => 1, async => (! $ENV{COVERAGE}) }, sub {
+        for (@required_modules) {
+            eval "require $_"
+                or skip_all "Test missing required module '$_'";
+        }
 
-     # Exclude because tested conditionally on CGI::Emulate::PSGI way below
-     'LedgerSMB::PSGI',
-     # Exclude because tested conditionally on X12::Parser way below
-     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+        ok eval("require $module"), $@;
+    };
+}
 
-     # Exclude because tested first to see if tests can succeed at all
-     'LedgerSMB::Sysconfig',
 
-     # Exclude because currently broken
-     #@@@TODO: 1.5 release blocker!
-    );
-
-# USE STATEMENTS BELOW AS HELPERS TO REFRESH THE TABLE
-#use Data::Dumper;
-#print STDERR Dumper(\@on_disk);
 my @modules =
     (
+     'LedgerSMB::Sysconfig',
+     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+     'LedgerSMB::Template::XLSX',
+     'LedgerSMB::Template::ODS',
+     'LedgerSMB::Template::LaTeX',
           'LedgerSMB::App_State',
           'LedgerSMB::DBH', 'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer',
           'LedgerSMB::User', 'LedgerSMB::Entity',
-          'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
+          'LedgerSMB::GL', 'LedgerSMB::Timecard',
           'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
           'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
           'LedgerSMB::File', 'LedgerSMB::Report',
-          'LedgerSMB::Template', 'LedgerSMB::Legacy_Util',
-          'LedgerSMB::Company_Config', 'LedgerSMB::Database',
-          'LedgerSMB::Database::ChangeChecks',
+          'LedgerSMB::Request::Helper::ParameterMap',
+          'LedgerSMB::Template', 'LedgerSMB::Template::UI',
+          'LedgerSMB::Legacy_Util',
+          'LedgerSMB::Company_Config',
+          'LedgerSMB::Currency', 'LedgerSMB::Database',
+          'LedgerSMB::Database::ChangeChecks', 'LedgerSMB::Database::Config',
+          'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
+          'LedgerSMB::IIAA',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld',
           'LedgerSMB::Setting', 'LedgerSMB::Tax', 'LedgerSMB::Upgrade_Tests',
-          'LedgerSMB::Upgrade_Preparation', 'LedgerSMB::Form', 'LedgerSMB::IS',
+          'LedgerSMB::Upgrade_Preparation',
+          'LedgerSMB::Database::SchemaChecks::JSON',
+          'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
           'LedgerSMB::DBObject::EOY',
@@ -100,6 +111,7 @@ my @modules =
           'LedgerSMB::old_code', 'LedgerSMB::Part',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
+          'LedgerSMB::PSGI',
           'LedgerSMB::PSGI::Preloads', 'LedgerSMB::PSGI::Util',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
@@ -155,6 +167,7 @@ my @modules =
           'LedgerSMB::Report::co::Balance_y_Mayor',
           'LedgerSMB::Report::co::Caja_Diaria',
           'LedgerSMB::Scripts::budget_reports',
+          'LedgerSMB::Scripts::currency',
           'LedgerSMB::Scripts::parts',
           'LedgerSMB::Scripts::contact_reports', 'LedgerSMB::Scripts::file',
           'LedgerSMB::Scripts::inv_reports', 'LedgerSMB::Scripts::lreports_co',
@@ -173,7 +186,6 @@ my @modules =
           'LedgerSMB::Scripts::user', 'LedgerSMB::Scripts::contact',
           'LedgerSMB::Scripts::drafts', 'LedgerSMB::Scripts::recon',
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
-          'LedgerSMB::Scripts::employee::country',
           'LedgerSMB::Setting::Sequence',
           'LedgerSMB::Setup::SchemaChecks',
           'LedgerSMB::Taxes::Simple',
@@ -185,72 +197,31 @@ my @modules =
           'LedgerSMB::Magic',
     );
 
-my %modules;
-$modules{$_} = 1 for @modules;
-$modules{$_} = 1 for @exception_modules;
+%on_disk = map { $_ => 1 } @on_disk;
 
-my @untested_modules;
-for (@on_disk) {
-    push @untested_modules, $_
-        if ! defined($modules{$_});
+
+########### The actual tests
+
+
+use Test2::Require::Module 'LedgerSMB::Sysconfig';
+delete $on_disk{'LedgerSMB::Sysconfig'};
+
+module_loads 'LedgerSMB::Template::ODS' => qw( XML::Twig OpenOffice::OODoc );
+
+module_loads
+    'LedgerSMB::Template::LaTeX' => qw( Template::Plugin::Latex Template::Latex );
+
+module_loads
+    'LedgerSMB::Template::XLSX' => qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
+
+for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
+    module_loads $_ => qw( X12::Parser );
 }
 
-ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
-    or diag ('Missing in test: ', explain \@untested_modules);
-
-use_ok('LedgerSMB::Sysconfig')
-    || BAIL_OUT('System Configuration could be loaded!');
-my @to_sort = map { rand() } 0 .. $#modules;
-@modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {
-    use_ok($module);
-}
-SKIP: {
-    eval{ require Template::Plugin::Latex} ||
-    skip 'Template::Plugin::Latex not installed', 1;
-    eval{ require Template::Latex} ||
-    skip 'Template::Latex not installed', 1;
-
-    use_ok('LedgerSMB::Template::LaTeX');
+    module_loads $module;
 }
 
-SKIP: {
-    eval { require XML::Twig };
-    skip 'XML::Twig not installed', 1 if $@;
-
-    eval { require OpenOffice::OODoc };
-    skip 'OpenOffice::OODoc not installed', 1 if $@;
-
-    use_ok('LedgerSMB::Template::ODS');
-}
-
-SKIP: {
-        eval { require CGI::Emulate::PSGI };
-
-        skip 'CGI::Emulate::PSGI not installed', 1 if $@;
-        use_ok('LedgerSMB::PSGI');
-}
-
-SKIP: {
-    eval { require X12::Parser };
-
-    skip 'X12::Parser not installed', 3 if $@;
-    for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
-        use_ok($_);
-    }
-}
-
-SKIP: {
-    eval { require Excel::Writer::XLSX };
-    skip 'Excel::Writer::XLSX not installed', 1 if $@;
-
-
-    eval { require Spreadsheet::WriteExcel };
-    skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
-
-    for ('LedgerSMB::Template::XLSX') {
-        use_ok($_);
-    }
-}
+is([ keys %on_disk ], [], 'All on-disk modules have been tested');
 
 done_testing;

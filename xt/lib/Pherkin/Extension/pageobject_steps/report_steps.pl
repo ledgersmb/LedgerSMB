@@ -1,6 +1,5 @@
 #!perl
 
-
 use strict;
 use warnings;
 
@@ -8,11 +7,28 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 
-
 When qr/I search with these parameters:/, sub {
     my %h = map { $_->{parameter} => $_->{value} } @{C->data};
     S->{ext_wsl}->page->body->maindiv->content->search(%h);
 };
+
+
+When qr/^I select the rows? where "(.*)" is "(.*)"$/, sub {
+    my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
+    my $column = $1;
+    my $value = $2;
+
+    foreach my $row(@rows) {
+        if ($row->{$column} eq $value) {
+            my $checkbox = $row->{_element}->find(
+                './td/div/input[@type="checkbox"]'
+            );
+            my $checked = $checkbox->get_attribute('checked');
+            $checked && $checked eq 'true' or $checkbox->click;
+        }
+    }
+};
+
 
 Then qr/the Balance Sheet per (.{10}) looks like:/, sub {
     my $date = $1;
@@ -29,6 +45,23 @@ Then qr/the Balance Sheet per (.{10}) looks like:/, sub {
 };
 
 
+Then qr/I expect the report to contain (\d+) rows?$/, sub {
+    my $wanted_row_count = $1;
+    my @rows = S->{ext_wsl}->page->body->maindiv->content->find_all(
+        './/table/tbody/tr'
+    );
+    my $row_count = scalar @rows;
+
+    # Discount final row if it contains totals
+    my $final_element = pop @rows;
+    if($final_element && $final_element->get_attribute('class') =~ m/listtotal/) {
+        $row_count --;
+    }
+
+    is($row_count, $wanted_row_count, "report contains $wanted_row_count rows");
+};
+
+
 Then qr/I expect the '(.*)' report column to contain '(.*)' for (.*) '(.*)'/, sub {
     my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
     my $column = $1;
@@ -39,6 +72,35 @@ Then qr/I expect the '(.*)' report column to contain '(.*)' for (.*) '(.*)'/, su
     ok((grep { $value eq $_->{$column}
                && $row_id eq $_->{$row} } @rows),
        "Column '$column' contains '$value' for row '$row_id' ($row)");
+};
+
+
+Then qr/I should see a heading "(.*)" displaying "(.*)"$/, sub {
+    my $heading = $1;
+    my $contents = $2;
+
+    my $found = S->{ext_wsl}->page->body->maindiv->content->find_heading({
+        Heading => $heading,
+        Contents => $contents
+    });
+
+    ok(
+        $found,
+        "Found header '$heading' displaying '$contents'"
+    );
+};
+
+
+Then qr/I should see these headings:$/, sub {
+    my $data = C->data;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+
+    foreach my $wanted(@{$data}) {
+        ok(
+            $page->find_heading($wanted),
+            "Found header '$wanted->{Heading}' displaying '$wanted->{Contents}'",
+        );
+    }
 };
 
 

@@ -1,8 +1,15 @@
-=pod
+
+package LedgerSMB::File::Entity;
 
 =head1 NAME
 
 LedgerSMB::File::Entity - File attachmets for contacts and entities
+
+=head1 DESCRIPTION
+
+Derived from C<LedgerSMB::File>, this module stores files into
+the C<file_entity> table, linked to an entity in the C<entity>
+table.
 
 =head1 SYNOPSIS
 
@@ -21,7 +28,6 @@ methods only
 
 =cut
 
-package LedgerSMB::File::Entity;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::File';
@@ -43,15 +49,18 @@ sub attach {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
 
+
 __PACKAGE__->meta->make_immutable;
+
+
 1;

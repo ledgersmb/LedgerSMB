@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Taxform::Summary;
+
 =head1 NAME
 
 LedgerSMB::Report::Taxform::Summary - Summary reports for 1099 and similar
@@ -10,7 +13,6 @@ forms for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::DBObject::TaxForm;
 use Moose;
 use namespace::autoclean;
@@ -65,35 +67,36 @@ has taxform => (is => 'rw', isa => 'Str', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
         col_id => 'legal_name',
         type   => 'text',
-        name   => LedgerSMB::Report::text('Company'), },
+        name   => $self->Text('Company'), },
 
       { col_id => 'account_type',
         type   => 'text',
-        name   => LedgerSMB::Report::text('Account Type'), },
+        name   => $self->Text('Account Type'), },
 
       { col_id => 'meta_number',
         type   => 'text',
-        name   => LedgerSMB::Report::text('Account Number'), },
+        name   => $self->Text('Account Number'), },
 
      { col_id  => 'control_code',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Control Code') },
+       name    => $self->Text('Control Code') },
 
      { col_id  => 'acc_sum',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Acc_trans Sum') },
+       name    => $self->Text('Acc_trans Sum') },
 
      { col_id  => 'invoice_sum',
        type    => 'text',
-       name    => LedgerSMB::Report::text('Invoice Sum') },
+       name    => $self->Text('Invoice Sum') },
 
      { col_id  => 'total',
        type    => 'href',
        href_base => 'taxform.pl?action=generate_report&',
-       name    => LedgerSMB::Report::text('Total') },
+       name    => $self->Text('Total') },
      ];
 }
 
@@ -102,10 +105,11 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [
-       { name => 'from_date', text => LedgerSMB::Report::text('From Date') },
-       { name => 'to_date',   text => LedgerSMB::Report::text('To Date') },
-       { name => 'taxform',   text => LedgerSMB::Report::text('Tax Form') },
+       { name => 'from_date', text => $self->Text('From Date') },
+       { name => 'to_date',   text => $self->Text('To Date') },
+       { name => 'taxform',   text => $self->Text('Tax Form') },
     ];
 }
 
@@ -114,7 +118,8 @@ sub header_lines {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Tax Form Report');
+    my ($self) = @_;
+    return $self->Text('Tax Form Report');
 }
 
 =head2 buttons
@@ -122,9 +127,10 @@ sub name {
 =cut
 
 sub buttons {
+    my ($self) = @_;
     return [{name => 'action',
              type => 'submit',
-             text => LedgerSMB::Report::text('Print'),
+             text => $self->Text('Print'),
             value => 'print'}];
 }
 
@@ -153,12 +159,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the LICENSE.TXT that came with this software for more
-details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

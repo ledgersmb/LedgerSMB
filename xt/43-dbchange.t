@@ -4,9 +4,9 @@ LedgerSMB::Database::Change
 
 =cut
 
+use Test2::V0;
+
 use LedgerSMB::Database::Change;
-use Test::Exception;
-use Test::More;
 use DBI;
 
 #
@@ -56,6 +56,8 @@ $chg_db->commit or $chg_db->rollback;
 $chg_db->do(q{SELECT count(*) FROM test1;});
 is $chg_db->rows, -1, 'Successfully created the table';
 
+$chg_db->rollback;
+$chg_db->disconnect;
 
 =head2 Changes in 'AutoCommit' mode
 
@@ -83,5 +85,6 @@ like $chg_db->errstr, qr/relation "test2" does not exist/,
 $chg_db->disconnect;
 
 $dbh->do(qq{DROP DATABASE  "$ENV{LSMB_NEW_DB}_41_dbchange"});
+$dbh->disconnect;
 
 done_testing;

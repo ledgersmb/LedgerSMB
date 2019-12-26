@@ -1,26 +1,34 @@
+
+package LedgerSMB::PGDate;
+
 =head1 NAME
 
 LedgerSMB::PgDate - Date handling and serialization to database
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::PGDate;
-use DateTime::Format::Strptime;
-use LedgerSMB::App_State;
-use LedgerSMB::Magic qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
-use Carp;
-use PGObject;
-use base qw(PGObject::Type::DateTime);
-use strict;
-use warnings;
-
-__PACKAGE__->register(registry => 'default', types => ['date']);
-
-=head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
 PostgreSQL. It provides a handler for date and timestamp datatypes.
 
 The type behaves internally as a Datetime module.
+
+=cut
+
+use strict;
+use warnings;
+use base qw(PGObject::Type::DateTime);
+
+use Carp;
+use DateTime;
+use DateTime::Format::Strptime;
+use PGObject;
+
+use LedgerSMB::App_State;
+use LedgerSMB::Magic
+    qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
+
+
+__PACKAGE__->register(registry => 'default', types => ['date']);
 
 =head1 SUPPORTED FORMATS
 
@@ -317,12 +325,17 @@ sub to_sort {
 
 #__PACKAGE__->meta->make_immutable;
 
-1;
-
 =back
 
-=head1 Copyright (C) 2011, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-This file is licensed under the Gnu General Public License version 2, or at your
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
+
+=cut
+
+
+1;

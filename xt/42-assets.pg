@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,12 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
+    \i xt/data/42-pg/Assets.sql
+
+    \set asset_report_type_depreciation 1
+    \set asset_report_type_full_disposal 2
+    \set asset_report_type_partial_disposal 4
 
     -- Validate required tables
 
@@ -26,26 +32,26 @@ BEGIN;
     SELECT has_function('asset_report__generate_gl',array['integer', 'integer']);
     SELECT has_function('asset_class__get',array['integer']);
     SELECT has_function('asset_class__search',array['integer', 'integer', 'integer', 'text']);
-    SELECT has_function('asset_class__get_dep_methods',ARRAY['']);
+    SELECT has_function('asset_class__get_dep_methods','{}'::text[]);
     SELECT has_function('asset_class__save',array['integer', 'integer', 'integer', 'integer', 'text', 'text']);
     SELECT has_function('asset__get',array['integer', 'text']);
     SELECT has_function('asset__search',array['integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric']);
-    SELECT has_function('asset_class__get_asset_accounts',ARRAY['']);
-    SELECT has_function('asset_class__get_dep_accounts',ARRAY['']);
-    SELECT has_function('asset__save',array['integer', 'integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric', 'date', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer']);
+    SELECT has_function('asset_class__get_asset_accounts','{}'::text[]);
+    SELECT has_function('asset_class__get_dep_accounts','{}'::text[]);
+    SELECT has_function('asset__save',array['integer', 'integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric', 'date', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer', 'integer']);
     SELECT has_function('asset_item__search',array['integer', 'integer', 'text', 'text', 'date', 'numeric', 'numeric', 'numeric', 'date', 'integer', 'integer', 'integer', 'integer', 'integer']);
     SELECT has_function('asset_class__get_dep_method',array['integer']);
     SELECT has_function('asset_report__save',array['integer', 'date', 'integer', 'integer', 'boolean']);
     SELECT has_function('asset_report__dispose',array['integer', 'integer', 'numeric', 'integer', 'numeric']);
     SELECT has_function('asset_report__get_disposal',array['integer']);
-    SELECT has_function('asset_nbv_report',ARRAY['']);
+    SELECT has_function('asset_nbv_report','{}'::text[]);
     SELECT has_function('asset_report_partial_disposal_details',array['integer']);
     SELECT has_function('asset_report__approve',array['integer', 'integer', 'integer', 'integer']);
     SELECT has_function('asset_report__disposal_gl',array['integer', 'integer', 'integer']);
     SELECT has_function('asset_item__add_note',array['integer', 'text', 'text']);
-    SELECT has_function('asset_report__get_expense_accts',ARRAY['']);
-    SELECT has_function('asset_report__get_gain_accts',ARRAY['']);
-    SELECT has_function('asset_report__get_loss_accts',ARRAY['']);
+    SELECT has_function('asset_report__get_expense_accts','{}'::text[]);
+    SELECT has_function('asset_report__get_gain_accts','{}'::text[]);
+    SELECT has_function('asset_report__get_loss_accts','{}'::text[]);
     SELECT has_function('asset_report__get',array['integer']);
     SELECT has_function('asset_report__get_lines',array['integer']);
     SELECT has_function('asset_report__search',array['date', 'date', 'integer', 'boolean', 'integer']);
@@ -56,11 +62,76 @@ BEGIN;
     SELECT has_function('asset_report__record_approve',array['integer']);
     SELECT has_function('asset__import_from_disposal',array['integer']);
 
+
+    -- Set up asset class
+
+    select __create_fixed_asset_account() as asset_acc_id
+    \gset
+    select __create_asset_dep_account() as dep_acc_id
+    \gset
+    select __create_asset_loss_account() as loss_acc_id
+    \gset
+    select __create_asset_gain_account() as gain_acc_id
+    \gset
+    select asset_class__save(null, :asset_acc_id, :dep_acc_id,
+                (select id from asset_dep_method
+                  where method = 'Annual Straight Line Monthly'),
+                'new asset class', 'unit label') as new_class
+    \gset
+
+    -- Create asset
+
+    select __create_asset_exp_account() as exp_acc_id
+    \gset
+    select asset__save(null, (:'new_class'::asset_class).id, 'new asset', 'tag of new asset',
+                       '2010-10-01'::date, 4800, 3, 1200,
+                       '2010-10-01'::date, null, null, null,
+                       :asset_acc_id, :dep_acc_id, :exp_acc_id, null) as new_asset
+    \gset
+
+
+    -- Run depreciation
+
+    select asset_report__save(null, '2010-11-01'::date, :asset_report_type_depreciation,
+                              (:'new_class'::asset_class).id, true) as new_report
+    \gset
+    select asset_report__approve((:'new_report'::asset_report).id, :exp_acc_id, null, null) as approved_report
+    \gset
+
+
+    -- Run partial disposal (abandonment)
+
+    select asset_report__save(null, '2010-11-01'::date, :asset_report_type_partial_disposal,
+                              (:'new_class'::asset_class).id, true) as disposal_report
+    \gset
+    select asset_report__dispose((:'disposal_report'::asset_report).id, (:'new_asset'::asset_item).id,
+                                 0.00, (select id from asset_disposal_method where short_label = 'A'), 50);
+    select asset_report__approve((:'disposal_report'::asset_report).id, :exp_acc_id,
+                                 :gain_acc_id, :loss_acc_id) as approved_report
+    \gset
+
+
+    -- Run full disposal (abandonment)
+
+    select asset_report__save(null, '2010-11-01'::date, :asset_report_type_full_disposal,
+                              (:'new_class'::asset_class).id, true) as full_disposal_report
+    \gset
+    select asset_report__dispose((:'full_disposal_report'::asset_report).id, (:'new_asset'::asset_item).id,
+                                 0.00, (select id from asset_disposal_method where short_label = 'A'), 100);
+    select asset_report__approve((:'disposal_report'::asset_report).id, :exp_acc_id,
+                                 :gain_acc_id, :loss_acc_id) as approved_report
+    \gset
+
+
     -- Run tests
+
+    --TODO: Verify results on various reports (depreciation, partial/full disposal)
 
 --    PREPARE test AS select ...;
 --    SELECT results_eq('test',result,'Description');
 --    DEALLOCATE test;
+
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

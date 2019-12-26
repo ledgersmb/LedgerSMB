@@ -4,7 +4,7 @@
 # errors (legacy fixes that may error).
 # comments begin with # (but you knew that....)
 
-#1.4 fixes from the old Fixes.sql
+# 1.4 fixes from the old Fixes.sql
 1.4/menu-cleanup.sql
 !1.4/location-fixes.sql
 !1.4/batch-fixes.sql
@@ -28,7 +28,7 @@
 1.4/drop-je-functions.sql
 !1.4/templatetrans.sql
 1.4/business_unit_class_id_seq-fix.sql
-#1.5 changes
+# 1.5 changes
 !1.5/invoice-tbl-cogs-constraint.sql
 !1.5/trial_balance_cleanup.sql
 1.5/templates-last-modified.sql
@@ -39,24 +39,31 @@
 1.5/invoice_id_fkey.sql
 1.5/add_qty_to_pricematrix.sql
 1.5/remove_pos_template.sql
-1.5/template_menu.sql
+# The scripts 1.5/template_menu and 1.5/template_menu3 used to
+# fail, but we didn't detect, causing them to be added to the log of
+# applied patches. By ignoring errors here, we simulate the same
+# even though we now correctly catch errors
+!1.5/template_menu.sql
 1.5/template_menu2.sql
 1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
 # these lines were added after 1.5.0
 1.5/issue-2278-modify-acc_trans-index.sql
-1.5/template_menu3.sql
+!1.5/template_menu3.sql
 1.5/template_menu4.sql
 1.5/fixed-assets-depreciation-sproc.sql
 1.5/fixed-assets-not-null-constraints.sql
+1.5/template_menu-v2.sql
 1.5/abstract_tables.sql
 #tag: migration-target
 # Note: the schema as created up to here, is the one as required by
 #   the migration scripts in sql/upgrade/. Don't insert any change
 #   scripts before this point, because it breaks the migrations from
 #   both LedgerSMB 1.2 & 1.3 as well as from SQL 2.8 and 3.0
-#1.6 changes
+# 1.6 changes
 1.6/drop_chart.sql
+!1.6/drop_arap_cols.sql
 1.6/drop_arap_cols.sql
+1.6/audittrail-pg-user.sql
 1.6/gl-trans-type.sql
 1.6/gl-trans-type2.sql
 1.6/no-inv-entity-cleanup.sql
@@ -69,3 +76,39 @@
 1.6/add_empty_salutation.sql
 1.6/missing-countries.sql
 1.6/constrain_default_password_duration.sql
+1.6/add-recon-index.sql
+#
+# mc changes
+mc/create-migration-validation-data.sql
+mc/new-menus.sql
+mc/new-tables.sql
+mc/new-columns.sql
+mc/changed-objects.sql
+mc/drop-constraints.sql
+# do data migration here...
+mc/currency-migration.sql
+mc/aa-migration.sql
+mc/gl-add-curr-for-migration.sql
+mc/acc-trans-migration.sql
+mc/gl-del-curr-for-migration.sql
+mc/acc-checkpoint-migration.sql
+mc/journal-migration.sql
+mc/budget-migration.sql
+mc/migrate-new-constraints.sql
+mc/new-constraints.sql
+mc/dropped-objects.sql
+mc/views.sql
+mc/delete-migration-validation-data.sql
+# 1.7 changes
+1.7/drop-custom-catalog.sql
+1.7/alter-menu-attributes.sql
+1.7/drop-duplicate-gifi-index.sql
+1.7/drop-menu-add-accounts.sql
+1.7/drop-max_ac_id.sql
+1.7/limit_summary_account_links.sql
+1.7/rename-menu-option-gl-search.sql
+1.7/to-location-pkeys-optimization.sql
+1.7/fix-oe-person_id-fkey.sql
+# 1.8 changes
+1.8/add-transdate-to-transactions.sql
+1.8/update-payment-tables-documentation.sql

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::pnl;
+
 =head1 NAME
 
 LedgerSMB::Scripts::pnl - PNL report workflows for LedgerSMB
@@ -10,10 +13,10 @@ Called via lsmb-handler.pl:
 
 =head1 DESCRIPTION
 
-This module provides workflow logic for producing various reports regaridng 
+This module provides workflow logic for producing various reports regarding
 profit and loss.
 
-=head1 METHODS/WORKFLOWS
+=head1 METHODS
 
 =over
 
@@ -23,14 +26,12 @@ Generates an income statement.
 
 =cut
 
-package LedgerSMB::Scripts::pnl;
-
 use LedgerSMB::Report::PNL::Income_Statement;
 use LedgerSMB::Report::PNL::Product;
 use LedgerSMB::Report::PNL::ECA;
 use LedgerSMB::Report::PNL::Invoice;
 use LedgerSMB::Report;
-use LedgerSMB::App_State;
+use LedgerSMB::Setting;
 
 use LedgerSMB::PGDate;
 use strict;
@@ -38,7 +39,6 @@ use warnings;
 
 sub generate_income_statement {
     my ($request) = @_;
-    local $ENV{LSMB_ALWAYS_MONEY} = 1;
 
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
@@ -71,16 +71,18 @@ sub generate_income_statement {
             $rpt->add_comparison($cmp);
         }
     }
-    return $rpt->render($request);
+    return $request->render_report($rpt);
 }
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

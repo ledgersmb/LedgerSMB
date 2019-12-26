@@ -1,0 +1,98 @@
+{
+    q|Assert AR transactions have currency when fx transaction| =>
+        [
+         {
+             failure_data => [
+                 [ qw(id invnumber curr amount netamount credit_entity_account) ],
+                 [ 11, '201801', undef, 20.01, 18.99, 20 ],
+                 ],
+             failure_session =>
+                 [
+                  {
+                      statement => q{SELECT * FROM currency},
+                      results => [
+                          [ qw( curr description ) ],
+                          [ 'USD', 'USD' ],
+                          [ 'EUR', 'EUR' ],
+                          ],
+                  },
+                  {
+                      statement => q{SELECT id, description FROM entity_credit_account WHERE entity_class = 2},
+                      results => [
+                          [ q(id description) ],
+                          [ 20, 'ABC Company'],
+                          ],
+                  },
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{UPDATE "ar"
+                      SET "amount" = ?, "curr" = ?
+                    WHERE "id" = ?},
+                      bound_params => [ 0, 'EUR', 11 ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'save',
+                 ar => [
+                     {
+                         '__pk' => 'MTE=',
+                         'curr' => 'EUR',
+                     },
+                     ],
+             },
+         },
+        ],
+    q|Assert AP transactions have currency when fx transaction| =>
+        [
+         {
+             failure_data => [
+                 [ qw(id invnumber curr amount netamount credit_entity_account) ],
+                 [ 11, '201801', undef, 20.01, 18.99, 20 ],
+                 ],
+             failure_session =>
+                 [
+                  {
+                      statement => q{SELECT * FROM currency},
+                      results => [
+                          [ qw( curr description ) ],
+                          [ 'USD', 'USD' ],
+                          [ 'EUR', 'EUR' ],
+                          ],
+                  },
+                  {
+                      statement => q{SELECT id, description FROM entity_credit_account WHERE entity_class = 1},
+                      results => [
+                          [ q(id description) ],
+                          [ 20, 'ABC Company'],
+                          ],
+                  },
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{UPDATE "ap"
+                      SET "amount" = ?, "curr" = ?
+                    WHERE "id" = ?},
+                      bound_params => [ 0, 'EUR', 11 ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'save',
+                 ap => [
+                     {
+                         '__pk' => 'MTE=',
+                         'curr' => 'EUR',
+                     },
+                     ],
+             },
+         },
+        ],
+}

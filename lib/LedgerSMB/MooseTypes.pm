@@ -1,10 +1,16 @@
+
+package LedgerSMB::MooseTypes;
+
 =head1 NAME
 
 LedgerSMB::MooseTypes - Moose subtypes and coercions for LedgerSMB
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::MooseTypes;
+This includes a general set of wrapper types, currently limited to dates and
+numbers, for automatic instantiation from strings.
+
+=cut
 
 use strict;
 use warnings;
@@ -29,10 +35,9 @@ use LedgerSMB::PGNumber;
                     coerce => 1
  );
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-This includes a general set of wrapper types, currently limited to dates and
-numbers, for automatic instantiation from strings.
+This module doesn't specify any (public) methods.
 
 =head1 SUBTYPES
 
@@ -107,5 +112,19 @@ coerce 'LedgerSMB::Moose::FileContent',
   via { PGObject::Type::ByteString->new($_) };
 
 
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 __PACKAGE__->meta->make_immutable;
+
+
 1;

@@ -1,8 +1,11 @@
+
+package LedgerSMB::Scripts::report_aging;
+
 =head1 NAME
 
 LedgerSMB::Scripts::report_aging - Aging Reports and Statements for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module provides AR/AP aging reports and statements for LedgerSMB.
 
@@ -10,15 +13,19 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 
 =cut
 
-package LedgerSMB::Scripts::report_aging;
-
-use LedgerSMB::Template;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::Report::Aging;
-use LedgerSMB::Scripts::reports;
-use LedgerSMB::Setting;
 use strict;
 use warnings;
+
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Entity;
+use LedgerSMB::Entity::Company;
+use LedgerSMB::Entity::Contact;
+use LedgerSMB::Entity::Credit_Account;
+use LedgerSMB::Entity::Location;
+use LedgerSMB::Legacy_Util;
+use LedgerSMB::Report::Aging;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Template;
 
 our $VERSION = '1.0';
 
@@ -41,9 +48,9 @@ sub run_report{
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::Report::Aging->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Aging->new(%$request)
+        );
 }
 
 
@@ -66,10 +73,7 @@ email.
 
 sub generate_statement {
     my ($request) = @_;
-    use LedgerSMB::Entity::Company;
-    use LedgerSMB::Entity::Credit_Account;
-    use LedgerSMB::Entity::Location;
-    use LedgerSMB::Entity::Contact;
+
     _strip_specials($request);
 
     my $rtype = $request->{report_type}; # in case we need it later
@@ -118,9 +122,9 @@ sub generate_statement {
     }
     $request->{report_type} = $rtype;
     $request->{meta_number} = $old_meta;
-    my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new( # printed document
         path => 'DB',
-        locale => $LedgerSMB::App_Date::Locale,
+        locale => $request->{_locale},
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
@@ -135,11 +139,16 @@ sub generate_statement {
        return;
 
     } elsif ($request->{media} eq 'screen'){
-        return $template->render({statements => \@statements});
+        return $template->render(
+            {
+                statements => \@statements,
+                DBNAME     => $request->{company},
+            });
     } else {
-        $template->legacy_render({statements => \@statements});
+        LedgerSMB::Legacy_Util::render_template($template, $request, {
+             statements => \@statements });
         $request->{module_name}='gl';
-        $request->{report_type}='aging';
+        $request->{report_name}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);
     }
     # Unreachable
@@ -154,11 +163,13 @@ sub _strip_specials {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of te GNU General Public License version 2 or at your option any later
-version.  Please see included LICENSE.txt for more info.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

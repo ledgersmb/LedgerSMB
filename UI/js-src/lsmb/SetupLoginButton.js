@@ -8,7 +8,7 @@ define([
 ],
        function(declare, event, xhr, dom, style, Button) {
            var authURL =
-               "login.pl?action=authenticate&company=postgres&dbonly=1";
+               "setup.pl?action=authenticate&company=postgres&dbonly=1";
 
            return declare("lsmb/SetupLoginButton",
                           [Button],

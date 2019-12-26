@@ -1,10 +1,20 @@
+
+package LedgerSMB::Report::Listings::TemplateTrans;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 
+=head1 DESCRIPTION
+
+Implements a listing of template transactions: transactions which have
+been (mostly) pre-filled. These transactions have themselves not been
+posted, however, copies of these transactions can be (quickly) posted
+due to the fact that only minimal additional data needs te be specified
+in order to complete the financial transaction.
+
 =cut
 
-package LedgerSMB::Report::Listings::TemplateTrans;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::Magic qw( JRNL_GJ JRNL_AR JRNL_AP );
@@ -35,6 +45,20 @@ Always false
 
 has approved => (is => 'ro', isa => 'Bool', default => 0);
 
+=head2 can_delete
+
+Boolean option which determines if option to delete is displayed.
+Initialised according to whether the current user has the role
+C<transaction_template_delete>.
+
+=cut
+
+has can_delete => (
+    is => 'ro',
+    isa => 'Bool',
+    lazy => 1,
+    builder => '_has_delete_permission'
+);
 
 
 =head1 METHODS
@@ -46,15 +70,22 @@ has approved => (is => 'ro', isa => 'Bool', default => 0);
 sub columns {
     my ($self) = @_;
     my $href_base='transtemplate.pl?action=view&id=';
-    return [ {
-        col_id => 'row_select',
-        type => 'checkbox',
-        name => '',
+    my @columns;
 
-     }, {
+    # Checkbox is only needed for delete option
+    if ($self->can_delete) {
+        push @columns, {
+            col_id => 'row_select',
+            type => 'checkbox',
+            name => '',
+        };
+    }
+
+    # Other fields are always displayed
+    push @columns, {
       col_id => 'id',
         type => 'href',
-        name => LedgerSMB::Report::text('ID'),
+        name => $self->Text('ID'),
    href_base => $href_base,
     }, {
       col_id => 'journal_type',
@@ -63,22 +94,16 @@ sub columns {
     }, {
       col_id => 'description',
         type => 'href',
-        name => LedgerSMB::Report::text('Description'),
+        name => $self->Text('Description'),
    href_base => $href_base,
     }, {
       col_id => 'entity_name',
         type => 'text',
-        name => LedgerSMB::Report::text('Counterparty'),
-    }];
+        name => $self->Text('Counterparty'),
+    };
+
+    return \@columns;
 }
-
-=head2 header_lines
-
-none
-
-=cut
-
-sub header_lines { return [] }
 
 =head2 set_buttons
 
@@ -87,14 +112,20 @@ none
 =cut
 
 sub set_buttons {
-    return [
-        { name => 'action',
-            text => LedgerSMB::Report::text('Delete'),
+    my ($self) = @_;
+    my @buttons;
+
+    if ($self->can_delete) {
+        push @buttons, {
+            name => 'action',
+            text => $self->Text('Delete'),
            value => 'delete',
             type => 'submit',
            class => 'submit'
-        },
-        ];
+        };
+    }
+
+    return \@buttons;
 }
 
 =head2 name
@@ -105,7 +136,7 @@ Template Transactions
 
 sub name {
     my $self = shift;
-    return LedgerSMB::Report::text('Template Transactions');
+    return $self->Text('Template Transactions');
 }
 
 =head2 run_report
@@ -129,13 +160,32 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
 
-Copyright (C) 2016 The LedgerSMB Core Team
+# PRIVATE METHODS
 
-This module may be used under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the enclosed
-LICENSE.txt for details
+# has_delete_permission()
+#
+# returns true if current user has transaction_template_delete role,
+# false otherwise.
+
+sub _has_delete_permission {
+    my ($self) = @_;
+    my $r = $self->call_dbmethod(
+        funcname => 'lsmb__is_allowed_role',
+        args => {rolelist => ['transaction_template_delete']}
+    );
+
+    return $r->{lsmb__is_allowed_role};
+}
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2016-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

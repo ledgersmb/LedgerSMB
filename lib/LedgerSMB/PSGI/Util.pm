@@ -23,8 +23,13 @@ This module implements the C<Plack::Middleware> protocol.
 use strict;
 use warnings;
 
+use Carp;
 use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
- HTTP_UNAUTHORIZED );
+    HTTP_UNAUTHORIZED );
+
+=head1 METHODS
+
+This module declares no methods.
 
 =head1 FUNCTIONS
 
@@ -43,7 +48,8 @@ sub internal_server_error {
     my @body_lines = ( '<html><body>',
                        q{<h2 class="error">Error!</h2>},
                        "<p><b>$msg</b></p>" );
-    push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
+    push @body_lines, '<p>dbversion: ' . ($dbversion // '') .
+         ', company: ' . ($company // '') . '</p>'
         if $company || $dbversion;
 
     push @body_lines, '</body></html>';
@@ -100,56 +106,11 @@ sub incompatible_database {
 }
 
 
-=head2 template_to_psgi($template, %args)
-
-Returns a PSGI return value triplet (status, headers and body).
-
-Note that the only guarantee here is that the triplet can
-be used as a PSGI return value which means that the body
-is *not* restricted to being an array of strings.
-
-When C<extra_headers> is specified in the C<%args> hash, these are
-included in the headers part of returned triplet.
-
-=cut
-
-
-sub template_to_psgi {
-    my $self = shift @_;
-    my %args = ( @_ );
-
-    my $charset = '';
-    $charset = '; charset=utf-8'
-        if $self->{mimetype} =~ m!^text/!;
-
-    # $self->{mimetype} set by format
-    my $headers = [
-        'Content-Type' => "$self->{mimetype}$charset",
-        (@{$args{extra_headers} // []})
-        ];
-
-    # Use the same Content-Disposition criteria as _http_output()
-    my $name = $self->{output_options}{filename};
-    if ($name) {
-        $name =~ s#^.*/##;
-        push @$headers,
-            ( 'Content-Disposition' =>
-              qq{attachment; filename="$name"} );
-    }
-
-    my $body = $self->{output};
-    utf8::encode($body)
-        if utf8::is_utf8($body);
-
-    return [ HTTP_OK, $headers, [ $body ] ];
-}
-
-
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2017 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

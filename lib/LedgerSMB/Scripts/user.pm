@@ -1,10 +1,11 @@
-=pod
+
+package LedgerSMB::Scripts::user;
 
 =head1 NAME
 
 LedgerSMB::Scripts::user - web entry points for user self-administration
 
-=head1 SYNPOSIS
+=head1 DESCRIPTION
 
 User preferences and password setting routines for LedgerSMB.  These are all
 accessible to all users and do not perform administrative functions.
@@ -22,12 +23,13 @@ and defaults to indefinite validity.
 =over
 
 =cut
-package LedgerSMB::Scripts::user;
-use LedgerSMB::Template;
-use LedgerSMB::DBObject::User;
-use LedgerSMB::App_State;
+
 use strict;
 use warnings;
+
+use LedgerSMB::DBObject::User;
+use LedgerSMB::Locale;
+use LedgerSMB::Template::UI;
 
 our $VERSION = 1.0;
 
@@ -47,19 +49,14 @@ sub preference_screen {
     }
     $user->get_option_data;
 
-    my $template = LedgerSMB::Template->new(
-        user     => $user,
-        locale   => $request->{_locale},
-        path     => 'UI/users',
-        template => 'preferences',
-        format   => 'HTML'
-    );
-
     my $creds = $request->{_auth}->get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
-    return $template->render({ request => $request,
-                                       user => $user });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request,
+                             'users/preferences',
+                             { request => $request,
+                               user => $user });
 }
 
 =item save_preferences
@@ -74,7 +71,6 @@ sub save_preferences {
     $request->{_user}->{language} = $request->{language};
     my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;
-    $LedgerSMB::App_State::Locale = $locale;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
     $user->{dateformat} =~ s/$slash/\//g;
     if ($user->{confirm_password}){
@@ -102,11 +98,13 @@ sub change_password {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2009 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

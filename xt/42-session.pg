@@ -2,6 +2,7 @@ BEGIN;
 
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -9,8 +10,8 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
-    \i sql/modules/test/data/Reconciliation.sql
+    \i xt/data/42-pg/Base.sql
+    \i xt/data/42-pg/Reconciliation.sql
 
     -- Validate required tables
 
@@ -27,13 +28,13 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('check_expiration',ARRAY['']);
+    SELECT has_function('check_expiration','{}'::text[]);
     SELECT has_function('form_check',ARRAY['integer','integer']);
     SELECT has_function('form_close',ARRAY['integer','integer']);
     SELECT has_function('form_open',ARRAY['integer']);
     SELECT has_function('session_check',ARRAY['integer','text']);
     SELECT has_function('unlock',ARRAY['integer']);
-    SELECT has_function('unlock_all',ARRAY['']);
+    SELECT has_function('unlock_all','{}'::text[]);
 
     -- Run tests
 

@@ -1,6 +1,294 @@
                                                         -*- fundamental -*-
+
+Changelog for 1.8 Series
+forthcoming
+
+Changelog for 1.8.0
+
+Changed functionalities
+* Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
+
+Bugs fixed
+* Default dates sometimes off by a day (before or after the current day)
+
+Code cleanup
+* Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
+* Replace unnecessary UNION selects on ar/ap/gl by select on transactions
+* Remove legacy infrastructure to generate table-formatted report output
+* Remove unmaintained ability from Makefile to install dependencies
+* Moved authentication for 'setup.pl' to itself, making it stand-alone
+* Removed use of LSMB_ALWAYS_MONEY environment variable
+* Replaced 'no strict "refs"' with use of Symbol module
+
+
+Changelog for 1.7 Series
+2019-10-04
+
+Changelog for 1.7.6
+* Disallow rate entry for the default currency (#4236)
+* Fix formatting on-hand (OH) column on orders to follow user settings (#3334)
+* Fix UI translation other than the menu, regressed from 1.6 (#4293)
+* Fix missing 'Entered At' date in contact notes (#2822)
+* Fix removal of lines from orders and vendor invoices on entry (#3703)
+
+
+Changelog for 1.7.5
+* Fix failure to save tax forms (#4252)
+* Fix failure to undo database edits when surrounding code fails (#4253)
+* Allow uploads of files with MIME types unavailable in the database (#1949)
+* Fix failure to render (AR/AP) aging report (#4259, #4260)
+* Separate authentication domains for setup.pl and login.pl (#4247)
+
+
+Changelog for 1.7.4
+* Fix COGS failure when posting AP invoice reversal (#4218)
+* Include first transaction on account in reconciliation (#4221)
+* Fix error on reconciliation when no prior balance available (#4224)
+* Fix SQL write access error when posting fixed assets disposal (#4230)
+* Correctly calculate the tax basis amount even for 0% taxes ($4240)
+
+
+Changelog for 1.7.3
+* Fix regression in fixed assets module due to Multi Currency support (#4195)
+* Fix 'constraint not deferrable' error in fixed assets disposal (#4195)
+* Stop posting manual tax lines with zero amount and zero base amount (#4196)
+* Fix incorrect currency setup error on 'Update' in part screen (#4198)
+* Fix occasional COGS error on invoice posting (#4200)
+* Fix occasional COGS error on invoice reversal posting (#4213)
+* Fix regression with missing download links on reports (#4206)
+
+
+Changelog for 1.7.2
+* Fix invoice screens crashing on manual tax with 0% tax rate (#4176)
+* Fix manual tax lines posted on current instead of transaction date (#4180)
+* Fix default currency invoice sometimes failing to save (#4184)
+* Fix SQL error in reversal of services in AP invoice (#4190)
+
+
+Changelog for 1.7.1
+* Generate unique names for backups
+* Fix tax checkmarks in contact screen sometimes being selected after save
+* Fix tax accounts inclusion in posted AR/AP transactions
+* Fix SQL error when running trial balance report
+* Fix assets and expenses with incorrect signs in GIFI balance and PnL
+
+
+Changelog for 1.7.0
+
+New functionalities
+* Deletion of template transactions (Nick P)
+* Transaction date now part of purchase history report (Chris T)
+* UI allows addition and removal of custom `account_link` flags (Nick P)
+
+Improved foreign currency support
+* Multiple rates per day per currency (Erik H)
+  - Reversing a transaction from a closed-period on a day with different rate
+  - Bank transfers with different banks on the same day with bank's fx rate
+  - Migration from systems which support per-transaction or per-line fx rates
+* Multiple currencies in a single general ledger transaction (Erik H)
+  - Posting an opening balance with all currencies in 1 transaction
+  - Transferring between foreign currencies on e.g. Paypal in 1 transaction
+* Fixed copying of invoice copies fx rate without option to change (Erik H)
+* UI showing foreign and default currency amounts in transactions (Erik H)
+
+Quality Assurance
+* Expanded checks and resolutions for schema changes (Erik H)
+* Testing infrastructure and tests for schema change checks (Erik H)
+* Ensure correct dependency declaration (RequireExplicitInclusion critic policy)
+* POD documentation structure improvements, with automated checks (Erik H)
+* Expanded BDD tests, including payments, batches and approval (Nick P, Erik H)
+
+Code cleanup
+* Removed deprecated 'custom table' and 'custom field' tables (Erik H)
+* Reduce dependencies on deprecated LedgerSMB::App_State (Nick P)
+* Simplified deprecated LedgerSMB::PGOld (Nick P)
+* Remove unused LedgerSMB::DBObject and LedgerSMB::PGOld methods (Nick P)
+* Remove unused configuration settings in ledgersmb.conf (Erik H)
+* Further (compared to 1.6) reduction of warnings
+* Implemented tests for LedgerSMB::File(::*) modules (Nick P)
+* Template engine simplification by separation of UI and printed docs (Erik H)
+* Consistent copyright notices - with tests - on all Perl files in lib/ (Nick P)
+* Request handling cleanup by mapping 'flat' POST data into hierarchy (Erik H)
+
+Dependency updates
+* Dojo Toolkit (JavaScript UI tools) updated to 1.15.0 (Erik H)
+* Minimum Perl (tested) version increased to 5.18 (from 5.14)
+* Plack web glue library minimum >= 1.0031
+* PGObject::Simple::Role minimum updated to 2.0.2 (from 1.13.2)
+* Cpanel::JSON::XS minimum >= 3.0206
+* JSON::PP >= 2.00
+* [New] File::Find::Rule
+* [New] Text::CSV
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+Chris T is Chris Travers
+
+
 Changelog for 1.6 Series
-Forthcoming
+Released 2018-06-10
+
+Changelog for 1.6.17
+* Allow uploading of attachments with unknown mime-types (Erik H)
+* Fix formatting on-hand (OH) column on orders to follow user settings (Erik H)
+* Fix migration of assembly data from SQL Ledger 3.2 (Yves L)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
+Changelog for 1.6.16
+* Include first transsaction on account in reconciliation report (Erik H)
+* Fix COGS error when posting AP invoice reversal (Erik H)
+* Fix error in reconciliation in case no prior balance exists (Erik H)
+* Fix write access error thrown on fixed assets disposal (Erik H)
+* Correctly calculate tax basis amount even for 0% taxes (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.15
+* Fix occasional COGS error on invoice posting (Erik H)
+* Fix occasional COGS error on invoice reversal posting (Erik H)
+* Fix failure on first reconciliation report for an account (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.14
+* Fix invoice screens crashing on manual tax with 0% tax rate (Erik H)
+* Fix manual tax lines posted on current instead of transaction date (Erik H)
+* Fix SQL error in reversal of services in AP invoice (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.13
+* Generate unique names for backups (Erik H)
+* Fix incorrect tax checkmarks in contact screen after save (Erik H)
+* Fix tax accounts inclusion in posted AR/AP transactions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.12
+* Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.11
+* Add CSS indentation to hierarchical financial statements (Erik H)
+* Fix random setup.pl errors due to assumed-available credentials (Erik H)
+* Fix failure in setup.pl when initial user exists in the database (Erik H)
+* Fix SQL Ledger version-comparisons when upgrading to LedgerSMB (Yves L)
+* Fix regression when running in a schema other than 'public' (Erik H)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
+Changelog for 1.6.10
+* Apply correct layout to schema upgrade pages in setup.pl (Erik H)
+* Fix iteration over row data provided in schema data fixes in setup.pl (Erik H)
+* Fix schema upgrade with multiple failing checks looping infinitely (Erik H)
+* Improve wording of correction instructions of schema check failure (Nick P)
+* Respect tempdir when rendering ODS template (don't use current dir) (Nick P)
+* Add user feedback when invoice needs recalculation before posting (Erik H)
+
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+
+
+Changelog for 1.6.9
+* Fix all addresses selected on AR/AP Invoice's Ship To screen (Erik H, #3940)
+* Fix sales tax not included in amount due on purchase invoice (Erik H, #3941)
+* Fix selected sales person not showing correctly on AR Invoice (Erik H, #3949)
+* Fix invoice selected shipping address not showing as selected (Erik H, #3899)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.8
+* Fix saving orders showing a permission error on a sequence (Erik H, #3889)
+* Fix employee (sales) not being saved for orders (Erik H, #3910)
+* Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
+* Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
+* Fix Post button showing on copied-to-new transaction (Erik H, #3907)
+* Fix vendor invoice looses payment's account on update (Erik H, #3890)
+* Fix saving order deleting invoice shipping info (Erik H, #3933 [dataloss])
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.7
+* Fix 'Save Groups' clearing all user permissions (Nick P)
+* Fix draft deletion failing after updating recon screen (Erik H, #3904)
+* Fix reconciliation failing to add transaction after approval (Erik H, #3909)
+* Improve unapproved transactions warning in reconciliation (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.6
+* Fix search for reconciliation report by amount (Nick P)
+* Fix adding budget gives error (Nick P, #3850)
+* Fix heading not displayed when editing account (Nick P)
+* Fix parent not displayed when editing account heading (Nick P)
+* Fix 'Returns' drop-down option not shown editing account (Nick P)
+* Update Dojo to 1.13.3 (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.5
+* Update Dojo to 1.13.3-pre; previous update broke file uploads (Erik H, #3799)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.4
+* Fix GL Save Template gives error (Nick P, #3754)
+* Fix error adding reverse payment to batch (Nick P, #3761)
+* Fix wrong search screen after reversing receipt (Nick P, #3763)
+* Fix error displaying template transaction (Nick P, #3759)
+* Update Dojo to 1.13.1 (Erik H)
+* Fix error deleting template transaction (Nick P, #3722)
+  - Add role 'transaction_template_delete'
+  - Show template transaction Delete button only with permissions
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.3
+* Fix for menu System > Templates fails to execute SQL script (Erik H, #3588)
+* Fix for GL journal buttons displaying in random order (Erik H, #3680)
+* Fix for 'contact_all' role missing 'contact_vendor' rights (Erik H)
+* Fix 1.6.1 regression browser failure to cache menu structure (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.2
+* Print button (to screen) doesn't work more than once (Erik H, #3705)
+* Menu links ignore clicks long after first click (Erik H, #3704)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.1
+* Menu fails to show sometimes (Erik H, #3684)
+* Error when managing user permissions through HR screen (Erik H, #3686)
+* Reconciliation reports sometimes can't be submitted (Nick P)
+
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+
+
+Changelog for 1.6.0
 
 User Interface
 * Reports and search results exportable to XLS(X) (Yves L)
@@ -51,6 +339,7 @@ Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
 * Enforce numerous Perl::Critic policies with code cleanup (Nick P/Rob R)
 * Add tests for all template output formats (Nick P)
+* Constrain password_duration setting to valid values (Nick P)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
@@ -61,6 +350,94 @@ David G is David Godfrey
 
 Changelog for 1.5 Series
 Released 2016-12-24
+
+Changelog for 1.5.30
+* Include first transsaction on account in reconciliation report (Erik H)
+* Fix COGS error when posting AP invoice reversal (Erik H)
+* Fix error in reconciliation in case no prior balance exists (Erik H)
+* Fix write access error thrown on fixed assets disposal (Erik H)
+* Correctly calculate tax basis amount even for 0% taxes (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.29
+* Fix occasional COGS error on invoice posting (Erik H)
+* Fix occasional COGS error on invoice reversal posting (Erik H)
+* Fix failure on first reconciliation report for an account (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.28
+* Fix invoice screens crashing on manual tax with 0% tax rate (Erik H)
+* Fix manual tax lines posted on current instead of transaction date (Erik H)
+* Fix SQL error in reversal of services in AP invoice (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.27
+* Fix incorrect tax checkmarks in contact screen after save (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.26
+* Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.25
+* Fix regression when running in a schema other than 'public' (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.24
+* Fix all addresses selected on AR/AP Invoice's Ship To screen (Erik H, #3940)
+* Fix sales tax not included in amount due on purchase invoice (Erik H, #3941)
+* Fix selected sales person not showing correctly on AR Invoice (Erik H, #3949)
+* Fix invoice selected shipping address not showing as selected (Erik H, #3899)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.23
+* Fix saving orders showing a permission error on a sequence (Erik H, #3889)
+* Fix invoice screen's vendor dropdown being broken (Erik H, #3896)
+* Fix buttons in AR/AP Add Transaction in random order (Erik H, #3905, #3906)
+* Fix employee (sales) not being saved for orders (Erik H, #3910)
+* Fix saving order deleting invoice shipping info (Erik H, #3933 [dataloss])
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.22
+* Upgrade Dojo to 1.10.10 (Erik H)
+* Fix failing update scripts applying menu reorganization (Erik H, #3855)
+* Fix template files containing object name instead of actual content (Nick P)
+* Fix voucher deletion throwing an error (Erik H, #3722)
+* Fix GL journal buttons displaying in random order (Erik H, #3860)
+* Fix aging report (typo in module name) (Erik H)
+* Fix draft deletion failing after updating recon screen (Erik H, #3904)
+* Fix reconciliation failing to add transaction after approval (Erik H, #3909)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.21
+* Clarify message after changing password through Preferences (Nick P)
+* Fix errors in ODS report tepmlate's title page (Nick P)
+* Fix #3642: Taxform report generation failing (Erik H)
+* Detect BOM to determine UTF-8 CSV imports (Erik H)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
 
 Changelog for 1.5.20
 * Fix inability to save custom sequences (System > Sequence) (Erik H, #3511)

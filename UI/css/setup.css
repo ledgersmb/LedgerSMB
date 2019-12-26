@@ -1,0 +1,131 @@
+body {
+    overflow-y: auto;
+}
+
+div#loading {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
+div.setupconsole {
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    min-width: 21em;
+    padding: 2em;
+    padding-bottom: 2em;
+    border-style: outset;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+div#logindiv {
+    z-index: 90;
+    position:absolute;
+    top:0;
+    left:0;
+    width:calc(100% - 4em);
+    height:calc(100% - 4em);
+    padding:2em;
+    text-align: center;
+    margin: 0 auto;
+}
+
+form#loginform {
+    display: inline-block;
+}
+
+.login_form {
+    text-align: left;
+}
+
+.inputrow {
+    padding-top: 3px;
+    padding-bottom: 2px;
+    padding-left: 4ex;
+}
+
+/* Prevent inheritance of the above */
+.inputrow * {
+    padding: initial;
+}
+
+div {
+    overflow: auto;
+}
+
+#yesno label {
+    width: 2em
+}
+
+caption {
+    font-weight: bold;
+    margin-top: 3em;
+}
+
+label {
+    width: 10em;
+    float: left;
+    border-width: 1px;
+    margin: 0;
+    padding-right: 0.5em;
+    margin-top: 0.5em;
+}
+
+input {
+    width: 14em;
+    margin: 0;
+    text-align: left;
+    float: left;
+    border-width: 3px;
+    margin-top: 0.5em;
+}
+
+#yesno input {
+    width: 1em;
+    margin-right: 3em;
+}
+
+#yesno span {
+    float: left;
+    display: block;
+}
+
+img.logo {
+    border-style: none;
+    width: 16em;
+    height: 8em;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.listtop {
+    font-size: larger;
+}
+
+tr.listheading {
+    background-color: lightgrey;
+}
+tr.listrow:nth-child(even) {background: #FFF}
+tr.listrow:nth-child(odd) {background: #EEE}
+
+td.dijitStretch {
+    min-width: 125px;
+}
+
+.notice {
+    background-color: red;
+    color: white;
+    margin-left: 1px;
+}
+
+td.transdate, td.duedate, td.datepaid {
+   white-space: nowrap!important;
+}

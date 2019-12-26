@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -16,7 +17,7 @@ BEGIN;
 
     -- Validate required functions
 
---    SELECT has_function('business_type__list',ARRAY['']);
+--    SELECT has_function('business_type__list','{}'::text[]);
     SELECT has_function('report__aa_outstanding',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
     SELECT has_function('report__aa_outstanding_details',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
     SELECT has_function('report__aa_transactions',ARRAY['integer','integer','text','text','integer','integer','text','text','text','text','text','text','text','date','date','boolean','boolean','integer','boolean','boolean','boolean','text']);
@@ -35,9 +36,9 @@ COPY gl(id, transdate, approved) FROM stdin DELIMITER '|';
 -1001|1900-01-03|TRUE
 \.
 
-COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin DELIMITER '|';
--1000|-1000|100.00|1900-01-01|TRUE|-1000
--1001|-1000|100.00|1900-01-03|TRUE|-1001
+COPY acc_trans(trans_id,chart_id,amount_bc,curr,amount_tc,transdate,approved,entry_id) FROM stdin DELIMITER '|';
+-1000|-1000|100.00|XTS|100.00|1900-01-01|TRUE|-1000
+-1001|-1000|100.00|XTS|100.00|1900-01-03|TRUE|-1001
 \.
 
     -- Run tests

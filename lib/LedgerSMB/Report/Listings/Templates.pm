@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Templates;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Templates - A List of templates installed in the
@@ -14,7 +17,6 @@ and orders).  This is not used for the user interface templates.
 
 =cut
 
-package LedgerSMB::Report::Listings::Templates;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -45,13 +47,14 @@ has language_code => (is => 'ro', isa => 'Str', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       { col_id => 'template_name',
-          name => LedgerSMB::Report::text('File Name'),
+          name => $self->Text('File Name'),
           type => 'href',
      href_base => 'templates.pl?action=display&' },
       { col_id => 'format',
-          name => LedgerSMB::Report::text('Format'),
+          name => $self->Text('Format'),
           type => 'text' },
    ];
 }
@@ -63,16 +66,21 @@ Just the language_code
 
 =cut
 
-sub header_lines { return [
-      { name => 'language_code', text => LedgerSMB::Report::text('Language') },
-    ]
+sub header_lines {
+    my ($self) = @_;
+    return [
+        { name => 'language_code', text => $self->Text('Language') },
+        ];
 };
 
 =head2 name
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Template Listing') };
+sub name {
+    my ($self) = @_;
+    return $self->Text('Template Listing');
+};
 
 =head1 METHODS
 
@@ -93,13 +101,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2014 The LedgerSMB Core Team
+Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.txt for more information.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

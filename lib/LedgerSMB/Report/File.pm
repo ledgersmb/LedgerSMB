@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::File;
+
 =head1 NAME
 
 LedgerSMB::Report::File - File role for querying files for a report
@@ -9,7 +12,6 @@ LedgerSMB::Report::File - File role for querying files for a report
 
 =cut
 
-package LedgerSMB::Report::File;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::File;
@@ -55,7 +57,7 @@ sub _set_lazy {
     return $self->ref_key;
 }
 
-=head1 METHODS ADDED
+=head1 METHODS
 
 =head2 list_files
 
@@ -83,13 +85,13 @@ sub list_links {
     return $fh->list_links($self);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 The LedgerSMB Core Team.
+Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License
-version 2, or at your option, any later version.  Please see the included
-LICENSE.txt for details.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

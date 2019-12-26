@@ -134,8 +134,7 @@ COMMENT ON TABLE account_link_description IS
 $$ This is a lookup table which provide basic information as to categories and
 dropdowns of accounts.  In general summary accounts cannot belong to more than
 one category (an AR summary account cannot appear in other dropdowns for
-example).  Custom fields are not overwritten when the account is edited from
-the front-end.$$;
+example).$$;
 
 INSERT INTO account_link_description (description, summary, custom)
 VALUES
@@ -662,8 +661,6 @@ create table location_class_to_entity_class (
   location_class int not null references location_class(id),
   entity_class int not null references entity_class(id)
 );
-
-GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
 
 COMMENT ON TABLE location_class_to_entity_class IS
 $$This determines which location classes go with which entity classes$$;
@@ -1361,7 +1358,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.7.0-dev
+version|1.8.0-dev
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1762,7 +1759,6 @@ for payment or in outstanding reports.$$;
 
 --
 --TODO 1.6 ap invnumber text check (invnumber ~ '[[:alnum:]_]') NOT NULL
---TODO 1.6 ap paid,datepaid , drop those fields? they are not maintained in Payment.sql!
 CREATE TABLE ap (
   id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
   invnumber text,
@@ -2458,7 +2454,7 @@ FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
 FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
--- deprecated; removed from Perl code
+-- deprecated; dropped in LedgerSMB 1.7
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
 extends TEXT,
@@ -2469,7 +2465,7 @@ COMMENT ON TABLE custom_table_catalog IS
 $$ Deprecated, all use removed from old code.$$;
 
 
--- deprecated; removed from Perl code
+-- deprecated; dropped in LedgerSMB 1.7
 CREATE TABLE custom_field_catalog (
 field_id SERIAL PRIMARY KEY,
 table_id INT REFERENCES custom_table_catalog,
@@ -3719,8 +3715,6 @@ SELECT 'last_year', 'Last Year',
        ((extract('YEAR' from now()) - 1)::text || '-01-01')::date as date_from
 ;
 
-GRANT SELECT ON periods TO public;
-
 CREATE TABLE asset_unit_class (
         id int not null unique,
         class text primary key
@@ -4898,8 +4892,6 @@ select c.id, c.accno, coalesce(at.description, c.description),
          ON c.id = at.trans_id
 group by c.id, c.accno, coalesce(at.description, c.description), c.category,
          c.heading, c.gifi_accno, c.contra, c.tax;
-
-GRANT SELECT ON chart TO public;
 
 COMMENT ON VIEW chart IS $$Compatibility chart for 1.2 and earlier.$$;
 

@@ -1,8 +1,11 @@
+
+package LedgerSMB::Scripts::lreports_co;
+
 =head1 NAME
 
 LedgerSMB::Scripts::lreports_co - Colombian local reports
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module holds Colombia-specific reports.
 
@@ -10,13 +13,12 @@ This module holds Colombia-specific reports.
 
 =cut
 
-package LedgerSMB::Scripts::lreports_co;
-
-use LedgerSMB::Template;
-use LedgerSMB::Report::co::Caja_Diaria;
-use LedgerSMB::Report::co::Balance_y_Mayor;
 use strict;
 use warnings;
+
+use LedgerSMB::Report::co::Caja_Diaria;
+use LedgerSMB::Report::co::Balance_y_Mayor;
+use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -32,14 +34,8 @@ Displays the filter screen for Caja Diaria
 
 sub start_caja_diaria {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/Reports/co',
-        template => 'filter_cd',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/co/filter_cd', $request);
 }
 
 =item start_bm
@@ -50,14 +46,8 @@ Displays the filter screen for Balance y Mayor
 
 sub start_bm {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/Reports/co',
-        template => 'filter_bm',
-        format => 'HTML'
-    );
-    return $template->render($request);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Reports/co/filter_bm', $request);
 }
 
 =item run_caja_diaria
@@ -68,9 +58,9 @@ Runs a Caja Diaria and displays results.
 
 sub run_caja_diaria {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::co::Caja_Diaria->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::co::Caja_Diaria->new(%$request)
+        );
 }
 
 =item run_bm
@@ -81,20 +71,11 @@ Runs Balance y Mayor and displays results.
 
 sub run_bm {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::co::Balance_y_Mayor->new(%$request)
+        );
 }
 
-=back
-
-=head1 Copyright (C) 2007 The LedgerSMB Core Team
-
-Licensed under the GNU General Public License version 2 or later (at your
-option).  For more information please see the included LICENSE and COPYRIGHT
-files.
-
-=cut
 
 {
     local ($!, $@) = ( undef, undef);
@@ -108,4 +89,18 @@ files.
         }
     }
 };
+
+=back
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 1;

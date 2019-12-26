@@ -5,6 +5,9 @@ use warnings;
 
 use Carp;
 use PageObject;
+use PageObject::App::Transactions::Lines;
+use PageObject::App::Invoices::Header;
+#use PageObject::App::Invoices::Payments;
 
 use Moose;
 use namespace::autoclean;
@@ -26,6 +29,25 @@ sub _verify {
     return $self;
 }
 
+sub _counterparty {
+    return 'customer';
+}
+
+sub header {
+    my ($self) = @_;
+
+    $self->verify;
+    return $self->find('*invoice-header',
+                       widget_args => [ counterparty_type => $self->_counterparty ]);
+}
+
+sub lines {
+    my ($self) = @_;
+
+    $self->verify;
+    return $self->find('*transaction-lines');
+}
+
 sub select_customer {
     my ($self, $customer) = @_;
 
@@ -37,7 +59,7 @@ sub select_customer {
     $elem->send_keys($customer);
 
     $self->find("*button", text => "Update")->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $elem);
 }
 
 

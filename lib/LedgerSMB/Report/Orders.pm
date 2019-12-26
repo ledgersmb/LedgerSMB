@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Orders;
+
 =head1 NAME
 
 LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
@@ -9,7 +12,6 @@ LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Orders;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -271,14 +273,6 @@ sub columns {
     return $cols;
 }
 
-=head2 header_lines
-
-=cut
-
-sub header_lines {
-    return [];
-}
-
 =head2 name
 
 =cut
@@ -316,11 +310,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

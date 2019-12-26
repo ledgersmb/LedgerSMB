@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::GL;
+
 =head1 NAME
 
 LedgerSMB::Report::GL - GL Reports for LedgerSMB
@@ -23,15 +26,13 @@ searching for and reporting financial transactions.
 
 =cut
 
-package LedgerSMB::Report::GL;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Report;
+
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
-
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::App_State;
 
 =head1 PROPERTIES
 
@@ -215,16 +216,6 @@ sub header_lines {
              text => $self->Text('Source')}];
 }
 
-=item subtotal_cols
-
-Returns list of columns for subtotals
-
-=cut
-
-sub subtotal_cols {
-    return ['debits', 'credits'];
-}
-
 =back
 
 =head2 Criteria Properties
@@ -368,11 +359,13 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

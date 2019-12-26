@@ -1,14 +1,23 @@
+
+package LedgerSMB::Scripts::transtemplate;
+
 =head1 NAME
 
 LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
+
+=head1 DESCRIPTION
+
+Entry points for managing transaction templates.
 
 =head1 SYNPOSIS
 
  LedgerSMB::Scripts::transtemplate::view($request);
 
-=cut
+=head1 METHODS
 
-package LedgerSMB::Scripts::transtemplate;
+This module doesn't specify any methods.
+
+=cut
 
 use strict;
 use warnings;
@@ -34,10 +43,11 @@ Views the transaction template.  Requires that id be set.
 sub _run_update {
     my ($transtemplate, $journal_type) = @_;
 
-    convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
-    $lsmb_legacy::form->{title} = 'Add';
+    convert_to_form($transtemplate, $lsmb_legacy::form, ## no critic
+                    $journal_type);
+    $lsmb_legacy::form->{title} = 'Add'; ## no critic
 
-    return lsmb_legacy::update();
+    return lsmb_legacy::update(); ## no critic
 }
 
 sub view {
@@ -59,6 +69,7 @@ sub view {
         unless $script;
 
     return dispatch($script, $entry->{function},
+                    $request->{_user},
                     { %$request, script => $script },
                     # $entry->{function}'s arguments:
                     $transtemplate, $journal_type);
@@ -117,8 +128,9 @@ Lists all transaction templates
 
 sub list {
     my ($request) = @_;
-    return LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
+        );
 }
 
 =item delete
@@ -136,17 +148,20 @@ sub delete {
             if $request->{"row_select_$row"};
         delete $request->{"row_select_$row"};
     }
-    return LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
+        );
 }
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

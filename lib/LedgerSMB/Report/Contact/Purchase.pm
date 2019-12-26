@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Contact::Purchase;
+
 =head1 NAME
 
 LedgerSMB::Report::Contact::Purchase - Search AR/AP Transactions and
@@ -26,7 +29,6 @@ certain point, and locating specific transactions.
 
 =cut
 
-package LedgerSMB::Report::Contact::Purchase;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -47,6 +49,7 @@ Read-only accessor, returns a list of columns.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
          {col_id => 'running_number',
             type => 'text',
@@ -54,67 +57,67 @@ sub columns {
 
          {col_id => 'id',
             type => 'text',
-            name => LedgerSMB::Report::text('ID') },
+            name => $self->Text('ID') },
          {col_id => 'entity_name',
             type => 'text',
-            name => LedgerSMB::Report::text('Name') },
+            name => $self->Text('Name') },
 
          {col_id => 'invnumber',
             type => 'href',
        href_base => '',
-            name => LedgerSMB::Report::text('Invoice Number') },
+            name => $self->Text('Invoice Number') },
 
          {col_id => 'ordnumber',
             type => 'text',
-            name => LedgerSMB::Report::text('Order Number') },
+            name => $self->Text('Order Number') },
 
          {col_id => 'ponumber',
             type => 'text',
-            name => LedgerSMB::Report::text('PO Number') },
+            name => $self->Text('PO Number') },
 
          {col_id => 'curr',
             type => 'text',
-            name => LedgerSMB::Report::text('Currency') },
+            name => $self->Text('Currency') },
 
          {col_id => 'amount',
             type => 'text',
            money => 1,
-            name => LedgerSMB::Report::text('Amount') },
+            name => $self->Text('Amount') },
 
          {col_id => 'tax',
             type => 'text',
            money => 1,
-            name => LedgerSMB::Report::text('Tax') },
+            name => $self->Text('Tax') },
 
          {col_id => 'paid',
             type => 'text',
            money => 1,
-            name => LedgerSMB::Report::text('Paid') },
+            name => $self->Text('Paid') },
 
          {col_id => 'due',
             type => 'text',
            money => 1,
-            name => LedgerSMB::Report::text('Due') },
+            name => $self->Text('Due') },
 
          {col_id => 'date_paid',
             type => 'text',
-            name => LedgerSMB::Report::text('Date Paid') },
+            name => $self->Text('Date Paid') },
 
          {col_id => 'due_date',
             type => 'text',
-            name => LedgerSMB::Report::text('Due Date') },
+            name => $self->Text('Due Date') },
 
          {col_id => 'notes',
             type => 'text',
-            name => LedgerSMB::Report::text('Notes') },
+            name => $self->Text('Notes') },
 
          {col_id => 'shipping_point',
             type => 'text',
-            name => LedgerSMB::Report::text('Shipping Point') },
+            name => $self->Text('Shipping Point') },
 
          {col_id => 'ship_via',
             type => 'text',
-            name => LedgerSMB::Report::text('Ship Via') },
+            name => $self->Text('Ship Via') },
     ];
 }
 
@@ -125,9 +128,9 @@ sub columns {
 sub name {
    my ($self) = @_;
    if ($self->entity_class == 1){
-       return LedgerSMB::Report::text('AP Transactions');
+       return $self->Text('AP Transactions');
    } elsif ($self->entity_class == 2){
-       return LedgerSMB::Report::text('AR Transactions');
+       return $self->Text('AR Transactions');
    }
 }
 
@@ -136,11 +139,12 @@ sub name {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
      return [
             {name => 'name_part',
-             text => LedgerSMB::Report::text('Name')},
+             text => $self->Text('Name')},
             {name => 'meta_number',
-             text => LedgerSMB::Report::text('Account Number')}
+             text => $self->Text('Account Number')}
        ];
 }
 
@@ -304,11 +308,13 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

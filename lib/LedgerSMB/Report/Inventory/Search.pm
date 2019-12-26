@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Search;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Search - Search for Goods and Services in
@@ -10,7 +13,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Search;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -182,138 +184,129 @@ has rfqs => (is => 'ro', isa => 'Bool', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
    return [
     {col_id => 'id',
        type => 'href',
   href_base => 'ic.pl?action=edit&id=',
-       name => LedgerSMB::Report::text('ID'),},
+       name => $self->Text('ID'),},
 
     {col_id => 'partnumber',
        type => 'href',
   href_base => 'ic.pl?action=edit&id=',
-       name => LedgerSMB::Report::text('Part Number'),},
+       name => $self->Text('Part Number'),},
 
     {col_id => 'description',
        type => 'text',
-       name => LedgerSMB::Report::text('Description'),},
+       name => $self->Text('Description'),},
 
     {col_id => 'onhand',
        type => 'text',
-       name => LedgerSMB::Report::text('On Hand'),},
+       name => $self->Text('On Hand'),},
 
     {col_id => 'unit',
        type => 'text',
-       name => LedgerSMB::Report::text('Unit'),},
+       name => $self->Text('Unit'),},
 
     {col_id => 'rop',
        type => 'text',
-       name => LedgerSMB::Report::text('ROP'),},
+       name => $self->Text('ROP'),},
 
     {col_id => 'bin',
        type => 'text',
-       name => LedgerSMB::Report::text('Bin'),},
+       name => $self->Text('Bin'),},
 
     {col_id => 'weight',
        type => 'text',
-       name => LedgerSMB::Report::text('Weight'),},
+       name => $self->Text('Weight'),},
 
     {col_id => 'listprice',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('List Price'),},
+       name => $self->Text('List Price'),},
 
     {col_id => 'sellprice',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('Sell Price'),},
+       name => $self->Text('Sell Price'),},
 
     {col_id => 'lastcost',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('Last Cost'),},
+       name => $self->Text('Last Cost'),},
 
     {col_id => 'avgcost',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('Avg. Cost'),},
+       name => $self->Text('Avg. Cost'),},
 
     {col_id => 'markup',
        type => 'text',
-       name => LedgerSMB::Report::text('Markup'),},
+       name => $self->Text('Markup'),},
 
     {col_id => 'priceupdate',
        type => 'text',
-       name => LedgerSMB::Report::text('Price Updated'),},
+       name => $self->Text('Price Updated'),},
 
     {col_id => 'make',
        type => 'text',
-       name => LedgerSMB::Report::text('Make'),},
+       name => $self->Text('Make'),},
 
     {col_id => 'model',
        type => 'text',
-       name => LedgerSMB::Report::text('Model'),},
+       name => $self->Text('Model'),},
 
     {col_id => 'image',
        type => 'href',
-       name => LedgerSMB::Report::text('Image'),},
+       name => $self->Text('Image'),},
 
     {col_id => 'drawing',
        type => 'href',
-       name => LedgerSMB::Report::text('Drawing'),},
+       name => $self->Text('Drawing'),},
 
     {col_id => 'microfiche',
        type => 'text',
-       name => LedgerSMB::Report::text('Microfiche'),},
+       name => $self->Text('Microfiche'),},
 
     {col_id => 'notes',
        type => 'text',
-       name => LedgerSMB::Report::text('Notes'),},
+       name => $self->Text('Notes'),},
 
     {col_id => 'partsgroup',
        type => 'text',
-       name => LedgerSMB::Report::text('Partsgroup'),},
+       name => $self->Text('Partsgroup'),},
 
     {col_id => 'invnumber',
        type => 'href',
-       name => LedgerSMB::Report::text('Invoice'),},
+       name => $self->Text('Invoice'),},
 
     {col_id => 'ordnumber',
        type => 'href',
-       name => LedgerSMB::Report::text('Order'),},
+       name => $self->Text('Order'),},
 
     {col_id => 'quonumber',
        type => 'href',
-       name => LedgerSMB::Report::text('Quotation'),},
+       name => $self->Text('Quotation'),},
 
     {col_id => 'curr',
        type => 'text',
-       name => LedgerSMB::Report::text('Currency'),},
+       name => $self->Text('Currency'),},
 
     {col_id => 'qty',
        type => 'text',
-       name => LedgerSMB::Report::text('Qty'),},
+       name => $self->Text('Qty'),},
 
     {col_id => 'linetotal',
        type => 'text',
       money => 1,
-       name => LedgerSMB::Report::text('Total'),},
+       name => $self->Text('Total'),},
 
     {col_id => 'serialnumber',
        type => 'text',
-       name => LedgerSMB::Report::text('Serial Number'),},
+       name => $self->Text('Serial Number'),},
 
     ];
 }
-
-=head2 header_lines
-
-None yet
-
-=cut
-
-sub header_lines {
-   return [];
-};
 
 =head2 name
 
@@ -322,7 +315,8 @@ Goods and Services
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Goods and Services');
+    my ($self) = @_;
+    return $self->Text('Goods and Services');
 }
 
 =head1 METHODS
@@ -345,11 +339,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

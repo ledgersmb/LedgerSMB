@@ -1,6 +1,14 @@
+
+package LedgerSMB::Scripts::invoice;
+
 =head1 NAME
 
 LedgerSMB::Scripts::invoice - Invoice Report Routines for LedgerSMB
+
+=head1 DESCRIPTION
+
+This module contains the invoice search routines.  In future versions this
+module will probably also include various invoice creation routines.
 
 =head1 SYNPOSIS
 
@@ -12,8 +20,6 @@ or
 
 =cut
 
-package LedgerSMB::Scripts::invoice;
-
 use strict;
 use warnings;
 
@@ -22,10 +28,9 @@ use LedgerSMB::Report::Invoices::Transactions;
 use LedgerSMB::Report::Invoices::Outstanding;
 use LedgerSMB::Scripts::reports;
 
-=head1 DESCRIPTION
+=head1 METHODS
 
-This module contains the invoice search routines.  In future versions this
-module will probably also include various invoice creation routines.
+This module doesn't specify any methods.
 
 =head1 FUNCTIONS
 
@@ -70,8 +75,9 @@ sub invoices_outstanding {
     # the line below is needed because we are using trinary boolean logic
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';
-    my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Invoices::Outstanding->new(%$request)
+        );
 }
 
 =item invoice_search
@@ -87,17 +93,20 @@ sub  invoice_search{
     # the line below is needed because we are using trinary boolean logic
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';
-    my $report = LedgerSMB::Report::Invoices::Transactions->new(%$request);
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Invoices::Transactions->new(%$request)
+        );
 }
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

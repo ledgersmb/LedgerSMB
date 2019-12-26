@@ -1,18 +1,13 @@
+
+package LedgerSMB::Scripts::template;
+
 =head1 NAME
 
 LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::Scripts::template;
-
-use strict;
-use warnings;
-
-use LedgerSMB::Template::DB;
-use LedgerSMB::Report::Listings::Templates;
-use LedgerSMB::Template;
-use LedgerSMB::App_State;
+Entry points for uploading, listing, saving and editing document templates.
 
 =head1 SYNPOSIS
 
@@ -24,6 +19,21 @@ To edit:
 
    LedgerSMB::Scripts::template::edit($request)
 
+=cut
+
+use strict;
+use warnings;
+
+use LedgerSMB;
+use LedgerSMB::Report::Listings::Templates;
+use LedgerSMB::Template;
+use LedgerSMB::Template::DB;
+use LedgerSMB::Template::UI;
+
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =head1 FUNCTIONS
 
 =head2 list($request)
@@ -34,8 +44,9 @@ Lists the templates.
 
 sub list {
     my ($request) = @_;
-    return LedgerSMB::Report::Listing::Templates->new(%$request)
-        ->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Listings::Templates->new(%$request)
+        );
 }
 
 =head2 display($request)
@@ -53,16 +64,11 @@ sub display {
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} =
-        [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/templates',
-        template => 'preview',
-        format   => 'HTML'
-    )->render({ request => $request,
-                template => $dbtemp,
-                %$dbtemp });
+        [ $request->call_procedure(funcname => 'person__list_languages') ];
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'templates/preview', { request => $request,
+                                                  template => $dbtemp,
+                                                  %$dbtemp });
 }
 
 =head2 edit($request)
@@ -82,21 +88,16 @@ sub edit {
     $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) }
         unless $dbtemp;
 
-    die $LedgerSMB::App_State::Locale->text('Template Not Found')
+    die $request->{_locale}->text('Template Not Found')
        unless $dbtemp;
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} =
-        [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
+        [ $request->call_procedure(funcname => 'person__list_languages') ];
 
-    return LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/templates',
-        template => 'edit',
-        format   => 'HTML'
-    )->render({ request => $request,
-                        to_edit => $dbtemp });
+    return LedgerSMB::Template::UI->new_UI
+        ->render($request, 'templates/edit', { request => $request,
+                                               to_edit => $dbtemp });
 }
 
 =head2 save($request)
@@ -121,29 +122,37 @@ will be accepted.
 
 sub upload {
     my ($request) = @_;
-    my @fnames =  $request->upload;
-    my $name = $fnames[0];
-    my $fh = $request->upload($name);
-    my $fdata = join ('', <$fh>);
+
+    my $upload = $request->{_uploads}->{template_file}
+        or die 'No template file uploaded';
+
+    # Slurp uploaded file
+    open my $fh, '<', $upload->path or die "Error opening uploaded file $!";
+    local $/ = undef;
+    my $fdata = <$fh>;
+
+    # Sanity check that browser-provided local name of uploaded file matches
+    # the template name and extension. Is this appropriate/necessary?
     die 'No content' unless $fdata;
     my $testname = $request->{template_name} . '.' . $request->{format};
-    die LedgerSMB::App_State::Locale->text(
+    die $request->{_locale}->text(
                 'Unexpected file name, expected [_1], got [_2]',
-                 $testname, $name)
-          unless $name eq $testname;
+                 $testname, $upload->basename)
+          unless $upload->basename eq $testname;
     $request->{template} = $fdata;
     my $dbtemp = LedgerSMB::Template::DB->new(%$request);
     $dbtemp->save();
+
     return display($request);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014-2016 The LedgerSMB Core Team.
+Copyright (C) 2014-2018 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.txt for details.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

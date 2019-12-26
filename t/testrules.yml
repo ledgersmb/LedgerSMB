@@ -15,6 +15,9 @@ seq:
     - par:
       - xt/40-database.t
       - xt/41-coaload.t
+      - xt/45*.t
+      - xt/47*.t
+      - xt/48*.t
   - seq:
     - par:
       - xt/{43,44,5,7}*.t

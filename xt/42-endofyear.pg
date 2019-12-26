@@ -1,14 +1,15 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
-    SELECT plan(19);
+    SELECT plan(21);
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -19,11 +20,11 @@ BEGIN;
 
     SELECT has_function('account__obtain_balance',ARRAY['date','integer']);
     SELECT has_function('account__obtain_starting_balance',ARRAY['date','integer']);
-    SELECT has_function('eoy__latest_checkpoint',ARRAY['']);
+    SELECT has_function('eoy__latest_checkpoint','{}'::text[]);
     SELECT has_function('eoy__reopen_books_at',ARRAY['date']);
     SELECT has_function('eoy_close_books',ARRAY['date','text','text','integer']);
     SELECT has_function('eoy_create_checkpoint',ARRAY['date']);
-    SELECT has_function('eoy_earnings_accounts',ARRAY['']);
+    SELECT has_function('eoy_earnings_accounts','{}'::text[]);
     SELECT has_function('eoy_reopen_books',ARRAY['date']);
     SELECT has_function('eoy_zero_accounts',ARRAY['date','text','text','integer']);
 
@@ -31,17 +32,21 @@ BEGIN;
 
     INSERT INTO gl (id, reference, description, transdate, approved)
     values (-1000, 'test', 'test', '1520-01-01', true); -- way in the future.
-    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
-    values (-1000, '-1000', '1520-01-01', '10000', true);
-    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
-    values (-1000, '-1001', '1520-01-01', '-10000', true);
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
+                curr, amount_tc, approved)
+    values (-1000, '-1000', '1520-01-01', '10000', 'XTS', '10000', true);
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
+                curr, amount_tc, approved)
+    values (-1000, '-1001', '1520-01-01', '-10000', 'XTS', '-10000', true);
 
     INSERT INTO gl (id, reference, description, transdate, approved)
-    values (-1001, 'test', 'test2', '1520-06-01', true); -- way in the future.
-    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
-    values (-1001, '-1000', '1520-06-01', '10000', true);
-    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
-    values (-1001, '-1001', '1520-06-01', '-10000', true);
+    values (-1001, 'test', 'test', '1520-06-01', true); -- way in the future.
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
+                curr, amount_tc, approved)
+    values (-1001, '-1000', '1520-06-01', '10000', 'XTS', '10000', true);
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
+                curr, amount_tc, approved)
+    values (-1001, '-1001', '1520-06-01', '-10000', 'XTS', '-10000', true);
 
     -- Run tests
 
@@ -60,11 +65,11 @@ BEGIN;
     DELETE FROM account_checkpoint;
     DELETE FROM yearend;
 
-    PREPARE test as SELECT eoy_close_books('1520-05-01', 'test', 'test', '-1002');
+    PREPARE test AS SELECT eoy_close_books('1520-05-01', 'test', 'test', '-1002');
     SELECT results_eq('test',ARRAY[true],'Close books succeeded');
     DEALLOCATE test;
 
-    PREPARE test as SELECT amount = 10000
+    PREPARE test as SELECT amount_bc = 10000
                     FROM account_checkpoint
                     WHERE end_date = '1520-05-01' AND account_id = -1000;
     SELECT results_eq('test',ARRAY[true],'Account checkpoint added');
@@ -81,6 +86,42 @@ BEGIN;
     PREPARE test AS SELECT account__obtain_balance('1520-06-01'::date, -1000) = 20000;
     SELECT results_eq('test',ARRAY[true],'account__obtain_balance (after checkpoint and transaction)');
     DEALLOCATE test;
+
+
+
+    DELETE FROM account_checkpoint;
+    INSERT INTO currency VALUES ('xts','xts');
+
+    INSERT INTO gl (id, reference, description, transdate, approved)
+    values (-1010, 'test', 'test', '1519-01-01', true); -- way in the future.
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
+                curr, amount_tc, approved)
+    values (-1010, '-1003', '1519-01-01', '10000', 'XTS', '10000', true),
+           (-1010, '-1004', '1519-01-01', '-10000', 'XTS', '-10000', true),
+           (-1010, '-1003', '1519-01-01', '10000', 'xts', '1', true),
+           (-1010, '-1004', '1519-01-01', '-10000', 'xts', '-1', true);
+
+    SELECT eoy_zero_accounts('1519-01-02', 'test', 'test-zero', -1005);
+
+    PREPARE test AS SELECT chart_id, sum(amount_bc), sum(amount_tc)
+                      FROM acc_trans
+                     WHERE curr = 'XTS' AND transdate <= '1519-01-03'
+                           AND chart_id IN (-1003, -1004)
+                     GROUP BY chart_id
+                     ORDER BY chart_id;
+    SELECT results_eq('test', $$VALUES(-1004, 0::numeric, 0::numeric),(-1003, 0::numeric, 0::numeric)$$, 'XTS currency cleared');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT chart_id, sum(amount_bc), sum(amount_tc)
+                      FROM acc_trans
+                     WHERE curr = 'xts' AND transdate <= '1519-01-03'
+                           AND chart_id IN (-1003, -1004)
+                     GROUP BY chart_id
+                     ORDER BY chart_id;
+    SELECT results_eq('test', $$VALUES(-1004, 0::numeric, 0::numeric),(-1003, 0::numeric, 0::numeric)$$, '"xts" currency cleared');
+    DEALLOCATE test;
+
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

@@ -1,3 +1,6 @@
+
+package LedgerSMB::Upgrade_Preparation;
+
 =head1 NAME
 
 LedgerSMB::Upgrade_Preparation - Upgrade preparations for LedgerSMB
@@ -12,7 +15,6 @@ This module has a single function that returns upgrade preparations.
 
 =cut
 
-package LedgerSMB::Upgrade_Preparation;
 use strict;
 use warnings;
 use Moose;
@@ -112,6 +114,17 @@ sub _get_migration_preparations {
 
     return @preparations;
 }
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 __PACKAGE__->meta->make_immutable;
 

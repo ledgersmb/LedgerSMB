@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Listings::Business_Type;
+
 =head1 NAME
 
 LedgerSMB::Report::Listings::Business_Type - List the Business Types in
@@ -17,8 +20,6 @@ This provides a simple list of business types, ordered alphabetically.
 None
 
 =cut
-
-package LedgerSMB::Report::Listings::Business_Type;
 
 use Moose;
 use namespace::autoclean;
@@ -41,29 +42,20 @@ extends 'LedgerSMB::Report';
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{
       col_id => 'description',
         type => 'href',
      p_width => '10',
-        name => LedgerSMB::Report::text('Description'),
+        name => $self->Text('Description'),
    href_base => 'am.pl?action=edit_business&id=',
     },
     {
       col_id => 'discount',
         type => 'text',
      p_width => '1',
-        name => LedgerSMB::Report::text('Discount (%)'),
+        name => $self->Text('Discount (%)'),
     }];
-};
-
-=item header_lines
-
-None added
-
-=cut
-
-sub header_lines {
-    return []
 };
 
 =item name
@@ -71,7 +63,8 @@ sub header_lines {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('List of Business Types');
+    my ($self) = @_;
+    return $self->Text('List of Business Types');
 }
 
 =back
@@ -95,11 +88,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2013 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

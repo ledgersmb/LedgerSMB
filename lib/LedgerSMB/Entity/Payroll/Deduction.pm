@@ -1,7 +1,14 @@
+
+package LedgerSMB::Entity::Payroll::Deduction;
+
 =head1 NAME
 
 LedgerSMB::Entity::Payroll::Deduction - Payroll Deduction handling for
 LedgerSMB
+
+=head1 DESCRIPTION
+
+Implements a database mapping for 'deduction instance' attributes.
 
 =head1 SYNPOSIS
 
@@ -23,7 +30,6 @@ To save a new deduction:
 
 =cut
 
-package LedgerSMB::Entity::Payroll::Deduction;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -104,7 +110,13 @@ sub save {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

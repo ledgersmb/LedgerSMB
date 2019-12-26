@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Payroll::Deduction_Types;
+
 =head1 NAME
 
 LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Payroll::Deduction_Types;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -26,34 +28,30 @@ This module provides for searching for deduction types.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
         { col_id => 'country_name',
-            name => LedgerSMB::Report::text('Country'),
+            name => $self->Text('Country'),
             type => 'text',
         },
         { col_id => 'deduction_class',
-            name => LedgerSMB::Report::text('Deduction Class'),
+            name => $self->Text('Deduction Class'),
             type => 'text' },
         { col_id => 'label',
-            name => LedgerSMB::Report::text('Label'),
+            name => $self->Text('Label'),
             type => 'href',
        href_base => 'payrol.pl?action=edit&id=' },
     ];
-}
-
-=item header_lines
-
-=cut
-
-sub header_lines {
-    return [];
 }
 
 =item name
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Deduction Types') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Deduction Types');
+}
 
 =back
 
@@ -122,11 +120,13 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -1,7 +1,25 @@
+
+package LedgerSMB::Report::Inventory::Activity;
+
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Activity - Inventory Activity reports for
-LedgerSMB
+LedgerSMB::Report::Inventory::Activity - Inventory Activity reports
+
+=head1 DESCRIPTION
+
+Implements a listing of parts, reporting numbers in 4 categories of activity:
+
+=over
+
+=item Sold
+
+=item Used
+
+=item Assembled
+
+=item Adjusted
+
+=back
 
 =head1 SYNOPSIS
 
@@ -10,7 +28,6 @@ LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Inventory::Activity;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -73,15 +90,15 @@ sub columns {
     return [
      {col_id => 'partnumber',
         type => 'text',
-        name => LedgerSMB::Report::text('Partnumber'), },
+        name => $self->Text('Partnumber'), },
 
      {col_id => 'description',
         type => 'text',
-        name => LedgerSMB::Report::text('Description'), },
+        name => $self->Text('Description'), },
 
      {col_id => 'sold',
         type => 'href',
-        name => LedgerSMB::Report::text('Sold'),
+        name => $self->Text('Sold'),
    href_base => "invoice.pl?&from_date=$from_date&to_date=$to_date"
                 . '&open=1&closed=1&action=invoice_search&'
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
@@ -91,11 +108,11 @@ sub columns {
      {col_id => 'revenue',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Revenue'), },
+        name => $self->Text('Revenue'), },
 
      {col_id => 'purchased',
         type => 'href',
-        name => LedgerSMB::Report::text('Purchased'),
+        name => $self->Text('Purchased'),
    href_base => "invoice.pl?&date_from=$self->date_from&date_to=$self->date_to"
                 . '&open=1&closed=1&action=invoice_search&'
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
@@ -105,22 +122,22 @@ sub columns {
      {col_id => 'cost',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Cost'), },
+        name => $self->Text('Cost'), },
 
      {col_id => 'used',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Used'), },
+        name => $self->Text('Used'), },
 
      {col_id => 'assembled',
         type => 'text',
        money => 1,
-      name => LedgerSMB::Report::text('Assembled'), },
+      name => $self->Text('Assembled'), },
 
      {col_id => 'adjusted',
         type => 'text',
        money => 1,
-      name => LedgerSMB::Report::text('Adjusted'), }
+      name => $self->Text('Adjusted'), }
     ];
 }
 
@@ -141,11 +158,12 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [
-      { name => 'partnumber',  text => LedgerSMB::Report::text('Partnumber') },
-      { name => 'description', text => LedgerSMB::Report::text('Description') },
-      { name => 'date_from',   text => LedgerSMB::Report::text('From Date') },
-      { name => 'date_to',     text => LedgerSMB::Report::text('To Date') },
+      { name => 'partnumber',  text => $self->Text('Partnumber') },
+      { name => 'description', text => $self->Text('Description') },
+      { name => 'date_from',   text => $self->Text('From Date') },
+      { name => 'date_to',     text => $self->Text('To Date') },
     ];
 }
 
@@ -157,7 +175,8 @@ Inventory Activity Report
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Inventory Activity Report');
+    my ($self) = @_;
+    return $self->Text('Inventory Activity Report');
 }
 
 =head1 METHODS
@@ -175,7 +194,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

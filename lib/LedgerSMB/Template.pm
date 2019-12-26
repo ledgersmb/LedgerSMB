@@ -2,7 +2,7 @@
 
 LedgerSMB::Template - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module renders templates to an in-memory property.
 
@@ -15,7 +15,7 @@ and LedgerSMB::Legacy_Util.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [format_options => $hashref], [locale => $locale], [language => $string], [path => $path], [debug => $bool] );
 
 Instantiates a new template. Accepts the following arguments:
 
@@ -71,10 +71,6 @@ The special value 'DB' enforces reading of the template from the
 current database.  Resolving the template takes the 'language' and
 'format' values into account.
 
-=item no_escape (optional)
-
-Disables escaping on the template variables when true.
-
 =item debug (optional)
 
 Enables template debugging.
@@ -116,19 +112,6 @@ Returns a list of format names, any of the following (in order) as applicable:
 =item ODS
 
 =back
-
-
-=item new_UI($request, template => $file, ...)
-
-Wrapper around the constructor that sets the following properties:
-
-    path   => 'UI'
-    format => 'HTML',
-    user   => $request->{_user}
-    locale => $request->{_locale}
-
-Additionally, variables are added to the template processor as required
-by the HTML UI.
 
 
 =item render($variables, $raw_variables)
@@ -317,12 +300,6 @@ Returns the MIME content-type for the rendered template.
 
 =back
 
-=head1 Copyright 2007-2018, The LedgerSMB Core Team
-
-This file is licensed under the GNU General Public License version 2, or at your
-option any later version.  A copy of the license should have been included with
-your software.
-
 =cut
 
 package LedgerSMB::Template;
@@ -330,13 +307,13 @@ package LedgerSMB::Template;
 use strict;
 use warnings;
 use Carp;
-use LedgerSMB::App_State;
+
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
-use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
 
+use Template;
 use Template::Parser;
 use Log::Log4perl;
 use File::Spec;
@@ -378,8 +355,8 @@ sub new {
     $logger->trace('output_options, keys: ' . join '|', keys %{$args{output_options}});
 
     $self->{$_} = $args{$_}
-        for (qw( template format language no_escape debug locale
-                 format_options output_options additional_vars ));
+        for (qw( template format language debug locale
+                 format_options output_options ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
     if ($self->{language}){ # Language takes precedence over locale
@@ -410,32 +387,7 @@ sub new {
     use_module("LedgerSMB::Template::$self->{format}")
        or die "Failed to load module $self->{format}";
 
-    carp 'no_escape mode enabled in rendering'
-        if $self->{no_escape};
-
     return $self;
-}
-
-sub new_UI {
-    my $class = shift;
-    my $request = shift;
-
-    my $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
-            if $LedgerSMB::App_State::Company_Config;
-    my $UI_vars = {
-        dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
-        dojo_built => $LedgerSMB::Sysconfig::dojo_built,
-        dojo_location => $LedgerSMB::Sysconfig::dojo_location,
-    };
-
-    return $class->new(
-        @_,
-        format => 'HTML' ,
-        path => 'UI',
-        user => $request->{_user},
-        locale => $request->{_locale},
-        additional_vars => $UI_vars
-    );
 }
 
 sub preprocess {
@@ -469,7 +421,7 @@ sub preprocess {
             # btw, some (internal) objects are XS objects, on which this trick
             # treating it as a hashref really doesn't work...
             next if /^_/;
-            $vars->{preprocess($_, $escape)} = preprocess( $rawvars->{$_}, $escape );
+            $vars->{$_} = preprocess( $rawvars->{$_}, $escape );
         }
     }
     # return undef for GLOB references (includes IO::File objects)
@@ -480,7 +432,7 @@ sub get_template_source {
     my ($self, $format_extension) = @_;
 
     my $source;
-    if ($self->{include_path} eq 'DB'){
+    if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $source = $self->{template};
     } else {
         $source = $self->{template} . '.' . $format_extension;
@@ -494,7 +446,7 @@ sub get_template_args {
     my $binmode = shift;
 
     my %additional_options = ();
-    if ($self->{include_path} eq 'DB'){
+    if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $additional_options{INCLUDE_PATH} = [];
         $additional_options{LOAD_TEMPLATES} =
             [ LedgerSMB::Template::DBProvider->new(
@@ -507,7 +459,9 @@ sub get_template_args {
                       }),
                   }) ];
     }
-    my $paths = [$self->{include_path},'templates/demo','UI/lib'];
+    my $paths = ['UI/lib'];
+    unshift @$paths, $self->{include_path}
+        if defined $self->{include_path};
     unshift @$paths, $self->{include_path_lang}
         if defined $self->{include_path_lang};
     my $arghash = {
@@ -523,7 +477,7 @@ sub get_template_args {
     };
 
     if ($LedgerSMB::Sysconfig::cache_templates
-        && $self->{include_path} ne 'DB') {
+        && (!$self->{include_path} || $self->{include_path} ne 'DB')) {
        # don't cache compiled database-retrieved templates
        # they will vary between databases
         $arghash->{COMPILE_EXT} = '.lttc';
@@ -535,7 +489,7 @@ sub get_template_args {
     return $arghash;
 }
 
-sub _tt_url {
+sub tt_url {
     my $str = shift;
 
     $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
@@ -554,39 +508,26 @@ sub _maketext {
 sub _render {
     my $self = shift;
     my $vars = shift;
-    my $cvars = shift;
-    $vars->{ENVARS} = \%ENV;
+    my $cvars = shift // {};
     $vars->{USER} = $self->{user};
-    $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
-    $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
     $vars->{SETTINGS} = {
-        default_currency =>
-            (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
-        decimal_places => $LedgerSMB::Company_Config::decimal_places,
-    } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
-
-    @{$vars->{PRINTERS}} =
-        map { { text => $_, value => $_ } }
-        keys %LedgerSMB::Sysconfig::printers;
-    unshift @{$vars->{PRINTERS}}, {
-        text => $LedgerSMB::App_State::Locale->text('Screen'),
-        value => 'screen'
-    } if $LedgerSMB::App_State::Locale;
+        %$LedgerSMB::Company_Config::settings,
+    } if $vars->{DBNAME} && $LedgerSMB::Company_Config::settings;
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
     my $unescape = $format->can('unescape');
-    my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
-    $cleanvars->{LIST_FORMATS} = sub { return $self->available_formats; };
-    $cleanvars->{escape} = sub { return $escape->(@_); };
-    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
-        if ($unescape && !$self->{no_escape});
-    $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
-    $cleanvars->{tt_url} = \&_tt_url;
-    $cleanvars->{$_} = $self->{additional_vars}->{$_}
-        for (keys %{$self->{additional_vars}});
-    $cleanvars->{$_} = $cvars->{$_}
-        for (keys %$cvars);
+    my $cleanvars = {
+        ( %{preprocess($vars, $escape)},
+          LIST_FORMATS => sub { return available_formats(); },
+          UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
+                       : sub { return @_; }),
+          escape => sub { return $escape->(@_); },
+          text => sub { return $self->_maketext($escape, @_); },
+          tt_url => \&tt_url,
+          %{$self->{additional_vars} // {}},
+          %$cvars )
+    };
 
     my $output;
     my $config;
@@ -625,6 +566,16 @@ sub render {
     $self->_render($vars, $cvars);
     return $self;
 }
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
 
 
 1;

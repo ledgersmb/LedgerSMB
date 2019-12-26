@@ -19,8 +19,9 @@ LedgerSMB::Template::Provider - Implements template loading from database
 use strict;
 use warnings;
 
-use Template::Provider;
+use Log::Log4perl;
 use PGObject::Type::DateTime;
+use Template::Provider;
 
 use Moose;
 use namespace::autoclean;
@@ -171,6 +172,14 @@ sub _compiled_filename {
 
 
 =back
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2016-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

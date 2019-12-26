@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -27,7 +28,7 @@ BEGIN;
     SELECT has_function('file__get_for_template',ARRAY['integer','integer']);
     SELECT has_function('file__list_by',ARRAY['integer','integer']);
     SELECT has_function('file__get',ARRAY['integer','integer']);
-    SELECT has_function('file_links_vrebuild',ARRAY['']);
+    SELECT has_function('file_links_vrebuild','{}'::text[]);
     SELECT has_function('file__list_links',ARRAY['integer','integer']);
 
     -- Run tests

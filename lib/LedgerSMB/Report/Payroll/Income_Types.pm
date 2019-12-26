@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Payroll::Income_Types;
+
 =head1 NAME
 
 LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
@@ -8,7 +11,6 @@ LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
 
 =cut
 
-package LedgerSMB::Report::Payroll::Income_Types;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -26,34 +28,30 @@ This module provides for searching for income types.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
         { col_id => 'country_name',
-            name => LedgerSMB::Report::text('Country'),
+            name => $self->Text('Country'),
             type => 'text',
         },
         { col_id => 'income_class',
-            name => LedgerSMB::Report::text('Income Class'),
+            name => $self->Text('Income Class'),
             type => 'text' },
         { col_id => 'label',
-            name => LedgerSMB::Report::text('Label'),
+            name => $self->Text('Label'),
             type => 'href',
        href_base => 'payrol.pl?action=edit&id=' },
     ];
-}
-
-=item header_lines
-
-=cut
-
-sub header_lines {
-    return [];
 }
 
 =item name
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Income Types') }
+sub name {
+    my ($self) = @_;
+    return $self->Text('Income Types');
+}
 
 =back
 
@@ -122,11 +120,13 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used following
-the terms of the GNU General Public License version 2 or at your option any
-later version.  Please see included LICENSE.TXT for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

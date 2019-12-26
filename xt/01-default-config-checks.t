@@ -1,12 +1,11 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-use Test::More tests => 3;
+use Test2::V0;
+
 use File::Compare;
 
-my $built_dojo_config   = 'conf/ledgersmb.conf.default';
-my $unbuilt_dojo_config = 'conf/ledgersmb.conf.unbuilt-dojo';
+my $built_dojo_config   = 'doc/conf/ledgersmb.conf.default';
+my $unbuilt_dojo_config = 'doc/conf/ledgersmb.conf.unbuilt-dojo';
 
 # Basic check that files exist
 ok(-f $built_dojo_config, 'default built dojo config file exists');
@@ -29,3 +28,5 @@ is(
     0,
     'default built/unbuilt config files differ only by dojo_built=X line'
 );
+
+done_testing;

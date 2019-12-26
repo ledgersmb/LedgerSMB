@@ -1,34 +1,29 @@
 
+package LedgerSMB::Scripts::journal;
+
 =head1 NAME
 
-LedgerSMB::Scripts::journal - LedgerSMB slim ajax script for journal's
-account search request.
+LedgerSMB::Scripts::journal - Web entrypoint for ajax account search.
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-A script for journal ajax requests: accepts a search string and returns a
+A script for ajax requests: accepts a search string and returns a
 list of matching accounts in a ul/li pair
-
-=head1 METHODS
 
 =cut
 
-package LedgerSMB::Scripts::journal;
-
-use LedgerSMB::Template;
-use LedgerSMB::Business_Unit;
+use LedgerSMB::DBObject::Account;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
+use LedgerSMB::Report::Contact::Purchase;
+use LedgerSMB::Scripts::account;
 use strict;
 use warnings;
 
-our $VERSION = '1.0';
 
-=pod
+=head1 METHODS
 
-=over
-
-=item chart_json
+=head2 chart_json
 
 Returns a json array of all accounts
 
@@ -49,7 +44,7 @@ sub chart_json {
     return $request->to_json(\@results);
 }
 
-=item chart_of_accounts
+=head2 chart_of_accounts
 
 Returns and displays the chart of accounts
 
@@ -57,20 +52,17 @@ Returns and displays the chart of accounts
 
 sub chart_of_accounts {
     my ($request) = @_;
-    for my $col(qw(accno description gifi debit_balance credit_balance)){
-        $request->{"col_$col"} = '1';
-    }
-    if ($request->is_allowed_role({allowed_roles => ['account_edit']})){
-       for my $col(qw(link edit delete)){
-           $request->{"col_$col"} = '1';
-       }
-    }
-    my $report = LedgerSMB::Report::COA->new(%$request);
-    $report->run_report();
-    return $report->render($request);
+
+    # Buttons on the Chart of Account screen are handled by a different script
+    $request->{script} = 'account.pl';
+
+    return $request->render_report(
+        LedgerSMB::Report::COA->new(_locale => $request->{_locale},
+                                    dbh => $request->{dbh})
+        );
 }
 
-=item delete_account
+=head2 delete_account
 
 This deletes an account and returns to the chart of accounts screen.
 
@@ -81,13 +73,13 @@ occurs to here.
 
 sub delete_account {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Account;
+
     my $account =  LedgerSMB::DBObject::Account->new({base => $request});
     $account->delete;
     return chart_of_accounts($request);
 }
 
-=item search
+=head2 search
 
 Runs a search and displays results.
 
@@ -102,10 +94,12 @@ sub search {
                if $request->{"business_unit_$count"};
     }
     #tshvr4 trying to mix in period from_month from_year interval
-    return LedgerSMB::Report::GL->new(%$request)->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::GL->new(%$request)
+        );
 }
 
-=item search_purchases
+=head2 search_purchases
 
 Runs a search of AR or AP transactions and displays results.
 
@@ -113,26 +107,17 @@ Runs a search of AR or AP transactions and displays results.
 
 sub search_purchases {
     my ($request) = @_;
-    use LedgerSMB::Report::Contact::Purchase;
+
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Contact::Purchase->new(%$request)
+        );
 }
 
-=back
-
-=head1 Copyright (C) 2007 The LedgerSMB Core Team
-
-Licensed under the GNU General Public License version 2 or later (at your
-option).  For more information please see the included LICENSE and COPYRIGHT
-files.
-
-=cut
 
 {
     local ($!, $@) = (undef, undef);
@@ -146,5 +131,17 @@ files.
         }
     }
 };
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2011-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;

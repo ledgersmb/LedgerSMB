@@ -1,14 +1,16 @@
 #!perl
 
 BEGIN {
+    use Test2::V0;
+
     use lib 'xt/lib';
     use LedgerSMB;
-    use Test::More;
     use LedgerSMB::Template;
     use LedgerSMB::Sysconfig;
     use LedgerSMB::DBTest;
     use LedgerSMB::App_State;
     use LedgerSMB::Locale;
+    use Plack::Request;
 }
 
 # TODO: FIXME
@@ -22,20 +24,17 @@ BEGIN {
 # LedgerSMB::Template contains render and _http_output
 # LedgerSMB contains error
 
-LedgerSMB::App_State::set_Locale(LedgerSMB::Locale->get_handle('en'));
-
 no warnings 'redefine';
 
 if (defined $ENV{LSMB_TEST_DB}){
-        if (defined $ENV{LSMB_NEW_DB}){
-                $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-        }
-        if (!defined $ENV{PGDATABASE}){
-                die "Oops...  LSMB_TEST_DB set but no db selected!";
-        }
-        plan 'no_plan';
+    if (defined $ENV{LSMB_NEW_DB}){
+        $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+    }
+    if (!defined $ENV{PGDATABASE}){
+        die "Oops...  LSMB_TEST_DB set but no db selected!";
+    }
 } else {
-        plan skip_all => 'Skipping, LSMB_TEST_DB environment variable not set.';
+    skip_all 'Skipping, LSMB_TEST_DB environment variable not set.';
 }
 
 @test_request_data = do { 'xt/data/62-request-data' } ; # Import test case hashes
@@ -82,7 +81,8 @@ for my $test (@$test_request_data){
         if (ref $test->{'_pre_test_sub'} eq 'CODE'){
                 $test->{'_pre_test_sub'}();
         }
-    my $request = LedgerSMB->new();
+    my $plack_request = Plack::Request->new({});
+    my $request = LedgerSMB->new($plack_request);
         if (lc $test->{_codebase} eq 'old'){
                 next; # skip old codebase tests for now
                 #old_code_test::_load_script($test->{module});
@@ -124,6 +124,9 @@ for my $test (@$test_request_data){
         ok($dbh->rollback, "$test->{_test_id}: rollback");
 }
 
+done_testing;
+
+
 package LedgerSMB::Template;
 use Test::More;
 # Don't render templates.  Just return so we can run tests on data structures.
@@ -164,3 +167,4 @@ sub error {
     $self->{_error} = shift;
     $self->{_died} = 1;
 }
+

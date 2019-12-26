@@ -35,9 +35,10 @@ sub self_register {
 sub open {
     my ($class, $session) = @_;
 
+    my $body = shift @{$session->page->find_all('//body')};
     $session->get($class->url);
 
-    $session->page->wait_for_body;
+    $session->page->wait_for_body(replaces => $body);
     return $session->page->body;
 }
 
@@ -53,13 +54,11 @@ sub wait_for_page {
         sub {
 
             if ($ref) {
-                local $@;
-                # if there's a reference element,
-                # wait for it to go stale (raise an exception)
-                eval {
-                    defined $ref->tag_name;
+                # In case of an exception, eval returns 'undef'
+                $ref = eval {
+                    $ref->tag_name;
+                    $ref;
                 };
-                $ref = undef if !defined $@;
                 return 0;
             }
             else {

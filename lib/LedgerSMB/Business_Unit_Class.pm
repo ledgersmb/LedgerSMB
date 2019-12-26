@@ -1,8 +1,11 @@
+
+package LedgerSMB::Business_Unit_Class;
+
 =head1 NAME
 
 LedgerSMB::Business_Unit_Class - Classes for additional accounting dimensions
 
-=head1 SYNOPSYS
+=head1 DESCRIPTION
 
 This holds the information as to the handling of classes of buisness units.
 Business units are reporting units which can be used to classify various line
@@ -11,7 +14,6 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::Business_Unit_Class;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_Module;
@@ -193,10 +195,13 @@ Used in some countries/industries for multi-vendor payments
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the
-GNU GPL in accordance with the LICENSE file listed.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -1,3 +1,6 @@
+
+package LedgerSMB::X12;
+
 =head1 NAME
 
 LedgerSMB::X12 - Base Class for LedgerSMB X12 handling
@@ -27,7 +30,6 @@ supported by X12::Parser.
 
 =cut
 
-package LedgerSMB::X12;
 use Moose;
 use namespace::autoclean;
 use X12::Parser;
@@ -221,11 +223,13 @@ sub write_997{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2013 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see included LICENSE.txt file for details.
+Copyright (C) 2013 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

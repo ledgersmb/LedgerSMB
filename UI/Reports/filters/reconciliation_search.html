@@ -1,13 +1,14 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 
-<div class="title"><?lsmb text('Search Reconciliation Reports') ?></div>
+<div id="reconciliation_report_search">
+    <form data-dojo-type="lsmb/Form" method="get" action="recon.pl">
+        <div class="listtop"><?lsmb text('Search Reconciliation Reports') ?></div>
+        <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
 
-<div class="body">
-        <form data-dojo-type="lsmb/Form" name="reconciliation__search" method="post" action="recon.pl" id="reconciliation__search">
-            <div>
+            <div class="input">
                 <?lsmb INCLUDE input element_data = {
-                        label = text('Date From'), #'
+                        title = text('Statement Date From'),
                         type = 'text',
                         class = 'date',
                         size = 12,
@@ -15,7 +16,7 @@
                         name = 'date_from'
                 } ?>
                 <?lsmb INCLUDE input element_data = {
-                        label = text('To:'),
+                        title = text('Statement Date To'),
                         type = 'text',
                         class = 'date',
                         size = 12,
@@ -23,84 +24,79 @@
                         name = 'date_to'
                 } ?>
             </div>
-            <div>
+
+            <div class="input">
                 <?lsmb INCLUDE input element_data = {
-                        label = text('Amount From'), #'
+                        title = text('Amount From'),
                         type = 'text',
                         class = 'money',
                         size = 12,
-                        value = amount_from,
-                        name = 'amount_from'
+                        value = balance_from,
+                        name = 'balance_from'
                 } ?>
                 <?lsmb INCLUDE input element_data = {
-                        label = text('To:'),
+                        title = text('Amount To'),
                         type = 'text',
                         class = 'money',
                         size = 12,
-                        value = amount_to,
-                        name = 'amount_to'
+                        value = balance_to,
+                        name = 'balance_to'
                 } ?>
             </div>
-            <div>
+
+            <div class="input">
                 <?lsmb INCLUDE select element_data = {
-                        label = text('Account:'),
+                        title = text('Account'),
                         class = "chart_id",
                         name = "account_id",
                         options = recon_accounts,
                         text_attr = 'name',
                         value_attr = 'id'
+                        default_blank = "true"
                 } ?>
             </div>
-            <div>
-                <?lsmb IF show_approved ?>
+
+            <div class="input">
                         <?lsmb- approved_options = [
-                                {id = undef, label = undef },
                                 {id = '1', label = text('Approved') },
-                                {id = '0', label = text('Not Approved') } #'
+                                {id = '0', label = text('Not Approved') }
                         ];
                         PROCESS select element_data = {
                                 name = 'approved',
-                                label = text('Approval Status'), #'
+                                title = text('Approval Status'),
                                 options = approved_options
                                 text_attr = 'label',
                                 value_attr = 'id',
                                 class = 'status'
+                                default_blank = "true"
                         } -?>
-                <?lsmb ELSE ?>
-                <?lsmb INCLUDE input element_data = {
-                        type = "hidden",
-                        name = "approved",
-                        value = approved
-                } ?>
-                <?lsmb END ?>
-                <?lsmb IF show_submitted ?>
+            </div>
+
+            <div class="input">
                         <?lsmb- submitted_options = [
-                                {id = undef, label = undef },
                                 {id = '1', label = text('Submitted') },
-                                {id = '0', label = text('Not Submitted') } #'
+                                {id = '0', label = text('Not Submitted') }
                         ];
                         PROCESS select element_data = {
                                 name = 'submitted',
-                                label = text('Submission Status'), #'
+                                title = text('Submission Status'),
                                 options = submitted_options
                                 text_attr = 'label',
                                 value_attr = 'id',
                                 class = 'status'
+                                default_blank = "true"
                         } -?>
-                <?lsmb ELSE ?>
-                <?lsmb INCLUDE input element_data = {
-                        type = "hidden",
-                        name = "submitted",
-                        value = submitted
-                } ?>
-                <?lsmb END ?>
             </div>
-                <?lsmb INCLUDE button element_data = {
-                        type = "submit",
-                        name = "action",
-                        text = text('Search'),
-                        value = 'get_results'
-                } ?>
-        </form>
+        </div>
+
+        <div class="input" id="buttons_div">
+            <?lsmb INCLUDE button element_data = {
+                type = "submit",
+                name = "action",
+                text = text('Search'),
+                value = 'get_results'
+            } ?>
+        </div>
+    </form>
 </div>
 </body>

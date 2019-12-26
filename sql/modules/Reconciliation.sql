@@ -49,11 +49,15 @@ RETURNS SETOF defaults
 LANGUAGE SQL AS
 $$
 WITH unapproved_tx as (
-     SELECT 'unapproved_transactions'::text, count(*)::text
-       FROM (SELECT          id::text FROM ar        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT          id::text FROM ap        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT          id::text FROM gl        WHERE approved IS FALSE AND transdate < $1
-      UNION  SELECT DISTINCT source   FROM acc_trans WHERE approved IS FALSE AND transdate < $1 AND chart_id = $2
+     SELECT 'unapproved_transactions'::text, sum(c)::text
+       FROM (SELECT count(*) as c FROM ar
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(*) as c FROM ap
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(*) FROM gl
+              WHERE approved IS FALSE AND transdate <= $1
+      UNION  SELECT count(DISTINCT source) FROM acc_trans
+              WHERE approved IS FALSE AND transdate <= $1 AND chart_id = $2
             ) tx
 ),
      unapproved_cr as (
@@ -64,6 +68,19 @@ WITH unapproved_tx as (
 SELECT * FROM unapproved_tx
 UNION SELECT * FROM unapproved_cr;
 $$;
+
+COMMENT ON FUNCTION reconciliation__check(date, int) IS
+$$Checks whether there are unapproved transactions on or before the end date
+and unapproved reports before the end date provided.
+
+Note that the check for unapproved transactions should include the end date,
+because having unapproved transactions on the end date influences the outcome
+of the balance to be verified by a report.
+
+Also note that the unapproved reports check can't include the end date,
+because that would mean that if a report were in progress while this function
+is being called, that report would be included in the count.
+$$; -- '
 
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
 RETURNS bool language sql as $$
@@ -168,13 +185,10 @@ CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
    in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
-    SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+    SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
-    JOIN (      SELECT id FROM ar WHERE approved
-          UNION SELECT id FROM ap WHERE approved
-          UNION SELECT id FROM gl WHERE approved
-          ) g ON g.id = ac.trans_id
+    JOIN (select id from transactions where approved) g ON g.id = ac.trans_id
     WHERE c.id = $1 AND cleared
       AND ac.approved IS true
       AND ac.transdate <= in_report_date
@@ -190,29 +204,10 @@ Note that currently contra accounts will show negative balances.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) returns INT as $$
 
-    -- Does some basic checks before allowing the approval to go through;
-    -- moves the approval to "cr_report_line", I guess, or some other "final" table.
-    --
-    -- Pending may just be a single flag in the database to mark that it is
-    -- not finalized. Will need to discuss with Chris.
-
     DECLARE
         current_row RECORD;
-        completed cr_report_line;
-        total_errors INT;
-        in_user TEXT;
         ac_entries int[];
     BEGIN
-        in_user := current_user;
-
-        -- so far, so good. Different user, and no errors remain. Therefore,
-        -- we can move it to completed reports.
-        --
-        -- User may not be necessary - I would think it better to use the
-        -- in_user, to note who approved the report, than the user who
-        -- filed it. This may require clunkier syntax..
-
-        --
         ac_entries := '{}';
         UPDATE cr_report SET approved = 't',
                 approved_by = person__get_my_entity_id(),
@@ -471,13 +466,8 @@ $$
                     THEN gl.ref
                     ELSE ac.source END,
                0,
-               sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
-                                 THEN 1
-                                 WHEN t_recon_fx and gl.table = 'ap'
-                                 THEN ex.sell
-                                 WHEN t_recon_fx and gl.table = 'ar'
-                                 THEN ex.buy
-                            END) AS amount,
+               sum(CASE WHEN t_recon_fx THEN amount_tc
+                        ELSE amount_bc END) AS amount,
                         (select entity_id from users
                         where username = CURRENT_USER),
                 ac.voucher_id, min(ac.entry_id), ac.transdate
@@ -500,24 +490,16 @@ $$
                         AND ac.voucher_id IS NULL)
                         OR (rl.voucher_id = ac.voucher_id)))
         LEFT JOIN cr_report r ON r.id = in_report_id
-        LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
         WHERE ac.cleared IS FALSE
                 AND ac.approved IS TRUE
                 AND ac.chart_id = t_chart_id
                 AND ac.transdate <= t_end_date
-                AND (t_recon_fx is not true
-                     OR (t_recon_fx is true
-                         AND (gl.table <> 'gl'
-                              OR ac.fx_transaction IS TRUE)))
-                AND (ac.entry_id > coalesce(r.max_ac_id, 0))
         GROUP BY gl.ref, ac.source, ac.transdate,
-                ac.memo, ac.voucher_id, gl.table,
-                case when gl.table = 'gl' then gl.id else 1 end
+                ac.memo, ac.voucher_id, gl.table
         HAVING count(rl.id) = 0;
 
         UPDATE cr_report set updated = date_trunc('second', now()),
-                their_total = coalesce(in_their_total, their_total),
-                max_ac_id = (select max(entry_id) from acc_trans)
+                their_total = coalesce(in_their_total, their_total)
         where id = in_report_id;
 
     RETURN in_report_id;
@@ -619,19 +601,11 @@ CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) returns numeric as
 $$
         SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
-                        IN ('A', 'E') THEN sum(a.amount) * -1
-                ELSE sum(a.amount) END
+                        IN ('A', 'E') THEN sum(a.amount_bc) * -1
+                ELSE sum(a.amount_bc) END
         FROM acc_trans a
-        JOIN (
-                SELECT id FROM ar
-                WHERE approved is true
-                UNION
-                SELECT id FROM ap
-                WHERE approved is true
-                UNION
-                SELECT id FROM gl
-                WHERE approved is true
-        ) gl ON a.trans_id = gl.id
+        JOIN ( SELECT id FROM transactions WHERE approved IS true
+             ) gl ON a.trans_id = gl.id
         WHERE a.approved IS TRUE
                 AND a.chart_id = in_account_id
                 AND a.transdate <= in_date;

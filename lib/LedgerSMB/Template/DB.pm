@@ -1,15 +1,14 @@
+
+package LedgerSMB::Template::DB;
+
 =head1 NAME
 
 LedgerSMB::Template::DB - Template administration functions for LedgerSMB
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::Template::DB;
-use Moose;
-use namespace::autoclean;
-with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
-
-use LedgerSMB::App_State;
+Implements the routines to save, store and edit document templates to/from
+"the" database.
 
 =head1 SYNPOPSIS
 
@@ -31,6 +30,12 @@ To save:
 
    my $template =  LedgerSMB::Template::DB->new(%$request);
    $template->save;
+
+=cut
+
+use Moose;
+use namespace::autoclean;
+with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
 =head1 PROPERTIES
 
@@ -170,13 +175,13 @@ sub save {
     return $self->call_dbmethod(funcname => 'template__save');
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License
-version 2 or at your option any later version.  Please see the included
-LICENSE.txt for details.
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

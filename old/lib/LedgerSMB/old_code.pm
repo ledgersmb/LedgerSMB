@@ -29,12 +29,13 @@ use warnings;
 use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
+use Log::Log4perl;
 use POSIX 'SEEK_SET';
+use Symbol;
 use Try::Tiny;
 
 use base qw(Exporter);
 our @EXPORT_OK = qw(dispatch);
-
 
 # make sure the package exists after 'use'-ing this module:
 
@@ -57,7 +58,9 @@ Wraps a "call" to old code, returning a PSGI triplet for the response.
 sub dispatch {
     my $script = shift;
     my $entrypoint = shift;
-    my $args = shift;
+    my $user = shift;
+    my $form_args = shift;
+    my @entrypoint_args = @_;
 
     my $stdout = IO::File->new_tmpfile;
     if (my $cpid = fork()) {
@@ -74,10 +77,19 @@ sub dispatch {
         # exit() below.
         try {
             local *STDOUT = $stdout;
+            my $script_module = $script;
+            $script_module =~ s/\.pl//;
             $lsmb_legacy::form = Form->new();
-            $lsmb_legacy::form->{$_} = $args->{$_} for (keys %$args);
-            $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
-            %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
+            $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
+            $lsmb_legacy::logger = Log::Log4perl->get_logger("lsmb.$script_module.$lsmb_legacy::form->{action}");
+            %lsmb_legacy::myconfig = %$user;
+            $lsmb_legacy::form->{_locale} =
+                $lsmb_legacy::locale =
+                LedgerSMB::Locale->get_handle( $user->{language} );
+
+            # This is a forked process, but we're using the parent's
+            # database handle. Don't destroy the database handle when
+            # this forked process exits, so the parent can continue using it.
             {
                 # Note that we're only loading this code *after* the fork,
                 # so, we're only ever "polluting" the namespaces of the
@@ -96,13 +108,15 @@ sub dispatch {
                 }
             }
             if (ref $entrypoint eq "CODE") {
-                $entrypoint->(@_);
+                $entrypoint->(@entrypoint_args);
             }
             else {
-                no strict 'refs';
-                &{"lsmb_legacy::$entrypoint"}($lsmb_legacy::form,
-                                              $lsmb_legacy::locale);
+                my $ref = qualify_to_ref $entrypoint, 'lsmb_legacy';
+                &{*{$ref}}($lsmb_legacy::form, $lsmb_legacy::locale);
             }
+        }
+        catch {
+            warn "Error dispatching call to old code: $_\n";
         };
         exit;
     }

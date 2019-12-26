@@ -2,7 +2,7 @@
        PROCESS 'report_base.html'; ?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
-
+<div id="purchase_history_search">
 <form data-dojo-type="lsmb/Form" method="get" action="contact_reports.pl">
 <table width=100%>
   <tr>
@@ -17,7 +17,7 @@
             <table>
               <?lsmb PROCESS entity_class ?>
               <tr>
-                <th align=right nowrap><?lsmb text('Company Name') ?></th>
+                <th align=right nowrap><?lsmb text('Entity Name') ?></th>
                 <td><?lsmb INCLUDE input element_data = {
                            size = 32,
                            name = "name_part",
@@ -98,7 +98,7 @@
               <tr>
                 <th align=right nowrap><?lsmb text('Country') ?></th>
                 <td><?lsmb country_list.unshift({});
-                     INCLUDE select element_data = {
+                     INCLUDE select_country element_data = {
                          name = "country_id",
                          text_attr = 'name',
                          value_attr = 'id',
@@ -332,6 +332,16 @@
                               class = 'checkbox',
                       }; ?>
                 </td>
+                <td>
+                   <?lsmb
+                       INCLUDE input element_data = {
+                              type = 'checkbox',
+                              name = 'l_transdate',
+                              value = '1',
+                              label = text('Transaction Date'), #'
+                              class = 'checkbox',
+                      }; ?>
+                </td>
               </tr>
 
       </table>
@@ -353,5 +363,5 @@
        name = 'action'
 } ?>
 </form>
-
+</div>
 </body>

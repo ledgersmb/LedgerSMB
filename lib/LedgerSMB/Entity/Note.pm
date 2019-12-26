@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Note;
+
 =head1 NAME
 
 LedgerSMB::Entity::Note - Notes handling for customers, vendors,
@@ -19,7 +22,6 @@ level.
 
 =cut
 
-package LedgerSMB::Entity::Note;
 use LedgerSMB::Magic qw( NC_ENTITY_CREDIT_ACCOUNT);
 use Moose;
 use namespace::autoclean;
@@ -55,6 +57,14 @@ If set this indicates this has been saved to the db.
 =cut
 
 has 'id' => (is =>'ro', isa => 'Int', required => 0);
+
+=item created
+
+Timestamp of creation of the note.
+
+=cut
+
+has 'created' => (is => 'ro', required => 0);
 
 =item created_by
 
@@ -141,11 +151,13 @@ sub save {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-OPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

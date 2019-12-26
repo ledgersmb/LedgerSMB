@@ -1,6 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
 
     -- Plan the tests.
 
@@ -8,7 +9,7 @@ BEGIN;
 
     -- Add data
 
-    \i sql/modules/test/Base.sql
+    \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
 
@@ -23,7 +24,7 @@ BEGIN;
     SELECT has_function('deduction__list_types',ARRAY['integer']);
     SELECT has_function('deduction__save',ARRAY['numeric','integer','integer']);
     SELECT has_function('payroll_income_type__get',ARRAY['integer']);
-    SELECT has_function('payroll_income_category__list',ARRAY['']);
+    SELECT has_function('payroll_income_category__list','{}'::text[]);
     SELECT has_function('payroll_income_class__for_country',ARRAY['integer']);
     SELECT has_function('payroll_income_type__save',ARRAY['integer','integer','integer','integer','text','text','numeric']);
     SELECT has_function('payroll_income_type__search',ARRAY['integer','integer','integer','text','text']);

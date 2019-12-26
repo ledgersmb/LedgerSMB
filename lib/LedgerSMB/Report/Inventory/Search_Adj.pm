@@ -1,3 +1,6 @@
+
+package LedgerSMB::Report::Inventory::Search_Adj;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Search_Adj - LedgerSMB report of
@@ -11,7 +14,6 @@ inventory adjustments
 
 =cut
 
-package LedgerSMB::Report::Inventory::Search_Adj;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
@@ -66,21 +68,25 @@ has source => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Inventory Adjustments') };
+sub name {
+    my ($self) = @_;
+    return $self->Text('Inventory Adjustments');
+};
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'from_date',
-             text => LedgerSMB::Report::text('Start Date') },
+             text => $self->Text('Start Date') },
             {name => 'to_date',
-             text => LedgerSMB::Report::text('End Date') },
+             text => $self->Text('End Date') },
             {name => 'partnumber',
-             text => LedgerSMB::Report::text('Including partnumber') },
+             text => $self->Text('Including partnumber') },
             {name => 'source',
-             text => LedgerSMB::Report::text('Source starting with') },
+             text => $self->Text('Source starting with') },
            ];
 }
 
@@ -89,21 +95,22 @@ sub header_lines {
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{col_id => 'transdate',
                type => 'href',
           href_base => 'inv_reports.pl?action=adj_detail&id=',
-               name => LedgerSMB::Report::text('Date')},
+               name => $self->Text('Date')},
             {col_id => 'source',
                type => 'href',
           href_base => 'inv_reports.pl?action=adj_detail&id=',
-               name => LedgerSMB::Report::text('Reference')},
+               name => $self->Text('Reference')},
             {col_id => 'ar_invnumber',
                type => 'href',
-               name => LedgerSMB::Report::text('AR Invoice'),
+               name => $self->Text('AR Invoice'),
           href_base => 'is.pl?action=edit&id='},
             {col_id => 'ap_invnumber',
                type => 'href',
-               name => LedgerSMB::Report::text('AP Invoice'),
+               name => $self->Text('AP Invoice'),
           href_base => 'ir.pl?action=edit&id='},
       ];
 }
@@ -141,11 +148,13 @@ sub run_report {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -1,0 +1,63 @@
+{
+    q|Assert availability of at least one currency| =>
+        [
+         {
+             failure_data => [
+                 [ qw( column ) ],
+                 [ 1 ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{INSERT INTO defaults VALUES ('curr', ?)},
+                      bound_params => [ 'EUR' ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'configure',
+                 'add_curr' => [
+                     {
+                         '__pk' => 'MQ==',
+                         'value' => 'EUR',
+                     },
+                     ],
+             },
+         },
+        ],
+   q|Assert 3-letter currency codes| =>
+        [
+         {
+             failure_data => [
+                 [ qw( curr ) ],
+                 [ 'EURO' ],
+                 ],
+             submit_session => [
+                 {
+                     statement => q{select value from defaults
+                                       where setting_key = 'curr'},
+                     results => [
+                         [ qw(value) ],
+                         [ 'USD:EURO:XTS' ]
+                         ],
+                 },
+                 {
+                     statement => q{UPDATE defaults SET value = ? WHERE setting_key = 'curr'},
+                     results => [],
+                     bound_parameters => [ 'USD:EUR:XTS' ],
+                 },
+                 ],
+             response => {
+                 confirm => 'change',
+                 valid_curr => [
+                     {
+                         __pk => 'RVVSTw==',
+                         value => 'EUR',
+                     },
+                     ],
+             },
+         },
+        ],
+}

@@ -1,12 +1,17 @@
+
+package LedgerSMB::Scripts::budget_reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
 
+=head1 DESCRIPTION
+
+Budget search and reporting entry points.
+
 =head1 METHODS
 
 =cut
-
-package LedgerSMB::Scripts::budget_reports;
 
 use LedgerSMB::Template;
 use LedgerSMB::Report::Budget::Search;
@@ -28,9 +33,9 @@ more.
 sub search {
     my ($request) = @_;
     LedgerSMB::Report::Budget::Search->prepare_criteria($request);
-    my $report = LedgerSMB::Report::Budget::Search->new(%$request);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Budget::Search->new(%$request)
+        );
 }
 
 =item variance_report
@@ -43,12 +48,22 @@ vs amounts used.
 sub variance_report {
     my ($request) = @_;
     my $id = $request->{id};
-    my $report = LedgerSMB::Report::Budget::Variance->for_budget_id($id);
-    $report->run_report;
-    return $report->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Budget::Variance->for_budget_id($id)
+        );
 }
 
 =back
+
+=cut
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

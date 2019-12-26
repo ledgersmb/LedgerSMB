@@ -1,19 +1,19 @@
 
+package LedgerSMB::Template::ODS;
+
 =head1 NAME
 
 LedgerSMB::Template::ODS - Template support module for LedgerSMB
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-OpenDocument Spreadsheet output.
+Implements C<LedgerSMB::Template>'s FORMATTER protocol for ODS output.
 
 =head1 METHODS
 
 =over
 
 =cut
-
-package LedgerSMB::Template::ODS;
 
 use strict;
 use warnings;
@@ -740,6 +740,15 @@ sub _format_cleanup_handler {
     return shift @style_stack;
 }
 
+
+# _ods_process($output, $template)
+#
+# If $output is a scalar, it is interpreted as a filename into which
+# the rendered template will be written.
+#
+# If $output is a scalar reference, the rendered template will be written
+# into the referenced scalar and no file will be rendered to disk.
+
 sub _ods_process {
     my ($output, $template) = @_;
     my $workdir = File::Temp->newdir;
@@ -753,9 +762,12 @@ sub _ods_process {
     else {
         $fn = $output;
     }
-    $ods = ooDocument(file => $fn,
-                      create => 'spreadsheet',
-                      work_dir => $workdir );
+
+    odfWorkingDirectory($workdir->dirname);
+    $ods = ooDocument(
+        file => $fn,
+        create => 'spreadsheet',
+    );
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -851,12 +863,13 @@ sub mimetype {
 
 =back
 
-=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+=head1 LICENSE AND COPYRIGHT
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Copyright (C) 2007-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

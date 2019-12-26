@@ -119,7 +119,9 @@ BEGIN
 END;
 $$;
 
-GRANT ALL ON SCHEMA public TO public;
+GRANT SELECT ON periods TO public; -- 'periods' is a view in Pg-database
+GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
+
 
 \echo BASE ROLES
 SELECT lsmb__create_role('base_user');
@@ -175,8 +177,32 @@ GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module
 
 \echo Exchange rate creation (requires insert/update on exchangerate table)
 SELECT lsmb__create_role('exchangerate_edit');
-SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
-SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+--### TODO: advisory rates still need to work!
+--SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
+--SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'DELETE');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit currencies'), 'allow');
+GRANT SELECT ON currency TO PUBLIC;
+
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'DELETE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type_id_seq', 'ALL');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit rate types'), 'allow');
+GRANT SELECT ON exchangerate_type TO PUBLIC;
+
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'DELETE');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit rates'), 'allow');
+GRANT SELECT ON exchangerate_default TO PUBLIC;
+
+
 
 \echo Basic file attachments
 SELECT lsmb__create_role('file_read');
@@ -339,6 +365,7 @@ SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
                     'entity_bank_account', 'person_to_company']) obj;
 
 SELECT lsmb__create_role('contact_all_rights');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_vendor');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_customer');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_employee');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_contact');
@@ -421,6 +448,7 @@ SELECT lsmb__grant_role('ar_invoice_create', 'ar_transaction_create');
 SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
   FROM unnest('{invoice,new_shipto,business_unit_inv}'::text[]) tname
  CROSS JOIN unnest('{SELECT,INSERT,UPDATE}'::text[]) ptype;
+
 SELECT lsmb__grant_menu('ar_invoice_create', 3, 'allow');
 SELECT lsmb__grant_menu('ar_invoice_create', 195, 'allow');
 
@@ -467,12 +495,14 @@ SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'INSERT');
 SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'UPDATE');
 SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'INSERT');
 SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'UPDATE');
+SELECT lsmb__grant_perms('sales_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('sales_order_create', '51', 'allow');
 
 SELECT lsmb__create_role('sales_order_edit');
 SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
+SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role(dt || '_delete')
   FROM unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
@@ -493,6 +523,7 @@ SELECT lsmb__grant_perms('sales_quotation_create', obj, 'ALL')
 SELECT lsmb__grant_perms('sales_quotation_create', obj, ptype)
   FROM unnest(array['orderitems'::text, 'business_unit_oitem']) obj,
        unnest(array['INSERT'::text, 'UPDATE']) ptype;
+SELECT lsmb__grant_perms('sales_quotation_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__grant_menu('sales_quotation_create', 68, 'allow');
 
@@ -611,12 +642,14 @@ SELECT lsmb__grant_perms('purchase_order_create', obj, ptype)
 SELECT lsmb__grant_perms('purchase_order_create', obj, 'ALL')
   FROM unnest(array['oe_id_seq'::text, 'orderitems_id_seq', 'warehouse_inventory',
                     'warehouse_inventory_entry_id_seq']) obj;
+SELECT lsmb__grant_perms('purchase_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('purchase_order_create', 52, 'allow');
 
 SELECT lsmb__create_role('purchase_order_edit');
 SELECT lsmb__grant_perms('purchase_order_edit', obj, 'DELETE')
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem',
                     'new_shipto']) obj;
+SELECT lsmb__grant_perms('purchase_order_edit', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role('rfq_create');
 SELECT lsmb__grant_role('rfq_create', 'contact_read');
@@ -627,6 +660,7 @@ SELECT lsmb__grant_perms('rfq_create', 'orderitems_id_seq', 'ALL');
 SELECT lsmb__grant_perms('rfq_create', obj, ptype)
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj,
        unnest(array['INSERT'::text, 'UPDATE']) ptype;
+SELECT lsmb__grant_perms('rfq_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role('purchase_order_list');
 SELECT lsmb__grant_role('purchase_order_list', 'contact_read');
@@ -967,6 +1001,12 @@ SELECT lsmb__create_role('recurring');
 SELECT lsmb__grant_menu('recurring', 115, 'allow');
 SELECT lsmb__grant_menu('recurring', 28, 'allow');
 
+\echo TEMPLATE TRANSACTIONS
+SELECT lsmb__create_role('transaction_template_delete');
+SELECT lsmb__grant_perms('transaction_template_delete', 'eca_invoice', 'DELETE');
+SELECT lsmb__grant_perms('transaction_template_delete', 'journal_entry', 'DELETE');
+SELECT lsmb__grant_perms('transaction_template_delete', 'journal_line', 'DELETE');
+
 \echo TAX FORMS
 SELECT lsmb__create_role('tax_form_save');
 SELECT lsmb__grant_perms('tax_form_save', 'country_tax_form', 'ALL');
@@ -996,7 +1036,7 @@ SELECT lsmb__grant_perms('account_create', obj, 'INSERT')
 SELECT lsmb__grant_perms('account_create', obj, 'ALL')
   FROM unnest(array['account_id_seq'::text, 'account_heading_id_seq']) obj;
 SELECT lsmb__grant_menu('account_create', id, 'allow')
-  FROM unnest(array[137,246]) id;
+  FROM unnest(array[246]) id;
 
 SELECT lsmb__create_role('account_edit');
 SELECT lsmb__grant_perms('account_edit', obj, perm)
@@ -1013,6 +1053,9 @@ SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
   FROM unnest(array['account'::text, 'account_heading', 'account_link',
                     'account_translation', 'account_heading_translation',
                     'cr_coa_to_account', 'tax']) obj;
+
+SELECT lsmb__create_role('account_link_description_create');
+SELECT lsmb__grant_perms('account_link_description_create', 'account_link_description', 'INSERT');
 
 SELECT lsmb__create_role('auditor');
 SELECT lsmb__grant_perms('auditor', 'audittrail', 'SELECT');
@@ -1066,7 +1109,7 @@ SELECT lsmb__create_role('template_edit');
 SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
 SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
-  FROM unnest(array[90, 99, 159,160,161,162,163,164,165,
+  FROM unnest(array[29, 30, 31, 32, 33, 90, 99, 159,160,161,162,163,164,165,
                     166,167,168,169,170,171,173,174,175,176,177,178,179,180,
                     181,182,183,184,185,186,187,241,242]) id;
 
@@ -1136,7 +1179,8 @@ SELECT lsmb__grant_perms('assets_depreciate', 'asset_report_id_seq', 'ALL');
 SELECT lsmb__grant_perms('assets_depreciate', 'asset_report', 'UPDATE');
 SELECT lsmb__grant_perms('assets_depreciate', obj, ptype)
   FROM unnest(array['SELECT'::text, 'INSERT']) ptype,
-       unnest(array['asset_report'::text, 'asset_report_line', 'asset_item',
+       unnest(array['asset_report'::text, 'asset_report_line',
+                    'asset_item', 'asset_rl_to_disposal_method',
                     'asset_class']) obj;
 
 SELECT lsmb__grant_menu('assets_depreciate', 238, 'allow');
@@ -1156,8 +1200,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['asset_unit_class'::text, 'asset_dep_method',
                     'lsmb_module', 'business_unit', 'business_unit_class']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
-  FROM unnest(array['makemodel'::text, 'custom_field_catalog',
-                    'custom_table_catalog', 'oe_class', 'note_class']) obj;
+  FROM unnest(array['makemodel'::text, 'oe_class', 'note_class']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['account_heading'::text, 'account',
                     'acc_trans', 'account_link',
@@ -1184,7 +1227,10 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'menu_node', 'menu_attribute', 'menu_acl',
                     'gifi', 'country', 'taxmodule',
                     'parts', 'partsgroup', 'country_tax_form', 'translation',
-                    'business', 'exchangerate', 'new_shipto', 'tax',
+                    'business',
+                    --###TODO: Add table for advisory rates
+                    --'exchangerate',
+                    'new_shipto', 'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
 
 SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');

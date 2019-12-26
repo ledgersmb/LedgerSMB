@@ -11,7 +11,7 @@
     most browsers should have no issues with them.  Furthermore, I cannot find
     any cleaner solution to embedding tabular data within tabular data than
     this -->
-<div id="payments">
+<div id="payments-detail">
 <div class="listtop"><?lsmb payment.payment_type ?></div>
  <form data-dojo-type="lsmb/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
  <!-- Moving all hidden variables to the top.  -CT -->
@@ -89,57 +89,63 @@
  } ?>
 
 
-<div class="container">
+  <div class="container">
+
+    <!-- Start of heading_section -->
+    <div class="heading_section report_header">
 
         <div id="date_row">
-                <label for="date_paid"><?lsmb text('Posting Date:') ?></label>
-                <?lsmb IF payment.batch_id ?>
+            <label for="date_paid"><?lsmb text('Posting Date') ?></label>
+            <?lsmb IF payment.batch_id ?>
                         <?lsmb IF ! payment.datepaid ?><?lsmb payment.datepaid = payment.batch_date ?><?lsmb END ?>
                         <span id="date_paid"><?lsmb payment.datepaid ?></span>
-                <?lsmb END ?>
-                <?lsmb INCLUDE input element_data= {
+            <?lsmb END ?>
+            <?lsmb INCLUDE input element_data= {
                         value = payment.datepaid
                         name  = "datepaid"
                         size  = 20
                         class = (payment.batch_id) ? "hidden" : "date"
                         type  = (payment.batch_id) ? "hidden" : "text"
-                } ?>
+                }
+            ?>
         </div>
 
-        <div id="date_filter_row">
-                <label for="filter_from"><?lsmb text('Filtering From:') ?></label>
-                <span id="filter_from"><?lsmb payment.date_from ?></span>
-                <?lsmb text('To:') ?>
-                <span id="filter_to"><?lsmb payment.date_to ?></span>
+        <?lsmb IF payment.date_from ?>
+        <div id="date_filter_from_row">
+            <label for="filter_from"><?lsmb text('Filtering From') ?></label>
+            <span id="filter_from"><?lsmb payment.date_from ?></span>
         </div>
-
-        <!-- the department will be shown if it was selected in the first step -->
-        <?lsmb IF payment.department.value  # Only process element if one exists. As in project above ?>
-                <div class="info">
-                        <label for="department_info"><?lsmb  text('Department')  ?></label>
-                        <span id="department_info">
-                                <?lsmb payment.department ?>
-                        </span>
-                </div>
         <?lsmb END ?>
 
-        <div class="info" id="account_row">
-                <label for="account_info">
-                        <?lsmb text('Account:'); ?>
-                </label>
-                <span id="account_info">
+        <?lsmb IF payment.date_to ?>
+        <div id="date_filter_to_row">
+            <label for="filter_to"><?lsmb text('To') ?></label>
+            <span id="filter_to"><?lsmb payment.date_to ?></span>
+        </div>
+        <?lsmb END ?>
+
+        <?lsmb IF payment.department.value ?>
+        <div class="info">
+            <label for="department_info"><?lsmb text('Department') ?></label>
+            <span id="department_info"><?lsmb payment.department ?></span>
+        </div>
+        <?lsmb END ?>
+
+        <div id="account_row">
+            <label for="account_info"><?lsmb text('Account') ?></label>
+            <span id="account_info">
                         <?lsmb FOREACH a = payment.debt_accounts ?>
                                 <?lsmb IF a.accno == payment.ar_ap_accno ?>
-                                        <?lsmb a.accno ?>--<?lsmb a.description ?>
+                                        <?lsmb a.accno ?> -- <?lsmb a.description ?>
                                 <?lsmb END # If a.accno... ?>
                         <?lsmb  END # FOREACH a ?>
-                </span>
+            </span>
         </div>
 
         <?lsmb  IF payment.default_currency != payment.currency ?>
-                <div class="info" id="exrate_row">
+        <div id="exrate_row">
                         <?lsmb IF payment.fx_from_db ?>
-                                <label><?lsmb text('Exchange Rate') ?>:</label> <?lsmb payment.exchangerate ?>
+                                <label><?lsmb text('Exchange Rate') ?></label> <?lsmb payment.exchangerate ?>
                                 <?lsmb PROCESS input element_data = {
                                         name  = 'exchangerate'
                                         value = payment.exchangerate
@@ -157,42 +163,50 @@
                                         size  = 20
                                 };
                         END ?>
-                </div>
+        </div>
         <?lsmb END ?>
 
         <?lsmb IF payment.business ?>
-                <div class="info">
-                        <label for="business_info"><?lsmb text('Business:') ?></label>
-                        <span id="business_info">
+        <div id="business_row">
+            <label for="business_info"><?lsmb text('Business') ?></label>
+            <span id="business_info">
                                 <?lsmb FOREACH b = payment.businesses ?>
                                         <?lsmb IF b.id == payment.business ?>
                                                 <?lsmb b.id ?> -- <?lsmb b.description ?>
                                         <?lsmb END # if b.id... ?>
                                 <?lsmb END # foreach b ?>
-                        </span>
-                </div>
+            </span>
+        </div>
         <?lsmb END # if business ?>
 
+        <?lsmb IF payment.payment_type ?>
         <div class="payment_type" id="payment_type_label_div">
-                <label for="filter_type_label"><?lsmb text('Payment Type:') ?></label>
-                <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
+            <label for="filter_type_label"><?lsmb text('Payment Type') ?></label>
+            <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
         </div>
+        <?lsmb END ?>
 
-        <div class="info" id="cash_account_div">
+        <div id="cash_account_div">
                 <?lsmb INCLUDE input element_data = {
                         type  = "hidden"
                         name  = "cash_accno"
                         value = payment.cash_accno
                 } ?>
                 <label><?lsmb text('Pay From') ?></label>
-                <?lsmb FOR c = cash_accounts -?>
+                <span id="cash_accno">
+                    <?lsmb FOR c = payment.cash_accounts -?>
                         <?lsmb IF c.accno == payment.cash_accno -?>
-                                <?lsmb c.accno ?>--<?lsmb c.description ?>
+                                <?lsmb c.accno ?> -- <?lsmb c.description ?>
                         <?lsmb END # if c.accno -?>
-                <?lsmb END # for c -?>
+                    <?lsmb END # for c -?>
+                </span>
         </div>
 
+    </div>
+    <!-- end of heading_section -->
+
         <table id="payments-table">
+            <thead>
                 <tr class="listheading">
                         <th class="account">
                                 <div class="selectall">
@@ -213,7 +227,8 @@
                         <th class="payment"><?lsmb text('Payment') ?></th>
                         <th class="payment"><?lsmb text('Details') ?></th>
                 </tr>
-
+            </thead>
+            <tbody>
                 <?lsmb rc = 1 ?><?lsmb count = 0 ?>
                 <?lsmb FOREACH r = payment.contact_invoices ?>
                         <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
@@ -313,6 +328,7 @@
                       style="display:none"
                       <?lsmb END; ?>
                       >
+                                            <thead>
                                                 <tr class="listheading">
                                                         <th class="invoice_date_list"><?lsmb text('Date') ?>
                                                         </th>
@@ -325,80 +341,79 @@
                                                         <th class="net_due_list"><?lsmb text('Net Due') ?> </th>
                                                         <th class="to_pay_list"><?lsmb text('To Pay') ?></th>
                                                 </tr>
-                                                <?lsmb icount = 0 ?>
+                                            </thead>
+                                            <tbody>
                                                 <?lsmb FOREACH i = r.invoices ?>
                                                         <?lsmb # NEXT IF nothing to pay ?>
-                                                        <?lsmb IF i.7 ?>
-                                                                <?lsmb icount = icount + 1 ?>
+                                                        <?lsmb IF i.to_pay ?>
                                                                 <tr>
                                                                         <td class="invoice_date_list">
-                                                                                &nbsp;<?lsmb i.2 ?>
+                                                                                <?lsmb i.transdate ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "invoice_date_$i.0"
-                                                                                        value = i.2 } ?>
+                                                                                        name = "invoice_date_" _ r.contact_id _ "_" _ i.id
+                                                                                        value = i.transdate } ?>
                                                                         </td>
                                                                         <td class="invoice_list">
-                                                                                &nbsp;<?lsmb i.1 ?>
+                                                                                <?lsmb i.invnumber ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "invnumber_$i.0"
-                                                                                        value = i.1 } ?>
+                                                                                        name = "invnumber_" _ r.contact_id _ "_" _ i.id
+                                                                                        value = i.invnumber } ?>
                                                                         </td>
                                                                         <td class="total_due_list">
-                                                                                &nbsp;<?lsmb i.3 ?>
+                                                                                <?lsmb i.amount ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "due_$i.0"
-                                                                                        value = i.6 } ?>
+                                                                                        name = "due_" _ r.contact_id _  "_" _ i.id
+                                                                                        value = i.due } ?>
                                                                         </td>
                                                                         <td class="paid_list">
-                                                                                &nbsp;<?lsmb i.4 ?>
+                                                                                <?lsmb i.paid ?>
                                                                         </td>
                                                                         <td class="discount_list">
-                                                                                &nbsp;<?lsmb i.5 ?>
+                                                                                <?lsmb i.net ?>
                                                                         </td>
                                                                         <td class="net_due_list">
-                                                                                &nbsp;<?lsmb i.6 ?>
+                                                                                <?lsmb i.due ?>
                                                                                 <?lsmb currency ?>
                                                                         </td>
                                                                         <td class="to_pay_list">
-                                                                                <?lsmb PROCESS input element_data = {
-                                                                                        name = "payment_$i.0"
-                                 id   = "payment_$i.0"
-                                                                                        value = payment.${"payment_$i.0"}
+                                                                          <?lsmb
+fld = "payment_" _ r.contact_id _ "_" _ i.id ;
+                                                                            PROCESS input element_data = {
+                                                                                        name = fld
+                                 id   = "payment_$i.id"
+                                                                                        value = payment.${fld}
                                                                                         size = 20
                                                                                         type = "text"
                                                                                         class = "monetary" } ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "invoice_" _ r.contact_id _ "_$icount"
-                                                                                        value = i.0 } ?>
+                                                                                        name = "invoice_" _ r.contact_id _  "_" _ i.id
+                                                                                        value = i.id } ?>
                                                                                 <?lsmb PROCESS input element_data = {
                                                                                         type = "hidden"
-                                                                                        name = "net_$i.0"
-                                                                                        value = i.7 } ?>
+                                                                                        name = "net_" _ r.contact_id _ "_" _ i.id
+                                                                                        value = i.to_pay } ?>
                                                                         </td>
                                                                 </tr>
-                                                        <?lsmb ELSE #not $i.7 ?>
+                                                        <?lsmb ELSE #not $i.to_pay ?>
                                                                 <tr>
                                                                         <td class="invoice_date_list">
-                                                                                &nbsp;<?lsmb i.2 ?>
+                                                                                <?lsmb i.transdate ?>
                                                                         </td>
                                                                         <td class="invoice_list">
-                                                                                &nbsp;<?lsmb i.1 ?>
+                                                                                <?lsmb i.invnumber ?>
                                                                         </td>
                                                                         <td class="total_due_list">
-                                                                                &nbsp;
-                                                                                <?lsmb i.3 ?>
+                                                                                <?lsmb i.amount ?>
                                                                         </td>
                                                                         <td class="paid_list">
-                                                                                &nbsp;
-                                                                                <?lsmb i.4 ?>
+                                                                                <?lsmb i.paid ?>
                                                                         </td>
                                                                         <td class="net_due_list">
-                                                                                &nbsp;
-                                                                                <?lsmb i.6 ?>
+                                                                                <?lsmb i.due ?>
                                                                                 <?lsmb currency ?>
                                                                         </td>
                                                                         <td class="to_pay_list">
@@ -411,9 +426,10 @@
                                                 <?lsmb INCLUDE input element_data = {
                                                                  type = "hidden"
                                                                  name = "invoice_count_" _ r.contact_id
-                                                                 value = icount
+                                                                 value = i.size()
                                                                  } ?>
-
+                                            </tbody>
+                                            <tfoot>
                                                 <tr class="subtotal">
                                                         <td colspan="6" class="total_label">
                                                                 <?lsmb text('Contact Total (if paying "some")') ?>
@@ -427,11 +443,13 @@
                                                                 </span>
                                                         </td>
                                                 </tr>
+                                            </tfoot>
                                         </table>
                                 </td>
                         </tr>
                 <?lsmb END # foreach r ?>
-
+            </tbody>
+            <tfoot>
                 <tr class="subtotal">
                         <td>
                                 &nbsp;
@@ -443,12 +461,12 @@
                                 <span id="grand_total">
                                         <?lsmb payment.grand_total ?>
                                 </span>
-                                <span class="currency">
+                                <span id="grand_total_currency" class="currency">
                                         <?lsmb payment.currency ?>
                                 </span>
                         </td>
                 </tr>
-
+            </tfoot>
         </table>
 
         <?lsmb INCLUDE input element_data = {
@@ -470,7 +488,7 @@
         <?lsmb INCLUDE button element_data = {
                 text  = text((batch_id) ? 'Save' : 'Post'),
                 # value = 'pre_bulk_post_report'
-                value = 'p_payments_bulk_post'
+                value = 'pre_bulk_post_report'
                 class = "submit"
                 name  = 'action'
         } ?>
@@ -497,9 +515,8 @@
                 } ?>
         <?lsmb END # IF can_print ?>
 
-</div>
-
-
-  </form>
   </div>
- </body>
+
+ </form>
+</div>
+</body>

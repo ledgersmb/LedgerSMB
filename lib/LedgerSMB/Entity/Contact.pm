@@ -1,3 +1,6 @@
+
+package LedgerSMB::Entity::Contact;
+
 =head1 NAME
 
 LedgerSMB::Entity::Contact - Contact info handling for LSMB
@@ -18,10 +21,8 @@ companies in LedgerSMB.
 
 =cut
 
-package LedgerSMB::Entity::Contact;
 use Moose;
 use namespace::autoclean;
-use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -162,7 +163,8 @@ sub save {
     } elsif ($self->entity_id){
         ($ref) = $self->call_dbmethod(funcname => 'entity__save_contact');
     } else {
-        die $LedgerSMB::App_State::Locale->text('Must have credit or entity id');
+        # No translation required: error targetting programmers, not users
+        die 'Must have credit or entity id';
     }
     $ref->{class_id} = $ref->{contact_class_id};
     return __PACKAGE__->new($ref);
@@ -207,11 +209,13 @@ sub list_classes {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-OPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

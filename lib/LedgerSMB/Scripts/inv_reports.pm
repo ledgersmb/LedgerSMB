@@ -1,3 +1,6 @@
+
+package LedgerSMB::Scripts::inv_reports;
+
 =head1 NAME
 
 LedgerSMB::Scripts::inv_reports - Inventory Reports in LedgerSMB
@@ -10,6 +13,10 @@ LedgerSMB::Scripts::inv_reports - Inventory Reports in LedgerSMB
 
 This provides the general inventory reports for LedgerSMB.
 
+=head1 METHODS
+
+This module doesn't specify any methods.
+
 =head1 ROUTINES
 
 =over
@@ -20,8 +27,6 @@ Searches for inventory adjustment reports
 
 =cut
 
-package LedgerSMB::Scripts::inv_reports;
-
 use strict;
 use warnings;
 
@@ -31,9 +36,9 @@ use LedgerSMB::Scripts::reports;
 
 sub search_adj{
     my ($request) = @_;
-    my $rpt = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
-    $rpt->run_report;
-    return $rpt->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Inventory::Search_Adj->new(%$request)
+        );
 }
 
 =item adj_detail
@@ -45,9 +50,9 @@ Shows adjustment details
 sub adj_detail {
     my ($request) = @_;
     $request->{hiddens} = { id => $request->{id}};
-    my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
-    $rpt->run_report;
-    return $rpt->render($request);
+    return $request->render_report(
+        LedgerSMB::Report::Inventory::Adj_Details->new(%$request)
+        );
 }
 
 =item approve
@@ -80,11 +85,13 @@ sub delete {
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the LedgerSMB General Public License version 2 or at your option any
-later version.  Please see enclosed LICENSE file for details.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

@@ -93,6 +93,7 @@ sub new_screen {
 
 
 sub add {
+    $form->{ARAP} = 'AR';
     if ($form->{type} eq 'credit_invoice'){
         $form->{title} = $locale->text('Add Credit Invoice');
         $form->{subtype} = 'credit_invoice';
@@ -152,10 +153,18 @@ sub invoice_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
-
-    @curr = split /:/, $form->{currencies};
+    @curr = @{$form->{currencies}};
     $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
+
+    for (@curr) { $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n" }
+
+    ###TODO 20151108: came with merge from 1.4-mc; incorrectly?
+    if ( @{ $form->{all_customer} } ) {
+        unless ( $form->{customer_id} ) {
+            $form->{customer_id} = $form->{all_customer}->[0]->{id};
+        }
+    }
+    ###TODO 20151108; end of merge region
 
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
@@ -218,8 +227,6 @@ sub invoice_links {
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
     $form->{AR} = $form->{AR_1} unless $form->{id};
-    $form->{transdate} = $form->{current_date} if (!$form->{transdate});
-    $form->{crdate} = $form->{current_date} if (!$form->{crdate});
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
@@ -272,7 +279,7 @@ sub prepare_invoice {
             $form->{"discount_$i"} =
               $form->format_amount( \%myconfig, $form->{"discount_$i"} * 100 );
 
-            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
+            my $moneyplaces = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
             my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
             $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
@@ -423,7 +430,7 @@ sub form_header {
   <tr height="5"></tr>
   <tr>
     <td>
-      <table width=100%>
+      <table id="invoice-header" width=100%>
     <tr valign=top>
       <td>
         <table>
@@ -438,7 +445,7 @@ sub form_header {
         <td colspan=3>
           <table>
             <tr> |;
-      if (LedgerSMB::Setting->get('show_creditlimit')){
+      if (LedgerSMB::Setting->new({base=>$form})->get('show_creditlimit')){
           print qq|
               <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
               <td>|
@@ -482,25 +489,25 @@ sub form_header {
           </tr>
 
           <tr>
-        <th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
+        <th align="right" nowrap><label for="AR">| . $locale->text('Record in') . qq|</label></th>
         <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR" id="AR">$form->{selectAR}</select></td>
           </tr>
           $department
           $exchangerate
             <tr>
-               <th align="right" nowrap>| . $locale->text('Description') . qq|
+               <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>
                </th>
-               <td><input data-dojo-type="dijit/form/TextBox" type="text" name="description" size="40"
+               <td><input data-dojo-type="dijit/form/TextBox" type="text" id="description" name="description" size="40"
                    value="| . $form->{description} . qq|" /></td>
             </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Shipping Point') . qq|</th>
-        <td colspan=3><input data-dojo-type="dijit/form/TextBox" name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
+        <th align=right nowrap><label for="shippingpoint">| . $locale->text('Shipping Point') . qq|</label></th>
+        <td colspan=3><input data-dojo-type="dijit/form/TextBox" id="shippingpoint" name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
+        <th align=right nowrap><label for="shipvia">| . $locale->text('Ship via') . qq|</label></th>
         <td colspan=3>
-                   <textarea data-dojo-type="dijit/form/Textarea" name="shipvia" cols="35" rows="3"
+                   <textarea data-dojo-type="dijit/form/Textarea" id="shipvia" name="shipvia" cols="35" rows="3"
                        >$form->{shipvia}</textarea></td>
           </tr>
         </table>
@@ -509,28 +516,28 @@ sub form_header {
         <table>
           $employee
           <tr>
-        <th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
+        <th align=right nowrap><label for="invnumber">| . $locale->text('Invoice Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name="invnumber" id="invnumber" size="20" value="$form->{invnumber}">| .  $form->sequence_dropdown('sinumber') . qq|</td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
+        <th align=right nowrap><label for="ordnumber">| . $locale->text('Order Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name="ordnumber" id="ordnumber" size="20" value="$form->{ordnumber}"></td>
 <input type=hidden name="quonumber" value="$form->{quonumber}">
           </tr>
           <tr class="crdate-row">
-        <th align=right>| . $locale->text('Invoice Created') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
+        <th align=right><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr class="transdate-row">
-        <th align=right>| . $locale->text('Invoice Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
+        <th align=right><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}" data-dojo-props="defaultIsToday:true"></td>
           </tr>
           <tr>
-        <th align=right>| . $locale->text('Due Date') . qq|</th>
+        <th align=right><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap><label for="ponumber">| . $locale->text('PO Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name="ponumber" id="ponumber" size="20" value="$form->{ponumber}"></td>
           </tr>
         </table>
@@ -724,9 +731,9 @@ sub form_footer {
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea data-dojo-type="dijit/form/Textarea" name="notes" rows="$rows" cols="40" wrap="soft">$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" id="notes" name="notes" rows="$rows" cols="40" wrap="soft">$form->{notes}</textarea>|;
     $intnotes =
-qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes}</textarea>|;
 
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
@@ -736,7 +743,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
               <tr height="5"></tr>
               <tr>
             <td align=right>
-            <input name="taxincluded" class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value="1" $form->{taxincluded}></td><th align=left>|
+            <input id="taxincluded" name="taxincluded" class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value="1" $form->{taxincluded}></td><th align=left>|
           . $locale->text('Tax Included')
           . qq|</th>
          </tr>
@@ -747,9 +754,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         if ($form->{manual_tax}){
              $tax .= qq|<tr class="listtop">
                       <td>&nbsp</td>
-                      <th align="center">|.$locale->text('Amount').qq|</th>
+                      <th align="center">|.$locale->text('Amount').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
-                      <th align="center">|.$locale->text('Basis').qq|</th>
+                      <th align="center">|.$locale->text('Basis').qq| ($form->{currency})</th>
                       <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
                     </tr>|;
@@ -771,7 +778,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                    !defined $form->{"mt_amount_$item"}){
                    $form->{"mt_amount_$item"} =
                            $form->{"mt_rate_$item"}
-                           * $form->{"mt_basis_$item"};
+                           * ($form->{"mt_basis_$item"} // 0);
                }
                $form->{invtotal} += $form->round_amount(
                                          $form->parse_amount( \%myconfig,  $form->{"mt_amount_$item"}), 2);
@@ -779,7 +786,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                # Note that the screens may be not wide enough to display
                # this in the normal way so we have to change the layout of the
                # notes fields. --CT
-               $tax .= qq|<tr>
+               $tax .= qq|<tr class="invoice-manual-tax">
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
@@ -807,20 +814,27 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                            $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
                 next if !$form->{"${taccno}_total"};
                 $tax .= qq|
-                <tr>
+                <tr class="invoice-auto-tax">
                   <th align=right>$form->{"${taccno}_description"}</th>
                   <td align=right>$form->{"${taccno}_total"}</td>
+                  <td>$form->{currency}</td>
                 </tr>|;
             }
+            $tax .= q|<tr><td>&nbsp;</td></tr>|;
         }
         $form->{invsubtotal} =
           $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
 
         $subtotal = qq|
-          <tr>
+          <tr class="invoice-subtotal">
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-        <td align=right>$form->{invsubtotal}</td>
-          </tr>
+      <td align=right>$form->{invsubtotal}</td><td>$form->{currency}</td></tr>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? ("<tr><th align=right>&nbsp;</th><td align=right>".$form->format_amount( \%myconfig,
+                                         $form->{invsubtotal}
+                                        * $form->{exchangerate}, 2)."</td><td>$form->{defaultcurrency}</td></tr>")
+         : '')
+      . qq|</tr>
 |;
 
     }
@@ -828,6 +842,12 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
     $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    my $invtotal_bc;
+    $invtotal_bc =
+        $form->format_amount( \%myconfig,
+                              $form->{invtotal} * $form->{exchangerate}, 2)
+        if $form->{currency} ne $form->{defaultcurrency};
+
 
     my $hold;
     my $hold_button_text;
@@ -875,18 +895,22 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
       </td>
       <td align=right>
         <table>
+          $subtotal
+              <tr><td>&nbsp;</td></tr>
               <tr><th align="center"
                       colspan="2">|.$locale->text('Calculate Taxes').qq|</th>
+                   <td colspan="3">$manual_tax</td>
               </tr>
               <tr>
-                   <td colspan="3">$manual_tax</td>
-               </tr>
-          $subtotal
+                <td>&nbsp;</td>
+              </tr>
           $tax
-          <tr>
+          <tr class="invoice-total">
         <th align=right>| . $locale->text('Total') . qq|</th>
-        <td align=right>$form->{invtotal}</td>
-          </tr>
+      <td align=right>$form->{invtotal}</td><td>$form->{currency}</td></tr>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? "<tr><td><!-- total --></td><td align=right>$invtotal_bc</td><td>$form->{defaultcurrency}</td></tr>" : '')
+      . qq|
           $taxincluded
         </table>
       </td>
@@ -898,7 +922,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
     <td>
       <table width=100% id="invoice-payments-table">
     <tr class=listheading>
-      <th colspan=6 class=listheading>| . $locale->text('Payments') . qq|</th>
+      <th colspan=7 class=listheading>| . $locale->text('Payments') . qq|</th>
     </tr>
 |;
 
@@ -906,12 +930,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         @column_index = qw(datepaid source memo paid AR_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate AR_paid);
+        @column_index = qw(datepaid source memo paid exchangerate paidfx AR_paid);
     }
 
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
+    $column_data{paidfx}       = "<th>" . $form->{defaultcurrency} . "</th>";
     $column_data{AR_paid}      = "<th>" . $locale->text('Account') . "</th>";
     $column_data{source}       = "<th>" . $locale->text('Source') . "</th>";
     $column_data{memo}         = "<th>" . $locale->text('Memo') . "</th>";
@@ -930,8 +955,8 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
 
         $form->hide_form("cleared_$i");
 
-        print "
-        <tr>\n";
+        print qq{
+        <tr class="invoice-payment">\n};
 
         $form->{"selectAR_paid_$i"} = $form->{selectAR_paid};
         $form->{"selectAR_paid_$i"} =~
@@ -939,6 +964,10 @@ s/option value="\Q$form->{"AR_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" 
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
+        $form->{"paidfx_$i"} =
+            $form->format_amount(
+                \%myconfig,
+                $form->{"paid_$i"} * ($form->{"exchangerate_$i"} // 1), 2 );
         $form->{"paid_$i"} =
           $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
         $form->{"exchangerate_$i"} =
@@ -963,6 +992,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
         $column_data{paid} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size="11" value="$form->{"paid_$i"}"></td>|;
         $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;
+        $column_data{paidfx} = qq|<td align="center">$form->{"paidfx_$i"}</td>|;
         $column_data{AR_paid} =
 qq|<td align="center"><select data-dojo-type="dijit/form/Select" name="AR_paid_$i" id="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =
@@ -1104,19 +1134,22 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 }
 
 sub update {
-
+    $form->{ARAP} = 'AR';
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
-
-
-    $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
-    if ( $newname = &check_name(customer) ) {
-        rebuild_vc('customer', $form->{transdate}, 1);
-    }
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
+
+
+    $form->{taxes} = {};
+
+    ( $form->{employee}, $form->{employee_id} ) = split /--/, $form->{employee}
+        if $form->{employee} && ! $form->{employee_id};
+    if ( $newname = &check_name(customer) ) {
+        $form->rebuild_vc('customer', $form->{transdate}, 1);
+    }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
           ( $form->{terms} )
@@ -1125,34 +1158,16 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
 
-        rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
+        $form->rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
-            $form->{exchangerate} = $exchangerate
-              if (
-                $form->{forex} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,$form->{currency},
-                        $form->{transdate}, 'buy'
-                    )
-                )
-              );
         }
 
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
         delete $form->{exchangerate};
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig,         $form->{currency},
-                    $form->{transdate}, 'buy'
-                )
-            )
-          );
     }
 
     $j = 1;
@@ -1166,15 +1181,6 @@ sub update {
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
             }
 
-            $form->{"exchangerate_$j"} = $exchangerate
-              if (
-                $form->{"forex_$j"} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,             $form->{currency},
-                        $form->{"datepaid_$j"}, 'buy'
-                    )
-                )
-              );
             if ( $j++ != $i ) {
                 for (qw(datepaid source memo cleared paid exchangerate forex)) {
                     delete $form->{"${_}_$i"};
@@ -1335,12 +1341,20 @@ sub update {
             }
         }
     }
+    $form->create_links( module => "AR",
+             myconfig => \%myconfig,
+             vc => "customer",
+             billing => 1,
+             job => 1 );
     $form->generate_selects(\%myconfig);
+    check_form();
+
     $form->{rowcount}--;
     display_form();
 }
 
 sub post {
+    $form->{ARAP} = 'AR';
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
                 'Could not save the data.  Please try again'

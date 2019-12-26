@@ -1,16 +1,24 @@
+
+package LedgerSMB::Scripts::budgets;
+
 =head1 NAME
 
 LedgerSMB::Scripts::budgets - web entry points for administration of budgets
 
-=cut
+=head1 DESCRIPTION
 
-package LedgerSMB::Scripts::budgets;
+Budget workflow scripts.
+
+=cut
 
 use strict;
 use warnings;
 
-=head1 SYNOPSYS
-Budget workflow scripts.
+use LedgerSMB::Budget;
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Magic qw( EDIT_BUDGET_ROWS NEW_BUDGET_ROWS );
+use LedgerSMB::Template::UI;
 
 =head1 REQUIRES
 
@@ -19,14 +27,6 @@ Budget workflow scripts.
 =item LedgerSMB::Budget
 
 =back
-
-=cut
-
-use LedgerSMB::Budget;
-use LedgerSMB::Business_Unit;
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Magic qw( EDIT_BUDGET_ROWS NEW_BUDGET_ROWS );
-
 
 =head1 METHODS
 
@@ -41,8 +41,8 @@ defaults however.
 sub new_budget {
     my ($request) = @_;
     $request->{rowcount} ||= 0;
-    my $budget = LedgerSMB::Budget->from_input($request);
-    return _render_screen($budget);
+    my $budget = LedgerSMB::Budget->new($request);
+    return _render_screen($request, $budget);
 }
 
 
@@ -51,7 +51,7 @@ sub new_budget {
 # Prepares and renders screen with budget info.
 
 sub _render_screen {
-    my ($budget) = @_;
+    my ($request, $budget) = @_;
     my $additional_rows = EDIT_BUDGET_ROWS;
     $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
@@ -95,13 +95,13 @@ sub _render_screen {
     if (!$budget->{id}){
        $budget->{buttons} = [
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Update'),
+                 text => $request->{_locale}->text('Update'),
                  type => 'submit',
                 value => 'update',
                 class => 'submit',
              },
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Save'),
+                 text => $request->{_locale}->text('Save'),
                  type => 'submit',
                 value => 'save',
                 class => 'submit',
@@ -110,13 +110,13 @@ sub _render_screen {
      } elsif (!$budget->{approved_by}){
          $budget->{buttons} = [
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Approve'),
+                 text => $request->{_locale}->text('Approve'),
                  type => 'submit',
                 value => 'approve',
                 class => 'submit',
              },
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Reject'),
+                 text => $request->{_locale}->text('Reject'),
                  type => 'submit',
                 value => 'reject',
                 class => 'submit',
@@ -125,25 +125,19 @@ sub _render_screen {
      } else {
          $budget->{buttons} = [
              {   name => 'action',
-                 text => $LedgerSMB::App_State::Locale->text('Obsolete'),
+                 text => $request->{_locale}->text('Obsolete'),
                  type => 'submit',
                 value => 'obsolete',
                 class => 'submit',
              },
         ];
     }
-    my $template = LedgerSMB::Template->new(
-        user     => $budget->{_user},
-        locale   => $budget->{_locale},
-        path     => 'UI/budgetting',
-        template => 'budget_entry',
-        format   => 'HTML'
-    );
     $budget->{hiddens} = {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
-    return $template->render($budget);
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'budgetting/budget_entry', $budget);
 }
 
 =item update
@@ -185,14 +179,14 @@ sub view_budget {
         } else {
             $row->{credit} = $line->{amount};
         }
-        my ($account) = $budget->call_procedure(
+        my ($account) = $request->call_procedure(
                           funcname => 'account_get',
                               args => [$line->{account_id}]
         );
         $row->{account_id} = "$account->{accno}--$account->{description}";
         push @{$budget->{display_rows}}, $row;
     }
-    return _render_screen($budget);
+    return _render_screen($request, $budget);
 }
 
 =item save
@@ -279,12 +273,15 @@ sub begin_search{
 
 =back
 
-=head1 COPYRIGHT AND LICENSE
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2012-2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
+
 
 1;

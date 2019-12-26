@@ -1,18 +1,22 @@
+
+package LedgerSMB::Entity;
+
 =head1 NAME
 
 LedgerSMB::Entity -- Entity Management base classes for LedgerSMB
 
+=head1 DESCRIPTION
+
+This module manages basic entity management for persons and companies,
+both of which will likely inherit this class.
+
+TODO: "will likely"????
+
 =cut
 
-package LedgerSMB::Entity;
 use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject';
-
-=head1 SYNOPSYS
-
-This module anages basic entity management for persons and companies, both of which will
-likely inherit this class.
 
 =head1 PROPERTIES
 
@@ -94,11 +98,13 @@ sub get{
 
 =back
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team.  This file may be reused under the
-conditions of the GNU GPL v2 or at your option any later version.  Please see the
-accompanying LICENSE.TXT for more information.
+Copyright (C) 2012 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 

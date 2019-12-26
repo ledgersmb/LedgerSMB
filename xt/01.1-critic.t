@@ -1,11 +1,17 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-use Test::More; # plan automatically generated below
+
+use Test2::V0;
+use Test2::Tools::Spec;
+
 use File::Find;
 use Perl::Critic;
 use Perl::Critic::Violation;
+
+
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    skip_all q{CI && COVERAGE excludes source code checks};
+}
 
 my @on_disk;
 
@@ -16,12 +22,12 @@ sub test_files {
     Perl::Critic::Violation::set_format( 'S%s %p %f: %l\n');
 
     for my $file (@$files) {
-        my @findings = $critic->critique($file);
+        tests critique => { async => (! $ENV{COVERAGE}) }, sub {
+            my @findings = map { "$_" } $critic->critique($file);
 
-        ok(scalar(@findings) == 0, "Critique for $file");
-        for my $finding (@findings) {
-            diag ("$finding");
-        }
+            ok(scalar(@findings) == 0, "Critique for $file");
+            diag(join('', @findings)) if scalar(@findings);
+        };
     }
 
     return;
@@ -47,8 +53,6 @@ my @on_disk_tests =
     grep { ! m#^(old|t|xt)/# }
     @on_disk;
 
-plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode) + scalar(@on_disk_tests);
-
 test_files(
     Perl::Critic->new(
         -profile => 'xt/perlcriticrc',
@@ -73,3 +77,4 @@ test_files(
     \@on_disk_tests
 );
 
+done_testing;

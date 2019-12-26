@@ -5,6 +5,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb  # Target_div handling now moved to controller script -- CT -?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
+<div id="edit_contact">
 
     <?lsmb IF name ?>
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
@@ -31,7 +32,7 @@ PROCESS "dynatable.html"  ?>
 </div>
 <div id="contact_tabs" data-dojo-type="dijit/layout/TabContainer" style="height:500px;">
   <?lsmb FOREACH ITEM IN DIVS;
-      INCLUDEDIV = "divs/" _ ITEM _ ".html";
+      INCLUDEDIV = "Contact/divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;
   END
   ?>
@@ -40,5 +41,7 @@ PROCESS "dynatable.html"  ?>
       INCLUDE $INCLUDEDIV;
   END;
   ?>
+</div>
+
 </div>
 </body>

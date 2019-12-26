@@ -52,11 +52,15 @@ When qr/I create a user with these values:/, sub {
 };
 
 When qr/I request the users list/, sub {
-    S->{ext_wsl}->page->body->list_users;
+    my $body = S->{ext_wsl}->page->body;
+    $body->list_users;
+    S->{ext_wsl}->page->wait_for_body(replaces => $body);
 };
 
 When qr/I request to add a user/, sub {
-    S->{ext_wsl}->page->body->add_user;
+    my $body = S->{ext_wsl}->page->body;
+    $body->add_user;
+    S->{ext_wsl}->page->wait_for_body(replaces => $body);
 };
 
 Then qr/I should see the table of available users:/, sub {

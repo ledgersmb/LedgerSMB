@@ -70,8 +70,10 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
+use DBI;
 use Plack::Request;
 use Plack::Util;
+use Plack::Util::Accessor qw( domain );
 
 use LedgerSMB;
 use LedgerSMB::Auth;
@@ -93,117 +95,127 @@ Implements C<Plack::Middleware->call()>.
 sub call {
     my $self = shift;
     my ($env) = @_;
-
     my $req = Plack::Request->new($env);
+
+    if (not $env->{'lsmb.want_db'}) {
+        $env->{'lsmb.company'} =
+            $req->parameters->get('database');
+        $env->{'lsmb.auth'} =  LedgerSMB::Auth::factory($env);
+        $env->{'lsmb.auth'}->get_credentials($self->domain,
+                                             $env->{'lsmb.company'});
+        return $self->app->($env)
+    }
+
     my $cookie_name = LedgerSMB::Sysconfig::cookie_name;
     my $session_cookie =
         $env->{'lsmb.want_cleared_session'} ? ''
         : $req->cookies->{$cookie_name};
 
-    if ($env->{'lsmb.want_db'}) {
-        my $auth = LedgerSMB::Auth::factory($env);
-        my $creds = $auth->get_credentials;
-        if (! $env->{'lsmb.dbonly'}) {
-           my ($unused_token, $cookie_company);
-           ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
-               split(/:/, $session_cookie // '', 3);
+    my ($unused_token, $cookie_company);
+    ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
+        split(/:/, $session_cookie // '', 3);
+    if (! $env->{'lsmb.dbonly'}
+        && $cookie_company && $cookie_company ne 'Login') {
+        $env->{'lsmb.company'} = $cookie_company;
+    }
+    elsif ($env->{'lsmb.dbonly'}) {
+        $env->{'lsmb.company'} ||=
+            $req->parameters->get('company') ||
+            # temporarily accept a 'database' parameter too,
+            # while we cut over 'setup.pl' in a later commit.
+            $req->parameters->get('database') ||
+            # we fall back to what the cookie has to offer before
+            # falling back to using the default database, because
+            # login.pl::logout() does not require a valid session
+            # and is therefor marked 'dbonly'; it does however require
+            # a session cookie in order to be able to delete the
+            # session from the database indicated by the cookie.
+            $cookie_company ||
+            ###TODO: falling back generally seems like a good idea,
+            # but in case of login.pl::logout() it would seem better
+            # just to report an error...
+            LedgerSMB::Sysconfig::default_db;
+    }
+    return LedgerSMB::PSGI::Util::unauthorized()
+        unless $env->{'lsmb.company'};
 
-            $env->{'lsmb.company'} = $cookie_company
-                if $cookie_company && $cookie_company ne 'Login';
-        }
-        else {
-            my ($unused_token, $cookie_company);
-            ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
-                split(/:/, $session_cookie // '', 3);
+    $env->{'lsmb.auth'} = LedgerSMB::Auth::factory($env);
+    my $creds = $env->{'lsmb.auth'}->get_credentials(
+        $self->domain,
+        $env->{'lsmb.company'});
+    return LedgerSMB::PSGI::Util::unauthorized()
+        unless $creds->{login} && $creds->{password};
+    my $dbh = $env->{'lsmb.db'} =
+        LedgerSMB::DBH->connect($env->{'lsmb.company'},
+                                $creds->{login},
+                                $creds->{password});
 
-            $env->{'lsmb.company'} ||=
-                eval { $req->parameters->get_one('company') } ||
-                # temporarily accept a 'database' parameter too,
-                # while we cut over 'setup.pl' in a later commit.
-                eval { $req->parameters->get_one('database') } ||
-                # we fall back to what the cookie has to offer before
-                # falling back to using the default database, because
-                # login.pl::logout() does not require a valid session
-                # and is therefor marked 'dbonly'; it does however require
-                # a session cookie in order to be able to delete the
-                # session from the database indicated by the cookie.
-                $cookie_company ||
-                ###TODO: falling back generally seems like a good idea,
-                # but in case of login.pl::logout() it would seem better
-                # just to report an error...
-                LedgerSMB::Sysconfig::default_db;
-        }
-        return LedgerSMB::PSGI::Util::unauthorized()
-            unless $env->{'lsmb.company'};
-
-        my $dbh = $env->{'lsmb.db'} =
-            LedgerSMB::DBH->connect($env->{'lsmb.company'},
-                                    $creds->{login},
-                                    $creds->{password})
-            or return LedgerSMB::PSGI::Util::unauthorized();
-
-        my $extended_cookie = '';
-        if (! $env->{'lsmb.dbonly'}) {
-            my $version;
-            LedgerSMB::App_State::run_with_state sub {
-                $version = LedgerSMB::DBH->require_version($LedgerSMB::VERSION);
-            }, DBH => $dbh;
-            if ($version) {
-                return LedgerSMB::PSGI::Util::incompatible_database(
-                    $LedgerSMB::VERSION, $version);
-            }
-
-            $extended_cookie = _verify_session($env->{'lsmb.db'},
-                                               $env->{'lsmb.company'},
-                                               $session_cookie);
-            return LedgerSMB::PSGI::Util::session_timed_out()
-                if ! $extended_cookie;
-
-            # create a session invalidation callback here.
-            $env->{'lsmb.invalidate_session_cb'} = sub {
-                $extended_cookie = _delete_session($dbh, $extended_cookie);
-
-                return $extended_cookie;
-            };
-        }
-        else {
-            # we don't have a session, but the route may want to create one
-            $env->{'lsmb.create_session_cb'} = sub {
-                $extended_cookie =
-                    _create_session($dbh, $env->{'lsmb.company'});
-
-                return $extended_cookie;
-            };
-            # we don't have a validated session, but the route may want
-            # to invalidate one if we have one anyway.
-            # create a session invalidation callback here.
-            $env->{'lsmb.invalidate_session_cb'} = sub {
-                $extended_cookie = _delete_session($dbh, $session_cookie);
-
-                return $extended_cookie;
-            };
-        }
-
-        my $res = $self->app->($env);
-        $dbh->rollback;
-        $dbh->disconnect;
-
-        my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
-        my $path = $env->{SCRIPT_NAME};
-        $path =~ s|[^/]*$||g;
-        return Plack::Util::response_cb(
-            $res, sub {
-                my $res = shift;
-
-                # Set the new cookie (with the extended life-time on response
-                Plack::Util::header_set(
-                    $res->[1], 'Set-Cookie',
-                    qq|$cookie_name=$extended_cookie; path=$path$secure|)
-                    if $extended_cookie;
+    if (! defined $dbh) {
+        $env->{'psgix.logger'}->(
+            {
+                level => 'error',
+                msg => q|Unable to create database connection: | . DBI->errstr
             });
+        return LedgerSMB::PSGI::Util::unauthorized();
     }
 
-    return $self->app->($env);
+    my $extended_cookie = '';
+    if (! $env->{'lsmb.dbonly'}) {
+        my $version =
+            LedgerSMB::DBH->require_version($dbh, $LedgerSMB::VERSION);
+        if ($version) {
+            return LedgerSMB::PSGI::Util::incompatible_database(
+                $LedgerSMB::VERSION, $version);
+        }
+
+        $extended_cookie = _verify_session($env->{'lsmb.db'},
+                                           $env->{'lsmb.company'},
+                                           $session_cookie);
+        return LedgerSMB::PSGI::Util::session_timed_out()
+            if ! $extended_cookie;
+
+        # create a session invalidation callback here.
+        $env->{'lsmb.invalidate_session_cb'} = sub {
+            $extended_cookie = _delete_session($dbh, $extended_cookie);
+
+            return $extended_cookie;
+        };
+    }
+    else {
+        # we don't have a session, but the route may want to create one
+        $env->{'lsmb.create_session_cb'} = sub {
+            $extended_cookie =
+                _create_session($dbh, $env->{'lsmb.company'});
+
+            return $extended_cookie;
+        };
+        # we don't have a validated session, but the route may want
+        # to invalidate one if we have one anyway.
+        # create a session invalidation callback here.
+        $env->{'lsmb.invalidate_session_cb'} = sub {
+            $extended_cookie = _delete_session($dbh, $session_cookie);
+
+            return $extended_cookie;
+        };
+    }
+
+    my $res = $self->app->($env);
+    $dbh->rollback;
+    $dbh->disconnect;
+
+    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
+    my $path = $env->{SCRIPT_NAME};
+    $path =~ s|[^/]*$||g;
+    return Plack::Util::response_cb(
+        $res, sub {
+            my $res = shift;
+
+            # Set the new cookie (with the extended life-time on response
+            Plack::Util::header_push(
+                $res->[1], 'Set-Cookie',
+                qq|$cookie_name=$extended_cookie; path=$path$secure|)
+                if $extended_cookie;
+        });
 }
 
 
@@ -247,11 +259,11 @@ sub _session_to_cookie_value {
 }
 
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2017 The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 

@@ -1,0 +1,140 @@
+{
+    'Assert duplicate values between abstract "note" table and children' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id subject note created created_by ) ], # column names...
+                 [ 1, '', '', '2018-01-01', 12 ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM ONLY note n
+                    WHERE EXISTS (select 1 from note d
+                                   where n.id = d.id
+                                  group by d.id
+                                  having count(*) > 1)},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         }
+        ],
+    'Assert duplicate values between abstract "file_secondary_attachment" table and children' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id attached_by) ], # column names...
+                 [ 1, 12 ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM ONLY file_secondary_attachment n
+                    WHERE EXISTS (select 1 from file_secondary_attachment d
+                                   where n.id = d.id
+                                  group by d.id
+                                  having count(*) > 1)},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         }
+        ],
+    'Assert duplicate values between abstract "file_base" table and children' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id file_name description) ], # column names...
+                 [ 1, 'abc.pdf', 'The abc.pdf' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM ONLY file_base n
+                    WHERE EXISTS (select 1 from file_base d
+                                   where n.id = d.id
+                                  group by d.id
+                                  having count(*) > 1)},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         }
+        ],
+    'Assert "note" table containing no records of its own' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id subject note created created_by ) ], # column names...
+                 [ 1, '', '', '2018-01-01', 12 ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM ONLY note},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         }
+        ],
+    'Assert "file_secondary_attachment" table containing no records of its own' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id attached_by) ], # column names...
+                 [ 1, 12 ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM ONLY file_secondary_attachment},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         }
+        ],
+    'Assert "file_base" table containing no records of its own' =>
+        [
+         {
+             failure_data => [
+                 [ qw(id file_name description) ], # column names...
+                 [ 1, 'abc.pdf', 'The abc.pdf' ],
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM ONLY file_base},
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'remove',
+             },
+         }
+        ],
+}

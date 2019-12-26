@@ -1,15 +1,21 @@
+
+package LedgerSMB::Report::Inventory::Pricegroups;
+
 =head1 NAME
 
 LedgerSMB::Report::Inventory::Pricegroups - Pricegroup search for LedgerSMB
 
+=head1 DESCRIPTION
+
+Implements a listing of price groups.
+
 =head1 SYNOPSIS
 
- my $report = LedgerSMB::Report::Inventory::Pricegroups->new(%$request);
- $report->render($request);
+  my $report = LedgerSMB::Report::Inventory::Pricegroups->new(%$request);
+  $report->render($request);
 
 =cut
 
-package LedgerSMB::Report::Inventory::Pricegroups;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -42,10 +48,11 @@ has pricegroup => (is => 'ro', isa => 'Str', required => '0');
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [{col_id => 'pricegroup',
                type => 'href',
           href_base => 'pe.pl?action=edit&type=pricegroup&id=',
-               name => LedgerSMB::Report::text('Price Group') }];
+               name => $self->Text('Price Group') }];
 }
 
 =head2 header_lines
@@ -59,8 +66,9 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'partsgroup',
-             text => LedgerSMB::Report::text('Price Group') }];
+             text => $self->Text('Price Group') }];
 }
 
 =head2 name
@@ -70,7 +78,8 @@ Price Groups
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Price Groups');
+    my ($self) = @_;
+    return $self->Text('Price Groups');
 }
 
 =head1 METHODS
@@ -88,7 +97,13 @@ sub run_report {
     return $self->rows(\@rows);
 }
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2018 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =cut
 
