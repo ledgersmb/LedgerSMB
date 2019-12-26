@@ -575,6 +575,9 @@ sub form_header {
             elsif ($closedto) {
                 %buttons = ();
             }
+            else {
+                for ( keys %button ) { delete $button{$_} unless $_ eq 'update' };
+            }
         }
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
