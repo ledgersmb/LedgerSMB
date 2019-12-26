@@ -193,21 +193,28 @@ padding-left: 12px;
 }
 
 .listtop {
-    font-size: 10pt;
-    background-color: black;
+    font-size: 120%;
+    background-color: #154d84;
     color: white;
     font-weight: bold;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-left: 1ex;
 }
 
 .listheading, thead th {
     font-size: 10pt;
-    background-color: #004a80;
-    color: white;
+    font-weight: bold;
+    background-color: #bcd8f4;
+    color: black;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-left: 1ex;
 }
 
-.listheading, thead A:link {
+thead A:link {
     text-decoration: none;
-    color: white;
+    color: black;
     font-weight: bold;
 }
 
