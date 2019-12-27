@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(159);
+    SELECT plan(157);
 
     -- Add data
 
@@ -13,8 +13,6 @@ BEGIN;
 
     -- Validate required tables
 
-    SELECT has_table('lsmb_group');
-    SELECT has_table('lsmb_group_grants');
     SELECT has_table('lsmb_module');
 
     -- Validate required functions

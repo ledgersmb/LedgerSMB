@@ -1121,7 +1121,6 @@ SELECT lsmb__grant_exec('users_manage', 'admin__add_user_to_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__remove_user_from_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__save_user(int,int,text,text,bool)');
 SELECT lsmb__grant_exec('users_manage', 'admin__delete_user(TEXT, bool)');
-SELECT lsmb__grant_perms('users_manage', 'role_view', 'SELECT');
 SELECT lsmb__grant_menu('users_manage', 222, 'allow');SELECT lsmb__grant_menu('users_manage', 48, 'allow');
 SELECT lsmb__grant_menu('users_manage', 48, 'allow');
 SELECT lsmb__grant_menu('users_manage', 49, 'allow');
