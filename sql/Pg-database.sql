@@ -2454,26 +2454,6 @@ FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
 FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
--- deprecated; dropped in LedgerSMB 1.7
-CREATE TABLE custom_table_catalog (
-table_id SERIAL PRIMARY KEY,
-extends TEXT,
-table_name TEXT
-);
-
-COMMENT ON TABLE custom_table_catalog IS
-$$ Deprecated, all use removed from old code.$$;
-
-
--- deprecated; dropped in LedgerSMB 1.7
-CREATE TABLE custom_field_catalog (
-field_id SERIAL PRIMARY KEY,
-table_id INT REFERENCES custom_table_catalog,
-field_name TEXT
-);
-
-COMMENT ON TABLE custom_field_catalog IS
-$$ Deprecated, all use removed from old code.$$;
 
 INSERT INTO taxmodule (
   taxmodule_id, taxmodulename
@@ -2611,26 +2591,6 @@ create unique index language_code_key on language (code);
 create index jcitems_id_key on jcitems (id);
 
 
---
-CREATE FUNCTION del_yearend() RETURNS TRIGGER AS '
-begin
-  delete from yearend where trans_id = old.id;
-  return NULL;
-end;
-' language 'plpgsql';
--- end function
---
---
-CREATE FUNCTION del_recurring() RETURNS TRIGGER AS '
-BEGIN
-  DELETE FROM recurring WHERE id = old.id;
-  DELETE FROM recurringemail WHERE id = old.id;
-  DELETE FROM recurringprint WHERE id = old.id;
-  RETURN NULL;
-END;
-' language 'plpgsql';
---end function
-
 CREATE FUNCTION avgcost(int) RETURNS FLOAT AS '
 
 DECLARE
@@ -2704,52 +2664,6 @@ CREATE TRIGGER parts_short AFTER UPDATE ON parts
 FOR EACH ROW EXECUTE PROCEDURE trigger_parts_short();
 -- end function
 
-CREATE OR REPLACE FUNCTION add_custom_field (table_name VARCHAR, new_field_name VARCHAR, field_datatype VARCHAR)
-RETURNS BOOL AS
-'
-BEGIN
-        perform TABLE_ID FROM custom_table_catalog
-                WHERE extends = table_name;
-        IF NOT FOUND THEN
-                BEGIN
-                        INSERT INTO custom_table_catalog (extends)
-                                VALUES (table_name);
-                        EXECUTE ''CREATE TABLE '' ||
-                               quote_ident(''custom_'' ||table_name) ||
-                                '' (row_id INT PRIMARY KEY)'';
-                EXCEPTION WHEN duplicate_table THEN
-                        -- do nothing
-                END;
-        END IF;
-        INSERT INTO custom_field_catalog (field_name, table_id)
-        values (new_field_name, (SELECT table_id
-                                        FROM custom_table_catalog
-                WHERE extends = table_name));
-        EXECUTE ''ALTER TABLE ''|| quote_ident(''custom_''||table_name) ||
-                '' ADD COLUMN '' || quote_ident(new_field_name) || '' '' ||
-                  quote_ident(field_datatype);
-        RETURN TRUE;
-END;
-' LANGUAGE PLPGSQL;
--- end function
-
-CREATE OR REPLACE FUNCTION drop_custom_field (VARCHAR, VARCHAR)
-RETURNS BOOL AS
-'
-DECLARE
-table_name ALIAS FOR $1;
-custom_field_name ALIAS FOR $2;
-BEGIN
-        DELETE FROM custom_field_catalog
-        WHERE field_name = custom_field_name AND
-                table_id = (SELECT table_id FROM custom_table_catalog
-                        WHERE extends = table_name);
-        EXECUTE ''ALTER TABLE '' || quote_ident(''custom_'' || table_name) ||
-                '' DROP COLUMN '' || quote_ident(custom_field_name);
-        RETURN TRUE;
-END;
-' LANGUAGE PLPGSQL;
--- end function
 CREATE TABLE menu_node (
     id serial NOT NULL,
     label character varying NOT NULL,
@@ -4829,39 +4743,6 @@ CREATE TYPE trial_balance__entry AS (
 ALTER TABLE cr_report_line ADD FOREIGN KEY(ledger_id) REFERENCES acc_trans(entry_id);
 
 
-CREATE VIEW chart AS
-SELECT ah.id, ah.accno, coalesce(ht.description, ah.description) as description,
-       'H' as charttype, NULL as category, NULL as link,
-       ah.parent_id as account_heading,
-       null as gifi_accno, false as contra,
-       false as tax
-  from account_heading ah
-  LEFT JOIN (SELECT ht.trans_id, ht.description FROM account_heading_translation ht
-                                    INNER JOIN user_preference up ON
-                                          up.language = ht.language_code
-                                    INNER JOIN users ON up.id = users.id
-                                    WHERE users.username = SESSION_USER) ht
-         ON ah.id = ht.trans_id
-UNION
-select c.id, c.accno, coalesce(at.description, c.description),
-       'A' as charttype, c.category, concat_colon(l.description) as link,
-       heading, gifi_accno, contra,
-       tax
-  from account c
-  left join account_link l
-    ON (c.id = l.account_id)
-  LEFT JOIN (SELECT at.trans_id, at.description FROM account_translation at
-                                    INNER JOIN user_preference up ON
-                                          up.language = at.language_code
-                                    INNER JOIN users ON up.id = users.id
-                                    WHERE users.username = SESSION_USER) at
-         ON c.id = at.trans_id
-group by c.id, c.accno, coalesce(at.description, c.description), c.category,
-         c.heading, c.gifi_accno, c.contra, c.tax;
-
-COMMENT ON VIEW chart IS $$Compatibility chart for 1.2 and earlier.$$;
-
-
 CREATE VIEW tx_report AS
 SELECT id, reference, null::int as entity_credit_account, 'gl' as table,
        approved
@@ -4918,13 +4799,6 @@ CREATE TABLE template ( -- not for UI templates
 CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format)
 WHERE language_code is null; -- Pseudo-Pkey
 
-CREATE TABLE fixes (
-    checksum text primary key,
-    path text not null,
-    stdout text,
-    stderr text,
-    applied_at timestamp default now()
-);
 
 commit;
 

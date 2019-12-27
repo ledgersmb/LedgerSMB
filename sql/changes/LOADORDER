@@ -113,3 +113,7 @@ mc/delete-migration-validation-data.sql
 1.8/add-transdate-to-transactions.sql
 1.8/update-payment-tables-documentation.sql
 1.8/simplify-menu.sql
+1.8/remove-fixes-table.sql
+1.8/remove-fixes-table.sql
+1.8/remove-custom-field-sprocs.sql
+1.8/remove-unused-sprocs.sql

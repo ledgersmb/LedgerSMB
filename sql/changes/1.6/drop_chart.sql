@@ -1,1 +1,1 @@
-drop view chart cascade;
+drop view if exists chart cascade;
