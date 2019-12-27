@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(36);
+    SELECT plan(26);
 
     -- Add data
 
@@ -15,8 +15,6 @@ BEGIN;
 
     SELECT has_table('defaults');
     SELECT has_table('entity_employee');
-    SELECT has_table('lsmb_group_grants');
-    SELECT has_table('lsmb_group');
     SELECT has_table('session');
     SELECT has_table('user_preference');
     SELECT has_table('users');
@@ -27,11 +25,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('admin__add_function_to_group',ARRAY['text','text']);
-    SELECT has_function('admin__add_group_to_role',ARRAY['text','text']);
     SELECT has_function('admin__add_user_to_role',ARRAY['text','text']);
-    SELECT has_function('admin__create_group',ARRAY['text']);
-    SELECT has_function('admin__delete_group',ARRAY['text']);
     SELECT has_function('admin__delete_user',ARRAY['text','boolean']);
     SELECT has_function('admin__drop_session',ARRAY['integer']);
     SELECT has_function('admin__get_roles','{}'::text[]);
@@ -39,12 +33,8 @@ BEGIN;
     SELECT has_function('admin__get_roles_for_user_by_entity',ARRAY['integer']);
     SELECT has_function('admin__get_user',ARRAY['integer']);
     SELECT has_function('admin__get_user_by_entity',ARRAY['integer']);
-    SELECT has_function('admin__is_group',ARRAY['text']);
     SELECT has_function('admin__is_user',ARRAY['text']);
-    SELECT has_function('admin__list_group_grants',ARRAY['text']);
     SELECT has_function('admin__list_sessions','{}'::text[]);
-    SELECT has_function('admin__remove_function_from_group',ARRAY['text','text']);
-    SELECT has_function('admin__remove_group_from_role',ARRAY['text','text']);
     SELECT has_function('admin__remove_user_from_role',ARRAY['text','text']);
     SELECT has_function('admin__save_user',ARRAY['integer','integer','text','text','boolean']);
     SELECT has_function('admin__search_users',ARRAY['text','text','text','text','date']);
