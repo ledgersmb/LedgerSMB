@@ -7,6 +7,44 @@
       method="GET">
   <div class="listtop"><?lsmb text('Search Goods and Services') ?></div>
 <table>
+<tr><th><?lsmb text('Type') ?></th>
+  <td colspan="3"><?lsmb
+    old_label_pos = label_pos;
+    label_pos = -1;
+    PROCESS input element_data = {
+        name = "parttype"
+        type = 'radio'
+     checked = 'CHECKED'
+       value = ''
+       label = text('All')
+    };
+    PROCESS input element_data = {
+        name = "parttype"
+        type = 'radio'
+       value = 'parts'
+       label = text('Parts') #'
+    };
+    PROCESS input element_data = {
+        name = "parttype"
+        type = 'radio'
+       value = 'services'
+       label = text('Services')
+    };
+    PROCESS input element_data = {
+        name = "parttype"
+        type = 'radio'
+       value = 'overhead'
+       label = text('Overhead')
+    };
+    PROCESS input element_data = {
+        name = "parttype"
+        type = 'radio'
+       value = 'assemblies'
+       label = text('Assemblies')
+    };
+    label_pos = old_label_pos;
+  ?></td>
+</tr>
 <tr>
  <th><label for="partnumber"><?lsmb text('Part Number') ?></label></th>
  <td><?lsmb PROCESS input element_data = {
