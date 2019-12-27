@@ -2611,26 +2611,6 @@ create unique index language_code_key on language (code);
 create index jcitems_id_key on jcitems (id);
 
 
---
-CREATE FUNCTION del_yearend() RETURNS TRIGGER AS '
-begin
-  delete from yearend where trans_id = old.id;
-  return NULL;
-end;
-' language 'plpgsql';
--- end function
---
---
-CREATE FUNCTION del_recurring() RETURNS TRIGGER AS '
-BEGIN
-  DELETE FROM recurring WHERE id = old.id;
-  DELETE FROM recurringemail WHERE id = old.id;
-  DELETE FROM recurringprint WHERE id = old.id;
-  RETURN NULL;
-END;
-' language 'plpgsql';
---end function
-
 CREATE FUNCTION avgcost(int) RETURNS FLOAT AS '
 
 DECLARE

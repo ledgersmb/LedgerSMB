@@ -116,3 +116,4 @@ mc/delete-migration-validation-data.sql
 1.8/remove-fixes-table.sql
 1.8/remove-fixes-table.sql
 1.8/remove-custom-field-sprocs.sql
+1.8/remove-unused-sprocs.sql
