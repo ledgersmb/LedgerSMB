@@ -12,7 +12,9 @@ CREATE TYPE menu_item AS (
    label varchar,
    path varchar,
    parent int,
-   args text[]
+   standalone boolean,
+   menu boolean,
+   url text
 );
 
 
@@ -31,10 +33,9 @@ $$
                                       FROM menu_node n
                                       JOIN tree t ON t.id = n.parent)
                 SELECT n.position, n.id, c.level, n.label, c.path, n.parent,
-                       to_args(array[ma.attribute, ma.value])
+                       n.standalone, n.menu, n.url
                 FROM tree c
                 JOIN menu_node n USING(id)
-                JOIN menu_attribute ma ON (n.id = ma.node_id)
                WHERE n.id IN (select node_id
                                 FROM menu_acl acl
                           LEFT JOIN pg_roles pr on pr.rolname = acl.role_name
@@ -78,8 +79,6 @@ $$
                                                          END))
                                        and cc.path::text
                                            like c.path::text || ',%')
-            GROUP BY n.position, n.id, c.level, n.label, c.path, c.positions,
-                     n.parent
             ORDER BY string_to_array(c.positions, ',')::int[]
 $$ language sql;
 
