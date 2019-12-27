@@ -125,8 +125,14 @@ DROP FUNCTION IF EXISTS goods__search
  in_sales_orders bool, in_purchase_orders bool, in_quotations bool,
  in_rfqs bool);
 
-CREATE OR REPLACE FUNCTION goods__search
+DROP FUNCTION IF EXISTS goods__search
 (in_partnumber text, in_description text,
+ in_partsgroup_id int, in_serial_number text, in_make text,
+ in_model text, in_drawing text, in_microfiche text,
+ in_status text, in_date_from date, in_date_to date);
+
+CREATE OR REPLACE FUNCTION goods__search
+(in_parttype text, in_partnumber text, in_description text,
  in_partsgroup_id int, in_serial_number text, in_make text,
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date)
@@ -158,6 +164,17 @@ LANGUAGE SQL STABLE AS $$
                       (select parts_id from invoice
                         where in_serial_number is not null
                               and serialnumber = in_serial_number))
+              AND (in_parttype IS NULL
+                   OR (in_parttype = 'assemblies' and p.assembly)
+                   OR (in_parttype = 'services'
+                       and p.inventory_accno_id IS NULL)
+                   OR (in_parttype = 'overhead'
+                       and p.inventory_accno_id IS NOT NULL
+                       and p.income_accno_id IS NULL)
+                   OR (in_parttype = 'parts'
+                       and p.inventory_accno_id IS NOT NULL
+                       and p.expense_accno_id IS NOT NULL
+                       and p.income_accno_id IS NOT NULL))
               AND ((in_status = 'active' and not p.obsolete)
                    OR (in_status = 'onhand' and p.onhand > 0)
                    OR (in_status = 'obsolete' and p.obsolete)

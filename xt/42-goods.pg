@@ -52,11 +52,15 @@ BEGIN;
     SELECT has_function('part__get_by_id',ARRAY['integer']);
     SELECT has_function('mfg_lot__commit',ARRAY['integer']);
     SELECT has_function('assembly__stock',ARRAY['integer','numeric']);
-    SELECT has_function('goods__search',ARRAY['text','text','integer','text','text','text','text','text','text','date','date']);
+    SELECT has_function('goods__search',
+                        ARRAY['text','text','text','integer','text','text',
+                              'text','text','text','text','date','date']);
     SELECT has_function('partsgroup__search',ARRAY['text']);
     SELECT has_function('inventory__activity',ARRAY['date','date','text','text']);
     SELECT has_function('inventory__search_part',ARRAY['integer','text','date']);
-    SELECT has_function('inventory_adjust__save_line',ARRAY['integer','integer','numeric','numeric','numeric']);
+    SELECT has_function('inventory_adjust__save_line',
+                        ARRAY['integer','integer','numeric',
+                              'numeric','numeric']);
     SELECT has_function('inventory_adjust__save_info',ARRAY['date','text']);
     SELECT has_function('inventory_adjust__approve',ARRAY['integer']);
     SELECT has_function('inventory_adjust__delete',ARRAY['integer']);
@@ -64,7 +68,10 @@ BEGIN;
     SELECT has_function('inventory_adjust__get',ARRAY['integer']);
     SELECT has_function('inventory_adjust__get_lines',ARRAY['integer']);
     SELECT has_function('warehouse__list','{}'::text[]);
-    SELECT has_function('goods__history',ARRAY['date','date','text','text','text','boolean','boolean','boolean','boolean','boolean','boolean']);
+    SELECT has_function('goods__history',
+                        ARRAY['date','date','text','text','text','boolean',
+                              'boolean','boolean','boolean','boolean',
+                              'boolean']);
 
     -- Set specific data
 
