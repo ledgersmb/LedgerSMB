@@ -656,7 +656,7 @@ sub _redirect {
     require "old/bin/$script";
 
     my $ref = qualify_to_ref $form->{action}, 'lsmb_legacy';
-    &{ $ref };
+    &{ *{$ref} };
 
 }
 
