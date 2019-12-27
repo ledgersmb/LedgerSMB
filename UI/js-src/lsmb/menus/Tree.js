@@ -63,18 +63,12 @@ define(["dojo/_base/declare",
 
             // for leafs, either open in the current application,
             // or open a new window, depending on the trigger.
-            var url = '',
+            var url = item.url,
                 newWindow = ((mouse.isLeft(event)
                               && (event.ctrlKey || event.metaKey))
                              || (mouse.isMiddle(event))
-                             || array.some( item.args,
-                                            function (q) {
-                                                return ("new=1" == q)
-                                            }));
-            if ( item.module ) {
-                url += item.module + "?";
-                url += item.args.join("&");
-            }
+                             || item.standalone
+                            );
             if ( newWindow ) {
                 // Simulate a target="_blank" attribute on an A tag
                 window.open(location.origin + location.pathname

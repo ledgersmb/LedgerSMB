@@ -100,8 +100,8 @@ BEGIN
    IF NOT FOUND THEN
       RAISE EXCEPTION 'Role not found';
    END IF;
-   PERFORM * FROM menu_attribute
-     WHERE attribute = 'menu' AND node_id = in_node_id;
+   PERFORM * FROM menu_node
+     WHERE menu AND id = in_node_id;
    IF FOUND THEN
       RAISE EXCEPTION 'Cannot grant to submenu';
    END IF;
@@ -1224,7 +1224,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'ALL')
 
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['user_listable'::text, 'language',
-                    'menu_node', 'menu_attribute', 'menu_acl',
+                    'menu_node', 'menu_acl',
                     'gifi', 'country', 'taxmodule',
                     'parts', 'partsgroup', 'country_tax_form', 'translation',
                     'business',
