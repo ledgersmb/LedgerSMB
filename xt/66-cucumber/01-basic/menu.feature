@@ -101,7 +101,10 @@ Scenario Outline: Navigate to menu and open screen
 #   | Goods and Services > Add Pricegroup        |                          |
     | Goods and Services > Add Service           | service entry            |
 #   | Goods and Services > Enter Inventory       | Enter Inventory          |
-#   | Goods and Services > Import Inventory      |                          |
+#   | Goods and Services > Import > Goods        |                          |
+#   | Goods and Services > Import > Services     |                          |
+#   | Goods and Services > Import > Overhead     |                          |
+#   | Goods and Services > Import > Inventory    |                          |
 #   | Goods and Services > Reports               |                          |
 #   | Goods and Services > Reports > Inventory Activity |                   |
 #   | Goods and Services > Search                | search for goods & services |
