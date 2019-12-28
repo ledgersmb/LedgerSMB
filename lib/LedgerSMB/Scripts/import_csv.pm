@@ -27,16 +27,28 @@ use List::MoreUtils qw{ any };
 use Text::CSV;
 
 our $cols = {
-   gl       =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx', 'credit_fx', 'source', 'memo'],
-   ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description',
-                 'invnumber', 'transdate'],
-   ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description',
-                 'invnumber', 'transdate'],
-   timecard =>  ['employee', 'business_unit_id', 'transdate', 'partnumber',
-                 'description', 'qty', 'non_billable', 'sellprice', 'allocated',
-                'notes', 'jctype', 'curr'],
-   inventory => ['partnumber', 'onhand', 'purchase_price'],
-   inventory_multi => ['date', 'partnumber', 'onhand', 'purchase_price'],
+    gl              =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx',
+                         'credit_fx', 'source', 'memo'],
+    ap_multi        =>  ['vendor', 'amount', 'account', 'ap', 'description',
+                        'invnumber', 'transdate'],
+    ar_multi        =>  ['customer', 'amount', 'account', 'ar', 'description',
+                        'invnumber', 'transdate'],
+    timecard        =>  ['employee', 'business_unit_id', 'transdate',
+                        'partnumber', 'description', 'qty', 'non_billable',
+                        'sellprice', 'allocated', 'notes', 'jctype', 'curr'],
+    inventory       => ['partnumber', 'onhand', 'purchase_price'],
+    inventory_multi => ['date', 'partnumber', 'onhand', 'purchase_price'],
+    goods           => [ qw/ partnumber description unit listprice sellprice
+                         lastcost weight notes makemodel assembly alternate
+                         rop inventory_accno income_accno expense_accno
+                         returns_accno bin bom image drawing microfiche
+                         partsgroup avgcost taxaccnos / ],
+    services        => [ qw/ partnumber description unit listprice sellprice
+                         lastcost notes income_accno expense_accno
+                         partsgroup taxaccnos / ],
+    overhead        => [ qw/ partnumber description unit listprice sellprice
+                         lastcost notes inventory_accno expense_accno
+                         bom partsgroup / ],
 };
 
 my %template_file = (
@@ -447,6 +459,93 @@ sub _process_inventory_multi {
     return;
 }
 
+sub _process_parts {
+    my ($request, $entries, $columns, $acc_types) = @_;
+    my %table_columns =
+        map { $_ => ($_ =~ s/_accno$/_accno_id/r) }
+        map { $_ eq 'partsgroup' ? 'partsgroup_id' : $_ }
+        grep { $_ ne 'taxaccnos' }
+        @{$columns};
+    my %column_placeholders =
+        map { $_ => (
+                  m/_accno$/ ?
+                   '(SELECT id FROM account
+                     WHERE accno = ?
+                           AND EXISTS (SELECT 1 FROM account_link al
+                                        WHERE al.account_id = account.id
+                                              AND al.description = ? ))'
+                  : ($_ eq 'partsgroup' ?
+                     '(SELECT id FROM partsgroup WHERE partsgroup = ?)'
+                     : $_))}
+        keys %table_columns;
+
+    my $stmt =
+        'INSERT INTO parts (' . join(', ',
+                                     map { $table_columns{$_} }
+                                     keys %table_columns)
+                            . ')
+         VALUES (' .
+                 join(', ',
+                      map { $column_placeholders{$_} }
+                      keys %table_columns)
+                 . ')';
+    my $i_sth = $request->{dbh}->prepare($stmt)
+        or die $request->{dbh}->errstr;
+
+    my $ti_sth = $request->{dbh}->prepare(
+        q{INSERT INTO partstax (parts_id, chart_id)
+          VALUES (currval('parts_id_seq'),
+                  (SELECT id FROM account
+                    WHERE accno = ?
+                          AND EXISTS (SELECT 1 FROM account_link al
+                                       WHERE al.account_id = account.id
+                                             AND al.description = ? )))});
+
+    @$entries =
+        map { map_columns_into_hash($columns, $_) }
+        @$entries;
+
+    for my $entry (@$entries) {
+        for my $k (keys %$entry) {
+            delete $entry->{$k}
+            if defined $entry->{$k} and $entry->{$k} eq '';
+        }
+        $i_sth->execute(map { m/_accno$/ ?
+                                  ($entry->{$_}, $acc_types->{$_})
+                                  : $entry->{$_} }
+                        keys %table_columns)
+            or die $i_sth->errstr;
+
+        if (exists $acc_types->{tax_accno}) {
+            for my $taxaccno (split /:/, $entry->{taxaccnos}) {
+                $ti_sth->execute($taxaccno, $acc_types->{tax_accno});
+            }
+        }
+    }
+}
+
+sub _process_goods {
+    return _process_parts(@_, $cols->{goods},
+        { income_accno    => 'IC_sale',
+          expense_accno   => 'IC_cogs',
+          inventory_accno => 'IC',
+          return_accno    => 'IC_returns',
+          tax_accno       => 'IC_taxpart' });
+}
+
+sub _process_services {
+    return _process_parts(@_, $cols->{services},
+        { income_accno  => 'IC_income',
+          expense_accno => 'IC_expense',
+          tax_accno     => 'IC_taxservice' });
+}
+
+sub _process_overhead {
+    return _process_parts(@_, $cols->{overhead},
+        { inventory_accno => 'IC',
+          expense_accno   => 'IC_expense' });
+}
+
 our $process = {
     gl              => \&_process_gl,
     ar_multi        => \&_process_ar_multi,
@@ -457,6 +556,9 @@ our $process = {
     timecard        => \&_process_timecard,
     inventory       => \&_process_inventory,
     inventory_multi => \&_process_inventory_multi,
+    goods           => \&_process_goods,
+    services        => \&_process_services,
+    overhead        => \&_process_overhead,
 };
 
 =head2 _parse_file

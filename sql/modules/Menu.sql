@@ -99,9 +99,16 @@ DECLARE
         new_id int;
 BEGIN
         UPDATE menu_node
-        SET position = position + 1
-        WHERE parent = in_parent_id
-                AND position >= in_position;
+            -- prevent duplicates by setting negative as a first step
+           SET position = -1 * (position + 1)
+         WHERE parent = in_parent_id
+               AND position >= in_position;
+
+        UPDATE menu_node
+            -- negate again now that all numbers are final
+           SET position = -1 * position
+         WHERE parent = in_parent_id
+               AND position < 0;
 
         INSERT INTO menu_node (parent, position, label)
         VALUES (in_parent_id, in_position, in_label);

@@ -751,7 +751,7 @@ SELECT lsmb__grant_role('cash_all', rname)
 SELECT lsmb__create_role('part_create');
 SELECT lsmb__grant_role('part_create', 'contact_read');
 SELECT lsmb__grant_menu('part_create', node_id, 'allow')
-  FROM unnest(array[78,79,80,81,82]) node_id;
+  FROM unnest(array[78,79,80,81,82,259,260,261]) node_id;
 
 SELECT lsmb__grant_perms('part_create', obj, 'ALL')
   FROM unnest(array['partsvendor'::text, 'partscustomer', 'parts_id_seq',
