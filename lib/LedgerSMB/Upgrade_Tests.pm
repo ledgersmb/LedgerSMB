@@ -487,6 +487,27 @@ push @tests, __PACKAGE__->new(
 
 push @tests, __PACKAGE__->new(
         test_query =>
+           q{SELECT COUNT(*)
+             FROM parts p
+             WHERE p.inventory_accno_id IS NULL
+               AND p.income_accno_id IS NULL
+               AND p.expense_accno_id IS NULL
+             HAVING count(*) > 0},
+ display_name => marktext('SQL-Ledger kits are not supported yet'),
+ instructions => marktext(
+                   q(The database is not migrateable because kits
+are not supported yet)),
+         name => 'no_kits',
+ display_cols => [],
+      columns => [],
+        table => 'customer',
+      appname => 'sql-ledger',
+  min_version => '3.2',
+  max_version => '3.9'
+);
+
+push @tests, __PACKAGE__->new(
+        test_query =>
            q{select count(*) as vendor_count
               from vendor
              where (select count(*)
