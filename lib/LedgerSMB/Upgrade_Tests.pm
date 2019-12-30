@@ -482,7 +482,7 @@ push @tests, __PACKAGE__->new(
         table => 'customer',
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '3.0'
+  max_version => '3.2'
 );
 
 push @tests, __PACKAGE__->new(
@@ -503,7 +503,7 @@ push @tests, __PACKAGE__->new(
         table => 'vendor',
       appname => 'ledgersmb',
   min_version => '2.7',
-  max_version => '3.0'
+  max_version => '3.2'
 );
 
 
@@ -525,7 +525,7 @@ push @tests, __PACKAGE__->new(
  instructions => marktext('Please add the missing GIFI accounts'),
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '3.0'
+  max_version => '3.2'
 );
 
 push @tests, __PACKAGE__->new(
@@ -588,7 +588,7 @@ push @tests, __PACKAGE__->new(
 #   instructions => marktext("Please correct the empty AR accounts"),
 #        appname => 'sql-ledger',
 #    min_version => '2.7',
-#    max_version => '3.0'
+#    max_version => '3.2'
 #     );
 
 #  push @tests, __PACKAGE__->new(
@@ -599,7 +599,7 @@ push @tests, __PACKAGE__->new(
 #   instructions => marktext("Please correct the empty AP accounts"),
 #        appname => 'sql-ledger',
 #    min_version => '2.7',
-#    max_version => '3.0'
+#    max_version => '3.2'
 #     );
 #*/
 
@@ -621,7 +621,7 @@ push @tests,__PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -641,7 +641,7 @@ number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -661,7 +661,7 @@ heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -677,7 +677,7 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
     push @tests,__PACKAGE__->new(
@@ -702,7 +702,7 @@ Please make sure business used by vendors and constomers are defined.<br>
              table => 'business',
            appname => 'sql-ledger',
        min_version => '2.7',
-       max_version => '3.0',
+       max_version => '3.2',
             insert => 1,
             # They should be constrained
            buttons => ['Save and Retry', 'Cancel', 'Force'],
@@ -738,7 +738,7 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -761,7 +761,7 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -784,7 +784,7 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -807,7 +807,7 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -825,7 +825,7 @@ push @tests,__PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 # push @tests,__PACKAGE__->new(
@@ -844,7 +844,7 @@ push @tests,__PACKAGE__->new(
 #     table => 'chart',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '3.0'
+#     max_version => '3.2'
 #     );
 
 push @tests,__PACKAGE__->new(
@@ -864,7 +864,7 @@ heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -884,7 +884,7 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -900,7 +900,7 @@ push @tests,__PACKAGE__->new(
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests,__PACKAGE__->new(
@@ -919,7 +919,7 @@ push @tests,__PACKAGE__->new(
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -935,7 +935,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -954,7 +954,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -975,7 +975,7 @@ push @tests, __PACKAGE__->new(
     table => 'ar',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 # There's no AP uniqueness requirement?
@@ -998,7 +998,7 @@ push @tests, __PACKAGE__->new(
     table => 'ap',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -1017,7 +1017,7 @@ push @tests, __PACKAGE__->new(
         table => 'parts',
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '3.0'
+  max_version => '3.2'
 );
 
 
@@ -1034,7 +1034,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 
@@ -1051,7 +1051,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 
@@ -1070,7 +1070,7 @@ push @tests, __PACKAGE__->new(
     table => 'partscustomer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -1086,7 +1086,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 
@@ -1104,7 +1104,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 
@@ -1121,7 +1121,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 
@@ -1140,7 +1140,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 
@@ -1160,7 +1160,7 @@ push @tests, __PACKAGE__->new(
     table => 'tax',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '3.0'
+    max_version => '3.2'
     );
 
 push @tests, __PACKAGE__->new(
@@ -1187,7 +1187,7 @@ push @tests, __PACKAGE__->new(
         table => 'ap',
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '3.0'
+  max_version => '3.2'
 );
 
 push @tests, __PACKAGE__->new(
@@ -1229,7 +1229,7 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
              table => 'acc_trans',
            appname => 'sql-ledger',
        min_version => '2.7',
-       max_version => '3.0'
+       max_version => '3.2'
 );
 
 
@@ -1248,7 +1248,7 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '3.0'
+#     max_version => '3.2'
 #     );
 
     return @tests;
