@@ -109,7 +109,7 @@ sub _get_migration_preparations {
         name => 'add_unique_acc_trans_key',
            appname => 'sql-ledger',
        min_version => '2.7',
-       max_version => '3.0'
+       max_version => '3.2'
     );
 
     return @preparations;
