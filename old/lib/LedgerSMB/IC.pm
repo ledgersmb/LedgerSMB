@@ -947,7 +947,8 @@ sub create_links {
          WHERE l.description LIKE ?
          GROUP BY a.accno, a.description
          ORDER BY a.accno|;
-    my $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query)
+        or $form->dberror($query);
     $sth->execute("$module%") || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -966,13 +967,14 @@ sub create_links {
                      WHERE entity_class = 1|;
         my ($count) = $dbh->selectrow_array($query);
 
-        if ( $count < $myconfig->{vclimit} ) {
+        if ( $count < $LedgerSMB::Company_Config::settings->{vclimit} ) {
             $query = qq|SELECT v.id, e.name
-                FROM entitiy_credit_account v
+                FROM entity_credit_account v
                 join entity e on e.id = v.entity_id
-               WHERE entity_class = 1
+               WHERE v.entity_class = 1
                 ORDER BY e.name|;
-            $sth   = $dbh->prepare($query);
+            $sth   = $dbh->prepare($query)
+                or $form->dberror($query);
             $sth->execute || $form->dberror($query);
 
             while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -987,13 +989,14 @@ sub create_links {
                 where entity_class = 2|;
     ($count) = $dbh->selectrow_array($query);
 
-    if ( $count < $myconfig->{vclimit} ) {
+    if ( $count < $LedgerSMB::Company_Config::settings->{vclimit} ) {
         $query = qq|SELECT c.id, e.name
             FROM entity_credit_account c
             join entity e on e.id = c.entity_id
-           WHERE entity_class = 2
+           WHERE c.entity_class = 2
             ORDER BY e.name|;
-        $sth   = $dbh->prepare($query);
+        $sth   = $dbh->prepare($query)
+            or $form->dberror($query);
         $sth->execute || $form->dberror($query);
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
