@@ -273,19 +273,22 @@ sub initialize_with_db {
 
     my $sth = $self->{dbh}->prepare(q{
             SELECT value FROM defaults
-             WHERE setting_key = 'role_prefix'});
-    $sth->execute;
+             WHERE setting_key = 'role_prefix'})
+        or die $self->{dbh}->errstr;;
+    $sth->execute or die $sth->errstr;
 
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
 
-    $sth = $self->{dbh}->prepare('SELECT check_expiration()');
-    $sth->execute;
+    $sth = $self->{dbh}->prepare('SELECT check_expiration()')
+        or die $self->{dbh}->errstr;
+    $sth->execute or die $sth->errstr;
     ($self->{warn_expire}) = $sth->fetchrow_array;
 
     if ($self->{warn_expire}){
-        $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()');
-        $sth->execute;
+        $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()')
+            or die $self->{dbh}->errstr;
+        $sth->execute or die $sth->errstr;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
 
