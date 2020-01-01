@@ -1115,20 +1115,14 @@ sub generate_selects {
      my ($form, $myconfig) = @_;
      my $locale = $LedgerSMB::App_State::Locale;
 
-    # currencies
-     if (!$form->{currencies}){
-         $form->error($locale->text(
-            'No currencies defined.  Please set these up under System/Currency.'
-                      ));
-     }
-
+     $form->currencies;
      if (@{$form->{currencies}}) {
         my @currencies = @{$form->{currencies}};
         $form->{defaultcurrency} = $currencies[0];
         $form->{currency} ||= $form->{defaultcurrency};
         $form->{selectcurrency} = "";
 
-        foreach my $currency (sort @currencies) {
+        foreach my $currency (@currencies) {
             my $selected = ($form->{currency} eq $currency)
                 ? ' selected="selected"'
                 : '';
@@ -2352,12 +2346,7 @@ sub create_links {
 
         $sth->finish;
     }
-    $sth = $dbh->prepare("select curr from currency");
-    $sth->execute || $self->dberror($query);
-    my @curr = grep { ! ($_ eq $self->{defaultcurrency}) }
-               map { $_->[0] } @{$sth->fetchall_arrayref()};
-    $self->{currencies} = [
-        $self->{defaultcurrency}, (@curr) ];
+    $self->currencies;
 
     if (!$self->{id} && !$self->{transdate}){
         $self->{transdate} = $self->{current_date};
@@ -2369,6 +2358,26 @@ sub create_links {
         $self->{transdate},
         $job
     );
+}
+
+=item $form->currencies
+
+=cut
+
+sub currencies {
+    my ($self) = @_;
+
+    return $self->{currencies} if $self->{currencies};
+
+    $self->{defaultcurrency} = $self->get_setting('curr');
+    my $dbh = $self->{dbh};
+    my $query = "select curr from currency";
+    my $sth = $dbh->prepare($query);
+    $sth->execute || $self->dberror($query);
+    my @curr = sort grep { ! ($_ eq $self->{defaultcurrency}) }
+               map { $_->[0] } @{$sth->fetchall_arrayref()};
+    return $self->{currencies} = [
+        $self->{defaultcurrency}, (@curr) ];
 }
 
 =item $form->get_setting($setting_name)
