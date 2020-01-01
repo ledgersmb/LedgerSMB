@@ -76,6 +76,8 @@ sub add {
     }
 
     &link_part;
+    $form->generate_selects(\%myconfig);
+
 
     &display_form;
 
@@ -112,12 +114,6 @@ sub edit {
 sub link_part {
 
     IC->create_links( "IC", \%myconfig, \%$form );
-
-    # currencies
-    $form->{selectcurrency} = "";
-    for ( @{$form->{currencies}} ) {
-        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n";
-    }
 
     # readonly
     if ( $form->{item} eq 'part' or $form->{item} eq 'assembly') {
@@ -1029,11 +1025,14 @@ sub vendor_row {
     foreach my $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
-            $form->{selectcurrency} =~ s/ selected="selected"//;
-            $form->{selectcurrency} =~
-s/(value="$form->{"vendorcurr_$i"}")/$1 selected="selected"/;
+            my $options = $form->{selectcurrency};
+            if ($form->{"vendorcurr_$i"}) {
+                $options =~ s/ selected="selected"//;
+                $form->{selectcurrency} =~
+                    s/(value="$form->{"vendorcurr_$i"}")/$1 selected="selected"/;
+            }
             $currency = qq|
-      <td><select data-dojo-type="dijit/form/Select" id="vendorcurr-$i" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
+      <td><select data-dojo-type="dijit/form/Select" id="vendorcurr-$i" name="vendorcurr_$i">$options</select></td>|;
         }
 
         if ( $i == $numrows ) {
@@ -1103,8 +1102,6 @@ sub customer_row {
     $form->{selectcustomer}   = $form->unescape( $form->{selectcustomer} );
     $form->{selectpricegroup} = $form->unescape( $form->{selectpricegroup} );
 
-    $form->hide_form(qw(selectcurrency));
-
     $currency = qq|<th class="listheading">| . $locale->text('Curr') . qq|</th>|
       if $form->{selectcurrency};
 
@@ -1133,11 +1130,14 @@ sub customer_row {
     foreach my $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
-            $form->{selectcurrency} =~ s/ selected="selected"//;
-            $form->{selectcurrency} =~
-s/(value="$form->{"customercurr_$i"}")/$1 selected="selected"/;
+            my $options = $form->{selectcurrency};
+            if ($form->{"customercurr_$i"}) {
+                $options =~ s/ selected="selected"//;
+                $options =~
+                    s/(value="$form->{"customercurr_$i"}")/$1 selected="selected"/;
+            }
             $currency = qq|
-      <td><select data-dojo-type="dijit/form/Select" id="customercurr-$i" name="customercurr_$i">$form->{selectcurrency}</select></td>|;
+      <td><select data-dojo-type="dijit/form/Select" id="customercurr-$i" name="customercurr_$i">$options</select></td>|;
         }
 
         if ( $i == $numrows ) {
