@@ -1044,7 +1044,7 @@ sub vendor_row {
 
             if ( $form->{selectvendor} ) {
                 $vendor = qq|
-      <td width=99%><select data-dojo-type="dijit/form/Select" id="vendor-$i" name="vendor_$i">$form->{selectvendor}</select></td>
+      <td><select data-dojo-type="dijit/form/Select" id="vendor-$i" name="vendor_$i">$form->{selectvendor}</select></td><td></td>
 |;
             }
 
@@ -1150,7 +1150,7 @@ sub customer_row {
 
             if ( $form->{selectcustomer} ) {
                 $customer = qq|
-      <td><select data-dojo-type="dijit/form/Select" id="customer-$i" name="customer_$i">$form->{selectcustomer}</select></td>
+      <td><select data-dojo-type="dijit/form/Select" id="customer-$i" name="customer_$i">$form->{selectcustomer}</select></td><td></td>
 |;
             }
 
