@@ -1006,9 +1006,6 @@ sub vendor_row {
       if $form->{selectcurrency};
 
     print qq|
-  <input type=hidden name=selectvendor value="|
-      . $form->escape( $form->{selectvendor}, 1 ) . qq|">
-
   <tr>
     <td>
       <table width=100%>
@@ -1099,18 +1096,10 @@ sub customer_row {
 |;
     }
 
-    $form->{selectcustomer}   = $form->unescape( $form->{selectcustomer} );
-    $form->{selectpricegroup} = $form->unescape( $form->{selectpricegroup} );
-
     $currency = qq|<th class="listheading">| . $locale->text('Curr') . qq|</th>|
       if $form->{selectcurrency};
 
     print qq|
-  <input type=hidden name=selectcustomer value="|
-      . $form->escape( $form->{selectcustomer}, 1 ) . qq|">
-  <input type=hidden name=selectpricegroup value="|
-      . $form->escape( $form->{selectpricegroup}, 1 ) . qq|">
-
   <tr>
     <td>
       <table width=100%>
