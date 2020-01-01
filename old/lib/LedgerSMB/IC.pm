@@ -968,9 +968,9 @@ sub create_links {
 
         if ( $count < $myconfig->{vclimit} ) {
             $query = qq|SELECT v.id, e.name
-                FROM entitiy_credit_account v
+                FROM entity_credit_account v
                 join entity e on e.id = v.entity_id
-               WHERE entity_class = 1
+               WHERE v.entity_class = 1
                 ORDER BY e.name|;
             $sth   = $dbh->prepare($query);
             $sth->execute || $form->dberror($query);
@@ -991,7 +991,7 @@ sub create_links {
         $query = qq|SELECT c.id, e.name
             FROM entity_credit_account c
             join entity e on e.id = c.entity_id
-           WHERE entity_class = 2
+           WHERE c.entity_class = 2
             ORDER BY e.name|;
         $sth   = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
