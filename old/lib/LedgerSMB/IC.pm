@@ -947,7 +947,8 @@ sub create_links {
          WHERE l.description LIKE ?
          GROUP BY a.accno, a.description
          ORDER BY a.accno|;
-    my $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query)
+        or $form->dberror($query);
     $sth->execute("$module%") || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -972,7 +973,8 @@ sub create_links {
                 join entity e on e.id = v.entity_id
                WHERE v.entity_class = 1
                 ORDER BY e.name|;
-            $sth   = $dbh->prepare($query);
+            $sth   = $dbh->prepare($query)
+                or $form->dberror($query);
             $sth->execute || $form->dberror($query);
 
             while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -993,7 +995,8 @@ sub create_links {
             join entity e on e.id = c.entity_id
            WHERE c.entity_class = 2
             ORDER BY e.name|;
-        $sth   = $dbh->prepare($query);
+        $sth   = $dbh->prepare($query)
+            or $form->dberror($query);
         $sth->execute || $form->dberror($query);
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
