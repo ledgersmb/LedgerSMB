@@ -3,7 +3,8 @@
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
    # Defaults for input attributes
   input_keys = ['type', 'name', 'disabled', 'size', 'value',
-        'data-dojo-type','data-dojo-props', 'required', 'tabindex']
+                'data-dojo-type','data-dojo-props', 'data-dojo-attach-point',
+                'required', 'tabindex']
 
   # ELEMENT DEFAULTS
 
@@ -181,10 +182,11 @@
             attribute_data=element_data
             attribute_defaults = textarea_defaults
 
-                                # Attributes that apply to textareas.
-            element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly',
-                                'tabindex', 'accesskey', 'value', 'style', 'wrap',
-                                'data-dojo-type', 'data-dojo-props']
+                 # Attributes that apply to textareas.
+            element_keys = [
+                 'name', 'cols', 'rows', 'disabled', 'readonly',
+                 'tabindex', 'accesskey', 'value', 'style', 'wrap',
+                 'data-dojo-type', 'data-dojo-props', 'data-dojo-attach-point']
           ?>
           <?lsmb PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes

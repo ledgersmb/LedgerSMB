@@ -598,3 +598,41 @@ html, body {
     border-left: 1px solid;
     padding-left: 3px;
 }
+
+#template-manager.state- #template-buttons,
+#template-manager.state-view #template-buttons {
+    display: block;
+}
+#template-manager.state-upload #template-buttons,
+#template-manager.state-edit #template-buttons {
+    display: none;
+}
+
+#template-manager.state- #template-upload,
+#template-manager.state-view #template-upload,
+#template-manager.state-edit #template-upload {
+    display: none;
+}
+#template-manager.state-upload #template-upload {
+    display: block;
+}
+
+#template-manager.state- #template-edit,
+#template-manager.state-upload #template-edit {
+    display: none;
+}
+#template-manager.state-view #template-edit,
+#template-manager.state-edit #template-edit {
+    display: block;
+}
+
+#template-manager.state-view #template-edit-buttons {
+    display: none;
+}
+#template-manager #template-edit-buttons {
+    display: block;
+}
+
+#template {
+    font-family: monospace;
+}

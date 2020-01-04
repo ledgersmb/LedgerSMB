@@ -49,6 +49,47 @@ sub list {
         );
 }
 
+=head2 templates_json
+
+=cut
+
+sub templates_json {
+    my ($request) = @_;
+
+    my $query = 'select id, template_name, language_code, format from template';
+    ###TODO: this breaks when we run in another schema...
+
+    my @templates = $request->{dbh}->selectall_array($query, { Slice => {} });
+    return $request->to_json( \@templates );
+}
+
+=head2 template
+
+=cut
+
+sub template {
+    my ($request) = @_;
+
+    my $dbtemplate;
+    local $@ = undef;
+    eval {$dbtemplate = LedgerSMB::Template::DB->get(%$request)};
+
+    if (defined $dbtemplate) {
+        return [
+            '200',
+            [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+            [ $dbtemplate->template ]
+            ];
+    }
+    else {
+        return [
+            '404',
+            [ 'Content-Type' => 'text/plain' ],
+            [ 'Template not found' ]
+            ];
+    }
+}
+
 =head2 display($request)
 
 Displays a template for review
@@ -57,47 +98,19 @@ Displays a template for review
 
 sub display {
     my ($request) = @_;
-    my $dbtemp;
-    local $@ = undef;
-    eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
-
-    $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
-    $dbtemp = $request unless $dbtemp->{format};
-    $dbtemp->{languages} =
-        [ $request->call_procedure(funcname => 'person__list_languages') ];
-    return LedgerSMB::Template::UI->new_UI
-        ->render($request, 'templates/preview', { request => $request,
-                                                  template => $dbtemp,
-                                                  %$dbtemp });
-}
-
-=head2 edit($request)
-
-Displays a screen for editing the template
-
-=cut
-
-sub edit {
-    my ($request) = @_;
-    my $dbtemp;
-
-    local $@ = undef;
-    $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
-    delete $request->{language_code}
-        unless $dbtemp;
-    $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) }
-        unless $dbtemp;
-
-    die $request->{_locale}->text('Template Not Found')
-       unless $dbtemp;
-    $dbtemp->{content} = $dbtemp->template;
-    $dbtemp = $request unless $dbtemp->{format};
-    $dbtemp->{languages} =
-        [ $request->call_procedure(funcname => 'person__list_languages') ];
 
     return LedgerSMB::Template::UI->new_UI
-        ->render($request, 'templates/edit', { request => $request,
-                                               to_edit => $dbtemp });
+        ->render($request, 'templates/widget',
+                 {
+                     language       => $request->{language_code},
+                     format         => $request->{format},
+                     template_name  => $request->{template_name},
+                     languages      => [
+                         $request->call_procedure(
+                             funcname => 'person__list_languages')
+                         ],
+                 }
+        );
 }
 
 =head2 save($request)
@@ -148,7 +161,7 @@ sub upload {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014-2018 The LedgerSMB Core Team
+Copyright (C) 2014-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

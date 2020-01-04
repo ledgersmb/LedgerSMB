@@ -119,3 +119,4 @@ mc/delete-migration-validation-data.sql
 1.8/remove-unused-sprocs.sql
 1.8/remove-unused-groups-admin.sql
 1.8/parts-imports.sql
+1.8/rm-templates-menus.sql
