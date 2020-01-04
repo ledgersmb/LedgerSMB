@@ -1,8 +1,8 @@
 --Setup
 
 -- With help of a few conditional statements handled by the Template toolkit,
--- this migration file handles migration from all SQL-Ledger version up to 3.0
--- to all Ledgersmb up to 1.6
+-- this migration file handles migration from all SQL-Ledger version up to 3.2
+-- to all Ledgersmb up to 1.8
 
 -- When moved to an interface, these will all be specified and preprocessed.
 \set default_country '''<?lsmb default_country ?>'''
@@ -14,6 +14,7 @@
  */
 \set slschema '<?lsmb slschema ?>'
 \set lsmbversion '<?lsmb lsmbversion ?>'
+\set slversion '<?lsmb slversion ?>'
 
 BEGIN;
 
@@ -432,7 +433,13 @@ delete from account_link where description = 'CT_tax';
 
 -- Business
 
+<?lsmb IF VERSION_COMPARE(slversion,'3.2') >= 0; ?>
+-- TODO: SL3.2+ support multiple discounts per business, as shown by the rn column.
+-- This will fail on primary key violation if there are many in the SL database
+INSERT INTO business SELECT id, description, discount FROM :slschema.business;
+<?lsmb ELSE; ?>
 INSERT INTO business SELECT * FROM :slschema.business;
+<?lsmb END; ?>
 
 --Entity
 
@@ -1269,7 +1276,13 @@ INSERT INTO status SELECT * FROM :slschema.status; -- may need to comment this o
 
 INSERT INTO sic SELECT * FROM :slschema.sic;
 
+<?lsmb IF VERSION_COMPARE(slversion,'3.2') >= 0; ?>
+-- TODO: SL3.2+ support multiple warehouses per id, as shown by the rn column.
+-- This will fail on primary key violation if there are many in the SL database
+INSERT INTO warehouse SELECT id,description FROM :slschema.warehouse;
+<?lsmb ELSE; ?>
 INSERT INTO warehouse SELECT * FROM :slschema.warehouse;
+<?lsmb END; ?>
 
 INSERT INTO warehouse_inventory(entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate)

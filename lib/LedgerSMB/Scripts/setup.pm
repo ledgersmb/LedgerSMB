@@ -193,6 +193,14 @@ sub get_dispatch_table {
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
+        version => '3.2',
+        slschema => 'sl32',
+        message => $request->{_locale}->text(
+                     'SQL-Ledger 3.2 database detected.'
+                   ),
+        operation => $migratemsg,
+        next_action => 'upgrade' },
+      { appname => 'sql-ledger',
         version => undef,
         message => $request->{_locale}->text(
                       'Unsupported SQL-Ledger version detected.'
@@ -587,12 +595,12 @@ sub _get_linked_accounts {
 
 my %info_applicable_for_upgrade = (
     'default_ar' => [ 'ledgersmb/1.2',
-                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0', 'sql-ledger/3.2' ],
     'default_ap' => [ 'ledgersmb/1.2',
-                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0', 'sql-ledger/3.2' ],
     'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0', 'sql-ledger/3.2' ],
+    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0', 'sql-ledger/3.2' ]
     );
 
 =item applicable_for_upgrade
@@ -690,6 +698,7 @@ my %upgrade_run_step = (
     'sql-ledger/2.7' => 'run_sl28_migration',
     'sql-ledger/2.8' => 'run_sl28_migration',
     'sql-ledger/3.0' => 'run_sl30_migration',
+    'sql-ledger/3.2' => 'run_sl32_migration',
     'ledgersmb/1.2' => 'run_upgrade',
     'ledgersmb/1.3' => 'run_upgrade'
     );
@@ -1333,6 +1342,26 @@ sub run_sl30_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, 'sl30', 'sl3.0');
+
+    return create_initial_user($request);
+}
+
+
+=item run_sl32_migration
+
+
+=cut
+
+sub run_sl32_migration {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO sl32');
+    $dbh->commit;
+
+    process_and_run_upgrade_script($request, $database, 'sl32', 'sl3.0');
 
     return create_initial_user($request);
 }
