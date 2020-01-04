@@ -998,9 +998,9 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
    FROM :slschema.acc_trans ac
    JOIN (
                     SELECT id,curr
-                    FROM (      SELECT id,curr FROM sl30.ap
-                          UNION SELECT id,curr FROM sl30.ar
-                          UNION SELECT id,curr FROM sl30.gl) xx
+                    FROM (      SELECT id,curr FROM :slschema.ap
+                          UNION SELECT id,curr FROM :slschema.ar
+                          UNION SELECT id,curr FROM :slschema.gl) xx
    ) xx ON xx.id=ac.trans_id
    LEFT JOIN :slschema.invoice ON ac.id = invoice.id
                               AND ac.trans_id = invoice.trans_id
