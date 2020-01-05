@@ -1,0 +1,95 @@
+<?lsmb
+
+PROCESS "ui-header.html"
+   stylesheet = USER.stylesheet;
+
+PROCESS "elements.html";
+
+PROCESS "dynatable.html";
+
+FORMATS = LIST_FORMATS();
+QSTRING = request.query_string;
+
+IF NOT QSTRING.match('company=');
+   ESCAPED_COMPANY = request.company FILTER uri;
+   QSTRING = QSTRING _ '&amp;company=' _ ESCAPED_COMPANY;
+END;
+
+LINK = request.script _ '?' _ QSTRING;
+
+
+?>
+<body class="lsmb <?lsmb dojo_theme ?>">
+<form data-dojo-type="lsmb/Form"
+      method="post"
+      action="<?lsmb request.script ?>"
+      id="search-report-dynatable" >
+  <div class="heading_section">
+    <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
+      <span class="report_header"><?lsmb name ?></span>
+    </div>
+    <div class="report_header"><label><?lsmb text('Company') ?>:</label>
+      <span class="report_header"><?lsmb request.company ?></span>
+    </div>
+    <?lsmb FOREACH LINE IN hlines ?>
+    <div class="report_header"><label><?lsmb LINE.text ?>:</label>
+      <span class="report_header">
+        <?lsmb
+           IF request.${LINE.name};
+              request.${LINE.name};
+           ELSE;
+              report.${LINE.name};
+           END;
+           ?>
+      </span>
+    </div>
+    <?lsmb END ?>
+  </div>
+  <?lsmb PROCESS input element_data = {
+         name = 'form_id'
+         value = request.form_id
+         type = 'hidden'
+         } ?>
+  <?lsmb FOREACH K IN request.hiddens.keys;
+         PROCESS input element_data = {
+         name = K
+         type = 'hidden'
+         value = request.hiddens.$K
+         };
+         END; ?>
+  <?lsmb PROCESS dynatable tbody = {rows = rows }
+                 attributes = {class = 'report', order_url = order_url } ?>
+<div id="options">
+<?lsmb
+FOREACH OPTION IN options;
+  PROCESS select element_data = OPTION;
+END; ?>
+</div>
+<?lsmb
+FOREACH BUTTON IN buttons;
+  PROCESS button element_data = BUTTON;
+END; ?><br />
+<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
+<?lsmb IF FORMATS.grep('PDF').size() ?>
+<a target="_blank"
+   href="<?lsmb LINK _ '&amp;format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('TXT').size(); ?>
+<a target="_blank"
+   href="<?lsmb LINK _ '&amp;format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('ODS').size() ?>
+<a target="_blank"
+   href="<?lsmb LINK _ '&amp;format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('XLS').size(); ?>
+<a target="_blank"
+   href="<?lsmb LINK _ '&amp;format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('XLSX').size(); ?>
+<a target="_blank"
+   href="<?lsmb LINK _ '&amp;format=XLSX' ?>">[<?lsmb text('XLSX') ?>]</a>&nbsp;
+<?lsmb END; ?>
+</form>
+</body>
+<?lsmb PROCESS end_html ?>

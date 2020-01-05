@@ -85,7 +85,7 @@ This may be overridden by child reports.
 
 =cut
 
-sub template { return 'Reports/PNL' }
+sub template { return 'PNL' }
 
 =item columns
 

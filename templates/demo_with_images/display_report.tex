@@ -1,0 +1,48 @@
+<?lsmb- PROCESS 'dynatable.tex';
+IF !papersize;
+   papersize = 'a4paper';
+END;
+
+SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
+COLNUMBER = 0;
+
+FOREACH COL IN columns;
+    IF 0 == SKIP_TYPES.grep(COL.type).size() and ! COL.html_only.defined();
+            COLNUMBER = COLNUMBER + 1;
+    END;
+END;
+ FILTER latex;
+-?>
+\documentclass[<?lsmb papersize ?>]{article}
+\usepackage{longtable}
+\usepackage[margin=1cm]{geometry}
+\begin{document}
+<?lsmb
+
+FIRSTHEAD = '\\multicolumn{2}{r}{' _ text('Report Name') _ ':} & ' _
+            '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ name _ '}\\\\
+             \\multicolumn{2}{r}{' _ text('Company') _ ':} & ' _
+            '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ request.company
+            _ '} \\\\
+            ';
+
+# use new_heads to get around variable name escaping
+newlines = new_heads(hlines);
+FOREACH LINE IN newlines;
+    IF request.${LINE.name}; #$
+        headval = request.${LINE.name}; #$
+    ELSE;
+         headval = report.${LINE.name};
+    END;
+    FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{2}{r}{ ' _ LINE.text _ ':} & ';
+    FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ headval;
+    FIRSTHEAD = FIRSTHEAD _ '}\\\\
+             ';
+END;
+
+PROCESS dynatable 
+      tbody = { rows = rows }
+      firsthead = FIRSTHEAD;
+?>
+\end{document}
+<?lsmb END ?>

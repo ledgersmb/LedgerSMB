@@ -584,7 +584,7 @@ sub report_renderer_ui {
   return sub {
       my ($template_name, $report, $vars, $cvars) = @_;
 
-      return $ui->render($request, $template_name, $vars, $cvars);
+      return $ui->render($request, "Reports/$template_name", $vars, $cvars);
   };
 }
 
@@ -596,7 +596,7 @@ sub report_renderer_doc {
         my $template = LedgerSMB::Template->new(
             template => $template_name,
             user     => $request->{_user},
-            path     => 'UI',  # TODO: we want to make this 'DB'
+            path     => 'DB',
             format   => uc($request->{format} || 'HTML'),
             output_options => {
                 filename => $report->output_name($request),

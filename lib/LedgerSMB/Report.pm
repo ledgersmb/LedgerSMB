@@ -396,7 +396,7 @@ sub _render {
     # template --CT
     local $@ = undef;
     eval {$template = $self->template};
-    $template ||= 'Reports/display_report';
+    $template ||= 'display_report';
 
     # Sorting and Subtotal logic
     my $url = $request->get_relative_url();
