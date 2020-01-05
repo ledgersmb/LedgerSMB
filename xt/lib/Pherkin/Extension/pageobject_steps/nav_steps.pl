@@ -115,6 +115,7 @@ my %screens = (
     'overhead entry' => 'PageObject::App::Parts::Overhead',
     'system defaults' => 'PageObject::App::System::Defaults',
     'system taxes' => 'PageObject::App::System::Taxes',
+    'system templates' => 'PageObject::App::System::Templates',
     'year-end' => ' PageObject::App::Closing',
     'Enter Inventory' => ' PageObject::App::Parts::AdjustSetup',
     'search for goods & services' => ' PageObject::App::Search::GoodsServices',
