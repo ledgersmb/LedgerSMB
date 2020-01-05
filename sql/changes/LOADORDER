@@ -54,7 +54,6 @@
 1.5/fixed-assets-not-null-constraints.sql
 1.5/template_menu-v2.sql
 1.5/abstract_tables.sql
-#tag: migration-target
 # Note: the schema as created up to here, is the one as required by
 #   the migration scripts in sql/upgrade/. Don't insert any change
 #   scripts before this point, because it breaks the migrations from
@@ -99,6 +98,7 @@ mc/new-constraints.sql
 mc/dropped-objects.sql
 mc/views.sql
 mc/delete-migration-validation-data.sql
+#tag: migration-target
 # 1.7 changes
 1.7/drop-custom-catalog.sql
 1.7/alter-menu-attributes.sql

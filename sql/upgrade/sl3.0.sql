@@ -465,12 +465,21 @@ UPDATE :slschema.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || ven
 
 UPDATE :slschema.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
 
+--TODO: Do we need that for MC?
+INSERT INTO defaults(setting_key,value)
+    SELECT 'curr',array_to_string(array_agg(curr),':')
+    FROM :slschema.curr;
+
+INSERT INTO currency(curr,description)
+    SELECT curr,curr
+    FROM  :slschema.curr;
+
 --Entity Credit Account
 
 UPDATE :slschema.vendor SET business_id = NULL WHERE business_id = 0;
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
-        cash_account_id, startdate, enddate, threshold, entity_class)
+        cash_account_id, startdate, enddate, threshold, entity_class, curr)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id
           from account
@@ -480,7 +489,7 @@ SELECT entity_id, vendornumber, business_id, creditlimit,
            from account
            where accno = (select accno from :slschema.chart
                            where id = payment_accno_id)),
-         startdate, enddate, threshold, 1
+         startdate, enddate, threshold, 1, curr
 FROM :slschema.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE :slschema.vendor SET credit_id =
@@ -491,7 +500,7 @@ UPDATE :slschema.vendor SET credit_id =
 UPDATE :slschema.customer SET business_id = NULL WHERE business_id = 0;
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
-        cash_account_id, startdate, enddate, threshold, entity_class)
+        cash_account_id, startdate, enddate, threshold, entity_class, curr)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id
           from account
@@ -501,7 +510,7 @@ SELECT entity_id, customernumber, business_id, creditlimit,
            from account
            where accno = (select accno from :slschema.chart
                            where id = payment_accno_id)),
-        startdate, enddate, threshold, 2
+        startdate, enddate, threshold, 2, curr
 FROM :slschema.customer WHERE entity_id IS NOT NULL;
 
 UPDATE :slschema.customer SET credit_id =
@@ -838,15 +847,6 @@ SELECT pg_temp.f_insert_count('sqnumber');
 SELECT pg_temp.f_insert_count('vendornumber');
 SELECT pg_temp.f_insert_count('vinumber');
 
---TODO: Do we need that for MC?
-INSERT INTO defaults(setting_key,value)
-    SELECT 'curr',array_to_string(array_agg(curr),':')
-    FROM :slschema.curr;
-
-INSERT INTO currency(curr,description)
-    SELECT curr,curr
-    FROM  :slschema.curr;
-
 CREATE OR REPLACE FUNCTION pg_temp.f_insert_account(skey varchar(20)) RETURNS VOID AS
 $$
 BEGIN
@@ -910,60 +910,71 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 
 ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
---TODO: Handle amount_tc and netamount_tc
 insert into ar
-(entity_credit_account, person_id,
+        (entity_credit_account, person_id,
         id, invnumber, transdate, taxincluded,
         amount_bc, netamount_bc,
         amount_tc, netamount_tc,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
-        duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        duedate, invoice, ordnumber,
+        curr,
+        notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
-        on_hold, approved, reverse, terms, description)
+        on_hold, approved, reverse,
+        terms, description)
 SELECT
         customer.credit_id,
         (select entity_id from :slschema.employee WHERE id = ar.employee_id),
-        ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
-        CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
-        CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
+        ar.id, invnumber, transdate, ar.taxincluded,
+        amount, netamount,
+        CASE WHEN exchangerate IS NOT NULL AND exchangerate <> 1 THEN amount/exchangerate ELSE 0 END,
+        CASE WHEN exchangerate IS NOT NULL AND exchangerate <> 1 THEN netamount/exchangerate ELSE 0 END,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
-        duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
-        intnotes,
+        duedate, invoice, ordnumber,
+        CASE WHEN exchangerate IS NOT NULL THEN ar.curr ELSE NULL END,
+        ar.notes, quonumber, intnotes,
         shipvia, ar.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
         ar.terms, description
-FROM :slschema.ar JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
+FROM :slschema.ar
+JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
 
 ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
 ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
 insert into ap
-(entity_credit_account, person_id,
+        (entity_credit_account,
+        person_id,
         id, invnumber, transdate, taxincluded, amount_bc, netamount_bc,
-        amount_tc, netamount_tc,
+        amount_tc,
+        netamount_tc,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
-        duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        duedate, invoice, ordnumber,
+        curr,
+        notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
-        on_hold, approved, reverse, terms, description)
+        on_hold, approved, reverse,
+        terms, description)
 SELECT
         vendor.credit_id,
         (select entity_id from :slschema.employee
                 WHERE id = ap.employee_id),
         ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
-        CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
-        CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
+        CASE WHEN exchangerate IS NOT NULL AND exchangerate <> 1 THEN amount/exchangerate ELSE 0 END,
+        CASE WHEN exchangerate IS NOT NULL AND exchangerate <> 1 THEN netamount/exchangerate ELSE 0 END,
 <?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
         paid, datepaid,
 <?lsmb END; ?>
-        duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
-        intnotes,
+        duedate, invoice, ordnumber,
+        CASE WHEN exchangerate IS NOT NULL THEN ap.curr ELSE NULL END,
+        ap.notes, quonumber, intnotes,
         shipvia, ap.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
         ap.terms, description
@@ -982,8 +993,6 @@ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             deliverydate, serialnumber
        FROM :slschema.invoice;
 
-ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
-
 update :slschema.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
@@ -991,9 +1000,9 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
                        transdate, source, cleared,
                        memo, approved, cleared_on, voucher_id, invoice_id)
  SELECT lsmb_entry_id, ac.trans_id,
-        (select id
-           from account
-          where accno = (select accno
+        (SELECT id
+           FROM account
+          WHERE accno = (select accno
                            from :slschema.chart
                           where chart.id = ac.chart_id)),
         CASE WHEN fx_transaction THEN 0 ELSE amount END,
@@ -1435,4 +1444,4 @@ UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
 --TODO:  Translation migration.  Partsgroups?
--- TODO:  User/password Migration
+--TODO:  User/password Migration
