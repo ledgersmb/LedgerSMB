@@ -143,45 +143,9 @@ Scenario Outline: Navigate to menu and open screen
 #   | System > GIFI > Add GIFI                   |                          |
 #   | System > GIFI > Import GIFI                |                          |
 #   | System > GIFI > List GIFI                  |                          |
-#   | System > HTML Templates > Invoicing > AP Transaction |                |
-#   | System > HTML Templates > Invoicing > AR Transaction |                |
-#   | System > HTML Templates > Invoicing > Invoice |                       |
-#   | System > HTML Templates > Invoicing > Product Receipt |               |
-#   | System > HTML Templates > Invoicing > Statement |                     |
-#   | System > HTML Templates > Ordering > Purchase Order |                 |
-#   | System > HTML Templates > Ordering > Quotation |                      |
-#   | System > HTML Templates > Ordering > RFQ   |                          |
-#   | System > HTML Templates > Ordering > Sales Order |                    |
-#   | System > HTML Templates > Ordering > Work Order |                     |
-#   | System > HTML Templates > Other > Letterhead |                        |
-#   | System > HTML Templates > Other > Payment  |                          |
-#   | System > HTML Templates > Other > Timecard |                          |
-#   | System > HTML Templates > Shipping > Bin List |                       |
-#   | System > HTML Templates > Shipping > Packing List |                   |
-#   | System > HTML Templates > Shipping > Pick List |                      |
+    | System > Templates                         | system templates         |
 #   | System > Language > Add Language           |                          |
 #   | System > Language > List Languages         |                          |
-#   | System > LaTeX Templates > Invoicing > AP Transaction |               |
-#   | System > LaTeX Templates > Invoicing > AR Transaction |               |
-#   | System > LaTeX Templates > Invoicing > Invoice |                      |
-#   | System > LaTeX Templates > Invoicing > Product Receipt |              |
-#   | System > LaTeX Templates > Invoicing > Statement |                    |
-#   | System > LaTeX Templates > Ordering > Purchase Order |                |
-#   | System > LaTeX Templates > Ordering > Quotation |                     |
-#   | System > LaTeX Templates > Ordering > RFQ  |                          |
-#   | System > LaTeX Templates > Ordering > Sales Order |                   |
-#   | System > LaTeX Templates > Ordering > Work Order |                    |
-#   | System > LaTeX Templates > Other > Check   |                          |
-#   | System > LaTeX Templates > Other > Check Base |                       |
-#   | System > LaTeX Templates > Other > Letterhead |                       |
-#   | System > LaTeX Templates > Other > Multiple Checks |                  |
-#   | System > LaTeX Templates > Other > Receipt |                          |
-#   | System > LaTeX Templates > Other > Timecard |                         |
-#   | System > LaTeX Templates > Shipping > Bin List |                      |
-#   | System > LaTeX Templates > Shipping > Envelope |                      |
-#   | System > LaTeX Templates > Shipping > Packing List |                  |
-#   | System > LaTeX Templates > Shipping > Pick List |                     |
-#   | System > LaTeX Templates > Shipping > Shipping Label |                |
 #   | System > Reporting Units                   |                          |
 #   | System > Sequences                         |                          |
 #   | System > Sessions                          |                          |

@@ -76,6 +76,8 @@ sub content_test {
                 return 1 if $param->{tag} =~ /input|div/ && $param->{attr} =~ /type|pwtype/;
                 return 1 if $param->{tag} eq "textarea" && $param->{attr} eq "autocomplete";
                 return 1 if $param->{tag} eq "div" && $param->{attr} eq "overflow";
+                return 1 if $param->{tag} eq 'span'
+                    && $param->{attr} eq 'value';
                 # The following should be removed and files fixed instead
                 return 1 if $param->{tag} =~ /div|tr/ && $param->{attr} =~ /height|width|name|cols/;
                 return 0;

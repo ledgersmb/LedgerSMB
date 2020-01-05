@@ -1,0 +1,164 @@
+<?lsmb PROCESS "elements.html" ?>
+<body>
+  <form id="system-templates"
+        data-dojo-type="lsmb/Form"
+        action="template.pl"
+        method="post"
+        enctype="multipart/form-data">
+    <div data-dojo-type="lsmb/TemplateManager"
+         data-dojo-props="state:'<?lsmb state ?>'"
+         id="template-manager">
+      <input type="hidden" name="template_name" id="shadow-template"
+             data-dojo-attach-point="shadowTemplate">
+      <input type="hidden" name="format" id="shadow-format"
+             data-dojo-attach-point="shadowFormat">
+      <input type="hidden" name="language" id="shadow-language"
+             data-dojo-attach-point="shadowLanguage">
+      <div id="template-variant">
+        <div>
+          <label for="template-name"
+                 style="display:inline-block;width:15ex"
+                 ><?lsmb text("Template") ?></label>
+          <div data-dojo-type="dijit/form/Select"
+               id="template-name"
+               style="width:20ex"
+               data-dojo-props="required:true,value:'<?lsmb template_name ?>'"
+               data-dojo-attach-point="templateName">
+            <span value=""><span><?lsmb text("--TEMPLATE--") ?></span></span>
+            <span value="ap_transaction">
+              <span><?lsmb text("AP transaction") ?></span></span>
+            <span value="ar_transaction">
+              <span><?lsmb text("AR transaction") ?></span></span>
+            <span value="bin_list">
+              <span><?lsmb text("Bin list") ?></span></span>
+            <span value="check">
+              <span><?lsmb text("Single check") ?></span></span>
+            <span value="check_base">
+            <span><?lsmb text("Check (base)") ?></span></span>
+            <span value="check_multiple">
+              <span><?lsmb text("Multiple checks") ?></span></span>
+            <span value="envelope">
+              <span><?lsmb text("Envelope") ?></span></span>
+            <span value="invoice">
+              <span><?lsmb text("Invoice") ?></span></span>
+            <span value="letterhead">
+              <span><?lsmb text("Letterhead") ?></span></span>
+            <span value="packing_list">
+              <span><?lsmb text("Packing list") ?></span></span>
+            <span value="pick_list">
+              <span><?lsmb text("Pick list") ?></span></span>
+            <span value="printPayment">
+              <span><?lsmb text("Payment") ?></span></span>
+            <span value="product_receipt">
+              <span><?lsmb text("Product receipt") ?></span></span>
+            <span value="purchase_order">
+            <span><?lsmb text("Purchase order") ?></span></span>
+            <span value="receipt">
+              <span><?lsmb text("Receipt") ?></span></span>
+            <span value="request_quotation">
+              <span><?lsmb text("Request for quotation") ?></span></span>
+            <span value="sales_order">
+              <span><?lsmb text("Sales order") ?></span></span>
+            <span value="sales_quotation">
+              <span><?lsmb text("Sales quotation") ?></span></span>
+            <span value="shipping_label">
+              <span><?lsmb text("Shipping label") ?></span></span>
+            <span value="statement">
+              <span><?lsmb text("Aging statement") ?></span></span>
+            <span value="timecard">
+              <span><?lsmb text("Timecard") ?></span></span>
+            <span value="work_order">
+              <span><?lsmb text("Work order") ?></span></span>
+          </div>
+        </div>
+        <div style="margin-top:8px">
+          <label for="format"
+                 style="display:inline-block;width:15ex"
+                 ><?lsmb text("Format") ?></label>
+          <div data-dojo-type="dijit/form/Select"
+               id="format"
+               style="width:20ex"
+               data-dojo-props="required:true,value:'<?lsmb format ?>'"
+               data-dojo-attach-point="templateFormat">
+            <span value=""><span><?lsmb text("--FORMAT--") ?></span></span>
+            <span value="csv"><span><?lsmb text("csv") ?></span></span>
+            <span value="html"><span><?lsmb text("html") ?></span></span>
+            <span value="tex"><span><?lsmb text("tex") ?></span></span>
+          </div>
+          <label for="language"
+                 style="margin-left:14ex;display:inline-block;width:15ex">Language</label>
+          <div data-dojo-type="dijit/form/Select"
+               id="language"
+               style="width:18ex"
+               data-dojo-props="value:'<?lsmb language ?>'"
+               data-dojo-attach-point="templateLanguage">
+            <span value=""><b><?lsmb text("None/Generic") ?></b></span>
+            <?lsmb
+              FOREACH lang IN languages ?>
+            <span value="<?lsmb lang.code ?>"><?lsmb lang.description ?></span>
+            <?lsmb
+              END
+              ?>
+          </div>
+        </div>
+      </div>
+
+      <div id="template-buttons">
+        <button id="create"
+                data-dojo-type="dijit/form/Button"
+                data-dojo-attach-point="createButton"
+                ><?lsmb text("Create") ?></button>
+
+        <button id="edit"
+                data-dojo-type="dijit/form/Button"
+                data-dojo-attach-point="editButton"
+                ><?lsmb text("Edit") ?></button>
+
+        <button id="upload"
+                data-dojo-type="dijit/form/Button"
+                data-dojo-attach-point="uploadButton"
+                ><?lsmb text("Upload") ?></button>
+      </div>
+      <div id="template-upload">
+        <input type="file"
+               name="template_content"
+               id="template-content"
+               >
+        <button id="upload-save"
+                name="action"
+                value="save"
+                type="submit"
+                data-dojo-type="dijit/form/Button"
+                ><?lsmb text("Save") ?></button>
+        <button id="upload-cancel"
+                data-dojo-type="dijit/form/Button"
+                data-dojo-attach-point="uploadCancelButton"
+                ><?lsmb text("Cancel") ?></button>
+      </div>
+      <div id="template-edit">
+        <div id="template-edit-buttons">
+          <button id="edit-save"
+                  name="action"
+                  value="save"
+                  type="submit"
+                  data-dojo-type="dijit/form/Button"
+                  data-dojo-attach-point="editSaveButton"
+                  ><?lsmb text("Save") ?></button>
+          <button id="edit-cancel"
+                  name="action"
+                  value="edit_cancel"
+                  data-dojo-type="dijit/form/Button"
+                  data-dojo-attach-point="editCancelButton"
+                  ><?lsmb text("Cancel") ?></button>
+        </div>
+
+        <?lsmb PROCESS textarea element_data = {
+                        class="template-body " _ format _ " editor"
+                        style="width:100%;display:block"
+                        name="template"
+                        'data-dojo-attach-point'="templateContent"
+                 text=UNESCAPE(template_content) } ?>
+      </div>
+    </div>
+  </form>
+</body>

@@ -616,7 +616,7 @@ SELECT lsmb__grant_perms('ap_transaction_list', obj, 'SELECT')
   FROM unnest(array['ap'::text, 'acc_trans', 'invoice', 'warehouse_inventory',
                     'tax_extended', 'ac_tax_form', 'invoice_tax_form']) obj;
 SELECT lsmb__grant_menu('ap_transaction_list', node_id, 'allow')
-  FROM unnest(array[25,27,34]) node_id;
+  FROM unnest(array[25,34]) node_id;
 
 SELECT lsmb__create_role('ap_all_vouchers');
 SELECT lsmb__grant_role('ap_all_vouchers', 'ap_transaction_create_voucher');
@@ -1108,10 +1108,7 @@ SELECT lsmb__grant_role('sic_all', 'sic_edit');
 SELECT lsmb__create_role('template_edit');
 SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
 SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
-SELECT lsmb__grant_menu('template_edit', id, 'allow')
-  FROM unnest(array[29, 30, 31, 32, 33, 90, 99, 159,160,161,162,163,164,165,
-                    166,167,168,169,170,171,173,174,175,176,177,178,179,180,
-                    181,182,183,184,185,186,187,241,242]) id;
+SELECT lsmb__grant_menu('template_edit', 156, 'allow');
 
 SELECT lsmb__create_role('users_manage');
 SELECT lsmb__grant_role('users_manage', 'contact_read');

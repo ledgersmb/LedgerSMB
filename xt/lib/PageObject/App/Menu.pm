@@ -87,6 +87,7 @@ my %menu_path_pageobject_map = (
 
     "System > Defaults" => 'PageObject::App::System::Defaults',
     "System > Taxes" => 'PageObject::App::System::Taxes',
+    "System > Templates" => 'PageObject::App::System::Templates',
     );
 
 
