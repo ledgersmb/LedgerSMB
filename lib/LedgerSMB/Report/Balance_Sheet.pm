@@ -274,7 +274,7 @@ Implements LedgerSMB::Report's abstract template method.
 =cut
 
 sub template {
-    return 'Reports/balance_sheet';
+    return 'balance_sheet';
 }
 
 =head2 name

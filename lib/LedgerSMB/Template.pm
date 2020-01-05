@@ -315,6 +315,7 @@ use LedgerSMB::Template::DBProvider;
 
 use Template;
 use Template::Parser;
+use Template::Provider;
 use Log::Log4perl;
 use File::Spec;
 use Module::Runtime qw(use_module);
@@ -448,16 +449,26 @@ sub get_template_args {
     my %additional_options = ();
     if ($self->{include_path} && $self->{include_path} eq 'DB'){
         $additional_options{INCLUDE_PATH} = [];
+        my $parser =  Template::Parser->new(
+            {
+                START_TAG => quotemeta('<?lsmb'),
+                END_TAG => quotemeta('?>'),
+            });
         $additional_options{LOAD_TEMPLATES} =
             [ LedgerSMB::Template::DBProvider->new(
                   {
                       format => $extension,
                       language_code => $self->{language},
-                      PARSER => Template::Parser->new({
-                         START_TAG => quotemeta('<?lsmb'),
-                         END_TAG => quotemeta('?>'),
-                      }),
-                  }) ];
+                      PARSER => $parser,
+                  }),
+              # We need this provider in order to allow the templates to
+              # depend on 'dynatable.*'
+              Template::Provider->new(
+                  {
+                      INCLUDE_PATH => [ 'UI/lib/' ],
+                      PARSER => $parser,
+                  }),
+            ];
     }
     my $paths = ['UI/lib'];
     unshift @$paths, $self->{include_path}
