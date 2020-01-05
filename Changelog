@@ -5,20 +5,33 @@ forthcoming
 
 Changelog for 1.8.0
 
+Added functionalities
+* Parts searches can be restricted by type (part, service, ...)
+* CSV upload of parts, services and overhead
+* Print templates for PNL, Balance sheet and generic reports now
+  * User-editable
+  * Customizable per company
+  * Stored in the database like all other templates (#811)
+
 Changed functionalities
+* Faster loading of the menu
+* New UI for uploading and editing document (print) templates
+* Colors of default scheme changed to follow the soft-tone of the Claro theme
 * Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
 
 Bugs fixed
 * Default dates sometimes off by a day (before or after the current day)
+* Customers and vendors in parts screen selectable through drop-downs
 
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
 * Replace unnecessary UNION selects on ar/ap/gl by select on transactions
 * Remove legacy infrastructure to generate table-formatted report output
 * Remove unmaintained ability from Makefile to install dependencies
-* Moved authentication for 'setup.pl' to itself, making it stand-alone
+* Moved authentication for 'setup.pl', making it stand-alone
 * Removed use of LSMB_ALWAYS_MONEY environment variable
 * Replaced 'no strict "refs"' with use of Symbol module
+* Removed tables 'fixes' and 'menu_attribute'
 
 
 Changelog for 1.7 Series
