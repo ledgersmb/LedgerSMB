@@ -1,9 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html';
 account_data = report.account_data;
 
-FORMATS = LIST_FORMATS();
-LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
-LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
        _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
        _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
@@ -94,14 +91,7 @@ END ;
 <?lsmb END ?>
 </tbody>
 </table>
-<?lsmb IF FORMATS.grep('PDF').size() ?>
-<div class="export-links">
-<div class="export-link"><a target="_blank"
-           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a>
-<div class="export-link"><a target="_blank"
-       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
-</div>
-<?lsmb END ?>
+
 </div>
 </body>
 </html>
