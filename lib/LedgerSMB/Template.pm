@@ -183,10 +183,6 @@ Note: This string looks up the exact string C<$string>, which makes it
 unsuited for translation of string values passed to the template through
 (escaped) string variable values.
 
-=item tt_url($string)
-
-This function applies basic URL encoding to C<$string>.
-
 =back
 
 =head1 FORMATS
@@ -461,13 +457,6 @@ sub get_template_args {
     return $arghash;
 }
 
-sub tt_url {
-    my $str = shift;
-
-    $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
-    return $str;
-}
-
 sub _maketext {
     my $self = shift;
     my $escape = shift;
@@ -495,7 +484,6 @@ sub _render {
                        : sub { return @_; }),
           escape => sub { return $escape->(@_); },
           text => sub { return $self->_maketext($escape, @_); },
-          tt_url => \&tt_url,
           %{$self->{additional_vars} // {}},
           %$cvars )
     };
