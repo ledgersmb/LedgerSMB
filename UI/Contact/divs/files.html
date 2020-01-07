@@ -51,11 +51,11 @@ INCLUDE dynatable
 END;
 ?>
 <a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb entity_id
-         ?>&amp;file_class=4&amp;callback=<?lsmb tt_url(callback) ?>"
+         ?>&amp;file_class=4&amp;callback=<?lsmb callback | uri ?>"
 >[<?lsmb text('Attach to Entity') ?>]</a>
 <?lsmb IF credit_act.id ?>
 <a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb credit_act.id
-    ?>&amp;file_class=5&amp;callback=<?lsmb tt_url(callback) ?>"
+    ?>&amp;file_class=5&amp;callback=<?lsmb callback | uri ?>"
 >[<?lsmb text('Attach to Credit Account') ?>]</a>
 <?lsmb END ?>
 </div>

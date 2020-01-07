@@ -15,6 +15,9 @@
    # Other fields are mapped to their fieldnames:
    #   [<attributes.input_prefix>_]<col_id>_<rownum>
 
+   # Note that URLs computed from href_base and XX_href_suffix as well as
+   # order_url will be URL encoded by this block
+
    # The block takes the following arguments:
 
    #  - attributes   : a hash of attributes (specified below)
@@ -72,7 +75,7 @@
    <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb
 
 IF attributes.order_url
-?> <a href="<?lsmb order_url ?>&amp;order_by=<?lsmb COL.col_id ?>"><?lsmb
+?> <a href="<?lsmb order_url | url ?>&amp;order_by=<?lsmb COL.col_id ?>"><?lsmb
 END;
 COL.name;
 IF attributes.order_url
@@ -180,7 +183,7 @@ END; ?>
                    IF COL.href_target;
                       HREF_TGT = ' target="' _ COL.href_target _ '"';
                    END;
-          ?><a href="<?lsmb HREF ?>"<?lsmb HREF_TGT ?>><?lsmb ROW.${COL.col_id} ?></a>
+          ?><a href="<?lsmb HREF | url ?>"<?lsmb HREF_TGT ?>><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF TYPE == 'mirrored';
                                          NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
                                          ROW.${COL.col_id} ?>
@@ -264,7 +267,7 @@ END; ?>
                    ELSE;
                       HREF = COL.href_base _ ROW.row_id;
                    END
-          ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
+          ?><a href="<?lsmb HREF | url ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF TYPE == 'mirrored';
                                          NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT;
                                          ROW.${COL.col_id} ?>

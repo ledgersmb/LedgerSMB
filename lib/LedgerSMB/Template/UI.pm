@@ -81,7 +81,6 @@ sub new_UI {
                 UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
                              : sub { return @_; }),
                 escape => $escape,
-                tt_url => \&LedgerSMB::Template::tt_url,
 
                 LIST_FORMATS => sub {
                     return LedgerSMB::Template::available_formats();

@@ -211,11 +211,11 @@ IF manage_users and entity_id;
        <a href="admin.pl?action=edit_user&amp;user_id=<?lsmb user_id ?>"
        >[<?lsmb text('Edit User') ?>]</a><?lsmb
    ELSE ?>
-       <a href="admin.pl?action=new_user&amp;first_name=<?lsmb tt_url(first_name)
-                ?>&amp;last_name=<?lsmb tt_url(last_name)
-                ?>&amp;employeenumber=<?lsmb tt_url(employeenumber)
-                ?>&amp;country_id=<?lsmb tt_url(country_id)
-                ?>&amp;entity_id=<?lsmb tt_url(entity_id) ?>"
+       <a href="admin.pl?action=new_user&amp;first_name=<?lsmb first_name | uri
+                ?>&amp;last_name=<?lsmb last_name | uri
+                ?>&amp;employeenumber=<?lsmb employeenumber | uri
+                ?>&amp;country_id=<?lsmb country_id | uri
+                ?>&amp;entity_id=<?lsmb entity_id | uri ?>"
        >[<?lsmb text('Add User') ?>]</a><?lsmb
    END;
 END ?>
