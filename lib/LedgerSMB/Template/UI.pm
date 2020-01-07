@@ -17,8 +17,6 @@ This module instantiates a singleton UI template rendering engine
 use strict;
 use warnings;
 
-#use parent qw(LedgerSMB::Template);
-
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
@@ -44,6 +42,25 @@ our @pre_render_cbs = (
         }
     },
     );
+
+
+sub _available_formats {
+    my @retval = ('HTML', 'TXT');
+
+    if ($LedgerSMB::Sysconfig::template_latex){
+        push @retval, 'PDF', 'PS';
+    }
+    if ($LedgerSMB::Sysconfig::template_xls){
+        push @retval, 'XLS';
+    }
+    if ($LedgerSMB::Sysconfig::template_xlsx){
+        push @retval, 'XLSX';
+    }
+    if ($LedgerSMB::Sysconfig::template_ods){
+        push @retval, 'ODS';
+    }
+    return \@retval;
+}
 
 =head2 new_UI()
 
@@ -84,7 +101,7 @@ sub new_UI {
                 tt_url => \&LedgerSMB::Template::tt_url,
 
                 LIST_FORMATS => sub {
-                    return LedgerSMB::Template::available_formats();
+                    return _available_formats();
                 },
             },
         }, __PACKAGE__;

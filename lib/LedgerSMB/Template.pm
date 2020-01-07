@@ -91,27 +91,6 @@ template to get debugging messages is to be surrounded by
 =back
 
 
-=item available_formats()
-
-Returns a list of format names, any of the following (in order) as applicable:
-
-=over
-
-=item HTML (always available)
-
-=item TXT (includes CSV, always available))
-
-=item PDF
-
-=item PS
-
-=item XLS
-
-=item XLSX
-
-=item ODS
-
-=back
 
 
 =item render($variables, $raw_variables)
@@ -154,7 +133,7 @@ subroutine.
 
 =head1 PROPERTIES
 
-=over 
+=over
 
 =item output
 
@@ -325,24 +304,6 @@ use parent qw( Exporter );
 our @EXPORT_OK = qw( preprocess );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
-
-sub available_formats {
-    my @retval = ('HTML', 'TXT');
-
-    if ($LedgerSMB::Sysconfig::template_latex){
-        push @retval, 'PDF', 'PS';
-    }
-    if ($LedgerSMB::Sysconfig::template_xls){
-        push @retval, 'XLS';
-    }
-    if ($LedgerSMB::Sysconfig::template_xlsx){
-        push @retval, 'XLSX';
-    }
-    if ($LedgerSMB::Sysconfig::template_ods){
-        push @retval, 'ODS';
-    }
-    return \@retval;
-}
 
 sub new {
     my $class = shift;
@@ -530,7 +491,6 @@ sub _render {
     my $unescape = $format->can('unescape');
     my $cleanvars = {
         ( %{preprocess($vars, $escape)},
-          LIST_FORMATS => sub { return available_formats(); },
           UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
                        : sub { return @_; }),
           escape => sub { return $escape->(@_); },
