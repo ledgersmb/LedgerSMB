@@ -18,7 +18,6 @@ Implements C<LedgerSMB::Template>'s FORMATTER protocol for HTML output.
 use strict;
 use warnings;
 
-use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;
 
@@ -36,16 +35,6 @@ sub escape {
     return undef unless defined $vars;
     $vars = escape_html($vars);
     return $vars;
-}
-
-=item unescape($string)
-
-Apply the reverse transformation of C<escape> to <$string>.
-
-=cut
-
-sub unescape {
-    return decode_entities(shift @_);
 }
 
 =item setup($parent, $cleanvars, $output)

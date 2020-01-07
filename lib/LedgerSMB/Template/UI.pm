@@ -24,6 +24,7 @@ use LedgerSMB::Template::HTML;
 
 use Carp;
 use File::Spec;
+use HTML::Entities;
 use Template;
 
 our $engine;
@@ -87,21 +88,21 @@ sub new_UI {
                 COMPILE_DIR =>
                    File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
                                         File::Spec->tmpdir ),
+                VARIABLES => {
+                    escape => \&LedgerSMB::Template::HTML::escape,
+                    LIST_FORMATS => sub {
+                        return _available_formats();
+                    },
+                    UNESCAPE => sub {
+                        return decode_entities(shift @_);
+                    },
+                }
                 )
                 or die Template->error;
         }
 
-        my $escape = \&LedgerSMB::Template::HTML::escape;
-        my $unescape = \&LedgerSMB::Template::HTML::unescape;
         $singleton = bless {
             standard_vars => {
-                UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
-                             : sub { return @_; }),
-                escape => $escape,
-
-                LIST_FORMATS => sub {
-                    return _available_formats();
-                },
             },
         }, __PACKAGE__;
     }
