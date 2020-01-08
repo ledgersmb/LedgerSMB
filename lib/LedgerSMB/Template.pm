@@ -167,12 +167,6 @@ the target document, showing the exact content of the string.
 E.g. for HTML encoding, this means that ampersand is encoded into C<&amp;>
 and that newline characters in LaTeX are encoded into double backslashes.
 
-=item UNESCAPE($string) [optional]
-
-This function reverses the string-escaping as might have been applied by
-the C<escape> function. This function is not guaranteed to be available
-(currently only supported for HTML templates).
-
 =item text($string, @args)
 
 This function looks up the translation of C<$string> in the language lexicon,
@@ -477,11 +471,8 @@ sub _render {
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
-    my $unescape = $format->can('unescape');
     my $cleanvars = {
         ( %{preprocess($vars, $escape)},
-          UNESCAPE => ($unescape ? sub { return $unescape->(@_); }
-                       : sub { return @_; }),
           escape => sub { return $escape->(@_); },
           text => sub { return $self->_maketext($escape, @_); },
           %{$self->{additional_vars} // {}},
