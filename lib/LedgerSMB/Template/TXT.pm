@@ -37,16 +37,6 @@ sub _get_extension {
     }
 }
 
-=item escape($var)
-
-Implements the templates escaping protocol. Returns C<$var>.
-
-=cut
-
-sub escape {
-    return shift;
-}
-
 =item setup($parent, $cleanvars, $output)
 
 Implements the template's initialization protocol.

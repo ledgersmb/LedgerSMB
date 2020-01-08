@@ -22,7 +22,6 @@ use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
 use File::Temp;
-use HTML::Escape;
 use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
 
@@ -805,19 +804,6 @@ sub _ods_process {
          or die "Can't clean up ODS generation temporary file: $!";
     }
     return undef;
-}
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=cut
-
-sub escape {
-    my $vars = shift @_;
-    return undef unless defined $vars;
-    $vars = escape_html($vars);
-    return $vars;
 }
 
 =item setup($parent, $cleanvars, $output)

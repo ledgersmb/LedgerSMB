@@ -147,16 +147,6 @@ sub _xlsx_process {
     return $workbook->close;
 }
 
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=cut
-
-sub escape {
-    return shift;
-}
-
 =item setup($parent, $cleanvars, $output)
 
 Implements the template's initialization protocol.
