@@ -31,20 +31,20 @@
 
     <td>
       <table width="100%">
-	<tr valign=top>
-	  <td><?lsmb statement.entity.name ?>
-	  <br><?lsmb statement.address.line_one ?>
-	  <?lsmb IF statement.address.line_two ?>
-	  <br><?lsmb statement.address.line_two ?>
-	  <?lsmb END ?>
-	  <br><?lsmb statement.address.city ?>
-	  <?lsmb IF statement.address.state ?>
-	  , <?lsmb statement.address.state ?>
-	  <?lsmb END ?>
-	  <?lsmb statement.address.mail_code ?>
-	  <br>
-	  </td>
-	</tr>
+        <tr valign=top>
+          <td><?lsmb statement.entity.name ?>
+          <br><?lsmb statement.address.line_one ?>
+          <?lsmb IF statement.address.line_two ?>
+          <br><?lsmb statement.address.line_two ?>
+          <?lsmb END ?>
+          <br><?lsmb statement.address.city ?>
+          <?lsmb IF statement.address.state ?>
+          , <?lsmb statement.address.state ?>
+          <?lsmb END ?>
+          <?lsmb statement.address.mail_code ?>
+          <br>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
@@ -57,43 +57,43 @@
     <td>
       <table width="100%">
         <tr>
-	  <th align=left><?lsmb text('Invoice #') ?></th>
+          <th align=left><?lsmb text('Invoice #') ?></th>
           <th align=left><?lsmb text('Order #') ?></th>
-	  <th width="10%"><?lsmb text('Date') ?></th>
-	  <th width="10%"><?lsmb text('Due') ?></th>
-	  <th width="10%"><?lsmb text('Current') ?></th>
-	  <th width="10%"><?lsmb text('30') ?></th>
-	  <th width="10%"><?lsmb text('60') ?></th>
-	  <th width="10%"><?lsmb text('90') ?></th>
-	</tr>
+          <th width="10%"><?lsmb text('Date') ?></th>
+          <th width="10%"><?lsmb text('Due') ?></th>
+          <th width="10%"><?lsmb text('Current') ?></th>
+          <th width="10%"><?lsmb text('30') ?></th>
+          <th width="10%"><?lsmb text('60') ?></th>
+          <th width="10%"><?lsmb text('90') ?></th>
+        </tr>
 
-	<?lsmb- FOREACH invoice IN statement.aging.rows ?>
-	<tr>
-	  <td><?lsmb invoice.invnumber ?></td>
+        <?lsmb- FOREACH invoice IN statement.aging.rows ?>
+        <tr>
+          <td><?lsmb invoice.invnumber ?></td>
           <td><?lsmb invoice.ordnumber ?></td>
-	  <td><?lsmb invoice.transdate ?></td>
-	  <td><?lsmb invoice.duedate ?></td>
-	  <td align=right><?lsmb invoice.c0 ?></td>
-	  <td align=right><?lsmb invoice.c30 ?></td>
-	  <td align=right><?lsmb invoice.c60 ?></td>
-	  <td align=right><?lsmb invoice.c90 ?></td>
-	</tr>
+          <td><?lsmb invoice.transdate ?></td>
+          <td><?lsmb invoice.duedate ?></td>
+          <td align=right><?lsmb invoice.c0 ?></td>
+          <td align=right><?lsmb invoice.c30 ?></td>
+          <td align=right><?lsmb invoice.c60 ?></td>
+          <td align=right><?lsmb invoice.c90 ?></td>
+        </tr>
         <?lsmb END -?>
 
         <tr>
-	  <td colspan=8><hr size=1></td>
-	</tr>
+          <td colspan=8><hr size=1></td>
+        </tr>
 
-	<tr>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+        <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-	  <th align=right><?lsmb statement.aging.c0total ?></td>
-	  <th align=right><?lsmb statement.aging.c30total ?></td>
-	  <th align=right><?lsmb statement.aging.c60total ?></td>
-	  <th align=right><?lsmb statement.aging.c90total ?></td>
-	</tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <th align=right><?lsmb statement.aging.c0total ?></td>
+          <th align=right><?lsmb statement.aging.c30total ?></td>
+          <th align=right><?lsmb statement.aging.c60total ?></td>
+          <th align=right><?lsmb statement.aging.c90total ?></td>
+        </tr>
       </table>
     </td>
   </tr>
@@ -106,9 +106,9 @@
     <td align=right>
       <table width="50%">
         <tr>
-	  <th><?lsmb text('Total Outstanding') ?></th>
+          <th><?lsmb text('Total Outstanding') ?></th>
           <th align=right><?lsmb statement.aging.total ?></th>
-	</tr>
+        </tr>
       </table>
     </td>
   </tr>

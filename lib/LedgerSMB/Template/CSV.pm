@@ -21,16 +21,6 @@ use strict;
 my $binmode = ':utf8';
 my $extension = 'csv';
 
-=item escape($var)
-
-Implements the template's escaping protocol. Returns C<$var>.
-
-=cut
-
-sub escape {
-    return shift;
-}
-
 =item setup($parent, $vars, $output)
 
 Implements the template's initialization protocol.

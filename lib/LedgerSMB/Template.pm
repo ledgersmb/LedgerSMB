@@ -159,14 +159,6 @@ template processor, when available for the current format.
 
 =over
 
-=item escape($string)
-
-This function encodes the string argument to be safe for inclusion in
-the target document, showing the exact content of the string.
-
-E.g. for HTML encoding, this means that ampersand is encoded into C<&amp;>
-and that newline characters in LaTeX are encoded into double backslashes.
-
 =item text($string, @args)
 
 This function looks up the translation of C<$string> in the language lexicon,
@@ -453,11 +445,8 @@ sub get_template_args {
 
 sub _maketext {
     my $self = shift;
-    my $escape = shift;
 
-    return $escape->(defined $self->{locale}
-                    ? $self->{locale}->maketext(@_)
-                    : shift);
+    return defined $self->{locale} ? $self->{locale}->maketext(@_) : shift;
 }
 
 sub _render {
@@ -471,13 +460,25 @@ sub _render {
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
-    my $cleanvars = {
-        ( %{preprocess($vars, $escape)},
-          escape => sub { return $escape->(@_); },
-          text => sub { return $self->_maketext($escape, @_); },
-          %{$self->{additional_vars} // {}},
-          %$cvars )
-    };
+    my $cleanvars;
+
+    if ($escape) {
+        $cleanvars = {
+            %{ preprocess($vars, $escape) },
+              %{$self->{additional_vars} // {}},
+              %$cvars,
+              text => sub { return $escape->($self->_maketext(@_)); },
+        };
+    }
+    else {
+        $cleanvars = {
+            ( %$vars,
+              %{$self->{additional_vars} // {}},
+              %$cvars,
+              text => sub { return $self->_maketext(@_); },
+            )
+        };
+    }
 
     my $output;
     my $config;

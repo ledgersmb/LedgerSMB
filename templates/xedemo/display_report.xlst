@@ -1,4 +1,4 @@
-<?lsmb PROCESS "dynatable.xlst" 
+<?lsmb PROCESS "dynatable.xlst"
 
 HEADS 2;
 
@@ -10,17 +10,17 @@ END;
 
 ?>
 <workbook>
-<worksheet name="<?lsmb text('Title Page') ?>" rows="<?lsmb HEADS ?>" 
+<worksheet name="<?lsmb text('Title Page') | html ?>" rows="<?lsmb HEADS ?>" 
            columns="2">
-<row><cell text="<?lsmb text('Report Name') ?>:" />
-     <cell text="<?lsmb name ?>" />
+<row><cell text="<?lsmb text('Report Name') | html ?>:" />
+     <cell text="<?lsmb name | html ?>" />
 </row>
-<row><cell text="<?lsmb text('Company') ?>:" />
-     <cell text="<?lsmb request.company ?>" />
+<row><cell text="<?lsmb text('Company') | html ?>:" />
+     <cell text="<?lsmb request.company | html ?>" />
 </row>
 <?lsmb FOREACH HLINE IN hlines -?>
-<row><cell text="<?lsmb HLINE.text ?>:" />
-     <cell text="<?lsmb request.${HLINE.name} ?>" />
+<row><cell text="<?lsmb HLINE.text | html ?>:" />
+     <cell text="<?lsmb request.${HLINE.name} | html ?>" />
 </row>
 <?lsmb END -?>
 </worksheet>

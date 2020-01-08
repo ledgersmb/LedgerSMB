@@ -124,7 +124,7 @@ password_strings = 'title:"' _ text("Change Password") _
         </div>
         <div data-dojo-type="dijit/layout/ContentPane" title="Password" data-dojo-props="selected:true">
           <div data-dojo-type='lsmb/users/ChangePassword'
-               data-dojo-properties="lstrings:{<?lsmb escape(password_strings) ?>}"></div>
+               data-dojo-properties="lstrings:{<?lsmb password_strings | html ?>}"></div>
         </div>
     </div>
 </div>

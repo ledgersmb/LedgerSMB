@@ -20,10 +20,10 @@ use warnings;
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
-use LedgerSMB::Template::HTML;
 
 use Carp;
 use File::Spec;
+use HTML::Escape;
 use HTML::Entities;
 use Template;
 
@@ -89,7 +89,6 @@ sub new_UI {
                    File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
                                         File::Spec->tmpdir ),
                 VARIABLES => {
-                    escape => \&LedgerSMB::Template::HTML::escape,
                     LIST_FORMATS => sub {
                         return _available_formats();
                     },
@@ -146,7 +145,7 @@ sub render_string {
     my $cleanvars = {
         ( %{LedgerSMB::Template::preprocess(
                 $vars,
-                \&LedgerSMB::Template::HTML::escape)},
+                sub { return escape_html($_[0]); }) },
           %{$self->{standard_vars}},
           dojo_theme => (
               $request->{_company_config}->{dojo_theme}
