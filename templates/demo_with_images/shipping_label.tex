@@ -1,23 +1,23 @@
-<?lsmb FILTER latex { format=FORMAT _ "(pdflatex)" } ?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } ?>
 \documentclass{scrartcl}
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
 \usepackage[paperheight=10.5cm, paperwidth=16.2cm,top=1cm,bottom=1.5cm,left=2cm,right=2cm]{geometry}
 \begin{document}
 <?lsmb IF shiptoaddress1 ?>
-\noindent <?lsmb name ?>\\
-<?lsmb shiptoaddress1 ?>\\
-<?lsmb IF shiptoaddress2; shiptoaddress2 ?>\\ <?lsmb END ?>
-<?lsmb- shiptocity ?>
+\noindent <?lsmb name | escape ?>\\
+<?lsmb shiptoaddress1 | escape ?>\\
+<?lsmb IF shiptoaddress2; shiptoaddress2 | escape ?>\\ <?lsmb END ?>
+<?lsmb- shiptocity | escape ?>
 <?lsmb IF shiptostate -?>
-\hspace{-0.1cm}, <?lsmb shiptostate ?><?lsmb END ?> <?lsmb shiptozipcode ?>\\
-<?lsmb shiptocountry ?>
+\hspace{-0.1cm}, <?lsmb shiptostate | escape ?><?lsmb END ?> <?lsmb shiptozipcode | escape ?>\\
+<?lsmb shiptocountry | escape ?>
 <?lsmb ELSE ?>
-\noindent <?lsmb name ?>\\
-<?lsmb address1 ?> \\
-<?lsmb- IF address2; address2 ?> \\<?lsmb END ?>
-<?lsmb- city ?>
-<?lsmb- IF state -?>, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>\\
+\noindent <?lsmb name | escape ?>\\
+<?lsmb address1 | escape ?> \\
+<?lsmb- IF address2; address2 | escape ?> \\<?lsmb END ?>
+<?lsmb- city | escape ?>
+<?lsmb- IF state -?>, <?lsmb state | escape ?> <?lsmb END ?> <?lsmb zipcode | escape ?>\\
 <?lsmb END ?>
 
 \end{document}

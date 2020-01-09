@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?lsmb text('Time Card') ?></title>
+  <title><?lsmb text('Time Card') | html ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body bgcolor=ffffff>
@@ -15,7 +15,7 @@
 
     <th colspan=3>
       <h4 style="text-transform:uppercase">
-        <?lsmb text('Time Card') ?></h4>
+        <?lsmb text('Time Card') | html ?></h4>
     </th>
   </tr>
 
@@ -28,12 +28,12 @@
           <td>
             <table>
               <tr>
-                <th align=left><?lsmb text('Employee') ?></th>
-                <td><?lsmb employee ?></td>
+                <th align=left><?lsmb text('Employee') | html ?></th>
+                <td><?lsmb employee | html ?></td>
               </tr>
               <tr>
-                <th align=left><?lsmb text('ID') ?></th>
-                <td><?lsmb employee_id ?></td>
+                <th align=left><?lsmb text('ID') | html ?></th>
+                <td><?lsmb employee_id | html ?></td>
               </tr>
             </table>
           </td>
@@ -41,24 +41,24 @@
           <td align=right>
             <table>
               <tr>
-                <th align=left nowrap><?lsmb text('Card ID') ?></th>
-                <td><?lsmb id ?></td>
+                <th align=left nowrap><?lsmb text('Card ID') | html ?></th>
+                <td><?lsmb id | html ?></td>
               </tr>
               <tr>
-                <th align=left nowrap><?lsmb text('Date') ?></th>
-                <td><?lsmb transdate ?></td>
+                <th align=left nowrap><?lsmb text('Date') | html ?></th>
+                <td><?lsmb transdate | html ?></td>
               </tr>
               <tr>
-                <th align=left nowrap><?lsmb text('In') ?></th>
-                <td><?lsmb checkedin ?></td>
+                <th align=left nowrap><?lsmb text('In') | html ?></th>
+                <td><?lsmb checkedin | html ?></td>
               </tr>
               <tr>
-                <th align=left><?lsmb text('Out') ?></th>
-                <td><?lsmb checkedout ?></td>
+                <th align=left><?lsmb text('Out') | html ?></th>
+                <td><?lsmb checkedout | html ?></td>
               </tr>
               <tr>
-                <th align=left nowrap><?lsmb text('Hours') ?></th>
-                <td><?lsmb qty ?></td>
+                <th align=left nowrap><?lsmb text('Hours') | html ?></th>
+                <td><?lsmb qty | html ?></td>
               </tr>
             </table>
           </td>
@@ -78,32 +78,32 @@
           <td>
             <table>
               <tr valign=top>
-                <th align=left><?lsmb text('Job/Project #') ?></th>
-                <td><?lsmb projectnumber ?></td>
+                <th align=left><?lsmb text('Job/Project #') | html ?></th>
+                <td><?lsmb projectnumber | html ?></td>
               </tr>
               <tr>
-                <th align=left><?lsmb text('Description') ?></th>
-                <td><?lsmb projectdescription ?></td>
+                <th align=left><?lsmb text('Description') | html ?></th>
+                <td><?lsmb projectdescription | html ?></td>
               </tr>
               <tr valign=top>
-                <th align=left><?lsmb text('Labor/Service Code') ?></th>
-                <td><?lsmb partnumber ?></td>
+                <th align=left><?lsmb text('Labor/Service Code') | html ?></th>
+                <td><?lsmb partnumber | html ?></td>
               </tr>
               <tr>
-                <th align=left><?lsmb text('Description') ?></th>
-                <td><?lsmb description ?></td>
+                <th align=left><?lsmb text('Description') | html ?></th>
+                <td><?lsmb description | html ?></td>
               </tr>
             </table>
           </td>
           <td align=right>
             <table>
               <tr>
-                <th align=right><?lsmb text('Rate') ?></th>
-                <td><?lsmb sellprice ?></td>
+                <th align=right><?lsmb text('Rate') | html ?></th>
+                <td><?lsmb sellprice | html ?></td>
               </tr>
               <tr>
-                <th align=right><?lsmb text('Total') ?></th>
-                <td><?lsmb total ?></td>
+                <th align=right><?lsmb text('Total') | html ?></th>
+                <td><?lsmb total | html ?></td>
               </tr>
             </table>
           </td>
@@ -119,7 +119,7 @@
     <td>&nbsp;</td>
 
           <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
-                    <p><?lsmb P ?></p>
+                    <p><?lsmb P | html ?></p>
                <?lsmb END ?></td>
   </tr>
   <?lsmb END ?>

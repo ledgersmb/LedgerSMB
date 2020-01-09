@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?lsmb text('Request for Quotation') ?></title>
+  <title><?lsmb text('Request for Quotation') | html ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body bgcolor=ffffff>
@@ -15,7 +15,7 @@
 
     <th colspan=3>
       <h4 style="text-transform:uppercase">
-        <?lsmb text('Request for Quotation') ?><h4>
+        <?lsmb text('Request for Quotation') | html ?><h4>
     </th>
   </tr>
 
@@ -25,66 +25,66 @@
     <td>
       <table width="100%">
         <tr bgcolor=000000>
-          <th align=left width="50%"><font color=ffffff><?lsmb text('To:') ?>
+          <th align=left width="50%"><font color=ffffff><?lsmb text('To:') | html ?>
          </th>
-          <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To:') ?>
+          <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To:') | html ?>
          </th>
         </tr>
 
         <tr valign=top>
-          <td><?lsmb name ?>
-          <br><?lsmb address1 ?>
+          <td><?lsmb name | html ?>
+          <br><?lsmb address1 | html ?>
           <?lsmb IF address2 ?>
-          <br><?lsmb address2 ?>
+          <br><?lsmb address2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb city ?>
+          <br><?lsmb city | html ?>
           <?lsmb IF state ?>
-          , <?lsmb state ?>
+          , <?lsmb state | html ?>
           <?lsmb END ?>
-          <?lsmb zipcode ?>
+          <?lsmb zipcode | html ?>
           <?lsmb IF country ?>
-          <br><?lsmb country ?>
+          <br><?lsmb country | html ?>
           <?lsmb END ?>
           <br>
 
           <?lsmb IF contact ?>
-          <br><?lsmb text('Attn: [_1]', contact) ?>
+          <br><?lsmb text('Attn: [_1]', contact) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF vendorphone ?>
-          <br><?lsmb text('Tel: [_1]', vendorphone) ?>
+          <br><?lsmb text('Tel: [_1]', vendorphone) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF vendorfax ?>
-          <br><?lsmb text('Fax: [_1]', vendorfax) ?>
+          <br><?lsmb text('Fax: [_1]', vendorfax) | html ?>
           <?lsmb END ?>
           </td>
 
-          <td><?lsmb shiptoname ?>
-          <br><?lsmb shiptoaddress1 ?>
+          <td><?lsmb shiptoname | html ?>
+          <br><?lsmb shiptoaddress1 | html ?>
           <?lsmb IF shiptoaddress2 ?>
-          <br><?lsmb shiptoaddr2 ?>
+          <br><?lsmb shiptoaddr2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb shiptocity ?>
+          <br><?lsmb shiptocity | html ?>
           <?lsmb IF shiptostate ?>
-          , <?lsmb shiptostate ?>
+          , <?lsmb shiptostate | html ?>
           <?lsmb END ?>
-          <?lsmb shiptozipcode ?>
+          <?lsmb shiptozipcode | html ?>
           <?lsmb IF shiptocountry ?>
-          <br><?lsmb shiptocountry ?>
+          <br><?lsmb shiptocountry | html ?>
           <?lsmb END ?>
           <br>
 
           <?lsmb IF shiptocontact ?>
-          <br><?lsmb text('Attn: [_1]', shiptocontact) ?>
+          <br><?lsmb text('Attn: [_1]', shiptocontact) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF shiptophone ?>
-          <br><?lsmb text('Tel: [_1]', shiptophone) ?>
+          <br><?lsmb text('Tel: [_1]', shiptophone) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF shiptofax ?>
-          <br><?lsmb text('Fax: [_1]', shiptofax) ?>
+          <br><?lsmb text('Fax: [_1]', shiptofax) | html ?>
           <?lsmb END ?>
           </td>
         </tr>
@@ -100,21 +100,21 @@
     <td>
       <table width=100% border=1>
         <tr>
-          <th width=17% align=left><?lsmb text('RFQ #') ?></th>
-          <th width=17% align=left><?lsmb text('Date') ?></th>
-          <th width=17% align=left><?lsmb text('Required by') ?></th>
-          <th width=17% align=left><?lsmb text('Contact') ?></th>
-          <th width=17% align=left><?lsmb text('Shipping Point') ?></th>
-          <th width=15% align=left><?lsmb text('Ship via') ?></th>
+          <th width=17% align=left><?lsmb text('RFQ #') | html ?></th>
+          <th width=17% align=left><?lsmb text('Date') | html ?></th>
+          <th width=17% align=left><?lsmb text('Required by') | html ?></th>
+          <th width=17% align=left><?lsmb text('Contact') | html ?></th>
+          <th width=17% align=left><?lsmb text('Shipping Point') | html ?></th>
+          <th width=15% align=left><?lsmb text('Ship via') | html ?></th>
         </tr>
 
         <tr>
-          <td><?lsmb quonumber ?></td>
-          <td><?lsmb quodate ?></td>
-          <td><?lsmb reqdate ?>&nbsp;</td>
-          <td><?lsmb employee ?></td>
-          <td><?lsmb shippingpoint ?>&nbsp;</td>
-          <td><?lsmb shipvia ?>&nbsp;</td>
+          <td><?lsmb quonumber | html ?></td>
+          <td><?lsmb quodate | html ?></td>
+          <td><?lsmb reqdate | html ?>&nbsp;</td>
+          <td><?lsmb employee | html ?></td>
+          <td><?lsmb shippingpoint | html ?>&nbsp;</td>
+          <td><?lsmb shipvia | html ?>&nbsp;</td>
         </tr>
       </table>
     </td>
@@ -125,7 +125,7 @@
   <tr>
     <td>&nbsp;</td>
 
-    <td><?lsmb text('Please provide price and delivery time for the following items:') ?></td>
+    <td><?lsmb text('Please provide price and delivery time for the following items:') | html ?></td>
   </tr>
 
   <tr height="10"></tr>
@@ -136,24 +136,24 @@
     <td>
       <table width="100%">
         <tr>
-          <th align=right><?lsmb text('Item') ?></th>
-          <th align=left><?lsmb text('Number') ?></th>
-          <th align=left><font color=ffffff><?lsmb text('Description') ?></th>
-          <th><?lsmb text('Qty') ?></th>
+          <th align=right><?lsmb text('Item') | html ?></th>
+          <th align=left><?lsmb text('Number') | html ?></th>
+          <th align=left><font color=ffffff><?lsmb text('Description') | html ?></th>
+          <th><?lsmb text('Qty') | html ?></th>
           <th>&nbsp;</th>
-          <th><?lsmb text('Delivery') ?></th>
-          <th<?lsmb text('Unit Price') ?></th>
-          <th<?lsmb text('Extended') ?></th>
+          <th><?lsmb text('Delivery') | html ?></th>
+          <th<?lsmb text('Unit Price') | html ?></th>
+          <th<?lsmb text('Extended') | html ?></th>
         </tr>
 
         <?lsmb FOREACH number ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr valign=top>
-          <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
-          <td><?lsmb number.${loop_count} ?></td>
+          <td align=right><?lsmb runningnumber.${loop_count} | html ?>.</td>
+          <td><?lsmb number.${loop_count} | html ?></td>
           <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
-          <td align=right><?lsmb qty.${loop_count} ?></td>
-          <td><?lsmb unit.${loop_count} ?></td>
+          <td align=right><?lsmb qty.${loop_count} | html ?></td>
+          <td><?lsmb unit.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
 
@@ -174,7 +174,7 @@
         <tr valign=top>
           <td<?lsmb text('Notes') ?></td>
           <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
-                    <p><?lsmb P ?></p>
+                    <p><?lsmb P | html ?></p>
                <?lsmb END ?></td>
         </tr>
 

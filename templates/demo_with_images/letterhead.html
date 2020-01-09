@@ -6,8 +6,8 @@
         <tr>
           <td>
             <h4>
-            <?lsmb company ?><br>
-            <?lsmb address ?>
+            <?lsmb company | html ?><br>
+            <?lsmb address | html ?>
             </h4>
           </td>
           <!-- Commenting out the image tag for now.  In general, folks can
@@ -18,8 +18,8 @@
 
           <td align=right>
             <h4>
-            <?lsmb text('Tel: [_1]', tel) ?><br>
-            <?lsmb text('Fax: [_1]', fax) ?>
+            <?lsmb text('Tel: [_1]', tel) | html ?><br>
+            <?lsmb text('Fax: [_1]', fax) | html ?>
             </h4>
           </td>
         </tr>

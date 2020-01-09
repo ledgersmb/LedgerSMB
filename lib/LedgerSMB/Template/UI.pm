@@ -127,6 +127,46 @@ be HTML encoded and ready for inclusion in the generated HTML output.
 
 =cut
 
+sub _preprocess {
+    my ($rawvars, $escape) = @_;
+    return undef unless defined $rawvars;
+
+    local $@ = undef;
+    if (eval {$rawvars->can('to_output')}){
+        $rawvars = $rawvars->to_output;
+    }
+    my $type = ref $rawvars;
+    return $rawvars if $type =~ /^LedgerSMB::Locale/;
+
+    my $vars;
+    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
+    if ( $reftype and $reftype eq 'ARRAY' ) {
+        $vars = [];
+        for (@{$rawvars}) {
+            push @{$vars}, preprocess( $_, $escape );
+        }
+    } elsif (!$type) {
+        return $escape->($rawvars);
+    } elsif ($reftype eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+        return $escape->($$rawvars);
+    } elsif ($reftype eq 'CODE'){ # a code reference makes no sense
+        return $rawvars;
+    } elsif ($reftype eq 'HASH') { # Hashes and objects
+        $vars = {};
+        for ( keys %{$rawvars} ) {
+            # don't encode the object's internals; TT won't forward anyway...
+            # btw, some (internal) objects are XS objects, on which this trick
+            # treating it as a hashref really doesn't work...
+            next if /^_/;
+            $vars->{$_} = preprocess( $rawvars->{$_}, $escape );
+        }
+    }
+    # return undef for GLOB references (includes IO::File objects)
+    return $vars;
+}
+
+
+
 sub render_string {
     my ($self, $request, $template, $vars, $cvars) = @_;
     my $locale;
@@ -143,7 +183,7 @@ sub render_string {
         $locale = $request->{_locale};
     }
     my $cleanvars = {
-        ( %{LedgerSMB::Template::preprocess(
+        ( %{_preprocess(
                 $vars,
                 sub { return escape_html($_[0]); }) },
           %{$self->{standard_vars}},

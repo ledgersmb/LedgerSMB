@@ -1,16 +1,16 @@
-<?lsmb FILTER latex { format=FORMAT _ "(pdflatex)" } ?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } ?>
 \documentclass{scrartcl}
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
 \usepackage[paperheight=11cm, paperwidth=23cm,top=3.5cm,bottom=3cm,left=12cm,right=1cm]{geometry}
 \begin{document}
 \thispagestyle{empty}
-\noindent <?lsmb name ?>\\
-<?lsmb address1 ?> \\
+\noindent <?lsmb name | escape ?>\\
+<?lsmb address1 | escape ?> \\
 <?lsmb- IF address2 ?>
-<?lsmb address2 ?> \\
+<?lsmb address2 | escape ?> \\
 <?lsmb- END ?>
-<?lsmb city ?>
-<?lsmb- IF state -?>, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>\\
+<?lsmb city | escape ?>
+<?lsmb- IF state -?>, <?lsmb state | escape ?> <?lsmb END ?> <?lsmb zipcode | escape ?>\\
 \end{document}
 <?lsmb END ?>

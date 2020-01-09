@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?lsmb text('Statement') ?></title>
+  <title><?lsmb text('Statement') | html ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body bgcolor=ffffff>
@@ -16,14 +16,14 @@
     <td width=10>&nbsp;</td>
 
     <th colspan=3><h4 style="text-transform:uppercase">
-         <?lsmb text('Statement') ?></h4></th>
+         <?lsmb text('Statement') | html ?></h4></th>
 
   </tr>
 
   <tr>
     <td>&nbsp;</td>
 
-    <td colspan=3 align=right><?lsmb statementdate ?></td>
+    <td colspan=3 align=right><?lsmb statementdate | html ?></td>
   </tr>
 
   <tr>
@@ -32,16 +32,16 @@
     <td>
       <table width="100%">
         <tr valign=top>
-          <td><?lsmb statement.entity.name ?>
-          <br><?lsmb statement.address.line_one ?>
+          <td><?lsmb statement.entity.name | html ?>
+          <br><?lsmb statement.address.line_one | html ?>
           <?lsmb IF statement.address.line_two ?>
-          <br><?lsmb statement.address.line_two ?>
+          <br><?lsmb statement.address.line_two | html ?>
           <?lsmb END ?>
-          <br><?lsmb statement.address.city ?>
+          <br><?lsmb statement.address.city | html ?>
           <?lsmb IF statement.address.state ?>
-          , <?lsmb statement.address.state ?>
+          , <?lsmb statement.address.state | html ?>
           <?lsmb END ?>
-          <?lsmb statement.address.mail_code ?>
+          <?lsmb statement.address.mail_code | html ?>
           <br>
           </td>
         </tr>
@@ -57,26 +57,26 @@
     <td>
       <table width="100%">
         <tr>
-          <th align=left><?lsmb text('Invoice #') ?></th>
-          <th align=left><?lsmb text('Order #') ?></th>
-          <th width="10%"><?lsmb text('Date') ?></th>
-          <th width="10%"><?lsmb text('Due') ?></th>
-          <th width="10%"><?lsmb text('Current') ?></th>
-          <th width="10%"><?lsmb text('30') ?></th>
-          <th width="10%"><?lsmb text('60') ?></th>
-          <th width="10%"><?lsmb text('90') ?></th>
+          <th align=left><?lsmb text('Invoice #') | html ?></th>
+          <th align=left><?lsmb text('Order #') | html ?></th>
+          <th width="10%"><?lsmb text('Date') | html ?></th>
+          <th width="10%"><?lsmb text('Due') | html ?></th>
+          <th width="10%"><?lsmb text('Current') | html ?></th>
+          <th width="10%"><?lsmb text('30') | html ?></th>
+          <th width="10%"><?lsmb text('60') | html ?></th>
+          <th width="10%"><?lsmb text('90') | html ?></th>
         </tr>
 
         <?lsmb- FOREACH invoice IN statement.aging.rows ?>
         <tr>
-          <td><?lsmb invoice.invnumber ?></td>
-          <td><?lsmb invoice.ordnumber ?></td>
-          <td><?lsmb invoice.transdate ?></td>
-          <td><?lsmb invoice.duedate ?></td>
-          <td align=right><?lsmb invoice.c0 ?></td>
-          <td align=right><?lsmb invoice.c30 ?></td>
-          <td align=right><?lsmb invoice.c60 ?></td>
-          <td align=right><?lsmb invoice.c90 ?></td>
+          <td><?lsmb invoice.invnumber | html ?></td>
+          <td><?lsmb invoice.ordnumber | html ?></td>
+          <td><?lsmb invoice.transdate | html ?></td>
+          <td><?lsmb invoice.duedate | html ?></td>
+          <td align=right><?lsmb invoice.c0 | html ?></td>
+          <td align=right><?lsmb invoice.c30 | html ?></td>
+          <td align=right><?lsmb invoice.c60 | html ?></td>
+          <td align=right><?lsmb invoice.c90 | html ?></td>
         </tr>
         <?lsmb END -?>
 
@@ -89,10 +89,10 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <th align=right><?lsmb statement.aging.c0total ?></td>
-          <th align=right><?lsmb statement.aging.c30total ?></td>
-          <th align=right><?lsmb statement.aging.c60total ?></td>
-          <th align=right><?lsmb statement.aging.c90total ?></td>
+          <th align=right><?lsmb statement.aging.c0total | html ?></td>
+          <th align=right><?lsmb statement.aging.c30total | html ?></td>
+          <th align=right><?lsmb statement.aging.c60total | html ?></td>
+          <th align=right><?lsmb statement.aging.c90total | html ?></td>
         </tr>
       </table>
     </td>
@@ -106,8 +106,8 @@
     <td align=right>
       <table width="50%">
         <tr>
-          <th><?lsmb text('Total Outstanding') ?></th>
-          <th align=right><?lsmb statement.aging.total ?></th>
+          <th><?lsmb text('Total Outstanding') | html ?></th>
+          <th align=right><?lsmb statement.aging.total | html ?></th>
         </tr>
       </table>
     </td>

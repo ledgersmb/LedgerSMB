@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?lsmb text('Bin List') ?></title>
+  <title><?lsmb text('Bin List') | html ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body bgcolor=ffffff>
@@ -15,7 +15,7 @@
 
     <th colspan=3>
       <h4 style="text-transform:uppercase">
-         <?lsmb text('Bin List') ?></h4>
+         <?lsmb text('Bin List') | html ?></h4>
     </th>
   </tr>
 
@@ -25,71 +25,71 @@
     <td>
       <table width=100% cellspacing=0 cellpadding=0>
         <tr bgcolor=000000>
-          <th align=left width="50%"><font color=ffffff><?lsmb text('From') ?>
+          <th align=left width="50%"><font color=ffffff><?lsmb text('From') | html ?>
           </th>
-          <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To') ?>
+          <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To') | html ?>
           </th>
         </tr>
 
         <tr valign=top>
-          <td><?lsmb name ?>
-          <br><?lsmb address1 ?>
+          <td><?lsmb name | html ?>
+          <br><?lsmb address1 | html ?>
           <?lsmb IF address2 ?>
-          <br><?lsmb address2 ?>
+          <br><?lsmb address2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb city ?>
+          <br><?lsmb city | html ?>
           <?lsmb IF state ?>
-          , <?lsmb state ?>
+          , <?lsmb state | html ?>
           <?lsmb END ?>
-          <?lsmb zipcode ?>
+          <?lsmb zipcode | html ?>
           <?lsmb IF country ?>
-          <?lsmb country ?>
+          <?lsmb country | html ?>
           <?lsmb END ?>
           <br>
 
           <?lsmb IF contact ?>
-          <br><?lsmb text('Attn: [_1]', contact) ?>
+          <br><?lsmb text('Attn: [_1]', contact) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF vendorphone ?>
-          <br><?lsmb text('Tel: [_1]', vendorphone) ?>
+          <br><?lsmb text('Tel: [_1]', vendorphone) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF vendorfax ?>
-          <br><?lsmb text('Fax: [_1]', vendorfax) ?>
+          <br><?lsmb text('Fax: [_1]', vendorfax) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF email ?>
-          <br><?lsmb email ?>
+          <br><?lsmb email | html ?>
           <?lsmb END ?>
 
           </td>
 
-          <td><?lsmb shiptoname ?>
-          <br><?lsmb shiptoaddress1 ?>
+          <td><?lsmb shiptoname | html ?>
+          <br><?lsmb shiptoaddress1 | html ?>
           <?lsmb IF shiptoaddress2 ?>
-          <br><?lsmb shiptoaddress2 ?>
+          <br><?lsmb shiptoaddress2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb shiptocity ?>
+          <br><?lsmb shiptocity | html ?>
           <?lsmb IF shiptostate ?>
-          , <?lsmb shiptostate ?>
+          , <?lsmb shiptostate | html ?>
           <?lsmb END ?>
-          <?lsmb shiptozipcode ?>
+          <?lsmb shiptozipcode | html ?>
           <?lsmb IF shiptocountry ?>
-          <?lsmb shiptocountry ?>
+          <?lsmb shiptocountry | html ?>
           <?lsmb END ?>
 
           <br>
           <?lsmb IF shiptocontact ?>
-          <br><?lsmb text('Attn: [_1]', shiptocontact) ?>
+          <br><?lsmb text('Attn: [_1]', shiptocontact) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF shiptophone ?>
-          <br><?lsmb text('Tel: [_1]', shiptophone) ?>
+          <br><?lsmb text('Tel: [_1]', shiptophone) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF shiptofax ?>
-          <br><?lsmb text('Fax: [_1]', shiptofax) ?>
+          <br><?lsmb text('Fax: [_1]', shiptofax) | html ?>
           <?lsmb END ?>
           </td>
         </tr>
@@ -105,33 +105,33 @@
     <td>
       <table width=100% border=1>
         <tr>
-          <th width=17% align=left nowrap><?lsmb text('Order #') ?></th>
-          <th width=17% align=left nowrap><?lsmb text('Date') ?></th>
-          <th width=17% align=left nowrap><?lsmb text('Contact') ?></th>
+          <th width=17% align=left nowrap><?lsmb text('Order #') | html ?></th>
+          <th width=17% align=left nowrap><?lsmb text('Date') | html ?></th>
+          <th width=17% align=left nowrap><?lsmb text('Contact') | html ?></th>
           <?lsmb IF warehouse ?>
-          <th width=17% align=left nowrap><?lsmb text('Warehouse') ?></th>
+          <th width=17% align=left nowrap><?lsmb text('Warehouse') | html ?></th>
           <?lsmb END ?>
-          <th width=17% align=left><?lsmb text('Shipping Point') ?></th>
-          <th width=15% align=left><?lsmb text('Ship via') ?></th>
+          <th width=17% align=left><?lsmb text('Shipping Point') | html ?></th>
+          <th width=15% align=left><?lsmb text('Ship via') | html ?></th>
         </tr>
 
         <tr>
-          <td><?lsmb ordnumber ?>&nbsp;</td>
+          <td><?lsmb ordnumber | html ?>&nbsp;</td>
 
           <?lsmb IF shippingdate ?>
-          <td><?lsmb shippingdate ?></td>
+          <td><?lsmb shippingdate | html ?></td>
           <?lsmb ELSE ?>
-          <td><?lsmb orddate ?></td>
+          <td><?lsmb orddate | html ?></td>
           <?lsmb END ?>
 
-          <td><?lsmb employee ?>&nbsp;</td>
+          <td><?lsmb employee | html ?>&nbsp;</td>
 
           <?lsmb IF warehouse ?>
-          <td><?lsmb warehouse ?></td>
+          <td><?lsmb warehouse | html ?></td>
           <?lsmb END ?>
 
-          <td><?lsmb shippingpoint ?>&nbsp;</td>
-          <td><?lsmb shipvia ?>&nbsp;</td>
+          <td><?lsmb shippingpoint | html ?>&nbsp;</td>
+          <td><?lsmb shipvia | html ?>&nbsp;</td>
         </tr>
       </table>
     </td>
@@ -143,29 +143,29 @@
     <td>
       <table width="100%">
         <tr bgcolor=000000>
-          <th align=left><font color=ffffff><?lsmb text('Item') ?></th>
-          <th align=left><font color=ffffff><?lsmb text('Number') ?></th>
-          <th align=left><font color=ffffff><?lsmb text('Description') ?></th>
-          <th><font color=ffffff><?lsmb text('Serialnumber') ?></th>
+          <th align=left><font color=ffffff><?lsmb text('Item') | html ?></th>
+          <th align=left><font color=ffffff><?lsmb text('Number') | html ?></th>
+          <th align=left><font color=ffffff><?lsmb text('Description') | html ?></th>
+          <th><font color=ffffff><?lsmb text('Serialnumber') | html ?></th>
           <th>&nbsp;</th>
-          <th><font color=ffffff><?lsmb text('Qty') ?></th>
-          <th><font color=ffffff><?lsmb text('Recd') ?></th>
+          <th><font color=ffffff><?lsmb text('Qty') | html ?></th>
+          <th><font color=ffffff><?lsmb text('Recd') | html ?></th>
           <th>&nbsp;</th>
-          <th><font color=ffffff><?lsmb text('Bin') ?></th>
+          <th><font color=ffffff><?lsmb text('Bin') | html ?></th>
         </tr>
 
         <?lsmb FOREACH number ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr valign=top>
-          <td><?lsmb runningnumber.${loop_count} ?></td>
-          <td><?lsmb number.${loop_count} ?></td>
-          <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
-          <td><?lsmb serialnumber.${loop_count} ?></td>
-          <td><?lsmb deliverydate.${loop_count} ?></td>
-          <td align=right><?lsmb qty.${loop_count} ?></td>
-          <td align=right><?lsmb ship.${loop_count} ?></td>
-          <td><?lsmb unit.${loop_count} ?></td>
-          <td><?lsmb bin.${loop_count} ?></td>
+          <td><?lsmb runningnumber.${loop_count} | html ?></td>
+          <td><?lsmb number.${loop_count} | html ?></td>
+          <td><?lsmb item_description.${loop_count}.replace("\n","<br />") | html ?></td>
+          <td><?lsmb serialnumber.${loop_count} | html ?></td>
+          <td><?lsmb deliverydate.${loop_count} | html ?></td>
+          <td align=right><?lsmb qty.${loop_count} | html ?></td>
+          <td align=right><?lsmb ship.${loop_count} | html ?></td>
+          <td><?lsmb unit.${loop_count} | html ?></td>
+          <td><?lsmb bin.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
 

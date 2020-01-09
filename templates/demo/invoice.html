@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?lsmb text('Invoice') ?></title>
+  <title><?lsmb text('Invoice') | html ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -14,7 +14,7 @@
 
     <th colspan=3>
       <h4 style="text-transform:uppercase">
-          <?lsmb IF reverse; text('Credit Invoice'); ELSE; text('Invoice'); END; ?>
+          <?lsmb IF reverse; text('Credit Invoice'); ELSE; text('Invoice'); END; | html ?>
     </th>
   </tr>
 
@@ -24,75 +24,75 @@
     <td>
       <table width=100% cellspacing=0 cellpadding=0>
         <tr bgcolor=000000>
-          <th align=left width="50%"><font color=ffffff><?lsmb text('To') ?></th>
-          <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To') ?>
+          <th align=left width="50%"><font color=ffffff><?lsmb text('To') | html ?></th>
+          <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To') | html ?>
           </th>
         </tr>
 
         <tr valign=top>
-          <td><?lsmb name ?>
-          <br><?lsmb address1 ?>
+          <td><?lsmb name | html ?>
+          <br><?lsmb address1 | html ?>
           <?lsmb IF address2 ?>
-          <br><?lsmb address2 ?>
+          <br><?lsmb address2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb city ?>
+          <br><?lsmb city | html ?>
           <?lsmb IF state ?>
-          , <?lsmb state ?>
+          , <?lsmb state | html ?>
           <?lsmb END ?>
-          <?lsmb zipcode ?>
+          <?lsmb zipcode | html ?>
           <?lsmb IF country ?>
-          <br><?lsmb country ?>
+          <br><?lsmb country | html ?>
           <?lsmb END ?>
           <br>
 
           <?lsmb IF contact ?>
-          <br><?lsmb contact ?>
+          <br><?lsmb contact | html ?>
           <br>
           <?lsmb END ?>
 
           <?lsmb IF customerphone ?>
-          <br><?lsmb text('Tel: [_1]', customerphone) ?>
+          <br><?lsmb text('Tel: [_1]', customerphone) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF customerfax ?>
-          <br><?lsmb text('Fax: [_1]', customerfax) ?>
+          <br><?lsmb text('Fax: [_1]', customerfax) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF email ?>
-          <br><?lsmb email ?>
+          <br><?lsmb email | html ?>
           <?lsmb END ?>
           </td>
 
-          <td><?lsmb shiptoname ?>
-          <br><?lsmb shiptoaddress1 ?>
+          <td><?lsmb shiptoname | html ?>
+          <br><?lsmb shiptoaddress1 | html ?>
           <?lsmb IF shiptoaddress2 ?>
-          <br><?lsmb shiptoaddress2 ?>
+          <br><?lsmb shiptoaddress2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb shiptocity ?>
+          <br><?lsmb shiptocity | html ?>
           <?lsmb IF shiptostate ?>
-          , <?lsmb shiptostate ?>
+          , <?lsmb shiptostate | html ?>
           <?lsmb END ?>
-          <?lsmb shiptozipcode ?>
+          <?lsmb shiptozipcode | html ?>
           <?lsmb IF shiptocountry ?>
-          <br><?lsmb shiptocountry ?>
+          <br><?lsmb shiptocountry | html ?>
           <?lsmb END ?>
           <br>
 
           <?lsmb IF shiptocontact ?>
-          <br><?lsmb shiptocontact ?>
+          <br><?lsmb shiptocontact | html ?>
           <br>
           <?lsmb END ?>
 
           <?lsmb IF shiptophone ?>
-          <br><?lsmb text('Tel: [_1]', shiptophone) ?>
+          <br><?lsmb text('Tel: [_1]', shiptophone) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF shiptofax ?>
-          <br><?lsmb text('Fax: [_1]', shiptofax) ?>
+          <br><?lsmb text('Fax: [_1]', shiptofax) | html ?>
           <?lsmb END ?>
 
           <?lsmb IF shiptoemail ?>
-          <br><?lsmb shiptoemail ?>
+          <br><?lsmb shiptoemail | html ?>
           <?lsmb END ?>
           </td>
         </tr>
@@ -108,23 +108,23 @@
     <td>
       <table width=100% border=1>
         <tr>
-          <th width=14% align=left nowrap><?lsmb text('Invoice #') ?></th>
-          <th width=14% align=left nowrap><?lsmb text('Date') ?></th>
-          <th width=14% align=left nowrap><?lsmb text('Due') ?></th>
-          <th width=14% align=left><?lsmb text('Order #') ?></th>
-          <th width=14% align=left nowrap><?lsmb text('Salesperson') ?></th>
-          <th width=14% align=left nowrap><?lsmb text('Shipping Point') ?></th>
-          <th width=14% align=left nowrap><?lsmb text('Ship via') ?></th>
+          <th width=14% align=left nowrap><?lsmb text('Invoice #') | html ?></th>
+          <th width=14% align=left nowrap><?lsmb text('Date') | html ?></th>
+          <th width=14% align=left nowrap><?lsmb text('Due') | html ?></th>
+          <th width=14% align=left><?lsmb text('Order #') | html ?></th>
+          <th width=14% align=left nowrap><?lsmb text('Salesperson') | html ?></th>
+          <th width=14% align=left nowrap><?lsmb text('Shipping Point') | html ?></th>
+          <th width=14% align=left nowrap><?lsmb text('Ship via') | html ?></th>
         </tr>
 
         <tr>
-          <td><?lsmb invnumber ?></td>
-          <td><?lsmb invdate ?></td>
-          <td><?lsmb duedate ?></td>
-          <td><?lsmb ordnumber ?>&nbsp;</td>
-          <td><?lsmb employee ?>&nbsp;</td>
-          <td><?lsmb shippingpoint ?>&nbsp;</td>
-          <td><?lsmb shipvia ?>&nbsp;</td>
+          <td><?lsmb invnumber | html ?></td>
+          <td><?lsmb invdate | html ?></td>
+          <td><?lsmb duedate | html ?></td>
+          <td><?lsmb ordnumber | html ?>&nbsp;</td>
+          <td><?lsmb employee | html ?>&nbsp;</td>
+          <td><?lsmb shippingpoint | html ?>&nbsp;</td>
+          <td><?lsmb shipvia | html ?>&nbsp;</td>
         </tr>
       </table>
     </td>
@@ -136,29 +136,29 @@
     <td>
       <table width="100%">
         <tr bgcolor=000000>
-          <th align=right><font color=ffffff><?lsmb text('Item') ?></th>
-          <th align=left><font color=ffffff><?lsmb text('Number') ?></th>
-          <th align=left><font color=ffffff><?lsmb text('Description') ?></th>
+          <th align=right><font color=ffffff><?lsmb text('Item') | html ?></th>
+          <th align=left><font color=ffffff><?lsmb text('Number') | html ?></th>
+          <th align=left><font color=ffffff><?lsmb text('Description') | html ?></th>
           <th>&nbsp;</th>
-          <th align=right><font color=ffffff><?lsmb text('Qty') ?></th>
+          <th align=right><font color=ffffff><?lsmb text('Qty') | html ?></th>
           <th>&nbsp;</th>
-          <th align=right><font color=ffffff><?lsmb text('Unit Price') ?></th>
-          <th align=right><font color=ffffff><?lsmb text('Disc %') ?></th>
-          <th align=right><font color=ffffff><?lsmb text('Extended') ?></th>
+          <th align=right><font color=ffffff><?lsmb text('Unit Price') | html ?></th>
+          <th align=right><font color=ffffff><?lsmb text('Disc %') | html ?></th>
+          <th align=right><font color=ffffff><?lsmb text('Extended') | html ?></th>
         </tr>
 
         <?lsmb FOREACH number ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr valign=top>
-          <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
-          <td><?lsmb number.${loop_count} ?></td>
-          <td><?lsmb item_description.${loop_count}.replace("\n","<br />") ?></td>
-          <td><?lsmb deliverydate.${loop_count} ?></td>
-          <td align=right><?lsmb qty.${loop_count} ?></td>
-          <td><?lsmb unit.${loop_count} ?></td>
-          <td align=right><?lsmb sellprice.${loop_count} ?></td>
-          <td align=right><?lsmb discountrate.${loop_count} ?></td>
-          <td align=right><?lsmb linetotal.${loop_count} ?></td>
+          <td align=right><?lsmb runningnumber.${loop_count} | html ?>.</td>
+          <td><?lsmb number.${loop_count} | html ?></td>
+          <td><?lsmb item_description.${loop_count}.replace("\n","<br />") | html ?></td>
+          <td><?lsmb deliverydate.${loop_count} | html ?></td>
+          <td align=right><?lsmb qty.${loop_count} | html ?></td>
+          <td><?lsmb unit.${loop_count} | html ?></td>
+          <td align=right><?lsmb sellprice.${loop_count} | html ?></td>
+          <td align=right><?lsmb discountrate.${loop_count} | html ?></td>
+          <td align=right><?lsmb linetotal.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
 
@@ -168,27 +168,27 @@
 
         <?lsmb IF tax -?>
         <tr>
-          <th colspan=7 align=right><?lsmb text('Subtotal') ?></th>
-          <td colspan=2 align=right><?lsmb subtotal ?></td>
+          <th colspan=7 align=right><?lsmb text('Subtotal') | html ?></th>
+          <td colspan=2 align=right><?lsmb subtotal | html ?></td>
         </tr>
         <?lsmb END -?>
 
         <?lsmb FOREACH tax ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr>
-          <th colspan=7 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> on <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
-          <td colspan=2 align=right><?lsmb tax.${loop_count} ?></td>
+          <th colspan=7 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> on <?lsmb taxbase.${loop_count} | html ?> @ <?lsmb taxrate.${loop_count} | html ?> %</th>
+          <td colspan=2 align=right><?lsmb tax.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
         <tr>
-          <th colspan=7 align=right><?lsmb text('Total') ?></th>
-          <td colspan=2 align=right><?lsmb invtotal ?></td>
+          <th colspan=7 align=right><?lsmb text('Total') | html ?></th>
+          <td colspan=2 align=right><?lsmb invtotal | html ?></td>
         </tr>
 
         <?lsmb IF paymentdate.0 ?>
         <tr>
-          <th colspan=7 align=right><?lsmb text('Paid') ?></th>
-          <td colspan=2 align=right>- <?lsmb paid ?></td>
+          <th colspan=7 align=right><?lsmb text('Paid') | html ?></th>
+          <td colspan=2 align=right>- <?lsmb paid | html ?></td>
         </tr>
 
         <tr>
@@ -198,8 +198,8 @@
 
         <tr>
           <td colspan=5>&nbsp;</td>
-          <th colspan=2 align=right nowrap><?lsmb text('Balance') ?></th>
-          <th colspan=2 align=right><?lsmb total ?></th>
+          <th colspan=2 align=right nowrap><?lsmb text('Balance') | html ?></th>
+          <th colspan=2 align=right><?lsmb total | html ?></th>
         </tr>
         <?lsmb END ?>
 
@@ -216,14 +216,14 @@
         <tr valign=top>
           <?lsmb IF notes ?>
           <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
-                    <p><?lsmb P ?></p>
+                    <p><?lsmb P | html ?></p>
                <?lsmb END ?></td>
           <?lsmb END ?>
 
-          <td><?lsmb text_amount ?> ***** <?lsmb decimal ?>/100</td>
+          <td><?lsmb text_amount | html ?> ***** <?lsmb decimal | html ?>/100</td>
 
           <td align=right nowrap>
-          <?lsmb text('All prices in [_1]', currency) ?>
+          <?lsmb text('All prices in [_1]', currency) | html ?>
           </td>
         </tr>
       </table>
@@ -238,7 +238,7 @@
       <table width="60%">
 
         <tr>
-          <th align=left><?lsmb text('Payments') ?></th>
+          <th align=left><?lsmb text('Payments') | html ?></th>
         </tr>
 
         <tr>
@@ -248,19 +248,19 @@
         </tr>
 
         <tr>
-          <th align=left><?lsmb text('Date') ?></th>
-          <th align=left><?lsmb text('Account') ?></th>
-          <th align=left><?lsmb text('Source') ?></th>
-          <th align=left><?lsmb text('Amount') ?></th>
+          <th align=left><?lsmb text('Date') | html ?></th>
+          <th align=left><?lsmb text('Account') | html ?></th>
+          <th align=left><?lsmb text('Source') | html ?></th>
+          <th align=left><?lsmb text('Amount') | html ?></th>
         </tr>
 
         <?lsmb FOREACH payment ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr>
-          <td><?lsmb paymentdate.${loop_count} ?></td>
-          <td><?lsmb paymentaccount.${loop_count} ?></td>
-          <td><?lsmb paymentsource.${loop_count} ?></td>
-          <td><?lsmb payment.${loop_count} ?></td>
+          <td><?lsmb paymentdate.${loop_count} | html ?></td>
+          <td><?lsmb paymentaccount.${loop_count} | html ?></td>
+          <td><?lsmb paymentsource.${loop_count} | html ?></td>
+          <td><?lsmb payment.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
 
@@ -275,7 +275,7 @@
     <td>&nbsp;</td>
 
     <th>
-    <?lsmb text('Thank you for your valued business!') ?>
+    <?lsmb text('Thank you for your valued business!') | html ?>
     </th>
   </tr>
 
@@ -286,8 +286,8 @@
       <table width="100%">
         <tr valign=top>
           <td width="60%"><font size=-3>
-          <?lsmb text('Payment due by [_1].', duedate) ?>
-          <?lsmb text('Items returned are subject to a 10% restocking charge. A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.', company) ?>
+          <?lsmb text('Payment due by [_1].', duedate) | html ?>
+          <?lsmb text('Items returned are subject to a 10% restocking charge. A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.', company) | html ?>
           </font>
           </td>
 
@@ -304,7 +304,7 @@
   <tr>
     <td>&nbsp;</td>
 
-    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> <?lsmb text('Registration [_1]', taxnumber.${loop_count}) ?></th>
+    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> <?lsmb text('Registration [_1]', taxnumber.${loop_count}) | html ?></th>
   </tr>
   <?lsmb END ?>
 
@@ -315,7 +315,7 @@
 
   <tr>
     <th colspan=8 align=left><font size=-2>
-       <?lsmb text('Taxes shown are included in price.') ?></th>
+       <?lsmb text('Taxes shown are included in price.') | html ?></th>
   </tr>
   <?lsmb END ?>
 

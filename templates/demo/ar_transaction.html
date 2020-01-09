@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?lsmb text('AR Transaction') ?></title>
+  <title><?lsmb text('AR Transaction') | html ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body bgcolor=ffffff>
@@ -15,7 +15,7 @@
 
     <th colspan=3>
       <h4 style="text-transform:uppercase">
-          <?lsmb text('AR Transaction') ?></h4>
+          <?lsmb text('AR Transaction') | html ?></h4>
     </th>
   </tr>
 
@@ -25,72 +25,72 @@
     <td>
       <table width=100% cellspacing=0 cellpadding=0>
         <tr valign=top>
-          <td><?lsmb name ?>
-          <br><?lsmb address1 ?>
+          <td><?lsmb name | html ?>
+          <br><?lsmb address1 | html ?>
           <?lsmb IF address2 ?>
-          <br><?lsmb address2 ?>
+          <br><?lsmb address2 | html ?>
           <?lsmb END ?>
-          <br><?lsmb city ?>
+          <br><?lsmb city | html ?>
           <?lsmb IF state ?>
-          , <?lsmb state ?>
+          , <?lsmb state | html ?>
           <?lsmb END ?>
-          <?lsmb zipcode ?>
+          <?lsmb zipcode | html ?>
           <?lsmb IF country ?>
-          <br><?lsmb country ?>
+          <br><?lsmb country | html ?>
           <?lsmb END ?>
           <br>
 
           <?lsmb IF contact ?>
-          <br><?lsmb contact ?>
+          <br><?lsmb contact | html ?>
           <br>
           <?lsmb END ?>
 
           <?lsmb IF customerphone ?>
-          <br><?lsmb text('Tel:') _ ' ' _ customerphone ?>
+          <br><?lsmb text('Tel:') _ ' ' _ customerphone | html ?>
           <?lsmb END ?>
 
           <?lsmb IF customerfax ?>
-          <br><?lsmb text('Fax:') _ ' ' _ customerfax ?>
+          <br><?lsmb text('Fax:') _ ' ' _ customerfax | html ?>
           <?lsmb END ?>
 
           <?lsmb IF email ?>
-          <br><?lsmb email ?>
+          <br><?lsmb email | html ?>
           <?lsmb END ?>
 
           <?lsmb IF customertaxnumber ?>
-          <br><?lsmb text('Taxnumber:') _ ' ' _ customertaxnumber ?>
+          <br><?lsmb text('Taxnumber:') _ ' ' _ customertaxnumber | html ?>
           <?lsmb END ?>
           </td>
 
           <td align=right>
             <table>
               <tr>
-                <th align=left nowrap><?lsmb text('Invoice #') ?></th>
-                <td><?lsmb invnumber ?></td>
+                <th align=left nowrap><?lsmb text('Invoice #') | html ?></th>
+                <td><?lsmb invnumber | html ?></td>
               </tr>
               <tr>
-                <th align=left nowrap><?lsmb text('Date') ?></th>
-                <td><?lsmb invdate ?></td>
+                <th align=left nowrap><?lsmb text('Date') | html ?></th>
+                <td><?lsmb invdate | html ?></td>
               </tr>
               <tr>
-                <th align=left nowrap><?lsmb text('Due') ?></th>
-                <td><?lsmb duedate ?></td>
+                <th align=left nowrap><?lsmb text('Due') | html ?></th>
+                <td><?lsmb duedate | html ?></td>
               </tr>
               <?lsmb IF ponumber ?>
               <tr>
-                <th align=left><?lsmb text('PO #') ?></th>
-                <td><?lsmb ponumber ?>&nbsp;</td>
+                <th align=left><?lsmb text('PO #') | html ?></th>
+                <td><?lsmb ponumber | html ?>&nbsp;</td>
               </tr>
               <?lsmb END ?>
               <?lsmb IF ordnumber ?>
               <tr>
-                <th align=left><?lsmb text('Order #') ?></th>
-                <td><?lsmb ordnumber ?>&nbsp;</td>
+                <th align=left><?lsmb text('Order #') | html ?></th>
+                <td><?lsmb ordnumber | html ?>&nbsp;</td>
               </tr>
               <?lsmb END ?>
               <tr>
-                <th align=left nowrap><?lsmb text('Salesperson') ?></th>
-                <td><?lsmb employee ?>&nbsp;</td>
+                <th align=left nowrap><?lsmb text('Salesperson') | html ?></th>
+                <td><?lsmb employee | html ?>&nbsp;</td>
               </tr>
             </table>
           </td>
@@ -109,43 +109,43 @@
         <?lsmb FOREACH account ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr valign=top>
-          <td><?lsmb accno.${loop_count} ?></td>
-          <td><?lsmb account.${loop_count} ?></td>
+          <td><?lsmb accno.${loop_count} | html ?></td>
+          <td><?lsmb account.${loop_count} | html ?></td>
           <td width=10>&nbsp;</td>
-          <td align=right><?lsmb amount.${loop_count} ?></td>
+          <td align=right><?lsmb amount.${loop_count} | html ?></td>
           <td width=10>&nbsp;</td>
-          <td><?lsmb description.${loop_count}.replace("\n","<br />") ?></td>
+          <td><?lsmb description.${loop_count}.replace("\n","<br />") | html ?></td>
           <td width=10>&nbsp;</td>
-          <td><?lsmb projectnumber.${loop_count} ?></td>
+          <td><?lsmb projectnumber.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
 
         <tr>
           <?lsmb IF taxincluded ?>
-          <th colspan=2 align=right><?lsmb text('Total') ?></th>
+          <th colspan=2 align=right><?lsmb text('Total') | html ?></th>
           <td width=10>&nbsp;</td>
-          <td align=right><?lsmb invtotal ?></td>
+          <td align=right><?lsmb invtotal | html ?></td>
           <?lsmb ELSE ?>
-          <th colspan=2 align=right><?lsmb text('Subtotal') ?></th>
+          <th colspan=2 align=right><?lsmb text('Subtotal') | html ?></th>
           <td width=10>&nbsp;</td>
-          <td align=right><?lsmb subtotal ?></td>
+          <td align=right><?lsmb subtotal | html ?></td>
           <?lsmb END ?>
         </tr>
 
         <?lsmb FOREACH tax ?>
         <?lsmb loop_count = loop.count - 1 ?>
         <tr>
-          <th colspan=2 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
+          <th colspan=2 align=right><?lsmb taxdescription.${loop_count}.replace("\n","<br />") | html ?> @ <?lsmb taxrate.${loop_count} | html ?> %</th>
           <td width=10>&nbsp;</td>
-          <td align=right><?lsmb tax.${loop_count} ?></td>
+          <td align=right><?lsmb tax.${loop_count} | html ?></td>
         </tr>
         <?lsmb END ?>
 
         <?lsmb IF NOT taxincluded ?>
         <tr>
-          <th colspan=2 align=right><?lsmb text('Total') ?></th>
+          <th colspan=2 align=right><?lsmb text('Total') | html ?></th>
           <td width=10>&nbsp;</td>
-          <td align=right><?lsmb invtotal ?></td>
+          <td align=right><?lsmb invtotal | html ?></td>
         </tr>
         <?lsmb END ?>
       </table>
@@ -156,7 +156,7 @@
     <td>&nbsp;</td>
 
     <td>
-      <?lsmb text_amount ?> ***** <?lsmb decimal ?>/100 <?lsmb currency ?>
+      <?lsmb text_amount | html ?> ***** <?lsmb decimal | html ?>/100 <?lsmb currency | html ?>
     </td>
   </tr>
 
@@ -164,7 +164,7 @@
     <td>&nbsp;</td>
 
           <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
-                    <p><?lsmb P ?></p>
+                    <p><?lsmb P | html ?></p>
                <?lsmb END ?></td>
   </tr>
 
@@ -175,7 +175,7 @@
     <td>
       <table>
         <tr>
-          <th><?lsmb text('Payments') ?></th>
+          <th><?lsmb text('Payments') | html ?></th>
         </tr>
 
         <tr>
@@ -188,20 +188,20 @@
           <td>
             <table>
               <tr>
-                <th><?lsmb text('Date') ?></th>
+                <th><?lsmb text('Date') | html ?></th>
                 <th>&nbsp;</th>
-                <th><?lsmb text('Source') ?></th>
-                <th><?lsmb text('Amount') ?></th>
+                <th><?lsmb text('Source') | html ?></th>
+                <th><?lsmb text('Amount') | html ?></th>
               </tr>
   <?lsmb END ?>
 
         <?lsmb FOREACH payment ?>
         <?lsmb loop_count = loop.count - 1 ?>
               <tr>
-                <td><?lsmb paymentdate.${loop_count} ?></td>
-                <td><?lsmb paymentaccount.${loop_count} ?></td>
-                <td><?lsmb paymentsource.${loop_count} ?></td>
-                <td align=right><?lsmb payment.${loop_count} ?></td>
+                <td><?lsmb paymentdate.${loop_count} | html ?></td>
+                <td><?lsmb paymentaccount.${loop_count} | html ?></td>
+                <td><?lsmb paymentsource.${loop_count} | html ?></td>
+                <td align=right><?lsmb payment.${loop_count} | html ?></td>
               </tr>
         <?lsmb END ?>
 
@@ -221,7 +221,7 @@
   <tr>
     <td>&nbsp;</td>
 
-    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> <?lsmb text('Registration') _ ' ' _  taxnumber.${loop_count} ?></th>
+    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count}.replace("\n","<br />") | html ?> <?lsmb text('Registration') _ ' ' _  taxnumber.${loop_count} | html ?></th>
   </tr>
   <?lsmb END ?>
 
@@ -232,7 +232,7 @@
 
   <tr>
     <th colspan=3 align=left><font size=-2>
-         <?lsmb text('Taxes shown are included in price.') ?></th>
+         <?lsmb text('Taxes shown are included in price.') | html ?></th>
   </tr>
   <?lsmb END ?>
 

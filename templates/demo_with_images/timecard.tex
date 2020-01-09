@@ -1,4 +1,4 @@
-<?lsmb FILTER latex { format=FORMAT _ "(pdflatex)" } -?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } -?>
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
@@ -14,41 +14,41 @@
 
 <?lsmb INCLUDE letterhead ?>
 
-\centerline{\textbf{\MakeUppercase{<?lsmb text('Time Card') ?>}}}
+\centerline{\textbf{\MakeUppercase{<?lsmb text('Time Card') | escape ?>}}}
 
 \vspace*{0.5cm}
 
 \begin{tabular}[t]{ll}
-  \textbf{<?lsmb text('Employee') ?>} & <?lsmb employee ?> \\
-  \textbf{<?lsmb text('ID') ?>} & <?lsmb employee_id ?> \\
+  \textbf{<?lsmb text('Employee') | escape ?>} & <?lsmb employee | escape ?> \\
+  \textbf{<?lsmb text('ID') | escape ?>} & <?lsmb employee_id | escape ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[t]{ll}
-  \textbf{<?lsmb text('Card ID') ?>} & <?lsmb id ?> \\
-  \textbf{<?lsmb text('Date') ?>} & <?lsmb transdate ?> \\
-  \textbf{<?lsmb text('In') ?>} & <?lsmb checkedin ?> \\
-  \textbf{<?lsmb text('Out') ?>} & <?lsmb checkedout ?> \\
-  \textbf{<?lsmb text('Hours') ?>} & <?lsmb qty ?> \\
+  \textbf{<?lsmb text('Card ID') | escape ?>} & <?lsmb id | escape ?> \\
+  \textbf{<?lsmb text('Date') | escape ?>} & <?lsmb transdate | escape ?> \\
+  \textbf{<?lsmb text('In') | escape ?>} & <?lsmb checkedin | escape ?> \\
+  \textbf{<?lsmb text('Out') | escape ?>} & <?lsmb checkedout | escape ?> \\
+  \textbf{<?lsmb text('Hours') | escape ?>} & <?lsmb qty | escape ?> \\
 \end{tabular}
 
 \vspace{1cm}
 
 \begin{tabular}[b]{ll}
-  \textbf{<?lsmb text('Job/Project #') ?>} & <?lsmb projectnumber ?> \\
-  \textbf{<?lsmb text('Description') ?>} & <?lsmb projectdescription ?> \\
-  \textbf{<?lsmb text('Labor/Service Code') ?>} & <?lsmb partnumber ?> \\
-  \textbf{<?lsmb text('Description') ?>} & <?lsmb description ?> \\
+  \textbf{<?lsmb text('Job/Project #') | escape ?>} & <?lsmb projectnumber | escape ?> \\
+  \textbf{<?lsmb text('Description') | escape ?>} & <?lsmb projectdescription | escape ?> \\
+  \textbf{<?lsmb text('Labor/Service Code') | escape ?>} & <?lsmb partnumber | escape ?> \\
+  \textbf{<?lsmb text('Description') | escape ?>} & <?lsmb description | escape ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[b]{lr}
-  \textbf{<?lsmb text('Rate') ?>} & <?lsmb sellprice ?> \\
-  \textbf{<?lsmb text('Total') ?>} & <?lsmb total ?> \\
+  \textbf{<?lsmb text('Rate') | escape ?>} & <?lsmb sellprice | escape ?> \\
+  \textbf{<?lsmb text('Total') | escape ?>} & <?lsmb total | escape ?> \\
 \end{tabular}
   
 \vspace{0.3cm}
 
 <?lsmb FOREACH P IN notes.split('\n{2,}') ?>
-<?lsmb P ?>\medskip
+<?lsmb P | escape ?>\medskip
 
 <?lsmb END ?>
  

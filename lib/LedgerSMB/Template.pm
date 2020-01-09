@@ -100,10 +100,6 @@ Returns the LedgerSMB::Template object itself. Dies on error.
 The rendered template result is available from the LedgerSMB::Template
 object's C<output> property, based on C<variables> and C<raw_variables>.
 
-C<variables> are escaped using the specific mechanism to the output
-format. C<raw_variables> are passed without escaping or processing
-to the template processor.
-
 
 =item get_template_source($extension)
 
@@ -115,18 +111,6 @@ extension as appropriate.
 
 Returns a hash with the default arguments for the Template and the
 desired file extention
-
-=back
-
-
-=head1 FUNCTIONS
-
-=over
-
-=item preprocess ($rawvars, $escape)
-
-Preprocess for rendering. This is not an object method, it is a standalone
-subroutine.
 
 =back
 
@@ -163,11 +147,9 @@ template processor, when available for the current format.
 
 This function looks up the translation of C<$string> in the language lexicon,
 interpolating the string's variable placeholders with the arguments provided
-in C<@args>. The resulting string will be escaped using the C<escape> function.
+in C<@args>.
 
-Note: This string looks up the exact string C<$string>, which makes it
-unsuited for translation of string values passed to the template through
-(escaped) string variable values.
+Note: This string looks up the exact string C<$string>.
 
 =item dbfile_path($name)
 =item dbfile_string($name)
@@ -203,19 +185,6 @@ In order to perform these actions, formats need to implement the following
 entry-points:
 
 =over
-
-=item escape($value)
-
-The template calls this function with one scalar value as its argument,
-repeatedly until all values to be passed to the template have been escaped.
-
-The return value is the escaped value to substitute for C<$value>. The
-escaping mechanism is format specific.
-
-=item unescape($value) [optional]
-
-The template calls this function with one scalar value as its argument,
-in order to reverse the transformation as applied by C<escape>.
 
 =item setup($parent, $variables, $output)
 
@@ -300,9 +269,6 @@ use Template::Parser;
 use Template::Provider;
 use Scalar::Util qw(reftype);
 
-use parent qw( Exporter );
-our @EXPORT_OK = qw( preprocess );
-
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub new {
@@ -351,44 +317,6 @@ sub new {
        or die "Failed to load module $self->{format}";
 
     return $self;
-}
-
-sub preprocess {
-    my ($rawvars, $escape) = @_;
-    return undef unless defined $rawvars;
-
-    local $@ = undef;
-    if (eval {$rawvars->can('to_output')}){
-        $rawvars = $rawvars->to_output;
-    }
-    my $type = ref $rawvars;
-    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
-    return $rawvars if $type =~ /^LedgerSMB::Locale/;
-
-    my $vars;
-    if ( $reftype and $reftype eq 'ARRAY' ) {
-        $vars = [];
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_, $escape );
-        }
-    } elsif (!$type) {
-        return $escape->($rawvars);
-    } elsif ($reftype eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return $escape->($$rawvars);
-    } elsif ($reftype eq 'CODE'){ # a code reference makes no sense
-        return $rawvars;
-    } elsif ($reftype eq 'HASH') { # Hashes and objects
-        $vars = {};
-        for ( keys %{$rawvars} ) {
-            # don't encode the object's internals; TT won't forward anyway...
-            # btw, some (internal) objects are XS objects, on which this trick
-            # treating it as a hashref really doesn't work...
-            next if /^_/;
-            $vars->{$_} = preprocess( $rawvars->{$_}, $escape );
-        }
-    }
-    # return undef for GLOB references (includes IO::File objects)
-    return $vars;
 }
 
 sub get_template_source {
@@ -512,37 +440,21 @@ sub _render {
     } if $vars->{DBNAME} && $LedgerSMB::Company_Config::settings;
 
     my $format = "LedgerSMB::Template::$self->{format}";
-    my $escape = $format->can('escape');
-    my $cleanvars;
-
-    if ($escape) {
-        $cleanvars = {
-            %{ preprocess($vars, $escape) },
-              %{$self->{additional_vars} // {}},
-              %$cvars,
-              text => sub { return $escape->($self->_maketext(@_)); },
-        };
-    }
-    else {
-        $cleanvars = {
-            ( %$vars,
-              %{$self->{additional_vars} // {}},
-              %$cvars,
-              text => sub { return $self->_maketext(@_); },
-            )
-        };
-    }
+    my $cleanvars = {
+        %$vars,
+        %{$self->{additional_vars} // {}},
+        %$cvars,
+        text => sub { return $self->_maketext(@_); },
+    };
 
     if ($self->{dbh}) {
         $cleanvars->{dbfile_path} = sub { $self->_dbfile_path($_[0]) };
         $cleanvars->{dbfile_string} = sub { $self->_dbfile_string($_[0]) };
         $cleanvars->{dbfile_base64} = sub { $self->_dbfile_base64($_[0]) };
     }
-    my $output;
-    my $config;
-    ($output, $config) = $format->can('setup')->($self, $cleanvars,
-                                                 \$self->{output});
 
+    my ($output, $config) = $format->can('setup')->($self, $cleanvars,
+                                                    \$self->{output});
     my $arghash = $self->get_template_args(
         $config->{input_extension},
         $config->{binmode});

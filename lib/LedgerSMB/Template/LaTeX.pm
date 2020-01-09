@@ -105,6 +105,7 @@ sub initialize_template {
 
     my %options = ( format => $config->{_format} );
     Template::Plugin::Latex->new($template->context, \%options);
+    $template->context->define_filter('escape', \&escape);
 
     return undef;
 }

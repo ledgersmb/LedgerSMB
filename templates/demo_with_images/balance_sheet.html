@@ -1,10 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html';
 
-DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
-       _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
-       _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
-       _ '&amp;col_accno=Y&amp;action=search&amp;col_running_balance=Y';
-
 max_path_depth = 0;
 FOREACH row IN report.sorted_row_ids ;
    IF max_path_depth < report.rheads.ids.$row.path.size ;
@@ -19,10 +14,10 @@ END ;
  ?>
 <body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
 <div id="PNL" class="financial-statement <?lsmb hierarchy ?> balance-sheet">  <!-- TODO: Find better name!! -->
-<h1><?lsmb text('Balance Sheet') ?></h1>
+<h1><?lsmb text('Balance Sheet') | html ?></h1>
 
-<div class="company-name"><?lsmb company_name ?></div>
-<div class="company-address"><?lsmb company_address ?></div>
+<div class="company-name"><?lsmb company_name | html ?></div>
+<div class="company-address"><?lsmb company_address | html ?></div>
 
 <table class="balancesheet" style="border-collapse: collapse">
 <colgroup class="headings">
@@ -45,7 +40,7 @@ END ;
     <tr class="report-head">
       <th colspan="<?lsmb max_path_depth ?>"> </th>
       <?lsmb FOREACH col IN report.sorted_col_ids -?>
-      <th><?lsmb report.cheads.ids.$col.props.description ?></th>
+      <th><?lsmb report.cheads.ids.$col.props.description | html ?></th>
       <?lsmb END -?>
     </tr>
 <?lsmb FOREACH row IN report.sorted_row_ids ;
@@ -75,32 +70,31 @@ END ;
   <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
 <?lsmb IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;
-  report.rheads.ids.$head_id.props.account_description; ?>
+  report.rheads.ids.$head_id.props.account_description; | html ?>
 </th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
 <?lsmb ELSE -?>
 <?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
-<?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
-<?lsmb report.rheads.ids.$row.props.account_desc ?></th>
+<?lsmb report.rheads.ids.$row.props.account_number | html ?>&nbsp;-&nbsp;<?lsmb END; -?>
+<?lsmb report.rheads.ids.$row.props.account_desc | html ?></th>
 <?lsmb FOREACH col IN report.sorted_col_ids -?>
-  <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
- DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
-           _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date ?>"><?lsmb report.cells.$row.$col ?></a></td><?lsmb END ?>
+  <td class="amount <?lsmb clazz ?>"
+      ><?lsmb report.cells.$row.$col | html ?></td><?lsmb END ?>
 <?lsmb END ?>
 </tr>
 <?lsmb END ?>
 
 <!--
-<h2><?lsmb text('Key Ratios'); ?></h2>
-<h2><?lsmb text('First column only') ?></h2>
+<h2><?lsmb text('Key Ratios'); | html ?></h2>
+<h2><?lsmb text('First column only') | html ?></h2>
 <table>
-<tr><th><?lsmb text('Assets to Liabilities') ?></th>
-    <td><?lsmb report.balance_sheet.ratios.AL ?></td>
+<tr><th><?lsmb text('Assets to Liabilities') | html ?></th>
+    <td><?lsmb report.balance_sheet.ratios.AL | html ?></td>
 </tr>
-<tr><th><?lsmb text('Assets to Equity') ?></th>
-    <td><?lsmb report.balance_sheet.ratios.AQ ?></td>
+<tr><th><?lsmb text('Assets to Equity') | html ?></th>
+    <td><?lsmb report.balance_sheet.ratios.AQ | html ?></td>
 </tr>
-<tr><th><?lsmb text('Equity to Liabilities') ?></th>
-    <td><?lsmb report.balance_sheet.ratios.QL ?></td>
+<tr><th><?lsmb text('Equity to Liabilities') | html ?></th>
+    <td><?lsmb report.balance_sheet.ratios.QL | html ?></td>
 </tr>
 -->
 </tbody>

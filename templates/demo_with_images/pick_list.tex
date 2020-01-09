@@ -1,4 +1,4 @@
-<?lsmb FILTER latex { format=FORMAT _ "(pdflatex)" } -?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } -?>
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
@@ -40,73 +40,73 @@
 
 \parbox[t]{.5\textwidth}{
 
-<?lsmb shiptoname ?>
+<?lsmb shiptoname | escape ?>
 
-<?lsmb shiptoaddress1 ?>
+<?lsmb shiptoaddress1 | escape ?>
 
-<?lsmb shiptoaddress2 ?>
+<?lsmb shiptoaddress2 | escape ?>
 
-<?lsmb shiptocity ?>
+<?lsmb shiptocity | escape ?>
 <?lsmb IF shiptostate ?>
-\hspace{-0.1cm}, <?lsmb shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate | escape ?>
 <?lsmb END ?>
-<?lsmb shiptozipcode ?>
+<?lsmb shiptozipcode | escape ?>
 
-<?lsmb shiptocountry ?>
+<?lsmb shiptocountry | escape ?>
 }
 \parbox[t]{.5\textwidth}{
-  <?lsmb shiptocontact ?>
+  <?lsmb shiptocontact | escape ?>
 
   <?lsmb IF shiptophone ?>
-  Tel: <?lsmb shiptophone ?>
+  Tel: <?lsmb shiptophone | escape ?>
   <?lsmb END ?>
 
   <?lsmb IF shiptofax ?>
-  Fax: <?lsmb shiptofax ?>
+  Fax: <?lsmb shiptofax | escape ?>
   <?lsmb END ?>
 
-  <?lsmb shiptoemail ?>
+  <?lsmb shiptoemail | escape ?>
 }
 \hfill
 
 \vspace{1cm}
 
-\textbf{\MakeUppercase{<?lsmb text('Pick List') ?>}}
+\textbf{\MakeUppercase{<?lsmb text('Pick List') | escape ?>}}
 \hfill
 
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
-  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>}
-   & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Contact') ?>}
-  & \textbf{<?lsmb text('Warehouse') ?>}
-  & \textbf{<?lsmb text('Shipping Point') ?>}
-  & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
+  \textbf{<?lsmb text('Invoice #') | escape ?>} & \textbf{<?lsmb text('Order #') | escape ?>}
+   & \textbf{<?lsmb text('Date') | escape ?>} & \textbf{<?lsmb text('Contact') | escape ?>}
+  & \textbf{<?lsmb text('Warehouse') | escape ?>}
+  & \textbf{<?lsmb text('Shipping Point') | escape ?>}
+  & \textbf{<?lsmb text('Ship via') | escape ?>} \\ [0.5em]
   \hline
-  <?lsmb invnumber ?> & <?lsmb ordnumber ?>
+  <?lsmb invnumber | escape ?> & <?lsmb ordnumber | escape ?>
   <?lsmb IF shippingdate ?>
-  & <?lsmb shippingdate ?>
+  & <?lsmb shippingdate | escape ?>
   <?lsmb ELSE ?>
-  & <?lsmb transdate ?>
+  & <?lsmb transdate | escape ?>
   <?lsmb END ?>
-  & <?lsmb employee ?> & <?lsmb warehouse ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  & <?lsmb employee | escape ?> & <?lsmb warehouse | escape ?> & <?lsmb shippingpoint | escape ?> & <?lsmb shipvia | escape ?> \\
   \hline
 \end{tabularx}
 
 \vspace{1cm}
 
 \begin{longtable}{@{\extracolsep{\fill}}rllrcll@{}}
-  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>}
-   & \textbf{<?lsmb text('Description') ?>} &
-  \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Ship') ?>} &
-  & \textbf{<?lsmb text('Bin') ?>} \\
+  \textbf{<?lsmb text('Item') | escape ?>} & \textbf{<?lsmb text('Number') | escape ?>}
+   & \textbf{<?lsmb text('Description') | escape ?>} &
+  \textbf{<?lsmb text('Qty') | escape ?>} & \textbf{<?lsmb text('Ship') | escape ?>} &
+  & \textbf{<?lsmb text('Bin') | escape ?>} \\
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
-  <?lsmb runningnumber.${lc} ?> &
-  <?lsmb number.${lc} ?> &
-  <?lsmb item_description.${lc} ?> &
-  <?lsmb qty.${lc} ?> & [\hspace{1cm}] &
-  <?lsmb unit.${lc} ?> & <?lsmb bin.${lc} ?> \\
+  <?lsmb runningnumber.${lc} | escape ?> &
+  <?lsmb number.${lc} | escape ?> &
+  <?lsmb item_description.${lc} | escape ?> &
+  <?lsmb qty.${lc} | escape ?> & [\hspace{1cm}] &
+  <?lsmb unit.${lc} | escape ?> & <?lsmb bin.${lc} | escape ?> \\
 <?lsmb END ?>
 \end{longtable}
 
