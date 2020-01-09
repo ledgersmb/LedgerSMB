@@ -81,7 +81,9 @@ feature 'latex-pdf-ps', "PDF and PostScript output" =>
         requires 'LaTeX::Driver', '0.300.2';
         requires 'Template::Latex', '3.08';
         requires 'Template::Plugin::Latex', '3.08';
-        requires 'TeX::Encode';
+        # 2.007 contains a fix for two characters we used to have
+        # a work-around for in our code base.
+        requires 'TeX::Encode', '2.007';
 };
 
 feature 'openoffice', "OpenOffice.org output" =>
