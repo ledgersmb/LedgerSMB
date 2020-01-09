@@ -24,7 +24,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
 sub _default_settings {

@@ -13,7 +13,6 @@ Budget search and reporting entry points.
 
 =cut
 
-use LedgerSMB::Template;
 use LedgerSMB::Report::Budget::Search;
 use LedgerSMB::Report::Budget::Variance;
 use strict;

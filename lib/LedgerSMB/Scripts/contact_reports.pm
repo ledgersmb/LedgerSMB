@@ -13,7 +13,6 @@ This module provides contact reports and purchase/sales history for LedgerSMB.
 
 =cut
 
-use LedgerSMB::Template;
 use LedgerSMB::Report::Contact::Search;
 use LedgerSMB::Report::Contact::History;
 use strict;

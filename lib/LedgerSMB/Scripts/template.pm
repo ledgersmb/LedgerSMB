@@ -26,7 +26,6 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::Report::Listings::Templates;
-use LedgerSMB::Template;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Template::UI;
 
