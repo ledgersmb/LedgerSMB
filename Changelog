@@ -12,6 +12,7 @@ Added functionalities
   * User-editable
   * Customizable per company
   * Stored in the database like all other templates (#811)
+* SysV init script template for RedHat/CentOS
 
 Changed functionalities
 * Faster loading of the menu
@@ -32,6 +33,7 @@ Code cleanup
 * Removed use of LSMB_ALWAYS_MONEY environment variable
 * Replaced 'no strict "refs"' with use of Symbol module
 * Removed tables 'fixes' and 'menu_attribute'
+* Removed template functions escape(), tt_url() & UNESCAPE()
 
 
 Changelog for 1.7 Series
