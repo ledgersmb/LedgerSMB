@@ -30,25 +30,6 @@ use Template::Plugin::Latex;
 use TeX::Encode::charmap;
 use TeX::Encode;
 
-BEGIN {
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{
-        "\N{LATIN CAPITAL LETTER A WITH RING ABOVE}"};
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{
-        "\N{LATIN SMALL LETTER A WITH RING ABOVE}"};
-    %TeX::Encode::charmap::CHAR_MAP = (
-        %TeX::Encode::charmap::CHARS,
-        %TeX::Encode::charmap::ACCENTED_CHARS,
-        %TeX::Encode::charmap::GREEK);
-    for(keys %TeX::Encode::charmap::MATH)
-    {
-        $TeX::Encode::charmap::CHAR_MAP{$_} ||= '$' . $TeX::Encode::charmap::MATH{$_} . '$';
-    }
-    for(keys %TeX::Encode::charmap::MATH_CHARS)
-    {
-        $TeX::Encode::charmap::CHAR_MAP{$TeX::Encode::charmap::MATH_CHARS{$_}} ||= '$' . $_ . '$';
-    }
-    $TeX::Encode::charmap::CHAR_MAP_RE = '[' . join('', map { quotemeta($_) } sort { length($b) <=> length($a) } keys %TeX::Encode::charmap::CHAR_MAP) . ']';
-}
 
 my $binmode = ':raw';
 my $extension = 'tex';
