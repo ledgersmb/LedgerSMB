@@ -1490,36 +1490,6 @@ sub formnames {
 }
 
 
-
-sub add_taxform {
-
-    $form->{title} = $locale->text("Add");
-
-    $form->{callback} =
-"$form->{script}?action=add_taxform&login=$form->{login}&sessionid=$form->{sessionid}"
-      unless $form->{callback};
-
-    $form->info("Add Country Tax forms is Under Construction");
-
-}
-
-
-sub search_taxform {
-
-    $form->{title} = "Edit";
-
-    $form->{callback} =
-"$form->{script}?action=search_taxform&login=$form->{login}&sessionid=$form->{sessionid}"
-      unless $form->{callback};
-
-    $form->info("Search Country Tax forms is Under Construction");
-
-}
-
-
-
-
-
 sub continue { &{ $form->{nextsub} } }
 
 1;
