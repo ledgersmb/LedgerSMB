@@ -23,7 +23,6 @@ use warnings;
 
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::Report::Unapproved::Drafts;
-use LedgerSMB::Template;
 
 our $VERSION = '0.1';
 

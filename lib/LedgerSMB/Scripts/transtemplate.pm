@@ -24,7 +24,6 @@ use warnings;
 
 use LedgerSMB::DBObject::TransTemplate;
 use LedgerSMB::Report::Listings::TemplateTrans;
-use LedgerSMB::Template;
 
 use LedgerSMB::old_code qw(dispatch);
 

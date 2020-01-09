@@ -17,7 +17,6 @@ devices.
 =cut
 
 use LedgerSMB::DBObject::Menu;
-use LedgerSMB::Template;
 use strict;
 use warnings;
 

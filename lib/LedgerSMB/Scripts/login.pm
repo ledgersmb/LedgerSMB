@@ -25,7 +25,6 @@ use LedgerSMB::Locale;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::User;
 
