@@ -28,6 +28,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
+use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
@@ -181,8 +182,18 @@ sub print {
     $request->{company_telephone} = $cc->{company_phone};
     $request->{my_tax_code}       = $cc->{businessnumber};
 
-    my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'taxform/summary_report', $request);
+    my $template = LedgerSMB::Template->new( # printed document
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'DB',
+        template => $request->{taxform_name},
+        format   => $request->{format},
+        output_options => {
+           filename => 'summary_report-' . $request->{tax_form_id}
+                            . '.' . lc($request->{format})
+        },
+    );
+    return $template->render($request);
 }
 
 =item list_all

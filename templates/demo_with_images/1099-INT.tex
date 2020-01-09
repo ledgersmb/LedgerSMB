@@ -1,9 +1,12 @@
+<?lsmb FILTER latex ?>
+
 \documentclass[usletter]{article}
 \usepackage{textpos}
 \usepackage[top=0.0in, bottom=0in, left=0in, right=0in]{geometry}
 \setlength{\parindent}{0pt}
 \setlength{\TPHorizModule}{1in}
 \setlength{\TPVertModule}{1in}
+
 <?lsmb BLOCK taxformpart ?>
 \begin{textblock}{4}[0,1](1, 1.5)
 <?lsmb company_name ?>\\
@@ -27,7 +30,7 @@ Tel: <?lsmb company_telephone ?>
 <?lsmb city ?>, <?lsmb state ?> <?lsmb mail_code ?>
 \end{textblock}
 
-\begin{textblock}{2}[0,1](4.5, 4.5)
+\begin{textblock}{2}[0,1](4.5, 1.5)
 <?lsmb total_sum ?>
 \end{textblock}
 <?lsmb END # Block taxformpart ?>
@@ -41,3 +44,18 @@ Tel: <?lsmb company_telephone ?>
 <?lsmb PROCESS taxformpart ?>
 \clearpage
 <?lsmb END #BLOCK taxform ?>
+
+\begin{document}
+<?lsmb FOR tf in results ?>
+<?lsmb INCLUDE taxform 
+pay_to_name = tf.legal_name
+pay_to_line_one = tf.line_one
+pay_to_line_two = tf.line_two
+pay_to_line_three = tf.line_three
+my_tax_code = business_number
+taxnumber = tf.taxnumber
+total_sum = tf.total_sum
+<?lsmb END # FOR tf  ?>
+\end{document}
+
+<?lsmb END # FILTER latex ?>
