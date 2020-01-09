@@ -1436,12 +1436,11 @@ sub print_payment {
       rows          => \@rows,
       format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
   };
-  $Payment->{templates_path} = 'templates/'.$request->setting->get('templates').'/';
-    my $template = LedgerSMB::Template->new( # printed document
+  my $template = LedgerSMB::Template->new( # printed document
       dbh      => $request->{dbh},
       user     => $Payment->{_user},
       locale   => $Payment->{_locale},
-      path     => $Payment->{templates_path},
+      path     => 'DB',
       template => 'printPayment',
       format => 'HTML' );
   return $template->render(
