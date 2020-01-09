@@ -144,6 +144,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | System > GIFI > Import GIFI                |                          |
 #   | System > GIFI > List GIFI                  |                          |
     | System > Templates                         | system templates         |
+    | System > Files                             | system files             |
 #   | System > Language > Add Language           |                          |
 #   | System > Language > List Languages         |                          |
 #   | System > Reporting Units                   |                          |

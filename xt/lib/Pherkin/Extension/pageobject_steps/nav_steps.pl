@@ -114,6 +114,7 @@ my %screens = (
     'assembly entry' => 'PageObject::App::Parts::Assembly',
     'overhead entry' => 'PageObject::App::Parts::Overhead',
     'system defaults' => 'PageObject::App::System::Defaults',
+    'system files' => 'PageObject::App::System::Files',
     'system taxes' => 'PageObject::App::System::Taxes',
     'system templates' => 'PageObject::App::System::Templates',
     'year-end' => ' PageObject::App::Closing',

@@ -120,3 +120,4 @@ mc/delete-migration-validation-data.sql
 1.8/remove-unused-groups-admin.sql
 1.8/parts-imports.sql
 1.8/rm-templates-menus.sql
+1.8/add-system-files-menu.sql

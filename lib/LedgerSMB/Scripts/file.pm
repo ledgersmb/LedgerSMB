@@ -74,6 +74,47 @@ sub get {
              [ ${$file->content} ] ];
 }
 
+=item list_internal_files
+
+=cut
+
+sub list_internal_files {
+    my ($request) = @_;
+    my $file = LedgerSMB::File->new(%$request);
+    my @files = $file->list(
+        {
+            ref_key => 0,
+            file_class => FC_INTERNAL()
+        });
+
+    my $columns = [
+    {col_id => 'select',
+       name => '',
+       type => 'checkbox' },
+
+    {col_id => 'file_name',
+       name => $request->{_locale}->text('File name'),
+  href_base => 'file.pl?action=get&file_class=6&id=',
+href_target => '_blank',
+       type => 'href' }, ## todo: URL
+
+    {col_id => 'description',
+       name => $request->{_locale}->text('Description'),
+       type => 'text' },
+
+    ];
+
+    for my $f (@files) {
+        $f->{file_name_href_suffix} = $f->{id};
+    }
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'file/internal-file-list',
+                             {
+                                 files => \@files,
+                                 columns => $columns,
+                             });
+}
+
 =item show_attachment_screen
 
 Show the attachment or upload screen.
