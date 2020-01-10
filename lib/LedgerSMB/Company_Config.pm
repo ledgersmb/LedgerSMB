@@ -32,7 +32,6 @@ namespace (scope of which is 'my') and setting keys as expected.
 
 use strict;
 use warnings;
-use base qw(LedgerSMB);
 use LedgerSMB::Setting;
 
 my @company_settings = qw(templates businessnumber weightunit curr
