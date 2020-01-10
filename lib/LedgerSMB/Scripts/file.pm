@@ -37,6 +37,7 @@ use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA
     FC_INTERNAL FC_INCOMING);
+use LedgerSMB::Request::Helper::ParameterMap qw( input_map spec_for_dynatable );
 use LedgerSMB::Template::UI;
 
 our $fileclassmap = {
@@ -74,6 +75,48 @@ sub get {
              [ ${$file->content} ] ];
 }
 
+my @internal_files_columns = (
+   {col_id => 'select',
+       type => 'checkbox' },
+
+    {col_id => 'file_name',
+  href_base => 'file.pl?action=get&file_class=6&id=',
+href_target => '_blank',
+       type => 'href' },
+
+    {col_id => 'description',
+       type => 'text' },
+    );
+
+my $internal_files_map =
+    input_map(spec_for_dynatable(
+                  path => '@files',
+                  attributes => {},
+                  columns => \@internal_files_columns
+              ));
+
+
+=item delete_internal_files
+
+=cut
+
+sub delete_internal_files {
+    my ($request) = @_;
+
+    my $params = $internal_files_map->({ %$request });
+    for my $row (grep { $_->{select} }
+                 @{$params->{files} // []}) {
+        my $file = LedgerSMB::File->new(
+            id         => $row->{row},
+            ref_key    => 0,
+            file_class => FC_INTERNAL(),
+            );
+        $file->remove;
+    }
+    $request->{action} = 'list_internal_files';
+    return list_internal_files($request);
+}
+
 =item list_internal_files
 
 =cut
@@ -87,24 +130,19 @@ sub list_internal_files {
             file_class => FC_INTERNAL()
         });
 
+    my $translations = {
+        file_name   => $request->{_locale}->text('File name'),
+        description => $request->{_locale}->text('Description'),
+    };
+
     my $columns = [
-    {col_id => 'select',
-       name => '',
-       type => 'checkbox' },
-
-    {col_id => 'file_name',
-       name => $request->{_locale}->text('File name'),
-  href_base => 'file.pl?action=get&file_class=6&id=',
-href_target => '_blank',
-       type => 'href' }, ## todo: URL
-
-    {col_id => 'description',
-       name => $request->{_locale}->text('Description'),
-       type => 'text' },
-
+        map { {
+            name => ($translations->{$_->{col_id}} // ''),
+            %$_  }  } @internal_files_columns
     ];
 
     for my $f (@files) {
+        $f->{row_id}                = $f->{id};
         $f->{file_name_href_suffix} = $f->{id};
     }
     my $template = LedgerSMB::Template::UI->new_UI;

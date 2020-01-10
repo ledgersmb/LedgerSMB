@@ -241,6 +241,18 @@ sub get_by_name {
     return;
 }
 
+=item remove
+
+Deletes a file.  ID and file_class properties must be set.
+
+=cut
+
+sub remove {
+    my ($self) = @_;
+    $self->call_dbmethod(funcname => 'file__delete');
+    return;
+}
+
 =item get_for_template({ref_key => int, file_class => int})
 
 This is a specialised query with rather opaque logic and transformations,
