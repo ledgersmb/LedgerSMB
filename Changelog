@@ -6,13 +6,14 @@ forthcoming
 Changelog for 1.8.0
 
 Added functionalities
-* Parts searches can be restricted by type (part, service, ...)
 * CSV upload of parts, services and overhead
+* Upload of logos and use in document templates (#1816)
 * Print templates for PNL, Balance sheet and generic reports now
   * User-editable
   * Customizable per company
   * Stored in the database like all other templates (#811)
-* SysV init script template for RedHat/CentOS
+* Parts searches can be restricted by type (part, service, ...)
+* SysV init script template for RedHat/CentOS (#2900)
 
 Changed functionalities
 * Faster loading of the menu
@@ -21,7 +22,7 @@ Changed functionalities
 * Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
 
 Bugs fixed
-* Default dates sometimes off by a day (before or after the current day)
+* Default dates sometimes off by a day (before or after the current day) (#2587)
 * Customers and vendors in parts screen selectable through drop-downs
 
 Code cleanup
