@@ -140,7 +140,7 @@ use Carp;
 
 
 our @EXPORT = ## no critic
-    qw( input_map );
+    qw( input_map spec_for_dynatable );
 
 
 
@@ -149,6 +149,51 @@ our @EXPORT = ## no critic
 This module declares no methods.
 
 =head1 FUNCTIONS
+
+=head2 spec_for_dynatable(path => 'path', attributes => \%attribs, columns => \@columns)
+
+Builds an C<input_map> specification for mapping parameters from a
+dynatable used as a form input.
+
+C<path> should specify a table mapping, optionally preceded by a (fixed)
+prefix path. I.e. a minimal C<path> value would be C<'@dyna'>, which maps
+the values of the dynatable into the C<dyna> key of the hash returned by
+the generated input mapper.
+
+The C<attributes> should be the same as those passed to the dynatable. The
+same applies for the column specification C<columns>.
+
+Dynatable adds a hidden column C<row> to each generated table. This function
+parses that hidden column into the return value by adding that same column to
+the column mapping instructions.
+
+=cut
+
+my %dyna_inputs = (
+    input_text        => 1,
+    checkbox          => 1,
+    hidden            => 1,
+    radio             => 1,
+    boolean_checkmark => 1,
+    select            => 1,
+    );
+
+sub spec_for_dynatable {
+    my %args = @_;
+    my $path = $args{path};
+    my $attr = $args{attributes};
+    my $col  = $args{columns};
+
+    my $prefix = $attr->{input_prefix} // '';
+    my @spec_cols = grep { $dyna_inputs{$_->{type}} } @$col;
+
+    push @spec_cols, { col_id => 'row' };
+    my $regex =
+        "^$prefix(?<fld>(" . join('|',
+                                  map { $_->{col_id} } @spec_cols)
+        . '))_(?<rn>\d+)$';
+    return [ $regex => "$path<rn>:%<fld>" ];
+}
 
 =head2 input_map([ qr/regex1/ => 'path1' ], [ qr/regex2/ => 'path2' ], ...)
 
