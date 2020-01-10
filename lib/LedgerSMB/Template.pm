@@ -169,6 +169,20 @@ Note: This string looks up the exact string C<$string>, which makes it
 unsuited for translation of string values passed to the template through
 (escaped) string variable values.
 
+=item dbfile_path($name)
+=item dbfile_string($name)
+=item dbfile_base64($name)
+
+These functions retrieve a file uploaded through System > Files. C<dbfile_path>
+returns a file name on the file system holding the content of the file in the
+database. C<dbfile_string> returns the content of the uploaded file in a
+string, whereas C<dbfile_base64> returns the content in a string, encoded
+using base64 encoding.
+
+The file returned by C<dbfile_path> is guaranteed as long as a reference to
+the template is kept. There are no guarantees beyond the life of the template
+itself.
+
 =back
 
 =head1 FORMATS
@@ -270,16 +284,20 @@ use warnings;
 use Carp;
 
 use LedgerSMB::Company_Config;
+use LedgerSMB::File;
 use LedgerSMB::Locale;
+use LedgerSMB::Magic qw( FC_INTERNAL );
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
 
+use File::Spec;
+use File::Temp;
+use Log::Log4perl;
+use MIME::Base64;
+use Module::Runtime qw(use_module);
 use Template;
 use Template::Parser;
 use Template::Provider;
-use Log::Log4perl;
-use File::Spec;
-use Module::Runtime qw(use_module);
 use Scalar::Util qw(reftype);
 
 use parent qw( Exporter );
@@ -292,6 +310,7 @@ sub new {
     my %args = @_;
     my $self = {
         binmode => undef,
+        dbh => $args{dbh},
     };
     bless $self, $class;
 
@@ -443,6 +462,40 @@ sub get_template_args {
     return $arghash;
 }
 
+sub _dbfile_path {
+    my $self = shift;
+    my $content = $self->_dbfile_string(@_);
+
+    $self->{_tmpdir} = File::Temp->newdir() unless defined $self->{_tmpdir};
+    $self->{_files} = [] unless defined $self->{_files};
+    my $file = File::Temp->new( DIR => $self->{_tmpdir} );
+
+    syswrite($file, $content)
+        or die "Unable to write content for database-file $_[0]: $!";
+    close($file)
+        or warn "Unable to close file for database-file content $_[0]: $!";
+    # Keep the file reference from going out of scope until the
+    # template itself finishes processing
+    push @{$self->{_files}}, $file;
+    return $file->filename;
+}
+
+sub _dbfile_base64 {
+    return encode_base64(_dbfile_string(@_), '');
+}
+
+sub _dbfile_string {
+    my ($self, $name) = @_;
+
+    my $file = LedgerSMB::File->new(
+        file_class => FC_INTERNAL,
+        file_name  => $name,
+        ref_key    => 0,
+        );
+    $file->get_by_name;
+    return ${$file->content};
+}
+
 sub _maketext {
     my $self = shift;
 
@@ -480,6 +533,11 @@ sub _render {
         };
     }
 
+    if ($self->{dbh}) {
+        $cleanvars->{dbfile_path} = sub { $self->_dbfile_path($_[0]) };
+        $cleanvars->{dbfile_string} = sub { $self->_dbfile_string($_[0]) };
+        $cleanvars->{dbfile_base64} = sub { $self->_dbfile_base64($_[0]) };
+    }
     my $output;
     my $config;
     ($output, $config) = $format->can('setup')->($self, $cleanvars,

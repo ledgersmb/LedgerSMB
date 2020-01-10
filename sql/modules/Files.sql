@@ -338,6 +338,16 @@ COMMENT ON FUNCTION file__list_by(in_ref_key int, in_file_class int) IS
 $$ Returns a list of files attached to a database object.  No content is
 retrieved.$$;
 
+
+CREATE OR REPLACE FUNCTION file__delete(in_id int, in_file_class int)
+RETURNS void AS
+$$
+DELETE FROM file_base where id = in_id and file_class = in_file_class;
+$$ language sql;
+
+COMMENT ON FUNCTION file__delete(in_id int, in_file_class int) IS
+$$ Deletes the file identified by in_id and in_file_class.$$;
+
 CREATE OR REPLACE FUNCTION file__get(in_id int, in_file_class int)
 RETURNS file_base AS
 $$
@@ -346,6 +356,19 @@ $$ language sql;
 
 COMMENT ON FUNCTION file__get(in_id int, in_file_class int) IS
 $$ Retrieves the file information specified including content.$$;
+
+CREATE OR REPLACE FUNCTION file__get_by_name(in_file_name text, in_ref_key int,
+in_file_class int)
+RETURNS file_base AS
+$$
+SELECT * FROM file_base where file_name = in_file_name
+                              and ref_key = in_ref_key
+                              and file_class = in_file_class;
+$$ language sql;
+
+COMMENT ON FUNCTION file__get_by_name(in_file_name text, in_ref_key int, in_file_class int) IS
+$$ Retrieves the file information specified including content.$$;
+
 
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 

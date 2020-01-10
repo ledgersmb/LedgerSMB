@@ -86,6 +86,7 @@ my %menu_path_pageobject_map = (
     "Goods and Services > Enter Inventory" => 'PageObject::App::Parts::AdjustSetup',
 
     "System > Defaults" => 'PageObject::App::System::Defaults',
+    "System > Files" => 'PageObject::App::System::Files',
     "System > Taxes" => 'PageObject::App::System::Taxes',
     "System > Templates" => 'PageObject::App::System::Templates',
     );

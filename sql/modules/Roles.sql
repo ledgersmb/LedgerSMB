@@ -217,6 +217,9 @@ SELECT lsmb__grant_perms('file_read', 'file_part', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_secondary_attachment', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_transaction', 'SELECT');
 
+SELECT lsmb__create_role('file_upload');
+SELECT lsmb__grant_perms('file_upload', 'file_internal', 'ALL');
+SELECT lsmb__grant_menu('file_upload', 27, 'allow');
 
 SELECT lsmb__create_role('file_attach_tx');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'INSERT');
