@@ -26,7 +26,6 @@ use Digest::MD5 qw(md5_hex);
 use Text::Markdown qw(markdown);
 
 use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
-use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
 our @EXPORT = ## no critic
