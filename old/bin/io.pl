@@ -1503,10 +1503,11 @@ sub print_form {
     $form->{fileid} = $form->{"${inv}number"};
     $form->{fileid} =~ s/(\s|\W)+//g;
 
-    my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new( # printed document
         user => \%myconfig,
         locale => $locale,
         template => $form->{'formname'},
+        dbh => $form->{dbh},
         path => 'DB',
         language => $form->{language_code},
         format => uc $form->{format},

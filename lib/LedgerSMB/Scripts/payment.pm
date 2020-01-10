@@ -490,6 +490,7 @@ sub print {
             template => 'check_multiple',
             format => uc $payment->{'format'},
             path => 'DB',
+            dbh  => $request->{dbh},
             output_options => {
                filename => 'printed-checks',
             },
@@ -1436,7 +1437,8 @@ sub print_payment {
       format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
   };
   $Payment->{templates_path} = 'templates/'.$request->setting->get('templates').'/';
-  my $template = LedgerSMB::Template->new( # printed document
+    my $template = LedgerSMB::Template->new( # printed document
+      dbh      => $request->{dbh},
       user     => $Payment->{_user},
       locale   => $Payment->{_locale},
       path     => $Payment->{templates_path},

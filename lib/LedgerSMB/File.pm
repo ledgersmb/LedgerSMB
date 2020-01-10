@@ -228,6 +228,19 @@ sub get {
     return;
 }
 
+=item get_by_name
+
+Retrieves a file.  name, ref_key and file_class properties must be set.
+
+=cut
+
+sub get_by_name {
+    my ($self) = @_;
+    my ($ref) = $self->call_dbmethod(funcname => 'file__get_by_name');
+    $self->{$_} = $ref->{$_} for keys %$ref;
+    return;
+}
+
 =item get_for_template({ref_key => int, file_class => int})
 
 This is a specialised query with rather opaque logic and transformations,

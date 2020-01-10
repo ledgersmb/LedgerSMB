@@ -129,6 +129,7 @@ exchangerate_type__delete
 exchangerate_type__get
 exchangerate_type__list
 file__get
+file__get_by_name
 file__list_by
 file__list_links
 file_links_vrebuild

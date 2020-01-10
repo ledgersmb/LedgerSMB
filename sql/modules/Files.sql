@@ -347,6 +347,20 @@ $$ language sql;
 COMMENT ON FUNCTION file__get(in_id int, in_file_class int) IS
 $$ Retrieves the file information specified including content.$$;
 
+CREATE OR REPLACE FUNCTION file__get_by_name(in_file_name text, in_ref_key int,
+in_file_class int)
+RETURNS file_base AS
+$$
+SELECT * FROM file_base where file_name = in_file_name
+                              and ref_key = in_ref_key
+                              and file_class = in_file_class;
+$$ language sql;
+
+COMMENT ON FUNCTION file__get_by_name(in_file_name text, in_ref_key int, in_file_class int) IS
+$$ Retrieves the file information specified including content.$$;
+
+
+
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 
 CREATE OR REPLACE view file_tx_links AS

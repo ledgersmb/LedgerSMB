@@ -296,9 +296,10 @@ sub print_transaction {
     my %output_options = (
         filename => "$form->{formname}-$form->{invnumber}.$form->{format}"
         );
-    my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new( # printed document
         user => \%myconfig,
         template => $form->{'formname'},
+        dbh => $form->{dbh},
         path => 'DB',
         locale => $locale,
         output_options => \%output_options,

@@ -202,7 +202,8 @@ sub print {
     my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => $request->{_company_config}->{templates},
+        dbh      => $request->{dbh},
+        path     => 'DB',
         template => 'timecard',
         format   => $request->{format} || 'HTML',
         output_options => {

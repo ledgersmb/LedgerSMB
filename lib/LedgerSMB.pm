@@ -593,10 +593,11 @@ sub report_renderer_doc {
 
     return sub {
         my ($template_name, $report, $vars, $cvars) = @_;
-        my $template = LedgerSMB::Template->new(
+        my $template = LedgerSMB::Template->new( # printed document
             template => $template_name,
             user     => $request->{_user},
             path     => 'DB',
+            dbh      => $request->{dbh},
             format   => uc($request->{format} || 'HTML'),
             output_options => {
                 filename => $report->output_name($request),
