@@ -1129,6 +1129,7 @@ $$ This function returns vendor or customer info $$;
 
 DROP TYPE IF EXISTS payment_record CASCADE;
 CREATE TYPE payment_record AS (
+        payment_id int,
         amount numeric,
         meta_number text,
         credit_id int,
@@ -1149,44 +1150,47 @@ CREATE OR REPLACE FUNCTION payment__search
         in_meta_number text)
 RETURNS SETOF payment_record AS
 $$
-                select sum(CASE WHEN c.entity_class = 1 then a.amount_bc
-                                ELSE a.amount_bc * -1 END), c.meta_number,
-                        c.id, e.name as legal_name,
-                        compound_array(ARRAY[ARRAY[ch.id::text, ch.accno,
-                                ch.description]]), a.source,
-                        b.control_code, b.description, a.voucher_id, a.transdate
-                FROM entity_credit_account c
-                JOIN ( select entity_credit_account, id, curr, approved
-                        FROM ar WHERE in_entity_class = 2
-                        UNION
-                        SELECT entity_credit_account, id, curr, approved
-                        FROM ap WHERE in_entity_class = 1
-                        ) arap ON (arap.entity_credit_account = c.id)
-                JOIN acc_trans a ON (arap.id = a.trans_id)
-                JOIN account ch ON (ch.id = a.chart_id)
-                JOIN entity e ON (c.entity_id = e.id)
-                LEFT JOIN voucher v ON (v.id = a.voucher_id)
-                LEFT JOIN batch b ON (b.id = v.batch_id)
-                WHERE ((ch.accno = in_cash_accno
-                        OR (in_cash_accno IS NULL
-                            AND ch.id IN (select account_id
-                                            FROM account_link
-                                           WHERE description IN('AR_paid',
-                                                                'AP_paid')))))
-                      AND (in_currency IS NULL OR in_currency = arap.curr)
-                      AND (c.id = in_credit_id OR in_credit_id IS NULL)
-                      AND (a.transdate >= in_from_date
-                              OR in_from_date IS NULL)
-                      AND (a.transdate <= in_to_date OR in_to_date IS NULL)
-                      AND (source = in_source OR in_source IS NULL)
-                      AND arap.approved AND a.approved
-                      AND (c.meta_number = in_meta_number
-                              OR in_meta_number IS NULL)
-                GROUP BY c.meta_number, c.id, e.name, a.transdate,
-                        a.source, a.memo, b.id, b.control_code, b.description,
-                        voucher_id
-                ORDER BY a.transdate, c.meta_number, a.source;
+   select p.id, sum(case when c.entity_class = 1 then a.amount_bc
+                    else -1*a.amount_bc end),
+          c.meta_number, c.id, e.name,
+          compound_array(array[array[act.id::text, act.accno,
+                                     act.description]]),
+          a.source, b.control_code, b.description,
+          v.id, p.payment_date
+     from payment p
+     join payment_links l on p.id = l.payment_id
+     join entity_credit_account c on p.entity_credit_id = c.id
+     join entity e on e.id = c.entity_id
+     join acc_trans a on l.entry_id = a.entry_id
+     join account act on a.chart_id = act.id
+     left join voucher v on a.voucher_id = v.id
+     left join batch b on v.batch_id = b.id
+    where (in_from_date is null
+           or in_from_date <= p.payment_date)
+          and (in_to_date is null
+               or in_to_date >= p.payment_date)
+          and (in_credit_id is null
+               or c.id = in_credit_id)
+          and (in_entity_class is null
+               or c.entity_class = in_entity_class)
+          and (in_currency is null
+               or p.currency = in_currency)
+          and (in_meta_number is null
+               or c.meta_number = in_meta_number)
+          and (in_source is null
+               or a.source = in_source)
+          and ((in_cash_accno is null
+                and exists (select 1
+                             from account_link al
+                            where al.description in ('AR_paid', 'AP_paid')
+                              and al.account_id = act.id))
+               or a.chart_id = (select id from account
+                                 where accno = in_cash_accno))
+        group by p.id, c.meta_number, c.id, e.name,
+                 a.source, b.control_code, b.description,
+                 v.id, p.payment_date;
 $$ language sql;
+
 
 COMMENT ON FUNCTION payment__search
 (in_source text, in_date_from date, in_date_to date, in_credit_id int,
