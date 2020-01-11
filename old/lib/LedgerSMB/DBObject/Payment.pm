@@ -55,11 +55,6 @@ calculation.
 
 sub __validate__ {
   my ($self) = shift @_;
-  # If the account class is not set, we don't know if it is a payment or a
-  # receipt.  --CT
-  if (!$self->{account_class}) {
-    $self->error("account_class must be set")
-  };
   # We should try to re-engineer this so that we don't have to include SQL in
   # this file.  --CT
   return ($self->{current_date})
@@ -270,10 +265,8 @@ sub get_all_accounts {
 
 =item $payment->reverse()
 
-This function reverses a payment.  A payment is defined as one source
-($payment->{source}) to one cash account ($payment->{cash_accno}) to one date
-($payment->{date_paid}) to one vendor/customer ($payment->{credit_id},
-$payment->{account_class}).  This reverses the entries with that source.
+This function reverses a payment identified by C<payment_id> (passed upon
+object instantiation).
 
 =back
 
