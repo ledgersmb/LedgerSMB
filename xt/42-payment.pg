@@ -40,7 +40,7 @@ BEGIN;
     SELECT has_function('payment_get_vc_info',ARRAY['integer','integer']);
     SELECT has_function('payment__overpayments_list',ARRAY['date','date','text','text','text']);
     SELECT has_function('payment_post',ARRAY['date','integer','integer','character','numeric','text','text','integer[]','numeric[]','text[]','text[]','integer[]','numeric[]','integer[]','text[]','text[]','integer[]','integer[]','boolean']);
-    SELECT has_function('payment__reverse',ARRAY['text','date','integer','text','date','integer','integer','integer']);
+    SELECT has_function('payment__reverse',ARRAY['integer','date','boolean','integer']);
     SELECT has_function('payment__search',ARRAY['text','date','date','integer','text','integer','character','text']);
     SELECT has_function('payments_get_open_currencies',ARRAY['integer']);
     SELECT has_function('payment_type__get_label',ARRAY['integer']);
@@ -265,8 +265,8 @@ BEGIN;
                       'After payment, the invoice is paid');
     DEALLOCATE test;
 
-   SELECT payment__reverse('pmt-rev-src1', now()::date, -101, '00003',
-                           now()::date, 1, null, null);
+   SELECT payment__reverse(currval('payment_id_seq')::int, now()::date,
+                           null::boolean, null::int);
 
    PREPARE test AS
    SELECT amount::int, due::int
