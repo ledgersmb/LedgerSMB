@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-12-26 18:05+0000\n"
+"POT-Creation-Date: 2020-01-12 20:42+0000\n"
 "Last-Translator: allphoneso donie <allphoneso.m6@gmail.com>, 2019\n"
 "Language-Team: Indonesian (https://www.transifex.com/ledgersmb/teams/58325/"
 "id/)\n"
@@ -197,7 +197,7 @@ msgstr "Akses ditolak"
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70 old/bin/aa.pl:1668
-#: old/bin/aa.pl:610 old/bin/aa.pl:674 old/bin/aa.pl:835 old/bin/ic.pl:1122
+#: old/bin/aa.pl:610 old/bin/aa.pl:674 old/bin/aa.pl:835 old/bin/ic.pl:1119
 #: old/bin/ir.pl:436 old/bin/ir.pl:833 old/bin/is.pl:472 old/bin/is.pl:942
 #: old/bin/oe.pl:448 t/data/04-complex_template.html:27
 #: templates/demo/invoice.html:252 templates/demo/printPayment.html:44
@@ -250,7 +250,7 @@ msgstr "Nomor Akun"
 #: lib/LedgerSMB/Report/Taxform/Details.pm:87
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:82
 #: lib/LedgerSMB/Report/Trial_Balance.pm:156
-#: lib/LedgerSMB/Scripts/payment.pm:184 old/bin/ic.pl:1021 old/bin/ic.pl:1672
+#: lib/LedgerSMB/Scripts/payment.pm:184 old/bin/ic.pl:1017 old/bin/ic.pl:1672
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:38
 #: UI/accounts/edit.html:126 UI/Contact/divs/bank_act.html:23
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
@@ -979,7 +979,7 @@ msgid "Assets to Liabilities"
 msgstr ""
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:102 old/bin/aa.pl:1096
-#: old/bin/ic.pl:926 old/bin/ir.pl:1009 old/bin/is.pl:1124 old/bin/oe.pl:943
+#: old/bin/ic.pl:922 old/bin/ir.pl:1009 old/bin/is.pl:1124 old/bin/oe.pl:943
 #: UI/journal/journal_entry.html:398
 msgid "Attach"
 msgstr ""
@@ -1012,29 +1012,29 @@ msgstr ""
 msgid "Attached By"
 msgstr ""
 
-#: old/bin/aa.pl:1068 old/bin/ic.pl:898 old/bin/ir.pl:983 old/bin/is.pl:1098
+#: old/bin/aa.pl:1068 old/bin/ic.pl:894 old/bin/ir.pl:983 old/bin/is.pl:1098
 #: old/bin/oe.pl:917 UI/journal/journal_entry.html:374
 msgid "Attached To"
 msgstr ""
 
-#: old/bin/aa.pl:1067 old/bin/ic.pl:897 old/bin/ir.pl:982 old/bin/is.pl:1097
+#: old/bin/aa.pl:1067 old/bin/ic.pl:893 old/bin/ir.pl:982 old/bin/is.pl:1097
 #: old/bin/oe.pl:916 UI/journal/journal_entry.html:373
 msgid "Attached To Type"
 msgstr ""
 
-#: old/bin/aa.pl:1044 old/bin/ic.pl:874 old/bin/ir.pl:959 old/bin/is.pl:1074
+#: old/bin/aa.pl:1044 old/bin/ic.pl:870 old/bin/ir.pl:959 old/bin/is.pl:1074
 #: old/bin/oe.pl:893 UI/journal/journal_entry.html:350
 msgid "Attached and Linked Files"
 msgstr ""
 
-#: old/bin/aa.pl:1048 old/bin/aa.pl:1069 old/bin/ic.pl:878 old/bin/ic.pl:899
+#: old/bin/aa.pl:1048 old/bin/aa.pl:1069 old/bin/ic.pl:874 old/bin/ic.pl:895
 #: old/bin/ir.pl:963 old/bin/ir.pl:984 old/bin/is.pl:1078 old/bin/is.pl:1099
 #: old/bin/oe.pl:897 old/bin/oe.pl:918 UI/journal/journal_entry.html:355
 #: UI/journal/journal_entry.html:375
 msgid "Attached at"
 msgstr ""
 
-#: old/bin/aa.pl:1049 old/bin/aa.pl:1070 old/bin/ic.pl:879 old/bin/ic.pl:900
+#: old/bin/aa.pl:1049 old/bin/aa.pl:1070 old/bin/ic.pl:875 old/bin/ic.pl:896
 #: old/bin/ir.pl:964 old/bin/ir.pl:985 old/bin/is.pl:1079 old/bin/is.pl:1100
 #: old/bin/oe.pl:898 old/bin/oe.pl:919 UI/journal/journal_entry.html:356
 #: UI/journal/journal_entry.html:376
@@ -1130,7 +1130,7 @@ msgstr ""
 msgid "Available overpayments"
 msgstr ""
 
-#: old/bin/ic.pl:448 UI/Reports/filters/search_goods.html:272
+#: old/bin/ic.pl:444 UI/Reports/filters/search_goods.html:272
 msgid "Average Cost"
 msgstr ""
 
@@ -1206,7 +1206,7 @@ msgstr ""
 msgid "Bank Accounts"
 msgstr ""
 
-#: old/bin/ic.pl:980
+#: old/bin/ic.pl:976
 msgid "Bar Code"
 msgstr ""
 
@@ -1307,7 +1307,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
 #: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2091
-#: old/bin/ic.pl:490 old/bin/io.pl:240 old/bin/oe.pl:1858
+#: old/bin/ic.pl:486 old/bin/io.pl:240 old/bin/oe.pl:1858
 #: templates/demo/bin_list.html:154 templates/demo/bin_list.tex:109
 #: templates/demo/pick_list.html:116 templates/demo/pick_list.tex:102
 #: templates/demo_with_images/bin_list.html:154
@@ -1411,7 +1411,7 @@ msgstr "Bisnis telah disimpan!"
 msgid "CC"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:527 old/bin/ic.pl:696
+#: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:523 old/bin/ic.pl:692
 #: UI/accounts/edit.html:431
 msgid "COGS"
 msgstr ""
@@ -1459,31 +1459,31 @@ msgstr "Batalkan?"
 msgid "Cannot Repost Transaction"
 msgstr ""
 
-#: old/bin/ic.pl:159
+#: old/bin/ic.pl:155
 msgid "Cannot create Labor; COGS account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:156
+#: old/bin/ic.pl:152
 msgid "Cannot create Labor; Inventory account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:134
+#: old/bin/ic.pl:130
 msgid "Cannot create Part; COGS account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:131
+#: old/bin/ic.pl:127
 msgid "Cannot create Part; Income account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:128
+#: old/bin/ic.pl:124
 msgid "Cannot create Part; Inventory account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:147
+#: old/bin/ic.pl:143
 msgid "Cannot create Service; Expense account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:143
+#: old/bin/ic.pl:139
 msgid "Cannot create Service; Income account does not exist!"
 msgstr ""
 
@@ -1821,7 +1821,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1477 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
-#: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:953
+#: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1554 old/bin/oe.pl:2069
 #: old/bin/oe.pl:2565 old/bin/pe.pl:1183 old/bin/pe.pl:327 old/bin/pe.pl:746
 #: old/bin/pe.pl:916 UI/asset/begin_approval.html:65
@@ -1841,7 +1841,7 @@ msgstr ""
 msgid "Continue"
 msgstr "Lanjut"
 
-#: old/bin/ic.pl:867
+#: old/bin/ic.pl:863
 msgid "Continue Previous Workflow"
 msgstr ""
 
@@ -1887,7 +1887,7 @@ msgstr ""
 msgid "Copy to New Name"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Activity.pm:125 old/bin/ic.pl:1023
+#: lib/LedgerSMB/Report/Inventory/Activity.pm:125 old/bin/ic.pl:1019
 #: old/bin/ic.pl:1270 old/bin/oe.pl:2409
 msgid "Cost"
 msgstr "Biaya"
@@ -2045,8 +2045,8 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:245 old/bin/ic.pl:1009
-#: old/bin/ic.pl:1108 old/bin/oe.pl:2414
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:245 old/bin/ic.pl:1005
+#: old/bin/ic.pl:1105 old/bin/oe.pl:2414
 msgid "Curr"
 msgstr "Mata Uang"
 
@@ -2098,7 +2098,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:180
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:251
 #: lib/LedgerSMB/Report/Orders.pm:191 lib/LedgerSMB/Report/Orders.pm:197
-#: old/bin/aa.pl:1583 old/bin/aa.pl:525 old/bin/ic.pl:1121 old/bin/is.pl:440
+#: old/bin/aa.pl:1583 old/bin/aa.pl:525 old/bin/ic.pl:1118 old/bin/is.pl:440
 #: old/bin/pe.pl:1012 old/bin/pe.pl:1162 UI/business_units/edit.html:81
 #: UI/Contact/divs/credit.html:15 UI/Contact/divs/credit.html:16
 #: UI/orders/order.html:20 UI/payments/use_overpayment1.html:28
@@ -2302,7 +2302,7 @@ msgstr "Tanggal"
 msgid "Date Format"
 msgstr "Format Tanggal"
 
-#: lib/LedgerSMB/Report/Listings/Overpayments.pm:106 old/bin/ic.pl:945
+#: lib/LedgerSMB/Report/Listings/Overpayments.pm:106 old/bin/ic.pl:941
 msgid "Date From"
 msgstr ""
 
@@ -2327,7 +2327,7 @@ msgstr "Tanggal Diterima"
 msgid "Date Reversed"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Listings/Overpayments.pm:107 old/bin/ic.pl:948
+#: lib/LedgerSMB/Report/Listings/Overpayments.pm:107 old/bin/ic.pl:944
 msgid "Date To"
 msgstr ""
 
@@ -2505,7 +2505,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:245
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:208 old/bin/aa.pl:939
 #: old/bin/aa.pl:970 old/bin/am.pl:177 old/bin/am.pl:186 old/bin/am.pl:67
-#: old/bin/am.pl:79 old/bin/ic.pl:832 old/bin/ic.pl:854 old/bin/ir.pl:944
+#: old/bin/am.pl:79 old/bin/ic.pl:828 old/bin/ic.pl:850 old/bin/ir.pl:944
 #: old/bin/is.pl:1058 old/bin/oe.pl:686 old/bin/oe.pl:877 old/bin/pe.pl:171
 #: old/bin/pe.pl:243 old/bin/pe.pl:605 t/data/04-complex_template.html:510
 #: UI/accounts/edit.html:103 UI/accounts/edit.html:563
@@ -2652,7 +2652,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:367
 #: lib/LedgerSMB/Scripts/asset.pm:652 lib/LedgerSMB/Scripts/asset.pm:717
 #: old/bin/aa.pl:1509 old/bin/aa.pl:624 old/bin/aa.pl:675 old/bin/am.pl:808
-#: old/bin/ic.pl:1264 old/bin/ic.pl:2020 old/bin/ic.pl:2087 old/bin/ic.pl:743
+#: old/bin/ic.pl:1264 old/bin/ic.pl:2020 old/bin/ic.pl:2087 old/bin/ic.pl:739
 #: old/bin/io.pl:1698 old/bin/io.pl:228 old/bin/ir.pl:461 old/bin/is.pl:500
 #: old/bin/oe.pl:1851 old/bin/oe.pl:2050 old/bin/oe.pl:2123 old/bin/oe.pl:2157
 #: old/bin/oe.pl:2401 old/bin/pe.pl:1035 old/bin/pe.pl:308 old/bin/pe.pl:354
@@ -2772,7 +2772,7 @@ msgstr ""
 msgid "Disc %"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:850 old/bin/ic.pl:1124
+#: lib/LedgerSMB/Scripts/payment.pm:850 old/bin/ic.pl:1121
 #: UI/accounts/edit.html:360 UI/accounts/edit.html:410
 #: UI/am-business-form.html:15 UI/Contact/divs/credit.html:168
 #: UI/Contact/divs/credit.html:169 UI/payments/payments_detail.html:340
@@ -2865,7 +2865,7 @@ msgstr ""
 msgid "Drafts"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:265 old/bin/ic.pl:506
+#: lib/LedgerSMB/Report/Inventory/Search.pm:265 old/bin/ic.pl:502
 #: UI/Reports/filters/search_goods.html:70
 #: UI/Reports/filters/search_goods.html:329
 msgid "Drawing"
@@ -2968,7 +2968,7 @@ msgstr "Edit Transaksi Hutang"
 msgid "Edit AR Transaction"
 msgstr "Edit Transaksi Piutang"
 
-#: old/bin/ic.pl:717 old/bin/ic.pl:95
+#: old/bin/ic.pl:713 old/bin/ic.pl:97
 msgid "Edit Assembly"
 msgstr ""
 
@@ -3016,7 +3016,7 @@ msgstr ""
 msgid "Edit Group"
 msgstr "Edit Kelompok Rakitan"
 
-#: old/bin/ic.pl:96
+#: old/bin/ic.pl:98
 msgid "Edit Labor/Overhead"
 msgstr "Edit Tenaga Kerja/ Overhead"
 
@@ -3024,7 +3024,7 @@ msgstr "Edit Tenaga Kerja/ Overhead"
 msgid "Edit Language"
 msgstr "Edit Bahasa"
 
-#: old/bin/ic.pl:715 old/bin/ic.pl:93
+#: old/bin/ic.pl:711 old/bin/ic.pl:95
 msgid "Edit Part"
 msgstr ""
 
@@ -3060,7 +3060,7 @@ msgstr "Edit Invoice Penjualan"
 msgid "Edit Sales Order"
 msgstr "Edit Pesanan Penjualan (SO)"
 
-#: old/bin/ic.pl:716 old/bin/ic.pl:94
+#: old/bin/ic.pl:712 old/bin/ic.pl:96
 msgid "Edit Service"
 msgstr "Edit Jasa"
 
@@ -3351,7 +3351,7 @@ msgstr "Kurs harap diisi!"
 msgid "Expected"
 msgstr ""
 
-#: old/bin/ic.pl:660 UI/accounts/edit.html:214 UI/accounts/edit.html:470
+#: old/bin/ic.pl:656 UI/accounts/edit.html:214 UI/accounts/edit.html:470
 #: UI/accounts/edit.html:509 UI/Reports/filters/gl.html:167
 msgid "Expense"
 msgstr "Biaya"
@@ -3514,14 +3514,14 @@ msgstr ""
 msgid "File Type"
 msgstr ""
 
-#: old/bin/aa.pl:1046 old/bin/aa.pl:1065 old/bin/ic.pl:876 old/bin/ic.pl:895
+#: old/bin/aa.pl:1046 old/bin/aa.pl:1065 old/bin/ic.pl:872 old/bin/ic.pl:891
 #: old/bin/ir.pl:961 old/bin/ir.pl:980 old/bin/is.pl:1076 old/bin/is.pl:1095
 #: old/bin/oe.pl:895 old/bin/oe.pl:914 UI/Contact/divs/files.html:10
 #: UI/journal/journal_entry.html:353 UI/journal/journal_entry.html:371
 msgid "File name"
 msgstr ""
 
-#: old/bin/aa.pl:1047 old/bin/aa.pl:1066 old/bin/ic.pl:877 old/bin/ic.pl:896
+#: old/bin/aa.pl:1047 old/bin/aa.pl:1066 old/bin/ic.pl:873 old/bin/ic.pl:892
 #: old/bin/ir.pl:962 old/bin/ir.pl:981 old/bin/is.pl:1077 old/bin/is.pl:1096
 #: old/bin/oe.pl:896 old/bin/oe.pl:915 UI/journal/journal_entry.html:354
 #: UI/journal/journal_entry.html:372
@@ -3620,7 +3620,7 @@ msgstr "Empat Belas"
 msgid "Fri"
 msgstr ""
 
-#: old/bin/aa.pl:1686 old/bin/ic.pl:1127 old/bin/oe.pl:2131 old/bin/pe.pl:833
+#: old/bin/aa.pl:1686 old/bin/ic.pl:1124 old/bin/oe.pl:2131 old/bin/pe.pl:833
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
 #: templates/demo_with_images/bin_list.html:28
 #: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
@@ -3792,7 +3792,7 @@ msgid "Grand Total"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:55 old/bin/ic.pl:1273
-#: old/bin/ic.pl:423 old/bin/io.pl:262 old/bin/oe.pl:2054 old/bin/oe.pl:2127
+#: old/bin/ic.pl:419 old/bin/io.pl:262 old/bin/oe.pl:2054 old/bin/oe.pl:2127
 #: old/bin/oe.pl:2162 old/bin/pe.pl:142 UI/io-email.html:86
 msgid "Group"
 msgstr ""
@@ -3909,7 +3909,7 @@ msgstr ""
 msgid "Ignore year-closing"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:261 old/bin/ic.pl:500
+#: lib/LedgerSMB/Report/Inventory/Search.pm:261 old/bin/ic.pl:496
 #: UI/Reports/filters/search_goods.html:322
 msgid "Image"
 msgstr ""
@@ -3999,7 +3999,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:191
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:193 lib/LedgerSMB/Report/PNL.pm:193
 #: lib/LedgerSMB/Report/PNL.pm:195 lib/LedgerSMB/Scripts/configuration.pm:104
-#: old/bin/ic.pl:523 old/bin/ic.pl:656 UI/accounts/edit.html:213
+#: old/bin/ic.pl:519 old/bin/ic.pl:652 UI/accounts/edit.html:213
 #: UI/accounts/edit.html:320 UI/accounts/edit.html:422 UI/accounts/edit.html:461
 #: UI/Reports/filters/gl.html:159
 msgid "Income"
@@ -4088,7 +4088,7 @@ msgstr ""
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:101 old/bin/ic.pl:519
+#: lib/LedgerSMB/Scripts/configuration.pm:101 old/bin/ic.pl:515
 #: UI/accounts/edit.html:286 sql/Pg-database.sql:2943
 msgid "Inventory"
 msgstr ""
@@ -4415,7 +4415,7 @@ msgstr ""
 msgid "Label:"
 msgstr ""
 
-#: old/bin/ic.pl:691
+#: old/bin/ic.pl:687
 msgid "Labor/Overhead"
 msgstr "Tenaga Kerja/ Overhead"
 
@@ -4451,8 +4451,8 @@ msgstr "Bahasa tidak terdefinisi!"
 msgid "Last"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:236 old/bin/ic.pl:457
-#: old/bin/ic.pl:635 UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:31
+#: lib/LedgerSMB/Report/Inventory/Search.pm:236 old/bin/ic.pl:453
+#: old/bin/ic.pl:631 UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:31
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:264
 msgid "Last Cost"
 msgstr ""
@@ -4478,7 +4478,7 @@ msgstr ""
 msgid "Lead Time"
 msgstr ""
 
-#: old/bin/ic.pl:1025
+#: old/bin/ic.pl:1021
 msgid "Leadtime"
 msgstr ""
 
@@ -4580,7 +4580,7 @@ msgstr ""
 msgid "Line Total"
 msgstr "Total Baris"
 
-#: old/bin/ic.pl:763
+#: old/bin/ic.pl:759
 msgid "Link Accounts"
 msgstr "Akun yg Berhubungan"
 
@@ -4608,7 +4608,7 @@ msgstr "Daftar Bahasa"
 msgid "List Overpayments"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:226 old/bin/ic.pl:440
+#: lib/LedgerSMB/Report/Inventory/Search.pm:226 old/bin/ic.pl:436
 #: UI/Reports/filters/search_goods.html:248
 msgid "List Price"
 msgstr "Daftar Harga"
@@ -4698,7 +4698,7 @@ msgstr ""
 msgid "Mailing"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:253 old/bin/ic.pl:978
+#: lib/LedgerSMB/Report/Inventory/Search.pm:253 old/bin/ic.pl:974
 #: UI/Reports/filters/search_goods.html:52
 #: UI/Reports/filters/search_goods.html:344
 msgid "Make"
@@ -4757,8 +4757,8 @@ msgstr ""
 msgid "March"
 msgstr "Maret"
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:245 old/bin/ic.pl:463
-#: old/bin/ic.pl:641 UI/Reports/filters/search_goods.html:286
+#: lib/LedgerSMB/Report/Inventory/Search.pm:245 old/bin/ic.pl:459
+#: old/bin/ic.pl:637 UI/Reports/filters/search_goods.html:286
 msgid "Markup"
 msgstr ""
 
@@ -4810,7 +4810,7 @@ msgstr "Metoda"
 msgid "Method Default"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:269 old/bin/ic.pl:502
+#: lib/LedgerSMB/Report/Inventory/Search.pm:269 old/bin/ic.pl:498
 #: UI/Reports/filters/search_goods.html:78
 #: UI/Reports/filters/search_goods.html:336
 msgid "Microfiche"
@@ -4837,7 +4837,7 @@ msgstr ""
 msgid "Min Empty Lines"
 msgstr ""
 
-#: old/bin/ic.pl:1129 UI/Contact/pricelist.csv:40 UI/Contact/pricelist.html:52
+#: old/bin/ic.pl:1126 UI/Contact/pricelist.csv:40 UI/Contact/pricelist.html:52
 #: UI/Contact/pricelist.tex:54
 msgid "Min Qty"
 msgstr ""
@@ -4858,7 +4858,7 @@ msgstr ""
 msgid "Miss."
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:257 old/bin/ic.pl:979
+#: lib/LedgerSMB/Report/Inventory/Search.pm:257 old/bin/ic.pl:975
 #: UI/Reports/filters/search_goods.html:60
 #: UI/Reports/filters/search_goods.html:351
 msgid "Model"
@@ -5046,10 +5046,6 @@ msgstr ""
 msgid "No changes"
 msgstr "Tidak Ada Perubahan"
 
-#: old/lib/LedgerSMB/Form.pm:1121
-msgid "No currencies defined.  Please set these up under System/Currency."
-msgstr ""
-
 #: old/bin/aa.pl:213 old/bin/ir.pl:160 old/bin/is.pl:153
 msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr ""
@@ -5154,7 +5150,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:257
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:293
 #: lib/LedgerSMB/Scripts/contact.pm:187 old/bin/aa.pl:1513 old/bin/aa.pl:1646
-#: old/bin/aa.pl:802 old/bin/ic.pl:768 old/bin/ir.pl:765 old/bin/is.pl:873
+#: old/bin/aa.pl:802 old/bin/ic.pl:764 old/bin/ir.pl:765 old/bin/is.pl:873
 #: old/bin/oe.pl:822 t/data/04-complex_template.html:33
 #: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:219
@@ -5222,7 +5218,7 @@ msgstr ""
 msgid "Null model numbers"
 msgstr ""
 
-#: old/bin/ic.pl:1261 old/bin/ic.pl:2014 old/bin/ic.pl:2083 old/bin/ic.pl:742
+#: old/bin/ic.pl:1261 old/bin/ic.pl:2014 old/bin/ic.pl:2083 old/bin/ic.pl:738
 #: old/bin/io.pl:225 old/bin/oe.pl:1848 old/bin/pe.pl:265 old/bin/pe.pl:347
 #: old/bin/pe.pl:379 templates/demo/bin_list.html:147
 #: templates/demo/invoice.html:140 templates/demo/invoice.tex:139
@@ -5288,7 +5284,7 @@ msgstr ""
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/budgets.pm:129 old/bin/ic.pl:707
+#: lib/LedgerSMB/Scripts/budgets.pm:129 old/bin/ic.pl:703
 #: UI/accounts/edit.html:141 UI/Reports/filters/search_goods.html:118
 msgid "Obsolete"
 msgstr "Kadaluarsa"
@@ -5317,7 +5313,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:129
 #: lib/LedgerSMB/Report/Inventory/Search.pm:205
-#: lib/LedgerSMB/Report/Invoices/COGS.pm:112 old/bin/ic.pl:474 old/bin/ic.pl:682
+#: lib/LedgerSMB/Report/Invoices/COGS.pm:112 old/bin/ic.pl:470 old/bin/ic.pl:678
 #: UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/search_goods.html:104
 msgid "On Hand"
@@ -5541,7 +5537,7 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1275
+#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1269
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:111
 #: UI/Reports/balance_sheet.html:115 UI/Reports/display_report.html:75
 #: UI/Reports/PNL.html:100
@@ -6012,7 +6008,7 @@ msgstr ""
 msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1273
+#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1267
 msgid "Postscript"
 msgstr ""
 
@@ -6065,7 +6061,7 @@ msgstr ""
 msgid "Price Updated"
 msgstr ""
 
-#: old/bin/ic.pl:1098 old/bin/pe.pl:214 UI/Contact/divs/credit.html:247
+#: old/bin/ic.pl:1097 old/bin/pe.pl:214 UI/Contact/divs/credit.html:247
 #: UI/Contact/divs/credit.html:248
 msgid "Pricegroup"
 msgstr "Kelompok Harga"
@@ -6195,7 +6191,7 @@ msgstr ""
 msgid "Profit and Loss"
 msgstr "Laba dan Rugi"
 
-#: old/bin/aa.pl:1041 old/bin/ic.pl:942 old/bin/ir.pl:956 old/bin/is.pl:1071
+#: old/bin/aa.pl:1041 old/bin/ic.pl:938 old/bin/ir.pl:956 old/bin/is.pl:1071
 msgid "Profit/Loss"
 msgstr "Laba/Rugi"
 
@@ -6421,7 +6417,7 @@ msgid "RFQs"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2096
-#: old/bin/ic.pl:483 UI/Reports/filters/search_goods.html:300
+#: old/bin/ic.pl:479 UI/Reports/filters/search_goods.html:300
 msgid "ROP"
 msgstr ""
 
@@ -6746,7 +6742,7 @@ msgstr ""
 msgid "Return to the login screen."
 msgstr ""
 
-#: old/bin/ic.pl:531 UI/accounts/edit.html:449
+#: old/bin/ic.pl:527 UI/accounts/edit.html:449
 msgid "Returns"
 msgstr ""
 
@@ -6930,7 +6926,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:423 lib/LedgerSMB/Scripts/budgets.pm:105
 #: old/bin/aa.pl:995 old/bin/am.pl:175 old/bin/am.pl:181 old/bin/am.pl:65
-#: old/bin/am.pl:73 old/bin/am.pl:84 old/bin/ic.pl:830 old/bin/ic.pl:839
+#: old/bin/am.pl:73 old/bin/am.pl:84 old/bin/ic.pl:826 old/bin/ic.pl:835
 #: old/bin/ir.pl:541 old/bin/is.pl:609 old/bin/oe.pl:647 old/bin/oe.pl:871
 #: old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
@@ -7009,8 +7005,8 @@ msgstr ""
 msgid "Save as New"
 msgstr ""
 
-#: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:262 old/bin/ic.pl:831
-#: old/bin/ic.pl:848 old/bin/oe.pl:659 old/bin/oe.pl:874
+#: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:262 old/bin/ic.pl:827
+#: old/bin/ic.pl:844 old/bin/oe.pl:659 old/bin/oe.pl:874
 #: UI/accounts/edit.html:94 UI/accounts/edit.html:554
 msgid "Save as new"
 msgstr "Simpan sbg yg baru"
@@ -7228,8 +7224,8 @@ msgstr "Jual"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:99
 #: lib/LedgerSMB/Report/Inventory/History.pm:154
-#: lib/LedgerSMB/Report/Inventory/Search.pm:231 old/bin/ic.pl:1125
-#: old/bin/ic.pl:436 UI/Contact/pricelist.csv:31 UI/Contact/pricelist.html:43
+#: lib/LedgerSMB/Report/Inventory/Search.pm:231 old/bin/ic.pl:1122
+#: old/bin/ic.pl:432 UI/Contact/pricelist.csv:31 UI/Contact/pricelist.html:43
 #: UI/Contact/pricelist.tex:42 UI/Reports/filters/purchase_history.html:262
 #: UI/Reports/filters/search_goods.html:256
 msgid "Sell Price"
@@ -7743,7 +7739,7 @@ msgstr ""
 msgid "Statement Date To"
 msgstr ""
 
-#: old/bin/ic.pl:627
+#: old/bin/ic.pl:623
 msgid "Stock"
 msgstr ""
 
@@ -7883,7 +7879,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:90
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:225
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:275 old/bin/aa.pl:1628
-#: old/bin/ic.pl:539 old/bin/ic.pl:668 UI/accounts/edit.html:255
+#: old/bin/ic.pl:535 old/bin/ic.pl:664 UI/accounts/edit.html:255
 #: UI/accounts/edit.html:340 UI/accounts/edit.html:391 UI/accounts/edit.html:440
 #: UI/accounts/edit.html:479 UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:316 UI/Reports/filters/orders.html:179
@@ -8337,7 +8333,7 @@ msgstr ""
 msgid "Times"
 msgstr ""
 
-#: old/bin/ic.pl:1128 old/bin/oe.pl:2134 old/bin/pe.pl:836
+#: old/bin/ic.pl:1125 old/bin/oe.pl:2134 old/bin/pe.pl:836
 #: templates/demo/invoice.html:27 templates/demo/request_quotation.tex:27
 #: templates/demo/sales_order.html:28 templates/demo_with_images/invoice.html:29
 #: templates/demo_with_images/request_quotation.tex:27
@@ -8698,7 +8694,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/History.pm:93
 #: lib/LedgerSMB/Report/Inventory/History.pm:133
 #: lib/LedgerSMB/Report/Inventory/Search.pm:209 old/bin/ic.pl:1258
-#: old/bin/ic.pl:787 old/bin/io.pl:233 old/bin/oe.pl:1856
+#: old/bin/ic.pl:783 old/bin/io.pl:233 old/bin/oe.pl:1856
 #: templates/demo/invoice.tex:143 templates/demo/product_receipt.tex:119
 #: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
 #: templates/demo_with_images/invoice.tex:143
@@ -8789,7 +8785,7 @@ msgid "Up"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/budgets.pm:99 old/bin/aa.pl:933 old/bin/aa.pl:958
-#: old/bin/gl.pl:250 old/bin/ic.pl:829 old/bin/ic.pl:838 old/bin/ir.pl:514
+#: old/bin/gl.pl:250 old/bin/ic.pl:825 old/bin/ic.pl:834 old/bin/ir.pl:514
 #: old/bin/ir.pl:939 old/bin/is.pl:1051 old/bin/is.pl:579 old/bin/oe.pl:1951
 #: old/bin/oe.pl:643 old/bin/oe.pl:868 old/bin/pe.pl:603 UI/am-taxes.html:71
 #: UI/Configuration/rate.html:46 UI/payments/payment2.html:492
@@ -8798,7 +8794,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: old/bin/ic.pl:780
+#: old/bin/ic.pl:776
 msgid "Updated"
 msgstr "Diupdate"
 
@@ -8935,7 +8931,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:178
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:248
 #: lib/LedgerSMB/Report/Orders.pm:194 lib/LedgerSMB/Report/Orders.pm:200
-#: old/bin/aa.pl:1592 old/bin/aa.pl:528 old/bin/ic.pl:1020 old/bin/ir.pl:402
+#: old/bin/aa.pl:1592 old/bin/aa.pl:528 old/bin/ic.pl:1016 old/bin/ir.pl:402
 #: old/bin/oe.pl:2403 old/bin/oe.pl:2554 old/bin/pe.pl:1013 old/bin/pe.pl:1163
 #: UI/Contact/divs/credit.html:12 UI/Contact/divs/credit.html:13
 #: UI/payments/payments_detail.html:4 UI/payments/use_overpayment1.html:26
@@ -8987,7 +8983,7 @@ msgstr "Nomor Supplier"
 msgid "Vendor Partnumber"
 msgstr ""
 
-#: old/bin/ic.pl:1022
+#: old/bin/ic.pl:1018
 msgid "Vendor Reference Number"
 msgstr ""
 
@@ -9092,8 +9088,8 @@ msgstr ""
 msgid "Weeks"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:221 old/bin/ic.pl:547
-#: old/bin/ic.pl:574 old/bin/ic.pl:596 UI/Reports/filters/search_goods.html:308
+#: lib/LedgerSMB/Report/Inventory/Search.pm:221 old/bin/ic.pl:543
+#: old/bin/ic.pl:570 old/bin/ic.pl:592 UI/Reports/filters/search_goods.html:308
 msgid "Weight"
 msgstr "Berat"
 
@@ -9272,7 +9268,7 @@ msgstr ""
 msgid "city"
 msgstr ""
 
-#: old/bin/ic.pl:1078 old/bin/oe.pl:376 t/data/04-complex_template.html:215
+#: old/bin/ic.pl:1077 old/bin/oe.pl:376 t/data/04-complex_template.html:215
 #: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:164
 #: UI/Contact/divs/credit.html:182
 msgid "days"
