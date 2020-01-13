@@ -2,6 +2,10 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.8
+* Upgrade Dojo dependency to 1.15.1
+
+
 Changelog for 1.7.7
 * Fix currency column not being available in the parts screen
 
