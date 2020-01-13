@@ -22,9 +22,8 @@
     "path": "packages/app"
   }],
   "dependencies": {
-    "dojo": "~1.11",
-    "dijit": "~1.11",
-    "dojox": "~1.11"
+    "dojo": "~1.13",
+    "dijit": "~1.13"
   },
   "main": "src",
   "homepage": "http://ledgersmb.org/",
