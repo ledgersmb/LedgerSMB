@@ -52,7 +52,6 @@ define(["dojo/_base/declare",
         postCreate: function() {
             this.inherited(arguments);
 
-            var self = this;
             this.own(
                 on(this.containerNode, "mousedown",
                    lang.hitch(this, this.__onClick)));
@@ -72,7 +71,8 @@ define(["dojo/_base/declare",
             if ( newWindow ) {
                 // Simulate a target="_blank" attribute on an A tag
                 window.open(location.origin + location.pathname
-                            + location.search + '#' + url, "_blank");
+                            + location.search + '#' + url, "_blank",
+                           'noopener,noreferrer');
             }
             else {
                 // Add timestamp to url so that it is unique.

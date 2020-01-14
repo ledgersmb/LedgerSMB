@@ -65,7 +65,7 @@
              IF ITEM.info;
                 "<td align='left'>";
                 FOREACH i IN ITEM.info;
-                    i = i.replace('\$1','<a href="http://currencies.apps.grandtrunk.net/" target="_blank">Historical currency converter web service</a>');
+                    i = i.replace('\$1','<a href="http://currencies.apps.grandtrunk.net/" target="_blank" rel="noopener noreferrer">Historical currency converter web service</a>');
                     "$i<br>";
                 END;
                 "</td>";

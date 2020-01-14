@@ -6,7 +6,7 @@
      >
   <div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
 <form data-dojo-type="lsmb/Form" name="hr" action="<?lsmb request.script ?>" method="post">
-<div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:3">
+<div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:3">
 <?lsmb PROCESS input element_data = {
                 type = "hidden"
                 name = "target_div"

@@ -153,8 +153,6 @@ var TableContainer = declare("lsmb.layout.TableContainer", _LayoutWidget, {
 
                 addCustomClass(table, "table", this.orientation);
 
-                var width = Math.floor(100 / this.cols) + "%";
-
                 var labelRow = domConstruct.create("tr", {}, tbody);
                 var childRow = (!this.showLabels || this.orientation == "horiz")
                                                 ? labelRow : domConstruct.create("tr", {}, tbody);

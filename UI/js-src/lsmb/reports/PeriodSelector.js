@@ -12,15 +12,6 @@ define(["dojo/_base/declare",
            return declare("lsmb/reports/PeriodSelector",
                           [_WidgetBase, _Container], {
                channel: '',
-               postCreate: function() {
-                   var self = this;
-                   this.inherited(arguments);
-                   this.own(
-                       topic.subscribe('ui/reports/period-selection',
-                                       function(e) {
-                                       })
-                   );
-               },
                startup: function() {
                    var self = this;
 
@@ -50,8 +41,6 @@ define(["dojo/_base/declare",
                    this._update_display();
                },
                _update_display: function() {
-                   var self = this;
-
                    style.set(dom.byId("date_to_date_id"),
                              "display",
                              this._by_dates.get("checked") ? "" : "none");

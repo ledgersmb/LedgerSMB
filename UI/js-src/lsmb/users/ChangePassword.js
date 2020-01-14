@@ -1,5 +1,4 @@
-define(["lsmb/TabularForm",
-        "dojo/_base/declare",
+define(["dojo/_base/declare",
          "dijit/_WidgetBase",
          "dijit/_TemplatedMixin",
          "dijit/_WidgetsInTemplateMixin",
@@ -11,7 +10,7 @@ define(["lsmb/TabularForm",
          "dojo/text!./templates/PasswordChange.html",
          "dojo/request",
          "dijit/_Container"],
-       function(tabform, declare, _widgetbase, _templatemixin,
+       function(declare, _widgetbase, _templatemixin,
                 _widget_parser, cp, registry, on, textbox, button,
                 template, request, _container) {
              return declare("lsmb/users/ChangePassword",
@@ -34,7 +33,7 @@ define(["lsmb/TabularForm",
                        return this.lstrings[to_translate];
                    },
                    startup: function(){
-                       for (str in this._lstrings){
+                       for (var str in this._lstrings){
                            if (this.lstrings[str]){
                                continue;
                            }
@@ -66,11 +65,11 @@ define(["lsmb/TabularForm",
                         }
                         var variations = {
                             digits: /\d/.test(pass),
-                             lower: /[a-z]/.test(pass),
-                             upper: /[A-Z]/.test(pass),
-                          nonWords: /\W/.test(pass)
-                        }
-                        variationCount = 0;
+                            lower: /[a-z]/.test(pass),
+                            upper: /[A-Z]/.test(pass),
+                            nonWords: /\W/.test(pass)
+                        };
+                        var variationCount = 0;
                         for (var check in variations) {
                             variationCount += (variations[check] === true) ? 1 : 0;
                         }
@@ -97,7 +96,6 @@ define(["lsmb/TabularForm",
                       var I = this;
                       var r = request;
                       console.log("change_pw clicked");
-                      var login = document.getElementById("username").value;
                       var old_password = I.oldpw.get("value");
                       var new_password = I.newpw.get("value");
                       var confirm_pass = I.verified.get("value");

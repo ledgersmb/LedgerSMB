@@ -13,7 +13,7 @@
         ?><?lsmb END ?>
         <div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
 <form data-dojo-type="lsmb/Form" id="company" method="post" action="<?lsmb request.script ?>">
-<div data-dojo-type="lsmb/TabularForm"
+<div data-dojo-type="lsmb/layout/TableContainer"
      data-dojo-props="cols:2">
 <?lsmb PROCESS input element_data = {
                   id = 'company-target-div'
