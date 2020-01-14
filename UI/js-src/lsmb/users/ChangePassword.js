@@ -65,10 +65,10 @@ define(["dojo/_base/declare",
                         }
                         var variations = {
                             digits: /\d/.test(pass),
-                             lower: /[a-z]/.test(pass),
-                             upper: /[A-Z]/.test(pass),
-                          nonWords: /\W/.test(pass)
-                        }
+                            lower: /[a-z]/.test(pass),
+                            upper: /[A-Z]/.test(pass),
+                            nonWords: /\W/.test(pass)
+                        };
                         variationCount = 0;
                         for (var check in variations) {
                             variationCount += (variations[check] === true) ? 1 : 0;
