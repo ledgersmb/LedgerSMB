@@ -7,7 +7,7 @@
 <div id="batch_search">
 <form data-dojo-type="lsmb/Form" action="vouchers.pl" method="get">
     <div class="listtop" id="title_div"><?lsmb text('Search Batches') ?></div>
-    <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
+    <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
 
         <div class="input" id="batch_class_div">
             <?lsmb INCLUDE select element_data = {

@@ -4,7 +4,8 @@
 <div id="reconciliation_report_search">
     <form data-dojo-type="lsmb/Form" method="get" action="recon.pl">
         <div class="listtop"><?lsmb text('Search Reconciliation Reports') ?></div>
-        <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
+        <div data-dojo-type="lsmb/layout/TableContainer"
+             data-dojo-props="cols:1">
 
             <div class="input">
                 <?lsmb INCLUDE input element_data = {

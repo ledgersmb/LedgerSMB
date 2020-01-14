@@ -27,7 +27,7 @@ PROCESS dynatable
    ];
 ?>
 <form data-dojo-type="lsmb/Form" name="bank_acct" action="<?lsmb request.script ?>" method="post">
-<div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
+<div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
 <?lsmb PROCESS input element_data = {
                 type = "hidden"
                 name = "form_id"
