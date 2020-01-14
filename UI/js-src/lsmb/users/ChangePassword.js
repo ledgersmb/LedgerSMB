@@ -33,7 +33,7 @@ define(["dojo/_base/declare",
                        return this.lstrings[to_translate];
                    },
                    startup: function(){
-                       for (str in this._lstrings){
+                       for (var str in this._lstrings){
                            if (this.lstrings[str]){
                                continue;
                            }
@@ -69,7 +69,7 @@ define(["dojo/_base/declare",
                             upper: /[A-Z]/.test(pass),
                             nonWords: /\W/.test(pass)
                         };
-                        variationCount = 0;
+                        var variationCount = 0;
                         for (var check in variations) {
                             variationCount += (variations[check] === true) ? 1 : 0;
                         }

@@ -366,7 +366,6 @@ define([
         var response = util.parseArgs(url,
                                       util.deepCreate(defaultOptions, options),
                                       true);
-        url = response.url;
         options = response.options;
 
         if(options.method !== 'GET' && options.method !== 'POST'){
