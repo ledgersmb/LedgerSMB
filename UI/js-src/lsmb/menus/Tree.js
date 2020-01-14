@@ -52,7 +52,6 @@ define(["dojo/_base/declare",
         postCreate: function() {
             this.inherited(arguments);
 
-            var self = this;
             this.own(
                 on(this.containerNode, "mousedown",
                    lang.hitch(this, this.__onClick)));

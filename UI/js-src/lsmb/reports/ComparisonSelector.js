@@ -48,8 +48,6 @@ define(["dojo/_base/declare",
                    this._update_display('');
                },
                _update_display: function(count) {
-                   var self = this;
-
                    if (count === "" || this.mode === "by-periods") {
                        style.set(dom.byId("comparison_dates"),
                                  "display", "none");

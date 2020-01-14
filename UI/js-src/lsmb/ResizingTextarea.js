@@ -22,7 +22,6 @@ define([
                 if (! this.autoSizing) return;
                 // setting to 'auto' first helps to shrink
                 // the height when possible.
-                var self = this;
                 this.textbox.style.height = "1em";
                 this.textbox.scrollTop = 0;
                 this.textbox.style.height =

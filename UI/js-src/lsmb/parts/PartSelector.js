@@ -27,10 +27,6 @@ define([
                 this.inherited(arguments);
                 this.initialValue=arguments[0].value;
             },
-            postCreate:function(){
-                var mySelf=this;
-                this.inherited(arguments);
-            },//postCreate
             startup:function(){
                 var self = this;
                 this.inherited(arguments);

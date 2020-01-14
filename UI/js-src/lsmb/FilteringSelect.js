@@ -11,7 +11,6 @@ define([
     ],
        function(FilteringSelect, declare, keys, on, hash, domattr, domform,
                 query, registry) {
-           var c = 0;
            return declare("lsmb/FilteringSelect",
                           [FilteringSelect],
               {

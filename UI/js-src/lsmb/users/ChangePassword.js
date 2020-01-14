@@ -96,7 +96,6 @@ define(["dojo/_base/declare",
                       var I = this;
                       var r = request;
                       console.log("change_pw clicked");
-                      var login = document.getElementById("username").value;
                       var old_password = I.oldpw.get("value");
                       var new_password = I.newpw.get("value");
                       var confirm_pass = I.verified.get("value");
