@@ -71,23 +71,23 @@ FOREACH BUTTON IN buttons;
 END; ?><br />
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <?lsmb IF FORMATS.grep('PDF').size() ?>
-<a target="_blank"
+<a target="_blank" rel="noopener noreferrer"
    href="<?lsmb LINK _ '&amp;format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('TXT').size(); ?>
-<a target="_blank"
+<a target="_blank" rel="noopener noreferrer"
    href="<?lsmb LINK _ '&amp;format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('ODS').size() ?>
-<a target="_blank"
+<a target="_blank" rel="noopener noreferrer"
    href="<?lsmb LINK _ '&amp;format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('XLS').size(); ?>
-<a target="_blank"
+<a target="_blank" rel="noopener noreferrer"
    href="<?lsmb LINK _ '&amp;format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('XLSX').size(); ?>
-<a target="_blank"
+<a target="_blank" rel="noopener noreferrer"
    href="<?lsmb LINK _ '&amp;format=XLSX' ?>">[<?lsmb text('XLSX') ?>]</a>&nbsp;
 <?lsmb END; ?>
 </form>

@@ -96,11 +96,14 @@ END ;
 </table>
 <?lsmb IF FORMATS.grep('PDF').size() ?>
 <div class="export-links">
-<div class="export-link"><a target="_blank"
+  <div class="export-link"
+       ><a target="_blank" rel="noopener noreferrer"
            href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a>
-<div class="export-link"><a target="_blank"
-       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
-</div>
+  </div>
+  <div class="export-link"
+       ><a target="_blank" rel="noopener noreferrer"
+           href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a>
+  </div>
 <?lsmb END ?>
 </div>
 </body>
