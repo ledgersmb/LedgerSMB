@@ -48,12 +48,6 @@ has ignore_yearend => (is => 'ro', 'isa' =>'Str', required =>1);
 
 =over
 
-=item template
-
-=cut
-
-sub template { return 'Reports/PNL' }
-
 =item name
 
 =cut
