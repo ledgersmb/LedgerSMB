@@ -59,12 +59,6 @@ has description  => (is => 'rw', isa =>'Str');
 
 =over
 
-=item template
-
-=cut
-
-sub template { return 'Reports/PNL' }
-
 =item name
 
 =cut
