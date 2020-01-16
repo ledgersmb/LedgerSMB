@@ -12,11 +12,6 @@
   <meta name="robots" content="noindex,nofollow" />
 </head>
 <body id="printPayment">
- <?lsmb PROCESS elements.html  # Include form elements helper. ?>
- <?lsmb accountclass.type = 'hidden';
-        INCLUDE input element_data=accountclass ?>
- <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login ?>
- <?lsmb #WE NEED TO KNOW HOW MANY COLUMNS WE ARE USING, PLEASE DO NOT MOVE THE NEXT LINE -?>
  <?lsmb column_count = 0 -?>
  <table width="100%" id="header_table">
    <tr id="header_bar">
