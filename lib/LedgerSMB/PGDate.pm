@@ -228,14 +228,15 @@ sub add_interval {
     return $self;
 }
 
-=item from_input($string date)
+=item from_input($date_string, [$format])
 
-Parses this from an input string according to the user's dateformat
+Parses this from an input string according to the user's dateformat,
+unless C<$format> has been specified to override it.
 
 =cut
 
 sub from_input{
-    my ($self, $input) = @_;
+    my ($self, $input, $format) = @_;
 
     local $@ = undef;
     return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
@@ -245,8 +246,12 @@ sub from_input{
 
     my $dt;
     my @fmts;
-    @fmts = @{$regexes->{uc($LedgerSMB::App_State::User->{dateformat})}}
-       if defined $LedgerSMB::App_State::User->{dateformat};
+    if ($format) {
+        @fmts = @{$regexes->{uc($format)}};
+    }
+    elsif (defined $LedgerSMB::App_State::User->{dateformat}) {
+        @fmts = @{$regexes->{uc($LedgerSMB::App_State::User->{dateformat})}};
+    }
 
     for my $fmt (@fmts, @{$regexes->{'YYYY-MM-DD'}} ) {
         my ($success, %args);
