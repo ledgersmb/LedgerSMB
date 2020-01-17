@@ -156,8 +156,12 @@ sub call {
             $extended_cookie = _verify_session($env->{'lsmb.db'},
                                                $env->{'lsmb.company'},
                                                $session_cookie);
-            return LedgerSMB::PSGI::Util::session_timed_out()
-                if ! $extended_cookie;
+            if (! $extended_cookie) {
+                $dbh->commit;
+                $dbh->disconnect;
+
+                return LedgerSMB::PSGI::Util::session_timed_out();
+            }
 
             # create a session invalidation callback here.
             $env->{'lsmb.invalidate_session_cb'} = sub {
