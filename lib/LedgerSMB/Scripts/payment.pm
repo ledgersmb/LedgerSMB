@@ -399,7 +399,7 @@ sub print {
     }
 
     $payment->{format_amount} =
-        sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(); };
+        sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(money => 1); };
 
     my $data = $bulk_post_map->($request);
     if ($data->{multiple}){
@@ -922,7 +922,7 @@ sub payment2 {
     my @open_invoices  = $Payment->get_open_invoices();
     my $unhandled_overpayment;
     for my $invoice (@open_invoices) {
-        $invoice->{invoice_date} = $invoice->{invoice_date}->to_output;
+        $invoice->{invoice_date} = $invoice->{invoice_date}->to_output();
 
         if ($args{update}
             && ! $request->{"checkbox_$invoice->{invoice_id}"}) {
@@ -979,7 +979,7 @@ sub payment2 {
         }
         my $paid = $invoice->{amount} -
             $invoice->{due} - $invoice->{discount};
-        my $paid_formatted = $paid->to_output;
+        my $paid_formatted = $paid->to_output(money => 1);
         # Now its time to build the link to the invoice :)
         my $uri_module;
         #TODO move following code to sub getModuleForUri() ?
@@ -1014,14 +1014,14 @@ sub payment2 {
                 id     =>  $invoice_id,
                 href   => $uri },
             invoice_date      => "$invoice->{invoice_date}",
-            amount            => $invoice_amt ? $invoice_amt->to_output() : '',
-            due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
+            amount            => $invoice_amt ? $invoice_amt->to_output(money => 1) : '',
+            due               => LedgerSMB::PGNumber->from_input($request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount})->to_output(money => 1),
             paid              => $paid_formatted,
             discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
             optional_discount =>  $request->{"optional_discount_$invoice_id"},
             exchange_rate     =>  "$invoice->{exchangerate}",
             due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-            topay             => $invoice->{due} - $invoice->{discount},
+            topay             => LedgerSMB::PGNumber->from_input($invoice->{due} - $invoice->{discount})->to_output(money => 1),
             source_text       =>  $request->{"source_text_$invoice_id"},
             optional          =>  $request->{"optional_pay_$invoice_id"},
             selected_account  =>  $request->{"account_$invoice_id"},
@@ -1032,10 +1032,11 @@ sub payment2 {
             },#END HASH
             topay_fx          =>  {
                 name  => "topay_fx_$invoice_id",
-                value => $request->{"topay_fx_$invoice_id"} //
+                value => ($request->{"topay_fx_$invoice_id"}
+                          ? LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice_id"})->to_output(money => 1) :
                     ( $topay_fx_value ?
-                      LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output()
-                      : ''),
+                      LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output(money => 1)
+                      : '')),
             }#END HASH
         };# END PUSH
 
@@ -1062,7 +1063,7 @@ sub payment2 {
                     split(/--/, $request->{"overpayment_cash_account_$i"});
 
                 push @overpayment, {
-                    amount  => LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"}),
+                    amount  => LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"})->to_output(money => 1),
                     source1 => $request->{"overpayment_source1_$i"},
                     source2 => $request->{"overpayment_source2_$i"},
                     memo    => $request->{"overpayment_memo_$i"},
@@ -1136,7 +1137,7 @@ sub payment2 {
             value => $request->{curr}, },
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
-        topay_subtotal => (sum map { $_->{topay} } @invoice_data) // 0,
+        topay_subtotal => LedgerSMB::PGNumber->new((sum map { $_->{topay} } @invoice_data) // 0)->to_output(money => 1),
         topay_state   => \@topay_state,
         vendorcustomer => {
             name => 'vendor-customer',
@@ -1165,9 +1166,9 @@ sub payment2 {
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
-        overpayment_subtotal => (sum map { $_->{amount} } @overpayment) // 0,
-        payment_total => (sum map { $_->{amount} } @overpayment)
-            + (sum map { $_->{topay} } @invoice_data),
+        overpayment_subtotal => LedgerSMB::PGNumber->new((sum map { $_->{amount} } @overpayment) // 0)->to_output(money => 1),
+        payment_total => LedgerSMB::PGNumber->new((sum map { $_->{amount} } @overpayment)
+            + (sum map { $_->{topay} } @invoice_data))->to_output(money => 1),
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
@@ -1400,7 +1401,7 @@ sub print_payment {
   my $select = {
       header        => $header,
       rows          => \@rows,
-      format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
+      format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output(money => 1)}
   };
   my $template = LedgerSMB::Template->new( # printed document
       user     => $Payment->{_user},
