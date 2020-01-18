@@ -66,6 +66,11 @@ sub list_currencies {
             $s->{drop_NOHREF} = 1;
             $s->{drop} = '(' . $request->{_locale}->text('default') . ')';
         }
+        elsif ($s->{is_used}) {
+            # Cannot delete a currency that's already being used
+            $s->{drop_NOHREF} = 1;
+            $s->{drop} = '';
+        }
         else {
             $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
         }
