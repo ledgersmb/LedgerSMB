@@ -149,7 +149,10 @@ sub _main_screen {
        if ($person->{entity_id} && $person->{entity_class}
                 && $person->{entity_class} == EC_EMPLOYEE ){
           shift @DIVS;
-          unshift @DIVS, 'employee', 'user', 'wage';
+          if ($request->setting->get('enable_wage_screen')) {
+              unshift @DIVS, 'wage';
+          }
+          unshift @DIVS, 'employee', 'user';
        }
        @entity_files = LedgerSMB::File->list(
                {ref_key => $entity_id, file_class => '4'}

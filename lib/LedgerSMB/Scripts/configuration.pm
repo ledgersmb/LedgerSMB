@@ -152,6 +152,11 @@ sub _default_settings {
                          'Please review the terms and conditions for the $1 before use.']
                 },
               ] },
+        { title => $locale->text('Experimental features'),
+          items => [
+              { name => 'enable_wage_screen', type => 'YES_NO',
+                label => $locale->text('Employee wage screen') },
+              ] },
         );
     return @default_settings;
 }
