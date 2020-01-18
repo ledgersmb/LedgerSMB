@@ -13,7 +13,8 @@
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
-     data-dojo-type="dijit/layout/TabContainer">
+     data-dojo-type="dijit/layout/TabContainer"
+     data-dojo-props="doLayout:false">
 <?lsmb IF form.charttype == 'H'; ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      data-dojo-props="selected:true"
