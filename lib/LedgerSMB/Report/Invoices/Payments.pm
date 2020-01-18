@@ -129,6 +129,7 @@ sub columns {
            name => $self->Text('Date Paid'), },
         {col_id => 'amount',
            type => 'text',
+          money => 1,
            name => $self->Text('Total Paid'), },
         {col_id => 'source',
            type => 'text',
