@@ -30,7 +30,9 @@ PROCESS "dynatable.html"  ?>
 <?lsmb text("Edit Employee") ?>
 -->
 </div>
-<div id="contact_tabs" data-dojo-type="dijit/layout/TabContainer" style="height:500px;">
+    <div id="contact_tabs"
+         data-dojo-type="dijit/layout/TabContainer"
+         data-dojo-props="doLayout:false">
   <?lsmb FOREACH ITEM IN DIVS;
       INCLUDEDIV = "Contact/divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;
