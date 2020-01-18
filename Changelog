@@ -17,9 +17,12 @@ Added functionalities
 
 Changed functionalities
 * Faster loading of the menu
+* All payments recorded in the database as primary data (no longer inferred)
 * New UI for uploading and editing document (print) templates
 * Colors of default scheme changed to follow the soft-tone of the Claro theme
 * Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
+* Employee 'Wages & Deductions' (experimental) page now hidden until enabled
+* Templates for printed documents need to escape inserted data (was automatic)
 
 Bugs fixed
 * Default dates sometimes off by a day (before or after the current day) (#2587)
@@ -35,6 +38,10 @@ Code cleanup
 * Replaced 'no strict "refs"' with use of Symbol module
 * Removed tables 'fixes' and 'menu_attribute'
 * Removed template functions escape(), tt_url() & UNESCAPE()
+* Javascript improvements based on automated code review from lgtm.com
+* Disentangled processing of UI and printed documents
+* Remove remnants of custom field support
+* Remove unused infrastructure to administer access role groups
 
 
 Changelog for 1.7 Series
