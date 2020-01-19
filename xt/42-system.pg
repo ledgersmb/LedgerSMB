@@ -4,49 +4,16 @@ BEGIN;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(1);
 
     -- Add data
-
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
-
---    SELECT has_table('business');
-
-    -- Validate required functions
-
---    SELECT has_function('business_type__list','{}'::text[]);
-
-    -- Run tests
-
-    -- Include the exempted functions in temporary table.
-    \i sql/modules/Blacklisted.sql.inc
+    -- Load the functions to check in a temporary table.
+    CREATE TEMPORARY TABLE blacklisted_funcs (funcname text primary key);
     \copy blacklisted_funcs from 'sql/modules/BLACKLIST';
 
-    -- Set temporary table in pg_temp
-    create temporary table test_exempt_tables (tablename text, reason text);
-    insert into test_exempt_tables values ('note', 'abstract table, no data');
-    insert into test_exempt_tables values ('open_forms', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_cfg', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_cfgmap', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_dict', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_parser', 'security definer only');
-    insert into test_exempt_tables values ('file_view_catalog', 'addon installaiton only');
-
-    insert into test_exempt_tables
-    values ('person_to_company', 'Unused in core, for addons only');
-    insert into test_exempt_tables
-    values ('person_to_entity', 'Unused in core, for addons only');
-
-    insert into test_exempt_tables values ('pg_temp.test_exempt_funcs', 'test data only');
-
-    insert into test_exempt_tables values ('pg_temp.test_exempt_tables', 'test data only');
-    insert into test_exempt_tables values ('menu_friendly', 'dev info only');
-    insert into test_exempt_tables values ('note', 'abstract table, no data');
-    analyze test_exempt_tables;
-
+    -- Run tests
     PREPARE test AS SELECT count(*) = 0
                     FROM (select proname FROM pg_proc
                             WHERE pronamespace =
@@ -57,15 +24,6 @@ BEGIN;
                             having count(*) > 1
                     ) t;
     SELECT results_eq('test',ARRAY[true],'No overloaded functions in current schema');
-    DEALLOCATE test;
-
-    PREPARE test AS select proname FROM pg_proc WHERE pronamespace =
-                            (select oid from pg_namespace
-                            where nspname = current_schema())
-                            AND proname IN (select funcname from blacklisted_funcs)
-                    group by proname
-                    having count(*) > 1;
---    SELECT results_eq('test',ARRAY[true],'No overloaded functions in current schema namespace');
     DEALLOCATE test;
 
     -- Finish the tests and clean up.

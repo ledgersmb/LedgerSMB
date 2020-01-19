@@ -2,7 +2,7 @@
 set client_min_messages = 'warning';
 
 
-\i sql/modules/Blacklisted.sql.inc
+CREATE TEMPORARY TABLE blacklisted_funcs (funcname text primary key);
 \copy blacklisted_funcs FROM 'sql/modules/BLACKLIST';
 DO $$
 DECLARE f record;
