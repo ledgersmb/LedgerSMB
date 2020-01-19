@@ -4,20 +4,10 @@ BEGIN;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(1);
 
     -- Add data
-
     \i xt/data/42-pg/Base.sql
-
-    -- Validate required tables
-
---    SELECT has_table('business');
-
-    -- Validate required functions
-
---    SELECT has_function('business_type__list','{}'::text[]);
 
     -- Run tests
 
@@ -35,15 +25,6 @@ BEGIN;
                             having count(*) > 1
                     ) t;
     SELECT results_eq('test',ARRAY[true],'No overloaded functions in current schema');
-    DEALLOCATE test;
-
-    PREPARE test AS select proname FROM pg_proc WHERE pronamespace =
-                            (select oid from pg_namespace
-                            where nspname = current_schema())
-                            AND proname IN (select funcname from blacklisted_funcs)
-                    group by proname
-                    having count(*) > 1;
---    SELECT results_eq('test',ARRAY[true],'No overloaded functions in current schema namespace');
     DEALLOCATE test;
 
     -- Finish the tests and clean up.
