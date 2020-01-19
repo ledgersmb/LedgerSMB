@@ -22,7 +22,7 @@ BEGIN;
     -- Run tests
 
     -- Include the exempted functions in temporary table.
-    \i sql/modules/Blacklisted.sql.inc
+    CREATE TEMPORARY TABLE blacklisted_funcs (funcname text primary key);
     \copy blacklisted_funcs from 'sql/modules/BLACKLIST';
 
     -- Set temporary table in pg_temp
