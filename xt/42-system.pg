@@ -25,28 +25,6 @@ BEGIN;
     CREATE TEMPORARY TABLE blacklisted_funcs (funcname text primary key);
     \copy blacklisted_funcs from 'sql/modules/BLACKLIST';
 
-    -- Set temporary table in pg_temp
-    create temporary table test_exempt_tables (tablename text, reason text);
-    insert into test_exempt_tables values ('note', 'abstract table, no data');
-    insert into test_exempt_tables values ('open_forms', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_cfg', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_cfgmap', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_dict', 'security definer only');
-    insert into test_exempt_tables values ('pg_ts_parser', 'security definer only');
-    insert into test_exempt_tables values ('file_view_catalog', 'addon installaiton only');
-
-    insert into test_exempt_tables
-    values ('person_to_company', 'Unused in core, for addons only');
-    insert into test_exempt_tables
-    values ('person_to_entity', 'Unused in core, for addons only');
-
-    insert into test_exempt_tables values ('pg_temp.test_exempt_funcs', 'test data only');
-
-    insert into test_exempt_tables values ('pg_temp.test_exempt_tables', 'test data only');
-    insert into test_exempt_tables values ('menu_friendly', 'dev info only');
-    insert into test_exempt_tables values ('note', 'abstract table, no data');
-    analyze test_exempt_tables;
-
     PREPARE test AS SELECT count(*) = 0
                     FROM (select proname FROM pg_proc
                             WHERE pronamespace =
