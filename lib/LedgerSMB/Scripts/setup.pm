@@ -686,6 +686,7 @@ sub upgrade_info {
         $request->{slschema} =~ s/\.//;
     }
     $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
+    $request->{slversion} = $dbinfo->{version};
     return $retval;
 }
 
