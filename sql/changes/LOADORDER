@@ -124,3 +124,4 @@ mc/delete-migration-validation-data.sql
 1.8/initialize-payments-from-vouchers.sql
 1.8/payments-reversing.sql
 1.8/drop-payment_map.sql
+1.8/explicit-reconciliation.sql

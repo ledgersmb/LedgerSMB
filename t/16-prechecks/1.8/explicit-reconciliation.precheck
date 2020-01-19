@@ -1,0 +1,32 @@
+{
+    q|Ensure that the database doesn't contain unapproved reconciliations| =>
+        [
+         {
+             failure_data => [
+                 [ qw( id accno description end_date their_total ) ],
+                 [ 22, '1510', 'Petty cash', '2018-01-01', 25.03 ],
+                 ],
+             submit_session =>
+                 [
+                  {
+                      statement => q{DELETE FROM cr_report_line WHERE report_id IN ?},
+                      # bound_params => [ [ 22 ] ], can't check bound arrays..
+                      results => [],
+                  },
+                  {
+                      statement => q{DELETE FROM cr_report WHERE id IN ?},
+                      # bound_params => [ [ 22 ] ], can't check bound arrays..
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'delete',
+                 'reconciliation' => [
+                     {
+                         '__pk' => 'MjI=',
+                     },
+                     ],
+             },
+         },
+        ],
+}
