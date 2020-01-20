@@ -38,6 +38,14 @@ This is the description of the currency.
 
 has 'description' => (is => 'rw', isa => 'Str');
 
+=item 'is_used'
+
+True if currency has been used. Currencies that have been used within
+the accounts cannot be deleted.
+
+=cut
+
+has 'is_used' => (is => 'ro', isa => 'Bool');
 
 =back
 

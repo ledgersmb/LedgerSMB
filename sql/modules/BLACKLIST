@@ -145,6 +145,7 @@ cr_report_block_changing_approved
 credit_limit__used
 currency__delete
 currency__get
+currency__is_used
 currency__list
 currency__save
 customer_location_save

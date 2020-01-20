@@ -48,10 +48,40 @@ $$ language sql;
 COMMENT ON FUNCTION currency__get(text) IS
 $$Retrieves a currency and its description using the currency indicator.$$;
 
+CREATE OR REPLACE FUNCTION currency__is_used
+(in_curr text)
+RETURNS BOOLEAN AS $$
+BEGIN
+   RETURN EXISTS (SELECT 1 FROM acc_trans WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM account_checkpoint WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM ap WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM ar WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM budget_line WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM entity_credit_account WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM exchangerate_default WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM jcitems WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM journal_line WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM oe WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM partscustomer WHERE curr = in_curr)
+       OR EXISTS (SELECT 1 FROM partsvendor WHERE curr = in_curr);
+END;$$ language plpgsql;
+
+COMMENT ON FUNCTION currency__is_used(text) IS
+$$Returns true if currency 'in_curr' is used within the current commpany
+database. Returns false otherwise.$$;
+
+DROP TYPE IF EXISTS currency_list CASCADE;
+CREATE TYPE currency_list AS (
+  curr CHARACTER(3),
+  description TEXT,
+  is_used BOOLEAN
+);
+
+DROP FUNCTION IF EXISTS currency__list();
 CREATE OR REPLACE FUNCTION currency__list()
-RETURNS SETOF currency AS
+RETURNS SETOF currency_list AS
 $$
-  select c.* from currency c
+  select c.curr, c.description, currency__is_used(c.curr) from currency c
     left join (select value as curr from defaults where setting_key = 'curr') d
          on c.curr = d.curr
    order by case when c.curr = d.curr then 1 else 2 end, c.curr;
