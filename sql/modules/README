@@ -5,4 +5,7 @@ Also Roles.sql MUST be run last because portions of it depend on function
 declarations in the other scripts.
 
 The file sql/modules/BLACKLIST lists all functions expected to exist in
-the schema. It is created by the script tools/makeblacklist.pl
+the schema.  This is used to test that functions have not been overloaded
+(that there are not multiple functions with the same name, but different
+parameters), which our object mapper does not handle. The file is created
+by the script `utils/test/makeblacklist.pl`.
