@@ -605,6 +605,43 @@ push @tests, __PACKAGE__->new(
 
 #=cut
 
+push @tests,__PACKAGE__->new(
+    test_query => q{SELECT  ap.id, vendor.name as vendor,
+                            (select name from employee
+                                    WHERE id = ap.employee_id),
+                            invnumber, transdate, amount, exchangerate, ap.curr,
+                            ap.notes, description
+                    FROM ap JOIN vendor ON ap.vendor_id = vendor.id
+                    WHERE exchangerate = 1 AND amount = 0
+                    ORDER BY transdate},
+    display_name => marktext('Invalid AP FX'),
+    name => 'invalid_ap_fx',
+    display_cols => ['transdate', 'id', 'vendor', 'name', 'amount', 'exchangerate', 'curr', 'notes', 'description' ],
+ instructions => marktext('Invalid AP FX transaction. Please fix in SQL-Ledger'),
+    table => 'ap',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.2'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => q{SELECT  ar.id, customer.name as customer,
+                            (select name from employee
+                                    WHERE id = ar.employee_id),
+                            invnumber, transdate, amount, exchangerate, ar.curr,
+                            ar.notes, description
+                    FROM ar JOIN customer ON ar.vendor_id = customer.id
+                    WHERE exchangerate = 1 AND amount = 0
+                    ORDER BY transdate},
+    display_name => marktext('Invalid ar FX'),
+    name => 'invalid_ar_fx',
+    display_cols => ['transdate', 'id', 'customer', 'name', 'amount', 'exchangerate', 'curr', 'notes', 'description' ],
+ instructions => marktext('Invalid AR FX transaction. Please fix in SQL-Ledger'),
+    table => 'ar',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.2'
+    );
 
 push @tests,__PACKAGE__->new(
     test_query => q{select *
