@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(43);
+    SELECT plan(42);
 
     -- Add data
 
@@ -16,7 +16,6 @@ BEGIN;
     SELECT has_table('ap');
     SELECT has_table('payment');
     SELECT has_table('payment_links');
-    SELECT has_table('payment_map');
     SELECT has_table('payment_type');
 
     -- Validate required functions
