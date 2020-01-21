@@ -348,10 +348,19 @@ sub reverse_payments {
         if ($request->{"select_$count"}) {
 
             my $data = {
-                dbh           => $request->{dbh},
-                batch_id      => $request->{batch_id},
-                payment_id    => $request->{"payment_id_$count"},
-                payment_date  => $date_reversed,
+                          dbh => $request->{dbh},
+                date_reversed => $date_reversed,
+                     batch_id => $request->{batch_id},
+                   cash_accno => $request->{cash_accno},
+                     currency => $request->{currency},
+                 exchangerate => $request->{exchangerate},
+                       source => $request->{"source_$count"},
+                    credit_id => $request->{"credit_id_$count"},
+                account_class => $request->{"entity_class_$count"},
+                   voucher_id => $request->{"voucher_id_$count"},
+                    date_paid => LedgerSMB::PGDate->from_input(
+                                     $request->{"date_paid_$count"}
+                                 ),
             };
 
             my $payment = LedgerSMB::DBObject::Payment->new({base => $data});

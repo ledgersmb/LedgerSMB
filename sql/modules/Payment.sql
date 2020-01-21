@@ -1139,8 +1139,7 @@ CREATE TYPE payment_record AS (
         batch_control text,
         batch_description text,
         voucher_id int,
-        date_paid date,
-        reversed_by int
+        date_paid date
 );
 
 DROP FUNCTION IF EXISTS payment__search(text, date, date, int, text, int, char(3));
@@ -1157,8 +1156,7 @@ $$
           compound_array(array[array[act.id::text, act.accno,
                                      act.description]]),
           a.source, b.control_code, b.description,
-          v.id, p.payment_date,
-          (select r.id from payment r where r.reversing = p.id)
+          v.id, p.payment_date
      from payment p
      join payment_links l on p.id = l.payment_id
      join entity_credit_account c on p.entity_credit_id = c.id
@@ -1209,86 +1207,126 @@ DROP FUNCTION IF EXISTS payment__reverse
         in_date_reversed date, in_account_class int, in_batch_id int,
         in_voucher_id int, in_exchangerate numeric, in_currency char(3));
 
-DROP FUNCTION IF EXISTS payment__reverse
+CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
         in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int);
-
-
-CREATE OR REPLACE FUNCTION payment__reverse
-(in_payment_id int, in_payment_date date, in_approved boolean,
-in_batch_id int)
+        in_voucher_id int)
 RETURNS INT
 AS $$
 DECLARE
-  t_payment_id int;
+        pay_row record;
+        t_voucher_id int;
+        t_voucher_inserted bool;
+
+        t_fxgain_id int;
+        t_fxloss_id int;
 BEGIN
-  -- check against being an overpayment??
-  INSERT INTO payment (reference, gl_id, payment_class,
-                       payment_date, closed, entity_credit_id,
-                       employee_id, currency, reversing, notes)
-    SELECT reference, gl_id, payment_class,
-           in_payment_date, closed, entity_credit_id,
-           person__get_my_id(), currency, in_payment_id,
-           'This payment reverses ' || in_payment_id
-      FROM payment
-     WHERE id = in_payment_id
-  RETURNING id INTO t_payment_id;
+        select value::int INTO t_fxgain_id FROM setting_get('fxgain_accno_id');
+        select value::int INTO t_fxloss_id FROM setting_get('fxloss_accno_id');
 
-  -- Using a CTE because we can use the returned result to fill
-  -- the payment_links table without further temporary tables
-  WITH new_entries AS (
-    INSERT INTO acc_trans (trans_id, chart_id, transdate, source,
-                           cleared, memo, invoice_id, approved,
-                           cleared_on, reconciled_on, voucher_id,
-                           amount_bc, amount_tc, curr)
-     SELECT trans_id, chart_id, in_payment_date, source,
-            false, memo, null, coalesce(in_approved, true),
-            null, null, null,
-            -1 * amount_bc, -1 * amount_tc, curr
-       FROM acc_trans a
-      WHERE exists (select 1 from payment_links pl
-                     where pl.payment_id = in_payment_id
-                           and a.entry_id = pl.entry_id)
-    RETURNING entry_id
-  )
-  INSERT INTO payment_links (payment_id, entry_id)
-  SELECT t_payment_id, entry_id
-    FROM new_entries;
+        IF in_batch_id IS NOT NULL THEN
+                t_voucher_id := nextval('voucher_id_seq');
+                t_voucher_inserted := FALSE;
+        END IF;
+        FOR pay_row IN
+                SELECT a.*,
+                       (select distinct chart_id
+                          from acc_trans ac
+                               join account at on ac.chart_id = at.id
+                               join account_link al on at.id = al.account_id
+                         where ((al.description = 'AP'
+                                   and in_account_class = 1)
+                                 or (al.description = 'AR'
+                                    and in_account_class = 2))
+                               and ac.trans_id = a.trans_id)
+                       as ar_ap_account_id,
+                       arap.curr, arap.orig_amount_tc, orig_amount_bc
+                FROM acc_trans a
+                JOIN (select id, curr, amount_tc as orig_amount_tc,
+                             amount_bc as orig_amount_bc, entity_credit_account
+                        FROM ar
+                       WHERE in_account_class = 2
+                      UNION
+                      select id, curr, amount_tc as orig_amount_tc,
+                             amount_bc as orig_amount_bc, entity_credit_account
+                        FROM ap
+                       WHERE in_account_class = 1
+                ) arap ON (a.trans_id = arap.id)
+                JOIN entity_credit_account c
+                        ON (arap.entity_credit_account = c.id)
+                JOIN account ch ON (a.chart_id = ch.id)
+                WHERE coalesce(a.source, '') = coalesce(in_source, '')
+                        AND a.transdate = in_date_paid
+                        AND in_credit_id = arap.entity_credit_account
+                        AND in_cash_accno = ch.accno
+                        and in_voucher_id IS NOT DISTINCT FROM voucher_id
+        LOOP
+                IF in_batch_id IS NOT NULL
+                        AND t_voucher_inserted IS NOT TRUE
+                THEN
+                        INSERT INTO voucher
+                        (id, trans_id, batch_id, batch_class)
+                        VALUES
+                        (t_voucher_id, pay_row.trans_id, in_batch_id,
+                                CASE WHEN in_account_class = 1 THEN 4
+                                     WHEN in_account_class = 2 THEN 7
+                                END);
 
-  IF in_batch_id IS NOT NULL THEN
-    --TODO: without vouchers, we could simply directly insert into
-    -- the batch when generating the acc_trans lines...
-    INSERT INTO voucher (trans_id, batch_id, batch_class)
-    select trans_id, in_batch_id,
-         (select case when payment_class = 1 then 4
-                      else 7 end
-            from payment c where c.id = t_payment_id)
-      from acc_trans a join payment_links pl on a.entry_id = pl.entry_id
-     where pl.payment_id = t_payment_id
-     group by trans_id;
+                        t_voucher_inserted := TRUE;
+                END IF;
 
-    UPDATE acc_trans a
-       SET voucher_id =
-            (select id from voucher
-              where a.trans_id = voucher.trans_id
-                    and voucher.batch_id = in_batch_id)
-     WHERE exists (select 1 from payment_links pl
-                    where pl.entry_id = a.entry_id
-                          and pl.payment_id = t_payment_id);
-  END IF;
+                INSERT INTO acc_trans
+                       (trans_id, chart_id, amount_bc, curr, amount_tc,
+                        transdate, source, memo, approved, voucher_id)
+                VALUES
+                   (pay_row.trans_id, pay_row.chart_id,
+                    -1 * pay_row.amount_bc,
+                    pay_row.curr,
+                    -1 * pay_row.amount_tc,
+                    in_date_reversed,
+                    in_source, 'Reversing ' || COALESCE(in_source, ''),
+                    case when in_batch_id is not null then false
+                    else true end, t_voucher_id),
+                   (pay_row.trans_id, pay_row.ar_ap_account_id,
+                    pay_row.amount_bc,
+                    pay_row.curr,
+                    pay_row.amount_tc,
+                    in_date_reversed,
+                    in_source, 'Reversing ' || COALESCE(in_source, ''),
+                    case when in_batch_id is not null then false
+                    else true end, t_voucher_id);
 
-  RETURN t_payment_id;
+                IF  ABS((pay_row.amount_bc / pay_row.orig_amount_bc
+                        * pay_row.orig_amount_tc) - pay_row.amount_tc)
+                        > 0.005 THEN
+                   INSERT INTO acc_trans (trans_id, chart_id, amount,
+                                          transdate, source, memo, approved,
+                                          voucher_id)
+                      VALUES
+                         (pay_row.trans_id,
+                          case when (pay_row.amount_bc / pay_row.orig_amount_bc
+                                     * pay_row.orig_amount_tc)
+                                       > pay_row.amount_tc
+                                  THEN t_fxloss_id ELSE t_fxgain_id END,
+                          (pay_row.amount_bc / pay_row.orig_amount_bc
+                            * pay_row.orig_amount_tc) - pay_row.amount_tc,
+                          in_date_reversed, in_source,
+                          'Reversing ' || COALESCE(in_source, ''),
+                          case when in_batch_id is not null then false
+                               else true end, t_voucher_id);
+                END IF;
+
+        END LOOP;
+        RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment__reverse
-(in_payment_id int, in_payment_date date, in_approved boolean,
- in_batch_id int) IS $$
-Reverses the payment identified by `in_payment_id`, adding the resulting
-transactions into `in_batch_id` if that''s not null.
-
-Returns the `id` of the reversal payment generated.
+(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
+        in_date_reversed date, in_account_class int, in_batch_id int,
+        in_voucher_id int) IS $$
+Reverses a payment.  All fields are mandatory except batch_id and voucher_id
+because they determine the identity of the payment to be reversed.
 $$;
 
 
