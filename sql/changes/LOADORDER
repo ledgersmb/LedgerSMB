@@ -123,3 +123,4 @@ mc/delete-migration-validation-data.sql
 1.8/add-system-files-menu.sql
 1.8/initialize-payments-from-vouchers.sql
 1.8/payments-reversing.sql
+1.8/drop-payment_map.sql

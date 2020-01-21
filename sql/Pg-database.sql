@@ -1607,21 +1607,6 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 
 --
 
-CREATE TABLE payment_map (
-    line_id int references journal_line(id),
-    pays int references eca_invoice(journal_id) not null,
-    primary key(line_id)
-);
-
-COMMENT ON TABLE payment_map IS $$ This maps the payment journal entry to the
-invoices it pays.  A couple notes here:
-1)  There is no requirement tht the payment "invoice" be linked to the same
-entity_credit_account as the paid invoice.  People can pay eachothers invoices
-if LedgerSMB supports this at an app level.
-2)  This now means that payments are first class transactions.$$;
---
-
-
 CREATE TABLE journal_note (
    internal_only bool not null default false,
    primary key (id),
