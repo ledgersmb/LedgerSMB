@@ -304,14 +304,22 @@ BEGIN;
     \gset
 
     PREPARE test AS
-    SELECT count(*)::int FROM payment
-     WHERE reference = 'test_bulk' and notes = 'generated from bulk payment';
+    SELECT count(*)::int FROM payment p
+     WHERE notes = 'generated from bulk payment'
+           AND EXISTS (select 1 from payment_links pl
+                                join acc_trans ac on pl.entry_id = ac.entry_id
+                                join ap on ac.trans_id = ap.id
+                        where ap.invnumber = 'test_bulk');
     SELECT results_eq('test', array[1::int],
                       'After payment, the payment table contains a record');
     DEALLOCATE test;
 
-    SELECT id as payment_id FROM payment
-     WHERE reference = 'test_bulk' and notes = 'generated from bulk payment'
+    SELECT id as payment_id FROM payment p
+     WHERE notes = 'generated from bulk payment'
+           AND EXISTS (select 1 from payment_links pl
+                                join acc_trans ac on pl.entry_id = ac.entry_id
+                                join ap on ac.trans_id = ap.id
+                        where ap.invnumber = 'test_bulk')
     \gset
 
 
