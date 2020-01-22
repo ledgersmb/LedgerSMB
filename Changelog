@@ -43,6 +43,10 @@ Code cleanup
 * Remove remnants of custom field support
 * Remove unused infrastructure to administer access role groups
 
+Dependency updates
+* Dojo Toolkit updated to 1.16.0
+* TeX::Encode >= 2.007
+
 
 Changelog for 1.7 Series
 2019-10-04
