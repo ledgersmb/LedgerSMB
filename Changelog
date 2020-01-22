@@ -5,7 +5,7 @@ Changelog for 1.7 Series
 Changelog for 1.7.8
 * Upgrade Dojo dependency to 1.15.1
 * Load the template from the database when printing receipts
-* Prevent dead-locks in response to request from to timed out session
+* Prevent dead-locks in response to request from timed out session
 * Add monetary formatting to payments/receipts screen and report
 
 
