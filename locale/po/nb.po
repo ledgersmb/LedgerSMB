@@ -2,14 +2,14 @@
 # Erik Huelsmann <ehuels@gmail.com>, 2018
 # Arne Hanssen <arne.senja@gmail.com>, 2018
 # Stig Berg <stig@tmb.no>, 2018
-# Håvard Sørli <havard@sorli.no>, 2018
+# Håvard Sørli <havard@sorli.no>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.18-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2019-12-26 17:31+0000\n"
-"Last-Translator: Håvard Sørli <havard@sorli.no>, 2018\n"
+"POT-Creation-Date: 2020-01-22 21:31+0000\n"
+"Last-Translator: Håvard Sørli <havard@sorli.no>, 2020\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
 "Language: nb\n"
@@ -4964,7 +4964,7 @@ msgstr "Må ha bruker ID"
 
 #: UI/accounts/edit.html:11
 msgid "NONE"
-msgstr ""
+msgstr "INGEN"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:138
 #: lib/LedgerSMB/Report/Contact/History.pm:56
