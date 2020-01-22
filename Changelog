@@ -4,6 +4,7 @@ Released 2018-06-10
 
 Changelog for 1.6.18
 * Upgrade Dojo dependency to 1.13.5 (Erik H)
+* Prevent dead-locks in response to request from timed out session (Erik H)
 
 Erik H is Erik Huelsmann
 
