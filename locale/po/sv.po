@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-01-12 20:42+0000\n"
+"POT-Creation-Date: 2020-01-22 21:49+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Swedish (https://www.transifex.com/ledgersmb/teams/58325/sv/)\n"
 "Language: sv\n"
@@ -198,10 +198,10 @@ msgstr ""
 #: old/bin/aa.pl:610 old/bin/aa.pl:674 old/bin/aa.pl:835 old/bin/ic.pl:1119
 #: old/bin/ir.pl:436 old/bin/ir.pl:833 old/bin/is.pl:472 old/bin/is.pl:942
 #: old/bin/oe.pl:448 t/data/04-complex_template.html:27
-#: templates/demo/invoice.html:252 templates/demo/printPayment.html:44
+#: templates/demo/invoice.html:252 templates/demo/printPayment.html:39
 #: templates/demo_with_images/invoice.html:255
-#: templates/demo_with_images/printPayment.html:44
-#: templates/xedemo/invoice.html:254 templates/xedemo/printPayment.html:44
+#: templates/demo_with_images/printPayment.html:39
+#: templates/xedemo/invoice.html:254 templates/xedemo/printPayment.html:39
 #: UI/accounts/edit.html:117 UI/budgetting/budget_entry.html:57
 #: UI/Contact/contact.html:14 UI/Contact/divs/credit.html:188
 #: UI/Contact/divs/credit.html:189 UI/journal/journal_entry.html:129
@@ -242,7 +242,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/History.pm:62
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:147
 #: lib/LedgerSMB/Report/Contact/Search.pm:107 lib/LedgerSMB/Report/GL.pm:212
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:193
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:194
 #: lib/LedgerSMB/Report/PNL/ECA.pm:94
 #: lib/LedgerSMB/Report/Taxform/Details.pm:117
 #: lib/LedgerSMB/Report/Taxform/Details.pm:87
@@ -600,9 +600,9 @@ msgstr ""
 msgid "Address:"
 msgstr ""
 
-#: templates/demo/printPayment.html:26
-#: templates/demo_with_images/printPayment.html:26
-#: templates/xedemo/printPayment.html:26
+#: templates/demo/printPayment.html:21
+#: templates/demo_with_images/printPayment.html:21
+#: templates/xedemo/printPayment.html:21
 msgid "Address: [_1]"
 msgstr ""
 
@@ -717,7 +717,7 @@ msgstr ""
 #: templates/demo/ap_transaction.html:196 templates/demo/ar_transaction.html:194
 #: templates/demo/ar_transaction.tex:129 templates/demo/invoice.html:254
 #: templates/demo/invoice.tex:146 templates/demo/invoice.tex:210
-#: templates/demo/printPayment.html:53 templates/demo/product_receipt.html:133
+#: templates/demo/printPayment.html:48 templates/demo/product_receipt.html:133
 #: templates/demo/product_receipt.tex:120 templates/demo/purchase_order.html:133
 #: templates/demo/purchase_order.tex:120 templates/demo/sales_order.html:135
 #: templates/demo/sales_order.tex:122 templates/demo/sales_quotation.html:104
@@ -728,7 +728,7 @@ msgstr ""
 #: templates/demo_with_images/invoice.html:257
 #: templates/demo_with_images/invoice.tex:146
 #: templates/demo_with_images/invoice.tex:209
-#: templates/demo_with_images/printPayment.html:53
+#: templates/demo_with_images/printPayment.html:48
 #: templates/demo_with_images/product_receipt.html:133
 #: templates/demo_with_images/product_receipt.tex:120
 #: templates/demo_with_images/purchase_order.html:133
@@ -741,7 +741,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.html:194
 #: templates/xedemo/ar_transaction.tex:129 templates/xedemo/invoice.html:256
 #: templates/xedemo/invoice.tex:141 templates/xedemo/invoice.tex:205
-#: templates/xedemo/printPayment.html:53
+#: templates/xedemo/printPayment.html:48
 #: templates/xedemo/product_receipt.html:135
 #: templates/xedemo/product_receipt.tex:120
 #: templates/xedemo/purchase_order.html:133
@@ -828,7 +828,7 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1283
+#: lib/LedgerSMB/Scripts/payment.pm:1284
 msgid "Applied discount"
 msgstr ""
 
@@ -869,9 +869,9 @@ msgstr ""
 msgid "Approved at"
 msgstr ""
 
-#: templates/demo/printPayment.html:117
-#: templates/demo_with_images/printPayment.html:117
-#: templates/xedemo/printPayment.html:117
+#: templates/demo/printPayment.html:112
+#: templates/demo_with_images/printPayment.html:112
+#: templates/xedemo/printPayment.html:112
 msgid "Approved signature"
 msgstr ""
 
@@ -1221,7 +1221,7 @@ msgstr ""
 msgid "Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:155
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:156
 msgid "Batch"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgstr ""
 msgid "Batch Date"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:152
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:153
 msgid "Batch Description"
 msgstr ""
 
@@ -1731,7 +1731,7 @@ msgstr ""
 msgid "Company License Number"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:149
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:150
 #: lib/LedgerSMB/Scripts/configuration.pm:38
 msgid "Company Name"
 msgstr "Företags namn"
@@ -2056,9 +2056,9 @@ msgstr "Valuta"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:293
 #: lib/LedgerSMB/Report/Orders.pm:242 old/bin/aa.pl:1633 old/bin/aa.pl:433
 #: old/bin/ir.pl:323 old/bin/is.pl:324 old/bin/oe.pl:1533 old/bin/oe.pl:342
-#: templates/demo/printPayment.html:75
-#: templates/demo_with_images/printPayment.html:75
-#: templates/xedemo/printPayment.html:75 UI/Configuration/rate.html:28
+#: templates/demo/printPayment.html:70
+#: templates/demo_with_images/printPayment.html:70
+#: templates/xedemo/printPayment.html:70 UI/Configuration/rate.html:28
 #: UI/Contact/divs/credit.html:222 UI/Contact/divs/credit.html:223
 #: UI/Contact/pricelist.csv:46 UI/Contact/pricelist.html:57
 #: UI/Contact/pricelist.tex:62 UI/orders/order.html:47
@@ -2123,7 +2123,7 @@ msgid "Customer Name"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:117
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:187
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:188
 #: lib/LedgerSMB/Scripts/configuration.pm:129 old/bin/aa.pl:1584
 #: old/bin/io.pl:1575 UI/payments/payments_filter.html:38
 #: UI/Reports/filters/invoice_outstanding.html:10
@@ -2246,7 +2246,7 @@ msgstr ""
 #: templates/demo/invoice.html:251 templates/demo/invoice.tex:209
 #: templates/demo/packing_list.html:80 templates/demo/packing_list.tex:88
 #: templates/demo/pick_list.html:79 templates/demo/pick_list.tex:81
-#: templates/demo/printPayment.html:78 templates/demo/request_quotation.html:104
+#: templates/demo/printPayment.html:73 templates/demo/request_quotation.html:104
 #: templates/demo/sales_quotation.html:72 templates/demo/statement.html:62
 #: templates/demo/statement.tex:37 templates/demo/timecard.html:48
 #: templates/demo/timecard.tex:28
@@ -2266,7 +2266,7 @@ msgstr ""
 #: templates/demo_with_images/packing_list.tex:88
 #: templates/demo_with_images/pick_list.html:79
 #: templates/demo_with_images/pick_list.tex:81
-#: templates/demo_with_images/printPayment.html:78
+#: templates/demo_with_images/printPayment.html:73
 #: templates/demo_with_images/request_quotation.html:104
 #: templates/demo_with_images/sales_quotation.html:72
 #: templates/demo_with_images/statement.html:62
@@ -2284,7 +2284,7 @@ msgstr ""
 #: templates/xedemo/invoice.html:113 templates/xedemo/invoice.html:253
 #: templates/xedemo/invoice.tex:204 templates/xedemo/packing_list.html:80
 #: templates/xedemo/packing_list.tex:88 templates/xedemo/pick_list.html:79
-#: templates/xedemo/pick_list.tex:81 templates/xedemo/printPayment.html:78
+#: templates/xedemo/pick_list.tex:81 templates/xedemo/printPayment.html:73
 #: templates/xedemo/product_receipt.html:103
 #: templates/xedemo/request_quotation.html:104
 #: templates/xedemo/sales_quotation.html:72 templates/xedemo/statement.html:62
@@ -2660,7 +2660,7 @@ msgstr ""
 #: templates/demo/bin_list.tex:106 templates/demo/invoice.html:141
 #: templates/demo/invoice.tex:140 templates/demo/packing_list.html:120
 #: templates/demo/packing_list.tex:114 templates/demo/pick_list.html:112
-#: templates/demo/pick_list.tex:100 templates/demo/printPayment.html:47
+#: templates/demo/pick_list.tex:100 templates/demo/printPayment.html:42
 #: templates/demo/product_receipt.html:128
 #: templates/demo/purchase_order.html:128
 #: templates/demo/request_quotation.html:141 templates/demo/sales_order.html:130
@@ -2675,7 +2675,7 @@ msgstr ""
 #: templates/demo_with_images/packing_list.tex:114
 #: templates/demo_with_images/pick_list.html:112
 #: templates/demo_with_images/pick_list.tex:100
-#: templates/demo_with_images/printPayment.html:47
+#: templates/demo_with_images/printPayment.html:42
 #: templates/demo_with_images/product_receipt.html:128
 #: templates/demo_with_images/purchase_order.html:128
 #: templates/demo_with_images/request_quotation.html:141
@@ -2693,7 +2693,7 @@ msgstr ""
 #: templates/xedemo/invoice.html:142 templates/xedemo/invoice.tex:135
 #: templates/xedemo/packing_list.html:120 templates/xedemo/packing_list.tex:114
 #: templates/xedemo/pick_list.html:112 templates/xedemo/pick_list.tex:100
-#: templates/xedemo/printPayment.html:47
+#: templates/xedemo/printPayment.html:42
 #: templates/xedemo/product_receipt.html:130
 #: templates/xedemo/purchase_order.html:128
 #: templates/xedemo/request_quotation.html:141
@@ -3339,7 +3339,7 @@ msgstr "Växlingskurs"
 msgid "Exchange rate for payment missing!"
 msgstr "Växlingskurs för saknad betalning"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1192
+#: lib/LedgerSMB/Scripts/payment.pm:1193
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -3640,7 +3640,7 @@ msgid "From Amount"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:165
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:195
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:196
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:182
 #: lib/LedgerSMB/Report/Taxform/Details.pm:114
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:110
@@ -3893,9 +3893,9 @@ msgstr "ID"
 msgid "IRC"
 msgstr ""
 
-#: templates/demo/printPayment.html:87
-#: templates/demo_with_images/printPayment.html:87
-#: templates/xedemo/printPayment.html:87
+#: templates/demo/printPayment.html:82
+#: templates/demo_with_images/printPayment.html:82
+#: templates/xedemo/printPayment.html:82
 msgid "Identification"
 msgstr ""
 
@@ -4142,13 +4142,13 @@ msgstr "Lager överfört"
 #: lib/LedgerSMB/Scripts/payment.pm:846 old/bin/am.pl:1465 old/bin/io.pl:1038
 #: old/bin/io.pl:1044 old/bin/io.pl:1164 old/bin/is.pl:1409 old/bin/is.pl:253
 #: old/bin/printer.pl:50 templates/demo/invoice.html:4
-#: templates/demo/invoice.tex:116 templates/demo/printPayment.html:41
+#: templates/demo/invoice.tex:116 templates/demo/printPayment.html:36
 #: templates/demo_with_images/invoice.html:4
 #: templates/demo_with_images/invoice.html:18
 #: templates/demo_with_images/invoice.tex:116
-#: templates/demo_with_images/printPayment.html:41
+#: templates/demo_with_images/printPayment.html:36
 #: templates/xedemo/invoice.html:4 templates/xedemo/invoice.html:18
-#: templates/xedemo/invoice.tex:112 templates/xedemo/printPayment.html:41
+#: templates/xedemo/invoice.tex:112 templates/xedemo/printPayment.html:36
 #: sql/Pg-database.sql:1066 sql/Pg-database.sql:2846 sql/Pg-database.sql:2945
 msgid "Invoice"
 msgstr "Faktura"
@@ -4909,7 +4909,7 @@ msgid ""
 "account;"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:226
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:227
 msgid "Must have cash account in batch"
 msgstr ""
 
@@ -5067,7 +5067,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr "Inga pågående projekt!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1338
+#: lib/LedgerSMB/Scripts/payment.pm:1339
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -5153,18 +5153,18 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:187 old/bin/aa.pl:1513 old/bin/aa.pl:1646
 #: old/bin/aa.pl:802 old/bin/ic.pl:764 old/bin/ir.pl:765 old/bin/is.pl:873
 #: old/bin/oe.pl:822 t/data/04-complex_template.html:33
-#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:119
 #: templates/demo/product_receipt.html:219
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175 templates/demo/sales_order.html:205
 #: templates/demo/sales_quotation.html:173
-#: templates/demo_with_images/printPayment.html:124
+#: templates/demo_with_images/printPayment.html:119
 #: templates/demo_with_images/product_receipt.html:219
 #: templates/demo_with_images/purchase_order.html:219
 #: templates/demo_with_images/request_quotation.html:175
 #: templates/demo_with_images/sales_order.html:205
 #: templates/demo_with_images/sales_quotation.html:173
-#: templates/xedemo/printPayment.html:124
+#: templates/xedemo/printPayment.html:119
 #: templates/xedemo/product_receipt.html:221
 #: templates/xedemo/purchase_order.html:219
 #: templates/xedemo/request_quotation.html:175
@@ -5699,9 +5699,9 @@ msgstr ""
 msgid "Pay To"
 msgstr ""
 
-#: templates/demo/printPayment.html:95
-#: templates/demo_with_images/printPayment.html:95
-#: templates/xedemo/printPayment.html:95
+#: templates/demo/printPayment.html:90
+#: templates/demo_with_images/printPayment.html:90
+#: templates/xedemo/printPayment.html:90
 msgid "Pay in behalf of"
 msgstr ""
 
@@ -5709,7 +5709,7 @@ msgstr ""
 msgid "Payables"
 msgstr "Utbetalningar"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1111 t/data/04-complex_template.html:282
+#: lib/LedgerSMB/Scripts/payment.pm:1112 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:330 UI/accounts/edit.html:382
 #: UI/Contact/divs/credit.html:210 UI/Contact/divs/credit.html:211
 #: UI/payments/payments_detail.html:227 sql/Pg-database.sql:2801
@@ -5720,9 +5720,9 @@ msgstr "Bocka av utförd betalning"
 msgid "Payment Amount"
 msgstr ""
 
-#: templates/demo/printPayment.html:32
-#: templates/demo_with_images/printPayment.html:32
-#: templates/xedemo/printPayment.html:32
+#: templates/demo/printPayment.html:27
+#: templates/demo_with_images/printPayment.html:27
+#: templates/xedemo/printPayment.html:27
 msgid "Payment Order Number [_1]"
 msgstr ""
 
@@ -5730,7 +5730,7 @@ msgstr ""
 msgid "Payment Processing"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:209
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:210
 msgid "Payment Results"
 msgstr ""
 
@@ -6469,7 +6469,7 @@ msgstr "Bocka av ink.betalning"
 msgid "Receipt Date"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:210
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:211
 msgid "Receipt Results"
 msgstr ""
 
@@ -6772,7 +6772,7 @@ msgstr ""
 msgid "Reverse Payment"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:238
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:239
 msgid "Reverse Payments"
 msgstr ""
 
@@ -7550,9 +7550,9 @@ msgstr "Kort"
 msgid "Show Credit Limit"
 msgstr ""
 
-#: templates/demo/printPayment.html:82
-#: templates/demo_with_images/printPayment.html:82
-#: templates/xedemo/printPayment.html:82
+#: templates/demo/printPayment.html:77
+#: templates/demo_with_images/printPayment.html:77
+#: templates/xedemo/printPayment.html:77
 msgid "Signature"
 msgstr "Signatur"
 
@@ -7599,18 +7599,18 @@ msgstr ""
 #: lib/LedgerSMB/Report/Budget/Search.pm:133 lib/LedgerSMB/Report/GL.pm:123
 #: lib/LedgerSMB/Report/GL.pm:216
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:77
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:143
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:144
 #: lib/LedgerSMB/Scripts/payment.pm:187 lib/LedgerSMB/Scripts/recon.pm:456
 #: old/bin/aa.pl:1505 old/bin/aa.pl:836 old/bin/ir.pl:834 old/bin/is.pl:943
 #: templates/demo/ap_transaction.html:194 templates/demo/ar_transaction.html:193
-#: templates/demo/invoice.html:253 templates/demo/printPayment.html:50
+#: templates/demo/invoice.html:253 templates/demo/printPayment.html:45
 #: templates/demo_with_images/ap_transaction.html:194
 #: templates/demo_with_images/ar_transaction.html:193
 #: templates/demo_with_images/invoice.html:256
-#: templates/demo_with_images/printPayment.html:50
+#: templates/demo_with_images/printPayment.html:45
 #: templates/xedemo/ap_transaction.html:194
 #: templates/xedemo/ar_transaction.html:193 templates/xedemo/invoice.html:255
-#: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:32
+#: templates/xedemo/printPayment.html:45 UI/inventory/adjustment_setup.html:32
 #: UI/journal/journal_entry.html:133 UI/orders/order.html:246
 #: UI/payments/payment2.html:109 UI/payments/payment2.html:273
 #: UI/payments/payment2.html:333 UI/payments/payments_detail.html:315
@@ -7861,9 +7861,9 @@ msgstr ""
 msgid "System diagnostics"
 msgstr ""
 
-#: templates/demo/printPayment.html:66
-#: templates/demo_with_images/printPayment.html:66
-#: templates/xedemo/printPayment.html:66
+#: templates/demo/printPayment.html:61
+#: templates/demo_with_images/printPayment.html:61
+#: templates/xedemo/printPayment.html:61
 msgid "TOTAL"
 msgstr ""
 
@@ -8023,7 +8023,7 @@ msgstr ""
 #: templates/demo/bin_list.html:55 templates/demo/bin_list.html:88
 #: templates/demo/invoice.html:54 templates/demo/invoice.html:87
 #: templates/demo/letterhead.html:21 templates/demo/packing_list.html:56
-#: templates/demo/pick_list.html:55 templates/demo/printPayment.html:27
+#: templates/demo/pick_list.html:55 templates/demo/printPayment.html:22
 #: templates/demo/product_receipt.html:54 templates/demo/product_receipt.html:82
 #: templates/demo/product_receipt.tex:52 templates/demo/product_receipt.tex:87
 #: templates/demo/purchase_order.html:54 templates/demo/purchase_order.html:82
@@ -8044,7 +8044,7 @@ msgstr ""
 #: templates/demo_with_images/letterhead.html:21
 #: templates/demo_with_images/packing_list.html:56
 #: templates/demo_with_images/pick_list.html:55
-#: templates/demo_with_images/printPayment.html:27
+#: templates/demo_with_images/printPayment.html:22
 #: templates/demo_with_images/product_receipt.html:54
 #: templates/demo_with_images/product_receipt.html:82
 #: templates/demo_with_images/product_receipt.tex:52
@@ -8074,7 +8074,7 @@ msgstr ""
 #: templates/xedemo/bin_list.html:88 templates/xedemo/invoice.html:55
 #: templates/xedemo/invoice.html:88 templates/xedemo/letterhead.html:21
 #: templates/xedemo/packing_list.html:56 templates/xedemo/pick_list.html:55
-#: templates/xedemo/printPayment.html:27
+#: templates/xedemo/printPayment.html:22
 #: templates/xedemo/product_receipt.html:54
 #: templates/xedemo/product_receipt.html:82
 #: templates/xedemo/product_receipt.tex:52
@@ -8165,9 +8165,9 @@ msgstr ""
 msgid "Thank you for your valued business!"
 msgstr ""
 
-#: templates/demo/printPayment.html:102
-#: templates/demo_with_images/printPayment.html:102
-#: templates/xedemo/printPayment.html:102
+#: templates/demo/printPayment.html:97
+#: templates/demo_with_images/printPayment.html:97
+#: templates/xedemo/printPayment.html:97
 msgid "The amount of"
 msgstr ""
 
@@ -8230,13 +8230,13 @@ msgid ""
 "used."
 msgstr ""
 
-#: templates/demo/printPayment.html:109
-#: templates/demo_with_images/printPayment.html:109
-#: templates/xedemo/printPayment.html:109
+#: templates/demo/printPayment.html:104
+#: templates/demo_with_images/printPayment.html:104
+#: templates/xedemo/printPayment.html:104
 msgid "This document has been approved by"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1209
+#: lib/LedgerSMB/Scripts/payment.pm:1210
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
@@ -8359,7 +8359,7 @@ msgid "To Amount"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:166
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:197
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:198
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:184
 #: lib/LedgerSMB/Report/Taxform/Details.pm:115
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:111
@@ -8491,7 +8491,7 @@ msgstr ""
 msgid "Total Outstanding"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:140
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:141
 msgid "Total Paid"
 msgstr ""
 
@@ -8968,7 +8968,7 @@ msgid "Vendor Name"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:115
-#: lib/LedgerSMB/Report/Invoices/Payments.pm:185
+#: lib/LedgerSMB/Report/Invoices/Payments.pm:186
 #: lib/LedgerSMB/Scripts/configuration.pm:130 old/bin/aa.pl:1593
 #: old/bin/io.pl:1576 UI/asset/edit_asset.html:190
 #: UI/asset/search_asset.html:162 UI/payments/payments_filter.html:36
