@@ -1358,7 +1358,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.7.8
+version|1.7.9-dev
 closedto|\N
 revtrans|1
 ponumber|1
