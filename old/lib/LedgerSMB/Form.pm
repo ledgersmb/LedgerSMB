@@ -172,7 +172,8 @@ sub new {
         my @cookies = split /;/, $ENV{HTTP_COOKIE};
         foreach (@cookies) {
             my ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
+            # 'new code' picks the first cookie (with the same name)
+            $cookie{$name} //= $value;
         }
         $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
         my $unused;
