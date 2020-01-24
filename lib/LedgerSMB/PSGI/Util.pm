@@ -106,6 +106,20 @@ sub incompatible_database {
 }
 
 
+=head2 cookie_path($script)
+
+Returns the C<path=> parameter to be used with the C<Set-Cookie>
+(authorization) header.
+
+=cut
+
+sub cookie_path {
+    my $script = shift;
+
+    return ($script =~ s|[^/]*$||r);
+}
+
+
 =head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2017 The LedgerSMB Core Team
