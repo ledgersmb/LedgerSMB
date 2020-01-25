@@ -6,7 +6,7 @@
 
   <div id="system-currency">
 
-    <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
+    <div class="listtop"><?lsmb name ?></div>
 
     <?lsmb PROCESS 'dynatable' tbody = { rows = rows }
             attributes = { width = '100%' } ?>
