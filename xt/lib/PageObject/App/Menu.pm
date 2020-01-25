@@ -85,6 +85,7 @@ my %menu_path_pageobject_map = (
     "Goods and Services > Add Overhead" => 'PageObject::App::Parts::Overhead',
     "Goods and Services > Enter Inventory" => 'PageObject::App::Parts::AdjustSetup',
 
+    "System > Currency > Edit currencies" => 'PageObject::App::System::Currency::EditCurrencies',
     "System > Defaults" => 'PageObject::App::System::Defaults',
     "System > Files" => 'PageObject::App::System::Files',
     "System > Taxes" => 'PageObject::App::System::Taxes',
