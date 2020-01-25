@@ -58,6 +58,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
 use LedgerSMB::Middleware::RequestID;
+use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
 
 use Data::UUID;
@@ -112,9 +113,10 @@ $locale->encoding('UTF-8');
 
 try {
     $form->db_init( \%myconfig );
+    my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
     print 'Set-Cookie: '
         . LedgerSMB::Sysconfig::cookie_name . '='
-        . $form->{_new_session_cookie_value} . "\n"
+        . $form->{_new_session_cookie_value} . "; path=$path\n"
         if $form->{_new_session_cookie_value};
 
     # we get rid of myconfig and use User as a real object

@@ -210,8 +210,7 @@ sub call {
     $dbh->disconnect;
 
     my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
-    my $path = $env->{SCRIPT_NAME};
-    $path =~ s|[^/]*$||g;
+    my $path = LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
     return Plack::Util::response_cb(
         $res, sub {
             my $res = shift;
