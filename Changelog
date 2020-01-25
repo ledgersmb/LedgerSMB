@@ -2,6 +2,12 @@
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.19
+* Fix authentication issue due to inconsistent cookie handling (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.18
 * Upgrade Dojo dependency to 1.13.5 (Erik H)
 * Prevent dead-locks in response to request from timed out session (Erik H)
