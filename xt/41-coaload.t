@@ -28,8 +28,11 @@ my @files = sort $rule->name("*.sql")->file->in("sql/coa");
 
 for my $sqlfile (@files) {
     tests $sqlfile => { async => 1 }, sub {
-        my ($unused,$dir,$type,$name) = $sqlfile =~ qr(sql\/coa\/(([a-z]{2})\/)?(.+\/)?([^\/\.]+)\.sql$);
-        my $db = "lsmb_test_coa_${dir}_${name}";
+        # Generate test database name based on sql file name
+        my ($db) = $sqlfile =~ m|^sql/(coa/.+)\.sql$|
+            or die "failed to extract test_name from filename $sqlfile";
+        $db =~ s|\W|_|g; # replace non-word characters with underscores
+        $db = "lsmb_test_$db";
 
         my ($stdout, $stderr, $rv) = capture {
             system('dropdb', $db);
