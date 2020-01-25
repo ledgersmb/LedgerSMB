@@ -51,6 +51,10 @@ Dependency updates
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.9
+* Fix authentication issue due to inconsistent cookie handling
+
+
 Changelog for 1.7.8
 * Upgrade Dojo dependency to 1.15.1
 * Load the template from the database when printing receipts
