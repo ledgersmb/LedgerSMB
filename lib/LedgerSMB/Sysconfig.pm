@@ -29,29 +29,6 @@ use English qw(-no_match_vars);
 use Symbol;
 
 
-=head2 die_pretty $line_1, $line_2, $line_N;
-
-each $line_* is a string that will be output on a separate line:
-
-=over
-
-=item line_1
-
-=item line_2
-
-=item line_3
-
-=item line_N
-
-=back
-
-=cut
-
-sub die_pretty {
-    my $dieHeader = '==============================================================================';
-    my $msg = '== ' . join("\n== ",@_);
-    die("\n" . $dieHeader . "\n$msg\n" . $dieHeader . "\n" .' Stopped at '); # trailing "<space>" prevents the location hint from being lost when pushing it to a newline
-}
 
 my $cfg_file = $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf';
 my $cfg;
@@ -108,11 +85,6 @@ The name of an associated Environment Variable.
 If the EnvVar is set it will be used to override the config file
 Regardless, the EnvVar will be set based on the config file or coded default
 
-=item suffix
-
-If set specifies a suffix to be appended to any value provided via the config file, defaults, or ENV Var.
-If used, often this would be configured as '-$EUID' or '-$PID'
-
 =item doc
 
 A description of the use of this key. Should normally be a scalar.
@@ -127,7 +99,6 @@ sub def {
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
-    my $suffix = $args{suffix};
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
@@ -141,11 +112,6 @@ sub def {
         # get the value of config key $section.$key.
         #  If it doesn't exist use $default instead
         ${*{$ref}} = $cfg->val($sec, $key, $default);
-        if (defined $suffix) {
-            # Append a value suffix if defined,
-            # probably something like $EUID or $PID etc
-            ${*{$ref}} = "${$name}$suffix";
-        }
 
         # If an environment variable is associated and currently defined,
         #  override the configfile and default with the ENV VAR
@@ -564,7 +530,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
 #log4perl.logger.LedgerSMB.Handler = ERROR
 #log4perl.logger.LedgerSMB.User = WARN
-#log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
 
 # if you have latex installed set to 1

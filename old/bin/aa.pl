@@ -54,7 +54,6 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
-require 'old/bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
 if ( -f "old/bin/custom/aa.pl" ) {
     eval { require "old/bin/custom/aa.pl"; };
