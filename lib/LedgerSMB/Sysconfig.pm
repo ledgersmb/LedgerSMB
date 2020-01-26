@@ -553,7 +553,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
 #log4perl.logger.LedgerSMB.Handler = ERROR
 #log4perl.logger.LedgerSMB.User = WARN
-#log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
 
 # if you have latex installed set to 1
