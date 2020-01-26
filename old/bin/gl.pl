@@ -55,7 +55,6 @@ use LedgerSMB::Legacy_Util;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
-require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/arap.pl";
 
 $form->{login} = 'test';

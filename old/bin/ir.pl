@@ -48,7 +48,6 @@ use LedgerSMB::Tax;
 use LedgerSMB::Setting;
 use LedgerSMB::DBObject::Draft;
 
-require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/io.pl";
 require "old/bin/arap.pl";
 
