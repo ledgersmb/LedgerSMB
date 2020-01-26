@@ -208,7 +208,6 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         current_row RECORD;
         ac_entries int[];
     BEGIN
-        ac_entries := '{}';
         UPDATE cr_report SET approved = 't',
                 approved_by = person__get_my_entity_id(),
                 approved_username = SESSION_USER
@@ -217,30 +216,14 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
             RAISE EXCEPTION 'No report at %.', $1;
         END IF;
 
-        FOR current_row IN
-                SELECT compound_array(entries) AS entries FROM (
-                        select as_array(ac.entry_id) as entries
-                FROM acc_trans ac
-                JOIN transactions t on (ac.trans_id = t.id)
-                JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
-                UNION select id, entity_credit_account::text,        'ap' as table FROM ap
-                UNION select id, reference, 'gl' as table FROM gl) gl
-                        ON (gl.table = t.table_name AND gl.id = t.id)
-                LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-                        AND ((rl.ledger_id = ac.entry_id
-                                AND ac.voucher_id IS NULL)
-                                OR (rl.voucher_id = ac.voucher_id)) and rl.cleared is true)
-                WHERE ac.cleared IS FALSE
-                        AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
-                GROUP BY gl.ref, ac.source, ac.transdate,
-                        ac.memo, ac.voucher_id, gl.table
-                HAVING count(rl.report_id) > 0) a
-        LOOP
-                ac_entries := ac_entries || current_row.entries;
-        END LOOP;
-
-        UPDATE acc_trans SET cleared = TRUE
-        WHERE entry_id = any(ac_entries);
+        UPDATE acc_trans ac
+           SET cleared = TRUE
+         WHERE exists (select 1
+                         from cr_report_line_links rll
+                         join cr_report_line rl on rll.report_line_id = rl.id
+                        where rll.entry_id = ac.entry_id
+                              and rl.cleared
+                              and rl.report_id = in_report_id);
 
         return 1;
     END;
@@ -449,60 +432,136 @@ CREATE OR REPLACE FUNCTION reconciliation__pending_transactions(
 $$
 
     DECLARE
-        gl_row RECORD;
-        t_recon_fx BOOL;
-        t_chart_id integer;
-        t_end_date date;
+        t_row            record;
+        t_recon_fx       BOOL;
+        t_chart_id       integer;
+        t_end_date       date;
+        t_report_line_id integer;
     BEGIN
-       SELECT end_date, recon_fx, chart_id
+        SELECT end_date, recon_fx, chart_id
          INTO t_end_date, t_recon_fx, t_chart_id
          FROM cr_report
         WHERE id = in_report_id;
 
-        INSERT INTO cr_report_line (report_id, scn, their_balance,
-                our_balance, "user", voucher_id, ledger_id, post_date)
-        SELECT in_report_id,
-               CASE WHEN ac.source IS NULL OR ac.source = ''
-                    THEN gl.ref
-                    ELSE ac.source END,
-               0,
-               sum(CASE WHEN t_recon_fx THEN amount_tc
-                        ELSE amount_bc END) AS amount,
-                        (select entity_id from users
-                        where username = CURRENT_USER),
-                ac.voucher_id, min(ac.entry_id), ac.transdate
-        FROM acc_trans ac
-        JOIN transactions t on (ac.trans_id = t.id)
-        JOIN (select id, entity_credit_account::text as ref, curr,
-                     transdate, 'ar' as table
-                FROM ar where approved
-                UNION
-              select id, entity_credit_account::text, curr,
-                     transdate, 'ap' as table
-                FROM ap WHERE approved
-                UNION
-              select id, reference, '',
-                     transdate, 'gl' as table
-                FROM gl WHERE approved) gl
-                ON (gl.table = t.table_name AND gl.id = t.id)
-        LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-                AND ((rl.ledger_id = ac.entry_id
-                        AND ac.voucher_id IS NULL)
-                        OR (rl.voucher_id = ac.voucher_id)))
-        LEFT JOIN cr_report r ON r.id = in_report_id
-        WHERE ac.cleared IS FALSE
-                AND ac.approved IS TRUE
-                AND ac.chart_id = t_chart_id
-                AND ac.transdate <= t_end_date
-        GROUP BY gl.ref, ac.source, ac.transdate,
-                ac.memo, ac.voucher_id, gl.table
-        HAVING count(rl.id) = 0;
+        /*
 
-        UPDATE cr_report set updated = date_trunc('second', now()),
-                their_total = coalesce(in_their_total, their_total)
-        where id = in_report_id;
+        Approach:
+         1. Identify lines to be added *somewhere*
+         2. Identify lines part of a payment
+            (always added as new lines: payments are natural groupings)
+         3. Identify non-payment lines to be added to existing
+            recon lines due to the same source system reference
+         4. Remaining lines added as new lines, either by source or
+            as individual ones.
 
-    RETURN in_report_id;
+         */
+
+        -- step 1: identify lines to be added somehow
+        create temporary table lines_to_be_added as
+        select entry_id, null::int as report_line_id
+         from acc_trans ac
+         join transactions tr on ac.trans_id = tr.id
+         where tr.approved
+               and ac.approved
+               and not ac.cleared
+               and ac.chart_id = t_chart_id
+               and ac.transdate <= t_end_date
+               and not exists (select 1 from cr_report_line_links rll
+                                        join cr_report_line rl
+                                          on rl.id = rll.report_line_id
+                                where ac.entry_id = rll.entry_id
+                                      and rl.report_id = in_report_id);
+
+        -- step 2: add lines part of a payment one line per payment
+        for t_row in
+           select payment_id, array_agg(ac.entry_id) as entries,
+                  sum(case when t_recon_fx then amount_tc
+                           else amount_bc end) as our_balance,
+                  payment_date
+             from payment_links pl
+             join acc_trans ac on pl.entry_id = ac.entry_id
+             join payment p on p.id = pl.payment_id
+            where ac.chart_id = t_chart_id
+                  and pl.entry_id in (select entry_id from lines_to_be_added)
+           group by payment_id, payment_date
+        loop
+           insert into cr_report_line (report_id, their_balance,
+                                       our_balance, post_date, "user")
+              values (in_report_id, 0, t_row.our_balance, t_row.payment_date,
+                      (select entity_id from users
+                        where username = CURRENT_USER))
+           returning id into t_report_line_id;
+
+           update lines_to_be_added
+              set report_line_id = t_report_line_id
+            where entry_id = any(t_row.entries);
+        end loop;
+
+        -- step 3: add new ledger lines to existing recon lines
+        with matched_entries as (
+           update lines_to_be_added la
+              set report_line_id =
+                     (select id
+                        from cr_report_line rl
+                        join acc_trans ac on ac.source = rl.scn
+                                             and ac.transdate = rl.post_date
+                       where la.entry_id = ac.entry_id
+                             and rl.report_id = in_report_id)
+            where la.report_line_id is null
+           returning report_line_id
+        )
+        update cr_report_line rl
+           set our_balance = (select sum(case when t_recon_fx then ac.amount_tc
+                                              else ac.amount_bc end)
+                                from cr_report_line_links rll
+                                join acc_trans ac on rll.entry_id = ac.entry_id
+                                where rl.id = rll.report_line_id)
+         where rl.id in (select report_line_id from matched_entries);
+
+        -- step 4: add new lines not part of payments
+        for t_row in
+           select source, case when source is null then entry_id
+                               else null end, array_agg(entry_id) as entries,
+                  sum(case when t_recon_fx then amount_tc
+                           else amount_bc end) as our_balance,
+                  transdate
+             from acc_trans ac
+            where ac.chart_id = t_chart_id
+                  and ac.entry_id in (select entry_id from lines_to_be_added
+                                       where report_line_id is null)
+           group by source, transdate,
+                    case when source is null then entry_id else null end
+        loop
+           insert into cr_report_line (report_id, scn, their_balance,
+                                      our_balance, post_date, "user")
+              values (in_report_id, t_row.source, 0,
+                      t_row.our_balance, t_row.transdate,
+                      (select entity_id from users
+                        where username = CURRENT_USER))
+           returning id into t_report_line_id;
+
+           update lines_to_be_added
+              set report_line_id = t_report_line_id
+            where entry_id = any(t_row.entries);
+        end loop;
+
+        perform * from lines_to_be_added where report_line_id is null;
+        if found then
+          drop table lines_to_be_added;
+          raise exception 'Unhandled entries %', (select array_agg(entry_id) from lines_to_be_added where report_line_id is null)::int[];
+        end if;
+
+        insert into cr_report_line_links (report_line_id, entry_id)
+        select report_line_id, entry_id from lines_to_be_added;
+
+        drop table lines_to_be_added;
+
+        UPDATE cr_report
+           set updated = date_trunc('second', now()),
+               their_total = coalesce(in_their_total, their_total)
+         where id = in_report_id;
+
+        RETURN in_report_id;
     END;
 $$
   LANGUAGE plpgsql;

@@ -43,6 +43,9 @@ INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-209, '-2007', '10', '10', 10, 10, -201, '1000-01-03', 'XTS');
 
+insert into payment (id, reference, payment_class, payment_date, entity_credit_id, currency)
+values (-201, 'reference-test', 2, '1000-01-03', -201, 'XTS');
+
 INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-210, 'Recon gl test 3', '1000-01-03');
@@ -121,3 +124,8 @@ INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc
 values (-214, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1', false);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, approved)
 values (-214, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1', false);
+
+insert into payment_links (payment_id, entry_id, type)
+select -201, entry_id, 1
+  from acc_trans where trans_id < 0 and chart_id = test_get_account_id('-11112');
+
