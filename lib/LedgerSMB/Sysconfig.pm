@@ -29,29 +29,6 @@ use English qw(-no_match_vars);
 use Symbol;
 
 
-=head2 die_pretty $line_1, $line_2, $line_N;
-
-each $line_* is a string that will be output on a separate line:
-
-=over
-
-=item line_1
-
-=item line_2
-
-=item line_3
-
-=item line_N
-
-=back
-
-=cut
-
-sub die_pretty {
-    my $dieHeader = '==============================================================================';
-    my $msg = '== ' . join("\n== ",@_);
-    die("\n" . $dieHeader . "\n$msg\n" . $dieHeader . "\n" .' Stopped at '); # trailing "<space>" prevents the location hint from being lost when pushing it to a newline
-}
 
 my $cfg_file = $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf';
 my $cfg;
