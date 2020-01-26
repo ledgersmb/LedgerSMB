@@ -108,11 +108,6 @@ The name of an associated Environment Variable.
 If the EnvVar is set it will be used to override the config file
 Regardless, the EnvVar will be set based on the config file or coded default
 
-=item suffix
-
-If set specifies a suffix to be appended to any value provided via the config file, defaults, or ENV Var.
-If used, often this would be configured as '-$EUID' or '-$PID'
-
 =item doc
 
 A description of the use of this key. Should normally be a scalar.
@@ -127,7 +122,6 @@ sub def {
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
-    my $suffix = $args{suffix};
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
@@ -141,11 +135,6 @@ sub def {
         # get the value of config key $section.$key.
         #  If it doesn't exist use $default instead
         ${*{$ref}} = $cfg->val($sec, $key, $default);
-        if (defined $suffix) {
-            # Append a value suffix if defined,
-            # probably something like $EUID or $PID etc
-            ${*{$ref}} = "${$name}$suffix";
-        }
 
         # If an environment variable is associated and currently defined,
         #  override the configfile and default with the ENV VAR
