@@ -489,7 +489,8 @@ sub delete_sic {
         DELETE FROM sic
               WHERE code = ?|;
 
-    $dbh->prepare($query)->execute( $form->{code} );
+    $dbh->do($query, {}, $form->{code} )
+        or $form->dberror($query);
 
 }
 
