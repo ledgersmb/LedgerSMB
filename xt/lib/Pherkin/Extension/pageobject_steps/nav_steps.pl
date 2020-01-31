@@ -98,6 +98,7 @@ my %screens = (
     'Create New Batch' => 'PageObject::App::Cash::Vouchers::Payments',
     'Edit Contact' => 'PageObject::App::Contacts::EditContact',
     'Edit currencies' => 'PageObject::App::System::Currency::EditCurrencies',
+    'Edit rate types' => 'PageObject::App::System::Currency::EditRateTypes',
     'Employee search' => 'PageObject::App::Search::Contact',
     'Enter Inventory' => ' PageObject::App::Parts::AdjustSetup',
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
