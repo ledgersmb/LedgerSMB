@@ -9,13 +9,13 @@
              submit_session =>
                  [
                   {
-                      statement => q{DELETE FROM cr_report_line WHERE report_id IN ?},
-                      # bound_params => [ [ 22 ] ], can't check bound arrays..
+                      statement => q{DELETE FROM cr_report_line WHERE report_id = ?},
+                      bound_params => [ 22 ],
                       results => [],
                   },
                   {
-                      statement => q{DELETE FROM cr_report WHERE id IN ?},
-                      # bound_params => [ [ 22 ] ], can't check bound arrays..
+                      statement => q{DELETE FROM cr_report WHERE id = ?},
+                      bound_params => [ 22 ],
                       results => [],
                   },
                  ],
