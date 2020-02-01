@@ -87,17 +87,23 @@
             <?lsmb IF !open ?>
             <tr>
               <td><?lsmb PROCESS input element_data = {
-                         name = 'open'
-                         type = 'checkbox'
+                         name = 'oc_state'
+                         type = 'radio'
                          checked = 'CHECKED'
-                         value = '1'
+                         value = 'open'
                          label = text('Open')
                          } ?></td>
               <td><?lsmb PROCESS input element_data = {
-                         name = 'closed'
-                         type = 'checkbox'
-                         value = '1'
+                         name = 'oc_state'
+                         type = 'radio'
+                         value = 'closed'
                          label = text('Closed')
+                         } ?></td>
+              <td><?lsmb PROCESS input element_data = {
+                         name = 'oc_state'
+                         type = 'radio'
+                         value = 'all'
+                         label = text('All')
                          } ?></td>
             </tr>
             <?lsmb END ?>

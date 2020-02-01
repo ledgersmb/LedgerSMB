@@ -20,20 +20,27 @@
 <tr>
    <th>&nbsp;</th>
    <td><div class="input">
-        <?lsmb PROCESS input element_data = {
-                  type = 'checkbox'
-                  name = 'open'
-                 value = '1'
-               checked = 'CHECKED'
-                 label = text('Open')
-         } ?></div><div class="input">
-         <?lsmb PROCESS input element_data = {
-                  type = 'checkbox'
-                  name = 'closed'
-                 value = '1'
-               checked = 'CHECKED'
-                 label = text('Closed')
-         } ?></div>
+       <?lsmb PROCESS input element_data = {
+                      name = 'oc_state'
+                      type = 'radio'
+                      checked = 'CHECKED'
+                      value = 'open'
+                      label = text('Open')
+                      } ?></div>
+     <div class="input">
+       <?lsmb PROCESS input element_data = {
+                      name = 'oc_state'
+                      type = 'radio'
+                      value = 'closed'
+                      label = text('Closed')
+                      } ?></div>
+     <div class="input">
+       <?lsmb PROCESS input element_data = {
+                      name = 'oc_state'
+                      type = 'radio'
+                      value = 'all'
+                      label = text('All')
+                      } ?></div>
    </td>
 </tr>
 <tr id="buttonrow">

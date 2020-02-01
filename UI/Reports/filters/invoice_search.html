@@ -201,17 +201,23 @@
     <table>
       <tr>
         <td><?lsmb PROCESS input element_data = {
-                    name = 'open'
-                    type = 'checkbox'
-                   value = '1'
+                    name = 'oc_state'
+                    type = 'radio'
+                   value = 'open'
                  checked = 'CHECKED'
                    label = text('Open')
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
-                    name = 'closed'
-                    type = 'checkbox'
-                   value = '1'
+                    name = 'oc_state'
+                    type = 'radio'
+                   value = 'closed'
                    label = text('Closed')
+        } ?></td>
+        <td><?lsmb PROCESS input element_data = {
+                    name = 'oc_state'
+                    type = 'radio'
+                   value = 'all'
+                   label = text('All')
         } ?></td>
       </tr>
       <tr>

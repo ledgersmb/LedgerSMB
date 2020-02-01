@@ -88,6 +88,7 @@ my @modules =
           'LedgerSMB::DBObject::Reconciliation',
           'LedgerSMB::Report::Listings::TemplateTrans',
           'LedgerSMB::Report::Approval_Option',
+          'LedgerSMB::Report::OpenClosed_Option',
           'LedgerSMB::DBObject::Payment', 'LedgerSMB::Entity::Contact',
           'LedgerSMB::Entity::Location', 'LedgerSMB::Entity::Note',
           'LedgerSMB::Entity::Bank', 'LedgerSMB::Entity::Company',

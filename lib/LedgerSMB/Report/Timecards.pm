@@ -22,7 +22,9 @@ use LedgerSMB::MooseTypes;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with
+    'LedgerSMB::Report::Dates',
+    'LedgerSMB::Report::OpenClosed_Option';
 
 =head1 CRITERIA PROPERTIES
 
@@ -57,22 +59,6 @@ This is the id of the person record for the employee entering the timecard.
 =cut
 
 has person_id => (is => 'ro', isa => 'Int', required => 0);
-
-=item open
-
-Show open timecards
-
-=cut
-
-has open => (is => 'ro', isa => 'Bool', required => 0);
-
-=item closed
-
-show closed timecards
-
-=cut
-
-has closed => (is => 'ro', isa => 'Bool', required => 0);
 
 =item jctype
 
