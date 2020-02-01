@@ -25,7 +25,7 @@ BEGIN
          AND curr IS NOT NULL;
 
   -- Migrate 'exchangerate' content / BUY field
-  PERFORM DISTINCT 1 FROM exchangerate WHERE buy IS NOT NULL;
+  PERFORM DISTINCT 1 FROM exchangerate WHERE buy IS NOT NULL AND buy != 0;
   IF FOUND THEN
     DECLARE
       v_rate_type int;
@@ -37,12 +37,14 @@ BEGIN
       INSERT INTO exchangerate_default
            (rate_type, curr, valid_from, valid_to, rate)
       SELECT v_rate_type, curr, transdate, transdate, buy
-        FROM exchangerate;
+        FROM exchangerate
+        WHERE buy IS NOT NULL
+        AND buy != 0;
     END;
   END IF;
 
   -- Migrate 'exchangerate' content / SELL field
-  PERFORM DISTINCT 1 FROM exchangerate WHERE sell IS NOT NULL;
+  PERFORM DISTINCT 1 FROM exchangerate WHERE sell IS NOT NULL AND sell != 0;
   IF FOUND THEN
     DECLARE
       v_rate_type int;
@@ -54,7 +56,9 @@ BEGIN
       INSERT INTO exchangerate_default
            (rate_type, curr, valid_from, valid_to, rate)
       SELECT v_rate_type, curr, transdate, transdate, sell
-        FROM exchangerate;
+        FROM exchangerate
+        WHERE sell IS NOT NULL
+        AND sell != 0;
     END;
   END IF;
 END;
