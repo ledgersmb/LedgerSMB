@@ -386,6 +386,11 @@ def 'smtpport',
     default => 25,
     doc => 'Connect to the smtp host using this port.';
 
+def 'smtpsender_hostname',
+    section => 'mail',
+    default => undef,
+    doc => 'Sets the host name used to identify the host when connecting to the mail server (smtphost).';
+
 def 'smtptimeout',
     section => 'mail',
     default => 60,
@@ -400,6 +405,26 @@ def 'smtppass',
     section => 'mail',
     default => undef,
     doc => 'Optional password used when connecting to smtp server.';
+
+def 'smtpauthmech',
+    section => 'mail',
+    default => 'PLAIN',
+    doc => 'SASL mechanism to use for authentication
+
+Note that the default (PLAIN) sends unencrypted passwords. Instead, use
+of more secure mechanisms such as DIGEST-MD5, SRP or PASSDSS is highly
+    recommended if the server supports it.';
+
+def 'smtptls',
+    section => 'mail',
+    default => 'no',
+    doc => q{Whether or not to use TLS to encrypt the connection for mail
+submission; default (no) doesn't use TLS, 'yes' indicates STARTTLS, usually
+used with a regular (25) or submission (587) port. 'tls' indicates "raw"
+TLS, most often used with dedicated port 465.
+
+When using PLAIN or LOGIN authentication, be sure to change this setting to
+prevent publicly visible transmission of credentials.};
 
 def 'backup_email_from',
     section => 'mail',
