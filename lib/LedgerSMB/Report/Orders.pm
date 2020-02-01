@@ -15,9 +15,14 @@ LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with
+    'LedgerSMB::Report::Dates',
+    'LedgerSMB::Report::OpenClosed_Option';
+
+
 use LedgerSMB::MooseTypes;
-use LedgerSMB::Magic qw( OEC_SALES_ORDER OEC_PURCHASE_ORDER OEC_QUOTATION OEC_RFQ );
+use LedgerSMB::Magic
+    qw( OEC_SALES_ORDER OEC_PURCHASE_ORDER OEC_QUOTATION OEC_RFQ );
 
 =head1 DESCRIPTION
 
@@ -43,23 +48,6 @@ This is the ID of the order entry class.  Valid values are:
 =cut
 
 has oe_class_id => (is => 'ro', isa => 'Int', required => 1);
-
-=item open bool
-
-If set, show open orders in the report
-
-=cut
-
-has open => (is => 'ro', isa => 'Bool', required => 0);
-
-=item closed bool
-
-If set show closed orders in report.  Note that if both open and closed are
-unset, the report will not return any results.
-
-=cut
-
-has closed  => (is => 'ro', isa => 'Bool', required => 0);
 
 =item shippable bool
 

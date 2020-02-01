@@ -16,7 +16,10 @@ LedgerSMB
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
+with
+    'LedgerSMB::Report::Dates',
+    'LedgerSMB::Report::Approval_Option',
+    'LedgerSMB::Report::OpenClosed_Option';
 
 =head1 DESCRIPTION
 
@@ -172,20 +175,6 @@ If taxable is set this filters only transactions of a specific tax account.
 
 has tax_account_id => (is => 'ro', isa => 'Int', required => 0);
 
-=item open bool
-
-If true, show open invoices
-
-=item closed bool
-
-If true, show closed invoices.  Naturally if neither open or closed is set, no
-invoices will be shown.
-
-=cut
-
-has open => (is => 'ro', isa => 'Bool', required => 0);
-has closed => (is => 'ro', isa => 'Bool', required => 0);
-
 =back
 
 =head1 INTERNLS
@@ -238,6 +227,7 @@ This is the customer or vendor name
 =back
 
 =cut
+
 
 sub columns {
     my $self = shift;
