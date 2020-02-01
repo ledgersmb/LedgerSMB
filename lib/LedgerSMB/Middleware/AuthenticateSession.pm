@@ -216,7 +216,7 @@ sub call {
             # Set the new cookie (with the extended life-time on response
             Plack::Util::header_push(
                 $res->[1], 'Set-Cookie',
-                qq|$cookie_name=$extended_cookie; path=$path$secure|)
+                qq|$cookie_name=$extended_cookie; SameSite=Strict; HttpOnly; path=$path$secure|)
                 if $extended_cookie;
         });
 }

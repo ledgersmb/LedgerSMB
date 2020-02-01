@@ -115,7 +115,7 @@ try {
     my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
     print 'Set-Cookie: '
         . LedgerSMB::Sysconfig::cookie_name . '='
-        . $form->{_new_session_cookie_value} . "; path=$path\n"
+        . $form->{_new_session_cookie_value} . "; SameSite=Strict; HttpOnly; path=$path\n"
         if $form->{_new_session_cookie_value};
 
     # we get rid of myconfig and use User as a real object
