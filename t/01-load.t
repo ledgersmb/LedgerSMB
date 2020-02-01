@@ -102,6 +102,7 @@ my @modules =
           'LedgerSMB::File::Transaction',
           'LedgerSMB::Inventory::Adjust',
           'LedgerSMB::Inventory::Adjust_Line',
+          'LedgerSMB::Mailer::TransportSMTP',
           'LedgerSMB::Middleware::AuthenticateSession',
           'LedgerSMB::Middleware::ClearDownloadCookie',
           'LedgerSMB::Middleware::DisableBackButton',

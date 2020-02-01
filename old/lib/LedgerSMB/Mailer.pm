@@ -47,12 +47,14 @@ use warnings;
 use strict;
 use Carp;
 
+use Authen::SASL;
 use Digest::MD5 qw(md5_hex);
-use Encode;
-use MIME::Lite;
+use Email::Sender::Simple;
+use Email::Stuffer;
+use LedgerSMB::Mailer::TransportSMTP;
 use LedgerSMB::Sysconfig;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 =head2 LedgerSMB::Mailer->new(...)
 
@@ -122,24 +124,23 @@ sub prepare_message {
         $self->{$_} =~ s/([\n\r\f])/$1 /g;
     }
 
-    $self->{_message} = MIME::Lite->new(
-        'From' => $self->{from},
-        'To' => $self->{to},
-        'Cc'  => $self->{cc},
-        'Bcc'  => $self->{bcc},
-        'Subject' => Encode::encode('MIME-Header', $self->{subject}),
-        'Type' => 'TEXT',
-        'Data' => Encode::encode_utf8($self->{message}),
-        'Encoding' => '8bit',
-        'Message-ID' => $self->generate_message_id,
-    );
-    $self->{_message}->attr( 'Content-Type' => $self->{contenttype} );
-    $self->{_message}->attr( 'Content-Type.charset' => 'UTF-8' ) if
-        $self->{contenttype} =~ m#^text/#;
+    $self->{_message} = Email::Stuffer
+        ->from( $self->{from} )
+        ->to( $self->{to} )
+        ->subject( $self->{subject} )
+        ->text_body( $self->{message},
+                     encoding => '8bit',
+                     content_type => $self->{contenttype},
+                     charset => 'utf8' )
+        ->header( 'Message-ID' => $self->generate_message_id );
+
+    $self->{_message}->cc( $self->{cc} ) if $self->{cc};
+    $self->{_message}->bcc( $self->{bcc} ) if $self->{bcc};
+
     # Annoy people with read receipt requests
-    $self->{_message}->add( 'Disposition-Notification-To' => $self->{from} )
-      if $self->{notify};
-    return $self->{_message}->binmode(':utf8');
+    $self->{_message}->header( 'Disposition-Notification-To' => $self->{from} )
+        if $self->{notify};
+    return;
 }
 
 =head2 $mail->attach(data => $data, file => $file,
@@ -171,17 +172,18 @@ sub attach {
     # handle both string and file types of input
     my @data;
     if (defined $args{data}) {
-        @data = ('Data', $args{data});
+        $self->{_message}->attach($args{data},
+                                  content_type => $args{mimetype},
+                                  disposition => 'attachment',
+                                  filename => $args{filename});
     } else {
-        @data = ('Path', $args{file});
+        $self->{_message}->attach_file($args{file},
+                                       content_type => $args{mimetype},
+                                       disposition => 'attachment',
+                                       filename => $args{filename});
     }
 
-    return $self->{_message}->attach(
-        'Type' => $args{mimetype},
-        'Filename' => $args{filename},
-        'Disposition' => 'attachment',
-        @data,
-        );
+    return;
 }
 
 =head2 $mail->send
@@ -194,38 +196,67 @@ sub send {
     my $self = shift;
     carp 'Message not prepared' unless ref $self->{_message};
 
-    # SC: Set the X-Mailer header here so that it will be the last
-    #     header set.  This ensures that MIME::Lite will not rewrite
-    #     it during the preparation of the message.
-    $self->{_message}->replace( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
+    $self->{_message}->header( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
     local $@ = undef;
     eval {
-        my @send_options;
+        my @transport;
+        if (LedgerSMB::Sysconfig::smtphost()) {
+            my @options;
 
-        if (defined $LedgerSMB::Sysconfig::smtphost) {
-            @send_options = (
-                'smtp',
-                $LedgerSMB::Sysconfig::smtphost,
-                Timeout => $LedgerSMB::Sysconfig::smtptimeout,
-                Port => $LedgerSMB::Sysconfig::smtpport,
-            );
+            push @options,
+                host => LedgerSMB::Sysconfig::smtphost();
 
-            if (defined $LedgerSMB::Sysconfig::smtpuser) {
-                push(@send_options, AuthUser => $LedgerSMB::Sysconfig::smtpuser);
+            if (LedgerSMB::Sysconfig::smtpport()) {
+                push @options,
+                    port => LedgerSMB::Sysconfig::smtpport();
             }
 
-            if (defined $LedgerSMB::Sysconfig::smtppass) {
-                push(@send_options, AuthPass => $LedgerSMB::Sysconfig::smtppass);
+            if (LedgerSMB::Sysconfig::smtpuser()) {
+                my $auth = Authen::SASL->new(
+                    mechanism => LedgerSMB::Sysconfig::smtpauthmech(),
+                    callback => {
+                        user => LedgerSMB::Sysconfig::smtpuser(),
+                        pass => LedgerSMB::Sysconfig::smtppass(),
+                    });
+                push @options,
+                    # the SMTP transport checks that 'sasl_password' be
+                    # defined; however, its implementation (Net::SMTP) allows
+                    # the 'sasl_username' to be an Authen::SASL instance which
+                    # means the password is already embedded in sasl_username.
+                    sasl_username => $auth,
+                    sasl_password => '';
             }
-        } else {
-            @send_options = (
-                'sendmail',
-                SendMail => $LedgerSMB::Sysconfig::sendmail,
-                SetSender => 1
+
+            if (LedgerSMB::Sysconfig::smtptimeout()) {
+                push @options, timeout => LedgerSMB::Sysconfig::smtptimeout();
+            }
+
+            my $tls = LedgerSMB::Sysconfig::smtptls();
+            if ($tls and $tls ne 'no') {
+                if ($tls eq 'yes') {
+                    push @options, ssl => 'starttls';
+                }
+                elsif ($tls eq 'tls') {
+                    push @options, ssl => 'ssl';
+                }
+            }
+
+            if (LedgerSMB::Sysconfig::smtpsender_hostname()) {
+                push @options,
+                    helo => LedgerSMB::Sysconfig::smtpsender_hostname();
+            }
+
+            @transport = (
+                transport => LedgerSMB::Mailer::TransportSMTP->new(@options),
             );
         }
 
-        $self->{_message}->send(@send_options) or return "$!";
+        # On failure, send() throws an exception
+        Email::Sender::Simple->send(
+            $self->{_message}->email,
+            {
+                @transport,
+            });
     };
     die "Could not send email: $@.  Please check your configuration." if $@;
     return;

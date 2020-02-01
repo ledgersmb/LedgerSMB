@@ -3,6 +3,7 @@
 
 requires 'perl', '5.18.0';
 
+requires 'Authen::SASL';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
@@ -11,6 +12,9 @@ requires 'DBI', '1.635';
 requires 'Data::UUID';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
+requires 'Email::Sender::Simple';
+requires 'Email::Sender::Transport::SMTP';
+requires 'Email::Stuffer';
 requires 'File::Find::Rule';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
@@ -25,9 +29,10 @@ requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'Log::Log4perl::Layout::PatternLayout';
 requires 'LWP::Simple';
-requires 'MIME::Lite';
 requires 'MIME::Types';
 requires 'Module::Runtime';
+requires 'Moo';                           # for Email::Sender::Transport::SMTP workaround
+requires 'MooX::Types::MooseLike::Base';  # for Email::Sender::Transport::SMTP workaround
 requires 'Moose';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
