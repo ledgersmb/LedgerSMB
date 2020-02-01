@@ -130,19 +130,19 @@ sub columns {
      pwidth => '2', },
 
     {col_id => 'c30',
-       name => $self->Text('30'),
+       name => '30',
        type => 'text',
       money => 1,
      pwidth => '3', },
 
     {col_id => 'c60',
-       name => $self->Text('60'),
+       name => '60',
        type => 'text',
       money => 1,
      pwidth => '3', },
 
     {col_id => 'c90',
-       name => $self->Text('90'),
+       name => '90',
        type => 'text',
       money => 1,
      pwidth => '3', },

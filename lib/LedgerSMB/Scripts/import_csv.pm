@@ -222,7 +222,7 @@ sub _inventory_single_date {
 
         $p_info_sth->execute($line->{partnumber});
         my $part = $p_info_sth->fetchrow_hashref('NAME_lc');
-        die "Part $line->{partnumber} not found."
+        die "Part $line->{partnumber} not found"
             unless $part;
         my $adjust = &$adjustment( $line->{onhand}, $part);
         my $adjust_form = ($adjust > 0) ? $ap_form : $ar_form;

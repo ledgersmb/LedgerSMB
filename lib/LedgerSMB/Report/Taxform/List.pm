@@ -77,7 +77,7 @@ sub name {
 sub buttons {
     my ($self) = @_;
     return  [{
-         text => $self->Text('Add New Tax Form'),
+         text => $self->Text('Add Tax Form'),
         value => 'add_taxform',
          name => 'action',
          type => 'submit',

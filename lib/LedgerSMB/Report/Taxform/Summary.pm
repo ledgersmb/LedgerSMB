@@ -87,11 +87,11 @@ sub columns {
 
      { col_id  => 'acc_sum',
        type    => 'text',
-       name    => $self->Text('Acc_trans Sum') },
+       name    => $self->Text('Transactions') },
 
      { col_id  => 'invoice_sum',
        type    => 'text',
-       name    => $self->Text('Invoice Sum') },
+       name    => $self->Text('Invoices') },
 
      { col_id  => 'total',
        type    => 'href',
