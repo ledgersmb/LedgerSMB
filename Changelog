@@ -14,6 +14,7 @@ Added functionalities
   * Stored in the database like all other templates (#811)
 * Parts searches can be restricted by type (part, service, ...)
 * SysV init script template for RedHat/CentOS (#2900)
+* New configuration keys in '[mail]' section of ledgersmb.conf (#4378)
 
 Changed functionalities
 * Faster loading of the menu
@@ -23,10 +24,12 @@ Changed functionalities
 * Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
 * Employee 'Wages & Deductions' (experimental) page now hidden until enabled
 * Templates for printed documents need to escape inserted data (was automatic)
+* Search checkmarks 'Open/Closed' replaced by radio button 'Open/Closed/All'
 
 Bugs fixed
 * Default dates sometimes off by a day (before or after the current day) (#2587)
 * Customers and vendors in parts screen selectable through drop-downs
+* Overpayments not shown in Cash > Reports > Receipts (#3577)
 
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
@@ -46,6 +49,10 @@ Code cleanup
 Dependency updates
 * Dojo Toolkit updated to 1.16.0
 * TeX::Encode >= 2.007
+* Authen::SASL (new)
+* Email::Sender (new)
+* Email::Stuffer (new)
+* MIME::Lite (dropped)
 
 
 Changelog for 1.7 Series
