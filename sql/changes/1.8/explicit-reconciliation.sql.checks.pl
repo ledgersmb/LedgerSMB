@@ -42,13 +42,20 @@ by clicking the 'Delete Unapproved Reconciliations' button.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'delete') {
-            my $ids = [ map { $_->{id} } @$rows ];
-            $dbh->do('DELETE FROM cr_report_line WHERE report_id IN ?',
-                     {}, $ids)
-                or die 'Failed to remove unapproved report: ' . $dbh->errstr;
-            $dbh->do('DELETE FROM cr_report WHERE id IN ?',
-                     {}, $ids)
-                or die 'Failed to remove unapproved report: ' . $dbh->errstr;
+            my $delete_report_lines = $dbh->prepare(
+                'DELETE FROM cr_report_line WHERE report_id = ?'
+            ) or die 'ERROR preparing sql to delete reconciliation report lines';
+
+            my $delete_report = $dbh->prepare(
+                'DELETE FROM cr_report WHERE id = ?'
+            ) or die 'ERROR preparing sql to delete reconciliation report';
+
+            foreach my $row(@$rows) {
+                $delete_report_lines->execute($row->{id})
+                    or die 'Failed to remove unapproved report: ' . $dbh->errstr;
+                $delete_report->execute($row->{id})
+                    or die 'Failed to remove unapproved report: ' . $dbh->errstr;
+            }
         }
         else {
           die "Unexpected confirmation value found: $confirm";
