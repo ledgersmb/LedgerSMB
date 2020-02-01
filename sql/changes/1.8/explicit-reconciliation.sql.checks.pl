@@ -4,7 +4,7 @@ package _18_uprade_checks;
 use LedgerSMB::Database::ChangeChecks;
 
 check q|Ensure that the database doesn't contain unapproved reconciliations|,
-    query => q|select id, accno, description, end_date, their_total
+    query => q|select r.id, accno, description, end_date, their_total
                  from cr_report r
                  join account a on a.id = r.chart_id
                 where not (deleted or approved)
