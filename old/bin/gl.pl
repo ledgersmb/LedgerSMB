@@ -580,7 +580,7 @@ sub update {
            }
 
             if (not $found_acc){
-                $form->error($locale->text('Account [_1] not found.',
+                $form->error($locale->text('Account [_1] not found',
                                            $form->{"accno_$i"}));
             }
             for my $tx_type (qw(debit credit debit_fx credit_fx)) {

@@ -145,7 +145,7 @@ sub columns {
      pwidth => '1', },
 
     {col_id => 'accno',
-       name => $self->Text('Account No.'),
+       name => $self->Text('Account Number'),
        type => 'text',
      pwidth => '3', },
 
