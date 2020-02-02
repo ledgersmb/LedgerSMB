@@ -50,12 +50,12 @@ the 'Delete null exchange rate defaults' button.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'delete') {
-            my $delete = $dbh->prepare('
-                DELETE FROM exchangerate_default
-                WHERE rate_type = ?
-                AND curr = ?
-                AND valid_from = ?
-            ') or die 'ERROR preparing sql to remove default exchange rate ' . $dbh->errstr;
+            my $delete = $dbh->prepare(
+                'DELETE FROM exchangerate_default '.
+                'WHERE rate_type = ? '.
+                'AND curr = ? '.
+                'AND valid_from = ?'
+            ) or die 'ERROR preparing sql to remove default exchange rate ' . $dbh->errstr;
 
             foreach my $row(@$rows) {
                 $delete->execute(
