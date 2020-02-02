@@ -46,10 +46,7 @@ Saves the pricelist.
 sub save {
     my ($self, $lines) = @_;
     for my $ref (@$lines){
-        my $line = __PACKAGE__->new({base => $self,
-                               copy => 'list',
-                              merge => ['entity_class', 'credit_id', 'qty'], }
-        );
+        my $line = __PACKAGE__->new({ base => $self });
         $line->merge($ref);
         $line->call_dbmethod(funcname => 'pricelist__save');
     }
@@ -69,9 +66,7 @@ Deletes the referred pricelist entry.
 sub delete {
     my ($self, $entry_id) = @_;
 
-    my $line = __PACKAGE__->new({base => $self,
-                                 merge => ['credit_id', 'entry_id'] }
-        );
+    my $line = __PACKAGE__->new({ base => $self });
     return $line->call_dbmethod(funcname => 'pricelist__delete');
 }
 
