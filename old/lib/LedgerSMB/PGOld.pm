@@ -70,21 +70,6 @@ sub merge {
      return $self;
 }
 
-=item $self->is_allowed_role([@rolelist])
-
-Accepts an arrayref of roles to check.  For each role on the list, checks to
-see if the current session is granted that.  Returns true if any are, false if
-none are.
-
-=cut
-
-sub is_allowed_role {
-    my ($self, $rolelist) = @_;
-    my ($access) =  $self->call_procedure(
-         procname => 'lsmb__is_allowed_role', args => [$rolelist]
-    );
-    return $access->{lsmb__is_allowed_role};
-}
 
 =item $self->funcschema()
 
