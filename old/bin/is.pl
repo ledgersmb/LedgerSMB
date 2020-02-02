@@ -71,7 +71,7 @@ sub copy_to_new{
 }
 
 sub edit_and_save {
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->delete();
     delete $form->{id};
     IS->post_invoice( \%myconfig, \%$form );
@@ -278,7 +278,7 @@ sub prepare_invoice {
             $form->{"discount_$i"} =
               $form->format_amount( \%myconfig, $form->{"discount_$i"} * 100 );
 
-            my $moneyplaces = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
+            my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
             my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
             $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
@@ -444,7 +444,7 @@ sub form_header {
         <td colspan=3>
           <table>
             <tr> |;
-      if (LedgerSMB::Setting->new({base=>$form})->get('show_creditlimit')){
+      if (LedgerSMB::Setting->new(%$form)->get('show_creditlimit')){
           print qq|
               <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
               <td>|

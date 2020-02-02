@@ -109,7 +109,7 @@ sub _aa_multi {
     use LedgerSMB::AA;
     use LedgerSMB::Batch;
     my ($request, $entries, $arap) = @_;
-    my $batch = LedgerSMB::Batch->new({base => $request});
+    my $batch = LedgerSMB::Batch->new(%$request);
     $batch->{batch_number} = $request->{reference};
     $batch->{batch_date} = $request->{transdate};
     $batch->{batch_class} = $arap;
@@ -335,7 +335,7 @@ sub _process_chart {
     use constant GIFI_ACCNO     => 8;
 
     foreach my $entry (@$entries){
-        my $account = LedgerSMB::DBObject::Account->new({base=>$request});
+        my $account = LedgerSMB::DBObject::Account->new(%$request);
         my $settings = {
             accno => $entry->[ACCNO],
             description => $entry->[DESCRIPTION],

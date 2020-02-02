@@ -73,7 +73,7 @@ sub approve {
         list_drafts($request);
         return;
     }
-    my $draft= LedgerSMB::DBObject::Draft->new({base => $request});
+    my $draft= LedgerSMB::DBObject::Draft->new(%$request);
     for my $row (1 .. $request->{rowcount_}){
         if ($draft->{"select_$row"}){
              $draft->{id} = $draft->{"select_$row"};
@@ -106,7 +106,7 @@ sub delete {
         list_drafts($request);
         return;
     }
-    my $draft= LedgerSMB::DBObject::Draft->new({base => $request});
+    my $draft= LedgerSMB::DBObject::Draft->new(%$request);
     for my $row (1 .. $draft->{rowcount_}){
         if ($draft->{"select_$row"}){
              $draft->{id} = $draft->{"select_$row"};

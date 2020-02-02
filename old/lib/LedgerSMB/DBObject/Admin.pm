@@ -76,7 +76,7 @@ sub save_roles {
 
     my $self = shift @_;
 
-    my $user = LedgerSMB::DBObject::User->new( { base=>$self, copy=>'all' } );
+    my $user = LedgerSMB::DBObject::User->new(%$self);
     $user->get();
     $self->{modifying_user} = $user->{user}->{username};
     my @roles = $self->call_dbmethod( funcname => "admin__get_roles" );

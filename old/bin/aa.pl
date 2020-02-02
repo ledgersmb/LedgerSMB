@@ -556,7 +556,7 @@ $form->open_status_div($status_div_id) . qq|
         <td colspan=3>
           <table width=100%>
             <tr> |;
-    if (LedgerSMB::Setting->new({base=>$form})->get('show_creditlimit')){
+    if (LedgerSMB::Setting->new(%$form)->get('show_creditlimit')){
        print qq|
               <th align=left nowrap>| . $locale->text('Credit Limit') . qq|</th>
               <td>$form->{creditlimit}</td>
@@ -1149,13 +1149,13 @@ sub save_temp {
                   };
         }
     }
-    $template = LedgerSMB::DBObject::TransTemplate->new({base => $lsmb});
+    $template = LedgerSMB::DBObject::TransTemplate->new(%$lsmb);
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }
 
 sub edit_and_save {
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->delete();
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
@@ -1165,7 +1165,7 @@ sub edit_and_save {
 sub approve {
     $form->update_invnumber;
 
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
 
     $draft->approve();
 

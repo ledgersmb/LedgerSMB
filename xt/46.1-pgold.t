@@ -29,7 +29,7 @@ my $base = {
 };
 
 isa_ok(
-    $pgold = LedgerSMB::PGOld->new({base => $base}),
+    $pgold = LedgerSMB::PGOld->new(%$base),
     ['LedgerSMB::PGOld'],
     'object created with base properties'
 );

@@ -46,10 +46,7 @@ A hashref which is imported as properties of the new object.
 =cut
 
 sub new {
-    my $pkg = shift;
-    my $args = (ref $_[0]) ? $_[0] : { @_ };
-
-    my $self = PGObject::Simple::new($pkg, %{$args->{base}});
+    my $self = PGObject::Simple::new(@_);
     return $self;
 }
 

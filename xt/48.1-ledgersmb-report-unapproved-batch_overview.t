@@ -57,15 +57,15 @@ my @test_batches = (
 );
 
 foreach my $batch_data(@test_batches) {
-    my $batch = LedgerSMB::Batch->new({ base => $batch_data });
+    my $batch = LedgerSMB::Batch->new(%$batch_data);
     $batch->set_dbh($dbh);
     my $batch_id = $batch->create or die 'Failed to create test batch';
 
     if($batch_data->{__POST}) {
-        $batch = LedgerSMB::Batch->new({ base => {
+        $batch = LedgerSMB::Batch->new(
             dbh => $dbh,
             batch_id => $batch_id,
-        }});
+        );
         $batch->post or die 'Failed to post/approve test batch';
     }
 }

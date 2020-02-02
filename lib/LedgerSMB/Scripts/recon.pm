@@ -46,9 +46,7 @@ sub display_report {
         report_id => $request->{report_id}
     };
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $recon_data,
-    });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
 
     return _display_report($recon, $request);
 }
@@ -62,7 +60,7 @@ and re-renders the reconciliation screen.
 
 sub update_recon_set {
     my ($request) = shift;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
     $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total};
     $recon->save() if !$recon->{submitted};
     $recon->update();
@@ -93,7 +91,7 @@ Rejects the recon set and returns it to non-submitted state
 
 sub reject {
     my ($request) = @_;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
     $recon->reject;
     return search($request);
 }
@@ -106,7 +104,7 @@ Submits the recon set to be approved.
 
 sub submit_recon_set {
     my ($request) = shift;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
     $recon->submit();
     my $can_approve = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     if ( !$can_approve ) {
@@ -125,7 +123,7 @@ Saves the reconciliation set for later use.
 
 sub save_recon_set {
     my ($request) = @_;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
     if ($request->close_form){
         $recon->save();
         return search($request);
@@ -313,9 +311,7 @@ sub start_report {
         recon_fx => $request->{recon_fx},
     };
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $recon_data,
-    });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
 
     # Insert new report into database
     $recon->new_report;
@@ -341,9 +337,7 @@ delete any non-approved reports.
 sub delete_report {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request,
-    });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
 
     $recon->delete($request->{report_id});
 
@@ -374,9 +368,7 @@ sub approve {
              [ q{'report_id' parameter missing} ]
         ] if ! $request->{report_id};
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({
-        base => $request
-    });
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
 
     my $code = $recon->approve;
     my $template = $code == 0 ? 'reconciliation/approved'
@@ -398,7 +390,7 @@ sub pending {
 
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
 
     my $template= LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'reconciliation/pending', {});

@@ -74,7 +74,7 @@ occurs to here.
 sub delete_account {
     my ($request) = @_;
 
-    my $account =  LedgerSMB::DBObject::Account->new({base => $request});
+    my $account =  LedgerSMB::DBObject::Account->new(%$request);
     $account->delete;
     return chart_of_accounts($request);
 }

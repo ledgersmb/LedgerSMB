@@ -21,6 +21,7 @@ use warnings;
 use Try::Tiny;
 
 use LedgerSMB;
+use LedgerSMB::DBObject::Pricelist;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -279,7 +280,7 @@ sub _main_screen {
 
     my @all_currencies =
         map { { curr => $_ } }
-        (LedgerSMB::Setting->new({base => $request}))->get_currencies;
+        (LedgerSMB::Setting->new(%$request))->get_currencies;
 
     my $default_country = $request->setting->get('default_country');
     my ($default_language) = $request->setting->get('default_language');
@@ -820,11 +821,8 @@ and the description is a full text search.
 
 sub save_pricelist {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Pricelist;
-
     my $count = $request->{rowcount_pricematrix};
-
-    my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
+    my $pricelist = LedgerSMB::DBObject::Pricelist->new(%$request);
     my @lines;
 
     # Search and populate
@@ -871,9 +869,7 @@ sub save_pricelist {
 
 sub delete_pricelist {
     my ($request) = @_;
-
-    use LedgerSMB::DBObject::Pricelist;
-    my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
+    my $pricelist = LedgerSMB::DBObject::Pricelist->new(%$request);
 
     $pricelist->delete;
 

@@ -206,7 +206,7 @@ Given qr/a (\w+) batch with these properties:$/, sub {
         batch_class => $batch_class,
         map { $map{$_->{Property}} => $_->{Value} } @{C->data},
     };
-    my $batch = LedgerSMB::Batch->new({base => $batch_data});
+    my $batch = LedgerSMB::Batch->new(%$batch_data);
     $batch->create;
 };
 
@@ -367,7 +367,7 @@ Given qr/(a batch|batches) with these properties:$/, sub {
             batch_date => $batch_spec->{Date},
             description => $batch_spec->{Description},
         };
-        my $batch = LedgerSMB::Batch->new({ base => $data });
+        my $batch = LedgerSMB::Batch->new(%$data);
         my $batch_id = $batch->create;
 
         if($batch_spec->{Approved} eq 'yes') {
@@ -375,7 +375,7 @@ Given qr/(a batch|batches) with these properties:$/, sub {
                 dbh => S->{ext_lsmb}->admin_dbh,
                 batch_id => $batch_id,
             };
-            LedgerSMB::Batch->new({ base => $data })->post;
+            LedgerSMB::Batch->new(%$data)->post;
         }
     }
 };
@@ -399,9 +399,7 @@ Given qr/^(a reconciliation report|reconciliation reports) with these properties
             end_date => $report_spec->{'Statement Date'},
         };
 
-        my $recon = LedgerSMB::DBObject::Reconciliation->new({
-            base => $recon_data,
-        });
+        my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
 
         my $recon_id = $recon->new_report();
 

@@ -41,7 +41,7 @@ Displays a list of open sessions.  No inputs required or used.
 
 sub list_sessions {
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
+    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
     my @sessions = $admin->list_sessions();
     my $column_names = {
         id => 'ID',
@@ -87,7 +87,7 @@ Deletes the session specified by $request->{session_id}
 
 sub delete_session {
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
+    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
     $admin->delete_session();
     return list_sessions($request);
 }
