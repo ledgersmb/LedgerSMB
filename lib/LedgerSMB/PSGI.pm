@@ -133,8 +133,11 @@ sub psgi_app {
                 level => 'error',
                 message => $error });
             $res = LedgerSMB::PSGI::Util::internal_server_error(
-                $error, 'Error!',
-                $request->{dbversion}, $request->{company});
+                $error,
+                'Error!',
+                $request->{company},
+                $request->{dbversion},
+            );
         }
         else {
             $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
