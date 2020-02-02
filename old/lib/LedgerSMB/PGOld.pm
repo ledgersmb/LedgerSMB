@@ -70,19 +70,6 @@ sub merge {
 }
 
 
-=item $self->funcschema()
-
-
-
-=cut
-
-sub funcschema {
-    my ($self) = @_;
-
-    return LedgerSMB::Sysconfig::db_namespace();
-}
-
-
 =back
 
 =cut
