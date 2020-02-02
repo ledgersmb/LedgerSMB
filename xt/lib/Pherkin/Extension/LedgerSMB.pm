@@ -36,10 +36,12 @@ has admin_user_name => (is => 'rw', default => 'test-user-admin');
 has admin_user_password => (is => 'rw', default => 'password');
 
 has db => (is => 'rw');
-has super_dbh => (is => 'rw');
+has super_dbh => (is => 'rw',
+                  predicate => '_has_super_dbh');
 has admin_dbh => (is => 'rw', lazy => 1,
                   builder => '_build_admin_dbh',
                   clearer => '_clear_admin_dbh',
+                  predicate => '_has_admin_dbh',
     );
 has template_created => (is => 'rw', default => 0);
 has last_scenario_stash => (is => 'rw');
@@ -94,7 +96,9 @@ sub post_feature {
 
     $self->last_feature_stash(undef);
     $self->super_dbh->disconnect
-        if $self->super_dbh;
+        if $self->_has_super_dbh;
+    $self->admin_dbh->disconnect
+        if $self->_has_admin_dbh;
 }
 
 
