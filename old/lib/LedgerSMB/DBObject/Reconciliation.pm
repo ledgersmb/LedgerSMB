@@ -325,8 +325,10 @@ a hashrefo of information from the account table.
 
 sub get {
     my ($self) = shift @_;
-    my ($ref) = $self->call_dbmethod(funcname=>'reconciliation__report_summary');
-    $self->merge($ref);
+    my ($ref) =
+        $self->call_dbmethod(funcname=>'reconciliation__report_summary');
+
+    @{$self}{keys %$ref} = values %$ref if $ref;
     if (!$self->{submitted}){
         $self->call_dbmethod(
             funcname=>'reconciliation__pending_transactions'

@@ -125,7 +125,7 @@ Gets report from the database.
 sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset_report__get');
-    $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
     $self->{report_lines} = [];
     if ($self->{report_class} == 1){
         @{$self->{report_lines}} = $self->call_dbmethod(

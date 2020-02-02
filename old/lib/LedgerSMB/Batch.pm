@@ -302,7 +302,8 @@ according to the retrieved record:
 sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'voucher_get_batch');
-    return $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
+    return $self;
 }
 
 1;

@@ -46,8 +46,7 @@ Saves the pricelist.
 sub save {
     my ($self, $lines) = @_;
     for my $ref (@$lines){
-        my $line = __PACKAGE__->new({ base => $self });
-        $line->merge($ref);
+        my $line = __PACKAGE__->new({ base => { %$self, %$ref } });
         $line->call_dbmethod(funcname => 'pricelist__save');
     }
     return;

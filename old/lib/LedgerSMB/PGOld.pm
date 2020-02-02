@@ -53,23 +53,6 @@ sub new {
     return $self;
 }
 
-=item $self->merge(\%base, %args)
-
-Sets the values from hash 'base' in $self, optionally limited by the
-keys enumerated in the array @$args{keys}.
-
-=cut
-
-sub merge {
-     my ($self, $base, %args) = @_;
-    my @keys = $args{keys} || keys %$base;
-     foreach my $key (@keys) {
-          $self->{$key} = $base->{$key};
-     }
-     return $self;
-}
-
-
 =back
 
 =cut
