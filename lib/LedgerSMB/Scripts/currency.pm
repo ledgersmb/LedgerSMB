@@ -64,12 +64,12 @@ sub list_currencies {
         $s->{row_id} = $s->{curr};
         if ($s->{curr} eq $default_curr) {
             $s->{drop_NOHREF} = 1;
-            $s->{drop} = '(' . $request->{_locale}->text('default') . ')';
+            $s->{drop} = $request->{_locale}->text('default');
         }
         elsif ($s->{is_used}) {
             # Cannot delete a currency that's already being used
             $s->{drop_NOHREF} = 1;
-            $s->{drop} = '';
+            $s->{drop} = $request->{_locale}->text('in use');
         }
         else {
             $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
@@ -147,7 +147,13 @@ sub list_exchangerate_types {
     for my $s (@exchangerate_types) {
         $s->{row_id} = $s->{id};
         if ($s->{builtin}) {
-            $s->{drop_NOHREF} = $s->{builtin};
+            $s->{drop_NOHREF} = 1;
+            $s->{drop} = $request->{_locale}->text('system type');
+        }
+        elsif ($s->{is_used}) {
+            # Cannot delete a currency that's already being used
+            $s->{drop_NOHREF} = 1;
+            $s->{drop} = $request->{_locale}->text('in use');
         }
         else {
             $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
@@ -369,7 +375,7 @@ sub upload_exchangerates {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 The LedgerSMB Core Team
+Copyright (C) 2015-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
