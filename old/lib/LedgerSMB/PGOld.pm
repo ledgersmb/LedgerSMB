@@ -50,7 +50,6 @@ sub new {
     my $args = (ref $_[0]) ? $_[0] : { @_ };
 
     my $self = PGObject::Simple::new($pkg, %{$args->{base}});
-    $self->__validate__  if $self->can('__validate__');
     return $self;
 }
 
