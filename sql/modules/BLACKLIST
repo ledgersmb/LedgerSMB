@@ -219,6 +219,7 @@ exchangerate__list
 exchangerate__save
 exchangerate_type__delete
 exchangerate_type__get
+exchangerate_type__is_used
 exchangerate_type__list
 exchangerate_type__save
 file__attach_to_eca

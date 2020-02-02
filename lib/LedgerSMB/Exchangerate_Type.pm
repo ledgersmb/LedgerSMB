@@ -48,6 +48,14 @@ value and it thus can't be deleted.
 
 has 'builtin' => (is => 'ro', isa => 'Bool');
 
+=item is_used
+
+This boolean indicates that the rate type is used within the current
+company and therefore cannot be deleted.
+
+=cut
+
+has 'is_used' => (is => 'ro', isa => 'Bool');
 
 =back
 
@@ -123,7 +131,7 @@ sub delete {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 The LedgerSMB Core Team
+Copyright (C) 2015-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

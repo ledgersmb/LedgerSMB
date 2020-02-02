@@ -141,15 +141,35 @@ $$ language sql;
 COMMENT ON FUNCTION exchangerate_type__get(numeric) IS
 $$Retrieves an exchangerate type and its description.$$;
 
+CREATE OR REPLACE FUNCTION exchangerate_type__is_used
+(in_id integer)
+RETURNS BOOLEAN AS $$
+BEGIN
+   RETURN EXISTS (SELECT 1 FROM exchangerate_default WHERE rate_type = in_id);
+END;$$ language plpgsql;
+
+COMMENT ON FUNCTION exchangerate_type__is_used(integer) IS
+$$Returns true if exchangerate_type with id 'in_id' is used within the current commpany
+database. Returns false otherwise.$$;
+
+DROP TYPE IF EXISTS exchangerate_type_list CASCADE;
+CREATE TYPE exchangerate_type_list AS (
+  id INTEGER,
+  description TEXT,
+  builtin BOOLEAN,
+  is_used BOOLEAN
+);
+
+DROP FUNCTION IF EXISTS exchangerate_type__list();
 CREATE OR REPLACE FUNCTION exchangerate_type__list()
-RETURNS SETOF exchangerate_type AS
+RETURNS SETOF exchangerate_type_list AS
 $$
-   SELECT * FROM exchangerate_type;
+   SELECT id, description, builtin, exchangerate_type__is_used(id)
+   FROM exchangerate_type;
 $$ language sql;
 
 COMMENT ON FUNCTION exchangerate_type__list() IS
 $$Returns all exchangerate types.$$;
-
 
 
 --- #######   Exchange rates
