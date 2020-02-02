@@ -1025,7 +1025,7 @@ sub create_form {
 }
 
 sub e_mail {
-    LedgerSMB::Company_Config->initialize();
+    LedgerSMB::Company_Config::initialize($form);
     my %hiddens;
     my $cc = $LedgerSMB::Company_Config::settings;
 
