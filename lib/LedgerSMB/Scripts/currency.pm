@@ -272,7 +272,7 @@ sub _list_exchangerates {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Configuration/rate', {
-        name       => '',
+        name       => $request->{title},
         request    => $request,
         columns    => $columns,
         rows       => $rows,
