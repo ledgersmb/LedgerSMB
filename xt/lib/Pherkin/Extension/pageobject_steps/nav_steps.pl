@@ -99,6 +99,7 @@ my %screens = (
     'Edit Contact' => 'PageObject::App::Contacts::EditContact',
     'Edit currencies' => 'PageObject::App::System::Currency::EditCurrencies',
     'Edit rate types' => 'PageObject::App::System::Currency::EditRateTypes',
+    'Edit rates' => 'PageObject::App::System::Currency::EditRates',
     'Employee search' => 'PageObject::App::Search::Contact',
     'Enter Inventory' => ' PageObject::App::Parts::AdjustSetup',
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',

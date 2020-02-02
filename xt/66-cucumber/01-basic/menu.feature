@@ -141,6 +141,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Shipping > Transfer                        |                          |
     | System > Currency > Edit currencies        | Edit currencies          |
     | System > Currency > Edit rate types        | Edit rate types          |
+    | System > Currency > Edit rates             | Edit rates               |
     | System > Defaults                          | system defaults          |
 #   | System > GIFI > Add GIFI                   |                          |
 #   | System > GIFI > Import GIFI                |                          |
