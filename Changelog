@@ -25,6 +25,7 @@ Changed functionalities
 * Employee 'Wages & Deductions' (experimental) page now hidden until enabled
 * Templates for printed documents need to escape inserted data (was automatic)
 * Search checkmarks 'Open/Closed' replaced by radio button 'Open/Closed/All'
+* Default exchange rates cannot be NULL
 
 Bugs fixed
 * Default dates sometimes off by a day (before or after the current day) (#2587)

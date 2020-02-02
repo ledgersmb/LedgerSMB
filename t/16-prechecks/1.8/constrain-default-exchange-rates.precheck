@@ -1,0 +1,29 @@
+{
+    q|Ensure that the database doesn't contain NULL default exchange rates| =>
+        [
+         {
+             failure_data => [
+                 [ qw(description rate_type curr valid_from valid_to rate) ],
+                 [ 'Migrated BUY rates', 3, 'SEK', '2019-01-01', '2020-01-02', undef ],
+             ],
+             submit_session => [
+                  {
+                      statement => 'DELETE FROM exchangerate_default '.
+                                   'WHERE rate_type = ? '.
+                                   'AND curr = ? '.
+                                   'AND valid_from = ?',
+                      bound_params => [3, 'SEK', '2019-01-01'],
+                      results => [],
+                  },
+             ],
+             response => {
+                 confirm => 'delete',
+                 'reconciliation' => [
+                     {
+                         '__pk' => 'MjI=',
+                     },
+                 ],
+             },
+         },
+        ],
+}
