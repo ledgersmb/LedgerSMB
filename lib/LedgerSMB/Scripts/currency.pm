@@ -256,6 +256,7 @@ sub _list_exchangerates {
         },
         {
             col_id => 'drop',
+            type   => 'href',
             href_base => $base_url,
         },
         ];
