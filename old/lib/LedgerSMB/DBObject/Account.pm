@@ -221,7 +221,7 @@ sub get {
         $account->{category} = 'Qt';
     }
 
-    $self->merge($account);
+    @{$self}{keys %$account} = values %$account if $account;
     $self->_get_translations;
     $self->_get_custom_account_links;
     $self->_get_summary_account_links;

@@ -63,7 +63,7 @@ Typically sets ID if no match found or if ID not provided.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset_class__save');
-    $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
     return $ref;
 }
 
@@ -102,7 +102,7 @@ Sets all other standard properties if the record is found.
 sub get_asset_class {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset_class__get');
-    $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
     return $ref;
 }
 

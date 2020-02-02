@@ -53,7 +53,7 @@ sub save {
       delete $self->{$_} unless $self->{$_};
    }
    my ($ref) = $self->call_dbmethod(funcname => 'journal__add');
-   $self->merge($ref);
+   @{$self}{keys %$ref} = values %$ref if $ref;
    $self->{journal_id} = $self->{id};
    for my $line (@{$self->{journal_lines}}){
        my $l = bless $line, 'LedgerSMB::PGOld';
@@ -103,7 +103,7 @@ Retrieves a given template transaction
 sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'journal__get_entry');
-    $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
     @{$self->{line_items}} =  $self->call_dbmethod(funcname => 'journal__lines');
     ($self->{invoice_data}) =
                  $self->call_dbmethod(funcname => 'journal__get_invoice');

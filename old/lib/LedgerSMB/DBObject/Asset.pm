@@ -105,7 +105,7 @@ usually ID (if no match to current ID or if ID was undef).
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset__save');
-    $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
     return $ref;
 }
 
@@ -118,7 +118,7 @@ Gets a fixed asset, sets all standard properties.  The id property must be set.
 sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset__get');
-    $self->merge($ref);
+    @{$self}{keys %$ref} = values %$ref if $ref;
     return $ref;
 }
 
