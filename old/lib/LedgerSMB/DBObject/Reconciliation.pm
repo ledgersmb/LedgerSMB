@@ -213,17 +213,11 @@ sub delete {
     my ($report_id) = @_;
     my $retval;
     my $found;
-    #TODO: Fix this properly. Access checks like this should move to the database
-    #This can't work for now, $self isn't a ledgerSMB but a PGOld.
-#    if ($self->is_allowed_role({allowed_roles => ['reconciliation_approve']})){
-        ($found) = $self->call_procedure(
-                           funcname => 'reconciliation__delete_unapproved',
-                               args => [$report_id]);
-#    } else {
-#        ($found) = $self->call_procedure(
-#                           funcname => 'reconciliation__delete_my_report',
-#                               args => [$report_id]);
-#    }
+
+    ($found) = $self->call_procedure(
+        funcname => 'reconciliation__delete_unapproved',
+        args => [$report_id]);
+
     if ($found){
         $retval = '0';
     } else {
