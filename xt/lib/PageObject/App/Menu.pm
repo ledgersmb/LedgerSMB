@@ -87,6 +87,7 @@ my %menu_path_pageobject_map = (
 
     "System > Currency > Edit currencies" => 'PageObject::App::System::Currency::EditCurrencies',
     "System > Currency > Edit rate types" => 'PageObject::App::System::Currency::EditRateTypes',
+    "System > Currency > Edit rates" => 'PageObject::App::System::Currency::EditRates',
     "System > Defaults" => 'PageObject::App::System::Defaults',
     "System > Files" => 'PageObject::App::System::Files',
     "System > Taxes" => 'PageObject::App::System::Taxes',
