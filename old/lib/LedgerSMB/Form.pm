@@ -3394,7 +3394,7 @@ This should be used instead of direct tests, and checks for a sequence selected.
 sub should_update_defaults {
     my ($self, $fldname) = @_;
 
-    my $gapless_ar = LedgerSMB::Setting->new({base=>{dbh=>$self->{dbh}}})
+    my $gapless_ar = LedgerSMB::Setting->new(dbh => $self->{dbh})
         ->get('gapless_ar');
     return 0 if $gapless_ar and ($fldname eq 'invnumber');
 

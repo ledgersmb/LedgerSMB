@@ -79,10 +79,10 @@ sub require_version {
     $expected_version ||= $self; # handling ::require_version($version) syntax
 
     my $ignore_version =
-        LedgerSMB::Setting->new({base=>{dbh=>$dbh}})->get('ignore_version');
+        LedgerSMB::Setting->new(dbh => $dbh)->get('ignore_version');
     return if $ignore_version;
 
-    my $version = LedgerSMB::Setting->new({base=>{dbh=>$dbh}})->get('version');
+    my $version = LedgerSMB::Setting->new(dbh => $dbh)->get('version');
 
     if ($expected_version eq $version) {
         return '';

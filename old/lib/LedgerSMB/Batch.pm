@@ -14,7 +14,7 @@ LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
         batch_date => '2018-09-08',
         description => 'Test Description',
     };
-    my $batch = LedgerSMB::Batch->new({ base => $data });
+    my $batch = LedgerSMB::Batch->new(%$data);
     my $id = $batch->create;
 
     # Retrieve a batch
@@ -22,7 +22,7 @@ LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
         dbh => $dbh,
         batch_id => $id,
     };
-    $batch = LedgerSMB::Batch->new({ base => $data });
+    $batch = LedgerSMB::Batch->new(%$data);
     my $result = $batch->get;
     my $description = $result->{description};
 
@@ -31,7 +31,7 @@ LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
         dbh => $dbh,
         batch_id => $id,
     };
-    $batch = LedgerSMB::Batch->new({ base => $data });
+    $batch = LedgerSMB::Batch->new(%$data);
     $batch->delete;
 
 =head1 METHODS
@@ -57,7 +57,7 @@ just populates the batch_number hashref value.
 
 sub get_new_info {
     my $self = shift @_;
-    my $cc_object = LedgerSMB::Setting->new({base => $self});
+    my $cc_object = LedgerSMB::Setting->new(%$self);
     $cc_object->{key} = 'batch_cc';
     return $self->{batch_number} = $cc_object->increment;
 }

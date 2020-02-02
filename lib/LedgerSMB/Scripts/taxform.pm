@@ -50,7 +50,7 @@ sub report {
     $request->{report_name} = 'taxforms';
 
     # Get tax forms.
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my $taxform = LedgerSMB::DBObject::TaxForm->new(%$request);
     $taxform->get_forms();
     $request->{forms} = $taxform->{forms};
     return LedgerSMB::Scripts::reports::start_report($request);
@@ -67,7 +67,7 @@ Display the "add taxform" screen.
 sub _taxform_screen
 {
     my ($request) = @_;
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my $taxform = LedgerSMB::DBObject::TaxForm->new(%$request);
     $taxform->get_metadata();
 
     my $template = LedgerSMB::Template::UI->new_UI;
@@ -87,7 +87,7 @@ This retrieves and edits a tax form.  Requires that id be set.
 sub edit {
     my ($request) = @_;
     my $tf =
-        LedgerSMB::DBObject::TaxForm->new({base => $request})
+        LedgerSMB::DBObject::TaxForm->new(%$request)
         ->get($request->{id});
     $request->merge($tf);
     return _taxform_screen($request);
@@ -144,7 +144,7 @@ Saves a tax form, returns to edit screen.
 sub save
 {
     my ($request) = @_;
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my $taxform = LedgerSMB::DBObject::TaxForm->new(%$request);
 
     $taxform->save();
     return edit($taxform);
@@ -158,7 +158,7 @@ Prints the tax forms, using the 1099 templates.
 
 sub print {
     my ($request) = @_;
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my $taxform = LedgerSMB::DBObject::TaxForm->new(%$request);
     my $form_info = $taxform->get($request->{tax_form_id});
     $request->{taxform_name} = $form_info->{form_name};
     $request->{format} = 'PDF';

@@ -46,7 +46,7 @@ $data = {
     batch_date => '2018-09-08',
     description => 'Test Description',
 };
-$batch = LedgerSMB::Batch->new({ base => $data });
+$batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object with data');
 $id = $batch->create;
 ok($id, 'batch creation returns true');
@@ -59,7 +59,7 @@ $data = {
     dbh => $dbh,
     batch_id => $id,
 };
-$batch = LedgerSMB::Batch->new({ base => $data });
+$batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->get;
 isa_ok($result, ['LedgerSMB::Batch'], 'object returned after retrieving batch');
@@ -84,7 +84,7 @@ $data = {
     dbh => $dbh,
     batch_id => $id,
 };
-$batch = LedgerSMB::Batch->new({ base => $data });
+$batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->delete;
 ok($result, 'deleting a batch returns true');
@@ -95,7 +95,7 @@ $data = {
     dbh => $dbh,
     batch_id => $id,
 };
-$batch = LedgerSMB::Batch->new({ base => $data });
+$batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->get;
 isa_ok($result, ['LedgerSMB::Batch'], 'object returned after retrieving non-existent batch');
@@ -115,7 +115,7 @@ $data = {
     batch_date => '2018-09-08',
     description => 'Test Description',
 };
-$batch = LedgerSMB::Batch->new({ base => $data });
+$batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object with data');
 like($id = $batch->create, qr/^\d+$/, 'batch creation returns numeric id');
 
@@ -123,7 +123,7 @@ $data = {
     dbh => $dbh,
     batch_id => $id,
 };
-$batch = LedgerSMB::Batch->new({ base => $data });
+$batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
 $result = $batch->post;
 like($result, qr/^\d{4}-\d{2}-\d{2}$/, 'batch posting returns a date');

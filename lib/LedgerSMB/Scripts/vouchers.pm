@@ -78,7 +78,7 @@ sub create_batch {
         {name => 'overpayment', value => $request->{overpayment}},
     ];
 
-    my $batch = LedgerSMB::Batch->new({base => $request});
+    my $batch = LedgerSMB::Batch->new(%$request);
     $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
     $batch->get_new_info;
 
@@ -137,7 +137,7 @@ sub create_vouchers {
         batch_date => $request->{batch_date},
         description => $request->{description},
     };
-    my $batch = LedgerSMB::Batch->new({base => $batch_data});
+    my $batch = LedgerSMB::Batch->new(%$batch_data);
 
     $request->{batch_id} = $batch->create;
     return add_vouchers($request);
@@ -276,7 +276,7 @@ Displays all vouchers from the batch by type, and includes amount.
 
 sub get_batch {
     my ($request)  = @_;
-    my $setting =  LedgerSMB::Setting->new({base=>$request});
+    my $setting =  LedgerSMB::Setting->new(%$request);
     $request->open_form;
 
     $request->{hiddens} = { batch_id => $request->{batch_id} };
@@ -298,7 +298,7 @@ sub single_batch_approve {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
-        my $batch = LedgerSMB::Batch->new(base => $request);
+        my $batch = LedgerSMB::Batch->new(%$request);
         $batch->post;
         return list_batches($request);
     } else {
@@ -316,7 +316,7 @@ sub single_batch_delete {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
-        my $batch = LedgerSMB::Batch->new(base => $request);
+        my $batch = LedgerSMB::Batch->new(%$request);
         $batch->delete;
         return list_batches($request);
     } else {
@@ -334,7 +334,7 @@ sub single_batch_unlock {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
-        my $batch = LedgerSMB::Batch->new(base => $request);
+        my $batch = LedgerSMB::Batch->new(%$request);
         $batch->unlock;
         $request->{report_name} = 'unapproved';
         $request->{search_type} = 'batches';
@@ -354,7 +354,7 @@ sub batch_vouchers_delete {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
-        my $batch = LedgerSMB::Batch->new(base => $request);
+        my $batch = LedgerSMB::Batch->new(%$request);
         for my $count (1 .. $request->{rowcount_}){
             my $voucher_id = $request->{"select_$count"};
             next unless $voucher_id;
@@ -377,7 +377,7 @@ sub batch_approve {
         list_batches($request);
     }
 
-    my $batch = LedgerSMB::Batch->new(base => $request);
+    my $batch = LedgerSMB::Batch->new(%$request);
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{'select_' . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
@@ -396,7 +396,7 @@ Unlocks selected batches
 sub batch_unlock {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
-    my $batch = LedgerSMB::Batch->new(base => $request);
+    my $batch = LedgerSMB::Batch->new(%$request);
     if ($request->{batch_id}){
        $batch->unlock($request->{batch_id});
     } else {
@@ -425,10 +425,10 @@ sub batch_delete {
 
     foreach my $count (1 .. $request->{rowcount_}){
         if ($request->{"select_$count"}) {
-            my $batch = LedgerSMB::Batch->new(base => {
+            my $batch = LedgerSMB::Batch->new(
                 dbh => $request->{dbh},
                 batch_id => $request->{"row_$count"},
-            });
+            );
             $batch->delete;
         }
     }
@@ -446,7 +446,7 @@ Adds overpayment reversal vouchers to a batch
 sub reverse_overpayment {
     my ($request) = @_;
     delete $request->{language}; # remove language; setting meant for printing
-    my $batch = LedgerSMB::Batch->new(base => $request);
+    my $batch = LedgerSMB::Batch->new(%$request);
     $batch->get;
     my $a_class;
     for my $count (1 .. $request->{rowcount_}){

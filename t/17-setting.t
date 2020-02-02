@@ -26,7 +26,7 @@ use LedgerSMB::App_State;
   use strict 'refs';
   use warnings 'redefine';
 
-  is(LedgerSMB::Setting->new({base => {dbh => 'db'}})->get('database'), '123', 'got mocked value back');
+  is(LedgerSMB::Setting->new(dbh => 'db')->get('database'), '123', 'got mocked value back');
 }
 
 

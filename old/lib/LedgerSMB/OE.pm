@@ -563,7 +563,7 @@ sub retrieve {
     my $ref;
 
     @{$form->{currencies}} =
-        (LedgerSMB::Setting->new({base => $form}))->get_currencies;
+        (LedgerSMB::Setting->new(%$form))->get_currencies;
     $form->{defaultcurrency} = $form->{currencies}->[0];
 
     $query = qq|

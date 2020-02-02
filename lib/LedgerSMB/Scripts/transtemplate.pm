@@ -59,7 +59,7 @@ sub view {
     };
 
     my $transtemplate =
-        LedgerSMB::DBObject::TransTemplate->new({base => $request});
+        LedgerSMB::DBObject::TransTemplate->new(%$request);
     $transtemplate->get;
     my $journal_type = $transtemplate->{journal};
     my $entry = $template_dispatch->{$journal_type};

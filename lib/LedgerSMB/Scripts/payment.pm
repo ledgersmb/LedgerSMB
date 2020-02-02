@@ -51,6 +51,7 @@ use warnings;
 
 use List::Util qw/sum/;
 
+use LedgerSMB::Batch;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
@@ -98,7 +99,7 @@ sub payments {
         account_class => $request->{account_class},
         batch_id => $request->{batch_id},
     };
-    my $payment = LedgerSMB::DBObject::Payment->new({'base' => $payment_data});
+    my $payment = LedgerSMB::DBObject::Payment->new(%$payment_data);
     $payment->get_metadata();
 
     my $template = LedgerSMB::Template::UI->new_UI;
@@ -136,7 +137,7 @@ sub get_search_criteria {
     # Additional data needed if this search is to create reversing vouchers
     $payment_data->{batch_id} = $request->{batch_id} if $request->{batch_id};
 
-    my $payment = LedgerSMB::DBObject::Payment->new({'base' => $payment_data});
+    my $payment = LedgerSMB::DBObject::Payment->new(%$payment_data);
     $payment->get_metadata();
 
     my $template = LedgerSMB::Template::UI->new_UI;
@@ -354,7 +355,7 @@ sub reverse_payments {
                 payment_date  => $date_reversed,
             };
 
-            my $payment = LedgerSMB::DBObject::Payment->new({base => $data});
+            my $payment = LedgerSMB::DBObject::Payment->new(%$data);
             $payment->reverse;
         }
     }
@@ -377,7 +378,7 @@ successful.
 
 sub post_payments_bulk {
     my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $payment =  LedgerSMB::DBObject::Payment->new(%$request);
     if ($request->close_form){
         my $data = $bulk_post_map->($request);
         $payment->post_bulk($data);
@@ -398,19 +399,15 @@ is not merged in, meaning that $request->{multiple} must be set to a true value.
 =cut
 
 sub print {
-    use LedgerSMB::Batch;
     my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $payment =  LedgerSMB::DBObject::Payment->new(%$request);
     $payment->{company} = $payment->{_user}->{company};
     $payment->{address} = $payment->{_user}->{address};
 
     my $template;
 
     if ($payment->{batch_id}){
-        my $batch = LedgerSMB::Batch->new(
-                         {base => $payment,
-                         copy  => 'base' }
-        );
+        my $batch = LedgerSMB::Batch->new(%$payment);
         $batch->{batch_id} = $payment->{batch_id};
         $batch->get;
         $payment->{batch_description} = $batch->{description};
@@ -550,7 +547,7 @@ sub display_payments {
             }
     } @{$data->{contacts}};
 
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $payment =  LedgerSMB::DBObject::Payment->new(%$request);
     $payment->get_payment_detail_data();
     $payment->{exchangerate} = undef;
     $payment->{grand_total} = LedgerSMB::PGNumber->from_db('0');
@@ -653,7 +650,7 @@ TT2 system.
 sub payment {
     my ($request)    = @_;
     #my $locale       = $request->{_locale};
-    my $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $dbPayment = LedgerSMB::DBObject::Payment->new(%$request);
 
     # Lets get the currencies (this uses the $dbPayment->{account_class} property)
     my @currOptions;
@@ -665,7 +662,7 @@ sub payment {
 
     }
     # Lets build filter by period
-    my $date = LedgerSMB::DBObject::Date->new({base => $request});
+    my $date = LedgerSMB::DBObject::Date->new(%$request);
     $date->build_filter_by_period($request->{_locale});
     # Lets set the data in a hash for the template system. :)
     my $select = {
@@ -724,7 +721,7 @@ one to handle the payment against
 sub payment1_5 {
     my ($request)    = @_;
     #my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
-    my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my  $dbPayment = LedgerSMB::DBObject::Payment->new(%$request);
     my @array_options = $dbPayment->get_entity_credit_account();
     if ($#array_options == -1) {
         return &payment($request);
@@ -799,7 +796,7 @@ payment module.
 sub payment2 {
     my ($request, %args) = @_;
     my $locale       = $request->{_locale};
-    my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Payment = LedgerSMB::DBObject::Payment->new(%$request);
     # VARIABLES
     my ($project_id, $project_number, $project_name, $department_name );
     my @project;
@@ -1211,7 +1208,7 @@ and its used for all the mechanics of storing a payment.
 sub post_payment {
     my ($request) = @_;
     my $locale       = $request->{_locale};
-    my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Payment = LedgerSMB::DBObject::Payment->new(%$request);
 
     if (!$request->{exrate}) {
      $Payment->error($locale->text('Exchange rate hasn\'t been defined!'));}
@@ -1454,7 +1451,7 @@ sub post_and_print_payment {
     $request->{continue_to_calling_sub} = 1;
     $request->{payment_id} = &post_payment($request);
     my $locale       = $request->{_locale};
-    my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Payment = LedgerSMB::DBObject::Payment->new(%$request);
     return print_payment($request, $Payment);
 }
 
@@ -1469,7 +1466,7 @@ from one customer to other customers.
 sub use_overpayment {
     my ($request) = @_;
     my $locale    = $request->{_locale};
-    my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Payment   = LedgerSMB::DBObject::Payment->new(%$request);
     my @arrayOptions;
     my @entities;
 
@@ -1522,7 +1519,7 @@ overpayment should be used
 sub use_overpayment2 {
     my ($request) = @_;
     my $locale    = $request->{_locale};
-    my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
+    my $Payment   = LedgerSMB::DBObject::Payment->new(%$request);
     my $Selected_entity;
     my @vc_info;
     my @vc_list;
@@ -1714,7 +1711,7 @@ sub use_overpayment2 {
         # lets create an object who has the entity_credit_id of the
         # selected entity
         $Selected_entity =
-            LedgerSMB::DBObject::Payment->new({'base' => $Payment});
+            LedgerSMB::DBObject::Payment->new(%$Payment);
         $Selected_entity->{invnumber} = $Selected_entity->{new_invoice} ;
 
         my ($id,$name,$vc_discount_accno) =
@@ -1890,7 +1887,7 @@ sub post_overpayment {
         if(!$entity_unused_ovp{"$ovp_chart_id"})
         {
             $entity_unused_ovp{"$ovp_chart_id"} =
-                LedgerSMB::DBObject::Payment->new({'base' => $request});
+                LedgerSMB::DBObject::Payment->new(%$request);
             $entity_unused_ovp{$ovp_chart_id}->{chart_id} = $ovp_chart_id;
             # this call will store the unused overpayments in
             # $entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"}
@@ -1941,7 +1938,7 @@ sub post_overpayment {
 
         if (! $entity_list{$entity_id}) {
             $entity_list{$entity_id} =
-                LedgerSMB::DBObject::Payment->new({base => $request});
+                LedgerSMB::DBObject::Payment->new(%$request);
             my $list_key = $entity_list{$entity_id};
             $list_key->{entity_credit_id} = $entity_id;
             $list_key->{gl_description} =

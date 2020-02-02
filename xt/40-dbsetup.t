@@ -163,7 +163,7 @@ SKIP: {
                    country_id => $id,
                    import     => 't',
                  });
-      my $user = LedgerSMB::DBObject::Admin->new({base => $lsmb});
+      my $user = LedgerSMB::DBObject::Admin->new(%$lsmb);
       ok($user->save_user, 'User saved');
       $sth = $dbh->prepare("SELECT admin__add_user_to_role(?, ?)");
       my $rolename = "lsmb_" . $ENV{PGDATABASE} . "__users_manage";

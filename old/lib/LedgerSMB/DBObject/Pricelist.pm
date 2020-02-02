@@ -4,7 +4,7 @@ LedgerSMB::DBObject::Pricelist - Pricelists for customers and vendors
 
 =head1 SYNOPSIS
 
- my $pl = LedgerSMB::DBObject::Pricelist->new({base => $request});
+ my $pl = LedgerSMB::DBObject::Pricelist->new(%$request);
  $pl->save(\@lines);
 
 =cut
@@ -46,7 +46,7 @@ Saves the pricelist.
 sub save {
     my ($self, $lines) = @_;
     for my $ref (@$lines){
-        my $line = __PACKAGE__->new({ base => { %$self, %$ref } });
+        my $line = __PACKAGE__->new(%$self, %$ref);
         $line->call_dbmethod(funcname => 'pricelist__save');
     }
     return;
@@ -65,7 +65,7 @@ Deletes the referred pricelist entry.
 sub delete {
     my ($self, $entry_id) = @_;
 
-    my $line = __PACKAGE__->new({ base => $self });
+    my $line = __PACKAGE__->new(%$self);
     return $line->call_dbmethod(funcname => 'pricelist__delete');
 }
 

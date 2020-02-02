@@ -1153,7 +1153,7 @@ sub _render_new_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     if ( $request->{coa_lc} ) {
-        LedgerSMB::Setting->new({base=>$request})->set('default_country',$request->{coa_lc});
+        LedgerSMB::Setting->new(%$request)->set('default_country',$request->{coa_lc});
     }
     return _render_user($request);
 }
@@ -1335,7 +1335,7 @@ sub run_upgrade {
         $request->{only_templates} = 1;
     }
 
-    my $templates = LedgerSMB::Setting->new({base=>{dbh=>$dbh}})
+    my $templates = LedgerSMB::Setting->new(dbh => $dbh)
         ->get('templates');
     if ($templates){
        $request->{template_dir} = $templates;
@@ -1444,7 +1444,7 @@ sub save_user_roles {
     return $reauth if $reauth;
 
     $request->{user_id} = $request->{id};
-    my $admin = LedgerSMB::DBObject::Admin->new(base => $request, copy=>'all');
+    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
     my $roles = [];
     for my $r (grep { $_ =~ m/lsmb_(.+)__/ } keys %$request) {
         push @$roles, $r;
@@ -1465,7 +1465,7 @@ sub reset_password {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
-    my $user = LedgerSMB::DBObject::User->new(base => $request, copy=>'all');
+    my $user = LedgerSMB::DBObject::User->new(%$request);
     my $result = $user->save();
 
     $request->{password} = '';

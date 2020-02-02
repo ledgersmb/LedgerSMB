@@ -33,10 +33,10 @@ $setting->set('curr', 'EUR')
 
 
 # Initialise Object
-$payment = LedgerSMB::DBObject::Payment->new({base => {
+$payment = LedgerSMB::DBObject::Payment->new(
     dbh => $dbh,
     account_class => 1,
-}});
+);
 isa_ok($payment, ['LedgerSMB::DBObject::Payment'], 'instantiated object');
 ok($payment->set_dbh($dbh), 'set dbh');
 

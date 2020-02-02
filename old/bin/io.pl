@@ -134,7 +134,7 @@ sub _calc_taxes {
 
 sub approve {
     $form->update_invnumber;
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
 
     $draft->approve();
     edit();
@@ -284,7 +284,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
             }
         }
-        my $moneyplaces = LedgerSMB::Setting->new({base=>$form})->get('decimal_places');
+        my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
         $dec = length $dec;
         $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
         $form->{"precision_$i"} = $decimalplaces;

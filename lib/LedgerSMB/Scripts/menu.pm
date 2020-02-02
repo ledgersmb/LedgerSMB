@@ -38,7 +38,7 @@ Returns the menu items in JSON format
 sub menuitems_json {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
+    my $menu = LedgerSMB::DBObject::Menu->new(%$request);
 
     $menu->generate;
     $_->{label} = $locale->maketext($_->{label})

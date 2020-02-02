@@ -57,7 +57,7 @@ sub call {
                                     qw| no-store  no-cache  must-revalidate
                                         post-check=0 pre-check=0 false|),
             'Pragma' => 'no-cache'
-        ) if LedgerSMB::Setting->new({base => { dbh => $env->{'lsmb.db'} }})
+        ) if LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})
             ->get('disable_back');
 
     });

@@ -39,10 +39,10 @@ Displays a screen to create a new account.
 sub new_account {
     my ($request) = @_;
 
-    my $account = LedgerSMB::DBObject::Account->new({base => {
+    my $account = LedgerSMB::DBObject::Account->new(
         dbh => $request->{dbh},
         charttype => 'A',
-    }});
+    );
 
     return _display_account_screen($request, $account);
 }
@@ -56,10 +56,10 @@ Displays a screen to create a new Chart of Accounts heading.
 sub new_heading {
     my ($request) = @_;
 
-    my $account = LedgerSMB::DBObject::Account->new({base => {
+    my $account = LedgerSMB::DBObject::Account->new(
         dbh => $request->{dbh},
         charttype => 'H',
-    }});
+    );
 
     return _display_account_screen($request, $account);
 }
@@ -75,11 +75,11 @@ Requires the id and charttype variables in the request to be set.
 sub edit {
     my ($request) = @_;
 
-    my $account = LedgerSMB::DBObject::Account->new({base => {
+    my $account = LedgerSMB::DBObject::Account->new(
         dbh => $request->{dbh},
         id => $request->{id},
         charttype => $request->{charttype},
-    }});
+    );
 
     $account = $account->get;
     return _display_account_screen($request, $account);
@@ -111,7 +111,7 @@ sub save {
     die $request->{_locale}->text('Please select a valid heading')
        if (defined $request->{heading}
            and $request->{heading} =~ /\D/);
-    my $account = LedgerSMB::DBObject::Account->new({base => $request});
+    my $account = LedgerSMB::DBObject::Account->new(%$request);
     $account->{$account->{summary}}=$account->{summary};
     $account->save;
     return edit($account);
@@ -125,7 +125,7 @@ Saves selected translations
 
 sub update_translations {
     my ($request) = @_;
-    my $account = LedgerSMB::DBObject::Account->new({base => $request});
+    my $account = LedgerSMB::DBObject::Account->new(%$request);
     if ($request->{languagecount} > 0) {
         $account->{translations} = {};
         for my $index (1..$request->{languagecount}) {
@@ -182,7 +182,7 @@ Shows the yearend screen.  No expected inputs.
 
 sub yearend_info {
     my ($request) = @_;
-    my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
+    my $eoy =  LedgerSMB::DBObject::EOY->new(%$request);
     $eoy->list_earnings_accounts;
     $eoy->{closed_date} = $eoy->latest_closing;
     $eoy->{user} = $request->{_user};
@@ -206,7 +206,7 @@ in_retention_acc_id: Account id to post retained earnings into
 
 sub post_yearend {
     my ($request) = @_;
-    my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
+    my $eoy =  LedgerSMB::DBObject::EOY->new(%$request);
     $eoy->close_books;
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'accounts/yearend_complete', $eoy);
@@ -224,7 +224,7 @@ period_close_date: Date up to (inclusive) which to close the books
 sub close_period {
     my ($request) = @_;
     $request->{end_date} = $request->{period_close_date};
-    my $eoy = LedgerSMB::DBObject::EOY->new({base => $request});
+    my $eoy = LedgerSMB::DBObject::EOY->new(%$request);
     $eoy->checkpoint_only;
     delete $request->{period_close_date};
     return yearend_info($request);
@@ -239,7 +239,7 @@ This reopens books as of $request->{reopen_date}
 
 sub reopen_books {
     my ($request) = @_;
-    my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
+    my $eoy =  LedgerSMB::DBObject::EOY->new(%$request);
     $eoy->reopen_books;
     delete $request->{reopen_date};
     return yearend_info($request);

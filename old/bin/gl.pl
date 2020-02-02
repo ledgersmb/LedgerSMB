@@ -92,14 +92,14 @@ $form->{login} = 'test';
 
 sub edit_and_save {
     check_balanced($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->delete();
     GL->post_transaction( \%myconfig, \%$form, $locale);
     edit();
 }
 
 sub approve {
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->approve();
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -357,7 +357,7 @@ sub save_temp {
         }
     }
 
-    $template = LedgerSMB::DBObject::TransTemplate->new({base => $data});
+    $template = LedgerSMB::DBObject::TransTemplate->new(%$data);
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }
@@ -648,7 +648,7 @@ sub post {
 sub delete {
     $form->error($locale->text('Cannot delete posted transaction'))
        if ($form->{approved});
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->delete();
     delete $form->{id};
     delete $form->{reference};

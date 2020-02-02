@@ -41,7 +41,7 @@ sub list_currencies {
     my ($request) = @_;
     my @currencies = LedgerSMB::Currency->list();
     my $default_curr =
-        LedgerSMB::Setting->new({base => $request})->get('curr');
+        LedgerSMB::Setting->new(%$request)->get('curr');
     my $columns = [
         {
             col_id => 'curr',
