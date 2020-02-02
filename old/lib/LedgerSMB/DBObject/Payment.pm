@@ -51,16 +51,6 @@ calculation.
 
 =back
 
-=cut
-
-sub __validate__ {
-  my ($self) = shift @_;
-  # We should try to re-engineer this so that we don't have to include SQL in
-  # this file.  --CT
-  return ($self->{current_date})
-            = $self->{dbh}->selectrow_array('select current_date');
-}
-
 =over
 
 =item text_amount($value)
