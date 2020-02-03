@@ -12,7 +12,7 @@
 
     <form data-dojo-type="lsmb/Form"
           method="post"
-          action="<?lsmb form.script ?>">
+          action="<?lsmb request.script ?>">
       <?lsmb FOREACH hidden IN hiddens.keys;
              PROCESS input element_data={
                      type => 'hidden',
