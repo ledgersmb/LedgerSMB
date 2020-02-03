@@ -126,3 +126,4 @@ mc/delete-migration-validation-data.sql
 1.8/drop-payment_map.sql
 1.8/explicit-reconciliation.sql
 1.8/constrain-default-exchange-rates.sql
+1.8/constrain-exchangerate-type.sql
