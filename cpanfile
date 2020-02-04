@@ -7,6 +7,7 @@ requires 'Authen::SASL';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
+requires 'Cookie::Baker';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI', '1.635';
 requires 'Data::UUID';

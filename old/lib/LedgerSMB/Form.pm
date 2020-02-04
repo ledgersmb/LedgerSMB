@@ -72,6 +72,7 @@ use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 use Try::Tiny;
 use Carp;
+use Cookie::Baker;
 use DBI;
 use LWP::Simple;
 use Symbol;
@@ -166,15 +167,8 @@ sub new {
     $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     if ($ENV{HTTP_COOKIE}){
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        my %cookie;
-        my @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            my ( $name, $value ) = split /=/, $_, 2;
-            # 'new code' picks the first cookie (with the same name)
-            $cookie{$name} //= $value;
-        }
-        $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
+        my $cookies = crush_cookie($ENV{HTTP_COOKIE});
+        $self->{cookie} = $cookies->{$LedgerSMB::Sysconfig::cookie_name};
         my $unused;
         ($self->{session_id}, $unused, $self->{company}) =
             split(/:/, $self->{cookie});

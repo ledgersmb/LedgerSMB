@@ -61,6 +61,7 @@ use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
 
+use Cookie::Baker;
 use Log::Log4perl;
 
 $form = Form->new;
@@ -113,10 +114,17 @@ $locale->encoding('UTF-8');
 try {
     $form->db_init( \%myconfig );
     my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
-    print 'Set-Cookie: '
-        . LedgerSMB::Sysconfig::cookie_name . '='
-        . $form->{_new_session_cookie_value} . "; SameSite=Strict; HttpOnly; path=$path\n"
-        if $form->{_new_session_cookie_value};
+    if ($form->{_new_session_cookie_value}) {
+        print 'Set-Cookie: '
+            . bake_cookie(LedgerSMB::Sysconfig::cookie_name,
+                          {
+                              value => $form->{_new_session_cookie_value},
+                              secure => (lc($ENV{HTTPS}) eq 'on'),
+                              samesite => 'strict',
+                              httponly => 1,
+                              path => $path,
+                          });
+    }
 
     # we get rid of myconfig and use User as a real object
     %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };

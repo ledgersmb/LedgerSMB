@@ -70,6 +70,7 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
+use Cookie::Baker;
 use DBI;
 use Plack::Request;
 use Plack::Util;
@@ -207,7 +208,7 @@ sub call {
     $dbh->rollback;
     $dbh->disconnect;
 
-    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
+    my $secure = $env->{SERVER_PROTOCOL} eq 'https';
     my $path = LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
     return Plack::Util::response_cb(
         $res, sub {
@@ -216,7 +217,16 @@ sub call {
             # Set the new cookie (with the extended life-time on response
             Plack::Util::header_push(
                 $res->[1], 'Set-Cookie',
-                qq|$cookie_name=$extended_cookie; SameSite=Strict; HttpOnly; path=$path$secure|)
+                bake_cookie($cookie_name,
+                            {
+                                value    => $extended_cookie,
+                                samesite => 'strict',
+                                httponly => 1,
+                                path     => $path,
+                                secure   => $secure,
+                                expires  => ($extended_cookie eq 'Login' ?
+                                             '1' : undef),
+                            }))
                 if $extended_cookie;
         });
 }
