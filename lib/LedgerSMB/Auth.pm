@@ -60,9 +60,10 @@ my $plugin = 'LedgerSMB::Auth::' . LedgerSMB::Sysconfig::auth;
 use_module($plugin) or die "Can't locate Auth parser plugin $plugin";
 
 sub factory {
-    my ($psgi_env) = @_;
+    my ($psgi_env, $domain) = @_;
 
-    return use_module($plugin)->new(env => $psgi_env);
+    return use_module($plugin)->new(env => $psgi_env,
+                                    domain => $domain);
 }
 
 

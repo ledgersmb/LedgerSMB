@@ -31,6 +31,8 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');
 
 has 'env' => (is => 'ro', required => 1, isa => 'HashRef');
 
+has 'domain' => (is => 'ro', required => 0, isa => 'Maybe[Str]');
+
 has 'credentials' => (is => 'ro', required => 0, lazy => 1,
                       builder => '_build_credentials', isa => 'HashRef');
 
@@ -66,7 +68,7 @@ sub _build_credentials {
     return \%rv;
 }
 
-=item get_credentials([domain, company])
+=item get_credentials([company])
 
 Gets credentials from the 'HTTP_AUTHORIZATION' environment variable which must
 be passed in as per the standards of HTTP basic authentication.
@@ -80,7 +82,7 @@ cached response from the first invocation.
 =cut
 
 sub get_credentials {
-    my ($self, $domain, $company) = @_;
+    my ($self, $company) = @_;
     # We ignore domain and company, but other auth providers may use it
 
     return $self->credentials;

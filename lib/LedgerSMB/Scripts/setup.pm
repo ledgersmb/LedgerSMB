@@ -137,7 +137,7 @@ sub __default {
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = $request->{_auth}->get_credentials('setup');
+    my $creds = $request->{_auth}->get_credentials;
 
     return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',

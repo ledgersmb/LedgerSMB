@@ -101,9 +101,7 @@ sub call {
     if (not $env->{'lsmb.want_db'}) {
         $env->{'lsmb.company'} =
             $req->parameters->get('database');
-        $env->{'lsmb.auth'} =  LedgerSMB::Auth::factory($env);
-        $env->{'lsmb.auth'}->get_credentials($self->domain,
-                                             $env->{'lsmb.company'});
+        $env->{'lsmb.auth'} =  LedgerSMB::Auth::factory($env, $self->domain);
         return $self->app->($env)
     }
 
@@ -140,10 +138,8 @@ sub call {
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $env->{'lsmb.company'};
 
-    $env->{'lsmb.auth'} = LedgerSMB::Auth::factory($env);
-    my $creds = $env->{'lsmb.auth'}->get_credentials(
-        $self->domain,
-        $env->{'lsmb.company'});
+    $env->{'lsmb.auth'} = LedgerSMB::Auth::factory($env, $self->domain);
+    my $creds = $env->{'lsmb.auth'}->get_credentials($env->{'lsmb.company'});
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $creds->{login} && $creds->{password};
     my $dbh = $env->{'lsmb.db'} =
