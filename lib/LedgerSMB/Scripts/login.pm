@@ -96,8 +96,7 @@ sub authenticate {
     $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
 
 
-    if (!$request->{dbonly}
-        && ! $request->{_create_session}->()) {
+    if (! $request->{_create_session}->()) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
 

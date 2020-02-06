@@ -103,24 +103,13 @@ sub clear_session_actions {
 
 =item authenticate
 
-This routine checks for the authentication information and if successful
-sends either a HTTP_FOUND redirect or a HTTP_OK successful response.
-
-If unsuccessful sends a HTTP_UNAUTHORIZED if the username/password is bad,
-or a HTTP_454 error if the database does not exist.
+This method is a remnant of authentication shared with
+login.pl.
 
 =cut
 
 sub authenticate {
     my ($request) = @_;
-
-    $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
-
-
-    if (!$request->{dbonly}
-        && ! $request->{_create_session}->()) {
-        return LedgerSMB::PSGI::Util::unauthorized();
-    }
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'text/plain; charset=utf-8' ],

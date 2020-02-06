@@ -120,9 +120,6 @@ sub call {
     elsif ($env->{'lsmb.dbonly'}) {
         $env->{'lsmb.company'} ||=
             $req->parameters->get('company') ||
-            # temporarily accept a 'database' parameter too,
-            # while we cut over 'setup.pl' in a later commit.
-            $req->parameters->get('database') ||
             # we fall back to what the cookie has to offer before
             # falling back to using the default database, because
             # login.pl::logout() does not require a valid session
