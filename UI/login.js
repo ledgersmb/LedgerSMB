@@ -22,14 +22,15 @@ function send_form() {
     require(["dojo/request/xhr","dojo/dom", "dojo/dom-style", "dojo/json",
              "dijit/Dialog"],
             function(xhr,dom,style,json,Dialog){
+       var r =
           xhr("login.pl?action=authenticate&company="+company,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
+                    handleAs: 'json',
                     data: json.stringify({"login":username,"password":password})
                 }).then(function(data){
-                     window.location.href=action
-                                           + ".pl?action=login&company=" + company;
+                    window.location.href = data.target;
                 }, function(err) {
                      var status = err.response.status;
                      if (status == "454"){

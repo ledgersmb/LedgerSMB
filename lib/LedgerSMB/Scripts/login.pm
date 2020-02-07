@@ -111,8 +111,8 @@ sub authenticate {
     }
 
     return [ HTTP_OK,
-             [ 'Content-Type' => 'text/plain; charset=utf-8' ],
-             [ 'Success' ] ];
+             [ 'Content-Type' => 'application/json' ],
+             [ '{ "target":  "login.pl?action=login" }' ]];
 }
 
 =item login
