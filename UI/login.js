@@ -17,12 +17,10 @@ function send_form() {
     var username = document.login.login.value;
      var password = document.login.password.value;
      var company = encodeURIComponent(document.login.company.value);
-     var action = document.login.action.value;
 
     require(["dojo/request/xhr","dojo/dom", "dojo/dom-style", "dojo/json",
              "dijit/Dialog"],
             function(xhr,dom,style,json,Dialog){
-       var r =
           xhr("login.pl?action=authenticate&company="+company,
                 {
                     method: "POST",
