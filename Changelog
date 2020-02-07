@@ -6,6 +6,7 @@ forthcoming
 Changelog for 1.8.0
 
 Added functionalities
+* Authentication and session storage through encrypted cookies (#4418)
 * CSV upload of parts, services and overhead
 * Upload of logos and use in document templates (#1816)
 * Print templates for PNL, Balance sheet and generic reports now
@@ -47,13 +48,17 @@ Code cleanup
 * Disentangled processing of UI and printed documents
 * Remove remnants of custom field support
 * Remove unused infrastructure to administer access role groups
+* Stricter data model for storage of foreign currency exchange rates
 
 Dependency updates
 * Dojo Toolkit updated to 1.16.0
 * TeX::Encode >= 2.007
 * Authen::SASL (new)
+* Cookie::Baker (new)
 * Email::Sender (new)
 * Email::Stuffer (new)
+* Session::Storage::Secure (new)
+* String::Random (new)
 * MIME::Lite (dropped)
 
 
