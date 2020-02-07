@@ -47,7 +47,7 @@ sub call {
     my $res = $self->app->($env);
 
     return $self->response_cb($res, sub {
-        return unless $env->{'lsmb.db'} && ! $env->{'lsmb.dbonly'};
+        return unless $env->{'lsmb.db'};
 
         my $res = shift;
         my ($status, $headers, $body) = @$res;

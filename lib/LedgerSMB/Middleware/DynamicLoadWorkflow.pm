@@ -84,12 +84,6 @@ sub call {
            || ($no_db_actions &&
                any { $_ eq $action_name } $no_db_actions->()));
 
-    my $dbonly_actions = $module->can('dbonly_actions');
-    $env->{'lsmb.dbonly'} =
-        ($module->can('dbonly')
-         || ($dbonly_actions &&
-             any { $_ eq $action_name } $dbonly_actions->()));
-
     $env->{'lsmb.module'} = $module;
     $env->{'lsmb.script'} = $script;
     $env->{'lsmb.script_name'} = $script_name;

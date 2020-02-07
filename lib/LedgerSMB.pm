@@ -234,6 +234,7 @@ sub new {
     $self->{_create_session} = $request->env->{'lsmb.create_session_cb'};
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
     $self->{_setting} = $request->env->{'lsmb.setting'};
+    $self->{_req} = $request;
 
     $self->_process_args($request->parameters);
     $self->_set_default_locale();

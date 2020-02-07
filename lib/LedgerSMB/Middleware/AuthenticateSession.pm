@@ -41,20 +41,10 @@ full authentication required. This means a session cookie is available
 with a database name and auth parameters are available for db connection
 and the session is validated against sessions in the database.
 
-This type of authentication has the PSGI environment key 'lsmb.want_db'
-but misses the key 'lsmb.dbonly'.
+This type of authentication has the PSGI environment key 'lsmb.want_db'.
 
 In case the company name is missing, the default company configured in
 ledgersmb.conf will be used.
-
-=item Database only
-
-The route explicitly requests not to be handled through a session cookie,
-instead to authenticate against a database (named as a query or POST parameter)
-with auth parameters available.
-
-This type of authentication has both the 'lsmb.want_db' and 'lsmb.dbonly'
-PSGI environment keys.
 
 =back
 
@@ -103,13 +93,6 @@ sub call {
     my ($env) = @_;
     my $req = Plack::Request->new($env);
 
-    if (not $env->{'lsmb.want_db'}) {
-        $env->{'lsmb.company'} =
-            $req->parameters->get('database');
-        $env->{'lsmb.auth'} =  LedgerSMB::Auth::factory($env, $self->domain);
-        return $self->app->($env)
-    }
-
     my $session = {};
     my $cookie_company;
     if (! $env->{'lsmb.want_cleared_session'}) {
@@ -132,50 +115,42 @@ sub call {
         }
     }
 
-    if (! $env->{'lsmb.dbonly'}
-        && $cookie_company && $cookie_company ne 'Login') {
-        $env->{'lsmb.company'} = $cookie_company;
-    }
-    elsif ($env->{'lsmb.dbonly'}) {
-        $env->{'lsmb.company'} ||=
-            $req->parameters->get('company') ||
-            # we fall back to what the cookie has to offer before
-            # falling back to using the default database, because
-            # login.pl::logout() does not require a valid session
-            # and is therefor marked 'dbonly'; it does however require
-            # a session cookie in order to be able to delete the
-            # session from the database indicated by the cookie.
-            $cookie_company ||
-            ###TODO: falling back generally seems like a good idea,
-            # but in case of login.pl::logout() it would seem better
-            # just to report an error...
-            LedgerSMB::Sysconfig::default_db;
-    }
+    $env->{'lsmb.company'} =
+        $req->parameters->get('company') ||
+        $cookie_company ||
+        ###TODO: falling back generally seems like a good idea,
+        # but in case of login.pl::logout() it would seem better
+        # just to report an error...
+        LedgerSMB::Sysconfig::default_db;
+
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $env->{'lsmb.company'};
 
-    $env->{'lsmb.auth'} //= LedgerSMB::Auth::factory($env, $self->domain);
-    my $creds = $env->{'lsmb.auth'}->get_credentials($env->{'lsmb.company'});
-    return LedgerSMB::PSGI::Util::unauthorized()
-        unless $creds->{login} && $creds->{password};
-    my $dbh = $env->{'lsmb.db'} =
-        LedgerSMB::DBH->connect($env->{'lsmb.company'},
-                                $creds->{login},
-                                $creds->{password});
-
-    if (! defined $dbh) {
-        $env->{'psgix.logger'}->(
-            {
-                level => 'error',
-                msg => q|Unable to create database connection: | . DBI->errstr
-            });
-        return LedgerSMB::PSGI::Util::unauthorized();
-    }
-
-    @{$session}{keys %$creds} = values %$creds;
-
     my $extended_cookie = '';
-    if (! $env->{'lsmb.dbonly'}) {
+    my $dbh;
+    if ($env->{'lsmb.want_db'}) {
+        return LedgerSMB::PSGI::Util::unauthorized()
+            unless $env->{'lsmb.auth'};
+
+        my $creds = $env->{'lsmb.auth'}->get_credentials($env->{'lsmb.company'});
+        return LedgerSMB::PSGI::Util::unauthorized()
+            unless $creds->{login} && $creds->{password};
+        $dbh = $env->{'lsmb.db'} =
+            LedgerSMB::DBH->connect($env->{'lsmb.company'},
+                                    $creds->{login},
+                                    $creds->{password});
+
+        if (! defined $dbh) {
+            $env->{'psgix.logger'}->(
+                {
+                    level => 'error',
+                    msg => q|Unable to create database connection: | . DBI->errstr
+                });
+            return LedgerSMB::PSGI::Util::unauthorized();
+        }
+
+        @{$session}{keys %$creds} = values %$creds;
+
         my $version =
             LedgerSMB::DBH->require_version($dbh, $LedgerSMB::VERSION);
         if ($version) {
@@ -201,8 +176,17 @@ sub call {
         };
     }
     else {
-        # we don't have a session, but the route may want to create one
+        # we may or may not have a session...
         $env->{'lsmb.create_session_cb'} = sub {
+            my ($login, $password) = @_;
+
+            if (! $dbh) {
+                $dbh = LedgerSMB::DBH->connect($env->{'lsmb.company'},
+                                               $login,
+                                               $password);
+                @{$session}{qw/ login password /} =
+                    ($login, $password);
+            }
             $extended_cookie =
                 _create_session($dbh, $env->{'lsmb.company'});
 
@@ -213,15 +197,28 @@ sub call {
         # to invalidate one if we have one anyway.
         # create a session invalidation callback here.
         $env->{'lsmb.invalidate_session_cb'} = sub {
-            $extended_cookie = _delete_session($dbh, $session);
+            if (not $dbh
+                and $env->{'lsmb.company'}
+                and $session->{login}
+                and $session->{password}) {
+                $dbh = LedgerSMB::DBH->connect($env->{'lsmb.company'},
+                                               $session->{login},
+                                               $session->{password});
+            }
+            if ($dbh) {
+                _delete_session($dbh, $session);
+            }
+            $extended_cookie = 'Login';
 
-            return $extended_cookie;
+            return 'Login';
         };
     }
 
     my $res = $self->app->($env);
-    $dbh->rollback;
-    $dbh->disconnect;
+    if ($dbh) {
+        $dbh->rollback;
+        $dbh->disconnect;
+    }
 
     my $secure = $env->{SERVER_PROTOCOL} eq 'https';
     my $path = LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});

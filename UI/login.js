@@ -19,13 +19,14 @@ function send_form() {
      var company = encodeURIComponent(document.login.company.value);
      var action = document.login.action.value;
 
-     require(["dojo/request/xhr","dojo/dom", "dojo/dom-style",
+    require(["dojo/request/xhr","dojo/dom", "dojo/dom-style", "dojo/json",
              "dijit/Dialog"],
-                function(xhr,dom,style,Dialog){
+            function(xhr,dom,style,json,Dialog){
           xhr("login.pl?action=authenticate&company="+company,
                 {
-                     user: username,
-                     password: password
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    data: json.stringify({"login":username,"password":password})
                 }).then(function(data){
                      window.location.href=action
                                            + ".pl?action=login&company=" + company;
@@ -36,7 +37,7 @@ function send_form() {
                                   content: "Company does not exist.",
                                   style: "width: 300px",
                                 })).show();
-                     } else if (status == "401") {
+                     } else if (status == "400" && err.response.text == "Credentials invalid or session expired") {
                     (new Dialog({ title: "Error",
                                   content: "Access denied: Bad username/password",
                                   style: "width: 300px",

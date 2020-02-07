@@ -106,7 +106,7 @@ sub psgi_app {
     my $res;
     try {
         LedgerSMB::App_State::run_with_state sub {
-            if ($env->{'lsmb.want_db'} && !$env->{'lsmb.dbonly'}) {
+            if ($env->{'lsmb.want_db'}) {
                 $request->initialize_with_db();
             }
             else {

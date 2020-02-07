@@ -73,9 +73,7 @@ pre-connected to the database.
 =cut
 
 sub no_db {
-    # if we switch our entrypoints to 'dbonly',
-    # there are problems with the case where
-    # a new database must be created.
+    # mark *all* entrypoints as not wanting a dbh
     return 1;
 }
 
