@@ -115,14 +115,19 @@ try {
     $form->db_init( \%myconfig );
     my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
     if ($form->{_new_session_cookie_value}) {
+        my $value = {
+            company       => $env->{'lsmb.company'},
+            %{$form->{_session}},
+        };
+
         print 'Set-Cookie: '
             . bake_cookie(LedgerSMB::Sysconfig::cookie_name,
                           {
-                              value => $form->{_new_session_cookie_value},
-                              secure => (lc($ENV{HTTPS}) eq 'on'),
+                              value    => $LedgerSMB::Middleware::AuthenticateSession::store->encode($value),
                               samesite => 'strict',
                               httponly => 1,
-                              path => $path,
+                              path     => $path,
+                              secure   => (lc($ENV{HTTPS}) eq 'on'),
                           });
     }
 

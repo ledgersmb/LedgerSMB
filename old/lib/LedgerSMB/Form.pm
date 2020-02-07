@@ -67,6 +67,7 @@ use LedgerSMB::PGNumber;
 use Log::Log4perl;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
+use LedgerSMB::Auth::DB;
 use LedgerSMB::Middleware::AuthenticateSession;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
@@ -169,9 +170,11 @@ sub new {
     if ($ENV{HTTP_COOKIE}){
         my $cookies = crush_cookie($ENV{HTTP_COOKIE});
         $self->{cookie} = $cookies->{$LedgerSMB::Sysconfig::cookie_name};
-        my $unused;
-        ($self->{session_id}, $unused, $self->{company}) =
-            split(/:/, $self->{cookie});
+        my $session = $LedgerSMB::Middleware::AuthenticateSession::store
+            ->decode($self->{cookie});
+        $self->{_session} = $session;
+        @{$self}{qw/ session_id company /} =
+            @{$session}{qw/ session_id company /};
     }
 
     $self->{version}   = "1.8.0-dev";
@@ -202,9 +205,16 @@ sub new {
         $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
-    $self->{_auth} = LedgerSMB::Auth::factory(\%ENV);
+    $self->{_auth} = LedgerSMB::Auth::DB->new(
+        env => \%ENV,
+        credentials => {
+            password => $self->{_session}->{password},
+            login    => $self->{_session}->{login},
+        },
+        domain => undef,
+        );
     # initialize domain and company (values will be cached)
-    $self->{_auth}->get_credentials(undef, $self->{company});
+    $self->{_auth}->get_credentials($self->{company});
     $self;
 }
 
@@ -1338,7 +1348,7 @@ sub db_init {
     $path =~ s|[^/]*$||;
     $self->{_new_session_cookie_value} =
         LedgerSMB::Middleware::AuthenticateSession::_verify_session(
-            $dbh, $dbname, $self->{cookie});
+            $dbh, $dbname, $self->{_session});
 
     _credential_prompt if ! $self->{_new_session_cookie_value};
 

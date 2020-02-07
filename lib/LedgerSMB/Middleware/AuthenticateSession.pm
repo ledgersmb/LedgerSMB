@@ -75,9 +75,11 @@ use DBI;
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor qw( domain );
+use Session::Storage::Secure;
 
 use LedgerSMB;
 use LedgerSMB::Auth;
+use LedgerSMB::Auth::DB;
 use LedgerSMB::App_State;
 use LedgerSMB::DBH;
 use LedgerSMB::PSGI::Util;
@@ -91,7 +93,10 @@ Implements C<Plack::Middleware->call()>.
 
 =cut
 
-
+our $store = Session::Storage::Secure->new(
+    secret_key => LedgerSMB::Sysconfig::cookie_secret,
+    default_duration => 24*60*60*90, # 90 days
+    );
 
 sub call {
     my $self = shift;
@@ -105,14 +110,28 @@ sub call {
         return $self->app->($env)
     }
 
-    my $cookie_name = LedgerSMB::Sysconfig::cookie_name;
-    my $session_cookie =
-        $env->{'lsmb.want_cleared_session'} ? ''
-        : $req->cookies->{$cookie_name};
+    my $session = {};
+    my $cookie_company;
+    if (! $env->{'lsmb.want_cleared_session'}) {
+        my $cookie_name = LedgerSMB::Sysconfig::cookie_name;
+        my $cookie      = $req->cookies->{$cookie_name};
+        $session        = $store->decode($cookie);
 
-    my ($unused_token, $cookie_company);
-    ($env->{'lsmb.session_id'}, $unused_token, $cookie_company) =
-        split(/:/, $session_cookie // '', 3);
+        if ($session) {
+            $cookie_company = $session->{company};
+            $env->{'lsmb.session_id'} = $session->{session_id};
+            $env->{'lsmb.auth'}       =
+                LedgerSMB::Auth::DB->new(
+                    env => $env,
+                    credentials => {
+                        login => $session->{login},
+                        password => $session->{password},
+                    },
+                    domain => $self->domain
+                );
+        }
+    }
+
     if (! $env->{'lsmb.dbonly'}
         && $cookie_company && $cookie_company ne 'Login') {
         $env->{'lsmb.company'} = $cookie_company;
@@ -135,7 +154,7 @@ sub call {
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $env->{'lsmb.company'};
 
-    $env->{'lsmb.auth'} = LedgerSMB::Auth::factory($env, $self->domain);
+    $env->{'lsmb.auth'} //= LedgerSMB::Auth::factory($env, $self->domain);
     my $creds = $env->{'lsmb.auth'}->get_credentials($env->{'lsmb.company'});
     return LedgerSMB::PSGI::Util::unauthorized()
         unless $creds->{login} && $creds->{password};
@@ -153,6 +172,8 @@ sub call {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
 
+    @{$session}{keys %$creds} = values %$creds;
+
     my $extended_cookie = '';
     if (! $env->{'lsmb.dbonly'}) {
         my $version =
@@ -164,7 +185,7 @@ sub call {
 
         $extended_cookie = _verify_session($env->{'lsmb.db'},
                                            $env->{'lsmb.company'},
-                                           $session_cookie);
+                                           $session);
         if (! $extended_cookie) {
             $dbh->commit;  # potentially log something
             $dbh->disconnect;
@@ -185,13 +206,14 @@ sub call {
             $extended_cookie =
                 _create_session($dbh, $env->{'lsmb.company'});
 
-            return $extended_cookie;
+            @{$session}{keys %$extended_cookie} = values %$extended_cookie;
+            return $session;
         };
         # we don't have a validated session, but the route may want
         # to invalidate one if we have one anyway.
         # create a session invalidation callback here.
         $env->{'lsmb.invalidate_session_cb'} = sub {
-            $extended_cookie = _delete_session($dbh, $session_cookie);
+            $extended_cookie = _delete_session($dbh, $session);
 
             return $extended_cookie;
         };
@@ -207,12 +229,16 @@ sub call {
         $res, sub {
             my $res = shift;
 
-            # Set the new cookie (with the extended life-time on response
+            # Set the new cookie (with the extended life-time) on response
+            my $value = {
+                company       => $env->{'lsmb.company'},
+                %$session,
+            };
             Plack::Util::header_push(
                 $res->[1], 'Set-Cookie',
-                bake_cookie($cookie_name,
+                bake_cookie(LedgerSMB::Sysconfig::cookie_name,
                             {
-                                value    => $extended_cookie,
+                                value    => $store->encode($value),
                                 samesite => 'strict',
                                 httponly => 1,
                                 path     => $path,
@@ -227,13 +253,15 @@ sub call {
 
 sub _verify_session {
     my ($dbh, $company, $cookie) = @_;
-    my ($session_id, $token, $cookie_company) = split(/:/, $cookie, 3);
     my ($extended_session) = $dbh->selectall_array(
         q{SELECT * FROM session_check(?, ?)}, { Slice => {} },
-        $session_id, $token) or die $dbh->errstr;
+        $cookie->{session_id}, $cookie->{token}) or die $dbh->errstr;
     $dbh->commit if $extended_session->{session_id};
 
-    return _session_to_cookie_value($extended_session, $company);
+    return unless $extended_session;
+
+    @{$cookie}{keys %$extended_session} = values %$extended_session;
+    return $cookie;
 }
 
 sub _create_session {
@@ -244,14 +272,14 @@ sub _create_session {
         ) or die $dbh->errstr;
     $dbh->commit if $created_session->{session_id};
 
-    return _session_to_cookie_value($created_session, $company);
+    return $created_session;
 }
 
 sub _delete_session {
     my ($dbh, $cookie) = @_;
-    my ($session_id, $token, $cookie_company) = split(/:/, $cookie, 3);
 
-    $dbh->selectall_array(q{SELECT session_delete(?)}, {}, $session_id)
+    $dbh->selectall_array(q{SELECT session_delete(?)}, {},
+                          $cookie->{session_id})
         or die $dbh->errstr;
 
     return 'Login';
