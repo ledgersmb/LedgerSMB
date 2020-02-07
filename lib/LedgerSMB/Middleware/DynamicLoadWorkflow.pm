@@ -84,12 +84,6 @@ sub call {
            || ($no_db_actions &&
                any { $_ eq $action_name } $no_db_actions->()));
 
-    my $dbonly_actions = $module->can('dbonly_actions');
-    $env->{'lsmb.dbonly'} =
-        ($module->can('dbonly')
-         || ($dbonly_actions &&
-             any { $_ eq $action_name } $dbonly_actions->()));
-
     $env->{'lsmb.module'} = $module;
     $env->{'lsmb.script'} = $script;
     $env->{'lsmb.script_name'} = $script_name;
@@ -101,7 +95,7 @@ sub call {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2017 The LedgerSMB Core Team
+Copyright (C) 2017-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

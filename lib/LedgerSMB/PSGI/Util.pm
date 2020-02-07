@@ -25,7 +25,7 @@ use warnings;
 
 use Carp;
 use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_SEE_OTHER
-    HTTP_UNAUTHORIZED );
+    HTTP_BAD_REQUEST );
 
 =head1 METHODS
 
@@ -67,10 +67,9 @@ Returns a standard error representation for HTTP status 401
 =cut
 
 sub unauthorized {
-    return [ HTTP_UNAUTHORIZED,
-             [ 'Content-Type' => 'text/plain; charset=utf-8',
-               'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
-             [ 'Please enter your credentials' ]
+    return [ HTTP_BAD_REQUEST,
+             [ 'Content-Type' => 'text/plain; charset=utf-8' ],
+             [ 'Credentials invalid or session expired' ]
         ];
 }
 

@@ -1,26 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<!--
-  I am inlining the Javascript to clear credentials here.  Normally we try to
-  separate this out into different files, one file per language but in this
-  case this makes localization of the Opera error message essentially impossible
-  so for this reason going to inline this functionality here. - Chris T -->
-<script>
-var agt=navigator.userAgent.toLowerCase();
-if (agt.indexOf("msie") != -1) {
-// IE clear HTTP Authentication
-    document.execCommand("ClearAuthenticationCache");
-}
-if (agt.indexOf("opera") != -1){
-   alert("<?lsmb text('Opera detected.  To complete this logout, please close your browser window or clear private/authentication information') ?>");
-}
-if (agt.indexOf("msie") == -1) {
-        var xhre = new XMLHttpRequest();
-        xhre.open("GET",'login.pl?action=logout_js',true,"logout","logout");
-        xhre.send("");
-}
-</script>
 <h1 class="info">
    <?lsmb IF reason == 'timeout';
             text('Logged out due to inactivity');
@@ -28,10 +8,5 @@ if (agt.indexOf("msie") == -1) {
             text('Logout Successful');
           END; ?></h1>
 <p><a target="_top" href="login.pl"><?lsmb text('Return to the login screen.') ?></a>
-<form data-dojo-type="lsmb/Form" id='submitform' action="login.pl" method="post">
-<?lsmb PROCESS input element_data = {
-       type = "hidden"
-       name = "action"
-       value = "logout_js" } ?></form>
 </body>
 </html>

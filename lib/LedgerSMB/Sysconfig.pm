@@ -26,6 +26,7 @@ use DBI qw(:sql_types);
 # because 5.20 doesn't copy the data (but uses
 # string slices)
 use English qw(-no_match_vars);
+use String::Random;
 use Symbol;
 
 
@@ -282,6 +283,11 @@ def 'max_post_size',
 def 'cookie_name',
     section => 'main',
     default => 'LedgerSMB-1.3',
+    doc => q{};
+
+def 'cookie_secret',
+    section => 'main',
+    default => sub { return String::Random->new->randpattern('.' x 50); },
     doc => q{};
 
 # Maximum number of invoices that can be printed on a check

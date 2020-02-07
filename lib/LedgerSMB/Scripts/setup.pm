@@ -73,9 +73,7 @@ pre-connected to the database.
 =cut
 
 sub no_db {
-    # if we switch our entrypoints to 'dbonly',
-    # there are problems with the case where
-    # a new database must be created.
+    # mark *all* entrypoints as not wanting a dbh
     return 1;
 }
 
@@ -103,24 +101,13 @@ sub clear_session_actions {
 
 =item authenticate
 
-This routine checks for the authentication information and if successful
-sends either a HTTP_FOUND redirect or a HTTP_OK successful response.
-
-If unsuccessful sends a HTTP_UNAUTHORIZED if the username/password is bad,
-or a HTTP_454 error if the database does not exist.
+This method is a remnant of authentication shared with
+login.pl.
 
 =cut
 
 sub authenticate {
     my ($request) = @_;
-
-    $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
-
-
-    if (!$request->{dbonly}
-        && ! $request->{_create_session}->()) {
-        return LedgerSMB::PSGI::Util::unauthorized();
-    }
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'text/plain; charset=utf-8' ],
@@ -137,7 +124,7 @@ sub __default {
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = $request->{_auth}->get_credentials('setup');
+    my $creds = $request->{_auth}->get_credentials;
 
     return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',

@@ -18,7 +18,8 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK ) ;
+use HTTP::Status qw( HTTP_OK );
+use JSON::MaybeXS;
 use Try::Tiny;
 
 use LedgerSMB::Locale;
@@ -38,20 +39,8 @@ a request object /not/ connected to the database.
 =cut
 
 sub no_db_actions {
-    return qw(__default logout_js);
+    return qw(__default authenticate logout);
 }
-
-=item dbonly_actions
-
-Returns an array of actions which should not receive
-a request object /not/ connected to the database.
-
-=cut
-
-sub dbonly_actions {
-    return qw(logout authenticate);
-}
-
 
 =item clear_session_actions
 
@@ -85,25 +74,45 @@ sub __default {
 This routine checks for the authentication information and if successful
 sends either a HTTP_FOUND redirect or a HTTP_OK successful response.
 
-If unsuccessful sends a HTTP_UNAUTHORIZED if the username/password is bad,
+If unsuccessful sends a HTTP_BAD_REQUEST if the username/password is bad,
 or a HTTP_454 error if the database does not exist.
 
 =cut
+
+my $json = JSON::MaybeXS->new( pretty => 1,
+                               utf8 => 1,
+                               indent => 1,
+                               convert_blessed => 1,
+                               allow_bignum => 1);
 
 sub authenticate {
     my ($request) = @_;
 
     $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
 
-
-    if (!$request->{dbonly}
-        && ! $request->{_create_session}->()) {
+    if ($request->{_req}->content_length > 4096) {
+        # Obviously, the request to log in can't be slurped into memory
+        # when bigger than 4k (which it ***NEVER*** should be...
+        return LedgerSMB::PSGI::Util::unauthorized();
+    }
+    my $r;
+    {
+        local $/ = undef;
+        my $fh = $request->{_req}->body;
+        my $body = <$fh>;
+        $r = $json->decode($body);
+    }
+    if (! $r->{login}
+        || ! $r->{password}) {
+        return LedgerSMB::PSGI::Util::unauthorized();
+    }
+    if (! $request->{_create_session}->($r->{login}, $r->{password})) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
 
     return [ HTTP_OK,
-             [ 'Content-Type' => 'text/plain; charset=utf-8' ],
-             [ 'Success' ] ];
+             [ 'Content-Type' => 'application/json' ],
+             [ '{ "target":  "login.pl?action=login" }' ]];
 }
 
 =item login
@@ -143,22 +152,6 @@ sub logout {
     return $template->render($request, 'logout', $request);
 }
 
-=item logout_js
-
-This is a stub for a js logout feature.  It allows javascript to log out by
-requiring only bogus credentials (logout:logout).
-
-=cut
-
-sub logout_js {
-    my $request = shift @_;
-    my $creds = $request->{_auth}->get_credentials;
-    return LedgerSMB::PSGI::Util::unauthorized()
-        unless (($creds->{password} eq 'logout')
-                and ($creds->{login} eq 'logout'));
-    return logout($request);
-}
-
 
 {
     local ($!, $@) = ( undef, undef);
@@ -177,7 +170,7 @@ sub logout_js {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2009-2017 The LedgerSMB Core Team
+Copyright (C) 2009-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
