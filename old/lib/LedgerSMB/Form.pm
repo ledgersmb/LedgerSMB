@@ -106,14 +106,6 @@ sub new {
     my $argstr = shift;
     my $self = bless {}, $type;
 
-    if (
-        ($ENV{CONTENT_LENGTH} != 0)
-         && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size )
-        && $LedgerSMB::Sysconfig::max_post_size != -1
-    ) {
-        print "Status: 413\n Request entity too large\n\n";
-        die "Error: Request entity too large\n";
-    }
     if ($argstr) {
         $_ = $argstr;
     }
