@@ -66,12 +66,8 @@ use Log::Log4perl;
 
 $form = Form->new;
 # name of this script
-my $script;
-$uri = $ENV{REQUEST_URI};
-$uri =~ s/\?.*//;
-$ENV{SCRIPT_NAME} = $uri;
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-$script = $1;
+my $script = $1;
 $script =~ m/(.*)\.pl/;
 my $script_module = $1;
 
