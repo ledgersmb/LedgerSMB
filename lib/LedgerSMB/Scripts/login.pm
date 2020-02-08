@@ -42,18 +42,6 @@ sub no_db_actions {
     return qw(__default authenticate logout);
 }
 
-=item clear_session_actions
-
-Returns an array of actions which should have the session
-(cookie) cleared before verifying the session and being
-dispatched to.
-
-=cut
-
-sub clear_session_actions {
-    return qw(__default authenticate);
-}
-
 =item __default (no action specified, do this)
 
 Displays the login screen.
@@ -63,6 +51,7 @@ Displays the login screen.
 sub __default {
     my ($request) = @_;
 
+    $request->{_req}->env->{'lsmb.session.expire'} = 1;
     $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{version}";
     my $template = LedgerSMB::Template::UI->new_UI;

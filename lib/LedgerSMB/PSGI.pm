@@ -207,9 +207,14 @@ sub setup_url_space {
 
         mount "/$_" => builder {
             enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain   => 'main',
+                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
