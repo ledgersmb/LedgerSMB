@@ -590,7 +590,7 @@ sub new_item {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <h4 class=error>| . $locale->text('Item not on file!') . qq|</h4>|;
 
@@ -1586,7 +1586,7 @@ sub ship_to {
 
 
     print qq|
-               <body class="lsmb $form->{dojo_theme}">
+               <body class="lsmb">
 
 <form name="form" method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 

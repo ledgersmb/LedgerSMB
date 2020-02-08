@@ -111,7 +111,7 @@ sub partsgroup_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -195,7 +195,7 @@ sub pricegroup_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -288,7 +288,7 @@ sub translation {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
@@ -394,7 +394,7 @@ sub list_translations {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <table width=100%>
   <tr>
@@ -529,7 +529,7 @@ sub translation_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -668,7 +668,7 @@ sub select_name {
     $form->header;
     $title = $locale->text('Select from one of the names below');
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -872,7 +872,7 @@ qq|<option value="$_->{control_code}--$_->{id}">$_->{control_code}--$_->{descrip
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -1046,7 +1046,7 @@ sub jcitems {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 

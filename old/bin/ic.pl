@@ -715,7 +715,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 | . $form->open_status_div($status_div_id) . qq|
 
 <form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
@@ -1670,7 +1670,7 @@ sub select_name {
     $title = $locale->text('Select from one of the names below');
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
@@ -1987,7 +1987,7 @@ sub stock_assembly {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -2094,7 +2094,7 @@ sub list_assemblies {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 

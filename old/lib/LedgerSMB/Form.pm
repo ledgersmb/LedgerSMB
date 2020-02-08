@@ -102,12 +102,9 @@ $form->error may be called to deny access on some attribute values.
 =cut
 
 sub new {
-
     my $type = shift;
     my $argstr = shift;
-
-    $ENV{CONTENT_LENGTH} = 0 unless defined $ENV{CONTENT_LENGTH};
-    my $dojo_theme = $LedgerSMB::Sysconfig::dojo_template;
+    my $self = bless {}, $type;
 
     if (
         ($ENV{CONTENT_LENGTH} != 0)
@@ -131,7 +128,6 @@ sub new {
     }
 
     $logger->trace(" RequestIn=$_") if $_;
-    my $self = {};
     my $orig = {};
     %$orig = split /[&=]/ unless !defined $_;
     for ( keys %$orig ) {
@@ -143,8 +139,6 @@ sub new {
         utf8::upgrade($self->{$p});
     }
     $self->{action} = "" unless defined $self->{action};
-    $self->{dojo_theme} = $dojo_theme;
-    $self->{dojo_location} = $LedgerSMB::Sysconfig::dojo_location;
 
     if($self->{header}) {
      delete $self->{header};
@@ -179,8 +173,6 @@ sub new {
 
     $self->{version}   = "1.8.0-dev";
     $self->{dbversion} = "1.8.0-dev";
-
-    bless $self, $type;
 
     if (
         ($self->{script})
@@ -1367,14 +1359,6 @@ sub db_init {
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
 
-    $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults
-             WHERE setting_key = 'dojo_theme'"
-    );
-    $sth->execute;
-
-    ($self->{dojo_theme}) = $sth->fetchrow_array;
-    $LedgerSMB::App_State::dojo_theme = $self->{dojo_theme};
     $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
