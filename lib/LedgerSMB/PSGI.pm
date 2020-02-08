@@ -83,8 +83,29 @@ sub old_app {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
             local $ENV{SCRIPT_NAME} = $uri;
+            local $ENV{CONTENT_LENGTH} //= 0;
 
-            _run_old();
+            if (my $cpid = fork()){
+                waitpid $cpid, 0;
+            } else {
+                # make 100% sure any "die"-s don't bubble up higher than
+                # this point in the stack: we're a fork()ed process and
+                # should under no circumstance end up acting like another
+                # worker. When we are done, we need to exit() below.
+                try {
+                    local ($!, $@) = (undef, undef);
+                    my $do_ = 'old/bin/old-handler.pl';
+                    unless ( do $do_ ) {
+                        if ($! or $@) {
+                            print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                            warn "Failed to execute $do_ ($!): $@\n";
+                        }
+                    }
+                };
+
+                exit;
+            }
+            return;
         });
 }
 
@@ -145,30 +166,6 @@ sub psgi_app {
     };
 
     return $res;
-}
-
-sub _run_old {
-    if (my $cpid = fork()){
-       waitpid $cpid, 0;
-    } else {
-        # make 100% sure any "die"-s don't bubble up higher than this point in
-        # the stack: we're a fork()ed process and should under no circumstance
-        # end up acting like another worker. When we are done, we need to
-        # exit() below.
-        try {
-            local ($!, $@) = (undef, undef);
-            my $do_ = 'old/bin/old-handler.pl';
-            unless ( do $do_ ) {
-                if ($! or $@) {
-                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                    warn "Failed to execute $do_ ($!): $@\n";
-                }
-            }
-        };
-
-        exit;
-    }
-    return;
 }
 
 =item setup_url_space(development => $boolean, coverage => $boolean)
