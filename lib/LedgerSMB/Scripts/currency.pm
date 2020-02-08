@@ -128,11 +128,6 @@ sub list_exchangerate_types {
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
     my $columns = [
         {
-            col_id => 'id',
-            name   => 'ID',
-            type   => 'text',
-        },
-        {
             col_id => 'description',
             name   => $request->{_locale}->text('Description'),
             type   => 'text',
@@ -142,7 +137,7 @@ sub list_exchangerate_types {
             type   => 'href',
             href_base => 'currency.pl?action=delete_exchangerate_type&id='
         },
-        ];
+    ];
     my $rows = [];
     for my $s (@exchangerate_types) {
         $s->{row_id} = $s->{id};
