@@ -683,4 +683,33 @@ Given qr/a gl account heading with these properties:$/, sub {
 };
 
 
+Given qr/the following exchange rates?:$/, sub {
+    # Expects data in the following form:
+    # | currency | rate type    | valid from | rate |
+    # | EUR      | Default rate | 2020-01-01 | 1.1  |
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+
+    my $q = $dbh->prepare('
+        INSERT INTO exchangerate_default (
+            rate_type,
+            curr,
+            valid_from,
+            rate
+        )
+        SELECT id, ?, ?, ?
+        FROM exchangerate_type
+        WHERE description = ?
+        LIMIT 1
+    ');
+
+    foreach my $row (@{C->data}) {
+        $q->execute(
+            $row->{'currency'},
+            $row->{'valid from'},
+            $row->{'rate'},
+            $row->{'rate type'},
+        ) or die "failed to insert exchange rate";
+    }
+};
+
 1;
