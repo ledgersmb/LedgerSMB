@@ -240,7 +240,7 @@ sub _list_exchangerates {
     my $columns = [
         {
             col_id => 'curr',
-            name   => 'ID'
+            name   => $request->{_locale}->text('Currency'),
         },
         {
             col_id => 'rate_type',
