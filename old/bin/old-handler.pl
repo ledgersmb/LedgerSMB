@@ -95,9 +95,6 @@ $form->{script} = $script;
 # strip .pl for translation files
 $script =~ s/\.pl//;
 
-# pull in DBI
-use DBI qw(:sql_types);
-
 # locale messages
 #$form->{charset} = $locale->encoding;
 $form->{charset} = 'UTF-8';
