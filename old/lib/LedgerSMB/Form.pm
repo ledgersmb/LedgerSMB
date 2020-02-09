@@ -130,24 +130,12 @@ sub new {
         utf8::decode($self->{$p});
         utf8::upgrade($self->{$p});
     }
-    $self->{action} = "" unless defined $self->{action};
+    $self->{nextsub} //= '';
+    $self->{action} //= $self->{nextsub};
 
     if($self->{header}) {
      delete $self->{header};
      $logger->error("self->{header} unset!!");
-    }
-
-    if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
-        $self->{action} = lc $self->{action};
-        $self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
-
-        if (defined $self->{nextsub}){
-            $self->{nextsub} = lc $self->{nextsub};
-            $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
-        }
-        else {
-            $self->{nextsub} = '';
-        }
     }
 
     $self->{login} = "" unless defined $self->{login};
@@ -171,10 +159,6 @@ sub new {
         if (defined $self->{$_}) {
             $self->{$_}=~ s/\N{NULL}//g;
         }
-    }
-
-    if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
-        $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
     $self->{_auth} = LedgerSMB::Auth::DB->new(

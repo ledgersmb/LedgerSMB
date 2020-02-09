@@ -71,9 +71,6 @@ my $script = $1;
 $script =~ m/(.*)\.pl/;
 my $script_module = $1;
 
-$form->{action} = $form->{nextsub} if (!$form->{action} and $form->{nextsub});
-
-
 #make logger available to other old programs
 our $logger=Log::Log4perl->get_logger("lsmb.$script_module.$form->{action}");
 local $SIG{__WARN__} = sub {
@@ -147,7 +144,9 @@ try {
         eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
     }
 
-    if ( $form->{action} && "lsmb_legacy"->can($form->{action}) ) {
+    if ( $form->{action}
+         && $form->{action} ne 'redirect'
+         && "lsmb_legacy"->can($form->{action}) ) {
         $logger->trace("action $form->{action}");
 
         binmode STDOUT, ':utf8';
