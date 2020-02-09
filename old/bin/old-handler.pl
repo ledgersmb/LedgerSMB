@@ -150,7 +150,7 @@ try {
         eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
     }
 
-    if ( $form->{action} ) {
+    if ( $form->{action} && "lsmb_legacy"->can($form->{action}) ) {
         $logger->trace("action $form->{action}");
 
         binmode STDOUT, ':utf8';

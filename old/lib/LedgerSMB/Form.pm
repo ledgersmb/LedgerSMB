@@ -166,18 +166,6 @@ sub new {
     $self->{version}   = "1.8.0-dev";
     $self->{dbversion} = "1.8.0-dev";
 
-    if (
-        ($self->{script})
-        and not List::Util::first { $_ eq $self->{script} }
-        @{LedgerSMB::Sysconfig::scripts}
-    ) {
-        $self->error( 'Access Denied', __LINE__, __FILE__ );
-    }
-
-    if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
-        $self->error( "Access Denied", __LINE__, __FILE__ );
-    }
-
     #for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
     for (keys %$self) {
         if (defined $self->{$_}) {
