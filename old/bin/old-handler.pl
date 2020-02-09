@@ -84,10 +84,6 @@ local $SIG{__WARN__} = sub {
     $logger->warn($msg);
 };
 
-print 'Set-Cookie: '
-    . $form->{"request.download-cookie"} . '=downloaded' . "\n"
-    if $form->{"request.download-cookie"};
-
 
 $locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
