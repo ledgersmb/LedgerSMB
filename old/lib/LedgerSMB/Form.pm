@@ -106,40 +106,37 @@ sub new {
     my $argstr = shift;
     my $self = bless {}, $type;
 
-    if ($argstr) {
-        $_ = $argstr;
-    }
-    elsif ($ENV{CONTENT_LENGTH}!= 0) {
-        read( STDIN, $_, $ENV{CONTENT_LENGTH} );
-    }
-    elsif ( $ENV{QUERY_STRING} ) {
-        $_ = $ENV{QUERY_STRING};
-    }
-    else {
-        $_ = undef;
+    if (! $argstr) {
+        if ($ENV{CONTENT_LENGTH}!= 0) {
+            read( STDIN, $argstr, $ENV{CONTENT_LENGTH} );
+        }
+        elsif ( $ENV{QUERY_STRING} ) {
+            $argstr = $ENV{QUERY_STRING};
+        }
+        else {
+            $argstr = undef;
+        }
     }
 
-    $logger->trace(" RequestIn=$_") if $_;
-    my $orig = {};
-    %$orig = split /[&=]/ unless !defined $_;
-    for ( keys %$orig ) {
-        $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
+    my %orig;
+    if (defined $argstr) {
+        %orig = split( /[&=]/, $argstr)
     }
+    for ( keys %orig ) {
+        $self->{unescape( "", $_) } = unescape( "", $orig{$_} );
+    }
+    delete $self->{header};
 
     for my $p(keys %$self){
         utf8::decode($self->{$p});
         utf8::upgrade($self->{$p});
+        $self->{$p} =~ s/\N{NULL}//g;
     }
     $self->{nextsub} //= '';
     $self->{action} //= $self->{nextsub};
+    $self->{version}   = "1.8.0-dev";
+    $self->{dbversion} = "1.8.0-dev";
 
-    if($self->{header}) {
-     delete $self->{header};
-     $logger->error("self->{header} unset!!");
-    }
-
-    $self->{login} = "" unless defined $self->{login};
-    $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     if ($ENV{HTTP_COOKIE}){
         my $cookies = crush_cookie($ENV{HTTP_COOKIE});
@@ -151,15 +148,6 @@ sub new {
             @{$session}{qw/ session_id company /};
     }
 
-    $self->{version}   = "1.8.0-dev";
-    $self->{dbversion} = "1.8.0-dev";
-
-    #for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
-    for (keys %$self) {
-        if (defined $self->{$_}) {
-            $self->{$_}=~ s/\N{NULL}//g;
-        }
-    }
 
     $self->{_auth} = LedgerSMB::Auth::DB->new(
         env => \%ENV,
