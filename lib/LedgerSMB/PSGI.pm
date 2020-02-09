@@ -25,6 +25,7 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
+use LedgerSMB::oldHandler;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
@@ -48,7 +49,7 @@ use Plack::Util;
 
 # After Perl 5.20 is the minimum required version,
 # we can drop the restriction on the match vars
-# because 5.20 doesn't copy the data (but uses       
+# because 5.20 doesn't copy the data (but uses
 # string slices)
 use English qw(-no_match_vars);
 if ($EUID == 0) {
@@ -83,7 +84,7 @@ sub old_app {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
             local $ENV{SCRIPT_NAME} = $uri;
-            local $ENV{CONTENT_LENGTH} //= 0;
+            local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
 
             if (my $cpid = fork()){
                 waitpid $cpid, 0;
@@ -94,11 +95,12 @@ sub old_app {
                 # worker. When we are done, we need to exit() below.
                 try {
                     local ($!, $@) = (undef, undef);
-                    my $do_ = 'old/bin/old-handler.pl';
-                    unless ( do $do_ ) {
+                    # the lsmb_legacy package is created by the
+                    # oldHandler use statement
+                    unless ( lsmb_legacy->handle ) { ## no critic (RequireExplicitInclusion)
                         if ($! or $@) {
                             print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                            warn "Failed to execute $do_ ($!): $@\n";
+                            warn "Failed to execute old request ($!): $@\n";
                         }
                     }
                 };
