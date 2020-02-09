@@ -146,16 +146,6 @@ sub handle {
         $logger->trace("requiring old/bin/$form->{script}");
         require "old/bin/$form->{script}";
 
-        # customized scripts
-        if ( -f "old/bin/custom/$form->{script}" ) {
-            eval { require "old/bin/custom/$form->{script}"; };
-        }
-
-        # customized scripts for login
-        if ( -f "old/bin/custom/$form->{login}_$form->{script}" ) {
-            eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
-        }
-
         if ( $form->{action}
              && $form->{action} ne 'redirect'
              && "lsmb_legacy"->can($form->{action}) ) {
