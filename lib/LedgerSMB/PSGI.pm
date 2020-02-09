@@ -78,8 +78,10 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 
 =cut
 
+our $psgi_env;
+
 sub old_app {
-    return CGI::Emulate::PSGI->handler(
+    my $handler = CGI::Emulate::PSGI->handler(
         sub {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
@@ -97,7 +99,7 @@ sub old_app {
                     local ($!, $@) = (undef, undef);
                     # the lsmb_legacy package is created by the
                     # oldHandler use statement
-                    unless ( lsmb_legacy->handle ) { ## no critic (RequireExplicitInclusion)
+                    unless ( lsmb_legacy->handle($psgi_env) ) { ## no critic (RequireExplicitInclusion)
                         if ($! or $@) {
                             print "Status: 500 Internal server error (PSGI.pm)\n\n";
                             warn "Failed to execute old request ($!): $@\n";
@@ -109,6 +111,15 @@ sub old_app {
             }
             return;
         });
+
+    # marshall the psgi environment into the cgi environment
+    # so we can re-use state from the various middlewares
+    return sub {
+        my $env = shift;
+        local $psgi_env = $env;
+
+        return $handler->($env);
+    }
 }
 
 
@@ -201,20 +212,27 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain          => 'main',
+                cookie          => LedgerSMB::Sysconfig::cookie_name,
+                duration        => 60*60*24*90,
+                # can marshall state in, but not back out (due to forking)
+                # so have the inner scope handle serialization itself
+                inner_serialize => 1;
             $old_app
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
+            enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
-            enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::AuthenticateSession';
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';

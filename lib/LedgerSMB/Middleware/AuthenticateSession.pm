@@ -64,7 +64,6 @@ use DBI;
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor qw( domain );
-use Session::Storage::Secure;
 
 use LedgerSMB;
 use LedgerSMB::Auth;
@@ -80,11 +79,6 @@ use LedgerSMB::Sysconfig;
 Implements C<Plack::Middleware->call()>.
 
 =cut
-
-our $store = Session::Storage::Secure->new(
-    secret_key => LedgerSMB::Sysconfig::cookie_secret,
-    default_duration => 24*60*60*90, # 90 days
-    );
 
 sub call {
     my $self = shift;

@@ -50,6 +50,7 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
+use LedgerSMB::Middleware::SessionStorage;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
@@ -68,7 +69,11 @@ sub handle {
     # This function *must* be called in a forked process
     #
     # because it changes global state without clean-up
-    my $class = shift;
+    #
+    #
+    # Note that this function can receive a PSGI environment, but
+    # modifications aren't marshalled back to the fork()ing process!
+    my ($class, $psgi_env) = @_;
 
     binmode (STDIN, ':utf8');
     binmode (STDOUT, ':utf8');
@@ -83,6 +88,21 @@ sub handle {
     }
 
     $form = Form->new($params);
+    my $session = $psgi_env->{'lsmb.session'};
+    $form->{_session} = $session;
+    @{$form}{qw/ session_id company /} =
+        @{$session}{qw/ session_id company /};
+    $form->{_auth} = LedgerSMB::Auth::DB->new(
+        env => \%ENV,
+        credentials => {
+            password => $session->{password},
+            login    => $session->{login},
+        },
+        domain => undef,
+        );
+    # initialize domain and company (values will be cached)
+    $form->{_auth}->get_credentials($form->{company});
+
     # name of this script
     $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
     my $script = $1;
@@ -121,15 +141,10 @@ sub handle {
         $form->db_init( \%myconfig );
         my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
         if ($form->{_new_session_cookie_value}) {
-            my $value = {
-                company       => $env->{'lsmb.company'},
-                %{$form->{_session}},
-            };
-
             print 'Set-Cookie: '
                 . bake_cookie(LedgerSMB::Sysconfig::cookie_name,
                               {
-                                  value    => $LedgerSMB::Middleware::AuthenticateSession::store->encode($value),
+                                  value    => $LedgerSMB::Middleware::SessionStorage::store->encode($form->{_session}),
                                   samesite => 'strict',
                                   httponly => 1,
                                   path     => $path,

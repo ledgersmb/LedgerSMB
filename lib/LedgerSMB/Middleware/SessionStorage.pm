@@ -30,7 +30,7 @@ use parent qw ( Plack::Middleware );
 use Cookie::Baker;
 use Plack::Request;
 use Plack::Util;
-use Plack::Util::Accessor qw( domain cookie duration );
+use Plack::Util::Accessor qw( domain cookie duration inner_serialize );
 use Session::Storage::Secure;
 
 use LedgerSMB::PSGI::Util;
@@ -65,22 +65,24 @@ sub call {
         $self->app->($env), sub {
             my $res = shift;
 
-            Plack::Util::header_push(
-                $res->[1], 'Set-Cookie',
-                bake_cookie(
-                    $self->cookie,
-                    {
-                        value    => $store->encode(
-                            $env->{'lsmb.session'},
-                            time + ($env->{'lsmb.session.duration'}
-                                    // $self->duration)),
-                        samesite => 'strict',
-                        httponly => 1,
-                        path     => $path,
-                        secure   => $secure,
-                        expires  => ($env->{'lsmb.session.expire'}
-                                     ? '1' : undef),
-                    }));
+            if (! $self->inner_serialize) {
+                Plack::Util::header_push(
+                    $res->[1], 'Set-Cookie',
+                    bake_cookie(
+                        $self->cookie,
+                        {
+                            value    => $store->encode(
+                                $env->{'lsmb.session'},
+                                time + ($env->{'lsmb.session.duration'}
+                                        // $self->duration)),
+                            samesite => 'strict',
+                            httponly => 1,
+                            path     => $path,
+                            secure   => $secure,
+                            expires  => ($env->{'lsmb.session.expire'}
+                                         ? '1' : undef),
+                        }));
+            }
         });
 }
 

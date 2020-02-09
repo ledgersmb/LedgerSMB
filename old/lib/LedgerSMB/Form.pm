@@ -66,7 +66,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Auth::DB;
 use LedgerSMB::Company_Config;
-use LedgerSMB::Middleware::AuthenticateSession;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting::Sequence;
@@ -74,7 +73,6 @@ use LedgerSMB::Setting;
 
 
 use Carp;
-use Cookie::Baker;
 use DBI;
 use List::Util qw(first);
 use Log::Log4perl;
@@ -126,27 +124,6 @@ sub new {
     $self->{dbversion} = '1.8.0-dev';
 
 
-    if ($ENV{HTTP_COOKIE}){
-        my $cookies = crush_cookie($ENV{HTTP_COOKIE});
-        $self->{cookie} = $cookies->{$LedgerSMB::Sysconfig::cookie_name};
-        my $session = $LedgerSMB::Middleware::AuthenticateSession::store
-            ->decode($self->{cookie});
-        $self->{_session} = $session;
-        @{$self}{qw/ session_id company /} =
-            @{$session}{qw/ session_id company /};
-    }
-
-
-    $self->{_auth} = LedgerSMB::Auth::DB->new(
-        env => \%ENV,
-        credentials => {
-            password => $self->{_session}->{password},
-            login    => $self->{_session}->{login},
-        },
-        domain => undef,
-        );
-    # initialize domain and company (values will be cached)
-    $self->{_auth}->get_credentials($self->{company});
     $self;
 }
 
