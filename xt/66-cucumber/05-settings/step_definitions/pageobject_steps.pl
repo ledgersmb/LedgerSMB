@@ -32,32 +32,4 @@ When qr/^I enter "(.*)" as the description for a new currency/, sub {
 };
 
 
-When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
-    my $link_text = $1;
-    my $column = $2;
-    my $value = $3;
-    my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
-
-    foreach my $row(@rows) {
-        if ($row->{$column} eq $value) {
-            my $link = $row->{_element}->find(
-                qq{.//a[.="$1"]}
-            );
-            ok($link, "found $link_text link for $column '$value'");
-            $link->click;
-            last;
-        }
-    }
-};
-
-
-Then qr/I should see the title "(.*)"/, sub {
-    my $page = S->{ext_wsl}->page->body->maindiv->content;
-    my $title = $1;
-
-    my $div = $page->title(title => $title);
-    ok($div, "Found title '$title'");
-};
-
-
 1;
