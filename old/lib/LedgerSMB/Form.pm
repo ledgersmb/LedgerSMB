@@ -56,37 +56,37 @@ Deprecated
 
 package Form;
 
-#inline documentation
 use strict;
-
-use LedgerSMB::Sysconfig;
-use List::Util qw(first);
-use Time::Local;
-use LedgerSMB::Company_Config;
-use LedgerSMB::PGNumber;
-use Log::Log4perl;
-use LedgerSMB::App_State;
-use LedgerSMB::Auth;
-use LedgerSMB::Auth::DB;
-use LedgerSMB::Middleware::AuthenticateSession;
-use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Setting;
-use Try::Tiny;
-use Carp;
-use Cookie::Baker;
-use DBI;
-use LWP::Simple;
-use Symbol;
-
 use charnames qw(:full);
 use open ':utf8';
 use utf8;
 
 
+use LedgerSMB::App_State;
+use LedgerSMB::Auth;
+use LedgerSMB::Auth::DB;
+use LedgerSMB::Company_Config;
+use LedgerSMB::Middleware::AuthenticateSession;
+use LedgerSMB::PGNumber;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Setting;
+
+
+use Carp;
+use Cookie::Baker;
+use DBI;
+use List::Util qw(first);
+use Log::Log4perl;
+use LWP::Simple;
+use Symbol;
+use Time::Local;
+use Try::Tiny;
+
+
 
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
-# To be later set in config, but also hardwired in Template::HTML --CT
 
 =item new Form([$argstr])
 
