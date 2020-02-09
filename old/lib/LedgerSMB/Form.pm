@@ -106,36 +106,24 @@ sub new {
     my $argstr = shift;
     my $self = bless {}, $type;
 
-    if (! $argstr) {
-        if ($ENV{CONTENT_LENGTH}!= 0) {
-            read( STDIN, $argstr, $ENV{CONTENT_LENGTH} );
-        }
-        elsif ( $ENV{QUERY_STRING} ) {
-            $argstr = $ENV{QUERY_STRING};
-        }
-        else {
-            $argstr = undef;
-        }
-    }
-
     my %orig;
     if (defined $argstr) {
-        %orig = split( /[&=]/, $argstr)
-    }
-    for ( keys %orig ) {
-        $self->{unescape( "", $_) } = unescape( "", $orig{$_} );
-    }
-    delete $self->{header};
+        %orig = split( /[&=]/, $argstr);
+        for ( keys %orig ) {
+            $self->{unescape( "", $_) } = unescape( "", $orig{$_} );
+        }
+        delete $self->{header};
 
-    for my $p(keys %$self){
-        utf8::decode($self->{$p});
-        utf8::upgrade($self->{$p});
-        $self->{$p} =~ s/\N{NULL}//g;
+        for my $p(keys %$self){
+            utf8::decode($self->{$p});
+            utf8::upgrade($self->{$p});
+            $self->{$p} =~ s/\N{NULL}//g;
+        }
+        $self->{nextsub} //= '';
+        $self->{action} //= $self->{nextsub};
     }
-    $self->{nextsub} //= '';
-    $self->{action} //= $self->{nextsub};
-    $self->{version}   = "1.8.0-dev";
-    $self->{dbversion} = "1.8.0-dev";
+    $self->{version}   = '1.8.0-dev';
+    $self->{dbversion} = '1.8.0-dev';
 
 
     if ($ENV{HTTP_COOKIE}){

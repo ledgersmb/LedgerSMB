@@ -74,7 +74,15 @@ sub handle {
     binmode (STDOUT, ':utf8');
     binmode STDERR, ':utf8';
 
-    $form = Form->new;
+    my $params;
+    if ($ENV{CONTENT_LENGTH}!= 0) {
+        read( STDIN, $params, $ENV{CONTENT_LENGTH} );
+    }
+    elsif ( $ENV{QUERY_STRING} ) {
+        $params = $ENV{QUERY_STRING};
+    }
+
+    $form = Form->new($params);
     # name of this script
     $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
     my $script = $1;
