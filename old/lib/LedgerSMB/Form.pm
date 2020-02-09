@@ -1299,15 +1299,6 @@ sub db_init {
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
 
-    $sth = $dbh->prepare('SELECT check_expiration()');
-    $sth->execute;
-    ($self->{warn_expire}) = $sth->fetchrow_array;
-    if ($self->{warn_expire}){
-        $sth = $dbh->prepare('SELECT user__check_my_expiration()');
-        $sth->execute;
-        ($self->{pw_expires})  = $sth->fetchrow_array;
-    }
-    $sth->finish();
     LedgerSMB::Company_Config::initialize($self);
     $logger->trace("end");
 }
