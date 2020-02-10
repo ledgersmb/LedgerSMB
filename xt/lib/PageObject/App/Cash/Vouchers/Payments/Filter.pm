@@ -9,6 +9,7 @@ use PageObject;
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
+with 'PageObject::App::Roles::Dynatable';
 
 __PACKAGE__->self_register(
               'cash-vouchers-payments-filter',
@@ -17,23 +18,6 @@ __PACKAGE__->self_register(
               attributes => {
                   id => 'payments-filter',
               });
-
-
-# title ()
-#
-# Returns the page title div with content matching the specified
-# `title` parameter
-# Normally contains text "Filtering Payments"
-
-sub title {
-    my $self = shift;
-    my %params = @_;
-    my $title = $self->find(sprintf(
-        './div[@class="listtop" and normalize-space(.)="%s"]',
-        $params{title},
-    ));
-    return $title
-}
 
 
 sub _verify {
