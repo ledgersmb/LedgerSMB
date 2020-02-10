@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-01-22 21:49+0000\n"
+"POT-Creation-Date: 2020-02-10 20:48+0000\n"
 "Last-Translator: Håvard Sørli <havard@sorli.no>, 2020\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -342,7 +342,7 @@ msgstr "Kostnadsbase"
 msgid "Accum. Depreciation"
 msgstr "Akkumulert Nedskrivning"
 
-#: old/lib/LedgerSMB/Form.pm:576 UI/lib/elements.html:440
+#: old/lib/LedgerSMB/Form.pm:577 UI/lib/elements.html:440
 msgid "Action: [_1], ID: [_2]"
 msgstr "Handling: [_1], ID: [_2]"
 
@@ -5574,7 +5574,7 @@ msgstr "Overbetalingkonto"
 msgid "Overpayments"
 msgstr "Overbetaling"
 
-#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1269
+#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1270
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:111
 #: UI/Reports/balance_sheet.html:115 UI/Reports/display_report.html:75
 #: UI/Reports/PNL.html:100
@@ -6056,7 +6056,7 @@ msgstr "Bokført Postering [_1]"
 msgid "Posting Vendor Invoice [_1]"
 msgstr "Bokført Inngående Faktura"
 
-#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1267
+#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1268
 msgid "Postscript"
 msgstr "Postscript"
 
@@ -9319,11 +9319,11 @@ msgstr "[_1]: Kunde ikke i registret"
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1]: Leverandør ikke i registret"
 
-#: old/lib/LedgerSMB/Form.pm:636
+#: old/lib/LedgerSMB/Form.pm:637
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr "[_1]:[_2]:[_3]: Kan ikke videresende"
 
-#: old/bin/old-handler.pl:160
+#: old/bin/old-handler.pl:162
 msgid "action not defined!"
 msgstr "Handling ikke definert"
 
