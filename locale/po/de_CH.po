@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.19-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-01-22 21:31+0000\n"
+"POT-Creation-Date: 2020-02-10 20:06+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: German (Switzerland) (https://www.transifex.com/ledgersmb/"
 "teams/58325/de_CH/)\n"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Accum. Depreciation"
 msgstr ""
 
-#: old/lib/LedgerSMB/Form.pm:565 UI/lib/elements.html:436
+#: old/lib/LedgerSMB/Form.pm:566 UI/lib/elements.html:436
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
@@ -5557,7 +5557,7 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: old/bin/am.pl:1008 old/lib/LedgerSMB/Form.pm:1259
+#: old/bin/am.pl:1008 old/lib/LedgerSMB/Form.pm:1260
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:111
 #: UI/Reports/balance_sheet.html:116 UI/Reports/display_report.html:75
 #: UI/Reports/PNL.html:96
@@ -6032,7 +6032,7 @@ msgstr ""
 msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:1007 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1257
+#: old/bin/am.pl:1007 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1258
 msgid "Postscript"
 msgstr "Postscript"
 
@@ -9015,7 +9015,7 @@ msgstr "Lieferant ist nicht in der Datenbank!"
 msgid "Verify"
 msgstr ""
 
-#: old/bin/old-handler.pl:155
+#: old/bin/old-handler.pl:156
 msgid "Version"
 msgstr "Version"
 
@@ -9264,11 +9264,11 @@ msgstr ""
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
-#: old/lib/LedgerSMB/Form.pm:625
+#: old/lib/LedgerSMB/Form.pm:626
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr ""
 
-#: old/bin/old-handler.pl:164
+#: old/bin/old-handler.pl:165
 msgid "action not defined!"
 msgstr ""
 
