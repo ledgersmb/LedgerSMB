@@ -708,8 +708,27 @@ Given qr/the following exchange rates?:$/, sub {
             $row->{'valid from'},
             $row->{'rate'},
             $row->{'rate type'},
-        ) or die "failed to insert exchange rate";
+        ) or die 'failed to insert exchange rate';
     }
 };
+
+Given qr/the following exchange rate types?:$/, sub {
+    # Expects data in the following form:
+    # | description |
+    # | Buy rate    |
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+
+    my $q = $dbh->prepare('
+        INSERT INTO exchangerate_type (description)
+        VALUES (?)
+    ');
+
+    foreach my $row (@{C->data}) {
+        $q->execute(
+            $row->{'description'},
+        ) or die 'failed to insert exchange rate type';
+    }
+};
+
 
 1;
