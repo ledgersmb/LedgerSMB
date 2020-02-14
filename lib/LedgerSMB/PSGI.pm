@@ -24,7 +24,6 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
-use LedgerSMB::Auth;
 use LedgerSMB::oldHandler;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
@@ -134,7 +133,7 @@ in LedgerSMB::Scripts::*.
 sub psgi_app {
     my $env = shift;
     my $psgi_req = Plack::Request::WithEncoding->new($env);
-    my $request = LedgerSMB->new($psgi_req, $env->{'lsmb.auth'});
+    my $request = LedgerSMB->new($psgi_req);
 
     $request->{action} = $env->{'lsmb.action_name'};
     my $res;
@@ -219,6 +218,12 @@ sub setup_url_space {
                 # can marshall state in, but not back out (due to forking)
                 # so have the inner scope handle serialization itself
                 inner_serialize => 1;
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'closed',
+                default_company    => LedgerSMB::Sysconfig::default_db();
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'closed',
+                require_version    => $LedgerSMB::VERSION;
             $old_app
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
@@ -233,7 +238,13 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
-            enable '+LedgerSMB::Middleware::AuthenticateSession';
+            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'open',
+                default_company => LedgerSMB::Sysconfig::default_db();
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'open',
+                require_version => $LedgerSMB::VERSION;
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;

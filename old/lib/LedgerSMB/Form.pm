@@ -63,8 +63,6 @@ use utf8;
 
 
 use LedgerSMB::App_State;
-use LedgerSMB::Auth;
-use LedgerSMB::Auth::DB;
 use LedgerSMB::Company_Config;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Sysconfig;
@@ -138,18 +136,20 @@ sub open_form {
 
     #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
     if ($self->{session_id}) {
-    my $sth = $self->{dbh}->prepare('select form_open(?)');
-    my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
+        my $sth = $self->{dbh}->prepare('select form_open(?)');
+        my $rc=$sth->execute($self->{session_id})
+            or $self->dberror;
+        #HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
 
         if(! $rc) {
-     $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
-     return undef;
-    }
-    @results = $sth->fetchrow_array();
+            $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
+            return undef;
+        }
+        @results = $sth->fetchrow_array();
     }
     else {
-     $logger->debug("no \$self->{session_id}!");
-     return undef;
+        $logger->debug("no \$self->{session_id}!");
+        return undef;
     }
 
     $self->{form_id} = $results[0];
@@ -1238,46 +1238,25 @@ Please enter your credentials
 
 
 sub db_init {
-    my ( $self, $myconfig ) = @_;
-    $logger->trace("begin");
-    if (!$self->{company}){
-        $self->{company} = $LedgerSMB::Sysconfig::default_db;
-    }
-    my $dbname = $self->{company};
-    my $creds = $self->{_auth}->get_credentials;
-    $self->{dbh} = LedgerSMB::DBH->connect($self->{company},
-                                           $creds->{login},
-                                           $creds->{password});
-
-    _credential_prompt unless $self->{dbh};
-    my $dbh = $self->{dbh};
-
-
+    my ( $self, $dbh, $myconfig ) = @_;
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
-    $self->{_new_session_cookie_value} =
-        LedgerSMB::Middleware::AuthenticateSession::_verify_session(
-            $dbh, $dbname, $self->{_session});
 
-    _credential_prompt if ! $self->{_new_session_cookie_value};
-
+    $self->{dbh} = $dbh;
     LedgerSMB::App_State::set_DBH($dbh);
     _set_datestyle($dbh);
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
-    LedgerSMB::DBH->require_version($dbh, $self->{version}) if $self->{version};
-
     my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
              WHERE setting_key = 'role_prefix'"
     );
-    $sth->execute;
+    $sth->execute or die $self->dberror('query to select role prefix');
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
 
     LedgerSMB::Company_Config::initialize($self);
-    $logger->trace("end");
 }
 
 sub _set_datestyle {

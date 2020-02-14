@@ -38,6 +38,7 @@ use Version::Compare;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
 use LedgerSMB::DBObject::Admin;
@@ -124,7 +125,9 @@ sub __default {
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = $request->{_auth}->get_credentials;
+
+    my $auth = LedgerSMB::Auth::factory($request->{_req}->env, 'setup');
+    my $creds = $auth->get_credentials;
 
     return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',

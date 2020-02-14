@@ -95,7 +95,9 @@ sub authenticate {
         || ! $r->{password}) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
-    if (! $request->{_create_session}->($r->{login}, $r->{password})) {
+    if ($request->{_create_session}->($r->{login},
+                                      $r->{password},
+                                      $r->{company})) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
 

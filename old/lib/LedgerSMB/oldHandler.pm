@@ -92,16 +92,6 @@ sub handle {
     $form->{_session} = $session;
     @{$form}{qw/ session_id company /} =
         @{$session}{qw/ session_id company /};
-    $form->{_auth} = LedgerSMB::Auth::DB->new(
-        env => \%ENV,
-        credentials => {
-            password => $session->{password},
-            login    => $session->{login},
-        },
-        domain => undef,
-        );
-    # initialize domain and company (values will be cached)
-    $form->{_auth}->get_credentials($form->{company});
 
     # name of this script
     $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
@@ -138,19 +128,10 @@ sub handle {
     $locale->encoding('UTF-8');
 
     try {
-        $form->db_init( \%myconfig );
+        $psgi_env->{'lsmb.app_cb'}->();
+        $form->{session_id} = $psgi_env->{'lsmb.session'}->{session_id};
+        $form->db_init( $psgi_env->{'lsmb.app'},  \%myconfig );
         my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
-        if ($form->{_new_session_cookie_value}) {
-            print 'Set-Cookie: '
-                . bake_cookie(LedgerSMB::Sysconfig::cookie_name,
-                              {
-                                  value    => $LedgerSMB::Middleware::SessionStorage::store->encode($form->{_session}),
-                                  samesite => 'strict',
-                                  httponly => 1,
-                                  path     => $path,
-                                  secure   => (lc($ENV{HTTPS}) eq 'on'),
-                              });
-        }
 
         # we get rid of myconfig and use User as a real object
         %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };

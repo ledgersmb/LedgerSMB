@@ -32,7 +32,6 @@ use warnings;
 
 # Preloads
 use LedgerSMB;
-use LedgerSMB::Auth;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;

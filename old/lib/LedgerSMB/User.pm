@@ -81,17 +81,12 @@ sub fetch_config {
 
     my ( $self, $lsmb ) = @_;
 
-    croak q{Can't fetch 'current user' }
-          . q{information on unauthenticated connection}
-        unless $lsmb->{_auth} && $lsmb->{_auth}->get_credentials->{login};
-
-    my $login = $lsmb->{_auth}->get_credentials->{login};
     my $dbh = $lsmb->{dbh};
     my $query = q{
         SELECT * FROM user_preference
-         WHERE id = (SELECT id FROM users WHERE username = ?)};
+         WHERE id = (SELECT id FROM users WHERE username = SESSION_USER)};
     my $sth = $dbh->prepare($query);
-    $sth->execute($login);
+    $sth->execute;
     my $myconfig = $sth->fetchrow_hashref('NAME_lc');
     bless $myconfig, __PACKAGE__;
     return $myconfig;

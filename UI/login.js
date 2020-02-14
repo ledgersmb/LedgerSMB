@@ -26,7 +26,10 @@ function send_form() {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     handleAs: 'json',
-                    data: json.stringify({"login":username,"password":password})
+                    data: json.stringify({
+                        "login": username,
+                        "password": password,
+                        "company": company})
                 }).then(function(data){
                     window.location.href = data.target;
                 }, function(err) {
