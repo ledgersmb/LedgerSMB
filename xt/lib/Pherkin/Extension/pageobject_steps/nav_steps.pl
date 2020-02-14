@@ -52,7 +52,7 @@ When qr/^I save the page( as new)?$/, sub {
 };
 
 When qr/I wait for the page to load$/, sub {
-    S->{ext_wsl}->page->body->maindiv->wait_for_content;
+    S->{ext_wsl}->page->body->maindiv->wait_for_valid_content;
 };
 
 Then qr/I should see the (.*) page/, sub {
@@ -72,7 +72,9 @@ Then qr/I should see the (.*) page/, sub {
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
 
+    my $maindiv = S->{ext_wsl}->page->body->maindiv->find('./*');
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
 };
 
 my %screens = (
@@ -146,12 +148,7 @@ Then qr/I should see the (.*) screen/, sub {
 
     use_module($screens{$page_name});
 
-    my $page;
-    S->{ext_wsl}->wait_for(
-        sub {
-            $page = S->{ext_wsl}->page->body->maindiv->content;
-            return $page && $page->isa($screens{$page_name});
-        });
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
     ok($page, "the browser screen is the screen named '$page_name'");
     ok($screens{$page_name}, "the named screen maps to a class name");
     ok($page->isa($screens{$page_name}),

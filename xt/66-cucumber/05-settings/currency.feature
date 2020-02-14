@@ -29,6 +29,7 @@ Scenario: Add a currency
   When I enter "SEK" as the id for a new currency
    And I enter "Swedish Krona" as the description for a new currency
    And I press "Add"
+   And I wait for the page to load
   Then I should see the Edit currencies screen
    And I expect the report to contain 4 rows
    And I expect the 'Description' report column to contain 'Swedish Krona' for ID 'SEK'
@@ -38,6 +39,7 @@ Scenario: Delete a currency
   Then I should see the Edit currencies screen
    And I expect the report to contain 3 rows
   When I click "[delete]" for the row with ID "CAD"
+   And I wait for the page to load
   Then I should see the Edit currencies screen
    And I expect the report to contain 2 rows
 

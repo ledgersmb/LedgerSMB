@@ -13,10 +13,12 @@ Scenario: Add a new account
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
   When I press "Create Account"
+   And I wait for the page to load
   Then I should see the Account screen
   When I enter "T0001" into "Account Number"
    And I enter "New Account" into "Description"
    And I press "Save"
+   And I wait for the page to load
   Then I should see the Account screen
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen

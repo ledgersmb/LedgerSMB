@@ -17,6 +17,7 @@ Scenario: Default search with no filter
  When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 4 rows
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-02-01'
@@ -37,6 +38,7 @@ Scenario: Filter by "Statement Date From"
   Then I should see the Search Reconciliation Reports screen
   When I enter "2018-02-01" into "Statement Date From"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I should see these headings:
        | Heading             | Contents               |
@@ -55,6 +57,7 @@ Scenario: Filter by "Statement Date To"
   Then I should see the Search Reconciliation Reports screen
   When I enter "2018-02-01" into "Statement Date To"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I should see these headings:
        | Heading             | Contents               |
@@ -72,6 +75,7 @@ Scenario: Filter by "Amount From"
   Then I should see the Search Reconciliation Reports screen
   When I enter "1000.01" into "Amount From"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
        | Heading             | Contents               |
        | Report Name         | Reconciliation Reports |
@@ -89,6 +93,7 @@ Scenario: Filter by "Amount To"
   Then I should see the Search Reconciliation Reports screen
   When I enter "100.00" into "Amount To"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
        | Heading             | Contents               |
        | Report Name         | Reconciliation Reports |
@@ -105,6 +110,7 @@ Scenario: Filter by "Account"
   Then I should see the Search Reconciliation Reports screen
   When I select "1065 Petty Cash" from the drop down "Account"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 1 row
    And I expect the 'Account' report column to contain '1065 Petty Cash' for Statement Date '2018-01-01'
@@ -114,6 +120,7 @@ Scenario: Filter by "Submission Status" is "Submitted"
   Then I should see the Search Reconciliation Reports screen
   When I select "Submitted" from the drop down "Submission Status"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 2 rows
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-02-01'
@@ -124,6 +131,7 @@ Scenario: Filter by "Submission Status" is "Not Submitted"
   Then I should see the Search Reconciliation Reports screen
   When I select "Not Submitted" from the drop down "Submission Status"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 2 rows
    And I expect the 'Statement Date' report column to contain '2018-01-01' for Account '1060 Checking Account'
@@ -134,6 +142,7 @@ Scenario: Filter by "Approved Status" is "Approved"
   Then I should see the Search Reconciliation Reports screen
   When I select "Approved" from the drop down "Approval Status"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 1 row
    And I expect the 'Statement Date' report column to contain '2018-03-01' for Account '1060 Checking Account'
@@ -143,6 +152,7 @@ Scenario: Filter by "Approved Status" is "Not Approved"
   Then I should see the Search Reconciliation Reports screen
   When I select "Not Approved" from the drop down "Approval Status"
    And I press "Search"
+   And I wait for the page to load
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 3 rows
    And I expect the 'Statement Date' report column to contain '2018-01-01' for Statement Balance '100.00'

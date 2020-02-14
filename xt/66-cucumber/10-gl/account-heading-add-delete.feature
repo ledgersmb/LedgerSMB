@@ -13,10 +13,12 @@ Scenario: Add a new account heading
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
   When I press "Create Heading"
+   And I wait for the page to load
   Then I should see the Account screen
   When I enter "H0001" into "Account Number"
    And I enter "New Heading" into "Description"
    And I press "Save"
+   And I wait for the page to load
   Then I should see the Account screen
 
 Scenario: Delete the account heading from the chart of accounts

@@ -23,6 +23,7 @@ Scenario: View the chart of accounts and change every property of an account
    And I expect the report to contain 78 rows
    And I expect the 'Description' report column to contain 'Office Furniture & Equipment' for Account Number '1820'
   When I click Account Number "1820"
+   And I wait for the page to load
   Then I should see the Account screen
    And I expect the "Description" field to contain "Office Furniture & Equipment"
    And I expect "1800--CAPITAL ASSETS" to be selected for "Heading"
@@ -68,6 +69,7 @@ Scenario: View the chart of accounts and change the description of an account he
    And I expect the report to contain 78 rows
    And I expect the 'Description' report column to contain 'CURRENT ASSETS' for Account Number '1000'
   When I click Account Number "1000"
+   And I wait for the page to load
   Then I should see the Account screen
    And I expect the "Description" field to contain "CURRENT ASSETS"
   When I enter "Assets" into "Description"
@@ -83,6 +85,7 @@ Scenario: Create a new account based on an existing account
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
   When I click Account Number "1060"
+   And I wait for the page to load
   Then I should see the Account screen
   When I select the "Account" tab
    And I enter "TEST-1" into "Account Number"
@@ -99,6 +102,7 @@ Scenario: Create a new heading based on an existing heading
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
   When I click Account Number "1000"
+   And I wait for the page to load
   Then I should see the Account screen
   When I select the "Heading" tab
    And I enter "TEST-2" into "Account Number"

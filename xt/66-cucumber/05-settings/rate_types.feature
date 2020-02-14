@@ -34,9 +34,11 @@ Scenario: Add and delete an exchange rate type
    And I expect the report to contain 1 row
   When I enter "Test" as the description for a new rate type
    And I press "Add"
+   And I wait for the page to load
   Then I should see the Edit rate types screen
    And I expect the report to contain 2 rows
   When I click "[delete]" for the row with Description "Test"
+   And I wait for the page to load
   Then I should see the Edit rate types screen
    And I expect the report to contain 1 row
 

@@ -19,6 +19,7 @@ Scenario: Add payments to a new batch
    And I enter "B-1001" into "Batch Number"
    And I enter "Test Batch" into "Description"
    And I press "Continue"
+   And I wait for the page to load
   Then I should see the Filtering Payments screen
    And I should see the title "Filtering Payments"
   When I enter "1001" into "Start Source Numbering At"
@@ -26,6 +27,7 @@ Scenario: Add payments to a new batch
    And I select "USD" from the drop down "Currency"
    And I select "1060--Checking Account" from the drop down "Pay From"
    And I press "Continue"
+   And I wait for the page to load
   Then I should see the Payments Detail screen
    And I expect to see the 'date_paid' value of '2018-01-01'
    And I expect to see the 'account_info' value of '2100 -- Accounts Payable'
@@ -41,8 +43,10 @@ Scenario: Add payments to a new batch
    And I expect to see the 'grand_total' value of '100.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
   When I press "Post"
+   And I wait for the page to load
   Then I should see the Payment Batch Summary screen
   When I press "Save Batch"
+   And I wait for the page to load
   Then I should see the Filtering Payments screen
 
 Scenario: Add payments to an existing batch
@@ -61,10 +65,12 @@ Scenario: Add payments to an existing batch
        | Batch Number | Description | Post Date  |
        | B-1001       | Test Batch  | 2018-01-01 |
   When I click on the Batch with Batch Number "B-1001"
+   And I wait for the page to load
   Then I should see the Filtering Payments screen
    And I should see the title "Filtering Payments"
   When I enter "2001" into "Start Source Numbering At"
    And I press "Continue"
+   And I wait for the page to load
   Then I should see the Payments Detail screen
    And I expect to see the 'date_paid' value of '2018-01-01'
   When I select the payment line with these values:
@@ -75,8 +81,10 @@ Scenario: Add payments to an existing batch
    And I expect to see the 'grand_total' value of '25.00'
    And I expect to see the 'grand_total_currency' value of 'USD'
   When I press "Post"
+   And I wait for the page to load
   Then I should see the Payment Batch Summary screen
   When I press "Save Batch"
+   And I wait for the page to load
   Then I should see the Filtering Payments screen
 
 Scenario: Add partial payment to an existing batch
@@ -95,9 +103,11 @@ Scenario: Add partial payment to an existing batch
        | Batch Number | Description | Post Date  |
        | B-1001       | Test Batch  | 2018-01-01 |
   When I click on the Batch with Batch Number "B-1001"
+   And I wait for the page to load
   Then I should see the Filtering Payments screen
   When I enter "3001" into "Start Source Numbering At"
    And I press "Continue"
+   And I wait for the page to load
   Then I should see the Payments Detail screen
   When I select the payment line with these values:
        | Name     | Invoice Total  | Source |
@@ -116,8 +126,10 @@ Scenario: Add partial payment to an existing batch
    And I expect to see the 'grand_total_currency' value of 'USD'
    And I expect to see the "Contact Total" of "1.00 USD" for "Vendor C"
   When I press "Post"
+   And I wait for the page to load
   Then I should see the Payment Batch Summary screen
   When I press "Save Batch"
+   And I wait for the page to load
   Then I should see the Filtering Payments screen
 
 ###TODO: This test was dependent on the previous one

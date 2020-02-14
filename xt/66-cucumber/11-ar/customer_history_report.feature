@@ -12,6 +12,7 @@ Scenario:
   When I navigate the menu and select the item at "AR > Reports > Customer History"
   Then I should see the Purchase History Search screen
   When I press "Continue"
+   And I wait for the page to load
   Then I should see the Purchase History Report screen
    And I should see these headings:
        | Heading             | Contents         |

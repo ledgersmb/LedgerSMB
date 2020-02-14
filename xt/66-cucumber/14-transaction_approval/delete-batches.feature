@@ -15,12 +15,15 @@ Scenario: Delete an unapproved batch
   When I navigate the menu and select the item at "Transaction Approval > Batches"
   Then I should see the Search Batches screen
   When I press "Search"
+   And I wait for the page to load
   Then I should see the Batch Search Report screen
    And I expect the report to contain 2 rows
   When I select the row where "Batch Number" is "B-1003"
    And I press "Delete"
+   And I wait for the page to load
   Then I should see the Search Batches screen
   When I press "Search"
+   And I wait for the page to load
   Then I should see the Batch Search Report screen
    And I expect the report to contain 1 rows
    And I expect the 'Description' report column to contain 'Batch-4' for Batch Number 'B-1004'

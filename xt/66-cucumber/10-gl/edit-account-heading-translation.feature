@@ -11,6 +11,7 @@ Scenario: Add translations for an account heading description
   When I navigate the menu and select the item at "General Journal > Chart of Accounts"
   Then I should see the Chart of Accounts screen
   When I click Account Number "4000"
+   And I wait for the page to load
   Then I should see the Account screen
   When I select the "Translations" tab
   Then I expect the "Spanish" field to contain ""

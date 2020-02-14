@@ -46,7 +46,7 @@ sub content {
     return $self->_get_content;
 }
 
-sub _wait_for_valid_content {
+sub wait_for_valid_content {
     my ($self) = @_;
 
     $self->session->wait_for(
@@ -60,7 +60,7 @@ sub _wait_for_valid_content {
 sub _build_content {
     my ($self) = @_;
 
-    $self->_wait_for_valid_content;
+    $self->wait_for_valid_content;
 
     my @found = $self->find_all('./*'); # find any immediate child
     die "#maindiv is expected to have exactly one child node, found " . scalar(@found) .
@@ -92,7 +92,7 @@ sub wait_for_content {
 
             return not defined $old_content;
         });
-    $self->_wait_for_valid_content;
+    $self->wait_for_valid_content;
 
     return $self->content;
 }
