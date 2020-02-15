@@ -7,14 +7,6 @@ _defaults: &defaults
     # Make sure that .profile is sourced for Perlbrew
     shell: /bin/bash --login -eo pipefail
 
-general:
-  branches:
-    ignore:
-      - /1\.2.*/
-      - /1\.3.*/
-      - /1\.4.*/
-      - /1\.5.*/
-      - /1\.6.*/
 
 # Define aliases for simplification
 aliases:
@@ -178,4 +170,12 @@ jobs:
 workflows:
   workflow:
     jobs:
-      - test_nodojo
+      - test_nodojo:
+          filters:
+             branches:
+                ignore:
+                  - /1\.2\..*/
+                  - /1\.3\..*/
+                  - /1\.4\..*/
+                  - /1\.5\..*/
+                  - /1\.6\..*/
