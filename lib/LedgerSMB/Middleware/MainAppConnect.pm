@@ -60,7 +60,7 @@ sub _connect {
     if (!$dbh) {
         my $cb = $env->{'lsmb.db_cb'};
         if ($cb) {
-            $dbh = $cb->(@_);
+            $dbh = $cb->($env, @_);
         }
         else {
             die q{Environment contains neither 'db' nor 'db_cb'};
@@ -85,12 +85,6 @@ sub _connect {
     return ($dbh, undef);
 }
 
-sub _alloc_cb {
-    my ($self, $env) = @_;
-    ###TODO oops: forgetting to verify the session!
-    return sub { _connect($self, $env, @_); return $env->{'lsmb.app'}; };
-}
-
 sub call {
     my $self = shift;
     my ($env) = @_;
@@ -100,7 +94,17 @@ sub call {
     if ($env->{'lsmb.want_db'}
         || $self->provide_connection eq 'closed') {
         if ($self->provide_connection eq 'closed') {
-            $env->{'lsmb.app_cb'} = _alloc_cb($self, $env);
+            $env->{'lsmb.app_cb'} = sub {
+                my $env = shift;
+                my $r;
+                ($dbh, $r) = _connect($self, $env);
+                die 'Internal server error' if defined $r;
+
+                $r = _verify_session($dbh, $env);
+                die 'Internal server error' if defined $r;
+
+                return $dbh;
+            };
         }
         else {
             my $r;

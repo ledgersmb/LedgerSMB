@@ -75,7 +75,7 @@ sub _connect {
     my ($env, $login, $password, $company) = @_;
 
     my $session = $env->{'lsmb.session'};
-    my @creds = ($session->{login})
+    my @creds = (! $login)
         ? (@{$session}{qw/company login password/})
         : ($company, $login, $password);
 
@@ -130,6 +130,7 @@ sub call {
             else {
                 if ($self->provide_connection eq 'closed') {
                     $env->{'lsmb.db_cb'} = sub {
+                        my $env = shift;
                         return $dbh = $env->{'lsmb.db'} = _connect($env, @_);
                     };
                 }
@@ -142,7 +143,10 @@ sub call {
     }
     else {
         # It may not want a pre-initialized db, but... it might request one.
-        $env->{'lsmb.db_cb'} = sub { return _connect($env, @_); };
+        $env->{'lsmb.db_cb'} = sub {
+            my $env = shift;
+            return _connect($env, @_);
+        };
     }
 
     return Plack::Util::response_cb(

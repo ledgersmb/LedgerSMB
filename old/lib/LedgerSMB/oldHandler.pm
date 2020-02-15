@@ -128,7 +128,7 @@ sub handle {
     $locale->encoding('UTF-8');
 
     try {
-        $psgi_env->{'lsmb.app_cb'}->();
+        $psgi_env->{'lsmb.app_cb'}->($psgi_env);
         $form->{session_id} = $psgi_env->{'lsmb.session'}->{session_id};
         $form->db_init( $psgi_env->{'lsmb.app'},  \%myconfig );
         my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
