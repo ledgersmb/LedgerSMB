@@ -48,7 +48,7 @@ Then qr/the Balance Sheet per (.{10}) looks like:/, sub {
 Then qr/I expect the report to contain (\d+) rows?$/, sub {
     my $wanted_row_count = $1;
     my @rows = S->{ext_wsl}->page->body->maindiv->content->find_all(
-        './/table/tbody/tr'
+        './/table[contains(@class, "dynatable")]/tbody/tr'
     );
     my $row_count = scalar @rows;
 
@@ -110,14 +110,17 @@ When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
     my $value = $3;
     my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
 
+    ok(@rows, qq/found row with $column "$value"/);
+
     foreach my $row(@rows) {
         if ($row->{$column} eq $value) {
             my $link = $row->{_element}->find(
                 qq{.//a[.="$1"]}
             );
+
             ok($link, "found $link_text link for $column '$value'");
             $link->click;
-            last;
+            return;
         }
     }
 };
