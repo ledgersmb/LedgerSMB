@@ -22,6 +22,10 @@ define([
               {
                   last_page: null,
                   interceptClick: null,
+                  startup: function () {
+                      this.inherited("startup", arguments);
+                      domClass.add(this.domNode,"done-parsing");
+                  },
                   report_request_error: function(err) {
                       var d = registry.byId("errorDialog");
                       if (0 === err.response.status) {
