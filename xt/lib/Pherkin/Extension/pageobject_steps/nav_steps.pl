@@ -52,7 +52,7 @@ When qr/^I save the page( as new)?$/, sub {
 };
 
 When qr/I wait for the page to load$/, sub {
-    S->{ext_wsl}->page->body->maindiv->wait_for_content;
+    # S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };
 
 Then qr/I should see the (.*) page/, sub {
