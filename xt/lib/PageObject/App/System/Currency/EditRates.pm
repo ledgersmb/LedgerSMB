@@ -9,6 +9,7 @@ use PageObject;
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
+with 'PageObject::App::Roles::Dynatable';
 
 __PACKAGE__->self_register(
               'system-rate',

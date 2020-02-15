@@ -56,7 +56,7 @@ sub rows {
     my $self = shift;
 
     my @headings = $self->_extract_column_headings;
-    my @rows = $self->find_all('.//table/tbody/tr');
+    my @rows = $self->find_all('.//table[contains(@class, "dynatable")]/tbody/tr');
 
     return map {
         my @cells = $_->find_all('./td | ./th');
