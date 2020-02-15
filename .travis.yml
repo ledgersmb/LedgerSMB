@@ -159,7 +159,7 @@ before_script:
     sed -i -e 's/# logging_dir:/logging_dir:/' t/.pherkin.yaml
 
 script:
-  - prove --jobs $(test-jobs) --recurse
+  - prove --jobs $(test-jobs) --recurse --time
           --pgtap-option dbname=lsmbinstalltest
           --pgtap-option username=postgres
           --feature-option tags=~@wip
