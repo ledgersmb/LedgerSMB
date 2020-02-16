@@ -51,10 +51,6 @@ When qr/^I save the page( as new)?$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
 };
 
-When qr/I wait for the page to load$/, sub {
-    # S->{ext_wsl}->page->body->maindiv->wait_for_content;
-};
-
 Then qr/I should see the (.*) page/, sub {
     my $page_name = $1;
     die "Unknown page '$page_name'"
