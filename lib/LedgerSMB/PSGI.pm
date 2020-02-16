@@ -218,6 +218,7 @@ sub setup_url_space {
                 # can marshall state in, but not back out (due to forking)
                 # so have the inner scope handle serialization itself
                 inner_serialize => 1;
+            enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'closed',
                 default_company    => LedgerSMB::Sysconfig::default_db();
@@ -229,7 +230,6 @@ sub setup_url_space {
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
-            enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
