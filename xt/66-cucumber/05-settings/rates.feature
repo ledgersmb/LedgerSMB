@@ -31,7 +31,7 @@ Scenario: Add an exchange rate
    And I select "Default rate" from the drop down "Rate type"
    And I enter "2020-02-01" into "Valid from"
    And I enter "1.2" into "Rate"
-   And I press "Add"
+   And I press "Add/Update"
   Then I should see the Edit rates screen
    And I expect the report to contain 3 rows
    And I expect the 'Currency' report column to contain 'EUR' for Valid From '2020-02-01'
@@ -47,7 +47,7 @@ Scenario: Update an exchange rate
    And I select "Default rate" from the drop down "Rate type"
    And I enter "2020-01-01" into "Valid from"
    And I enter "1.2" into "Rate"
-   And I press "Add"
+   And I press "Add/Update"
   Then I should see the Edit rates screen
    And I expect the report to contain 2 rows
    And I expect the 'Currency' report column to contain 'EUR' for Valid From '2020-01-01'
