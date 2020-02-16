@@ -53,11 +53,19 @@
 #    "data-dojo-props" = "constraints:{pattern:'0.00'}"
 #  }
 
+  # default exchangerate
+  exchangerate_defaults = {
+    size = '5',
+    maxlength = '20',
+    "data-dojo-type" = "dijit/form/ValidationTextBox"
+  }
+
   # date
   USER.dojo_dateformat = USER.dateformat.replace('mm','MM');
   date_defaults = {
     "data-dojo-type" = 'lsmb/DateTextBox',
     'data-dojo-props' = "constraints: {datePattern: '$USER.dojo_dateformat'},placeholder: '$USER.dateformat'"
+    size = '8',
   }
 
   # textarea
@@ -146,6 +154,9 @@
               CASE 'monetary';
                 input_type_keys = input_keys;
                 input_defaults = monetary_defaults;
+              CASE 'exchangerate';
+                input_type_keys = input_keys;
+                input_defaults = exchangerate_defaults;
               CASE;
                 input_type_keys = input_keys;
             END;
