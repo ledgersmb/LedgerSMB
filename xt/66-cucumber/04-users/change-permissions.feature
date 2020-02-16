@@ -18,7 +18,6 @@ Scenario: Remove a user permission
   Then I expect the "account all" checkbox to be selected
   When I deselect checkbox "account all"
    And I press "Save Groups"
-   And I wait for the page to load
   Then I should see the Edit Contact screen
   When I select the "User" tab
   Then I expect the "account all" checkbox to be not selected
@@ -34,7 +33,6 @@ Scenario: Add a user permission
   Then I expect the "account all" checkbox to be not selected
   When I select checkbox "account all"
    And I press "Save Groups"
-   And I wait for the page to load
   Then I should see the Edit Contact screen
   When I select the "User" tab
   Then I expect the "account all" checkbox to be selected

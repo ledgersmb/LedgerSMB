@@ -34,6 +34,5 @@ Scenario: Delete the account from the chart of accounts
    And I expect the report to contain 79 rows
    And I expect the 'Description' report column to contain 'New Account' for Account Number 'T0001'
   When I click "[Delete]" for the row with Account Number "T0001"
-   And I wait for the page to load
   Then I should see the Chart of Accounts screen
    And I expect the report to contain 78 rows
