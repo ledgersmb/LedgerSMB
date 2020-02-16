@@ -65,9 +65,14 @@ added to authenticate and create a database connection on demand.
 
 =head1 CALLBACKS
 
-=head2 lsmb.db_cb
+=head2 lsmb.db_cb($env, [$login, $password, [$company]])
 
-###TODOC
+Returns a database handle connected to C<$company> using the credentials
+C<$login> and C<$password>, if supplied. If C<$company> isn't provided,
+the value of the C<default_company> attribute is used.
+
+When C<$login> isn't provided, credentials are taken from the session
+storage available through C<$env->{'lsmb.session'}>.
 
 =cut
 

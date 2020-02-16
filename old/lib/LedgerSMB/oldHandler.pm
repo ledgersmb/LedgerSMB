@@ -75,9 +75,9 @@ sub handle {
     # modifications aren't marshalled back to the fork()ing process!
     my ($class, $psgi_env) = @_;
 
-    binmode (STDIN, ':utf8');
-    binmode (STDOUT, ':utf8');
-    binmode STDERR, ':utf8';
+    binmode(STDIN,  ':utf8');
+    binmode(STDOUT, ':utf8');
+    binmode(STDERR, ':utf8');
 
     my $params;
     if ($ENV{CONTENT_LENGTH}!= 0) {
