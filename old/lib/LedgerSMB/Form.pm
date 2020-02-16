@@ -1425,25 +1425,19 @@ sub get_shipto {
 
 =item $form->get_employee();
 
-Returns a list containing the name and id of the employee $form->{login}.  Any
-portion of $form->{login} including and past '@' are ignored.
+Returns a list containing the name and id of the logged in employee.
 
 =cut
 
 sub get_employee {
     my ($self) = @_;
 
-    my $login = $self->{login};
-    $login =~ s/@.*//;
-
     my $query = qq|
         SELECT name, id
-          FROM entity WHERE id IN (select entity_id
-                     FROM users
-                    WHERE username = ?)|;
+          FROM entity WHERE id = person__get_my_entity_id()|;
 
     my $sth = $self->{dbh}->prepare($query);
-    $sth->execute($login);
+    $sth->execute;
     my (@a) = $sth->fetchrow_array();
 
     $sth->finish;

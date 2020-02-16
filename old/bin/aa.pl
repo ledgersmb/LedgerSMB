@@ -58,9 +58,6 @@ use LedgerSMB::DBObject::TransTemplate;
 if ( -f "old/bin/custom/aa.pl" ) {
     eval { require "old/bin/custom/aa.pl"; };
 }
-if ( -f "old/bin/custom/$form->{login}_aa.pl" ) {
-    eval { require "old/bin/custom/$form->{login}_aa.pl"; };
-}
 
 my $is_update;
 

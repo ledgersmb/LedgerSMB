@@ -106,8 +106,7 @@ sub add {
         $form->{title} = $locale->text('Add Sales Invoice');
         $form->{reverse} = 0;
     }
-    $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&type=$form->{type}"
       unless $form->{callback};
 
     &invoice_links;

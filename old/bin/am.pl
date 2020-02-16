@@ -218,8 +218,7 @@ sub add_business {
 
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add_business&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add_business"
       unless $form->{callback};
 
     my %hiddens;
@@ -303,8 +302,7 @@ sub add_sic {
 
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add_sic&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add_sic"
       unless $form->{callback};
 
     my %hiddens;
@@ -395,8 +393,7 @@ sub add_language {
 
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add_language&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add_language"
       unless $form->{callback};
 
     my %hiddens;
@@ -544,8 +541,6 @@ sub display_taxes {
 
     $form->{title} = $locale->text('Taxes');
     my %hiddens = (
-        login => $form->{login},
-        sessionid => $form->{sessionid},
         type => 'taxes',
         );
 
@@ -687,8 +682,7 @@ sub add_warehouse {
 
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add_warehouse&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add_warehouse"
       unless $form->{callback};
 
     my %hiddens;
@@ -881,7 +875,7 @@ sub recurring_transactions {
               : $locale->text('Next Number');
             $column_data{reference} = {
                 text => $reference,
-                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&module=$ref->{module}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
                 };
 
             my $module = "$ref->{module}.pl";
@@ -895,7 +889,7 @@ sub recurring_transactions {
 
             $column_data{id} = {
                 text => $ref->{id},
-                href => qq|$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1|,
+                href => qq|$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&type=$type&readonly=1|,
                 };
 
             $column_data{repeat} = $repeat;
@@ -932,8 +926,6 @@ sub recurring_transactions {
         }
     }
 
-    $hiddens{login} = $form->{login};
-    $hiddens{sessionid} = $form->{sessionid};
     $hiddens{lastndx} = $k;
 
     my @buttons;
@@ -977,8 +969,7 @@ sub edit_recurring {
         oe => 'prepare_order',
     );
 
-    $form->{callback} =
-"$form->{script}?action=recurring_transactions&login=$form->{login}&sessionid=$form->{sessionid}";
+    $form->{callback} = "$form->{script}?action=recurring_transactions";
 
     $form->{type} = "transaction";
 
@@ -1353,8 +1344,7 @@ sub process_transactions {
         }
     }
 
-    $form->{callback} =
-"am.pl?action=recurring_transactions&login=$form->{login}&sessionid=$form->{sessionid}&header=1";
+    $form->{callback} = "am.pl?action=recurring_transactions&header=1";
     $form->redirect;
 
 }
@@ -1393,7 +1383,7 @@ sub print_recurring {
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
+            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
 
             $form->info( " ..... " . $locale->text('done') );
         }
@@ -1441,7 +1431,7 @@ sub email_recurring {
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
+            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
             $ok = !( $form->_redirect() );
 
             if ($ok) {

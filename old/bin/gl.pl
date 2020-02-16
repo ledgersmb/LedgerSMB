@@ -57,8 +57,6 @@ use LedgerSMB::DBObject::TransTemplate;
 
 require "old/bin/arap.pl";
 
-$form->{login} = 'test';
-
 # end of main
 
 # this is for our long dates
@@ -139,8 +137,7 @@ sub add {
 
     $form->{title} = "Add";
 
-    $form->{callback} =
-"$form->{script}?action=add&transfer=$form->{transfer}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&transfer=$form->{transfer}"
       unless $form->{callback};
 
     if (!$form->{rowcount}){
@@ -211,8 +208,6 @@ sub display_form
     our %hiddens = (
         'direction' => $form->{direction},
         'oldsort' => $form->{oldsort},
-        'login' => $form->{login},
-        'session_id' => $form->{session_id},
         'batch_id' => $form->{batch_id},
         'id' => $form->{id},
         'transfer' => $form->{transfer},

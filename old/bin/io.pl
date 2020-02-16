@@ -55,9 +55,6 @@ require "old/bin/printer.pl";
 if ( -f "old/bin/custom/io.pl" ) {
     eval { require "old/bin/custom/io.pl"; };
 }
-if ( -f "old/bin/custom/$form->{login}_io.pl" ) {
-    eval { require "old/bin/custom/$form->{login}_io.pl"; };
-}
 
 # end of main
 

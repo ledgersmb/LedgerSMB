@@ -75,8 +75,7 @@ sub add {
         $form->{vc}    = 'customer';
     }
 
-    $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}"
       unless $form->{callback};
 
     $form->{rowcount} = 0;
@@ -1457,11 +1456,6 @@ sub invoice {
     # customized scripts
     if ( -f "old/bin/custom/$form->{script}" ) {
         eval { require "old/bin/custom/$form->{script}"; };
-    }
-
-    # customized scripts for login
-    if ( -f "old/bin/custom/$form->{login}_$form->{script}" ) {
-        eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
     }
 
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
