@@ -205,12 +205,8 @@ Displays a list of configured exchangerate types.  No inputs required or used.
 
 sub list_exchangerates {
     my ($request) = @_;
-    my @exchangerates = LedgerSMB::Exchangerate->list(
-        curr => $request->{curr},
-        type_id => $request->{type} || 1,
-        offset => $request->{offset},
-        limit => $request->{limit} || 30,
-        );
+    my @exchangerates = LedgerSMB::Exchangerate->list();
+
     $request->{title} =
         $request->{_locale}->text('Available exchange rates');
 
