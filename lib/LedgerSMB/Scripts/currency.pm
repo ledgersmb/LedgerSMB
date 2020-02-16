@@ -286,15 +286,24 @@ sub _list_exchangerates {
 
 =item save_exchangerate
 
-Creates a currency - or if it exists, updates the description.
+If a default exchange rate record already exists with the specified
+currency, rate type and valid from dates, updates its rate. Otherwise
+creates a new default exchange rate record. Displays a list of all
+default exchange rates once complete.
+
+Requires the following request parameters:
+
+  * curr
+  * rate_type
+  * valid_from
+  * rate
 
 =cut
 
 sub save_exchangerate {
     my ($request) = @_;
-
-    my $ratetype = LedgerSMB::Exchangerate->new(%$request);
-    $ratetype->save;
+    my $rate = LedgerSMB::Exchangerate->new(%$request);
+    $rate->save;
 
     return &list_exchangerates($request);
 }
@@ -303,6 +312,12 @@ sub save_exchangerate {
 
 Deletes an exchangerate type. Returns an error in case the rate type is
 still referenced in the system.
+
+Requires the following request parameters:
+
+  * curr
+  * rate_type
+  * valid_from
 
 =cut
 
