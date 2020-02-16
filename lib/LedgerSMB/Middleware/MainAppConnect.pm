@@ -77,9 +77,14 @@ sub _connect {
         }
     }
 
-    $dbh->do(q{SET SESSION AUTHORIZATION ?}, {},
-             $env->{'lsmb.session'}->{username})
-        or die 'Unable to switch to authenticated user: ' . $dbh->errstr;
+    if ($env->{'lsmb.session'}->{username}) {
+        $dbh->do(q{SET SESSION AUTHORIZATION ?}, {},
+                 $env->{'lsmb.session'}->{username})
+            or die 'Unable to switch to authenticated user: ' . $dbh->errstr;
+    }
+    else {
+        die 'Unable to switch to authenticated user: none supplied';
+    }
 
     $env->{'lsmb.app'} = $dbh;
     return ($dbh, undef);
