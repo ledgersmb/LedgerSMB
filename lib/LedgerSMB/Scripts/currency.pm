@@ -103,15 +103,21 @@ sub save_currency {
 
 =item delete_currency
 
-Deletes a currency. Returns an error in case the currency is
+Deletes a currency. Returns an error if the currency is
 still referenced in the system.
+
+Requires the following request parameters:
+
+  * curr
 
 =cut
 
 sub delete_currency {
     my ($request) = @_;
 
-    my $currency = LedgerSMB::Currency->new(%$request);
+    my $currency = LedgerSMB::Currency->new(
+        curr => $request->{curr}
+    );
     $currency->delete;
 
     return &list_currencies($request);
@@ -324,7 +330,11 @@ Requires the following request parameters:
 sub delete_exchangerate {
     my ($request) = @_;
 
-    my $ratetype = LedgerSMB::Exchangerate->new(%$request);
+    my $ratetype = LedgerSMB::Exchangerate->new(
+        curr => $request->{curr},
+        rate_type => $request->{rate_type},
+        valid_from => $request->{valid_from},
+    );
     $ratetype->delete;
 
     return &list_exchangerates($request);
