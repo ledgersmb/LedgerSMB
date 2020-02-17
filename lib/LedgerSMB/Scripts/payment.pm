@@ -1137,7 +1137,9 @@ sub payment2 {
             value => $request->{curr}, },
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
-        topay_subtotal => LedgerSMB::PGNumber->new((sum map { $_->{topay} } @invoice_data) // 0)->to_output(money => 1),
+        topay_subtotal => (
+            (sum map {LedgerSMB::PGNumber->from_input($_->{topay} || 0)} @invoice_data) // 0
+        )->to_output(money => 1),
         topay_state   => \@topay_state,
         vendorcustomer => {
             name => 'vendor-customer',
@@ -1166,9 +1168,15 @@ sub payment2 {
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
-        overpayment_subtotal => LedgerSMB::PGNumber->new((sum map { $_->{amount} } @overpayment) // 0)->to_output(money => 1),
-        payment_total => LedgerSMB::PGNumber->new((sum map { $_->{amount} } @overpayment)
-            + (sum map { $_->{topay} } @invoice_data))->to_output(money => 1),
+        overpayment_subtotal => (
+              (sum map {LedgerSMB::PGNumber->from_input($_->{amount} || 0)} @overpayment)
+             + LedgerSMB::PGNumber->from_input(0) # never end up with undef
+        )->to_output(money => 1),
+        payment_total => (
+              (sum map {LedgerSMB::PGNumber->from_input($_->{amount} || 0)} @overpayment)
+            + (sum map {LedgerSMB::PGNumber->from_input($_->{topay}  || 0)} @invoice_data)
+            + LedgerSMB::PGNumber->from_input(0) # never end up with undef
+        )->to_output(money => 1),
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
