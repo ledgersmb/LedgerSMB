@@ -92,6 +92,9 @@ sub change_password {
     if ($user->{confirm_password}){
         $user->change_my_password;
     }
+    ###TODO we're breaking the separation of concerns here!
+    $request->{_req}->env->{'lsmb.session'}->{password} =
+        $request->{new_password};
     return preference_screen($request, $user);
 }
 
