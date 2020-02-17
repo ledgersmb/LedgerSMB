@@ -228,7 +228,8 @@ sub _list_exchangerates {
     my $base_url = 'currency.pl?action=delete_exchangerate';
     for my $s (@$exchangerates) {
         $s->{i} = $rowcount % 2;
-        $s->{rate} = $s->{rate}->to_output();
+        $s->{rate} = defined $s->{rate} ? $s->{rate}->to_output()
+                                        : 'undefined';
         $s->{drop} = {
             href =>"$base_url&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output(),
             text => '[' . $request->{_locale}->text('delete') . ']',
