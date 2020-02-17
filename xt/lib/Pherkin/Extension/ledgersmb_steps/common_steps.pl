@@ -682,6 +682,27 @@ Given qr/a gl account heading with these properties:$/, sub {
         or die $dbh->errstr;
 };
 
+Given qr/the following currenc(?:y|ies):$/, sub {
+    # Expects data in the following form:
+    # | currency | description   |
+    # | SEK      | Swedish Krona |
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+
+    my $q = $dbh->prepare('
+        INSERT INTO currency (
+            curr,
+            description
+        )
+        VALUES (?,?)
+    ');
+
+    foreach my $row (@{C->data}) {
+        $q->execute(
+            $row->{'currency'},
+            $row->{'description'},
+        ) or die 'failed to insert currency';
+    }
+};
 
 Given qr/the following exchange rates?:$/, sub {
     # Expects data in the following form:

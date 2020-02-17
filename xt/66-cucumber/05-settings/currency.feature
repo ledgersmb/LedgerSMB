@@ -41,3 +41,15 @@ Scenario: Delete a currency
   Then I should see the Edit currencies screen
    And I expect the report to contain 2 rows
 
+
+Scenario: Delete an exchange rate containing query string characters
+ Given the following currency:
+     | currency | description    |
+     | &&?      | test currency  |
+  When I navigate the menu and select the item at "System > Currency > Edit currencies"
+  Then I should see the Edit currencies screen
+   And I expect the report to contain 4 rows
+  When I click "[delete]" for the row with ID "&&?"
+  Then I should see the Edit currencies screen
+   And I expect the report to contain 3 rows
+
