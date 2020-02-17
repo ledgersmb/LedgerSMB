@@ -23,8 +23,8 @@ COMMENT ON FUNCTION currency__save(text, text) IS
 $$Creates a new currency if 'in_curr' doesn''t exist yet;
 otherwise, updates the description.$$;
 
-
-CREATE OR REPLACE FUNCTION currency__delete(in_curr text)
+DROP FUNCTION IF EXISTS currency__delete(in_curr text);
+CREATE OR REPLACE FUNCTION currency__delete(in_curr CHAR(3))
 RETURNS void AS $$
 BEGIN
    IF defaults_get_defaultcurrency() = in_curr THEN
@@ -35,7 +35,7 @@ BEGIN
    DELETE FROM currency WHERE curr = in_curr;
 END;$$ language plpgsql;
 
-COMMENT ON FUNCTION currency__delete(text) IS
+COMMENT ON FUNCTION currency__delete(CHAR(3)) IS
 $$Removes the indicated currency, if it''s not the default currency
 or subject to other integrity constraints.$$;
 
