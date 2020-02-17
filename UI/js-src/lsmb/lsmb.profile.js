@@ -126,6 +126,10 @@ var profile = (function(){
                                 mid in miniExcludeMids;
                 },
 
+                declarative: function (filename) {
+                        return (/\.html$/).test(filename);
+                },
+
                 amd: function (filename) {
                         return (/lsmb\/.+\.js$/).test(filename);
                 }
