@@ -108,6 +108,13 @@ login.pl.
 
 sub authenticate {
     my ($request) = @_;
+    my $creds = $request->{_req}->env->{'lsmb.auth'}->get_credentials;
+
+    return [ HTTP_UNAUTHORIZED,
+             [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
+               'Content-Type' => 'text/text; charset=UTF-8' ],
+             [ 'Please enter your credentials' ] ]
+        if ! defined $creds->{password};
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'text/plain; charset=utf-8' ],
@@ -124,7 +131,8 @@ sub __default {
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = $request->{_auth}->get_credentials;
+    my $creds = $request->{_req}->env->{'lsmb.auth'}->get_credentials;
+    $request->{login} = $creds->{login};
 
     return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',

@@ -45,9 +45,6 @@ use LedgerSMB::AA;
 if ( -f "old/bin/custom/arap.pl" ) {
     eval { require "old/bin/custom/arap.pl"; };
 }
-if ( -f "old/bin/custom/$form->{login}_arap.pl" ) {
-    eval { require "old/bin/custom/$form->{login}_arap.pl"; };
-}
 
 # end of main
 
@@ -181,7 +178,7 @@ sub select_name {
     $title = $locale->text('Select from one of the names below');
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -550,7 +547,7 @@ sub schedule {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 

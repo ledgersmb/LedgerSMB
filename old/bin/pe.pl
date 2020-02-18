@@ -27,8 +27,7 @@ use LedgerSMB::OE;
 sub add {
 
     # construct callback
-    $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&type=$form->{type}"
       unless $form->{callback};
 
     &{"prepare_$form->{type}"};
@@ -111,7 +110,7 @@ sub partsgroup_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -195,7 +194,7 @@ sub pricegroup_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -288,7 +287,7 @@ sub translation {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
@@ -339,7 +338,7 @@ sub list_translations {
     $title = $form->escape( $form->{title}, 1 );
 
     $callback =
-"$form->{script}?action=list_translations&login=$form->{login}&sessionid=$form->{sessionid}&translation=$form->{translation}&number=$form->{number}&title=$title";
+"$form->{script}?action=list_translations&translation=$form->{translation}&number=$form->{number}&title=$title";
 
     if ( $form->{"$form->{number}"} ) {
         $callback .= qq|&$form->{number}=$form->{"$form->{number}"}|;
@@ -394,7 +393,7 @@ sub list_translations {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <table width=100%>
   <tr>
@@ -433,7 +432,7 @@ sub list_translations {
         for (@column_index) { $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>" }
 
         $column_data{description} =
-"<td><a href=$form->{script}?action=edit_translation&translation=$form->{translation}&number=$form->{number}&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}&nbsp;</a></td>";
+"<td><a href=$form->{script}?action=edit_translation&translation=$form->{translation}&number=$form->{number}&id=$ref->{id}&callback=$callback>$ref->{description}&nbsp;</a></td>";
 
         $i++;
         $i %= 2;
@@ -529,7 +528,7 @@ sub translation_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -668,7 +667,7 @@ sub select_name {
     $form->header;
     $title = $locale->text('Select from one of the names below');
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -872,7 +871,7 @@ qq|<option value="$_->{control_code}--$_->{id}">$_->{control_code}--$_->{descrip
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -1046,7 +1045,7 @@ sub jcitems {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 

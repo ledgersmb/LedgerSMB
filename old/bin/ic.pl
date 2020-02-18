@@ -65,8 +65,7 @@ sub add {
     $label = "Add $label{$form->{item}}";
     $form->{title} = $locale->maketext($label);
 
-    $form->{callback} =
-"$form->{script}?action=add&item=$form->{item}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&item=$form->{item}"
       unless $form->{callback};
 
     $form->{orphaned} = 1;
@@ -715,7 +714,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 | . $form->open_status_div($status_div_id) . qq|
 
 <form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
@@ -1426,7 +1425,7 @@ sub edit_assemblyitem {
       : $form->{"assembly_$i"};
 
     $form->{callback} =
-qq|$form->{script}?action=edit&id=$form->{"id_$i"}&login=$form->{login}&sessionid=$form->{sessionid}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
+qq|$form->{script}?action=edit&id=$form->{"id_$i"}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
 
     $form->redirect;
 
@@ -1670,7 +1669,7 @@ sub select_name {
     $title = $locale->text('Select from one of the names below');
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
@@ -1987,7 +1986,7 @@ sub stock_assembly {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -2050,11 +2049,11 @@ sub list_assemblies {
     IC->retrieve_assemblies( \%myconfig, \%$form );
 
     $callback =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&login=$form->{login}&sessionid=$form->{sessionid}&checkinventory=$form->{checkinventory}";
+"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
 
     $form->sort_order();
     $href =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&login=$form->{login}&sessionid=$form->{sessionid}&checkinventory=$form->{checkinventory}";
+"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
 
     if ( $form->{partnumber} ) {
         $callback .= "&partnumber=" . $form->escape( $form->{partnumber}, 1 );
@@ -2094,7 +2093,7 @@ sub list_assemblies {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -2129,7 +2128,7 @@ sub list_assemblies {
         }
 
         $column_data{partnumber} =
-"<td width=20%><a href=$form->{script}?action=edit&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
+"<td width=20%><a href=$form->{script}?action=edit&id=$ref->{id}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
 
         $column_data{description} =
           qq|<td width=50%>$ref->{description}&nbsp;</td>|;

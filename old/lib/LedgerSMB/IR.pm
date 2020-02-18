@@ -143,10 +143,10 @@ sub post_invoice {
 
         $query = qq|
             INSERT INTO ap (invnumber, person_id, entity_credit_account)
-            VALUES ('$uid', (SELECT entity_id FROM users
-                              WHERE username = ?), ?)|;
+            VALUES ('$uid', person__get_my_entity_id(), ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{login}, $form->{vendor_id} ) || $form->dberror($query);
+        $sth->execute( $form->{vendor_id} )
+            || $form->dberror($query);
 
         $query = qq|SELECT id FROM ap WHERE invnumber = '$uid'|;
         $sth   = $dbh->prepare($query);

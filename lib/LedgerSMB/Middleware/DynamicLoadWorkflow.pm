@@ -25,11 +25,13 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
+use HTTP::Status qw/ HTTP_REQUEST_ENTITY_TOO_LARGE /;
 use List::Util qw{ none any };
 use Module::Runtime qw/ use_module /;
 use Plack::Request;
 
 use LedgerSMB::PSGI::Util;
+use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 
@@ -43,6 +45,16 @@ Implements C<Plack::Middleware->call()>.
 sub call {
     my $self = shift;
     my ($env) = @_;
+
+    if (LedgerSMB::Sysconfig::max_post_size() != -1
+        && $env->{CONTENT_LENGTH}
+        && ($env->{CONTENT_LENGTH} != 0)
+        && ($env->{CONTENT_LENGTH} > LedgerSMB::Sysconfig::max_post_size())) {
+        return [ HTTP_REQUEST_ENTITY_TOO_LARGE,
+                 [ 'Content-Type' => 'text/plain' ],
+                 [ 'Request entity too large' ]
+            ];
+    }
 
     my $script_name = $env->{SCRIPT_NAME};
     $script_name =~ m/([^\/\\\?]*)\.pl$/;

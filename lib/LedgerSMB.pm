@@ -208,28 +208,24 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 
 sub new {
-
-    my ($class, $request, $auth) = @_;
+    my ($class, $request) = @_;
     my $self = {};
     bless $self, $class;
-
-    (my $package,my $filename,my $line)=caller;
 
     # Properties prefixed with underscore are hidden from UI templates.
     #
     # Some tests construct LedgerSMB objects without $auth argument
     # (in fact, without any arguments), so check for having an $auth
     # arg before trying to call methods on it.
-    $self->{login} = $auth->get_credentials->{login} if defined $auth;
+    $self->{login} = $request->env->{'lsmb.session'}->{login};
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{_uploads} = $request->uploads if defined $request->uploads;
     $self->{_cookies} = $request->cookies if defined $request->cookies;
     $self->{query_string} = $request->query_string if defined $request->query_string;
-    $self->{_auth} = $auth;
     $self->{script} = $request->env->{'lsmb.script'};
-    $self->{dbh} = $request->env->{'lsmb.db'};
-    $self->{company} = $request->env->{'lsmb.company'};
+    $self->{dbh} = $request->env->{'lsmb.app'};
+    $self->{company} = $request->env->{'lsmb.session'}->{company};
     $self->{_session_id} = $request->env->{'lsmb.session_id'};
     $self->{_create_session} = $request->env->{'lsmb.create_session_cb'};
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
@@ -467,11 +463,7 @@ sub dberror{
 }
 
 sub merge {
-    (my $package,my $filename,my $line)=caller;
     my ( $self, $src ) = @_;
-    $logger->debug("begin caller \$filename=$filename \$line=$line");
-       # Removed dbh from logging string since not used on this api call and
-       # not initialized in test cases -CT
     for my $arg ( $self, $src ) {
         shift;
     }
@@ -492,25 +484,8 @@ sub merge {
         else {
             $dst_arg = $arg;
         }
-        if ( defined $dst_arg && defined $src->{$arg} )
-        {
-            $logger->trace("LedgerSMB.pm: merge setting $dst_arg to $src->{$arg}");
-        }
-        elsif ( !defined $dst_arg && defined $src->{$arg} )
-        {
-            $logger->trace("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is defined $src->{$arg}");
-        }
-        elsif ( defined $dst_arg && !defined $src->{$arg} )
-        {
-            $logger->trace("LedgerSMB.pm: merge setting \$dst_arg is defined $dst_arg \$src->{\$arg} is undefined");
-        }
-        elsif ( !defined $dst_arg && !defined $src->{$arg} )
-        {
-            $logger->trace('LedgerSMB.pm: merge setting $dst_arg is undefined $src->{$arg} is undefined');
-        }
         $self->{$dst_arg} = $src->{$arg};
     }
-    $logger->debug("end caller \$filename=$filename \$line=$line");
     return;
 }
 

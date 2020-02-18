@@ -56,37 +56,33 @@ Deprecated
 
 package Form;
 
-#inline documentation
 use strict;
-
-use LedgerSMB::Sysconfig;
-use List::Util qw(first);
-use Time::Local;
-use LedgerSMB::Company_Config;
-use LedgerSMB::PGNumber;
-use Log::Log4perl;
-use LedgerSMB::App_State;
-use LedgerSMB::Auth;
-use LedgerSMB::Auth::DB;
-use LedgerSMB::Middleware::AuthenticateSession;
-use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Setting;
-use Try::Tiny;
-use Carp;
-use Cookie::Baker;
-use DBI;
-use LWP::Simple;
-use Symbol;
-
 use charnames qw(:full);
 use open ':utf8';
 use utf8;
 
 
+use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
+use LedgerSMB::PGNumber;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Setting;
+
+
+use Carp;
+use DBI;
+use List::Util qw(first);
+use Log::Log4perl;
+use LWP::Simple;
+use Symbol;
+use Time::Local;
+use Try::Tiny;
+
+
 
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
-# To be later set in config, but also hardwired in Template::HTML --CT
 
 =item new Form([$argstr])
 
@@ -102,119 +98,30 @@ $form->error may be called to deny access on some attribute values.
 =cut
 
 sub new {
-
     my $type = shift;
     my $argstr = shift;
+    my $self = bless {}, $type;
 
-    $ENV{CONTENT_LENGTH} = 0 unless defined $ENV{CONTENT_LENGTH};
-    my $dojo_theme = $LedgerSMB::Sysconfig::dojo_template;
-
-    if (
-        ($ENV{CONTENT_LENGTH} != 0)
-         && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size )
-        && $LedgerSMB::Sysconfig::max_post_size != -1
-    ) {
-        print "Status: 413\n Request entity too large\n\n";
-        die "Error: Request entity too large\n";
-    }
-    if ($argstr) {
-        $_ = $argstr;
-    }
-    elsif ($ENV{CONTENT_LENGTH}!= 0) {
-        read( STDIN, $_, $ENV{CONTENT_LENGTH} );
-    }
-    elsif ( $ENV{QUERY_STRING} ) {
-        $_ = $ENV{QUERY_STRING};
-    }
-    else {
-        $_ = undef;
-    }
-
-    $logger->trace(" RequestIn=$_") if $_;
-    my $self = {};
-    my $orig = {};
-    %$orig = split /[&=]/ unless !defined $_;
-    for ( keys %$orig ) {
-        $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
-    }
-
-    for my $p(keys %$self){
-        utf8::decode($self->{$p});
-        utf8::upgrade($self->{$p});
-    }
-    $self->{action} = "" unless defined $self->{action};
-    $self->{dojo_theme} = $dojo_theme;
-    $self->{dojo_location} = $LedgerSMB::Sysconfig::dojo_location;
-
-    if($self->{header}) {
-     delete $self->{header};
-     $logger->error("self->{header} unset!!");
-    }
-
-    if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
-        $self->{action} = lc $self->{action};
-        $self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
-
-        if (defined $self->{nextsub}){
-            $self->{nextsub} = lc $self->{nextsub};
-            $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
+    my %orig;
+    if (defined $argstr) {
+        %orig = split( /[&=]/, $argstr);
+        for ( keys %orig ) {
+            $self->{unescape( "", $_) } = unescape( "", $orig{$_} );
         }
-        else {
-            $self->{nextsub} = '';
+        delete $self->{header};
+
+        for my $p(keys %$self){
+            utf8::decode($self->{$p});
+            utf8::upgrade($self->{$p});
+            $self->{$p} =~ s/\N{NULL}//g;
         }
+        $self->{nextsub} //= '';
+        $self->{action} //= $self->{nextsub};
     }
+    $self->{version}   = '1.8.0-dev';
+    $self->{dbversion} = '1.8.0-dev';
 
-    $self->{login} = "" unless defined $self->{login};
-    $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
-    if ($ENV{HTTP_COOKIE}){
-        my $cookies = crush_cookie($ENV{HTTP_COOKIE});
-        $self->{cookie} = $cookies->{$LedgerSMB::Sysconfig::cookie_name};
-        my $session = $LedgerSMB::Middleware::AuthenticateSession::store
-            ->decode($self->{cookie});
-        $self->{_session} = $session;
-        @{$self}{qw/ session_id company /} =
-            @{$session}{qw/ session_id company /};
-    }
-
-    $self->{version}   = "1.8.0-dev";
-    $self->{dbversion} = "1.8.0-dev";
-
-    bless $self, $type;
-
-    if (
-        ($self->{script})
-        and not List::Util::first { $_ eq $self->{script} }
-        @{LedgerSMB::Sysconfig::scripts}
-    ) {
-        $self->error( 'Access Denied', __LINE__, __FILE__ );
-    }
-
-    if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
-        $self->error( "Access Denied", __LINE__, __FILE__ );
-    }
-
-    #for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
-    for (keys %$self) {
-        if (defined $self->{$_}) {
-            $self->{$_}=~ s/\N{NULL}//g;
-        }
-    }
-
-    if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
-        $self->error( "Access Denied", __LINE__, __FILE__ );
-    }
-
-    $self->{_auth} = LedgerSMB::Auth::DB->new(
-        env => \%ENV,
-        credentials => {
-            password => $self->{_session}->{password},
-            login    => $self->{_session}->{login},
-        },
-        domain => undef,
-        );
-    # initialize domain and company (values will be cached)
-    $self->{_auth}->get_credentials($self->{company});
     $self;
 }
 
@@ -229,18 +136,20 @@ sub open_form {
 
     #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
     if ($self->{session_id}) {
-    my $sth = $self->{dbh}->prepare('select form_open(?)');
-    my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
+        my $sth = $self->{dbh}->prepare('select form_open(?)');
+        my $rc=$sth->execute($self->{session_id})
+            or $self->dberror;
+        #HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
 
         if(! $rc) {
-     $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
-     return undef;
-    }
-    @results = $sth->fetchrow_array();
+            $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
+            return undef;
+        }
+        @results = $sth->fetchrow_array();
     }
     else {
-     $logger->debug("no \$self->{session_id}!");
-     return undef;
+        $logger->debug("no \$self->{session_id}!");
+        return undef;
     }
 
     $self->{form_id} = $results[0];
@@ -1329,63 +1238,25 @@ Please enter your credentials
 
 
 sub db_init {
-    my ( $self, $myconfig ) = @_;
-    $logger->trace("begin");
-    if (!$self->{company}){
-        $self->{company} = $LedgerSMB::Sysconfig::default_db;
-    }
-    my $dbname = $self->{company};
-    my $creds = $self->{_auth}->get_credentials;
-    $self->{dbh} = LedgerSMB::DBH->connect($self->{company},
-                                           $creds->{login},
-                                           $creds->{password});
-
-    _credential_prompt unless $self->{dbh};
-    my $dbh = $self->{dbh};
-
-
+    my ( $self, $dbh, $myconfig ) = @_;
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
-    $self->{_new_session_cookie_value} =
-        LedgerSMB::Middleware::AuthenticateSession::_verify_session(
-            $dbh, $dbname, $self->{_session});
 
-    _credential_prompt if ! $self->{_new_session_cookie_value};
-
+    $self->{dbh} = $dbh;
     LedgerSMB::App_State::set_DBH($dbh);
     _set_datestyle($dbh);
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
-    LedgerSMB::DBH->require_version($dbh, $self->{version}) if $self->{version};
-
     my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
              WHERE setting_key = 'role_prefix'"
     );
-    $sth->execute;
+    $sth->execute or die $self->dberror('query to select role prefix');
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
 
-    $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults
-             WHERE setting_key = 'dojo_theme'"
-    );
-    $sth->execute;
-
-    ($self->{dojo_theme}) = $sth->fetchrow_array;
-    $LedgerSMB::App_State::dojo_theme = $self->{dojo_theme};
-    $sth = $dbh->prepare('SELECT check_expiration()');
-    $sth->execute;
-    ($self->{warn_expire}) = $sth->fetchrow_array;
-    if ($self->{warn_expire}){
-        $sth = $dbh->prepare('SELECT user__check_my_expiration()');
-        $sth->execute;
-        ($self->{pw_expires})  = $sth->fetchrow_array;
-    }
-    $sth->finish();
     LedgerSMB::Company_Config::initialize($self);
-    $logger->trace("end");
 }
 
 sub _set_datestyle {
@@ -1554,25 +1425,19 @@ sub get_shipto {
 
 =item $form->get_employee();
 
-Returns a list containing the name and id of the employee $form->{login}.  Any
-portion of $form->{login} including and past '@' are ignored.
+Returns a list containing the name and id of the logged in employee.
 
 =cut
 
 sub get_employee {
     my ($self) = @_;
 
-    my $login = $self->{login};
-    $login =~ s/@.*//;
-
     my $query = qq|
         SELECT name, id
-          FROM entity WHERE id IN (select entity_id
-                     FROM users
-                    WHERE username = ?)|;
+          FROM entity WHERE id = person__get_my_entity_id()|;
 
     my $sth = $self->{dbh}->prepare($query);
-    $sth->execute($login);
+    $sth->execute;
     my (@a) = $sth->fetchrow_array();
 
     $sth->finish;

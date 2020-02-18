@@ -106,8 +106,7 @@ sub add {
         $form->{title} = $locale->text('Add Sales Invoice');
         $form->{reverse} = 0;
     }
-    $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&type=$form->{type}"
       unless $form->{callback};
 
     &invoice_links;
@@ -1488,7 +1487,7 @@ sub save_info {
         if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
-        print qq|<html><body class="lsmb $form->{dojo_theme}">|;
+        print qq|<html><body class="lsmb">|;
         my $url = $form->{callback};
         print qq|If you are not redirected automatically, click <a href="$url">|
             . qq|here</a>.</body></html>|;

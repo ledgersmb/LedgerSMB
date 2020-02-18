@@ -75,8 +75,7 @@ sub add {
         $form->{vc}    = 'customer';
     }
 
-    $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}&login=$form->{login}&sessionid=$form->{sessionid}"
+    $form->{callback} = "$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}"
       unless $form->{callback};
 
     $form->{rowcount} = 0;
@@ -1328,7 +1327,7 @@ sub delete {
     }
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
@@ -1459,11 +1458,6 @@ sub invoice {
         eval { require "old/bin/custom/$form->{script}"; };
     }
 
-    # customized scripts for login
-    if ( -f "old/bin/custom/$form->{login}_$form->{script}" ) {
-        eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
-    }
-
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
     for (
         qw(currency oldcurrency employee department intnotes notes taxincluded))
@@ -1504,7 +1498,7 @@ sub backorder_exchangerate {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
@@ -1746,7 +1740,7 @@ sub display_ship_receive {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -2020,7 +2014,7 @@ sub search_transfer {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -2167,7 +2161,7 @@ sub list_transfer {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
@@ -2416,7 +2410,7 @@ sub po_orderitems {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}">
+<body class="lsmb">
 
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 

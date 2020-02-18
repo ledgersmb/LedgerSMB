@@ -53,9 +53,6 @@ require 'old/bin/printer.pl';# centralizing print options display
 if ( -f "old/bin/custom/arapprn.pl" ) {
     eval { require "old/bin/custom/arapprn.pl"; };
 }
-if ( -f "old/bin/custom/$form->{login}_arapprn.pl" ) {
-    eval { require "old/bin/custom/$form->{login}_arapprn.pl"; };
-}
 
 # end of main
 

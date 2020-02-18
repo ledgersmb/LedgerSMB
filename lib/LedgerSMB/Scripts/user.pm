@@ -49,8 +49,7 @@ sub preference_screen {
     }
     $user->get_option_data;
 
-    my $creds = $request->{_auth}->get_credentials();
-    $user->{login} = $creds->{login};
+    $user->{login} = $request->{_req}->env->{'lsmb.session'}->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request,
@@ -93,6 +92,9 @@ sub change_password {
     if ($user->{confirm_password}){
         $user->change_my_password;
     }
+    ###TODO we're breaking the separation of concerns here!
+    $request->{_req}->env->{'lsmb.session'}->{password} =
+        $request->{new_password};
     return preference_screen($request, $user);
 }
 

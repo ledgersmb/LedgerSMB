@@ -24,7 +24,7 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
-use LedgerSMB::Auth;
+use LedgerSMB::oldHandler;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
@@ -48,7 +48,7 @@ use Plack::Util;
 
 # After Perl 5.20 is the minimum required version,
 # we can drop the restriction on the match vars
-# because 5.20 doesn't copy the data (but uses       
+# because 5.20 doesn't copy the data (but uses
 # string slices)
 use English qw(-no_match_vars);
 if ($EUID == 0) {
@@ -77,15 +77,48 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 
 =cut
 
+our $psgi_env;
+
 sub old_app {
-    return CGI::Emulate::PSGI->handler(
+    my $handler = CGI::Emulate::PSGI->handler(
         sub {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
             local $ENV{SCRIPT_NAME} = $uri;
+            local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
 
-            _run_old();
+            if (my $cpid = fork()){
+                waitpid $cpid, 0;
+            } else {
+                # make 100% sure any "die"-s don't bubble up higher than
+                # this point in the stack: we're a fork()ed process and
+                # should under no circumstance end up acting like another
+                # worker. When we are done, we need to exit() below.
+                try {
+                    local ($!, $@) = (undef, undef);
+                    # the lsmb_legacy package is created by the
+                    # oldHandler use statement
+                    unless ( lsmb_legacy->handle($psgi_env) ) { ## no critic (RequireExplicitInclusion)
+                        if ($! or $@) {
+                            print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                            warn "Failed to execute old request ($!): $@\n";
+                        }
+                    }
+                };
+
+                exit;
+            }
+            return;
         });
+
+    # marshall the psgi environment into the cgi environment
+    # so we can re-use state from the various middlewares
+    return sub {
+        my $env = shift;
+        local $psgi_env = $env;
+
+        return $handler->($env);
+    }
 }
 
 
@@ -100,7 +133,7 @@ in LedgerSMB::Scripts::*.
 sub psgi_app {
     my $env = shift;
     my $psgi_req = Plack::Request::WithEncoding->new($env);
-    my $request = LedgerSMB->new($psgi_req, $env->{'lsmb.auth'});
+    my $request = LedgerSMB->new($psgi_req);
 
     $request->{action} = $env->{'lsmb.action_name'};
     my $res;
@@ -147,30 +180,6 @@ sub psgi_app {
     return $res;
 }
 
-sub _run_old {
-    if (my $cpid = fork()){
-       waitpid $cpid, 0;
-    } else {
-        # make 100% sure any "die"-s don't bubble up higher than this point in
-        # the stack: we're a fork()ed process and should under no circumstance
-        # end up acting like another worker. When we are done, we need to
-        # exit() below.
-        try {
-            local ($!, $@) = (undef, undef);
-            my $do_ = 'old/bin/old-handler.pl';
-            unless ( do $do_ ) {
-                if ($! or $@) {
-                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                    warn "Failed to execute $do_ ($!): $@\n";
-                }
-            }
-        };
-
-        exit;
-    }
-    return;
-}
-
 =item setup_url_space(development => $boolean, coverage => $boolean)
 
 Sets up the URL space for the PSGI app, pointing various URLs at the
@@ -201,16 +210,41 @@ sub setup_url_space {
         mount "/$_.pl" => builder {
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain          => 'main',
+                cookie          => LedgerSMB::Sysconfig::cookie_name,
+                duration        => 60*60*24*90,
+                # can marshall state in, but not back out (due to forking)
+                # so have the inner scope handle serialization itself
+                inner_serialize => 1;
+            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'closed',
+                default_company    => LedgerSMB::Sysconfig::default_db();
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'closed',
+                require_version    => $LedgerSMB::VERSION;
             $old_app
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
             enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain   => 'main',
+                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
             enable '+LedgerSMB::Middleware::Log4perl';
-            enable '+LedgerSMB::Middleware::AuthenticateSession';
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'open',
+                default_company => LedgerSMB::Sysconfig::default_db();
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'open',
+                require_version => $LedgerSMB::VERSION;
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
