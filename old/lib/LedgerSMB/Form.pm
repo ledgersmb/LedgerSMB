@@ -1248,14 +1248,6 @@ sub db_init {
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
-    my $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults
-             WHERE setting_key = 'role_prefix'"
-    );
-    $sth->execute or die $self->dberror('query to select role prefix');
-
-    ($self->{_role_prefix}) = $sth->fetchrow_array;
-
     LedgerSMB::Company_Config::initialize($self);
 }
 

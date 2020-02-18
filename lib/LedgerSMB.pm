@@ -267,15 +267,8 @@ sub close_form {
 
 sub initialize_with_db {
     my ($self) = @_;
+    my $sth;
 
-    my $sth = $self->{dbh}->prepare(q{
-            SELECT value FROM defaults
-             WHERE setting_key = 'role_prefix'})
-        or die $self->{dbh}->errstr;;
-    $sth->execute or die $sth->errstr;
-
-
-    ($self->{_role_prefix}) = $sth->fetchrow_array;
 
     $sth = $self->{dbh}->prepare('SELECT check_expiration()')
         or die $self->{dbh}->errstr;
