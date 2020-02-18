@@ -129,6 +129,8 @@ sub handle {
 
     try {
         $psgi_env->{'lsmb.app_cb'}->($psgi_env);
+        LedgerSMB::App_State::set_DBH($psgi_env->{'lsmb.app'});
+
         $form->{session_id} = $psgi_env->{'lsmb.session'}->{session_id};
         $form->db_init( $psgi_env->{'lsmb.app'},  \%myconfig );
         my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});

@@ -1243,7 +1243,6 @@ sub db_init {
     $path =~ s|[^/]*$||;
 
     $self->{dbh} = $dbh;
-    LedgerSMB::App_State::set_DBH($dbh);
     _set_datestyle($dbh);
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
