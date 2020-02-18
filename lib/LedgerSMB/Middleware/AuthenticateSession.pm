@@ -48,12 +48,6 @@ ledgersmb.conf will be used.
 
 =back
 
-Both regular unauthenticated and database only entry points may request
-clearing/ disregarding session cookie information by specifying the
-'lsmb.want_cleared_session' PSGI environment key.
-
-
-
 =cut
 
 use strict;

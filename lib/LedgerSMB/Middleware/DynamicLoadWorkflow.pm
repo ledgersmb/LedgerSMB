@@ -83,13 +83,6 @@ sub call {
     # This authorization stuff seems to belong elsewhere...
     # but it's very much tied to our current style of request handling.
     ###TODO: factor out in its own 'authentication middleware'
-    my $clear_session_actions =
-        $module->can('clear_session_actions');
-    $env->{'lsmb.want_cleared_session'} =
-        $clear_session_actions
-        && ( ! none { $_ eq $action_name }
-               $clear_session_actions->() );
-
     my $no_db_actions = $module->can('no_db_actions');
     $env->{'lsmb.want_db'} =
         ! ($module->can('no_db')
