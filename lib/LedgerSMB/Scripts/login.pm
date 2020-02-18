@@ -20,27 +20,12 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK );
 use JSON::MaybeXS;
-use Try::Tiny;
 
-use LedgerSMB::Locale;
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;
-use LedgerSMB::User;
 
 our $VERSION = 1.0;
-
-=item no_db_actions
-
-Returns an array of actions which should not receive
-a request object /not/ connected to the database.
-
-=cut
-
-sub no_db_actions {
-    return qw(__default authenticate logout);
-}
 
 =item __default (no action specified, do this)
 
@@ -103,27 +88,7 @@ sub authenticate {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ '{ "target":  "login.pl?action=login" }' ]];
-}
-
-=item login
-
-Logs in the user and displays the root document.
-
-=cut
-
-sub login {
-    my ($request) = @_;
-
-    if (!$request->{_user}){
-        return __default($request);
-    }
-
-    $request->{title} = "LedgerSMB $request->{version} -- ".
-    "$request->{login} -- $request->{company}";
-
-    my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'main', $request);
+             [ '{ "target":  "erp.pl?action=root" }' ]];
 }
 
 =item logout
