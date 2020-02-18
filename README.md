@@ -286,7 +286,7 @@ as well as in the Transifex project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2019 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2020 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
