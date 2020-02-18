@@ -1239,8 +1239,6 @@ Please enter your credentials
 
 sub db_init {
     my ( $self, $dbh, $myconfig ) = @_;
-    my $path = ($ENV{SCRIPT_NAME});
-    $path =~ s|[^/]*$||;
 
     $self->{dbh} = $dbh;
     _set_datestyle($dbh);
