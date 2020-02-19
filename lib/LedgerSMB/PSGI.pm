@@ -238,7 +238,8 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
-                want_db  => 1;
+                want_db  => 1,
+                script   => $_;
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
@@ -261,7 +262,8 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
-                want_db  => 0;
+                want_db  => 0,
+                script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
@@ -278,7 +280,8 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                script => 'setup.pl';
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::SetupAuthentication';
             enable '+LedgerSMB::Middleware::DisableBackButton';

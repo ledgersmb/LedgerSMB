@@ -29,19 +29,39 @@ use HTTP::Status qw/ HTTP_REQUEST_ENTITY_TOO_LARGE /;
 use List::Util qw{ none any };
 use Module::Runtime qw/ use_module /;
 use Plack::Request;
-use Plack::Util::Accessor qw( want_db );
+use Plack::Util::Accessor qw( script script_name module want_db );
 
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 
+=head2 $self->prepare_app
+
+Implements C<Plack::Middleware->prepare_app()>.
+
+=cut
+
+sub prepare_app {
+    my $self = shift;
+
+    my $m = ($self->script =~ s/[.]pl$//r);
+    $self->script_name($m);
+    $self->module('LedgerSMB::Scripts::' . $m);
+
+    die 'No workflow module specified!'
+        unless $self->module;
+
+    die "Unable to open module $self->module : $! : $@"
+        unless use_module($self->module);
+}
+
+
 =head2 $self->call($env)
 
 Implements C<Plack::Middleware->call()>.
 
 =cut
-
 
 sub call {
     my $self = shift;
@@ -57,24 +77,9 @@ sub call {
             ];
     }
 
-    my $script_name = $env->{SCRIPT_NAME};
-    $script_name =~ m/([^\/\\\?]*)\.pl$/;
-    $script_name = $1;
-    my $module = "LedgerSMB::Scripts::$script_name";
-    my $script = "$script_name.pl";
-
-    return LedgerSMB::PSGI::Util::internal_server_error(
-        'No workflow module specified!'
-        )
-        unless $module;
-
-    return LedgerSMB::PSGI::Util::internal_server_error(
-        "Unable to open module $module : $! : $@"
-        )
-        unless use_module($module);
-
     my $req = Plack::Request->new($env);
     my $action_name = $req->parameters->get('action') // '__default';
+    my $module = $self->module;
     my $action = $module->can($action_name);
     return  LedgerSMB::PSGI::Util::internal_server_error(
         "Action Not Defined: $action_name"
@@ -82,9 +87,9 @@ sub call {
         unless $action;
 
     $env->{'lsmb.want_db'} = $self->want_db;
-    $env->{'lsmb.module'} = $module;
-    $env->{'lsmb.script'} = $script;
-    $env->{'lsmb.script_name'} = $script_name;
+    $env->{'lsmb.module'} = $self->module;
+    $env->{'lsmb.script'} = $self->script;
+    $env->{'lsmb.script_name'} = $self->script_name;
     $env->{'lsmb.action'} = $action;
     $env->{'lsmb.action_name'} = $action_name;
     return $self->app->($env);
