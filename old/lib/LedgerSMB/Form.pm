@@ -1239,22 +1239,11 @@ Please enter your credentials
 
 sub db_init {
     my ( $self, $dbh, $myconfig ) = @_;
-    my $path = ($ENV{SCRIPT_NAME});
-    $path =~ s|[^/]*$||;
 
     $self->{dbh} = $dbh;
-    LedgerSMB::App_State::set_DBH($dbh);
     _set_datestyle($dbh);
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
-
-    my $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults
-             WHERE setting_key = 'role_prefix'"
-    );
-    $sth->execute or die $self->dberror('query to select role prefix');
-
-    ($self->{_role_prefix}) = $sth->fetchrow_array;
 
     LedgerSMB::Company_Config::initialize($self);
 }
