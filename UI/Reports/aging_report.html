@@ -1,8 +1,5 @@
 <?lsmb
 
-PROCESS "ui-header.html"
-   stylesheet = USER.stylesheet;
-
 PROCESS "elements.html";
 
 PROCESS "dynatable.html";
@@ -128,4 +125,3 @@ IF FORMATS.grep('ODS').size() ?>
    href="<?lsmb LINK _ '&amp;format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
 <?lsmb END; ?>
 </body>
-<?lsmb PROCESS end_html ?>
