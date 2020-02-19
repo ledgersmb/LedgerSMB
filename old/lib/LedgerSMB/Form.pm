@@ -1232,8 +1232,6 @@ sub db_init {
     $self->{dbh} = $dbh;
     _set_datestyle($dbh);
 
-    $self->{db_dateformat} = $myconfig->{dateformat};    #shim
-
     LedgerSMB::Company_Config::initialize($self);
 }
 
