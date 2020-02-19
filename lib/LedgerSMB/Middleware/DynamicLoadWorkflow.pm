@@ -29,6 +29,7 @@ use HTTP::Status qw/ HTTP_REQUEST_ENTITY_TOO_LARGE /;
 use List::Util qw{ none any };
 use Module::Runtime qw/ use_module /;
 use Plack::Request;
+use Plack::Util::Accessor qw( want_db );
 
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
@@ -80,22 +81,7 @@ sub call {
         )
         unless $action;
 
-    # This authorization stuff seems to belong elsewhere...
-    # but it's very much tied to our current style of request handling.
-    ###TODO: factor out in its own 'authentication middleware'
-    my $clear_session_actions =
-        $module->can('clear_session_actions');
-    $env->{'lsmb.want_cleared_session'} =
-        $clear_session_actions
-        && ( ! none { $_ eq $action_name }
-               $clear_session_actions->() );
-
-    my $no_db_actions = $module->can('no_db_actions');
-    $env->{'lsmb.want_db'} =
-        ! ($module->can('no_db')
-           || ($no_db_actions &&
-               any { $_ eq $action_name } $no_db_actions->()));
-
+    $env->{'lsmb.want_db'} = $self->want_db;
     $env->{'lsmb.module'} = $module;
     $env->{'lsmb.script'} = $script;
     $env->{'lsmb.script_name'} = $script_name;

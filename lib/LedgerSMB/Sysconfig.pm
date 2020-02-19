@@ -486,7 +486,7 @@ our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
 #
 our @newscripts = qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
-   configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl
+   configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl erp.pl
    file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
    journal.pl login.pl lreports_co.pl menu.pl order.pl parts.pl payment.pl
    payroll.pl pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl

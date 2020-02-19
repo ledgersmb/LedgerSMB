@@ -237,7 +237,8 @@ sub setup_url_space {
                 domain   => 'main',
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
-            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow';
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                want_db  => 1;
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
@@ -249,7 +250,29 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
-        for  (grep { $_ ne 'setup.pl' } @LedgerSMB::Sysconfig::newscripts);
+        for  (grep { $_ !~ m/^(login|setup)[.]pl$/ } @LedgerSMB::Sysconfig::newscripts);
+
+        mount '/login.pl' => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain   => 'main',
+                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                duration => 60*60*24*90;
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                want_db  => 0;
+            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'open',
+                default_company => LedgerSMB::Sysconfig::default_db();
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'open',
+                require_version => $LedgerSMB::VERSION;
+            enable '+LedgerSMB::Middleware::DisableBackButton';
+            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
+            $psgi_app;
+        };
 
         mount '/setup.pl' => builder {
             enable '+LedgerSMB::Middleware::RequestID';

@@ -65,40 +65,6 @@ if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
     $CURRENT_MINOR_VERSION = $1;
 }
 
-=item no_db
-
-Existence of this sub causes requests passed to this module /not/ to be
-pre-connected to the database.
-
-=cut
-
-sub no_db {
-    # mark *all* entrypoints as not wanting a dbh
-    return 1;
-}
-
-=item no_db_actions
-
-=cut
-
-sub no_db_actions {
-    return qw(__default);
-}
-
-
-=item clear_session_actions
-
-Returns an array of actions which should have the session
-(cookie) cleared before verifying the session and being
-dispatched to.
-
-=cut
-
-sub clear_session_actions {
-    return qw(__default authenticate);
-}
-
-
 =item authenticate
 
 This method is a remnant of authentication shared with
