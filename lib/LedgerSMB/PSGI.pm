@@ -80,11 +80,9 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 our $psgi_env;
 
 sub old_app {
+    my $script = shift;
     my $handler = CGI::Emulate::PSGI->handler(
         sub {
-            my $uri = $ENV{REQUEST_URI};
-            $uri =~ s/\?.*//;
-            local $ENV{SCRIPT_NAME} = $uri;
             local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
 
             if (my $cpid = fork()){
@@ -98,7 +96,7 @@ sub old_app {
                     local ($!, $@) = (undef, undef);
                     # the lsmb_legacy package is created by the
                     # oldHandler use statement
-                    unless ( lsmb_legacy->handle($psgi_env) ) { ## no critic (RequireExplicitInclusion)
+                    unless ( lsmb_legacy->handle($script, $psgi_env) ) { ## no critic (RequireExplicitInclusion)
                         if ($! or $@) {
                             print "Status: 500 Internal server error (PSGI.pm)\n\n";
                             warn "Failed to execute old request ($!): $@\n";
@@ -191,7 +189,6 @@ sub setup_url_space {
     my %args = @_;
     my $coverage = $args{coverage};
     my $development = $args{development};
-    my $old_app = old_app();
     my $psgi_app = \&psgi_app;
 
     return builder {
@@ -208,6 +205,7 @@ sub setup_url_space {
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => builder {
+            my $script = $_;
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
@@ -225,11 +223,12 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'closed',
                 require_version    => $LedgerSMB::VERSION;
-            $old_app
+            old_app($script)
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
+            my $script = $_;
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
@@ -239,7 +238,7 @@ sub setup_url_space {
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 want_db  => 1,
-                script   => $_;
+                script   => $script;
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
