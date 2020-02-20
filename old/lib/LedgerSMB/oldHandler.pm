@@ -73,7 +73,9 @@ sub handle {
     #
     # Note that this function can receive a PSGI environment, but
     # modifications aren't marshalled back to the fork()ing process!
-    my ($class, $psgi_env) = @_;
+    my ($class, $script_module, $psgi_env) = @_;
+    my $script = $script_module . '.pl';
+
 
     binmode(STDIN,  ':utf8');
     binmode(STDOUT, ':utf8');
@@ -92,12 +94,6 @@ sub handle {
     $form->{_session} = $session;
     @{$form}{qw/ session_id company /} =
         @{$session}{qw/ session_id company /};
-
-    # name of this script
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    my $script = $1;
-    $script =~ m/(.*)\.pl/;
-    my $script_module = $1;
 
     #make logger available to other old programs
     $logger = Log::Log4perl->get_logger("lsmb.$script_module.$form->{action}");
@@ -118,9 +114,6 @@ sub handle {
 
     # we use $script for the language module
     $form->{script} = $script;
-
-    # strip .pl for translation files
-    $script =~ s/\.pl//;
 
     # locale messages
     #$form->{charset} = $locale->encoding;
@@ -149,8 +142,8 @@ sub handle {
 
         $form->{_locale} = $locale;
         # pull in the main code
-        $logger->trace("requiring old/bin/$form->{script}");
-        require "old/bin/$form->{script}";
+        $logger->trace("requiring old/bin/$script");
+        require "old/bin/$script";
 
         if ( $form->{action}
              && $form->{action} ne 'redirect'

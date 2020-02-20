@@ -1226,24 +1226,11 @@ is populated.  The connection initiated has autocommit disabled.
 =cut
 
 
-sub _credential_prompt{
-    print qq|Status: 401
-Content-Type: text/plain; charset=utf-8
-WWW-Authenticate: Basic realm=LedgerSMB
-
-Please enter your credentials
-|;
-    die;
-}
-
-
 sub db_init {
     my ( $self, $dbh, $myconfig ) = @_;
 
     $self->{dbh} = $dbh;
     _set_datestyle($dbh);
-
-    $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
     LedgerSMB::Company_Config::initialize($self);
 }
