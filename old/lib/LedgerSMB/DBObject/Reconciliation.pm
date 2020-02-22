@@ -228,7 +228,12 @@ sub delete {
 
 =item reject
 
-This rejects a submitted but not approved report.
+This rejects a submitted but not approved report, by marking it as
+not submitted.
+
+Requires that the following object properties are set:
+
+  * report_id
 
 =cut
 
