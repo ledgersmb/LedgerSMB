@@ -96,7 +96,7 @@ sub call {
     my $req = Plack::Request->new($env);
 
     my $dbh;
-    if ($env->{'lsmb.want_db'}
+    if ($self->provide_connection eq 'open'
         || $self->provide_connection eq 'closed') {
         if ($self->provide_connection eq 'closed') {
             $env->{'lsmb.app_cb'} = sub {

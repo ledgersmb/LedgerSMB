@@ -123,7 +123,8 @@ sub call {
     $env->{'lsmb.session_id'} = $session->{session_id};
 
     my $dbh;
-    if ($env->{'lsmb.want_db'}) {
+    if ($self->provide_connection eq 'open'
+        or $self->provide_connection eq 'closed') {
         my $r;
         ($dbh, $r) = _connect($env);
         return $r if defined $r;
@@ -140,10 +141,12 @@ sub call {
                     };
                 }
                 $dbh->disconnect;
+                delete $env->{'lsmb.db'};
             }
         }
         else {
             $dbh->disconnect;
+            delete $env->{'lsmb.db'};
         }
     }
     else {
