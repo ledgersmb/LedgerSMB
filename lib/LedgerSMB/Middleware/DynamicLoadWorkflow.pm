@@ -29,7 +29,7 @@ use HTTP::Status qw/ HTTP_REQUEST_ENTITY_TOO_LARGE /;
 use List::Util qw{ none any };
 use Module::Runtime qw/ use_module /;
 use Plack::Request;
-use Plack::Util::Accessor qw( script script_name module want_db );
+use Plack::Util::Accessor qw( script script_name module );
 
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
@@ -86,7 +86,6 @@ sub call {
         )
         unless $action;
 
-    $env->{'lsmb.want_db'} = $self->want_db;
     $env->{'lsmb.module'} = $self->module;
     $env->{'lsmb.script'} = $self->script;
     $env->{'lsmb.script_name'} = $self->script_name;

@@ -137,16 +137,8 @@ sub psgi_app {
     my $res;
     try {
         LedgerSMB::App_State::run_with_state sub {
-            if ($env->{'lsmb.want_db'}) {
-                $request->initialize_with_db();
-            }
-            else {
-                # Some default settings as we run without a user
-                $request->{_user} = {
-                    dateformat => LedgerSMB::Sysconfig::date_format(),
-                };
-            }
 
+            $request->initialize_with_db if $request->{dbh};
             $res = $env->{'lsmb.action'}->($request);
         }, DBH     => $env->{'lsmb.db'};
 
@@ -237,7 +229,6 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
-                want_db  => 1,
                 script   => $script;
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
@@ -261,14 +252,13 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
-                want_db  => 0,
                 script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Log4perl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
-                provide_connection => 'open',
+                provide_connection => 'none',
                 default_company => LedgerSMB::Sysconfig::default_db();
             enable '+LedgerSMB::Middleware::MainAppConnect',
-                provide_connection => 'open',
+                provide_connection => 'none',
                 require_version => $LedgerSMB::VERSION;
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
