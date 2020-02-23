@@ -40,7 +40,7 @@ if (defined $ENV{LSMB_TEST_DB}){
 @test_request_data = do { 'xt/data/62-request-data' } ; # Import test case hashes
 
 for (qw(        drafts     login      payment
-                menu       contact
+                contact
                 inventory  vouchers recon)
     ){
         ok(eval { require "LedgerSMB/Scripts/$_.pm" }, "Importing $_");

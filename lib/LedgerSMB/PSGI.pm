@@ -26,6 +26,8 @@ use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::oldHandler;
 use LedgerSMB::PSGI::Util;
+use LedgerSMB::Router keywords => [ qw( router ) ];
+use LedgerSMB::Routes::ERP::API::MenuNodes;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
@@ -33,6 +35,7 @@ use CGI::Emulate::PSGI;
 use HTTP::Status qw( HTTP_FOUND );
 use Try::Tiny;
 use List::Util qw{  none };
+use Log::Log4perl;
 use Scalar::Util qw{ reftype };
 
 # To build the URL space
@@ -61,8 +64,6 @@ if ($EUID == 0) {
         'be used as starman drops privileges too late, starting us as root.'
     );
 }
-
-
 
 local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -177,6 +178,24 @@ appropriate PSGI handlers/apps.
 
 =cut
 
+sub _hook_psgi_logger {
+    my ($env, $settings, $router) = @_;
+    my $logger_name = $settings->{logger} ? ".$settings->{logger}" : '';
+    my $logger = Log::Log4perl->get_logger("LedgerSMB$logger_name");
+
+    $env->{'psgix.logger'} = sub {
+        my ($level, $msg) = @{$_[0]}{qw/ level message /};
+
+        return if not defined $msg;
+
+        local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
+        $logger->$level( ($msg =~ s/\n/\\n/gr) );
+        return;
+    };
+
+    return;
+}
+
 sub setup_url_space {
     my %args = @_;
     my $coverage = $args{coverage};
@@ -263,6 +282,26 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DisableBackButton';
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
+        };
+
+        mount '/erp/api' => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain      => 'main',
+                cookie      => LedgerSMB::Sysconfig::cookie_name,
+                cookie_path => '/',
+                duration    => 60*60*24*90;
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'open',
+                default_company => LedgerSMB::Sysconfig::default_db();
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'open',
+                require_version => $LedgerSMB::VERSION;
+            my $router = router 'erp/api';
+            $router->hooks('before' => \&_hook_psgi_logger);
+            sub { return $router->dispatch(@_); };
         };
 
         mount '/setup.pl' => builder {
