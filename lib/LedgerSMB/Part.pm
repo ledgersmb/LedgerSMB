@@ -33,7 +33,7 @@ table are returned.
 
 sub basic_partslist {
     my ($self, %args) = @_;
-    my @parts = __PACKAGE__->call_dbmethod(
+    my @parts = $self->call_dbmethod(
         funcname => 'parts__search_lite',
         args     => \%args
         );
@@ -52,11 +52,11 @@ match and the part is not obsolete.
 sub get_by_partnumber {
     my ($self, $partnumber) = @_;
     return (
-       __PACKAGE__->call_dbmethod(
-           funcname => 'parts__get_by_partnumber',
-           args     => { partnumber => $partnumber }
-       )
-    )[0];
+        $self->call_dbmethod(
+            funcname => 'parts__get_by_partnumber',
+            args     => { partnumber => $partnumber }
+        )
+        )[0];
 }
 
 =head1 LICENSE AND COPYRIGHT
