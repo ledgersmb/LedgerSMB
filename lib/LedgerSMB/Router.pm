@@ -54,6 +54,7 @@ use parent 'Exporter';
 
 use Carp;
 use HTTP::Status qw( HTTP_NOT_FOUND );
+use JSON::MaybeXS;
 use List::Util qw( reduce );
 
 use LedgerSMB::Locale;
@@ -72,11 +73,15 @@ my $appname;
 my $router = {};
 
 
-our @EXPORT = qw( del get head patch post put set user locale ); ## no critic (ProhibitAutomaticExportation)
+our @EXPORT = ## no critic (ProhibitAutomaticExportation)
+    qw(
+    del get head patch post put
+    json locale set user
+    );
 our @EXPORT_OK = qw(router);
 our %EXPORT_TAGS = (
     all => [ qw( any del get head options patch post put
-             hook set user locale )]
+             hook json locale set user )]
     );
 
 =head1 MODULE METHODS
@@ -351,9 +356,10 @@ sub _add_mapping {
 =head2 put $path => \&code
 
 =head2 hook $name => \&hook
+=head2 json
+=head2 locale $env
 =head2 set $setting => 'value'
 =head2 user $env
-=head2 locale $env
 
 =cut
 
@@ -374,6 +380,25 @@ sub hook {
     return;
 }
 
+my $json = JSON::MaybeXS->new( pretty => 1,
+                               utf8 => 1,
+                               indent => 1,
+                               convert_blessed => 1,
+                               allow_bignum => 1);
+
+sub json {
+    return $json;
+}
+
+sub locale {
+    my $env = shift;
+
+    return $env->{'lsmb.locale'} //=
+        LedgerSMB::Locale->get_handle(
+            user($env)->{language} // LedgerSMB::Sysconfig::language()
+        );
+}
+
 sub set {
     my ($setting, $value) = @_;
 
@@ -390,15 +415,6 @@ sub user {
             dbh => $env->{'lsmb.app'},
         }) // {};
     return $env->{'lsmb.user'};
-}
-
-sub locale {
-    my $env = shift;
-
-    return $env->{'lsmb.locale'} //=
-        LedgerSMB::Locale->get_handle(
-            user($env)->{language} // LedgerSMB::Sysconfig::language()
-        );
 }
 
 =head2 router $appname

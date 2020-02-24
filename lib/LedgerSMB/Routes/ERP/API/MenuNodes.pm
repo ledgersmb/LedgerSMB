@@ -22,18 +22,11 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK );
-use JSON::MaybeXS;
 
 use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.menu-nodes';
-
-my $json = JSON::MaybeXS->new( pretty => 1,
-                               utf8 => 1,
-                               indent => 1,
-                               convert_blessed => 1,
-                               allow_bignum => 1);
 
 
 get '/menu-nodes/' => sub {
@@ -46,7 +39,7 @@ get '/menu-nodes/' => sub {
         for (@{$menu->{menu_items}});
 
     return [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-             [ $json->encode( $menu->{menu_items} ) ] ];
+             [ json()->encode( $menu->{menu_items} ) ] ];
 };
 
 
