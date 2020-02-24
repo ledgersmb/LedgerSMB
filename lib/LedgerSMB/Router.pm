@@ -56,6 +56,10 @@ use Carp;
 use HTTP::Status qw( HTTP_NOT_FOUND );
 use List::Util qw( reduce );
 
+use LedgerSMB::Locale;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::User;
+
 use constant {
     MAP_NEXT    => 0,
     MAP_HANDLER => 1,
@@ -68,11 +72,11 @@ my $appname;
 my $router = {};
 
 
-our @EXPORT = qw( del get head patch post put set ); ## no critic (ProhibitAutomaticExportation)
+our @EXPORT = qw( del get head patch post put set user locale ); ## no critic (ProhibitAutomaticExportation)
 our @EXPORT_OK = qw(router);
 our %EXPORT_TAGS = (
     all => [ qw( any del get head options patch post put
-             hook set )]
+             hook set user locale )]
     );
 
 =head1 MODULE METHODS
@@ -348,6 +352,8 @@ sub _add_mapping {
 
 =head2 hook $name => \&hook
 =head2 set $setting => 'value'
+=head2 user $env
+=head2 locale $env
 
 =cut
 
@@ -374,6 +380,25 @@ sub set {
     $router->{$appname}->setting($setting, $value);
 
     return;
+}
+
+
+sub user {
+    my $env = shift;
+    $env->{'lsmb.user'} //= LedgerSMB::User->fetch_config(
+        {
+            dbh => $env->{'lsmb.app'},
+        }) // {};
+    return $env->{'lsmb.user'};
+}
+
+sub locale {
+    my $env = shift;
+
+    return $env->{'lsmb.locale'} //=
+        LedgerSMB::Locale->get_handle(
+            user($env)->{language} // LedgerSMB::Sysconfig::language()
+        );
 }
 
 =head2 router $appname

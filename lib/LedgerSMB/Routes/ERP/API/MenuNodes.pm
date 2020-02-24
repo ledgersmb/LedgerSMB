@@ -38,13 +38,12 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 
 get '/menu-nodes/' => sub {
     my ($env) = @_;
+    my $locale = locale($env);
 
-    my $menu = LedgerSMB::DBObject::Menu
-        ->new(dbh => $env->{'lsmb.app'});
-
+    my $menu = LedgerSMB::DBObject::Menu->new(dbh => $env->{'lsmb.app'});
     $menu->generate;
-#    $_->{label} = $locale->maketext($_->{label})
-#        for (@{$menu->{menu_items}});
+    $_->{label} = $locale->maketext($_->{label})
+        for (@{$menu->{menu_items}});
 
     return [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              [ $json->encode( $menu->{menu_items} ) ] ];
