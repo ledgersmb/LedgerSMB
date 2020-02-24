@@ -15,7 +15,7 @@ define(["dojo/_base/declare",
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
         var restStore = new JsonRest({
-            target:      "erp/api/menu-nodes/",
+            target:      "erp/api/v0/menu-nodes/",
             idProperty: "id"
         });
         var memoryStore = new Memory({idProperty: "id"});

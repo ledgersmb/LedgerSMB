@@ -50,7 +50,7 @@ define([
                     });
         var store = new Observable(new partsRest({
             idProperty: "partnumber",
-            target: "erp/api/goods/"
+            target: "erp/api/v0/goods/"
         }));
         console.log("done creating store");
         return store;

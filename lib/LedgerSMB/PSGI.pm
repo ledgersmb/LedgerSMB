@@ -285,7 +285,7 @@ sub setup_url_space {
             $psgi_app;
         };
 
-        mount '/erp/api' => builder {
+        mount '/erp/api/v0' => builder {
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
