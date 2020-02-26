@@ -98,6 +98,7 @@ sub columns {
 
      {col_id => 'sold',
         type => 'href',
+       class => 'amount',
         name => $self->Text('Sold'),
    href_base => "invoice.pl?&from_date=$from_date&to_date=$to_date"
                 . '&open=1&closed=1&action=invoice_search&'
@@ -112,6 +113,7 @@ sub columns {
 
      {col_id => 'purchased',
         type => 'href',
+       class => 'amount',
         name => $self->Text('Purchased'),
    href_base => "invoice.pl?&date_from=$self->date_from&date_to=$self->date_to"
                 . '&open=1&closed=1&action=invoice_search&'
@@ -126,17 +128,17 @@ sub columns {
 
      {col_id => 'used',
         type => 'text',
-       money => 1,
+       class => 'amount',
         name => $self->Text('Used'), },
 
      {col_id => 'assembled',
         type => 'text',
-       money => 1,
+       class => 'amount',
       name => $self->Text('Assembled'), },
 
      {col_id => 'adjusted',
         type => 'text',
-       money => 1,
+       class => 'amount',
       name => $self->Text('Adjusted'), }
     ];
 }
