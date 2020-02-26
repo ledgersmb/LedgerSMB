@@ -58,6 +58,15 @@ This is the id of the report, only valid once stored
 
 has id => (is => 'rw', isa => 'Int', required => '0');
 
+=item trans_id int
+
+ID of the transaction associated with the inventory report, when the
+report has been approved (undefined otherwise).
+
+=cut
+
+has trans_id => (is => 'rw', isa => 'Maybe[Int]', required => '0');
+
 =item transdate date
 
 This is the date the inventory was counted at.  The invoices take effect on

@@ -366,6 +366,11 @@ BEGIN
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
+IF inv.trans_id IS NOT NULL THEN
+   -- already approved
+   RETURN inv;
+END IF;
+
 INSERT INTO gl (description, transdate, reference, approved, trans_type_code)
         VALUES ('Transaction due to approval of inventory adjustment',
                 inv.transdate, 'invadj-' || in_id, true, 'ia')
