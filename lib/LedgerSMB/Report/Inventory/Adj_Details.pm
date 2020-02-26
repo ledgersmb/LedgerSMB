@@ -53,6 +53,10 @@ Matches the beginning of the source string on the report source string
 
 has source => (is => 'rw', isa => 'Maybe[Str]');
 
+### private properties
+
+has _include_buttons => (is => 'rw', default => 1);
+
 =back
 
 =head1 REPORT CONSTANT FUNCTIONS
@@ -83,6 +87,7 @@ sub header_lines {
 
 sub columns {
     my ($self) = @_;
+    return [] if not $self->_include_buttons;
     return [
       {col_id => 'partnumber',
          type => 'href',
@@ -137,6 +142,7 @@ sub set_buttons {
 sub run_report {
     my ($self) = @_;
     my ($rpt) = $self->call_dbmethod(funcname => 'inventory_adjust__get');
+    $self->_include_buttons(defined $rpt->{trans_id});
     $self->source($rpt->{source});
     my @rows = $self->call_dbmethod(funcname => 'inventory_adjust__get_lines');
     for my $row (@rows){
