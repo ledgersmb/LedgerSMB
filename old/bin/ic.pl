@@ -1226,7 +1226,7 @@ sub assembly_row {
 
         # escape ampersands
         $form->{$key} =~ s/&/%26/g;
-        $previousform .= qq|$key=$form->{$key}&| if $form->{$key};
+        $previousform .= qq|$key=$form->{$key}&| if $form->{$key} && ! ref $form->{$key};
     }
     chop $previousform;
     $form->{previousform} = $form->escape( $previousform, 1 );
@@ -1782,7 +1782,6 @@ sub name_selected {
 }
 
 sub save {
-
     if ( $form->{obsolete} ) {
         $form->error(
             $locale->maketext(
@@ -1817,7 +1816,7 @@ sub save {
         $baseassembly = $form->{baseassembly};
 
         # don't trample on previous variables
-        for ( keys %newform ) { delete $form->{$_} if $_ ne 'dbh' }
+        for ( keys %newform ) { delete $form->{$_} if $_ ne 'dbh' && $_ !~ /^_/ }
 
         # now take it apart and restore original values
         foreach my $item ( split /&/, $previousform ) {
