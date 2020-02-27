@@ -179,9 +179,10 @@ Returns an array of currencies defined for the current company.
 
 sub get_currencies {
     my $self = shift;
-    @{$self->{currencies}} =
+
+    $self->{currencies} = [
         map { $_->{curr} }
-        $self->call_procedure(funcname => 'currency__list');
+        $self->call_procedure(funcname => 'currency__list') ];
     return @{$self->{currencies}};
 }
 
