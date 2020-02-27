@@ -91,8 +91,19 @@ commands:
       - run:
           name: Set up dirs and files
           command: |
-            mkdir -p logs screens;
+            mkdir -p logs screens
+            # these commands are in start.sh of the Perl container too:
             cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+            sed -i \
+                -e "s/\(cache_templates = \).*\$/cache_templates = 1/g" \
+                -e "s/\(host = \).*\$/\1$POSTGRES_HOST/g" \
+                -e "s/\(port = \).*\$/\1$POSTGRES_PORT/g" \
+                -e "s/\(default_db = \).*\$/\1$DEFAULT_DB/g" \
+                -e "s%\(sendmail   = \).*%#\1/usr/sbin/ssmtp%g" \
+                -e "s/# \(smtphost = \).*\$/\1mailhog:1025/g" \
+                -e "s/# \(backup_email_from = \).*\$/\1lsmb-backups@example.com/g" \
+                -e "s/#dojo_built = 1/dojo_built = 0/" \
+              ledgersmb.conf
   start_plackup:
     description: "Start plackup"
     steps:
@@ -136,6 +147,8 @@ executors:
     docker:
       - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
       - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
+        environment:
+          POSTGRES_PASSWORD: test
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
@@ -156,8 +169,8 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: "5.28"
-      postgres: "11"
+      perl: latest
+      postgres: latest
       browser: phantomjs
     steps:
       - prep_env
