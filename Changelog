@@ -16,6 +16,7 @@ Added functionalities
 * Parts searches can be restricted by type (part, service, ...)
 * SysV init script template for RedHat/CentOS (#2900)
 * New configuration keys in '[mail]' section of ledgersmb.conf (#4378)
+* Beginnings of a web services API, served at /erp/api/v0 (#4452)
 
 Changed functionalities
 * Faster loading of the menu
@@ -33,6 +34,8 @@ Bugs fixed
 * Default dates sometimes off by a day (before or after the current day) (#2587)
 * Customers and vendors in parts screen selectable through drop-downs
 * Overpayments not shown in Cash > Reports > Receipts (#3577)
+* Handling of currencies with short codes or unusual characters (#4435, #4436)
+* Formatting of columns in the 'Inventory Activity' report
 
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
@@ -49,6 +52,10 @@ Code cleanup
 * Remove remnants of custom field support
 * Remove unused infrastructure to administer access role groups
 * Stricter data model for storage of foreign currency exchange rates
+* Simplified request handling by
+  * Making old/bin/old-handler.pl a PSGI app (LedgerSMB::oldHandler)
+  * Stripping LedgerSMB::Form from anything handled by middleware
+  * Separating 'setup.pl authentication' into its own middleware
 
 Dependency updates
 * Dojo Toolkit updated to 1.16.0
