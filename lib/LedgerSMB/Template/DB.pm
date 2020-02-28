@@ -107,6 +107,8 @@ Gets the template by args (for editing or management).  Args are:
 
 =item format
 
+=item dbh
+
 =back
 
 =cut
@@ -115,13 +117,15 @@ sub get {
     my $module = shift @_;
     my %args = @_;
     my ($temp) = __PACKAGE__->call_procedure(
-         funcname => 'template__get',
-         args => [$args{template_name}, $args{language_code}, $args{format}]
+        dbh      => $args{dbh},
+        funcname => 'template__get',
+        args     => [$args{template_name}, $args{language_code}, $args{format}]
     );
     die text('Could Not Load Template from DB') unless $temp;
     for (keys (%$temp)){
         delete $temp->{$_} unless defined $temp->{$_};
     }
+    $temp->{_dbh} = $args{dbh};
     return __PACKAGE__->new(%$temp);
 }
 
