@@ -30,7 +30,8 @@ use parent qw ( Plack::Middleware );
 use Cookie::Baker;
 use Plack::Request;
 use Plack::Util;
-use Plack::Util::Accessor qw( domain cookie duration inner_serialize );
+use Plack::Util::Accessor
+    qw( domain cookie cookie_path duration inner_serialize );
 use Session::Storage::Secure;
 
 use LedgerSMB::PSGI::Util;
@@ -59,7 +60,9 @@ sub call {
     my $session     = $store->decode($cookie);
 
     my $secure = $env->{SERVER_PROTOCOL} eq 'https';
-    my $path = LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
+    my $path =
+        $self->cookie_path //
+        LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
     $env->{'lsmb.session'} = $session;
     return Plack::Util::response_cb(
         $self->app->($env), sub {

@@ -40,17 +40,17 @@ define([
                         },
                         query: function(query, options) {
                             if (query && typeof query == "object") {
-                                query = io.objectToQuery(query);
+                                query = "?" + io.objectToQuery(query);
                             }
                             if (options && options.type) {
-                                query = "&type=" + options.type + "&" + query
+                                query = "?type=" + options.type + "&" + query
                             }
                             return this.inherited(arguments, [query, options]);
                         }
                     });
         var store = new Observable(new partsRest({
             idProperty: "partnumber",
-            target: "parts.pl?action=partslist_json&"
+            target: "erp/api/v0/goods/"
         }));
         console.log("done creating store");
         return store;
