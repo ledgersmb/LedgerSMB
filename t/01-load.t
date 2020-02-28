@@ -176,6 +176,7 @@ my @modules =
           'LedgerSMB::Router',
           'LedgerSMB::Routes::ERP::API::Goods',
           'LedgerSMB::Routes::ERP::API::MenuNodes',
+          'LedgerSMB::Routes::ERP::API::Templates',
           'LedgerSMB::Scripts::budget_reports',
           'LedgerSMB::Scripts::currency',
           'LedgerSMB::Scripts::contact_reports', 'LedgerSMB::Scripts::file',

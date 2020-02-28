@@ -116,10 +116,13 @@ Gets the template by args (for editing or management).  Args are:
 sub get {
     my $module = shift @_;
     my %args = @_;
+    my @args =
+        $args{id} ? ($args{id})
+        : (@args{qw/template_name language_code format /});
     my ($temp) = __PACKAGE__->call_procedure(
         dbh      => $args{dbh},
-        funcname => 'template__get',
-        args     => [$args{template_name}, $args{language_code}, $args{format}]
+        funcname => ($args{id} ? 'template__get_by_id' : 'template__get'),
+        args     => \@args,
     );
     die text('Could Not Load Template from DB') unless $temp;
     for (keys (%$temp)){

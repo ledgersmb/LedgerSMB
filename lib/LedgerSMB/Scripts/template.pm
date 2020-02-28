@@ -48,47 +48,6 @@ sub list {
         );
 }
 
-=head2 templates_json
-
-=cut
-
-sub templates_json {
-    my ($request) = @_;
-
-    my $query = 'select id, template_name, language_code, format from template';
-    ###TODO: this breaks when we run in another schema...
-
-    my @templates = $request->{dbh}->selectall_array($query, { Slice => {} });
-    return $request->to_json( \@templates );
-}
-
-=head2 template
-
-=cut
-
-sub template {
-    my ($request) = @_;
-
-    my $dbtemplate;
-    local $@ = undef;
-    eval {$dbtemplate = LedgerSMB::Template::DB->get(%$request)};
-
-    if (defined $dbtemplate) {
-        return [
-            '200',
-            [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
-            [ $dbtemplate->template ]
-            ];
-    }
-    else {
-        return [
-            '404',
-            [ 'Content-Type' => 'text/plain' ],
-            [ 'Template not found' ]
-            ];
-    }
-}
-
 =head2 display($request)
 
 Displays a template for review
