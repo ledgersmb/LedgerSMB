@@ -42,7 +42,7 @@ define([
                     });
         var store = new Cache(new accountsRest({
             idProperty: "accno",
-            target: "journal.pl?action=chart_json"
+            target: "/erp/api/v0/accounts/"
         }), new Memory());
         return store;
     });

@@ -27,6 +27,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::oldHandler;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Router keywords => [ qw( router ) ];
+use LedgerSMB::Routes::ERP::API::Accounts;
 use LedgerSMB::Routes::ERP::API::Goods;
 use LedgerSMB::Routes::ERP::API::MenuNodes;
 use LedgerSMB::Setting;

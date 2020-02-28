@@ -174,6 +174,7 @@ my @modules =
           'LedgerSMB::Report::co::Balance_y_Mayor',
           'LedgerSMB::Report::co::Caja_Diaria',
           'LedgerSMB::Router',
+          'LedgerSMB::Routes::ERP::API::Accounts',
           'LedgerSMB::Routes::ERP::API::Goods',
           'LedgerSMB::Routes::ERP::API::MenuNodes',
           'LedgerSMB::Scripts::budget_reports',

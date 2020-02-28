@@ -23,27 +23,6 @@ use warnings;
 
 =head1 METHODS
 
-=head2 chart_json
-
-Returns a json array of all accounts
-
-=cut
-
-sub chart_json {
-    my ($request) = @_;
-    my $label = $request->{label};
-    $label //= '';
-    $label =~ s/\*//g;
-    my $funcname = 'chart_list_all';
-    my @results =
-        $request->call_procedure( funcname => $funcname, order_by => 'accno' );
-    @results =
-        grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
-        map { $_->{label} = $_->{accno} . '--' . $_->{description}; $_ }
-        @results;
-    return $request->to_json(\@results);
-}
-
 =head2 chart_of_accounts
 
 Returns and displays the chart of accounts
