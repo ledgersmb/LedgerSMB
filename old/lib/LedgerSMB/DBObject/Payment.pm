@@ -707,7 +707,6 @@ partial payment (C<paid == 'some'>).
 sub post_bulk {
     my ($self, $data) = @_;
 
-    #$self->{payment_date} = $self->{datepaid};
     for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
         for my $invoice (@{$contact->{invoices}}) {
@@ -733,11 +732,21 @@ sub post_bulk {
                 $invoice_array =~ s/\}$/,$invoice_subarray\}/;
             }
         }
-        $self->{transactions} = $invoice_array;
-        $self->{source} = $contact->{source};
 
-
-        $self->call_dbmethod(funcname => 'payment_bulk_post');
+        $self->call_dbmethod(
+            funcname => 'payment_bulk_post',
+            args => {
+                transactions => $invoice_array,
+                batch_id => $self->{batch_id},
+                source => $contact->{source},
+                ar_ap_accno => $self->{ar_ap_accno},
+                cash_accno => $self->{cash_accno},
+                payment_date => $self->{datepaid},
+                account_class => $self->{account_class},
+                exchangerate => $self->{exchange_rate},
+                currency => $self->{currency},
+            }
+        );
     }
 
     return;
