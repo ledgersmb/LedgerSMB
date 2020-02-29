@@ -1,0 +1,269 @@
+{
+    q|Ensure that the gl database table doesn't contain NULL approval flags or transacton dates| => [{
+         failure_data => [
+             [ qw(id reference description transdate person_id notes approved trans_type_code) ],
+             [ 22, '1001', 'Rent', undef, 1, 'notes', undef, 'gl' ],
+         ],
+         response => {
+             confirm => 'save',
+             'gl' => [
+                 {
+                     '__pk' => 'MjI=',
+                     approved => 1,
+                     transdate => '2020-01-01',
+                 },
+             ]
+         },
+         submit_session => [
+             {
+                 statement => q{UPDATE "gl"
+                      SET "approved" = ?, "transdate" = ?
+                    WHERE "id" = ?},
+                  bound_params => [ 1, '2020-01-01', 22 ],
+                  results => [],
+             },
+         ],
+    }],
+
+    q|Ensure that the ap database table doesn't contain NULL approval flags or transacton dates| => [{
+         failure_data => [
+             [ qw(
+                  id invnumber transdate entity_id taxincluded duedate invoice
+                  ordnumber curr notes person_id till quonumber intnotes shipvia
+                  language_code ponumber shippingpoint on_hold approved reverse
+                  terms description force_closed crdate is_return entity_credit_account
+                  amount_bc amount_tc netamount_bc netamount_tc
+             ) ],
+             [
+                  101, 'INV123', undef, 12, 0, '2020-02-01', 0,
+                  'ORD123', 'EUR', 'Notes', 13, '', 'Q123', 'Int Notes', 'Courier',
+                  'en', 'PO123', 'ShipPoint', 0, undef, 0,
+                  30, 'Description', 0, undef, 0, 14,
+                  100.00, 100.00, 100.00, 100.00
+             ]
+         ],
+         response => {
+             confirm => 'save',
+             'ap' => [
+                 {
+                     '__pk' => 'MTAx',
+                     approved => 1,
+                     transdate => '2020-01-01',
+                 },
+             ]
+         },
+         submit_session => [
+             {
+                 statement => q{UPDATE "ap"
+                      SET "approved" = ?, "transdate" = ?
+                    WHERE "id" = ?},
+                  bound_params => [ 1, '2020-01-01', 101 ],
+                  results => [],
+             },
+         ], 
+    }],
+
+    q|Ensure that the ar database table doesn't contain NULL approval flags or transacton dates| => [{
+         failure_data => [
+             [ qw(
+                  id invnumber transdate entity_id taxincluded duedate invoice
+                  shippingpoint terms notes curr ordnumber person_id till quonumber
+                  intnotes shipvia language_code ponumber on_hold reverse approved
+                  entity_credit_account force_closed description is_return crdate
+                  setting_sequence amount_bc amount_tc netamount_bc netamount_tc
+             ) ],
+             [
+                  101, 'INV123', undef, 12, 0, '2020-02-01', 0,
+                  'ShipPoint', 30, 'Notes', 'EUR', 'ORD123', 13, '', 'Q123',
+                  'Int Notes', 'Courier', 'en', 'PO123', 0, 0, undef,
+                  14, undef, 'Description', 0, '2020-03-01',
+                  'SettingSeq', 100.00, 100.00, 100.00, 100.00
+             ]
+         ],
+         response => {
+             confirm => 'save',
+             'ar' => [
+                 {
+                     '__pk' => 'MTAx',
+                     approved => 1,
+                     transdate => '2020-01-01',
+                 },
+             ]
+         },
+         submit_session => [
+             {
+                 statement => q{UPDATE "ar"
+                      SET "approved" = ?, "transdate" = ?
+                    WHERE "id" = ?},
+                  bound_params => [ 1, '2020-01-01', 101 ],
+                  results => [],
+             },
+         ],
+    }],
+
+    q|Ensure that the acc_trans database table doesn't contain NULL approval flags or transacton dates| => [{
+         failure_data => [
+             [ qw(
+                  trans_id chart_id transdate source cleared memo
+                  invoice_id approved cleared_on reconciled_on voucher_id
+                  entry_id amount_bc amount_tc curr
+             ) ],
+             [
+                  11, 31, undef, 'S123', 1, 'Memo',
+                  32, undef, undef, undef, undef,
+                  101, 100.00, 100.00, 100.00, 100.00
+             ]
+         ],
+         response => {
+             confirm => 'save',
+             'acc_trans' => [
+                 {
+                     '__pk' => 'MTAx',
+                     approved => 1,
+                     transdate => '2020-01-01',
+                 },
+             ]
+         },
+         submit_session => [
+             {
+                 statement => q{UPDATE "acc_trans"
+                      SET "approved" = ?, "transdate" = ?
+                    WHERE "entry_id" = ?},
+                  bound_params => [ 1, '2020-01-01', 101 ],
+                  results => [],
+             },
+         ],
+    }],
+
+    q|Repair missing approval status for transactions| => [{
+         failure_data => [
+             [ qw(
+                  id table_name locked_by approved approved_by
+                  approved_at transdate
+             ) ],
+             [
+                  101, 'gl', undef, undef, undef,
+                  undef, undef
+             ]
+         ],
+         response => {
+             confirm => 'repair',
+         },
+         submit_session => [
+             {
+                 statement =>
+                     q{UPDATE transactions }.
+                     q{SET approved = g.approved }.
+                     q{FROM ( }.
+                     q{SELECT id, approved FROM ar }.
+                     q{UNION SELECT id, approved FROM ap }.
+                     q{UNION SELECT id, approved FROM gl }.
+                     q{) g }.
+                     q{WHERE g.id = transactions.id }.
+                     q{AND transactions.approved IS NULL},
+                  bound_params => [],
+                  results => [],
+             },
+         ],
+    }],
+
+    q|Clear orphaned invoice rows| => [{
+         failure_data => [
+             [ qw(
+                  id trans_id parts_id description qty allocated sellprice
+                  precision fxsellprice discount assemblyitem unit
+                  deliverydate serialnumber vendor_sku notes id table_name
+                  locked_by approved approved_by approved_at transdate
+             ) ],
+             [
+                  101, 31, 32, 'Description', 10, 9, 100.00,
+                  2, 100.00, 10.00, 0, 'EACH',
+                  '2019-12-25', 'S12345', 'SKU123', 'Notes', 33, 'ar',
+                  undef, undef, undef, undef, undef,
+             ]
+         ],
+         response => {
+             confirm => 'delete',
+         },
+         submit_session => [
+             {
+                 statement =>
+                     q{DELETE FROM invoice_note }.
+                     q{USING invoice, transactions t }.
+                     q{WHERE invoice_note.ref_key = invoice.id }.
+                     q{AND invoice.trans_id = t.id }.
+                     q{AND t.transdate IS NULL }.
+                     q{AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR invoice_id = invoice.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)},
+                  bound_params => [],
+                  results => [],
+             },
+             {
+                 statement =>
+                     q{DELETE FROM invoice_tax_form }.
+                     q{USING invoice, transactions t }.
+                     q{WHERE invoice_tax_form.invoice_id = invoice.id }.
+                     q{AND invoice.trans_id = t.id }.
+                     q{AND t.transdate IS NULL }.
+                     q{AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR invoice_id = invoice.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)},
+                  bound_params => [],
+                  results => [],
+             },
+             {
+                 statement =>
+                     q{DELETE FROM invoice }.
+                     q{USING transactions t }.
+                     q{WHERE invoice.trans_id = t.id }.
+                     q{AND t.transdate IS NULL }.
+                     q{AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR invoice_id = invoice.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)},
+                  bound_params => [],
+                  results => [],
+             },
+        ],
+    }],
+
+    q|Clear orphaned transaction entries| => [{
+         failure_data => [
+             [ qw(
+                  id table_name locked_by approved approved_by approved_at
+                  transdate
+             ) ],
+             [
+                  101, 'gl', undef, undef, undef, undef,
+                  undef
+             ]
+         ],
+         response => {
+             confirm => 'delete',
+         },
+         submit_session => [
+             {
+                 statement =>
+                     q{DELETE FROM transactions t }.
+                     q{WHERE locked_by IS NULL }.
+                     q{AND approved_by IS NULL }.
+                     q{AND approved_at IS NULL }.
+                     q{AND transdate IS NULL }.
+                     q{AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM file_transaction WHERE ref_key = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM invoice WHERE trans_id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM new_shipto WHERE trans_id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id) }.
+                     q{AND NOT EXISTS (SELECT 1 FROM voucher WHERE trans_id = t.id)},
+                  bound_params => [],
+                  results => [],
+             },
+        ],
+    }],
+}
