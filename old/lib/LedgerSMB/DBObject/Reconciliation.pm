@@ -359,20 +359,7 @@ sub get {
         $neg = -1;
     }
     $self->{account_info} = $ref;
-
-    my ($previous) = $self->call_dbmethod(funcname=>'reconciliation__previous_report_date',
-                                args => { chart_id => $self->{chart_id},
-                                          end_date => $self->{end_date}
-                                        });
-
-    ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
-                                args => { chart_id => $ref->{id},
-                                          report_date => $previous->{end_date}
-                                        });
-
-    my $our_balance = $ref->{reconciliation__get_cleared_balance} // 0;
-
-    $self->{beginning_balance} = $our_balance;
+    $self->{beginning_balance} = $self->previous_cleared_balance // 0;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_our_total} = LedgerSMB::PGNumber->from_db(0);
@@ -382,6 +369,8 @@ sub get {
     $self->{mismatch_their_credits} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_debits} = LedgerSMB::PGNumber->from_db(0);
     $self->{their_balance} //= 0;   # Report maybe empty
+
+    my $our_balance = $self->{beginning_balance};
 
     for my $line (@{$self->{report_lines}}){
 
@@ -588,7 +577,44 @@ sub get_accounts {
 
 =back
 
-=head1 Copyright (C) 2007, The LedgerSMB core team.
+
+=item previous_cleared_balance
+
+For a given date and account, returns the cleared balance of the previous
+reconciliation, or undef if there is no previous reconciliation for the
+account.
+
+Requires that the following object properties are set:
+
+    * chart_id
+    * end_date
+
+=cut
+
+sub previous_cleared_balance {
+    my $self = shift;
+
+    my $previous = $self->call_dbmethod(
+        funcname => 'reconciliation__previous_report_date',
+        args => {
+            chart_id => $self->{chart_id},
+            end_date => $self->{end_date}
+        }
+    );
+
+    my $r = $self->call_dbmethod(
+        funcname => 'reconciliation__get_cleared_balance',
+        args => {
+            chart_id => $self->{chart_id},
+            report_date => $previous->{end_date}
+        }
+    );
+
+    return $r->{reconciliation__get_cleared_balance};
+}
+
+
+=head1 Copyright (C) 2007-2020, The LedgerSMB core team.
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
