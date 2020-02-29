@@ -79,10 +79,10 @@ require(
                      }
                  },
                  updateTemplate: function() {
-                     var a  = "language_code=" + this.templateLanguage.value
-                         + "&format=" + this.templateFormat.value
-                         + "&template_name=" + this.templateName.value;
-                     return xhr("template.pl?action=template&" + a,
+                     return xhr("/erp/api/v0/templates/" +
+                                this.templateName.value + "/" +
+                                this.templateFormat.value + "/" +
+                                this.templateLanguage.value,
                                 {"handlesAs": "text"})
                          .then(
                              lang.hitch(this,function(doc){
