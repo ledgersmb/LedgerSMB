@@ -56,6 +56,7 @@ Code cleanup
   * Making old/bin/old-handler.pl a PSGI app (LedgerSMB::oldHandler)
   * Stripping LedgerSMB::Form from anything handled by middleware
   * Separating 'setup.pl authentication' into its own middleware
+* Remove unused 'queue_payments' setting
 
 Dependency updates
 * Dojo Toolkit updated to 1.16.0

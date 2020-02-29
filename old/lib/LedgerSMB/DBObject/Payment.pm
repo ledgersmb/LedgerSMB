@@ -706,22 +706,7 @@ partial payment (C<paid == 'some'>).
 
 sub post_bulk {
     my ($self, $data) = @_;
-    my $total_count = 0;
-    my ($ref) = $self->call_procedure(
-          funcname => 'setting_get',
-          args     => ['queue_payments'],
-    );
-    my $queue_payments = $ref->{setting_get};
-    if ($queue_payments){
-        my ($job_ref) = $self->call_dbmethod(
-                 funcname => 'job__create'
-        );
-        $self->{job_id} = $job_ref->{job__create};
 
-         ($self->{job}) = $self->call_dbmethod(
-        funcname => 'job__status'
-         );
-    }
     #$self->{payment_date} = $self->{datepaid};
     for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
@@ -750,16 +735,12 @@ sub post_bulk {
         }
         $self->{transactions} = $invoice_array;
         $self->{source} = $contact->{source};
-        if ($queue_payments){
-            $self->{batch_class} = BC_PAYMENT;
-             $self->call_dbmethod(
-                 funcname => 'payment_bulk_queue'
-             );
-        } else {
-            $self->call_dbmethod(funcname => 'payment_bulk_post');
-        }
+
+
+        $self->call_dbmethod(funcname => 'payment_bulk_post');
     }
-    return $self->{queue_payments} = $queue_payments;
+
+    return;
 }
 
 =item post_payment
