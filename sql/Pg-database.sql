@@ -1362,7 +1362,6 @@ customernumber|1
 vendornumber|1
 glnumber|1
 projectnumber|1
-poll_frequency|1
 rcptnumber|1
 paynumber|1
 separate_duties|1

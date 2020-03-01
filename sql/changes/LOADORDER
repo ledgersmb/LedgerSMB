@@ -128,3 +128,4 @@ mc/delete-migration-validation-data.sql
 1.8/constrain-default-exchange-rates.sql
 1.8/constrain-exchangerate-type.sql
 1.8/drop_queue_payments_setting.sql
+1.8/drop_poll_frequency_setting.sql
