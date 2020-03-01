@@ -648,6 +648,16 @@ sub get_payment_detail_data {
 
 This function posts the payments in bulk.
 
+Uses the following object properties:
+
+  * account_class
+  * ar_ap_accno
+  * batch_id
+  * cash_accno
+  * currency
+  * exchangerate
+  * payment_date
+
 The C<$data> hashref has the following keys:
 
 =over
@@ -737,14 +747,7 @@ sub post_bulk {
             funcname => 'payment_bulk_post',
             args => {
                 transactions => $invoice_array,
-                batch_id => $self->{batch_id},
                 source => $contact->{source},
-                ar_ap_accno => $self->{ar_ap_accno},
-                cash_accno => $self->{cash_accno},
-                payment_date => $self->{datepaid},
-                account_class => $self->{account_class},
-                exchangerate => $self->{exchange_rate},
-                currency => $self->{currency},
             }
         );
     }
