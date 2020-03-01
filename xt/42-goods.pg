@@ -490,12 +490,12 @@ BEGIN;
                                            0::numeric, 0::numeric,
                                            0::numeric, 0::numeric,
                                            0::numeric, 0::numeric,
-                                           -20::numeric),
+                                           20::numeric),
                                       (-2, 'GOODS Test Series 2', 'TS2',
                                            0::numeric, 0::numeric,
                                            0::numeric, 0::numeric,
                                            0::numeric, 0::numeric,
-                                           5::numeric)$$,
+                                           -5::numeric)$$,
                        'adjustment inventory activity TS1, TS2');
     DEALLOCATE test;
 
