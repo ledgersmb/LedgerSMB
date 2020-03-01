@@ -648,6 +648,16 @@ sub get_payment_detail_data {
 
 This function posts the payments in bulk.
 
+Uses the following object properties:
+
+  * account_class
+  * ar_ap_accno
+  * batch_id
+  * cash_accno
+  * currency
+  * exchangerate
+  * payment_date
+
 The C<$data> hashref has the following keys:
 
 =over
@@ -707,7 +717,6 @@ partial payment (C<paid == 'some'>).
 sub post_bulk {
     my ($self, $data) = @_;
 
-    #$self->{payment_date} = $self->{datepaid};
     for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
         for my $invoice (@{$contact->{invoices}}) {
@@ -733,11 +742,14 @@ sub post_bulk {
                 $invoice_array =~ s/\}$/,$invoice_subarray\}/;
             }
         }
-        $self->{transactions} = $invoice_array;
-        $self->{source} = $contact->{source};
 
-
-        $self->call_dbmethod(funcname => 'payment_bulk_post');
+        $self->call_dbmethod(
+            funcname => 'payment_bulk_post',
+            args => {
+                transactions => $invoice_array,
+                source => $contact->{source},
+            }
+        );
     }
 
     return;
