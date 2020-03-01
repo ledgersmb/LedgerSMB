@@ -748,6 +748,7 @@ sub post_bulk {
             args => {
                 transactions => $invoice_array,
                 source => $contact->{source},
+                payment_date => $self->{datepaid},
             }
         );
     }
