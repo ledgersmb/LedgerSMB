@@ -29,14 +29,15 @@ IF request.action == 'select_all';
    END;
 END;
 
-FOREACH KEY IN report.keys();
+FOREACH KEY IN [ 'to_date', 'report_type',
+                 'overdue', 'c0', 'c30', 'c60', 'c90'];
     IF KEY == 'rows';
        NEXT;
     ELSE;
         PROCESS input element_data = {
              name = KEY
              type = 'hidden'
-            value = report.$KEY
+            value = request.$KEY
         };
     END;
 END;
