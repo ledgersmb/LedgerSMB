@@ -189,7 +189,7 @@ sub template {
     if (not $self->format or (uc($self->format) eq 'HTML')
            or (uc($self->format) eq 'PDF'))
     {
-           return 'Reports/aging_report';
+           return 'aging_report';
     }
     else {
        return undef;
