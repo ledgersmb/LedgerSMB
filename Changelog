@@ -20,6 +20,8 @@ Added functionalities
 
 Changed functionalities
 * Faster loading of the menu
+* Faster loading of selected accounts in the GL accounts drop-down
+* Faster loading of the goods number and description drop-downs
 * All payments recorded in the database as primary data (no longer inferred)
 * New UI for uploading and editing document (print) templates
 * Colors of default scheme changed to follow the soft-tone of the Claro theme
