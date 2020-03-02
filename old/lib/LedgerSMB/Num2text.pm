@@ -48,19 +48,15 @@ use warnings;
 use LedgerSMB::Locale;
 
 sub new {
-    my ( $type, $countrycode ) = @_;
+    my ( $type, $locale ) = @_;
 
-    my $self = {};
-    $self->{'locale'} = LedgerSMB::Locale->get_handle($countrycode);
-    bless $self, $type;
-
-    return $self;
+    return bless { locale => $locale }, $type;
 }
 
 
 sub init {
     my $self    = shift;
-    my $locale  = $self->{'locale'} || $self->{'_locale'};
+    my $locale  = $self->{'locale'};
     my $langtag = substr( $locale->language_tag, 0, 2 );
     $self->{'numrules'} = 'en';
     $self->{'numrules'} = $langtag

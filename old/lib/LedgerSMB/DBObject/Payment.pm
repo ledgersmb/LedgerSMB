@@ -19,7 +19,7 @@ see the included COPYRIGHT and LICENSE files for more information.
 =cut
 
 package LedgerSMB::DBObject::Payment;
-use base qw(LedgerSMB::PGOld LedgerSMB::Num2text);
+use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 use LedgerSMB::PGNumber;
@@ -50,26 +50,6 @@ attached to it.  Customer/vendor payment threshold is not considered for this
 calculation.
 
 =back
-
-=over
-
-=item text_amount($value)
-
-Returns the textual representation, as defined in localization rules, for the
-numeric value passed.
-
-=back
-
-=cut
-
-sub text_amount {
-    use LedgerSMB::Num2text;
-    my ($self, $value) = @_;
-    $self->{locale} = $self->{_locale};
-    $self->init();
-    return $self->num2text($value);
-}
-
 
 =over
 
