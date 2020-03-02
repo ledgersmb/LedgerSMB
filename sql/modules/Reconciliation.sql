@@ -92,6 +92,11 @@ $$ SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION reconciliation__reject_set(in_report_id int) FROM public;
 
+COMMENT ON FUNCTION reconciliation__reject_set(in_report_id int) IS
+$$Sets the reconciliation report identified by in_report_id as not approved,
+providing it is not already submitted. Used in the reconciliation workflow
+to reject approval.$$;
+
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
         in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$

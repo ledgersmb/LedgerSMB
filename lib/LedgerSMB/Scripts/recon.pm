@@ -85,14 +85,29 @@ sub select_all_recons {
 
 =item reject
 
-Rejects the recon set and returns it to non-submitted state
+Rejects the recon set and returns it to non-submitted state, by marking
+it as not submitted. Can only be performed if the recon set has not
+already been marked as approved.
+
+C<$request> is a L<LedgerSMB> object reference. The following request keys
+must be set:
+
+  * dbh
+  * report_id
 
 =cut
 
 sub reject {
     my ($request) = @_;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
+
+    my $recon_data = {
+        dbh => $request->{dbh},
+        report_id => $request->{report_id}
+    };
+
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
     $recon->reject;
+
     return search($request);
 }
 
