@@ -1320,13 +1320,11 @@ sub order_details {
       ? $form->{ordtotal}
       : $form->{ordtotal} + $tax;
 
-    my $c;
-    if ( $form->{language_code} ne "" ) {
-        $c = LedgerSMB::Num2text->new( $form->{language_code});
-    }
-    else {
-        $c = LedgerSMB::Num2text->new( $myconfig->{countrycode});
-    }
+    my $c = LedgerSMB::Num2text->new(
+        LedgerSMB::Locale->get_handle(
+            ($form->{language_code} ne "")
+            ? $form->{language_code} : $myconfig->{countrycode}
+        ));
     $c->init;
     my $whole;
     ( $whole, $form->{decimal} ) = split /\./, $form->{ordtotal};

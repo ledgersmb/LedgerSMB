@@ -55,6 +55,7 @@ use LedgerSMB::Batch;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
+use LedgerSMB::Num2text;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
@@ -400,7 +401,9 @@ is not merged in, meaning that $request->{multiple} must be set to a true value.
 
 sub print {
     my ($request) = @_;
+    my $fmt = LedgerSMB::Num2text->new($request->{_locale});
     my $payment =  LedgerSMB::DBObject::Payment->new(%$request);
+    $fmt->init();
     $payment->{company} = $payment->{_user}->{company};
     $payment->{address} = $payment->{_user}->{address};
 
@@ -465,7 +468,7 @@ sub print {
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
-            $check->{text_amount} = $payment->text_amount($amt);
+            $check->{text_amount} = $fmt->num2text($amt);
             $check->{decimal} = ($check->{amount} - $amt) * 100;
             $check->{amount} = $check->{amount}->to_output(
                     format => '1000.00',

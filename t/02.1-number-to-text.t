@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 
 use Test2::V0;
-use LedgerSMB::PGNumber;
+
+use LedgerSMB::Locale;
 use LedgerSMB::Num2text;
+use LedgerSMB::PGNumber;
 
 my %english = (
     0 => 'Zero',
@@ -19,7 +21,7 @@ my %english = (
  1455 => 'One Thousand Four Hundred Fifty Five'
 );
 
-my $en = LedgerSMB::Num2text->new('en');
+my $en = LedgerSMB::Num2text->new(LedgerSMB::Locale->get_handle('en'));
 $en->init;
 is($en->num2text($_, 1) , $english{$_}, "$_ -> $english{$_}, Plain") for keys %english;
 
