@@ -12,9 +12,9 @@ in the near future.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007 The LedgerSMB Core Team.  Licensed under the GNU General
-Public License version 2 or at your option any later version.  Please see the
-included COPYRIGHT and LICENSE files for more information.
+Copyright (c) 2007-2020 The LedgerSMB Core Team.  Licensed under the GNU
+General Public License version 2 or at your option any later version.  Please
+see the included COPYRIGHT and LICENSE files for more information.
 
 =cut
 
@@ -718,7 +718,8 @@ sub post_bulk {
     my ($self, $data) = @_;
 
     for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
-        my $invoice_array = "{}"; # Pg Array
+
+        my @invoice_elements;
         for my $invoice (@{$contact->{invoices}}) {
 
             my $pay_amount =
@@ -734,19 +735,19 @@ sub post_bulk {
                 die "Invalid subarray: $invoice_subarray";
             }
 
-            # What magic happens here?!?!
-            $invoice_subarray =~ s/[^0123456789{},.-]//;
-            if ($invoice_array eq '{}'){ # Omit comma
-                $invoice_array = "{$invoice_subarray}";
-            } else {
-                $invoice_array =~ s/\}$/,$invoice_subarray\}/;
-            }
+            push @invoice_elements, $invoice_subarray;
         }
+
+        # Generate a postgresql array of arrays in the form:
+        # {{1700,0.01},{1353,0.01},{454,0.01}}
+        # Each sub element comprises the ar/ap table id being paid and
+        # the amount being paid.
+        my $transactions = '{' . join(',', @invoice_elements) . '}';
 
         $self->call_dbmethod(
             funcname => 'payment_bulk_post',
             args => {
-                transactions => $invoice_array,
+                transactions => $transactions,
                 source => $contact->{source},
                 payment_date => $self->{datepaid},
             }
