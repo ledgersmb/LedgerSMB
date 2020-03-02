@@ -214,7 +214,7 @@ $$
            AS used,
            SUM(CASE WHEN transtype = 'as' AND i.qty < 0 then -1*i.qty ELSE 0 END)
            AS assembled,
-           SUM(CASE WHEN transtype = 'ia' THEN i.qty ELSE 0 END)
+           SUM(CASE WHEN transtype = 'ia' THEN -1 * i.qty ELSE 0 END)
            AS adjusted
       FROM invoice i
       JOIN parts p ON (i.parts_id = p.id)
