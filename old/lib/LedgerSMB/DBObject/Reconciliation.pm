@@ -575,8 +575,6 @@ sub get_accounts {
     return $self->{recon_accounts};
 }
 
-=back
-
 
 =item previous_cleared_balance
 
@@ -613,6 +611,8 @@ sub previous_cleared_balance {
     return $r->{reconciliation__get_cleared_balance};
 }
 
+
+=back
 
 =head1 Copyright (C) 2007-2020, The LedgerSMB core team.
 
