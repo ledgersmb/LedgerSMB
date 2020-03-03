@@ -124,6 +124,22 @@ Month info in hashref format in 01 => January format
 
 =back
 
+=item all_years()
+
+Returns hashref of localized date data with following members:
+
+=over
+
+=item dropdown
+
+Month information in drop down format.
+
+=item hashref
+
+Month info in hashref format in 01 => January format
+
+=back
+
 
 =item report_renderer_ui
 
@@ -545,6 +561,20 @@ sub all_months {
     }
     return { as_hashref => $months, dropdown=> $for_dropdown };
 }
+
+sub all_years {
+    my ($self) = @_;
+
+    my @years = $self->call_procedure(
+        funcname => 'date_get_all_years'
+        );
+
+    return { as_hashref => \@years,
+             dropdown => [ map { +{ text => $_->{date_get_all_years},
+                                    value => $_->{date_get_all_years} }
+                           } @years ] };
+}
+
 
 sub report_renderer_ui {
   my ($request) = @_;

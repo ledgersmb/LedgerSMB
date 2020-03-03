@@ -23,7 +23,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::DBObject::TaxForm;
-use LedgerSMB::DBObject::Date;
 use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
