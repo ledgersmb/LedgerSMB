@@ -84,7 +84,7 @@ my @modules =
           'LedgerSMB::DBObject::TransTemplate', 'LedgerSMB::DBObject::Menu',
           'LedgerSMB::DBObject::User', 'LedgerSMB::DBObject::Account',
           'LedgerSMB::DBObject::Admin', 'LedgerSMB::DBObject::Asset',
-          'LedgerSMB::DBObject::Asset_Report', 'LedgerSMB::DBObject::Date',
+          'LedgerSMB::DBObject::Asset_Report',
           'LedgerSMB::DBObject::Reconciliation',
           'LedgerSMB::Report::Listings::TemplateTrans',
           'LedgerSMB::Report::Approval_Option',
