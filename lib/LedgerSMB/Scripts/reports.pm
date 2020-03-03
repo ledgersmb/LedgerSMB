@@ -87,9 +87,7 @@ sub start_report {
     @{$request->{batch_classes}} = $request->call_procedure(
                       funcname => 'batch_list_classes'
     );
-    @{$request->{all_years}} = $request->call_procedure(
-              funcname => 'date_get_all_years'
-    );
+    @{$request->{all_years}} = $request->all_years->{as_hashref};
     @{$request->{currencies}} = $request->setting->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     $request->{all_months} = $request->all_months->{dropdown};

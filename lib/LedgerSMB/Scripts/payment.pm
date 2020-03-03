@@ -53,7 +53,6 @@ use List::Util qw/sum/;
 
 use LedgerSMB::Batch;
 use LedgerSMB::DBObject::Payment;
-use LedgerSMB::DBObject::Date;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
@@ -661,9 +660,6 @@ sub payment {
                              text => $arrayOptions[$ref]};
 
     }
-    # Lets build filter by period
-    my $date = LedgerSMB::DBObject::Date->new(%$request);
-    $date->build_filter_by_period($request->{_locale});
     # Lets set the data in a hash for the template system. :)
     my $select = {
         script => 'payment.pl',
@@ -676,13 +672,12 @@ sub payment {
         },
         month => {
             name => 'month',
-            options => $date->{monthsOptions}
+            options => $request->all_months->{dropdown}
         },
         year => {
             name => 'year',
-            options => $date->{yearsOptions}
+            options => $request->all_years->{dropdown}
         },
-        interval_radios => $date->{radioOptions},
         amountfrom => {
             name => 'amountfrom',
         },
