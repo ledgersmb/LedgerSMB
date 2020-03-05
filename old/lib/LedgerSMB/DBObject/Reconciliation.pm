@@ -339,7 +339,6 @@ sub get {
             funcname=>'reconciliation__pending_transactions'
         );
     }
-    $self->{enteredby_username} = $ref->{entered_username};
 
     @{$self->{report_lines}} = $self->call_dbmethod(
         funcname=>'reconciliation__report_details_payee',
