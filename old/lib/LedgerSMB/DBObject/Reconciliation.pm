@@ -333,17 +333,7 @@ sub get {
 
     $self->get_report_summary;
     $self->refresh_pending_transactions unless $self->{submitted};
-
-    @{$self->{report_lines}} = $self->call_dbmethod(
-        funcname=>'reconciliation__report_details_payee',
-        orderby => [ ( $self->{line_order} // 'scn' ) ]
-    );
-    my $db_report_days;
-    @{$db_report_days} = $self->call_dbmethod(
-                            funcname=>'reconciliation__report_details_payee_with_days',
-                                                    args => { report_id => $self->{id},
-                                                              end_date => $self->{end_date} });
-    my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
+    $self->get_report_lines;
 
     my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
 
@@ -394,8 +384,6 @@ sub get {
         else {
             $self->{outstanding_total} += $line->{our_balance};
         }
-
-        $line->{days} = $report_days{$line->{id}};
     }
 
     $self->{our_total} = $our_balance * $neg;
@@ -598,7 +586,7 @@ sub get_report_summary {
 
     # Add summary details of the account we're reconciling
     # We should perhaps be instantiating a LedgerSMB::DBObject::Account object
-    $self->{account_details} = $self->call_dbmethod(
+    $self->{account_info} = $self->call_dbmethod(
         funcname=>'account_get',
         args => { id => $self->{chart_id} }
     ) or die 'error retrieving account information';
@@ -632,6 +620,37 @@ sub refresh_pending_transactions {
     return;
 };
 
+
+=item get_report_lines
+
+Retrieve detail lines for the current reconciliation report, adding
+the C<days> information to each.
+
+=cut
+
+sub get_report_lines {
+    my $self = shift;
+
+    @{$self->{report_lines}} = $self->call_dbmethod(
+        funcname => 'reconciliation__report_details_payee',
+        orderby => [
+            ($self->{line_order} // 'scn')
+        ]
+    );
+
+    # Add the 'days' for each line.
+    # This could be more elegantly done by getting the previous database call
+    # to return a view incorporating the days field
+    my %report_days = map { $_->{id} => $_->{days} } $self->call_dbmethod(
+        funcname => 'reconciliation__report_details_payee_with_days',
+    );
+
+    for my $line (@{$self->{report_lines}}){
+        $line->{days} = $report_days{$line->{id}};
+    }
+
+    return;
+}
 
 
 =item previous_cleared_balance
