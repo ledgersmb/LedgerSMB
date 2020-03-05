@@ -332,12 +332,7 @@ sub get {
     my ($self) = shift @_;
 
     $self->get_report_summary;
-
-    if (!$self->{submitted}){
-        $self->call_dbmethod(
-            funcname=>'reconciliation__pending_transactions'
-        );
-    }
+    $self->refresh_pending_transactions unless $self->{submitted};
 
     @{$self->{report_lines}} = $self->call_dbmethod(
         funcname=>'reconciliation__report_details_payee',
@@ -614,6 +609,33 @@ sub get_report_summary {
 
     return;
 }
+
+=item refresh_pending_transactions
+
+This is a simple wrapper around reconciliation__pending_transactions.
+
+It changes no object properties, but in the database, the reconciliation
+report lines are updated and the summary C<updated> timstamp is updated.
+
+Requires that the following object properties be set:
+
+  * report_id
+  * chart_id
+  * end_date
+  * their_total
+
+=cut
+
+sub refresh_pending_transactions {
+    my $self = shift;
+
+    $self->call_dbmethod(
+        funcname => 'reconciliation__pending_transactions'
+    ) or die 'error refreshing pending transactions';
+
+    return;
+};
+
 
 
 =item previous_cleared_balance
