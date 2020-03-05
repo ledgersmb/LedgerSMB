@@ -344,14 +344,9 @@ sub get {
                                                     args => { report_id => $self->{id},
                                                               end_date => $self->{end_date} });
     my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
-    my ($ref) = $self->call_dbmethod(funcname=>'account_get',
-                                args => { id => $self->{chart_id} });
-    my $neg = 1;
-    if (defined $self->{account_info}->{category}   # Report may be empty
-    and $self->{account_info}->{category} =~ /(A|E)/){
-        $neg = -1;
-    }
-    $self->{account_info} = $ref;
+
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+
     $self->{beginning_balance} = $self->previous_cleared_balance // 0;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
@@ -403,12 +398,8 @@ sub get {
         $line->{days} = $report_days{$line->{id}};
     }
 
-    $self->{our_total} = $our_balance;
-
-    if ($self->{account_info}->{category} =~ /(A|E)/){
-       $self->{our_total} *= -1;
-       return $self->{mismatch_their_total} *= -1;
-    }
+    $self->{our_total} = $our_balance * $neg;
+    $self->{mismatch_their_total} *= $neg;
 
     return;
 }
@@ -565,7 +556,8 @@ sub get_accounts {
 
 =item get_report_summary
 
-This is a simple wrapper around reconciliation__report_summary.
+This is a wrapper around reconciliation__report_summary and account_get
+database functions.
 
 Requires that the C<report_id> be set to a valid reconciliation report id.
 
@@ -584,6 +576,9 @@ Sets the following object properties:
   * approved_by (may be undef)
   * approved_username (may be undef)
   * recon_fx (may be undef)
+  * account_info
+
+
 
 =cut
 
@@ -600,6 +595,13 @@ sub get_report_summary {
     delete $r->{id};
 
     @{$self}{keys %$r} = values %$r;
+
+    # Add summary details of the account we're reconciling
+    # We should perhaps be instantiating a LedgerSMB::DBObject::Account object
+    $self->{account_details} = $self->call_dbmethod(
+        funcname=>'account_get',
+        args => { id => $self->{chart_id} }
+    ) or die 'error retrieving account information';
 
     return;
 }
