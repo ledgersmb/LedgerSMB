@@ -205,7 +205,6 @@ sub search {
 
 sub _display_report {
     my ($recon, $request) = @_;
-    my $neg_factor;
 
     $request->close_form;
     $request->open_form;
@@ -218,13 +217,8 @@ sub _display_report {
     $recon->get;
     $recon->unapproved_checks;
 
-    if ($recon->{account_info}->{category} =~ /^(A|E)$/){
-       $recon->{their_total} *= -1;
-       $neg_factor = -1;
-    }
-    else {
-        $neg_factor = 1;
-    }
+    my $neg_factor = ($recon->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+    $recon->{their_total} *= $neg_factor;
 
     if ($recon->{account_info}->{category} eq 'A') {
         $recon->{reverse} = $request->setting->get('reverse_bank_recs');
