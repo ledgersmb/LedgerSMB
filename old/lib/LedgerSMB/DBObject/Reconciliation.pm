@@ -330,10 +330,9 @@ a hashrefo of information from the account table.
 
 sub get {
     my ($self) = shift @_;
-    my ($ref) =
-        $self->call_dbmethod(funcname=>'reconciliation__report_summary');
 
-    @{$self}{keys %$ref} = values %$ref if $ref;
+    $self->get_report_summary;
+
     if (!$self->{submitted}){
         $self->call_dbmethod(
             funcname=>'reconciliation__pending_transactions'
@@ -350,7 +349,7 @@ sub get {
                                                     args => { report_id => $self->{id},
                                                               end_date => $self->{end_date} });
     my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
-    ($ref) = $self->call_dbmethod(funcname=>'account_get',
+    my ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => { id => $self->{chart_id} });
     my $neg = 1;
     if (defined $self->{account_info}->{category}   # Report may be empty
@@ -572,6 +571,48 @@ sub get_accounts {
     );
 
     return $self->{recon_accounts};
+}
+
+
+=item get_report_summary
+
+This is a simple wrapper around reconciliation__report_summary.
+
+Requires that the C<report_id> be set to a valid reconciliation report id.
+
+Sets the following object properties:
+
+  * chart_id
+  * their_total
+  * approved
+  * submitted
+  * end_date
+  * updated
+  * entered_by
+  * entered_username
+  * deleted
+  * deleted_by (may be undef)
+  * approved_by (may be undef)
+  * approved_username (may be undef)
+  * recon_fx (may be undef)
+
+=cut
+
+sub get_report_summary {
+    my $self = shift;
+
+    my $r = $self->call_dbmethod(
+         funcname => 'reconciliation__report_summary'
+    ) or die 'reconciliation report does not exist';
+
+    # We've already set this object's `report_id` property
+    # we don't need another `id` property holding the same
+    # value and causing confusion.
+    delete $r->{id};
+
+    @{$self}{keys %$r} = values %$r;
+
+    return;
 }
 
 
