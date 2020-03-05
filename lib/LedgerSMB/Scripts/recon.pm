@@ -246,6 +246,12 @@ sub _display_report {
     }
     $recon->{their_total} *= $neg_factor;
 
+    for my $line (@{$recon->{report_lines}}){
+        for my $element (qw/ our_balance our_credits our_debits their_balance their_credits their_debits /) {
+            $line->{$element} = $line->{$element}->to_output(money => 1);
+        }
+    }
+
     for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance /) {
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }

@@ -447,12 +447,6 @@ sub build_totals {
            $l->{our_debits} = $l->{our_balance}->bneg;
         }
 
-        # Format line amounts for display
-        # (Shouldn't this be done in the template rather than in code?)
-        for my $element (qw/our_balance our_credits our_debits their_balance their_credits their_debits/) {
-            $l->{$element} = $l->{$element}->to_output(money => 1);
-        }
-
         # Update report totals
         if ($l->{cleared}){
              $self->{total_cleared_credits}->badd($l->{our_credits});
@@ -564,8 +558,6 @@ Sets the following object properties:
   * approved_username (may be undef)
   * recon_fx (may be undef)
   * account_info
-
-
 
 =cut
 
