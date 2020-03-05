@@ -346,7 +346,6 @@ sub get {
     $self->{mismatch_their_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_credits} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_debits} = LedgerSMB::PGNumber->from_db(0);
-    $self->{their_balance} //= 0;   # Report maybe empty
 
     my $our_balance = $self->{beginning_balance};
 
