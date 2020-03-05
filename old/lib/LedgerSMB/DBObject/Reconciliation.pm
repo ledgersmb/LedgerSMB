@@ -405,12 +405,6 @@ sub get {
 
     $self->{our_total} = $our_balance;
 
-    for (@{$self->{recon_accounts}}){
-       if ($_->{id} == $self->{chart_id}){
-           $self->{account} = $_->{name};
-       }
-    }
-
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;
        return $self->{mismatch_their_total} *= -1;

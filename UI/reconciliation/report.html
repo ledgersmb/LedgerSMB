@@ -28,7 +28,8 @@ END ?>
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
 <table id="report_headings" class="info">
 <tr>
-  <th><?lsmb text('Account:') ?></th><td><?lsmb account ?></td>
+  <th><?lsmb text('Account:') ?></th>
+  <td><?lsmb account_info.accno ?> <?lsmb account_info.description ?></td>
 </tr>
 <tr>
   <th><?lsmb text('Statement Date') ?>:</th><td><?lsmb end_date ?></td>

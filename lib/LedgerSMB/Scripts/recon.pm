@@ -216,7 +216,6 @@ sub _display_report {
     $recon->{decimal_places} = $request->setting->get('decimal_places');
     _set_sort_options($recon, $request);
 
-    $recon->get_accounts;
     $recon->get;
     $recon->unapproved_checks;
 
