@@ -662,16 +662,11 @@ sub previous_cleared_balance {
 
     my $previous = $self->call_dbmethod(
         funcname => 'reconciliation__previous_report_date',
-        args => {
-            chart_id => $self->{chart_id},
-            end_date => $self->{end_date}
-        }
     );
 
     my $r = $self->call_dbmethod(
         funcname => 'reconciliation__get_cleared_balance',
         args => {
-            chart_id => $self->{chart_id},
             report_date => $previous->{end_date}
         }
     );
