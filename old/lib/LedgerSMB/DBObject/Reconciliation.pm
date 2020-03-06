@@ -330,35 +330,13 @@ a hashrefo of information from the account table.
 
 sub get {
     my ($self) = shift @_;
-    my ($ref) =
-        $self->call_dbmethod(funcname=>'reconciliation__report_summary');
 
-    @{$self}{keys %$ref} = values %$ref if $ref;
-    if (!$self->{submitted}){
-        $self->call_dbmethod(
-            funcname=>'reconciliation__pending_transactions'
-        );
-    }
-    $self->{enteredby_username} = $ref->{entered_username};
+    $self->get_report_summary;
+    $self->refresh_pending_transactions unless $self->{submitted};
+    $self->get_report_lines;
 
-    @{$self->{report_lines}} = $self->call_dbmethod(
-        funcname=>'reconciliation__report_details_payee',
-        orderby => [ ( $self->{line_order} // 'scn' ) ]
-    );
-    my $db_report_days;
-    @{$db_report_days} = $self->call_dbmethod(
-                            funcname=>'reconciliation__report_details_payee_with_days',
-                                                    args => { report_id => $self->{id},
-                                                              end_date => $self->{end_date} });
-    my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
-    ($ref) = $self->call_dbmethod(funcname=>'account_get',
-                                args => { id => $self->{chart_id} });
-    my $neg = 1;
-    if (defined $self->{account_info}->{category}   # Report may be empty
-    and $self->{account_info}->{category} =~ /(A|E)/){
-        $neg = -1;
-    }
-    $self->{account_info} = $ref;
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+
     $self->{beginning_balance} = $self->previous_cleared_balance // 0;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
@@ -368,7 +346,6 @@ sub get {
     $self->{mismatch_their_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_credits} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_debits} = LedgerSMB::PGNumber->from_db(0);
-    $self->{their_balance} //= 0;   # Report maybe empty
 
     my $our_balance = $self->{beginning_balance};
 
@@ -380,8 +357,8 @@ sub get {
         }
         elsif (
             (
-                $self->{their_balance} != '0'
-                and $self->{their_balance} != $self->{our_balance}
+                $line->{their_balance} != 0
+                and $line->{their_balance} != $line->{our_balance}
             )
             or $line->{our_balance} == 0
         ) {
@@ -406,22 +383,10 @@ sub get {
         else {
             $self->{outstanding_total} += $line->{our_balance};
         }
-
-        $line->{days} = $report_days{$line->{id}};
     }
 
-    $self->{our_total} = $our_balance;
-
-    for (@{$self->{recon_accounts}}){
-       if ($_->{id} == $self->{chart_id}){
-           $self->{account} = $_->{name};
-       }
-    }
-
-    if ($self->{account_info}->{category} =~ /(A|E)/){
-       $self->{our_total} *= -1;
-       return $self->{mismatch_their_total} *= -1;
-    }
+    $self->{our_total} = $our_balance * $neg;
+    $self->{mismatch_their_total} *= $neg;
 
     return;
 }
@@ -480,12 +445,6 @@ sub build_totals {
         else {
            $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
            $l->{our_debits} = $l->{our_balance}->bneg;
-        }
-
-        # Format line amounts for display
-        # (Shouldn't this be done in the template rather than in code?)
-        for my $element (qw/our_balance our_credits our_debits their_balance their_credits their_debits/) {
-            $l->{$element} = $l->{$element}->to_output(money => 1);
         }
 
         # Update report totals
@@ -576,6 +535,115 @@ sub get_accounts {
 }
 
 
+=item get_report_summary
+
+This is a wrapper around reconciliation__report_summary and account_get
+database functions.
+
+Requires that the C<report_id> be set to a valid reconciliation report id.
+
+Sets the following object properties:
+
+  * chart_id
+  * their_total
+  * approved
+  * submitted
+  * end_date
+  * updated
+  * entered_by
+  * entered_username
+  * deleted
+  * deleted_by (may be undef)
+  * approved_by (may be undef)
+  * approved_username (may be undef)
+  * recon_fx (may be undef)
+  * account_info
+
+=cut
+
+sub get_report_summary {
+    my $self = shift;
+
+    my $r = $self->call_dbmethod(
+         funcname => 'reconciliation__report_summary'
+    ) or die 'reconciliation report does not exist';
+
+    # We've already set this object's `report_id` property
+    # we don't need another `id` property holding the same
+    # value and causing confusion.
+    delete $r->{id};
+
+    @{$self}{keys %$r} = values %$r;
+
+    # Add summary details of the account we're reconciling
+    # We should perhaps be instantiating a LedgerSMB::DBObject::Account object
+    $self->{account_info} = $self->call_dbmethod(
+        funcname=>'account_get',
+        args => { id => $self->{chart_id} }
+    ) or die 'error retrieving account information';
+
+    return;
+}
+
+=item refresh_pending_transactions
+
+This is a simple wrapper around reconciliation__pending_transactions.
+
+It changes no object properties, but in the database, the reconciliation
+report lines are updated and the summary C<updated> timstamp is updated.
+
+Requires that the following object properties be set:
+
+  * report_id
+  * chart_id
+  * end_date
+  * their_total
+
+=cut
+
+sub refresh_pending_transactions {
+    my $self = shift;
+
+    $self->call_dbmethod(
+        funcname => 'reconciliation__pending_transactions'
+    ) or die 'error refreshing pending transactions';
+
+    return;
+};
+
+
+=item get_report_lines
+
+Retrieve detail lines for the current reconciliation report, adding
+the C<days> information to each.
+
+=cut
+
+sub get_report_lines {
+    my $self = shift;
+
+    @{$self->{report_lines}} = $self->call_dbmethod(
+        funcname => 'reconciliation__report_details_payee',
+        orderby => [
+            ($self->{line_order} // 'scn')
+        ]
+    );
+
+    # Add the 'days' for each line.
+    # This could be more elegantly done by getting the previous database call
+    # to return a view incorporating the days field
+    my %report_days = map { $_->{id} => $_->{days} } $self->call_dbmethod(
+        funcname => 'reconciliation__report_details_payee_with_days',
+    );
+
+    for my $line (@{$self->{report_lines}}){
+        $line->{days} = $report_days{$line->{id}};
+    }
+
+    return;
+}
+
+
 =item previous_cleared_balance
 
 For a given date and account, returns the cleared balance of the previous
@@ -594,16 +662,11 @@ sub previous_cleared_balance {
 
     my $previous = $self->call_dbmethod(
         funcname => 'reconciliation__previous_report_date',
-        args => {
-            chart_id => $self->{chart_id},
-            end_date => $self->{end_date}
-        }
     );
 
     my $r = $self->call_dbmethod(
         funcname => 'reconciliation__get_cleared_balance',
         args => {
-            chart_id => $self->{chart_id},
             report_date => $previous->{end_date}
         }
     );

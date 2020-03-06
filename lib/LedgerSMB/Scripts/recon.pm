@@ -194,19 +194,17 @@ sub search {
     );
 }
 
-=item new_report ($recon, $request)
-
-Creates a new report, from a selectable set of bank statements that have been
-received (or can be received from, depending on implementation)
-
-Allows for an optional selection key, which will return the new report after
-it has been created.
-
-=cut
+# _display_report ($recon, $request)
+#
+# Private method to display the provided LedgerSMB::DBObject::Reconciliation
+# object as a report.
+#
+# Called after an existing report has been instantiated by display_report(),
+# or a new report has been created by start_report(), or after updates to
+# a report have been submitted.
 
 sub _display_report {
     my ($recon, $request) = @_;
-    my $neg_factor;
 
     $request->close_form;
     $request->open_form;
@@ -216,17 +214,11 @@ sub _display_report {
     $recon->{decimal_places} = $request->setting->get('decimal_places');
     _set_sort_options($recon, $request);
 
-    $recon->get_accounts;
     $recon->get;
     $recon->unapproved_checks;
 
-    if ($recon->{account_info}->{category} =~ /^(A|E)$/){
-       $recon->{their_total} *= -1;
-       $neg_factor = -1;
-    }
-    else {
-        $neg_factor = 1;
-    }
+    my $neg_factor = ($recon->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+    $recon->{their_total} *= $neg_factor;
 
     if ($recon->{account_info}->{category} eq 'A') {
         $recon->{reverse} = $request->setting->get('reverse_bank_recs');
@@ -247,6 +239,12 @@ sub _display_report {
         }
     }
     $recon->{their_total} *= $neg_factor;
+
+    for my $line (@{$recon->{report_lines}}){
+        for my $element (qw/ our_balance our_credits our_debits their_balance their_credits their_debits /) {
+            $line->{$element} = $line->{$element}->to_output(money => 1);
+        }
+    }
 
     for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance /) {
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
