@@ -357,8 +357,8 @@ sub get {
         }
         elsif (
             (
-                $self->{their_balance} != '0'
-                and $self->{their_balance} != $self->{our_balance}
+                $line->{their_balance} != 0
+                and $line->{their_balance} != $line->{our_balance}
             )
             or $line->{our_balance} == 0
         ) {
