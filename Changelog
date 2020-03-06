@@ -38,6 +38,7 @@ Bugs fixed
 * Overpayments not shown in Cash > Reports > Receipts (#3577)
 * Handling of currencies with short codes or unusual characters (#4435, #4436)
 * Formatting of columns in the 'Inventory Activity' report
+* Reconciliation reports list now shows usernames rather than user ids (#4388)
 
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale

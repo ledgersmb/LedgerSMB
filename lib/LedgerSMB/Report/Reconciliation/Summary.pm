@@ -153,10 +153,10 @@ sub columns {
              {col_id => 'updated',
                 name => $self->Text('Last Updated'),
                 type => 'text', },
-             {col_id => 'entered_by',
+             {col_id => 'entered_username',
                 name => $self->Text('Entered By'),
                 type => 'text', },
-             {col_id => 'approved_by',
+             {col_id => 'approved_username',
                 name => $self->Text('Approved By'),
                 type => 'text', },
           ];
@@ -226,7 +226,7 @@ sub run_report {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
