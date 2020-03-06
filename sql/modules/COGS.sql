@@ -14,6 +14,43 @@ set client_min_messages = 'warning';
 -- AR rows.
 
 
+/*
+
+# Data structure
+
+Each purchase or sale records inventory change in the `invoice` table. Returns
+and reversals are recorded too. The number of items involved is recorded in
+the `qty` column. The `qty` columns holds positive values for sales (and
+purchase reversals) and negative values for purchases (and sales returns and
+reversals). Effective purchase and sales prices are recorded in the
+`sellprice` column.
+
+In FIFO COGS calculation, each item bought will be assigned to a sale,
+resulting in the COGS expense amount for the sale. Whether or not an item
+has been used for COGS expenses is tracked in the `allocated` column in the
+`invoice` table. It has an opposite sign of the `qty` of the record. Allocation
+is both tracked on the purchase and on the sale side: it's possible that
+sales are recorded (and invoiced) where the items on the invoice are placed
+in back-order. This is modelled by a sales `invoice` record with 0 (zero)
+`allocated` field. In this case, there is no inventory to allocate to the sale,
+meaning that COGS calculation will be delayed until the back-ordered items are
+received -- at which time the COGS are retro-actively calculated and posted.
+
+
+# FIFO process
+
+The regular process to process for the FIFO inventory is to keep a list of
+all items added to inventory, adding to the end of the list upon purchase
+and taking from the front on sales.
+
+In case of reversals and returns (of sales), these are returned to the front
+of the list. In case of reversals and returns (of purchases), these are taken
+from the end of the list.
+
+
+*/
+
+
 BEGIN;
 
 
@@ -54,6 +91,7 @@ LOOP
    END IF;
 END LOOP;
 
+-- all AR invoices re-alloced; add allocation from AP invoices
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
@@ -76,13 +114,15 @@ LOOP
    END IF;
 END LOOP;
 
+RAISE EXCEPTION 'TOO FEW TO ALLOCATE';
 END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION cogs__reverse_ar(in_parts_id int, in_qty numeric) IS
 $$This function accepts a part id and quantity to reverse.  It then iterates
 backwards over AP related records, calculating COGS.  This does not save COGS
-but rather returns it to the application to save.
+but rather returns it to the application to save. It does however, modify the
+`invoice` records.
 
 Return values are an array of {allocated, cogs}.
 $$;
@@ -133,7 +173,8 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION cogs__add_for_ar(in_parts_id int, in_qty numeric) IS
 $$ This function accepts a parts_id and a quantity, and iterates through AP
 records in order, calculating COGS on a FIFO basis and returning it to the
-application to attach to the current transaction.
+application to attach to the current transaction. Modifies the `invoice`
+records `allocated` values.
 
 Return values are an array of {allocated, cogs}.
 $$;
@@ -143,6 +184,7 @@ CREATE OR REPLACE FUNCTION cogs__reverse_ap
 $$
 DECLARE t_alloc numeric :=0;
         t_realloc numeric;
+        t_reversed numeric;
         t_inv invoice;
         t_cogs numeric :=0;
         retval numeric[];
@@ -154,8 +196,8 @@ FOR t_inv IN
       JOIN (select id, approved, transdate from ap
              union
             select id, approved, transdate from gl) a
-           ON a.id = i.trans_id AND a.approved
-     WHERE qty + allocated < 0 AND parts_id = in_parts_id
+           ON a.id = i.trans_id
+     WHERE qty + allocated < 0 AND parts_id = in_parts_id AND a.approved
   ORDER BY a.transdate, a.id, i.id
 LOOP
    t_realloc := least(in_qty - t_alloc, -1 * (t_inv.allocated + t_inv.qty));
@@ -171,6 +213,29 @@ LOOP
    END IF;
 END LOOP;
 
+-- All AP invoices allocating; removing AR allocation
+FOR t_inv IN
+    SELECT i.*
+      FROM invoice i
+      JOIN (select id, approved, transdate from ar
+            union
+            select id, approved, transdate from gl) a ON a.id = i.trans_id
+     WHERE allocated < 0 and a.approved and parts_id = in_parts_id
+  ORDER BY a.transdate, a.id, i.id
+LOOP
+   t_reversed := least(in_qty - t_alloc, -1 * t_inv.allocated);
+   UPDATE invoice SET allocated = allocated + t_reversed
+    WHERE id = t_inv.id;
+   t_alloc := t_alloc + t_reversed;
+
+   IF t_alloc > in_qty THEN
+       RAISE EXCEPTION 'TOO MANY ALLOCATED';
+   ELSIF t_alloc = in_qty THEN
+       RETURN ARRAY[-1 * t_alloc, t_cogs];
+   END IF;
+END LOOP;
+
+
 RAISE EXCEPTION 'TOO FEW TO ALLOCATE';
 END;
 $$ LANGUAGE PLPGSQL;
@@ -178,8 +243,8 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION cogs__reverse_ap (in_parts_id int, in_qty numeric) IS
 $$ This function iterates through invoice rows attached to ap transactions and
-allocates them on a first-in first-out basis.  The sort of pseudo-"COGS" value
-is returned to the application for further handling.$$;
+allocates to them on a first-in first-out basis.  The sort of pseudo-"COGS"
+value is returned to the application for further handling.$$;
 
 -- Not concerned about performance on the function below.  It is possible that
 -- large AP purchases which add COGS to a lot of AR transactions could pose
