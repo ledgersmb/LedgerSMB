@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(119);
+    SELECT plan(120);
 
     -- Add data
 
@@ -786,11 +786,11 @@ BEGIN;
     VALUES (-5203, -5203, -5, 150, 0, 3);
 
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
-    VALUES (-5104,  true, 'test5004', now() - '4 days'::interval, -2000);
+    VALUES (-5204,  true, 'test5004', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
-    VALUES (-5104, -5104, -5, -150, 0, 3);
+    VALUES (-5204, -5204, -5, -150, 0, 3);
 
-    SELECT cogs__add_for_ap_line(-5104);
+    SELECT cogs__add_for_ap_line(-5204);
 
     PREPARE test AS SELECT allocated = -150
                     FROM invoice WHERE id = -5203;
@@ -798,7 +798,7 @@ BEGIN;
     DEALLOCATE test;
 
     PREPARE test AS SELECT allocated = 150
-                    FROM invoice WHERE id = -5104;
+                    FROM invoice WHERE id = -5204;
     SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 4 series 5 is 150; ');
     DEALLOCATE test;
 
@@ -831,13 +831,11 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 6 series 5 is 150');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -5204;
---    TODO: Fix, Bad syntax and no id = -5204
+    PREPARE test AS SELECT allocated = 75
+       FROM invoice WHERE id = -5204;
+    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75');
+    DEALLOCATE test;
 
-    SELECT todo('Fix, Bad syntax and no id = -5204',1);
---    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated);
-     DEALLOCATE test;
 
     PREPARE test AS select count(*) = 26
   from goods__history(null, null, null, null, null, false, false, false, false, true, true);
