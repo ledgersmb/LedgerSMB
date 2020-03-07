@@ -1,0 +1,26 @@
+{
+    q|Ensure that the transactions table contains no invalid table names| => [{
+         failure_data => [
+             [ qw(id table_name locked_by approved approved_by approved_at transdate) ],
+             [ 22, undef, undef, 1, undef, undef, '2020-01-01' ],
+         ],
+         response => {
+             confirm => 'save',
+             'transactions' => [
+                 {
+                     '__pk' => 'MjI=',
+                     table_name => 'gl',
+                 },
+             ]
+         },
+         submit_session => [
+             {
+                 statement => q{UPDATE "transactions"
+                      SET "table_name" = ?
+                    WHERE "id" = ?},
+                  bound_params => [ 'gl', 22 ],
+                  results => [],
+             },
+         ],
+    }],
+}
