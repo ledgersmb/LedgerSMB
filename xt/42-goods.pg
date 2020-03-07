@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(53);
+    SELECT plan(58);
 
 
    -- TABLE OF CONTENTS
@@ -91,8 +91,8 @@ BEGIN;
            (-4104, 'TEST4004', 'I', 'GOODS test series 1 income', -1000);
 
     INSERT INTO parts
-           (id, partnumber, description, income_accno_id, expense_accno_id,
-            inventory_accno_id, returns_accno_id, assembly, lastcost)
+           (id, partnumber, description, inventory_accno_id, expense_accno_id,
+            income_accno_id, returns_accno_id, assembly, lastcost)
     VALUES
       (-1, 'TS1', 'GOODS Test Series 1', -1101, -1102, -1104, -1103, false, 1.5),
       (-2, 'TS2', 'GOODS Test Series 2', -2101, -2102, -2104, -2103, false, 2),
@@ -130,6 +130,17 @@ BEGIN;
     -- Verify 'inventory_adjust__approve'
     --
 
+
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account, approved)
+    VALUES (-1102,  true, 'test1002', now() - '10 days'::interval, -1000, 't');
+    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    VALUES (-1102, -1102, -1, -150, 50, 0.5);
+
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account, approved)
+    VALUES (-1103,  true, 'test1003', now() - '10 days'::interval, -1000, 't');
+    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    VALUES (-1103, -1103, -2, -150, 75, 9);
+
     INSERT INTO inventory_report (transdate) VALUES (now()::date);
 
     -- LedgerSMB::Inventory::Adjust_Line defines variance as:
@@ -158,6 +169,44 @@ BEGIN;
     SELECT results_eq('test', $$VALUES(now()::date, currval('id')::int)$$,
                               'inventory adjustment, adjustment transactions');
     DEALLOCATE test;
+
+    SELECT is(
+          ARRAY(SELECT count(*)
+            FROM acc_trans
+           WHERE trans_id = currval('id')),
+           ARRAY[4]::bigint[],
+           'There are 4 lines in acc_trans (correcting the inventory account)'
+    );
+
+    SELECT is(
+          (SELECT ARRAY[count(*), sum(amount_bc)]
+            FROM acc_trans
+           WHERE trans_id = currval('id') AND chart_id = -1101),
+           ARRAY[1, -5]::numeric[],
+           'There is 1 line on "series 1" inventory'
+    );
+    SELECT is(
+          (SELECT ARRAY[count(*), sum(amount_bc)]
+            FROM acc_trans
+           WHERE trans_id = currval('id') AND chart_id = -1102),
+           ARRAY[1, 5]::numeric[],
+           'There is 1 line on "series 1" COGS'
+    );
+    SELECT is(
+          (SELECT ARRAY[count(*), sum(amount_bc)]
+            FROM acc_trans
+           WHERE trans_id = currval('id') AND chart_id = -2101),
+           ARRAY[1, 45]::numeric[],
+           'There is 1 line on "series 2" inventory'
+    );
+    SELECT is(
+          (SELECT ARRAY[count(*), sum(amount_bc)]
+            FROM acc_trans
+           WHERE trans_id = currval('id') AND chart_id = -2102),
+           ARRAY[1, -45]::numeric[],
+           'There is 1 line on "series 2" COGS'
+    );
+
 
     PREPARE test AS SELECT onhand FROM parts
                      WHERE id IN (-1, -2) ORDER BY id DESC;
