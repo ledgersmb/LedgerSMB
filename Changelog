@@ -55,6 +55,7 @@ Code cleanup
 * Remove remnants of custom field support
 * Remove unused infrastructure to administer access role groups
 * Stricter data model for storage of foreign currency exchange rates
+* Stricter data constraints for storage of transactions
 * Simplified request handling by
   * Making old/bin/old-handler.pl a PSGI app (LedgerSMB::oldHandler)
   * Stripping LedgerSMB::Form from anything handled by middleware
