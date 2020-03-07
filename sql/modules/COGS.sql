@@ -69,6 +69,7 @@ IF in_qty = 0 THEN
    RETURN ARRAY[0, 0];
 END IF;
 
+-- First satisfy invoices in back-order
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
@@ -91,7 +92,8 @@ LOOP
    END IF;
 END LOOP;
 
--- all AR invoices re-alloced; add allocation from AP invoices
+-- No (more) invoices in back-order?
+-- * Reverse allocation from AP invoices
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
@@ -190,6 +192,7 @@ DECLARE t_alloc numeric :=0;
         retval numeric[];
 BEGIN
 
+-- Move allocation to other purchase lines
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
@@ -213,7 +216,8 @@ LOOP
    END IF;
 END LOOP;
 
--- All AP invoices allocating; removing AR allocation
+-- No more items in stock to move allocation to?
+-- * Put AR invoices in back-order
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
