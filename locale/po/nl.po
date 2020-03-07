@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-02-10 20:48+0000\n"
+"POT-Creation-Date: 2020-03-07 15:14+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -833,11 +833,11 @@ msgstr "Lineaire afschrijving, per maand"
 msgid "Any"
 msgstr "Elk(e)"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1284
+#: lib/LedgerSMB/Scripts/payment.pm:1292
 msgid "Applied discount"
 msgstr "Toegepaste korting"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1931
+#: lib/LedgerSMB/Scripts/payment.pm:1939
 msgid "Applied discount by an overpayment"
 msgstr "Korting bij een vooruitbetaling"
 
@@ -849,11 +849,11 @@ msgstr "Toepassen korting"
 msgid "Approval Status"
 msgstr "Goedkeuringsstatus"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:120
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:202
 #: lib/LedgerSMB/Scripts/asset.pm:553 lib/LedgerSMB/Scripts/asset.pm:615
 #: lib/LedgerSMB/Scripts/asset.pm:677 lib/LedgerSMB/Scripts/asset.pm:738
-#: lib/LedgerSMB/Scripts/budgets.pm:114 UI/reconciliation/report.html:396
+#: lib/LedgerSMB/Scripts/budgets.pm:114 UI/reconciliation/report.html:394
 msgid "Approve"
 msgstr "Goedkeuren"
 
@@ -1191,7 +1191,7 @@ msgstr "Balans"
 msgid "Balances as"
 msgstr "Balans als"
 
-#: UI/reconciliation/report.html:147
+#: UI/reconciliation/report.html:145
 msgid "Bank"
 msgstr ""
 
@@ -1340,7 +1340,7 @@ msgstr "Vergaarlijst"
 msgid "Birthdate"
 msgstr "Geboortedatum"
 
-#: UI/reconciliation/report.html:139
+#: UI/reconciliation/report.html:137
 msgid "Books"
 msgstr ""
 
@@ -1429,7 +1429,7 @@ msgstr ""
 msgid "CSV"
 msgstr "CSV"
 
-#: UI/reconciliation/report.html:81
+#: UI/reconciliation/report.html:79
 msgid "CSV File:"
 msgstr "CSV Bestand:"
 
@@ -1632,25 +1632,25 @@ msgstr "(Woon)plaats:"
 msgid "Class"
 msgstr "Class"
 
-#: lib/LedgerSMB/Scripts/recon.pm:455
+#: lib/LedgerSMB/Scripts/recon.pm:461
 msgid "Clear date"
 msgstr "Opgeschonen"
 
-#: UI/reconciliation/report.html:190
+#: UI/reconciliation/report.html:188
 msgid "Clear date is [*,_1,day] in the future of after posting"
 msgstr ""
 
-#: UI/reconciliation/report.html:196
+#: UI/reconciliation/report.html:194
 msgid "Clear date over [*,_1,day]"
 msgstr ""
 
-#: lib/LedgerSMB/Report/GL.pm:133 UI/reconciliation/report.html:116
-#: UI/reconciliation/report.html:236 UI/reconciliation/report.html:296
+#: lib/LedgerSMB/Report/GL.pm:133 UI/reconciliation/report.html:114
+#: UI/reconciliation/report.html:234 UI/reconciliation/report.html:294
 #: UI/Reports/filters/gl.html:252
 msgid "Cleared"
 msgstr "Opgeschoond"
 
-#: UI/reconciliation/report.html:102
+#: UI/reconciliation/report.html:100
 msgid "Cleared Transactions"
 msgstr "Afgehandelde transacties"
 
@@ -1824,7 +1824,7 @@ msgstr "Contacten"
 msgid "Content"
 msgstr "Inhoud"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1477 lib/LedgerSMB/Scripts/payment.pm:682
+#: lib/LedgerSMB/Scripts/payment.pm:1485 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
 #: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1554 old/bin/oe.pl:2069
@@ -1917,7 +1917,7 @@ msgstr "Kon niet opslaan!"
 msgid "Could not transfer Inventory!"
 msgstr "Kon geen Inventaris overboeken!"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:96
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:101
 #: UI/inventory/adjustment_entry.html:26
 msgid "Counted"
 msgstr "Geteld (aanwezig)"
@@ -2045,8 +2045,8 @@ msgstr "Creditmemo"
 
 #: lib/LedgerSMB/Report/COA.pm:112 lib/LedgerSMB/Report/GL.pm:117
 #: lib/LedgerSMB/Report/Trial_Balance.pm:186
-#: lib/LedgerSMB/Scripts/payment.pm:190 UI/reconciliation/report.html:157
-#: UI/reconciliation/report.html:159 UI/Reports/co/filter_cd.html:90
+#: lib/LedgerSMB/Scripts/payment.pm:190 UI/reconciliation/report.html:155
+#: UI/reconciliation/report.html:157 UI/Reports/co/filter_cd.html:90
 msgid "Credits"
 msgstr "Credit"
 
@@ -2174,11 +2174,11 @@ msgstr "Geb. datum"
 msgid "DOB:"
 msgstr "Geb. dat."
 
-#: UI/reconciliation/report.html:151
+#: UI/reconciliation/report.html:149
 msgid "Data from your bank statement"
 msgstr ""
 
-#: UI/reconciliation/report.html:143
+#: UI/reconciliation/report.html:141
 msgid "Data from your ledger"
 msgstr ""
 
@@ -2365,11 +2365,11 @@ msgstr "Datum tot"
 msgid "Date to register payment"
 msgstr "Datum van betaling"
 
-#: UI/reconciliation/report.html:120
+#: UI/reconciliation/report.html:118
 msgid "Date when the transaction was cleared at your bank"
 msgstr ""
 
-#: UI/reconciliation/report.html:132
+#: UI/reconciliation/report.html:130
 msgid "Date when the transaction was posted in the ledger"
 msgstr ""
 
@@ -2412,8 +2412,8 @@ msgstr "Debetmemo"
 
 #: lib/LedgerSMB/Report/COA.pm:105 lib/LedgerSMB/Report/GL.pm:111
 #: lib/LedgerSMB/Report/Trial_Balance.pm:180
-#: lib/LedgerSMB/Scripts/payment.pm:189 UI/reconciliation/report.html:156
-#: UI/reconciliation/report.html:158 UI/Reports/co/filter_cd.html:82
+#: lib/LedgerSMB/Scripts/payment.pm:189 UI/reconciliation/report.html:154
+#: UI/reconciliation/report.html:156 UI/Reports/co/filter_cd.html:82
 msgid "Debits"
 msgstr "Debet"
 
@@ -2505,7 +2505,7 @@ msgid "Defined exchange rate types"
 msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:124 lib/LedgerSMB/Report/COA.pm:163
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:126
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:131
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:121
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:245
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:208 old/bin/aa.pl:939
@@ -2516,7 +2516,7 @@ msgstr ""
 #: UI/accounts/edit.html:103 UI/accounts/edit.html:563
 #: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:53
 #: UI/Contact/divs/bank_act.html:15 UI/Contact/divs/contact_info.html:12
-#: UI/Contact/pricelist.html:66 UI/reconciliation/report.html:411
+#: UI/Contact/pricelist.html:66 UI/reconciliation/report.html:409
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -2636,7 +2636,7 @@ msgstr "Afschrijvingen met succes geboekt"
 #: lib/LedgerSMB/Report/File/Internal.pm:51 lib/LedgerSMB/Report/GL.pm:101
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:164
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:97
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:93
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:98
 #: lib/LedgerSMB/Report/Inventory/History.pm:125
 #: lib/LedgerSMB/Report/Inventory/Search.pm:201
 #: lib/LedgerSMB/Report/Listings/Asset.pm:129
@@ -2718,8 +2718,8 @@ msgstr "Afschrijvingen met succes geboekt"
 #: UI/Contact/pricelist.tex:17 UI/create_batch.html:24 UI/create_batch.html:78
 #: UI/import_csv/import_csv.html:37 UI/inventory/adjustment_entry.html:25
 #: UI/io-email.html:101 UI/journal/journal_entry.html:51
-#: UI/reconciliation/report.html:136 UI/reconciliation/report.html:239
-#: UI/reconciliation/report.html:299 UI/Reports/filters/batches.html:43
+#: UI/reconciliation/report.html:134 UI/reconciliation/report.html:237
+#: UI/reconciliation/report.html:297 UI/Reports/filters/batches.html:43
 #: UI/Reports/filters/budget_search.html:28
 #: UI/Reports/filters/cogs_lines.html:18 UI/Reports/filters/gl.html:82
 #: UI/Reports/filters/gl.html:217 UI/Reports/filters/inventory_activity.html:18
@@ -3207,7 +3207,7 @@ msgstr "Einde"
 msgid "Ending Balance"
 msgstr "Eindsaldo"
 
-#: UI/reconciliation/report.html:69
+#: UI/reconciliation/report.html:67
 msgid "Ending GL Balance:"
 msgstr "Eindsaldo boekhouding"
 
@@ -3347,7 +3347,7 @@ msgstr "Wisselkoers"
 msgid "Exchange rate for payment missing!"
 msgstr "Wisselkoers voor betaling ontbreekt!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1193
+#: lib/LedgerSMB/Scripts/payment.pm:1201
 msgid "Exchange rate hasn't been defined!"
 msgstr "Wisselkoers is niet gedefinieerd!"
 
@@ -3355,7 +3355,7 @@ msgstr "Wisselkoers is niet gedefinieerd!"
 msgid "Exchange rate missing!"
 msgstr "Wisselkoers ontbreekt!"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:104
 msgid "Expected"
 msgstr "Verwacht"
 
@@ -4095,7 +4095,7 @@ msgstr "Niet bruikbaar redirect"
 msgid "Invalid request"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:303
+#: lib/LedgerSMB/Scripts/recon.pm:309
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr "Onjuist rekeningafschriftsaldo. Hint: voer een getal in"
 
@@ -4112,7 +4112,7 @@ msgstr "Voorraadactiviteit"
 msgid "Inventory Activity Report"
 msgstr "Voorraadactiviteitrapportage"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:68
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:72
 msgid "Inventory Adjustment Details"
 msgstr "Inventaris details wijzigingen"
 
@@ -4566,7 +4566,7 @@ msgid ""
 "selection or select the proper business from the list"
 msgstr ""
 
-#: UI/reconciliation/report.html:65
+#: UI/reconciliation/report.html:63
 msgid "Less Outstanding Checks:"
 msgstr "Minus nog aan te sluiten bedragen"
 
@@ -4872,7 +4872,7 @@ msgstr "Min. belastbaar"
 msgid "Misc Settings"
 msgstr "Overige instellingen"
 
-#: UI/reconciliation/report.html:226
+#: UI/reconciliation/report.html:224
 msgid "Mismatched Transactions (From Upload)"
 msgstr "Niet overeenkomende transacties (vanuit upload)"
 
@@ -5092,7 +5092,7 @@ msgstr "Geen taal"
 msgid "No open Projects!"
 msgstr "Geen open projecten!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1339
+#: lib/LedgerSMB/Scripts/payment.pm:1347
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Geen voorschotrekening geselecteerd  Een aanmaken?"
 
@@ -5454,7 +5454,7 @@ msgstr "Bestelling"
 msgid "Order #"
 msgstr "Order #"
 
-#: UI/reconciliation/report.html:360
+#: UI/reconciliation/report.html:358
 msgid "Order By"
 msgstr "Order door"
 
@@ -5519,15 +5519,15 @@ msgstr "Orders gegenereerd!"
 msgid "Other Actions"
 msgstr "Overige acties"
 
-#: lib/LedgerSMB/Scripts/recon.pm:458
+#: lib/LedgerSMB/Scripts/recon.pm:464
 msgid "Our Balance"
 msgstr "Ons saldo"
 
-#: UI/reconciliation/report.html:241 UI/reconciliation/report.html:301
+#: UI/reconciliation/report.html:239 UI/reconciliation/report.html:299
 msgid "Our Credits"
 msgstr "Onze credits"
 
-#: UI/reconciliation/report.html:240 UI/reconciliation/report.html:300
+#: UI/reconciliation/report.html:238 UI/reconciliation/report.html:298
 msgid "Our Debits"
 msgstr "Onze debets"
 
@@ -5546,7 +5546,7 @@ msgstr "Boeking is niet in evenwicht!"
 msgid "Outstanding"
 msgstr "Openstaand"
 
-#: UI/reconciliation/report.html:288
+#: UI/reconciliation/report.html:286
 msgid "Outstanding Transactions"
 msgstr "Open transacties"
 
@@ -5656,7 +5656,7 @@ msgid "Part Group"
 msgstr "Artikelgroep"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:81
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:95
 #: lib/LedgerSMB/Report/Inventory/History.pm:121
 #: lib/LedgerSMB/Report/Inventory/Search.pm:197
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:101
@@ -6011,7 +6011,7 @@ msgstr "Inboeken"
 msgid "Post Batch"
 msgstr "Boek transactiegroep"
 
-#: lib/LedgerSMB/Scripts/recon.pm:457 UI/create_batch.html:81
+#: lib/LedgerSMB/Scripts/recon.pm:463 UI/create_batch.html:81
 msgid "Post Date"
 msgstr "Boekdatum"
 
@@ -6023,8 +6023,8 @@ msgstr "Boek jaarafsluiting"
 msgid "Post as new"
 msgstr "Inboeken als nieuw"
 
-#: UI/reconciliation/report.html:128 UI/reconciliation/report.html:238
-#: UI/reconciliation/report.html:298
+#: UI/reconciliation/report.html:126 UI/reconciliation/report.html:236
+#: UI/reconciliation/report.html:296
 msgid "Posted"
 msgstr ""
 
@@ -6617,7 +6617,7 @@ msgstr "Registratie [_1]"
 msgid "Regular"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/budgets.pm:120 UI/reconciliation/report.html:403
+#: lib/LedgerSMB/Scripts/budgets.pm:120 UI/reconciliation/report.html:401
 msgid "Reject"
 msgstr "Afwijzen"
 
@@ -6647,7 +6647,7 @@ msgstr "Herhaal"
 msgid "Report Approved"
 msgstr "Rapport goedgekeurd"
 
-#: UI/reconciliation/report.html:74
+#: UI/reconciliation/report.html:72
 msgid "Report Generated By:"
 msgstr ""
 
@@ -6983,7 +6983,7 @@ msgstr "Zater"
 #: UI/Contact/pricelist.html:95 UI/import_csv/import_csv.html:70
 #: UI/import_csv/import_inventory_csv.html:77
 #: UI/inventory/adjustment_entry.html:89 UI/payroll/deduction.html:93
-#: UI/payroll/income.html:98 UI/reconciliation/report.html:381
+#: UI/payroll/income.html:98 UI/reconciliation/report.html:379
 #: UI/taxform/add_taxform.html:84 UI/templates/edit.html:37
 #: UI/timecards/timecard.html:169 UI/timecards/timecard-week.html:126
 #: UI/users/preferences.html:122
@@ -7205,7 +7205,7 @@ msgstr "Secundair telefoonnummer"
 msgid "Security Settings"
 msgstr "Veiligheids Instellingen"
 
-#: UI/reconciliation/report.html:375 UI/Reports/aging_report.html:56
+#: UI/reconciliation/report.html:373 UI/Reports/aging_report.html:56
 msgid "Select All"
 msgstr "Alles selecteren"
 
@@ -7637,9 +7637,9 @@ msgstr "Sorteer op"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:133 lib/LedgerSMB/Report/GL.pm:123
 #: lib/LedgerSMB/Report/GL.pm:216
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:77
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:81
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:144
-#: lib/LedgerSMB/Scripts/payment.pm:187 lib/LedgerSMB/Scripts/recon.pm:456
+#: lib/LedgerSMB/Scripts/payment.pm:187 lib/LedgerSMB/Scripts/recon.pm:462
 #: old/bin/aa.pl:1505 old/bin/aa.pl:836 old/bin/ir.pl:834 old/bin/is.pl:943
 #: templates/demo/ap_transaction.html:194 templates/demo/ar_transaction.html:193
 #: templates/demo/invoice.html:253 templates/demo/printPayment.html:45
@@ -7653,8 +7653,8 @@ msgstr "Sorteer op"
 #: UI/journal/journal_entry.html:133 UI/orders/order.html:246
 #: UI/payments/payment2.html:109 UI/payments/payment2.html:273
 #: UI/payments/payment2.html:333 UI/payments/payments_detail.html:315
-#: UI/reconciliation/report.html:124 UI/reconciliation/report.html:237
-#: UI/reconciliation/report.html:297 UI/Reports/filters/gl.html:67
+#: UI/reconciliation/report.html:122 UI/reconciliation/report.html:235
+#: UI/reconciliation/report.html:295 UI/Reports/filters/gl.html:67
 #: UI/Reports/filters/gl.html:240 UI/Reports/filters/inventory_adj.html:13
 #: UI/Reports/filters/invoice_search.html:130
 #: UI/Reports/filters/payments.html:64
@@ -7814,7 +7814,7 @@ msgstr "Onderwerp: [_1]"
 msgid "Submission Status"
 msgstr "Indieningsstatus"
 
-#: UI/reconciliation/report.html:387
+#: UI/reconciliation/report.html:385
 msgid "Submit"
 msgstr "Indienen"
 
@@ -8211,15 +8211,15 @@ msgstr "Bedankt voor uw aankoop!"
 msgid "The amount of"
 msgstr "Het bedrag van"
 
-#: lib/LedgerSMB/Scripts/recon.pm:459
+#: lib/LedgerSMB/Scripts/recon.pm:465
 msgid "Their Balance"
 msgstr "Banksaldo"
 
-#: UI/reconciliation/report.html:243
+#: UI/reconciliation/report.html:241
 msgid "Their Credits"
 msgstr "Bankcredits"
 
-#: UI/reconciliation/report.html:242
+#: UI/reconciliation/report.html:240
 msgid "Their Debits"
 msgstr "Bankdebets"
 
@@ -8278,11 +8278,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dit document is goedgekeurd door"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1210
+#: lib/LedgerSMB/Scripts/payment.pm:1218
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr "Deze journaalboeking is een gevolg van een betalingstransactie"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1918
+#: lib/LedgerSMB/Scripts/payment.pm:1926
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr "Deze journaalboeking is het gevolg van vooruitbetaling transactie"
 
@@ -8516,8 +8516,8 @@ msgstr "Hoogste Niveau"
 #: templates/xedemo/timecard.tex:45 UI/orders/order.html:224
 #: UI/payments/payment1.html:85 UI/payments/payment1.html:94
 #: UI/payments/payment2.html:481 UI/payments/payments_detail.html:338
-#: UI/reconciliation/report.html:216 UI/reconciliation/report.html:276
-#: UI/reconciliation/report.html:337
+#: UI/reconciliation/report.html:214 UI/reconciliation/report.html:274
+#: UI/reconciliation/report.html:335
 #: UI/Reports/filters/invoice_outstanding.html:210
 #: UI/Reports/filters/invoice_search.html:322
 msgid "Total"
@@ -8569,7 +8569,7 @@ msgid "Transaction Dates"
 msgstr "Transactiedatums"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:190
-#: UI/reconciliation/report.html:112 UI/reconciliation/report.html:235
+#: UI/reconciliation/report.html:110 UI/reconciliation/report.html:233
 #: UI/Reports/filters/batches.html:14 UI/Reports/filters/unapproved.html:22
 msgid "Transaction Type"
 msgstr "Boekingtype"
@@ -8836,7 +8836,7 @@ msgstr ""
 #: old/bin/oe.pl:643 old/bin/oe.pl:868 old/bin/pe.pl:603 UI/am-taxes.html:71
 #: UI/Configuration/rate.html:46 UI/payments/payment2.html:492
 #: UI/payments/payments_detail.html:483 UI/payroll/deduction.html:85
-#: UI/payroll/income.html:90 UI/reconciliation/report.html:369
+#: UI/payroll/income.html:90 UI/reconciliation/report.html:367
 msgid "Update"
 msgstr "Bijwerken"
 
@@ -8867,7 +8867,7 @@ msgstr "Ge-upload op"
 msgid "Uploaded By"
 msgstr "Ge-upload door"
 
-#: lib/LedgerSMB/Scripts/currency.pm:333
+#: lib/LedgerSMB/Scripts/currency.pm:334
 msgid "Uploaded rates"
 msgstr ""
 
@@ -8892,7 +8892,7 @@ msgstr "Gebruik voorschot"
 msgid "Use Shipto"
 msgstr "Gebruik verzendadres"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1796
+#: lib/LedgerSMB/Scripts/payment.pm:1804
 msgid "Use overpayment/prepayment"
 msgstr "Gebruik meerbetaling/vooruitbetaling"
 
@@ -8965,11 +8965,11 @@ msgid "Valuation"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:95
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:102
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:107
 msgid "Variance"
 msgstr "Verschil"
 
-#: UI/reconciliation/report.html:58
+#: UI/reconciliation/report.html:57
 msgid "Variance:"
 msgstr "Afwijking:"
 
@@ -9331,7 +9331,7 @@ msgid "default"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/admin.pm:62 lib/LedgerSMB/Scripts/currency.pm:137
-#: lib/LedgerSMB/Scripts/currency.pm:234 lib/LedgerSMB/Scripts/currency.pm:65
+#: lib/LedgerSMB/Scripts/currency.pm:235 lib/LedgerSMB/Scripts/currency.pm:65
 msgid "delete"
 msgstr "verwijderen"
 
@@ -9380,19 +9380,19 @@ msgstr "in maanden"
 msgid "in years"
 msgstr "in jaren"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1946
+#: lib/LedgerSMB/Scripts/payment.pm:1954
 msgid "is bigger than the amount available"
 msgstr "Saldo is ontoereikend"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1647
+#: lib/LedgerSMB/Scripts/payment.pm:1655
 msgid "is lesser than 0"
 msgstr "Is minder dan 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1641
+#: lib/LedgerSMB/Scripts/payment.pm:1649
 msgid "is lesser than the amount to be paid"
 msgstr "het bedrag is minder dan uiteindelijk moet worden betaald"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1903
+#: lib/LedgerSMB/Scripts/payment.pm:1911
 msgid "is null"
 msgstr "is nihiel"
 
@@ -9440,7 +9440,7 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "onverwachte fout!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1955 lib/LedgerSMB/Scripts/payment.pm:1974
+#: lib/LedgerSMB/Scripts/payment.pm:1963 lib/LedgerSMB/Scripts/payment.pm:1982
 msgid "use of an overpayment"
 msgstr "Gebruik van een vooruitbetaling"
 
