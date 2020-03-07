@@ -372,22 +372,21 @@ UPDATE inventory_report
 -- When the count is higher than expected, we need to increase
 -- some of our inventory. To do so, we stock at reverse COGS, taking
 -- the cost of the inventory increase out of COGS (to re-add on sale)
-INSERT INTO invoice (trans_id, parts_id, description, qty,
+INSERT INTO invoice (trans_id, parts_id, description, qty, allocated,
                      sellprice, precision, discount)
-SELECT t_trans_id, p.id, p.description, l.variance * -1,
-       CASE WHEN l.variance > 0 THEN p.lastcost ELSE 0 END,
-       3, CASE WHEN l.variance > 0 THEN 1 ELSE 0 END
+SELECT t_trans_id, p.id, p.description, l.variance * -1, 0,
+       0, 3, 1
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
  WHERE l.adjust_id = in_id;
 
+-- cogs for AR manipulates the tip of the FIFO buffer
+--  record shortage as a regular FIFO allocation, without income aspects
+--  record overage as a regular FIFO reversal, similarly without income aspects
 PERFORM cogs__add_for_ar_line(id)
    FROM invoice
-  WHERE qty > 0 AND trans_id = t_trans_id;
+  WHERE trans_id = t_trans_id;
 
-PERFORM cogs__add_for_ap_line(id)
-   FROM invoice
-  WHERE qty < 0 AND trans_id = t_trans_id;
 
 UPDATE parts p
    SET onhand = onhand + (select variance
