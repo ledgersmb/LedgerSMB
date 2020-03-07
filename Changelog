@@ -84,6 +84,7 @@ Changelog for 1.7.10
 * Fix NULL transaction dates in inventory adjustment (#4463)
 * Fix alignment of numbers in Inventory Activity report (#4454)
 * Fix variance calculation on reconciliation report (#4486)
+* Fix CSV import through explicit version on HTTP::Headers::Fast dependecy
 
 
 Changelog for 1.7.9
