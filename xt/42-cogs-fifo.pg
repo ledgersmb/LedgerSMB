@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(126);
+    SELECT plan(132);
 
     -- Add data
 
@@ -844,7 +844,16 @@ BEGIN;
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5204, -5204, -5, -150, 0, 3);
 
-    SELECT cogs__add_for_ap_line(-5204);
+    SELECT is(
+              cogs__add_for_ap_line(-5204),
+              150::numeric,
+              'ar-1, allocation invoice 3 series 5'
+              );
+    SELECT is(
+              sum(amount_bc),
+              -450::numeric,
+              'ar-1, cogs 1 series 5, expense account total')
+     FROM acc_trans WHERE chart_id = -5102;
 
     PREPARE test AS SELECT allocated = -150
                     FROM invoice WHERE id = -5203;
@@ -861,7 +870,16 @@ BEGIN;
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5205, -5205, -5, 75, 0, 3);
 
-    SELECT cogs__add_for_ar_line(-5205);
+    SELECT is(
+              cogs__add_for_ar_line(-5205),
+              0::numeric,
+              'ar-1, allocation invoice 5 series 5'
+              );
+    SELECT is(
+              sum(amount_bc),
+              -450::numeric,
+              'ar-1, cogs 2 series 5, expense account total')
+     FROM acc_trans WHERE chart_id = -5102;
 
     PREPARE test AS SELECT allocated = 0
       FROM invoice WHERE id = -5205;
@@ -873,7 +891,16 @@ BEGIN;
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5206, -5206, -5, -150, 0, 3);
 
-    SELECT cogs__add_for_ar_line(-5206);
+    SELECT is(
+              cogs__add_for_ar_line(-5206),
+              -150::numeric,
+              'ar-1, allocation invoice 6 series 5'
+              );
+    SELECT is(
+              sum(amount_bc),
+              -225::numeric,
+              'ar-1, cogs 3 series 5, expense account total')
+     FROM acc_trans WHERE chart_id = -5102;
 
     PREPARE test AS SELECT allocated = -75
                     FROM invoice WHERE id = -5205;
@@ -922,7 +949,7 @@ BEGIN;
     SELECT is(
               sum(amount_bc),
               -450::numeric,
-              'ar-1, cogs series 5, expense account total')
+              'ar-1, cogs 2 series 5, expense account total')
      FROM acc_trans WHERE chart_id = -6102;
 
     SELECT is(ARRAY(select allocated from invoice where id in (-5207, -5208) order by id),
