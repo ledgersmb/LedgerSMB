@@ -78,19 +78,6 @@ This function returns the complete menu tree.  It is used to generate nested
 menus for the web interface.
 $$;
 
-CREATE OR REPLACE FUNCTION menu_children(in_parent_id int) RETURNS SETOF menu_item
-AS $$
-SELECT * FROM menu_generate() where parent = $1;
-$$ language sql;
-
-COMMENT ON FUNCTION menu_children(int) IS
-$$ This function returns all menu  items which are children of in_parent_id
-(the only input parameter).
-
-It is thus similar to menu_generate() but it only returns the menu items
-associated with nodes directly descendant from the parent.  It is used for
-menues for frameless browsers.$$;
-
 CREATE OR REPLACE FUNCTION
 menu_insert(in_parent_id int, in_position int, in_label text)
 returns int

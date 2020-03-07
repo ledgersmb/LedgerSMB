@@ -262,16 +262,6 @@ COMMENT ON FUNCTION user__check_my_expiration() IS
 $$ Returns the time when password of the current logged in user is set to
 expire.$$;
 
-CREATE OR REPLACE FUNCTION user__expires_soon()
-RETURNS BOOL AS
-$$
-   SELECT user__check_my_expiration() < '1 week';
-$$ language sql;
-
-COMMENT ON FUNCTION user__expires_soon() IS
-$$ Returns true if the password of the current logged in user is set to expire
-within on week.$$;
-
 CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
 returns int SET datestyle = 'ISO, YMD' as -- datestyle needed due to legacy code
 $$

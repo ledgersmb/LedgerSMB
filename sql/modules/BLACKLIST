@@ -300,7 +300,6 @@ lsmb__role
 lsmb__role_prefix
 lsmb_module__get
 lsmb_module__list
-menu_children
 menu_generate
 menu_insert
 mfg_lot__commit
@@ -452,7 +451,6 @@ unlock
 unlock_all
 user__change_password
 user__check_my_expiration
-user__expires_soon
 user__get_all_users
 user__get_preferences
 user__save_preferences
