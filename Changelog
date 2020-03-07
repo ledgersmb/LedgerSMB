@@ -77,8 +77,19 @@ Dependency updates
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.10
+* Fix error displaying NULL exchange rates (#4438)
+* Fix incorrect receipt totals due to number formatting (#4441)
+* Prevent re-approval of approved inventory adjustment (#4458)
+* Fix NULL transaction dates in inventory adjustment (#4463)
+* Fix alignment of numbers in Inventory Activity report (#4454)
+* Fix variance calculation on reconciliation report (#4486)
+
+
 Changelog for 1.7.9
-* Fix authentication issue due to inconsistent cookie handling
+* Fix authentication issue due to inconsistent cookie handling (#4380)
+* Fix delete access for SIC codes (standard industry code) (#4391)
+* Fix SL 3.0 migration of assemblies (#4386)
 
 
 Changelog for 1.7.8
