@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-02-10 20:06+0000\n"
+"POT-Creation-Date: 2020-03-07 14:31+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Approval Status"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:113
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:119
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:206
 #: lib/LedgerSMB/Scripts/asset.pm:595 lib/LedgerSMB/Scripts/asset.pm:671
 #: lib/LedgerSMB/Scripts/asset.pm:740 lib/LedgerSMB/Scripts/asset.pm:808
@@ -1918,7 +1918,7 @@ msgstr ""
 msgid "Could not transfer Inventory!"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:96
 #: UI/inventory/adjustment_entry.html:26
 msgid "Counted"
 msgstr ""
@@ -2502,7 +2502,7 @@ msgid "Defaults"
 msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:124 lib/LedgerSMB/Report/COA.pm:188
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:119
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:119
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:212
@@ -2633,7 +2633,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/File/Internal.pm:49 lib/LedgerSMB/Report/GL.pm:100
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:146
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:80
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:87
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:93
 #: lib/LedgerSMB/Report/Inventory/History.pm:122
 #: lib/LedgerSMB/Report/Inventory/Search.pm:198
 #: lib/LedgerSMB/Report/Listings/Asset.pm:120
@@ -3357,7 +3357,7 @@ msgstr ""
 msgid "Exchange rate missing!"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:93
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
 msgid "Expected"
 msgstr ""
 
@@ -4106,7 +4106,7 @@ msgstr ""
 msgid "Inventory Activity Report"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:65
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:69
 msgid "Inventory Adjustment Details"
 msgstr ""
 
@@ -5631,7 +5631,7 @@ msgid "Part Group"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:79
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:84
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: lib/LedgerSMB/Report/Inventory/History.pm:118
 #: lib/LedgerSMB/Report/Inventory/Search.pm:194
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:158
@@ -7601,7 +7601,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:128 lib/LedgerSMB/Report/GL.pm:122
 #: lib/LedgerSMB/Report/GL.pm:215
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:72
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:76
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:141
 #: lib/LedgerSMB/Scripts/payment.pm:157 lib/LedgerSMB/Scripts/recon.pm:231
 #: old/bin/aa.pl:1495 old/bin/aa.pl:814 old/bin/ir.pl:818 old/bin/is.pl:916
@@ -8911,7 +8911,7 @@ msgid "Valuation"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:92
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:96
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:102
 msgid "Variance"
 msgstr ""
 

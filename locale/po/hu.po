@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-02-10 20:06+0000\n"
+"POT-Creation-Date: 2020-03-07 14:31+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Hungarian (https://www.transifex.com/ledgersmb/teams/58325/"
 "hu/)\n"
@@ -853,7 +853,7 @@ msgstr "Engedményadás"
 msgid "Approval Status"
 msgstr "Jóváhagyás állapota"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:113
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:119
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:206
 #: lib/LedgerSMB/Scripts/asset.pm:595 lib/LedgerSMB/Scripts/asset.pm:671
 #: lib/LedgerSMB/Scripts/asset.pm:740 lib/LedgerSMB/Scripts/asset.pm:808
@@ -1927,7 +1927,7 @@ msgstr "Nem lehet elmenteni!"
 msgid "Could not transfer Inventory!"
 msgstr "Nem lehet a készletet áthelyezni!"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:96
 #: UI/inventory/adjustment_entry.html:26
 msgid "Counted"
 msgstr "Számlált"
@@ -2511,7 +2511,7 @@ msgid "Defaults"
 msgstr "Alapbeállítások"
 
 #: lib/LedgerSMB/Report/COA.pm:124 lib/LedgerSMB/Report/COA.pm:188
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:119
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:119
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:212
@@ -2642,7 +2642,7 @@ msgstr "Értékcsökkentés sikeres"
 #: lib/LedgerSMB/Report/File/Internal.pm:49 lib/LedgerSMB/Report/GL.pm:100
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:146
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:80
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:87
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:93
 #: lib/LedgerSMB/Report/Inventory/History.pm:122
 #: lib/LedgerSMB/Report/Inventory/Search.pm:198
 #: lib/LedgerSMB/Report/Listings/Asset.pm:120
@@ -3366,7 +3366,7 @@ msgstr ""
 msgid "Exchange rate missing!"
 msgstr "Az átváltási árfolyam hiányzik!"
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:93
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
 msgid "Expected"
 msgstr "Várt"
 
@@ -4115,7 +4115,7 @@ msgstr "Készletmozgások"
 msgid "Inventory Activity Report"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:65
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:69
 msgid "Inventory Adjustment Details"
 msgstr "Készlet korrekció részletei"
 
@@ -5649,7 +5649,7 @@ msgid "Part Group"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:79
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:84
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: lib/LedgerSMB/Report/Inventory/History.pm:118
 #: lib/LedgerSMB/Report/Inventory/Search.pm:194
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:158
@@ -7621,7 +7621,7 @@ msgstr "Rendezve"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:128 lib/LedgerSMB/Report/GL.pm:122
 #: lib/LedgerSMB/Report/GL.pm:215
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:72
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:76
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:141
 #: lib/LedgerSMB/Scripts/payment.pm:157 lib/LedgerSMB/Scripts/recon.pm:231
 #: old/bin/aa.pl:1495 old/bin/aa.pl:814 old/bin/ir.pl:818 old/bin/is.pl:916
@@ -8932,7 +8932,7 @@ msgid "Valuation"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:92
-#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:96
+#: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:102
 msgid "Variance"
 msgstr "Eltérés"
 
