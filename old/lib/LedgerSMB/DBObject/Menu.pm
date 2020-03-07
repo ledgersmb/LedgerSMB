@@ -48,44 +48,12 @@ sub generate {
     return @{$self->{menu_items}};
 }
 
-=item generate_section()
-
-This class acts like Menu::Generate except it returns only a cross-section of
-the menu.  Basically it returns all nodes which are direct children below
-$object->{parent_id}.
-
-=cut
-
-sub generate_section {
-    my ($self) = shift @_;
-
-    @{$self->{menu_items}} = $self->call_dbmethod(funcname => 'menu_children');
-
-    return @{$self->{menu_items}};
-}
-
-=item will_expire_soon()
-
-This method returns true if the user's password will expire soon
-(within the next week).
-
-=cut
-
-sub will_expire_soon {
-    my ($self) = @_;
-    my ($pw_expires) = $self->call_dbmethod(
-        dbh => $self->{dbh},
-        funcname => 'user__expires_soon');
-    $self->{expires_soon} = $pw_expires->{'user__expires_soon'};
-    return $self->{expires_soon};
-}
-
 
 1;
 
 =back
 
-=head1 Copyright (C) 2007-2014 The LedgerSMB Core Team
+=head1 Copyright (C) 2007-2020 The LedgerSMB Core Team
 
 Licensed under the GNU General Public License version 2 or later (at your
 option).  For more information please see the included LICENSE and COPYRIGHT

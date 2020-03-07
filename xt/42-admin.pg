@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(26);
+    SELECT plan(25);
 
     -- Add data
 
@@ -40,7 +40,6 @@ BEGIN;
     SELECT has_function('admin__search_users',ARRAY['text','text','text','text','date']);
     SELECT has_function('user__change_password',ARRAY['text']);
     SELECT has_function('user__check_my_expiration','{}'::text[]);
-    SELECT has_function('user__expires_soon','{}'::text[]);
     SELECT has_function('user__get_all_users','{}'::text[]);
     SELECT has_function('user__get_preferences',ARRAY['integer']);
     SELECT has_function('user__save_preferences',ARRAY['text','text','text','text','text']);
