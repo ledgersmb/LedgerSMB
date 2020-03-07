@@ -114,6 +114,11 @@ When qr/^I change the "Ending Statement Balance" to "(.*)"$/, sub {
 };
 
 
+When qr/^I wait (\d+) seconds$/, sub {
+    sleep $1;
+};
+
+
 Then qr/^I expect to see the Invoice Detail table for "(.*)"$/, sub {
     my $vendor = $1;
     my $page = S->{ext_wsl}->page->body->maindiv->content;

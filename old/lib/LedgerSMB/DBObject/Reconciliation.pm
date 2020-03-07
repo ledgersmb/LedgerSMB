@@ -352,12 +352,12 @@ sub get {
     my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => { id => $self->{chart_id} });
+    $self->{account_info} = $ref;
     my $neg = 1;
     if (defined $self->{account_info}->{category}   # Report may be empty
     and $self->{account_info}->{category} =~ /(A|E)/){
         $neg = -1;
     }
-    $self->{account_info} = $ref;
 
     my ($previous) = $self->call_dbmethod(funcname=>'reconciliation__previous_report_date',
                                 args => { chart_id => $self->{chart_id},
@@ -430,7 +430,7 @@ sub get {
 
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;
-       return $self->{mismatch_their_total} *= -1;
+       $self->{mismatch_their_total} *= -1;
     }
 
     return;
@@ -490,12 +490,6 @@ sub build_totals {
         else {
            $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
            $l->{our_debits} = $l->{our_balance}->bneg;
-        }
-
-        # Format line amounts for display
-        # (Shouldn't this be done in the template rather than in code?)
-        for my $element (qw/our_balance our_credits our_debits their_balance their_credits their_debits/) {
-            $l->{$element} = $l->{$element}->to_output(money => 1);
         }
 
         # Update report totals

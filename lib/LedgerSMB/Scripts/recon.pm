@@ -238,6 +238,12 @@ sub _display_report {
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
 
+    for my $l (@{$recon->{report_lines}}){
+        for my $element (qw/our_balance our_credits our_debits their_balance their_credits their_debits/) {
+            $l->{$element} = $l->{$element}->to_output(money => 1);
+        }
+    }
+
     for my $field (qw/ our_total beginning_balance /) {
         $recon->{$field} ||= LedgerSMB::PGNumber->from_db(0);
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
