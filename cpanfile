@@ -14,7 +14,7 @@ requires 'DateTime::Format::Strptime';
 requires 'File::Find::Rule';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
-requires 'HTTP::Headers::Fast'; # dependency of Plack too; don't need '::Fast'
+requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
