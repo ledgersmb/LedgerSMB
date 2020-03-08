@@ -344,7 +344,7 @@ sub get {
 
     my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
 
-    $self->{beginning_balance} = $self->previous_cleared_balance // 0;
+    $self->{beginning_balance} = $self->previous_cleared_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_our_total} = LedgerSMB::PGNumber->from_db(0);
@@ -661,8 +661,11 @@ sub get_report_lines {
 =item previous_cleared_balance
 
 For a given date and account, returns the cleared balance of the previous
-reconciliation, or undef if there is no previous reconciliation for the
-account.
+reconciliation as a LedgerSMB::PGNumber.
+
+If there is no previous reconciliation, a LedgerSMB::PGNumber object
+representing zero is returned (internally Math::BigFloat interprets
+an undefined value as zero during intialisation).
 
 Requires that the following object properties are set:
 
@@ -685,7 +688,9 @@ sub previous_cleared_balance {
         }
     );
 
-    return $r->{reconciliation__get_cleared_balance};
+    return LedgerSMB::PGNumber->from_db(
+        $r->{reconciliation__get_cleared_balance}
+    );
 }
 
 
