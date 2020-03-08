@@ -12,7 +12,7 @@
 # LSMB_AWS_UPLOAD_BUCKET should contain the name of the bucket to upload into
 
 
-dist: trusty
+dist: xenial
 language: perl
 
 notifications:
