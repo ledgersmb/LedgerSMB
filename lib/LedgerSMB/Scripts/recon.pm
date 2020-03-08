@@ -232,13 +232,13 @@ sub _display_report {
     _highlight_suspect_rows($recon);
 
     $recon->{submit_enabled} = ($recon->{variance} == 0);
+    $recon->{their_total} *= $neg_factor;
 
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
         for my $bal_type (qw/ credits debits/) {
             $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
         }
     }
-    $recon->{their_total} *= $neg_factor;
 
     for my $line (@{$recon->{report_lines}}){
         for my $element (qw/ our_balance our_credits our_debits their_balance their_credits their_debits /) {
@@ -246,12 +246,7 @@ sub _display_report {
         }
     }
 
-    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance /) {
-        $recon->{$field} = $recon->{$field}->to_output(money => 1);
-    }
-
-    for my $field (qw/ our_total beginning_balance /) {
-        $recon->{$field} ||= LedgerSMB::PGNumber->from_db(0);
+    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance our_total beginning_balance /) {
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
 
