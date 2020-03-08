@@ -217,8 +217,6 @@ sub _display_report {
     $recon->get;
     _process_upload($recon, $request) unless $recon->{submitted};
     $recon->build_totals;
-    $recon->build_statement_gl_calc;
-    $recon->build_variance;
 
     if ($recon->{account_info}->{category} eq 'A') {
         $recon->{reverse} = $request->setting->get('reverse_bank_recs');
@@ -489,7 +487,7 @@ sub _highlight_suspect_rows {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011-2018 The LedgerSMB Core Team
+Copyright (C) 2011-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
