@@ -215,23 +215,17 @@ sub _display_report {
     _set_sort_options($recon, $request);
 
     $recon->get;
-
-    my $neg_factor = ($recon->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
-    $recon->{their_total} *= $neg_factor;
+    _process_upload($recon, $request) unless $recon->{submitted};
+    $recon->build_totals;
+    $recon->build_statement_gl_calc;
+    $recon->build_variance;
 
     if ($recon->{account_info}->{category} eq 'A') {
         $recon->{reverse} = $request->setting->get('reverse_bank_recs');
     }
 
-    _process_upload($recon, $request) unless $recon->{submitted};
-
-    $recon->build_totals;
-    $recon->build_statement_gl_calc;
-    $recon->build_variance;
-    _highlight_suspect_rows($recon);
-
     $recon->{submit_enabled} = ($recon->{variance} == 0);
-    $recon->{their_total} *= $neg_factor;
+    _highlight_suspect_rows($recon);
 
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
         for my $bal_type (qw/ credits debits/) {

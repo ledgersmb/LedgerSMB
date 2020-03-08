@@ -479,12 +479,18 @@ Requires that the following object properties are set:
     * their_total
     * our_total
     * decimal_places
+    * account_info
 
 =cut
 
 sub build_variance {
     my $self = shift;
-    $self->{variance} = $self->{their_total} - $self->{our_total};
+
+    # their_total is reversed for some kinds of account
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+    my $their_total = $self->{their_total} * $neg;
+
+    $self->{variance} = $their_total - $self->{our_total};
     $self->{variance}->bfround(
         $self->{decimal_places} * -1
     );
@@ -504,21 +510,22 @@ Requries that the following object properties are set:
     * their_total
     * outstanding_total
     * mismatch_our_total
+    * account_info
 
 =cut
 
 sub build_statement_gl_calc {
     my $self = shift;
 
+    # their_total is reversed for some kinds of account
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+    my $their_total = $self->{their_total} * $neg;
+
     $self->{statement_gl_calc} = sum(
-        $self->{their_total},
+        $their_total,
         $self->{outstanding_total},
         $self->{mismatch_our_total},
-    );
-
-    if ($self->{account_info}->{category} =~ /^(A|E)$/) {
-       $self->{statement_gl_calc} *= -1;
-    }
+    ) * $neg;
 
     return $self->{statement_gl_calc};
 }
