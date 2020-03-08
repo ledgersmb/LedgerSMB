@@ -67,10 +67,6 @@ transaction list.
 sub update {
     my $self = shift @_;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-    my $their_total = $self->{their_total} // 0;
-    my $beginning_balance = $self->{beginning_balance} // 0;
-    my $total_cleared_credits = $self->{total_cleared_credits} // 0;
-    my $total_cleared_debits = $self->{total_cleared_debits} // 0;
     return;
 }
 
@@ -135,13 +131,23 @@ sub import_file {
 
 =item unapproved_checks
 
-Checks for unapproved
+Private method that checks whether any of the following items are unapproved
+for the period up to the end date of the current reconciliation report:
 
  * transactions (generally, since these could change)
  * payments against the account
  * reconciliation reports
 
+The intention is to allow any such items to be flagged to the user,
+as it is considered bad practice to reconcile account while there are
+items awaiting approval.
+
 Sets $self->{check} with the name of the test and the number of failures
+
+Requires that the following object properties are set:
+
+  * end_date
+  * chart_id
 
 =cut
 
@@ -333,11 +339,12 @@ sub get {
 
     $self->get_report_summary;
     $self->refresh_pending_transactions unless $self->{submitted};
+    $self->unapproved_checks;
     $self->get_report_lines;
 
     my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
 
-    $self->{beginning_balance} = $self->previous_cleared_balance // 0;
+    $self->{beginning_balance} = $self->previous_cleared_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_our_total} = LedgerSMB::PGNumber->from_db(0);
@@ -472,12 +479,18 @@ Requires that the following object properties are set:
     * their_total
     * our_total
     * decimal_places
+    * account_info
 
 =cut
 
 sub build_variance {
     my $self = shift;
-    $self->{variance} = $self->{their_total} - $self->{our_total};
+
+    # their_total is reversed for some kinds of account
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+    my $their_total = $self->{their_total} * $neg;
+
+    $self->{variance} = $their_total - $self->{our_total};
     $self->{variance}->bfround(
         $self->{decimal_places} * -1
     );
@@ -497,21 +510,22 @@ Requries that the following object properties are set:
     * their_total
     * outstanding_total
     * mismatch_our_total
+    * account_info
 
 =cut
 
 sub build_statement_gl_calc {
     my $self = shift;
 
+    # their_total is reversed for some kinds of account
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
+    my $their_total = $self->{their_total} * $neg;
+
     $self->{statement_gl_calc} = sum(
-        $self->{their_total},
+        $their_total,
         $self->{outstanding_total},
         $self->{mismatch_our_total},
-    );
-
-    if ($self->{account_info}->{category} =~ /^(A|E)$/) {
-       $self->{statement_gl_calc} *= -1;
-    }
+    ) * $neg;
 
     return $self->{statement_gl_calc};
 }
@@ -647,8 +661,11 @@ sub get_report_lines {
 =item previous_cleared_balance
 
 For a given date and account, returns the cleared balance of the previous
-reconciliation, or undef if there is no previous reconciliation for the
-account.
+reconciliation as a LedgerSMB::PGNumber.
+
+If there is no previous reconciliation, a LedgerSMB::PGNumber object
+representing zero is returned (internally Math::BigFloat interprets
+an undefined value as zero during intialisation).
 
 Requires that the following object properties are set:
 
@@ -671,7 +688,9 @@ sub previous_cleared_balance {
         }
     );
 
-    return $r->{reconciliation__get_cleared_balance};
+    return LedgerSMB::PGNumber->from_db(
+        $r->{reconciliation__get_cleared_balance}
+    );
 }
 
 
