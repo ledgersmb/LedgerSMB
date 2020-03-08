@@ -159,4 +159,21 @@ Then qr/I should see the title "(.*)"/, sub {
 };
 
 
+Then qr/^I expect the (.+) Transactions totals to be/, sub {
+
+    my $section = $1;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+    my $data = C->data;
+    my $wanted = shift @{$data};
+
+    my $totals = $page->find_reconciliation_totals({
+        section => $section,
+    });
+
+    foreach my $field (keys %{$wanted}) {
+        is($totals->{$field}, $wanted->{$field}, "$field total matches");
+    }
+};
+
+
 1;
