@@ -215,7 +215,6 @@ sub _display_report {
     _set_sort_options($recon, $request);
 
     $recon->get;
-    $recon->unapproved_checks;
 
     my $neg_factor = ($recon->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
     $recon->{their_total} *= $neg_factor;

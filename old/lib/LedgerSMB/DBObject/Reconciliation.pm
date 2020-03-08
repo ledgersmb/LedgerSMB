@@ -135,13 +135,23 @@ sub import_file {
 
 =item unapproved_checks
 
-Checks for unapproved
+Private method that checks whether any of the following items are unapproved
+for the period up to the end date of the current reconciliation report:
 
  * transactions (generally, since these could change)
  * payments against the account
  * reconciliation reports
 
+The intention is to allow any such items to be flagged to the user,
+as it is considered bad practice to reconcile account while there are
+items awaiting approval.
+
 Sets $self->{check} with the name of the test and the number of failures
+
+Requires that the following object properties are set:
+
+  * end_date
+  * chart_id
 
 =cut
 
@@ -333,6 +343,7 @@ sub get {
 
     $self->get_report_summary;
     $self->refresh_pending_transactions unless $self->{submitted};
+    $self->unapproved_checks;
     $self->get_report_lines;
 
     my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
