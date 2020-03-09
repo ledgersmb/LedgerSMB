@@ -61,7 +61,9 @@ and re-renders the reconciliation screen.
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
-    $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total};
+    $recon->{their_total} = LedgerSMB::PGNumber->from_input(
+        $recon->{their_total}
+    ) if defined $recon->{their_total};
     $recon->save() if !$recon->{submitted};
     $recon->update();
     return _display_report($recon, $request);
@@ -121,7 +123,9 @@ sub submit_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
     $recon->submit();
-    my $can_approve = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    my $can_approve = $request->is_allowed_role(
+        {allowed_roles => ['reconciliation_approve']}
+    );
     if ( !$can_approve ) {
         my $template = LedgerSMB::Template::UI->new_UI;
         return $template->render($request, 'reconciliation/submitted',
@@ -143,7 +147,9 @@ sub save_recon_set {
         $recon->save();
         return search($request);
     } else {
-        $recon->{notice} = $request->{_locale}->text('Data not saved.  Please update again.');
+        $recon->{notice} = $request->{_locale}->text(
+            'Data not saved.  Please update again.'
+        );
         return _display_report($recon, $request);
     }
 }
@@ -210,7 +216,9 @@ sub _display_report {
     $request->open_form;
 
     $recon->{form_id} = $request->{form_id};
-    $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    $recon->{can_approve} = $request->is_allowed_role(
+        {allowed_roles => ['reconciliation_approve']}
+    );
     $recon->{decimal_places} = $request->setting->get('decimal_places');
     _set_sort_options($recon, $request);
 
@@ -225,19 +233,41 @@ sub _display_report {
     $recon->{submit_enabled} = ($recon->{variance} == 0);
     _highlight_suspect_rows($recon);
 
-    for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
+    for my $amt_name (qw/
+        mismatch_our_
+        mismatch_their_
+        total_cleared_
+        total_uncleared_
+    /) {
         for my $bal_type (qw/ credits debits/) {
-            $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
+            $recon->{"$amt_name$bal_type"} = (
+                $recon->{"$amt_name$bal_type"}->to_output(money => 1)
+            );
         }
     }
 
     for my $line (@{$recon->{report_lines}}){
-        for my $element (qw/ our_balance our_credits our_debits their_balance their_credits their_debits /) {
+        for my $element (qw/
+            our_balance
+            our_credits
+            our_debits
+            their_balance
+            their_credits
+            their_debits
+        /) {
             $line->{$element} = $line->{$element}->to_output(money => 1);
         }
     }
 
-    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total variance our_total beginning_balance /) {
+    for my $field (qw/
+        cleared_total
+        outstanding_total
+        statement_gl_calc
+        their_total
+        variance
+        our_total
+        beginning_balance
+    /) {
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
 
@@ -444,11 +474,26 @@ sub _set_sort_options {
     my ($recon, $request) = @_;
 
     $recon->{sort_options} = [
-            {id => 'clear_time', label => $request->{_locale}->text('Clear date')},
-            {id => 'scn', label => $request->{_locale}->text('Source')},
-            {id => 'post_date', label => $request->{_locale}->text('Post Date')},
-            {id => 'our_balance', label => $request->{_locale}->text('Our Balance')},
-            {id => 'their_balance', label => $request->{_locale}->text('Their Balance')},
+        {
+            id => 'clear_time',
+            label => $request->{_locale}->text('Clear date')
+        },
+        {
+            id => 'scn',
+            label => $request->{_locale}->text('Source')
+        },
+        {
+            id => 'post_date',
+            label => $request->{_locale}->text('Post Date')
+        },
+        {
+            id => 'our_balance',
+            label => $request->{_locale}->text('Our Balance')
+        },
+        {
+            id => 'their_balance',
+            label => $request->{_locale}->text('Their Balance')
+        },
     ];
 
     $recon->{line_order} ||= 'scn';
