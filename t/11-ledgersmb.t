@@ -4,11 +4,8 @@ use strict;
 use warnings;
 
 use Test2::V0;
-use Math::BigFloat;
 
-use LedgerSMB::Sysconfig;
 use LedgerSMB;
-use LedgerSMB::App_State;
 use Plack::Request;
 
 use Log::Log4perl qw(:easy);
@@ -27,7 +24,6 @@ my $request = Plack::Request->new({});
 
 $lsmb = LedgerSMB->new($request);
 my $utfstr;
-my @r;
 
 ok(defined $lsmb);
 isa_ok($lsmb, ['LedgerSMB']);
@@ -43,44 +39,6 @@ ok(defined $lsmb, 'new: blank, defined');
 isa_ok($lsmb, ['LedgerSMB'], 'new: blank, correct type');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
-
-# $lsmb->call_procedure checks
-SKIP: {
-        skip 'Skipping call_procedure tests, no db specified', 5
-                if !defined $ENV{PGDATABASE};
-        $lsmb = LedgerSMB->new($request);
-        my $pghost = "";
-        $pghost = ";host=" . $ENV{PGHOST}
-            if $ENV{PGHOST} && $ENV{PGHOST} ne 'localhost';
-        $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}$pghost",
-                undef, undef, {AutoCommit => 0 });
-        ok($lsmb->{dbh},"Connected to $ENV{PGDATABASE}");
-        LedgerSMB::App_State::set_DBH($lsmb->{dbh});
-        @r = $lsmb->call_procedure('procname' => 'character_length',
-                'funcschema' => 'pg_catalog',
-                'args' => ['month']);
-        is($#r, 0, 'call_procedure: correct return length (one row)');
-        is($r[0]->{'character_length'}, 5,
-                'call_procedure: single arg, non-numeric return');
-
-        @r = $lsmb->call_procedure('procname' => 'trunc',
-                'funcschema' => 'pg_catalog',
-                'args' => [57.1, 0]);
-        is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
-                'call_procedure: two args, numeric return');
-
-        @r = $lsmb->call_procedure('procname' => 'pi',
-                'funcschema' => 'pg_catalog',
-                'args' => []);
-        like($r[0]->{'pi'}, qr/^3.14/,
-                'call_procedure: empty arg list, non-numeric return');
-        @r = $lsmb->call_procedure('procname' => 'pi',
-                'funcschema' => 'pg_catalog');
-        like($r[0]->{'pi'}, qr/^3.14/,
-                'call_procedure: no args, non-numeric return');
-    $lsmb->{dbh}->rollback();
-    $lsmb->{dbh}->disconnect;
-}
 
 # $lsmb->merge checks
 $lsmb = LedgerSMB->new($request);
