@@ -342,58 +342,7 @@ sub get {
     $self->unapproved_checks;
     $self->get_report_lines;
 
-    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
-
     $self->{beginning_balance} = $self->previous_cleared_balance;
-    $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
-    $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
-    $self->{mismatch_our_total} = LedgerSMB::PGNumber->from_db(0);
-    $self->{mismatch_our_credits} = LedgerSMB::PGNumber->from_db(0);
-    $self->{mismatch_our_debits} = LedgerSMB::PGNumber->from_db(0);
-    $self->{mismatch_their_total} = LedgerSMB::PGNumber->from_db(0);
-    $self->{mismatch_their_credits} = LedgerSMB::PGNumber->from_db(0);
-    $self->{mismatch_their_debits} = LedgerSMB::PGNumber->from_db(0);
-
-    my $our_balance = $self->{beginning_balance};
-
-    for my $line (@{$self->{report_lines}}){
-
-        if ($line->{cleared}) {
-            $our_balance += ($neg * $line->{our_balance});
-            $self->{cleared_total} += ($neg * $line->{our_balance});
-        }
-        elsif (
-            (
-                $line->{their_balance} != 0
-                and $line->{their_balance} != $line->{our_balance}
-            )
-            or $line->{our_balance} == 0
-        ) {
-            $line->{err} = 'mismatch';
-            $self->{mismatch_our_total} += $line->{our_balance};
-            $self->{mismatch_their_total} += $line->{their_balance};
-
-            if ($line->{our_balance} < 0){
-                $self->{mismatch_our_debits} += -$line->{our_balance};
-            }
-            else {
-                $self->{mismatch_our_credits} += $line->{our_balance};
-            }
-
-            if ($line->{their_balance} < 0){
-                $self->{mismatch_their_debits} += -$line->{their_balance};
-            }
-            else {
-                $self->{mismatch_their_credits} += $line->{their_balance};
-            }
-        }
-        else {
-            $self->{outstanding_total} += $line->{our_balance};
-        }
-    }
-
-    $self->{our_total} = $our_balance * $neg;
-    $self->{mismatch_their_total} *= $neg;
 
     return;
 }
@@ -415,6 +364,14 @@ Builds the report totals:
   * total_cleared_debits
   * total_uncleared_credits
   * total_uncleared_debits
+  * cleared_total
+  * outstanding_total
+  * mismatch_our_total
+  * mismatch_their_total
+  * mismatch_our_credits
+  * mismatch_our_debits
+  * mismatch_their_credits
+  * mismatch_their_debits
 
 =cut
 
@@ -427,9 +384,20 @@ sub build_totals {
         total_cleared_debits
         total_uncleared_credits
         total_uncleared_debits
+        cleared_total
+        outstanding_total
+        mismatch_our_total
+        mismatch_their_total
+        mismatch_our_credits
+        mismatch_our_debits
+        mismatch_their_credits
+        mismatch_their_debits
     )) {
         $self->{$field} = LedgerSMB::PGNumber->from_input(0);
     }
+
+    # For some types of account, balances are inverted
+    my $neg = ($self->{account_info}->{category} =~ /^[AE]/) ? -1 : 1;
 
     # Iterate through each line of the report
     for my $l (@{$self->{report_lines}}){
@@ -437,33 +405,63 @@ sub build_totals {
         # Separate 'their' credits and debits
         if ($l->{their_balance} > 0){
            $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{their_credits} = $l->{their_balance};
+           $l->{their_credits} = $l->{their_balance}->copy;
         }
         else {
            $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{their_debits} = $l->{their_balance}->bneg;
+           $l->{their_debits} = ($l->{their_balance} * -1);
         }
 
         # Separate 'our' credits and debits
         if ($l->{our_balance} > 0){
            $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{our_credits} = $l->{our_balance};
+           $l->{our_credits} = $l->{our_balance}->copy;
         }
         else {
            $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
-           $l->{our_debits} = $l->{our_balance}->bneg;
+           $l->{our_debits} = ($l->{our_balance} * -1);
         }
 
         # Update report totals
         if ($l->{cleared}){
-             $self->{total_cleared_credits}->badd($l->{our_credits});
-             $self->{total_cleared_debits}->badd($l->{our_debits});
+            $self->{total_cleared_credits} += $l->{our_credits};
+            $self->{total_cleared_debits} += $l->{our_debits};
+            $self->{cleared_total} += $l->{our_balance};
         }
         else {
-             $self->{total_uncleared_credits}->badd($l->{our_credits});
-             $self->{total_uncleared_debits}->badd($l->{our_debits});
+             $self->{total_uncleared_credits} += $l->{our_credits};
+             $self->{total_uncleared_debits} += $l->{our_debits};
+
+             # Separate 'mismatched' and 'outstanding' lines
+             if(
+                 ($l->{their_balance} != 0 &&
+                  $l->{their_balance} != $l->{our_balance}
+                 ) or $l->{our_balance} == 0
+             ) {
+                $l->{err} = 'mismatch';
+                $self->{mismatch_our_total} += $l->{our_balance};
+                $self->{mismatch_their_total} += $l->{their_balance};
+
+                # Total mismatch lines for 'our' balance
+                $self->{mismatch_our_credits} += $l->{our_credits};
+                $self->{mismatch_our_debits} += $l->{our_debits};
+                $self->{mismatch_their_credits} += $l->{their_credits};
+                $self->{mismatch_their_debits} += $l->{their_debits};
+             }
+             else {
+                $self->{outstanding_total} += $l->{our_balance};
+             }
         }
     }
+
+    $self->{cleared_total} *= $neg;
+    $self->{mismatch_their_total} *= $neg;
+    $self->{our_total} = (
+        $self->{beginning_balance} + $self->{cleared_total}
+    ) * $neg;
+
+    $self->build_statement_gl_calc;
+    $self->build_variance;
 }
 
 

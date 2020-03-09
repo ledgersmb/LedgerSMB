@@ -213,8 +213,8 @@ END ?>
     <?lsmb END -?>
     <tr class="subtotal">
         <th colspan=6><?lsmb text('Total') ?></th>
-        <td class="money"><?lsmb total_cleared_debits ?></td>
-        <td class="money"><?lsmb total_cleared_credits ?></td>
+        <td class="money" id="total_cleared_debits"><?lsmb total_cleared_debits ?></td>
+        <td class="money" id="total_cleared_credits"><?lsmb total_cleared_credits ?></td>
     </tr>
     </table>
 <table border=0 id="error-table">
@@ -273,10 +273,10 @@ END ?>
     <?lsmb END -?>
     <tr class="subtotal">
         <th colspan=6><?lsmb text('Total') ?></th>
-        <td class="money"><?lsmb mismatch_our_debits ?></td>
-        <td class="money"><?lsmb mismatch_our_credits ?></td>
-        <td class="money"><?lsmb mismatch_their_debits ?></td>
-        <td class="money"><?lsmb mismatch_their_credits ?></td>
+        <td class="money" id="total_mismatch_our_debits"><?lsmb mismatch_our_debits ?></td>
+        <td class="money" id="total_mismatch_our_credits"><?lsmb mismatch_our_credits ?></td>
+        <td class="money" id="total_mismatch_their_debits"><?lsmb mismatch_their_debits ?></td>
+        <td class="money" id="total_mismatch_their_credits"><?lsmb mismatch_their_credits ?></td>
     </tr>
     </table>
     <table id="outstanding-table">
@@ -334,8 +334,8 @@ END ?>
     END -?>
     <tr class="subtotal">
         <th colspan=4><?lsmb text('Total') ?></th>
-        <td class="money"><?lsmb total_uncleared_debits ?></td>
-        <td class="money"><?lsmb total_uncleared_credits ?></td>
+        <td class="money" id="total_outstanding_debits"><?lsmb total_uncleared_debits ?></td>
+        <td class="money" id="total_outstanding_credits"><?lsmb total_uncleared_credits ?></td>
     </tr>
 </table>
 <?lsmb INCLUDE input element_data = {

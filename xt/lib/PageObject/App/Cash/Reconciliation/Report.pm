@@ -47,6 +47,61 @@ sub find_heading {
 }
 
 
+# find_reconciliation_totals({section => 'Cleared'})
+#
+# Extracts and returns the totals for the specified section of the
+# Reconciliation Report.
+
+sub find_reconciliation_totals {
+    my $self = shift;
+    my $args = shift;
+    my $rv;
+
+    if($args->{section} =~ m/^Cleared$/i) {
+        $rv = {
+            'Books Debits' => $self->find(
+                q{//td[@id="total_cleared_debits"]}
+            )->get_text,
+            'Books Credits' => $self->find(
+                q{//td[@id="total_cleared_credits"]}
+            )->get_text,
+        };
+    }
+    elsif($args->{section} =~ m/^Mismatched$/i) {
+        $rv = {
+            'Our Debits' => $self->find(
+                q{//td[@id="total_mismatch_our_debits"]}
+            )->get_text,
+            'Our Credits' => $self->find(
+                q{//td[@id="total_mismatch_our_credits"]}
+            )->get_text,
+            'Their Debits' => $self->find(
+                q{//td[@id="total_mismatch_their_debits"]}
+            )->get_text,
+            'Their Credits' => $self->find(
+                q{//td[@id="total_mismatch_their_credits"]}
+            )->get_text,
+        };
+    }
+    elsif($args->{section} =~ m/^Outstanding$/i) {
+        $rv = {
+            'Our Debits' => $self->find(
+                q{//td[@id="total_outstanding_debits"]}
+            )->get_text,
+            'Our Credits' => $self->find(
+                q{//td[@id="total_outstanding_credits"]}
+            )->get_text,
+        };
+    }
+    else {
+        die "unknown reconciliation report section: $args->{section}";
+    }
+
+    return $rv;
+}
+
+
+
 sub _verify {
     my ($self) = @_;
 
