@@ -441,7 +441,7 @@ sub build_totals {
                 $l->{err} = 'mismatch';
                 $self->{mismatch_our_total} += $l->{our_balance};
                 $self->{mismatch_their_total} += $l->{their_balance};
- 
+
                 # Total mismatch lines for 'our' balance
                 $self->{mismatch_our_credits} += $l->{our_credits};
                 $self->{mismatch_our_debits} += $l->{our_debits};
