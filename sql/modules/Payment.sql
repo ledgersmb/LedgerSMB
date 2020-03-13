@@ -168,6 +168,16 @@ CREATE TYPE payment_invoice AS (
         exchangerate numeric
 );
 
+
+DROP FUNCTION IF EXISTS payment_get_open_invoices
+(in_account_class int,
+ in_entity_credit_id int,
+ in_curr char(3),
+ in_datefrom date,
+ in_dateto date,
+ in_amountfrom numeric,
+ in_amountto   numeric);
+
 CREATE OR REPLACE FUNCTION payment_get_open_invoices
 (in_account_class int,
  in_entity_credit_id int,
@@ -175,25 +185,26 @@ CREATE OR REPLACE FUNCTION payment_get_open_invoices
  in_datefrom date,
  in_dateto date,
  in_amountfrom numeric,
- in_amountto   numeric)
+ in_amountto   numeric,
+ in_datepaid   date)
 RETURNS SETOF payment_invoice AS
 $$
                 SELECT a.id AS invoice_id, a.invnumber AS invnumber,a.invoice AS invoice,
                        a.transdate AS invoice_date, a.amount_bc AS amount,
                        a.amount_tc,
-                       (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS discount,
-                        (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+                        (CASE WHEN (c.discount_terms||' days')::interval > age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                         END) AS discount_tc,
-                        ac.due - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+                        ac.due - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS due,
-              ac.due_fx - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+              ac.due_fx - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                          END) AS due_fx,
@@ -248,9 +259,20 @@ $$
               a.curr, a.invoice;
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3), date, date, numeric, numeric) IS
+COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3),
+date, date, numeric, numeric, date) IS
 $$ This function is the base for get_open_invoice and returns all open invoices for the entity_credit_id
 it has a lot of options to enable filtering and use the same logic for entity_class_id and currency. $$;
+
+DROP FUNCTION IF EXISTS payment_get_open_invoice
+(in_account_class int,
+ in_entity_credit_id int,
+ in_curr char(3),
+ in_datefrom date,
+ in_dateto date,
+ in_amountfrom numeric,
+ in_amountto   numeric,
+ in_invnumber text);
 
 CREATE OR REPLACE FUNCTION payment_get_open_invoice
 (in_account_class int,
@@ -260,16 +282,17 @@ CREATE OR REPLACE FUNCTION payment_get_open_invoice
  in_dateto date,
  in_amountfrom numeric,
  in_amountto   numeric,
- in_invnumber text)
+ in_invnumber text,
+ in_datepaid  date)
 RETURNS SETOF payment_invoice AS
 $$
                 SELECT * from payment_get_open_invoices(in_account_class, in_entity_credit_id, in_curr, in_datefrom, in_dateto, in_amountfrom,
-                in_amountto)
+                in_amountto, in_datepaid)
                 WHERE (invnumber like in_invnumber OR in_invnumber IS NULL);
 
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION payment_get_open_invoice(int, int, char(3), date, date, numeric, numeric, text) IS
+COMMENT ON FUNCTION payment_get_open_invoice(int, int, char(3), date, date, numeric, numeric, text, date) IS
 $$
 This function is based on payment_get_open_invoices and returns only one invoice if the in_invnumber is set.
 if no in_invnumber is passed this function behaves the same as payment_get_open_invoices
@@ -291,7 +314,7 @@ CREATE TYPE payment_contact_invoice AS (
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
         in_date_from date, in_date_to date, in_batch_id int,
-        in_ar_ap_accno text, in_meta_number text)
+        in_ar_ap_accno text, in_meta_number text, in_payment_date date)
 RETURNS SETOF payment_contact_invoice AS
 $$
                   SELECT c.id AS contact_id, e.control_code as econtrol_code,
@@ -302,8 +325,8 @@ $$
                                        u.username = SESSION_USER
                              THEN
                               coalesce(p.due::numeric, 0) -
-                              CASE WHEN c.discount_terms
-                                        > extract('days' FROM age(a.transdate))
+                              CASE WHEN (c.discount_terms||' days')::interval
+                                        > age(coalesce(in_payment_date, current_date), a.transdate)
                                    THEN 0
                                    ELSE (coalesce(p.due::numeric, 0)) *
                                         coalesce(c.discount::numeric, 0) / 100
@@ -313,14 +336,14 @@ $$
                          compound_array(ARRAY[[
                               a.id::text, a.invnumber, a.transdate::text,
                               a.amount_bc::text, (a.amount_bc - p.due)::text,
-                              (CASE WHEN c.discount_terms
-                                        < extract('days' FROM age(a.transdate))
+                              (CASE WHEN (c.discount_terms||' days')::interval
+                                        < age(coalesce(in_payment_date, current_date), a.transdate)
                                    THEN 0
                                    ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
                               END)::text,
                               (coalesce(p.due, 0) -
-                              (CASE WHEN c.discount_terms
-                                        < extract('days' FROM age(a.transdate))
+                              (CASE WHEN (c.discount_terms||' days')::interval
+                                        < age(coalesce(in_payment_date, current_date), a.transdate)
                                    THEN 0
                                    ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
                               END))::text,
@@ -402,7 +425,7 @@ $$ LANGUAGE sql;
 COMMENT ON FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
         in_date_from date, in_date_to date, in_batch_id int,
-        in_ar_ap_accno text, in_meta_number text) IS
+        in_ar_ap_accno text, in_meta_number text, in_datepaid date) IS
 $$
 This function takes the following arguments (all prefaced with in_ in the db):
 account_class: 1 for vendor, 2 for customer
@@ -594,8 +617,8 @@ BEGIN
                           / (100 - eca.discount::numeric)
                           * eca.discount::numeric
                      FROM entity_credit_account eca
-                    WHERE extract('days' from age(bpi.invoice_date))
-                                  < eca.discount_terms
+                    WHERE age(in_payment_date, bpi.invoice_date)
+                                  < (eca.discount_terms||' days')::interval
                           AND eca.discount_terms IS NOT NULL
                           AND eca.discount IS NOT NULL
                           AND eca.discount_account_id IS NOT NULL
