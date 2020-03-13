@@ -10,6 +10,8 @@ use strict;
 use warnings;
 
 use base qw(LedgerSMB::PGOld);
+
+use Locale::Country;
 use Log::Log4perl;
 
 use Try::Tiny;
@@ -22,38 +24,6 @@ This badly needs to be rewritten and moved to later frameworks.  Planned for
 =head2 METHODS
 
 =over
-
-=item country_codes();
-
-Returns a hash where the keys are registered locales and the values are the
-textual representation of the locale name.
-
-=cut
-
-sub country_codes {
-    use Locale::Country;
-    use Locale::Language;
-
-    my %cc = ();
-
-    # scan the locale directory and read in the LANGUAGE files
-    opendir DIR, "${LedgerSMB::Sysconfig::localepath}";
-
-    my @dir = grep !/^\..*$/, readdir DIR;
-
-    foreach my $dir (@dir) {
-        $dir = substr( $dir, 0, -3 );  ## no critic (ProhibitMagicNumbers) sniff
-        $cc{$dir} = code2language( substr( $dir, 0, 2 ) );
-        $cc{$dir} .= ( "/" . code2country( substr( $dir, 3, 2 ) ) )  ## no critic (ProhibitMagicNumbers) sniff
-          if length($dir) > 2;
-        $cc{$dir} .= ( " " . substr( $dir, 6 ) ) if length($dir) > 5;  ## no critic (ProhibitMagicNumbers) sniff
-    }
-
-    closedir(DIR);
-
-    return %cc;
-}
-
 
 =item save_preferences()
 
@@ -129,16 +99,15 @@ sub get_option_data {
     }
     use warnings;
 
-    my %country_codes = country_codes();
-
-    foreach my $key ( sort { $country_codes{$a} cmp $country_codes{$b} }
-        keys %country_codes )
+    foreach my $key ( all_country_codes() )
     {
         push @{$self->{country_codes}}, {
-            label => $country_codes{$key},
+            label => code2country($key),
             id => $key,
         };
     }
+    @{$self->{country_codes}} =
+        sort { $a->{label} cmp $b->{label} } @{$self->{country_codes}};
 
     $self->{cssfiles} = [];
     opendir CSS, "UI/css/.";
@@ -157,43 +126,6 @@ sub get_option_data {
     my ($pw_expiration) = $self->call_dbmethod(
             funcname => 'user__check_my_expiration');
     return $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
-}
-
-=item save()
-
-Saves (creates) the user in the database
-
-Return codes:
- - 0 as success,
- - 8 as duplicate user, and
- - 1 as general failure
-
-=cut
-
-sub save {
-    my $self = shift @_;
-    my $user = $self->get();
-
-    my $errcode;
-    my ($ref) = try { $self->call_dbmethod(funcname=>'admin__save_user') }
-                catch {
-                   if ($_ =~ /No password/){
-                      die $self->{_locale}->text(
-                             'Password required'
-                      );
-                   } elsif ($_ =~/Duplicate user/){
-                      $self->{dbh}->rollback;
-                      $errcode = 8;  ## no critic (ProhibitMagicNumbers) sniff
-                   }
-                };
-    return $errcode if $errcode;
-
-    ($self->{id}) = values %$ref;
-    if (!$self->{id}) {
-
-        return 0;
-    }
-    return 1;
 }
 
 =item get($id)
@@ -255,36 +187,6 @@ sub get {
     return $user;
 }
 
-=item remove()
-
-Removes the user identified by $self->{id} and $self->{username}.
-
-=cut
-
-sub remove {
-
-    my $self = shift;
-
-    my $code = $self->call_procedure(funcname=>"admin__delete_user", args=>[$self->{id}, $self->{username}]);
-    $self->{id} = undef;
-
-    return $code->[0];
-}
-
-# sub save_prefs {
-
-#     my $self = shift @_;
-
-#     my $pref_id = $self->call_procedure(funcname=>"admin__save_preferences",
-#         args=>[
-#             'language',
-#             'stylesheet',
-#             'printer',
-#             'dateformat',
-#             'numberformat'
-#         ]
-#     );
-# }
 
 =item get_all_users()
 
