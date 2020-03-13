@@ -361,59 +361,6 @@ sub get_all_contact_invoices {
 
 =over
 
-=item list_open_projects
-
-This method gets the current date attribute, and provides a list of open
-projects.  The list is attached to $self->{projects} and returned.
-
-=back
-
-=cut
-
-sub list_open_projects {
-    my ($self) = @_;
-    @{$self->{projects}} = $self->call_procedure(
-         funcname => 'project_list_open',  args => [$self->{current_date}]
-    );
-    return  @{$self->{projects}};
-}
-
-=over
-
-=item list_departments
-
-This method gets the type of document as a parameter, and provides a list of departments
-of the required type.
-The list is attached to $self->{departments} and returned.
-
-=back
-
-=cut
-
-sub list_departments {
-  my ($self) = shift @_;
-  my @args = @_;
-  @{$self->{departments}} = $self->call_procedure(
-      funcname => 'department_list',
-      args => \@args
-  );
-  return @{$self->{departments}};
-}
-
-=over
-
-=item list_open_vc
-
-This method gets the type of vc (vendor or customer) as a parameter, and provides a list of departments
-of the required type.
-The list is attached to $self->{departments} and returned.
-
-=back
-
-=cut
-
-=over
-
 =item get_open_currencies
 
 This method gets a list of the open currencies inside the database, it requires that
@@ -497,17 +444,6 @@ sub get_default_currency {
 
     $self->{default_currency} = $result->{defaults_get_defaultcurrency};
     return $self->{default_currency};
-}
-
-=item get_current_date
-
-This method returns the system's current date
-
-=cut
-
-sub get_current_date {
- my ($self) = shift @_;
- return $self->{current_date};
 }
 
 =item get_vc_info
