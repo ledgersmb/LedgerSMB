@@ -137,9 +137,9 @@ put '/templates/:name/:format/:language' => sub {
             template_name => $match->{name},
             format        => $match->{format},
             language      => $match->{language},
+            template      => $req->content,
             dbh           => $app
             );
-        $dbtemplate->template($req->content);
         $dbtemplate->save;
         $done = 1;
     };
