@@ -25,15 +25,11 @@ the database connections for the user.
 This sets a $self->{form_id} to be used in later form validation (anti-XSRF
 measure).
 
-=item check_form()
-
-This returns true if the form_id was associated with the session, and false if
-not.  Use this if the form may be re-used (back-button actions are valid).
-
 =item close_form()
 
-Identical with check_form() above, but also removes the form_id from the
-session.  This should be used when back-button actions are not valid.
+This returns true if the form_id was associated with the session, and false if
+not and also removes the form_id from the
+session.
 
 =item is_allowed_role({allowed_roles => @role_names})
 
@@ -90,11 +86,6 @@ Loads user configuration info from LedgerSMB::User
 =item initialize_with_db
 
 This function sets up the db handle for the request
-
-=item to_json($output)
-
-Serializes the Perl object (hash) $output to JSON and returns the
-PSGI response triplet (status, headers, body).
 
 =item system_info($dbh)
 
@@ -199,7 +190,6 @@ use Carp;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
 use HTTP::Status qw( HTTP_OK ) ;
-use JSON::MaybeXS;
 use Log::Log4perl;
 use PGObject;
 use Plack;
@@ -216,11 +206,6 @@ use LedgerSMB::Template::UI;
 our $VERSION = '1.8.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
-my $json = JSON::MaybeXS->new( pretty => 1,
-                               utf8 => 1,
-                               indent => 1,
-                               convert_blessed => 1,
-                               allow_bignum => 1);
 
 
 sub new {
@@ -261,15 +246,6 @@ sub open_form {
                               continue_on_error => 1
     );
     return $self->{form_id} = $vars[0]->{form_open};
-}
-
-# move to another module
-sub check_form {
-    my ($self) = @_;
-    my @vars = $self->call_procedure(funcname => 'form_check',
-                              args => [$self->{_session_id}, $self->{form_id}]
-    );
-    return $vars[0]->{form_check};
 }
 
 sub close_form {
@@ -496,16 +472,6 @@ sub merge {
         $self->{$dst_arg} = $src->{$arg};
     }
     return;
-}
-
-sub to_json {
-    my ($self, $output) = @_;
-
-    return [
-        HTTP_OK,
-        [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-        [ $json->encode($output) ],
-    ];
 }
 
 sub system_info {
