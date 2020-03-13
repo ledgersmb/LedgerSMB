@@ -113,18 +113,6 @@ sub save_roles {
     return;
 }
 
-=item get_salutations
-
-Returns a list of salutation records from the db for the dropdowns.
-
-=cut
-
-sub get_salutations {
-    my $self = shift;
-    return $self->call_dbmethod(funcname => 'person__list_salutations');
-}
-
-
 =item get_roles
 
 Returns a list of role names with the following format:
