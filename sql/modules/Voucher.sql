@@ -506,27 +506,57 @@ $$
 DECLARE
         voucher_row RECORD;
 BEGIN
-        SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
-        IF voucher_row.batch_class IN (1, 2, 5) THEN
+    SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
+    IF voucher_row.batch_class IN (1, 2, 5) THEN -- GL/AR/AP voucher
+        -- Delete *all* lines from acc_trans (in the transaction)
+        -- /even/ if not explicitly linked to the voucher
         DELETE FROM ac_tax_form WHERE entry_id IN (
                SELECT entry_id
                  FROM acc_trans
                WHERE trans_id = voucher_row.trans_id);
 
-                DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
-                DELETE FROM ar WHERE id = voucher_row.trans_id;
-                DELETE FROM ap WHERE id = voucher_row.trans_id;
-                DELETE FROM gl WHERE id = voucher_row.trans_id;
-                DELETE FROM voucher WHERE id = voucher_row.id;
-                -- DELETE FROM transactions WHERE id = voucher_row.trans_id;
-        ELSE
-                DELETE FROM ac_tax_form WHERE entry_id IN
-                       (select entry_id from acc_trans
-                         where voucher_id = voucher_row.id);
+        -- Note that this query *looks* duplicated with the next section
+        -- but it's not! Notably, the WHERE clause in the EXISTS subquery
+        -- has a different condition (trans_id vs voucher_id!)
+        WITH deleted_links AS (
+             DELETE FROM payment_links pl WHERE
+                   EXISTS (select 1 from acc_trans a
+                            where pl.entry_id    = a.entry_id
+                                  and a.trans_id = voucher_row.trans_id)
+             RETURNING *
+        )
+        DELETE FROM payment p
+         WHERE id IN (select payment_id from deleted_links)
+                AND NOT EXISTS (select 1 from payment_links pl
+                                 where pl.payment_id = p.id);
+        DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
 
-                DELETE FROM acc_trans where voucher_id = voucher_row.id;
-        END IF;
-        RETURN 1;
+        DELETE FROM ar WHERE id = voucher_row.trans_id;
+        DELETE FROM ap WHERE id = voucher_row.trans_id;
+        DELETE FROM gl WHERE id = voucher_row.trans_id;
+    ELSE
+        -- Delete only the lines in the transaction which are explicitly
+        -- linked to the voucher
+        DELETE FROM ac_tax_form WHERE entry_id IN
+               (select entry_id from acc_trans
+                 where voucher_id = voucher_row.id);
+
+        WITH deleted_links AS (
+             DELETE FROM payment_links pl WHERE
+                   EXISTS (select 1 from acc_trans a
+                            where pl.entry_id    = a.entry_id
+                                  and a.voucher_id = voucher_row.id)
+             RETURNING *
+        )
+        DELETE FROM payment p
+         WHERE id IN (select payment_id from deleted_links)
+                AND NOT EXISTS (select 1 from payment_links pl
+                                 where pl.payment_id = p.id);
+        DELETE FROM acc_trans where voucher_id = voucher_row.id;
+    END IF;
+
+    DELETE FROM voucher WHERE id = voucher_row.id;
+    RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
