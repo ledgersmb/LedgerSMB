@@ -232,18 +232,20 @@ sub run_report{
                     value => 'print_batch',
                     class => 'submit',
                 }, ]);
+    my $class_to_script = {
+        '1' => 'ap',
+        '2' => 'ar',
+        '3' => 'gl',
+        '8' => 'is',
+        '9' => 'ir',
+    };
     my @rows = $self->call_dbmethod(funcname => 'voucher__list');
     for my $ref (@rows){
-        my $script;
-        my $class_to_script = {
-           '1' => 'ap',
-           '2' => 'ar',
-           '3' => 'gl',
-           '8' => 'is',
-           '9' => 'ir',
-        };
-        $script = $class_to_script->{lc($ref->{batch_class_id})};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}" if $script;
+        $ref->{row_id} = $ref->{id};
+
+        my $script = $class_to_script->{lc($ref->{batch_class_id})};
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}"
+            if $script;
     }
     return $self->rows(\@rows);
 }
