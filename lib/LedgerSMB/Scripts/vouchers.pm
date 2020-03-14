@@ -349,10 +349,12 @@ sub batch_vouchers_delete {
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         for my $count (1 .. $request->{rowcount_}){
-            my $voucher_id = $request->{"select_$count"};
-            next unless $voucher_id;
-            $batch->delete_voucher($voucher_id);
+            next unless $request->{"select_$count"};
+            $batch->delete_voucher($request->{"row_$count"});
         }
+    }
+    else {
+        die 'invalid form token';
     }
     return get_batch($request);
 }
