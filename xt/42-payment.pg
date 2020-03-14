@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(42);
+    SELECT plan(44);
 
     -- Add data
 
@@ -26,14 +26,14 @@ BEGIN;
     SELECT has_function('payment_gather_header_info',ARRAY['integer','integer']);
     SELECT has_function('payment_gather_line_info',ARRAY['integer','integer']);
     SELECT has_function('payment_get_all_accounts',ARRAY['integer']);
-    SELECT has_function('payment_get_all_contact_invoices',ARRAY['integer','integer','character','date','date','integer','text','text']);
+    SELECT has_function('payment_get_all_contact_invoices',ARRAY['integer','integer','character','date','date','integer','text','text','date']);
     SELECT has_function('payment_get_available_overpayment_amount',ARRAY['integer','integer']);
     SELECT has_function('payment_get_entity_account_payment_info',ARRAY['integer']);
     SELECT has_function('payment_get_entity_accounts',ARRAY['integer','text','text','date','date']);
     SELECT has_function('payment__get_gl',ARRAY['integer']);
     SELECT has_function('payment_get_open_accounts',ARRAY['integer','date','date']);
-    SELECT has_function('payment_get_open_invoice',ARRAY['integer','integer','character','date','date','numeric','numeric','text']);
-    SELECT has_function('payment_get_open_invoices',ARRAY['integer','integer','character','date','date','numeric','numeric']);
+    SELECT has_function('payment_get_open_invoice',ARRAY['integer','integer','character','date','date','numeric','numeric','text','date']);
+    SELECT has_function('payment_get_open_invoices',ARRAY['integer','integer','character','date','date','numeric','numeric','date']);
     SELECT has_function('payment_get_open_overpayment_entities',ARRAY['integer']);
     SELECT has_function('payment_get_unused_overpayment',ARRAY['integer','integer','integer']);
     SELECT has_function('payment_get_vc_info',ARRAY['integer','integer']);
@@ -80,11 +80,16 @@ BEGIN;
     INSERT INTO business (id, description)
     values (-101, 'test');
 
+    INSERT INTO account(id, accno, description, category, contra, heading)
+    values (-2000, '-2000000000', 'Test discount', 'A', false,
+      (select id from account_heading WHERE accno  = '000000000000000000000'));
     INSERT INTO entity_credit_account
                 (id, meta_number, threshold, entity_id, entity_class,
-                 business_id, ar_ap_account_id, curr)
+                 business_id, ar_ap_account_id, curr,
+                 discount, discount_terms, discount_account_id)
          values (-101, 'TEST1', 100000, -101, 1, -101,
-                 (select id from account where accno = '00001'), 'XTS');
+                 (select id from account where accno = '00001'), 'XTS',
+                 0.1, 30, -2000); -- 10%, 30 days
 
     INSERT INTO ap (invnumber, entity_credit_account, approved,
                     amount_bc, amount_tc, netamount_bc, curr)
@@ -152,11 +157,30 @@ BEGIN;
     $$ LANGUAGE SQL;
 
     PREPARE test AS
+    SELECT amount::int, due::numeric, discount::numeric
+     FROM payment_get_open_invoice(
+            1, -101, 'XTS', null, null, null, null, 'test_show3', null);
+    SELECT results_eq('test',
+                     $$VALUES (1000000::int, 999000::numeric, 1000::numeric)$$,
+                     'On direct payment, a discount applies');
+    DEALLOCATE test;
+
+    PREPARE test AS
+    SELECT amount::int, due::numeric, discount::numeric
+     FROM payment_get_open_invoice(
+            1, -101, 'XTS', null, null, null, null, 'test_show3',
+            (now() + '60 days'::interval)::date);
+    SELECT results_eq('test',
+                     $$VALUES (1000000::int, 1000000::numeric, 0::numeric)$$,
+                     'On past-term payment, no discount applies');
+    DEALLOCATE test;
+
+    PREPARE test AS
     SELECT test_convert_array(invoices) LIKE '%::test_show::%'
       FROM (
         SELECT invoices
           FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                        NULL, (:batch_id)::int, '00001', 'TEST1')
+                        NULL, (:batch_id)::int, '00001', 'TEST1', NULL)
         ) p;
     SELECT results_eq('test',ARRAY[true],'Batch Voucher In Payment Selection');
     DEALLOCATE test;
@@ -166,7 +190,8 @@ BEGIN;
       FROM (
         SELECT invoices
          FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                       NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
+                       NULL, currval('batch_id_seq')::int, '00001',
+                       'TEST1', NULL)
       ) p;
     SELECT results_eq('test',ARRAY[true],'Locked Invoice In Payment Selection');
     DEALLOCATE test;
@@ -176,7 +201,7 @@ BEGIN;
       FROM (
         SELECT invoices
           FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                        NULL, NULL, '00001', 'TEST1')
+                        NULL, NULL, '00001', 'TEST1', NULL)
       ) p;
     SELECT results_eq('test',ARRAY[true],'Threshold met');
     DEALLOCATE test;
@@ -186,7 +211,8 @@ BEGIN;
        FROM (
          SELECT invoices
            FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                         NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
+                         NULL, currval('batch_id_seq')::int, '00001',
+                         'TEST1', NULL)
        ) p;
     SELECT results_eq('test', ARRAY[true],
                       'Non-Batch Voucher Not In Payment Selection');
@@ -195,7 +221,7 @@ BEGIN;
     PREPARE test AS
     SELECT total_due < 1000000
       FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                    NULL, currval('batch_id_seq')::int, '00001', 'TEST1');
+                    NULL, currval('batch_id_seq')::int, '00001', 'TEST1', NULL);
     SELECT results_eq('test', ARRAY[true], 'Locked Invoice not in total');
     DEALLOCATE test;
 
@@ -240,7 +266,7 @@ BEGIN;
     PREPARE test AS
     SELECT amount::int, due::int
       FROM payment_get_open_invoice(
-             1, -101, 'XTS', null, null, null, null, 'test_reverse');
+             1, -101, 'XTS', null, null, null, null, 'test_reverse', null);
     SELECT results_eq('test', $$VALUES (1::int, 1::int)$$,
                       'Before payment, the open amount is 1');
     DEALLOCATE test;
@@ -259,7 +285,7 @@ BEGIN;
     PREPARE test AS
     SELECT count(*) = 0
       FROM payment_get_open_invoice(
-             1, -101, 'XTS', null, null, null, null, 'test_reverse');
+             1, -101, 'XTS', null, null, null, null, 'test_reverse', null);
     SELECT results_eq('test', array[true],
                       'After payment, the invoice is paid');
     DEALLOCATE test;
@@ -270,7 +296,7 @@ BEGIN;
    PREPARE test AS
    SELECT amount::int, due::int
      FROM payment_get_open_invoice(
-            1, -101, 'XTS', null, null, null, null, 'test_reverse');
+            1, -101, 'XTS', null, null, null, null, 'test_reverse', null);
    SELECT results_eq('test', $$VALUES (1::int, 1::int)$$,
                      'After reversal, paid amount reverts back to nil');
    DEALLOCATE test;
@@ -327,8 +353,8 @@ BEGIN;
     PREPARE test AS
     SELECT count(*)::int FROM payment_links
      WHERE payment_id = :payment_id ;
-    SELECT results_eq('test', array[2::int],
-                      'There are 2 links: the cash account and the ap account line');
+    SELECT results_eq('test', array[3::int],
+                      'There are 3 links: the cash account, the discount account and the ap account line');
     DEALLOCATE test;
 
     PREPARE test AS
@@ -336,8 +362,8 @@ BEGIN;
                     JOIN voucher v ON v.id = a.voucher_id
                     JOIN batch b ON v.batch_id = b.id
      WHERE b.id = :batch_id ;
-    SELECT results_eq('test', array[2::int],
-                      'There are 2 journal lines as there are 2 payment links');
+    SELECT results_eq('test', array[3::int],
+                      'There are 3 journal lines as there are 3 payment links');
     DEALLOCATE test;
 
     -- test that the command runs ok.
