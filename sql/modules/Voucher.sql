@@ -479,27 +479,27 @@ $$
 DECLARE
         voucher_row RECORD;
 BEGIN
-        SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
-        IF voucher_row.batch_class IN (1, 2, 5) THEN
+    SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
+    IF voucher_row.batch_class IN (1, 2, 5) THEN
         DELETE FROM ac_tax_form WHERE entry_id IN (
                SELECT entry_id
                  FROM acc_trans
                WHERE trans_id = voucher_row.trans_id);
 
-                DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
-                DELETE FROM ar WHERE id = voucher_row.trans_id;
-                DELETE FROM ap WHERE id = voucher_row.trans_id;
-                DELETE FROM gl WHERE id = voucher_row.trans_id;
-                DELETE FROM voucher WHERE id = voucher_row.id;
-                -- DELETE FROM transactions WHERE id = voucher_row.trans_id;
-        ELSE
-                DELETE FROM ac_tax_form WHERE entry_id IN
-                       (select entry_id from acc_trans
-                         where voucher_id = voucher_row.id);
+        DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
+        DELETE FROM ar WHERE id = voucher_row.trans_id;
+        DELETE FROM ap WHERE id = voucher_row.trans_id;
+        DELETE FROM gl WHERE id = voucher_row.trans_id;
+        DELETE FROM voucher WHERE id = voucher_row.id;
+        -- DELETE FROM transactions WHERE id = voucher_row.trans_id;
+    ELSE
+        DELETE FROM ac_tax_form WHERE entry_id IN
+               (select entry_id from acc_trans
+                 where voucher_id = voucher_row.id);
 
-                DELETE FROM acc_trans where voucher_id = voucher_row.id;
-        END IF;
-        RETURN 1;
+        DELETE FROM acc_trans where voucher_id = voucher_row.id;
+    END IF;
+    RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
