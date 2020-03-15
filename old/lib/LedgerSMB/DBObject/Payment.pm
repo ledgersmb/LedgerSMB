@@ -408,22 +408,6 @@ sub list_overpayment_accounting {
 }
 
 
-=item get_sources
-
-This method builds all the possible sources of money,
-in the future it will look inside the DB.
-
-=cut
-
-sub get_sources {
- my ($self, $locale) = @_;
- @{$self->{cash_sources}} = ($locale->text('cash'),
-                             $locale->text('check'),
-                             $locale->text('deposit'),
-                             $locale->text('other'));
- return @{$self->{cash_sources}};
-}
-
 =item get_default_currency
 
 This method gets the default currency from the database (as a three-character
