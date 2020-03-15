@@ -856,7 +856,6 @@ sub payment2 {
             value => $request->{department}};
     }
     my @account_options = $Payment->list_accounting();
-    my @sources_options = $Payment->get_sources(\%$locale);
     my $default_currency = $Payment->get_default_currency();
     my $currency_text  =
         $request->{curr} eq $default_currency ? '' : '('.$request->{curr}.')';
@@ -1083,7 +1082,6 @@ sub payment2 {
 
                 push @overpayment, {
                     amount  => LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"})->to_output(money => 1),
-                    source1 => $request->{"overpayment_source1_$i"},
                     source2 => $request->{"overpayment_source2_$i"},
                     memo    => $request->{"overpayment_memo_$i"},
                     account => {
@@ -1146,8 +1144,6 @@ sub payment2 {
             name => 'datepaid',
             value => $request->{datepaid} ? $request->{datepaid} : $Payment->{current_date}
         },
-        source => \@sources_options,
-        selected_source => $request->{source},
         source_value => $request->{source_value},
         defaultcurrency => {
             text => $default_currency },
@@ -1323,8 +1319,8 @@ sub post_payment {
 
             # We'll use this for both source and ap/ar accounts
             push @source, $request->{"optional_pay_$array_options[$ref]"}
-            ? $request->{"source_$array_options[$ref]->{invoice_id}"} .' ' . $request->{"source_text_$array_options[$ref]->{invoice_id}"}
-            : $request->{source}.' '.$request->{source_value};
+            ? $request->{"source_text_$array_options[$ref]->{invoice_id}"}
+            : $request->{source_value};
             push @memo,
                 $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"};
             push @transaction_id, $array_options[$ref]->{invoice_id};
@@ -1361,8 +1357,7 @@ sub post_payment {
                 }
                 push @op_amount, $request->{"overpayment_topay_$i"};
                 push @op_cash_account_id, $cashid;
-                push @op_source, $request->{"overpayment_source1_$i"}
-                . ' ' .$request->{"overpayment_source2_$i"};
+                push @op_source, $request->{"overpayment_source2_$i"};
                 push @op_memo, $request->{"overpayment_memo_$i"};
                 if (not $id and $id ne '0'){
                     $request->error($request->{_locale}->text('No overpayment account selected.  Was one set up?'));

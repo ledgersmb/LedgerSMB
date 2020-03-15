@@ -107,22 +107,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             <tr id="source_row">
               <?lsmb # here goes all the posible sources which we can use -?>
               <th align="right" nowrap id="source_label_column"><?lsmb text('Source')?></th>
-              <td width="28%" id="source_column">
-                <?lsmb sources = [];
-                       FOREACH item IN source ;
-                       sources.push( { text = item, value = item } );
-                       END;
-                       PROCESS select element_data = {
-                                                id="source"
-                                                name="source"
-                                                options=sources
-                                                default_values=[selected_source] }; ?>
-                <?lsmb INCLUDE tooltip element_data = {
-                       ref_id => 'source_column'
-                       msg => text("Only for documentation")
-                }; ?>
-              </td>
-              <td id="source_text_column">
+              <td id="source_text_column" colspan="2">
                 <?lsmb PROCESS input element_data={
                        class => 'source'
                        name  => 'source_value'
@@ -271,13 +256,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
               <tr id="<?lsmb "source_row$i" ?>">
                 <?lsmb # here goes all the posible sources which we can used ?>
                 <th align="right" nowrap id="<?lsmb "source_label_column$i" ?>"><?lsmb text('Source') ?></th>
-                <td width="28%" id="<?lsmb "source_column$i" ?>">
-                  <?lsmb PROCESS select element_data = {
-                            id="source_" _ row.invoice.id
-                            name="source_" _ row.invoice.id
-                            options=sources
-                            default_values=[row.selected_source] } ?>
-                </td>
                 <td><?lsmb PROCESS input element_data={
                            name  => "source_text_$row.invoice.id",
                   id    => "source_text_$row.invoice.id",
@@ -359,12 +337,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                  value=item.cashaccount.id _ '--' _ item.cashaccount.accno _ '--' _ item.cashaccount.description } ?>
         </td>
         <td align="center">
-            <?lsmb item.source1 -?>     <?lsmb item.source2 -?>
-            <?lsmb PROCESS input element_data = {
-                   type="hidden"
-                   id="overpayment_source1_" _ overpayment_item
-                   name="overpayment_source1_" _ overpayment_item
-                   value=item.source1 } ?>
+            <?lsmb item.source2 -?>
             <?lsmb PROCESS input element_data = {
                    type="hidden"
                    id="overpayment_source2_" _ overpayment_item
@@ -432,15 +405,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
              options=options } ?>
     </td>
      <td align="center">
-       <?lsmb
-          options=[];
-          FOREACH item IN source;
-             options.push( { text = item, value = item } );
-          END;
-          PROCESS select element_data = {
-             id="overpayment_source1_" _ overpayment_item
-             name="overpayment_source1_" _ overpayment_item
-             options=options } ?>
        <?lsmb PROCESS input element_data = {
                  name="overpayment_source2_" _ overpayment_item
                  class="source"
