@@ -1264,17 +1264,34 @@ BEGIN
      WHERE id = in_payment_id
   RETURNING id INTO t_payment_id;
 
+  IF in_batch_id IS NOT NULL THEN
+    -- Note that we're using the original payment to derive the
+    -- value for 'trans_id', because the reversal inserts into the
+    -- same trans_id (see 'new_entries' query below for determination
+    -- of the value of 'trans_id' in the new acc_trans lines)
+    INSERT INTO voucher (trans_id, batch_id, batch_class)
+    select trans_id, in_batch_id,
+         (select case when payment_class = 1 then 4
+                      else 7 end
+            from payment c where c.id = t_payment_id)
+      from acc_trans a join payment_links pl on a.entry_id = pl.entry_id
+     where pl.payment_id = in_payment_id
+     group by trans_id;
+  END IF;
+
   -- Using a CTE because we can use the returned result to fill
   -- the payment_links table without further temporary tables
   WITH new_entries AS (
     INSERT INTO acc_trans (trans_id, chart_id, transdate, source,
-                           cleared, memo, invoice_id, approved,
-                           cleared_on, reconciled_on, voucher_id,
-                           amount_bc, amount_tc, curr)
+                           cleared, memo, invoice_id, approved, cleared_on,
+                           reconciled_on, amount_bc, amount_tc, curr,
+                           voucher_id)
      SELECT trans_id, chart_id, in_payment_date, source,
-            false, memo, null, coalesce(in_approved, true),
-            null, null, null,
-            -1 * amount_bc, -1 * amount_tc, curr
+            false, memo, null, coalesce(in_approved, true), null,
+            null, -1 * amount_bc, -1 * amount_tc, curr,
+            (select id from voucher v
+              where a.trans_id = v.trans_id
+                    and v.batch_id = in_batch_id) as voucher_id
        FROM acc_trans a
       WHERE exists (select 1 from payment_links pl
                      where pl.payment_id = in_payment_id
@@ -1284,28 +1301,6 @@ BEGIN
   INSERT INTO payment_links (payment_id, entry_id)
   SELECT t_payment_id, entry_id
     FROM new_entries;
-
-  IF in_batch_id IS NOT NULL THEN
-    --TODO: without vouchers, we could simply directly insert into
-    -- the batch when generating the acc_trans lines...
-    INSERT INTO voucher (trans_id, batch_id, batch_class)
-    select trans_id, in_batch_id,
-         (select case when payment_class = 1 then 4
-                      else 7 end
-            from payment c where c.id = t_payment_id)
-      from acc_trans a join payment_links pl on a.entry_id = pl.entry_id
-     where pl.payment_id = t_payment_id
-     group by trans_id;
-
-    UPDATE acc_trans a
-       SET voucher_id =
-            (select id from voucher
-              where a.trans_id = voucher.trans_id
-                    and voucher.batch_id = in_batch_id)
-     WHERE exists (select 1 from payment_links pl
-                    where pl.entry_id = a.entry_id
-                          and pl.payment_id = t_payment_id);
-  END IF;
 
   RETURN t_payment_id;
 END;
