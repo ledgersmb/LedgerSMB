@@ -101,6 +101,17 @@ When qr/^I enter "(.*)" into "To Pay" for the invoice from "(.*)" with these val
     $input_field->send_keys($amount);
 };
 
+When qr/^I edit the open item for invoice (\S+) with these values:/, sub {
+
+    my $invoice = $1;
+    my $entry = S->{ext_wsl}->page->body->maindiv->content;
+    my $row = $entry->open_items->row($invoice);
+
+    for my $data (@{C->data}) {
+        $row->set($data->{Column}, $data->{Value});
+    }
+};
+
 
 When qr/^I change the "Ending Statement Balance" to "(.*)"$/, sub {
     my $amount = $1;
@@ -175,5 +186,25 @@ Then qr/^I expect the (.+) Transactions totals to be/, sub {
     }
 };
 
+Then qr/^I expect the open items table to contain (\d+) rows?/, sub {
+
+    my $count = $1;
+    my $entry = S->{ext_wsl}->page->body->maindiv->content;
+    my $rowcount = scalar @{$entry->open_items->rows};
+
+    is($rowcount, $count, 'Correct number of rows');
+};
+
+Then qr/^I expect the open item for invoice (\S+) to show:/, sub {
+
+    my $invoice = $1;
+    my $entry = S->{ext_wsl}->page->body->maindiv->content;
+    my $row = $entry->open_items->row($invoice);
+
+    for my $data (@{C->data}) {
+        is($row->get($data->{Column}), $data->{Expected},
+            "Testing expected value for $data->{Column}");
+    }
+};
 
 1;

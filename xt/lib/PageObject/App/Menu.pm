@@ -49,8 +49,12 @@ my %menu_path_pageobject_map = (
     "AP > Reports > AP Aging" => '',
     "AP > Reports > Customer History" => '',
 
+    "Cash > Receipt" => 'PageObject::App::Cash::SelectVC',
+    "Cash > Payment" => 'PageObject::App::Cash::SelectVC',
     "Cash > Vouchers > Payments" => 'PageObject::App::Cash::Vouchers::Payments',
     "Cash > Reconciliation" => 'PageObject::App::Cash::Reconciliation::NewReport',
+    "Cash > Reports > Payments" => 'PageObject::App::Cash::PaymentSearch',
+    "Cash > Reports > Receipts" => 'PageObject::App::Cash::PaymentSearch',
     "Cash > Reports > Reconciliation" => 'PageObject::App::Search::Reconciliation',
 
     "Transaction Approval > Batches" => 'PageObject::App::TransactionApproval::Batches',

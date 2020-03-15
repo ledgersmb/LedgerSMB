@@ -1,6 +1,9 @@
 <body id="payment-1-body" class="lsmb <?lsmb dojo_theme?>">
 
-<form data-dojo-type="lsmb/Form" name="search" method="get" action="<?lsmb script ?>">
+  <form data-dojo-type="lsmb/Form"
+        id="payments-select-vc"
+        method="get"
+        action="<?lsmb script ?>">
 <?lsmb PROCESS elements.html  # Include form elements helper. -?>
 <?lsmb login.type = 'hidden' ; PROCESS input element_data=login -?>
 <?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass -?>
@@ -30,11 +33,13 @@
         </td>
         </tr>
         <tr id="vc-currency-row">
-                <td id="vc-label-column" class="label-left">
+          <td id="vc-label-column" class="label-left">
+            <label for="vc_name">
                  <?lsmb IF (type.value == 'receipt') -?>
                    <?lsmb text('Customer Name') -?>
                  <?lsmb ELSE; text('Vendor Name') -?>
                  <?lsmb END -?>
+            </label>
                 </td>
                 <td id="vc-column">
                         <?lsmb PROCESS input element_data = {
@@ -42,7 +47,7 @@
                                name="vc_name" } ?>
                 </td>
                 <td id="vc-label-column2" align="right">
-                        <?lsmb text('SSN')?>
+                  <label for="vc_ssn"><?lsmb text('SSN')?></label>
                 </td>
                 <td id="vc-column2">
                         <?lsmb PROCESS input element_data = {
@@ -52,13 +57,15 @@
                 </td>
         </tr>
         <tr>
-        <td id="currency-label-column" class="label-left"><?lsmb text('Currency') ?></td>
+          <td id="currency-label-column" class="label-left">
+            <label for="curr"><?lsmb text('Currency') ?></label></td>
                 <td id="currency-column">
                         <?lsmb PROCESS select element_data=curr ?>
                 </td>
         </tr>
         <tr id="daterange-row">
-                <td id="datefrom-label-column" class="label-left"><?lsmb text('Date from') ?> &gt;=</td>
+          <td id="datefrom-label-column" class="label-left">
+            <label for="datefrom"><?lsmb text('Date from') ?></label> &gt;=</td>
                 <td id="datefrom-gt-column">
                         <?lsmb
                              datefrom.type      = "text";
@@ -69,7 +76,8 @@
                              PROCESS input element_data=datefrom;
                          -?>
                 </td>
-                <td id="dateto-label-column" class="label-left" align=right><?lsmb text('Date to') ?> &lt;=</td>
+          <td id="dateto-label-column" class="label-left" align=right>
+            <label for="dateto"><?lsmb text('Date to') ?></label> &lt;=</td>
                 <td id="dateto-column">
                         <?lsmb
                              dateto.type        = "text";
@@ -82,7 +90,8 @@
                 </td>
         </tr>
         <tr id="total-row">
-                <td id="total-gt-label-column" class="label-left"><?lsmb text('Total') ?> &gt;=</td>
+          <td id="total-gt-label-column" class="label-left">
+            <label for="amountfrom"><?lsmb text('Total') ?> &gt;=</label></td>
                 <td id="total-gt-column">
                         <?lsmb
                              amountfrom.type      = "text";
@@ -91,7 +100,8 @@
                              PROCESS input element_data=amountfrom;
                          ?>
                 </td>
-                <td id="total-lt-label-column" class="label-left" align=right><?lsmb text('Total') ?> &lt;=</td>
+          <td id="total-lt-label-column" class="label-left" align=right>
+            <label for="amountto"><?lsmb text('Total') ?> &lt;=</label></td>
                 <td id="total-lt-column">
                         <?lsmb
                              amountto.type        = "text";
