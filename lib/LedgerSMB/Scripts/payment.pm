@@ -935,6 +935,7 @@ sub payment2 {
                 text => 'X'
             };
     }
+
     my @invoice_data;
     my @topay_state;
     my @open_invoices  = $Payment->get_open_invoices();
@@ -961,6 +962,9 @@ sub payment2 {
         ? 'on'
             :  $request->{"optional_discount_$invoice->{invoice_id}"};
 
+        $invoice->{discount} = 0
+            if ! $request->{"optional_discount_$invoice->{invoice_id}"};
+
         # LETS SET THE EXCHANGERATE VALUES
         #tshvr4 meaning of next statement? does the same in either case!
         my $due_fx = $invoice->{due_fx};
@@ -971,7 +975,7 @@ sub payment2 {
             if (!$request->{"optional_discount_$invoice->{invoice_id}"}) {
                 $topay_fx_value = $due_fx =
                     $due_fx +
-                    ($invoice->{discount}/$invoice->{exchangerate});
+                    ($invoice->{discount}/$exchangerate);
             }
         } else {
             #    $topay_fx_value = "N/A";

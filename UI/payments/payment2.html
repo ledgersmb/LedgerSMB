@@ -198,7 +198,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <td class="amount invoice-total"><?lsmb row.amount ?></td>
         <td class="amount invoice-paid"><?lsmb row.paid ?></td>
         <td class="amount invoice-discount"><?lsmb row.discount ?></td>
-        <td align="center apply-discount"><?lsmb IF row.optional_discount OR first_load ;
+        <td align="center" class="apply-discount"><?lsmb IF row.optional_discount OR first_load ;
                                                  CHECKED='checked';
                                                  ELSE;
                                                  CHECKED='';
