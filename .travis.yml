@@ -99,7 +99,7 @@ matrix:
             - postgresql-9.6-pgtap
       env:
         - COA_TESTING=1
-    - perl: '5.18'
+    - perl: '5.30'
       addons:
         postgresql: "9.6"
         apt:

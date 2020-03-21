@@ -39,7 +39,7 @@ and [current 1.7 version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system
 
 ## Server
 
- * Perl 5.18+
+ * Perl 5.20+
  * PostgreSQL 9.4+
  * Web server (e.g. nginx, Apache, lighttpd)
 

@@ -68,6 +68,7 @@ Code cleanup
 * Removal of dead code
 
 Dependency updates
+* Perl 5.20 (upgraded from 5.18)
 * Dojo Toolkit updated to 1.16.0
 * TeX::Encode >= 2.007
 * Authen::SASL (new)
