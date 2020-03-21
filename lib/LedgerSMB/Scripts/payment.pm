@@ -935,6 +935,7 @@ sub payment2 {
                 text => 'X'
             };
     }
+
     my @invoice_data;
     my @topay_state;
     my @open_invoices  = $Payment->get_open_invoices();
@@ -947,6 +948,12 @@ sub payment2 {
             next;
         }
 
+        if (($request->{"topay_fx_$invoice->{invoice_id}"} // '')
+            eq ($request->{"orig_topay_fx_$invoice->{invoice_id}"} // '')) {
+            # When the 'topay' amount hasn't been changed, delete it
+            # so it will be recalculated somewhere below
+            delete $request->{"topay_fx_$invoice->{invoice_id}"}
+        }
         my $request_topay_fx_bigfloat
             = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
         # SHOULD I APPLY DISCCOUNTS?
@@ -954,6 +961,9 @@ sub payment2 {
             $request->{first_load}
         ? 'on'
             :  $request->{"optional_discount_$invoice->{invoice_id}"};
+
+        $invoice->{discount} = 0
+            if ! $request->{"optional_discount_$invoice->{invoice_id}"};
 
         # LETS SET THE EXCHANGERATE VALUES
         #tshvr4 meaning of next statement? does the same in either case!
@@ -965,7 +975,7 @@ sub payment2 {
             if (!$request->{"optional_discount_$invoice->{invoice_id}"}) {
                 $topay_fx_value = $due_fx =
                     $due_fx +
-                    ($invoice->{discount}/$invoice->{exchangerate});
+                    ($invoice->{discount}/$exchangerate);
             }
         } else {
             #    $topay_fx_value = "N/A";
@@ -1035,7 +1045,7 @@ sub payment2 {
             amount            => $invoice_amt ? $invoice_amt->to_output(money => 1) : '',
             due               => LedgerSMB::PGNumber->from_input($request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount})->to_output(money => 1),
             paid              => $paid_formatted,
-            discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
+            discount          => $request->{"optional_discount_$invoice_id"} ? $invoice->{discount}->to_output(money => 1) : 0 ,
             optional_discount =>  $request->{"optional_discount_$invoice_id"},
             exchange_rate     =>  "$invoice->{exchangerate}",
             due_fx            =>  "$due_fx", # This was set at the begining of the for statement

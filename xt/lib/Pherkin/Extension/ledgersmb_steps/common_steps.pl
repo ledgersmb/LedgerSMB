@@ -752,4 +752,35 @@ Given qr/the following exchange rate types?:$/, sub {
 };
 
 
+Given qr/that standard payment terms apply for "(.+)"/, sub {
+
+    my $vc = $1;
+    # assert that the discount account exists (AR_discount/AP_discount)
+
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+
+    if (not $dbh->selectall_array(
+            q{SELECT 1 FROM account WHERE accno = 'DISC'})) {
+        $dbh->do(q{
+              SELECT account__save(NULL, 'DISC', 'Payment discounts',
+                 'E', NULL, (select id from account where accno='5600'),
+                 false, false, ARRAY['AR_discount','AP_discount']::text[],
+                 false, false);
+            })
+            or die $dbh->errstr;
+    }
+
+    # discount account; payment terms: 10%/15, net 30
+    $dbh->do(qq{
+          UPDATE entity_credit_account
+             SET discount_account_id = (select id from account
+                                         where accno='DISC'),
+                 discount = 10,
+                 discount_terms = 15,
+                 terms = 30
+           WHERE meta_number = '$vc';
+    }) or die $dbh->errstr;
+
+};
+
 1;

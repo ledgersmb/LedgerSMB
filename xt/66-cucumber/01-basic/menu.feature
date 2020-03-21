@@ -58,8 +58,8 @@ Scenario Outline: Navigate to menu and open screen
 #   | AR > Vouchers > Invoice Vouchers           |                          |
     | Budgets > Add Budget                       | Budget                   |
     | Budgets > Search                           | Budget search            |
-#   | Cash > Payment                             |                          |
-#   | Cash > Receipt                             |                          |
+    | Cash > Payment                             | Single Payment Vendor Selection   |
+    | Cash > Receipt                             | Single Payment Customer Selection |
 #   | Cash > Reconciliation                      |                          |
 #   | Cash > Reports                             |                          |
 #   | Cash > Reports > Payments                  |                          |

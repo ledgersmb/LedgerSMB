@@ -46,7 +46,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
               </td>
             </tr>
             <tr align="right" id="notes_row">
-              <th valign="top" id="notes_column"><?lsmb text('Notes') ?></th>
+              <th valign="top" id="notes_column">
+                <label for="notes"><?lsmb text('Notes') ?></label></th>
               <td><?lsmb PROCESS textarea element_data = {
                                                   id="notes"
                                                   name="notes"
@@ -81,7 +82,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             <?lsmb END ?>
             <tr id="account_row">
               <?lsmb  #here goes all the posible accounts were the paid can be done  ?>
-              <th align="right" nowrap id="account_label_column"><?lsmb text('Account') ?></th>
+              <th align="right" nowrap id="account_label_column">
+                <label for="account"><?lsmb text('Account') ?></label></th>
               <td colspan="2" id="account_column">
                 <?lsmb
                    PROCESS select element_data = {
@@ -94,7 +96,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
               </td>
             </tr>
             <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method   ?>
-              <th align="right" nowrap id="date_label_column"><?lsmb text('Date') ?></th>
+              <th align="right" nowrap id="date_label_column">
+                <label for="datepaid"><?lsmb text('Date') ?></label></th>
               <?lsmb- datepaid.class = 'date' ?>
               <td colspan="2" id="date_column">
                 <?lsmb PROCESS input element_data=datepaid ?>
@@ -106,7 +109,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             </tr>
             <tr id="source_row">
               <?lsmb # here goes all the posible sources which we can use -?>
-              <th align="right" nowrap id="source_label_column"><?lsmb text('Source')?></th>
+              <th align="right" nowrap id="source_label_column">
+                <label for="source_value"><?lsmb text('Source')?></label></th>
               <td id="source_text_column" colspan="2">
                 <?lsmb PROCESS input element_data={
                        class => 'source'
@@ -179,21 +183,22 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       <?lsmb i = '0';  -?>
       <?lsmb FOREACH row IN rows ?>
       <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
-      <tr class="<?lsmb alterning_style ?>">
-        <td><a href="<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
+      <tr class="<?lsmb alterning_style ?> open-item-row">
+        <td class="invoice-number"><a href="<?lsmb row.invoice.href ?>"
+                                      target="_new"><?lsmb row.invoice.number ?></a>
         </td>
         <?lsmb # we can use an href to link this invoice number to the invoice ?>
-        <td>
+        <td class="invoice-date">
           <?lsmb row.invoice_date ?>
           <?lsmb PROCESS input element_data = {
                  type="hidden"
                  name="invoice_date_" _ row.invoice.id
                  value=row.invoice_date } ?>
         </td>
-        <td class="amount"><?lsmb row.amount ?></td>
-        <td class="amount"><?lsmb row.paid ?></td>
-        <td class="amount"><?lsmb row.discount ?></td>
-        <td align="center"><?lsmb IF row.optional_discount OR first_load ;
+        <td class="amount invoice-total"><?lsmb row.amount ?></td>
+        <td class="amount invoice-paid"><?lsmb row.paid ?></td>
+        <td class="amount invoice-discount"><?lsmb row.discount ?></td>
+        <td align="center" class="apply-discount"><?lsmb IF row.optional_discount OR first_load ;
                                                  CHECKED='checked';
                                                  ELSE;
                                                  CHECKED='';
@@ -205,7 +210,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                       class="checkbox"
                       checked=CHECKED } ?>
         </td>
-        <td align="center">
+        <td align="center invoice-memo">
           <?lsmb row.memo.id=row.memo.name;
                  PROCESS input element_data=row.memo; -?>
           <?lsmb INCLUDE tooltip element_data = {
@@ -216,7 +221,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <?lsmb IF defaultcurrency.text != curr.value ?>
         <td><?lsmb row.exchange_rate ?></td>
         <?lsmb END ?>
-        <td class="amount"><?lsmb row.due ?></td>
+        <td class="amount invoice-due"><?lsmb row.due ?></td>
         <?lsmb IF defaultcurrency.text != curr.value ?>
         <td>
             <div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div>
@@ -226,14 +231,20 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         </td>
         <?lsmb END ?>
         <?lsmb #This should be computed and updated to the div using  ?>
-        <td align="center"><?lsmb row.topay_fx.id=row.topay_fx.name;
+        <td align="center invoice-to-pay"><?lsmb row.topay_fx.id=row.topay_fx.name;
                                   PROCESS input element_data = {
                                       type = "text"
                                       id = row.topay_fx.id
                                       name = row.topay_fx.name
                                       value = row.topay_fx.value
                                       class = "topay_amount amount"
-                                  } ?>
+                                 };
+          PROCESS input element_data = {
+                type = "hidden"
+                  id = "orig_" _ row.topay_fx.id
+                name = "orig_" _ row.topay_fx.name
+                value = row.topay_fx.value
+          } ?>
           <img src="payments/img/up.gif" alt=<?lsmb text('Up') ?>
                data-dojo-type="lsmb/MaximizeMinimize"
                data-dojo-props="mmNodeId: 'div_topay_<?lsmb row.invoice.id ?>'"
