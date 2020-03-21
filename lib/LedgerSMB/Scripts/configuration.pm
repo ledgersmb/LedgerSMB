@@ -68,9 +68,6 @@ sub _default_settings {
               ] },
         { title => $locale->text('Security Settings'),
           items => [
-              { name => 'disable_back',
-                label => $locale->text('Disable Back Button'),
-                type => 'YES_NO', },
               { name => 'password_duration',
                 label => $locale->text('Password Duration (days)')
               },

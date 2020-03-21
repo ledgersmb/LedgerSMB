@@ -25,6 +25,8 @@ The policy kicks in when so configured in the company database.
 
 use strict;
 use warnings;
+use feature 'postderef';
+
 use parent qw ( Plack::Middleware );
 
 use Plack::Util;
@@ -44,22 +46,15 @@ Implements C<Plack::Middleware->call()>.
 sub call {
     my $self = shift;
     my ($env) = @_;
-    my $res = $self->app->($env);
 
-    return $self->response_cb($res, sub {
-        return unless $env->{'lsmb.db'};
 
-        my $res = shift;
-        my ($status, $headers, $body) = @$res;
-
-        push @$headers, (
+    return Plack::Util::response_cb($self->app->($env), sub {
+        push $_[1]->@*, (
             'Cache-Control' => join(', ',
                                     qw| no-store  no-cache  must-revalidate
                                         post-check=0 pre-check=0 false|),
             'Pragma' => 'no-cache'
-        ) if LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})
-            ->get('disable_back');
-
+        );
     });
 }
 
