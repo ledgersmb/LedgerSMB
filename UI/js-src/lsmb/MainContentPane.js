@@ -32,7 +32,15 @@ define([
                           d.set("content",
                                 "Could not connect to server");
                       } else {
-                          d.set("content",err.response.data);
+                          var data = err.response.data;
+                          if (data instanceof Blob) {
+                              data.text().then(function (txt) {
+                                  d.set("content", txt);
+                              });
+                          }
+                          else {
+                              d.set("content",err.response.data);
+                          }
                       }
                       d.show();
                   },
