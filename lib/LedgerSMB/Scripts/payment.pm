@@ -1423,9 +1423,6 @@ sub print_payment {
     ###############################################################################
     # First we need to solve some ugly behaviour in the template system
     $header->{amount} = abs("$header->{amount}");
-    # The next code will enable number to text conversion
-    $Payment->init();
-    $header->{amount2text} = $Payment->num2text($header->{amount});
     ############################################################################
     # IF YOU NEED MORE INFORMATION ON THE HEADER AND ROWS ITEMS CHECK SQL FUNCTIONS
     # payment_gather_header_info AND payment_gather_line_info
@@ -1446,11 +1443,16 @@ sub print_payment {
       path     => 'DB',
       template => 'printPayment',
       format => 'HTML' );
-    return $template->render(
+    $template->render(
         {
             DBNAME => $request->{company},
             %$select,
         }); ###TODO: psgi-render-to-attachment
+    return
+        [ 200,
+          [ 'Content-Disposition' =>
+            'attachment; filename="printPayment.html"' ],
+          [ $template->{output} ] ];
 }
 
 =item post_and_print_payment
@@ -1466,6 +1468,7 @@ sub post_and_print_payment {
     $request->{payment_id} = &post_payment($request);
     my $locale       = $request->{_locale};
     my $Payment = LedgerSMB::DBObject::Payment->new(%$request);
+
     return print_payment($request, $Payment);
 }
 
