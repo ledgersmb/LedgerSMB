@@ -58,6 +58,7 @@ requires 'Plack::Request';
 requires 'Plack::Request::WithEncoding';
 requires 'Plack::Util';
 requires 'Plack::Util::Accessor';
+requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
 requires 'Template', '2.14';

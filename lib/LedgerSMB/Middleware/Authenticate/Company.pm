@@ -43,9 +43,11 @@ use warnings;
 use parent qw ( Plack::Middleware );
 
 use DBI;
+use HTTP::Status qw( is_server_error );
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor qw( provide_connection default_company );
+use Scope::Guard qw( guard );
 
 use LedgerSMB::DBH;
 use LedgerSMB::PSGI::Util;
@@ -157,10 +159,19 @@ sub call {
         };
     }
 
+
+    $env->{__dbh_guard__} = guard {
+        if ($dbh and $dbh->{Active}) {
+            $dbh->rollback;
+            $dbh->disconnect;
+        }
+    };
     return Plack::Util::response_cb(
         $self->app->($env), sub {
-            if ($dbh) {
-                $dbh->rollback;
+            if ($dbh and $dbh->{Active}
+                and not is_server_error($_[0])) {
+                $env->{__dbh_guard__}->dismiss;
+                $dbh->commit;
                 $dbh->disconnect;
             }
         });
