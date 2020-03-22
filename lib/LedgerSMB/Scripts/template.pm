@@ -79,7 +79,15 @@ Saves the template.
 
 sub save {
     my ($request) = @_;
-    my $dbtemp = LedgerSMB::Template::DB->new(%$request);
+    my $content = $request->{template};
+
+    if (not $content) {
+        my $fh = $request->upload('template_content');
+        local $/ = undef;
+        $content = <$fh>;
+    }
+    my $dbtemp = LedgerSMB::Template::DB->new(
+        %$request, template => $content);
     $dbtemp->save();
     return display($request);
 }
