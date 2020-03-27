@@ -23,7 +23,7 @@ define([
         store,
         template
       ){
-        return declare("lsmb/parts/PartsDescription",[Textarea, _HasDropDown, _AutoCompleterMixin], {
+        return declare("lsmb/parts/PartDescription",[Textarea, _HasDropDown, _AutoCompleterMixin], {
             channel: null,
             height: null,
             store:  store,
