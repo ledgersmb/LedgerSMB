@@ -65,6 +65,9 @@ sub process {
     if ($self->can($func)){
        @{$self->{entries}} = $self->can($func)->($self,$contents);
     }
+    else {
+        die "no custom method `$func` exists to parse the reconciliation file";
+    }
 
     return $self->{entries};
 }
