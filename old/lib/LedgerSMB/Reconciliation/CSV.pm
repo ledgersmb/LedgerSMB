@@ -72,15 +72,4 @@ sub process {
    return $self->{entries};
 }
 
-=head2 $self->is_error()
-
-Well,...
-
-=cut
-
-sub is_error {
-   my $self = shift @_;
-   return $self->{invalid_format};
-}
-
 1;
