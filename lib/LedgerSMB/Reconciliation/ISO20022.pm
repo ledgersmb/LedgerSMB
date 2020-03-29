@@ -20,14 +20,16 @@ use strict;
 use warnings;
 
 
-=head2 process_xml
+=head2 process_xml($content)
 
-Processes an ISO 20022 file for recon.
+Processes the supplied ISO 20022 file content for reconciliation.
+
+Returns an array of transaction lines.
 
 =cut
 
 sub process_xml {
-    my ($self, $recon, $contents) = @_;
+    my ($contents) = @_;
     my $camt053 = LedgerSMB::FileFormats::ISO20022::CAMT053->new($contents);
     return unless $camt053;
 
