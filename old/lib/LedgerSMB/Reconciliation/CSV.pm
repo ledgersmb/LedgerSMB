@@ -56,20 +56,16 @@ sub process {
     my ($recon, $contents) = @_;
 
     if (@{$self->{entries}} = LedgerSMB::Reconciliation::ISO20022->process_xml($recon, $contents)){
-        $self->{file_upload} = 1;
         return $self->{entries};
     }
+
     my $func = "parse_$self->{company}_$recon->{chart_id}";
     if ($self->can($func)){
        my @entries = $self->can($func)->($self,$contents);
        @{$self->{entries}} = @entries;
+    }
 
-       $self->{file_upload} = 1;
-   }
-   else {
-       $self->{file_upload} = 0;
-   }
-   return $self->{entries};
+    return $self->{entries};
 }
 
 1;
