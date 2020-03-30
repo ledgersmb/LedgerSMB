@@ -57,7 +57,7 @@ with the content of the CSV file, if that method exists.
 sub process {
     my ($self, $recon, $contents) = @_;
 
-    if (@{$self->{entries}} = LedgerSMB::Reconciliation::ISO20022->process_xml($contents)){
+    if (@{$self->{entries}} = LedgerSMB::Reconciliation::ISO20022::process_xml($contents)){
         return $self->{entries};
     }
 
