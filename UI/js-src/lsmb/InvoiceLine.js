@@ -1,4 +1,4 @@
-require(["dojo/_base/declare",
+define(["dojo/_base/declare",
          "dijit/_WidgetBase",
          "dijit/_TemplatedMixin",
          "dijit/_WidgetsInTemplateMixin",
