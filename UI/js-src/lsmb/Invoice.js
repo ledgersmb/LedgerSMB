@@ -1,4 +1,4 @@
-require(
+define(
     ["dojo/_base/declare",
      "dijit/registry",
      "dojo/on",
