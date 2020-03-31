@@ -454,9 +454,6 @@ sub _process_upload {
         $contents = <$handle> if defined $handle;
     }
 
-    # An empty string is recognized by the entry-importer (ISO20022)
-    # as a file name (due to absense of '<' and '>'); only call it
-    # when there's actual content to handle.
     if ($contents) {
         $recon->add_entries($recon->import_file($contents));
     }

@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use XML::Simple;
+use Try::Tiny;
 
 =head1 NAME
 
@@ -23,20 +24,32 @@ The constructor returns UNDEF if the file is not a CAMT053 docuent.
 
 =head1 METHODS
 
-=head2 new($spec)
+=head2 new($xml_data)
 
-You can pass in any input type specified by XML::Simple's XMLin method.
-
-Specifically you can pass in a file name, an undef (always returns undef), or an
-IO::Handle object.
+Pass in a string of XML data. Returns undef if the string is not valid XML or
+not identified as a CAMT053 document.
 
 =cut
 
-sub new{
-    my ($class, $spec) = @_;
-    return unless defined $spec;
-    my $raw = XMLin($spec);
-    return unless $raw->{xmlns} and $raw->{xmlns} eq 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02';
+sub new {
+    my ($class, $content) = @_;
+    return unless defined $content;
+
+    my $parser = XML::Simple->new();
+    my $raw;
+
+    # XML::Simple will die if content is not valid XML (it might be csv).
+    # Use parse_string() as the standard XMLin() parser scans the string
+    # for '<' and '>' characters and, if none are found, interprets
+    # the content as a filename to try reading from the filesystem.
+    try {
+       $raw = $parser->parse_string($content);
+    };
+
+    return unless $raw
+        and $raw->{xmlns}
+        and $raw->{xmlns} eq 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02';
+
     return bless ({struct => $raw}, $class);
 }
 

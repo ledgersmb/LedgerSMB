@@ -19,28 +19,18 @@ use LedgerSMB::FileFormats::ISO20022::CAMT053;
 use strict;
 use warnings;
 
-use XML::Simple;
 
-=head2 is_camt053
+=head2 process_xml($content)
 
-Returns true if the content is detected to be an ISO 20022 file
+Processes the supplied ISO 20022 file content for reconciliation.
 
-=cut
-
-sub is_camt053 {
-    my ($self, $content) = @_;
-    return LedgerSMB::FileFormats::ISO20022::CAMT053->new($content);
-}
-
-=head2 process_xml
-
-Processes an ISO 20022 file for recon.
+Returns an array of transaction lines.
 
 =cut
 
 sub process_xml {
-    my ($self, $recon, $contents) = @_;
-    my $camt053 = $self->is_camt053($contents);
+    my ($contents) = @_;
+    my $camt053 = LedgerSMB::FileFormats::ISO20022::CAMT053->new($contents);
     return unless $camt053;
 
     my @elements =
@@ -56,7 +46,7 @@ sub process_xml {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2016-2018 The LedgerSMB Core Team
+Copyright (C) 2016-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
