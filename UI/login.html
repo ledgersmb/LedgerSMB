@@ -58,7 +58,8 @@
                          title=text('User Name')
                          value = login
                          accesskey="l"
-                         tabindex=1 } #' ?>
+                         tabindex=1,
+                         attributes = { autocomplete = 'off'} } #' ?>
                 </div>
                 <div>
                   <?lsmb PROCESS input
@@ -71,7 +72,8 @@
                          title=text('Password')
                          value = ''
                          accesskey="p"
-                         tabindex=2 } ?>
+                         tabindex=2,
+                         attributes = { autocomplete = 'off'} } ?>
                 </div>
               </div>
               <?lsmb PROCESS input

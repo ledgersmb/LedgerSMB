@@ -50,7 +50,8 @@ include_stylesheet=["setup.css"];
                 </td>
                 <td>
                     <input type="password"
-                           id="password" name="password" value=""/>
+                           id="password" name="password" value=""
+                           autocomplete="off" />
                 </td>
             </tr>
 
@@ -89,7 +90,8 @@ include_stylesheet=["setup.css"];
                          name = 'action'
                          type = 'submit'
                         class = 'submit'
-                        value = 'reset_password'
+                  value = 'reset_password'
+                  attributes = { autocomplete = "off" }
                 };
            ELSE;
                 PROCESS button element_data  = {
