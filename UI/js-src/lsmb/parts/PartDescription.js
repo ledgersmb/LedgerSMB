@@ -8,7 +8,7 @@ define([
     "dojo/_base/declare",
     "dojo/topic",
     "dojo/keys",
-    "lsmb/parts/PartStore",
+    "lsmb/parts/PartRestStore",
     "dojo/text!./templates/DropDownTextarea.html"
     ], function(
         ComboBox,
