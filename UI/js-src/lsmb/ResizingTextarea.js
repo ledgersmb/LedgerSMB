@@ -1,25 +1,23 @@
+/** @format */
+
 define([
     "dijit/form/TextBox",
     "dojo/_base/declare",
-    "dojo/debounce",
-    "dojo/text!./templates/ResizingTextarea.html"
-    ], function(
-        TextBox,
-        declare,
-        debounce,
-        template
-      ){
-        return declare("lsmb/ResizingTextarea",
-                       [TextBox], {
+   "dojo/text!./templates/ResizingTextarea.html",
+   "dojo/keys",
+], function (TextBox, declare, resizingtextarea, keys) {
+   return declare("lsmb/ResizingTextarea", [TextBox], {
             innerStyle: "",
-            templateString: template,
+      templateString: resizingtextarea,
             autoSizing: true,
-            startup: function() {
+      startup: function () {
                 this.inherited(arguments);
                 this._autoSize();
             }, // startup
-            _autoSize: function() {
-                if (! this.autoSizing) return;
+      _autoSize: function () {
+         if (!this.autoSizing) {
+            return;
+         }
                 // setting to 'auto' first helps to shrink
                 // the height when possible.
                 this.textbox.style.height = "1em";
@@ -27,7 +25,7 @@ define([
                 this.textbox.style.height =
                     this.textbox.scrollHeight + "px";
             }, // autoSize
-            _onInput: function() {
+      _onInput: function () {
                 this.inherited(arguments);
                 this._autoSize();
             }, // _onInput
@@ -38,7 +36,7 @@ define([
                 }
                 this._autoSize();
             }, // _onKey
-            set: function() {
+      set: function () {
                 this.inherited(arguments);
                 this._autoSize();
             } // set
