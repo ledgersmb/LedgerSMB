@@ -35,6 +35,6 @@ define("lsmb/Reconciliation", [
                self.update(targetValue, "#outstanding-table");
             }
          );
-      },
+      }
    });
 });

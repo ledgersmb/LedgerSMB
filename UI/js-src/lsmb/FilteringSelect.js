@@ -12,6 +12,6 @@ define([
             this.onChange(d.getHighlightedOption());
          }
          return this.inherited(arguments);
-      },
+      }
    });
 });

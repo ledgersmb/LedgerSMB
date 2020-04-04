@@ -15,6 +15,6 @@ define(["dijit/form/Form", "dojo/_base/declare"], function (Form, declare) {
       /* eslint no-unused-vars:0 */
       onSubmit: function (evt) {
          return this.validate();
-      },
+      }
    });
 });

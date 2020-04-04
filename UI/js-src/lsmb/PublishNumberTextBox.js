@@ -18,6 +18,6 @@ define([
                self.publish(targetValue);
             })
          );
-      },
+      }
    });
 });

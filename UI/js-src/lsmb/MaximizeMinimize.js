@@ -46,6 +46,6 @@ define([
             })
          );
          this.setState(this.state);
-      },
+      }
    });
 });

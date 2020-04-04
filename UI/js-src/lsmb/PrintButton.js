@@ -55,6 +55,6 @@ define([
          }
 
          return this.inherited(arguments);
-      },
+      }
    });
 });

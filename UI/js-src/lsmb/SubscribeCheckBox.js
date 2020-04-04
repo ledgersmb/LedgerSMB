@@ -19,6 +19,6 @@ define(["dojo/_base/declare", "dojo/topic", "dijit/form/CheckBox"], function (
                self.update(targetValue);
             })
          );
-      },
+      }
    });
 });

@@ -30,6 +30,6 @@ define("lsmb/ReconciliationLine", [
                self._display(targetValue);
             })
          );
-      },
+      }
    });
 });

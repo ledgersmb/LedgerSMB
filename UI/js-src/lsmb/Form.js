@@ -77,6 +77,6 @@ define([
             }
             registry.byId("maindiv").load_form(url, options);
          }
-      },
+      }
    });
 });

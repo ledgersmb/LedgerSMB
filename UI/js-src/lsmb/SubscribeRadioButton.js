@@ -19,6 +19,6 @@ define([
                self.update(targetValue);
             })
          );
-      },
+      }
    });
 });

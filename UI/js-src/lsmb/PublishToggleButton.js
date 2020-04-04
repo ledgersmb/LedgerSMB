@@ -25,6 +25,6 @@ define([
             })
          );
          self.publish(self.checked);
-      },
+      }
    });
 });

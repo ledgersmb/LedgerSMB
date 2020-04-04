@@ -177,6 +177,6 @@ define([
             return contentPromise;
          }
          return setPromise;
-      },
+      }
    });
 });

@@ -40,6 +40,6 @@ define([
                self.update(targetValue);
             })
          );
-      },
+      }
    });
 });

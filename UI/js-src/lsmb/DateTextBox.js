@@ -81,6 +81,6 @@ define([
             datePattern: "yyyy-MM-dd",
             selector: "date",
          });
-      },
+      }
    });
 });
