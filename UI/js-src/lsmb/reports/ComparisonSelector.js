@@ -1,68 +1,83 @@
-define(["dojo/_base/declare",
-        "dojo/on",
-        "dojo/dom",
-        "dojo/dom-style",
-        "dojo/topic",
-        "dijit/registry",
-        "dijit/_WidgetBase",
-        "dijit/_Container"
-       ],
-       function(declare, on, dom, style, topic, registry,
-                _WidgetBase, _Container) {
-           return declare("lsmb/reports/ComparisonSelector",
-                          [_WidgetBase, _Container], {
-               channel: '',
-               mode: "by-dates",
-               postCreate: function() {
-                   var self = this;
-                   this.inherited(arguments);
-                   this.own(
-                       topic.subscribe(this.channel,
-                          function(action, value) {
-                              var display = "";
+/** @format */
+/*
+TODO: remaining issue
+  67:16  error  Assignment to function parameter 'count'  no-param-reassign
+ */
+define([
+   "dojo/_base/declare",
+   "dojo/on",
+   "dojo/dom",
+   "dojo/dom-style",
+   "dojo/topic",
+   "dijit/registry",
+   "dijit/_WidgetBase",
+   "dijit/_Container",
+], function (
+   declare,
+   on,
+   dom,
+   domStyle,
+   topic,
+   registry,
+   _WidgetBase,
+   _Container
+) {
+   return declare(
+      "lsmb/reports/ComparisonSelector",
+      [_WidgetBase, _Container],
+      {
+         channel: "",
+         mode: "by-dates",
+         postCreate: function () {
+            var self = this;
+            this.inherited(arguments);
+            this.own(
+               topic.subscribe(this.channel, function (action, value) {
+                  var display = "";
 
-                              if (action === "changed-period-type") {
-                                  self.mode = value;
+                  if (action === "changed-period-type") {
+                     self.mode = value;
 
-                                  if (value === "by-dates") {
-                                      display = self._comparison_periods
-                                          .get("value");
-                                  }
-                              }
-                              self._update_display(display);
-                          })
-                   );
-               },
-               startup: function() {
-                   var self = this;
+                     if (value === "by-dates") {
+                        display = self._comparison_periods.get("value");
+                     }
+                  }
+                  self._update_display(display);
+               })
+            );
+         },
+         startup: function () {
+            var self = this;
 
-                   this.inherited(arguments);
-                   this._comparison_periods =
-                       registry.byId("comparison-periods");
-                   this.own(
-                       on(this._comparison_periods, "change",
-                          function(newvalue) {
-                              self._update_display(self._comparison_periods
-                                                   .get("value"));
-                          }));
-                   this._update_display('');
-               },
-               _update_display: function(count) {
-                   if (count === "" || this.mode === "by-periods") {
-                       style.set(dom.byId("comparison_dates"),
-                                 "display", "none");
-                       return;
-                   }
-                   else {
-                       count = parseInt(count);
-                       if (isNaN(count)) return; // invalid input
+            this.inherited(arguments);
+            this._comparison_periods = registry.byId("comparison-periods");
+            this.own(
+               /* eslint no-unused-vars:0 */
+               on(this._comparison_periods, "change", function (newvalue) {
+                  self._update_display(self._comparison_periods.get("value"));
+               })
+            );
+            this._update_display("");
+         },
+         _update_display: function (count) {
+            if (count === "" || this.mode === "by-periods") {
+               domStyle.set(dom.byId("comparison_dates"), "display", "none");
+            } else {
+               count = parseInt(count, 10);
+               if (Number.isNaN(count)) {
+                  return;
+               } // invalid input
 
-                       style.set(dom.byId("comparison_dates"), "display", "");
-                       for (var i = 1; i <= 9; i++) {
-                           style.set(dom.byId("comparison_dates_" + i),
-                                     "display", (i <= count) ? "" : "none");
-                       }
-                   }
+               domStyle.set(dom.byId("comparison_dates"), "display", "");
+               for (var i = 1; i <= 9; i++) {
+                  domStyle.set(
+                     dom.byId("comparison_dates_" + i),
+                     "display",
+                     i <= count ? "" : "none"
+                  );
                }
-           });
-       });
+            }
+         },
+      }
+   );
+});
