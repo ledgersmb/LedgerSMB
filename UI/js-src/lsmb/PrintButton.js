@@ -10,7 +10,7 @@ define([
    "dijit/form/Button",
    "lsmb/iframe",
    "dojo/dom-form",
-   "dijit/registry",
+   "dijit/registry"
 ], function (declare, event, domattr, Button, iframe, domform, registry) {
    return declare("lsmb/PrintButton", [Button], {
       minimalGET: true,
@@ -27,7 +27,7 @@ define([
                   formname: f.formname.value,
                   language_code: f.language_code.value,
                   media: "screen",
-                  format: f.format.value,
+                  format: f.format.value
                };
                // Apparently, transactions do not include a
                // 'vc' field; so, when we have one, add it.
@@ -41,7 +41,7 @@ define([
             }
 
             iframe(domattr.get(f, "action"), {
-               data: data,
+               data: data
             }).then(
                function () {
                   // success? do nothing
@@ -54,7 +54,7 @@ define([
             return;
          }
 
-         return this.inherited(arguments);
+         this.inherited(arguments);
       }
    });
 });
