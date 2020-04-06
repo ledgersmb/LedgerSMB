@@ -1,9 +1,5 @@
 /** @format */
-/*
-Remaining issues:
-   71:10  error  Method 'set_main_div' expected no return value  consistent-return
-  117:10  error  Method 'load_link' expected no return value     consistent-return
- */
+
 define([
    "dijit/layout/ContentPane",
    "dojo/_base/declare",
@@ -15,7 +11,7 @@ define([
    "dojo/request/xhr",
    "dojo/query",
    //   "dojo/request/iframe",
-   "dojo/dom-class",
+   "dojo/dom-class"
 ], function (
    ContentPane,
    declare,
@@ -65,7 +61,7 @@ define([
             this.report_error(
                "Invalid server response: document lacks BODY tag"
             );
-            return;
+            return undefined;
          }
          var newbody = body[1];
          return this.set("content", newbody).then(
@@ -111,7 +107,7 @@ define([
       },
       load_link: function (href) {
          if (this.last_page === href) {
-            return;
+            return undefined;
          }
          this.last_page = href;
          return this.load_form(href, { handlesAs: "text" });
@@ -153,7 +149,7 @@ define([
          if (newContent !== null) {
             contentPromise = this.inherited("set", arguments, [
                "content",
-               newContent,
+               newContent
             ]).then(function () {
                query("a", self.domNode).forEach(self.interceptClick);
                self.show_main_div();
