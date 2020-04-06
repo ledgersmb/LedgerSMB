@@ -1,7 +1,7 @@
 /** @format */
 /*
 TODO: Unsolved issues
-  111:23  error  Expected to return a value at the end of method 'submit_form'  consistent-return
+  111:23  error  Expected to return a value at the end of method 'submitForm'  consistent-return
   136:27  error  Expected to return a value at the end of function              consistent-return
 */
 define([
@@ -12,7 +12,7 @@ define([
    "dijit/registry",
    "dojo/on",
    "dojo/text!./templates/PasswordChange.html",
-   "dojo/request",
+   "dojo/request"
 ], function (
    declare,
    _widgetbase,
@@ -35,7 +35,7 @@ define([
             verify: "Verify",
             change: "Change Password",
             "no-oldpw": "No Old Password",
-            strength: "Strength",
+            strength: "Strength"
          },
          lstrings: {},
          text: function (toTranslate) {
@@ -63,7 +63,7 @@ define([
             registry.byId("pw-change").set("innerHTML", this.text("change"));
             registry.byId("pw-strength").set("title", this.text("strength"));
             on(this.submitbutton, "click", function () {
-               I.submit_form();
+               I.submitForm();
             });
             this.inherited(arguments);
          },
@@ -82,7 +82,7 @@ define([
                digits: /\d/.test(pass),
                lower: /[a-z]/.test(pass),
                upper: /[A-Z]/.test(pass),
-               nonWords: /\W/.test(pass),
+               nonWords: /\W/.test(pass)
             };
             var variationCount = 0;
             for (var check in variations) {
@@ -108,43 +108,40 @@ define([
             elem.set("class", bgclass);
             elem.set("innerHTML", score);
          },
-         submit_form: function () {
+         submitForm: function () {
             var I = this;
             var r = request;
             var oldPassword = I.oldpw.get("value");
             var newPassword = I.newpw.get("value");
             var confirmPassword = I.verified.get("value");
             if (oldPassword === "" || newPassword === "") {
-               return I.setFeedback(0, I.text("Password Required"));
+               I.setFeedback(0, I.text("Password Required"));
+               return;
             }
             if (newPassword !== confirmPassword) {
-               return I.setFeedback(0, I.text("Confirmation did not match"));
+               I.setFeedback(0, I.text("Confirmation did not match"));
+               return;
             }
             r("user.pl", {
                data: {
                   action: "change_password",
                   old_password: oldPassword,
                   new_password: newPassword,
-                  confirm_password: confirmPassword,
+                  confirm_password: confirmPassword
                },
-               method: "POST",
+               method: "POST"
             })
                /* eslint no-unused-vars: 0 */
                .then(function (response) {
-                  return I.setFeedback(1, I.text("Password Changed"));
+                  I.setFeedback(1, I.text("Password Changed"));
                })
                .otherwise(function (err) {
                   if (err.response.status !== 200) {
                      if (err.response.status !== "500") {
-                        return I.setFeedback(
-                           0,
-                           I.text("Bad username/Password")
-                        );
+                        I.setFeedback(0, I.text("Bad username/Password"));
+                        return;
                      }
-                     return I.setFeedback(
-                        0,
-                        I.text("Error changing password.")
-                     );
+                     I.setFeedback(0, I.text("Error changing password."));
                   }
                });
          },
@@ -155,7 +152,7 @@ define([
                this.feedback.set("class", "failure");
             }
             this.feedback.set("innerHTML", message);
-         },
+         }
       }
    );
 });
