@@ -1,8 +1,4 @@
 /** @format */
-/*
-TODO: Remaining issue
-  41:22  error  'data' is already declared in the upper scope  no-shadow
- */
 
 define([
    "dojo/_base/declare",
@@ -11,7 +7,7 @@ define([
    "dojo/request/xhr",
    "dojo/dom-form",
    "dojo/dom-attr",
-   "dijit/registry",
+   "dijit/registry"
 ], function (declare, event, button, xhr, domform, domattr, registry) {
    return declare("lsmb/payments/PostPrintButton", [button], {
       onClick: function (evt) {
@@ -24,7 +20,7 @@ define([
          xhr(domattr.get(f, "action"), {
             method: "POST",
             data: data,
-            handleAs: "blob",
+            handleAs: "blob"
          }).then(
             function (blob) {
                // IE doesn't allow using a blob object directly
@@ -38,29 +34,29 @@ define([
                // For other browsers:
                // Create a link pointing to the ObjectURL
                // containing the blob.
-               const data = window.URL.createObjectURL(blob);
+               const _blob = window.URL.createObjectURL(blob);
                var link = document.createElement("a");
-               link.href = data;
+               link.href = _blob;
                link.download = "print-payment.html";
                link.click();
                setTimeout(function () {
                   // For Firefox it is necessary to delay
                   // revoking the ObjectURL
-                  window.URL.revokeObjectURL(data);
+                  window.URL.revokeObjectURL(_blob);
                }, 100);
                registry
                   .byId("maindiv")
                   .load_link(
                      "payment.pl?action=payment&account_class=" +
-                        data.account_class +
+                        _blob.account_class +
                         "&type=" +
-                        data.type
+                        _blob.type
                   );
             },
             function (err) {
                registry.byId("maindiv").report_request_error(err);
             }
          );
-      },
+      }
    });
 });
