@@ -1,39 +1,41 @@
+/* stylelint-disable no-descending-specificity, plugin/no-unsupported-browser-features */
+
 body {
     overflow-y: auto;
 }
 
 div#loading {
-    z-index: 100;
+    background: white;
+    height: 100%;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    background: white;
+    z-index: 100;
 }
 
 div.setupconsole {
     background-color: white;
-    margin-right: auto;
+    border-style: outset;
+    margin-bottom: 2em;
     margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
     min-width: 21em;
     padding: 2em;
     padding-bottom: 2em;
-    border-style: outset;
-    margin-top: 2em;
-    margin-bottom: 2em;
 }
 
 div#logindiv {
-    z-index: 90;
-    position:absolute;
-    top:0;
-    left:0;
-    width:calc(100% - 4em);
-    height:calc(100% - 4em);
-    padding:2em;
-    text-align: center;
+    height: calc(100% - 4em);
+    left: 0;
     margin: 0 auto;
+    padding: 2em;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: calc(100% - 4em);
+    z-index: 90;
 }
 
 form#loginform {
@@ -45,9 +47,9 @@ form#loginform {
 }
 
 .inputrow {
-    padding-top: 3px;
     padding-bottom: 2px;
     padding-left: 4ex;
+    padding-top: 3px;
 }
 
 /* Prevent inheritance of the above */
@@ -59,8 +61,8 @@ div {
     overflow: auto;
 }
 
-#yesno label {
-    width: 2em
+label #yesno {
+    width: 2em;
 }
 
 caption {
@@ -69,37 +71,37 @@ caption {
 }
 
 label {
-    width: 10em;
-    float: left;
     border-width: 1px;
+    float: left;
     margin: 0;
-    padding-right: 0.5em;
     margin-top: 0.5em;
+    padding-right: 0.5em;
+    width: 10em;
 }
 
 input {
-    width: 14em;
-    margin: 0;
-    text-align: left;
-    float: left;
     border-width: 3px;
+    float: left;
+    margin: 0;
     margin-top: 0.5em;
+    text-align: left;
+    width: 14em;
 }
 
 #yesno input {
-    width: 1em;
     margin-right: 3em;
+    width: 1em;
 }
 
 #yesno span {
-    float: left;
     display: block;
+    float: left;
 }
 
 img.logo {
     border-style: none;
-    width: 16em;
     height: 8em;
+    width: 16em;
 }
 
 button {
@@ -113,8 +115,8 @@ button {
 tr.listheading {
     background-color: lightgrey;
 }
-tr.listrow:nth-child(even) {background: #FFF}
-tr.listrow:nth-child(odd) {background: #EEE}
+tr.listrow:nth-child(even) { background: #fff; }
+tr.listrow:nth-child(odd) { background: #eee; }
 
 td.dijitStretch {
     min-width: 125px;
@@ -126,6 +128,8 @@ td.dijitStretch {
     margin-left: 1px;
 }
 
-td.transdate, td.duedate, td.datepaid {
-   white-space: nowrap!important;
+td.transdate,
+td.duedate,
+td.datepaid {
+    white-space: nowrap !important;
 }
