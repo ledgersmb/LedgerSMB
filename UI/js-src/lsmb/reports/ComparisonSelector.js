@@ -1,8 +1,5 @@
 /** @format */
-/*
-TODO: remaining issue
-  67:16  error  Assignment to function parameter 'count'  no-param-reassign
- */
+
 define([
    "dojo/_base/declare",
    "dojo/on",
@@ -11,7 +8,7 @@ define([
    "dojo/topic",
    "dijit/registry",
    "dijit/_WidgetBase",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (
    declare,
    on,
@@ -63,8 +60,8 @@ define([
             if (count === "" || this.mode === "by-periods") {
                domStyle.set(dom.byId("comparison_dates"), "display", "none");
             } else {
-               count = parseInt(count, 10);
-               if (Number.isNaN(count)) {
+               var _count = parseInt(count, 10);
+               if (Number.isNaN(_count)) {
                   return;
                } // invalid input
 
@@ -73,11 +70,11 @@ define([
                   domStyle.set(
                      dom.byId("comparison_dates_" + i),
                      "display",
-                     i <= count ? "" : "none"
+                     i <= _count ? "" : "none"
                   );
                }
             }
-         },
+         }
       }
    );
 });
