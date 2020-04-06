@@ -1,23 +1,9 @@
 /** @format */
 
-/*
-Remaining issues
-   68:34  error    Unnecessary escape character: \/                                                                            no-useless-escape
-   68:36  error    Unnecessary escape character: \.                                                                            no-useless-escape
-   68:38  error    Unnecessary escape character: \-                                                                            no-useless-escape
-   73:7   error    Assignment to property of function parameter 'window'                                                       no-param-reassign
-   74:20  error    'iframe' was used before it was defined                                                                     no-use-before-define
-   95:13  warning  Unexpected console statement                                                                                no-console
-  101:10  error    Assignment to function parameter 'uri'                                                                      no-param-reassign
-  119:7   error    Assignment to property of function parameter 'window'                                                       no-param-reassign
-  188:19  error    Unexpected chained assignment                                                                               no-multi-assign
-  260:16  error    The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype  guard-for-in
-  315:13  error    Expected an assignment or function call and instead saw an expression                                       no-unused-expressions
-  343:21  error    'response' is defined but never used                                                                        no-unused-vars
-  390:17  error    'doc' is already declared in the upper scope                                                                no-shadow
-  415:13  error    Assignment to function parameter 'error'                                                                    no-param-reassign
-  440:7   error    Assignment to function parameter 'options'                                                                  no-param-reassign
- */
+/* eslint no-useless-escape:0, no-param-reassign:0, no-console:0 */
+/* eslint no-use-before-define:0 */ /* iframe is defined at the bottom */
+/* eslint no-unused-expressions:0 */ /* Allow a && a() */
+
 // This file is a copy of 'dojo/request/iframe.js', but adds checks for
 // the presence and value of a cookie
 
@@ -48,7 +34,7 @@ define([
    "dojo/NodeList-manipulate",
    "dojo/NodeList-dom" /*= ====,
                        '../request',
-                       '../_base/declare' ===== */,
+                       '../_base/declare' ===== */
 ], function (
    module,
    require,
@@ -169,8 +155,8 @@ define([
             style: {
                position: "absolute",
                top: "-1000px",
-               left: "-1000px",
-            },
+               left: "-1000px"
+            }
          },
          window.body()
       );
@@ -185,7 +171,8 @@ define([
             return;
          }
          do {
-            dfd = iframe._currentDfd = iframe._dfdQueue.shift();
+            iframe._currentDfd = iframe._dfdQueue.shift();
+            dfd = iframe._currentDfd;
          } while (
             dfd &&
             (dfd.canceled || (dfd.isCanceled && dfd.isCanceled())) &&
@@ -197,9 +184,11 @@ define([
             return;
          }
 
+         dfd._contentToClean = [];
+
          var response = dfd.response;
          var options = response.options;
-         var c2c = (dfd._contentToClean = []);
+         var c2c = dfd._contentToClean;
          var formNode = dom.byId(options.form);
          var notify = util.notify;
          var data = options.data || null;
@@ -209,7 +198,8 @@ define([
          cookie(downloadCookie, "requested");
 
          if (!dfd._legacy && options.method === "POST" && !formNode) {
-            formNode = dfd._tmpForm = createForm();
+            dfd._tmpForm = createForm();
+            formNode = dfd._tmpForm;
          } else if (
             options.method === "GET" &&
             formNode &&
@@ -251,24 +241,26 @@ define([
                      {
                         type: "hidden",
                         name: name,
-                        value: value,
+                        value: value
                      },
                      formNode
                   );
                   c2c.push(name);
                };
                for (var x in data) {
-                  var val = data[x];
-                  if (lang.isArray(val) && val.length > 1) {
-                     for (var i = 0; i < val.length; i++) {
-                        createInput(x, val[i]);
-                     }
-                  } else {
-                     var n = query("input[name='" + x + "']", formNode);
-                     if (n.indexOf() === -1) {
-                        createInput(x, val);
+                  if (Object.prototype.hasOwnProperty.call(data, x)) {
+                     var val = data[x];
+                     if (lang.isArray(val) && val.length > 1) {
+                        for (var i = 0; i < val.length; i++) {
+                           createInput(x, val[i]);
+                        }
                      } else {
-                        n.val(val);
+                        var n = query("input[name='" + x + "']", formNode);
+                        if (n.indexOf() === -1) {
+                           createInput(x, val);
+                        } else {
+                           n.val(val);
+                        }
                      }
                   }
                }
@@ -339,6 +331,7 @@ define([
       }
    }
 
+   /* eslint no-unused-vars:0 */
    // dojo/request/watch handlers
    function isValid(response) {
       return !this.isFulfilled();
@@ -387,29 +380,31 @@ define([
 
       if (!error && cookie(downloadCookie) === "requested") {
          try {
-            var doc = iframe.doc(iframe._frame);
+            var _doc = iframe.doc(iframe._frame);
             var handleAs = options.handleAs;
 
             if (handleAs !== "html") {
                if (handleAs === "xml") {
                   // IE6-8 have to parse the XML manually. See http://bugs.dojotoolkit.org/ticket/6334
-                  if (doc.documentElement.tagName.toLowerCase() === "html") {
-                     query("a", doc.documentElement).orphan();
+                  if (_doc.documentElement.tagName.toLowerCase() === "html") {
+                     query("a", _doc.documentElement).orphan();
                      var xmlText =
-                        doc.documentElement.innerText ||
-                        doc.documentElement.textContent;
+                        _doc.documentElement.innerText ||
+                        _doc.documentElement.textContent;
                      xmlText = xmlText.replace(/>\s+</g, "><");
                      response.text = lang.trim(xmlText);
                   } else {
-                     response.data = doc;
+                     response.data = _doc;
                   }
                } else {
                   // 'json' and 'javascript' and 'text'
-                  response.text = doc.getElementsByTagName("textarea")[0].value; // text
+                  response.text = _doc.getElementsByTagName(
+                     "textarea"
+                  )[0].value; // text
                }
                handlers(response);
             } else {
-               response.data = doc;
+               response.data = _doc;
             }
          } catch (e) {
             error = e;
@@ -429,7 +424,7 @@ define([
    }
 
    var defaultOptions = {
-      method: "POST",
+      method: "POST"
    };
    function iframe(url, options, returnDeferred) {
       var response = util.parseArgs(
