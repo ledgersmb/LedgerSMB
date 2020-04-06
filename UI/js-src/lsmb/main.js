@@ -1,7 +1,7 @@
 /** @format */
+/* eslint no-param-reassign:0 */
 /*
 Remaining issues:
-  49:10  error  Assignment to property of function parameter 'dnode'  no-param-reassign
   61:56  error  'hash' is already declared in the upper scope         no-shadow
  */
 require([
@@ -14,7 +14,7 @@ require([
    "dojo/topic",
    "dojo/dom-class",
    "dojo/ready",
-   "dojo/domReady!",
+   "dojo/domReady!"
 ], function (parser, query, on, registry, event, hash, topic, domClass, ready) {
    parser.parse().then(function () {
       // delay the option of triggering load_link() until
@@ -58,8 +58,8 @@ require([
          if (window.location.hash) {
             mainDiv.load_link(hash());
          }
-         topic.subscribe("/dojo/hashchange", function (hash) {
-            mainDiv.load_link(hash);
+         topic.subscribe("/dojo/hashchange", function (_hash) {
+            mainDiv.load_link(_hash);
          });
       }
 
