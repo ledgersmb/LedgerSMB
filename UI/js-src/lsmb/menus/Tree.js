@@ -1,9 +1,6 @@
 /** @format */
 /* globals dijit */
-/*
-TODO: remaining issue
-  87:38  error  'event' is already declared in the upper scope  no-shadow
- */
+
 define([
    "dojo/_base/declare",
    "dojo/on",
@@ -15,7 +12,7 @@ define([
    "dojo/store/Memory",
    "dijit/Tree",
    "dijit/tree/ObjectStoreModel",
-   "dijit/registry",
+   "dijit/registry"
 ], function (
    declare,
    on,
@@ -33,7 +30,7 @@ define([
    // to query the children of a node
    var restStore = new JsonRest({
       target: "erp/api/v0/menu-nodes/",
-      idProperty: "id",
+      idProperty: "id"
    });
    var memoryStore = new Memory({ idProperty: "id" });
    memoryStore = new Observable(memoryStore);
@@ -65,7 +62,7 @@ define([
       /* eslint no-unused-vars:0 */
       getRoot: function (onItem, onError) {
          onItem({ id: 0 });
-      },
+      }
    });
 
    return declare("lsmb/menus/Tree", [Tree], {
@@ -132,6 +129,6 @@ define([
          var node = dijit.getEnclosingWidget(e.target);
          var item = node.item;
          this.onClick(item, node, e);
-      },
+      }
    });
 });
