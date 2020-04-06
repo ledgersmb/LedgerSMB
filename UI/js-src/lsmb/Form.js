@@ -12,7 +12,7 @@ define([
    "dojo/dom-attr",
    "dojo/dom-form",
    "dojo/query",
-   "dijit/registry",
+   "dijit/registry"
 ], function (
    Form,
    declare,
@@ -54,7 +54,7 @@ define([
             if (!url) {
                /* eslint no-alert:0 */
                alert("Form contains no action. Please file a bug");
-               return false;
+               return;
             }
             c++;
             var qobj = domform.toQuery(this.domNode);
