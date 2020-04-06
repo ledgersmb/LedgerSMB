@@ -3,7 +3,7 @@
 define([
    "lsmb/FilteringSelect",
    "dojo/_base/declare",
-   "lsmb/accounts/AccountRestStore",
+   "lsmb/accounts/AccountRestStore"
 ], function (filteringSelect, declare, accountRestStore) {
    var mySelect = new declare(
       "lsmb/accounts/AccountSelector",
@@ -22,7 +22,7 @@ define([
          constructor: function () {
             this.inherited(arguments);
             this.initialValue = arguments[0].value;
-         },
+         }
       }
    );
    return mySelect;

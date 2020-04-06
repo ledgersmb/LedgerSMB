@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/RadioButton",
+   "dijit/form/RadioButton"
 ], function (declare, on, topic, RadioButton) {
    return declare("lsmb/PublishRadioButton", [RadioButton], {
       topic: "",

@@ -5,7 +5,7 @@ define([
    "dijit/registry",
    "dojo/on",
    "lsmb/Form",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (declare, registry, on, Form, _Container) {
    return declare("lsmb/Invoice", [Form, _Container], {
       _update: function () {
@@ -20,6 +20,6 @@ define([
                self._update();
             })
          );
-      }, // startup
+      } // startup
    });
 });

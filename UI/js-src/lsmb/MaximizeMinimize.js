@@ -5,7 +5,7 @@ define([
    "dojo/dom",
    "dojo/dom-style",
    "dojo/on",
-   "dijit/_WidgetBase",
+   "dijit/_WidgetBase"
 ], function (declare, dom, domStyle, on, _WidgetBase) {
    return declare("lsmb/MaximizeMinimize", [_WidgetBase], {
       state: "min",
@@ -13,13 +13,13 @@ define([
          max: {
             nextState: "min",
             imgURL: "payments/img/up.gif",
-            display: "block",
+            display: "block"
          },
          min: {
             nextState: "max",
             imgURL: "payments/img/down.gif",
-            display: "none",
-         },
+            display: "none"
+         }
       },
       mmNodeId: null,
       setState: function (state) {

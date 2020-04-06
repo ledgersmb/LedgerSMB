@@ -3,7 +3,7 @@
 define([
    "dijit/form/FilteringSelect",
    "dojo/_base/declare",
-   "dojo/keys",
+   "dojo/keys"
 ], function (FilteringSelect, declare, keys) {
    return declare("lsmb/FilteringSelect", [FilteringSelect], {
       onKey: function (e) {

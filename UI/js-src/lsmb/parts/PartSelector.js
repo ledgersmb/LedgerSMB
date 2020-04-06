@@ -5,7 +5,7 @@ define([
    "dojo/_base/declare",
    "dojo/aspect",
    "dojo/topic",
-   "lsmb/parts/PartRestStore",
+   "lsmb/parts/PartRestStore"
 ], function (filteringSelect, declare, aspect, topic, partRestStore) {
    var mySelect = new declare("lsmb/parts/PartSelector", [filteringSelect], {
       store: partRestStore,
@@ -36,7 +36,7 @@ define([
                topic.publish(self.channel, self.item);
             });
          }
-      },
+      }
    });
 
    aspect.around(mySelect, "_announceOption", function (orig) {

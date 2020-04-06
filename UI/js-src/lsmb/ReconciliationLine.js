@@ -5,7 +5,7 @@ define("lsmb/ReconciliationLine", [
    "dojo/on",
    "dojo/dom-class",
    "dijit/_WidgetBase",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (declare, on, domClass, _WidgetBase, _Container) {
    return declare("lsmb/ReconciliationLine", [_WidgetBase, _Container], {
       _display: function (targetValue) {

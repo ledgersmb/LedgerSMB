@@ -4,7 +4,7 @@ define([
    "dijit/form/CheckBox",
    "dojo/_base/declare",
    "dojo/on",
-   "dojo/dom-class",
+   "dojo/dom-class"
 ], function (CheckBox, declare, on, domClass) {
    return declare("lsmb/journal/fx_checkbox", [CheckBox], {
       postCreate: function () {
@@ -19,6 +19,6 @@ define([
                domClass.remove("transaction-table", "fx-transaction");
             }
          });
-      },
+      }
    });
 });

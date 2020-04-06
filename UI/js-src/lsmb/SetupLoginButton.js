@@ -5,7 +5,7 @@ define([
    "dojo/_base/event",
    "dojo/request/xhr",
    "dojo/dom",
-   "dijit/form/Button",
+   "dijit/form/Button"
 ], function (declare, event, xhr, dom, Button) {
    var authURL = "setup.pl?action=authenticate&company=postgres";
 
@@ -20,7 +20,7 @@ define([
          event.stop(evt);
          xhr(authURL, {
             user: username,
-            password: password,
+            password: password
          }).then(
             /* eslint no-unused-vars:0 */
             function (data) {

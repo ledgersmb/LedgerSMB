@@ -4,7 +4,7 @@ define([
     "dijit/form/TextBox",
     "dojo/_base/declare",
    "dojo/text!./templates/ResizingTextarea.html",
-   "dojo/keys",
+   "dojo/keys"
 ], function (TextBox, declare, resizingtextarea, keys) {
    return declare("lsmb/ResizingTextarea", [TextBox], {
             innerStyle: "",

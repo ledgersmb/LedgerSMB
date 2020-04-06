@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/ToggleButton",
+   "dijit/form/ToggleButton"
 ], function (declare, on, topic, ToggleButton) {
    return declare("lsmb/PublishToggleButton", [ToggleButton], {
       publish: function (targetValue) {

@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/CheckBox",
+   "dijit/form/CheckBox"
 ], function (declare, on, topic, CheckBox) {
    return declare("lsmb/PublishCheckBox", [CheckBox], {
       topic: "",

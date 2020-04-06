@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/dom-style",
    "dojo/topic",
-   "dijit/_WidgetBase",
+   "dijit/_WidgetBase"
 ], function (declare, domstyle, topic, _WidgetBase) {
    return declare("lsmb/SubscribeShowHide", [_WidgetBase], {
       topic: "",

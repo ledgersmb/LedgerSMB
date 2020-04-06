@@ -3,7 +3,7 @@
 define([
    "dojo/_base/declare",
    "dojo/topic",
-   "dijit/form/ToggleButton",
+   "dijit/form/ToggleButton"
 ], function (declare, topic, ToggleButton) {
    return declare("lsmb/SubscribeToggleButton", [ToggleButton], {
       update: function (targetValue) {

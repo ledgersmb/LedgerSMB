@@ -9,7 +9,7 @@ define([
    "dojo/topic",
    "dojo/keys",
    "lsmb/parts/PartRestStore",
-   "dojo/text!./templates/DropDownTextarea.html",
+   "dojo/text!./templates/DropDownTextarea.html"
 ], function (
    textBox,
    _HasDropDown,
@@ -79,7 +79,7 @@ define([
          set: function () {
             this.inherited(arguments);
             this._autoSize();
-         }, // set
+         } // set
       }
    );
 });
