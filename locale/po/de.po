@@ -2,13 +2,14 @@
 # Mikkel Høgh <mikkel@hoegh.org>, 2019
 # Mikael Arhelger <mikaelarhelger@gmail.com>, 2019
 # Erik Huelsmann <ehuels@gmail.com>, 2019
+# e t <contacts@ethnoco.ch>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-03-07 15:14+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
+"POT-Creation-Date: 2020-04-11 18:39+0000\n"
+"Last-Translator: e t <contacts@ethnoco.ch>, 2020\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -5042,7 +5043,7 @@ msgstr "neunzig"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:101 UI/Configuration/settings.html:45
 msgid "No"
-msgstr "Nr"
+msgstr "Nein"
 
 #: lib/LedgerSMB/Scripts/contact.pm:589
 msgid "No AR or AP Account Selected"
