@@ -70,7 +70,7 @@ Scenario: Search for reconciliation report and delete it,
    And I expect the 'Statement Balance' report column to contain '101.00' for Statement Date '2018-01-01'
    And I expect the 'Approved' report column to contain '' for Statement Date '2018-01-01'
    And I expect the 'Submitted' report column to contain '' for Statement Date '2018-01-01'
-   And I expect the 'Entered By' report column to contain '1' for Statement Date '2018-01-01'
+   And I expect the 'Entered By' report column to contain 'test-user-admin' for Statement Date '2018-01-01'
    And I expect the 'Approved By' report column to contain '' for Statement Date '2018-01-01'
   When I click the "2018-01-01" link
   Then I should see the Reconciliation Report screen
