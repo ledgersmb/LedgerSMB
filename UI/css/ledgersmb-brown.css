@@ -1,5 +1,7 @@
 /* stylesheet for ledger-smb, brown theme */
 
+@import url("ledgersmb-common.css");
+
 /* CSS3 Variables */
 :root {
   /* Backgrounds */
@@ -155,5 +157,3 @@
   --th-font-size:10pt;
   --version_info-font-size:initial;
 }
-
-@import url("ledgersmb-common.css");

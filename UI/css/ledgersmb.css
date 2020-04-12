@@ -1,5 +1,7 @@
 /* stylesheet for ledger-smb */
 
+@import url("ledgersmb-common.css");
+
 /* CSS3 Variables */
 :root {
     /* Backgrounds */
@@ -166,5 +168,3 @@
     --th-font-size:10pt;
     --version_info-font-size:9pt;
 }
-
-@import url("ledgersmb-common.css");
