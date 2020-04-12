@@ -68,10 +68,10 @@ password_strings = "title:'" _ text("Change Password") _
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Language') ?></th>
-                <td><?lsmb country_codes.unshift({}) ?>
+                <td><?lsmb language_codes.unshift({}) ?>
                     <?lsmb PROCESS select_language element_data={
                      name = 'language',
-                     options = user.country_codes,
+                     options = user.language_codes,
                      default_values = [ user.prefs.language ],
                      text_attr = 'label',
                      value_attr = 'id',
