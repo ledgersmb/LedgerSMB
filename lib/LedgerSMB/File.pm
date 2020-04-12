@@ -56,7 +56,7 @@ Timestamp of attachment point.
 
 =cut
 
-has uploaded_at => (is => 'ro', isa => 'Maybe[Str]');
+has uploaded_at => (is => 'ro', isa => 'Maybe[LedgerSMB::Moose::Timestamp]');
 
 =item content
 
