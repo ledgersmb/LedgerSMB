@@ -12,6 +12,8 @@ use warnings;
 use base qw(LedgerSMB::PGOld);
 
 use Locale::Country;
+use Locale::Language;
+
 use Log::Log4perl;
 
 use Try::Tiny;
@@ -108,6 +110,16 @@ sub get_option_data {
     }
     @{$self->{country_codes}} =
         sort { $a->{label} cmp $b->{label} } @{$self->{country_codes}};
+
+    foreach my $key ( all_language_codes() )
+    {
+        push @{$self->{language_codes}}, {
+            label => code2language($key),
+            id => $key,
+        };
+    }
+    @{$self->{language_codes}} =
+        sort { $a->{label} cmp $b->{label} } @{$self->{language_codes}};
 
     $self->{cssfiles} = [];
     opendir CSS, "UI/css/.";
