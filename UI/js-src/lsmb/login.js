@@ -69,5 +69,3 @@ require(["dijit/ProgressBar", "dojo/domReady"],
         }).placeAt("login-indicator", "only");
         indicator.startup();
     });
-
-

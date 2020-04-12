@@ -107,6 +107,7 @@ var profile = (function(){
                     "lsmb/SubscribeNumberTextBox",
                     "lsmb/SubscribeSelect",
                     "lsmb/SubscribeShowHide",
+                    "lsmb/login",
                 ]
             }
         },
