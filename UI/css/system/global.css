@@ -119,8 +119,6 @@ html, body {
     height: 550px;
 }
 
-
-
 /******** For account editing page */
 #account-tabs .dijitTabContainerTopChildWrapper div
 {
@@ -179,7 +177,6 @@ html, body {
   text-align: center;
  }
 
-
 /********* For assets editing page ********/
 
 #assets label
@@ -206,7 +203,6 @@ html, body {
 {
        display: none;
 }
-
 
 /***** Contact screens ******/
 
@@ -296,12 +292,6 @@ html, body {
 {
        display: none;
 }
-
-
-
-
-
-
 
 /***** PNL Report ******/
 
@@ -472,7 +462,6 @@ html, body {
 #reconciliation table {
         border: 0;
 }
-
 
 /*********** payments *************/
 

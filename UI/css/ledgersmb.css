@@ -1,484 +1,170 @@
 /* stylesheet for ledger-smb */
-@import url("system/global.css");
 
-td.money {
-   text-align: right;
-}
-
-td.date {
-   white-space: nowrap!important;
-}
-
-td.check {
-    text-align: center;
-}
-
-div#title {
-    font-size: large;
-}
-
-th.header {
-    text-align: center;
-}
-
-/* general stuff */
-A:link { text-decoration: none; }
-A:visited {text-decoration: none; }
-A:active { text-decoration: underline; }
-A:hover {
-  background-color: transparent;
-  text-decoration: underline;
-}
-
-#pwfeedback.success { background-color: lightgreen; }
-#pwfeedback.failure { background-color: pink; }
-#pw-strength.weak { background-color: pink; }
-#pw-strength.good { background-color: yellow; }
-#pw-strength.strong { background-color: lightgreen; }
-
-body {
-  font-family: Arial, Verdana, Helvetica, sans-serif;
-  color: #444444;
-  font-size: 10pt;
-  background-color: #ffffff;
-}
-
-span.warning_label {
-  font-weight: bold;
-  color: red
-}
-td {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 9pt;
-}
-
-th {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10pt;
-}
-
-table.form th {
-  text-align: right;
-}
-
-table.form th.centered, th.centered {
-  text-align: center;
-}
-
-table.criteria td {
-  text-align: left;
-}
-
-table.warning {
-    border: 0;
-}
-
-#version_info {
-   font-weight: bold;
-   font-size: 9pt;
-}
-
-#company_info, #login_info {
-   font-size: smaller;
-}
-
-/* login and admin */
-.login {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-}
-body#app-login {
-  background: #5a7d9b;
-  color: black;
-}
-h1.login {
-  font-size: 18pt;
-}
-table.login {
-  background-color: #FFFFFF;
-  padding: 20px;
-}
-td.login {
-  text-align: center;
-}
-th.login {
-  text-align: right;
-}
-
-table.report {
-   width: 100%
-}
-
-div.report_header {
-   overflow: auto;
-}
-
-div.report_header label {
-   display: block;
-   float: left;
-   width: 12em;
-   font-weight: bold;
-   text-align: right;
-   margin-right: 1em;
-}
-
-body.admin {
-  background-color: #FFFFFF;
-  color: black;
-}
-
-body.menu, #menudiv  {
-  background-color: #eeeeee;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  color: black;
-}
-
-cornerlogo {
-        border: 1px solid #000000;
-        margin-left: auto;
-        margin-right: auto;
-        background: #ffffff;
-        padding: 4px;
-}
-
-.submenu {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  padding-left: 20px;
-  list-style: none;
-}
-
-.menu_item {
-    padding-left: 12px;
-}
-
-#top_menu {
-  margin: 0;
-  padding: 0;
-  -webkit-padding-start: 0;
-  list-style: none;
-  background-image: none;
-}
-
-#top_menu ul {
-  margin : 0;
-  padding : 0;
-}
-
-.menu_open {
-background-image: url('../images/up.gif');
-background-repeat: no-repeat;
-background-position: 0 0;
-padding-left: 12px;
-}
-
-.menu_closed {
-background-image: url('../images/down.gif');
-background-repeat: no-repeat;
-background-position: 0 0;
-padding-left: 12px;
-}
-
-
-
-.submenu a {
-  color: #004a80;
-  text-decoration: none;
-}
-
-.submenu a:hover {
-  text-decoration: none;
-  color: #eeeeee;
-  background: #004a80;
-}
-
-.listtop {
-    font-size: 120%;
-    background-color: #154d84;
-    color: white;
-    font-weight: bold;
-    padding-top: 0.1em;
-    padding-bottom: 0.1em;
-    padding-left: 1ex;
-}
-
-.listheading, thead th {
-    font-size: 10pt;
-    font-weight: bold;
-    background-color: #bcd8f4;
-    color: black;
-    padding-top: 0.1em;
-    padding-bottom: 0.1em;
-    padding-left: 1ex;
-}
-
-thead A:link {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-A.listheading:link, A.listheading:active, A.listheading:visited {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-.listrow1, table.dynatable tr, .listrow0 {
-    font-size: 10pt;
-    color: black;
-    vertical-align: top;
-}
-
-.listrow1, table.dynatable tr:nth-child(odd) {
-    background-color: #e6e6fa;
-}
-
-.listrow0, table.dynatable tr:nth-child(even) {
-    background-color: #ffeeec;
-}
-
-.listrow1:hover, table.dynatable tbody tr:nth-child(odd):hover {
-    background-color: #a4a4a6;
-}
-
-.listrow0:hover, table.dynatable tbody tr:nth-child(even):hover {
-    background-color: #aaa2a0;
-}
-
-.listsubtotal, table.dynatable tr.sublisttotal {
-    font-size: 10pt;
-    background-color: #5a7d9b;
-    color: white;
-}
-
-.listtotal, table.dynatable tr.listtotal {
-    font-size: 10pt;
-    background-color: #004d99;
-    color: white;
-    font-weight: bold
-}
-
-textarea {
-    font-family: inherit;
-/*   border: 1px solid #888888; */
-/*   font-size: 11px; */
-/*   background-color: #eeeeee; */
-/*   font-weight: bold; */
-}
-
-input {
-/*  font-family: Verdana, Arial, Helvetica, sans-serif; */
-  border: 1px solid #888888;
-  font-size: 11px;
-  background-color: #eeeeee;
-  font-weight: bold;
-}
-
-select {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10pt;
-}
-
-.submit {
-  font-size: 10pt;
-  color: #000080;
-  font-weight: normal;
-}
-
-.checkbox, .radio {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10pt;
-}
-
-.plus0 {    /* font color for negative numbers */
-  color: red;
-}
-
-.plus1 {
-  color: green;
-}
-
-h2.confirm {
-  color: blue;
-  font-size: 14pt;
-}
-
-h2.error {
-  color: red;
-  font-size: 14pt;
-}
-
-#notes_div div.note {
-        margin: 1em;
-        padding: 1em;
-        border: 2px;
-        height: 5em;
-        width: 90%;
-        overflow: hidden;
-        background-color: #ddd;
-        border-style: groove;
-}
-
-#notes_div div.note:hover {
-        overflow:visible;
-        background-color: #ddd;
-        border-style: groove;
-        height: 100%;
-        width: 90%;
-        min-height: 5em;
-        overflow: auto;
-}
-
-#company_div div.note {
-        display: none;
-}
-
-tr.active {
-        background-color: #ddd;
-}
-
-tr.record {
-        background-color: pink;
-}
-
-tr.suspect {
-        background-color: red;
-        color: white;
-        font-weight: bold;
-}
-
-tr.warning, div.warning {
-        background-color: yellow;
-        color: black;
-}
-
-span.no-submit {
-        font-weight: bold;
-        color: white;
-        background: red;
-}
-
-td.cleared-future {
-        font-weight: bold;
-        color: red;
-        background: white;
-}
-
-td.cleared-past {
-        font-weight: bold;
-        color: black;
-        background: yellow;
-}
-
-input[type=checkbox].remove::before {
-    display: inline-block;
-    content: ' X ';
-    width: 12px;
-    text-align: center;
-    background: white;
-    color: white;
-}
-input[type=checkbox].remove:checked:before {
-    background:red;
-}
-
-/* Theming controls based on transaction status */
-/* disabled for now to speed release
-#statusdiv.new input {
-}
-
-#statusdiv.posted input {
-       background-color: white;
-}
-
-#statusdiv.saved input {
-       background-color: #ccccff;
-}
-
-*/
-
-/* media stuff */
-
-@media screen {
-  .noscreen {   /* items with this class won't display */
-    display: none;
-  }
-}
-
-@media print {
-  .noprint {   /* items with this class won't print */
-    display: none;
-  }
-}
-
-/* ajax-specific styling */
-
-div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
-}
-div.autocomplete ul {
-  list-style-type:none; margin:0; padding:0;
-}
-div.autocomplete ul li.selected { background-color: #ccc;}
-div.autocomplete ul li {
-  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
-}
-span.indicator {
-  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
-}
-
-/* ajax-specific styling */
-
-div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
-}
-div.autocomplete ul {
-  list-style-type:none; margin:0; padding:0;
-}
-div.autocomplete ul li.selected { background-color: #ccc;}
-div.autocomplete ul li {
-  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
-}
-span.indicator {
-  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
-}
-
-.financial-statement h1, .financial-statement h2 {
-   text-align: center;
-}
-
-.financial-statement table {
-   margin-left: auto;
-   margin-right: auto;
-}
-
-.financial-statement td.amount{
-   text-align: right;
-   padding-left: 4em;
-}
-
-.financial-statement tr.total td, .financial-statement tr.total th {
-   padding-bottom: 2em;
-}
-.financial-statement tr.total td.amount {
-   border-top: thick double black;
-}
-
-.financial-statement th {
-   text-align: left;
-}
-
-.financial-statement tr.section-head th, .financial-statement tr.total th {
-   text-align: center;
-}
-
-.financial-statement a, .financial-statement a:visited {
-   color: black;
-   text-decoration: none;
-}
-
-#plDebug .plDebugPanelContent {
-   left: 207px;
-   right: 207px;
+@import url("ledgersmb-common.css");
+
+/* CSS3 Variables */
+:root {
+    /* Backgrounds */
+    --a-hover-bg-clr:transparent;
+    --body-bg-clr:#fff;
+    --body-admin-bg-clr:#fff;
+    --body-app-login-bg:#5a7d9b;
+    --body-login-bg:initial;
+    --body-menu-bg:initial;
+    --body-menu-bg-clr:#eee;
+    --body-menu-ul-bg-clr:initial;
+    --cornerlogo-bg:#fff;
+    --div-autocomplete-bg-clr:white;
+    --div-autocomplete-ul-li-selected-bg-clr:#ccc;
+    --hr-bg-clr:initial;
+    --input-bg-clr:#eee;
+    --input-remove-before-bg:white;
+    --input-remove-checked-before-bg:red;
+    --listheading-bg-clr:initial;
+    --listheading-bg-clr:#bcd8f4;
+    --listrow0-hover-bg-clr:#aaa2a0;
+    --listrow0-bg-clr:#ffeeec;
+    --listrow1-hover-bg-clr:#a4a4a6;
+    --listrow1-bg-clr:#e6e6fa;
+    --listsubtotal-bg-clr:initial;
+    --listsubtotal-bg-clr:#5a7d9b;
+    --listtop-bg-clr:#154d84;
+    --listtotal-bg-clr:initial;
+    --listtotal-bg-clr:#004d99;
+    --menuOut-bg-clr:initial;
+    --menuOut-a-bg-clr:initial;
+    --menuOver-bg-clr:initial;
+    --menuOver-a-bg-clr:initial;
+    --notes_div-div-note-bg-clr:#ddd;
+    --notes_div-div-note-hover-bg-clr:#ddd;
+    --pwfeedback-failure-bg-clr:pink;
+    --pwfeedback-success-bg-clr:lightgreen;
+    --pw-strength-good-bg-clr:yellow;
+    --pw-strength-strong-bg-clr:lightgreen;
+    --pw-strength-weak-bg-clr:pink;
+    --span-indicator-bg-clr:#eee;
+    --span-no-submit-bg:red;
+    --statusdiv-posted-input-bg-clr: white;
+    --statusdiv-saved-input-bg-clr: #ccccff;
+    --submenu-a-hover-bg:#004a80;
+    --submit-bg-clr:0;
+    --table-login-bg-clr:#fff;
+    --textarea-bg-clr: #eeeeee;
+    --td-cleared-future-bg:white;
+    --td-cleared-past-bg:yellow;
+    --textarea-bg-clr:initial;
+    --top_menu-bg:none;
+    --tr-active-bg-clr:#ddd;
+    --tr-record-bg-clr:pink;
+    --tr-suspect-bg-clr:red;
+    --tr-warning-bg-clr:yellow;
+
+    /* Color */
+    --a-active-clr:initial;
+    --a-hover-clr:initial;
+    --a-link-clr:initial;
+    --a-listheading-link-clr:white;
+    --a-visited-clr:initial;
+    --body-clr:#444;
+    --body-admin-clr:black;
+    --body-app-login-clr:black;
+    --body-login-clr:initial;
+    --body-menu-clr:black;
+    --body-menu-clr:black;
+    --financial-statement-a-clr:black;
+    --h2-confirm-clr:blue;
+    --h2-error-clr:red;
+    --input-remove--before-clr:white;
+    --listheading-clr:black;
+    --listheading-clr:black;
+    --listheading-clr:black;
+    --listrow0-clr:initial;
+    --listrow1-clr:black;
+    --listrow1-clr:black;
+    --listsubtotal-clr:white;
+    --listsubtotal-clr:white;
+    --listsubtotal-clr:white;
+    --listtop-clr:white;
+    --listtotal-clr:white;
+    --listtotal-clr:white;
+    --menuOut-clr:initial;
+    --menuOut-a-clr:initial;
+    --menuOver-clr:initial;
+    --menuOver-a-clr:initial;
+    --plus0-clr:red;
+    --plus1-clr:green;
+    --span-no-submit-clr:white;
+    --span-warning_label-clr:red;
+    --submenu-a-clr:#004a80;
+    --submenu-a-hover-clr:#eee;
+    --submit-clr:#000080;
+    --td-cleared-future-clr:red;
+    --td-cleared-past-clr:black;
+    --thead-a-link-clr:black;
+    --tr-suspect-clr:white;
+    --tr-warning-clr:black;
+
+    /* Borders */
+    --a-active-border:initial;
+    --body-menu-ul-border:initial;
+    --cornerlogo-border:1px solid #000;
+    --div-autocomplete-border:1px solid #888;
+    --financial-statement-tr-total-td-amount-border-top:thick double black;
+    --input-border:1px solid #888;
+    --listheading-border:initial;
+    --listtop-border:initial;
+    --menuOut-border:initial;
+    --menuOut-a-border:initial;
+    --menuOver-border:initial;
+    --menuOver-a-border:initial;
+    --notes_div-div-note-border:2px;
+    --notes_div-div-note-hover-border-style:groove;
+    --span-indicator-border:1px solid black;
+    --submit-border:initial;
+    --table-warning-border:0;
+    --textarea-border:1px solid #888888;
+
+    /* Fonts-familly */
+    --body-font-family:Arial, Verdana, Helvetica, sans-serif;
+    --body-menu-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --checkbox-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --input-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --login-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --select-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --submenu-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --submit-font-family:initial;
+    --td-font-family:Verdana, Arial, Helvetica, sans-serif;
+    --textarea-font-family:inherit;
+    --th-font-family:Verdana, Arial, Helvetica, sans-serif;
+
+    /* Fonts-size */
+    --body-font-size:10pt;
+    --body-menu-font-size:11px;
+    --body-menu-ul-font-size:initial;
+    --checkbox-font-size:10pt;
+    --company_info-font-size:smaller;
+    --div-autocomplete-ul-li-font-size:10px;
+    --div-title-font-size:large;
+    --h1-login-font-size:18pt;
+    --h2-confirm-font-size:14pt;
+    --h2-error-font-size:14pt;
+    --input-font-size:11px;
+    --listheading-font-size:10pt;
+    --listrow0-font-size:initial;
+    --listrow1-font-size:10pt;
+    --listsubtotal-font-size:10pt;
+    --listtop-font-size:1.2;
+    --listtotal-font-size:10pt;
+    --menuOut-font-size:initial;
+    --menuOut-a-font-size:initial;
+    --menuOver-font-size:initial;
+    --menuOver-a-font-size:initial;
+    --select-font-size:10pt;
+    --span-indicator-font-size:10px;
+    --submenu-font-size:12px;
+    --submit-font-size:10pt;
+    --td-font-size:9pt;
+    --textarea-font-size:initial;
+    --th-font-size:10pt;
+    --version_info-font-size:9pt;
 }

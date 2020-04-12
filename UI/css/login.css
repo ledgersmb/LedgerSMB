@@ -1,45 +1,45 @@
 div.login {
     background-color: white;
-    margin-right: auto;
+    border-style: outset;
     margin-left: auto;
-    width: 25em;
+    margin-right: auto;
     padding: 2em;
     padding-bottom: 2em;
-    border-style: outset;
+    width: 25em;
 }
 
 div.login div.login {
-    width: 21em;
-    height: 23em;
-    border-width: 1px;
     border-style: solid;
+    border-width: 1px;
+    height: 23em;
     padding-bottom: 2em;
+    width: 21em;
 }
 div.labelledinput {
-    width: 100%;
     clear: both;
+    width: 100%;
 }
 div.label {
-    width: 5em;
-    text-align: right;
-    float: left;
     border-width: 1px;
+    float: left;
     margin: 0;
-    padding-right: 0.5em;
     margin-top: 0.5em;
+    padding-right: 0.5em;
+    text-align: right;
+    width: 5em;
 }
 div.input {
-    width: 14em;
-    text-align: left;
-    float: left;
     border-width: 3px;
+    float: left;
     margin: 0;
     margin-top: 0.5em;
+    text-align: left;
+    width: 14em;
 }
 img.logo {
     border-style: none;
-    width: 16em;
     height: 8em;
+    width: 16em;
 }
 
 input {
@@ -54,7 +54,7 @@ div#login-indicator {
     font-size: x-large;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
     text-align: center;
     visibility: hidden;
+    width: 100%;
 }
