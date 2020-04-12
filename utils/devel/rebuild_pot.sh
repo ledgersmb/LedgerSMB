@@ -2,8 +2,12 @@
 
 set -x
 
+detect_version () {
+    sed -ne "/^our \$VERSION/ { s/^our \$VERSION = '\\(.*\\)';\$/\\1/ p }" lib/LedgerSMB.pm
+}
+
 date_now=`date --utc "+%F %R%z"`
-version_now=`perl -Ilib -MLedgerSMB -e 'print \$LedgerSMB::VERSION'`
+version_now=`detect_version`
 
 if test "q$version_now" = "q" ;
 then
