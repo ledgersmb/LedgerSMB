@@ -89,11 +89,23 @@ sub get_type {
     $sth->finish;
 }
 
+
+sub _db_prepare_vars {
+    my $self = shift;
+
+    for (@_) {
+        if ( !$self->{$_} and $self->{$_} ne "0" ) {
+            undef $self->{$_};
+        }
+    }
+}
+
+
 sub save {
     my ( $self, $myconfig, $form ) = @_;
 
     $form->all_business_units;
-    $form->db_prepare_vars(
+    _db_prepare_vars( $form,
         "quonumber", "transdate",     "vendor_id",     "entity_id",
         "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
         "currency",  "department_id", "employee_id",   "language_code",
@@ -241,7 +253,7 @@ sub save {
     my $rowcount = $form->{rowcount};
     for my $i ( 1 .. $rowcount ) {
         $form->{"ship_$i"} = 0 unless $form->{"ship_$i"};
-        $form->db_prepare_vars( "orderitems_id_$i", "id_$i", "description_$i",
+        _db_prepare_vars( $form, "orderitems_id_$i", "id_$i", "description_$i",
             "project_id_$i" );
 
         for (qw(qty ship)) {

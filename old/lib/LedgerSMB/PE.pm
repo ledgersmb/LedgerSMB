@@ -670,6 +670,61 @@ $myconfig is unused.
 
 =cut
 
+sub _from_to {
+
+    my ( $self, $yyyy, $mm, $interval ) = @_;
+
+    $yyyy = 0 unless defined $yyyy;
+    $mm = 0 unless defined $mm;
+
+    my @t;
+    my $dd       = 1;
+    my $fromdate = "$yyyy-${mm}-01";
+    my $bd       = 1;
+
+    if ( defined $interval ) {
+
+        if ( $interval == 12 ) {
+            $yyyy++;
+        }
+        else {
+
+            if ( ( $mm += $interval ) > 12 ) {
+                $mm -= 12;
+                $yyyy++;
+            }
+
+            if ( $interval == 0 ) {
+                @t    = localtime(time);
+                $dd   = $t[3];
+                $mm   = $t[4] + 1;
+                $yyyy = $t[5] + 1900;
+                $bd   = 0;
+            }
+        }
+
+    }
+    else {
+
+        if ( ++$mm > 12 ) {
+            $mm -= 12;
+            $yyyy++;
+        }
+    }
+
+    $mm--;
+    @t = localtime( Time::Local::timelocal( 0, 0, 0, $dd, $mm, $yyyy ) - $bd );
+
+    $t[4]++;
+    $t[4] = substr( "0$t[4]", -2 );
+    $t[3] = substr( "0$t[3]", -2 );
+    $t[5] += 1900;
+
+
+    return ( $fromdate, "$t[5]-$t[4]-$t[3]" );
+}
+
+
 sub get_jcitems {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -692,7 +747,7 @@ sub get_jcitems {
     }
 
     ( $form->{transdatefrom}, $form->{transdateto} ) =
-      $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
+      _from_to( $form->{year}, $form->{month}, $form->{interval} )
       if $form->{year} && $form->{month};
 
     if ( $form->{transdatefrom} ) {
