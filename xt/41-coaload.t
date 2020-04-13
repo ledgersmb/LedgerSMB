@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 
-use lib 'xt/41-coaload';
-
 use Test2::V0;
 use Test2::Tools::Spec;
 
@@ -63,4 +61,3 @@ for my $sqlfile (@files) {
 }
 
 done_testing;
-
