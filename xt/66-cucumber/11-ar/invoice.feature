@@ -51,7 +51,7 @@ Scenario: Creation of a new sales invoice, no taxes
        | Description     |          |
        | Shipping Point  |          |
        | Ship via        |          |
-       | Invoice Number  | 2        |
+       | Invoice Number  | 1        |
        | Order Number    |          |
        | PO Number       |          |
      And I expect to see an invoice with these lines
