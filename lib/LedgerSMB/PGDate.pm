@@ -63,25 +63,19 @@ On the database side, these are all converted to YYYY-MM-DD format.
 
 =item MMDDYY
 
-=item DDmonYYYY
-
 =cut
 
 our $formats = {
-    'YYYY-MM-DD' => ['%F'],
-    'DD-MM-YYYY' => ['%d-%m-%Y', '%d-%m-%y'],
-    'DD.MM.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
-    'DD/MM/YYYY' => ['%d/%m/%Y', '%D'],
-    'MM-DD-YYYY' => ['%m-%d-%Y', '%m-%d-%y'],
-    'MM/DD/YYYY' => ['%m/%d/%Y', '%m/%d/%y'],
-    'MM.DD.YYYY' => ['%m.%d.%Y', '%m.%d.%y'],
-      'YYYYMMDD' => ['%Y%m%d'],
-        'YYMMDD' => ['%y%m%d'],
-      'DDMMYYYY' => ['%d%m%Y'],
-        'DDMMYY' => ['%d%m%y'],
-      'MMDDYYYY' => ['%m%d%Y'],
-        'MMDDYY' => ['%m%d%y'],
-     'DDmonYYYY' => ['%d%b%Y', '%d%b%y']
+    'YYYY-MM-DD' => '%F',
+    'DD-MM-YYYY' => '%d-%m-%Y',
+    'DD.MM.YYYY' => '%d.%m.%Y',
+    'DD/MM/YYYY' => '%d/%m/%Y',
+    'MM-DD-YYYY' => '%m-%d-%Y',
+    'MM/DD/YYYY' => '%m/%d/%Y',
+    'MM.DD.YYYY' => '%m.%d.%Y',
+      'YYYYMMDD' => '%Y%m%d',
+      'DDMMYYYY' => '%d%m%Y',
+      'MMDDYYYY' => '%m%d%Y',
 };
 
 
@@ -98,59 +92,29 @@ my $regexes = {
                     ],
     'DD-MM-YYYY' => [ { regex => qr/^(\d\d)\-(\d\d)\-(\d{4,4})$/,
                         fields => [ 'day', 'month', 'year' ] },
-                      { regex => qr/^(\d\d)\-(\d\d)\-(\d\d)$/,
-                        short_year => 1,
-                        fields => [ 'day', 'month', 'year' ] },
                     ],
     'DD.MM.YYYY' => [ { regex => qr/^(\d\d)\.(\d\d)\.(\d{4,4})$/,
-                        fields => [ 'day', 'month', 'year' ] },
-                      { regex => qr/^(\d\d)\.(\d\d)\.(\d\d)$/,
-                        short_year => 1,
                         fields => [ 'day', 'month', 'year' ] },
                     ],
     'DD/MM/YYYY' => [ { regex => qr/^(\d\d)\/(\d\d)\/(\d{4,4})$/,
                         fields => [ 'day', 'month', 'year' ] },
-                      { regex => qr/^(\d\d)\/(\d\d)\/(\d\d)$/,
-                        short_year => 1,
-                        fields => [ 'day', 'month', 'year' ] },
                     ],
     'MM-DD-YYYY' => [ { regex => qr/^(\d\d)\-(\d\d)\-(\d{4,4})$/,
-                        fields => [ 'month', 'day', 'year' ] },
-                      { regex => qr/^(\d\d)\-(\d\d)\-(\d\d)$/,
-                        short_year => 1,
                         fields => [ 'month', 'day', 'year' ] },
                     ],
     'MM.DD.YYYY' => [ { regex => qr/^(\d\d)\.(\d\d)\.(\d{4,4})$/,
                         fields => [ 'month', 'day', 'year' ] },
-                      { regex => qr/^(\d\d)\.(\d\d)\.(\d\d)$/,
-                        short_year => 1,
-                        fields => [ 'month', 'day', 'year' ] },
                     ],
     'MM/DD/YYYY' => [ { regex => qr/^(\d\d)\/(\d\d)\/(\d{4,4})$/,
-                        fields => [ 'month', 'day', 'year' ] },
-                      { regex => qr/^(\d\d)\/(\d\d)\/(\d\d)$/,
-                        short_year => 1,
                         fields => [ 'month', 'day', 'year' ] },
                     ],
       'YYYYMMDD' => [ { regex => qr/^(\d{4,4})(\d\d)(\d\d)$/,
                         fields => [ 'year', 'month', 'day' ] },
                     ],
-        'YYMMDD' => [ { regex => qr/^(\d\d)(\d\d)(\d\d)$/,
-                        short_year => 1,
-                        fields => [ 'year', 'month', 'day' ] },
-                    ],
       'DDMMYYYY' => [ { regex => qr/^(\d\d)(\d\d)(\d{4,4})$/,
                         fields => [ 'day', 'month', 'year' ] },
                     ],
-        'DDMMYY' => [ { regex => qr/^(\d\d)(\d\d)(\d\d)$/,
-                        short_year => 1,
-                        fields => [ 'day', 'month', 'year' ] },
-                    ],
       'MMDDYYYY' => [ { regex => qr/^(\d\d)(\d\d)(\d{4,4})$/,
-                        fields => [ 'month', 'day', 'year' ] },
-                    ],
-        'MMDDYY' => [ { regex => qr/^(\d\d)(\d\d)(\d\d)$/,
-                        short_year => 1,
                         fields => [ 'month', 'day', 'year' ] },
                     ],
 };
@@ -158,9 +122,6 @@ my $regexes = {
 =back
 
 =head1 CONSTRUCTOR SYNTAX
-
-LedgerSMB::PgDate->new({ date => DateTime->new(year => 2012, day => 31, month =>
-12)});
 
 Note the constructor here is private, and not intended to be called directly.
 
@@ -259,23 +220,11 @@ sub from_input{
             @args{@{$fmt->{fields}}} = ($1, $2, $3);
             $success = 1;
         }
-        if ($fmt->{short_year}) {
-            my $year = DateTime->today()->year();
-            my $short_year = $year % YEARS_PER_CENTURY;
-            my $century = $year - $short_year;
 
-            if ($args{year} > ($short_year+FUTURE_YEARS_LIMIT)) {
-                $args{year} += ($century-1);
-            }
-            else {
-                $args{year} += $century;
-            }
+        if ($success) {
+            $dt = __PACKAGE__->new(%args);
+            last;
         }
-
-        $dt = __PACKAGE__->new(%args)
-            if $success;
-
-        last if $success;
     }
 
     die "Bad date ($input)" if $input && ! $dt;
@@ -302,11 +251,14 @@ sub to_output {
     } else {
         $fmt = '%F';
     }
-    $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
+    $fmt = $formats->{uc($fmt)} if defined $formats->{uc($fmt)};
 
     $fmt .= ' %T' if $self->is_time();
     $fmt =~ s/^\s+//;
 
+    # the hard-coded 'en_US' locale here is no problem: it's used
+    # for the %b format ('mon') to look up the names of the months;
+    # however, we only support numeric formats
     my $formatter = DateTime::Format::Strptime->new(
              pattern => $fmt,
               locale => 'en_US',
