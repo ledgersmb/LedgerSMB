@@ -267,7 +267,7 @@ use Module::Runtime qw(use_module);
 use Template;
 use Template::Parser;
 use Template::Provider;
-use Scalar::Util qw(reftype);
+
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 

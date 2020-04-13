@@ -25,6 +25,7 @@ use Carp;
 use File::Spec;
 use HTML::Escape;
 use HTML::Entities;
+use Scalar::Util qw(reftype blessed);
 use Template;
 
 our $engine;
@@ -139,7 +140,8 @@ sub _preprocess {
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
     my $vars;
-    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
+    my $reftype = '';
+    $reftype = reftype $rawvars if blessed $rawvars;
     if ( $reftype and $reftype eq 'ARRAY' ) {
         $vars = [];
         for (@{$rawvars}) {
