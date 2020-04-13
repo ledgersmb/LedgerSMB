@@ -50,13 +50,10 @@ sub _stringify {
 
 =head1 CONSTRUCTOR SYNTAX
 
-LedgerSMB::PgDate->new({ date => DateTime->new(year => 2012, day => 31, month =>
-12)});
+Note the constructor is private, and not intended to be called directly.
 
-Note the constructor here is private, and not intended to be called directly.
-
-Use from_db and from_input methods instead since these handle appropriately
-different formats and handle construction differently.
+Use from_db and from_input methods instead since these handle different
+formats appropriately and handle construction
 
 =cut
 
@@ -119,28 +116,24 @@ sub add_interval {
     return $self;
 }
 
-=item from_input($date_string, [$format])
+=item from_input($timestamp_string)
 
-Parses this from an input string according to the user's dateformat,
-unless C<$format> has been specified to override it.
+Parses the input string as 'YYYY-MM-DD HH:mm:ss' or without the
+time part, setting it to 00:00:00.
 
 =cut
 
 our $formats = {
-    'YYYY-MM-DD' => ['%F'],
-    'DD-MM-YYYY' => ['%d-%m-%Y', '%d-%m-%y'],
-    'DD.MM.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
-    'DD/MM/YYYY' => ['%d/%m/%Y', '%D'],
-    'MM-DD-YYYY' => ['%m-%d-%Y', '%m-%d-%y'],
-    'MM/DD/YYYY' => ['%m/%d/%Y', '%m/%d/%y'],
-    'MM.DD.YYYY' => ['%m.%d.%Y', '%m.%d.%y'],
-      'YYYYMMDD' => ['%Y%m%d'],
-        'YYMMDD' => ['%y%m%d'],
-      'DDMMYYYY' => ['%d%m%Y'],
-        'DDMMYY' => ['%d%m%y'],
-      'MMDDYYYY' => ['%m%d%Y'],
-        'MMDDYY' => ['%m%d%y'],
-     'DDmonYYYY' => ['%d%b%Y', '%d%b%y']
+    'YYYY-MM-DD' => '%F',
+    'DD-MM-YYYY' => '%d-%m-%Y',
+    'DD.MM.YYYY' => '%d.%m.%Y',
+    'DD/MM/YYYY' => '%d/%m/%Y',
+    'MM-DD-YYYY' => '%m-%d-%Y',
+    'MM/DD/YYYY' => '%m/%d/%Y',
+    'MM.DD.YYYY' => '%m.%d.%Y',
+      'YYYYMMDD' => '%Y%m%d',
+      'DDMMYYYY' => '%d%m%Y',
+      'MMDDYYYY' => '%m%d%Y',
 };
 
 sub from_input{
@@ -179,11 +172,14 @@ sub to_output {
     } else {
         $fmt = '%F';
     }
-    $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
+    $fmt = $formats->{uc($fmt)} if defined $formats->{uc($fmt)};
 
     $fmt .= ' %T' if $self->is_time();
     $fmt =~ s/^\s+//;
 
+    # the hard-coded 'en_US' locale here is no problem: it's used
+    # for the %b format ('mon') to look up the names of the months;
+    # however, we only support numeric formats
     my $formatter = DateTime::Format::Strptime->new(
              pattern => $fmt,
               locale => 'en_US',
