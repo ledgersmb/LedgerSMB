@@ -50,7 +50,7 @@ Scenario: Creation of a new purchase invoice, no taxes
        | Record in       | 2100--Accounts Payable |
        | Currency        | USD      |
        | Description     |          |
-       | Invoice Number  | 2        |
+       | Invoice Number  | 1        |
        | Order Number    |          |
        | SO Number       |          |
      And I expect to see an invoice with these lines

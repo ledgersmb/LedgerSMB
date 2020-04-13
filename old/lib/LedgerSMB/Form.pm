@@ -3092,27 +3092,18 @@ sub update_defaults {
 
     my $dbh = $self->{dbh};
 
-    #if ( !$self ) { #if !$self, previous statement would already have failed!
-    #    $dbh = $_[3];
-    #}
-
     my $query = qq|
         SELECT value FROM defaults
          WHERE setting_key = ? FOR UPDATE|;
-    my $sth = $self->{dbh}->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute($fld);
-    ($_) = $sth->fetchrow_array();
+    my ($dbvar) = $sth->fetchrow_array();
 
-    $_ = "0" unless $_;
-
-# check for and replace
-# <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
-# <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
-# <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
-# <?lsmb PHONE ?> for customer and vendors
-
-    my $num = $_;
-    ($num) = $num =~ /\D*(\d+)\D*$/;
+    $dbvar //= "0";
+    my $var = $dbvar;
+    my $num = $dbvar;
+    my ($prefix, $suffix);
+    ($prefix, $num, $suffix) = $num =~ /(\D*)(\d+)(\D*)$/;
 
     if ( defined $num ) {
         my $incnum;
@@ -3132,89 +3123,9 @@ sub update_defaults {
             $incnum = $num + 1;
         }
 
-        s/$num/$incnum/;
+        $dbvar =~ s/\Q$prefix$num$suffix\E$/$prefix$incnum$suffix/;
     }
 
-    my $dbvar = $_;
-    my $var   = $_;
-    my $str;
-    my $param;
-
-    if (/<\?lsmb /) {
-
-        while (/<\?lsmb /) {
-
-            s/(<\?lsmb .*? \?>)//;
-            last unless $1;
-            $param = $1;
-            $str   = "";
-
-            if ( $param =~ /<\?lsmb date \?>/i ) {
-                $str = (
-                    $self->split_date(
-                        $myconfig->{dateformat},
-                        $self->{transdate}
-                    )
-                )[0];
-                $var =~ s/$param/$str/;
-            }
-
-            if ( $param =~
-/<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i
-            ) {
-            #SC: XXX hairy, undoc, possibly broken
-                my $fld = lc $1;
-
-                if ( $fld =~ /name/ ) {
-                    if ( $self->{type} ) {
-                        $fld = $self->{vc};
-                    }
-                }
-
-                my $p = $param;
-                $p =~ s/(<|>|%)//g;
-                my @p = split / /, $p;
-                my @n = split / /, uc $self->{$fld};
-
-                if ( $#p > 0 ) {
-
-                    for ( my $i = 1 ; $i <= $#p ; $i++ ) {
-                        $str .= substr( $n[ $i - 1 ], 0, $p[$i] );
-                    }
-                }
-                else {
-                    ($str) = split /--/, $self->{$fld};
-                }
-
-                $var =~ s/$param/$str/;
-                $var =~ s/\W//g if $fld eq 'phone';
-            }
-
-            if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-        # SC: XXX Does this even work anymore?
-                my $p = $param;
-                $p =~ s/lsmb//;
-                $p =~ s/[^YyMmDd]//g;
-                my %d = ( yy => 1, mm => 2, dd => 3 );
-                my $str = $p;
-
-                my @a = $self->split_date(
-                    $myconfig->{dateformat},
-                    $self->{transdate}
-                );
-
-                for my $k (keys %d) {
-                    $str =~ s/$k/$a[ $d{$k} ]/i
-                }
-                $var =~ s/\Q$param\E/$str/i;
-            }
-
-            if ( $param =~ /<\?lsmb curr/i ) {
-                my $curr = $self->{currency} || $self->{curr};
-                $var =~ s/<\?lsmb curr \?>/$curr/i;
-            }
-        }
-    }
 
     $query = qq|
         UPDATE defaults
@@ -3304,104 +3215,6 @@ sub db_prepare_vars {
     }
 }
 
-=item $form->split_date($dateformat[, $date]);
-
-Returns ($rv, $yy, $mm, $dd) for the provided $date, or the current date if no
-date is provided.  $rv is a seperator-free merging of the fields $yy, $mm, and
-$dd in the ordering supplied by $dateformat.  If the supplied $date does not
-contain non-digit characters, $rv is $date and the other return values are
-undefined.
-
-$yy is two digits.
-
-=cut
-
-sub split_date {
-
-    my ( $self, $dateformat, $date ) = @_;
-
-    my $mm;
-    my $dd;
-    my $yy;
-    my $rv;
-
-    if ( !$date ) {
-        my @d = localtime;
-        $dd = $d[3];
-        $mm = ++$d[4];
-        $yy = substr( $d[5]+1900, -4 );
-        $mm = substr( "0$mm", -2 );
-        $dd = substr( "0$dd", -2 );
-    }
-
-    $dateformat = 'yyyy-mm-dd' if $date =~ /\d{4}\D\d{2}\D\d{2}/;
-
-    if ( $dateformat =~ /^yy/ ) {
-
-        if ($date) {
-
-            if ( $date =~ /\D/ ) {
-                ( $yy, $mm, $dd ) = split /\D/, $date;
-                $mm *= 1;
-                $dd *= 1;
-                $mm = substr( "0$mm", -2 );
-                $dd = substr( "0$dd", -2 );
-                $yy = substr( $yy,    -4 );
-                $rv = "$yy$mm$dd";
-            }
-            else {
-                $rv = $date;
-            }
-        }
-        else {
-            $rv = "$yy$mm$dd";
-        }
-    }
-    elsif ( $dateformat =~ /^mm/ ) {
-
-        if ($date) {
-
-            if ( $date =~ /\D/ ) {
-                ( $mm, $dd, $yy ) = split /\D/, $date;
-                $mm *= 1;
-                $dd *= 1;
-                $mm = substr( "0$mm", -2 );
-                $dd = substr( "0$dd", -2 );
-                $yy = substr( $yy,    -4 );
-                $rv = "$mm$dd$yy";
-            }
-            else {
-                $rv = $date;
-            }
-        }
-        else {
-            $rv = "$mm$dd$yy";
-        }
-    }
-    elsif ( $dateformat =~ /^dd/ ) {
-
-        if ($date) {
-
-            if ( $date =~ /\D/ ) {
-                ( $dd, $mm, $yy ) = split /\D/, $date;
-                $mm *= 1;
-                $dd *= 1;
-                $mm = substr( "0$mm", -2 );
-                $dd = substr( "0$dd", -2 );
-                $yy = substr( $yy,    -4 );
-                $rv = "$dd$mm$yy";
-            }
-            else {
-                $rv = $date;
-            }
-        }
-        else {
-            $rv = "$dd$mm$yy";
-        }
-    }
-
-    ( $rv, $yy, $mm, $dd );
-}
 
 =item $form->format_date($date);
 

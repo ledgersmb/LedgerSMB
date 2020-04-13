@@ -106,47 +106,6 @@ cmp_ok($form->datetonum(\%myconfig), 'eq', '', "form: datetonum, empty string");
 cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234',
         "form: datetonum, 1234");
 
-# $form->split_date checks
-# Note that $form->split_date assumes the year range 2000-2099
-# Note that $form->split_date only outputs two digit years
-# Note that $form->split_date if a date provided without non-digit, identity
-foreach my $format (0 .. $#formats) {
-        %myconfig = (dateformat => $formats[$format][0]);
-        my $fmt = $formats[$format][0];
-        my $sep = $formats[$format][1];
-        my $yearcount = $formats[$format][2];
-        my @output = $form->split_date($fmt, $formats[$format][3]);
-        my $rv = $fmt;
-        $rv =~ s/\Q$sep\E//g;
-        $rv =~ s/yyyy/$output[1]/;
-        $rv =~ s/mm/$output[2]/;
-        $rv =~ s/dd/$output[3]/;
-        cmp_ok($output[1], 'eq', '2000', "split_date specified, year");
-        cmp_ok($output[2], 'eq', '02', "split_date specified, month");
-        cmp_ok($output[3], 'eq', '29', "split_date specified, day");
-        cmp_ok($output[0], 'eq', $rv, "split_date specified, unit");
-        @output = $form->split_date($fmt);
-        $rv = $fmt;
-        $rv =~ s/\Q$sep\E//g;
-        $rv =~ s/yyyy/$output[1]/;
-        $rv =~ s/mm/$output[2]/;
-        $rv =~ s/dd/$output[3]/;
-        my $tv = $fmt;
-        $tv =~ s/\Q$sep\E//g;
-        $tv =~ s/yyyy/$today_parts{'yyyy'}/;
-        $tv =~ s/mm/$today_parts{'mm'}/;
-        $tv =~ s/dd/$today_parts{'dd'}/;
-        cmp_ok($output[1], 'eq', $today_parts{'yyyy'},
-                "split_date unspecified, year");
-        cmp_ok($output[2], 'eq', $today_parts{'mm'},
-                "split_date unspecified, month");
-        cmp_ok($output[3], 'eq', $today_parts{'dd'},
-                "split_date unspecified, day");
-        @output = $form->split_date($fmt, '12345');
-        cmp_ok($output[0], 'eq', '12345',
-                'split_date, 12345');
-}
-
 # $form->format_date checks
 # Note that $form->format_date always outputs four digit years
 foreach my $format (0 .. $#formats) {
