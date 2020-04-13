@@ -123,9 +123,6 @@ my $regexes = {
 
 =head1 CONSTRUCTOR SYNTAX
 
-LedgerSMB::PgDate->new({ date => DateTime->new(year => 2012, day => 31, month =>
-12)});
-
 Note the constructor here is private, and not intended to be called directly.
 
 Use from_db and from_input methods instead since these handle appropriately
@@ -259,6 +256,9 @@ sub to_output {
     $fmt .= ' %T' if $self->is_time();
     $fmt =~ s/^\s+//;
 
+    # the hard-coded 'en_US' locale here is no problem: it's used
+    # for the %b format ('mon') to look up the names of the months;
+    # however, we only support numeric formats
     my $formatter = DateTime::Format::Strptime->new(
              pattern => $fmt,
               locale => 'en_US',
