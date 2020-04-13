@@ -128,7 +128,6 @@ sub load_checks {
     $path = File::Spec->rel2abs($path)
         unless ref $path;
     {
-        package main; ## no critic
         # Run in the main package in order not to polute the check runner
         # package; pre-check files are supposed to declare their own package
         # name if they don't want to run in 'main'.
@@ -138,14 +137,16 @@ sub load_checks {
         if (ref $path) { # $path should be a file handle
             local $/ = undef;
             my $content = <$path>;
-            unless ( eval $content ) {
+            # Using the same strategy as IRSSI (pointed out by MST)
+            unless ( eval "package main; $content" ) {
                 if ( $@ ) {
                     die "Schema-upgrade pre-check failed: $@";
                 }
             }
         }
         elsif ( -e $path ) {
-            unless ( do $path ) {
+            $path =~ s/(\\|})/\\$1/g;
+            unless ( eval "package main; do q{$path}" ) {
                 if ($! or $@) {
                     die "Schema-upgrade pre-check failed: $@";
                 }
