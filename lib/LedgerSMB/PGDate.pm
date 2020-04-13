@@ -8,7 +8,7 @@ LedgerSMB::PgDate - Date handling and serialization to database
 =head1 DESCRIPTION
 
 This class handles formatting and mapping between the DateTime module and
-PostgreSQL. It provides a handler for date and timestamp datatypes.
+PostgreSQL. It provides a handler for date datatype.
 
 The type behaves internally as a Datetime module.
 

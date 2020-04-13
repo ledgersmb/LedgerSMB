@@ -111,7 +111,7 @@ is($result->{ref_key}, 0, 'ref_key set to 0 for new file');
 is($result->{mime_type_id}, 153, 'mime_type_id represents text/plain for new file');
 like($result->{id}, qr/^\d+$/, 'id is numeric for new file');
 like($result->{uploaded_by}, qr/^\d+$/, 'uploaded_by is numeric for new file');
-like($result->{uploaded_at}, qr/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d+$/, 'uploaded_at is correct format for new file');
+like($result->{uploaded_at}, qr/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$/, 'uploaded_at is correct format for new file');
 
 
 # Overwrite an existing 'internal' file
@@ -136,7 +136,7 @@ ok($result && ref $result, 'overwritten an existing file');
 #is($result->{mime_type_id}, 153, 'mime_type_id represents text/plain when overwriting file');
 #is($result->{id}, $old_result->{id}, 'id remains the same when overwriting file');
 #like($result->{uploaded_by}, qr/^\d+$/, 'uploaded_by is numeric for new file');
-#like($result->{uploaded_at}, qr/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d+$/, 'uploaded_at is correct format when overwriting file');
+#like($result->{uploaded_at}, qr/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$/, 'uploaded_at is correct format when overwriting file');
 #isnt($result->{uploaded_at}, $old_result->{uploaded_at}, 'uploaded_at changes when overwriting file');
 
 
@@ -155,7 +155,7 @@ is($file->{ref_key}, 0, 'ref_key set to 0 when retrieving file');
 is($file->{mime_type_id}, 153, 'mime_type_id represents text/plain when retrieving file');
 is($file->{id}, $old_result->{id}, 'correct id when retrieving file');
 is($file->{uploaded_by}, $old_result->{uploaded_by}, 'correct uploaded_by when retrieving file');
-like($file->{uploaded_at}, qr/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d+$/, 'uploaded_at is correct format when retrieving file');
+like($file->{uploaded_at}, qr/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$/, 'uploaded_at is correct format when retrieving file');
 isnt($file->{uploaded_at}, $old_result->{uploaded_at}, 'uploaded_at has been changed by overwriting file');
 is($file->{file_path}, undef, 'file_path is undef when retrieving file');
 is($file->{reference}, undef, 'reference is undef when retrieving file');

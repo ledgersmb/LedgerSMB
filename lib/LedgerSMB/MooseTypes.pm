@@ -22,6 +22,7 @@ use Moose::Util::TypeConstraints;
 use PGObject::Type::ByteString;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
+use LedgerSMB::PGTimestamp;
 
 =head1 SYNPOSIS
 
@@ -51,7 +52,6 @@ date formats.
 subtype 'LedgerSMB::Moose::Date', as 'Maybe[LedgerSMB::PGDate]';
 
 
-
 =head3 Coercions
 
 The only coercion provided is from a string, and it calls the PGDate class's
@@ -63,6 +63,29 @@ Maybe[LedgerSMB::Moose::Date].
 coerce 'LedgerSMB::Moose::Date'
     => from 'Str'
     => via { LedgerSMB::PGDate->from_input($_) };
+
+
+=head2 LedgerSMB::Moose::Timestamp
+
+This wraps the LedgerSMB::PGTimestamp class for automagic handling of i18n and
+date formats.
+
+=cut
+
+subtype 'LedgerSMB::Moose::Timestamp', as 'Maybe[LedgerSMB::PGTimestamp]';
+
+=head3 Coercions
+
+The only coercion provided is from a string, and it calls the PGTimestamp class's
+from_input method.  A second coercion is provided for
+Maybe[LedgerSMB::Moose::Timestamp].
+
+=cut
+
+coerce 'LedgerSMB::Moose::Timestamp'
+    => from 'Str'
+    => via { LedgerSMB::PGTimestamp->from_input($_) };
+
 
 =head2 LedgerSMB::Moose::Number
 

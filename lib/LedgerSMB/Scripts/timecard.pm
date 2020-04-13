@@ -7,7 +7,7 @@ LedgerSMB::Scripts::timecard - LedgerSMB workflow routines for timecards.
 
 =head1 SYNPOSIS
 
- LedgerSMB::Scripts::timecard::display($request)
+ LedgerSMB::Scripts::timecard::display($request, $tcard)
 
 =head1 DESCRIPTION
 
@@ -24,12 +24,11 @@ This module does not specify any methods.
 use strict;
 use warnings;
 
-use DateTime;
-
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
 use LedgerSMB::PGDate;
+use LedgerSMB::PGTimestamp;
 use LedgerSMB::Report::Timecards;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
@@ -72,27 +71,27 @@ defaults.
 =cut
 
 sub display {
-    my ($request) = @_;
-    $request->{non_billable} ||= 0;
-    if ($request->{in_hour} and $request->{in_min}) {
-        my $request->{min_used} =
-            ($request->{in_hour} * MIN_PER_HOUR) + $request->{in_min} -
-            ($request->{out_hour} * MIN_PER_HOUR) - $request->{out_min};
-        $request->{qty} = $request->{min_used}/MIN_PER_HOUR - $request->{non_billable};
+    my ($request, $tcard) = @_;
+    $tcard->{non_billable} ||= 0;
+    if ($tcard->{in_hour} and $tcard->{in_min}) {
+        my $tcard->{min_used} =
+            ($tcard->{in_hour} * MIN_PER_HOUR) + $tcard->{in_min} -
+            ($tcard->{out_hour} * MIN_PER_HOUR) - $tcard->{out_min};
+        $tcard->{qty} = $tcard->{min_used}/MIN_PER_HOUR - $tcard->{non_billable};
     } else { # Default to current date and time
-        my $now = DateTime->now;
-        $request->{in_hour} = $now->hour unless defined $request->{in_hour};
-        $request->{in_min} = $now->minute unless defined $request->{in_min};
+        my $now = LedgerSMB::PGTimestamp->now;
+        $tcard->{in_hour} = $now->hour unless defined $tcard->{in_hour};
+        $tcard->{in_min} = $now->minute unless defined $tcard->{in_min};
     }
-    @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
-          $request->{bu_class_id}, undef, 0, $request->{transdate}
+    @{$tcard->{b_units}} = LedgerSMB::Business_Unit->list(
+          $tcard->{bu_class_id}, undef, 0, $tcard->{transdate}
     );
-    @{$request->{currencies}} =
+    @{$tcard->{currencies}} =
         $request->setting->get_currencies;
-    $request->{total} =
-        ($request->{qty} // 0) + ($request->{non_billable} // 0);
+    $tcard->{total} =
+        ($tcard->{qty} // 0) + ($tcard->{non_billable} // 0);
      my $template = LedgerSMB::Template::UI->new_UI;
-     return $template->render($request, 'timecards/timecard', $request);
+     return $template->render($request, 'timecards/timecard', $tcard);
 }
 
 =item timecard_screen
@@ -105,7 +104,7 @@ sub timecard_screen {
     my ($request) = @_;
     if (1 == $request->{num_days}){
         $request->{transdate} = $request->{date_from};
-        return display($request);
+        return display($request, $request);
     } else {
          @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
               $request->{bu_class_id}, undef, 0, $request->{transdate}
@@ -148,7 +147,7 @@ sub save {
     $request->merge($timecard->get($request->{id}));
     $request->{templates} = ['timecard'];
     @{$request->{printers}} = %LedgerSMB::Sysconfig::printer; # List context
-    return display($request);
+    return display($request, $request);
 }
 
 sub _get_qty {
@@ -220,7 +219,7 @@ sub print {
         $template->render($request);
         $template->output(%$request);
 
-        return display($request);
+        return display($request, $request);
     }
 }
 
@@ -268,7 +267,7 @@ sub get {
     $tcard->{partnumber} = $part->{partnumber};
     $tcard->{qty} //= 0;
     $tcard->{non_billable} //= 0;
-    return display($tcard);
+    return display($request, $tcard);
 }
 
 

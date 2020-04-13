@@ -135,7 +135,7 @@ Time and date work started
 
 =cut
 
-has checkedin  => (isa => 'LedgerSMB::Moose::Date', is => 'ro', required => '0',
+has checkedin  => (isa => 'LedgerSMB::Moose::Timestamp', is => 'ro', required => '0',
                 coerce => 1);
 
 =item checkedout timestamp
@@ -144,7 +144,7 @@ Time and date work ended for this card
 
 =cut
 
-has checkedout  => (isa => 'LedgerSMB::Moose::Date', is => 'ro',
+has checkedout  => (isa => 'LedgerSMB::Moose::Timestamp', is => 'ro',
                required => '0', coerce => 1);
 
 =item person_id int
