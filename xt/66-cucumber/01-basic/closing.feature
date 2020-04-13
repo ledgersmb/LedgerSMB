@@ -5,9 +5,11 @@ Feature: correct operation of period closing and year end posting
 
 
 Background:
+    Note that the user used to log in below is a generic 'admin'
+    yet we should be testing this code with a user who has strict
+    'accounting' rights!
   Given a standard test company
     And a logged in admin
-# should have been : And a logged in accounting user
 
 Scenario: Closed books disallow posting
  Given the following GL transaction posted on 2015-11-01:
