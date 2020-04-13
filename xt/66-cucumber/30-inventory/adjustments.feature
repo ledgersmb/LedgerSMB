@@ -6,10 +6,15 @@ Feature: Adjusting stock levels
   report and be able to search for inventory adjustment reports.
 
 
-Scenario: Adjusting recorded inventory down (to a lower count)
-   Given a standard test company
 # Note: we need a way to list inventory; 'part_edit' isn't that role...
 #     And a logged in user with 'part_edit' rights
+
+
+Scenario: Adjusting recorded inventory down (to a lower count)
+     Note that half way through, we check that the adjustment was entered, but
+     not yet approved. In that stage, there should not be a balance or inventory
+     impact yet.
+   Given a standard test company
      And a vendor "v1"
      And a part with these properties:
        | name       | value          |
@@ -27,7 +32,6 @@ Scenario: Adjusting recorded inventory down (to a lower count)
     When I create an inventory adjustment dated 2016-11-28 with these counts:
        | Partnumber | Counted |
        | P001       | 8       |
-# Entered but not approved: no impact
      And I open the parts screen for 'P001'
     Then I expect to see the 'onhand' value of '10'
     When I search for part 'P001'

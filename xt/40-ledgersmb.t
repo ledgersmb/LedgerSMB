@@ -20,12 +20,13 @@ my @r;
 ok(defined $lsmb);
 isa_ok($lsmb, ['LedgerSMB']);
 
+my $pgdatabase = $ENV{PGDATABASE} // '';
 my $pghost = "";
 $pghost = ";host=" . $ENV{PGHOST}
         if $ENV{PGHOST} && $ENV{PGHOST} ne 'localhost';
-$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}$pghost",
+$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$pgdatabase$pghost",
         undef, undef, {AutoCommit => 0 });
-ok($lsmb->{dbh},"Connected to $ENV{PGDATABASE}");
+ok($lsmb->{dbh},"Connected to $pgdatabase");
 LedgerSMB::App_State::set_DBH($lsmb->{dbh});
 @r = $lsmb->call_procedure('procname' => 'character_length',
         'funcschema' => 'pg_catalog',
