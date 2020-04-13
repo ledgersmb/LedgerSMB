@@ -25,7 +25,7 @@ use Carp;
 use File::Spec;
 use HTML::Escape;
 use HTML::Entities;
-use Scalar::Util qw(reftype blessed);
+use Scalar::Util qw(reftype);
 use Template;
 
 our $engine;
@@ -141,7 +141,7 @@ sub _preprocess {
 
     my $vars;
     my $reftype = '';
-    $reftype = reftype $rawvars if blessed $rawvars;
+    $reftype = reftype $rawvars;
     if ( $reftype and $reftype eq 'ARRAY' ) {
         $vars = [];
         for (@{$rawvars}) {
