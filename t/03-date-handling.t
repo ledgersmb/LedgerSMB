@@ -106,23 +106,6 @@ cmp_ok($form->datetonum(\%myconfig), 'eq', '', "form: datetonum, empty string");
 cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234',
         "form: datetonum, 1234");
 
-# $form->format_date checks
-# Note that $form->format_date always outputs four digit years
-foreach my $format (0 .. $#formats) {
-        $form->{db_dateformat} = $formats[$format][0];
-        my $fmt = $formats[$format][0];
-        my $sep = $formats[$format][1];
-        my $yearcount = $formats[$format][2];
-        my $results = $fmt;
-        $results =~ s/yyyy/2000/;
-        $results =~ s/mm/02/;
-        $results =~ s/dd/29/;
-        cmp_ok($form->format_date('2000-02-29'), 'eq',
-                $results, "format_date, $fmt, ISO");
-        cmp_ok($form->format_date($formats[$format][3]), 'eq',
-                $formats[$format][3], "format_date, $fmt, non-ISO");
-}
-
 # $form->from_to checks
 # Note that $form->from_to requires $form->format_date
 # Note that $form->from_to outputs four digit years

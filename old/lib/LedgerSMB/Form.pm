@@ -3216,37 +3216,6 @@ sub db_prepare_vars {
 }
 
 
-=item $form->format_date($date);
-
-Returns $date converted from 'yyyy-mm-dd' format to the format specified by
-$form->{db_dateformat}.  If the supplied date does not match /^\d{4}\D/,
-return the supplied date.
-
-This function takes a four digit year and returns the date with a four digit
-year.
-
-=cut
-
-sub format_date {
-
-    # takes an iso date in, and converts it to the date for printing
-    my ( $self, $date ) = @_;
-    my $datestring;
-
-    if ( $date =~ /^\d{4}\D/ ) {    # is an ISO date
-        $datestring = $self->{db_dateformat};
-        my ( $yyyy, $mm, $dd ) = split( /\W/, $date );
-        $datestring =~ s/y+/$yyyy/;
-        $datestring =~ s/mm/$mm/;
-        $datestring =~ s/dd/$dd/;
-    }
-    else {                          # return date
-        $datestring = $date;
-    }
-
-    return $datestring;
-}
-
 =item $form->from_to($yyyy, $mm[, $interval]);
 
 Returns the date $yyyy-$mm-01 and the the last day of the month interval - 1
