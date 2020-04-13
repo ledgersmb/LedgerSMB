@@ -3329,7 +3329,7 @@ sub split_date {
         my @d = localtime;
         $dd = $d[3];
         $mm = ++$d[4];
-        $yy = substr( $d[5], -2 );
+        $yy = substr( $d[5]+1900, -4 );
         $mm = substr( "0$mm", -2 );
         $dd = substr( "0$dd", -2 );
     }
@@ -3346,7 +3346,7 @@ sub split_date {
                 $dd *= 1;
                 $mm = substr( "0$mm", -2 );
                 $dd = substr( "0$dd", -2 );
-                $yy = substr( $yy,    -2 );
+                $yy = substr( $yy,    -4 );
                 $rv = "$yy$mm$dd";
             }
             else {
@@ -3367,7 +3367,7 @@ sub split_date {
                 $dd *= 1;
                 $mm = substr( "0$mm", -2 );
                 $dd = substr( "0$dd", -2 );
-                $yy = substr( $yy,    -2 );
+                $yy = substr( $yy,    -4 );
                 $rv = "$mm$dd$yy";
             }
             else {
@@ -3388,7 +3388,7 @@ sub split_date {
                 $dd *= 1;
                 $mm = substr( "0$mm", -2 );
                 $dd = substr( "0$dd", -2 );
-                $yy = substr( $yy,    -2 );
+                $yy = substr( $yy,    -4 );
                 $rv = "$dd$mm$yy";
             }
             else {

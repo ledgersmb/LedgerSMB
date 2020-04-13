@@ -34,13 +34,7 @@ my $lsmb = LedgerSMB->new($request);
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 
-my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'],
-                ['mm/dd/yy', '/', 2, '02/29/00', '03/01/00'],
-                ['dd-mm-yy', '-', 2, '29-02-00', '01-03-00'],
-                ['dd/mm/yy', '/', 2, '29/02/00', '01/03/00'],
-                ['dd.mm.yy', '.', 2, '29.02.00', '01.03.00'],
-#               ['yyyymmdd', '', 4, '20000229', '20000301'],
-                ['yyyy-mm-dd', '-', 4, '2000-02-29', '2000-03-01']);
+my @formats = (['yyyy-mm-dd', '-', 4, '2000-02-29', '2000-03-01']);
 
 my @months = ('January', 'February', 'March', 'April', 'May ', 'June',
         'July', 'August', 'September', 'October', 'November', 'December');
@@ -56,12 +50,9 @@ my $today = `date +\%F`;
 chomp $today;
 my %today_parts;
 $today_parts{'yyyy'} = `date +\%Y`;
-$today_parts{'yy'} = $today_parts{'yyyy'};
-$today_parts{'yy'} =~ s/^..//;
 $today_parts{'mm'} = `date +\%m`;
 $today_parts{'dd'} = `date +\%d`;
 chomp $today_parts{'yyyy'};
-chomp $today_parts{'yy'};
 chomp $today_parts{'mm'};
 chomp $today_parts{'dd'};
 
@@ -90,7 +81,6 @@ foreach my $format (0 .. $#formats) {
                 my $month_es = $locale_es->maketext($months[$mm - 1]);
                 $start =~ s/dd/29/;
                 $start =~ s/yyyy/2000/;
-                $start =~ s/yy/00/;
                 $start =~ s/mm/$temp/;
                 cmp_ok($locale_es->date(\%myconfig, $start, 1), 'eq',
                         "$month_es 29 2000", "date, $start, $fmt: long, es");
@@ -128,25 +118,25 @@ foreach my $format (0 .. $#formats) {
         my @output = $form->split_date($fmt, $formats[$format][3]);
         my $rv = $fmt;
         $rv =~ s/\Q$sep\E//g;
-        $rv =~ s/(yy)?yy/$output[1]/;
+        $rv =~ s/yyyy/$output[1]/;
         $rv =~ s/mm/$output[2]/;
         $rv =~ s/dd/$output[3]/;
-        cmp_ok($output[1], 'eq', '00', "split_date specified, year");
+        cmp_ok($output[1], 'eq', '2000', "split_date specified, year");
         cmp_ok($output[2], 'eq', '02', "split_date specified, month");
         cmp_ok($output[3], 'eq', '29', "split_date specified, day");
         cmp_ok($output[0], 'eq', $rv, "split_date specified, unit");
         @output = $form->split_date($fmt);
         $rv = $fmt;
         $rv =~ s/\Q$sep\E//g;
-        $rv =~ s/(yy)?yy/$output[1]/;
+        $rv =~ s/yyyy/$output[1]/;
         $rv =~ s/mm/$output[2]/;
         $rv =~ s/dd/$output[3]/;
         my $tv = $fmt;
         $tv =~ s/\Q$sep\E//g;
-        $tv =~ s/(yy)?yy/$today_parts{'yy'}/;
+        $tv =~ s/yyyy/$today_parts{'yyyy'}/;
         $tv =~ s/mm/$today_parts{'mm'}/;
         $tv =~ s/dd/$today_parts{'dd'}/;
-        cmp_ok($output[1], 'eq', $today_parts{'yy'},
+        cmp_ok($output[1], 'eq', $today_parts{'yyyy'},
                 "split_date unspecified, year");
         cmp_ok($output[2], 'eq', $today_parts{'mm'},
                 "split_date unspecified, month");
@@ -165,7 +155,7 @@ foreach my $format (0 .. $#formats) {
         my $sep = $formats[$format][1];
         my $yearcount = $formats[$format][2];
         my $results = $fmt;
-        $results =~ s/(yy)?yy/2000/;
+        $results =~ s/yyyy/2000/;
         $results =~ s/mm/02/;
         $results =~ s/dd/29/;
         cmp_ok($form->format_date('2000-02-29'), 'eq',
@@ -190,7 +180,7 @@ foreach my $format (0 .. $#formats) {
         my $sep = '-';
         my $yearcount = $formats[$format][2];
         my $results = $fmt;
-        $results =~ s/(yy)?yy/1999/;
+        $results =~ s/yyyy/1999/;
         $results =~ s/mm/12/;
         $results =~ s/dd/31/;
         cmp_ok($form->from_to(), 'eq',
@@ -282,7 +272,7 @@ foreach my $format (0 .. $#formats) {
         my $sep = $formats[$format][1];
         my $yearcount = $formats[$format][2];
         my $start = $fmt;
-        $start =~ s/(yy)?yy/2000/;
+        $start =~ s/yyyy/2000/;
         $start =~ s/mm/01/;
         $start =~ s/dd/29/;
         my $results = $start;
@@ -357,10 +347,6 @@ foreach my $test (
         date => '29102016',
     },
     {
-        format => 'ddmmyy',
-        date => '291016',
-    },
-    {
         format => 'mm/dd/yyyy',
         date => '10/29/2016',
     },
@@ -377,16 +363,8 @@ foreach my $test (
         date => '10292016',
     },
     {
-        format => 'mmddyy',
-        date => '102916',
-    },
-    {
         format => 'yyyymmdd',
         date => '20161029',
-    },
-    {
-        format => 'yymmdd',
-        date => '161029',
     },
 ) {
    $LedgerSMB::App_State::User = { dateformat => $test->{format} };
