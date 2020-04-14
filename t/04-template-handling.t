@@ -10,6 +10,7 @@ use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
+use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::HTML;
 use Plack::Request;
@@ -141,7 +142,7 @@ SKIP: {
         'Template, new (PS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (PS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
+    isa_ok($template->render({'login' => 'foo&bar'}),
         ['LedgerSMB::Template'],
         'Template, render (PS): Simple Postscript template, default filename');
     like($template->{output}, qr/^%!PS/, 'Template, render (PS): output is Postscript');
