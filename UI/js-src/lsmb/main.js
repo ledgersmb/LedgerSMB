@@ -25,7 +25,7 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
 
                     var href = dnode.href + "#s";
                     on(dnode, "click", function(e) {
-                        if ( !e.ctrlKey && !e.shiftKey && !e.button != 0 ) {
+                        if ( !e.ctrlKey && !e.shiftKey && e.button != 0 ) {
                           event.stop(e);
                           c++;
                           hash(href + c.toString(16));
