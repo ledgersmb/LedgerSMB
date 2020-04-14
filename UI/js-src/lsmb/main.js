@@ -1,9 +1,9 @@
 
 require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
          "dojo/_base/event", "dojo/hash", "dojo/topic", "dojo/dom-class",
-         "dojo/ready", "dojo/domReady!"],
+         "dojo/mouse","dojo/ready", "dojo/domReady!"],
         function(parser, query, on, registry, event, hash, topic, domClass,
-                 ready) {
+                 mouse, ready) {
             parser.parse().then(function() {
                 // delay the option of triggering load_link() until
                 // the parser has run: before then, the maindiv widget
@@ -25,7 +25,7 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
 
                     var href = dnode.href + "#s";
                     on(dnode, "click", function(e) {
-                        if ( !e.ctrlKey && !e.shiftKey && e.button != 0 ) {
+                        if ( !e.ctrlKey && !e.shiftKey && mouse.isLeft(e)) {
                           event.stop(e);
                           c++;
                           hash(href + c.toString(16));
