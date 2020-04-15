@@ -1,4 +1,5 @@
 /** @format */
+/* eslint global-require: 0 */
 
 function show_indicator() {
    require(["dojo/dom", "dojo/dom-style"], function (dom, style) {
