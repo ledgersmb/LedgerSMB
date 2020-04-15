@@ -34,23 +34,23 @@ define([
                // For other browsers:
                // Create a link pointing to the ObjectURL
                // containing the blob.
-               const data = window.URL.createObjectURL(blob);
+               const _data = window.URL.createObjectURL(blob);
                var link = document.createElement("a");
-               link.href = data;
+               link.href = _data;
                link.download = "print-payment.html";
                link.click();
                setTimeout(function () {
                   // For Firefox it is necessary to delay
                   // revoking the ObjectURL
-                  window.URL.revokeObjectURL(data);
+                  window.URL.revokeObjectURL(_data);
                }, 100);
                registry
                   .byId("maindiv")
                   .load_link(
                      "payment.pl?action=payment&account_class=" +
-                        data.account_class +
+                        _data.account_class +
                         "&type=" +
-                        data.type
+                        _data.type
                   );
             },
             function (err) {

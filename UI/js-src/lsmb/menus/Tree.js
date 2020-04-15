@@ -82,7 +82,7 @@ define([
             )
          );
       },
-      onClick: function (item, node, event) {
+      onClick: function (item, node, _event) {
          // regular handling of non-leafs
          if (item.menu) {
             return;
@@ -92,8 +92,8 @@ define([
          // or open a new window, depending on the trigger.
          var url = item.url;
          var newWindow =
-            (mouse.isLeft(event) && (event.ctrlKey || event.metaKey)) ||
-            mouse.isMiddle(event) ||
+            (mouse.isLeft(_event) && (_event.ctrlKey || _event.metaKey)) ||
+            mouse.isMiddle(_event) ||
             item.standalone;
          if (newWindow) {
             /* eslint no-restricted-globals: 0 */

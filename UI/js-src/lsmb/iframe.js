@@ -364,29 +364,31 @@ define([
 
       if (!error && cookie(downloadCookie) === "requested") {
          try {
-            var doc = iframe.doc(iframe._frame);
+            var _doc = iframe.doc(iframe._frame);
             var handleAs = options.handleAs;
 
             if (handleAs !== "html") {
                if (handleAs === "xml") {
                   // IE6-8 have to parse the XML manually. See http://bugs.dojotoolkit.org/ticket/6334
-                  if (doc.documentElement.tagName.toLowerCase() === "html") {
-                     query("a", doc.documentElement).orphan();
+                  if (_doc.documentElement.tagName.toLowerCase() === "html") {
+                     query("a", _doc.documentElement).orphan();
                      var xmlText =
-                        doc.documentElement.innerText ||
-                        doc.documentElement.textContent;
+                        _doc.documentElement.innerText ||
+                        _doc.documentElement.textContent;
                      xmlText = xmlText.replace(/>\s+</g, "><");
                      response.text = lang.trim(xmlText);
                   } else {
-                     response.data = doc;
+                     response.data = _doc;
                   }
                } else {
                   // 'json' and 'javascript' and 'text'
-                  response.text = doc.getElementsByTagName("textarea")[0].value; // text
+                  response.text = _doc.getElementsByTagName(
+                     "textarea"
+                  )[0].value; // text
                }
                handlers(response);
             } else {
-               response.data = doc;
+               response.data = _doc;
             }
          } catch (e) {
             error = e;

@@ -66,8 +66,8 @@ require([
          if (window.location.hash) {
             mainDiv.load_link(hash());
          }
-         topic.subscribe("/dojo/hashchange", function (hash) {
-            mainDiv.load_link(hash);
+         topic.subscribe("/dojo/hashchange", function (_hash) {
+            mainDiv.load_link(_hash);
          });
       }
 
