@@ -228,17 +228,19 @@ define([
                   c2c.push(name);
                };
                for (var x in data) {
-                  var val = data[x];
-                  if (lang.isArray(val) && val.length > 1) {
-                     for (var i = 0; i < val.length; i++) {
-                        createInput(x, val[i]);
-                     }
-                  } else {
-                     var n = query("input[name='" + x + "']", formNode);
-                     if (n.indexOf() === -1) {
-                        createInput(x, val);
+                  if ({}.prototype.hasOwnProperty.call(data, x)) {
+                     var val = data[x];
+                     if (lang.isArray(val) && val.length > 1) {
+                        for (var i = 0; i < val.length; i++) {
+                           createInput(x, val[i]);
+                        }
                      } else {
-                        n.val(val);
+                        var n = query("input[name='" + x + "']", formNode);
+                        if (n.indexOf() === -1) {
+                           createInput(x, val);
+                        } else {
+                           n.val(val);
+                        }
                      }
                   }
                }

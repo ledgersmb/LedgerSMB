@@ -47,6 +47,7 @@ define([
             return this.lstrings[to_translate];
          },
          startup: function () {
+            // eslint-disable-next-line guard-for-in
             for (var str in this._lstrings) {
                if (this.lstrings[str]) {
                   continue;
@@ -87,6 +88,7 @@ define([
                nonWords: /\W/.test(pass)
             };
             var variationCount = 0;
+            // eslint-disable-next-line guard-for-in
             for (var check in variations) {
                variationCount += variations[check] === true ? 1 : 0;
             }
