@@ -1,5 +1,7 @@
 /** @format */
 
+/* eslint no-template-curly-in-string:0 */
+
 define([
    "dijit/form/ComboBox",
    "dijit/form/TextBox",

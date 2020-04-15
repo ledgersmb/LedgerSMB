@@ -1,5 +1,7 @@
 /** @format */
 
+/* eslint no-template-curly-in-string: 0 */
+
 define([
    "lsmb/FilteringSelect",
    "dojo/_base/declare",
