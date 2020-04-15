@@ -41,11 +41,12 @@ define([
                   this[btn],
                   "click",
                   lang.hitch(this, function () {
-                     if (this.state == "edit" && tgtState !== "edit")
+                     if (this.state == "edit" && tgtState !== "edit") {
                         this.templateContent.set(
                            "value",
                            this.restorableContent
                         );
+                     }
                      this.setState(tgtState);
                   })
                )
@@ -136,7 +137,9 @@ define([
                "state-" + newValue,
                "state-" + old
             );
-            if (newValue == "view") newValue = "";
+            if (newValue == "view") {
+               newValue = "";
+            }
             this.templateName.set("disabled", newValue !== "");
             this.templateFormat.set("disabled", newValue !== "");
             this.templateLanguage.set("disabled", newValue !== "");

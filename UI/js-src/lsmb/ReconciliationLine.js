@@ -18,7 +18,9 @@ define("lsmb/ReconciliationLine", [
    return declare("lsmb/ReconciliationLine", [_WidgetBase, _Container], {
       _display: function (targetValue) {
          var id = this.id.replace("cleared-", "recon-line-");
-         if (!id) return;
+         if (!id) {
+            return;
+         }
          if (targetValue) {
             domClass.add(id, "active");
             domClass.remove(id, "record");

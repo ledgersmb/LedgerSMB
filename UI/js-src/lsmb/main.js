@@ -40,7 +40,9 @@ require([
       // search page (that is -- without the hash part below)
       var c = 0;
       var interceptClick = function (dnode) {
-         if (dnode.target || !dnode.href) return;
+         if (dnode.target || !dnode.href) {
+            return;
+         }
 
          var href = dnode.href + "#s";
          on(dnode, "click", function (e) {

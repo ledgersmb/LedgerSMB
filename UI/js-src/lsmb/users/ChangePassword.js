@@ -43,7 +43,9 @@ define([
          },
          lstrings: {},
          text: function (to_translate) {
-            if (undefined === this.lstrings[to_translate]) return to_translate;
+            if (undefined === this.lstrings[to_translate]) {
+               return to_translate;
+            }
             return this.lstrings[to_translate];
          },
          startup: function () {
@@ -72,7 +74,9 @@ define([
          scorePassword: function () {
             var pass = registry.byId("new-pw").get("value");
             var score = 0;
-            if (!pass) return score;
+            if (!pass) {
+               return score;
+            }
             var letters = new Object();
             for (var i = 0; i < pass.length; i++) {
                letters[pass[i]] = (letters[pass[i]] || 0) + 1;
@@ -95,9 +99,13 @@ define([
          setStrengthClass: function () {
             var score = this.scorePassword();
             var bgclass = "";
-            if (score > 80) bgclass = "strong";
-            else if (score > 60) bgclass = "good";
-            else if (score >= 30) bgclass = "weak";
+            if (score > 80) {
+               bgclass = "strong";
+            } else if (score > 60) {
+               bgclass = "good";
+            } else if (score >= 30) {
+               bgclass = "weak";
+            }
             var elem = registry.byId("pw-strength");
             elem.set("class", bgclass);
             elem.set("innerHTML", score);
@@ -109,10 +117,12 @@ define([
             var old_password = I.oldpw.get("value");
             var new_password = I.newpw.get("value");
             var confirm_pass = I.verified.get("value");
-            if (old_password === "" || new_password === "")
+            if (old_password === "" || new_password === "") {
                return I.setFeedback(0, I.text("Password Required"));
-            if (new_password !== confirm_pass)
+            }
+            if (new_password !== confirm_pass) {
                return I.setFeedback(0, I.text("Confirmation did not match"));
+            }
             r("user.pl", {
                data: {
                   action: "change_password",
@@ -136,8 +146,11 @@ define([
                });
          },
          setFeedback: function (success, message) {
-            if (success) this.feedback.set("class", "success");
-            else this.feedback.set("class", "failure");
+            if (success) {
+               this.feedback.set("class", "success");
+            } else {
+               this.feedback.set("class", "failure");
+            }
             this.feedback.set("innerHTML", message);
          },
       }

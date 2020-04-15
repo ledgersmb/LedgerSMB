@@ -40,7 +40,9 @@ define([
          this.submit();
       },
       submit: function () {
-         if (!this.validate()) return;
+         if (!this.validate()) {
+            return;
+         }
 
          var method = typeof this.method === "undefined" ? "GET" : this.method;
          var url = this.action;

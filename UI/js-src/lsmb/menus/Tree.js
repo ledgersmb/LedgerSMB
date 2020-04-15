@@ -82,7 +82,9 @@ define([
       },
       onClick: function (item, node, event) {
          // regular handling of non-leafs
-         if (item.menu) return;
+         if (item.menu) {
+            return;
+         }
 
          // for leafs, either open in the current application,
          // or open a new window, depending on the trigger.
@@ -116,7 +118,9 @@ define([
       __onClick: function (e) {
          // simulate "click opening in background tab"
          // (Ctrl+LeftMouse or MiddleMouse)
-         if (mouse.isLeft(e) && !(e.ctrlKey || e.metaKey)) return;
+         if (mouse.isLeft(e) && !(e.ctrlKey || e.metaKey)) {
+            return;
+         }
 
          event.stop(e);
          e.preventDefault();

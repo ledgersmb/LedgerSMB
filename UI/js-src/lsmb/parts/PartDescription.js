@@ -59,7 +59,9 @@ define([
             this._autoSize();
          }, // startup
          _autoSize: function () {
-            if (!this.autoSizing) return;
+            if (!this.autoSizing) {
+               return;
+            }
             // setting to 'auto' first helps to shrink
             // the height when possible.
             this.textbox.style.height = "1em";

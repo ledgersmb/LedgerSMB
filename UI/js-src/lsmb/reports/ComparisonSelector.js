@@ -61,7 +61,9 @@ define([
                return;
             } else {
                count = parseInt(count);
-               if (isNaN(count)) return; // invalid input
+               if (isNaN(count)) {
+                  return;
+               } // invalid input
 
                style.set(dom.byId("comparison_dates"), "display", "");
                for (var i = 1; i <= 9; i++) {
