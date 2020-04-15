@@ -111,8 +111,6 @@ define([
                { handlesAs: "text" }
             ).then(
                lang.hitch(this, function (doc) {
-                  console.log(doc);
-                  console.log(this.templateContent);
                   this.restorableContent = doc;
                   this.templateContent.set("value", doc);
                   this.editButton.set("disabled", false);
@@ -132,7 +130,6 @@ define([
          setState: function (newValue) {
             var old = this.state;
             this.state = newValue;
-            console.log("state setter; " + newValue + "!" + old);
             domClass.replace(
                this.srcNodeRef,
                "state-" + newValue,

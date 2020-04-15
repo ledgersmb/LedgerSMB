@@ -113,12 +113,6 @@ define([
          submit_form: function () {
             var I = this;
             var r = request;
-            console.log("change_pw clicked");
-            var old_password = I.oldpw.get("value");
-            var new_password = I.newpw.get("value");
-            var confirm_pass = I.verified.get("value");
-            if (old_password === "" || new_password === "") {
-               return I.setFeedback(0, I.text("Password Required"));
             }
             if (new_password !== confirm_pass) {
                return I.setFeedback(0, I.text("Confirmation did not match"));

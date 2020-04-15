@@ -10,7 +10,6 @@ define([
    "dojo/request",
    "dojo/io-query"
 ], function (JsonRest, Observable, request, array, declare, Evented, xhr, io) {
-   console.log("creating store");
    var partsRest = declare("lsmb/parts/PartRestStore", [JsonRest], {
       get: function (id) {
          var self = this;
@@ -45,6 +44,5 @@ define([
          target: "erp/api/v0/goods/"
       })
    );
-   console.log("done creating store");
    return store;
 });
