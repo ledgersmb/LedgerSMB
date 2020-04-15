@@ -49,9 +49,9 @@ define([
    win
    /*= ====, NodeList, NodeList, request, declare ===== */
 ) {
-   var mid = module.id.replace(/[\/\.\-]/g, "_"),
-      onload = mid + "_onload",
-      downloadCookie = "request-download." + new Date().getTime();
+   var mid = module.id.replace(/[\/\.\-]/g, "_");
+   var onload = mid + "_onload";
+   var downloadCookie = "request-download." + new Date().getTime();
 
    if (!win.global[onload]) {
       win.global[onload] = function () {
@@ -181,13 +181,13 @@ define([
             return;
          }
 
-         var response = dfd.response,
-            options = response.options,
-            c2c = (dfd._contentToClean = []),
-            formNode = dom.byId(options.form),
-            notify = util.notify,
-            data = options.data || null,
-            queryStr;
+         var response = dfd.response;
+         var options = response.options;
+         var c2c = (dfd._contentToClean = []);
+         var formNode = dom.byId(options.form);
+         var notify = util.notify;
+         var data = options.data || null;
+         var queryStr;
 
          data["request.download-cookie"] = downloadCookie;
          cookie(downloadCookie, "requested");
@@ -257,9 +257,9 @@ define([
 
             // IE requires going through getAttributeNode instead of just getAttribute in some form cases,
             // so use it for all.  See #2844
-            var actionNode = formNode.getAttributeNode("action"),
-               methodNode = formNode.getAttributeNode("method"),
-               targetNode = formNode.getAttributeNode("target");
+            var actionNode = formNode.getAttributeNode("action");
+            var methodNode = formNode.getAttributeNode("method");
+            var targetNode = formNode.getAttributeNode("target");
 
             if (response.url) {
                dfd._originalAction = actionNode ? actionNode.value : null;
@@ -328,8 +328,8 @@ define([
       return !!this._finished || cookie(downloadCookie) !== "requested";
    }
    function handleResponse(response, error) {
-      var options = response.options,
-         formNode = dom.byId(options.form) || this._tmpForm;
+      var options = response.options;
+      var formNode = dom.byId(options.form) || this._tmpForm;
 
       if (formNode) {
          // remove all the hidden content inputs
@@ -368,8 +368,8 @@ define([
 
       if (!error && cookie(downloadCookie) === "requested") {
          try {
-            var doc = iframe.doc(iframe._frame),
-               handleAs = options.handleAs;
+            var doc = iframe.doc(iframe._frame);
+            var handleAs = options.handleAs;
 
             if (handleAs !== "html") {
                if (handleAs === "xml") {

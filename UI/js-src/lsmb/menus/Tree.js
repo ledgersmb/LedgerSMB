@@ -88,11 +88,11 @@ define([
 
          // for leafs, either open in the current application,
          // or open a new window, depending on the trigger.
-         var url = item.url,
-            newWindow =
-               (mouse.isLeft(event) && (event.ctrlKey || event.metaKey)) ||
-               mouse.isMiddle(event) ||
-               item.standalone;
+         var url = item.url;
+         var newWindow =
+            (mouse.isLeft(event) && (event.ctrlKey || event.metaKey)) ||
+            mouse.isMiddle(event) ||
+            item.standalone;
          if (newWindow) {
             // Simulate a target="_blank" attribute on an A tag
             window.open(

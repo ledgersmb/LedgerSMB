@@ -31,9 +31,9 @@ define([
          // retrieve format to add it as the placeholder
          // (unless there's a placeholder already)
          if (!params.placeholder) {
-            var l = i18n.normalizeLocale(params.locale),
-               formatLength = params.formatLength || "short",
-               bundle = locale._getGregorianBundle(l);
+            var l = i18n.normalizeLocale(params.locale);
+            var formatLength = params.formatLength || "short";
+            var bundle = locale._getGregorianBundle(l);
 
             if (params.constraints.selector == "year") {
                params.placeholder = bundle["dateFormatItem-yyyy"] || "yyyy";
