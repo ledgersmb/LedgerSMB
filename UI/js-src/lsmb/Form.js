@@ -49,6 +49,7 @@ define([
          var options = { handleAs: "text" };
          if (method.toLowerCase() === "get") {
             if (!url) {
+               /* eslint no-alert:0 */
                alert("Form contains no action. Please file a bug");
                return false;
             }

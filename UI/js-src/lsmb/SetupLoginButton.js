@@ -29,6 +29,7 @@ define([
             },
             function (err) {
                var status = err.response.status;
+               /* eslint no-alert:0 */
                if (status === 454) {
                   alert("Company does not exist");
                } else {
