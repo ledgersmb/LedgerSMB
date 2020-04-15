@@ -61,7 +61,7 @@ define([
                return;
             }
             count = parseInt(count, 10);
-            if (isNaN(count)) {
+            if (Number.isNaN(count)) {
                return;
             } // invalid input
 

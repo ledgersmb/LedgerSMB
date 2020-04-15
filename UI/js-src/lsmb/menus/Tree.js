@@ -94,6 +94,7 @@ define([
             mouse.isMiddle(event) ||
             item.standalone;
          if (newWindow) {
+            /* eslint no-restricted-globals: 0 */
             // Simulate a target="_blank" attribute on an A tag
             window.open(
                location.origin +

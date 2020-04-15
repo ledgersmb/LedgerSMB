@@ -63,6 +63,7 @@ define([
                      which the widget expects */
             this.value = this.parse(this._formattedValue, this.constraints);
          }
+         /* eslint no-restricted-globals: 0 */
          if (
             (this.value === undefined || isNaN(this.value)) &&
             this.defaultIsToday
