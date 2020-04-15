@@ -94,7 +94,7 @@ define([
             }
             score += (variationCount - 1) * 10;
 
-            return parseInt(score);
+            return parseInt(score, 10);
          },
          setStrengthClass: function () {
             var score = this.scorePassword();

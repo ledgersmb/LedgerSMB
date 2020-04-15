@@ -60,7 +60,7 @@ define([
                style.set(dom.byId("comparison_dates"), "display", "none");
                return;
             }
-            count = parseInt(count);
+            count = parseInt(count, 10);
             if (isNaN(count)) {
                return;
             } // invalid input
