@@ -14,6 +14,7 @@ define([
       constructor: function (params, srcNodeRef) {
          this._formattedValue = srcNodeRef.value;
 
+         /* eslint no-param-reassign:0 */
          /* Provide default 'old code' doesn't include in its templates */
          if (!params.constraints) {
             params.constraints = {};

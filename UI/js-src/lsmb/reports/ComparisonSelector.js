@@ -61,8 +61,8 @@ define([
                style.set(dom.byId("comparison_dates"), "display", "none");
                return;
             }
-            count = parseInt(count, 10);
-            if (Number.isNaN(count)) {
+            var _count = parseInt(count, 10);
+            if (Number.isNaN(_count)) {
                return;
             } // invalid input
 
@@ -71,7 +71,7 @@ define([
                style.set(
                   dom.byId("comparison_dates_" + i),
                   "display",
-                  i <= count ? "" : "none"
+                  i <= _count ? "" : "none"
                );
             }
          }

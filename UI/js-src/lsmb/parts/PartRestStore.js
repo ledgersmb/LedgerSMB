@@ -29,13 +29,14 @@ define([
          return rv;
       },
       query: function (query, options) {
-         if (query && typeof query === "object") {
-            query = "?" + io.objectToQuery(query);
+         var _query = query;
+         if (_query && typeof _query === "object") {
+            _query = "?" + io.objectToQuery(_query);
          }
          if (options && options.type) {
-            query = "?type=" + options.type + "&" + query;
+            _query = "?type=" + options.type + "&" + _query;
          }
-         return this.inherited(arguments, [query, options]);
+         return this.inherited(arguments, [_query, options]);
       }
    });
    var store = new Observable(

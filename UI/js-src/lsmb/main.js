@@ -1,4 +1,5 @@
 /** @format */
+/* eslint no-param-reassign:0 */
 
 require([
    "dojo/parser",

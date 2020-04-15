@@ -129,19 +129,20 @@ define([
          },
          setState: function (newValue) {
             var old = this.state;
-            this.state = newValue;
+            var _newValue = newValue;
+            this.state = _newValue;
             domClass.replace(
                this.srcNodeRef,
-               "state-" + newValue,
+               "state-" + _newValue,
                "state-" + old
             );
-            if (newValue === "view") {
-               newValue = "";
+            if (_newValue === "view") {
+               _newValue = "";
             }
-            this.templateName.set("disabled", newValue !== "");
-            this.templateFormat.set("disabled", newValue !== "");
-            this.templateLanguage.set("disabled", newValue !== "");
-            this.templateContent.set("readonly", newValue === "");
+            this.templateName.set("disabled", _newValue !== "");
+            this.templateFormat.set("disabled", _newValue !== "");
+            this.templateLanguage.set("disabled", _newValue !== "");
+            this.templateContent.set("readonly", _newValue === "");
          }
       }
    );
