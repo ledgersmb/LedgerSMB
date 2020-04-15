@@ -136,6 +136,21 @@ our $formats = {
       'MMDDYYYY' => '%m%d%Y',
 };
 
+my $pref_parser =  DateTime::Format::Strptime->new(
+    pattern   => '%F %T',
+    locale    => 'en_US',
+    strict    => 1,
+    time_zone => 'UTC',
+    on_error  => 'undef' );
+
+my $fb_parser =  DateTime::Format::Strptime->new(
+    pattern   => '%F',
+    locale    => 'en_US',
+    strict    => 1,
+    time_zone => 'UTC',
+    on_error  => 'undef' );
+
+
 sub from_input{
     my ($self, $input) = @_;
 
@@ -145,8 +160,8 @@ sub from_input{
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
 
-    my $dt = eval { strptime('%F %T', $input) }
-        // strptime('%F', $input);
+    my $dt = $pref_parser->parse_datetime($input)
+        // $fb_parser->parse_datetime($input);
 
     die "Bad timestamp ($input)" if $input && ! $dt;
     bless $dt, __PACKAGE__;
