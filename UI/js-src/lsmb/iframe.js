@@ -158,7 +158,8 @@ define([
             return;
          }
          do {
-            dfd = iframe._currentDfd = iframe._dfdQueue.shift();
+            iframe._currentDfd = iframe._dfdQueue.shift();
+            dfd = iframe._currentDfd;
          } while (
             dfd &&
             (dfd.canceled || (dfd.isCanceled && dfd.isCanceled())) &&
@@ -170,9 +171,11 @@ define([
             return;
          }
 
+         dfd._contentToClean = [];
+
          var response = dfd.response;
          var options = response.options;
-         var c2c = (dfd._contentToClean = []);
+         var c2c = dfd._contentToClean;
          var formNode = dom.byId(options.form);
          var notify = util.notify;
          var data = options.data || null;
@@ -182,7 +185,8 @@ define([
          cookie(downloadCookie, "requested");
 
          if (!dfd._legacy && options.method === "POST" && !formNode) {
-            formNode = dfd._tmpForm = createForm();
+            dfd._tmpForm = createForm();
+            formNode = dfd._tmpForm;
          } else if (
             options.method === "GET" &&
             formNode &&
