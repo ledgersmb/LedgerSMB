@@ -58,14 +58,14 @@ define([
             url = url + "?" + qobj + "#" + c.toString(16);
             hash(url); // add GET forms to the back button history
          } else {
-            options["method"] = method;
+            options.method = method;
             if (this.domNode.enctype == "multipart/form-data") {
-               options["data"] = new FormData(this.domNode);
+               options.data = new FormData(this.domNode);
                // FF doesn't add the clicked button
-               options["data"].append("action", this.clickedAction);
+               options.data.append("action", this.clickedAction);
             } else {
                // old code (Form.pm) wants x-www-urlencoded
-               options["data"] =
+               options.data =
                   "action=" +
                   this.clickedAction +
                   "&" +

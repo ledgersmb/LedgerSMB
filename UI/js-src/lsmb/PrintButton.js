@@ -29,12 +29,12 @@ define([
                // Apparently, transactions do not include a
                // 'vc' field; so, when we have one, add it.
                // when we don't... don't.
-               if (f["vc"]) {
-                  data["vc"] = f.vc.value;
+               if (f.vc) {
+                  data.vc = f.vc.value;
                }
             } else {
                data = domform.toObject(f);
-               data["action"] = this.get("value");
+               data.action = this.get("value");
             }
 
             iframe(domattr.get(f, "action"), {

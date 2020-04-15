@@ -139,10 +139,10 @@ define([
          if (
             arguments.length === 1 &&
             lang.isObject(arguments[0]) &&
-            arguments[0]["content"] !== null
+            arguments[0].content !== null
          ) {
-            newContent = arguments[0]["content"];
-            delete arguments[0]["content"];
+            newContent = arguments[0].content;
+            delete arguments[0].content;
          } else if (arguments.length === 1 && lang.isString(arguments[0])) {
             newContent = arguments[0];
             contentOnly = true;

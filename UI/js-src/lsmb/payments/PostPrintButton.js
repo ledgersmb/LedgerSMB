@@ -15,7 +15,7 @@ define([
          event.stop(evt);
 
          var data = domform.toObject(f);
-         data["action"] = this.get("value");
+         data.action = this.get("value");
 
          xhr(domattr.get(f, "action"), {
             method: "POST",
@@ -48,9 +48,9 @@ define([
                   .byId("maindiv")
                   .load_link(
                      "payment.pl?action=payment&account_class=" +
-                        data["account_class"] +
+                        data.account_class +
                         "&type=" +
-                        data["type"]
+                        data.type
                   );
             },
             function (err) {
