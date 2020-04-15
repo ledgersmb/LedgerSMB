@@ -41,7 +41,7 @@ define([
                data: data,
             }).then(
                function () {
-                  //success? do nothing
+                  // success? do nothing
                },
                function (err) {
                   registry.byId("maindiv").report_request_error(err);

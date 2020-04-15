@@ -28,9 +28,9 @@ define([
    "dojo/cookie",
    "dojo/_base/window",
    "dojo/NodeList-manipulate",
-   "dojo/NodeList-dom" /*=====,
+   "dojo/NodeList-dom" /*= ====,
                        '../request',
-                       '../_base/declare' =====*/,
+                       '../_base/declare' ===== */,
 ], function (
    module,
    require,
@@ -45,7 +45,7 @@ define([
    domConstruct,
    cookie,
    win
-   /*=====, NodeList, NodeList, request, declare =====*/
+   /*= ====, NodeList, NodeList, request, declare ===== */
 ) {
    var mid = module.id.replace(/[\/\.\-]/g, "_"),
       onload = mid + "_onload",
@@ -252,8 +252,8 @@ define([
                }
             }
 
-            //IE requires going through getAttributeNode instead of just getAttribute in some form cases,
-            //so use it for all.  See #2844
+            // IE requires going through getAttributeNode instead of just getAttribute in some form cases,
+            // so use it for all.  See #2844
             var actionNode = formNode.getAttributeNode("action"),
                methodNode = formNode.getAttributeNode("method"),
                targetNode = formNode.getAttributeNode("target");
@@ -335,9 +335,9 @@ define([
          var toClean = this._contentToClean;
          for (var i = 0; i < toClean.length; i++) {
             var key = toClean[i];
-            //Need to cycle over all nodes since we may have added
-            //an array value which means that more than one node could
-            //have the same .name value.
+            // Need to cycle over all nodes since we may have added
+            // an array value which means that more than one node could
+            // have the same .name value.
             for (var j = 0; j < formNode.childNodes.length; j++) {
                var childNode = formNode.childNodes[j];
                if (childNode.name === key) {
@@ -454,7 +454,7 @@ define([
       return returnDeferred ? dfd : dfd.promise;
    }
 
-   /*=====
+   /*= ====
       iframe = function(url, options){
       // summary:
       //              Sends a request using an iframe element with the given URL and options.
@@ -498,7 +498,7 @@ define([
       //              Options for the request.
       // returns: dojo/request.__Promise
       };
-        =====*/
+        ===== */
    iframe.create = create;
    iframe.doc = doc;
    iframe.setSrc = setSrc;

@@ -25,7 +25,7 @@ define("lsmb/layout/TableContainer", [
    _WidgetBase,
    _LayoutWidget
 ) {
-   //kernel.experimental("dojox.layout.TableContainer");
+   // kernel.experimental("dojox.layout.TableContainer");
 
    var TableContainer = declare("lsmb.layout.TableContainer", _LayoutWidget, {
       // summary:
@@ -309,7 +309,7 @@ define("lsmb/layout/TableContainer", [
          this.resize();
       },
 
-      destroyDescendants: function (/*Boolean*/ preserveDom) {
+      destroyDescendants: function (/* Boolean */ preserveDom) {
          // summary:
          //              Destroys all the widgets inside this.containerNode,
          //              but not this widget itself
@@ -355,7 +355,7 @@ define("lsmb/layout/TableContainer", [
    // Add to widget base for benefit of parser.   Remove for 2.0.   Also, hide from doc viewer.
    lang.extend(
       _WidgetBase,
-      /*===== {} || =====*/ TableContainer.ChildWidgetProperties
+      /*= ==== {} || ===== */ TableContainer.ChildWidgetProperties
    );
 
    return TableContainer;
