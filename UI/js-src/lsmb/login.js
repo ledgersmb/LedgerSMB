@@ -1,13 +1,13 @@
 /** @format */
 /* eslint global-require:0, no-unused-vars:0 */ /* submitForm is used elsewhere */
 
-function show_indicator() {
+function showIndicator() {
    require(["dojo/dom", "dojo/dom-style"], function (dom, style) {
       style.set(dom.byId("login-indicator"), "visibility", "visible");
    });
 }
 
-function send_form() {
+function sendForm() {
    var username = document.login.login.value;
    var password = document.login.password.value;
    var company = encodeURIComponent(document.login.company.value);
@@ -68,9 +68,9 @@ function send_form() {
    });
 }
 
-function submit_form() {
-   window.setTimeout(show_indicator, 0);
-   window.setTimeout(send_form, 10);
+function submitForm() {
+   window.setTimeout(showIndicator, 0);
+   window.setTimeout(sendForm, 10);
    return false;
 }
 

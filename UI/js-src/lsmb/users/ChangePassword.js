@@ -16,7 +16,7 @@ define([
    declare,
    _widgetbase,
    _templatemixin,
-   _widget_parser,
+   _widgetsInTemplateMixin,
    cp,
    registry,
    on,
@@ -27,7 +27,7 @@ define([
 ) {
    return declare(
       "lsmb/users/ChangePassword",
-      [_widgetbase, _templatemixin, _widget_parser],
+      [_widgetbase, _templatemixin, _widgetsInTemplateMixin],
       {
          templateString: template,
          _lstrings: {
@@ -40,11 +40,11 @@ define([
             strength: "Strength"
          },
          lstrings: {},
-         text: function (to_translate) {
-            if (undefined === this.lstrings[to_translate]) {
-               return to_translate;
+         text: function (toTranslate) {
+            if (undefined === this.lstrings[toTranslate]) {
+               return toTranslate;
             }
-            return this.lstrings[to_translate];
+            return this.lstrings[toTranslate];
          },
          startup: function () {
             // eslint-disable-next-line guard-for-in
@@ -66,7 +66,7 @@ define([
             registry.byId("pw-change").set("innerHTML", this.text("change"));
             registry.byId("pw-strength").set("title", this.text("strength"));
             on(this.submitbutton, "click", function () {
-               I.submit_form();
+               I.submitForm();
             });
             this.inherited(arguments);
          },
@@ -110,25 +110,25 @@ define([
             elem.set("class", bgclass);
             elem.set("innerHTML", score);
          },
-         submit_form: function () {
+         submitForm: function () {
             var I = this;
             var r = request;
-            var old_password = I.oldpw.get("value");
-            var new_password = I.newpw.get("value");
-            var confirm_pass = I.verified.get("value");
-            if (old_password === "" || new_password === "") {
+            var oldPassword = I.oldpw.get("value");
+            var newPassword = I.newpw.get("value");
+            var confirmedPassword = I.verified.get("value");
+            if (oldPassword === "" || newPassword === "") {
                I.setFeedback(0, I.text("Password Required"));
                return;
             }
-            if (new_password !== confirm_pass) {
+            if (newPassword !== confirmedPassword) {
                return I.setFeedback(0, I.text("Confirmation did not match"));
             }
             r("user.pl", {
                data: {
                   action: "change_password",
-                  old_password: old_password,
-                  new_password: new_password,
-                  confirm_password: confirm_pass
+                  old_password: oldPassword,
+                  new_password: newPassword,
+                  confirm_password: confirmedPassword
                },
                method: "POST"
             })
