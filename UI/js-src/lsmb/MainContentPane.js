@@ -67,7 +67,7 @@ define([
             this.report_error(
                "Invalid server response: document lacks BODY tag"
             );
-            return;
+            return undefined;
          }
          var newbody = body[1];
          return this.set("content", newbody).then(
@@ -113,7 +113,7 @@ define([
       },
       load_link: function (href) {
          if (this.last_page === href) {
-            return;
+            return undefined;
          }
          this.last_page = href;
          return this.load_form(href, { handlesAs: "text" });

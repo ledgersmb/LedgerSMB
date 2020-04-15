@@ -121,7 +121,8 @@ define([
                return;
             }
             if (newPassword !== confirmedPassword) {
-               return I.setFeedback(0, I.text("Confirmation did not match"));
+               I.setFeedback(0, I.text("Confirmation did not match"));
+               return;
             }
             r("user.pl", {
                data: {

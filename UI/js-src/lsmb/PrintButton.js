@@ -51,7 +51,7 @@ define([
             return;
          }
 
-         return this.inherited(arguments);
+         this.inherited(arguments);
       }
    });
 });
