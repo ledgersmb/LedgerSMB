@@ -52,6 +52,7 @@ define([
                      self.set("value", selected[self.searchAttr]);
                   })
                );
+               // eslint-disable-next-line no-unused-vars
                this.on("change", function (newValue) {
                   if (self.item) {
                      topic.publish(self.channel, self.item);

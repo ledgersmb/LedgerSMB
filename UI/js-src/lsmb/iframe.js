@@ -321,9 +321,11 @@ define([
    }
 
    // dojo/request/watch handlers
+   // eslint-disable-next-line no-unused-vars
    function isValid(response) {
       return !this.isFulfilled();
    }
+   // eslint-disable-next-line no-unused-vars
    function isReady(response) {
       return !!this._finished || cookie(downloadCookie) !== "requested";
    }
@@ -405,6 +407,7 @@ define([
          this.reject(new Error("Invalid dojo/request/iframe request state"));
       }
    }
+   // eslint-disable-next-line no-unused-vars
    function last(response) {
       this._callNext();
    }

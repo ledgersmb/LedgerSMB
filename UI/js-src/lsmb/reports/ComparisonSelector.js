@@ -49,6 +49,7 @@ define([
             this.inherited(arguments);
             this._comparison_periods = registry.byId("comparison-periods");
             this.own(
+               // eslint-disable-next-line no-unused-vars
                on(this._comparison_periods, "change", function (newvalue) {
                   self._update_display(self._comparison_periods.get("value"));
                })

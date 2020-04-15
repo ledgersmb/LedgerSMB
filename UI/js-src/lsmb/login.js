@@ -1,5 +1,5 @@
 /** @format */
-/* eslint global-require: 0 */
+/* eslint global-require:0, no-unused-vars:0 */ /* submitForm is used elsewhere */
 
 function show_indicator() {
    require(["dojo/dom", "dojo/dom-style"], function (dom, style) {

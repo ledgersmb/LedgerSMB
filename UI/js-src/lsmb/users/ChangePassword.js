@@ -11,8 +11,7 @@ define([
    "dijit/form/TextBox",
    "dijit/form/Button",
    "dojo/text!./templates/PasswordChange.html",
-   "dojo/request",
-   "dijit/_Container"
+   "dojo/request"
 ], function (
    declare,
    _widgetbase,
@@ -24,8 +23,7 @@ define([
    textbox,
    button,
    template,
-   request,
-   _container
+   request
 ) {
    return declare(
       "lsmb/users/ChangePassword",
@@ -132,6 +130,7 @@ define([
                },
                method: "POST"
             })
+               // eslint-disable-next-line no-unused-vars
                .then(function (response) {
                   I.setFeedback(1, I.text("Password Changed"));
                })

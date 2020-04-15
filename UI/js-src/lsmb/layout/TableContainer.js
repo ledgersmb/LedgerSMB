@@ -167,6 +167,7 @@ define("lsmb/layout/TableContainer", [
 
          arrayUtil.forEach(
             children,
+            // eslint-disable-next-line no-unused-vars
             lang.hitch(this, function (child, index) {
                if (!childIds[child.id]) {
                   // Add pre-existing children to the start of the array

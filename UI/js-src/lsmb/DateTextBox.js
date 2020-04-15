@@ -72,6 +72,7 @@ define([
             this.value = new Date();
          }
       },
+      /* eslint no-unused-vars:0 */
       parse: function (value, constraints) {
          if (!isoDate.test(value)) {
             return this.inherited(arguments);

@@ -1,10 +1,11 @@
-/**
- * /*
+/*
+ *
  * Created by john on 2/21/16.
  * Modified by ylavoie 2016-04-27 for amd
  *
  * @format
  */
+/* eslint no-unused-vars:0 */
 
 var copyOnlyMids = {
    //        "lsmb/package": 1
