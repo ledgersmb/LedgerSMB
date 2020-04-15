@@ -135,7 +135,8 @@ define([
             iframes[name].contentWindow.document
          ) {
             return iframes[name].contentWindow.document;
-         } else if (win.doc.frames[name] && win.doc.frames[name].document) {
+         }
+         if (win.doc.frames[name] && win.doc.frames[name].document) {
             return win.doc.frames[name].document;
          }
       }

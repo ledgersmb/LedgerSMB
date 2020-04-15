@@ -173,14 +173,11 @@ define([
             setPromise instanceof Promise
          ) {
             return all([contentPromise, setPromise]);
-         } else if (
-            contentPromise !== null &&
-            contentPromise instanceof Promise
-         ) {
-            return contentPromise;
-         } else {
-            return setPromise;
          }
+         if (contentPromise !== null && contentPromise instanceof Promise) {
+            return contentPromise;
+         }
+         return setPromise;
       },
    });
 });

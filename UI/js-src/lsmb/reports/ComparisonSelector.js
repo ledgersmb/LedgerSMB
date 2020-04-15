@@ -59,20 +59,19 @@ define([
             if (count === "" || this.mode === "by-periods") {
                style.set(dom.byId("comparison_dates"), "display", "none");
                return;
-            } else {
-               count = parseInt(count);
-               if (isNaN(count)) {
-                  return;
-               } // invalid input
+            }
+            count = parseInt(count);
+            if (isNaN(count)) {
+               return;
+            } // invalid input
 
-               style.set(dom.byId("comparison_dates"), "display", "");
-               for (var i = 1; i <= 9; i++) {
-                  style.set(
-                     dom.byId("comparison_dates_" + i),
-                     "display",
-                     i <= count ? "" : "none"
-                  );
-               }
+            style.set(dom.byId("comparison_dates"), "display", "");
+            for (var i = 1; i <= 9; i++) {
+               style.set(
+                  dom.byId("comparison_dates_" + i),
+                  "display",
+                  i <= count ? "" : "none"
+               );
             }
          },
       }
