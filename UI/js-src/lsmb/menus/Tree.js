@@ -1,4 +1,5 @@
 /** @format */
+/* globals dijit */
 
 define([
    "dojo/_base/declare",

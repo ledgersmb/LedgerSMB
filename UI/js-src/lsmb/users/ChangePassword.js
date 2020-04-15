@@ -56,7 +56,7 @@ define([
                this.lstrings[str] = this._lstrings[str];
             }
             document.getElementById("pwtitle").innerHTML = this.lstrings.title;
-            I = this;
+            var I = this;
             on(this.newpw, "keypress", function () {
                I.setStrengthClass();
             });
@@ -113,6 +113,12 @@ define([
          submit_form: function () {
             var I = this;
             var r = request;
+            var old_password = I.oldpw.get("value");
+            var new_password = I.newpw.get("value");
+            var confirm_pass = I.verified.get("value");
+            if (old_password === "" || new_password === "") {
+               I.setFeedback(0, I.text("Password Required"));
+               return;
             }
             if (new_password !== confirm_pass) {
                return I.setFeedback(0, I.text("Confirmation did not match"));

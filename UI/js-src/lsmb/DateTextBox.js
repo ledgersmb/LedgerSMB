@@ -1,4 +1,5 @@
 /** @format */
+/* global lsmbConfig */
 
 define([
    "dijit/form/DateTextBox",
