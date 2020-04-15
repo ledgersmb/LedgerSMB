@@ -6,7 +6,7 @@ define("lsmb/ReconciliationLine", [
    "dojo/dom-class",
    "dijit/_WidgetBase",
    "dijit/_Container",
-   "lsmb/SubscribeCheckBox",
+   "lsmb/SubscribeCheckBox"
 ], function (
    declare,
    on,
@@ -38,6 +38,6 @@ define("lsmb/ReconciliationLine", [
                self._display(targetValue);
             })
          );
-      },
+      }
    });
 });

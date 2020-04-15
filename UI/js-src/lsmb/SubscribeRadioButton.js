@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/RadioButton",
+   "dijit/form/RadioButton"
 ], function (declare, on, topic, RadioButton) {
    return declare("lsmb/SubscribeRadioButton", [RadioButton], {
       topic: "",
@@ -20,6 +20,6 @@ define([
                self.update(targetValue);
             })
          );
-      },
+      }
    });
 });

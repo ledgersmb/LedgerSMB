@@ -10,7 +10,7 @@ define([
    "dijit/_WidgetBase",
    "dijit/_WidgetsInTemplateMixin",
    "dijit/_AttachMixin",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (
    declare,
    on,
@@ -145,7 +145,7 @@ define([
             this.templateFormat.set("disabled", newValue !== "");
             this.templateLanguage.set("disabled", newValue !== "");
             this.templateContent.set("readonly", newValue === "");
-         },
+         }
       }
    );
 });

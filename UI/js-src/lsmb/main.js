@@ -11,7 +11,7 @@ require([
    "dojo/dom-class",
    "dojo/mouse",
    "dojo/ready",
-   "dojo/domReady!",
+   "dojo/domReady!"
 ], function (
    parser,
    query,

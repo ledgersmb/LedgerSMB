@@ -12,7 +12,7 @@ define("lsmb/layout/TableContainer", [
    "dojo/dom-prop",
    "dojo/dom-style",
    "dijit/_WidgetBase",
-   "dijit/layout/_LayoutWidget",
+   "dijit/layout/_LayoutWidget"
 ], function (
    kernel,
    lang,
@@ -183,7 +183,7 @@ define("lsmb/layout/TableContainer", [
                class:
                   "tableContainer-table tableContainer-table-" +
                   this.orientation,
-               cellspacing: this.spacing,
+               cellspacing: this.spacing
             },
             this.domNode
          );
@@ -278,7 +278,7 @@ define("lsmb/layout/TableContainer", [
                   childCell = domConstruct.create(
                      "td",
                      {
-                        class: "tableContainer-valueCell",
+                        class: "tableContainer-valueCell"
                      },
                      childRow
                   );
@@ -325,7 +325,7 @@ define("lsmb/layout/TableContainer", [
          if (this.table) {
             this.table.cellspacing = Number(value);
          }
-      },
+      }
    });
 
    TableContainer.ChildWidgetProperties = {
@@ -349,7 +349,7 @@ define("lsmb/layout/TableContainer", [
 
       // colspan: Number
       //              The number of columns this widget should span.
-      colspan: 1,
+      colspan: 1
    };
 
    // Add to widget base for benefit of parser.   Remove for 2.0.   Also, hide from doc viewer.

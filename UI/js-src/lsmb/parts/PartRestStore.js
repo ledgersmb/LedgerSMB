@@ -8,7 +8,7 @@ define([
    "dojo/_base/declare",
    "dojo/Evented",
    "dojo/request",
-   "dojo/io-query",
+   "dojo/io-query"
 ], function (JsonRest, Observable, request, array, declare, Evented, xhr, io) {
    console.log("creating store");
    var partsRest = declare("lsmb/parts/PartRestStore", [JsonRest], {
@@ -16,7 +16,7 @@ define([
          var self = this;
          var r = request.get(this.target, {
             handleAs: "json",
-            headers: this.headers,
+            headers: this.headers
          });
          var rv = r.then(function (data) {
             var theOne;
@@ -37,12 +37,12 @@ define([
             query = "?type=" + options.type + "&" + query;
          }
          return this.inherited(arguments, [query, options]);
-      },
+      }
    });
    var store = new Observable(
       new partsRest({
          idProperty: "partnumber",
-         target: "erp/api/v0/goods/",
+         target: "erp/api/v0/goods/"
       })
    );
    console.log("done creating store");

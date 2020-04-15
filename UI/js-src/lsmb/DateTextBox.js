@@ -4,7 +4,7 @@ define([
    "dijit/form/DateTextBox",
    "dojo/date/locale",
    "dojo/i18n",
-   "dojo/_base/declare",
+   "dojo/_base/declare"
 ], function (DateTextBox, locale, i18n, declare) {
    var isoDate = /^\d\d\d\d-\d\d-\d\d$/;
    return declare("lsmb/DateTextBox", [DateTextBox], {
@@ -76,8 +76,8 @@ define([
          }
          return locale.parse(value, {
             datePattern: "yyyy-MM-dd",
-            selector: "date",
+            selector: "date"
          });
-      },
+      }
    });
 });

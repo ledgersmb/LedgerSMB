@@ -14,6 +14,6 @@ define(["dijit/form/Form", "dojo/_base/declare"], function (Form, declare) {
    return declare("lsmb/SimpleForm", [Form], {
       onSubmit: function (evt) {
          return this.validate();
-      },
+      }
    });
 });

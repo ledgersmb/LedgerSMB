@@ -5,7 +5,7 @@ define([
    "dijit/_WidgetBase",
    "dijit/_TemplatedMixin",
    "dijit/_WidgetsInTemplateMixin",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (
    declare,
    _WidgetBase,

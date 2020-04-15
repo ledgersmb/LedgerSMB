@@ -11,7 +11,7 @@ var copyOnlyMids = {
 };
 var miniExcludeMids = {
    //      "lsmb/README.md": 1,
-   "lsmb/package": 1,
+   "lsmb/package": 1
 };
 
 // jshint unused: false
@@ -37,9 +37,9 @@ var profile = (function () {
             "dojo-loader": 1,
             dom: 1,
             "host-browser": 1,
-            "config-selectorEngine": "lite",
+            "config-selectorEngine": "lite"
          },
-         async: 1,
+         async: 1
       },
 
       staticHasFeatures: {
@@ -71,22 +71,22 @@ var profile = (function () {
          "dojo-v1x-i18n-Api": 1, // Enables support for v1.x i18n loading (required for Dijit)
          dom: 1, // Ensures the DOM code is available
          "host-browser": 1, // Ensures the code is built to run on a browser platform
-         "extend-dojo": 1, // Ensures pre-Dojo 2.0 behavior is maintained
+         "extend-dojo": 1 // Ensures pre-Dojo 2.0 behavior is maintained
       },
 
       packages: [
          {
             name: "dojo",
-            location: "../dojo",
+            location: "../dojo"
          },
          {
             name: "dijit",
-            location: "../dijit",
+            location: "../dijit"
          },
          {
             name: "lsmb",
-            location: ".",
-         },
+            location: "."
+         }
       ],
 
       layers: {
@@ -96,10 +96,10 @@ var profile = (function () {
                "dojo/query",
                "dojo/domReady",
                "dojo/on",
-               "dijit/Tooltip",
+               "dijit/Tooltip"
             ],
             customBase: true,
-            boot: true,
+            boot: true
          },
          "lsmb/main": {
             include: [
@@ -119,9 +119,9 @@ var profile = (function () {
                "lsmb/SubscribeCheckBox",
                "lsmb/SubscribeNumberTextBox",
                "lsmb/SubscribeSelect",
-               "lsmb/SubscribeShowHide",
-            ],
-         },
+               "lsmb/SubscribeShowHide"
+            ]
+         }
       },
 
       resourceTags: {
@@ -147,7 +147,7 @@ var profile = (function () {
 
          amd: function (filename) {
             return /lsmb\/.+\.js$/.test(filename);
-         },
-      },
+         }
+      }
    };
 })();

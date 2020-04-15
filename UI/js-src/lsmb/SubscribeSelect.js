@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/Select",
+   "dijit/form/Select"
 ], function (declare, on, topic, Select) {
    return declare("lsmb/SubscribeSelect", [Select], {
       topic: "",
@@ -24,6 +24,6 @@ define([
                self.update(targetValue);
             })
          );
-      },
+      }
    });
 });

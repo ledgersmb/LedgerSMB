@@ -8,7 +8,7 @@ define([
    "dojo/topic",
    "dijit/registry",
    "dijit/_WidgetBase",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (
    declare,
    on,
@@ -64,6 +64,6 @@ define([
             "display",
             this._by_periods.get("checked") ? "" : "none"
          );
-      },
+      }
    });
 });

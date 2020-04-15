@@ -14,7 +14,7 @@ define([
    "dojo/request/xhr",
    "dojo/query",
    "dojo/request/iframe",
-   "dojo/dom-class",
+   "dojo/dom-class"
 ], function (
    ContentPane,
    declare,
@@ -154,7 +154,7 @@ define([
          if (newContent !== null) {
             contentPromise = this.inherited("set", arguments, [
                "content",
-               newContent,
+               newContent
             ]).then(function () {
                query("a", self.domNode).forEach(self.interceptClick);
                self.show_main_div();
@@ -178,6 +178,6 @@ define([
             return contentPromise;
          }
          return setPromise;
-      },
+      }
    });
 });

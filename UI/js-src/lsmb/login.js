@@ -22,7 +22,7 @@ function send_form() {
       "dojo/dom",
       "dojo/dom-style",
       "dojo/json",
-      "dijit/Dialog",
+      "dijit/Dialog"
    ], function (xhr, dom, style, json, Dialog) {
       xhr("login.pl?action=authenticate&company=" + company, {
          method: "POST",
@@ -31,8 +31,8 @@ function send_form() {
          data: json.stringify({
             login: username,
             password: password,
-            company: company,
-         }),
+            company: company
+         })
       }).then(
          function (data) {
             window.location.href = data.target;
@@ -43,7 +43,7 @@ function send_form() {
                new Dialog({
                   title: "Error",
                   content: "Company does not exist.",
-                  style: "width: 300px",
+                  style: "width: 300px"
                }).show();
             } else if (
                status === 400 &&
@@ -52,19 +52,19 @@ function send_form() {
                new Dialog({
                   title: "Error",
                   content: "Access denied: Bad username/password",
-                  style: "width: 300px",
+                  style: "width: 300px"
                }).show();
             } else if (status === 521) {
                new Dialog({
                   title: "Error",
                   content: "Database version mismatch",
-                  style: "width: 300px",
+                  style: "width: 300px"
                }).show();
             } else {
                new Dialog({
                   title: "Error",
                   content: "Unknown error preventing login",
-                  style: "width: 300px",
+                  style: "width: 300px"
                }).show();
             }
             style.set(dom.byId("login-indicator"), "visibility", "hidden");
@@ -77,7 +77,7 @@ require(["dijit/ProgressBar", "dojo/domReady"], function (progressbar) {
    var indicator = new progressbar({
       id: "login-progressbar",
       value: 100,
-      indeterminate: true,
+      indeterminate: true
    }).placeAt("login-indicator", "only");
    indicator.startup();
 });

@@ -7,7 +7,7 @@ define("lsmb/Reconciliation", [
    "lsmb/Form",
    "dijit/_Container",
    "dojo/NodeList-dom", // To load extensions in query
-   "dojo/domReady!",
+   "dojo/domReady!"
 ], function (declare, topic, query, Form, _Container) {
    return declare("lsmb/Reconciliation", [Form, _Container], {
       update: function (targetValue, prefix) {
@@ -35,6 +35,6 @@ define("lsmb/Reconciliation", [
                self.update(targetValue, "#outstanding-table");
             }
          );
-      },
+      }
    });
 });

@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/Select",
+   "dijit/form/Select"
 ], function (declare, on, topic, Select) {
    return declare("lsmb/PublishSelect", [Select], {
       topic: "",
@@ -19,6 +19,6 @@ define([
                self.publish(targetValue);
             })
          );
-      },
+      }
    });
 });

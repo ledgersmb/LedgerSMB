@@ -9,7 +9,7 @@ define([
    "dojo/dom-attr",
    "dojo/dom-form",
    "dojo/query",
-   "dijit/registry",
+   "dijit/registry"
 ], function (
    Form,
    declare,
@@ -73,6 +73,6 @@ define([
             }
             registry.byId("maindiv").load_form(url, options);
          }
-      },
+      }
    });
 });

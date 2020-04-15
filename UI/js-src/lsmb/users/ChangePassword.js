@@ -12,7 +12,7 @@ define([
    "dijit/form/Button",
    "dojo/text!./templates/PasswordChange.html",
    "dojo/request",
-   "dijit/_Container",
+   "dijit/_Container"
 ], function (
    declare,
    _widgetbase,
@@ -39,7 +39,7 @@ define([
             verify: "Verify",
             change: "Change Password",
             "no-oldpw": "No Old Password",
-            strength: "Strength",
+            strength: "Strength"
          },
          lstrings: {},
          text: function (to_translate) {
@@ -128,9 +128,9 @@ define([
                   action: "change_password",
                   old_password: old_password,
                   new_password: new_password,
-                  confirm_password: confirm_pass,
+                  confirm_password: confirm_pass
                },
-               method: "POST",
+               method: "POST"
             })
                .then(function (response) {
                   I.setFeedback(1, I.text("Password Changed"));
@@ -152,7 +152,7 @@ define([
                this.feedback.set("class", "failure");
             }
             this.feedback.set("innerHTML", message);
-         },
+         }
       }
    );
 });

@@ -4,7 +4,7 @@ define([
    "dijit/form/TextBox",
    "dojo/_base/declare",
    "dojo/debounce",
-   "dojo/text!./templates/ResizingTextarea.html",
+   "dojo/text!./templates/ResizingTextarea.html"
 ], function (TextBox, declare, debounce, template) {
    return declare("lsmb/ResizingTextarea", [TextBox], {
       innerStyle: "",
@@ -37,6 +37,6 @@ define([
       set: function () {
          this.inherited(arguments);
          this._autoSize();
-      }, // set
+      } // set
    });
 });

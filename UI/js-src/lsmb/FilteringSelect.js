@@ -9,7 +9,7 @@ define([
    "dojo/dom-attr",
    "dojo/dom-form",
    "dojo/query",
-   "dijit/registry",
+   "dijit/registry"
 ], function (
    FilteringSelect,
    declare,
@@ -28,6 +28,6 @@ define([
             this.onChange(d.getHighlightedOption());
          }
          return this.inherited(arguments);
-      },
+      }
    });
 });

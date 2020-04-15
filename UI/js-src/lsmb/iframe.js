@@ -32,7 +32,7 @@ define([
    "dojo/NodeList-manipulate",
    "dojo/NodeList-dom" /*= ====,
                        '../request',
-                       '../_base/declare' ===== */,
+                       '../_base/declare' ===== */
 ], function (
    module,
    require,
@@ -153,8 +153,8 @@ define([
             style: {
                position: "absolute",
                top: "-1000px",
-               left: "-1000px",
-            },
+               left: "-1000px"
+            }
          },
          win.body()
       );
@@ -232,7 +232,7 @@ define([
                      {
                         type: "hidden",
                         name: name,
-                        value: value,
+                        value: value
                      },
                      formNode
                   );
@@ -410,7 +410,7 @@ define([
    }
 
    var defaultOptions = {
-      method: "POST",
+      method: "POST"
    };
    function iframe(url, options, returnDeferred) {
       var response = util.parseArgs(

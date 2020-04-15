@@ -7,7 +7,7 @@ define([
    "dojo/request/xhr",
    "dojo/dom-form",
    "dojo/dom-attr",
-   "dijit/registry",
+   "dijit/registry"
 ], function (declare, event, Button, xhr, domform, domattr, registry) {
    return declare("lsmb/payments/PostPrintButton", [Button], {
       onClick: function (evt) {
@@ -20,7 +20,7 @@ define([
          xhr(domattr.get(f, "action"), {
             method: "POST",
             data: data,
-            handleAs: "blob",
+            handleAs: "blob"
          }).then(
             function (blob) {
                // IE doesn't allow using a blob object directly
@@ -57,6 +57,6 @@ define([
                registry.byId("maindiv").report_request_error(err);
             }
          );
-      },
+      }
    });
 });

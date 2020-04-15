@@ -4,7 +4,7 @@ define([
    "dojo/_base/declare",
    "dojo/on",
    "dojo/topic",
-   "dijit/form/NumberTextBox",
+   "dijit/form/NumberTextBox"
 ], function (declare, on, topic, NumberTextBox) {
    return declare("lsmb/SubscribeNumberTextBox", NumberTextBox, {
       topic: "",
@@ -20,6 +20,6 @@ define([
                self.update(targetValue);
             })
          );
-      },
+      }
    });
 });
