@@ -7,12 +7,6 @@ function show_indicator() {
    });
 }
 
-function submit_form() {
-   window.setTimeout(show_indicator, 0);
-   window.setTimeout(send_form, 10);
-   return false;
-}
-
 function send_form() {
    var username = document.login.login.value;
    var password = document.login.password.value;
@@ -72,6 +66,12 @@ function send_form() {
          }
       );
    });
+}
+
+function submit_form() {
+   window.setTimeout(show_indicator, 0);
+   window.setTimeout(send_form, 10);
+   return false;
 }
 
 require(["dijit/ProgressBar", "dojo/domReady"], function (progressbar) {

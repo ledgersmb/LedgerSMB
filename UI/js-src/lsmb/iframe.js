@@ -1,6 +1,7 @@
 /** @format */
 
 /* eslint no-useless-escape:0, no-param-reassign:0, no-console:0 */
+/* eslint no-use-before-define:0 */ /* iframe is defined at the bottom but used everywhere */
 
 // This file is a copy of 'dojo/request/iframe.js', but adds checks for
 // the presence and value of a cookie
@@ -52,18 +53,6 @@ define([
    var mid = module.id.replace(/[\/\.\-]/g, "_");
    var onload = mid + "_onload";
    var downloadCookie = "request-download." + new Date().getTime();
-
-   if (!win.global[onload]) {
-      win.global[onload] = function () {
-         var dfd = iframe._currentDfd;
-         if (!dfd) {
-            iframe._fireNextRequest();
-            return;
-         }
-
-         dfd._finished = true;
-      };
-   }
 
    function create(name, onloadstr, uri) {
       if (win.global[name]) {
@@ -515,6 +504,18 @@ define([
    iframe._fireNextRequest = fireNextRequest;
 
    util.addCommonMethods(iframe, ["GET", "POST"]);
+
+   if (!win.global[onload]) {
+      win.global[onload] = function () {
+         var dfd = iframe._currentDfd;
+         if (!dfd) {
+            iframe._fireNextRequest();
+            return;
+         }
+
+         dfd._finished = true;
+      };
+   }
 
    return iframe;
 });
