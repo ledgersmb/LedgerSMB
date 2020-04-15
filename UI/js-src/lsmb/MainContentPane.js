@@ -40,7 +40,7 @@ define([
       },
       report_request_error: function (err) {
          var d = registry.byId("errorDialog");
-         if (0 === err.response.status) {
+         if (err.response.status === 0) {
             d.set("content", "Could not connect to server");
          } else {
             var data = err.response.data;

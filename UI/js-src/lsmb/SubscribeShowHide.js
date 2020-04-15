@@ -19,11 +19,11 @@ define([
          style.set(this.domNode, "display", "none");
       },
       update: function (targetValue) {
-         if (this.showValues && -1 !== this.showValues.indexOf(targetValue)) {
+         if (this.showValues && this.showValues.indexOf(targetValue) !== -1) {
             this.show();
          } else if (
             this.hideValues &&
-            -1 !== this.hideValues.indexOf(targetValue)
+            this.hideValues.indexOf(targetValue) !== -1
          ) {
             this.hide();
          } else if (!this.showValues) {

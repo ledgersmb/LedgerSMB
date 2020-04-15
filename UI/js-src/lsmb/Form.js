@@ -47,7 +47,7 @@ define([
          var method = typeof this.method === "undefined" ? "GET" : this.method;
          var url = this.action;
          var options = { handleAs: "text" };
-         if ("get" === method.toLowerCase()) {
+         if (method.toLowerCase() === "get") {
             if (!url) {
                alert("Form contains no action. Please file a bug");
                return false;
@@ -59,7 +59,7 @@ define([
             hash(url); // add GET forms to the back button history
          } else {
             options["method"] = method;
-            if ("multipart/form-data" == this.domNode.enctype) {
+            if (this.domNode.enctype == "multipart/form-data") {
                options["data"] = new FormData(this.domNode);
                // FF doesn't add the clicked button
                options["data"].append("action", this.clickedAction);
