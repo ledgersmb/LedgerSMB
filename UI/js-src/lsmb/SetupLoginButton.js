@@ -29,7 +29,7 @@ define([
             },
             function (err) {
                var status = err.response.status;
-               if (status == "454") {
+               if (status === 454) {
                   alert("Company does not exist");
                } else {
                   alert(

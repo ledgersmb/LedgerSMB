@@ -41,7 +41,7 @@ define([
                   this[btn],
                   "click",
                   lang.hitch(this, function () {
-                     if (this.state == "edit" && tgtState !== "edit") {
+                     if (this.state === "edit" && tgtState !== "edit") {
                         this.templateContent.set(
                            "value",
                            this.restorableContent
@@ -89,7 +89,8 @@ define([
          },
          updateButtons: function () {
             var disabled =
-               this.templateName.value == "" || this.templateFormat.value == "";
+               this.templateName.value === "" ||
+               this.templateFormat.value === "";
 
             // how to choose between 'create' and 'edit'?!
             this.createButton.set("disabled", disabled);
@@ -119,7 +120,7 @@ define([
                   this.setState("view");
                }),
                lang.hitch(this, function (err) {
-                  if (err.response.status == 404) {
+                  if (err.response.status === 404) {
                      this.restorableContent = "";
                      this.editButton.set("disabled", true);
                      this.createButton.set("disabled", false);
@@ -137,13 +138,13 @@ define([
                "state-" + newValue,
                "state-" + old
             );
-            if (newValue == "view") {
+            if (newValue === "view") {
                newValue = "";
             }
             this.templateName.set("disabled", newValue !== "");
             this.templateFormat.set("disabled", newValue !== "");
             this.templateLanguage.set("disabled", newValue !== "");
-            this.templateContent.set("readonly", newValue == "");
+            this.templateContent.set("readonly", newValue === "");
          },
       }
    );

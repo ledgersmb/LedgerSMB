@@ -21,7 +21,7 @@ define([
          var rv = r.then(function (data) {
             var theOne;
             array.forEach(data, function (item) {
-               if (id == item[self.idProperty]) {
+               if (id === item[self.idProperty]) {
                   theOne = item;
                }
             });
@@ -30,7 +30,7 @@ define([
          return rv;
       },
       query: function (query, options) {
-         if (query && typeof query == "object") {
+         if (query && typeof query === "object") {
             query = "?" + io.objectToQuery(query);
          }
          if (options && options.type) {

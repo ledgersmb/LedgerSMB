@@ -111,7 +111,7 @@ define([
          //     });
       },
       load_link: function (href) {
-         if (this.last_page == href) {
+         if (this.last_page === href) {
             return;
          }
          this.last_page = href;
@@ -146,7 +146,7 @@ define([
          } else if (arguments.length === 1 && lang.isString(arguments[0])) {
             newContent = arguments[0];
             contentOnly = true;
-         } else if (arguments.length === 2 && arguments[0] == "content") {
+         } else if (arguments.length === 2 && arguments[0] === "content") {
             newContent = arguments[1];
             contentOnly = true;
          }

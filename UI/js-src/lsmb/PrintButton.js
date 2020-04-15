@@ -13,7 +13,7 @@ define([
       minimalGET: true,
       onClick: function (evt) {
          var f = this.valueNode.form;
-         if (f.media.value == "screen") {
+         if (f.media.value === "screen") {
             var data;
 
             if (this.minimalGET) {

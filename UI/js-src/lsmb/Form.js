@@ -59,7 +59,7 @@ define([
             hash(url); // add GET forms to the back button history
          } else {
             options.method = method;
-            if (this.domNode.enctype == "multipart/form-data") {
+            if (this.domNode.enctype === "multipart/form-data") {
                options.data = new FormData(this.domNode);
                // FF doesn't add the clicked button
                options.data.append("action", this.clickedAction);

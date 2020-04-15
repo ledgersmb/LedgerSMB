@@ -35,9 +35,9 @@ define([
             var formatLength = params.formatLength || "short";
             var bundle = locale._getGregorianBundle(l);
 
-            if (params.constraints.selector == "year") {
+            if (params.constraints.selector === "year") {
                params.placeholder = bundle["dateFormatItem-yyyy"] || "yyyy";
-            } else if (params.constraints.selector == "time") {
+            } else if (params.constraints.selector === "time") {
                params.placeholder =
                   params.constraints.timePattern ||
                   bundle["timeFormat-" + formatLength];

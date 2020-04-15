@@ -84,9 +84,9 @@ define("lsmb/layout/TableContainer", [
          this.connect(this, "set", function (name, value) {
             if (
                value &&
-               (name == "orientation" ||
-                  name == "customClass" ||
-                  name == "cols")
+               (name === "orientation" ||
+                  name === "customClass" ||
+                  name === "cols")
             ) {
                this.layout();
             }
@@ -125,7 +125,7 @@ define("lsmb/layout/TableContainer", [
          //              does not resize, as it takes up 100% of the
          //              available width.
          arrayUtil.forEach(this.getChildren(), function (child) {
-            if (typeof child.resize == "function") {
+            if (typeof child.resize === "function") {
                child.resize();
             }
          });
@@ -144,7 +144,7 @@ define("lsmb/layout/TableContainer", [
          var _this = this;
 
          function addCustomClass(node, type, count) {
-            if (_this.customClass != "") {
+            if (_this.customClass !== "") {
                var clazz =
                   _this.customClass +
                   "-" +
@@ -195,7 +195,7 @@ define("lsmb/layout/TableContainer", [
 
          var labelRow = domConstruct.create("tr", {}, tbody);
          var childRow =
-            !this.showLabels || this.orientation == "horiz"
+            !this.showLabels || this.orientation === "horiz"
                ? labelRow
                : domConstruct.create("tr", {}, tbody);
          var maxCols = this.cols * (this.showLabels ? 2 : 1);
@@ -221,7 +221,7 @@ define("lsmb/layout/TableContainer", [
                   numCols = 0;
                   labelRow = domConstruct.create("tr", {}, tbody);
                   childRow =
-                     this.orientation == "horiz"
+                     this.orientation === "horiz"
                         ? labelRow
                         : domConstruct.create("tr", {}, tbody);
                }
@@ -240,7 +240,7 @@ define("lsmb/layout/TableContainer", [
                   if (child.spanLabel) {
                      domProp.set(
                         labelCell,
-                        this.orientation == "vert" ? "rowspan" : "colspan",
+                        this.orientation === "vert" ? "rowspan" : "colspan",
                         2
                      );
                   } else {
@@ -301,7 +301,7 @@ define("lsmb/layout/TableContainer", [
          // Refresh the layout of any child widgets, allowing them to resize
          // to their new parent.
          arrayUtil.forEach(children, function (child) {
-            if (typeof child.layout == "function") {
+            if (typeof child.layout === "function") {
                child.layout();
             }
          });

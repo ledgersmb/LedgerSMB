@@ -246,7 +246,7 @@ define([
                      }
                   } else {
                      var n = query("input[name='" + x + "']", formNode);
-                     if (n.indexOf() == -1) {
+                     if (n.indexOf() === -1) {
                         createInput(x, val);
                      } else {
                         n.val(val);

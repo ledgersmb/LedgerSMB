@@ -39,22 +39,22 @@ function send_form() {
          },
          function (err) {
             var status = err.response.status;
-            if (status == "454") {
+            if (status === 454) {
                new Dialog({
                   title: "Error",
                   content: "Company does not exist.",
                   style: "width: 300px",
                }).show();
             } else if (
-               status == "400" &&
-               err.response.text == "Credentials invalid or session expired"
+               status === 400 &&
+               err.response.text === "Credentials invalid or session expired"
             ) {
                new Dialog({
                   title: "Error",
                   content: "Access denied: Bad username/password",
                   style: "width: 300px",
                }).show();
-            } else if (status == "521") {
+            } else if (status === 521) {
                new Dialog({
                   title: "Error",
                   content: "Database version mismatch",

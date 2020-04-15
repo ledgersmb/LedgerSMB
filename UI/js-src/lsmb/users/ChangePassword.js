@@ -86,7 +86,7 @@ define([
                digits: /\d/.test(pass),
                lower: /[a-z]/.test(pass),
                upper: /[A-Z]/.test(pass),
-               nonWords: /\W/.test(pass),
+               nonWords: /\W/.test(pass)
             };
             var variationCount = 0;
             for (var check in variations) {
@@ -136,8 +136,8 @@ define([
                   I.setFeedback(1, I.text("Password Changed"));
                })
                .otherwise(function (err) {
-                  if (err.response.status != 200) {
-                     if (err.response.status != "500") {
+                  if (err.response.status !== 200) {
+                     if (err.response.status !== 500) {
                         I.setFeedback(0, I.text("Bad username/Password"));
                      } else {
                         I.setFeedback(0, I.text("Error changing password."));
