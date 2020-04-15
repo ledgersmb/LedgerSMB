@@ -2,7 +2,8 @@ package LedgerSMB::FileFormats::ISO20022::CAMT053;
 use strict;
 use warnings;
 
-use XML::Simple;
+use XML::LibXML;
+use XML::LibXML::XPathContext;
 use Try::Tiny;
 
 =head1 NAME
@@ -11,20 +12,21 @@ LedgerSMB::FileFormats::ISO20022::CAMT053 - Parse SEPA CAMT053 files
 
 =head1 SYNOPSIS
 
-    LedgerSMB::FileFormats::ISO20022::CAMT053->new($filename);
-    LedgerSMB::FileFormats::ISO20022::CAMT053->new($filecontents);
+    my $camt = LedgerSMB::FileFormats::ISO20022::CAMT053->new($filecontents);
+    my @transactions = $camt->lineitems_simple;
 
 =head1 DESCRIPTION
 
-This module provides basic management functions for CAMT053 files for LedgerSMB
+This module provides basic parsing and data extraction of CAMT053 bank statement
+files for LedgerSMB.
 
 =head1 AUTODETECTION
 
-The constructor returns UNDEF if the file is not a CAMT053 docuent.
+The constructor returns C<undef> if the file is not a CAMT053 docuent.
 
 =head1 METHODS
 
-=head2 new($xml_data)
+=head2 new($xml_string)
 
 Pass in a string of XML data. Returns undef if the string is not valid XML or
 not identified as a CAMT053 document.
@@ -35,47 +37,34 @@ sub new {
     my ($class, $content) = @_;
     return unless defined $content;
 
-    my $parser = XML::Simple->new();
-    my $raw;
-
-    # XML::Simple will die if content is not valid XML (it might be csv).
-    # Use parse_string() as the standard XMLin() parser scans the string
-    # for '<' and '>' characters and, if none are found, interprets
-    # the content as a filename to try reading from the filesystem.
+    my ($dom, $ns);
     try {
-       $raw = $parser->parse_string($content);
+        $dom = XML::LibXML->load_xml(
+            string => $content
+        );
+        $ns = $dom->documentElement->namespaceURI;
     };
 
-    return unless $raw
-        and $raw->{xmlns}
-        and $raw->{xmlns} eq 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02';
+    return unless $dom
+        and $ns
+        and $ns eq 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02';
 
-    return bless ({struct => $raw}, $class);
+    return bless ({dom => $dom}, $class);
 }
 
 =head1 PROPERTIES
 
-=head2 raw_struct
+=head2 dom
 
-Returns the raw structure
-
-=cut
-
-sub raw_struct {
-    my ($self) = @_;
-    return $self->{struct}
-}
-
-=head2 lineitems_full
-
-Returns a simple list of data structures representing the statement lines
+Returns the XML::LibXML DOM tree representing the input xml.
 
 =cut
 
-sub lineitems_full {
+sub dom {
     my ($self) = @_;
-    return @{$self->raw_struct->{BkToCstmrStmt}->{Stmt}->{Ntry}};
+    return $self->{dom};
 }
+
 
 =head2 lineitems_simple
 
@@ -86,8 +75,6 @@ Returns a flattened list with the following elements:
 =item entry_id
 
 =item acc_id
-
-=item counterparty_name
 
 =item amount
 
@@ -112,21 +99,35 @@ sub _decode_crdt {
 
 sub lineitems_simple {
     my ($self) = @_;
+
+    my $xpc = XML::LibXML::XPathContext->new;
+    $xpc->registerNs(
+        'camt' => 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02'
+    );
+    $xpc->setContextNode($self->dom);
+
+    my $transactions = $xpc->find(
+        '//camt:Document/camt:BkToCstmrStmt/camt:Stmt/camt:Ntry'
+    );
+
     return map {
+        $xpc->setContextNode($_);
         {
-             entry_id          => $_->{NtryRef},
-             acc_id            => $_->{AcctSvcrRef},
-             amount            => $_->{Amt}->{content},
-             currency          => $_->{Amt}->{Ccy},
-             booked_date       => $_->{BookgDt}->{Dt},
-             credit_debit      => _decode_crdt($_->{CdtDbtInd}),
+            entry_id     => $xpc->findvalue('camt:NtryRef'),
+            acc_id       => $xpc->findvalue('camt:AcctSvcrRef'),
+            amount       => $xpc->findvalue('camt:Amt'),
+            currency     => $xpc->findvalue('camt:Amt/@Ccy'),
+            booked_date  => $xpc->findvalue('camt:BookgDt/camt:Dt'),
+            credit_debit => _decode_crdt(
+                $xpc->findvalue('camt:CdtDbtInd')
+            ),
         }
-    } $self->lineitems_full;
+    } @{$transactions};
 }
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2016-2018 The LedgerSMB Core Team
+Copyright (C) 2016-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

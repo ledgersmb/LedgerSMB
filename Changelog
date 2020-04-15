@@ -81,6 +81,7 @@ Dependency updates
 * PGObject::Type::BigFloat >= 2.0.1 (from 1.0.0)
 * PGObject::Type::DateTime >= 2.0.2 (from 1.0.4)
 * PGObject::Type::ByteString >= 1.2.3 (from 1.1.1)
+* XML::Simple (dropped)
 
 
 Changelog for 1.7 Series
