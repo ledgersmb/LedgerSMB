@@ -277,13 +277,11 @@ define([
                } else {
                   formNode.setAttribute("method", options.method);
                }
-            } else {
-               if (!methodNode || !methodNode.value) {
-                  if (methodNode) {
-                     methodNode.value = options.method;
-                  } else {
-                     formNode.setAttribute("method", options.method);
-                  }
+            } else if (!methodNode || !methodNode.value) {
+               if (methodNode) {
+                  methodNode.value = options.method;
+               } else {
+                  formNode.setAttribute("method", options.method);
                }
             }
 
