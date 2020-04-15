@@ -282,7 +282,9 @@ define([
             }
             formNode.target = iframe._iframeName;
 
-            notify && notify.emit("send", response, dfd.promise.cancel);
+            if (typeof notify === "function") {
+               notify.emit("send", response, dfd.promise.cancel);
+            }
             iframe._notifyStart(response);
             formNode.submit();
          } else {
@@ -300,7 +302,9 @@ define([
                response.url +
                (response.url.indexOf("?") > -1 ? "&" : "?") +
                extra;
-            notify && notify.emit("send", response, dfd.promise.cancel);
+            if (typeof notify === "function") {
+               notify.emit("send", response, dfd.promise.cancel);
+            }
             iframe._notifyStart(response);
             iframe.setSrc(iframe._frame, tmpUrl, true);
          }
@@ -340,8 +344,9 @@ define([
          }
 
          // restore original action + target
-         this._originalAction &&
+         if (typeof this._originalAction !== "undefined") {
             formNode.setAttribute("action", this._originalAction);
+         }
          if (this._originalMethod) {
             formNode.setAttribute("method", this._originalMethod);
             formNode.method = this._originalMethod;
