@@ -65,6 +65,11 @@ define([
                      which the widget expects */
             this.value = this.parse(this._formattedValue, this.constraints);
          }
+         /*
+          * isNan validates input without conversion, whereas Number.isNan
+          * converts its input to number then validates. So we disable the
+          * linter rule
+          */
          /* eslint no-restricted-globals: 0 */
          if (
             (this.value === undefined || isNaN(this.value)) &&
@@ -73,8 +78,7 @@ define([
             this.value = new Date();
          }
       },
-      /* eslint no-unused-vars:0 */
-      parse: function (value, constraints) {
+      parse: function (value) {
          if (!isoDate.test(value)) {
             return this.inherited(arguments);
          }
