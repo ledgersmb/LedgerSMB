@@ -22,8 +22,7 @@ define([
             user: username,
             password: password
          }).then(
-            // eslint-disable-next-line no-unused-vars
-            function (data) {
+            function () {
                window.location.href =
                   "setup.pl?action=" + self.action + "&database=" + company;
             },

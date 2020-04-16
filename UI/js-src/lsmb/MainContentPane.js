@@ -87,8 +87,7 @@ define([
             }
          );
       },
-      // eslint-disable-next-line no-unused-vars
-      download_link: function (href) {
+      download_link: function (/*href*/) {
          // while it would have been nice for the code below
          // to work, content downloaded into the iframe through
          // dojo/request/iframe breaks all but the first request

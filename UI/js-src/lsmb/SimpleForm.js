@@ -12,8 +12,7 @@ define(["dijit/form/Form", "dojo/_base/declare"], function (Form, declare) {
               Concluding: you only want to use this class in specific cases.
             */
    return declare("lsmb/SimpleForm", [Form], {
-      /* eslint no-unused-vars:0 */
-      onSubmit: function (evt) {
+      onSubmit: function () {
          return this.validate();
       }
    });
