@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity */
+
 textarea#intnotes,
 textarea#notes {
     /* Prevent notes fields taking up endless screen estate */
@@ -7,8 +9,10 @@ textarea#notes {
 div.input {
     float: left;
 }
+
 .lsmb .dijitTextBox {
     /* neutralize default textbox width of 15em */
+
     /* we need two classes here, because it needs to be more specific
        than the .dijitTextBox class in order to be the applicable rule */
     width: auto;
@@ -19,23 +23,24 @@ div.date {
 }
 
 div.warning {
-    float: right;
-    width: 60%;
-    margin-right: 10%;
+    background: #f81;
+    border: 3px solid #f22;
+    border-radius: 6px;
+    box-shadow: #eee 6px 6px 4px;
     box-sizing: border-box;
-    padding-top: 1em;
-    padding-bottom:1em;
+    color: black;
+    float: right;
+    margin-right: 10%;
+    padding-bottom: 1em;
     padding-left: 5em;
     padding-right: 5em;
+    padding-top: 1em;
     text-align: center;
-    border: 3px solid #f22;
-    background: #f81;
-    color: black;
-    border-radius: 6px;
-    border-shadow: #eee 6px 6px 4px;
+    width: 60%;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     overflow: hidden;
@@ -43,55 +48,56 @@ html, body {
 }
 
 .flat-hierarchy .balancesheet .report-head th {
-    text-align: right;
     font-weight: bold;
+    text-align: right;
     white-space: pre;
 }
 
 .flat-hierarchy .balancesheet .section1.QL,
 .flat-hierarchy .income_statement .section1 {
-    display: none;
     border: none;
+    display: none;
 }
-
 
 .flat-hierarchy .balancesheet .section1,
 .flat-hierarchy .balancesheet .section2,
 .flat-hierarchy .income_statement .section2 {
-    font-size: large;
     border-bottom: 3px double black;
+    font-size: large;
 }
 
 .financial-statement.flat-hierarchy .heading1,
 .financial-statement.flat-hierarchy .balancesheet .heading2 {
     border-top: 1px solid black;
+    font-weight: bold;
     height: 2em;
     vertical-align: top;
-    font-weight: bold;
 }
 
 .financial-statement.flat-hierarchy .income_statement .heading2 {
     border-top: 1px solid black;
+    font-size: bigger;
+    font-style: italic;
     height: 2em;
     vertical-align: top;
-    font-style: italic;
-    font-size: bigger;
 }
 
 #maindiv {
     overflow-y: auto;
 }
+
 .financial-statement.flat-hierarchy table {
-    min-width: 60ex;
     margin-top: 3em;
+    min-width: 60ex;
 }
 
 #appLayout {
     height: 100%;
 }
+
 #leftCol {
-    width: 14em;
     margin-top: 3em;
+    width: 14em;
 }
 
 .financial-statement.flat-hierarchy table td,
@@ -99,135 +105,127 @@ html, body {
     padding-bottom: 3px; /* add space for the dashed line underlining hovered amounts */
 }
 
-
 .financial-statement .company-name {
-   margin-top: 2em;
-   font-family: monospace;
-   text-align: center;
+    font-family: monospace;
+    margin-top: 2em;
+    text-align: center;
 }
 
 .claro .demoLayout .edgePanel {
     background-color: #d0e9fc;
 }
+
 .financial-statement .company-address {
-   font-family: monospace;
-   text-align: center;
-   font-size: smaller;
+    font-family: monospace;
+    font-size: smaller;
+    text-align: center;
 }
+
 #viewsChart {
-    width: 550px;
     height: 550px;
+    width: 550px;
 }
 
 /******** For account editing page */
-#account-tabs .dijitTabContainerTopChildWrapper div
-{
-   /* we used to have 'overflow: auto', but that broke account checkboxes */
-   overflow-y: auto;
+#account-tabs .dijitTabContainerTopChildWrapper div {
+    /* we used to have 'overflow: auto', but that broke account checkboxes */
+    overflow-y: auto;
 }
 
-#account-tabs label,
-#account-tabs label
- {
-   display: block;
-   float: left;
-   text-align: right;
-   margin-right: 0.5ex;
-}
-#account-tabs div.inputgroup,
-#account-tabs div.inputgroup
- {
-   float: left;
-   display: block;
+#account-tabs label {
+    display: block;
+    float: left;
+    margin-right: 0.5ex;
+    text-align: right;
 }
 
-#account-tabs label.line,
-#account-tabs label.line
- {
-   font-weight: bold;
-   width: 12em;
-   margin-right: 0.5em;
-   /*vertical-align: center;*/
-   height: 100%,
+#account-tabs div.inputgroup {
+    display: block;
+    float: left;
 }
 
-#account-tabs div.inputgroup label,
-#account-tabs div.inputgroup label
- {
-   width: 8em;
+#account-tabs label.line {
+    font-weight: bold;
+
+    /* vertical-align: center; */
+    height: 100%,;
+    margin-right: 0.5em;
+    width: 12em;
 }
 
-#account-tabs div.subsectionhead,
-#account-tabs div.subsectionhead
- {
-   font-weight: bold;
-   margin: 1em;
+#account-tabs div.inputgroup label {
+    width: 8em;
+}
+
+#account-tabs div.subsectionhead {
+    font-weight: bold;
+    margin: 1em;
 }
 
 /********* For business units editing page ********/
 
 #business_units div.table { display: table; }
+
 #business_units form.tr,
 #business_units div.tr { display: table-row; }
+
 #business_units div.td,
 #business_units div.th {
-  display: table-cell;
-  padding-left: 0.5ex;
-  padding-right: 0.5ex;
-  text-align: center;
- }
+    display: table-cell;
+    padding-left: 0.5ex;
+    padding-right: 0.5ex;
+    text-align: center;
+}
 
 /********* For assets editing page ********/
 
-#assets label
-{ display: block;
-        float: left;
-        width: 170px;
-        text-align: right;
+#assets label {
+    display: block;
+    float: left;
+    text-align: right;
+    width: 170px;
 }
 
-#assets span.inputgroup
-{ display: block;
-        float: left;
-        width: 40%;
+#assets span.inputgroup {
+    display: block;
+    float: left;
+    width: 40%;
 }
 
-#assets div.inputrow
-{
-   display: block;
-        width: 100%;
-   clear: both;
+#assets div.inputrow {
+    clear: both;
+    display: block;
+    width: 100%;
 }
 
-#assets .invisible
-{
-       display: none;
+#assets .invisible {
+    display: none;
 }
 
 /***** Contact screens ******/
 
-
-#credit_div table label { display: inline-block; width: 12ex; }
-
-
+#credit_div table label {
+    display: inline-block;
+    width: 12ex;
+}
 
 /***** Budgetting screens ******/
-
 
 #budgets div.input_row {
     overflow: auto;
 }
+
 #budgets div.input_group {
     float: left;
     width: 35em;
 }
 
 #budgets div label {
-    text-align: right;
-    width: 7em;
     display: block;
     float: left;
     padding-right: 3px;
+    text-align: right;
+    width: 7em;
 }
 
 /***** Reports ******/
@@ -237,9 +235,9 @@ html, body {
 #balance-sheet-parameters label,
 #balance-sheet-parameters .label {
     display: inline-block;
-    width: 170px;
     text-align: right;
     vertical-align: top;
+    width: 170px;
 }
 
 #reports div.label,
@@ -254,11 +252,11 @@ html, body {
 
 #reports .input_row,
 #balance-sheet-parameters .input_row {
-   display: block;
-   width: 100%;
-   margin-top: 0.2em;
-   margin-bottom: 1em;
-   clear: both;
+    clear: both;
+    display: block;
+    margin-bottom: 1em;
+    margin-top: 0.2em;
+    width: 100%;
 }
 
 #reports .input_option,
@@ -269,8 +267,8 @@ html, body {
 
 #reports .input_option label,
 #balance-sheet-parameters .input_option label {
+    margin-left: 1ex;
     text-align: left;
-    left-margin: 1ex;
 }
 
 #reports fieldset,
@@ -282,185 +280,179 @@ html, body {
 
 #reports legend label#comparison-periods-label,
 #balance-sheet-parameters legend label#comparison-periods-label {
-    width: auto;
     vertical-align: center;
-}
-
-
-
-#assets .invisible
-{
-       display: none;
+    width: auto;
 }
 
 /***** PNL Report ******/
 
 #PNL a {
-        color: inherit;
-        background-color: inherit;
-        text-decoration: none;
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none;
 }
+
 #PNL a:link {
-        color: inherit;
-        background-color: inherit;
-        text-decoration: none;
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none;
 }
+
 #PNL a:visited {
-        color: inherit;
-        background-color: inherit;
-        text-decoration: none;
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none;
 }
+
 #PNL a:hover {
-        color: inherit;
-        background-color: inherit;
-        text-decoration: none;
-        border-bottom: thin dashed;
+    background-color: inherit;
+    border-bottom: thin dashed;
+    color: inherit;
+    text-decoration: none;
 }
+
 #PNL td.amount {
-        text-align: right;
-        padding-left: 0.5em;
-        white-space: pre;
+    padding-left: 0.5em;
+    text-align: right;
+    white-space: pre;
 }
+
 #PNL tr.separator {
-        min-height: 1em;
+    min-height: 1em;
 }
-#PNL tr.sectionhead {
-}
+
 #PNL tr.sectionhead th {
-        padding-top: 2em;
-        margin-top: 4em;
-        font-weight: bold;
-        white-space: pre;
-        text-align: right;
+    font-weight: bold;
+    margin-top: 4em;
+    padding-top: 2em;
+    text-align: right;
+    white-space: pre;
 }
 
 #PNL td.total {
-        border: 0px;
-        border-top: 1px;
-        border-color: black;
-        border-style: solid;
+    border: 0;
+    border-color: black;
+    border-style: solid;
+    border-top: 1px;
 }
 
 #PNL th {
-        padding-left: 5px;
+    padding-left: 5px;
 }
 
 #PNL table {
-      margin-right: auto;
-      margin-left: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
-#PNL h1, h2 {
-       text-align: center;
+
+#PNL h1,
+h2 {
+    text-align: center;
 }
 
 #PNL th[colspan="1"].indent {
-  width: 1em;
+    width: 1em;
 }
 
 #PNL th[colspan="2"].indent {
-  width: 2em;
+    width: 2em;
 }
 
 #PNL th[colspan="3"].indent {
-  width: 3em;
+    width: 3em;
 }
 
 #PNL th[colspan="4"].indent {
-  width: 4em;
+    width: 4em;
 }
 
 #PNL th[colspan="5"].indent {
-  width: 5em;
+    width: 5em;
 }
 
 #PNL th[colspan="6"].indent {
-  width: 6em;
+    width: 6em;
 }
 
 #PNL th[colspan="7"].indent {
-  width: 7em;
+    width: 7em;
 }
 
 #PNL th[colspan="8"].indent {
-  width: 8em;
+    width: 8em;
 }
 
 #PNL th[colspan="9"].indent {
-  width: 9em;
+    width: 9em;
 }
-
 
 #PNL td.heading1,
 #PNL th.heading1 {
-  font-weight: bold;
-  padding-bottom: 1em;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    font-weight: bold;
+    padding-bottom: 1em;
 }
 
 #PNL td.heading2,
 #PNL th.heading2 {
-  font-weight: bold;
-  font-style: italic;
+    font-style: italic;
+    font-weight: bold;
 }
 
 #PNL table.balancesheet {
-  margin-top: 2em;
-  border-top: 1px solid black;
+    border-top: 1px solid black;
+    margin-top: 2em;
 }
 
 #PNL .amount {
-  padding-left: 0.5em;
+    padding-left: 0.5em;
 }
 
 /****** Reconciliation ****/
 
-
 #reconciliation #cleared-table {
-        width: 800px;
+    width: 800px;
 }
 
 #reconciliation #outstanding-table {
-        width: 800px;
+    width: 800px;
 }
 
 #reconciliation #error-table {
-        width: 800px;
+    width: 800px;
 }
 
 #reconciliation span.heading {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 #reconciliation table.info tr th {
-        text-align: left;
+    text-align: left;
 }
 
 #reconciliation tr.spacer {
-        margin-bottom: 100px;
-}
-
-#reconciliation span.data {
+    margin-bottom: 100px;
 }
 
 #reconciliation td.no-submit {
-        background: red;
+    background: red;
 }
 
 #reconciliation td.cleared-future {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 #reconciliation td.cleared-past {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 #reconciliation th {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 #reconciliation table {
-        border: 0;
+    border: 0;
 }
 
 /*********** payments *************/
@@ -499,24 +491,26 @@ html, body {
 }
 
 #payments .details_select input[type="radio"] {
-        float: left;
+    float: left;
 }
+
 #payments select {
-        float: left;
+    float: left;
 }
+
 #payments span.input {
-     display: block;
-     float: left;
+    display: block;
+    float: left;
 }
 
 #payments .details-popup {
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-radius: 6px;
+    border-right: 1px solid black;
+    padding: 3px;
     position: absolute;
     z-index: 100;
-    padding: 3px;
-    border-radius: 6px;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
 }
 
 #payments img.details-toggler {
@@ -525,24 +519,23 @@ html, body {
 }
 
 @media print {
-  .export-links {
-     display: none;
-  }
+    .export-links {
+        display: none;
+    }
 }
 
 @media not print {
-  .export-links {
-      margin-top: 40px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-  }
+    .export-links {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+        text-align: center;
+    }
 
-  .export-link {
-      display: inline;
-  }
+    .export-link {
+        display: inline;
+    }
 }
-
 
 .claro .dijitTextBox.dijitTextArea {
     padding: 0;
@@ -550,8 +543,8 @@ html, body {
 
 .claro .dijitTextBox textarea.dijitInputInner {
     outline: none;
-    padding-top: 0;
     padding-bottom: 0;
+    padding-top: 0;
 }
 
 .no-fx-transaction .fx-row {
@@ -560,7 +553,7 @@ html, body {
 
 #top_menu .dijitTreeIcon {
     background-image: none;
-    width: 0
+    width: 0;
 }
 
 #version_info {
@@ -568,30 +561,35 @@ html, body {
 }
 
 .header_table {
+    border: none;
+    border-collapse: collapse;
+    margin-bottom: 0;
     margin-left: auto;
     margin-right: auto;
-    border:none; border-height:0; padding-top:0; padding-bottom:0; margin-top:0; margin-bottom:0;
-    border-collapse: collapse;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 .header_left {
-    font-size: smaller;
-    text-align: right;
     border-right: 1px solid;
+    font-size: smaller;
     padding-right: 3px;
+    text-align: right;
 }
 
 .header_right {
-    font-size: smaller;
-    text-align: left;
     border-left: 1px solid;
+    font-size: smaller;
     padding-left: 3px;
+    text-align: left;
 }
 
 #template-manager.state- #template-buttons,
 #template-manager.state-view #template-buttons {
     display: block;
 }
+
 #template-manager.state-upload #template-buttons,
 #template-manager.state-edit #template-buttons {
     display: none;
@@ -602,6 +600,7 @@ html, body {
 #template-manager.state-edit #template-upload {
     display: none;
 }
+
 #template-manager.state-upload #template-upload {
     display: block;
 }
@@ -610,6 +609,7 @@ html, body {
 #template-manager.state-upload #template-edit {
     display: none;
 }
+
 #template-manager.state-view #template-edit,
 #template-manager.state-edit #template-edit {
     display: block;
@@ -618,6 +618,7 @@ html, body {
 #template-manager.state-view #template-edit-buttons {
     display: none;
 }
+
 #template-manager #template-edit-buttons {
     display: block;
 }
