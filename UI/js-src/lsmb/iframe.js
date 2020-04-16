@@ -2,7 +2,7 @@
 
 /* eslint no-useless-escape:0, no-param-reassign:0, no-console:0 */
 /* eslint no-use-before-define:0 */ /* iframe is defined at the bottom but used everywhere */
-
+/* eslint amd/sane-dependency-names:0 */
 // This file is a copy of 'dojo/request/iframe.js', but adds checks for
 // the presence and value of a cookie
 

@@ -6,7 +6,7 @@ define([
    "dojo/dom-style",
    "dojo/on",
    "dijit/_WidgetBase"
-], function (declare, dom, style, on, _WidgetBase) {
+], function (declare, dom, domStyle, on, _WidgetBase) {
    return declare("lsmb/MaximizeMinimize", [_WidgetBase], {
       state: "min",
       stateData: {
@@ -26,7 +26,11 @@ define([
          var nextStateData = this.stateData[state];
          this.domNode.src = nextStateData.imgURL;
          this.state = state;
-         style.set(dom.byId(this.mmNodeId), "display", nextStateData.display);
+         domStyle.set(
+            dom.byId(this.mmNodeId),
+            "display",
+            nextStateData.display
+         );
       },
       toggle: function () {
          this.setState(this.stateData[this.state].nextState);

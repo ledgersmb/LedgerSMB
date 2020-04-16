@@ -12,18 +12,18 @@ define([
 ], function (
    declare,
    _widgetbase,
-   _templatemixin,
+   _templatedMixin,
    _widgetsInTemplateMixin,
    registry,
    on,
-   template,
+   passwordChange,
    request
 ) {
    return declare(
       "lsmb/users/ChangePassword",
-      [_widgetbase, _templatemixin, _widgetsInTemplateMixin],
+      [_widgetbase, _templatedMixin, _widgetsInTemplateMixin],
       {
-         templateString: template,
+         templateString: passwordChange,
          _lstrings: {
             title: "Change Password",
             "old password": "Old Password",

@@ -7,7 +7,7 @@ define([
    "dojo/_base/array",
    "dojo/_base/declare",
    "dojo/io-query"
-], function (JsonRest, Observable, request, array, declare, io) {
+], function (JsonRest, Observable, request, array, declare, ioQuery) {
    var partsRest = declare("lsmb/parts/PartRestStore", [JsonRest], {
       get: function (id) {
          var self = this;
@@ -29,7 +29,7 @@ define([
       query: function (query, options) {
          var _query = query;
          if (_query && typeof _query === "object") {
-            _query = "?" + io.objectToQuery(_query);
+            _query = "?" + ioQuery.objectToQuery(_query);
          }
          if (options && options.type) {
             _query = "?type=" + options.type + "&" + _query;

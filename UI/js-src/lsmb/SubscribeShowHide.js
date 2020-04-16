@@ -5,16 +5,16 @@ define([
    "dojo/dom-style",
    "dojo/topic",
    "dijit/_WidgetBase"
-], function (declare, style, topic, _WidgetBase) {
+], function (declare, domstyle, topic, _WidgetBase) {
    return declare("lsmb/SubscribeShowHide", [_WidgetBase], {
       topic: "",
       showValues: null,
       hideValues: null,
       show: function () {
-         style.set(this.domNode, "display", "block");
+         domstyle.set(this.domNode, "display", "block");
       },
       hide: function () {
-         style.set(this.domNode, "display", "none");
+         domstyle.set(this.domNode, "display", "none");
       },
       update: function (targetValue) {
          if (this.showValues && this.showValues.indexOf(targetValue) !== -1) {

@@ -7,8 +7,8 @@ define([
    "dojo/request",
    "dojo/_base/array",
    "dojo/_base/declare"
-], function (JsonRest, Memory, Cache, request, array, declare) {
-   var accountsRest = declare("lsmb/accounts/AccountRestStore", [JsonRest], {
+], function (jsonRest, memory, cache, request, array, declare) {
+   var accountsRest = declare("lsmb/accounts/AccountRestStore", [jsonRest], {
       get: function (id) {
          var self = this;
          var r = request.get(this.target, {
@@ -27,12 +27,12 @@ define([
          return rv;
       }
    });
-   var store = new Cache(
+   var store = new cache(
       new accountsRest({
          idProperty: "accno",
          target: "/erp/api/v0/accounts/"
       }),
-      new Memory()
+      new memory()
    );
    return store;
 });

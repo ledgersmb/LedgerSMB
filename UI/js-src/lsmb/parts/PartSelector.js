@@ -8,9 +8,9 @@ define([
    "dojo/aspect",
    "dojo/topic",
    "lsmb/parts/PartRestStore"
-], function (Select, declare, aspect, topic, store) {
-   var mySelect = new declare("lsmb/parts/PartSelector", [Select], {
-      store: store,
+], function (filteringSelect, declare, aspect, topic, partRestStore) {
+   var mySelect = new declare("lsmb/parts/PartSelector", [filteringSelect], {
+      store: partRestStore,
       queryExpr: "*${0}*",
       style: "width: 15ex",
       highlightMatch: "all",

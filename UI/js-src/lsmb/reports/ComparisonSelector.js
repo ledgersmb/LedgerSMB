@@ -13,7 +13,7 @@ define([
    declare,
    on,
    dom,
-   style,
+   domStyle,
    topic,
    registry,
    _WidgetBase,
@@ -58,7 +58,7 @@ define([
          },
          _update_display: function (count) {
             if (count === "" || this.mode === "by-periods") {
-               style.set(dom.byId("comparison_dates"), "display", "none");
+               domStyle.set(dom.byId("comparison_dates"), "display", "none");
                return;
             }
             var _count = parseInt(count, 10);
@@ -66,9 +66,9 @@ define([
                return;
             } // invalid input
 
-            style.set(dom.byId("comparison_dates"), "display", "");
+            domStyle.set(dom.byId("comparison_dates"), "display", "");
             for (var i = 1; i <= 9; i++) {
-               style.set(
+               domStyle.set(
                   dom.byId("comparison_dates_" + i),
                   "display",
                   i <= _count ? "" : "none"

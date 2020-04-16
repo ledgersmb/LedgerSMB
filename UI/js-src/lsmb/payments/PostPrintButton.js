@@ -8,8 +8,8 @@ define([
    "dojo/dom-form",
    "dojo/dom-attr",
    "dijit/registry"
-], function (declare, event, Button, xhr, domform, domattr, registry) {
-   return declare("lsmb/payments/PostPrintButton", [Button], {
+], function (declare, event, button, xhr, domform, domattr, registry) {
+   return declare("lsmb/payments/PostPrintButton", [button], {
       onClick: function (evt) {
          var f = this.valueNode.form;
          event.stop(evt);

@@ -5,10 +5,10 @@ define([
    "dojo/_base/declare",
    "dojo/text!./templates/ResizingTextarea.html",
    "dojo/keys"
-], function (TextBox, declare, template, keys) {
+], function (TextBox, declare, resizingTextarea, keys) {
    return declare("lsmb/ResizingTextarea", [TextBox], {
       innerStyle: "",
-      templateString: template,
+      templateString: resizingTextarea,
       autoSizing: true,
       startup: function () {
          this.inherited(arguments);

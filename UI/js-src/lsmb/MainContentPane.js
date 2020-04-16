@@ -16,7 +16,7 @@ define([
    ContentPane,
    declare,
    registry,
-   style,
+   domStyle,
    lang,
    Promise,
    all,
@@ -115,14 +115,14 @@ define([
       fade_main_div: function () {
          // mention we're processing the request
          domClass.replace(this.domNode, "parsing", "done-parsing");
-         style.set(this.domNode, "opacity", "0.3");
+         domStyle.set(this.domNode, "opacity", "0.3");
       },
       hide_main_div: function () {
-         style.set(this.domNode, "visibility", "hidden");
+         domStyle.set(this.domNode, "visibility", "hidden");
       },
       show_main_div: function () {
-         style.set(this.domNode, "visibility", "visible");
-         style.set(this.domNode, "opacity", "1");
+         domStyle.set(this.domNode, "visibility", "visible");
+         domStyle.set(this.domNode, "opacity", "1");
          domClass.replace(this.domNode, "done-parsing", "parsing");
       },
       set: function () {

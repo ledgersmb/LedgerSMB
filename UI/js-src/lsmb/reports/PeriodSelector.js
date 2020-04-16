@@ -13,7 +13,7 @@ define([
    declare,
    on,
    dom,
-   style,
+   domStyle,
    topic,
    registry,
    _WidgetBase,
@@ -54,12 +54,12 @@ define([
          this._update_display();
       },
       _update_display: function () {
-         style.set(
+         domStyle.set(
             dom.byId("date_to_date_id"),
             "display",
             this._by_dates.get("checked") ? "" : "none"
          );
-         style.set(
+         domStyle.set(
             dom.byId("date_period_id"),
             "display",
             this._by_periods.get("checked") ? "" : "none"

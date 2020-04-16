@@ -13,30 +13,31 @@ define([
    "lsmb/parts/PartRestStore",
    "dojo/text!./templates/DropDownTextarea.html"
 ], function (
-   Textarea,
+   textBox,
    _HasDropDown,
    _AutoCompleterMixin,
    _ComboBoxMenu,
    declare,
    topic,
    keys,
-   store,
-   template
+   partRestStore,
+   dropDownTextarea
 ) {
    return declare(
       "lsmb/parts/PartDescription",
-      [Textarea, _HasDropDown, _AutoCompleterMixin],
+      [textBox, _HasDropDown, _AutoCompleterMixin],
       {
          channel: null,
          height: null,
-         store: store,
+         store: partRestStore,
+         /* eslint no-template-curly-in-string:0 */
          queryExpr: "*${0}*",
          autoComplete: false,
          innerStyle: "",
          highlightMatch: "all",
          searchAttr: "description",
          labelAttr: "label",
-         templateString: template,
+         templateString: dropDownTextarea,
          dropDownClass: _ComboBoxMenu,
          autoSizing: true,
          startup: function () {

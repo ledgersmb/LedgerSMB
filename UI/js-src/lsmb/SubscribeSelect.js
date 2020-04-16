@@ -3,9 +3,9 @@
 define(["dojo/_base/declare", "dojo/topic", "dijit/form/Select"], function (
    declare,
    topic,
-   Select
+   select
 ) {
-   return declare("lsmb/SubscribeSelect", [Select], {
+   return declare("lsmb/SubscribeSelect", [select], {
       topic: "",
       topicMap: {},
       update: function (targetValue) {
