@@ -2,10 +2,9 @@
 
 define([
    "dojo/_base/declare",
-   "dojo/on",
    "dojo/topic",
    "dijit/form/ToggleButton"
-], function (declare, on, topic, ToggleButton) {
+], function (declare, topic, ToggleButton) {
    return declare("lsmb/SubscribeToggleButton", [ToggleButton], {
       update: function (targetValue) {
          this.set("checked", targetValue);

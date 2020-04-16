@@ -2,10 +2,9 @@
 
 define([
    "dojo/_base/declare",
-   "dojo/on",
    "dojo/topic",
    "dijit/form/NumberTextBox"
-], function (declare, on, topic, NumberTextBox) {
+], function (declare, topic, NumberTextBox) {
    return declare("lsmb/SubscribeNumberTextBox", NumberTextBox, {
       topic: "",
       update: function (targetValue) {

@@ -3,9 +3,7 @@
 /* eslint no-template-curly-in-string:0 */
 
 define([
-   "dijit/form/ComboBox",
    "dijit/form/TextBox",
-   //    "dijit/form/ComboBoxMixin",
    "dijit/_HasDropDown",
    "dijit/form/_AutoCompleterMixin",
    "dijit/form/_ComboBoxMenu",
@@ -15,9 +13,7 @@ define([
    "lsmb/parts/PartRestStore",
    "dojo/text!./templates/DropDownTextarea.html"
 ], function (
-   ComboBox,
    Textarea,
-   //        ComboBoxMixin,
    _HasDropDown,
    _AutoCompleterMixin,
    _ComboBoxMenu,

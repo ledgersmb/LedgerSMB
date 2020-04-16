@@ -3,7 +3,7 @@
 // This file is copied from dojox/layout/TableContainer.
 
 define("lsmb/layout/TableContainer", [
-   "dojo/_base/kernel",
+   // "dojo/_base/kernel",
    "dojo/_base/lang",
    "dojo/_base/declare",
    "dojo/dom-class",
@@ -14,7 +14,7 @@ define("lsmb/layout/TableContainer", [
    "dijit/_WidgetBase",
    "dijit/layout/_LayoutWidget"
 ], function (
-   kernel,
+   // kernel,
    lang,
    declare,
    domClass,

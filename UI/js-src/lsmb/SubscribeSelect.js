@@ -1,11 +1,10 @@
 /** @format */
 
-define([
-   "dojo/_base/declare",
-   "dojo/on",
-   "dojo/topic",
-   "dijit/form/Select"
-], function (declare, on, topic, Select) {
+define(["dojo/_base/declare", "dojo/topic", "dijit/form/Select"], function (
+   declare,
+   topic,
+   Select
+) {
    return declare("lsmb/SubscribeSelect", [Select], {
       topic: "",
       topicMap: {},

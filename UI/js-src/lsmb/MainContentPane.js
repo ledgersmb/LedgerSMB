@@ -3,32 +3,26 @@
 define([
    "dijit/layout/ContentPane",
    "dojo/_base/declare",
-   "dojo/_base/event",
    "dijit/registry",
    "dojo/dom-style",
    "dojo/_base/lang",
    "dojo/promise/Promise",
-   "dojo/on",
-   "dojo/hash",
    "dojo/promise/all",
    "dojo/request/xhr",
    "dojo/query",
-   "dojo/request/iframe",
+   //   "dojo/request/iframe",
    "dojo/dom-class"
 ], function (
    ContentPane,
    declare,
-   event,
    registry,
    style,
    lang,
    Promise,
-   on,
-   hash,
    all,
    xhr,
    query,
-   iframe,
+   //   iframe,
    domClass
 ) {
    return declare("lsmb/MainContentPane", [ContentPane], {

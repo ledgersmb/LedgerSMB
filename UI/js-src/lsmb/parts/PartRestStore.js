@@ -6,10 +6,8 @@ define([
    "dojo/request",
    "dojo/_base/array",
    "dojo/_base/declare",
-   "dojo/Evented",
-   "dojo/request",
    "dojo/io-query"
-], function (JsonRest, Observable, request, array, declare, Evented, xhr, io) {
+], function (JsonRest, Observable, request, array, declare, io) {
    var partsRest = declare("lsmb/parts/PartRestStore", [JsonRest], {
       get: function (id) {
          var self = this;

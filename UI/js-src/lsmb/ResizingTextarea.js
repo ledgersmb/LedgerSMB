@@ -3,10 +3,9 @@
 define([
    "dijit/form/TextBox",
    "dojo/_base/declare",
-   "dojo/debounce",
    "dojo/text!./templates/ResizingTextarea.html",
    "dojo/keys"
-], function (TextBox, declare, debounce, template, keys) {
+], function (TextBox, declare, template, keys) {
    return declare("lsmb/ResizingTextarea", [TextBox], {
       innerStyle: "",
       templateString: template,

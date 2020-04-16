@@ -5,9 +5,8 @@ define([
    "dojo/_base/event",
    "dojo/request/xhr",
    "dojo/dom",
-   "dojo/dom-style",
    "dijit/form/Button"
-], function (declare, event, xhr, dom, style, Button) {
+], function (declare, event, xhr, dom, Button) {
    var authURL = "setup.pl?action=authenticate&company=postgres";
 
    return declare("lsmb/SetupLoginButton", [Button], {

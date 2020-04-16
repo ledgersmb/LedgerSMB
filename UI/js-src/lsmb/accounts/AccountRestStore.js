@@ -2,13 +2,12 @@
 
 define([
    "dojo/store/JsonRest",
-   "dojo/store/Observable",
    "dojo/store/Memory",
    "dojo/store/Cache",
    "dojo/request",
    "dojo/_base/array",
    "dojo/_base/declare"
-], function (JsonRest, Observable, Memory, Cache, request, array, declare) {
+], function (JsonRest, Memory, Cache, request, array, declare) {
    var accountsRest = declare("lsmb/accounts/AccountRestStore", [JsonRest], {
       get: function (id) {
          var self = this;

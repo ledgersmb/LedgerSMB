@@ -4,9 +4,8 @@ define([
    "dijit/form/CheckBox",
    "dojo/_base/declare",
    "dojo/on",
-   "dojo/dom",
    "dojo/dom-class"
-], function (CheckBox, declare, on, dom, domClass) {
+], function (CheckBox, declare, on, domClass) {
    return declare("lsmb/journal/fx_checkbox", [CheckBox], {
       postCreate: function () {
          var self = this;

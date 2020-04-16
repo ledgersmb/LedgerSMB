@@ -1,11 +1,10 @@
 /** @format */
 
-define([
-   "dojo/_base/declare",
-   "dojo/on",
-   "dojo/topic",
-   "dijit/form/CheckBox"
-], function (declare, on, topic, CheckBox) {
+define(["dojo/_base/declare", "dojo/topic", "dijit/form/CheckBox"], function (
+   declare,
+   topic,
+   CheckBox
+) {
    return declare("lsmb/SubscribeCheckBox", [CheckBox], {
       topic: "",
       update: function (targetValue) {

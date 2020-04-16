@@ -5,11 +5,8 @@ define([
    "dijit/_WidgetBase",
    "dijit/_TemplatedMixin",
    "dijit/_WidgetsInTemplateMixin",
-   "dijit/layout/ContentPane",
    "dijit/registry",
    "dojo/on",
-   "dijit/form/TextBox",
-   "dijit/form/Button",
    "dojo/text!./templates/PasswordChange.html",
    "dojo/request"
 ], function (
@@ -17,11 +14,8 @@ define([
    _widgetbase,
    _templatemixin,
    _widgetsInTemplateMixin,
-   cp,
    registry,
    on,
-   textbox,
-   button,
    template,
    request
 ) {
