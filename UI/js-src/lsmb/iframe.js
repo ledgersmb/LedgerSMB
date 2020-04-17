@@ -31,7 +31,7 @@ define([
    "dojo/cookie",
    "dojo/_base/window",
    "dojo/NodeList-manipulate",
-   "dojo/NodeList-dom" /*= ====,
+   "dojo/NodeList-dom" /* = ====,
                        '../request',
                        '../_base/declare' ===== */
 ], function (
@@ -48,7 +48,7 @@ define([
    domConstruct,
    cookie,
    win
-   /*= ====, NodeList, NodeList, request, declare ===== */
+   /* = ====, NodeList, NodeList, request, declare ===== */
 ) {
    var mid = module.id.replace(/[\/\.\-]/g, "_");
    var onload = mid + "_onload";
@@ -460,7 +460,7 @@ define([
       return returnDeferred ? dfd : dfd.promise;
    }
 
-   /*= ====
+   /* =====
       iframe = function(url, options){
       // summary:
       //              Sends a request using an iframe element with the given URL and options.
