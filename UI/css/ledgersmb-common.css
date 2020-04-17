@@ -221,7 +221,7 @@ h2.confirm { color: var(--h2-confirm-clr); font-size: var(--h2-confirm-font-size
 h2.error { color: var(--h2-error-clr); font-size: var(--h2-error-font-size);
 }
 
-#notes_div div.note { background-color: #var(var(--notes_div-div-note-bg-clr)); border: var(--notes_div-div-note-border); border-style: var(--notes_div-div-note-border-style); height: 5em; margin: 1em; overflow: hidden; padding: 1em; width: 90%;
+#notes_div div.note { background-color: var(--notes_div-div-note-bg-clr); border: var(--notes_div-div-note-border); border-style: var(--notes_div-div-note-border-style); height: 5em; margin: 1em; overflow: hidden; padding: 1em; width: 90%;
 }
 
 #notes_div div.note:hover { background-color: var(--notes_div-div-note-hover-bg-clr); border-style: groove; height: 100%; min-height: 5em; overflow: auto; width: 90%;
