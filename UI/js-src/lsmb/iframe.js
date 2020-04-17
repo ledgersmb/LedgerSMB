@@ -1,3 +1,8 @@
+/** @format */
+
+/* eslint no-useless-escape:0, no-param-reassign:0, no-console:0 */
+/* eslint no-use-before-define:0 */ /* iframe is defined at the bottom but used everywhere */
+/* eslint amd/sane-dependency-names:0 */
 // This file is a copy of 'dojo/request/iframe.js', but adds checks for
 // the presence and value of a cookie
 
@@ -11,391 +16,451 @@
 // the value of the cookie indicates that the response is being/has been
 // processed
 
-
 define([
-    'module',
-    'require',
-    'dojo/request/watch',
-    'dojo/request/util',
-    'dojo/request/handlers',
-    'dojo/_base/lang',
-    'dojo/io-query',
-    'dojo/query',
-    'dojo/has',
-    'dojo/dom',
-    'dojo/dom-construct',
-    'dojo/cookie',
-    'dojo/_base/window',
-    'dojo/NodeList-manipulate',
-    'dojo/NodeList-dom'/*=====,
+   "module",
+   "require",
+   "dojo/request/watch",
+   "dojo/request/util",
+   "dojo/request/handlers",
+   "dojo/_base/lang",
+   "dojo/io-query",
+   "dojo/query",
+   "dojo/has",
+   "dojo/dom",
+   "dojo/dom-construct",
+   "dojo/cookie",
+   "dojo/_base/window",
+   "dojo/NodeList-manipulate",
+   "dojo/NodeList-dom" /*= ====,
                        '../request',
-                       '../_base/declare' =====*/
-], function(module, require, watch, util, handlers,
-            lang, ioQuery, query, has, dom, domConstruct, cookie, win
-            /*=====, NodeList, NodeList, request, declare =====*/){
-    var mid = module.id.replace(/[\/\.\-]/g, '_'),
-        onload = mid + '_onload',
-        downloadCookie = 'request-download.'+(new Date()).getTime();
+                       '../_base/declare' ===== */
+], function (
+   module,
+   require,
+   watch,
+   util,
+   handlers,
+   lang,
+   ioQuery,
+   query,
+   has,
+   dom,
+   domConstruct,
+   cookie,
+   win
+   /*= ====, NodeList, NodeList, request, declare ===== */
+) {
+   var mid = module.id.replace(/[\/\.\-]/g, "_");
+   var onload = mid + "_onload";
+   var downloadCookie = "request-download." + new Date().getTime();
 
-    if(!win.global[onload]){
-        win.global[onload] = function(){
-            var dfd = iframe._currentDfd;
-            if(!dfd){
-                iframe._fireNextRequest();
-                return;
-            }
+   function create(name, onloadstr, uri) {
+      if (win.global[name]) {
+         return win.global[name];
+      }
 
-            dfd._finished = true;
-        };
-    }
+      if (win.global.frames[name]) {
+         return win.global.frames[name];
+      }
 
-    function create(name, onloadstr, uri){
-        if(win.global[name]){
-            return win.global[name];
-        }
+      if (!uri) {
+         if (has("config-useXDomain") && !has("config-dojoBlankHtmlUrl")) {
+            console.warn(
+               "dojo/request/iframe: When using cross-domain Dojo builds," +
+                  " please save dojo/resources/blank.html to your domain and set dojoConfig.dojoBlankHtmlUrl" +
+                  " to the path on your domain to blank.html"
+            );
+         }
+         uri =
+            has("config-dojoBlankHtmlUrl") ||
+            require.toUrl("dojo/resources/blank.html");
+      }
 
-        if(win.global.frames[name]){
-            return win.global.frames[name];
-        }
+      var frame = domConstruct.place(
+         '<iframe id="' +
+            name +
+            '" name="' +
+            name +
+            '" src="' +
+            uri +
+            '" onload="' +
+            onloadstr +
+            '" style="position: absolute; left: 1px; top: 1px; height: 1px; width: 1px; visibility: hidden">',
+         win.body()
+      );
 
-        if(!uri){
-            if(has('config-useXDomain') && !has('config-dojoBlankHtmlUrl')){
-                console.warn('dojo/request/iframe: When using cross-domain Dojo builds,' +
-                             ' please save dojo/resources/blank.html to your domain and set dojoConfig.dojoBlankHtmlUrl' +
-                             ' to the path on your domain to blank.html');
-            }
-            uri = (has('config-dojoBlankHtmlUrl')||require.toUrl('dojo/resources/blank.html'));
-        }
+      win.global[name] = frame;
 
-        var frame = domConstruct.place(
-            '<iframe id="'+name+'" name="'+name+'" src="'+uri+'" onload="'+onloadstr+
-                '" style="position: absolute; left: 1px; top: 1px; height: 1px; width: 1px; visibility: hidden">',
-            win.body());
+      return frame;
+   }
 
-        win.global[name] = frame;
+   function setSrc(_iframe, src, replace) {
+      var frame = win.global.frames[_iframe.name];
 
-        return frame;
-    }
+      if (frame.contentWindow) {
+         // We have an iframe node instead of the window
+         frame = frame.contentWindow;
+      }
 
-    function setSrc(_iframe, src, replace){
-        var frame = win.global.frames[_iframe.name];
+      try {
+         if (!replace) {
+            frame.location = src;
+         } else {
+            frame.location.replace(src);
+         }
+      } catch (e) {
+         console.log("dojo/request/iframe.setSrc: ", e);
+      }
+   }
 
-        if(frame.contentWindow){
-            // We have an iframe node instead of the window
-            frame = frame.contentWindow;
-        }
+   function doc(iframeNode) {
+      if (iframeNode.contentDocument) {
+         return iframeNode.contentDocument;
+      }
+      var name = iframeNode.name;
+      if (name) {
+         var iframes = win.doc.getElementsByTagName("iframe");
+         if (
+            iframeNode.document &&
+            iframes[name].contentWindow &&
+            iframes[name].contentWindow.document
+         ) {
+            return iframes[name].contentWindow.document;
+         }
+         if (win.doc.frames[name] && win.doc.frames[name].document) {
+            return win.doc.frames[name].document;
+         }
+      }
+      return null;
+   }
 
-        try{
-            if(!replace){
-                frame.location = src;
-            }else{
-                frame.location.replace(src);
-            }
-        }catch(e){
-            console.log('dojo/request/iframe.setSrc: ', e);
-        }
-    }
-
-    function doc(iframeNode){
-        if(iframeNode.contentDocument){
-            return iframeNode.contentDocument;
-        }
-        var name = iframeNode.name;
-        if(name){
-            var iframes = win.doc.getElementsByTagName('iframe');
-            if(iframeNode.document && iframes[name].contentWindow && iframes[name].contentWindow.document){
-                return iframes[name].contentWindow.document;
-            }else if(win.doc.frames[name] && win.doc.frames[name].document){
-                return win.doc.frames[name].document;
-            }
-        }
-        return null;
-    }
-
-    function createForm(){
-        return domConstruct.create('form', {
-            name: mid + '_form',
+   function createForm() {
+      return domConstruct.create(
+         "form",
+         {
+            name: mid + "_form",
             style: {
-                position: 'absolute',
-                top: '-1000px',
-                left: '-1000px'
+               position: "absolute",
+               top: "-1000px",
+               left: "-1000px"
             }
-        }, win.body());
-    }
+         },
+         win.body()
+      );
+   }
 
-    function fireNextRequest(){
-        // summary:
-        //              Internal method used to fire the next request in the queue.
-        var dfd;
-        try{
-            if(iframe._currentDfd || !iframe._dfdQueue.length){
-                return;
+   function fireNextRequest() {
+      // summary:
+      //              Internal method used to fire the next request in the queue.
+      var dfd;
+      try {
+         if (iframe._currentDfd || !iframe._dfdQueue.length) {
+            return;
+         }
+         do {
+            iframe._currentDfd = iframe._dfdQueue.shift();
+            dfd = iframe._currentDfd;
+         } while (
+            dfd &&
+            (dfd.canceled || (dfd.isCanceled && dfd.isCanceled())) &&
+            iframe._dfdQueue.length
+         );
+
+         if (!dfd || dfd.canceled || (dfd.isCanceled && dfd.isCanceled())) {
+            iframe._currentDfd = null;
+            return;
+         }
+
+         dfd._contentToClean = [];
+
+         var response = dfd.response;
+         var options = response.options;
+         var c2c = dfd._contentToClean;
+         var formNode = dom.byId(options.form);
+         var notify = util.notify;
+         var data = options.data || null;
+         var queryStr;
+
+         data["request.download-cookie"] = downloadCookie;
+         cookie(downloadCookie, "requested");
+
+         if (!dfd._legacy && options.method === "POST" && !formNode) {
+            dfd._tmpForm = createForm();
+            formNode = dfd._tmpForm;
+         } else if (
+            options.method === "GET" &&
+            formNode &&
+            response.url.indexOf("?") > -1
+         ) {
+            queryStr = response.url.slice(response.url.indexOf("?") + 1);
+            data = lang.mixin(ioQuery.queryToObject(queryStr), data);
+         }
+
+         if (formNode) {
+            if (!dfd._legacy) {
+               var parentNode = formNode;
+               do {
+                  parentNode = parentNode.parentNode;
+               } while (parentNode && parentNode !== win.doc.documentElement);
+
+               // Append the form node or some browsers won't work
+               if (!parentNode) {
+                  formNode.style.position = "absolute";
+                  formNode.style.left = "-1000px";
+                  formNode.style.top = "-1000px";
+                  win.body().appendChild(formNode);
+               }
+
+               if (!formNode.name) {
+                  formNode.name = mid + "_form";
+               }
             }
-            do{
-                dfd = iframe._currentDfd = iframe._dfdQueue.shift();
-            }while(dfd
-                   && (dfd.canceled || (dfd.isCanceled && dfd.isCanceled()))
-                   && iframe._dfdQueue.length);
 
-            if(!dfd || dfd.canceled || (dfd.isCanceled && dfd.isCanceled())){
-                iframe._currentDfd = null;
-                return;
-            }
-
-            var response = dfd.response,
-                options = response.options,
-                c2c = dfd._contentToClean = [],
-                formNode = dom.byId(options.form),
-                notify = util.notify,
-                data = options.data || null,
-                queryStr;
-
-            data['request.download-cookie'] = downloadCookie;
-            cookie(downloadCookie,'requested');
-
-            if(!dfd._legacy && options.method === 'POST' && !formNode){
-                formNode = dfd._tmpForm = createForm();
-            }else if(options.method === 'GET' && formNode && response.url.indexOf('?') > -1){
-                queryStr = response.url.slice(response.url.indexOf('?') + 1);
-                data = lang.mixin(ioQuery.queryToObject(queryStr), data);
-            }
-
-            if(formNode){
-                if(!dfd._legacy){
-                    var parentNode = formNode;
-                    do{
-                        parentNode = parentNode.parentNode;
-                    }while(parentNode && parentNode !== win.doc.documentElement);
-
-                    // Append the form node or some browsers won't work
-                    if(!parentNode){
-                        formNode.style.position = 'absolute';
-                        formNode.style.left = '-1000px';
-                        formNode.style.top = '-1000px';
-                        win.body().appendChild(formNode);
-                    }
-
-                    if(!formNode.name){
-                        formNode.name = mid + '_form';
-                    }
-                }
-
-                // if we have things in data, we need to add them to the form
-                // before submission
-                if(data){
-                    var createInput = function(name, value){
-                        domConstruct.create('input', {
-                            type: 'hidden',
-                            name: name,
-                            value: value
-                        }, formNode);
-                        c2c.push(name);
-                    };
-                    for(var x in data){
-                        var val = data[x];
-                        if(lang.isArray(val) && val.length > 1){
-                            for(var i=0; i<val.length; i++){
-                                createInput(x, val[i]);
-                            }
-                        }else{
-                            var n = query("input[name='"+x+"']", formNode);
-                            if(n.indexOf() == -1){
-                                createInput(x, val);
-                            }else{
-                                n.val(val);
-                            }
+            // if we have things in data, we need to add them to the form
+            // before submission
+            if (data) {
+               var createInput = function (name, value) {
+                  domConstruct.create(
+                     "input",
+                     {
+                        type: "hidden",
+                        name: name,
+                        value: value
+                     },
+                     formNode
+                  );
+                  c2c.push(name);
+               };
+               for (var x in data) {
+                  if ({}.prototype.hasOwnProperty.call(data, x)) {
+                     var val = data[x];
+                     if (lang.isArray(val) && val.length > 1) {
+                        for (var i = 0; i < val.length; i++) {
+                           createInput(x, val[i]);
                         }
-                    }
-                }
-
-                //IE requires going through getAttributeNode instead of just getAttribute in some form cases,
-                //so use it for all.  See #2844
-                var actionNode = formNode.getAttributeNode('action'),
-                    methodNode = formNode.getAttributeNode('method'),
-                    targetNode = formNode.getAttributeNode('target');
-
-                if(response.url){
-                    dfd._originalAction = actionNode ? actionNode.value : null;
-                    if(actionNode){
-                        actionNode.value = response.url;
-                    }else{
-                        formNode.setAttribute('action', response.url);
-                    }
-                }
-
-                if(!dfd._legacy){
-                    dfd._originalMethod = methodNode ? methodNode.value : null;
-                    if(methodNode){
-                        methodNode.value = options.method;
-                    }else{
-                        formNode.setAttribute('method', options.method);
-                    }
-                }else{
-                    if(!methodNode || !methodNode.value){
-                        if(methodNode){
-                            methodNode.value = options.method;
-                        }else{
-                            formNode.setAttribute('method', options.method);
+                     } else {
+                        var n = query("input[name='" + x + "']", formNode);
+                        if (n.indexOf() === -1) {
+                           createInput(x, val);
+                        } else {
+                           n.val(val);
                         }
-                    }
-                }
-
-                dfd._originalTarget = targetNode ? targetNode.value : null;
-                if(targetNode){
-                    targetNode.value = iframe._iframeName;
-                }else{
-                    formNode.setAttribute('target', iframe._iframeName);
-                }
-                formNode.target = iframe._iframeName;
-
-                notify && notify.emit('send', response, dfd.promise.cancel);
-                iframe._notifyStart(response);
-                formNode.submit();
-            }else{
-                // otherwise we post a GET string by changing URL location for the
-                // iframe
-
-                var extra = '';
-                if(response.options.data){
-                    extra = response.options.data;
-                    if(typeof extra !== 'string'){
-                        extra = ioQuery.objectToQuery(extra);
-                    }
-                                }
-                var tmpUrl = response.url + (response.url.indexOf('?') > -1 ? '&' : '?') + extra;
-                notify && notify.emit('send', response, dfd.promise.cancel);
-                iframe._notifyStart(response);
-                iframe.setSrc(iframe._frame, tmpUrl, true);
-            }
-        }catch(e){
-            dfd.reject(e);
-        }
-    }
-
-    // dojo/request/watch handlers
-    function isValid(response){
-        return !this.isFulfilled();
-    }
-    function isReady(response){
-        return (!!this._finished || cookie(downloadCookie) !== 'requested');
-    }
-    function handleResponse(response, error){
-        var options = response.options,
-            formNode = dom.byId(options.form) || this._tmpForm;
-
-        if(formNode){
-            // remove all the hidden content inputs
-            var toClean = this._contentToClean;
-            for(var i=0; i<toClean.length; i++){
-                var key = toClean[i];
-                //Need to cycle over all nodes since we may have added
-                //an array value which means that more than one node could
-                //have the same .name value.
-                for(var j=0; j<formNode.childNodes.length; j++){
-                    var childNode = formNode.childNodes[j];
-                    if(childNode.name === key){
-                        domConstruct.destroy(childNode);
-                        break;
-                    }
-                }
+                     }
+                  }
+               }
             }
 
-            // restore original action + target
-            this._originalAction
-                && formNode.setAttribute('action', this._originalAction);
-            if(this._originalMethod){
-                formNode.setAttribute('method', this._originalMethod);
-                formNode.method = this._originalMethod;
+            // IE requires going through getAttributeNode instead of just getAttribute in some form cases,
+            // so use it for all.  See #2844
+            var actionNode = formNode.getAttributeNode("action");
+            var methodNode = formNode.getAttributeNode("method");
+            var targetNode = formNode.getAttributeNode("target");
+
+            if (response.url) {
+               dfd._originalAction = actionNode ? actionNode.value : null;
+               if (actionNode) {
+                  actionNode.value = response.url;
+               } else {
+                  formNode.setAttribute("action", response.url);
+               }
             }
-            if(this._originalTarget){
-                formNode.setAttribute('target', this._originalTarget);
-                formNode.target = this._originalTarget;
+
+            if (!dfd._legacy) {
+               dfd._originalMethod = methodNode ? methodNode.value : null;
+               if (methodNode) {
+                  methodNode.value = options.method;
+               } else {
+                  formNode.setAttribute("method", options.method);
+               }
+            } else if (!methodNode || !methodNode.value) {
+               if (methodNode) {
+                  methodNode.value = options.method;
+               } else {
+                  formNode.setAttribute("method", options.method);
+               }
             }
-        }
 
-        if(this._tmpForm){
-            domConstruct.destroy(this._tmpForm);
-            delete this._tmpForm;
-        }
-
-        if(!error && cookie(downloadCookie) === 'requested'){
-            try{
-                var doc = iframe.doc(iframe._frame),
-                    handleAs = options.handleAs;
-
-                if(handleAs !== 'html'){
-                    if(handleAs === 'xml'){
-                        // IE6-8 have to parse the XML manually. See http://bugs.dojotoolkit.org/ticket/6334
-                        if(doc.documentElement.tagName.toLowerCase() === 'html'){
-                            query('a', doc.documentElement).orphan();
-                            var xmlText = doc.documentElement.innerText || doc.documentElement.textContent;
-                            xmlText = xmlText.replace(/>\s+</g, '><');
-                            response.text = lang.trim(xmlText);
-                        }else{
-                            response.data = doc;
-                        }
-                    }else{
-                        // 'json' and 'javascript' and 'text'
-                        response.text = doc.getElementsByTagName('textarea')[0].value; // text
-                    }
-                    handlers(response);
-                }else{
-                    response.data = doc;
-                }
-            }catch(e){
-                error = e;
+            dfd._originalTarget = targetNode ? targetNode.value : null;
+            if (targetNode) {
+               targetNode.value = iframe._iframeName;
+            } else {
+               formNode.setAttribute("target", iframe._iframeName);
             }
-        }
+            formNode.target = iframe._iframeName;
 
-        if(error){
-            this.reject(error);
-        }else if(this._finished || cookie(downloadCookie) !== 'requested'){
-            this.resolve(response);
-        }else{
-            this.reject(new Error('Invalid dojo/request/iframe request state'));
-        }
-    }
-    function last(response){
-        this._callNext();
-    }
-
-    var defaultOptions = {
-        method: 'POST'
-    };
-    function iframe(url, options, returnDeferred){
-        var response = util.parseArgs(url,
-                                      util.deepCreate(defaultOptions, options),
-                                      true);
-        options = response.options;
-
-        if(options.method !== 'GET' && options.method !== 'POST'){
-            throw new Error(options.method + ' not supported by dojo/request/iframe');
-        }
-
-        if(!iframe._frame){
-            iframe._frame = iframe.create(iframe._iframeName, onload + '();');
-        }
-
-        var dfd = util.deferred(response, null, isValid,
-                                isReady, handleResponse, last);
-        dfd._callNext = function(){
-            if(!this._calledNext){
-                this._calledNext = true;
-                iframe._currentDfd = null;
-                iframe._fireNextRequest();
+            if (typeof notify === "function") {
+               notify.emit("send", response, dfd.promise.cancel);
             }
-        };
-        dfd._legacy = returnDeferred;
+            iframe._notifyStart(response);
+            formNode.submit();
+         } else {
+            // otherwise we post a GET string by changing URL location for the
+            // iframe
 
-        iframe._dfdQueue.push(dfd);
-        iframe._fireNextRequest();
+            var extra = "";
+            if (response.options.data) {
+               extra = response.options.data;
+               if (typeof extra !== "string") {
+                  extra = ioQuery.objectToQuery(extra);
+               }
+            }
+            var tmpUrl =
+               response.url +
+               (response.url.indexOf("?") > -1 ? "&" : "?") +
+               extra;
+            if (typeof notify === "function") {
+               notify.emit("send", response, dfd.promise.cancel);
+            }
+            iframe._notifyStart(response);
+            iframe.setSrc(iframe._frame, tmpUrl, true);
+         }
+      } catch (e) {
+         dfd.reject(e);
+      }
+   }
 
-        watch(dfd);
+   // dojo/request/watch handlers
+   // eslint-disable-next-line no-unused-vars
+   function isValid(response) {
+      return !this.isFulfilled();
+   }
+   // eslint-disable-next-line no-unused-vars
+   function isReady(response) {
+      return !!this._finished || cookie(downloadCookie) !== "requested";
+   }
+   function handleResponse(response, error) {
+      var options = response.options;
+      var formNode = dom.byId(options.form) || this._tmpForm;
 
-        return returnDeferred ? dfd : dfd.promise;
-    }
+      if (formNode) {
+         // remove all the hidden content inputs
+         var toClean = this._contentToClean;
+         for (var i = 0; i < toClean.length; i++) {
+            var key = toClean[i];
+            // Need to cycle over all nodes since we may have added
+            // an array value which means that more than one node could
+            // have the same .name value.
+            for (var j = 0; j < formNode.childNodes.length; j++) {
+               var childNode = formNode.childNodes[j];
+               if (childNode.name === key) {
+                  domConstruct.destroy(childNode);
+                  break;
+               }
+            }
+         }
 
-    /*=====
+         // restore original action + target
+         if (typeof this._originalAction !== "undefined") {
+            formNode.setAttribute("action", this._originalAction);
+         }
+         if (this._originalMethod) {
+            formNode.setAttribute("method", this._originalMethod);
+            formNode.method = this._originalMethod;
+         }
+         if (this._originalTarget) {
+            formNode.setAttribute("target", this._originalTarget);
+            formNode.target = this._originalTarget;
+         }
+      }
+
+      if (this._tmpForm) {
+         domConstruct.destroy(this._tmpForm);
+         delete this._tmpForm;
+      }
+
+      if (!error && cookie(downloadCookie) === "requested") {
+         try {
+            var _doc = iframe.doc(iframe._frame);
+            var handleAs = options.handleAs;
+
+            if (handleAs !== "html") {
+               if (handleAs === "xml") {
+                  // IE6-8 have to parse the XML manually. See http://bugs.dojotoolkit.org/ticket/6334
+                  if (_doc.documentElement.tagName.toLowerCase() === "html") {
+                     query("a", _doc.documentElement).orphan();
+                     var xmlText =
+                        _doc.documentElement.innerText ||
+                        _doc.documentElement.textContent;
+                     xmlText = xmlText.replace(/>\s+</g, "><");
+                     response.text = lang.trim(xmlText);
+                  } else {
+                     response.data = _doc;
+                  }
+               } else {
+                  // 'json' and 'javascript' and 'text'
+                  response.text = _doc.getElementsByTagName(
+                     "textarea"
+                  )[0].value; // text
+               }
+               handlers(response);
+            } else {
+               response.data = _doc;
+            }
+         } catch (e) {
+            error = e;
+         }
+      }
+
+      if (error) {
+         this.reject(error);
+      } else if (this._finished || cookie(downloadCookie) !== "requested") {
+         this.resolve(response);
+      } else {
+         this.reject(new Error("Invalid dojo/request/iframe request state"));
+      }
+   }
+   // eslint-disable-next-line no-unused-vars
+   function last(response) {
+      this._callNext();
+   }
+
+   var defaultOptions = {
+      method: "POST"
+   };
+   function iframe(url, options, returnDeferred) {
+      var response = util.parseArgs(
+         url,
+         util.deepCreate(defaultOptions, options),
+         true
+      );
+      options = response.options;
+
+      if (options.method !== "GET" && options.method !== "POST") {
+         throw new Error(
+            options.method + " not supported by dojo/request/iframe"
+         );
+      }
+
+      if (!iframe._frame) {
+         iframe._frame = iframe.create(iframe._iframeName, onload + "();");
+      }
+
+      var dfd = util.deferred(
+         response,
+         null,
+         isValid,
+         isReady,
+         handleResponse,
+         last
+      );
+      dfd._callNext = function () {
+         if (!this._calledNext) {
+            this._calledNext = true;
+            iframe._currentDfd = null;
+            iframe._fireNextRequest();
+         }
+      };
+      dfd._legacy = returnDeferred;
+
+      iframe._dfdQueue.push(dfd);
+      iframe._fireNextRequest();
+
+      watch(dfd);
+
+      return returnDeferred ? dfd : dfd.promise;
+   }
+
+   /*= ====
       iframe = function(url, options){
       // summary:
       //              Sends a request using an iframe element with the given URL and options.
@@ -439,19 +504,31 @@ define([
       //              Options for the request.
       // returns: dojo/request.__Promise
       };
-        =====*/
-    iframe.create = create;
-    iframe.doc = doc;
-    iframe.setSrc = setSrc;
+        ===== */
+   iframe.create = create;
+   iframe.doc = doc;
+   iframe.setSrc = setSrc;
 
-    // TODO: Make these truly private in 2.0
-    iframe._iframeName = mid + '_IoIframe';
-    iframe._notifyStart = function(){};
-    iframe._dfdQueue = [];
-    iframe._currentDfd = null;
-    iframe._fireNextRequest = fireNextRequest;
+   // TODO: Make these truly private in 2.0
+   iframe._iframeName = mid + "_IoIframe";
+   iframe._notifyStart = function () {};
+   iframe._dfdQueue = [];
+   iframe._currentDfd = null;
+   iframe._fireNextRequest = fireNextRequest;
 
-    util.addCommonMethods(iframe, ['GET', 'POST']);
+   util.addCommonMethods(iframe, ["GET", "POST"]);
 
-    return iframe;
+   if (!win.global[onload]) {
+      win.global[onload] = function () {
+         var dfd = iframe._currentDfd;
+         if (!dfd) {
+            iframe._fireNextRequest();
+            return;
+         }
+
+         dfd._finished = true;
+      };
+   }
+
+   return iframe;
 });
