@@ -77,6 +77,9 @@ Dependency updates
 * Session::Storage::Secure (new)
 * String::Random (new)
 * MIME::Lite (dropped)
+* PGObject >= 2.0.2 (from 1.403.2)
+* PGObject::Type::BigFloat >= 2.0.1 (from 1.0.0)
+* PGObject::Type::DateTime >= 2.0.2 (from 1.0.4)
 
 
 Changelog for 1.7 Series
