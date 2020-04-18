@@ -1,0 +1,38 @@
+<?lsmb- BLOCK escape;
+
+IF VALUE.match('[^0-9.+-]'); # any non-digit means run escaping
+   '"' _ VALUE.replace('"', '""') _ '"';
+ELSE;
+   VALUE;
+END;
+
+END -?>
+<?lsmb- BLOCK dynatable;
+SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
+
+FOREACH COL IN columns;
+    IF 0 == SKIP_TYPES.grep(COL.type).size();
+        IF ADD_COMMA;
+           ',';
+        END;
+        INCLUDE escape VALUE = COL.name;
+        ADD_COMMA = 1;
+    END;
+END;
+?>
+<?lsmb FOREACH ROW IN tbody.rows;
+
+ADD_COMMA=0;
+
+    FOREACH COL IN columns;
+        COL_ID = COL.col_id;
+        IF 0 == SKIP_TYPES.grep(COL.type).size();
+            IF ADD_COMMA;
+               ',';
+            END;
+            ADD_COMMA = 1;
+            INCLUDE escape VALUE = ROW.$COL_ID;
+        END;
+    END; 
+?>
+<?lsmb END; END ?>
