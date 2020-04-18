@@ -172,7 +172,7 @@ END; ?>
                 class=COL.class
                 options=OPTION_LIST
                 default_blank=COL.default_blank
-                default_values=[ROW.row_id] } ?>
+                default_values=[ROW.${COL.col_id}] } ?>
          <?lsmb- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF ROW.$HREF_SFX;
