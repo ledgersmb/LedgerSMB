@@ -72,7 +72,7 @@ sub templates {
                     ->in(File::Spec->catfile($basedir, $_)) ]
         }
         grep { -d File::Spec->catfile($basedir, $_) }
-        @$templates
+        grep { $_ ne 'lib' } @$templates
     };
 }
 

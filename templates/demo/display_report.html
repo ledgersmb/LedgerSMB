@@ -3,16 +3,10 @@
 PROCESS "ui-header.html"
    stylesheet = USER.stylesheet;
 
-PROCESS "elements.html";
-
 PROCESS "dynatable.html";
 
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form"
-      method="post"
-      action="<?lsmb request.script ?>"
-      id="search-report-dynatable" >
   <div class="heading_section">
     <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
       <span class="report_header"><?lsmb name ?></span>
@@ -34,30 +28,7 @@ PROCESS "dynatable.html";
     </div>
     <?lsmb END ?>
   </div>
-  <?lsmb PROCESS input element_data = {
-         name = 'form_id'
-         value = request.form_id
-         type = 'hidden'
-         } ?>
-  <?lsmb FOREACH K IN request.hiddens.keys;
-         PROCESS input element_data = {
-         name = K
-         type = 'hidden'
-         value = request.hiddens.$K
-         };
-         END; ?>
   <?lsmb PROCESS dynatable tbody = {rows = rows }
                  attributes = {class = 'report', order_url = order_url } ?>
-<div id="options">
-<?lsmb
-FOREACH OPTION IN options;
-  PROCESS select element_data = OPTION;
-END; ?>
-</div>
-<?lsmb
-FOREACH BUTTON IN buttons;
-  PROCESS button element_data = BUTTON;
-END; ?><br />
-</form>
 </body>
-<?lsmb PROCESS end_html ?>
+</html>
