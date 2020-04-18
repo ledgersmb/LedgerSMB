@@ -1,23 +1,23 @@
-<?lsmb PROCESS elements.html;
-       PROCESS report_base.html; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html;
+       PROCESS report_base.html; %]
+<body class="lsmb [% dojo_theme %]">
 <div id="budgets">
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb request.script ?>">
+<form data-dojo-type="lsmb/Form" method="post" action="[% request.script %]">
 <div id="budget-header">
-<div class="listtop"><?lsmb title ?></div>
+<div class="listtop">[% title %]</div>
 <div class="input_row" id = "reference_row">
 <div class="input_group">
-       <?lsmb INCLUDE input element_data = {
+       [% INCLUDE input element_data = {
                         name = "reference",
                         value = reference,
                         type = "text",
                         size = "20",
                         class = 'reference',
                         label = text('Reference')
-        } ?>
+        } %]
 </div>
 <div class="input_group">
-          <?lsmb INCLUDE input element_data = {
+          [% INCLUDE input element_data = {
                               name = "description",
                               value = description,
                               type = "text",
@@ -25,163 +25,163 @@
                               class = 'description'
                               label = text('Description')
                                                                       }
-           ?>
+           %]
 </div></div>
 <div class="input_row" id = "date_row">
 <div class="input_group">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 name = "start_date"
                 value = start_date
                 type = "text"
                 size = "11"
                 class = 'date'
                 label = text('Start Date') #'
-        } ?>
+        } %]
 </div>
 <div class="input_group">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 name = "end_date"
                 value = end_date
                 type = "text"
                 size = "11"
                 class = 'date'
                 label = text('End Date') #'
-        } ?>
+        } %]
 </div>
 
 </div></div>
-<?lsmb PROCESS business_classes_div ?>
+[% PROCESS business_classes_div %]
 
       <table width="100%">
           <tr class="listheading">
-          <th class="listheading"><?lsmb text('Account') ?></th>
-          <?lsmb IF transfer == 1 ?>
-             <th class="listheading"><?lsmb text('FX') ?></th>
-          <?lsmb END ?>
-          <th class="listheading"><?lsmb text('Debit') ?></th>
-          <th class="listheading"><?lsmb text('Credit') ?></th>
-          <th class="listheading"><?lsmb text('Description') ?></th>
+          <th class="listheading">[% text('Account') %]</th>
+          [% IF transfer == 1 %]
+             <th class="listheading">[% text('FX') %]</th>
+          [% END %]
+          <th class="listheading">[% text('Debit') %]</th>
+          <th class="listheading">[% text('Credit') %]</th>
+          <th class="listheading">[% text('Description') %]</th>
         </tr>
-        <?lsmb FOREACH displayrow IN lines ?>
+        [% FOREACH displayrow IN lines %]
         <tr>
-                <?lsmb INDEX= loop.count ?>
+                [% INDEX= loop.count %]
                   <td>
-                        <?lsmb IF displayrow.accnoset == 0 ?>
-                              <?lsmb PROCESS input element_data = {
+                        [% IF displayrow.accnoset == 0 %]
+                              [% PROCESS input element_data = {
                                       type = 'text'
                                       name = "accno_$INDEX"
                                       initial_value = displayrow.accno
                                       class = 'AccountBox'
                                       "data-dojo-type" = "lsmb/accounts/AccountSelector"
-                              } ?>
+                              } %]
 
-                          <?lsmb ELSE ?>
+                          [% ELSE %]
 
-                              <?lsmb PROCESS input element_data = {
+                              [% PROCESS input element_data = {
                                         label = displayrow.accno _ '--' _ displayrow.acc_desc
                                         type = "hidden"
                                         value = displayrow.accno
                                         name = "accno_$INDEX"
                                         id = "acc_$INDEX"
-                                      } ?>
+                                      } %]
 
-                        <?lsmb END ?>
+                        [% END %]
 
                  </td>
 
                   <td>
-                          <?lsmb PROCESS input element_data = {
+                          [% PROCESS input element_data = {
                                   value = displayrow.debit
                                   name = "debit_$INDEX"
                                   type = "text"
                                   size = 12
                                   accesskey = displayrow.index
-                          }  ?>
+                          }  %]
 
                    </td>
 
                   <td>
-                          <?lsmb PROCESS input element_data = {
+                          [% PROCESS input element_data = {
                                   value = displayrow.credit
                                   name = "credit_$INDEX"
                                   type = "text"
                                   size = 12
-                          }  ?>
+                          }  %]
 
                    </td>
 
                     <td>
-                          <?lsmb PROCESS input element_data = {
+                          [% PROCESS input element_data = {
                                   value = displayrow.description
                                   name = "description_$INDEX"
                                   type = "text"
                                   size = 30
-                          }  ?>
+                          }  %]
 
                    </td>
         </tr>
-        <?lsmb END ?>
+        [% END %]
      </table>
     <hr size="3">
 
-<?lsmb FOREACH hidden IN hiddens.keys;
+[% FOREACH hidden IN hiddens.keys;
         PROCESS input element_data={
                 type = 'hidden',
                 name = hidden,
                 value = hiddens.item(hidden)
-                }; END ?>
+                }; END %]
 
-<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+[% FOREACH button IN buttons; PROCESS button element_data=button; END %]
 </form>
-<?lsmb IF id ?>
-<form data-dojo-type="lsmb/Form" name="note" action="<?lsmb request.script ?>" method="POST">
-<?lsmb PROCESS input element_data = {
+[% IF id %]
+<form data-dojo-type="lsmb/Form" name="note" action="[% request.script %]" method="POST">
+[% PROCESS input element_data = {
        name = "id"
       value = id
        type = "hidden"
-} ?>
+} %]
 <div class="inputrow">
 <div class="inputgroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         type = "text"
         name = "subject"
         size = "64"
        label = text('Subject')
 }
-?>
+%]
 </div></div>
 <div class="inputrow">
 <div class="inputgroup">
-<?lsmb PROCESS textarea element_data = {
+[% PROCESS textarea element_data = {
         name = "note"
         cols = '64'
         rows = '5'
        label = text('Content')
 }
-?>
+%]
 </div></div>
 <div class="inputrow">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         name = "action"
        value = 'add_note'
         type = "submit"
        class = "submit"
         text = text('Add Note') #'
 }
-?>
+%]
 </div>
 </form>
-<?lsmb END # IF id ?>
-<?lsmb FOREACH note IN notes ?>
+[% END # IF id %]
+[% FOREACH note IN notes %]
 <div class="note">
-<div class="note_subject"><label><?lsmb text('Subject') ?>:</label>
-<?lsmb note.subject ?></div>
+<div class="note_subject"><label>[% text('Subject') %]:</label>
+[% note.subject %]</div>
 <div class="note_entry_info"><label>&nbsp;:</label>
-<?lsmb note.created_by ?>:<?lsmb note.created ?>
+[% note.created_by %]:[% note.created %]
 </div>
-<div class="note_content"><label><?lsmb text('Content') ?>:</label>
-<?lsmb note.note ?>
+<div class="note_content"><label>[% text('Content') %]:</label>
+[% note.note %]
 </div>
-<?lsmb END # FOREACH Note ?>
+[% END # FOREACH Note %]
 </div>
 </body>

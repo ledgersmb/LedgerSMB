@@ -1,25 +1,25 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-  <div id="<?lsmb request.page_id ?>">
-    <div class="listtop"><?lsmb request.title ?></div>
-    <div class="info"><?lsmb request.info ?></div>
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
+  <div id="[% request.page_id %]">
+    <div class="listtop">[% request.title %]</div>
+    <div class="info">[% request.info %]</div>
     <form data-dojo-type="lsmb/Form"
-          action="<?lsmb request.script ?>"
+          action="[% request.script %]"
           method="post"
           enctype="multipart/form-data">
-      <?lsmb PROCESS input element_data = {
+      [% PROCESS input element_data = {
              type = "hidden"
              class = "hidden"
              name = "type"
              value = request.type
-             } ?>
-      <?lsmb IF multi ?>
-      <div class="listtop"><?lsmb text('Batch Information') ?></div>
-      <?lsmb END ?>
+             } %]
+      [% IF multi %]
+      <div class="listtop">[% text('Batch Information') %]</div>
+      [% END %]
       <div data-dojo-type="lsmb/layout/TableContainer"
            data-dojo-props="cols:1">
         <div class="inputrow" id = "referencerow">
-          <?lsmb PROCESS input element_data = {
+          [% PROCESS input element_data = {
                  type  = "text"
                  class = "reference"
                  name  = "reference"
@@ -27,20 +27,20 @@
                  label = "_none_"
                  value = request.reference
                  size  = 15
-                 } ?>
+                 } %]
         </div>
         <div class="inputrow" id = "descriptionrow">
-          <?lsmb PROCESS input element_data = {
+          [% PROCESS input element_data = {
                  type  = "text"
                  class = "description"
                  name  = "description"
                  title = text('Description')
                  label = "_none_"
                  value = request.description
-                 } ?>
+                 } %]
         </div>
         <div class="inputrow" id="daterow">
-          <?lsmb PROCESS input element_data = {
+          [% PROCESS input element_data = {
                  type = "text"
                  class = "date"
                  title = text("Transaction Date") #'
@@ -48,31 +48,31 @@
                  name = "transdate"
                  value = request.transdate
                  size = 12
-                 } ?>
+                 } %]
         </div>
       </div>
       <div class="inputrow" id="filerow">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                name = "import_file"
                type = "file"
                label = text('From File') #'
                class = "file"
                accept = ".csv"
-               } ?>
+               } %]
       </div>
       <div class="inputrow" id="buttonrow">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                type = "hidden"
                name = "trans_type"
                value = request.trans_type
-               } ?>
-        <?lsmb PROCESS button element_data = {
+               } %]
+        [% PROCESS button element_data = {
                text = text("Save")
                type = "submit"
                class = "submit"
                name = "action"
                value = "run_import"
-               } ?>
+               } %]
       </div>
     </form>
   </div>

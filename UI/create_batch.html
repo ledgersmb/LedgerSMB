@@ -1,63 +1,63 @@
-<?lsmb
+[%
   PROCESS elements.html;
   PROCESS dynatable.html;
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+%]
+<body class="lsmb [% dojo_theme %]">
 <div id="create-new-batch">
-<div class="listtop"><?lsmb text('Create Batch') ?></div>
-<form data-dojo-type="lsmb/Form" name="create_batch" method="post" action="<?lsmb request.script ?>">
+<div class="listtop">[% text('Create Batch') %]</div>
+<form data-dojo-type="lsmb/Form" name="create_batch" method="post" action="[% request.script %]">
 <div class="labelledinput">
-  <label for="batch-number"><?lsmb text("Batch Number") ?></label>
+  <label for="batch-number">[% text("Batch Number") %]</label>
   <div class="value">
-    <?lsmb PROCESS input element_data = {
+    [% PROCESS input element_data = {
            name = "batch_number"
            type = "text"
-           value = batch.batch_number } ?>
+           value = batch.batch_number } %]
   </div>
 </div>
 <div class="labelledinput">
-  <label for="description"><?lsmb text("Description") ?></label>
+  <label for="description">[% text("Description") %]</label>
   <div class="inputgroup">
-    <?lsmb PROCESS input element_data = {
+    [% PROCESS input element_data = {
            name = "description"
            type = "text"
-           value = batch.batch_number } ?>
+           value = batch.batch_number } %]
   </div>
 </div>
 <div class="labelledinput">
-  <label for="batch-date"><?lsmb text("Batch Date") ?></label>
+  <label for="batch-date">[% text("Batch Date") %]</label>
   <div class="inputgroup">
-     <?lsmb PROCESS input element_data = {
+     [% PROCESS input element_data = {
             type = "date"
             class = "date"
             name = "batch_date"
             required = "true"
-            value = batch.batch_date } ?>
+            value = batch.batch_date } %]
   </div>
 </div>
 <div id="buttons">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
        value = "create_vouchers"
        type = "submit"
        class = "submit"
        name = "action"
-       text = text('Continue') } ?>
+       text = text('Continue') } %]
 </div>
-<?lsmb
+[%
 hidden_url_base = '';
 FOREACH item = batch.hidden;
   IF item.value;
       hidden_url_base = hidden_url_base _ '&amp;' _ item.name _ '=' _ item.value;
   END;
-   ?>
-<?lsmb PROCESS input element_data = {
+   %]
+[% PROCESS input element_data = {
        type = "hidden"
        name = item.name
-       value = item.value  } ?>
-<?lsmb END ?>
+       value = item.value  } %]
+[% END %]
 </form>
-<div class="listtop"><?lsmb text('Or Add To Batch') ?></div>
-<?lsmb
+<div class="listtop">[% text('Or Add To Batch') %]</div>
+[%
 
 FOREACH row IN batch.search_results;
      row.row_id = row.id;
@@ -75,6 +75,6 @@ PROCESS dynatable
         { col_id='created_on', type='text', name = text('Created On') } #'
          { col_id='default_date', type='text', name = text('Post Date') } #'
        ];
-?>
+%]
 </div>
 </body>

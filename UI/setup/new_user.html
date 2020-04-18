@@ -1,45 +1,45 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
-include_stylesheet=["setup.css"] ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-new-user" class="lsmb <?lsmb dojo_theme ?>">
+include_stylesheet=["setup.css"] %]
+[% PROCESS elements.html %]
+<body id="setup-new-user" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('Database Management Console') ?></h2>
-<div class="listtop"><?lsmb text('Enter User') ?></div>
+<h2>[% text('Database Management Console') %]</h2>
+<div class="listtop">[% text('Enter User') %]</div>
 <form data-dojo-type="lsmb/SimpleForm"
       action="setup.pl" method="POST" name="new_user">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
    value = database
-} ?>
+} %]
 <div class="form">
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
                             name  = 'username'
                             type  = 'text'
                            label  = text('Username')
                             class = 'username'
                             value = username
                          required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<label id="password-label" for="password" class="password"><?lsmb
-text('Password') ?></label>
-<?lsmb PROCESS input element_data = {
+<label id="password-label" for="password" class="password">[%
+text('Password') %]</label>
+[% PROCESS input element_data = {
                  name='password'
                  type='password'
                  class = 'password'
        size='60',
        attributes = { autocomplete = 'off' }
-       } ?>
+       } %]
 </div>
 <div class="input_row">
-  <label><?lsmb text('User creation') ?></label>
+  <label>[% text('User creation') %]</label>
   <div class="input_group">
     <div>
-      <?lsmb
+      [%
          PROCESS input element_data = {
          label   = text("Create new user")
          value   = '0'
@@ -48,10 +48,10 @@ text('Password') ?></label>
          type    = 'radio'
          }
          label_pos = 1 ;
-         ?>
+         %]
     </div>
     <div style="float:left">
-      <?lsmb
+      [%
          PROCESS input element_data = {
          label   = text("Import existing user")
          value   = '1'
@@ -59,11 +59,11 @@ text('Password') ?></label>
          name    = 'pls_import'
          type    = 'radio'
          }
-         label_pos = 1 ; ?>
+         label_pos = 1 ; %]
     </div>
-    <?lsmb- IF notice -?>
-    <div class="notice" style="float:left"><?lsmb notice ?></div>
-    <?lsmb- END # IF notice -?>
+    [%- IF notice -%]
+    <div class="notice" style="float:left">[% notice %]</div>
+    [%- END # IF notice -%]
   </div>
   <div data-dojo-type="dijit/Tooltip"
        data-dojo-props="connectId:'pls-import-1',position:['below']">
@@ -88,7 +88,7 @@ text('Password') ?></label>
   </div>
 </div>
 <div class="input_row">
-<?lsmb INCLUDE select element_data = {
+[% INCLUDE select element_data = {
           options = salutations
         text_attr = 'salutation'
        value_attr = 'id'
@@ -97,10 +97,10 @@ text('Password') ?></label>
              name = 'salutation_id'
             label = 'Salutation'
          required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'first_name'
    class = 'name'
     type = 'text'
@@ -108,10 +108,10 @@ text('Password') ?></label>
    value = first_name
    label = text('First Name') #'
 required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'last_name'
    class = 'name'
     type = 'text'
@@ -119,10 +119,10 @@ required = 'required'
    value = last_name
    label = text('Last name') #'
 required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'employeenumber'
    class = 'control_code'
     type = 'text'
@@ -130,10 +130,10 @@ required = 'required'
    label = text('Employee Number') #'
    value = employeenumber
 required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'dob'
    class = 'date'
     type = 'text'
@@ -141,10 +141,10 @@ required = 'required'
    label = text('Date of Birth') #'
    value = dob
 required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'ssn'
    class = 'tax_id'
     type = 'text'
@@ -152,10 +152,10 @@ required = 'required'
    label = text('Tax ID/SSN') #'
    value = ssn
 required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb  countries.unshift({});
+[%  countries.unshift({});
 INCLUDE select element_data = {
           options = countries
         text_attr = 'name'
@@ -165,10 +165,10 @@ INCLUDE select element_data = {
              name = 'country_id'
             label = 'Country'
          required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE select element_data = {
+[% INCLUDE select element_data = {
           options = perm_sets
         text_attr = 'label'
        value_attr = 'id'
@@ -177,16 +177,16 @@ INCLUDE select element_data = {
    default_values = [perms]
             label = 'Assign Permissions'
          required = 'required'
-} ?>
+} %]
 </div>
 <div class="input_row">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     text = text('Create User') #';
     name = 'action'
    value = save_action
     type = 'submit'
    class = 'submit'
-} ?>
+} %]
 </div>
 </div>
 </form>

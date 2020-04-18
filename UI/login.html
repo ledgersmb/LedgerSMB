@@ -1,26 +1,26 @@
-<?lsmb INCLUDE 'ui-header.html'
+[% INCLUDE 'ui-header.html'
         titlebar = "LedgerSMB $version"
         include_stylesheet = ["login.css", "ledgersmb.css"]
         include_script = [ 'js/lsmb/login.js' ]
-?>
-<?lsmb
-   PROCESS elements.html -?>
-<body class="login, <?lsmb dojo_theme ?>"
+%]
+[%
+   PROCESS elements.html -%]
+<body class="login, [% dojo_theme %]"
       id="app-login">
   <br /><br />
   <center>
     <form data-dojo-type="lsmb/Form" method="post" action="login.pl" name="login"
           onsubmit="return submitForm()">
-      <?lsmb INCLUDE input element_data = {
+      [% INCLUDE input element_data = {
              type = "hidden",
              name = "menubar",
              value = menubar
-             } ?>
-      <?lsmb INCLUDE input element_data = {
+             } %]
+      [% INCLUDE input element_data = {
              type = "hidden",
              name = "blacklisted",
              value = blacklisted
-             } ?>
+             } %]
       <div class="login" id="logindiv">
         <div class="login" align="center">
           <a href="http://www.ledgersmb.org/"
@@ -40,7 +40,7 @@
             </div>
           <div style="z-index:10; position:absolute; top:0; left:0; width:100%; height:100%;">
           <h1 class="login" align="center">
-            LedgerSMB <?lsmb version ?>
+            LedgerSMB [% version %]
           </h1>
           <div align="center">
             <div id="company_div"
@@ -48,7 +48,7 @@
                  data-dojo-props="cols:1">
               <div class="noshow">
                 <div>
-                  <?lsmb PROCESS input
+                  [% PROCESS input
                          element_data = {
                          type="text"
                          name="login"
@@ -59,10 +59,10 @@
                          value = login
                          accesskey="l"
                          tabindex=1,
-                         attributes = { autocomplete = 'off'} } #' ?>
+                         attributes = { autocomplete = 'off'} } #' %]
                 </div>
                 <div>
-                  <?lsmb PROCESS input
+                  [% PROCESS input
                          element_data = {
                          type="password"
                          name="password"
@@ -73,10 +73,10 @@
                          value = ''
                          accesskey="p"
                          tabindex=2,
-                         attributes = { autocomplete = 'off'} } ?>
+                         attributes = { autocomplete = 'off'} } %]
                 </div>
               </div>
-              <?lsmb PROCESS input
+              [% PROCESS input
                      element_data = {
                      type="text"
                      name="company"
@@ -86,10 +86,10 @@
                      title=text('Company')
                      value = company
                      accesskey="c"
-                     tabindex=3 } ?>
+                     tabindex=3 } %]
             </div>
           </div>
-          <?lsmb PROCESS button
+          [% PROCESS button
                  element_data = {
                  type="submit"
                  name="action"
@@ -97,12 +97,12 @@
                  accesskey="l"
                  id="action-login"
                  text=text('Login')
-                 tabindex=4 } ?>
+                 tabindex=4 } %]
           </div>
           </div>
         </div>
         <div id="login-indicator">
-          <span><?lsmb text('Logging in.  Please wait.') ?></span>
+          <span>[% text('Logging in.  Please wait.') %]</span>
         </div>
       </div>
     </form>

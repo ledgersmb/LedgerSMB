@@ -1,65 +1,65 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb request.dojo_theme ?>">
-<div class="listtop"><?lsmb request.title ?></div>
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% request.dojo_theme %]">
+<div class="listtop">[% request.title %]</div>
 <div id="business_units">
 <div class="table">
 <!-- headings -->
 <div class="tr listheading">
-    <div class="th"><?lsmb text('ID') ?></div>
-    <div class="th"><?lsmb text('Label') ?></div>
-    <div class="th"><?lsmb text('Active') ?></div>
-    <div class="th"><?lsmb text('Ordering') ?></div>
-  <?lsmb FOREACH m IN request.modules ?>
-    <div class="th"><?lsmb text(m.label) ?></div>
-  <?lsmb END ?>
+    <div class="th">[% text('ID') %]</div>
+    <div class="th">[% text('Label') %]</div>
+    <div class="th">[% text('Active') %]</div>
+    <div class="th">[% text('Ordering') %]</div>
+  [% FOREACH m IN request.modules %]
+    <div class="th">[% text(m.label) %]</div>
+  [% END %]
     <div class="th">&nbsp;</div>
     <div class="th">&nbsp;</div>
 </div>
-<?lsmb request.classes.push({});
+[% request.classes.push({});
        FOR c IN request.classes;
            id = c.id;
-?>
+%]
 <form data-dojo-type="lsmb/Form"
-      action="<?lsmb request.script ?>"
+      action="[% request.script %]"
       method="GET"
       class="tr">
 <!-- div class="tr"-->
 
 <div class="td">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
     type = "hidden"
    value = id
     name = "id"
-} ?><?lsmb id ?></div>
-<div class="td"><?lsmb PROCESS input element_data = {
+} %][% id %]</div>
+<div class="td">[% PROCESS input element_data = {
     type = "text"
    class = "control_code"
     name = "label"
    value = c.label
       id = "label_$id"
     size = 12
-} ?>
+} %]
 </div>
-<div class="td"><?lsmb PROCESS input element_data = {
+<div class="td">[% PROCESS input element_data = {
     type = "checkbox"
    value = "1"
    class = "is-active"
     name = "active"
       id = "active_$id"
  checked = (c.active)? 'CHECKED' : ''
-} ?>
+} %]
 </div>
-<div class="td"><?lsmb PROCESS input element_data = {
+<div class="td">[% PROCESS input element_data = {
     type = "text"
    class = "ordering"
     name = "ordering"
    value = c.ordering
       id = "ordering_$id"
     size = 4
-} ?>
+} %]
 </div>
-  <?lsmb FOREACH m IN request.modules ?>
-    <div class="td"><?lsmb
+  [% FOREACH m IN request.modules %]
+    <div class="td">[%
     checked = '';
     FOREACH mm IN c.modules;
        IF mm.id == m.id;
@@ -72,10 +72,10 @@
        name = "module_" _ m.id
          id = "module_$id" _ "_" _ m.id
       value = 1
-    } ?> </div>
-  <?lsmb END ?>
+    } %] </div>
+  [% END %]
     <!-- TODO:  Add modules perms here -->
-<div class="td"><?lsmb PROCESS button element_data = {
+<div class="td">[% PROCESS button element_data = {
     type = "submit"
    class = "submit"
     name = "action"
@@ -90,9 +90,9 @@ PROCESS button element_data = {
    value = "delete_class"
       id = "delete_class_$id"
     text = text('Delete')
-} ?>
+} %]
 </div>
-<div class="td"><?lsmb
+<div class="td">[%
 IF c.id;
 PROCESS button element_data = {
     type = "submit"
@@ -110,10 +110,10 @@ PROCESS button element_data = {
       id = "list_$id"
     text = text('List Units')#'
 };
-END; ?></div>
+END; %]</div>
 <!-- /div -->
 </form>
-<?lsmb END ?>
+[% END %]
 </div>
 </div>
 

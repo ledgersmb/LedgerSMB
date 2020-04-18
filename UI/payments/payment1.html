@@ -1,121 +1,121 @@
-<body id="payment-1-body" class="lsmb <?lsmb dojo_theme?>">
+<body id="payment-1-body" class="lsmb [% dojo_theme%]">
 
   <form data-dojo-type="lsmb/Form"
         id="payments-select-vc"
         method="get"
-        action="<?lsmb script ?>">
-<?lsmb PROCESS elements.html  # Include form elements helper. -?>
-<?lsmb login.type = 'hidden' ; PROCESS input element_data=login -?>
-<?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass -?>
-<?lsmb # The first_load field is required on payment2.html to initialize discounts the first time, on each subsequent update it wont exist-?>
-<?lsmb PROCESS input element_data={
+        action="[% script %]">
+[% PROCESS elements.html  # Include form elements helper. -%]
+[% login.type = 'hidden' ; PROCESS input element_data=login -%]
+[% accountclass.type = 'hidden'; PROCESS input element_data=accountclass -%]
+[% # The first_load field is required on payment2.html to initialize discounts the first time, on each subsequent update it wont exist-%]
+[% PROCESS input element_data={
             name => 'first_load',
             id   => 'first_load',
             type => 'hidden',
-            value => 'on'} ?>
-<?lsmb type.type = "hidden"; PROCESS input element_data=type; -?>
+            value => 'on'} %]
+[% type.type = "hidden"; PROCESS input element_data=type; -%]
 <table width="100%">
   <tr id="top-bar" class="listtop">
     <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label">
-     <?lsmb IF (type.value == 'receipt') -?>
-      <?lsmb text('Receipts') ?>
-     <?lsmb ELSE; text('Payments') -?>
-     <?lsmb END -?></label>
+     [% IF (type.value == 'receipt') -%]
+      [% text('Receipts') %]
+     [% ELSE; text('Payments') -%]
+     [% END -%]</label>
     </th>
   </tr>
 </table>
 
 <table id="search-form-table">
         <tr id="cost-center-row">
-                <td id="cost-center-label-column" class="label-left"><?lsmb text('Departments') ?></td>
+                <td id="cost-center-label-column" class="label-left">[% text('Departments') %]</td>
                 <td id="department-column">
-                        <?lsmb PROCESS select element_data=department ?>
+                        [% PROCESS select element_data=department %]
         </td>
         </tr>
         <tr id="vc-currency-row">
           <td id="vc-label-column" class="label-left">
             <label for="vc_name">
-                 <?lsmb IF (type.value == 'receipt') -?>
-                   <?lsmb text('Customer Name') -?>
-                 <?lsmb ELSE; text('Vendor Name') -?>
-                 <?lsmb END -?>
+                 [% IF (type.value == 'receipt') -%]
+                   [% text('Customer Name') -%]
+                 [% ELSE; text('Vendor Name') -%]
+                 [% END -%]
             </label>
                 </td>
                 <td id="vc-column">
-                        <?lsmb PROCESS input element_data = {
+                        [% PROCESS input element_data = {
                                id="vc_name"
-                               name="vc_name" } ?>
+                               name="vc_name" } %]
                 </td>
                 <td id="vc-label-column2" align="right">
-                  <label for="vc_ssn"><?lsmb text('SSN')?></label>
+                  <label for="vc_ssn">[% text('SSN')%]</label>
                 </td>
                 <td id="vc-column2">
-                        <?lsmb PROCESS input element_data = {
+                        [% PROCESS input element_data = {
                                id="vc_ssn"
                                name="vc_ssn"
-                               size=10 } ?>
+                               size=10 } %]
                 </td>
         </tr>
         <tr>
           <td id="currency-label-column" class="label-left">
-            <label for="curr"><?lsmb text('Currency') ?></label></td>
+            <label for="curr">[% text('Currency') %]</label></td>
                 <td id="currency-column">
-                        <?lsmb PROCESS select element_data=curr ?>
+                        [% PROCESS select element_data=curr %]
                 </td>
         </tr>
         <tr id="daterange-row">
           <td id="datefrom-label-column" class="label-left">
-            <label for="datefrom"><?lsmb text('Date from') ?></label> &gt;=</td>
+            <label for="datefrom">[% text('Date from') %]</label> &gt;=</td>
                 <td id="datefrom-gt-column">
-                        <?lsmb
+                        [%
                              datefrom.type      = "text";
                              datefrom.size      = "10"  ;
                              datefrom.maxlenght = "10"  ;
                              datefrom.class     = 'date';
                              datefrom.name      = "datefrom";
                              PROCESS input element_data=datefrom;
-                         -?>
+                         -%]
                 </td>
           <td id="dateto-label-column" class="label-left" align=right>
-            <label for="dateto"><?lsmb text('Date to') ?></label> &lt;=</td>
+            <label for="dateto">[% text('Date to') %]</label> &lt;=</td>
                 <td id="dateto-column">
-                        <?lsmb
+                        [%
                              dateto.type        = "text";
                              dateto.size        = "10"  ;
                              dateto.maxlenght   = "10"  ;
                              dateto.class       = 'date';
                              dateto.name        = "dateto";
                              PROCESS input element_data=dateto;
-                        -?>
+                        -%]
                 </td>
         </tr>
         <tr id="total-row">
           <td id="total-gt-label-column" class="label-left">
-            <label for="amountfrom"><?lsmb text('Total') ?> &gt;=</label></td>
+            <label for="amountfrom">[% text('Total') %] &gt;=</label></td>
                 <td id="total-gt-column">
-                        <?lsmb
+                        [%
                              amountfrom.type      = "text";
                              amountfrom.size      = "10"  ;
                              amountfrom.maxlenght = "10"  ;
                              PROCESS input element_data=amountfrom;
-                         ?>
+                         %]
                 </td>
           <td id="total-lt-label-column" class="label-left" align=right>
-            <label for="amountto"><?lsmb text('Total') ?> &lt;=</label></td>
+            <label for="amountto">[% text('Total') %] &lt;=</label></td>
                 <td id="total-lt-column">
-                        <?lsmb
+                        [%
                              amountto.type        = "text";
                              amountto.size        = "10"  ;
                              amountto.maxlenght   = "10"  ;
                              PROCESS input element_data=amountto;
-                        ?>
+                        %]
                 </td>
         </tr>
 </table>
 
 <hr />
 
-<?lsmb PROCESS button element_data=action ?>
+[% PROCESS button element_data=action %]
 
 </form>
 </body>

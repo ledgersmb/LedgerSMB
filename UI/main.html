@@ -1,6 +1,6 @@
-<?lsmb INCLUDE "ui-header.html" ?>
+[% INCLUDE "ui-header.html" %]
 <body id="app-main"
-      class="lsmb <?lsmb dojo_theme ?>">
+      class="lsmb [% dojo_theme %]">
   <div id="console-container"
        data-dojo-type="dijit/layout/BorderContainer"
        data-dojo-props="persist: true"
@@ -19,20 +19,20 @@
                width="100" height="50" style="border:1px" alt="LedgerSMB" />
         </a>
       </div>
-      <div id="version_info"><?lsmb text("LedgerSMB [_1]", version) ?></div>
+      <div id="version_info">[% text("LedgerSMB [_1]", version) %]</div>
       <table id="header_info" class="header_table">
         <tr>
           <td id="login_info_header" class="header_left">
-            <?lsmb text("User") ?>
+            [% text("User") %]
           </td>
           <td id="company_info_header"
               class="header_right">
-            <?lsmb text("Company") ?>
+            [% text("Company") %]
           </td>
         </tr>
         <tr>
-          <td id="login_info" class="header_left"><?lsmb login ?></td>
-          <td id="company_info" class="header_right"><?lsmb company ?></td>
+          <td id="login_info" class="header_left">[% login %]</td>
+          <td id="company_info" class="header_right">[% company %]</td>
         </tr>
       </table>
       <hr>

@@ -1,53 +1,53 @@
-<?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
-<body id="payments-filter-body" class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html'  # Include form elements helper. %]
+<body id="payments-filter-body" class="lsmb [% dojo_theme %]">
 <div id="payments-filter">
 <div class="listtop">
         <!-- CT:  Strings for locales:
-        <?lsmb text('Filtering Receipts') ?>
-        <?lsmb text('Filtering Payments') ?> -->
-        <?lsmb IF payment.account_class == 1 ?><?lsmb t = 'Payments'
-        ?><?lsmb ELSE ?><?lsmb t = 'Receipts'
-        ?><?lsmb END ?>
-        <?lsmb text("Filtering $t") ?>
+        [% text('Filtering Receipts') %]
+        [% text('Filtering Payments') %] -->
+        [% IF payment.account_class == 1 %][% t = 'Payments'
+        %][% ELSE %][% t = 'Receipts'
+        %][% END %]
+        [% text("Filtering $t") %]
 </div>
 <form data-dojo-type="lsmb/Form" name="search" method="post"
-      <?lsmb # action set explicitly,
-             # because this file renders from vouchers.pl ?>
+      [% # action set explicitly,
+             # because this file renders from vouchers.pl %]
       action="payment.pl">
 
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
         value = payment.account_class
         type = "hidden"
         name = "account_class"
-} ?>
-<?lsmb PROCESS input element_data={
+} %]
+[% PROCESS input element_data={
         value = payment.batch_id
         type = "hidden"
         name = "batch_id"
-} ?>
-<?lsmb PROCESS input element_data={
+} %]
+[% PROCESS input element_data={
         value = payment.batch_date
         type = "hidden"
         name = "batch_date"
-} ?>
+} %]
 
 
-<?lsmb IF request.account_class == 1 ?>
-<?lsmb vendor_customer_code = text("Vendor Number") # ' ?>
-<?lsmb ELSIF request.account_class == 2 ?>
-<?lsmb vendor_customer_code = text("Customer Number") # ' ?>
-<?lsmb END ?>
+[% IF request.account_class == 1 %]
+[% vendor_customer_code = text("Vendor Number") # ' %]
+[% ELSIF request.account_class == 2 %]
+[% vendor_customer_code = text("Customer Number") # ' %]
+[% END %]
 
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         name = "meta_number"
         type = "text"
         value = payment.meta_number
         label = vendor_customer_code
         size = '15'
-} ?>
+} %]
 
 <div class="inputgroup" id="account_input">
-    <?lsmb
+    [%
      FOREACH a = payment.debt_accounts;
        a.text = a.accno _ '--' _ a.description;
      END;
@@ -58,12 +58,12 @@
      value_attr = 'accno'
       text_attr = 'text'
  default_values = [payment.account]
-    } ?>
+    } %]
 </div>
 
 <div id = "payments-filter-currency-row" class="inputgroup">
-<label for="currency"><?lsmb text('Currency')?></label>
-<?lsmb
+<label for="currency">[% text('Currency')%]</label>
+[%
    currency_list = [];
    FOREACH c IN payment.currencies;
      currency_list.push( { text = c, value = c } );
@@ -74,12 +74,12 @@
        options = currency_list
        default_values = [ payment.default_currency ]
    }
-?>
+%]
 </div>
 
-<div class="listtop"><?lsmb text('Payment Processing') ?></div>
+<div class="listtop">[% text('Payment Processing') %]</div>
 
-      <?lsmb
+      [%
           IF payment.account_class == 1; pay_label = text('Pay From');#'
           ELSIF payment.account_class == 2; pay_label = text('Pay To'); #'
           END;
@@ -90,48 +90,48 @@
                 value_attr = "accno"
                 text_attr = "text"
                 label = pay_label
-        } ?>
+        } %]
 
-<?lsmb IF payment.payment_types ?>
+[% IF payment.payment_types %]
 
 <div id = "payments-filter-payment_types" class="inputpayment">
 
- <?lsmb PROCESS select element_data = {
+ [% PROCESS select element_data = {
                 name = "payment_type_id"
                 default_values = []
                 options = payment.payment_types
                 value_attr = "id"
                 text_attr = "label"
                 label = text('Payment Type') #'
-        } ?>
+        } %]
 
 
 </div>
 
-<?lsmb END ?>
+[% END %]
 
 
 
 
-<?lsmb IF payment.account_class == 1 ?>
+[% IF payment.account_class == 1 %]
 <div class = "inputgroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         type = "text"
         size = "20"
         name = "source_start"
         required = "true"
         label = text('Start Source Numbering At')
-} # ?>
+} # %]
 </div>
-<?lsmb END ?>
+[% END %]
 <div>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         type = "submit"
         name = "action"
         text = text('Continue')
         class = "submit"
         value = "display_payments"
-} ?>
+} %]
 </div>
 </form>
 </div>

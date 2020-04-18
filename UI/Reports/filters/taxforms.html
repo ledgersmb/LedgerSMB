@@ -1,42 +1,42 @@
-<?lsmb PROCESS 'elements.html';
+[% PROCESS 'elements.html';
        PROCESS 'report_base.html';
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+%]
+<body class="lsmb [% dojo_theme %]">
 
 <form data-dojo-type="lsmb/Form" method="post" action="taxform.pl">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
     type = "hidden"
     name = "sort"
     value = "transdate"
-} ?>
+} %]
 
 <table width="100%">
   <tr>
-    <th class="listtop"><?lsmb text('Tax Form Reports') ?></th>
+    <th class="listtop">[% text('Tax Form Reports') %]</th>
   </tr>
   <tr style="height:5px"></tr>
   <tr>
     <td>
       <table>
         <tr>
-        <th align="right"><?lsmb text('Form') ?></th>
+        <th align="right">[% text('Form') %]</th>
         <td colspan="6">
-        <?lsmb PROCESS select element_data = {
+        [% PROCESS select element_data = {
                name = "tax_form_id"
                options = forms
                text_attr = "form_name"
                value_attr = "id"
-        } ?>
+        } %]
         </td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Vendor Number') ?></th>
-          <td colspan="6"><?lsmb INCLUDE input element_data = {
+          <th align="right">[% text('Vendor Number') %]</th>
+          <td colspan="6">[% INCLUDE input element_data = {
                           name = "meta_number"
                           size = '35'
-           } ?></td>
+           } %]</td>
         </tr>
-        <?lsmb PROCESS date_row ?>
+        [% PROCESS date_row %]
       </table>
     </td>
   </tr>
@@ -45,20 +45,20 @@
   </tr>
 </table>
 
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        type="hidden"
        name="login"
        value=login
-} ?>
+} %]
 
 <br>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
        text = text('Continue')
        class="submit"
        type="submit"
        name="action"
        value="generate_report"
-} ?>
+} %]
 </form>
 
 </body>

@@ -1,4 +1,4 @@
-<?lsmb PROCESS "report_base.html";
+[% PROCESS "report_base.html";
        PROCESS "elements.html";
        IF entity_class == 1;
            TITLE = text('Search AP Invoices'); #'
@@ -15,63 +15,63 @@
            T.text = T.accno _ '--' _ T.description;
         END;
         accounts.unshift({});
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+%]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" action="invoice.pl" method="GET"
-      id="<?lsmb FORM_ID ?>">
-<?lsmb PROCESS input element_data = {
+      id="[% FORM_ID %]">
+[% PROCESS input element_data = {
      name = 'entity_class'
     value = entity_class
      type = 'hidden'
-} ?>
-<div class="listtop"><?lsmb TITLE ?></div>
+} %]
+<div class="listtop">[% TITLE %]</div>
 <table class="form">
 <tr id="account-row">
-  <th><?lsmb text('Account') ?></th>
-  <td><?lsmb PROCESS select element_data = {
+  <th>[% text('Account') %]</th>
+  <td>[% PROCESS select element_data = {
              name = 'account_id',
        value_attr = 'id',
         text_attr = 'text',
    default_values = [account_id],
             class = 'account',
           options = accounts
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="name-row">
-  <th><?lsmb NAME ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% NAME %]</th>
+  <td>[% PROCESS input element_data = {
            name = "entity_name"
           value = entity_name
            type = "text"
            size = "32"
           class = "name"
-      } ?></td>
+      } %]</td>
 </tr>
 <tr id="meta-number-row">
-  <th><?lsmb META_NUMBER ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% META_NUMBER %]</th>
+  <td>[% PROCESS input element_data = {
            name = "meta_number"
           value = meta_number
            type = 'text'
            size = 16
           class = "control-code"
-       } ?></td>
+       } %]</td>
 </tr>
-<?lsmb PROCESS employee_row ?>
-<?lsmb PROCESS business_classes ?>
+[% PROCESS employee_row %]
+[% PROCESS business_classes %]
 <tr id="taxable-row">
-  <th><?lsmb text('Tax Status') ?></th>
-  <td><?lsmb PROCESS select element_data = {
+  <th>[% text('Tax Status') %]</th>
+  <td>[% PROCESS select element_data = {
               name = "taxable"
            options = [{} # all
                       {text = text('Taxable'), value = 1}
                       {text = text('Nontaxable'), value = 0}]
     default_values = taxable
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="tax-account-row">
-  <th><?lsmb text('Tax Account') ?></th>
-  <td><?lsmb
+  <th>[% text('Tax Account') %]</th>
+  <td>[%
         FOREACH T IN tax_accounts;
            T.text = T.accno _ '--' _ T.description;
         END;
@@ -83,93 +83,93 @@
    default_values = [tax_account_id],
             class = 'account',
           options = tax_accounts
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="invnumber-row">
-  <th><?lsmb text('Invoice Number') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('Invoice Number') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "invnumber"
           value = invnumber
            type = 'text'
            size = 16
           class = "control-code"
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="ordnumber-row">
-  <th><?lsmb text('Order Number') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('Order Number') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "ordnumber"
           value = ordnumber
            type = 'text'
            size = 16
           class = "control-code"
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="ponumber-row">
-  <th><?lsmb text('PO Number') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('PO Number') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "ponumber"
           value = ponumber
            type = 'text'
            size = 16
           class = "control-code"
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="partnumber-row">
-   <th><?lsmb text('Partnumber') ?></th>
-   <td><?lsmb PROCESS input element_data = {
+   <th>[% text('Partnumber') %]</th>
+   <td>[% PROCESS input element_data = {
            name = "partnumber"
           value = partnumber
            type = 'text'
            size = 16
           class = "control-code"
-       } ?></td>
+       } %]</td>
 </tr>
 
 <tr id="source-row">
-  <th><?lsmb text('Source') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('Source') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "source"
           value = source
            type = 'text'
            size = 16
           class = "control-code"
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="description-row">
-  <th><?lsmb text('Description') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('Description') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "description"
           value = description
            type = 'text'
            size = 32
           class = "text"
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="notes-row">
-  <th><?lsmb text('Notes') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('Notes') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "notes"
           value = notes
            type = 'text'
            size = 32
           class = "text"
-       } ?></td>
+       } %]</td>
 </tr>
 <tr id="ship-via-row">
-  <th><?lsmb text('Ship Via') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <th>[% text('Ship Via') %]</th>
+  <td>[% PROCESS input element_data = {
            name = "ship_via"
           value = ship_via
            type = 'text'
            size = 32
           class = "text"
-       } ?></td>
+       } %]</td>
 </tr>
-<?lsmb PROCESS date_row ?>
+[% PROCESS date_row %]
 <tr id="onhold-row">
-  <th><?lsmb text('Invoice Status') ?></th>
-  <td><?lsmb label_pos = 1; PROCESS input element_data = {
+  <th>[% text('Invoice Status') %]</th>
+  <td>[% label_pos = 1; PROCESS input element_data = {
         label = text('All')
          type = 'radio'
          name = 'on_hold'
@@ -190,212 +190,212 @@
          name = 'on_hold'
          id   = 'on_hold-hold'
         value = '1'
-     }; ?></td>
+     }; %]</td>
 </tr>
 <tr>
-<th colspan="4" class="centered"><?lsmb text('Include in Report') ?></th>
+<th colspan="4" class="centered">[% text('Include in Report') %]</th>
 </tr>
 <tr>
   <th>&nbsp;</th>
   <td colspan="3">
     <table>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'oc_state'
                     type = 'radio'
                    value = 'open'
                  checked = 'CHECKED'
                    label = text('Open')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'oc_state'
                     type = 'radio'
                    value = 'closed'
                    label = text('Closed')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'oc_state'
                     type = 'radio'
                    value = 'all'
                    label = text('All')
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'is_approved'
                     type = 'radio'
                    value = 'Y'
                    label = text('Approved')
                  checked = 'CHECKED'
-        }; ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        }; %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'is_approved'
                     type = 'radio'
                    value = 'N'
                    label = text('Unapproved')
-        }; ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        }; %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'is_approved'
                     type = 'radio'
                    value = 'All'
                    label = text('All')
-        }; ?></td>
+        }; %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'col_running_number'
                     type = 'checkbox'
                    value = '1'
                    label = text('No.')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_id'
                     type = 'checkbox'
                    value = '1'
                    label = text('ID')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_invnumber'
                     type = 'checkbox'
                    value = '1'
                    label = text('Invoice Number') #'
                  checked = 'CHECKED'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_ordnumber'
                     type = 'checkbox'
                    value = '1'
                    label = text('Order Number') #'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_ponumber'
                     type = 'checkbox'
                    value = '1'
                    label = text('PO Number') #'
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'col_transdate'
                     type = 'checkbox'
                    value = '1'
                    label = text('Invoice Date') #'
                  checked = 'CHECKED'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_business_units'
                     type = 'checkbox'
                    value = '1'
                    label = text('Business Units') #'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_entity_name'
                     type = 'checkbox'
                    value = '1'
                    label = NAME
                  checked = 'CHECKED'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_salesperson'
                     type = 'checkbox'
                    value = '1'
                    label = text('Salesperson')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_manager'
                     type = 'checkbox'
                    value = '1'
                    label = text('Manager')
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'col_netamount'
                     type = 'checkbox'
                    value = '1'
                    label = text('Amount')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_tax'
                     type = 'checkbox'
                    value = '1'
                    label = text('Tax')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_amount'
                     type = 'checkbox'
                    value = '1'
                    label = text('Total')
                  checked = 'CHECKED'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_curr'
                     type = 'checkbox'
                    value = '1'
                    label = text('Currency')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_last_payment'
                     type = 'checkbox'
                    value = '1'
                    label = text('Date Paid') #'
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'col_paid'
                     type = 'checkbox'
                    value = '1'
                    label = text('Paid')
                  checked = 'CHECKED'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_due_date'
                     type = 'checkbox'
                    value = '1'
                    label = text('Due Date') #'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_due'
                     type = 'checkbox'
                    value = '1'
                    label = text('Amount Due') #'
                  checked = 'CHECKED'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_notes'
                     type = 'checkbox'
                    value = '1'
                    label = text('Notes')
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_till'
                     type = 'checkbox'
                    value = '1'
                    label = text('Till')
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'col_shipping_point'
                     type = 'checkbox'
                    value = '1'
                    label = text('Shipping Point') #'
-        } ?></td>
-        <td><?lsmb PROCESS input element_data = {
+        } %]</td>
+        <td>[% PROCESS input element_data = {
                     name = 'col_ship_via'
                     type = 'checkbox'
                    value = '1'
                    label = text('Ship Via') #'
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
-        <td><?lsmb PROCESS input element_data = {
+        <td>[% PROCESS input element_data = {
                     name = 'subtotal'
                     type = 'checkbox'
                    value = '1'
                    label = text('Subtotal')
-        } ?></td>
+        } %]</td>
 
       </tr>
     </table>
@@ -403,12 +403,12 @@
 </tr>
 </table>
 <hr />
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
     name = 'action'
    value = 'invoice_search'
     type = 'submit'
    class = 'submit'
     text = text('Continue')
-} ?>
+} %]
 </form>
 </body>

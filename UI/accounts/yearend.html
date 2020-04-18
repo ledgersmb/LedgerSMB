@@ -1,79 +1,79 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
   <form data-dojo-type="lsmb/Form"
         id="gl-yearend"
         method="post"
-        action="<?lsmb request.script ?>">
+        action="[% request.script %]">
     <div id="closing-tabs"
          data-dojo-type="dijit/layout/TabContainer"
          style="height: 100%" >
       <div id="closing-year"
-           title="<?lsmb text('Close Year') ?>"
+           title="[% text('Close Year') %]"
            data-dojo-type="dijit/layout/ContentPane" >
         <table width="100%">
-          <tr><th class="listtop"><?lsmb text('Closing data') ?></th></tr>
+          <tr><th class="listtop">[% text('Closing data') %]</th></tr>
           <tr><td> </td></tr>
           <tr>
     <td>
       <table width="100%">
         <tr>
           <th align="right"><label
-                               for='end-date'><?lsmb text('Yearend')
-                                                     ?></label></th>
-          <td><?lsmb PROCESS input element_data={
+                               for='end-date'>[% text('Yearend')
+                                                     %]</label></th>
+          <td>[% PROCESS input element_data={
             class = 'date',
             name = 'end_date',
             size = 11,
             title = user.dateformat,
-            } -?></td>
+            } -%]</td>
         </tr>
         <tr>
           <th align="right"><label
-                               for="reference"><?lsmb text('Reference')
-                                                  ?></label></th>
-          <td><?lsmb PROCESS input element_data={
+                               for="reference">[% text('Reference')
+                                                  %]</label></th>
+          <td>[% PROCESS input element_data={
             name = 'reference',
             size = 20,
             value = text('Yearend'),
-            } -?></td>
+            } -%]</td>
         </tr>
         <tr>
-          <th align="right"><label for="description"><?lsmb text('Description') ?></label></th>
-          <td><?lsmb PROCESS textarea element_data={
+          <th align="right"><label for="description">[% text('Description') %]</label></th>
+          <td>[% PROCESS textarea element_data={
             name = 'description',
             rows = 3,
             cols = 50,
-            } -?></td>
+            } -%]</td>
         </tr>
         <tr>
-          <th align="right"><label for="retention-acc-id"><?lsmb text('Retained Earnings') ?></label></th>
-          <?lsmb FOREACH opt = eoy.earnings_accounts;
+          <th align="right"><label for="retention-acc-id">[% text('Retained Earnings') %]</label></th>
+          [% FOREACH opt = eoy.earnings_accounts;
                      opt.text = opt.accno _ '--' _ opt.description;
-                           END -?>
-          <td><?lsmb PROCESS select element_data={
+                           END -%]
+          <td>[% PROCESS select element_data={
                      name = "retention_acc_id"
                      options = eoy.earnings_accounts
                      value_attr = "id"
-                } -?></td>
+                } -%]</td>
         </tr>
         <tr><td colspan="2">
             <hr size="3" noshade="noshade" />
-            <?lsmb FOREACH hidden IN eoy.hiddens.keys;
+            [% FOREACH hidden IN eoy.hiddens.keys;
                    PROCESS input element_data={
                             type = 'hidden',
                             name = hidden,
                             value = hiddens.item(hidden)
-                   }; END ?></td>
+                   }; END %]</td>
         </tr>
         <tr>
           <td align="left">
-            <?lsmb PROCESS button element_data = {
+            [% PROCESS button element_data = {
                         name = "action"
                         type = "submit"
                         class = "submit"
                         value = "post_yearend"
                         text = text('Post Yearend') #'
-                   } ?></td></tr>
+                   } %]</td></tr>
       </table>
     </td>
           </tr>
@@ -82,35 +82,35 @@
       </div>
 
       <div id="closing-period"
-           title="<?lsmb text('Close Period') ?>"
+           title="[% text('Close Period') %]"
            data-dojo-type="dijit/layout/ContentPane" >
         <table width="100%">
           <tr><td>
               <table width="100%">
                 <tr><th colspan="2"
-                        class="listtop"><?lsmb text('Close books') ?></th></tr>
-                <tr><th align="right"><?lsmb text('Books closed up to') ?></th>
-                  <td><?lsmb eoy.closed_date ?></td>
+                        class="listtop">[% text('Close books') %]</th></tr>
+                <tr><th align="right">[% text('Books closed up to') %]</th>
+                  <td>[% eoy.closed_date %]</td>
                 <tr>
                   <th align="right">
-                    <label for="period-close-date"><?lsmb text('Close As-Of')
-                                                         ?></label></th>
-          <td><?lsmb PROCESS input element_data={
+                    <label for="period-close-date">[% text('Close As-Of')
+                                                         %]</label></th>
+          <td>[% PROCESS input element_data={
             class = 'date',
             name = 'period_close_date',
             size = 11,
             title = user.dateformat,
-            } -?></td></tr>
+            } -%]</td></tr>
                 <tr><td colspan="2">
                     <hr size="3" noshade="noshade" /></td></tr>
                 <td align="left">
-                  <?lsmb PROCESS button element_data = {
+                  [% PROCESS button element_data = {
                          name = "action"
                          type = "submit"
                          class = "submit"
                          value = "close_period"
                          text = text('Close Period') #'
-                         } ?></td></tr>
+                         } %]</td></tr>
               </table>
             </td>
           </tr>
@@ -119,38 +119,38 @@
 
 
     <div id="reopen"
-           title="<?lsmb text('Re-open Books') ?>"
+           title="[% text('Re-open Books') %]"
            data-dojo-type="dijit/layout/ContentPane" >
 
         <table width="100%">
           <tr><td>
               <table width="100%">
                 <tr><th colspan="2"
-                        class="listtop"><?lsmb text('Re-open Books')
-                                               ?></th></tr>
-<tr><th align="right"><?lsmb text('Books closed on') ?></th>
-    <td><?lsmb eoy.closed_date ?></td></tr>
+                        class="listtop">[% text('Re-open Books')
+                                               %]</th></tr>
+<tr><th align="right">[% text('Books closed on') %]</th>
+    <td>[% eoy.closed_date %]</td></tr>
 <tr>
   <th align="right"><label
-                       for="reopen-date"><?lsmb text('Re-Open As Of')
-                                                ?></label></th>
-          <td><?lsmb PROCESS input element_data={
+                       for="reopen-date">[% text('Re-Open As Of')
+                                                %]</label></th>
+          <td>[% PROCESS input element_data={
             class = 'date',
             name = 'reopen_date',
             size = 11,
             title = user.dateformat,
-            } -?></td></tr>
+            } -%]</td></tr>
 <tr>
 <tr><td colspan="2">
 <hr size="3" noshade="noshade" /></td></tr>
 <td align="left">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         name = "action"
         type = "submit"
         class = "submit"
         value = "reopen_books"
         text = text('Re-open Period') #'
-} ?></td></tr>
+} %]</td></tr>
       </table>
     </td>
   </tr>

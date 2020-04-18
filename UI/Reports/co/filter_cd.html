@@ -1,17 +1,17 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
 
-<form data-dojo-type="lsmb/Form" method="get" action="<?lsmb request.script ?>">
-<?lsmb PROCESS input element_data = {
+<form data-dojo-type="lsmb/Form" method="get" action="[% request.script %]">
+[% PROCESS input element_data = {
     type = "hidden"
     name = "sort"
     value = "transdate"
-} ?>
+} %]
 
 <table width="100%">
   <tr>
     <th class="listtop">Caja Diaria ---
-      <?lsmb text('All fields are required') ?>
+      [% text('All fields are required') %]
     </th>
 
   </tr>
@@ -20,74 +20,74 @@
     <td>
       <table>
           <tr>
-          <th align="right"><?lsmb text('Accounts From') ?></th>
-          <td><?lsmb PROCESS input element_data = {
+          <th align="right">[% text('Accounts From') %]</th>
+          <td>[% PROCESS input element_data = {
                      name = 'from_accno'
                      type = 'text'
-                     size = 20 } ?></td>
-          <th align="right"><?lsmb text('Accounts To') ?></th>
-          <td><?lsmb PROCESS input element_data = {
+                     size = 20 } %]</td>
+          <th align="right">[% text('Accounts To') %]</th>
+          <td>[% PROCESS input element_data = {
                      name="to_accno"
                      size="20"
                      type="text"
-              } ?></td>
+              } %]</td>
         </tr>
 
         <tr>
 
-          <th align="right"><?lsmb text('From') ?></th>
-          <td><?lsmb PROCESS input element_data = {
+          <th align="right">[% text('From') %]</th>
+          <td>[% PROCESS input element_data = {
                class="date"
                name="date_from"
                size="11"
-               title=datestyle } ?></td>
-          <th align="right"><?lsmb text('To') ?></th>
-          <td><?lsmb PROCESS input element_data = {
+               title=datestyle } %]</td>
+          <th align="right">[% text('To') %]</th>
+          <td>[% PROCESS input element_data = {
                  class="date"
                  name="date_to"
                  size="11"
-                 title=datestyle } ?></td>
+                 title=datestyle } %]</td>
         </tr>
 
         <tr>
-          <th align="right"><?lsmb text('Include in Report') ?></th>
+          <th align="right">[% text('Include in Report') %]</th>
 
-                      <td nowrap><?lsmb PROCESS input element_data = {
+                      <td nowrap>[% PROCESS input element_data = {
                                         name="col_accno"
                                         class="checkbox"
                                         type="checkbox"
                                         value="Y"
                                         checked = 'checked'
-                                 } ?> <?lsmb text('Account Number') ?></td>
-                      <td nowrap><?lsmb PROCESS input element_data = {
+                                 } %] [% text('Account Number') %]</td>
+                      <td nowrap>[% PROCESS input element_data = {
                                         name="col_description"
                                         class="checkbox"
                                         type="checkbox"
                                         value="Y"
                                         checked="checked"
-                                  } ?> <?lsmb text('Account Name') ?></td>
-                     <td nowrap><?lsmb PROCESS input element_data = {
+                                  } %] [% text('Account Name') %]</td>
+                     <td nowrap>[% PROCESS input element_data = {
                                        name="col_document_type"
                                        class="checkbox"
                                        type="checkbox"
                                        value="Y"
                                        checked="checked"
-                                } ?> <?lsmb text('Document Type') ?></td>
-                     <td nowrap><?lsmb PROCESS input element_data = {
+                                } %] [% text('Document Type') %]</td>
+                     <td nowrap>[% PROCESS input element_data = {
                                        name="col_debits"
                                        class="checkbox"
                                        type="checkbox"
                                        value="Y"
                                        checked="checked"
-                                 } ?> <?lsmb text('Debits') ?></td>
+                                 } %] [% text('Debits') %]</td>
 
-                    <td nowrap><?lsmb PROCESS input element_data = {
+                    <td nowrap>[% PROCESS input element_data = {
                                       name="col_credits"
                                       class="checkbox"
                                       type="checkbox"
                                       value="Y"
                                       checked="checked"
-                               } ?> <?lsmb text('Credits') ?></td>
+                               } %] [% text('Credits') %]</td>
                   </tr>
 
       </table>
@@ -98,25 +98,25 @@
   </tr>
 </table>
 
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        type="hidden"
        name="path"
        value=path
-} ?>
-<?lsmb PROCESS input element_data = {
+} %]
+[% PROCESS input element_data = {
        type="hidden"
        name="login"
        value=login
-} ?>
+} %]
 
 <br>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
        text = text('Continue')
        class="submit"
        type="submit"
        name="action"
        value="run_caja_diaria"
-} ?>
+} %]
 </form>
 
 

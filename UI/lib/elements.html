@@ -1,5 +1,5 @@
-<?lsmb# HTML Snippet, for import only ?>
-<?lsmb
+[%# HTML Snippet, for import only %]
+[%
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
    # Defaults for input attributes
   input_keys = ['type', 'name', 'disabled', 'size', 'value',
@@ -99,12 +99,12 @@
     "data-dojo-props" = "iconClass:'dijitCheckBoxIcon'"
   }
 
-?>
+%]
 
-<?lsmb # INPUT ELEMENT ?>
-<?lsmb BLOCK input ?>
-  <?lsmb IF label_pos != 1 and label_pos != -1; label_pos = -1; END ?>
-  <?lsmb IF element_data;  # Only process element if one exists.
+[% # INPUT ELEMENT %]
+[% BLOCK input %]
+  [% IF label_pos != 1 and label_pos != -1; label_pos = -1; END %]
+  [% IF element_data;  # Only process element if one exists.
          IF !element_data.title.defined();
              element_data.title = element_data.label;
          END;
@@ -160,36 +160,36 @@
               CASE;
                 input_type_keys = input_keys;
             END;
-          ?>
-          <?lsmb PROCESS attributes  # Process regular attributes.
+          %]
+          [% PROCESS attributes  # Process regular attributes.
             attribute_data = element_data
             attribute_defaults = input_defaults
             element_keys = input_type_keys
-          ?>
-          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+          %]
+          [% PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes
-          ?>
-      <?lsmb IF label_pos == -1 ?>
-        <?lsmb PROCESS auto_label  # Process element label. ?>
-      <?lsmb END ?>
-          <input<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> />
-      <?lsmb IF label_pos == 1 ?>
-        <?lsmb PROCESS auto_label  # Process element label. ?>
-      <?lsmb END ?>
-  <?lsmb END ?>
-<?lsmb END ?>
+          %]
+      [% IF label_pos == -1 %]
+        [% PROCESS auto_label  # Process element label. %]
+      [% END %]
+          <input[% all_attributes %][% all_custom_attributes %] />
+      [% IF label_pos == 1 %]
+        [% PROCESS auto_label  # Process element label. %]
+      [% END %]
+  [% END %]
+[% END %]
 
-<?lsmb # TEXTAREA ELEMENT ?>
-<?lsmb BLOCK textarea ?>
-  <?lsmb IF element_data;  # Only process element if one exists.
+[% # TEXTAREA ELEMENT %]
+[% BLOCK textarea %]
+  [% IF element_data;  # Only process element if one exists.
               IF !element_data.title.defined();
                   element_data.title = element_data.label;
-              END; ?>
-        <?lsmb
+              END; %]
+        [%
             element_type = 'textarea';
             PROCESS auto_id;
-          ?>
-          <?lsmb PROCESS attributes  # Process regular attributes.
+          %]
+          [% PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
             attribute_defaults = textarea_defaults
 
@@ -198,37 +198,37 @@
                  'name', 'cols', 'rows', 'disabled', 'readonly',
                  'tabindex', 'accesskey', 'value', 'style', 'wrap',
                  'data-dojo-type', 'data-dojo-props', 'data-dojo-attach-point']
-          ?>
-          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+          %]
+          [% PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes
-          ?>
-          <?lsmb PROCESS auto_label  # Process element label. ?>
-          <textarea<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></textarea>
-  <?lsmb END ?>
-<?lsmb END ?>
+          %]
+          [% PROCESS auto_label  # Process element label. %]
+          <textarea[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</textarea>
+  [% END %]
+[% END %]
 
-<?lsmb # SELECT ELEMENT ?>
-<?lsmb BLOCK select ?>
-  <?lsmb IF element_data;  # Only process element if one exists.
+[% # SELECT ELEMENT %]
+[% BLOCK select %]
+  [% IF element_data;  # Only process element if one exists.
               IF !element_data.title.defined();
                   element_data.title = element_data.label;
-              END; ?>
-    <?lsmb default_blank = element_data.default_blank;
-           element_data.delete('default_blank'); ?>
-    <?lsmb IF element_data.defined('text_attr') ?>
-        <?lsmb text_attr =  element_data.text_attr ?>
-        <?lsmb element.delete('text_attr') ?>
-    <?lsmb ELSE ?>
-        <?lsmb text_attr = 'text' ?>
-    <?lsmb END ?>
-    <?lsmb IF element_data.defined('value_attr') ?>
-        <?lsmb value_attr =  element_data.value_attr ?>
-        <?lsmb element.delete('value_attr') ?>
-    <?lsmb ELSE ?>
-        <?lsmb value_attr = 'value' ?>
-    <?lsmb END ?>
-    <?lsmb IF element_data.defined('default_values') ?>
-            <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
+              END; %]
+    [% default_blank = element_data.default_blank;
+           element_data.delete('default_blank'); %]
+    [% IF element_data.defined('text_attr') %]
+        [% text_attr =  element_data.text_attr %]
+        [% element.delete('text_attr') %]
+    [% ELSE %]
+        [% text_attr = 'text' %]
+    [% END %]
+    [% IF element_data.defined('value_attr') %]
+        [% value_attr =  element_data.value_attr %]
+        [% element.delete('value_attr') %]
+    [% ELSE %]
+        [% value_attr = 'value' %]
+    [% END %]
+    [% IF element_data.defined('default_values') %]
+            [%  # Undef items must be removed, or they choke in the options defaults check later.
         i = 0;
         FOREACH select_default IN element_data.default_values;
           UNLESS select_default.defined;
@@ -236,15 +236,15 @@
           END;
           i = i + 1;
         END;
-      ?>
-    <?lsmb END ?>
-        <?lsmb
+      %]
+    [% END %]
+        [%
             element_type = 'select';
             PROCESS auto_id;
             parent_id = element_data.id;
             optindex = 1;
-          ?>
-          <?lsmb PROCESS attributes  # Process regular attributes.
+          %]
+          [% PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
             attribute_defaults =
                 (element_data.type.defined() && element_data.type == "multiselect")
@@ -253,18 +253,18 @@
             # Attributes that apply to selects and multiselect.
             element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
             'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
-          ?>
-          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+          %]
+          [% PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes
-          ?>
-          <?lsmb PROCESS auto_label  # Process element label. ?>
-          <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
-            <?lsmb IF default_blank;
+          %]
+          [% PROCESS auto_label  # Process element label. %]
+          <select[% all_attributes %][% all_custom_attributes %]>
+            [% IF default_blank;
                      option_data={};
                      PROCESS option parent_id=parent_id, optindex = optindex;
                      optindex=optindex+1 ;
-                   END ?>
-            <?lsmb  # Build options.
+                   END %]
+            [%  # Build options.
               FOREACH optionds IN element_data.options;
                   option_data = {};
                   FOREACH key IN optionds.keys;
@@ -274,134 +274,134 @@
                 optindex=optindex+1;
 
               END;
-            ?>
+            %]
           </select>
-  <?lsmb END ?>
-<?lsmb END ?>
+  [% END %]
+[% END %]
 
-<?lsmb # OPTION ELEMENT ?>
-<?lsmb BLOCK option ?>
-  <?lsmb option_data.value = option_data.$value_attr ?>
-  <?lsmb option_data.text = option_data.$text_attr ?>
-  <?lsmb option_data.id = "${parent_id}-${optindex}" -?>
-  <?lsmb  # Selected is a special case -- no attribute key, so it is handled here by looking for the option value in the default_values list.
+[% # OPTION ELEMENT %]
+[% BLOCK option %]
+  [% option_data.value = option_data.$value_attr %]
+  [% option_data.text = option_data.$text_attr %]
+  [% option_data.id = "${parent_id}-${optindex}" -%]
+  [%  # Selected is a special case -- no attribute key, so it is handled here by looking for the option value in the default_values list.
     option_data.selected = "";
     FOREACH test_val IN element_data.default_values;
        IF option_data.value == test_val;
            option_data.selected = ' selected="selected"';
        END;
     END;
-  ?>
-  <?lsmb PROCESS attributes  # Process regular attributes.
+  %]
+  [% PROCESS attributes  # Process regular attributes.
     attribute_data=option_data
     element_keys=['tabindex', 'disabled', 'value']  # Attributes that apply to options.
-  ?>
-  <?lsmb PROCESS custom_attributes  # Process custom attributes.
+  %]
+  [% PROCESS custom_attributes  # Process custom attributes.
     custom_attribute_data=option_data.attributes
-  ?>
-  <option <?lsmb all_attributes ?> <?lsmb all_custom_attributes ?><?lsmb option_data.selected ?>><?lsmb option_data.text ?></option>
-<?lsmb END ?>
+  %]
+  <option [% all_attributes %] [% all_custom_attributes %][% option_data.selected %]>[% option_data.text %]</option>
+[% END %]
 
-<?lsmb # BUTTON ELEMENT ?>
-<?lsmb BLOCK button ?>
-  <?lsmb IF element_data  # Only process element if one exists. ?>
-        <?lsmb
+[% # BUTTON ELEMENT %]
+[% BLOCK button %]
+  [% IF element_data  # Only process element if one exists. %]
+        [%
             element_type = 'button';
             PROCESS auto_id;
-          ?>
-          <?lsmb PROCESS attributes  # Process regular attributes.
+          %]
+          [% PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
             attribute_defaults = button_defaults
             element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
                  'tabindex', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to buttons.
-          ?>
-          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+          %]
+          [% PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes
-          ?>
-          <?lsmb PROCESS auto_label  # Process element label. ?>
-          <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
-          <?lsmb IF element_data.tooltip.msg;
+          %]
+          [% PROCESS auto_label  # Process element label. %]
+          <button[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</button>
+          [% IF element_data.tooltip.msg;
                 INCLUDE tooltip element_data = {
                 id       => element_data.tooltip.id,
                 ref_id   => element_data.id,
                 position => element_data.tooltip.position,
                 msg      => element_data.tooltip.msg };
-          END ?>
-  <?lsmb END ?>
-<?lsmb END ?>
+          END %]
+  [% END %]
+[% END %]
 
-<?lsmb # BUTTON ELEMENT ?>
-<?lsmb BLOCK toggle ?>
-  <?lsmb IF element_data  # Only process element if one exists. ?>
-        <?lsmb
+[% # BUTTON ELEMENT %]
+[% BLOCK toggle %]
+  [% IF element_data  # Only process element if one exists. %]
+        [%
             element_type = 'toggle';
             PROCESS auto_id;
-          ?>
-          <?lsmb PROCESS attributes  # Process regular attributes.
+          %]
+          [% PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
             attribute_defaults = toggle_defaults
             element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
                  'showLabel', 'label',
                  'tabindex', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to toggles.
-          ?>
-          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+          %]
+          [% PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes
-          ?>
-          <?lsmb PROCESS auto_label  # Process element label. ?>
-          <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
-  <?lsmb END ?>
-<?lsmb END ?>
+          %]
+          [% PROCESS auto_label  # Process element label. %]
+          <button[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</button>
+  [% END %]
+[% END %]
 
-<?lsmb # LABEL ELEMENT ?>
-<?lsmb BLOCK label ?>
-  <?lsmb IF element_data  # Only process element if one exists. ?>
-        <?lsmb
+[% # LABEL ELEMENT %]
+[% BLOCK label %]
+  [% IF element_data  # Only process element if one exists. %]
+        [%
             element_type = 'label';
             PROCESS auto_id;
-          ?>
-          <?lsmb PROCESS attributes
+          %]
+          [% PROCESS attributes
             attribute_data=element_data
             attribute_defaults = {}  # Make sure old defaults are cleared out.
             element_keys=['for']  # Attributes that apply to labels.
-          ?>
-          <?lsmb PROCESS custom_attributes
+          %]
+          [% PROCESS custom_attributes
             custom_attribute_data=element_data.attributes
-          ?>
-          <label<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></label>
-  <?lsmb END ?>
-<?lsmb END ?>
+          %]
+          <label[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</label>
+  [% END %]
+[% END %]
 
-<?lsmb # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here. ?>
-<?lsmb BLOCK attributes ?>
-  <?lsmb
+[% # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here. %]
+[% BLOCK attributes %]
+  [%
     all_attributes = ""
     all_keys = default_keys.merge(element_keys)  # Merge in attributes that apply to this element.
-  ?>
-  <?lsmb FOREACH element_attribute IN all_keys  # Loop through each allowed attribute. ?>
-    <?lsmb
+  %]
+  [% FOREACH element_attribute IN all_keys  # Loop through each allowed attribute. %]
+    [%
       IF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");  # Add the attribute to the element if it's been set.
         all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_data.${element_attribute} _ '"';
       ELSIF attribute_defaults.defined(element_attribute);  # Fall back to default value if one is supplied.
         all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_defaults.${element_attribute} _ '"';
       END;
-    ?>
-  <?lsmb END ?>
-<?lsmb END ?>
+    %]
+  [% END %]
+[% END %]
 
-<?lsmb # CUSTOM ATTRIBUTE PROCESSING -- any other attributes passed in the 'attributes' key are processed here. ?>
-<?lsmb BLOCK custom_attributes ?>
-  <?lsmb all_custom_attributes = "" ?>
-  <?lsmb  # Loop through each attribute and add it to the custom attribute string.
+[% # CUSTOM ATTRIBUTE PROCESSING -- any other attributes passed in the 'attributes' key are processed here. %]
+[% BLOCK custom_attributes %]
+  [% all_custom_attributes = "" %]
+  [%  # Loop through each attribute and add it to the custom attribute string.
     FOREACH element_attribute IN custom_attribute_data;
       all_custom_attributes = all_custom_attributes _ " " _ element_attribute.key _ '="' _ element_attribute.value _ '"';
     END;
-  ?>
-<?lsmb END ?>
+  %]
+[% END %]
 
-<?lsmb BLOCK auto_id  # Automatically builds the id tag for the element if possible. ?>
-  <?lsmb UNLESS element_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. ?>
-    <?lsmb element_id = "" ?>
-    <?lsmb  # Label id's default to [for]-label.
+[% BLOCK auto_id  # Automatically builds the id tag for the element if possible. %]
+  [% UNLESS element_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. %]
+    [% element_id = "" %]
+    [%  # Label id's default to [for]-label.
       IF element_type == 'label' AND (element_data.defined('for') OR element_type == 'toggle');
         element_id = element_data.for _ "-label";
       ELSIF ((element_type == 'input' AND element_data.type == 'radio') OR element_type == 'button') AND element_data.defined('name') AND element_data.defined('value');
@@ -409,19 +409,19 @@
       ELSIF (element_type == 'input' OR element_type == 'textarea' OR element_type == 'select') AND element_data.defined('name');
         element_id = element_data.name;
       END;
-    ?>
-    <?lsmb  # Add the id if it's been generated.  Replace all non alphanumeric characters with dashes -- nicer CSS.
+    %]
+    [%  # Add the id if it's been generated.  Replace all non alphanumeric characters with dashes -- nicer CSS.
       IF element_id;
         element_data.id = element_id.replace('[^\p{IsAlnum}]', '-');
       END;
-    ?>
-  <?lsmb END ?>
-<?lsmb END ?>
+    %]
+  [% END %]
+[% END %]
 
-<?lsmb BLOCK auto_label  # Sets a label for a form element if the special 'label' key is passed. ?>
-  <?lsmb IF element_data.defined('label')  # Check for label. ?>
-  <?lsmb IF element_data.label != '_none_' ?>
-    <?lsmb  # Add a for attribute for the label if possible.
+[% BLOCK auto_label  # Sets a label for a form element if the special 'label' key is passed. %]
+  [% IF element_data.defined('label')  # Check for label. %]
+  [% IF element_data.label != '_none_' %]
+    [%  # Add a for attribute for the label if possible.
       IF element_data.defined('id');
         label_id = ' id="' _ element_data.id _ '-label"';
         label_for = ' for="' _ element_data.id _ '"';
@@ -429,39 +429,39 @@
         label_id = "";
         label_for = "";
       END;
-    ?>
-    <?lsmb  # Label inherits class of the related element if possible.
+    %]
+    [%  # Label inherits class of the related element if possible.
       IF element_data.defined('class');
         label_class = ' class="' _ element_data.class _ '"';
       ELSE;
         label_class = "";
       END;
-    ?>
-    <label<?lsmb label_id ?><?lsmb label_for ?><?lsmb label_class ?>><?lsmb text(element_data.label) ?></label>
-  <?lsmb END ?>
-  <?lsmb END ?>
-<?lsmb END ?>
+    %]
+    <label[% label_id %][% label_for %][% label_class %]>[% text(element_data.label) %]</label>
+  [% END %]
+  [% END %]
+[% END %]
 
-<?lsmb BLOCK OPEN_STATUS_DIV;
+[% BLOCK OPEN_STATUS_DIV;
    CLASS = 'new';
    IF id and approved;
        CLASS = 'posted';
    ELSIF id;
        CLASS = 'saved';
    END;
-?><div id="statusdiv" class="<?lsmb CLASS ?>">
-<div id="history"><?lsmb text('Action: [_1], ID: [_2]', action, id); ?></div>
-<?lsmb END ?>
+%]<div id="statusdiv" class="[% CLASS %]">
+<div id="history">[% text('Action: [_1], ID: [_2]', action, id); %]</div>
+[% END %]
 
-<?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>
+[% BLOCK CLOSE_STATUS_DIV %]</div>[% END %]
 
-<?lsmb BLOCK decorated_text;
+[% BLOCK decorated_text;
   IF element_data && element_data.msg.defined();
     element_data.msg.replace('&lt;((/?[ibup]|br))&gt;','<$1>');
   END;
-END ?>
+END %]
 
-<?lsmb BLOCK tooltip;
+[% BLOCK tooltip;
   IF element_data && element_data.msg.defined();
      props="\"connectId:'" _ element_data.ref_id _ "'";
      IF element_data.position.defined();
@@ -473,27 +473,27 @@ END ?>
         props = props _ ',position:[' _ positions.join(',') _ ']';
     END;
     props = props _ '"';
-    ?>
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props=<?lsmb props ?>  >
-         <?lsmb INCLUDE decorated_text element_data = {
+    %]
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props=[% props %]  >
+         [% INCLUDE decorated_text element_data = {
                 msg => element_data.msg };
-         ?>
+         %]
     </div>
-  <?lsmb END;
-END ?>
+  [% END;
+END %]
 
-<?lsmb BLOCK select_language;
+[% BLOCK select_language;
     IF ! element_data.default_values || element_data.default_values.size == 0 ;
        element_data.default_values = [ SETTINGS.default_language ] ;
     END ;
     INCLUDE select element_data=element_data ;
   END ;
-   ?>
+   %]
 
-<?lsmb BLOCK select_country;
+[% BLOCK select_country;
     IF ! element_data.default_values || element_data.default_values.size == 0 ;
        element_data.default_values = [ SETTINGS.default_country ] ;
     END ;
     PROCESS select element_data=element_data ;
   END ;
-   ?>
+   %]

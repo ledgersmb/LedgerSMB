@@ -1,9 +1,9 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
+<form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
 <table width="100%">
   <tr class="listtop">
-    <th class="listtop"><?lsmb text('E-mail [_1]', form.${form.vc}.remove('--.*')) ?></th>
+    <th class="listtop">[% text('E-mail [_1]', form.${form.vc}.remove('--.*')) %]</th>
   </tr>
   <tr>
     <td> </td>
@@ -12,28 +12,16 @@
     <td>
       <table width="100%">
         <tr>
-          <th align="right"><?lsmb text('E-mail') ?></th>
-          <td><?lsmb PROCESS input element_data={name => 'email', size => 30, value => form.email} ?></td>
-          <th align="right"><?lsmb text('Cc') ?></th>
-          <td><?lsmb PROCESS input element_data={name => 'cc', size => 30, value => form.cc} ?></td>
+          <th align="right">[% text('E-mail') %]</th>
+          <td>[% PROCESS input element_data={name => 'email', size => 30, value => form.email} %]</td>
+          <th align="right">[% text('Cc') %]</th>
+          <td>[% PROCESS input element_data={name => 'cc', size => 30, value => form.cc} %]</td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Subject') ?></th>
-          <td><?lsmb PROCESS input element_data={name => 'subject', size => 30, value => form.subject} ?></td>
-          <th align="right"><?lsmb text('Bcc') ?></th>
-          <td><?lsmb PROCESS input element_data={name => 'bcc', size => 30, value => form.bcc} ?></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table width="100%">
-        <tr>
-          <th align="left"><?lsmb text('Message') ?></th>
-        </tr>
-        <tr>
-          <td><?lsmb PROCESS textarea element_data={name => 'message', rows => 15, cols => 60, text => form.message} ?></td>
+          <th align="right">[% text('Subject') %]</th>
+          <td>[% PROCESS input element_data={name => 'subject', size => 30, value => form.subject} %]</td>
+          <th align="right">[% text('Bcc') %]</th>
+          <td>[% PROCESS input element_data={name => 'bcc', size => 30, value => form.bcc} %]</td>
         </tr>
       </table>
     </td>
@@ -42,42 +30,54 @@
     <td>
       <table width="100%">
         <tr>
-          <!-- <td><?lsmb PROCESS select element_data=print.formname ?></td>
-          <td><?lsmb IF print.lang.defined;
-            PROCESS select element_data=print.lang; END ?>
+          <th align="left">[% text('Message') %]</th>
+        </tr>
+        <tr>
+          <td>[% PROCESS textarea element_data={name => 'message', rows => 15, cols => 60, text => form.message} %]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <!-- <td>[% PROCESS select element_data=print.formname %]</td>
+          <td>[% IF print.lang.defined;
+            PROCESS select element_data=print.lang; END %]
           </td>-->
-          <td><?lsmb PROCESS select element_data=print.format ?></td>
-          <td><?lsmb PROCESS select element_data=print.media ?> </td>
-          <td><?lsmb PROCESS select element_data=print.lang ?> </td>
-          <?lsmb PROCESS input element_data = {
+          <td>[% PROCESS select element_data=print.format %]</td>
+          <td>[% PROCESS select element_data=print.media %] </td>
+          <td>[% PROCESS select element_data=print.lang %] </td>
+          [% PROCESS input element_data = {
                  name = "formname"
                  type = "hidden"
                  value = form.formname
-          } ?>
-      <!--    <?lsmb PROCESS input element_data = {
+          } %]
+      <!--    [% PROCESS input element_data = {
                  name = "format"
                  type = "hidden"
                  value = format
-          } ?> -->
-<?lsmb IF print.copies ?>
+          } %] -->
+[% IF print.copies %]
           <td>
-  <?lsmb PROCESS input element_data={name => 'copies', size => '2', value => form.copies, label => text('Copies') } ?>
+  [% PROCESS input element_data={name => 'copies', size => '2', value => form.copies, label => text('Copies') } %]
           </td>
-<?lsmb ELSE ?>
+[% ELSE %]
           <td> </td>
-<?lsmb END ?>
-          <td><div style="width: 15em"><?lsmb
+[% END %]
+          <td><div style="width: 15em">[%
 PROCESS input element_data={
   name => 'read_receipt',
   type => 'checkbox',
   label => text('Request read receipt'),
   }
-            ?></div></td>
+            %]</div></td>
           <td align="right" width="90%">&nbsp;
           </td>
         </tr>
         <tr>
-          <td colspan="7"><?lsmb text('Group by') ?> -&gt; <?lsmb
+          <td colspan="7">[% text('Group by') %] -&gt; [%
             PROCESS input element_data={name => 'groupprojectnumber',
               type => 'checkbox', label => text('Project'),
               value => 'groupprojectnumber',
@@ -86,11 +86,11 @@ PROCESS input element_data={
               type => 'checkbox', label => text('Group'),
               value => 'grouppartsgroup',
               ${print.groupby.grouppartsgroup} = print.groupby.grouppartsgroup};
-            ?>
+            %]
           </td>
         </tr>
         <tr>
-          <td colspan="7"><?lsmb text('Sort by') ?> -&gt; <?lsmb
+          <td colspan="7">[% text('Sort by') %] -&gt; [%
             PROCESS input element_data={name => 'sortby', type => 'radio',
               label => text('Item'), value => 'runningnumber',
               ${print.sortby.runningnumber} = print.sortby.runningnumber};
@@ -103,7 +103,7 @@ PROCESS input element_data={
             PROCESS input element_data={name => 'sortby', type => 'radio',
               label => text('Bin'), value => 'bin',
               ${print.sortby.bin} = print.sortby.bin};
-            ?>
+            %]
           </td>
         </tr>
       </table>
@@ -114,12 +114,12 @@ PROCESS input element_data={
   </tr>
 </table>
 <br />
-<?lsmb FOREACH hidden IN hiddens.keys;
+[% FOREACH hidden IN hiddens.keys;
         PROCESS input element_data={
                 type => 'hidden',
                 name => hidden,
                 value => hiddens.item(hidden)
-                }; END ?>
-<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+                }; END %]
+[% FOREACH button IN buttons; PROCESS button element_data=button; END %]
 </form>
 </body>

@@ -1,62 +1,62 @@
-<body id="use_overpayment1" class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" name="search" method="post" action="<?lsmb script ?>">
-  <?lsmb PROCESS elements.html  # Include form elements helper. -?>
-  <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
-  <?lsmb account_class.type = 'hidden'; account_class.id =  account_class.name; INCLUDE input element_data=account_class-?>
+<body id="use_overpayment1" class="lsmb [% dojo_theme %]">
+<form data-dojo-type="lsmb/Form" name="search" method="post" action="[% script %]">
+  [% PROCESS elements.html  # Include form elements helper. -%]
+  [% login.type = 'hidden' ; INCLUDE input element_data=login -%]
+  [% account_class.type = 'hidden'; account_class.id =  account_class.name; INCLUDE input element_data=account_class-%]
 <table width="100%">
   <tr id="top-bar" class="listtop">
-    <th id="top-bar-header" class="listtop"><label id="top-bar-header-label"><?lsmb text('Use Overpayment') ?></label></th>
+    <th id="top-bar-header" class="listtop"><label id="top-bar-header-label">[% text('Use Overpayment') %]</label></th>
   </tr>
 </table>
 <br/>
-<?lsmb IF entities -?>
+[% IF entities -%]
   <span id="disclaimer">
-  <?lsmb IF account_class.value == 1 -?>
-    <?lsmb text('Please select a vendor with unused overpayments') ?>
-  <?lsmb ELSE -?>
-    <?lsmb text('Please select a customer with unused overpayments') ?>
-  <?lsmb END -?>
+  [% IF account_class.value == 1 -%]
+    [% text('Please select a vendor with unused overpayments') %]
+  [% ELSE -%]
+    [% text('Please select a customer with unused overpayments') %]
+  [% END -%]
   </span>
   <br/>
   <table >
     <tr id="vc-row" class="label-left">
       <td id="vc-label-column" class="label-left">
         <span id="disclaimer">
-        <?lsmb IF account_class.value == 1 -?>
-          <?lsmb text('Vendor') -?>
-        <?lsmb ELSE -?>
-          <?lsmb text('Customer') -?>
-        <?lsmb END ?>
+        [% IF account_class.value == 1 -%]
+          [% text('Vendor') -%]
+        [% ELSE -%]
+          [% text('Customer') -%]
+        [% END %]
         </span>
       </td>
       <td id="vc-column" class="label-left">
-        <?lsmb PROCESS select element_data = {
+        [% PROCESS select element_data = {
                                         id="entity_credit_id"
                                         name="entity_credit_id"
                                         options=entities
-                                        text_attr='name' } ?>
+                                        text_attr='name' } %]
       </td>
     </tr>
     <tr id="curr-row" class="label-left">
       <td id="curr-label-column" class="label-left">
-        <?lsmb text('Currency') ?>
+        [% text('Currency') %]
       </td>
       <td id="curr-column" class="label-left">
-        <?lsmb PROCESS select element_data = {
+        [% PROCESS select element_data = {
                                         id="curr"
                                         name="curr"
-                                        options=curr } ?>
+                                        options=curr } %]
       </td>
     </tr>
   </table>
   <hr/>
-  <?lsmb PROCESS button element_data=action ?>
-<?lsmb ELSE -?>
-  <?lsmb IF account_class.value == 1 -?>
-    <?lsmb text('There is no vendor with overpayments') ?>
-  <?lsmb ELSE -?>
-    <?lsmb text('There is no customer with overpayments') ?>
-  <?lsmb END -?>
-<?lsmb END -?>
+  [% PROCESS button element_data=action %]
+[% ELSE -%]
+  [% IF account_class.value == 1 -%]
+    [% text('There is no vendor with overpayments') %]
+  [% ELSE -%]
+    [% text('There is no customer with overpayments') %]
+  [% END -%]
+[% END -%]
 </form>
 </body>

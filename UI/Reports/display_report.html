@@ -1,4 +1,4 @@
-<?lsmb
+[%
 
 PROCESS "elements.html";
 
@@ -15,77 +15,77 @@ END;
 LINK = request.script _ '?' _ QSTRING;
 
 
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+%]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form"
       method="post"
-      action="<?lsmb request.script ?>"
+      action="[% request.script %]"
       id="search-report-dynatable" >
   <div class="heading_section">
-    <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
-      <span class="report_header"><?lsmb name ?></span>
+    <div class="report_header"><label>[% text('Report Name') %]:</label>
+      <span class="report_header">[% name %]</span>
     </div>
-    <div class="report_header"><label><?lsmb text('Company') ?>:</label>
-      <span class="report_header"><?lsmb request.company ?></span>
+    <div class="report_header"><label>[% text('Company') %]:</label>
+      <span class="report_header">[% request.company %]</span>
     </div>
-    <?lsmb FOREACH LINE IN hlines ?>
-    <div class="report_header"><label><?lsmb LINE.text ?>:</label>
+    [% FOREACH LINE IN hlines %]
+    <div class="report_header"><label>[% LINE.text %]:</label>
       <span class="report_header">
-        <?lsmb
+        [%
            IF request.${LINE.name};
               request.${LINE.name};
            ELSE;
               report.${LINE.name};
            END;
-           ?>
+           %]
       </span>
     </div>
-    <?lsmb END ?>
+    [% END %]
   </div>
-  <?lsmb PROCESS input element_data = {
+  [% PROCESS input element_data = {
          name = 'form_id'
          value = request.form_id
          type = 'hidden'
-         } ?>
-  <?lsmb FOREACH K IN request.hiddens.keys;
+         } %]
+  [% FOREACH K IN request.hiddens.keys;
          PROCESS input element_data = {
          name = K
          type = 'hidden'
          value = request.hiddens.$K
          };
-         END; ?>
-  <?lsmb PROCESS dynatable tbody = {rows = rows }
-                 attributes = {class = 'report', order_url = order_url } ?>
+         END; %]
+  [% PROCESS dynatable tbody = {rows = rows }
+                 attributes = {class = 'report', order_url = order_url } %]
 <div id="options">
-<?lsmb
+[%
 FOREACH OPTION IN options;
   PROCESS select element_data = OPTION;
-END; ?>
+END; %]
 </div>
-<?lsmb
+[%
 FOREACH BUTTON IN buttons;
   PROCESS button element_data = BUTTON;
-END; ?><br />
-<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
-<?lsmb IF FORMATS.grep('PDF').size() ?>
+END; %]<br />
+<a href="[% LINK %]">[[% text('permalink') %]]</a>&nbsp;
+[% IF FORMATS.grep('PDF').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('TXT').size(); ?>
+   href="[% LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('TXT').size(); %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('ODS').size() ?>
+   href="[% LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('ODS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('XLS').size(); ?>
+   href="[% LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('XLS').size(); %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('XLSX').size(); ?>
+   href="[% LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('XLSX').size(); %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=XLSX' ?>">[<?lsmb text('XLSX') ?>]</a>&nbsp;
-<?lsmb END; ?>
+   href="[% LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
+[% END; %]
 </form>
 </body>

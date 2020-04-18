@@ -1,12 +1,12 @@
-<?lsmb INCLUDE 'ui-header.html' ?>
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% INCLUDE 'ui-header.html' %]
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
 <h1 class="info">
-   <?lsmb IF reason == 'timeout';
+   [% IF reason == 'timeout';
             text('Logged out due to inactivity');
           ELSE;
             text('Logout Successful');
-          END; ?></h1>
-<p><a target="_top" href="login.pl"><?lsmb text('Return to the login screen.') ?></a>
+          END; %]</h1>
+<p><a target="_top" href="login.pl">[% text('Return to the login screen.') %]</a>
 </body>
 </html>

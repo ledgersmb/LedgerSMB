@@ -1,30 +1,30 @@
-<?lsmb# HTML Snippet, for import only ?>
+[%# HTML Snippet, for import only %]
 <div id="employee_div"
-     title="<?lsmb text('Employee') ?>"
+     title="[% text('Employee') %]"
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'employee_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'employee_div' %]data-dojo-props="selected:true"[% END %]
      >
-  <div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
-<form data-dojo-type="lsmb/Form" name="hr" action="<?lsmb request.script ?>" method="post">
+  <div class="listtop"><strong>[% text("$operation Employee") %]</strong></div>
+<form data-dojo-type="lsmb/Form" name="hr" action="[% request.script %]" method="post">
 <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:3">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
                 type = "hidden"
                 name = "target_div"
                 value = 'hr_div'
-        } ?>
-<?lsmb PROCESS input element_data = {
+        } %]
+[% PROCESS input element_data = {
                 type = "hidden"
                 name = "form_id"
                 value = form_id
-        } ?>
-<?lsmb PROCESS input element_data = {
+        } %]
+[% PROCESS input element_data = {
                 type = "hidden"
                 name = "entity_id"
                value = entity_id
-} ?>
+} %]
 <div class="input_line">
 <div class="input_group g1">
-     <?lsmb
+     [%
         PROCESS select element_data = {
                   title = text('Salutation')
                   label = "_none_"
@@ -35,12 +35,12 @@
                   class = 'salutations'
               text_attr = 'salutation'
              value_attr = 'id'
-    } ?>
+    } %]
 </div>
 </div>
-<div class="input_line" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
+<div class="input_line" id="person_name_div">[% #text('Name:')%]&nbsp;
 <div class="input_group g1">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('First Name') #'
         label = "_none_"
         name = "first_name"
@@ -48,22 +48,22 @@
         type = "text"
         size = 20
    required = 'true'
-} ?>
+} %]
 </div>
 <div class="input_group g2">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('Middle Name') #'
         label = "_none_"
         name = "middle_name"
         value = employee.middle_name
         type = "text"
         size = 20
-} ?>
+} %]
 </div>
 </div>
 <div class="input_line" id='person_name2_div'>
 <div class="input_group g1">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('Last Name') #'
         label = "_none_"
         name = "last_name"
@@ -71,24 +71,24 @@
         type = "text"
         size = 20
    required = 'true'
-} ?>
+} %]
 </div>
 <!-- Note that the strange # ' constructs are only necessary to help VIM avoid
 problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div class="input_group g2">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('Job Title')
         label = "_none_"
         name = "role"
         value = employee.role
         type = "text"
         size = 20
-} # ' ?>
+} # ' %]
 </div>
 </div>
 <div class="input_line" id="person-role-div">
 <div class="input_group g1">
-<?lsmb
+[%
 IF employee.sales; checked = "CHECKED"; ELSE; checked = undef; END;
 PROCESS input element_data = {
         title = text('Sales')
@@ -97,10 +97,10 @@ PROCESS input element_data = {
         type = "checkbox"
         checked = checked
         name = "sales"
-} ?>
+} %]
 </div>
 <div class="input_group g2">
-<?lsmb
+[%
 IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
  PROCESS input element_data = {
         title = text('Manager')
@@ -109,13 +109,13 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
         type = "checkbox"
         checked = checked
         name = "is_manager"
-} ?>
+} %]
 </div>
 </div>
 <div class="input_line" id="person-country-div">
 <div class="input_group solo">
-       <?lsmb country_list.unshift({}) ?>
-                <?lsmb INCLUDE select_country element_data = {
+       [% country_list.unshift({}) %]
+                [% INCLUDE select_country element_data = {
                         text_attr = "name"
                         value_attr = "id"
                         default_values = [employee.country_id]
@@ -124,22 +124,22 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
                         required = 'true'
                         title = text('Country')
                         label = "_none_"
-        } ?>
+        } %]
 </div>
 </div>
 <div id="employeenumber_div" class="input_line">
 <div class="input_group g1">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('Employee Number') #'
         label = "_none_"
         value = employee.employeenumber
         name = "employeenumber"
         type = "text"
         size = 20
-}  ?>
+}  %]
 </div>
 <div class="input_group g2">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
          title = text('Manager')
          label = "_none_"
           name = 'manager_id'
@@ -147,10 +147,10 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
 default_values = [employee.manager_id]
      text_attr = 'label'
     value_attr = 'id'
-} ?>
+} %]
 </div>
 <div class="input_group g3">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('Tax ID/SSN') #'
         label = "_none_"
          name = "ssn"
@@ -158,12 +158,12 @@ default_values = [employee.manager_id]
          type = "text"
         class = "tax_id"
          size = "16"
-} ?>
+} %]
 </div>
 </div>
 <div class="input_line" id="hr_dates_div">
 <div class="input_group g1">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('DOB')
         label = "_none_"
         name = "dob"
@@ -171,10 +171,10 @@ default_values = [employee.manager_id]
         type = "text"
         class = "date"
         size = 10
-}  ?>
+}  %]
 </div>
 <div class="input_group g2">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('Start Date')
         label = "_none_"
         name = "start_date"
@@ -182,10 +182,10 @@ default_values = [employee.manager_id]
         type = "text"
         class = "date"
         size = 10
-} # '  ?>
+} # '  %]
 </div>
 <div class="input_group g3">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         title = text('End Date')
         label = "_none_"
         name = "end_date"
@@ -193,32 +193,32 @@ default_values = [employee.manager_id]
         class = "date"
         type = "text"
         size = 10
-} # ' ?>
+} # ' %]
 </div>
 </div>
 </div>
 <div>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         text = text('Save')
         class = "submit"
         type = "submit"
         name = 'action'
         value = "save_employee"
-} ?>
-<?lsmb
+} %]
+[%
 IF manage_users and entity_id;
-   IF user_id ?>
-       <a href="admin.pl?action=edit_user&amp;user_id=<?lsmb user_id ?>"
-       >[<?lsmb text('Edit User') ?>]</a><?lsmb
-   ELSE ?>
-       <a href="admin.pl?action=new_user&amp;first_name=<?lsmb first_name | uri
-                ?>&amp;last_name=<?lsmb last_name | uri
-                ?>&amp;employeenumber=<?lsmb employeenumber | uri
-                ?>&amp;country_id=<?lsmb country_id | uri
-                ?>&amp;entity_id=<?lsmb entity_id | uri ?>"
-       >[<?lsmb text('Add User') ?>]</a><?lsmb
+   IF user_id %]
+       <a href="admin.pl?action=edit_user&amp;user_id=[% user_id %]"
+       >[[% text('Edit User') %]]</a>[%
+   ELSE %]
+       <a href="admin.pl?action=new_user&amp;first_name=[% first_name | uri
+                %]&amp;last_name=[% last_name | uri
+                %]&amp;employeenumber=[% employeenumber | uri
+                %]&amp;country_id=[% country_id | uri
+                %]&amp;entity_id=[% entity_id | uri %]"
+       >[[% text('Add User') %]]</a>[%
    END;
-END ?>
+END %]
 </div>
 </form>
 </div>

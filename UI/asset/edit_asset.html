@@ -1,44 +1,44 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
 <div id="asset-edit">
-<div class="listtop"><?lsmb asset.title ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
+<div class="listtop">[% asset.title %]</div>
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         type = "hidden"
         name = "id"
         value = asset.id
-} ?>
-<?lsmb
+} %]
+[%
    default_asset_account = "{";
    FOREACH a_class IN asset.asset_classes;
      default_asset_account = default_asset_account _ "'" _ a_class.id _ "': '" _ a_class.asset_account_id _ "',";
    END;
    default_asset_account = default_asset_account _ "}";
 
-?>
-<?lsmb
+%]
+[%
    default_depreciation_account = "{";
    FOREACH a_class IN asset.asset_classes;
      default_depreciation_account = default_depreciation_account _ "'" _ a_class.id _ "': '" _ a_class.dep_account_id _ "',";
    END;
    default_depreciation_account = default_depreciation_account _ "}";
 
-?>
+%]
 
 
 <div class="inputrow" id="tagrow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         type = "text"
         class = "control_code"
         name = "tag"
         value = asset.tag
         label = text('Tag:')
         size = 32
-} ?>
+} %]
 </div>
 <div class="inputrow" id="classrow">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
         name = "asset_class"
         class = "class"
         options = asset.asset_classes
@@ -48,20 +48,20 @@
         label = text("Asset Class:") #'
        "data-dojo-type" = "lsmb/PublishSelect"
        "data-dojo-props" = "topic:'ui/assets/class'"
-} ?>
+} %]
 </div>
 <div class="inputrow" id="descrow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text("Description:")
         name = "description"
         class = "description"
         value = asset.description
         type = "text"
-} ?>
+} %]
 </div>
 <div class="inputrow" id="purchaserow">
 <span class="inputgroup" id="purchasedategroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text("Purchase Date:") #'
         name = "purchase_date"
         class = "date"
@@ -69,10 +69,10 @@
         type = "date"
         size = 12
         required = 1
-} ?>
+} %]
 </span>
 <span class="inputgroup" id="purchasevaluegroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text("Purchase Value:") #'
         name = "purchase_value"
         class = "money"
@@ -80,27 +80,27 @@
         type = "text"
         size = 16
         required = 1
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="salvagerow">
 <span class="inputgroup" id="usablelifegroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text("Usable Life") #'
         name = "usable_life"
         value = asset.usable_life
         type = "text"
         size = 10
         required = 1
-} ?>
+} %]
 <span class="caption" id="caption-usablelifegroup">
 <!-- 20150621EH This text should be updated upon change of asset class,
      but there's no value to update it to, atm. -->
-(<?lsmb text('Method Default') ?>)
+([% text('Method Default') %])
 </span>
 </span>
 <span class="inputgroup" id="salvagevaluegroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text("Salvage Value:") #'
         name = "salvage_value"
         class = "money"
@@ -108,12 +108,12 @@
         type = "text"
         size = 16
         required = 1
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="startdeprow">
 <span class="inputgroup" id="startdepgroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text("Depreciation Starts") #'
         name = "start_depreciation"
         value = asset.start_depreciation
@@ -121,34 +121,34 @@
         size = 12
         class = "date"
         required = 1
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="business_row">
 <span class="inputgroup" id="locationgroup">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
         name = "warehouse_id"
         options = asset.locations
         value_attr = "id"
         text_attr = "description"
         default_values = [asset.warehouse_id]
         label = text('Location')
-} ?>
+} %]
 </span>
 <span class="inputgroup" id="departmentgroup">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
         name = "department_id"
         options = asset.departments
         value_attr = "id"
         text_attr = "description"
         default_values = [asset.department_id]
         label = text('Department')
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="accountsrow">
 <span class="inputgroup" id="assetaccgroup">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
         label = text('Asset Account') #'
         options = asset.asset_accounts
         name = "asset_account_id"
@@ -157,10 +157,10 @@
         text_attr = 'text'
        "data-dojo-type" = "lsmb/SubscribeSelect"
        "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_asset_account"
-} ?>
+} %]
 </span>
 <span class="inputgroup" id="depaccgroup">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
         label = text('Depreciation Account') #'
         options = asset.dep_accounts
         name = "dep_account_id"
@@ -169,12 +169,12 @@
         text_attr = 'text'
        "data-dojo-type" = "lsmb/SubscribeSelect"
        "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_depreciation_account"
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="exprow">
 <span class="inputgroup" id="expensegroup">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
      name = "exp_account_id"
      class = "account"
      options = asset.exp_accounts
@@ -182,38 +182,38 @@
      value_attr = 'id'
      default_values = [asset.exp_account_id]
      label = text('Expense Account') #'
-} ?>
+} %]
 </span></div>
 <div class="inputrow" id="invoicerow">
 <span class="inputgroup" id="vendorgroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text('Vendor Number') #'
         type = "text"
         class = "identifier"
         size = 20
         value = asset.meta_number
         name = "meta_number"
-} ?>
+} %]
 </span>
 <span class="inputgroup" id="invgroup">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text('Invoice Number') #'
         type = "text"
         class = "identifier"
         size = 20
         value = asset.invnumber
         name = "invnumber"
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="buttonrow">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         text = text("Save")
         type = "submit"
         class = "submit"
         name = "action"
         value = "asset_save"
-} ?>
+} %]
 </div>
 </form>
 </div>

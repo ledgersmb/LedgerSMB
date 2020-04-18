@@ -1,42 +1,42 @@
-<?lsmb
+[%
 PROCESS 'elements.html';
-PROCESS 'report_base.html'; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+PROCESS 'report_base.html'; %]
+<body class="lsmb [% dojo_theme %]">
   <form data-dojo-type="lsmb/Form"
         id="part-search-unapproved"
         action="inv_reports.pl"
         method="get">
-    <div class="listtop"><?lsmb text('Search Inventory Entry'); ?></div>
+    <div class="listtop">[% text('Search Inventory Entry'); %]</div>
     <div class="input_row">
       <div class="input_group">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text('Source')
          name = 'source'
          type = 'text'
          size = '20'
         value = source
         class = 'control_code'
-} ?>
+} %]
       </div>
       <div class="input_group">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         label = text('Includes Part') #'
          name = 'partnumber'
          type = 'text'
          size = '20'
         value = partnumber
         class = 'control_code'
-       } ?>
+       } %]
       </div>
     </div>
-    <?lsmb PROCESS date_row_div ?>
+    [% PROCESS date_row_div %]
     <div class="input_row">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
        name = "action"
       value = "search_adj"
        type = "submit"
        text = text('Run Report') #'
-}; ?>
+}; %]
     </div>
   </form>
 </body>

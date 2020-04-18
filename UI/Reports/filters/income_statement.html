@@ -1,26 +1,26 @@
-<?lsmb PROCESS 'elements.html';
-       PROCESS 'report_base.html'; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html';
+       PROCESS 'report_base.html'; %]
+<body class="lsmb [% dojo_theme %]">
 <div id="reports">
   <form data-dojo-type="lsmb/Form"
         action="pnl.pl" method="get">
-    <?lsmb
+    [%
        PROCESS input element_data = {
        name = 'pnl_type',
        type = 'hidden',
        value = pnl_type
        };
-       ?>
+       %]
 
-      <div class="listtop"><?lsmb text('Income Statement') ?></div>
+      <div class="listtop">[% text('Income Statement') %]</div>
 
       <fieldset>
-        <legend><?lsmb text('Report type') ?></legend>
+        <legend>[% text('Report type') %]</legend>
         <div class="input_row">
-          <div class="label"><?lsmb text('Valuation') ?></div>
+          <div class="label">[% text('Valuation') %]</div>
           <div class="input_group">
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data={
                  name = 'basis',
                  type = 'radio',
@@ -29,10 +29,10 @@
                  checked = 'checked',
                  }
                  label_pos = 1 ;
-                 ?>
+                 %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data={
                  name = 'basis',
                  type = 'radio',
@@ -40,15 +40,15 @@
                  label = text('Cash'),
                  }
                  label_pos = 1 ;
-                 ?>
+                 %]
             </div>
           </div>
         </div>
         <div class="input_row">
-          <div class="label"><?lsmb text('GIFI') ?></div>
+          <div class="label">[% text('GIFI') %]</div>
           <div class="input_group">
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('Regular')
                  name = 'gifi'
@@ -57,10 +57,10 @@
                  checked = 'checked'
                  }
                  label_pos = 1 ;
-                 ?>
+                 %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('GIFI')
                  name = 'gifi'
@@ -68,7 +68,7 @@
                  type = 'radio'
                  }
                  label_pos = 1 ;
-                 ?>
+                 %]
             </div>
           </div>
         </div>
@@ -76,22 +76,22 @@
 
       <fieldset data-dojo-type="lsmb/reports/PeriodSelector"
                 data-dojo-props="channel:'ui/reports/period-selection'">
-        <legend><?lsmb text('Period selection') ?></legend>
+        <legend>[% text('Period selection') %]</legend>
         <div class="input_row">
           <div class="label">
-            <?lsmb text('Select using') ?>
+            [% text('Select using') %]
           </div>
           <div class="input_group">
-            <?lsmb
+            [%
                IF comparison_type == 'by_periods';
                YES="CHECKED";
                NO=undef;
                ELSE;
                NO="CHECKED";
                YES=undef;
-               END; -?>
+               END; -%]
             <div class="input_option">
-              <?lsmb    PROCESS input element_data={
+              [%    PROCESS input element_data={
                         type = 'radio',
                         name = 'comparison_type',
                         id = 'comparison_by_dates',
@@ -100,10 +100,10 @@
                         checked = NO
                         }
                         label_pos = 1 ;
-                        ?>
+                        %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data={
                  type = 'radio',
                  name = 'comparison_type',
@@ -112,45 +112,45 @@
                  label = text('Periods'),
                  checked = YES,
                  } label_pos = 1 ;
-                 ?></div>
+                 %]</div>
           </div>
         </div>
         <div class="input_row">
           <div style="display:inline-block">
             <div id="date_from_date_id">
-              <?lsmb label_pos = -1; # apparently, there's something leaky
+              [% label_pos = -1; # apparently, there's something leaky
                      PROCESS input element_data = {
                      label=text('From')
                      class="date"
                      name="from_date"
                      id="from_date"
                      size="11"
-                     title=datestyle } ?>
+                     title=datestyle } %]
             </div>
           </div>
           <div style="display:inline-block">
             <div id="date_to_date_id">
-              <?lsmb label_pos = -1; # apparently, there's something leaky
+              [% label_pos = -1; # apparently, there's something leaky
                      PROCESS input element_data = {
                      label=text('To')
                      class="date"
                      name="to_date"
                      id="to_date"
                      size="11"
-                     title=datestyle } ?>
+                     title=datestyle } %]
             </div>
           </div>
         </div>
         <div class="input_row" id="date_period_id">
-          <?lsmb PROCESS date_period_div; ?>
+          [% PROCESS date_period_div; %]
         </div>
         <div class="input_row">
           <div class="label">
-            <?lsmb text('Ignore year-closing') ?>
+            [% text('Ignore year-closing') %]
           </div>
 
           <div class="input_group">
-            <?lsmb
+            [%
                PROCESS select element_data = {
                options = [
                {
@@ -171,7 +171,7 @@
                text_attr = 'label',
                value_attr = 'id',
                }
-               ?>
+               %]
           </div>
         </div>
       </fieldset>
@@ -179,7 +179,7 @@
 
       <fieldset data-dojo-type="lsmb/reports/ComparisonSelector"
                 data-dojo-props="channel:'ui/reports/period-selection'">
-        <legend><?lsmb
+        <legend>[%
                    PROCESS input element_data = {
                    label = text('Comparison Periods')
                    name = 'comparison_periods'
@@ -188,37 +188,37 @@
                    "data-dojo-type" = "dijit/form/NumberSpinner"
                    "data-dojo-props" = "intermediateChanges:true, constraints:{min:0, max:9, places:0}, smallDelta:1, style:'width:7ex'"
                    };
-                   ?></legend>
+                   %]</legend>
 
         <div id="comparison_dates" style="display:none">
-          <?lsmb FOREACH c IN [1 .. 9]; ?>
-          <div class="input_row" id="comparison_dates_<?lsmb c ?>" style="display:none">
+          [% FOREACH c IN [1 .. 9]; %]
+          <div class="input_row" id="comparison_dates_[% c %]" style="display:none">
             <div class="input_group">
-              <?lsmb PROCESS input element_data = {
+              [% PROCESS input element_data = {
                      label=text('From')
                      class="date"
                      name="from_date_" _ c
                      id="from_date_" _ c
                      size="11"
-                     title=datestyle } ?>
+                     title=datestyle } %]
 
-              <?lsmb PROCESS input element_data = {
+              [% PROCESS input element_data = {
                      label=text('To')
                      class="date"
                      name="to_date_" _ c
                      id="to_date_" _ c
                      size="11"
-                     title=datestyle } ?>
+                     title=datestyle } %]
             </div>
           </div>
-          <?lsmb END ?>
+          [% END %]
         </div>
       </fieldset>
 
       <fieldset>
         <legend>Report options</legend>
         <div class="input_row">
-          <?lsmb
+          [%
              PROCESS input element_data = {
              label = text('Account numbers')    #'
              name = 'incl_accnos'
@@ -226,14 +226,14 @@
              value = 1
              checked = 'checked' # checked by default
              };
-             ?>
+             %]
         </div>
         <div class="input_row">
           <div class="label">
-            <?lsmb text('Hierarchy type') ?>
+            [% text('Hierarchy type') %]
           </div>
           <div class="input_group">
-            <?lsmb
+            [%
                HIERARCHY_SETUP = earn_id;
                IF HIERARCHY_SETUP;
                full_checked = 'CHECKED';
@@ -244,9 +244,9 @@
                full_checked = undef;
                legacy_checked = 'CHECKED';
                END;
-               ?>
+               %]
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('Full')
                  type = 'radio'
@@ -257,17 +257,17 @@
                  disabled = full_disabled
                  }
                  label_pos = 1;
-                 ?>
-              <?lsmb IF full_disabled ?>
+                 %]
+              [% IF full_disabled %]
               <span class="setupwarning" id="warning-hierarchy-not-setup">
                 <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting"
                    target="_blank" rel="noopener noreferrer"
-                   ><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a>
+                   >[% text('Not set up for hierarchy reporting, please see linked instructions') %]</a>
               </span>
-              <?lsmb END ?>
+              [% END %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('Account category')
                  type = 'radio'
@@ -277,12 +277,12 @@
                  checked = legacy_checked
                  }
                  label_pos = 1;
-                 ?>
+                 %]
             </div>
           </div>
         </div>
         <div class="input_row">
-          <?lsmb
+          [%
              PROCESS select_language element_data = {
              label = text('Language')
              name = 'language'
@@ -290,25 +290,25 @@
              text_attr = 'description'
              value_attr = 'code'
              default_values = [USER.language]
-             } ?>
+             } %]
         </div>
       </fieldset>
 
-      <?lsmb IF bu_classes.size > 0; ?>
+      [% IF bu_classes.size > 0; %]
       <fieldset>
-        <legend><?lsmb text('Reporting unit filters') ?></legend>
-        <?lsmb PROCESS business_classes_div; ?>
+        <legend>[% text('Reporting unit filters') %]</legend>
+        [% PROCESS business_classes_div; %]
       </fieldset>
-      <?lsmb END ?>
+      [% END %]
 
-      <?lsmb
+      [%
          PROCESS button element_data = {
          text = text('Continue')
          name = 'action'
          value = 'generate_income_statement'
          type = 'submit'
          class = 'submit'
-         } ?>
+         } %]
 
   </form>
 </div>

@@ -81,8 +81,6 @@ sub new_UI {
                 INCLUDE_PATH => [ 'UI/', 'UI/lib/' ],
                 ENCODING => 'utf8',
                 TRIM => 1,
-                START_TAG => quotemeta('<?lsmb'),
-                END_TAG => quotemeta('?>'),
                 DELIMITER => ';',
                 COMPILE_EXT => '.lttc',
                 COMPILE_DIR =>

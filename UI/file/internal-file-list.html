@@ -1,5 +1,5 @@
-<?lsmb PROCESS 'elements.html' ?>
-<?lsmb PROCESS 'dynatable.html' ?>
+[% PROCESS 'elements.html' %]
+[% PROCESS 'dynatable.html' %]
 <body>
   <form id="system-files"
         method="post"
@@ -8,75 +8,75 @@
         data-dojo-type="lsmb/Form">
     <h1 class="listtop">Uploaded files (not attached)</h1>
 
-    <?lsmb PROCESS dynatable tbody = { rows = files }
-           ?>
+    [% PROCESS dynatable tbody = { rows = files }
+           %]
 
-    <?lsmb INCLUDE input element_data = {
+    [% INCLUDE input element_data = {
            type = "hidden"
            value = "6"
            name = "file_class"
-           } ?>
-    <?lsmb INCLUDE input element_data = {
+           } %]
+    [% INCLUDE input element_data = {
            type = "hidden"
            value = "0"
            name = "ref_key"
-           } ?>
-    <?lsmb INCLUDE input element_data = {
+           } %]
+    [% INCLUDE input element_data = {
            type = "hidden"
            value = "file.pl?action=list_internal_files"
            name = "callback"
-           } ?>
+           } %]
 
-    <?lsmb INCLUDE button element_data = {
+    [% INCLUDE button element_data = {
            text = text("Delete")
            value = "delete_internal_files"
            name = "action"
            type = "submit"
            class = "submit"
-           } ?>
+           } %]
 
     <div class="inputline">
       <div class="inputgroup">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                label = text('Description')
                type = "text"
                value = description
                name = "description"
                class = "description"
-               } ?>
+               } %]
       </div>
     </div>
     <div class="inputline">
       <div class="inputgroup">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                label = text('Url')
                type = "text"
                value = url
                name = "url"
                class = "url"
-               } ?>
+               } %]
       </div>
     </div>
     <div class="separator"></div>
-    <?lsmb text('Or') ?>
+    [% text('Or') %]
     <div class="inputline">
       <div class="inputgroup">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                label = text("File")
                type = "file"
                name = "upload_data"
-               } ?>
+               } %]
       </div>
     </div>
     <div class="inputline">
       <div class="inputgroup">
-        <?lsmb INCLUDE button element_data = {
+        [% INCLUDE button element_data = {
                text = text('Upload')
                value = "attach_file"
                name = "action"
                type = "submit"
                class = "submit"
-               } ?>
+               } %]
       </div>
     </div>
   </form>

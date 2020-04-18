@@ -1,20 +1,20 @@
-<body id="payment_2_body" class="lsmb <?lsmb dojo_theme ?>"
+<body id="payment_2_body" class="lsmb [% dojo_theme %]"
 onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.gif','payments/img/up.gif') ">
   <div id="payments">
   <form data-dojo-type="lsmb/Form" name="pay_single_dues" method="post" action="payment.pl">
 
-    <?lsmb PROCESS elements.html  # Include form elements helper. ?>
-    <?lsmb accountclass.type = 'hidden';
-        PROCESS input element_data=accountclass ?>
-    <?lsmb login.type = 'hidden' ; PROCESS input element_data=login ?>
-    <?lsmb #WE NEED TO KNOW HOW MANY COLUMNS ARE WE USING, PLEASE DO NOT MOVE THE NEXT LINE -?>
-    <?lsmb column_count = 0; FOREACH column IN column_headers; column_count = column_count + 1; END -?>
+    [% PROCESS elements.html  # Include form elements helper. %]
+    [% accountclass.type = 'hidden';
+        PROCESS input element_data=accountclass %]
+    [% login.type = 'hidden' ; PROCESS input element_data=login %]
+    [% #WE NEED TO KNOW HOW MANY COLUMNS ARE WE USING, PLEASE DO NOT MOVE THE NEXT LINE -%]
+    [% column_count = 0; FOREACH column IN column_headers; column_count = column_count + 1; END -%]
 
     <table width="100%">
       <tr id="top_bar" class="listtop">
         <th id="top_bar_header" class="listtop">
-            <?lsmb header.text ?>
-          <?lsmb type.type = 'hidden' ; PROCESS input element_data=type ?>
+            [% header.text %]
+          [% type.type = 'hidden' ; PROCESS input element_data=type %]
         </th>
       </tr>
     </table>
@@ -24,143 +24,143 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
           <table id="cv_info_table">
             <tr id="cv_row">
               <th class="label_left" id="cv_label_column">
-                <?lsmb IF (type.value == 'receipt') -?>
-                <?lsmb text('Customer Name') -?>
-                <?lsmb ELSE; text('Vendor Name') -?>
-                <?lsmb END -?></th>
+                [% IF (type.value == 'receipt') -%]
+                [% text('Customer Name') -%]
+                [% ELSE; text('Vendor Name') -%]
+                [% END -%]</th>
               <td id="cv_column">
-                    <?lsmb vc.name ?><?lsmb vendorcustomer.type = 'hidden'; PROCESS input element_data=vendorcustomer?>
+                    [% vc.name %][% vendorcustomer.type = 'hidden'; PROCESS input element_data=vendorcustomer%]
               </td>
             </tr>
             <tr id="cv_address_row">
-              <th valign="top" align="right" id="cv_address_label_column"><?lsmb text('Location') ?></th>
+              <th valign="top" align="right" id="cv_address_label_column">[% text('Location') %]</th>
               <td id="cv_address_column">
                 <table id="cv_address_table">
-                  <?lsmb # this table will show the customer/vendor address, city, phone and others things that could help to reminds them?>
-                  <?lsmb FOREACH address IN vc.address  # Loop through customer/vendor address info ?>
+                  [% # this table will show the customer/vendor address, city, phone and others things that could help to reminds them%]
+                  [% FOREACH address IN vc.address  # Loop through customer/vendor address info %]
                   <tr>
-                    <td><?lsmb address.text ?></td>
+                    <td>[% address.text %]</td>
                   </tr>
-                       <?lsmb END ?>
+                       [% END %]
                 </table>
               </td>
             </tr>
             <tr align="right" id="notes_row">
               <th valign="top" id="notes_column">
-                <label for="notes"><?lsmb text('Notes') ?></label></th>
-              <td><?lsmb PROCESS textarea element_data = {
+                <label for="notes">[% text('Notes') %]</label></th>
+              <td>[% PROCESS textarea element_data = {
                                                   id="notes"
                                                   name="notes"
                                                   cols="35"
                                                   rows="3"
-                                                  text=notes } ?>
+                                                  text=notes } %]
                         </td>
             </tr>
           </table>
         </td>
         <td align="right">
           <table>
-            <?lsmb # the project will be shown if it was selected in the first step  ?>
-            <?lsmb IF project.value  # Only process element if the value exists.  ?>
+            [% # the project will be shown if it was selected in the first step  %]
+            [% IF project.value  # Only process element if the value exists.  %]
             <tr id="project_row">
-              <th align="right" nowrap id="project_label_column"><?lsmb text('Projects') ?>:</th>
+              <th align="right" nowrap id="project_label_column">[% text('Projects') %]:</th>
               <td colspan="2" id="project_column">
-                <?lsmb project.text ?>
-                     <?lsmb  project.type="hidden"; PROCESS input element_data=project ?>
+                [% project.text %]
+                     [%  project.type="hidden"; PROCESS input element_data=project %]
               </td>
             </tr>
-            <?lsmb END ?>
-            <?lsmb #the department will be shown if it was selected in the first step ?>
-            <?lsmb IF department.value  # Only process element if one exists. As in project above ?>
+            [% END %]
+            [% #the department will be shown if it was selected in the first step %]
+            [% IF department.value  # Only process element if one exists. As in project above %]
             <tr id="department-row">
-              <th align="right" nowrap id="department_label_column"><?lsmb  text('Department')  ?>:</th>
+              <th align="right" nowrap id="department_label_column">[%  text('Department')  %]:</th>
               <td colspan="2" id="department_column">
-                <?lsmb  department.text ?>
-                <?lsmb  department.type="hidden"; PROCESS input element_data=department ?>
+                [%  department.text %]
+                [%  department.type="hidden"; PROCESS input element_data=department %]
               </td>
             </tr>
-            <?lsmb END ?>
+            [% END %]
             <tr id="account_row">
-              <?lsmb  #here goes all the posible accounts were the paid can be done  ?>
+              [%  #here goes all the posible accounts were the paid can be done  %]
               <th align="right" nowrap id="account_label_column">
-                <label for="account"><?lsmb text('Account') ?></label></th>
+                <label for="account">[% text('Account') %]</label></th>
               <td colspan="2" id="account_column">
-                <?lsmb
+                [%
                    PROCESS select element_data = {
                    name = 'account'
                    options = account
                    text_attr = 'description'
                    value_attr = 'id'
                    default_values = [selected_account]
-                   } ?>
+                   } %]
               </td>
             </tr>
-            <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method   ?>
+            <tr id="date_row">[% # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method   %]
               <th align="right" nowrap id="date_label_column">
-                <label for="datepaid"><?lsmb text('Date') ?></label></th>
-              <?lsmb- datepaid.class = 'date' ?>
+                <label for="datepaid">[% text('Date') %]</label></th>
+              [%- datepaid.class = 'date' %]
               <td colspan="2" id="date_column">
-                <?lsmb PROCESS input element_data=datepaid ?>
-                <?lsmb datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid ?>
-                <?lsmb INCLUDE tooltip element_data = {
+                [% PROCESS input element_data=datepaid %]
+                [% datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid %]
+                [% INCLUDE tooltip element_data = {
                        ref_id => "datepaid"
-                       msg => text("Date to register payment") }; ?>
+                       msg => text("Date to register payment") }; %]
               </td>
             </tr>
             <tr id="source_row">
-              <?lsmb # here goes all the posible sources which we can use -?>
+              [% # here goes all the posible sources which we can use -%]
               <th align="right" nowrap id="source_label_column">
-                <label for="source_value"><?lsmb text('Source')?></label></th>
+                <label for="source_value">[% text('Source')%]</label></th>
               <td id="source_text_column" colspan="2">
-                <?lsmb PROCESS input element_data={
+                [% PROCESS input element_data={
                        class => 'source'
                        name  => 'source_value'
                        id    => 'source_value'
-                       value => source_value } -?>
-                <?lsmb INCLUDE tooltip element_data = {
+                       value => source_value } -%]
+                [% INCLUDE tooltip element_data = {
                        ref_id => 'source_value'
                        msg => text("Source documentation") };
-                ?>
+                %]
               </td>
             </tr>
             <tr id="currency_row">
-              <?lsmb #  here goes the selected currency in step 1 ?>
-              <th align="right" id="currency_label_column"><?lsmb text('Currency') -?></th>
+              [% #  here goes the selected currency in step 1 %]
+              <th align="right" id="currency_label_column">[% text('Currency') -%]</th>
               <td id="currency_column">
-                    <?lsmb curr.value -?><?lsmb curr.type='hidden'; PROCESS input element_data=curr -?>
+                    [% curr.value -%][% curr.type='hidden'; PROCESS input element_data=curr -%]
               </td>
             </tr>
-            <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
-            <?lsmb  IF defaultcurrency.text != curr.text # Only process element if one exists. ?>
+            [% # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button %]
+            [%  IF defaultcurrency.text != curr.text # Only process element if one exists. %]
             <tr id="exrate_row">
-              <th valign="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?></th>
+              <th valign="top" align="right" id="exrate_label_column">[% text('Exchange Rate') %]</th>
               <td id="exrate_column">
-                <?lsmb  IF exrate.value -?>
-                <?lsmb  exrate.text -?>
-                <?lsmb  exrate.type='hidden'; PROCESS input element_data=exrate -?>
-                <?lsmb  END -?>
-                <?lsmb  IF !exrate.value -?>
-                <?lsmb PROCESS input element_data=exrate -?>
-                <?lsmb  END -?>
+                [%  IF exrate.value -%]
+                [%  exrate.text -%]
+                [%  exrate.type='hidden'; PROCESS input element_data=exrate -%]
+                [%  END -%]
+                [%  IF !exrate.value -%]
+                [% PROCESS input element_data=exrate -%]
+                [%  END -%]
               </td>
             </tr>
-            <?lsmb END ?>
+            [% END %]
           </table>
         </td>
       </tr>
     </table>
     <table width="100%" id="open-items">
       <tr class="listheading">
-        <?lsmb j=1; FOREACH column IN column_headers;  # Loop through columns
-                   IF j < column_count ; THEN -?>
-                       <th class="listheading"><?lsmb column.text ?></th>
-        <?lsmb     ELSE -?>
+        [% j=1; FOREACH column IN column_headers;  # Loop through columns
+                   IF j < column_count ; THEN -%]
+                       <th class="listheading">[% column.text %]</th>
+        [%     ELSE -%]
                        <th class="listheading">
                          <button type="button"
                                  style="margin-left:auto;margin-right:auto"
                                  id="checkbox_all"
                                  data-dojo-type="dijit/form/Button">
-                                <?lsmb column.text -?>
+                                [% column.text -%]
                                 <script type="dojo/on" data-dojo-event="click">
                                     require(["dojo/domReady!"], function(){
                                         dojo.query('input[name^="checkbox_"]', this.domNode).forEach(function (node, index, arr) {
@@ -170,68 +170,68 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                     });
                                 </script>
                             </button>
-                         <?lsmb INCLUDE tooltip element_data = {
+                         [% INCLUDE tooltip element_data = {
                                 ref_id => "checkbox_all"
                                 msg => text("Toggle all removal checkboxes")
-                         }; ?>
+                         }; %]
                        </th>
-        <?lsmb     END;
-                   j = j + 1; ?>
-        <?lsmb END ?>
+        [%     END;
+                   j = j + 1; %]
+        [% END %]
       </tr>
-      <?lsmb # We have to clear i for later usage :)  ?>
-      <?lsmb i = '0';  -?>
-      <?lsmb FOREACH row IN rows ?>
-      <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
-      <tr class="<?lsmb alterning_style ?> open-item-row">
-        <td class="invoice-number"><a href="<?lsmb row.invoice.href ?>"
-                                      target="_new"><?lsmb row.invoice.number ?></a>
+      [% # We have to clear i for later usage :)  %]
+      [% i = '0';  -%]
+      [% FOREACH row IN rows %]
+      [% i = i + 1; j = i % 2; alterning_style = "listrow$j" %]
+      <tr class="[% alterning_style %] open-item-row">
+        <td class="invoice-number"><a href="[% row.invoice.href %]"
+                                      target="_new">[% row.invoice.number %]</a>
         </td>
-        <?lsmb # we can use an href to link this invoice number to the invoice ?>
+        [% # we can use an href to link this invoice number to the invoice %]
         <td class="invoice-date">
-          <?lsmb row.invoice_date ?>
-          <?lsmb PROCESS input element_data = {
+          [% row.invoice_date %]
+          [% PROCESS input element_data = {
                  type="hidden"
                  name="invoice_date_" _ row.invoice.id
-                 value=row.invoice_date } ?>
+                 value=row.invoice_date } %]
         </td>
-        <td class="amount invoice-total"><?lsmb row.amount ?></td>
-        <td class="amount invoice-paid"><?lsmb row.paid ?></td>
-        <td class="amount invoice-discount"><?lsmb row.discount ?></td>
-        <td align="center" class="apply-discount"><?lsmb IF row.optional_discount OR first_load ;
+        <td class="amount invoice-total">[% row.amount %]</td>
+        <td class="amount invoice-paid">[% row.paid %]</td>
+        <td class="amount invoice-discount">[% row.discount %]</td>
+        <td align="center" class="apply-discount">[% IF row.optional_discount OR first_load ;
                                                  CHECKED='checked';
                                                  ELSE;
                                                  CHECKED='';
-                                                 END; ?>
-          <?lsmb PROCESS input element_data = {
+                                                 END; %]
+          [% PROCESS input element_data = {
                       name="optional_discount_" _ row.invoice.id
                       id="optional_discount_" _ row.invoice.id
                       type="checkbox"
                       class="checkbox"
-                      checked=CHECKED } ?>
+                      checked=CHECKED } %]
         </td>
         <td align="center invoice-memo">
-          <?lsmb row.memo.id=row.memo.name;
-                 PROCESS input element_data=row.memo; -?>
-          <?lsmb INCLUDE tooltip element_data = {
+          [% row.memo.id=row.memo.name;
+                 PROCESS input element_data=row.memo; -%]
+          [% INCLUDE tooltip element_data = {
                  ref_id => row.memo.name
                  msg => text("Memo to help retrieval")
-          }; ?>
+          }; %]
         </td>
-        <?lsmb IF defaultcurrency.text != curr.value ?>
-        <td><?lsmb row.exchange_rate ?></td>
-        <?lsmb END ?>
-        <td class="amount invoice-due"><?lsmb row.due ?></td>
-        <?lsmb IF defaultcurrency.text != curr.value ?>
+        [% IF defaultcurrency.text != curr.value %]
+        <td>[% row.exchange_rate %]</td>
+        [% END %]
+        <td class="amount invoice-due">[% row.due %]</td>
+        [% IF defaultcurrency.text != curr.value %]
         <td>
-            <div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div>
-            <?lsmb INCLUDE tooltip element_data = {
+            <div id="[% "div_topay_invoice_$i" %]">[% row.due_fx %]</div>
+            [% INCLUDE tooltip element_data = {
                    ref_id => "div_topay_invoice_$i"
-                   msg => text("Amount to pay") }; ?>
+                   msg => text("Amount to pay") }; %]
         </td>
-        <?lsmb END ?>
-        <?lsmb #This should be computed and updated to the div using  ?>
-        <td align="center invoice-to-pay"><?lsmb row.topay_fx.id=row.topay_fx.name;
+        [% END %]
+        [% #This should be computed and updated to the div using  %]
+        <td align="center invoice-to-pay">[% row.topay_fx.id=row.topay_fx.name;
                                   PROCESS input element_data = {
                                       type = "text"
                                       id = row.topay_fx.id
@@ -244,46 +244,46 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                   id = "orig_" _ row.topay_fx.id
                 name = "orig_" _ row.topay_fx.name
                 value = row.topay_fx.value
-          } ?>
-          <img src="payments/img/up.gif" alt=<?lsmb text('Up') ?>
+          } %]
+          <img src="payments/img/up.gif" alt=[% text('Up') %]
                data-dojo-type="lsmb/MaximizeMinimize"
-               data-dojo-props="mmNodeId: 'div_topay_<?lsmb row.invoice.id ?>'"
+               data-dojo-props="mmNodeId: 'div_topay_[% row.invoice.id %]'"
                class="details-toggler">
-          <div id="div_topay_<?lsmb row.invoice.id ?>" class="<?lsmb alterning_style ?> details-popup" >
+          <div id="div_topay_[% row.invoice.id %]" class="[% alterning_style %] details-popup" >
             <table class="invoice-posting-details">
-              <tr id="<?lsmb "account-row$i"?>">
-                <?lsmb # here goes all the posible accounts were the paid can be  done ?>
-                <th align="right" nowrap id="<?lsmb "account_label_column$i" ?>"><?lsmb text('Account') ?></th>
-                <td colspan="2" id="<?lsmb "account_column$i" ?>">
-                  <?lsmb PROCESS select element_data = {
+              <tr id="[% "account-row$i"%]">
+                [% # here goes all the posible accounts were the paid can be  done %]
+                <th align="right" nowrap id="[% "account_label_column$i" %]">[% text('Account') %]</th>
+                <td colspan="2" id="[% "account_column$i" %]">
+                  [% PROCESS select element_data = {
                                                   id="account_"  _ row.invoice.id
                                                   name="account_" _ row.invoice.id
                                                   options=account
                                                   value_attr='id'
                                                   text_attr='description'
-                                                  default_values=[row.selected_account] } ?>
+                                                  default_values=[row.selected_account] } %]
                 </td>
               </tr>
-              <tr id="<?lsmb "source_row$i" ?>">
-                <?lsmb # here goes all the posible sources which we can used ?>
-                <th align="right" nowrap id="<?lsmb "source_label_column$i" ?>"><?lsmb text('Source') ?></th>
-                <td><?lsmb PROCESS input element_data={
+              <tr id="[% "source_row$i" %]">
+                [% # here goes all the posible sources which we can used %]
+                <th align="right" nowrap id="[% "source_label_column$i" %]">[% text('Source') %]</th>
+                <td>[% PROCESS input element_data={
                            name  => "source_text_$row.invoice.id",
                   id    => "source_text_$row.invoice.id",
                                               value => row.source_text
-                  } -?></td>
+                  } -%]</td>
                 <td nowrap align="left">
-                       <?lsmb IF row.optional ;
+                       [% IF row.optional ;
                                    CHECKED='checked' ;
                                    ELSE ;
                                    CHECKED='';
-                                   END ; ?>
-                       <?lsmb PROCESS input element_data = {
+                                   END ; %]
+                       [% PROCESS input element_data = {
                                    name="optional_pay_" _ row.invoice.id
                                    id="optional_pay_" _ row.invoice.id
                                    type="checkbox"
                                    class="checkbox"
-                                   checked=CHECKED } ?>
+                                   checked=CHECKED } %]
                      </td>
               </tr>
             </table>
@@ -291,104 +291,104 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         </td>
         <td valign="middle"
             align="center">
-          <?lsmb
+          [%
              PROCESS input element_data = {
              type="checkbox"
              class="remove"
              id="checkbox_" _ row.invoice.id
              name="checkbox_" _ row.invoice.id
              checked="checked"
-             } ?>
-          <?lsmb INCLUDE tooltip element_data = {
+             } %]
+          [% INCLUDE tooltip element_data = {
                  ref_id => "checkbox_" _ row.invoice.id
-                 msg => text("Uncheck to remove entry from payment") }; ?>
+                 msg => text("Uncheck to remove entry from payment") }; %]
         </td>
       </tr>
-      <?lsmb END ?>
-      <?lsmb  colspan = column_count - 2 # We will use this later on totals -?>
+      [% END %]
+      [%  colspan = column_count - 2 # We will use this later on totals -%]
       <tr class="listsubtotal">
-        <th colspan="<?lsmb colspan -?>" align="right"><?lsmb text('Subtotal') -?></th>
-        <th colspan="2"><?lsmb topay_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
+        <th colspan="[% colspan -%]" align="right">[% text('Subtotal') -%]</th>
+        <th colspan="2">[% topay_subtotal -%]&nbsp;[% curr.value -%]</th>
       </tr>
     </table>
     <table width="100%" id="overpayments">
       <tr>
-        <th class="listheading" colspan="7" ><?lsmb text('OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT') ?></th>
+        <th class="listheading" colspan="7" >[% text('OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT') %]</th>
       </tr>
       <tr>
-        <th class="listheading"><?lsmb text('Item') ?></th>
-        <th class="listheading"><?lsmb text('Account') ?></th>
-        <th class="listheading"><?lsmb text('Cash Account')?></th>
-        <th class="listheading"><?lsmb text('Source') ?></th>
-        <th class="listheading"><?lsmb text('Memo') ?></th>
-        <th class="listheading"><?lsmb text('Amount') ?></th>
+        <th class="listheading">[% text('Item') %]</th>
+        <th class="listheading">[% text('Account') %]</th>
+        <th class="listheading">[% text('Cash Account')%]</th>
+        <th class="listheading">[% text('Source') %]</th>
+        <th class="listheading">[% text('Memo') %]</th>
+        <th class="listheading">[% text('Amount') %]</th>
         <th class="listheading">X</th>
       </tr>
-      <?lsmb # We have to insert the overpayment data  -?>
-      <?lsmb overpayment_item = 0; -?>
-      <?lsmb FOREACH item IN overpayment -?>
-      <?lsmb overpayment_item = overpayment_item + 1  -?>
-      <?lsmb j = overpayment_item % 2; alterning_style = "listrow$j" ?>
-      <tr class="<?lsmb alterning_style -?>">
-        <td align="center"><?lsmb overpayment_item ?> </td>
+      [% # We have to insert the overpayment data  -%]
+      [% overpayment_item = 0; -%]
+      [% FOREACH item IN overpayment -%]
+      [% overpayment_item = overpayment_item + 1  -%]
+      [% j = overpayment_item % 2; alterning_style = "listrow$j" %]
+      <tr class="[% alterning_style -%]">
+        <td align="center">[% overpayment_item %] </td>
         <td align="center">
-          <?lsmb item.account.accno -?>--<?lsmb item.account.description -?>
-          <?lsmb PROCESS input element_data = {
+          [% item.account.accno -%]--[% item.account.description -%]
+          [% PROCESS input element_data = {
                  type="hidden"
                  id="overpayment_account_" _ overpayment_item
                  name="overpayment_account_" _ overpayment_item
-                 value=item.account.id _ '--' _ item.account.accno _ '--' _ item.account.description } ?>
+                 value=item.account.id _ '--' _ item.account.accno _ '--' _ item.account.description } %]
         </td>
         <td align="center">
-          <?lsmb item.cashaccount.accno -?>--<?lsmb item.cashaccount.description -?>
-          <?lsmb PROCESS input element_data = {
+          [% item.cashaccount.accno -%]--[% item.cashaccount.description -%]
+          [% PROCESS input element_data = {
                  type="hidden"
                  id="overpayment_cash_account_" _ overpayment_item
                  name="overpayment_cash_account_" _ overpayment_item
-                 value=item.cashaccount.id _ '--' _ item.cashaccount.accno _ '--' _ item.cashaccount.description } ?>
+                 value=item.cashaccount.id _ '--' _ item.cashaccount.accno _ '--' _ item.cashaccount.description } %]
         </td>
         <td align="center">
-            <?lsmb item.source2 -?>
-            <?lsmb PROCESS input element_data = {
+            [% item.source2 -%]
+            [% PROCESS input element_data = {
                    type="hidden"
                    id="overpayment_source2_" _ overpayment_item
                    name="overpayment_source2_" _ overpayment_item
-                   value=item.source2 } ?>
+                   value=item.source2 } %]
         </td>
         <td align="center">
-          <?lsmb item.memo -?>
-          <?lsmb PROCESS input element_data = {
+          [% item.memo -%]
+          [% PROCESS input element_data = {
                  type="hidden"
                  id="overpayment_memo_" _ overpayment_item
                  name="overpayment_memo_" _ overpayment_item
-                 value=item.memo } ?>
+                 value=item.memo } %]
         </td>
         <td align="center" class="amount">
-            <?lsmb item.amount -?>
-            <?lsmb PROCESS input element_data = {
+            [% item.amount -%]
+            [% PROCESS input element_data = {
                    type="hidden"
                    id="overpayment_topay_" _ overpayment_item
                    name="overpayment_topay_" _ overpayment_item
-                   value=item.amount } ?>
+                   value=item.amount } %]
         </td>
         <td align="center">
-          <?lsmb
+          [%
              PROCESS input element_data = {
              type="checkbox"
              class="remove"
              name="overpayment_checkbox_" _ overpayment_item
-             } ?>
+             } %]
           </td>
    </tr>
-   <?lsmb END -?>
-   <?lsmb #Now we insert an empty field to process a new overpayment -?>
-   <?lsmb overpayment_item = overpayment_item + 1;
+   [% END -%]
+   [% #Now we insert an empty field to process a new overpayment -%]
+   [% overpayment_item = overpayment_item + 1;
           j = overpayment_item % 2;
-          alterning_style = "listrow$j"            -?>
-    <tr class="<?lsmb alterning_style -?>">
-     <td align="center"><?lsmb  overpayment_item -?></td>
+          alterning_style = "listrow$j"            -%]
+    <tr class="[% alterning_style -%]">
+     <td align="center">[%  overpayment_item -%]</td>
      <td align="center">
-          <?lsmb
+          [%
              options=[];
              FOREACH item IN overpayment_account;
                 options.push( {
@@ -399,10 +399,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
              PROCESS select element_data = {
                 id="overpayment_account_" _ overpayment_item
                 name="overpayment_account_" _ overpayment_item
-                options=options } ?>
+                options=options } %]
      </td>
      <td align="center">
-       <?lsmb
+       [%
           options=[];
           FOREACH item IN account;
               options.push( {
@@ -413,83 +413,83 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
           PROCESS select element_data = {
              id="overpayment_cash_account_" _ overpayment_item
              name="overpayment_cash_account_" _ overpayment_item
-             options=options } ?>
+             options=options } %]
     </td>
      <td align="center">
-       <?lsmb PROCESS input element_data = {
+       [% PROCESS input element_data = {
                  name="overpayment_source2_" _ overpayment_item
                  class="source"
                  id="overpayment_source2_" _ overpayment_item
-              } ?>
-         <?lsmb PROCESS input element_data = {
+              } %]
+         [% PROCESS input element_data = {
                    type="hidden"
                    name="overpayment_qty"
                    id="overpayment_qty"
-                   value=overpayment_item } ?>
+                   value=overpayment_item } %]
      </td>
      <td align="center">
-       <?lsmb PROCESS input element_data = {
+       [% PROCESS input element_data = {
                  name="overpayment_memo_" _ overpayment_item
-                 id="overpayment_memo_" _ overpayment_item } ?>
+                 id="overpayment_memo_" _ overpayment_item } %]
           </td>
      <td align="center">
       <!-- CT:  Changing this to always show 0 because nowhere else to enter an
            amount to overpay. -->
-      <?lsmb PROCESS input element_data = {
+      [% PROCESS input element_data = {
                  name="overpayment_topay_" _ overpayment_item
                  id="overpayment_topay_" _ overpayment_item
                  value="0"
-                 class="overpayment_topay" } ?>
+                 class="overpayment_topay" } %]
      </td>
      <td align="center">
-                 <?lsmb PROCESS input element_data = {
+                 [% PROCESS input element_data = {
                                  type="checkbox"
                                  class="remove"
-                                 name="overpayment_checkbox_" _  overpayment_item } ?>
+                                 name="overpayment_checkbox_" _  overpayment_item } %]
           </td>
    </tr>
    <tr class="listsubtotal">
-   <th colspan="5" align="right"><?lsmb text('Subtotal') -?></th>
-   <th colspan="2"><?lsmb overpayment_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
+   <th colspan="5" align="right">[% text('Subtotal') -%]</th>
+   <th colspan="2">[% overpayment_subtotal -%]&nbsp;[% curr.value -%]</th>
    </tr>
    <tr class="listtotal">
-   <th colspan="5" align="right"><?lsmb text('Total') -?></th>
-   <th colspan="2"><?lsmb payment_total -?>&nbsp;<?lsmb curr.value -?></th>
+   <th colspan="5" align="right">[% text('Total') -%]</th>
+   <th colspan="2">[% payment_total -%]&nbsp;[% curr.value -%]</th>
    </tr>
    </table>
 
    <hr />
-   <?lsmb PROCESS button element_data={
+   [% PROCESS button element_data={
           accesskey   = "U"
           title       = "UPDATE ALT+U"
           name        = "action"
           value       = "update_payment2"
           text        = text("Update")
-         } -?>
-  <?lsmb PROCESS button element_data={
+         } -%]
+  [% PROCESS button element_data={
          accesskey   = "P"
          title       = "POST ALT+P"
          name        = "action"
          value       = "post_payment"
          text        = text("Post")
-         } -?>
-  <?lsmb PROCESS button element_data={
+         } -%]
+  [% PROCESS button element_data={
          accesskey = "R"
          title     = "POST AND PRINT ALT+R"
          name = "action"
          value = "post_and_print_payment"
          text = text("POST AND PRINT")
          "data-dojo-type" = "lsmb/payments/PostPrintButton"
-         } ?>
-  <?lsmb PROCESS select element_data=format ?>
-  <?lsmb PROCESS select element_data=media ?>
+         } %]
+  [% PROCESS select element_data=format %]
+  [% PROCESS select element_data=media %]
   <div id=div_topay_state>
-  <?lsmb FOREACH item IN topay_state -?>
-        <?lsmb  PROCESS input element_data= {
+  [% FOREACH item IN topay_state -%]
+        [%  PROCESS input element_data= {
                 type = "hidden"
                 name = item.id
-                } ?>
-  <?lsmb END -?>
+                } %]
+  [% END -%]
   </div>
  </form>
   </div>

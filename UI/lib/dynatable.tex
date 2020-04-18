@@ -1,4 +1,4 @@
-<?lsmb- BLOCK dynatable;
+[%- BLOCK dynatable;
 
 TOTAL_WIDTH=14; # cm. using A4 as a basis because it is slightly narrower than
                 # US Letter. This way the dynatable works for both paper sizes.
@@ -17,8 +17,8 @@ IF DECLARED_WIDTH > 0;
 ELSE;
     WIDTH_PER_P = 1;
 END;
- ?>
-\begin{longtable}{<?lsmb-
+ %]
+\begin{longtable}{[%-
 
 FOREACH COL IN columns;
    IF COL.psep_before;
@@ -37,12 +37,12 @@ FOREACH COL IN columns;
       '|';
    END;
 END; 
--?>}
-<?lsmb IF firsthead; firsthead ?>\\
-<?lsmb- END ?>
-<?lsmb IF head; head ?>\\<?lsmb- END ?>
-<?lsmb- -?>
-<?lsmb 
+-%]}
+[% IF firsthead; firsthead %]\\
+[%- END %]
+[% IF head; head %]\\[%- END %]
+[%- -%]
+[% 
 ADD_SEP = 0;
 FOREACH COL IN columns;
     IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
@@ -53,10 +53,10 @@ FOREACH COL IN columns;
         ADD_SEP = 1;
     END;
 END;
--?>\tabularnewline
+-%]\tabularnewline
 \hline\hline
 \endfirsthead
-<?lsmb 
+[% 
 
 ADD_SEP = 0;
 FOREACH COL IN columns;
@@ -68,10 +68,10 @@ FOREACH COL IN columns;
         ADD_SEP = 1;
     END;
 END;
--?>\tabularnewline
+-%]\tabularnewline
 \hline\hline
 \endhead
-<?lsmb
+[%
 
 FOREACH ROW IN tbody.rows;
     ADD_SEP=0;
@@ -82,13 +82,13 @@ FOREACH ROW IN tbody.rows;
                ' & ';
             END;
             ADD_SEP = 1;
-            ?>\begin{minipage}{<?lsmb (COL.pwidth * WIDTH_PER_P) _ "cm"; ?>}<?lsmb
+            %]\begin{minipage}{[% (COL.pwidth * WIDTH_PER_P) _ "cm"; %]}[%
                 ROW.${COLID}; #$
-            ?>\end{minipage}<?lsmb
+            %]\end{minipage}[%
         END;
     END;
-    ?>\tabularnewline
-<?lsmb
-END; # FOREACH ?>
+    %]\tabularnewline
+[%
+END; # FOREACH %]
 \end{longtable}
-<?lsmb END;  # block dynatable -?>
+[% END;  # block dynatable -%]

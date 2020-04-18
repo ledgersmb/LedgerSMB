@@ -1,20 +1,20 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"];
        PROCESS "elements.html";
-       PROCESS "dynatable.html"; ?>
-<body id="setup-list-databases" class="lsmb <?lsmb dojo_theme ?>">
+       PROCESS "dynatable.html"; %]
+<body id="setup-list-databases" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<?lsmb INCLUDE 'setup/ui-db-credentials.html' ?>
-<div class="listtop"><?lsmb text('Available Databases') ?></div>
-<?lsmb
+[% INCLUDE 'setup/ui-db-credentials.html' %]
+<div class="listtop">[% text('Available Databases') %]</div>
+[%
     INCLUDE dynatable
             columns = [{col_id = 'db',
                        name = text('Database'),
                        type = 'href'
                   href_base = 'setup.pl?action=login&amp;database='}]
             tbody = {rows = dbs}
-              id = 'db_list' ?>
+              id = 'db_list' %]
 </div>
 </body>
 </html>

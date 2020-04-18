@@ -1,4 +1,4 @@
-<?lsmb
+[%
 
 FORMATS = LIST_FORMATS();
 LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
@@ -19,39 +19,39 @@ IF report.legacy_hierarchy ;
 ELSE ;
    hierarchy = 'full-hierarchy';
 END ;
- ?>
-<body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
-<div id="PNL" class="financial-statement <?lsmb hierarchy ?> balance-sheet">  <!-- TODO: Find better name!! -->
-<h1><?lsmb text('Balance Sheet') ?></h1>
+ %]
+<body class="financial-statement [% dojo_theme %] [% hierarchy %]">
+<div id="PNL" class="financial-statement [% hierarchy %] balance-sheet">  <!-- TODO: Find better name!! -->
+<h1>[% text('Balance Sheet') %]</h1>
 
-<div class="company-name"><?lsmb company_name ?></div>
-<div class="company-address"><?lsmb company_address ?></div>
+<div class="company-name">[% company_name %]</div>
+<div class="company-address">[% company_address %]</div>
 
 <table class="balancesheet" style="border-collapse: collapse">
 <colgroup class="headings">
-<?lsmb i = 1;
+[% i = 1;
    WHILE i <= max_path_depth;
      '  <col class="level' _ i _ '" />';
      i = i + 1;
    END;
-?>
+%]
 </colgroup>
 <colgroup class="values">
-<?lsmb i = 1;
+[% i = 1;
    WHILE i <= report.cheads.ids.keys.size;
      '  <col class="values' _ i _ '" />';
      i = i + 1;
    END;
-?>
+%]
 </colgroup>
   <tbody>
     <tr class="report-head">
-      <th colspan="<?lsmb max_path_depth ?>"> </th>
-      <?lsmb FOREACH col IN report.sorted_col_ids -?>
-      <th><?lsmb report.cheads.ids.$col.props.description ?></th>
-      <?lsmb END -?>
+      <th colspan="[% max_path_depth %]"> </th>
+      [% FOREACH col IN report.sorted_col_ids -%]
+      <th>[% report.cheads.ids.$col.props.description %]</th>
+      [% END -%]
     </tr>
-<?lsmb FOREACH row IN report.sorted_row_ids ;
+[% FOREACH row IN report.sorted_row_ids ;
    path_depth = report.rheads.ids.$row.path.size;
    path_prefix_len = path_depth - 1;
    path_suffix_len = max_path_depth - path_prefix_len;
@@ -66,59 +66,59 @@ END ;
      class = 'class="account"';
      clazz = 'account';
    END;
- ?>
-<tr <?lsmb class; IF report.rheads.ids.$row.props.account_number;
+ %]
+<tr [% class; IF report.rheads.ids.$row.props.account_number;
                      ' data-lsmb-account="';
                      report.rheads.ids.$row.props.account_number;
                      '"';
-                  END ?>>
-  <?lsmb IF path_prefix_len > 0 ?>
-  <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th>
-  <?lsmb END ?>
-  <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
-<?lsmb IF report.rheads.ids.$row.props.section_for ;
+                  END %]>
+  [% IF path_prefix_len > 0 %]
+  <th colspan="[% path_prefix_len %]" class="indent"></th>
+  [% END %]
+  <th colspan="[% path_suffix_len %]" [% class %]>
+[% IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;
-  report.rheads.ids.$head_id.props.account_description; ?>
-</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
-<?lsmb ELSE -?>
-<?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
-<?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
-<?lsmb report.rheads.ids.$row.props.account_desc ?></th>
-<?lsmb FOREACH col IN report.sorted_col_ids -?>
-  <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
+  report.rheads.ids.$head_id.props.account_description; %]
+</th><th colspan="[% report.cheads.ids.keys.size %]" [% class %]>
+[% ELSE -%]
+[% IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -%]
+[% report.rheads.ids.$row.props.account_number %]&nbsp;-&nbsp;[% END; -%]
+[% report.rheads.ids.$row.props.account_desc %]</th>
+[% FOREACH col IN report.sorted_col_ids -%]
+  <td class="amount [% clazz %]"><a href="[%
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
-           _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date ?>"><?lsmb report.cells.$row.$col ?></a></td><?lsmb END ?>
-<?lsmb END ?>
+           _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date %]">[% report.cells.$row.$col %]</a></td>[% END %]
+[% END %]
 </tr>
-<?lsmb END ?>
+[% END %]
 
 <!--
-<h2><?lsmb text('Key Ratios'); ?></h2>
-<h2><?lsmb text('First column only') ?></h2>
+<h2>[% text('Key Ratios'); %]</h2>
+<h2>[% text('First column only') %]</h2>
 <table>
-<tr><th><?lsmb text('Assets to Liabilities') ?></th>
-    <td><?lsmb report.balance_sheet.ratios.AL ?></td>
+<tr><th>[% text('Assets to Liabilities') %]</th>
+    <td>[% report.balance_sheet.ratios.AL %]</td>
 </tr>
-<tr><th><?lsmb text('Assets to Equity') ?></th>
-    <td><?lsmb report.balance_sheet.ratios.AQ ?></td>
+<tr><th>[% text('Assets to Equity') %]</th>
+    <td>[% report.balance_sheet.ratios.AQ %]</td>
 </tr>
-<tr><th><?lsmb text('Equity to Liabilities') ?></th>
-    <td><?lsmb report.balance_sheet.ratios.QL ?></td>
+<tr><th>[% text('Equity to Liabilities') %]</th>
+    <td>[% report.balance_sheet.ratios.QL %]</td>
 </tr>
 -->
 </tbody>
 </table>
 
-<?lsmb IF FORMATS.grep('PDF').size() ?>
+[% IF FORMATS.grep('PDF').size() %]
 <div class="export-links">
   <div class="export-link"
        ><a target="_blank" rel="noopener noreferrer"
-           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></div>
+           href="[% LINK %]&amp;format=PDF">[[% text('PDF') %]]</a></div>
   <div class="export-link"
        ><a target="_blank" rel="noopener noreferrer"
-           href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
+           href="[% LINK %]&amp;format=CSV">[[% text('CSV') %]]</a></div>
 </div>
-<?lsmb END ?>
+[% END %]
 </div>
 
 </body>

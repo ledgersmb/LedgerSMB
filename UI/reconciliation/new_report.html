@@ -1,67 +1,67 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
 <div id ="recon1">
 
     <form data-dojo-type="lsmb/Form" method="POST" action="recon.pl">
 
         <div class="listtop">
-            <?lsmb text('New Reconciliation Report') ?>
+            [% text('New Reconciliation Report') %]
         </div>
 
         <div data-dojo-type="lsmb/layout/TableContainer"
              data-dojo-props="cols:1">
 
             <div class="input">
-            <?lsmb INCLUDE select element_data = {
+            [% INCLUDE select element_data = {
                 name = "chart_id",
                 options = recon_accounts,
                 text_attr = "name",
                 value_attr = "id",
                 title = text("Account")
-            } ?>
+            } %]
             </div>
 
             <div class="input">
-            <?lsmb INCLUDE input element_data = {
+            [% INCLUDE input element_data = {
                 name = "total",
                 class = "numeric",
                 title = text('Statement Balance'),
                 type = "text",
                 required = '1'
                 size = 12
-            } ?>
+            } %]
             </div>
 
             <div class="input">
-            <?lsmb INCLUDE input element_data = {
+            [% INCLUDE input element_data = {
                 name = "end_date",
                 title = text('Statement Date'),
                 class = "date",
                 required = '1',
                 size = 14
-            } ?>
+            } %]
             </div>
 
             <div class="input">
-            <?lsmb INCLUDE input element_data = {
+            [% INCLUDE input element_data = {
                title = text('Reconcile as FX')
                value = 1
                type = "checkbox"
                checked = recon_fx
                name = "recon_fx"
-            } ?>
+            } %]
             </div>
 
         </div>
 
         <div class="input" id="buttons_div">
-        <?lsmb INCLUDE button element_data = {
+        [% INCLUDE button element_data = {
             type = "submit"
             name = "action"
             value = "start_report"
             class = "submit"
             text = text('Create New Report')
-        } ?>
+        } %]
         </div>
     </form>
 </div>

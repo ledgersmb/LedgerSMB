@@ -1,49 +1,49 @@
-<?lsmb# HTML Snippet, for import only ?>
+[%# HTML Snippet, for import only %]
 <div id="person_div"
-     title="<?lsmb text('Person') ?>"
+     title="[% text('Person') %]"
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'person_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'person_div' %]data-dojo-props="selected:true"[% END %]
      >
-<?lsmb SWITCH entity_class
-        ?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor"
-        ?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer"
-        ?><?lsmb END ?>
-        <div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form data-dojo-type="lsmb/Form" name="customer" method="post" action="<?lsmb request.script ?>">
-<?lsmb PROCESS input element_data = { # Only for generate_control_code
+[% SWITCH entity_class
+        %][% CASE 1 %][% entity_classname = "Vendor"
+        %][% CASE 2 %][% entity_classname = "Customer"
+        %][% END %]
+        <div class="listtop"><strong>[% text("$operation $entity_classname") %]</strong></div>
+<form data-dojo-type="lsmb/Form" name="customer" method="post" action="[% request.script %]">
+[% PROCESS input element_data = { # Only for generate_control_code
                   id = 'person-target-div'
                 type = "hidden"
                 name = "target_div"
                 value = 'person_div'
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                   id = 'person-entity-id'
                 type = "hidden"
                 name = "entity_id"
                 value = entity_id
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                   id = 'person-id'
                 type = "hidden"
                 name = "id"
                 value = person.id
-        } ?>
-<?lsmb PROCESS input element_data = {
+        } %]
+[% PROCESS input element_data = {
                   id = 'person-form-id'
                 type = "hidden"
                 name = "form_id"
                 value = form_id
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                   id = 'person-account-class'
                 type = "hidden"
                 name = "account_class"
                 value = account_class
-        } ?>
+        } %]
 <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
 <div class="input_line">
 <div class="input_group1">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                   id = 'person-control-code'
                 title = text('Control Code') #'
                 label = "_none_"
@@ -51,13 +51,13 @@
                 name = "control_code"
                 value = person.control_code
                 size = "20"
-        } ?>
-        <?lsmb IF !created_as_class;
+        } %]
+        [% IF !created_as_class;
                 created_as_class = entity_class;
-        END; # IF !created_as_class ?>
+        END; # IF !created_as_class %]
 </div>
 <div class="input_group2">
-        <?lsmb
+        [%
         PROCESS select element_data = {
                 id = 'person-entity-class'
                 name = "entity_class"
@@ -67,12 +67,12 @@
                 value_attr = 'id'
                 title = text('Class')
                 label = "_none_"
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-     <?lsmb
+     [%
         PROCESS select element_data = {
                   title = text('Salutation')
                   label = "_none_"
@@ -84,12 +84,12 @@
               text_attr = 'salutation'
              value_attr = 'id'
                required = 'true'
-    } ?>
+    } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                 title = text('Given Name') #'
                 label = "_none_"
                 type= "text"
@@ -97,24 +97,24 @@
                 value = person.first_name
                 size = "20"
             required = 'true'
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                 title = text('Middle Name') #'
                 label = "_none_"
                 type= "text"
                 name = "middle_name"
                 value = person.middle_name
                 size = "20"
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                 title = text('Surname')
                 label = "_none_"
                 type= "text"
@@ -122,12 +122,12 @@
                 value = person.last_name
                 size = "20"
             required = 'true'
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-       <?lsmb
+       [%
                 person_country_id = person.country_id;
                 IF !person_country_id;
                           person_country_id = default_country;
@@ -142,12 +142,12 @@
                         title = text('Country')
                         label = "_none_"
                         required = 'true'
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-    <?lsmb INCLUDE input element_data = {
+    [% INCLUDE input element_data = {
            name  = 'personal_id',
            type  = 'text',
            size  = '20',
@@ -156,12 +156,12 @@
            label = "_none_"
            class = 'id',
                           required = 'true'
-    } ?>
+    } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-    <?lsmb INCLUDE input element_data = {
+    [% INCLUDE input element_data = {
            name  = 'birthdate',
            type  = 'text',
            value = person.birthdate,
@@ -170,30 +170,30 @@
            size  = '11',
            class = 'date',
                           required = 'true'
-    } ?>
+    } %]
 </div>
 </div>
 </div>
 <div class="input_line">
             <hr/>
 <div class="buttonrow">
-        <?lsmb PROCESS button element_data = {
+        [% PROCESS button element_data = {
                  id = 'person-generate-control-code'
                 text = text('Generate Control Code') #'
                 type = "submit"
                 name = "action"
                 value = "generate_control_code"
                 class = "submit"
-        } ?>
-        <?lsmb PROCESS button element_data = {
+        } %]
+        [% PROCESS button element_data = {
                   id = 'person-retrieve'
                 text = text('Retrieve')
                 type = 'submit'
                 name = 'action'
                value = 'get_by_cc'
                class = 'submit'
-        } ?>
-                <?lsmb INCLUDE button element_data = {
+        } %]
+                [% INCLUDE button element_data = {
                         text = text('Save'),
                         class="submit"
                         type="submit"
@@ -201,13 +201,13 @@
                         value="save_person"
                         accesskey="S"
                         title="Save [Alt-S]"
-                } ?>
+                } %]
 </div>
 </div>
 </form>
-<?lsmb FOREACH n = notes ?>
+[% FOREACH n = notes %]
 <div class="note">
-<div class="note_contents"><?lsmb n.note ?></div>
+<div class="note_contents">[% n.note %]</div>
 </div>
-<?lsmb END ?>
+[% END %]
 </div>

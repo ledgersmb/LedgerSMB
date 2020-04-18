@@ -1,4 +1,4 @@
-<?lsmb PROCESS "elements.html" ?>
+[% PROCESS "elements.html" %]
 <body>
   <form id="system-templates"
         data-dojo-type="lsmb/Form"
@@ -6,7 +6,7 @@
         method="post"
         enctype="multipart/form-data">
     <div data-dojo-type="lsmb/TemplateManager"
-         data-dojo-props="state:'<?lsmb state ?>'"
+         data-dojo-props="state:'[% state %]'"
          id="template-manager">
       <input type="hidden" name="template_name" id="shadow-template"
              data-dojo-attach-point="shadowTemplate">
@@ -18,97 +18,97 @@
         <div>
           <label for="template-name"
                  style="display:inline-block;width:15ex"
-                 ><?lsmb text("Template") ?></label>
+                 >[% text("Template") %]</label>
           <div data-dojo-type="dijit/form/Select"
                id="template-name"
                style="width:20ex"
-               data-dojo-props="required:true,value:'<?lsmb template_name ?>'"
+               data-dojo-props="required:true,value:'[% template_name %]'"
                data-dojo-attach-point="templateName">
-            <span value=""><span><?lsmb text("--TEMPLATE--") ?></span></span>
+            <span value=""><span>[% text("--TEMPLATE--") %]</span></span>
             <span value="ap_transaction">
-              <span><?lsmb text("AP transaction") ?></span></span>
+              <span>[% text("AP transaction") %]</span></span>
             <span value="ar_transaction">
-              <span><?lsmb text("AR transaction") ?></span></span>
+              <span>[% text("AR transaction") %]</span></span>
             <span value="balance_sheet">
-              <span><?lsmb text("Balance sheet") ?></span></span>
+              <span>[% text("Balance sheet") %]</span></span>
             <span value="PNL">
-              <span><?lsmb text("Income statement") ?></span></span>
+              <span>[% text("Income statement") %]</span></span>
             <span value="bin_list">
-              <span><?lsmb text("Bin list") ?></span></span>
+              <span>[% text("Bin list") %]</span></span>
             <span value="check">
-              <span><?lsmb text("Single check") ?></span></span>
+              <span>[% text("Single check") %]</span></span>
             <span value="check_base">
-            <span><?lsmb text("Check (base)") ?></span></span>
+            <span>[% text("Check (base)") %]</span></span>
             <span value="check_multiple">
-              <span><?lsmb text("Multiple checks") ?></span></span>
+              <span>[% text("Multiple checks") %]</span></span>
             <span value="envelope">
-              <span><?lsmb text("Envelope") ?></span></span>
+              <span>[% text("Envelope") %]</span></span>
             <span value="invoice">
-              <span><?lsmb text("Invoice") ?></span></span>
+              <span>[% text("Invoice") %]</span></span>
             <span value="letterhead">
-              <span><?lsmb text("Letterhead") ?></span></span>
+              <span>[% text("Letterhead") %]</span></span>
             <span value="packing_list">
-              <span><?lsmb text("Packing list") ?></span></span>
+              <span>[% text("Packing list") %]</span></span>
             <span value="pick_list">
-              <span><?lsmb text("Pick list") ?></span></span>
+              <span>[% text("Pick list") %]</span></span>
             <span value="printPayment">
-              <span><?lsmb text("Payment") ?></span></span>
+              <span>[% text("Payment") %]</span></span>
             <span value="product_receipt">
-              <span><?lsmb text("Product receipt") ?></span></span>
+              <span>[% text("Product receipt") %]</span></span>
             <span value="purchase_order">
-            <span><?lsmb text("Purchase order") ?></span></span>
+            <span>[% text("Purchase order") %]</span></span>
             <span value="receipt">
-              <span><?lsmb text("Receipt") ?></span></span>
+              <span>[% text("Receipt") %]</span></span>
             <span value="request_quotation">
-              <span><?lsmb text("Request for quotation") ?></span></span>
+              <span>[% text("Request for quotation") %]</span></span>
             <span value="sales_order">
-              <span><?lsmb text("Sales order") ?></span></span>
+              <span>[% text("Sales order") %]</span></span>
             <span value="sales_quotation">
-              <span><?lsmb text("Sales quotation") ?></span></span>
+              <span>[% text("Sales quotation") %]</span></span>
             <span value="shipping_label">
-              <span><?lsmb text("Shipping label") ?></span></span>
+              <span>[% text("Shipping label") %]</span></span>
             <span value="statement">
-              <span><?lsmb text("Aging statement") ?></span></span>
+              <span>[% text("Aging statement") %]</span></span>
             <span value="timecard">
-              <span><?lsmb text("Timecard") ?></span></span>
+              <span>[% text("Timecard") %]</span></span>
             <span value="work_order">
-              <span><?lsmb text("Work order") ?></span></span>
+              <span>[% text("Work order") %]</span></span>
             <span value="display_report">
-              <span><?lsmb text("Reports") ?></span></span>
+              <span>[% text("Reports") %]</span></span>
             <span value="1099-MISC">
-              <span><?lsmb text("1099-MISC") ?></span></span>
+              <span>[% text("1099-MISC") %]</span></span>
             <span value="1099-INT">
-              <span><?lsmb text("1099-INT") ?></span></span>
+              <span>[% text("1099-INT") %]</span></span>
           </div>
         </div>
         <div style="margin-top:8px">
           <label for="format"
                  style="display:inline-block;width:15ex"
-                 ><?lsmb text("Format") ?></label>
+                 >[% text("Format") %]</label>
           <div data-dojo-type="dijit/form/Select"
                id="format"
                style="width:20ex"
-               data-dojo-props="required:true,value:'<?lsmb format ?>'"
+               data-dojo-props="required:true,value:'[% format %]'"
                data-dojo-attach-point="templateFormat">
-            <span value=""><span><?lsmb text("--FORMAT--") ?></span></span>
-            <span value="csv"><span><?lsmb text("csv") ?></span></span>
-            <span value="html"><span><?lsmb text("html") ?></span></span>
-            <span value="tex"><span><?lsmb text("tex") ?></span></span>
+            <span value=""><span>[% text("--FORMAT--") %]</span></span>
+            <span value="csv"><span>[% text("csv") %]</span></span>
+            <span value="html"><span>[% text("html") %]</span></span>
+            <span value="tex"><span>[% text("tex") %]</span></span>
           </div>
           <label for="language"
                  style="margin-left:14ex;display:inline-block;width:15ex">Language</label>
           <div data-dojo-type="dijit/form/Select"
                id="language"
                style="width:18ex"
-               data-dojo-props="value:'<?lsmb language ?>'"
+               data-dojo-props="value:'[% language %]'"
                data-dojo-attach-point="templateLanguage">
-            <span value="__all__"><b><?lsmb text("None/Generic") ?></b></span>
-            <?lsmb
-              FOREACH lang IN languages ?>
-            <span value="<?lsmb lang.code ?>"><?lsmb lang.description ?></span>
-            <?lsmb
+            <span value="__all__"><b>[% text("None/Generic") %]</b></span>
+            [%
+              FOREACH lang IN languages %]
+            <span value="[% lang.code %]">[% lang.description %]</span>
+            [%
               END
-              ?>
+              %]
           </div>
         </div>
       </div>
@@ -117,17 +117,17 @@
         <button id="create"
                 data-dojo-type="dijit/form/Button"
                 data-dojo-attach-point="createButton"
-                ><?lsmb text("Create") ?></button>
+                >[% text("Create") %]</button>
 
         <button id="edit"
                 data-dojo-type="dijit/form/Button"
                 data-dojo-attach-point="editButton"
-                ><?lsmb text("Edit") ?></button>
+                >[% text("Edit") %]</button>
 
         <button id="upload"
                 data-dojo-type="dijit/form/Button"
                 data-dojo-attach-point="uploadButton"
-                ><?lsmb text("Upload") ?></button>
+                >[% text("Upload") %]</button>
       </div>
       <div id="template-upload">
         <input type="file"
@@ -139,11 +139,11 @@
                 value="save"
                 type="submit"
                 data-dojo-type="dijit/form/Button"
-                ><?lsmb text("Save") ?></button>
+                >[% text("Save") %]</button>
         <button id="upload-cancel"
                 data-dojo-type="dijit/form/Button"
                 data-dojo-attach-point="uploadCancelButton"
-                ><?lsmb text("Cancel") ?></button>
+                >[% text("Cancel") %]</button>
       </div>
       <div id="template-edit">
         <div id="template-edit-buttons">
@@ -153,21 +153,21 @@
                   type="submit"
                   data-dojo-type="dijit/form/Button"
                   data-dojo-attach-point="editSaveButton"
-                  ><?lsmb text("Save") ?></button>
+                  >[% text("Save") %]</button>
           <button id="edit-cancel"
                   name="action"
                   value="edit_cancel"
                   data-dojo-type="dijit/form/Button"
                   data-dojo-attach-point="editCancelButton"
-                  ><?lsmb text("Cancel") ?></button>
+                  >[% text("Cancel") %]</button>
         </div>
 
-        <?lsmb PROCESS textarea element_data = {
+        [% PROCESS textarea element_data = {
                         class="template-body " _ format _ " editor"
                         style="width:100%;display:block"
                         name="template"
                         'data-dojo-attach-point'="templateContent"
-                 text=UNESCAPE(template_content) } ?>
+                 text=UNESCAPE(template_content) } %]
       </div>
     </div>
   </form>

@@ -1,55 +1,55 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
   <form data-dojo-type="lsmb/Form"
         id="system-taxes"
         method="post"
-        action="<?lsmb form.script ?>">
+        action="[% form.script %]">
     <table width="100%">
-      <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+      <tr><th class="listtop">[% form.title %]</th></tr>
       <tr>
         <td>
           <table>
             <tr>
               <th></th>
-              <th><?lsmb text('Rate (%)') ?></th>
-              <th><?lsmb text('Min Taxable') ?></th>
-              <th><?lsmb text('Number') ?></th>
-              <th><?lsmb text('Valid To') ?></th>
-              <th><?lsmb text('Ordering') ?></th>
-              <th><?lsmb text('Tax Rules') ?></th>
+              <th>[% text('Rate (%)') %]</th>
+              <th>[% text('Min Taxable') %]</th>
+              <th>[% text('Number') %]</th>
+              <th>[% text('Valid To') %]</th>
+              <th>[% text('Ordering') %]</th>
+              <th>[% text('Tax Rules') %]</th>
             </tr>
-            <?lsmb FOREACH row IN rows; i = loop.count ?>
+            [% FOREACH row IN rows; i = loop.count %]
             <tr>
-              <th align="right"><?lsmb row.0 ?></th>
-              <td><?lsmb PROCESS input element_data = {
+              <th align="right">[% row.0 %]</th>
+              <td>[% PROCESS input element_data = {
                          name = "taxrate_" _ i
                          size = 6
                          value = form.item("taxrate_$i")
-                         } ?></td>
-              <td><?lsmb PROCESS input element_data = {
+                         } %]</td>
+              <td>[% PROCESS input element_data = {
                          name = "minvalue_" _ i
                          size = 6
                          value = form.item("minvalue_$i")
-                         } ?></td>
-              <td><?lsmb PROCESS input element_data = {
+                         } %]</td>
+              <td>[% PROCESS input element_data = {
                          name = "taxnumber_" _ i
                          size = 6
                          value = form.item("taxnumber_$i")
-                         } ?></td>
-              <td><?lsmb PROCESS input element_data = {
+                         } %]</td>
+              <td>[% PROCESS input element_data = {
                          name = "validto_" _ i
                          size = 10
                          value = form.item("validto_$i")
                          class = "date"
-                         } ?></td>
-              <td><?lsmb PROCESS input element_data = {
+                         } %]</td>
+              <td>[% PROCESS input element_data = {
                          name = "pass_" _ i
                          size = 6
                          value = form.item("pass_$i")
-                         } ?></td>
-              <td><?lsmb PROCESS select element_data=row.1 ?></td>
+                         } %]</td>
+              <td>[% PROCESS select element_data=row.1 %]</td>
             </tr>
-            <?lsmb END ?>
+            [% END %]
           </table>
         </td>
       </tr>
@@ -58,7 +58,7 @@
       </tr>
     </table>
 
-    <?lsmb FOREACH hidden IN hiddens.keys;
+    [% FOREACH hidden IN hiddens.keys;
              PROCESS input element_data={
                      type => 'hidden'
                      name => hidden
@@ -74,6 +74,6 @@
             name => 'action'
             value => 'save_taxes'
             text => text('Save')
-            } ?>
+            } %]
   </form>
 </body>

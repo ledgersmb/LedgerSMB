@@ -1,34 +1,34 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
        stylesheet="ledgersmb.css";
        PROCESS elements.html;
-       PROCESS 'dynatable.html' ?>
+       PROCESS 'dynatable.html' %]
 
-<body id="setup-migration_step" class="lsmb <?lsmb dojo_theme?>">
+<body id="setup-migration_step" class="lsmb [% dojo_theme%]">
   <div class="setupconsole">
     <h1 style="font-weight: bold; margin-bottom: 1em; text-align: center">
-        <?lsmb text('Database Management Console') ?>
+        [% text('Database Management Console') %]
     </h1>
-    <?lsmb # We cannot use form-dynatable, for it requires lsmb/Form and maindiv ?>
+    [% # We cannot use form-dynatable, for it requires lsmb/Form and maindiv %]
     <form data-dojo-type="lsmb/SimpleForm"
           method="post"
-          action="<?lsmb form.script ?>"
+          action="[% form.script %]"
           id="migration-step-dynatable">
-    <?lsmb FOREACH header IN headers ?><div class="listtop">
-             <?lsmb INCLUDE decorated_text element_data = {
+    [% FOREACH header IN headers %]<div class="listtop">
+             [% INCLUDE decorated_text element_data = {
                     msg => header };
-             ?></div>
-    <?lsmb END ?>
+             %]</div>
+    [% END %]
 
-    <?lsmb PROCESS 'dynatable' tbody = { rows = rows } ?>
+    [% PROCESS 'dynatable' tbody = { rows = rows } %]
     <br />
 
-    <?lsmb FOREACH hidden IN hiddens.keys;
+    [% FOREACH hidden IN hiddens.keys;
         PROCESS input element_data={
             type => 'hidden',
             name => hidden,
             value => hiddens.item(hidden)
-            }; END ?>
-    <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+            }; END %]
+    [% FOREACH button IN buttons; PROCESS button element_data=button; END %]
     </form>
   </div>
 </body>

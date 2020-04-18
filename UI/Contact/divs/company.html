@@ -1,54 +1,54 @@
-<?lsmb# HTML Snippet, for import only ?>
+[%# HTML Snippet, for import only %]
 <div id="company_div"
-     title="<?lsmb text('Company') ?>"
+     title="[% text('Company') %]"
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'company_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'company_div' %]data-dojo-props="selected:true"[% END %]
 
      >
 
 
-<?lsmb SWITCH entity_class
-        ?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor"
-        ?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer"
-        ?><?lsmb END ?>
-        <div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form data-dojo-type="lsmb/Form" id="company" method="post" action="<?lsmb request.script ?>">
+[% SWITCH entity_class
+        %][% CASE 1 %][% entity_classname = "Vendor"
+        %][% CASE 2 %][% entity_classname = "Customer"
+        %][% END %]
+        <div class="listtop"><strong>[% text("$operation $entity_classname") %]</strong></div>
+<form data-dojo-type="lsmb/Form" id="company" method="post" action="[% request.script %]">
 <div data-dojo-type="lsmb/layout/TableContainer"
      data-dojo-props="cols:2">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
                   id = 'company-target-div'
                 type = "hidden"
                 name = "target_div"
                 value = 'company_div'
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                   id = 'company-entity-id'
                 type = "hidden"
                 name = "entity_id"
                 value = entity_id
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                   id = 'company-company-id'
                 type = "hidden"
                 name = "id"
                 value = company.id
-        } ?>
-<?lsmb PROCESS input element_data = {
+        } %]
+[% PROCESS input element_data = {
                   id = 'company-form-id'
                 type = "hidden"
                 name = "form_id"
                 value = form_id
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                   id = 'company-account-class'
                 type = "hidden"
                 name = "account_class"
                 value = account_class
-        } ?>
+        } %]
 <div class=" col-2 ">
 <div class="input_line">
 <div class="input_group1">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                 label = '_none_'
                 title = text('Control Code') #'
                   id = 'company-control-code'
@@ -56,13 +56,13 @@
                 name = "control_code"
                 value = company.control_code
                 size = "20"
-        } ?>
-        <?lsmb IF !created_as_class;
+        } %]
+        [% IF !created_as_class;
                 created_as_class = entity_class;
-        END; # IF !created_as_class ?>
+        END; # IF !created_as_class %]
 </div>
 <div class="input_group2">
-        <?lsmb company_entity_class = company.entity_class;
+        [% company_entity_class = company.entity_class;
         IF !company_entity_class;
               company_entity_class = request.entity_class;
         END;
@@ -75,12 +75,12 @@
                 value_attr = 'id'
                 title = text('Class')
                 label = '_none_'
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-        <?lsmb PROCESS input element_data = {
+        [% PROCESS input element_data = {
                 title = text('Name')
                 label = '_none_'
                 type= "text"
@@ -88,10 +88,10 @@
                 value = company.legal_name
                 size = "20"
                 required = 'true'
-        } ?>
+        } %]
 </div>
 <div class="input_group2">
-       <?lsmb country_list.unshift({});
+       [% country_list.unshift({});
                 company_country_id = company.country_id;
                 IF !company_country_id;
                           company_country_id = default_country;
@@ -106,22 +106,22 @@
                         title = text('Country')
                         label = '_none_'
                         required = 'true'
-        } ?>
+        } %]
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
-                <?lsmb INCLUDE input element_data = {
+                [% INCLUDE input element_data = {
                         label = '_none_'
                         title = text('Tax Number/SSN'),
                         name = "tax_id",
                         value = company.tax_id,
                         type = "text",
                         size = "19"
-                } #' ?>
+                } #' %]
 </div>
 <div class="input_group2">
-                <?lsmb INCLUDE input element_data = {
+                [% INCLUDE input element_data = {
                         label = '_none_'
                         title = text('SIC'),
                         name = "sic_code",
@@ -129,13 +129,13 @@
                         type = "text",
                         size = "19",
                         class = 'sic'
-                } ?>
+                } %]
 </div>
 </div>
 <div class="input_line"
      id="sales-tax-info">
 <div class="input_group1">
-     <?lsmb INCLUDE input element_data = {
+     [% INCLUDE input element_data = {
          label = '_none_'
          title = text('Sales Tax ID') #'
           name = 'sales_tax_id'
@@ -143,10 +143,10 @@
          class = 'taxnumber'
           size = '19'
          value = company.sales_tax_id
-     } ?>
+     } %]
 </div>
 <div class="input_group2">
-     <?lsmb INCLUDE input element_data = {
+     [% INCLUDE input element_data = {
          title = text('License Number') #'
          label = '_none_'
           name = 'license_number'
@@ -154,7 +154,7 @@
          class = 'taxnumber'
           size = '19'
          value = company.license_number
-     } ?>
+     } %]
 </div>
 </div>
 </div>
@@ -162,23 +162,23 @@
 <div class="input_line">
             <hr/>
 <div class="input_group1">
-        <?lsmb PROCESS button element_data = {
+        [% PROCESS button element_data = {
                 text = text('Generate Control Code') #'
                   id = 'company-generate-control-code'
                 type = "submit"
                 name = "action"
                 value = "generate_control_code"
                 class = "submit"
-        } ?>
-        <?lsmb PROCESS button element_data = {
+        } %]
+        [% PROCESS button element_data = {
                   id = 'company-action-retrieve'
                 text = text('Retrieve')
                 type = 'submit'
                 name = 'action'
                value = 'get_by_cc'
                class = 'submit'
-        } ?>
-                <?lsmb INCLUDE button element_data = {
+        } %]
+                [% INCLUDE button element_data = {
                         text = text('Save')
                         id = 'company-action-save'
                         class="submit"
@@ -187,13 +187,13 @@
                         value="save_company"
                         accesskey="S"
                         title="Save [Alt-S]"
-                } ?>
+                } %]
 </div>
 </div>
 </form>
-<?lsmb FOREACH n = notes ?>
+[% FOREACH n = notes %]
 <div class="note">
-<div class="note_contents"><?lsmb n.note ?></div>
+<div class="note_contents">[% n.note %]</div>
 </div>
-<?lsmb END ?>
+[% END %]
 </div>

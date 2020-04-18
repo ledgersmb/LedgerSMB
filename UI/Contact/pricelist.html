@@ -1,5 +1,5 @@
-<?lsmb PROCESS 'elements.html' ?>
-<?lsmb PROCESS 'dynatable.html' ?>
+[% PROCESS 'elements.html' %]
+[% PROCESS 'dynatable.html' %]
 <!--
 
 The overall structure here is imagined to be a list of individual price
@@ -10,10 +10,10 @@ checking a price deal for a customer.
 -CT
 
 -->
-<?lsmb account_class = entity_class ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb text('Pricelist') ?> <?lsmb pricematrix.length ?></div>
-<?lsmb
+[% account_class = entity_class %]
+<body class="lsmb [% dojo_theme %]">
+<div class="listtop">[% text('Pricelist') %] [% pricematrix.length %]</div>
+[%
     columns = [
               { col_id = 'parts_id',
                   type = 'hidden' },
@@ -65,20 +65,20 @@ checking a price deal for a customer.
      FOREACH pm IN pricematrix;
          pm.delete = '[' _ text('Delete') _ ']';
          pm.row_id = pm.entry_id;
-     END ?>
-<form data-dojo-type="lsmb/Form" name="pricematrix" action="<?lsmb script ?>" method="post">
- <?lsmb PROCESS input element_data = {
+     END %]
+<form data-dojo-type="lsmb/Form" name="pricematrix" action="[% script %]" method="post">
+ [% PROCESS input element_data = {
         type="hidden"
         name="entity_class"
-        value=account_class } ?>
- <?lsmb PROCESS input element_data = {
+        value=account_class } %]
+ [% PROCESS input element_data = {
         type="hidden"
         name="credit_id"
-        value=credit_id } ?>
- <?lsmb PROCESS input element_data = {
+        value=credit_id } %]
+ [% PROCESS input element_data = {
         type="hidden"
         name="entity_id"
-        value=entity_id } ?><?lsmb
+        value=entity_id } %][%
       PROCESS dynatable
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }
@@ -87,8 +87,8 @@ checking a price deal for a customer.
                               },
                    dojo_type = { int_partnumber = "lsmb/parts/PartSelector" },
                    dojo_props = { int_partnumber = "required: false" },
-                   rows = [{}]} ?>
-<?lsmb PROCESS button element_data = {
+                   rows = [{}]} %]
+[% PROCESS button element_data = {
     type = "submit"
    class = "submit"
     name = "action"
@@ -98,36 +98,36 @@ checking a price deal for a customer.
 
 FORMATS = LIST_FORMATS();
 
-IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=PDF&amp;credit_id=<?lsmb
-             credit_id ?>&amp;entity_id=<?lsmb entity_id
-     ?>">[<?lsmb text('PDF') ?>]</a>
-<?lsmb END;
+IF FORMATS.grep('PDF').size() %] <a href="[% request.script %]?action=get_pricelist&amp;format=PDF&amp;credit_id=[%
+             credit_id %]&amp;entity_id=[% entity_id
+     %]">[[% text('PDF') %]]</a>
+[% END;
 
 IF FORMATS.grep('XLS').size()
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=XLS&amp;credit_id=<?lsmb
-             credit_id ?>&amp;entity_id=<?lsmb entity_id
-     ?>">[<?lsmb text('XLS') ?>]</a>
-<?lsmb END;
+%] <a href="[% request.script %]?action=get_pricelist&amp;format=XLS&amp;credit_id=[%
+             credit_id %]&amp;entity_id=[% entity_id
+     %]">[[% text('XLS') %]]</a>
+[% END;
 
 IF FORMATS.grep('XLSX').size()
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=XLSX&amp;credit_id=<?lsmb
-             credit_id ?>&amp;entity_id=<?lsmb entity_id
-     ?>">[<?lsmb text('XLSX') ?>]</a>
-<?lsmb END;
+%] <a href="[% request.script %]?action=get_pricelist&amp;format=XLSX&amp;credit_id=[%
+             credit_id %]&amp;entity_id=[% entity_id
+     %]">[[% text('XLSX') %]]</a>
+[% END;
 
 IF FORMATS.grep('ODS').size()
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=ODS&amp;credit_id=<?lsmb
-             credit_id ?>&amp;entity_id=<?lsmb entity_id
-     ?>">[<?lsmb text('ODS') ?>]</a>
-<?lsmb END ?>
- <a href="<?lsmb request.script ?>?action=get_pricelist&amp;format=CSV&amp;credit_id=<?lsmb
-             credit_id ?>&amp;entity_id=<?lsmb entity_id
-     ?>">[<?lsmb text('CSV') ?>]</a>
-<?lsmb IF pricematrix_pricegroup;
+%] <a href="[% request.script %]?action=get_pricelist&amp;format=ODS&amp;credit_id=[%
+             credit_id %]&amp;entity_id=[% entity_id
+     %]">[[% text('ODS') %]]</a>
+[% END %]
+ <a href="[% request.script %]?action=get_pricelist&amp;format=CSV&amp;credit_id=[%
+             credit_id %]&amp;entity_id=[% entity_id
+     %]">[[% text('CSV') %]]</a>
+[% IF pricematrix_pricegroup;
      PROCESS dynatable
        attributes = { id = 'pricematrixgroup'
                       input_prefix = 'grp_' }
          tbody = { rows = pricematrix_pricegroup };
-       END ?>
+       END %]
 </form>
 </body>

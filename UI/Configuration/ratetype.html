@@ -1,30 +1,30 @@
-<?lsmb PROCESS elements.html ?>
-<?lsmb PROCESS 'dynatable.html' ?>
+[% PROCESS elements.html %]
+[% PROCESS 'dynatable.html' %]
 
-<body class="<?lsmb dojo_theme ?>">
+<body class="[% dojo_theme %]">
   <div id="system-ratetype">
-    <div class="listtop"><?lsmb name ?></div>
+    <div class="listtop">[% name %]</div>
 
-    <?lsmb PROCESS 'dynatable' tbody = { rows = rows }
-           attributes = { width = "100%" }?>
+    [% PROCESS 'dynatable' tbody = { rows = rows }
+           attributes = { width = "100%" }%]
     <br />
 
     <form data-dojo-type="lsmb/Form"
           method="post"
-          action="<?lsmb request.script ?>">
-      <?lsmb FOREACH hidden IN hiddens.keys;
+          action="[% request.script %]">
+      [% FOREACH hidden IN hiddens.keys;
              PROCESS input element_data={
                      type => 'hidden',
                      name => hidden,
                      value => hiddens.item(hidden)
                 };
-             END ?>
+             END %]
 
-      <?lsmb PROCESS input element_data={
+      [% PROCESS input element_data={
                      name='description'
                      type='text'
-                 } ?>
-      <?lsmb PROCESS button element_data={
+                 } %]
+      [% PROCESS button element_data={
                         text = text('Add'),
                         class="submit"
                         type="submit"
@@ -32,12 +32,12 @@
                         value="save_exchangerate_type"
                         accesskey="S"
                         title="Save [Alt-S]"
-                 } ?>
+                 } %]
 
 
-      <?lsmb FOREACH button IN buttons;
+      [% FOREACH button IN buttons;
              PROCESS button element_data=button;
-             END ?>
+             END %]
     </form>
   </div>
 </body>

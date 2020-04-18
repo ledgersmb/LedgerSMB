@@ -1,10 +1,10 @@
-<?lsmb# HTML Snippet, for import only ?>
+[%# HTML Snippet, for import only %]
 <div id="files_div"
-     title="<?lsmb text('Files') ?>"
+     title="[% text('Files') %]"
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'files_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'files_div' %]data-dojo-props="selected:true"[% END %]
      >
-<?lsmb callback="contact.pl?action=get&amp;entity_class=" _
+[% callback="contact.pl?action=get&amp;entity_class=" _
                 credit_act.entity_class _ "&amp;entity_id=" _ entity_id _
                 "&amp;credit_id=" _ credit_act.id;
 columns = [{ col_id = 'file_name', name = text('File name'), #'
@@ -14,9 +14,9 @@ columns = [{ col_id = 'file_name', name = text('File name'), #'
            { col_id = 'uploaded_at', name = text('Attached At'), #'
                type = 'text'}
            { col_id = 'uploaded_by_name', name = text('Attached By'), #'
-               type = 'text'}]; ?>
-<div class="listtop"><?lsmb text('Files attached to Entity') ?></div>
-<?lsmb
+               type = 'text'}]; %]
+<div class="listtop">[% text('Files attached to Entity') %]</div>
+[%
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
             COL.href_base='file.pl?action=get&amp;file_class=4&amp;id=';
@@ -31,10 +31,10 @@ INCLUDE dynatable
       columns = columns
       attributes = {id = 'entity-files', width = '100%'}
       tbody = {rows = entity_files };
-?>
-<?lsmb IF credit_act.id ?>
-<div class="listtop"><?lsmb text('Files attached to Credit Account') ?></div>
-<?lsmb
+%]
+[% IF credit_act.id %]
+<div class="listtop">[% text('Files attached to Credit Account') %]</div>
+[%
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
                   COL.href_base='file.pl?action=get&amp;file_class=5&amp;id=';
@@ -49,13 +49,13 @@ INCLUDE dynatable
       attributes = {id = 'eca-files', width = '100%'}
       tbody = {rows = eca_files };
 END;
-?>
-<a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb entity_id
-         ?>&amp;file_class=4&amp;callback=<?lsmb callback | uri ?>"
->[<?lsmb text('Attach to Entity') ?>]</a>
-<?lsmb IF credit_act.id ?>
-<a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb credit_act.id
-    ?>&amp;file_class=5&amp;callback=<?lsmb callback | uri ?>"
->[<?lsmb text('Attach to Credit Account') ?>]</a>
-<?lsmb END ?>
+%]
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=[% entity_id
+         %]&amp;file_class=4&amp;callback=[% callback | uri %]"
+>[[% text('Attach to Entity') %]]</a>
+[% IF credit_act.id %]
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=[% credit_act.id
+    %]&amp;file_class=5&amp;callback=[% callback | uri %]"
+>[[% text('Attach to Credit Account') %]]</a>
+[% END %]
 </div>

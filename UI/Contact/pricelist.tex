@@ -1,10 +1,10 @@
-<?lsmb   FILTER latex ?>
+[%   FILTER latex %]
 \documentclass[a4paper]{article}
 \usepackage{longtable}
 \usepackage[margin=1cm]{geometry}
 \begin{document}
-<?lsmb- PROCESS 'dynatable.tex' -?>
-<?lsmb-
+[%- PROCESS 'dynatable.tex' -%]
+[%-
     columns = [ 
               { col_id = 'parts_id',
                   type = 'hidden' },
@@ -18,7 +18,7 @@
                   type = 'text'
                 pwidth = 4
                 } ];
-?> <?lsmb-
+%] [%-
      IF account_class == 1;
          columns.push(
                   {col_id = 'lastcost'
@@ -57,7 +57,7 @@
          );
                         
      END;
--?><?lsmb-
+-%][%-
      columns.push({col_id = 'currency',
                      name = text('Currency'),
                    pwidth = 1
@@ -73,6 +73,6 @@
      PROCESS dynatable
          tbody = { rows = pricematrix_pricegroup };
    END;
--?>
+-%]
 \end{document}
-<?lsmb  END ?>
+[%  END %]

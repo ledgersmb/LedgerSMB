@@ -1,38 +1,38 @@
-<?lsmb PROCESS "report_base.html";
-       PROCESS "elements.html" ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb text('COGS Lots Report') ?></div>
+[% PROCESS "report_base.html";
+       PROCESS "elements.html" %]
+<body class="lsmb [% dojo_theme %]">
+<div class="listtop">[% text('COGS Lots Report') %]</div>
 <form data-dojo-type="lsmb/Form" action="goods.pl" method="GET">
 <table>
 <tr>
- <th><?lsmb text('Part Number') ?></th>
- <td><?lsmb PROCESS input element_data = {
+ <th>[% text('Part Number') %]</th>
+ <td>[% PROCESS input element_data = {
          name = 'partnumber'
         class = 'control_code'
          type = 'text'
         value = partnumber
          size = 16
- } ?></td>
+ } %]</td>
 </tr>
 <tr>
- <th><?lsmb text('Description') ?></th>
- <td colspan="3"><?lsmb PROCESS input element_data = {
+ <th>[% text('Description') %]</th>
+ <td colspan="3">[% PROCESS input element_data = {
          name = 'description'
         class = 'description'
          type = 'text'
         value = description
          size = 32
- } ?></td>
+ } %]</td>
 </tr>
-<?lsmb PROCESS date_row ?>
+[% PROCESS date_row %]
 <tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
 </table>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
    name = 'action'
   class = 'submit'
    type = 'submit'
   value = 'cogs_lines'
    text = text('Search')
-} ?>
+} %]
 </form>
 </body>

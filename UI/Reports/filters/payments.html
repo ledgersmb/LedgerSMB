@@ -1,55 +1,55 @@
-<?lsmb PROCESS 'elements.html';
+[% PROCESS 'elements.html';
        PROCESS 'report_base.html';
-       IF ! entity_class.defined; entity_class = account_class; END ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<?lsmb IF account_class == 2;
+       IF ! entity_class.defined; entity_class = account_class; END %]
+<body class="lsmb [% dojo_theme %]">
+[% IF account_class == 2;
             CONTACT = "Customer Number";
             TITLE = text('Search Receipts'); #'
        ELSIF account_class == 1;
             CONTACT = "Vendor Number";
             TITLE = text('Search Payments'); #'
-       ELSE ?><?lsmb TITLE = "Unsupported" -?>
-<?lsmb END # if account_class -?>
+       ELSE %][% TITLE = "Unsupported" -%]
+[% END # if account_class -%]
 <!-- CT: Text strings for localization:
-        <?lsmb text('Customer Number') ?>
-        <?lsmb text('Vendor Number') ?>
-        <?lsmb text('Unsupported Number') ?>
+        [% text('Customer Number') %]
+        [% text('Vendor Number') %]
+        [% text('Unsupported Number') %]
 -->
 <form data-dojo-type="lsmb/Form" action="payment.pl" method="get" name="main_form"
         id="payment_search_form">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 type  = "hidden"
                 name  = "batch_id"
                 value = batch_id
-        } ?>
-        <?lsmb INCLUDE input element_data = {
+        } %]
+        [% INCLUDE input element_data = {
                 type  = "hidden"
                 name  = "entity_class"
                 value = entity_class
-        } ?>
-        <?lsmb INCLUDE input element_data = {
+        } %]
+        [% INCLUDE input element_data = {
                 type  = "hidden"
                 name  = "account_class"
                 value = account_class
-        } ?>
-<div class="listtop" id="page_title"><?lsmb TITLE ?></div>
+        } %]
+<div class="listtop" id="page_title">[% TITLE %]</div>
 
   <div class="labelledinput">
-      <label for="meta-number"><?lsmb CONTACT ?></label>
+      <label for="meta-number">[% CONTACT %]</label>
       <div class="value">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 name  = "meta_number"
                 value = meta_number
                 class = "text"
                 type  = "text"
                 size  = "20"
-        } ?>
+        } %]
        </div>
   </div>
   <div class="labelledinput">
-      <label for="cash-accno"><?lsmb text('Cash Account') ?></label>
+      <label for="cash-accno">[% text('Cash Account') %]</label>
       <div class="value">
-        <?lsmb
+        [%
              IF !batch_id; cash_accounts.unshift({}); END;
              INCLUDE select element_data = {
                 name           = "cash_accno"
@@ -57,49 +57,49 @@
                 default_values = [cash_accno]
                 class          = "account"
                 value_attr     = "accno"
-        } ?>
+        } %]
       </div>
   </div>
   <div class="labelledinput">
-    <label for="source"><?lsmb text('Source') ?></label>
+    <label for="source">[% text('Source') %]</label>
     <div class="value" id="source_input_div">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 name  = "source"
                 value = source
                 class = "text"
                 type  = "text"
                 size  = "20"
-        } ?>
+        } %]
     </div>
   </div>
-  <?lsmb PROCESS date_row_div ?>
+  [% PROCESS date_row_div %]
 
-<?lsmb IF batch_id ?>
+[% IF batch_id %]
   <div class="listtop">
-      <?lsmb text('Payment Reversal Information') ?>
+      [% text('Payment Reversal Information') %]
   </div>
 
   <div class="tabular col-1">
 
     <div class="labelledinput">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 type  = "hidden"
                 value = batch_date
                 name  = "date_reversed"
-        } ?>
-      <label for="batch_post_span"><?lsmb text('Date Reversed') ?></label>
-      <span id="batch_post_span"><?lsmb batch_date ?></span>
+        } %]
+      <label for="batch_post_span">[% text('Date Reversed') %]</label>
+      <span id="batch_post_span">[% batch_date %]</span>
 
     </div>
 
-    <?lsmb
+    [%
         currency_list = [];
         FOREACH c IN currencies;
             currency_list.push( { text = c, value = c } );
         END;
-    ?>
+    %]
     <div class="input" id="curr-exchange-div">
-      <?lsmb
+      [%
            INCLUDE select element_data = {
               name = 'currency'
            options = currency_list
@@ -107,8 +107,8 @@
     default_values = [default_currency]
              label = text('Currency')
            }
-      ?>
-      <?lsmb
+      %]
+      [%
            INCLUDE input element_data = {
              label = text('Exchange Rate') #'
               type = 'text'
@@ -117,19 +117,19 @@
              value = exchangerate
              class = 'fxrate'
            }
-      ?>
+      %]
     </div>
   </div>
-<?lsmb END # if batch_id -?>
+[% END # if batch_id -%]
 
 <div class="button" id="search_button_div">
-        <?lsmb INCLUDE button element_data = {
+        [% INCLUDE button element_data = {
                 name  = "action"
                 type  = "submit"
                 class = "submit"
                 value = "get_search_results"
                 text  = text('Search')
-        } ?>
+        } %]
 </div>
 
 </form>

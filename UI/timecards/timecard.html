@@ -1,24 +1,24 @@
-<?lsmb PROCESS 'elements.html';
+[% PROCESS 'elements.html';
        PROCESS 'report_base.html';
        PROCESS 'utilities.html';
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+%]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" action="timecard.pl" method="post">
-<?lsmb FOR hidden IN ['id', 'parts_id'];
+[% FOR hidden IN ['id', 'parts_id'];
 PROCESS input element_data = {
     type = 'hidden'
     name = hidden
    value = $hidden
 };
-END; ?>
-<div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
+END; %]
+<div class="listtop">[% text('Time or Materials Card') %]</div>
 <table>
-<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> :
+<tr><th colspan="2" class="listtop">[% text('Category') %] :
     </th>
 </tr>
 <tr id="business_unit">
-  <th><?lsmb text('Entered For') ?></th>
-  <td><?lsmb
+  <th>[% text('Entered For') %]</th>
+  <td>[%
         FOREACH bu IN b_units;
             bu.text = bu.control_code _ ' -- ' _ bu.description;
         END;
@@ -28,98 +28,98 @@ END; ?>
                     options = b_units
                   text_attr = 'text'
                  value_attr = 'id'
-       } ?></td>
+       } %]</td>
 </tr>
-<tr><th><?lsmb  text('Partnumber') ?></th>
+<tr><th>[%  text('Partnumber') %]</th>
   <td>
     <input data-dojo-type="lsmb/parts/PartSelector"
            data-dojo-props="required:false,channel:'/timecard/part-select/day',fetchProperties:{type:'sales'}"
            name="partnumber"
            id="partnumber"
            size="32"
-           value="<?lsmb partnumber ?>"
+           value="[% partnumber %]"
            accesskey="p"
            title="[p]"
            class="control-code" />
     </td>
 </tr>
-<tr><th><?lsmb text('Description') ?></th>
+<tr><th>[% text('Description') %]</th>
   <td>
     <div data-dojo-type="lsmb/parts/PartDescription"
          data-dojo-props="channel:'/timecard/part-select/day'"
          name="description"
          id="description"
          style="width:100%"
-         class="description"><?lsmb description ?></div>
+         class="description">[% description %]</div>
     </td>
 </tr>
-<tr><th><?lsmb text('Date Worked') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+<tr><th>[% text('Date Worked') %]</th>
+    <td>[% PROCESS input element_data = {
                name = 'transdate'
               value = transdate
                type = 'text',
                size = '15',
               class = 'date'
-         } ?>
+         } %]
      </td>
 </tr>
-<?lsmb IF jctype.is_timecard OR jctype.is_service ?>
+[% IF jctype.is_timecard OR jctype.is_service %]
 <tr>
-<th><?lsmb text('Time In') ?></th>
-<td><?lsmb PROCESS input element_data = {
+<th>[% text('Time In') %]</th>
+<td>[% PROCESS input element_data = {
        name = 'in_hour'
       value = in_hour
        type = 'text'
       class = 'time-part'
        size = 3
-  maxlength = 2 } ?> :
-    <?lsmb PROCESS input element_data = {
+  maxlength = 2 } %] :
+    [% PROCESS input element_data = {
        name = 'in_min'
       value = in_min
        type = 'text'
       class = 'time-part'
        size = 3
-  maxlength = 2 } ?>
+  maxlength = 2 } %]
  </td>
-<th><?lsmb text('Time Out') ?></th>
-<td><?lsmb PROCESS input element_data = {
+<th>[% text('Time Out') %]</th>
+<td>[% PROCESS input element_data = {
        name = 'out_hour'
       value = out_hour
        type = 'text'
       class = 'time-part'
        size = 3
-  maxlength = 2 } ?> :
-    <?lsmb PROCESS input element_data = {
+  maxlength = 2 } %] :
+    [% PROCESS input element_data = {
        name = 'out_min'
       value = out_min
        type = 'text'
       class = 'time-part'
        size = 3
-  maxlength = 2 } ?>
+  maxlength = 2 } %]
  </td>
 </tr>
-<tr><th><?lsmb text('Clocked') ?></th>
-    <td><?lsmb total ?></td>
+<tr><th>[% text('Clocked') %]</th>
+    <td>[% total %]</td>
 </tr>
-<?lsmb END # if is_service or is_timecard ?>
-<tr><th><?lsmb text('Chargeable') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+[% END # if is_service or is_timecard %]
+<tr><th>[% text('Chargeable') %]</th>
+    <td>[% PROCESS input element_data = {
        name = 'qty'
       value = defined(qty) ? qty : 0
        type = 'text'
       class = 'qty'
-       size = 16 } ?></td>
+       size = 16 } %]</td>
 </tr>
-<tr><th><?lsmb text('Non-Chargeable') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+<tr><th>[% text('Non-Chargeable') %]</th>
+    <td>[% PROCESS input element_data = {
        name = 'non_billable'
       value = defined(non_billable) ? non_billable : 0
        type = 'text'
       class = 'qty'
-       size = 16 } ?></td>
+       size = 16 } %]</td>
 </tr>
-<tr><th><?lsmb text('Currency') ?></th>
-    <td><?lsmb
+<tr><th>[% text('Currency') %]</th>
+    <td>[%
         currencies2 = [];
         FOREACH curr IN currencies;
            currencies2.push({text = curr, value = curr });
@@ -128,21 +128,21 @@ END; ?>
            name = "curr"
         options = currencies2
  default_values = [curr]
-       }; ?></td></tr>
-<tr><th><?lsmb text('Allocated') ?></th>
-    <td><?lsmb allocated ?></td>
+       }; %]</td></tr>
+<tr><th>[% text('Allocated') %]</th>
+    <td>[% allocated %]</td>
 </tr>
-<tr><th align><?lsmb text('Notes') ?></th>
-    <td colspan=3><?lsmb PROCESS textarea element_data = {
+<tr><th align>[% text('Notes') %]</th>
+    <td colspan=3>[% PROCESS textarea element_data = {
                                                                  name="notes"
                                                                  rows=2
                                                                  cols=46
                                                                  wrap="soft"
-                                                                 text=notes } ?>
+                                                                 text=notes } %]
     </td>
 </tr>
 </table>
-<?lsmb IF id;
+[% IF id;
 formats = [];
 FOR F IN LIST_FORMATS();
    IF F == 'HTML' or F == 'PDF';
@@ -151,8 +151,8 @@ FOR F IN LIST_FORMATS();
 END;
 
 PROCESS print_options;
-END; ?>
-<?lsmb
+END; %]
+[%
 IF id;
     PROCESS button element_data = {
    name = 'action'
@@ -170,6 +170,6 @@ ELSE;
   value = 'save'
    };
 END;
-?>
+%]
 </form>
 </body>

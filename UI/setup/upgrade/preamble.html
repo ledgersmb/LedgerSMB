@@ -1,10 +1,11 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
-include_stylesheet=["setup.css"] ?>
-<body class="<?lsmb dojo_theme ?>">
+include_stylesheet=["setup.css"] %]
+<body class="[% dojo_theme %]">
   <form method="POST"
         enctype="multipart/form-data"
-        action="<?lsmb action_url ?>">
-    <input type="hidden" name="action" value="<?lsmb resubmit_action ?>">
-    <input type="hidden" name="database" value="<?lsmb database ?>">
-    <input type="hidden" name="check_id" value="<?lsmb check_id ?>">
+        action="[% action_url %]">
+    <input type="hidden" name="action" value="[% resubmit_action %]">
+    <input type="hidden" name="database" value="[% database %]">
+    <input type="hidden" name="check_id" value="[% check_id %]">
+

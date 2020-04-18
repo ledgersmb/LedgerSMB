@@ -1,4 +1,4 @@
-<?lsmb PROCESS "elements.html";
+[% PROCESS "elements.html";
        PROCESS 'report_base.html';
 
    batch_classes = [
@@ -10,58 +10,58 @@
    script = 'drafts.pl';
    action = 'list_drafts';
 
- ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+ %]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form"
-      action="<?lsmb script ?>"
+      action="[% script %]"
       method="get">
-<div class="listtop" id="title_div"><?lsmb text('Search Unapproved Transactions') ?></div>
+<div class="listtop" id="title_div">[% text('Search Unapproved Transactions') %]</div>
 <div data-dojo-type="lsmb/layout/TableContainer"
      data-dojo-props="cols:1">
 <div class="input" id="batch_class_div">
-        <?lsmb INCLUDE select element_data = {
+        [% INCLUDE select element_data = {
                 title = text('Transaction Type') # '
                 options = batch_classes
                 value_attr = "value"
                 text_attr = "text"
                 name = "type"
                 default_values = [class_id]
-        } ?>
+        } %]
 </div>
 <div class="input" id="reference_div">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 title = text('Reference') #'
                 size = 20
                 value = reference
                 name = "reference"
-        } ?>
+        } %]
         </div>
 <div class="input" id="amounts_div">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 title = "Minimum Value"
                 name = "amount_gt"
                 class = "numeric"
                 size = 20
                 value = amount_gt
                 type = "text"
-        } ?>
-        <?lsmb INCLUDE input element_data = {
+        } %]
+        [% INCLUDE input element_data = {
                 title = "Maximum Value"
                 name = "amount_lt"
                 value = amount_lt
                 size = 20
                 class = "numeric"
                 type = "text"
-        } ?>
+        } %]
         </div>
 </div>
 <div class="input" id="buttons_div">
-        <?lsmb INCLUDE button element_data = {
+        [% INCLUDE button element_data = {
                 text = text('Search')
                 name = "action"
                 value = action
                 class = "submit"
                 type = "submit"
-        } ?> </div>
+        } %] </div>
 </form>
 </body>

@@ -1,22 +1,22 @@
-<?lsmb PROCESS elements.html ?>
+[% PROCESS elements.html %]
 
-<body class="lsmb <?lsmb dojo_theme ?>">
+<body class="lsmb [% dojo_theme %]">
 
-<?lsmb INCLUDE OPEN_STATUS_DIV
-             id=form.id approved = form.approved action=form.action ?>
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
+[% INCLUDE OPEN_STATUS_DIV
+             id=form.id approved = form.approved action=form.action %]
+<form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
 <table width="100%">
 <tr>
-    <th class="listtop" ><?lsmb form.title ?></th>
+    <th class="listtop" >[% form.title %]</th>
 </tr>
 
 <tr>
     <td>
       <table>
         <tr>
-          <th align="right"><?lsmb text('Reference') ?></th>
+          <th align="right">[% text('Reference') %]</th>
           <td>
-               <?lsmb INCLUDE input element_data = {
+               [% INCLUDE input element_data = {
                         name = "reference",
                         value = form.reference,
                         type = "text",
@@ -33,34 +33,34 @@
                text_attr = 'label'
               value_attr = 'label'
                  };
-             END; ?>
+             END; %]
          </td>
-          <th align="right"><?lsmb text('Date') ?></th>
+          <th align="right">[% text('Date') %]</th>
           <td>
-              <?lsmb INCLUDE input element_data = {
+              [% INCLUDE input element_data = {
                         name = "transdate"
          id = "transdate"
                         value = form.transdate
                         size = "11"
                         type = 'text'
                         class = 'date'
-              } ?>
+              } %]
           </td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Description') ?></th>
+          <th align="right">[% text('Description') %]</th>
           <td colspan="3">
-                        <?lsmb IF form.colrowdesc ==1 ?>
-                              <?lsmb INCLUDE textarea element_data={
+                        [% IF form.colrowdesc ==1 %]
+                              [% INCLUDE textarea element_data={
                                                         name = "description"
                                                         rows = form.rowsdesc
                                                         cols = form.colsdesc
                                                         text = form.description
                                                         id = "des_1"
                                                                     }
-                               ?>
-                        <?lsmb ELSE ?>
-                                  <?lsmb INCLUDE textarea element_data = {
+                               %]
+                        [% ELSE %]
+                                  [% INCLUDE textarea element_data = {
                                                       name = "description",
                                                       text = form.description,
                                                       type = "text",
@@ -68,48 +68,48 @@
                                                       class = 'description'
                                                       id = "des_1"
                                                                       }
-                                   ?>
+                                   %]
 
-                        <?lsmb END ?>
+                        [% END %]
           </td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Notes') ?></th>
+          <th align="right">[% text('Notes') %]</th>
           <td colspan="3">
-                        <?lsmb IF form.colrownotes ==1 ?>
-                              <?lsmb INCLUDE textarea element_data={
+                        [% IF form.colrownotes ==1 %]
+                              [% INCLUDE textarea element_data={
                                                         name = "notes"
                                                         rows = form.rowsnotes
                                                         cols = form.colsnotes
                                                         text = form.notes
                                                         id = "not_1"
                                                             }
-                               ?>
-                        <?lsmb ELSE ?>
-                                  <?lsmb INCLUDE textarea element_data = {
+                               %]
+                        [% ELSE %]
+                                  [% INCLUDE textarea element_data = {
                                                       name = "notes",
                                                       value = form.notes,
                                                       size = "50",
                                                       class = 'notes'
                                                       id = "not_1"
                                                           }
-                                   ?>
+                                   %]
 
-                        <?lsmb END ?>
+                        [% END %]
 
 
           </td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('FX') ?></th>
+          <th align="right">[% text('FX') %]</th>
           <td colspan="3">
-            <?lsmb PROCESS input element_data = {
+            [% PROCESS input element_data = {
                    name="fx_transaction"
                    type='checkbox'
                    class='fx_checkbox'
                    "data-dojo-type"="lsmb/journal/fx_checkbox"
                    value=1
-                   checked=form.fx_transaction } ?>
+                   checked=form.fx_transaction } %]
           </td>
         </tr>
       </table>
@@ -119,39 +119,39 @@
 <tr>
     <td>
       <table width="100%" id="transaction-table"
-             <?lsmb IF form.fx_transaction ;
+             [% IF form.fx_transaction ;
                     'class="fx-transaction"' ;
                     ELSE ;
                     'class="no-fx-transaction"' ;
-                    END -?>
+                    END -%]
              >
           <tr class="listheading">
-          <th class="listheading"><?lsmb text('Account') ?></th>
-          <th class="listheading"><?lsmb text('FX') ?></th>
-          <th class="listheading"><?lsmb text('Debit') ?></th>
-          <th class="listheading"><?lsmb text('Credit') ?></th>
-          <th class="listheading"><?lsmb text('Source') ?></th>
-          <th class="listheading"><?lsmb text('Memo') ?></th>
-          <?lsmb IF form.projectset == 1 ?>
-          <th class="listheading"><?lsmb text('Project') ?></th>
-          <?lsmb END ?>
-          <?lsmb FOREACH cls IN form.bu_class ?>
-              <?lsmb IF form.b_units.${cls.id} ?>
-          <th><?lsmb text(cls.label) ?></th>
-               <?lsmb END ?>
-          <?lsmb END ?>
+          <th class="listheading">[% text('Account') %]</th>
+          <th class="listheading">[% text('FX') %]</th>
+          <th class="listheading">[% text('Debit') %]</th>
+          <th class="listheading">[% text('Credit') %]</th>
+          <th class="listheading">[% text('Source') %]</th>
+          <th class="listheading">[% text('Memo') %]</th>
+          [% IF form.projectset == 1 %]
+          <th class="listheading">[% text('Project') %]</th>
+          [% END %]
+          [% FOREACH cls IN form.bu_class %]
+              [% IF form.b_units.${cls.id} %]
+          <th>[% text(cls.label) %]</th>
+               [% END %]
+          [% END %]
         </tr>
-          <?lsmb
+          [%
         curr = [];
         FOREACH c IN form.currencies;
            curr.push({ text = c, value = c });
         END;
-        FOREACH displayrow IN displayrows ?>
+        FOREACH displayrow IN displayrows %]
         <tr>
-                <?lsmb INDEX=displayrow.index ?>
+                [% INDEX=displayrow.index %]
                   <td>
-                        <?lsmb IF displayrow.accnoset == 0 ?>
-                                <?lsmb PROCESS input element_data = {
+                        [% IF displayrow.accnoset == 0 %]
+                                [% PROCESS input element_data = {
                                       name = "accno_$INDEX"
                                                                          type = "text"
                                       initial_value = ${"accno_$INDEX"}
@@ -161,100 +161,100 @@
                                                                          class = 'AccountBox'
                                                                          'data-dojo-type' = 'lsmb/accounts/AccountSelector'
                             'data-dojo-props' = 'required: false'
-                              } ?>
+                              } %]
 
-                          <?lsmb ELSE ?>
+                          [% ELSE %]
 
-                                      <?lsmb PROCESS label element_data = {
+                                      [% PROCESS label element_data = {
                                         text = displayrow.accno
                                         align = 'right'
                                         id = "acc_$INDEX"
-                                      } ?>
+                                      } %]
 
 
-                        <?lsmb END ?>
+                        [% END %]
 
                  </td>
 
                       <td>
-                        <?lsmb form.currencies.0 ?>
+                        [% form.currencies.0 %]
                       </td>
 
 
                   <td>
-                          <?lsmb PROCESS input element_data = {
+                          [% PROCESS input element_data = {
                                   value = displayrow.debit
                                   name = "debit_$INDEX"
                                   type = "currency"
                                   size = 12
                                   accesskey = displayrow.index
                                   id = "deb_$INDEX"
-                                              }  ?>
+                                              }  %]
 
                    </td>
 
                   <td>
-                          <?lsmb PROCESS input element_data = {
+                          [% PROCESS input element_data = {
                                   value = displayrow.credit
                                   name = "credit_$INDEX"
                                   type = "currency"
                                   size = 12
                                   id = "cre_$INDEX"
-                                      }  ?>
+                                      }  %]
 
                    </td>
 
                     <td>
-                          <?lsmb PROCESS input element_data = {
+                          [% PROCESS input element_data = {
                                   value = displayrow.source
                                   name = "source_$INDEX"
                                   type = "text"
                                   size = 10
                                   id = "sou_$INDEX"
 
-                           }  ?>
+                           }  %]
 
                    </td>
 
                     <td>
-                          <?lsmb PROCESS textarea element_data = {
+                          [% PROCESS textarea element_data = {
                                   value = displayrow.memo
                                   name = "memo_$INDEX"
                                   size = 30
                                   id = "mem_$INDEX"
-                                     }  ?>
+                                     }  %]
 
                    </td>
-                  <?lsmb IF form.projectset == 1 ?>
+                  [% IF form.projectset == 1 %]
                    <td>
 
-                        <?lsmb IF displayrow.projectset == 1 ?>
-                                        <?lsmb PROCESS label element_data = {
+                        [% IF displayrow.projectset == 1 %]
+                                        [% PROCESS label element_data = {
                                               text = displayrow.projectnumber
                                               align = 'right'
                                               id = "pro_$INDEX"
-                                     } ?>
+                                     } %]
 
 
-                        <?lsmb ELSE ?>
-                                <?lsmb INCLUDE select element_data = {
+                        [% ELSE %]
+                                [% INCLUDE select element_data = {
                                         text_attr = "projectnumber"
                                         value_attr = "projectstyle"
                                         default_values = []
                                         options = form.all_project
                                         name = "projectnumber_$INDEX"
                                         id = "pro_$INDEX"
-                                     } ?>
+                                     } %]
 
-                        <?lsmb END ?>
+                        [% END %]
 
                    </td>
-                       <?lsmb END ?>
-                   <?lsmb FOREACH cls IN form.bu_class ?>
-                      <?lsmb IF form.b_units.${cls.id} ?>
+                       [% END %]
+                   [% FOREACH cls IN form.bu_class %]
+                      [% IF form.b_units.${cls.id} %]
                    <td>
 
-                       <?lsmb clsid = cls.id;
+                       [% clsid = cls.id;
                               bucid = "b_unit_$clsid";
                               burow = "${bucid}_$INDEX";
                        form.b_units.${clsid}.unshift({});
@@ -264,62 +264,62 @@
                          default_values = [displayrow.${bucid}]
                                    name = "$burow"
                                 options = form.b_units.${clsid}
-                       } ?>
+                       } %]
                    </td>
-                   <?lsmb END ?>
-                  <?lsmb END ?>
+                   [% END %]
+                  [% END %]
 
         </tr>
      <tr class="fx-row">
        <td><!-- account cell is empty --></td>
-       <td><?lsmb PROCESS select element_data = {
+       <td>[% PROCESS select element_data = {
                   options = curr
                   name = "curr_$INDEX"
                   default_values = [displayrow.curr]
-                  } ?></td>
+                  } %]</td>
 
        <td>
-         <?lsmb PROCESS input element_data = {
+         [% PROCESS input element_data = {
                         value = displayrow.debit_fx
                         name = "debit_fx_$INDEX"
                         type = "currency"
                                   size = 12
                                   accesskey = displayrow.index
                                   id = "deb_fx_$INDEX"
-                                              }  ?>
+                                              }  %]
        </td>
 
        <td>
-         <?lsmb PROCESS input element_data = {
+         [% PROCESS input element_data = {
                                   value = displayrow.credit_fx
                                   name = "credit_fx_$INDEX"
                                   type = "currency"
                                   size = 12
                                   id = "cre_fx_$INDEX"
-                                      }  ?>
+                                      }  %]
        </td>
      </tr>
-     <?lsmb END ?>
+     [% END %]
         <tr class="listtotal">
           <th>&nbsp;</th>
              <th>&nbsp;</th>
           <th class="listtotal debitsubtotal" align="right">
-                        <?lsmb form.totaldebit ?>
+                        [% form.totaldebit %]
           </th>
 
           <th class="listtotal creditsubtotal" align="right">
-                        <?lsmb form.totalcredit ?>
+                        [% form.totalcredit %]
           </th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
-          <?lsmb IF form.projectset == 1 ?>
+          [% IF form.projectset == 1 %]
           <th class="listheading">&nbsp;</th>
-          <?lsmb END ?>
-          <?lsmb FOREACH cls IN form.bu_class ?>
-              <?lsmb IF form.b_units.${cls.id} ?>
+          [% END %]
+          [% FOREACH cls IN form.bu_class %]
+              [% IF form.b_units.${cls.id} %]
           <th>&nbsp;</th>
-               <?lsmb END ?>
-          <?lsmb END ?>
+               [% END %]
+          [% END %]
         </tr>
 
      </table>
@@ -329,74 +329,74 @@
     <td><hr size="3" /></td>
   </tr>
 </table>
-<?lsmb FOREACH hidden IN hiddens.keys;
+[% FOREACH hidden IN hiddens.keys;
         PROCESS input element_data={
                 type => 'hidden',
                 name => hidden,
                 value => hiddens.item(hidden)
-                }; END ?>
+                }; END %]
 
-<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
-<?lsmb IF form.recurringset ==1 ?>
-          <?lsmb PROCESS label element_data = {
+[% FOREACH button IN buttons; PROCESS button element_data=button; END %]
+[% IF form.recurringset ==1 %]
+          [% PROCESS label element_data = {
                 text => text('Scheduled')
                 align => 'right'
-           } ?>
+           } %]
 
-<?lsmb END ?>
-<?lsmb IF form.id ?>
+[% END %]
+[% IF form.id %]
 <table width="100%">
 <tr class="listtop">
-<th colspan="4"><?lsmb text('Attached and Linked Files') ?></th>
+<th colspan="4">[% text('Attached and Linked Files') %]</th>
 </tr>
 <tr class="listheading">
-<th><?lsmb text('File name') ?></th>
-<th><?lsmb text('File type') ?></th>
-<th><?lsmb text('Attached at') ?></th>
-<th><?lsmb text('Attached by') ?></th>
+<th>[% text('File name') %]</th>
+<th>[% text('File type') %]</th>
+<th>[% text('Attached at') %]</th>
+<th>[% text('Attached by') %]</th>
 </tr>
-<?lsmb FOREACH file IN form.files ?>
+[% FOREACH file IN form.files %]
 <tr>
-<td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=<?lsmb form.id
-            ?>&amp;id=<?lsmb file.id ?>" target="_download"
-            ><?lsmb file.file_name ?></a></td>
-<td><?lsmb file.mime_type ?></td>
-<td><?lsmb file.uploaded_at ?></td>
-<td><?lsmb file.uploaded_by_name ?></td>
+<td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=[% form.id
+            %]&amp;id=[% file.id %]" target="_download"
+            >[% file.file_name %]</a></td>
+<td>[% file.mime_type %]</td>
+<td>[% file.uploaded_at %]</td>
+<td>[% file.uploaded_by_name %]</td>
 </tr>
-<?lsmb END ?>
+[% END %]
 </table>
 <table width="100%">
 <tr class="listheading">
-<th><?lsmb text('File name') ?></th>
-<th><?lsmb text('File type') ?></th>
-<th><?lsmb text('Attached To Type') ?></th>
-<th><?lsmb text('Attached To') ?></th>
-<th><?lsmb text('Attached at') ?></th>
-<th><?lsmb text('Attached by') ?></th>
+<th>[% text('File name') %]</th>
+<th>[% text('File type') %]</th>
+<th>[% text('Attached To Type') %]</th>
+<th>[% text('Attached To') %]</th>
+<th>[% text('Attached at') %]</th>
+<th>[% text('Attached by') %]</th>
 </tr>
-<?lsmb
+[%
 FOREACH link IN form.file_links;
         aclass="&nbsp;";
         IF link.src_class() == 1;
             aclass="Transaction";
         ELSIF link.src_class() == 2;
             aclass="Order";
-        END; ?>
+        END; %]
 <tr>
-<td><?lsmb file.file_name ?></td>
-<td><?lsmb file.mime_type ?></td>
-<td><?lsmb aclass ?></td>
-<td><?lsmb file.reference() ?></td>
-<td><?lsmb file.attached_at() ?></td>
-<td><?lsmb file.attached_by() ?></td>
+<td>[% file.file_name %]</td>
+<td>[% file.mime_type %]</td>
+<td>[% aclass %]</td>
+<td>[% file.reference() %]</td>
+<td>[% file.attached_at() %]</td>
+<td>[% file.attached_by() %]</td>
 </tr>
-<?lsmb END # FOREACH ?>
+[% END # FOREACH %]
 </table>
-<?lsmb callback = "gl.pl?action=edit&amp;id=" _ form.id -?>
-<a href="file.pl?action=show_attachment_screen&amp;ref_key=<?lsmb form.id
-   ?>&amp;file_class=1&amp;callback=<?lsmb callback | uri ?>">[<?lsmb text('Attach') ?>]</a>
-<?lsmb END # IF for<?lsmb INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved ?>
+[% callback = "gl.pl?action=edit&amp;id=" _ form.id -%]
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=[% form.id
+   %]&amp;file_class=1&amp;callback=[% callback | uri %]">[[% text('Attach') %]]</a>
+[% END # IF for[% INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved %]
 </form>
-<?lsmb INCLUDE CLOSE_STATUS_DIV ?>
+[% INCLUDE CLOSE_STATUS_DIV %]
 </body>

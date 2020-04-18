@@ -1,54 +1,54 @@
-<?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<?lsmb IF id;
+[% PROCESS 'elements.html'  # Include form elements helper. %]
+<body class="lsmb [% dojo_theme %]">
+[% IF id;
           title = text('Edit Tax Form'); #'
        ELSE;
           title = text('Create New Tax Form'); #'
-       END ?>
-<div class="listtop"><?lsmb title ?></div>
+       END %]
+<div class="listtop">[% title %]</div>
 <form data-dojo-type="lsmb/Form"
       name="add_taxform"
       method="post"
-      action="<?lsmb script ?>">
-<?lsmb PROCESS input element_data = {
+      action="[% script %]">
+[% PROCESS input element_data = {
     type = "hidden"
     name = "id"
    value = id
-}; ?>
+}; %]
 <div class="labelledinput">
     <br>
     <div id = "taxform-countries" class="inputcountry">
 
-    <?lsmb IF countries ?>
-        <?lsmb IF !country_id; country_id = default_country; END ?>
-        <?lsmb PROCESS select_country element_data = {
+    [% IF countries %]
+        [% IF !country_id; country_id = default_country; END %]
+        [% PROCESS select_country element_data = {
                         name = "country_id"
                         default_values = [country_id]
                         options = countries
                         value_attr = "id"
                         text_attr = "name"
                         label = text('Country:')
-                } ?>
-    <?lsmb END ?>
+                } %]
+    [% END %]
 
     </div>
 </div>
 
 <div class="labelledinput">
 
-     <?lsmb PROCESS input element_data = {
+     [% PROCESS input element_data = {
         name = "form_name"
         type = "text"
         value = form_name
         label = text("Description:")
         size = '15'
                                          }
-     ?>
+     %]
 </div>
 
 <div class="labelledinput">
 
-     <?lsmb IF default_reportable; CHECKED = 'CHECKED';
+     [% IF default_reportable; CHECKED = 'CHECKED';
             ELSE; CHECKED = '';
             END;
         PROCESS input element_data = {
@@ -58,12 +58,12 @@
         label = text("Select by Default:") #"
         checked = CHECKED
                                          }
-     ?>
+     %]
 </div>
 
 <div class="labelledinput">
 
-     <?lsmb IF is_accrual; CHECKED = 'CHECKED';
+     [% IF is_accrual; CHECKED = 'CHECKED';
             ELSE; CHECKED = '';
             END;
         PROCESS input element_data = {
@@ -73,28 +73,28 @@
         label = text("Accrual Basis:") #"
         checked = CHECKED
                                          }
-     ?>
+     %]
 </div>
 
 <div id="buttons">
 
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
         type = "submit"
         name = "action"
         text = text('Save')
         id   = 'taxform-add-action'
         class = "submit"
         value = "save"
-} ?>
+} %]
 
 </div>
 
-<?lsmb FOREACH item = hidden ?>
-<?lsmb PROCESS input element_data = {
+[% FOREACH item = hidden %]
+[% PROCESS input element_data = {
                  type="hidden"
                  name=item.name
-                 value=item.value } ?>
-<?lsmb END ?>
+                 value=item.value } %]
+[% END %]
 
 </form>
 </body>

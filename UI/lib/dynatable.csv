@@ -1,4 +1,4 @@
-<?lsmb- BLOCK escape;
+[%- BLOCK escape;
 
 IF VALUE.match('[^0-9.+-]'); # any non-digit means run escaping
    '"' _ VALUE.replace('"', '""') _ '"';
@@ -6,8 +6,8 @@ ELSE;
    VALUE;
 END;
 
-END -?>
-<?lsmb- BLOCK dynatable;
+END -%]
+[%- BLOCK dynatable;
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
 FOREACH COL IN columns;
@@ -19,8 +19,8 @@ FOREACH COL IN columns;
         ADD_COMMA = 1;
     END;
 END;
-?>
-<?lsmb FOREACH ROW IN tbody.rows;
+%]
+[% FOREACH ROW IN tbody.rows;
 
 ADD_COMMA=0;
 
@@ -34,5 +34,5 @@ ADD_COMMA=0;
             INCLUDE escape VALUE = ROW.$COL_ID;
         END;
     END; 
-?>
-<?lsmb END; END ?>
+%]
+[% END; END %]

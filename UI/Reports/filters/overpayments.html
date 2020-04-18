@@ -1,58 +1,58 @@
-<?lsmb PROCESS 'elements.html';
-       PROCESS 'report_base.html'; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb text('List Overpayments') ?></div>
+[% PROCESS 'elements.html';
+       PROCESS 'report_base.html'; %]
+<body class="lsmb [% dojo_theme %]">
+<div class="listtop">[% text('List Overpayments') %]</div>
 <form data-dojo-type="lsmb/Form" action="reports.pl" method="get">
 <table>
- <?lsmb PROCESS date_row ?>
+ [% PROCESS date_row %]
  <tr>
-    <th><?lsmb text('Control Code') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+    <th>[% text('Control Code') %]</th>
+    <td>[% PROCESS input element_data = {
          name = 'control_code'
          type = 'text'
          size = '16'
         value = control_code
         class = 'control-code'
-    } ?></td>
+    } %]</td>
  </tr>
  <tr>
-    <th><?lsmb IF account_class == 1; text('Vendor Number'); END;
+    <th>[% IF account_class == 1; text('Vendor Number'); END;
               IF account_class == 2; text('Customer Number'); END;
-               ?></th>
-    <td><?lsmb PROCESS input element_data = {
+               %]</th>
+    <td>[% PROCESS input element_data = {
          name = 'meta_number'
          type = 'text'
          size = '16'
         value = meta_number
         class = 'control-code'
-    } ?></td>
+    } %]</td>
  </tr>
  <tr>
-    <th><?lsmb text('Name') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+    <th>[% text('Name') %]</th>
+    <td>[% PROCESS input element_data = {
          name = 'name_part'
          type = 'text'
          size = '32'
         value = name_part
         class = 'name'
-    } ?></td>
+    } %]</td>
  </tr>
  <tr class="listtop">
-  <th colspan="4"><?lsmb text('Reversal Information') ?></th>
+  <th colspan="4">[% text('Reversal Information') %]</th>
  </tr>
- <tr><th><?lsmb text('Currency'); ?></th>
-     <td><?lsmb PROCESS select element_data = {
+ <tr><th>[% text('Currency'); %]</th>
+     <td>[% PROCESS select element_data = {
           options = currencies
              name = 'currency'
    default_values = [currency]
             class = 'currency'
-     }; ?></td>
-     <th><?lsmb text('Exchange Rate'); ?></th>
-     <td><?lsmb PROCESS input element_data = {
-     }; ?></td>
+     }; %]</td>
+     <th>[% text('Exchange Rate'); %]</th>
+     <td>[% PROCESS input element_data = {
+     }; %]</td>
  </tr>
 </table>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
       name = 'action'
      value = "search_overpayments"
       type = 'submit'
@@ -76,6 +76,6 @@
      value = batch_id
       type = 'hidden'
 
-} ?>
+} %]
 </form>
 </body>

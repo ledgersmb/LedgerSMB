@@ -1,48 +1,48 @@
-<?lsmb PROCESS 'elements.html';
-PROCESS "dynatable.html"  ?>
-<?lsmb IF !country_id; country_id = default_country; END -?>
-<?lsmb IF !country_id_t; country_id_t = default_country; END -?>
-<?lsmb  # Target_div handling now moved to controller script -- CT -?>
+[% PROCESS 'elements.html';
+PROCESS "dynatable.html"  %]
+[% IF !country_id; country_id = default_country; END -%]
+[% IF !country_id_t; country_id_t = default_country; END -%]
+[%  # Target_div handling now moved to controller script -- CT -%]
 
-<body class="lsmb <?lsmb dojo_theme ?>">
+<body class="lsmb [% dojo_theme %]">
 <div id="edit_contact">
 
-    <?lsmb IF name ?>
-<div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
-    <?lsmb END ?>
-    <?lsmb IF meta_number ?>
-<div class="pageheading"><?lsmb text('Account') ?>: <?lsmb meta_number ?></div>
-    <?lsmb END ?>
-<?lsmb notice = line_one ?>
-    <?lsmb IF notice ?>
-    <div class="notice"><?lsmb notice ?></div>
-    <?lsmb END ?>
-    <div class="navigation" id="nav_div"><?lsmb target_div ?>
-<?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
-?><?lsmb operation = "Add"
-?><?lsmb END ?>
+    [% IF name %]
+<div class="pageheading">[% text('Company') %]: [% name %]</div>
+    [% END %]
+    [% IF meta_number %]
+<div class="pageheading">[% text('Account') %]: [% meta_number %]</div>
+    [% END %]
+[% notice = line_one %]
+    [% IF notice %]
+    <div class="notice">[% notice %]</div>
+    [% END %]
+    <div class="navigation" id="nav_div">[% target_div %]
+[% IF entity_id %][% operation = "Edit" %][% ELSE
+%][% operation = "Add"
+%][% END %]
 <!-- CT: Keys for localization scripts:
-<?lsmb text("Add Customer") ?>
-<?lsmb text("Edit Customer") ?>
-<?lsmb text("Add Vendor") ?>
-<?lsmb text("Edit Vendor") ?>
-<?lsmb text("Add Employee") ?>
-<?lsmb text("Edit Employee") ?>
+[% text("Add Customer") %]
+[% text("Edit Customer") %]
+[% text("Add Vendor") %]
+[% text("Edit Vendor") %]
+[% text("Add Employee") %]
+[% text("Edit Employee") %]
 -->
 </div>
     <div id="contact_tabs"
          data-dojo-type="dijit/layout/TabContainer"
          data-dojo-props="doLayout:false">
-  <?lsmb FOREACH ITEM IN DIVS;
+  [% FOREACH ITEM IN DIVS;
       INCLUDEDIV = "Contact/divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;
   END
-  ?>
-  <?lsmb FOREACH ITEM IN PLUGINS;
+  %]
+  [% FOREACH ITEM IN PLUGINS;
       INCLUDEDIV = "plugins/" _ ITEM;
       INCLUDE $INCLUDEDIV;
   END;
-  ?>
+  %]
 </div>
 
 </div>
