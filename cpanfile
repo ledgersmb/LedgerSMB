@@ -68,7 +68,8 @@ requires 'Text::CSV';
 requires 'Text::Markdown';
 requires 'Try::Tiny';
 requires 'Version::Compare';
-requires 'XML::Simple';
+requires 'XML::LibXML';
+requires 'XML::LibXML::XPathContext';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
