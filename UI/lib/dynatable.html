@@ -36,7 +36,7 @@
 
    # the elements in the 'columns' array support these attributes:
    #  - type         : can be any of 'input_text', 'href', 'hidden', 'checkbox'
-   #                   'radio', 'mirrored', 'text', 'boolean_checkmark', 'select'
+   #                   'radio', 'text', 'boolean_checkmark', 'select'
    #  - col_id       : the internal identifier for the column
    #  - class        : the (additional) css classes to be applied to the column
    #  - data_dojo_type : Dojo type for the inputs in the column
@@ -186,13 +186,6 @@ END; ?>
                       HREF_TGT = ' target="' _ COL.href_target _ '"';
                    END;
           ?><a href="<?lsmb ESCAPED_HREF ?>"<?lsmb HREF_TGT ?>><?lsmb ROW.${COL.col_id} ?></a>
-         <?lsmb ELSIF TYPE == 'mirrored';
-                                         NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
-                                         ROW.${COL.col_id} ?>
-         <?lsmb PROCESS input element_data = {
-                                         type="hidden"
-                                         name=NAME
-                                         value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
@@ -270,13 +263,6 @@ END; ?>
                       HREF = COL.href_base _ ROW.row_id;
                    END
           ?><a href="<?lsmb HREF | url ?>"><?lsmb ROW.${COL.col_id} ?></a>
-         <?lsmb ELSIF TYPE == 'mirrored';
-                                         NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT;
-                                         ROW.${COL.col_id} ?>
-         <?lsmb PROCESS input element_data = {
-                                         type="hidden"
-                                         name=NAME
-                                         value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
