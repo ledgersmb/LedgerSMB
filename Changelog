@@ -17,6 +17,7 @@ Added functionalities
 * SysV init script template for RedHat/CentOS (#2900)
 * New configuration keys in '[mail]' section of ledgersmb.conf (#4378)
 * Beginnings of a web services API, served at /erp/api/v0 (#4452)
+* Import of OFX bank statement files for reconciliation
 
 Changed functionalities
 * Faster loading of the menu
