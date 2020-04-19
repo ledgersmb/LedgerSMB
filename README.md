@@ -96,9 +96,9 @@ Then, some of the features listed below have system requirements as well:
  * latex-pdf-ps depends on these binaries or libraries:
    * latex (usually provided through a texlive package)
    * pdflatex
-   * dvitopdf
-   * dvitops
-   * pdftops
+   * dvipdfm
+   * dvips
+   * pdf2ps
 
 ## Perl module dependencies
 
