@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?OFX OFXHEADER="200"  VERSION="220" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE"?>
+<OFX>    
+  <SIGNONMSGSRSV1>        
+    <SONRS>            
+      <STATUS>                
+        <CODE>0</CODE>                
+        <SEVERITY>INFO</SEVERITY>
+      </STATUS>
+      <LANGUAGE>ENG</LANGUAGE>
+    </SONRS>
+  </SIGNONMSGSRSV1>
+  <BANKMSGSRSV1>
+    <STMTTRNRS>
+      <TRNUID>99</TRNUID>
+      <STATUS>
+        <CODE>0</CODE>
+        <SEVERITY>INFO</SEVERITY>
+      </STATUS>
+      <STMTRS>
+        <CURDEF>GBP</CURDEF>
+        <BANKACCTFROM>
+          <BANKID>200000</BANKID>
+          <ACCTID>55779911</ACCTID>
+          <ACCTTYPE>DDA</ACCTTYPE>
+        </BANKACCTFROM>
+        <BANKTRANLIST>
+          <DTSTART>20200220</DTSTART>
+          <DTEND>20200309</DTEND>
+          <STMTTRN>
+            <TRNTYPE>DIRECTDEBIT</TRNTYPE>
+            <DTPOSTED>20200220</DTPOSTED>
+            <TRNAMT>-26.59</TRNAMT>
+            <FITID>202002202659117123782934</FITID>
+            <NAME>SUPPLIER ONE</NAME>
+          </STMTTRN>
+          <STMTTRN>
+            <TRNTYPE>CREDIT</TRNTYPE>
+            <DTPOSTED>20200302</DTPOSTED>
+            <TRNAMT>25.00</TRNAMT>
+            <FITID>202003022500117148782934</FITID>
+            <NAME>CUSTOMER ONE</NAME>
+          </STMTTRN>
+          <STMTTRN>
+            <TRNTYPE>DEBIT</TRNTYPE>
+            <DTPOSTED>20200304</DTPOSTED>
+            <TRNAMT>-6.50</TRNAMT>
+            <FITID>20200304650116645202934</FITID>
+            <NAME>TOTAL CHARGES TO 11FEB2020</NAME>
+          </STMTTRN>
+        </BANKTRANLIST>
+        <LEDGERBAL>
+          <BALAMT>1234.56</BALAMT>
+          <DTASOF>20200220</DTASOF>
+        </LEDGERBAL>
+      </STMTRS>
+    </STMTTRNRS>
+  </BANKMSGSRSV1>
+</OFX>

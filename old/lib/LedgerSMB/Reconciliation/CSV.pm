@@ -16,6 +16,7 @@ now handles all supported reconciliation data formats.
 
 package LedgerSMB::Reconciliation::CSV;
 use LedgerSMB::Reconciliation::ISO20022;
+use LedgerSMB::FileFormats::OFX::BankStatement;
 
 use strict;
 use warnings;
@@ -48,8 +49,8 @@ try {
 Processes the input reconciliation file, returning a list of the transactions
 it contains.
 
-First tries to read the file as ISO200022 CAMT053 XML. If that fails,
-parses the file by calling method $self->parse_<company>_<account_id>()
+First tries to read the file as ISO200022 CAMT053 XML, then as OFX. If that
+fails, parses the file by calling method $self->parse_<company>_<account_id>()
 with the content of the CSV file, if that method exists.
 
 =cut
@@ -59,6 +60,10 @@ sub process {
 
     if (@{$self->{entries}} = LedgerSMB::Reconciliation::ISO20022::process_xml($contents)){
         return $self->{entries};
+    }
+
+    if (my $ofx = LedgerSMB::FileFormats::OFX::BankStatement->new($contents)) {
+        return $ofx->transactions;
     }
 
     my $func = "parse_$self->{company}_$recon->{chart_id}";
