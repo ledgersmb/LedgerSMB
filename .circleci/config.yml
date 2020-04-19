@@ -72,7 +72,7 @@ commands:
       - run:
           name: Refresh modules from CPAN
           command: |
-            cpanm --quiet --notest \
+            cpanm --metacpan --quiet --notest \
               --with-develop \
               --with-feature=starman \
               --with-feature=latex-pdf-images \
@@ -81,10 +81,10 @@ commands:
               --with-feature=xls \
               --with-feature=edi \
               --installdeps .
-            cpanm --notest Starlet
+            cpanm --metacpan --notest Starlet
             if [ "x$COVERAGE" == "x1" ]
             then
-              cpanm --quiet --notest \
+              cpanm --metacpan --quiet --notest \
                     Devel::Cover \
                     Devel::Cover::Report::Coveralls
             fi
