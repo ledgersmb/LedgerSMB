@@ -136,7 +136,7 @@ install:
   - cpanm --reinstall --notest Locale::Country Locale::Codes Locale::Language JSON::PP
   - cpanm --quiet --notest Cpanel::JSON::XS~3.0206
   - cpanm --quiet --notest Starlet
-  - cpanm --quiet --notest --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
+  - cpanm --quiet --notest --metacpan --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .
   - cpan-install --coverage
 
 before_script:
