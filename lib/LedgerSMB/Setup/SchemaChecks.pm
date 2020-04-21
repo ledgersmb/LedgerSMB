@@ -68,6 +68,7 @@ sub _wrap_html {
         {
             check_id => _check_hashid( $failing_check ),
             database => $request->{database},
+            resubmit_action => $request->{resubmit_action},
             action_url => $request->get_relative_url,
         });
 

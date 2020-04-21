@@ -1501,8 +1501,8 @@ between versions on a stable branch (typically upgrading)
 
 =cut
 
-sub rebuild_modules {
-    my ($request, $database) = @_;
+sub _rebuild_modules {
+    my ($request, $entrypoint, $database) = @_;
 
     if (not defined $database) {
         my ($reauth, $db) = _init_db($request);
@@ -1515,6 +1515,7 @@ sub rebuild_modules {
     #  New modules should be able to depend on the latest changes
     #  e.g. table definitions, etc.
 
+    $request->{resubmit_action} //= $entrypoint;
     my $HTML = html_formatter_context {
         return ! $database->apply_changes( checks => 1 );
     } $request;
@@ -1527,6 +1528,16 @@ sub rebuild_modules {
 
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
+
+    return;
+}
+
+sub rebuild_modules {
+    my ($request) = @_;
+
+    if (my $rv = _rebuild_modules($request, 'rebuild_modules')) {
+        return $rv;
+    }
     return complete($request);
 }
 
