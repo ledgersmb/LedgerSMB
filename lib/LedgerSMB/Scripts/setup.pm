@@ -33,6 +33,7 @@ use List::Util qw( first );
 use Locale::Country;
 use Log::Log4perl;
 use MIME::Base64;
+use Scope::Guard;
 use Try::Tiny;
 use Version::Compare;
 
@@ -1289,8 +1290,20 @@ sub run_upgrade {
         . $dbh->errstr();
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, "lsmb$v",
-                   "$dbinfo->{version}-$CURRENT_MINOR_VERSION");
+    {
+        my $guard = Scope::Guard->new(
+            sub {
+                $dbh->rollback;
+                $dbh->do(
+                    qq{DROP SCHEMA $LedgerSMB::Sysconfig::db_namespace CASCADE;
+                       ALTER SCHEMA lsmb$v
+                    RENAME TO $LedgerSMB::Sysconfig::db_namespace});
+                $dbh->commit;
+            });
+        process_and_run_upgrade_script($request, $database, "lsmb$v",
+                                       "$dbinfo->{version}-1.5");
+        $guard->dismiss;
+    }
 
     if ($v ne '1.2'){
         $request->{only_templates} = 1;
