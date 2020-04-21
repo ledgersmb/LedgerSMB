@@ -1179,10 +1179,10 @@ sub save_user {
                                            'users_manage',
                                          ]
         );
-   }
-   $request->{dbh}->commit;
+    }
+    $request->{dbh}->commit;
 
-   return rebuild_modules($request);
+    return complete($request);
 }
 
 
