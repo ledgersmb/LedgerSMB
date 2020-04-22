@@ -714,6 +714,39 @@ sub _applicable_upgrade_tests {
                   LedgerSMB::Upgrade_Tests->get_tests;
 }
 
+sub _prepare_upgrade {
+    my ($request, $dbinfo) = @_;
+
+    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
+        next if (defined $request->{"applied_$preparation->{name}"}
+                 && $request->{"applied_$preparation->{name}"} eq 'On');
+        my $sth = $request->{dbh}->prepare($preparation->preparation);
+        my $status = $sth->execute()
+            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
+        $request->{"applied_$preparation->{name}"} = 'On';
+        $sth->finish();
+    }
+}
+
+sub _run_upgrade_tests {
+    my ($request, $dbinfo) = @_;
+
+    for my $check (_applicable_upgrade_tests($dbinfo)) {
+        next if ($check->skipable
+                 && defined $request->{"skip_$check->{name}"}
+                 && $request->{"skip_$check->{name}"} eq 'On');
+        my $sth = $request->{dbh}->prepare($check->test_query);
+        $sth->execute()
+            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
+        if ($sth->rows > 0){ # Check failed --CT
+            return _failed_check($request, $check, $sth);
+        }
+        $sth->finish();
+    }
+
+    return;
+}
+
 sub upgrade {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
@@ -721,44 +754,27 @@ sub upgrade {
 
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-
-    $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
-        next if defined $request->{"applied_$preparation->{name}"}
-             && $request->{"applied_$preparation->{name}"} eq 'On';
-        my $sth = $request->{dbh}->prepare($preparation->preparation);
-        my $status = $sth->execute()
-            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
-        $request->{"applied_$preparation->{name}"} = 'On';
-        $sth->finish();
-    }
+    $request->{dbh}->{AutoCommit} = 0;
+    _prepare_upgrade($request, $dbinfo);
 
-    for my $check (_applicable_upgrade_tests($dbinfo)) {
-        next if $check->skipable
-             && defined $request->{"skip_$check->{name}"}
-             && $request->{"skip_$check->{name}"} eq 'On';
-        my $sth = $request->{dbh}->prepare($check->test_query);
-        $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
-        if ($sth->rows > 0){ # Check failed --CT
-             return _failed_check($request, $check, $sth);
-        }
-        $sth->finish();
+    if (my $rv = _run_upgrade_tests($request, $dbinfo)) {
+        return $rv;
     }
 
     if (upgrade_info($request) > 0) {
         my $template = LedgerSMB::Template::UI->new_UI;
 
-        $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
+        my $step = $upgrade_run_step{$upgrade_type};
+        $request->{upgrade_action} = $upgrade_next_steps{$step};
         return $template->render($request, 'setup/upgrade_info', $request);
     } else {
         $request->{dbh}->rollback();
 
-        return __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
+        return _dispatch_upgrade_workflow($request,
+                                          $upgrade_run_step{$upgrade_type});
     }
-
 }
 
 sub _failed_check {
