@@ -580,13 +580,17 @@ sub _get_linked_accounts {
 =cut
 
 my %info_applicable_for_upgrade = (
-    'default_ar' => [ 'ledgersmb/1.2',
-                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'default_ap' => [ 'ledgersmb/1.2',
-                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'default_ar'      => [ 'ledgersmb/1.2',
+                           'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'default_ap'      => [ 'ledgersmb/1.2',
+                           'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'slschema'        => [ 'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -1285,7 +1289,7 @@ sub post_migration_schema_upgrade {
     # found also in pg_roles, so as to avoid errors.  --CT
     $guard->dismiss;
     $dbh->do(q{SELECT admin__add_user_to_role(username, 'base_user')
-                from users WHERE username IN (select rolname from pg_roles)});
+                 FROM users WHERE username IN (select rolname from pg_roles)});
 
     $dbh->commit;
     $dbh->disconnect;
@@ -1333,8 +1337,7 @@ sub run_upgrade {
         $request->{only_templates} = 1;
     }
 
-    my $templates = LedgerSMB::Setting->new(dbh => $dbh)
-        ->get('templates');
+    my $templates = LedgerSMB::Setting->new(dbh => $dbh)->get('templates');
     if ($templates){
        $request->{template_dir} = $templates;
        return load_templates($request);
