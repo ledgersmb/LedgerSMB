@@ -1256,18 +1256,42 @@ sub process_and_run_upgrade_script {
     # a frozen (fixed) migration target. Now, however, we need to apply the
     # changes from the remaining database schema management scripts to
     # make the schema a complete one.
-    rebuild_modules($request,$database);
+    return post_migration_schema_upgrade($request, $database, $dbh);
+}
 
-    # If users are added to the user table, and appropriat roles created, this
+
+sub post_migration_schema_upgrade {
+    my ($request, $database, $dbh) = @_;
+    my $guard = Scope::Guard->new(
+        sub {
+            if ($dbh) {
+                $dbh->rollback;
+                $dbh->disconnect;
+            }
+        });
+    my $reauth;
+
+    ($reauth, $database) = _init_db($request) if not $database;
+    return $reauth if $reauth;
+
+
+    if (my $rv = _rebuild_modules($request, 'post_migration_schema_upgrade',
+                                  $database)) {
+        return $rv;
+    }
+
+    # If users are added to the user table, and appropriate roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
+    $guard->dismiss;
     $dbh->do(q{SELECT admin__add_user_to_role(username, 'base_user')
                 from users WHERE username IN (select rolname from pg_roles)});
 
     $dbh->commit;
-    return $dbh->disconnect;
-}
+    $dbh->disconnect;
 
+    return;
+}
 
 =item run_upgrade
 
