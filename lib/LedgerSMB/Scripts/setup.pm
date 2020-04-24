@@ -715,6 +715,10 @@ my %upgrade_next_steps = (
     # "stepped through" without there being an explicit or hard-coded
     # dependency or sequence between steps.
 
+    # new database
+    _create_db             => '_select_coa',
+    _select_coa            => '_select_templates',
+
     #sl28 specific
     _initial_sl28          => '_run_sl28_upgrade',
     _run_sl28_upgrade      => '_post_sl28_migration',
@@ -752,6 +756,15 @@ sub _dispatch_upgrade_workflow {
     }
 
     die "Upgrade workflow error: no next step for '$step_name'";
+}
+
+sub _select_coa {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (select_coa($request)
+            or _dispatch_upgrade_workflow($request, '_select_coa'));
 }
 
 sub _run_sl28_upgrade {
@@ -1172,7 +1185,7 @@ sub create_db {
     my $rc = $database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
-    return select_coa($request);
+    return _dispatch_upgrade_workflow($request, '_create_db');
 }
 
 =item select_coa
@@ -1220,7 +1233,8 @@ sub select_coa {
                     sic => $request->{sic}
                 });
 
-           return template_screen($request);
+            # successful completion returns 'undef'
+            return _dispatch_upgrade_workflow($request, '_select_coa');
         } else {
             for my $select (qw(chart gifi sic)) {
                 $request->{"${select}s"} =
@@ -1251,7 +1265,7 @@ button facilitates that scenario.
 sub skip_coa {
     my ($request) = @_;
 
-    return template_screen($request);
+    return _dispatch_upgrade_workflow($request, '_select_coa')
 }
 
 
