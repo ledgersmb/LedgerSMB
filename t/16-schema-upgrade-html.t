@@ -24,8 +24,9 @@ sub test_request {
     my $plack_req = Plack::Request->new({});
     my $req = LedgerSMB->new($plack_req);
 
-    $req->{script} = 'script.pl';
-    $req->{query_string} = 'action=rebuild';
+    $req->{script}          = 'script.pl';
+    $req->{query_string}    = 'action=rebuild';
+    $req->{resubmit_action} = 'rebuild_modules';
 
     return $req;
 }
