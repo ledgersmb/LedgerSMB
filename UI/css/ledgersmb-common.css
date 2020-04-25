@@ -159,7 +159,7 @@ a.listheading:visited { color: var(--a-listheading-link-clr); font-weight: bold;
 
 .listrow1,
 table.dynatable tr,
-.listrow0 { color: var(--listrow1-bg-clr); font-size: var(--listrow1-font-size); vertical-align: top;
+.listrow0 { color: var(--listrow1-clr); font-size: var(--listrow1-font-size); vertical-align: top;
 }
 
 .listrow1,
