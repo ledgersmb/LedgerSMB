@@ -1138,7 +1138,8 @@ sub payment2 {
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
         topay_subtotal => (
-            (sum map {LedgerSMB::PGNumber->from_input($_->{topay} || 0)} @invoice_data) // 0
+            LedgerSMB::PGNumber->from_input(0) # never end up with undef
+            + (sum map {LedgerSMB::PGNumber->from_input($_->{topay} || 0)} @invoice_data) // 0
         )->to_output(money => 1),
         topay_state   => \@topay_state,
         vendorcustomer => {
