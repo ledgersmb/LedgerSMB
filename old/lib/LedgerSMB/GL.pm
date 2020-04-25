@@ -188,8 +188,10 @@ UPDATE gl
         $debit  = $form->parse_amount( $myconfig, $form->{"debit_$i"} );
         $credit = $form->parse_amount( $myconfig, $form->{"credit_$i"} );
         $debit_fx  =
+            (not $form->{fx_transaction}) ? $debit :
             $form->parse_amount( $myconfig, $form->{"debit_fx_$i"} );
         $credit_fx =
+            (not $form->{fx_transaction}) ? $credit :
             $form->parse_amount( $myconfig, $form->{"credit_fx_$i"} );
 
 
