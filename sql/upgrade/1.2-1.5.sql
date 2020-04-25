@@ -9,13 +9,13 @@ BEGIN;
 
 -- adding mapping info for import.
 
-ALTER TABLE lsmb12.vendor ADD COLUMN entity_id int;
-ALTER TABLE lsmb12.vendor ADD COLUMN company_id int;
-ALTER TABLE lsmb12.vendor ADD COLUMN credit_id int;
+ALTER TABLE lsmb12.vendor ADD COLUMN IF NOT EXISTS entity_id int;
+ALTER TABLE lsmb12.vendor ADD COLUMN IF NOT EXISTS company_id int;
+ALTER TABLE lsmb12.vendor ADD COLUMN IF NOT EXISTS credit_id int;
 
-ALTER TABLE lsmb12.customer ADD COLUMN entity_id int;
-ALTER TABLE lsmb12.customer ADD COLUMN company_id int;
-ALTER TABLE lsmb12.customer ADD COLUMN credit_id int;
+ALTER TABLE lsmb12.customer ADD COLUMN IF NOT EXISTS entity_id int;
+ALTER TABLE lsmb12.customer ADD COLUMN IF NOT EXISTS company_id int;
+ALTER TABLE lsmb12.customer ADD COLUMN IF NOT EXISTS credit_id int;
 
 -- Buisness Reporting Units
 
@@ -42,6 +42,83 @@ SELECT link, false, true
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
+
+
+CREATE OR REPLACE FUNCTION account__save
+(in_id int, in_accno text, in_description text, in_category char(1),
+in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
+in_link text[], in_obsolete bool, in_is_temp bool)
+RETURNS int AS $$
+DECLARE
+        t_heading_id int;
+        t_link record;
+        t_id int;
+        t_tax bool;
+BEGIN
+
+    SELECT count(*) > 0 INTO t_tax FROM tax WHERE in_id = chart_id;
+    t_tax := t_tax OR in_tax;
+        -- check to ensure summary accounts are exclusive
+        -- necessary for proper handling by legacy code
+    FOR t_link IN SELECT description FROM account_link_description
+    WHERE summary='t'
+        LOOP
+                IF t_link.description = ANY (in_link) and array_upper(in_link, 1) > 1 THEN
+                        RAISE EXCEPTION 'Invalid link settings:  Summary';
+                END IF;
+        END LOOP;
+        -- heading settings
+        IF in_heading IS NULL THEN
+                SELECT id INTO t_heading_id FROM account_heading
+                WHERE accno < in_accno order by accno desc limit 1;
+        ELSE
+                t_heading_id := in_heading;
+        END IF;
+
+        -- Remove all links. Later we'll (re-)insert the ones we want.
+        DELETE FROM account_link
+        WHERE account_id = in_id;
+
+        UPDATE account
+        SET accno = in_accno,
+                description = in_description,
+                category = in_category,
+                gifi_accno = in_gifi_accno,
+                heading = t_heading_id,
+                contra = in_contra,
+                obsolete = coalesce(in_obsolete,'f'),
+                tax = t_tax,
+                is_temp = coalesce(in_is_temp,'f')
+        WHERE id = in_id;
+
+        IF FOUND THEN
+                t_id := in_id;
+        ELSE
+                -- can't obsolete on insert, but this can be changed if users
+                -- request it --CT
+                INSERT INTO account (accno, description, category, gifi_accno,
+                        heading, contra, tax, is_temp)
+                VALUES (in_accno, in_description, in_category, in_gifi_accno,
+                        t_heading_id, in_contra, in_tax, coalesce(in_is_temp, 'f'));
+
+                t_id := currval('account_id_seq');
+        END IF;
+
+        FOR t_link IN
+                select in_link[generate_series] AS val
+                FROM generate_series(array_lower(in_link, 1),
+                        array_upper(in_link, 1))
+        LOOP
+                INSERT INTO account_link (account_id, description)
+                VALUES (t_id, t_link.val);
+        END LOOP;
+
+
+        RETURN t_id;
+END;
+$$ language plpgsql;
+
+
 
 SELECT account__save(id, accno, description, category, gifi_accno, NULL, contra,
                     (CASE WHEN link like '%tax%' THEN true ELSE false END),
@@ -97,6 +174,15 @@ FROM lsmb12.customer WHERE entity_id IS NOT NULL;
 UPDATE lsmb12.customer SET credit_id =
         (SELECT id FROM entity_credit_account e
         WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
+
+CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency()
+RETURNS char(3) AS
+$$
+           SELECT substr(value,1,3)
+           FROM defaults
+           WHERE setting_key = 'curr';
+$$ language sql;
+
 
 UPDATE entity_credit_account SET curr = defaults_get_defaultcurrency()
  WHERE curr IS NULL;
@@ -184,6 +270,74 @@ group by v.credit_id, v.fax;
 -- addresses
 
 INSERT INTO public.country (id, name, short_name) VALUES (-1, 'Invalid Country', 'XX');
+
+CREATE OR REPLACE FUNCTION location_save
+(in_location_id int, in_address1 text, in_address2 text, in_address3 text,
+        in_city text, in_state text, in_zipcode text, in_country int)
+returns integer AS
+$$
+DECLARE
+        location_id integer;
+        location_row RECORD;
+BEGIN
+
+        IF in_location_id IS NULL THEN
+            SELECT id INTO location_id FROM location
+            WHERE line_one = in_address1 AND line_two = in_address2
+                  AND line_three = in_address3 AND in_city = city
+                  AND in_state = state AND in_zipcode = mail_code
+                  AND in_country = country_id
+            LIMIT 1;
+
+            IF NOT FOUND THEN
+            -- Straight insert.
+            location_id = nextval('location_id_seq');
+            INSERT INTO location (
+                id,
+                line_one,
+                line_two,
+                line_three,
+                city,
+                state,
+                mail_code,
+                country_id)
+            VALUES (
+                location_id,
+                in_address1,
+                in_address2,
+                in_address3,
+                in_city,
+                in_state,
+                in_zipcode,
+                in_country
+                );
+            END IF;
+            return location_id;
+        ELSE
+            RAISE NOTICE 'Overwriting location id %', in_location_id;
+            -- Test it.
+            SELECT * INTO location_row FROM location WHERE id = in_location_id;
+            IF NOT FOUND THEN
+                -- Tricky users are lying to us.
+                RAISE EXCEPTION 'location_save called with nonexistant location ID %', in_location_id;
+            ELSE
+                -- Okay, we're good.
+
+                UPDATE location SET
+                    line_one = in_address1,
+                    line_two = in_address2,
+                    line_three = in_address3,
+                    city = in_city,
+                    state = in_state,
+                    mail_code = in_zipcode,
+                    country_id = in_country
+                WHERE id = in_location_id;
+                return in_location_id;
+            END IF;
+        END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
 
 INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
@@ -372,7 +526,7 @@ WHERE id IN
 INSERT INTO pricegroup
 SELECT * FROM lsmb12.pricegroup;
 
-ALTER TABLE lsmb12.employee ADD entity_id int;
+ALTER TABLE lsmb12.employee ADD COLUMN IF NOT EXISTS entity_id int;
 
 INSERT INTO entity(control_code, entity_class, name, country_id)
 select 'E-' || employeenumber, 3, name,
@@ -394,19 +548,164 @@ SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
  WHERE id IN (select min(id) from lsmb12.employee group by entity_id);
 
 
--- I would prefer stronger passwords here but the exposure is very short, since
--- the passwords time out after 24 hours anyway.  These are not assumed to be
--- usable passwords. --CT
+-- -- I would prefer stronger passwords here but the exposure is very short, since
+-- -- the passwords time out after 24 hours anyway.  These are not assumed to be
+-- -- usable passwords. --CT
 
-SELECT admin__save_user(null, max(entity_id), login, random()::text, true)
-  FROM lsmb12.employee
- WHERE login IN (select rolname FROM pg_roles)
- GROUP BY login;
+-- CREATE OR REPLACE FUNCTION setting_get (in_key varchar) RETURNS defaults AS
+-- $$
+-- SELECT * FROM defaults WHERE setting_key = $1;
+-- $$ LANGUAGE sql;
 
-SELECT  admin__save_user(null, max(entity_id), login, random()::text, false)
-  FROM lsmb12.employee
- WHERE login NOT IN (select rolname FROM pg_roles)
- GROUP BY login;
+-- CREATE OR REPLACE FUNCTION lsmb__role_prefix() RETURNS text
+-- LANGUAGE SQL AS
+-- $$ select coalesce((setting_get('role_prefix')).value,
+--                    'lsmb_' || current_database() || '__'); $$;
+
+
+-- CREATE OR REPLACE FUNCTION lsmb__role(global_role text) RETURNS text
+-- LANGUAGE SQL AS
+-- $$ select lsmb__role_prefix() || $1; $$;
+
+-- CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEXT) returns INT AS $$
+
+--     declare
+--         stmt TEXT;
+--         a_role name;
+--         a_user name;
+--         t_userid int;
+--     BEGIN
+
+--         -- Issue the grant
+--         select rolname into a_role from pg_roles
+--           where rolname = lsmb__role(in_role);
+--         IF NOT FOUND THEN
+--             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
+--         END IF;
+
+--         select rolname into a_user from pg_roles
+--          where rolname = in_username;
+
+--         IF NOT FOUND THEN
+--             RAISE EXCEPTION 'Cannot grant permissions to a non-existant database user.';
+--         END IF;
+
+--         select id into t_userid from users where username = in_username;
+--         if not FOUND then
+--           RAISE EXCEPTION 'Cannot grant permissions to a non-existant application user.';
+--         end if;
+
+--         stmt := 'GRANT '|| quote_ident(a_role) ||' to '|| quote_ident(in_username);
+
+--         EXECUTE stmt;
+
+--         return 1;
+--     END;
+
+-- $$ language 'plpgsql' security definer;
+
+
+-- CREATE OR REPLACE FUNCTION admin__save_user(
+--     in_id int,
+--     in_entity_id INT,
+--     in_username text,
+--     in_password TEXT,
+--     in_pls_import BOOL
+-- ) returns int
+-- SET datestyle = 'ISO, YMD' -- needed due to legacy code regarding datestyles
+-- AS $$
+--     DECLARE
+
+--         a_user users;
+--         v_user_id int;
+--         p_id int;
+--         l_id int;
+--         stmt text;
+--         t_is_role bool;
+--         t_is_user bool;
+--     BEGIN
+--         -- WARNING TO PROGRAMMERS:  This function runs as the definer and runs
+--         -- utility statements via EXECUTE.
+--         -- PLEASE BE VERY CAREFUL ABOUT SQL-INJECTION INSIDE THIS FUNCTION.
+
+--        PERFORM rolname FROM pg_roles WHERE rolname = in_username;
+--        t_is_role := found;
+--        t_is_user := admin__is_user(in_username);
+
+--        IF t_is_role is true and t_is_user is false and in_pls_import is NOT TRUE THEN
+--           RAISE EXCEPTION 'Duplicate user';
+--         END IF;
+
+--         if t_is_role and in_password is not null then
+--                 execute 'ALTER USER ' || quote_ident( in_username ) ||
+--                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
+--                      || $e$ valid until $e$ ||
+--                       quote_literal(now() + '1 day'::interval);
+--         elsif in_pls_import is false AND t_is_user is false
+--               AND in_password IS NULL THEN
+--                 RAISE EXCEPTION 'No password';
+--         elsif  t_is_role is false and in_pls_import IS NOT TRUE THEN
+--             -- create an actual user
+--                 execute 'CREATE USER ' || quote_ident( in_username ) ||
+--                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
+--                      || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
+--        END IF;
+
+--         select * into a_user from users lu where lu.id = in_id;
+--         IF FOUND THEN
+--             PERFORM admin__add_user_to_role(a_user.username, 'base_user');
+--             return a_user.id;
+--         ELSE
+--             -- Insert cycle
+
+--             --- The entity is expected to already BE created. See admin.pm.
+
+--             PERFORM * FROM USERS where username = in_username;
+--             IF NOT FOUND THEN
+--                 v_user_id := nextval('users_id_seq');
+--                 insert into users (id, username, entity_id) VALUES (
+--                     v_user_id,
+--                     in_username,
+--                     in_entity_id
+--                 );
+
+--                 insert into user_preference (id) values (v_user_id);
+--             END IF;
+
+--             IF NOT exists(SELECT * FROM entity_employee WHERE entity_id = in_entity_id) THEN
+--                 INSERT into entity_employee (entity_id) values (in_entity_id);
+--             END IF;
+--             -- Finally, issue the create user statement
+--             PERFORM admin__add_user_to_role(in_username, 'base_user');
+--             return v_user_id ;
+
+
+
+--         END IF;
+
+--     END;
+-- $$ language 'plpgsql' SECURITY DEFINER;
+
+-- create or replace function admin__is_user (in_user text) returns bool as $$
+--     BEGIN
+
+--         PERFORM * from users where username = in_user;
+--         RETURN found;
+
+--     END;
+
+-- $$ language plpgsql;
+
+
+-- SELECT admin__save_user(null, max(entity_id), login, random()::text, true)
+--   FROM lsmb12.employee
+--  WHERE login IN (select rolname FROM pg_roles)
+--  GROUP BY login;
+
+-- SELECT  admin__save_user(null, max(entity_id), login, random()::text, false)
+--   FROM lsmb12.employee
+--  WHERE login NOT IN (select rolname FROM pg_roles)
+--  GROUP BY login;
 
 
 
@@ -414,10 +713,6 @@ SELECT  admin__save_user(null, max(entity_id), login, random()::text, false)
 
 -- needed to handle null values
 UPDATE lsmb12.makemodel set model = '' where model is null;
-
---barcode will throw off SELECT * FROM makemodel
-INSERT INTO makemodel (parts_id, make, model)
-SELECT * FROM lsmb12.makemodel;
 
 INSERT INTO gifi
 SELECT * FROM lsmb12.gifi;
@@ -490,6 +785,10 @@ SELECT
  LEFT JOIN account inventory_accno ON invc.accno = inventory_accno.accno
  LEFT JOIN account income_accno ON incc.accno = income_accno.accno
  LEFT JOIN account expense_accno ON expc.accno = expense_accno.accno;
+
+--barcode will throw off SELECT * FROM makemodel
+INSERT INTO makemodel (parts_id, make, model)
+SELECT * FROM lsmb12.makemodel;
 
 INSERT INTO assembly SELECT * FROM lsmb12.assembly;
 
@@ -577,7 +876,8 @@ INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
       UNION
      SELECT ac.entry_id, 2, ac.project_id + 1000
        FROM lsmb12.acc_trans ac
-      WHERE ac.project_id IS NOT NULL;
+      WHERE ac.project_id IS NOT NULL
+            AND ac.project_id <> 0;
 
 INSERT INTO partstax (parts_id, chart_id)
      SELECT parts_id, a.id
@@ -721,10 +1021,6 @@ INSERT INTO jcitems(id, business_unit_id, parts_id, description, qty, allocated,
        JOIN lsmb12.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
 
-INSERT INTO  custom_table_catalog  SELECT * FROM lsmb12. custom_table_catalog;
-
-INSERT INTO  custom_field_catalog  SELECT * FROM lsmb12. custom_field_catalog;
-
 INSERT INTO parts_translation SELECT * FROM lsmb12.translation where trans_id in (select id from parts);
 
 INSERT INTO partsgroup_translation SELECT * FROM lsmb12.translation where trans_id in
@@ -780,8 +1076,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
  SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
  SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
- SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
- SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;

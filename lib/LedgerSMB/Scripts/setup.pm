@@ -33,6 +33,7 @@ use List::Util qw( first );
 use Locale::Country;
 use Log::Log4perl;
 use MIME::Base64;
+use Scope::Guard;
 use Try::Tiny;
 use Version::Compare;
 
@@ -503,18 +504,18 @@ sub revert_migration {
 =item template_screen
 
 Shows the screen for loading templates.  This should appear before loading
-the user.  $request->{only_templates} will be passed on to the saving routine
-so that further workflow can be aborted.
+the user.
 
 =cut
 
 sub template_screen {
-    my ($request) = @_;
+    my ($request, $entrypoint) = @_;
     $request->{template_dirs} =
         [ map { +{ text => $_, value => $_ } }
           keys %{ LedgerSMB::Database::Config->new->templates } ];
     return LedgerSMB::Template::UI->new_UI
-        ->render($request, 'setup/template_info', $request);
+        ->render($request, 'setup/template_info',
+                 { %$request, templates_action => $entrypoint });
 }
 
 =item load_templates
@@ -525,11 +526,12 @@ and not the user creation screen.
 
 =cut
 
-sub load_templates {
-    my ($request) = @_;
+sub _save_templates {
+    my ($request, $entrypoint) = @_;
     my $templates = LedgerSMB::Database::Config->new->templates;
 
-    die 'Invalid request' if not exists $templates->{$request->{template_dir}};
+    return template_screen($request, $entrypoint)
+        if not exists $templates->{$request->{template_dir}};
 
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
@@ -540,9 +542,15 @@ sub load_templates {
        my $dbtemp = LedgerSMB::Template::DB->get_from_file($template);
        $dbtemp->save;
     }
-    return _render_new_user($request) unless $request->{only_templates};
 
-    return complete($request);
+    return;
+}
+
+sub load_templates {
+    my ($request) = @_;
+
+    return (_save_templates($request, 'load_templates')
+            or login($request));
 }
 
 =item _get_linked_accounts
@@ -579,13 +587,17 @@ sub _get_linked_accounts {
 =cut
 
 my %info_applicable_for_upgrade = (
-    'default_ar' => [ 'ledgersmb/1.2',
-                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'default_ap' => [ 'ledgersmb/1.2',
-                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'default_ar'      => [ 'ledgersmb/1.2',
+                           'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'default_ap'      => [ 'ledgersmb/1.2',
+                           'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'slschema' => [ 'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
+    'slschema'        => [ 'sql-ledger/2.7',
+                           'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -680,12 +692,190 @@ sub upgrade_info {
 =cut
 
 my %upgrade_run_step = (
-    'sql-ledger/2.7' => 'run_sl28_migration',
-    'sql-ledger/2.8' => 'run_sl28_migration',
-    'sql-ledger/3.0' => 'run_sl30_migration',
-    'ledgersmb/1.2' => 'run_upgrade',
-    'ledgersmb/1.3' => 'run_upgrade'
+    'sql-ledger/2.7' => '_initial_sl27',
+    'sql-ledger/2.8' => '_initial_sl28',
+    'sql-ledger/3.0' => '_initial_sl30',
+    'ledgersmb/1.2'  => '_initial_ls12',
+    'ledgersmb/1.3'  => '_initial_ls13'
     );
+
+# Note that by the time we get to these steps,
+# all upgrade checks have already been executed
+my %upgrade_next_steps = (
+    # The protocol for each of the right-hand sides here:
+
+    # * The right-hand sides are all subroutine names in this module
+    # * Each subroutine returns either
+    #   * a PSGI-triplet
+    #     The returned page posts its interaction back to the entrypoint
+    #   * the result of a call to _dispatch_upgrade_workflow
+    #     called with two arguments: the request environment and its own name
+    #
+    # This makes sure that the steps in the workflow are correctly
+    # "stepped through" without there being an explicit or hard-coded
+    # dependency or sequence between steps.
+
+    # new database
+    _create_db             => '_select_coa',
+    _select_coa            => '_select_templates',
+
+    #sl28 specific
+    _initial_sl28          => '_run_sl28_upgrade',
+    _run_sl28_upgrade      => '_post_sl28_migration',
+    _post_sl28_migration   => '_select_templates',
+
+    #sl30 specific
+    _initial_sl30          => '_run_sl30_upgrade',
+    _run_sl30_upgrade      => '_post_sl30_migration',
+    _post_sl30_migration   => '_select_templates',
+
+    #lsmb12 specific
+    _initial_ls12          => '_run_ls12_upgrade',
+    _run_ls12_upgrade      => '_post_ls12_migration',
+    _post_ls12_migration   => '_select_templates',
+
+    #lsmb13 specific
+    _initial_ls13          => '_run_ls13_upgrade',
+    _run_ls13_upgrade      => '_post_ls13_migration',
+    _post_ls13_migration   => '_load_templates',
+
+    # common final steps
+#   _migrate_users could be used to create sl and lsmb12 users
+#   _select_templates      => '_migrate_users',
+#   _migrate_users         => '_complete',
+    _select_templates      => '_create_initial_user',
+    _load_templates        => '_complete',
+    _create_initial_user   => '_complete',
+    );
+
+sub _dispatch_upgrade_workflow {
+    my ($request, $step_name) = @_;
+
+    if (my $next = $upgrade_next_steps{$step_name}) {
+        return __PACKAGE__->can($next)->($request);
+    }
+
+    die "Upgrade workflow error: no next step for '$step_name'";
+}
+
+sub _select_coa {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (select_coa($request)
+            or _dispatch_upgrade_workflow($request, '_select_coa'));
+}
+
+sub _run_sl28_upgrade {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (process_and_run_upgrade_script($request, $database,
+                                           'sl28', 'sl2.8')
+            or _dispatch_upgrade_workflow($request, '_run_sl28_upgrade'));
+}
+
+sub _run_sl30_upgrade {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (process_and_run_upgrade_script($request, $database,
+                                           'sl30', 'sl3.0')
+            or _dispatch_upgrade_workflow($request, '_run_sl30_upgrade'));
+}
+
+sub _run_ls12_upgrade {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (process_and_run_upgrade_script($request, $database,
+                                           'lsmb12', '1.2-1.5')
+            or _dispatch_upgrade_workflow($request, '_run_ls12_upgrade'));
+}
+
+sub _run_ls13_upgrade {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (process_and_run_upgrade_script($request, $database,
+                                           'lsmb13', '1.3-1.5')
+            or _dispatch_upgrade_workflow($request, '_run_ls13_upgrade'));
+}
+
+
+sub _post_sl28_migration {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (_post_migration_schema_upgrade($request, $database,
+                                          '_post_sl28_migration')
+            or _dispatch_upgrade_workflow($request, '_post_sl28_migration'));
+}
+
+sub _post_sl30_migration {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (_post_migration_schema_upgrade($request, $database,
+                                          '_post_sl30_migration')
+            or _dispatch_upgrade_workflow($request, '_post_sl30_migration'));
+}
+
+sub _post_ls12_migration {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (_post_migration_schema_upgrade($request, $database,
+                                          '_post_ls12_migration')
+            or _dispatch_upgrade_workflow($request, '_post_ls12_migration'));
+}
+
+sub _post_ls13_migration {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    return (_post_migration_schema_upgrade($request, $database,
+                                          '_post_ls13_migration')
+            or _dispatch_upgrade_workflow($request, '_post_ls13_migration'));
+}
+
+
+sub _select_templates {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+
+    return (_save_templates($request, '_select_templates')
+            or _dispatch_upgrade_workflow($request, '_select_templates'));
+}
+
+sub _load_templates {
+    my ($request) = @_;
+    my ($reauth, $database) = _init_db($request);
+    return $reauth if $reauth;
+
+    my $dbh = $request->{dbh};
+    #### Suppress selecting templates!
+    ### Suppress next steps in load templates!
+
+    $request->{template_dir} //=
+        LedgerSMB::Setting->new(dbh => $dbh)->get('templates');
+    return (_save_templates($request, '_load_templates')
+            or _dispatch_upgrade_workflow($request, '_load_templates'));
+}
+
+
+
 
 sub _upgrade_test_is_applicable {
     my ($dbinfo, $test) = @_;
@@ -709,6 +899,39 @@ sub _applicable_upgrade_tests {
                   LedgerSMB::Upgrade_Tests->get_tests;
 }
 
+sub _prepare_upgrade {
+    my ($request, $dbinfo) = @_;
+
+    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
+        next if (defined $request->{"applied_$preparation->{name}"}
+                 && $request->{"applied_$preparation->{name}"} eq 'On');
+        my $sth = $request->{dbh}->prepare($preparation->preparation);
+        my $status = $sth->execute()
+            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
+        $request->{"applied_$preparation->{name}"} = 'On';
+        $sth->finish();
+    }
+}
+
+sub _run_upgrade_tests {
+    my ($request, $dbinfo) = @_;
+
+    for my $check (_applicable_upgrade_tests($dbinfo)) {
+        next if ($check->skipable
+                 && defined $request->{"skip_$check->{name}"}
+                 && $request->{"skip_$check->{name}"} eq 'On');
+        my $sth = $request->{dbh}->prepare($check->test_query);
+        $sth->execute()
+            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
+        if ($sth->rows > 0){ # Check failed --CT
+            return _failed_check($request, $check, $sth);
+        }
+        $sth->finish();
+    }
+
+    return;
+}
+
 sub upgrade {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
@@ -716,44 +939,33 @@ sub upgrade {
 
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-
-    $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
-        next if defined $request->{"applied_$preparation->{name}"}
-             && $request->{"applied_$preparation->{name}"} eq 'On';
-        my $sth = $request->{dbh}->prepare($preparation->preparation);
-        my $status = $sth->execute()
-            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
-        $request->{"applied_$preparation->{name}"} = 'On';
-        $sth->finish();
-    }
+    $request->{dbh}->{AutoCommit} = 0;
+    _prepare_upgrade($request, $dbinfo);
 
-    for my $check (_applicable_upgrade_tests($dbinfo)) {
-        next if $check->skipable
-             && defined $request->{"skip_$check->{name}"}
-             && $request->{"skip_$check->{name}"} eq 'On';
-        my $sth = $request->{dbh}->prepare($check->test_query);
-        $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
-        if ($sth->rows > 0){ # Check failed --CT
-             return _failed_check($request, $check, $sth);
-        }
-        $sth->finish();
+    if (my $rv = _run_upgrade_tests($request, $dbinfo)) {
+        return $rv;
     }
 
     if (upgrade_info($request) > 0) {
         my $template = LedgerSMB::Template::UI->new_UI;
 
-        $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
+        my $step = $upgrade_run_step{$upgrade_type};
+        my $upgrade_action = $upgrade_next_steps{$step};
+        $request->{upgrade_action} = $upgrade_action;
+
+        die "Upgrade type $upgrade_type not associated with a next step (step: $step)"
+            unless $upgrade_action;
+
+        print STDERR "Upgrade type $upgrade_type associated with $upgrade_action\n";
         return $template->render($request, 'setup/upgrade_info', $request);
     } else {
         $request->{dbh}->rollback();
 
-        return __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
+        return _dispatch_upgrade_workflow($request,
+                                          $upgrade_run_step{$upgrade_type});
     }
-
 }
 
 sub _failed_check {
@@ -973,7 +1185,7 @@ sub create_db {
     my $rc = $database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
-    return select_coa($request);
+    return _dispatch_upgrade_workflow($request, '_create_db');
 }
 
 =item select_coa
@@ -1021,7 +1233,8 @@ sub select_coa {
                     sic => $request->{sic}
                 });
 
-           return template_screen($request);
+            # successful completion returns 'undef'
+            return _dispatch_upgrade_workflow($request, '_select_coa');
         } else {
             for my $select (qw(chart gifi sic)) {
                 $request->{"${select}s"} =
@@ -1052,7 +1265,7 @@ button facilitates that scenario.
 sub skip_coa {
     my ($request) = @_;
 
-    return template_screen($request);
+    return _dispatch_upgrade_workflow($request, '_select_coa')
 }
 
 
@@ -1064,7 +1277,7 @@ select_coa and skip_coa functions.
 =cut
 
 sub _render_user {
-    my ($request) = @_;
+    my ($request, $entrypoint) = @_;
 
     @{$request->{salutations}} = $request->call_procedure(
         funcname => 'person__list_salutations'
@@ -1082,7 +1295,8 @@ sub _render_user {
         );
 
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'setup/new_user', $request);
+    return $template->render($request, 'setup/new_user',
+                             { %$request, save_action => $entrypoint });
 }
 
 =item _render_new_user
@@ -1093,7 +1307,7 @@ select_coa and skip_coa functions.
 =cut
 
 sub _render_new_user {
-    my ($request) = @_;
+    my ($request, $entrypoint) = @_;
 
     # One thing to remember here is that the setup.pl does not get the
     # benefit of the automatic db connection.  So in order to build this
@@ -1116,19 +1330,19 @@ sub _render_new_user {
     if ( $request->{coa_lc} ) {
         LedgerSMB::Setting->new(%$request)->set('default_country',$request->{coa_lc});
     }
-    return _render_user($request);
+    return _render_user($request, $entrypoint);
 }
 
 
 
-=item save_user
+=item _save_user
 
 Saves the administrative user, and then directs to the login page.
 
 =cut
 
-sub save_user {
-    my ($request) = @_;
+sub _save_user {
+    my ($request, $entrypoint) = @_;
     $request->{entity_class} = EC_EMPLOYEE;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
 
@@ -1155,7 +1369,7 @@ sub save_user {
            $request->{pls_import} = 1;
 
            # return from the 'catch' block
-           return _render_user($request);
+           return _render_user($request, $entrypoint);
        } else {
            die $_;
        }
@@ -1178,10 +1392,10 @@ sub save_user {
                                            'users_manage',
                                          ]
         );
-   }
-   $request->{dbh}->commit;
+    }
+    $request->{dbh}->commit;
 
-   return rebuild_modules($request);
+    return;
 }
 
 
@@ -1194,7 +1408,19 @@ sub process_and_run_upgrade_script {
     my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $database->loader_log_filename();
 
-    $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
+    my $guard = Scope::Guard->new(
+        sub {
+            $dbh->rollback;
+            $dbh->do(
+                qq{DROP SCHEMA $LedgerSMB::Sysconfig::db_namespace CASCADE;
+                   ALTER SCHEMA $src_schema
+                         RENAME TO $LedgerSMB::Sysconfig::db_namespace});
+            $dbh->commit;
+        });
+
+    $dbh->do("ALTER SCHEMA  $LedgerSMB::Sysconfig::db_namespace
+                    RENAME TO $src_schema;
+              CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
     $dbh->commit;
 
@@ -1251,107 +1477,70 @@ sub process_and_run_upgrade_script {
     $dbh->do(q{delete from defaults where setting_key like 'migration_%'});
     $dbh->commit;
 
-    # the schema was left incomplete when we created it, in order to provide
-    # a frozen (fixed) migration target. Now, however, we need to apply the
-    # changes from the remaining database schema management scripts to
-    # make the schema a complete one.
-    rebuild_modules($request,$database);
+    $guard->dismiss;
+    return;
+}
 
-    # If users are added to the user table, and appropriat roles created, this
+
+sub _post_migration_schema_upgrade {
+    my ($request, $database, $entrypoint) = @_;
+    my $dbh = $request->{dbh};
+    my $guard = Scope::Guard->new(
+        sub {
+            if ($dbh) {
+                $dbh->rollback;
+                $dbh->disconnect;
+            }
+        });
+    my $reauth;
+
+    ($reauth, $database) = _init_db($request) if not $database;
+    return $reauth if $reauth;
+
+
+    if (my $rv = _rebuild_modules($request, $entrypoint, $database)) {
+        ### should we *really* commit??
+        ### or should we treat *any* return value as problematic
+        ### (and leave committing the transaction to the inner scope?
+        if ($rv->[0] == 200) {
+            $dbh->commit;
+            $guard->dismiss;
+        }
+
+        return $rv;
+    }
+
+    # If users are added to the user table, and appropriate roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
+    $guard->dismiss;
     $dbh->do(q{SELECT admin__add_user_to_role(username, 'base_user')
-                from users WHERE username IN (select rolname from pg_roles)});
+                 FROM users WHERE username IN (select rolname from pg_roles)});
 
     $dbh->commit;
-    return $dbh->disconnect;
+    $dbh->disconnect;
+
+    return;
 }
 
-
-=item run_upgrade
-
-
+=item add_user
 
 =cut
 
-sub run_upgrade {
+sub _create_initial_user {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
+    return _render_new_user($request, '_create_initial_user')
+        unless $request->{username};
 
-    my $dbh = $request->{dbh};
-    my $dbinfo = $database->get_info();
-    my $v = $dbinfo->{version};
-    $v =~ s/\.//;
-    $dbh->do("ALTER SCHEMA $LedgerSMB::Sysconfig::db_namespace
-                RENAME TO lsmb$v")
-        or die "Can't rename schema '$LedgerSMB::Sysconfig::db_namespace': "
-        . $dbh->errstr();
-    $dbh->commit;
-
-    process_and_run_upgrade_script($request, $database, "lsmb$v",
-                   "$dbinfo->{version}-$CURRENT_MINOR_VERSION");
-
-    if ($v ne '1.2'){
-        $request->{only_templates} = 1;
-    }
-
-    my $templates = LedgerSMB::Setting->new(dbh => $dbh)
-        ->get('templates');
-    if ($templates){
-       $request->{template_dir} = $templates;
-       return load_templates($request);
-    } else {
-       return template_screen($request);
-    }
+    return (_save_user($request, '_create_initial_user')
+            or _dispatch_upgrade_workflow($request, '_create_initial_user'));
 }
 
-=item run_sl28_migration
-
-
-=cut
-
-sub run_sl28_migration {
+sub add_user {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    my $dbh = $request->{dbh};
-    $dbh->do('ALTER SCHEMA public RENAME TO sl28');
-    $dbh->commit;
-
-    process_and_run_upgrade_script($request, $database, 'sl28', 'sl3.0');
-
-    return create_initial_user($request);
-}
-
-=item run_sl30_migration
-
-
-=cut
-
-sub run_sl30_migration {
-    my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
-
-    my $dbh = $request->{dbh};
-    $dbh->do('ALTER SCHEMA public RENAME TO sl30');
-    $dbh->commit;
-
-    process_and_run_upgrade_script($request, $database, 'sl30', 'sl3.0');
-
-    return create_initial_user($request);
-}
-
-
-=item create_initial_user
-
-=cut
-
-sub create_initial_user {
-    my ($request) = @_;
-    return _render_new_user($request);
+    return (_create_initial_user($request)
+            or login($request));
 }
 
 =item edit_user_roles
@@ -1488,8 +1677,8 @@ between versions on a stable branch (typically upgrading)
 
 =cut
 
-sub rebuild_modules {
-    my ($request, $database) = @_;
+sub _rebuild_modules {
+    my ($request, $entrypoint, $database) = @_;
 
     if (not defined $database) {
         my ($reauth, $db) = _init_db($request);
@@ -1502,6 +1691,7 @@ sub rebuild_modules {
     #  New modules should be able to depend on the latest changes
     #  e.g. table definitions, etc.
 
+    $request->{resubmit_action} //= $entrypoint;
     my $HTML = html_formatter_context {
         return ! $database->apply_changes( checks => 1 );
     } $request;
@@ -1514,6 +1704,16 @@ sub rebuild_modules {
 
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
+
+    return;
+}
+
+sub rebuild_modules {
+    my ($request) = @_;
+
+    if (my $rv = _rebuild_modules($request, 'rebuild_modules')) {
+        return $rv;
+    }
     return complete($request);
 }
 
@@ -1523,7 +1723,7 @@ Gets the statistics info and shows the complete screen.
 
 =cut
 
-sub complete {
+sub _complete {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
@@ -1533,6 +1733,8 @@ sub complete {
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/complete', $request);
 }
+
+sub complete { return _complete(@_) };
 
 =item system_info
 
