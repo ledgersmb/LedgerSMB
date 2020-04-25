@@ -90,6 +90,7 @@ Changelog for 1.7 Series
 
 Changelog for 1.7.12 (to be released)
 * Reconciliation reports list now shows usernames rather than user ids (#4388)
+* Single payment interface throws error without open invoices (#4529)
 
 
 Changelog for 1.7.11
