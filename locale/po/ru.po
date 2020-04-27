@@ -6,7 +6,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.7.0\n"
+"Project-Id-Version: LedgerSMB 1.7.12"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2020-04-27 15:17+0000\n"
 "Last-Translator: Olena Fesiuk <o.fesiuk@gmail.com>, 2019\n"
