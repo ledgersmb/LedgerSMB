@@ -1,3 +1,4 @@
+#
 # Translators:
 # Максим Дронь <dronmax@gmail.com>, 2019
 # Erik Huelsmann <ehuels@gmail.com>, 2019
@@ -7,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-11 18:39+0000\n"
+"POT-Creation-Date: 2020-04-27 15:17+0000\n"
 "Last-Translator: Olena Fesiuk <o.fesiuk@gmail.com>, 2019\n"
 "Language-Team: Russian (https://www.transifex.com/ledgersmb/teams/58325/ru/)\n"
 "Language: ru\n"
@@ -281,7 +282,7 @@ msgstr "Наименование счета"
 msgid "Account Type"
 msgstr "Тип счета"
 
-#: old/lib/LedgerSMB/GL.pm:224
+#: old/lib/LedgerSMB/GL.pm:226
 msgid "Account [_1] not found"
 msgstr "Счет  [_1]  не найден"
 
@@ -836,11 +837,11 @@ msgstr "Годовая прямолинейная амортизация еже�
 msgid "Any"
 msgstr "Любой"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1292
+#: lib/LedgerSMB/Scripts/payment.pm:1293
 msgid "Applied discount"
 msgstr "Примененная скидка"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1939
+#: lib/LedgerSMB/Scripts/payment.pm:1940
 msgid "Applied discount by an overpayment"
 msgstr "Примененная скидка при переплате"
 
@@ -1440,7 +1441,7 @@ msgstr ""
 msgid "Calculate Taxes"
 msgstr ""
 
-#: old/lib/LedgerSMB/GL.pm:199
+#: old/lib/LedgerSMB/GL.pm:201
 msgid "Can't post credits and debits on one line."
 msgstr ""
 
@@ -1826,7 +1827,7 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1485 lib/LedgerSMB/Scripts/payment.pm:682
+#: lib/LedgerSMB/Scripts/payment.pm:1486 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
 #: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1554 old/bin/oe.pl:2069
@@ -3346,7 +3347,7 @@ msgstr "Курс валюты"
 msgid "Exchange rate for payment missing!"
 msgstr "Пропущен курс оплаты!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1201
+#: lib/LedgerSMB/Scripts/payment.pm:1202
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -5075,7 +5076,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr "Нет открытых проектов"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1347
+#: lib/LedgerSMB/Scripts/payment.pm:1348
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -8244,11 +8245,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1218
+#: lib/LedgerSMB/Scripts/payment.pm:1219
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1926
+#: lib/LedgerSMB/Scripts/payment.pm:1927
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -8856,7 +8857,7 @@ msgstr ""
 msgid "Use Shipto"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1804
+#: lib/LedgerSMB/Scripts/payment.pm:1805
 msgid "Use overpayment/prepayment"
 msgstr ""
 
@@ -9342,19 +9343,19 @@ msgstr ""
 msgid "in years"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1954
+#: lib/LedgerSMB/Scripts/payment.pm:1955
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1655
+#: lib/LedgerSMB/Scripts/payment.pm:1656
 msgid "is lesser than 0"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1649
+#: lib/LedgerSMB/Scripts/payment.pm:1650
 msgid "is lesser than the amount to be paid"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1911
+#: lib/LedgerSMB/Scripts/payment.pm:1912
 msgid "is null"
 msgstr ""
 
@@ -9402,6 +9403,6 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "неожиданная ошибка"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1963 lib/LedgerSMB/Scripts/payment.pm:1982
+#: lib/LedgerSMB/Scripts/payment.pm:1964 lib/LedgerSMB/Scripts/payment.pm:1983
 msgid "use of an overpayment"
 msgstr ""

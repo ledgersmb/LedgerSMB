@@ -1,3 +1,4 @@
+#
 # Translators:
 # Jos <j.verdoold@gmail.com>, 2019
 # Erik Huelsmann <ehuels@gmail.com>, 2019
@@ -6,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-11 18:39+0000\n"
+"POT-Creation-Date: 2020-04-27 15:17+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -278,7 +279,7 @@ msgstr "Rekeningtitel"
 msgid "Account Type"
 msgstr "Rekeningtype"
 
-#: old/lib/LedgerSMB/GL.pm:224
+#: old/lib/LedgerSMB/GL.pm:226
 msgid "Account [_1] not found"
 msgstr "Rekening [_1] niet gevonden"
 
@@ -833,11 +834,11 @@ msgstr "Lineaire afschrijving, per maand"
 msgid "Any"
 msgstr "Elk(e)"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1292
+#: lib/LedgerSMB/Scripts/payment.pm:1293
 msgid "Applied discount"
 msgstr "Toegepaste korting"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1939
+#: lib/LedgerSMB/Scripts/payment.pm:1940
 msgid "Applied discount by an overpayment"
 msgstr "Korting bij een vooruitbetaling"
 
@@ -1437,7 +1438,7 @@ msgstr "CSV Bestand:"
 msgid "Calculate Taxes"
 msgstr "Bereken BTW"
 
-#: old/lib/LedgerSMB/GL.pm:199
+#: old/lib/LedgerSMB/GL.pm:201
 msgid "Can't post credits and debits on one line."
 msgstr ""
 
@@ -1824,7 +1825,7 @@ msgstr "Contacten"
 msgid "Content"
 msgstr "Inhoud"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1485 lib/LedgerSMB/Scripts/payment.pm:682
+#: lib/LedgerSMB/Scripts/payment.pm:1486 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
 #: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1554 old/bin/oe.pl:2069
@@ -3347,7 +3348,7 @@ msgstr "Wisselkoers"
 msgid "Exchange rate for payment missing!"
 msgstr "Wisselkoers voor betaling ontbreekt!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1201
+#: lib/LedgerSMB/Scripts/payment.pm:1202
 msgid "Exchange rate hasn't been defined!"
 msgstr "Wisselkoers is niet gedefinieerd!"
 
@@ -5092,7 +5093,7 @@ msgstr "Geen taal"
 msgid "No open Projects!"
 msgstr "Geen open projecten!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1347
+#: lib/LedgerSMB/Scripts/payment.pm:1348
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Geen voorschotrekening geselecteerd  Een aanmaken?"
 
@@ -8278,11 +8279,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dit document is goedgekeurd door"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1218
+#: lib/LedgerSMB/Scripts/payment.pm:1219
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr "Deze journaalboeking is een gevolg van een betalingstransactie"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1926
+#: lib/LedgerSMB/Scripts/payment.pm:1927
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr "Deze journaalboeking is het gevolg van vooruitbetaling transactie"
 
@@ -8892,7 +8893,7 @@ msgstr "Gebruik voorschot"
 msgid "Use Shipto"
 msgstr "Gebruik verzendadres"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1804
+#: lib/LedgerSMB/Scripts/payment.pm:1805
 msgid "Use overpayment/prepayment"
 msgstr "Gebruik meerbetaling/vooruitbetaling"
 
@@ -9380,19 +9381,19 @@ msgstr "in maanden"
 msgid "in years"
 msgstr "in jaren"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1954
+#: lib/LedgerSMB/Scripts/payment.pm:1955
 msgid "is bigger than the amount available"
 msgstr "Saldo is ontoereikend"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1655
+#: lib/LedgerSMB/Scripts/payment.pm:1656
 msgid "is lesser than 0"
 msgstr "Is minder dan 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1649
+#: lib/LedgerSMB/Scripts/payment.pm:1650
 msgid "is lesser than the amount to be paid"
 msgstr "het bedrag is minder dan uiteindelijk moet worden betaald"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1911
+#: lib/LedgerSMB/Scripts/payment.pm:1912
 msgid "is null"
 msgstr "is nihiel"
 
@@ -9440,7 +9441,7 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "onverwachte fout!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1963 lib/LedgerSMB/Scripts/payment.pm:1982
+#: lib/LedgerSMB/Scripts/payment.pm:1964 lib/LedgerSMB/Scripts/payment.pm:1983
 msgid "use of an overpayment"
 msgstr "Gebruik van een vooruitbetaling"
 

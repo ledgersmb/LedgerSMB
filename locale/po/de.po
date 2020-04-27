@@ -1,3 +1,4 @@
+#
 # Translators:
 # Mikkel Høgh <mikkel@hoegh.org>, 2019
 # Mikael Arhelger <mikaelarhelger@gmail.com>, 2019
@@ -8,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-11 18:39+0000\n"
+"POT-Creation-Date: 2020-04-27 15:17+0000\n"
 "Last-Translator: e t <contacts@ethnoco.ch>, 2020\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -279,7 +280,7 @@ msgstr "Kontobezeichnung"
 msgid "Account Type"
 msgstr "Kontotyp"
 
-#: old/lib/LedgerSMB/GL.pm:224
+#: old/lib/LedgerSMB/GL.pm:226
 msgid "Account [_1] not found"
 msgstr "Konto [_1] nicht gefunden"
 
@@ -834,11 +835,11 @@ msgstr "Lineare Abschreibung monatlich"
 msgid "Any"
 msgstr "Jede"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1292
+#: lib/LedgerSMB/Scripts/payment.pm:1293
 msgid "Applied discount"
 msgstr "Discount angerechnet"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1939
+#: lib/LedgerSMB/Scripts/payment.pm:1940
 msgid "Applied discount by an overpayment"
 msgstr "Angewandter Nachlass aus Ãœberzahlung"
 
@@ -1438,7 +1439,7 @@ msgstr "CSV Datei:"
 msgid "Calculate Taxes"
 msgstr "Steuern berechnen"
 
-#: old/lib/LedgerSMB/GL.pm:199
+#: old/lib/LedgerSMB/GL.pm:201
 msgid "Can't post credits and debits on one line."
 msgstr ""
 
@@ -1832,7 +1833,7 @@ msgstr "Kontakte"
 msgid "Content"
 msgstr "Inhalt"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1485 lib/LedgerSMB/Scripts/payment.pm:682
+#: lib/LedgerSMB/Scripts/payment.pm:1486 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
 #: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1554 old/bin/oe.pl:2069
@@ -3356,7 +3357,7 @@ msgstr "Wechselkurs"
 msgid "Exchange rate for payment missing!"
 msgstr "Wechselkurs für Zahlung fehlt!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1201
+#: lib/LedgerSMB/Scripts/payment.pm:1202
 msgid "Exchange rate hasn't been defined!"
 msgstr "Wechselkurs wurde nicht definiert!"
 
@@ -5099,7 +5100,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr "Keine offenen Projekte!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1347
+#: lib/LedgerSMB/Scripts/payment.pm:1348
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Kein Ãœberzahlungskonto gewÃ¤hlt.  Wurde ein solches erstellt?"
 
@@ -8272,11 +8273,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dieses Dokument wurde genehmigt von"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1218
+#: lib/LedgerSMB/Scripts/payment.pm:1219
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr "Dieser Hauptbucheintrag ist die Folge einer Zahlung"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1926
+#: lib/LedgerSMB/Scripts/payment.pm:1927
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr "Dieser Hauptbucheintrag ist die Folge einer Ãœberzahlung"
 
@@ -8884,7 +8885,7 @@ msgstr "Überzahlung nutzen"
 msgid "Use Shipto"
 msgstr "Verwenden Sie die Lieferadresse"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1804
+#: lib/LedgerSMB/Scripts/payment.pm:1805
 msgid "Use overpayment/prepayment"
 msgstr "Ãœberzahlung/Anzahlung nutzen"
 
@@ -9372,19 +9373,19 @@ msgstr "in Monaten"
 msgid "in years"
 msgstr "in Jahren"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1954
+#: lib/LedgerSMB/Scripts/payment.pm:1955
 msgid "is bigger than the amount available"
 msgstr "ist größer als der verfügbare Betrag"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1655
+#: lib/LedgerSMB/Scripts/payment.pm:1656
 msgid "is lesser than 0"
 msgstr "ist kleiner als 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1649
+#: lib/LedgerSMB/Scripts/payment.pm:1650
 msgid "is lesser than the amount to be paid"
 msgstr "ist weniger als der zu zahlende Betrag"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1911
+#: lib/LedgerSMB/Scripts/payment.pm:1912
 msgid "is null"
 msgstr "ist null"
 
@@ -9432,7 +9433,7 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "unerwarteter Fehler!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1963 lib/LedgerSMB/Scripts/payment.pm:1982
+#: lib/LedgerSMB/Scripts/payment.pm:1964 lib/LedgerSMB/Scripts/payment.pm:1983
 msgid "use of an overpayment"
 msgstr "Nutzen einer Ãœberzahlung"
 

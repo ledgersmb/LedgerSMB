@@ -1,3 +1,4 @@
+#
 # Translators:
 # Arne Hanssen <arne.senja@gmail.com>, 2019
 # Erik Huelsmann <ehuels@gmail.com>, 2019
@@ -8,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-11 18:39+0000\n"
+"POT-Creation-Date: 2020-04-27 15:17+0000\n"
 "Last-Translator: Håvard Sørli <havard@sorli.no>, 2020\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -280,7 +281,7 @@ msgstr "Kontotype"
 msgid "Account Type"
 msgstr "Kontotype"
 
-#: old/lib/LedgerSMB/GL.pm:224
+#: old/lib/LedgerSMB/GL.pm:226
 msgid "Account [_1] not found"
 msgstr "Konto [_1] ikke funnet"
 
@@ -841,11 +842,11 @@ msgstr "Årlig rett linje månedlig"
 msgid "Any"
 msgstr "Noen"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1292
+#: lib/LedgerSMB/Scripts/payment.pm:1293
 msgid "Applied discount"
 msgstr "Lagt til rabatt"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1939
+#: lib/LedgerSMB/Scripts/payment.pm:1940
 msgid "Applied discount by an overpayment"
 msgstr "Lagt til rabatt på grunn av overbetaling"
 
@@ -1445,7 +1446,7 @@ msgstr "CSV Fil:"
 msgid "Calculate Taxes"
 msgstr "Kalkuler MVA/Avgifter"
 
-#: old/lib/LedgerSMB/GL.pm:199
+#: old/lib/LedgerSMB/GL.pm:201
 msgid "Can't post credits and debits on one line."
 msgstr "Kan ikke spesifisere både debet og kreditt på en linje"
 
@@ -1830,7 +1831,7 @@ msgstr "Kontakter"
 msgid "Content"
 msgstr "Innhold"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1485 lib/LedgerSMB/Scripts/payment.pm:682
+#: lib/LedgerSMB/Scripts/payment.pm:1486 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1747 old/bin/arap.pl:266
 #: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1554 old/bin/oe.pl:2069
@@ -3355,7 +3356,7 @@ msgstr "Vekslingskurs"
 msgid "Exchange rate for payment missing!"
 msgstr "Vekslingskurs for betaling mangler!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1201
+#: lib/LedgerSMB/Scripts/payment.pm:1202
 msgid "Exchange rate hasn't been defined!"
 msgstr "Vekslingskurs er ikke definert!"
 
@@ -5099,7 +5100,7 @@ msgstr "Ingen språk valgt"
 msgid "No open Projects!"
 msgstr "Ignen åpne prosjekter!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1347
+#: lib/LedgerSMB/Scripts/payment.pm:1348
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Ingen for mye betalt konto valgt. Finnes det noen?"
 
@@ -8294,12 +8295,12 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dette dokumentet er godkjent av"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1218
+#: lib/LedgerSMB/Scripts/payment.pm:1219
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering."
 
-#: lib/LedgerSMB/Scripts/payment.pm:1926
+#: lib/LedgerSMB/Scripts/payment.pm:1927
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering"
@@ -8919,7 +8920,7 @@ msgstr "Bruk Overbetaling"
 msgid "Use Shipto"
 msgstr "Bruk send til"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1804
+#: lib/LedgerSMB/Scripts/payment.pm:1805
 msgid "Use overpayment/prepayment"
 msgstr "Bruk overbetaling/forhåndsinnbetaling"
 
@@ -9407,19 +9408,19 @@ msgstr "i måneder"
 msgid "in years"
 msgstr "i år"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1954
+#: lib/LedgerSMB/Scripts/payment.pm:1955
 msgid "is bigger than the amount available"
 msgstr "er større enn tilgjengelig beløp"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1655
+#: lib/LedgerSMB/Scripts/payment.pm:1656
 msgid "is lesser than 0"
 msgstr "er mindre enn 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1649
+#: lib/LedgerSMB/Scripts/payment.pm:1650
 msgid "is lesser than the amount to be paid"
 msgstr "er mindre en beløpet som skal betales"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1911
+#: lib/LedgerSMB/Scripts/payment.pm:1912
 msgid "is null"
 msgstr "er null"
 
@@ -9467,7 +9468,7 @@ msgstr "til_dato"
 msgid "unexpected error!"
 msgstr "uventet feil!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1963 lib/LedgerSMB/Scripts/payment.pm:1982
+#: lib/LedgerSMB/Scripts/payment.pm:1964 lib/LedgerSMB/Scripts/payment.pm:1983
 msgid "use of an overpayment"
 msgstr "bruk en overbetaling"
 
