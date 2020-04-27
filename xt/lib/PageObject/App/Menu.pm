@@ -134,9 +134,13 @@ sub click_menu {
         for my $path (@$paths) {
             $self->session->wait_for(
                 sub {
-                    my $xpath = "./*[\@role='$role']" .
-                                "/*[\@role='presentation'" .
-                                " and .//*[\@role='treeitem' and text()='$path']]";
+                    my $xpath =
+                        "./*[\@class='dijitTreeNodeContainer']" .
+                        "/*[contains(\@class,'dijitTreeNode')" .
+                        "   and ./*[contains(\@class,'dijitTreeRow')" .
+                        "           and .//*[normalize-space(text())" .
+                        "                    =normalize-space('$path')]]]";
+
                     my $item1 = $item->find($xpath);
                     my $valid = $item1 && ($item1->get_text ne '');
                     $item = $item1 if $valid;
@@ -160,6 +164,13 @@ sub click_menu {
         maindiv->wait_for_content(replaces => $maindiv);
 }
 
+sub close_menus {
+    my ($self) = @_;
+
+    my @nodes = $self->find_all('.//*[@aria-expanded="true"'
+                                . '   and @role="treeitem"]');
+    $_->click for reverse @nodes;
+}
 
 __PACKAGE__->meta->make_immutable;
 
