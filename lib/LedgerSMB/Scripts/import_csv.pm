@@ -324,33 +324,26 @@ sub _process_chart {
 
     my ($request, $entries) = @_;
 
-    use constant ACCNO          => 0;
-    use constant DESCRIPTION    => 1;
-    use constant CHARTTYPE      => 2;
-    use constant CATEGORY       => 3;
-    use constant CONTRA         => 4;
-    use constant TAX            => 5;
-    use constant LINK           => 6;
-    use constant HEADING        => 7;
-    use constant GIFI_ACCNO     => 8;
-
+    my %imported;
     foreach my $entry (@$entries){
-        my $account = LedgerSMB::DBObject::Account->new(%$request);
-        my $settings = {
-            accno => $entry->[ACCNO],
-            description => $entry->[DESCRIPTION],
-            charttype => $entry->[CHARTTYPE],
-            category => $entry->[CATEGORY],
-            contra => $entry->[CONTRA],
-            tax => $entry->[TAX],
-#            heading => $entry->[7],
-            gifi_accno => $entry->[GIFI_ACCNO],
-        };
-        my @link = split /:/, $entry->[LINK];
-        @$settings{ @link } = ( (1) x @link);
+        my %settings;
 
-        $account->merge($settings);
+        @settings{qw( accno description charttype
+                      category contra tax link heading gifi_accno )} = @$entry;
+
+        my @link = split /:/, $settings{link};
+        @settings{ @link } = ( (1) x @link);
+
+        die "Unable to resolve heading $settings{heading} to its id; available: " . join(' ', sort keys %imported)
+            if ($settings{heading}
+                and not exists $imported{$settings{heading}});
+        $settings{heading} = $imported{$settings{heading}}->{id};
+
+        my $account =
+            LedgerSMB::DBObject::Account->new(%settings,
+                                              dbh => $request->{dbh});
         $account->save();
+        $imported{$settings{accno}} = $account;
     }
     return;
 }
