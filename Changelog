@@ -88,9 +88,11 @@ Dependency updates
 Changelog for 1.7 Series
 2019-10-04
 
-Changelog for 1.7.12 (to be released)
+Changelog for 1.7.12
 * Reconciliation reports list now shows usernames rather than user ids (#4388)
 * Single payment interface throws error without open invoices (#4529)
+* Fix CSV data imports discading the first row (#4567)
+* Improve Chart of Accounts import no longer discards heading (#4567)
 
 
 Changelog for 1.7.11
