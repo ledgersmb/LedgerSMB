@@ -473,7 +473,7 @@ sub _parse_file {
     $csv->header($handle);
     $self->{import_entries} = $csv->getline_all($handle);
 
-    return @{$self->{import_entries}};
+    return ([$csv->fields], @{$self->{import_entries}});
 }
 
 =head2 begin_import
