@@ -47,6 +47,7 @@ has template_created => (is => 'rw', default => 0);
 has last_scenario_stash => (is => 'rw');
 has last_feature_stash => (is => 'rw');
 
+has databases_created => (is => 'ro', default => sub { [] });
 
 sub _build_admin_dbh {
     my ($self) = @_;
@@ -70,8 +71,43 @@ sub step_directories {
     return [ 'ledgersmb_steps/' ];
 }
 
+
+my $startup_pid = $$;
+
+sub pre_execute {
+}
+
+sub post_execute {
+    my ($self) = @_;
+
+    if ($$ != $startup_pid) {
+        my $db = LedgerSMB::Database->new(
+            dbname   => $self->db_name,
+            username => $self->username,
+            password => $self->password,
+            host     => $self->host);
+
+        my $dbh = $db->connect({ PrintError => 0,
+                                 RaiseError => 1,
+                                 AutoCommit => 1,
+                               });
+        $dbh->do(q{set client_min_messages = 'warning'});
+
+        for my $db (@{$self->databases_created}, $self->template_db_name) {
+            $dbh->do(q{drop database if exists }
+                     . $dbh->quote_identifier($db));
+        }
+        $dbh->disconnect;
+    }
+}
+
 sub pre_feature {
     my ($self, $feature, $stash) = @_;
+
+    $self->template_db_name($self->template_db_name . "-$$")
+        if $$ != $startup_pid;
+    $self->admin_user_name($self->admin_user_name . "-$$")
+        if $$ != $startup_pid;
 
     my $db = LedgerSMB::Database->new(
         dbname   => $self->db_name,
@@ -235,6 +271,8 @@ sub create_from_template {
     $self->last_feature_stash->{"the company"} = $company;
     $self->last_scenario_stash->{"the company"} = $company;
     $self->_clear_admin_dbh;
+
+    push @{$self->databases_created}, $company;
 }
 
 sub ensure_nonexisting_company {
