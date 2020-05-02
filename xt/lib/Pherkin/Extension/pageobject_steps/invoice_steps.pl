@@ -9,7 +9,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Database;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
-use LedgerSMB::PGDate;
 use Selenium::Remote::WDKeys;
 
 use Module::Runtime qw(use_module);
@@ -18,18 +17,6 @@ use PageObject::App::AR::Invoice;
 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
-
-Transform qr/^table:/, sub {
-    my ($c, $data) = @_;
-
-    for my $row (@$data) {
-        for my $col (sort keys %$row) {
-            if (exists $row->{$col} and $row->{$col} eq '$$today') {
-                $row->{$col} = LedgerSMB::PGDate->today->to_output;
-            }
-        }
-    }
-};
 
 When qr/I open the sales invoice entry screen/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';

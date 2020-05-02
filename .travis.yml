@@ -118,6 +118,7 @@ cache:
     - $HOME/dojo_archive
 
 before_install:
+  - sudo mount -o remount,size=50% /var/ramfs
   # list all the running services before we start. Perhaps we can stop some of them to save resources.
   - service --status-all
   # display the available resources

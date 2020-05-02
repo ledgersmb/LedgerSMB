@@ -27,7 +27,7 @@ Given qr/a (fresh )?standard test company(?: named "(.*)")?/, sub {
     S->{ext_lsmb}->ensure_template;
 
     if (! S->{"the company"} || $fresh_required) {
-        $company //= "standard-" . $company_seq++;
+        $company //= "standard-$$-" . $company_seq++;
         S->{ext_lsmb}->create_from_template($company);
     }
 };
