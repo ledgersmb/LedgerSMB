@@ -57,6 +57,18 @@ my %menu_path_pageobject_map = (
     "Cash > Reports > Receipts" => 'PageObject::App::Cash::PaymentSearch',
     "Cash > Reports > Reconciliation" => 'PageObject::App::Search::Reconciliation',
 
+    "Fixed Assets > Asset Classes > Add Class" => 'PageObject::App::FixedAssets::EditClass',
+    "Fixed Assets > Asset Classes > List Classes" => 'PageObject::App::FixedAssets::SearchClass',
+    "Fixed Assets > Assets > Add Assets" => 'PageObject::App::FixedAssets::Edit',
+#    "Fixed Assets > Assets > Depreciate" => 'PageObject::App::FixedAssets::DepreciationStart',
+#    "Fixed Assets > Assets > Disposal" => '',
+#    "Fixed Assets > Assets > Import" => '',
+#    "Fixed Assets > Assets > Reports > Depreciation" => '',
+#    "Fixed Assets > Assets > Reports > Disposal" => '',
+#    "Fixed Assets > Assets > Reports > Net Book Value" => '',
+    "Fixed Assets > Assets > Search Assets" => 'PageObject::App::FixedAssets::Search',
+
+
     "Transaction Approval > Batches" => 'PageObject::App::TransactionApproval::Batches',
     "Transaction Approval > Inventory" => 'PageObject::App::Parts::AdjustSearchUnapproved',
 

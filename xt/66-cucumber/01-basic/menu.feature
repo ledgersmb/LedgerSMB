@@ -122,25 +122,26 @@ Scenario Outline: Navigate to menu and open screen
     | path                                       | screen                   |
     | Contacts > Search                          | Contact Search           |
 
+  Examples:
+    | path                                        | screen                   |
+    | Fixed Assets > Asset Classes > Add Class    | asset class edit         |
+    | Fixed Assets > Asset Classes > List Classes | asset class search       |
+    | Fixed Assets > Assets > Add Assets          | asset edit               |
+
   @wip
   Examples:
-    | path                                       | screen                   |
-    | Fixed Assets > Asset Classes               |                          |
-    | Fixed Assets > Asset Classes > Add Class   |                          |
-    | Fixed Assets > Asset Classes > List Classes|                          |
-    | Fixed Assets > Assets                      |                          |
-    | Fixed Assets > Assets > Add Assets         |                          |
-    | Fixed Assets > Assets > Depreciate         |                          |
-    | Fixed Assets > Assets > Disposal           |                          |
-    | Fixed Assets > Assets > Import             |                          |
-    | Fixed Assets > Assets > Reports            |                          |
-    | Fixed Assets > Assets > Reports > Depreciation |                      |
-    | Fixed Assets > Assets > Reports > Disposal |                          |
-    | Fixed Assets > Assets > Reports > Net Book Value |                    |
-    | Fixed Assets > Assets > Search Assets      |                          |
+    | path                                             | screen |
+    | Fixed Assets > Assets > Depreciate          | asset depreciation start |
+    | Fixed Assets > Assets > Disposal                 |        |
+    | Fixed Assets > Assets > Import                   |        |
+    | Fixed Assets > Assets > Reports > Depreciation   |        |
+    | Fixed Assets > Assets > Reports > Disposal       |        |
+    | Fixed Assets > Assets > Reports > Net Book Value |        |
+
   Examples:
-    | path                                       | screen                   |
-    | General Journal > Chart of Accounts        | Chart of Accounts        |
+    | path                                  | screen            |
+    | Fixed Assets > Assets > Search Assets | asset search      |
+    | General Journal > Chart of Accounts   | Chart of Accounts |
 
   @wip
   Examples:

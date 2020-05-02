@@ -72,6 +72,7 @@ When qr/I navigate the menu and select the item at "(.*)"/, sub {
 };
 
 my %screens = (
+    'Account' => 'PageObject::App::GL::Account',
     'AP debit invoice entry' => 'PageObject::App::AP::DebitInvoice',
     'AP invoice entry' => 'PageObject::App::AP::Invoice',
     'AP note entry' => 'PageObject::App::AP::Note',
@@ -83,7 +84,11 @@ my %screens = (
     'AR returns' => 'PageObject::App::AR::Return',
     'AR search' => 'PageObject::App::Search::AR',
     'AR transaction entry' => 'PageObject::App::AR::Transaction',
-    'Account' => 'PageObject::App::GL::Account',
+    'asset class edit' => 'PageObject::App::FixedAssets::EditClass',
+    'asset class search' => 'PageObject::App::FixedAssets::SearchClass',
+    'asset depreciate' => 'PageObject::App::FixedAssets::DepreciateStart',
+    'asset edit' => 'PageObject::App::FixedAssets::Edit',
+    'asset search' => 'PageObject::App::FixedAssets::Search',
     'Batch Search Report' => 'PageObject::App::Search::ReportDynatable',
     'Batch import' => 'PageObject::App::BatchImport',
     'Budget search' => 'PageObject::App::Search::Budget',
