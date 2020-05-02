@@ -29,7 +29,7 @@ commands:
              echo $PWD
              # Coverage explicitly without parallellism to prevent resource contention
              # when Devel::Cover writes coverage database on process-exit
-             prove --recurse \
+             prove -j2 --recurse \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
                    --pgtap-option psql=.circleci/psql-wrap \
