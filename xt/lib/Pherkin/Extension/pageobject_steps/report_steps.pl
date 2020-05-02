@@ -68,6 +68,7 @@ Then qr/I expect the '(.*)' report column to contain '(.*)' for (.*) '(.*)'/, su
     my $value = $2;
     my $row = $3;
     my $row_id = $4;
+    $value =~ s/^\$\$(.+)$/S->{$1}/e;
 
     ok((grep { $value eq $_->{$column}
                && $row_id eq $_->{$row} } @rows),
