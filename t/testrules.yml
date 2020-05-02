@@ -6,10 +6,9 @@
 #    {foo,bar,baz} is any of foo, bar or baz.
 #    \ is an escape character
 seq:
-  - seq:
-    - par:
-      - t/*
-      - xt/{0,1,2,3}*
+  - par:
+    - t/*
+    - xt/{0,1,2,3}*
   - seq:
     - xt/40-dbsetup.t
     - par:
@@ -19,17 +18,9 @@ seq:
       - xt/45*.t
       - xt/47*.t
       - xt/48*.t
-  - seq:
-    - par:
       - xt/{43,44,5,7}*.t
       - xt/6{1,2,3,7,8,9}*.t
-      - seq:
-        - xt/60-startlsmb.t
-        - seq:
-          - par:
-            - xt/6{5,6}*.t
-        - seq:
-          - par:
-            - **.feature
+      - **.feature
       - xt/*.pg
-  - seq: xt/89-dropdb.t
+  - seq:
+    - xt/89-dropdb.t
