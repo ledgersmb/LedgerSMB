@@ -33,9 +33,10 @@ foreach my $file(@files) {
     {
         my $todo;
         # Non-standard copyright section in this file
-        if($file eq 'lib/LedgerSMB/Scripts/payment.pm') {
-            $todo = todo "SKIPPING $file - non standard COPYRIGHT section";
-        }
+        # payment.pm has been fixed; leaving the code here as an example
+        #if($file eq 'lib/LedgerSMB/Scripts/payment.pm') {
+        #    $todo = todo "SKIPPING $file - non standard COPYRIGHT section";
+        #}
 
         my $file_text = get_raw_pod_section_from_file(
             $file,
