@@ -129,7 +129,7 @@ Displays the asset category search screen
 
 sub asset_category_search {
     my ($request) = @_;
-    my $ac = LedgerSMB::DBObject::Asset_Class->new();
+    my $ac = LedgerSMB::DBObject::Asset_Class->new(dbh => $request->{dbh});
     $ac->get_metadata;
 
     my $template = LedgerSMB::Template::UI->new_UI;
