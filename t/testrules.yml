@@ -28,6 +28,8 @@ seq:
         - seq:
           - par:
             - xt/6{5,6}*.t
-        - seq: **.feature
+        - seq:
+          - par:
+            - **.feature
       - xt/*.pg
   - seq: xt/89-dropdb.t
