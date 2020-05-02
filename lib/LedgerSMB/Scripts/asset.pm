@@ -38,48 +38,6 @@ our @file_columns = qw(tag purchase_date description asset_class location vendor
 our $default_dep_account = '5010'; # Override in custom/asset.pl
 our $default_asset_account = '1300'; # Override in custom/asset.pl
 
-=item begin_depreciation_all
-
-Displays the depreciation screen for all asset classes.
-
-No inputs required.  Those inputs expected for depreciate_all can be used to
-set defaults here.
-
-=cut
-
-sub begin_depreciation_all {
-    my ($request) = @_;
-    my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'asset/begin_depreciation_all',
-                             { request => $request });
-}
-
-=item depreciate_all
-
-Creates a depreciation report for each asset class.  Depreciates all assets
-
-Expects report_date to be set.
-
-=cut
-
-sub depreciate_all {
-    my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->get_metadata;
-    for my $ac(@{$report->{asset_classes}}){
-        my $dep = LedgerSMB::DBObject::Asset_Report->new(%$request);
-        $dep->{asset_class} = $ac->{id};
-        $dep->generate;
-        for my $asset (@{$dep->{assets}}){
-            push @{$dep->{asset_ids}}, $asset->{id};
-        }
-        $dep->save;
-    }
-    $request->{message} = $request->{_locale}->text('Depreciation Successful');
-    my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'info', { request => $request });
-}
-
 =item asset_category_screen
 
 Asset class (edit create class)
