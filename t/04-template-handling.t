@@ -167,7 +167,7 @@ SKIP: {
         'Template, new (XLS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar',
+    isa_ok($template->render({'name' => 'foo\&bar',
                               'rows' => [],
                               'columns' => [] }),
         ['LedgerSMB::Template'],
@@ -193,7 +193,7 @@ SKIP: {
         'Template, new (XLSX): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (XLSX): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar',
+    isa_ok($template->render({'name' => 'foo\&bar',
                               'rows' => [],
                               'columns' => []}),
         ['LedgerSMB::Template'],
@@ -225,7 +225,7 @@ SKIP: {
         'Template, new (ODS): Object creation with format and template');
     is($template->{include_path}, 't/data',
         'Template, new (ODS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
+    isa_ok($template->render({'name' => 'foo\&bar'}),
         ['LedgerSMB::Template'],
         'Template, render (ODS): Simple ODS template, default filename');
     # ods is actualy a zip file.
