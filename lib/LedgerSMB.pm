@@ -581,7 +581,8 @@ sub report_renderer_doc {
             ];
 
         # Use the same Content-Disposition criteria as _http_output()
-        my $name = $template->{output_options}->{filename};
+        my $name =
+            $template->{output_options}->{filename} . '.' . lc($request->{format});
         if ($name) {
             $name =~ s#^.*/##;
             push @$headers,
