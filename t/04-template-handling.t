@@ -158,16 +158,16 @@ SKIP: {
     $template = undef;
     $template = LedgerSMB::Template->new(
         'format'   => 'XLS',
-        'path'     => 't/data',
-        'template' => '04-template'
+        'path'     => 'templates/demo',
+        'template' => 'display_report'
     );
     ok(defined $template,
         'Template, new (XLS): Object creation with format and template');
     isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (XLS): Object creation with format and template');
-    is($template->{include_path}, 't/data',
+    is($template->{include_path}, 'templates/demo',
         'Template, new (XLS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar',
+    isa_ok($template->render({'name' => 'foo&bar',
                               'rows' => [],
                               'columns' => [] }),
         ['LedgerSMB::Template'],
@@ -184,16 +184,16 @@ SKIP: {
     $template = undef;
     $template = LedgerSMB::Template->new(
         'format'   => 'XLSX',
-        'path'     => 't/data',
-        'template' => '04-template'
+        'path'     => 'templates/demo',
+        'template' => 'display_report'
     );
     ok(defined $template,
         'Template, new (XLSX): Object creation with format and template');
     isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (XLSX): Object creation with format and template');
-    is($template->{include_path}, 't/data',
+    is($template->{include_path}, 'templates/demo',
         'Template, new (XLSX): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar',
+    isa_ok($template->render({'name' => 'foo&bar',
                               'rows' => [],
                               'columns' => []}),
         ['LedgerSMB::Template'],
@@ -216,16 +216,16 @@ SKIP: {
     $template = undef;
     $template = LedgerSMB::Template->new(
         'format'   => 'ODS',
-        'path'     => 't/data',
-        'template' => '04-template'
+        'path'     => 'templates/demo',
+        'template' => 'display_report'
     );
     ok(defined $template,
         'Template, new (ODS): Object creation with format and template');
     isa_ok($template, ['LedgerSMB::Template'],
         'Template, new (ODS): Object creation with format and template');
-    is($template->{include_path}, 't/data',
+    is($template->{include_path}, 'templates/demo',
         'Template, new (ODS): Object creation with format and template');
-    isa_ok($template->render({'login' => 'foo\&bar'}),
+    isa_ok($template->render({'name' => 'foo&bar'}),
         ['LedgerSMB::Template'],
         'Template, render (ODS): Simple ODS template, default filename');
     # ods is actualy a zip file.
