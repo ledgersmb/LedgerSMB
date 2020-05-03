@@ -55,11 +55,32 @@ sub chart_of_accounts {
     $report->set_dbh($request->{dbh});
     $report->run_report();
 
-    # Buttons on the Chart of Account screen are handled by a different script
-    $request->{script} = 'account.pl';
-
     return $report->render($request);
 }
+
+=head2 new_account
+
+Forwards request processing to LedgerSMB::Scripts::account.
+
+=cut
+
+sub new_account {
+    # The CoA report buttons submit here, but functionality is in 'account'
+    return LedgerSMB::Scripts::account::new_account(@_);
+}
+
+=head2 new_heading
+
+Forwards request processing to LedgerSMB::Scripts::account.
+
+=cut
+
+sub new_heading {
+    # The CoA report buttons submit here, but functionality is in 'account'
+    return LedgerSMB::Scripts::account::new_heading(@_);
+}
+
+
 
 =head2 delete_account
 
