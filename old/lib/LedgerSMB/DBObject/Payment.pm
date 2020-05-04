@@ -739,7 +739,8 @@ sub post_bulk {
         funcname => 'job__status'
          );
     }
-    #$self->{payment_date} = $self->{datepaid};
+
+    $self->{payment_date} //= $data->{payment_date};
     for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
         for my $invoice (@{$contact->{invoices}}) {
