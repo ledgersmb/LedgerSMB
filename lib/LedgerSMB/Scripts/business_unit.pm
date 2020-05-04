@@ -72,7 +72,7 @@ sub add {
     @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
     $request->{mode} = 'add';
-    return _display($request);
+    return _display($request, $b_unit);
 }
 
 =item edit
@@ -84,19 +84,19 @@ Edits an existing business unit.  $request->{id} must be set.
 sub edit {
     my ($request) = @_;
     $request->{control_code} = '';
-    $request->{class_id} = 0 unless $request->{class_id} != 0;
+    $request->{class_id} = 0 unless $request->{class_id};
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     my $bu = $b_unit->get($request->{id});
     @{$bu->{parent_options}} = $b_unit->list($bu->{class_id});
     $bu->{mode} = 'edit';
 
-    return _display($bu);
+    return _display($request, $bu);
 }
 
 sub _display {
-    my ($request) = @_;
+    my ($request, $bu) = @_;
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'business_units/edit', $request);
+    return $template->render($request, 'business_units/edit', $bu);
 
 }
 
