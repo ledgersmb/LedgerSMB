@@ -7,6 +7,8 @@ Changelog for 1.7.13 (to be released)
 * Solve failure to create initial user by requiring input (#4525)
 * Fix links at the bottom of the CoA screen (#4568)
 * Fix CoA export (ODS, XLS or XLSX) throwing malformed XML error (#4580)
+* Fix downloaded reports missing extension (e.g. '.pdf') (#4584)
+* Improve performance of deleting batches (#4449)
 
 
 Changelog for 1.7.12
