@@ -19,9 +19,18 @@ This module doesn't specify any methods.
 use strict;
 use warnings;
 
+
+use LedgerSMB::AA;
+use LedgerSMB::Batch;
+use LedgerSMB::DBObject::Account;
 use LedgerSMB::Form;
+use LedgerSMB::GL;
+use LedgerSMB::IR;
+use LedgerSMB::IS;
 use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
+use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template::UI;
+use LedgerSMB::Timecard;
 
 use List::MoreUtils qw{ any };
 use Text::CSV;
@@ -29,6 +38,9 @@ use Text::CSV;
 our $cols = {
     gl              =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx',
                          'credit_fx', 'source', 'memo'],
+    gl_multi        =>  ['debit_accno', 'credit_accno', 'amount', 'curr',
+                         'amount_fx', 'reference', 'transdate', 'description',
+                         'source_debit', 'source_credit', 'memo'],
     ap_multi        =>  ['vendor', 'amount', 'account', 'ap', 'description',
                         'invnumber', 'transdate'],
     ar_multi        =>  ['customer', 'amount', 'account', 'ar', 'description',
@@ -106,8 +118,6 @@ sub map_columns_into_hash {
 
 
 sub _aa_multi {
-    use LedgerSMB::AA;
-    use LedgerSMB::Batch;
     my ($request, $entries, $arap) = @_;
     my $batch = LedgerSMB::Batch->new(%$request);
     $batch->{batch_number} = $request->{reference};
@@ -183,8 +193,6 @@ sub _aa_multi {
 
 sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
-    use LedgerSMB::IS;
-    use LedgerSMB::IR;
     my $ar_form = Form->new(); ## no critic
     my $ap_form = Form->new(); ## no critic
     my $dbh = $request->{dbh};
@@ -284,8 +292,73 @@ sub _process_ap_multi {
     return &_aa_multi($request, $entries, 'ap');
 }
 
+sub _process_gl_multi {
+    my ($request, $entries) = @_;
+    my $dbh = $request->{dbh};
+    my $batch = LedgerSMB::Batch->new(
+        dbh => $dbh,
+        batch_class  => 'gl',
+        batch_date   => $request->{transdate},
+        batch_number => $request->{reference},
+        description  => $request->{description},
+        );
+    my $batch_id = $batch->create;
+
+    my $sth_voucher = $dbh->prepare(q{
+         INSERT INTO voucher (batch_id, trans_id, batch_class)
+               VALUES (?, ?, (select id FROM batch_class
+                                      WHERE class = 'gl'))
+         RETURNING id
+                                 });
+
+    my $sth_acc = $dbh->prepare(q{
+        INSERT INTO acc_trans (trans_id, transdate, source, memo, chart_id,
+                               curr, voucher_id, amount_bc, amount_tc)
+               VALUES (?, ?, ?, ?, (select id from account where accno = ?),
+                       ?, ?, ?, ?)
+                                })
+        or die $dbh->errstr;
+    my $sth_gl = $dbh->prepare(q{
+        INSERT INTO gl (transdate, reference, description)
+               VALUES (?, ?, ?)
+        RETURNING id })
+        or die $dbh->errstr;
+    for my $entry (@$entries) {
+        # $entry holds:
+        # ['debit_accno', 'credit_accno', 'amount', 'curr',
+        #  'amount_fx', 'reference', 'transdate', 'description',
+        #  'source_debit', 'source_credit', 'memo']
+
+        my %entry;
+        @entry{@{$cols->{gl_multi}}} = @$entry;
+        delete $entry{reference} if $entry{reference} eq '';
+        $entry{reference} =
+            LedgerSMB::Setting::Sequence->increment('glnumber', $request)
+            unless defined $entry{reference};
+
+        $sth_gl->execute(@entry{('transdate', 'reference', 'description')})
+            or die $sth_gl->errstr;
+        my ($trans_id) = $sth_gl->fetchrow_array;
+        $sth_gl->finish;
+
+        $sth_voucher->execute($batch_id, $trans_id)
+            or die $sth_voucher->errstr;
+        my ($voucher_id) = $sth_voucher->fetchrow_array;
+
+        # debit row
+        $sth_acc->execute($trans_id, @entry{qw(transdate source_debit memo
+                                               debit_accno curr )},
+                          $voucher_id, -1*$entry{amount}, -1*$entry{amount_fx})
+            or die $sth_acc->errstr;
+        # credit row
+        $sth_acc->execute($trans_id, @entry{qw(transdate source_debit memo
+                                               debit_accno curr )},
+                          $voucher_id, $entry{amount}, $entry{amount_fx})
+            or die $sth_acc->errstr;
+    }
+}
+
 sub _process_gl {
-    use LedgerSMB::GL;
     my ($request, $entries) = @_;
     my $form = Form->new(); ## no critic
     $form->{reference} = $request->{reference};
@@ -320,8 +393,6 @@ sub _process_gl {
 }
 
 sub _process_chart {
-    use LedgerSMB::DBObject::Account;
-
     my ($request, $entries) = @_;
 
     my %imported;
@@ -375,7 +446,6 @@ sub _process_sic {
 }
 
 sub _process_timecard {
-    use LedgerSMB::Timecard;
     my ($request, $entries) = @_;
     my @floats = qw {qty non_billable sellprice allocated};
     for my $entry (@$entries) {
@@ -541,6 +611,7 @@ sub _process_overhead {
 
 our $process = {
     gl              => \&_process_gl,
+    gl_multi        => \&_process_gl_multi,
     ar_multi        => \&_process_ar_multi,
     ap_multi        => \&_process_ap_multi,
     chart           => \&_process_chart,

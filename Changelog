@@ -8,6 +8,7 @@ Changelog for 1.8.0
 Added functionalities
 * Authentication and session storage through encrypted cookies (#4418)
 * CSV upload of parts, services and overhead
+* CSV upload of a batch of GL transactions
 * Upload of logos and use in document templates (#1816)
 * Print templates for PNL, Balance sheet and generic reports now
   * User-editable
