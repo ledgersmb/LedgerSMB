@@ -102,6 +102,8 @@ Changelog for 1.7.13 (to be released)
 * Fix CoA export (ODS, XLS or XLSX) throwing malformed XML error (#4580)
 * Fix downloaded reports missing extension (e.g. '.pdf') (#4584)
 * Improve performance of deleting batches (#4449)
+* Fix error thrown when opening reporting unit 'edit' screen (#4592)
+* Fix transdate being NULL in journal lines from bulk payments (#4587)
 
 
 Changelog for 1.7.12
