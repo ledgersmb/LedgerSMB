@@ -80,12 +80,13 @@ require([
 
    // Submit form and show a 10 seconds progress bar
    function submitForm() {
-      setIndicator();
+      showIndicator();
       window.setTimeout(showIndicator, 0);
       window.setTimeout(sendForm, 10);
       return false;
    }
 
+   setIndicator();
    // Make it public
    window.submitForm = submitForm;
 });
