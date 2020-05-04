@@ -135,7 +135,8 @@ sub template_to_psgi {
         ];
 
     # Use the same Content-Disposition criteria as _http_output()
-    my $name = $self->{output_options}{filename};
+    my $name = $self->{output_options}{filename} . '.'
+        . lc($self->{format_options}->{filetype});
     if ($name) {
         $name =~ s#^.*/##;
         push @$headers,
