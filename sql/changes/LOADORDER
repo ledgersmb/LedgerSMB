@@ -132,3 +132,4 @@ mc/delete-migration-validation-data.sql
 1.8/drop_poll_frequency_setting.sql
 1.8/constrain-transaction-tables.sql
 1.8/constrain-transactions-table-name.sql
+1.8/add-gl-batch-import-menu.sql
