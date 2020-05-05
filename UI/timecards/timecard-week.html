@@ -1,7 +1,7 @@
-<?lsmb PROCESS "elements.html" ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS "elements.html" %]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" action="timecard.pl" method="post">
-<?lsmb
+[%
 PROCESS input element_data = {
     type = "hidden"
     name = "rowcount"
@@ -45,25 +45,25 @@ PROCESS input element_data = {
 FOREACH bu IN b_units;
     bu.text = bu.control_code _ ' -- ' _ bu.description;
 END;
-?>
-<div class="listtop"><?lsmb text('Weekly Time and Materials Entry') ?></div>
+%]
+<div class="listtop">[% text('Weekly Time and Materials Entry') %]</div>
 <table width="100%"
  id="timecard-weekly">
 <tr class="listtop">
- <th><?lsmb transdates.0 ?></th>
- <th><?lsmb transdates.1 ?></th>
- <th><?lsmb transdates.2 ?></th>
- <th><?lsmb transdates.3 ?></th>
- <th><?lsmb transdates.4 ?></th>
- <th><?lsmb transdates.5 ?></th>
- <th><?lsmb transdates.6 ?></th>
+ <th>[% transdates.0 %]</th>
+ <th>[% transdates.1 %]</th>
+ <th>[% transdates.2 %]</th>
+ <th>[% transdates.3 %]</th>
+ <th>[% transdates.4 %]</th>
+ <th>[% transdates.5 %]</th>
+ <th>[% transdates.6 %]</th>
 </tr>
-<?lsmb FOR lnum IN [1 .. num_lines] ?>
+[% FOR lnum IN [1 .. num_lines] %]
 <tr>
-<?lsmb FOR dnum IN [0 .. 6] ?>
+[% FOR dnum IN [0 .. 6] %]
 <td>
-     <div><?lsmb text('Report in') ?> </div>
-     <div><?lsmb
+     <div>[% text('Report in') %] </div>
+     <div>[%
         suffix = transdates.$dnum.replace('[./-]', '_') _ '_' _ lnum;
         PROCESS select element_data = {
                        name = "business_unit_id_$suffix"
@@ -71,10 +71,10 @@ END;
                     options = b_units
                   text_attr = 'text'
                  value_attr = 'id'
-     } ?>
+     } %]
     </div>
-    <div id='curr-lbl'><?lsmb text('Currency') ?></div>
-    <div id='curr-input'><?lsmb
+    <div id='curr-lbl'>[% text('Currency') %]</div>
+    <div id='curr-input'>[%
         currencies2 = [];
         FOREACH curr IN currencies;
            currencies2.push({text = curr, value = curr });
@@ -84,51 +84,51 @@ END;
                    name = "curr_$suffix"
                 options = currencies2
          default_values = [${"curr_$suffix"}]
-       }; ?></div>
-  <div><?lsmb  text('Partnumber') ?></div>
+       }; %]</div>
+  <div>[%  text('Partnumber') %]</div>
   <div>
     <input data-dojo-type="lsmb/parts/PartSelector"
-           data-dojo-props="required:false,channel:'/timecard/part-select/<?lsmb suffix ?>',fetchProperties:{type:'sales'}"
-           name="partnumber_<?lsmb suffix ?>"
-           id="partnumber_<?lsmb suffix ?>"
+           data-dojo-props="required:false,channel:'/timecard/part-select/[% suffix %]',fetchProperties:{type:'sales'}"
+           name="partnumber_[% suffix %]"
+           id="partnumber_[% suffix %]"
            size="15"
-           value="<?lsmb ${"partnumber_$suffix"} ?>"
+           value="[% ${"partnumber_$suffix"} %]"
            accesskey="p"
            title="[p]"
            style="width:100%" />
     </div>
-  <div><?lsmb text('Qty') ?></div>
-    <div><?lsmb PROCESS input element_data = {
+  <div>[% text('Qty') %]</div>
+    <div>[% PROCESS input element_data = {
        name = "qty_$suffix"
       value = ${"qty_$suffix"}
       class = 'qty'
-       size = 5 } ?></div>
-  <div><?lsmb text('Extra Used') ?></div>
-    <div><?lsmb PROCESS input element_data = {
+       size = 5 } %]</div>
+  <div>[% text('Extra Used') %]</div>
+    <div>[% PROCESS input element_data = {
        name = "non_billable_$suffix"
       value = ${"non_billable_$suffix"}
       class = 'qty'
-       size = 5 } ?></div>
-    <div><?lsmb text('Description') ?></div>
+       size = 5 } %]</div>
+    <div>[% text('Description') %]</div>
     <div data-dojo-type="lsmb/parts/PartDescription"
-         data-dojo-props="channel:'/timecard/part-select/<?lsmb suffix ?>'"
-         name="description_<?lsmb suffix ?>"
-         id="description_<?lsmb suffix ?>"
+         data-dojo-props="channel:'/timecard/part-select/[% suffix %]'"
+         name="description_[% suffix %]"
+         id="description_[% suffix %]"
          cols="15"
-         class="description"><?lsmb ${"description_$suffix"} ?></div>
+         class="description">[% ${"description_$suffix"} %]</div>
 </td>
-<?lsmb END ?>
+[% END %]
 </tr>
-<?lsmb END ?>
+[% END %]
 </table>
 <div id="buttons-div">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
     text = text('Save')
     name = 'action'
    value = 'save_week'
     type = 'submit'
    class = 'submit'
-} ?>
+} %]
 </div>
 </form>
 </body>

@@ -1,21 +1,21 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
 <div id="assetclass-search">
-<div class="listtop"><?lsmb text('Search Asset Class') ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
+<div class="listtop">[% text('Search Asset Class') %]</div>
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
 <div class="inputrow" id="labelrow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         type = "text"
         name = "label"
         value = asset_class.label
         class = "control_code"
         size = 32
         label = text('Label:')
-} ?>
+} %]
 </div>
 <div class="inputrow" id="methodrow">
 <span class="inputgroup" id="methodgroup">
-<?lsmb
+[%
         PROCESS select element_data = {
         label = text('Depreciation Method') #'
         options = asset_class.dep_methods
@@ -23,10 +23,10 @@
         text_attr = 'method'
    default_blank = 1
         name = 'method_id'
-} ?>
+} %]
 </span>
 <span class="inputgroup" id="Units">
-<?lsmb
+[%
         PROCESS select element_data = {
         label = text('Lifetime Measured In') #'
         options = asset_class.life_units
@@ -34,12 +34,12 @@
    default_blank = 1
         text_attr = "unit"
         value_atr = "id"
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="accountsrow">
 <span class="inputgroup" id="assetaccgroup">
-<?lsmb
+[%
         PROCESS select element_data = {
         label = text('Asset Account') #'
         options = asset_class.asset_accounts
@@ -47,10 +47,10 @@
    default_blank = 1
         value_attr = 'id'
         text_attr = 'text'
-} ?>
+} %]
 </span>
 <span class="inputgroup" id="depaccgroup">
-<?lsmb
+[%
         PROCESS select element_data = {
         label = text('Depreciation Account') #'
         options = asset_class.dep_accounts
@@ -58,17 +58,17 @@
    default_blank = 1
         value_attr = 'id'
         text_attr = 'text'
-} ?>
+} %]
 </span>
 </div>
 <div class="inputrow" id="buttonrow">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         text = text("Search")
         type = "submit"
         class = "submit"
         name = "action"
         value = "asset_category_results"
-} ?>
+} %]
 </div>
 </form>
 </div>

@@ -1,25 +1,25 @@
-<?lsmb PROCESS 'elements.html'; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb text('Sequences') ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb script ?>" method="post">
+[% PROCESS 'elements.html'; %]
+<body class="lsmb [% dojo_theme %]">
+<div class="listtop">[% text('Sequences') %]</div>
+<form data-dojo-type="lsmb/Form" action="[% script %]" method="post">
 <table width='100%'>
 <tr class="listheading">
-<th class="listheading"><?lsmb text('Save') ?></th>
-<th class="listheading"><?lsmb text('Allow Input') ?></th>
-<th class="listheading"><?lsmb text('label') ?></th>
-<th class="listheading"><?lsmb text('Setting') ?></th>
-<th class="listheading"><?lsmb text('Prefix') ?></th>
-<th class="listheading"><?lsmb text('Sequence') ?></th>
-<th class="listheading"><?lsmb text('Suffix') ?></th>
+<th class="listheading">[% text('Save') %]</th>
+<th class="listheading">[% text('Allow Input') %]</th>
+<th class="listheading">[% text('label') %]</th>
+<th class="listheading">[% text('Setting') %]</th>
+<th class="listheading">[% text('Prefix') %]</th>
+<th class="listheading">[% text('Sequence') %]</th>
+<th class="listheading">[% text('Suffix') %]</th>
 </tr>
-<?lsmb FOR seq IN sequence_list; count = loop.count ?>
+[% FOR seq IN sequence_list; count = loop.count %]
 <tr>
- <td><?lsmb PROCESS input element_data = {
+ <td>[% PROCESS input element_data = {
            type = 'checkbox'
            name = 'save_' _ count
           value = 1
-     } ?></td>
- <td><?lsmb
+     } %]</td>
+ <td>[%
      checked = undefined;
      IF seq.accept_input; checked = 'CHECKED'; END;
      PROCESS input element_data = {
@@ -27,93 +27,93 @@
            name = 'accept_input_' _ count
           value = 1
         checked = checked
-     } ?></td>
- <td><?lsmb seq.label; PROCESS input element_data = {
+     } %]</td>
+ <td>[% seq.label; PROCESS input element_data = {
            type = 'hidden'
            name = 'label_' _ count
           value = seq.label
-     } ?></td>
- <td><?lsmb PROCESS select element_data = {
+     } %]</td>
+ <td>[% PROCESS select element_data = {
              name = 'setting_key_' _ count
           options = setting_keys
    default_values = [seq.setting_key]
         text_attr = 'label',
        value_attr = 'name'
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
              name = 'prefix_' _ count
              type = 'text'
             value = seq.prefix
              size = '10'
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
              name = 'sequence_' _ count
              type = 'text'
             value = seq.sequence
              size = '10'
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
              name = 'suffix_' _ count
              type = 'text'
             value = seq.suffix
              size = '10'
-     } ?></td>
+     } %]</td>
 </tr>
-<?lsmb END; count = count + 1 # FOR seq ?>
+[% END; count = count + 1 # FOR seq %]
 <tr>
- <td><?lsmb PROCESS input element_data = {
+ <td>[% PROCESS input element_data = {
            type = 'checkbox'
            name = 'save_' _ count
           value = 1
         checked = 'CHECKED'
-     } ?></td>
- <td><?lsmb
+     } %]</td>
+ <td>[%
      PROCESS input element_data = {
            type = 'checkbox'
            name = 'accept_input_' _ count
           value = 1
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
            type = 'text'
            name = 'label_' _ count
            size = 10
           class = 'control_code'
-     } ?> </td>
- <td><?lsmb PROCESS select element_data = {
+     } %] </td>
+ <td>[% PROCESS select element_data = {
              name = 'setting_key_' _ count
           options = setting_keys
         text_attr = 'label',
        value_attr = 'name'
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
              name = 'prefix_' _ count
              type = 'text'
              size = '10'
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
              name = 'sequence_' _ count
              type = 'text'
              size = '10'
-     } ?></td>
- <td><?lsmb PROCESS input element_data = {
+     } %]</td>
+ <td>[% PROCESS input element_data = {
              name = 'suffix_' _ count
              type = 'text'
              size = '10'
-     } ?></td>
+     } %]</td>
 </tr>
 </table>
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
              name = 'count'
              type = 'hidden'
             value = count
-} ?>
+} %]
 <div class="button-row">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
              name = 'action'
             value = 'save_sequences'
              type = 'submit'
             class = 'submit'
              text = text('Save')
-} ?></div>
+} %]</div>
 </form>
 </body>

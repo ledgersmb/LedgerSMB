@@ -1,15 +1,15 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
-include_stylesheet=["setup.css"] ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-upgrade-info" class="lsmb <?lsmb dojo_theme ?>">
+include_stylesheet=["setup.css"] %]
+[% PROCESS elements.html %]
+<body id="setup-upgrade-info" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('Database Management Console') ?></h2>
-<div class="listtop"><?lsmb text('Upgrade Info') ?></div>
+<h2>[% text('Database Management Console') %]</h2>
+<div class="listtop">[% text('Upgrade Info') %]</div>
 <form data-dojo-type="lsmb/SimpleForm"
       action="setup.pl" method="POST"
       name="upgrade_info">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
    value = database
@@ -23,90 +23,90 @@ INCLUDE input element_data = {
     name = 'lsmbversion'
     type = 'hidden'
    value = lsmbversion
-} ?>
+} %]
 <div class="form">
 <p>
-  <?lsmb text('LedgerSMB has introduced three new system wide default values which ' _
-              'you will need to set as part of the upgrade process.') ?>
+  [% text('LedgerSMB has introduced three new system wide default values which ' _
+              'you will need to set as part of the upgrade process.') %]
 </p>
 <p>
-  <?lsmb text('In addition to these new defaults LedgerSMB 1.3 adds stricter ' _
+  [% text('In addition to these new defaults LedgerSMB 1.3 adds stricter ' _
               'checks on data validity in the database. Because of these stricter checks ' _
               'it''s no longer valid to leave companies without a country or customers ' _
               'without accounts receivable reference. The defaults you choose below will ' _
-              'be used to add values where these are currently missing but required.') ?>
+              'be used to add values where these are currently missing but required.') %]
 </p>
 <div class="input_row">
-<?lsmb INCLUDE select element_data = {
+[% INCLUDE select element_data = {
                           options = countries
                        value_attr = 'code'
                         text_attr = 'country'
                             name  = 'default_country'
                            label  = text('Default Country') #'
                             class = 'country'
-} ?>
+} %]
 </div>
-<?lsmb IF ar_accounts.size > 1; ?>
+[% IF ar_accounts.size > 1; %]
 <div class="input_row">
 <p>
-  <?lsmb text('LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts ' _
+  [% text('LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts ' _
               'per company. One of those must be the system default. Please select ' _
               'your default below in case of multiple. If the list below is empty, ' _
-              'your database is in an inconsistent state and needs to be fixed first.') ?>
+              'your database is in an inconsistent state and needs to be fixed first.') %]
 </p>
-<?lsmb INCLUDE select element_data = {
+[% INCLUDE select element_data = {
                             name  = 'default_ar'
                            label  = text('Default AR') #'
                             class = 'accno'
                             options = ar_accounts
                             value_attr = 'accno'
                             text_attr = 'desc'
-} ?>
+} %]
 </div>
-<?lsmb ELSE;
+[% ELSE;
 INCLUDE input element_data = {
     name = 'default_ar'
     type = 'hidden'
    value = default_ar
 };
-END ?>
-<?lsmb IF ap_accounts.size > 1; ?>
+END %]
+[% IF ap_accounts.size > 1; %]
 <div class="input_row">
 <p>
-  <?lsmb text('LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts ' _
+  [% text('LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts ' _
               'per company. One of those must be the system default. Please select ' _
               'your default below in case of multiple. If the list below is empty, ' _
-              'your database is in an inconsistent state and needs to be fixed first.') ?>
+              'your database is in an inconsistent state and needs to be fixed first.') %]
 </p>
-<?lsmb INCLUDE select element_data = {
+[% INCLUDE select element_data = {
                             name  = 'default_ap'
                            label  = text('Default AP') #'
                             class = 'accno'
                             options = ap_accounts
                             value_attr = 'accno'
                             text_attr = 'desc'
-} ?>
+} %]
 </div>
-<?lsmb ELSE;
+[% ELSE;
 INCLUDE input element_data = {
     name = 'default_ap'
     type = 'hidden'
    value = default_ap
 };
-END ?>
+END %]
 <div class="input_row">
 <p>
-  <?lsmb text('Note that the process invoked by hitting the button below might ' _
+  [% text('Note that the process invoked by hitting the button below might ' _
               'take long to complete as it will run the upgrade process and will ' _
-              'copy all data from the 1.2 tables into the 1.3 tables.') ?>
+              'copy all data from the 1.2 tables into the 1.3 tables.') %]
 </p>
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     text = text('Upgrade')
     name = 'action'
    value = upgrade_action
     type = 'submit'
    class = 'submit'
-} ?>
+} %]
 </div>
 </div>
 </form>

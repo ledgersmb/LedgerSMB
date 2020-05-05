@@ -59,8 +59,8 @@ sub content_test {
 
     #Fix source text. Template statements have to be removed for now.
     #IF/ELSE/END branches will clash though. - YL
-    #Strip <?lsmb ... ?>, keep lines for error reporting
-    $text = strip_pattern($text,qr/(.*)(<\?lsmb\s*.*?\s*\?>)(.*)/s);
+    #Strip [% ... %], keep lines for error reporting
+    $text = strip_pattern($text,qr/(.*)(\[%\s*.*?\s*%\])(.*)/s);
     #Strip ${...}, keep lines for error reporting
     $text = strip_pattern($text,qr/(.*)(\$\{[^\}]+\})(.*)/s);
     #Strip comments, keep lines for error reporting
@@ -113,7 +113,7 @@ sub content_test {
         if @trailing_space_lines;
 
     foreach my $error ( $lint->errors ) {
-        next if $error->as_string =~ m/(<\/?title>|<\?lsmb.+\?>)/;
+        next if $error->as_string =~ m/(<\/?title>|\[%.+%\])/;
         next if (($ui_header_used || $is_snippet)
                  && $error->as_string =~ m/<(head|html)> tag is required/);
         next if ($ui_header_used

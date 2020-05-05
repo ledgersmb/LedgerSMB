@@ -298,54 +298,7 @@ ok(defined $template,
 isa_ok($template, ['LedgerSMB::Template'],
         'Template, private (preprocess): Object creation with format and template');
 
-###################################
-## LedgerSMB::Template::Elements ##
-###################################
 
-my $contact_request = {
-        entity_id    => 1,
-        control_code => 'test1',
-        meta_number  => 'test1',
-        credit_id    => '1',
-        entity_class => 1,
-        default_country => 4,
-        credit_list  => [{ entity_class => 1,
-                           meta_number => 'test1',
-                        }],
-        contacts     => [{contact     => 'ctest1',
-                        description   => 'dtest1',
-                        contact_class => '1'}],
-        business_id  => 1000,
-        business_types => [{ id => 1,    description => 'test1' },
-                           { id => 1000, description => 'test2' }],
-        country_list => [{id => 1, name => 'country1'},
-                {id => 2, name => 'country2'},
-                {id => 3, name => 'country3'},
-                {id => 4, name => 'country4'},
-                {id => 5, name => 'country5'},
-                {id => 6, name => 'country6'},
-                ]
-}; # Company with Credit Accounts and business types.
-
-my $request = Plack::Request->new({});
-my $payment = LedgerSMB->new($request);
-$payment->merge({
-        contact_1 => 1, source_1 => 1, action=>'dispay_payments', id_1 => 1,
-        id_1_1    => 1,
-        contact_invoices => [{contact_id => 1, invoices =>[[101, 101, "2009-01-01", 1000, 0, 0, 1000, 0,
-                                'test']]}]});
-
-my $payment_template =  LedgerSMB::Template->new(
-    path            => 'UI/payments',
-    template        => 'payments_detail',
-    format          => 'HTML',
-);
-
-$payment_template->render({ request => { script => '' },
-                            payment => $payment });
-my @output =  split /\n/, $payment_template->{output};
-is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
-is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
 
 # LPR Printing Tests

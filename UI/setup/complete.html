@@ -1,33 +1,33 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
           stylesheet="ledgersmb.css"
           include_stylesheet=["setup.css"]
-       ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-operation-complete" class="lsmb <?lsmb dojo_theme ?>">
+       %]
+[% PROCESS elements.html %]
+<body id="setup-operation-complete" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('Database Management Console') ?></h2>
-<?lsmb INCLUDE 'setup/ui-db-credentials.html' ?>
-<div class="listtop"><?lsmb text('Database Operation Complete') ?></div>
-<p><?lsmb text('This database operation has completed successfully.  LedgerSMB may now be used.'); ?></p>
-<p><a href="setup.pl?action=login&amp;s_user=<?lsmb login ?>&amp;database="><?lsmb text('Return to setup') ?></a></p>
-<p><a href="login.pl?login=username&amp;company=<?lsmb UNESCAPE(database) | uri ?>"><?lsmb text('Start using LedgerSMB') ?></a></p><!-- Setting login=username is a kludge to prevent the dbadmin user from being pre-entered. A better solution needs to be found. -->
-<?lsmb IF lsmb_info ?>
+<h2>[% text('Database Management Console') %]</h2>
+[% INCLUDE 'setup/ui-db-credentials.html' %]
+<div class="listtop">[% text('Database Operation Complete') %]</div>
+<p>[% text('This database operation has completed successfully.  LedgerSMB may now be used.'); %]</p>
+<p><a href="setup.pl?action=login&amp;s_user=[% login %]&amp;database=">[% text('Return to setup') %]</a></p>
+<p><a href="login.pl?login=username&amp;company=[% UNESCAPE(database) | uri %]">[% text('Start using LedgerSMB') %]</a></p><!-- Setting login=username is a kludge to prevent the dbadmin user from being pre-entered. A better solution needs to be found. -->
+[% IF lsmb_info %]
 <table class='lsmb_info'>
   <thead>
-  <tr><th colspan="2"><?lsmb text('LedgerSMB Database Statistics') ?></th></tr>
-  <tr><th colspan="2"><?lsmb text('Row counts') ?></th></tr>
+  <tr><th colspan="2">[% text('LedgerSMB Database Statistics') %]</th></tr>
+  <tr><th colspan="2">[% text('Row counts') %]</th></tr>
   </thead>
   <tbody>
-  <tr><th><?lsmb text('AP') ?></th><td><?lsmb lsmb_info.ap ?></td></tr>
-  <tr><th><?lsmb text('AR') ?></th><td><?lsmb lsmb_info.ar ?></td></tr>
-  <tr><th><?lsmb text('GL') ?></th><td><?lsmb lsmb_info.gl ?></td></tr>
-  <tr><th><?lsmb text('Journal Lines') ?></th><td><?lsmb lsmb_info.acc_trans ?></td></tr>
-  <tr><th><?lsmb text('Orders') ?></th><td><?lsmb lsmb_info.oe ?></td></tr>
-  <tr><th><?lsmb text('Customer/Vendor Accounts') ?></th><td><?lsmb lsmb_info.entity_credit_account ?></td></tr>
-  <tr><th><?lsmb text('Users') ?></th><td><?lsmb lsmb_info.users ?></td></tr>
+  <tr><th>[% text('AP') %]</th><td>[% lsmb_info.ap %]</td></tr>
+  <tr><th>[% text('AR') %]</th><td>[% lsmb_info.ar %]</td></tr>
+  <tr><th>[% text('GL') %]</th><td>[% lsmb_info.gl %]</td></tr>
+  <tr><th>[% text('Journal Lines') %]</th><td>[% lsmb_info.acc_trans %]</td></tr>
+  <tr><th>[% text('Orders') %]</th><td>[% lsmb_info.oe %]</td></tr>
+  <tr><th>[% text('Customer/Vendor Accounts') %]</th><td>[% lsmb_info.entity_credit_account %]</td></tr>
+  <tr><th>[% text('Users') %]</th><td>[% lsmb_info.users %]</td></tr>
   </tbody>
 </table>
-<?lsmb END ?>
+[% END %]
 </div>
 </body>
 </html>

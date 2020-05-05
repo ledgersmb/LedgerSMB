@@ -1,74 +1,74 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
-include_stylesheet=["setup.css"] ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-begin-backup" class="lsmb <?lsmb dojo_theme ?>">
+include_stylesheet=["setup.css"] %]
+[% PROCESS elements.html %]
+<body id="setup-begin-backup" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('Database Management Console') ?></h2>
-<div class="listtop"><?lsmb text('Where shall we send the backup?') ?></div>
-<?lsmb # notice, message, and operation are all localized. ?>
-<div id="notice"><?lsmb notice ?></div>
+<h2>[% text('Database Management Console') %]</h2>
+<div class="listtop">[% text('Where shall we send the backup?') %]</div>
+[% # notice, message, and operation are all localized. %]
+<div id="notice">[% notice %]</div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="confirm_operation">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
    value = database
-} ?>
-<?lsmb INCLUDE input element_data = {
+} %]
+[% INCLUDE input element_data = {
     name = 'backup'
     type = 'hidden'
    value = backup
-} ?>
+} %]
 <div class="inputrow" id="emailopt">
-<?lsmb IF can_email ?>
-<?lsmb INCLUDE input element_data = {
+[% IF can_email %]
+[% INCLUDE input element_data = {
         type = 'radio'
         name = 'backup_type'
        label = text('To email') #'
        value = 'email'
     }, label_pos = 1
-?>
-<?lsmb INCLUDE input element_data = {
+%]
+[% INCLUDE input element_data = {
     type = "text"
     name = "email"
    value = email
    class = "email"
-} ?>
-<?lsmb ELSE ?>
-<?lsmb INCLUDE input element_data = {
+} %]
+[% ELSE %]
+[% INCLUDE input element_data = {
         type = 'radio'
         name = 'backup_type'
        label = text('To email') #'
        value = 'email'
     disabled = 'disabled'
     }, label_pos = 1
-?>
-<?lsmb INCLUDE input element_data = {
+%]
+[% INCLUDE input element_data = {
     type = "text"
     name = "email"
    value = email
    class = "email"
 disabled = "disabled"
-} ?>
-<?lsmb END ?>
+} %]
+[% END %]
 </div>
 <div class="inputrow" id="browseropt">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     type = 'radio'
     name = 'backup_type'
    label = text('To my browser') #'
    value = 'browser'
  checked = "checked"
-}, label_pos = 1 ?>
+}, label_pos = 1 %]
 </div>
 <div class="inputrow">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'run_backup'
     type = 'submit'
    class = 'submit'
     text = text('Run Backup') #'
-} ?>
+} %]
 </div>
 </form>
 </div>

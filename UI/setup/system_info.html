@@ -1,44 +1,44 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
           stylesheet="ledgersmb.css"
           include_stylesheet=["setup.css"]
-       ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-system-info" class="lsmb <?lsmb dojo_theme ?>">
+       %]
+[% PROCESS elements.html %]
+<body id="setup-system-info" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('System Information') ?></h2>
-<?lsmb INCLUDE 'setup/ui-db-credentials.html' ?>
-<p><?lsmb text('LedgerSMB has detected the following system components'); ?></p>
+<h2>[% text('System Information') %]</h2>
+[% INCLUDE 'setup/ui-db-credentials.html' %]
+<p>[% text('LedgerSMB has detected the following system components'); %]</p>
 
 <table>
-  <caption><?lsmb text('Database component') ?></caption>
+  <caption>[% text('Database component') %]</caption>
   <tbody>
-    <?lsmb FOR item IN info.db.keys.sort ?>
+    [% FOR item IN info.db.keys.sort %]
     <tr>
-      <th><?lsmb item ?></th><td style="text-align: right"><?lsmb info.db.$item ?></td>
+      <th>[% item %]</th><td style="text-align: right">[% info.db.$item %]</td>
     </tr>
-    <?lsmb END ?>
+    [% END %]
   </tbody>
 </table>
 
 <table>
-  <caption><?lsmb text('Base system') ?></caption>
+  <caption>[% text('Base system') %]</caption>
   <tbody>
-    <?lsmb FOR item IN info.system.keys.sort ?>
+    [% FOR item IN info.system.keys.sort %]
     <tr>
-      <th><?lsmb item ?></th><td style="text-align: right"><?lsmb info.system.$item ?></td>
+      <th>[% item %]</th><td style="text-align: right">[% info.system.$item %]</td>
     </tr>
-    <?lsmb END ?>
+    [% END %]
   </tbody>
 </table>
 
 <table>
-  <caption><?lsmb text('Environment') ?></caption>
+  <caption>[% text('Environment') %]</caption>
   <tbody>
-    <?lsmb FOR item IN info.environment.keys.sort ?>
+    [% FOR item IN info.environment.keys.sort %]
     <tr>
-      <th><?lsmb item ?></th><td style="text-align: left"><?lsmb info.environment.$item ?></td>
+      <th>[% item %]</th><td style="text-align: left">[% info.environment.$item %]</td>
     </tr>
-    <?lsmb END ?>
+    [% END %]
   </tbody>
 </table>
 

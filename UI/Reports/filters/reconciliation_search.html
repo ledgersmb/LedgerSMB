@@ -1,52 +1,52 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
 
 <div id="reconciliation_report_search">
     <form data-dojo-type="lsmb/Form" method="get" action="recon.pl">
-        <div class="listtop"><?lsmb text('Search Reconciliation Reports') ?></div>
+        <div class="listtop">[% text('Search Reconciliation Reports') %]</div>
         <div data-dojo-type="lsmb/layout/TableContainer"
              data-dojo-props="cols:1">
 
             <div class="input">
-                <?lsmb INCLUDE input element_data = {
+                [% INCLUDE input element_data = {
                         title = text('Statement Date From'),
                         type = 'text',
                         class = 'date',
                         size = 12,
                         value = date_from,
                         name = 'date_from'
-                } ?>
-                <?lsmb INCLUDE input element_data = {
+                } %]
+                [% INCLUDE input element_data = {
                         title = text('Statement Date To'),
                         type = 'text',
                         class = 'date',
                         size = 12,
                         value = date_to,
                         name = 'date_to'
-                } ?>
+                } %]
             </div>
 
             <div class="input">
-                <?lsmb INCLUDE input element_data = {
+                [% INCLUDE input element_data = {
                         title = text('Amount From'),
                         type = 'text',
                         class = 'money',
                         size = 12,
                         value = balance_from,
                         name = 'balance_from'
-                } ?>
-                <?lsmb INCLUDE input element_data = {
+                } %]
+                [% INCLUDE input element_data = {
                         title = text('Amount To'),
                         type = 'text',
                         class = 'money',
                         size = 12,
                         value = balance_to,
                         name = 'balance_to'
-                } ?>
+                } %]
             </div>
 
             <div class="input">
-                <?lsmb INCLUDE select element_data = {
+                [% INCLUDE select element_data = {
                         title = text('Account'),
                         class = "chart_id",
                         name = "account_id",
@@ -54,11 +54,11 @@
                         text_attr = 'name',
                         value_attr = 'id'
                         default_blank = "true"
-                } ?>
+                } %]
             </div>
 
             <div class="input">
-                        <?lsmb- approved_options = [
+                        [%- approved_options = [
                                 {id = '1', label = text('Approved') },
                                 {id = '0', label = text('Not Approved') }
                         ];
@@ -70,11 +70,11 @@
                                 value_attr = 'id',
                                 class = 'status'
                                 default_blank = "true"
-                        } -?>
+                        } -%]
             </div>
 
             <div class="input">
-                        <?lsmb- submitted_options = [
+                        [%- submitted_options = [
                                 {id = '1', label = text('Submitted') },
                                 {id = '0', label = text('Not Submitted') }
                         ];
@@ -86,17 +86,17 @@
                                 value_attr = 'id',
                                 class = 'status'
                                 default_blank = "true"
-                        } -?>
+                        } -%]
             </div>
         </div>
 
         <div class="input" id="buttons_div">
-            <?lsmb INCLUDE button element_data = {
+            [% INCLUDE button element_data = {
                 type = "submit",
                 name = "action",
                 text = text('Search'),
                 value = 'get_results'
-            } ?>
+            } %]
         </div>
     </form>
 </div>

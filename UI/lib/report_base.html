@@ -1,31 +1,31 @@
-<?lsmb# HTML Snippet, for import only ?>
-<?lsmb- BLOCK business_classes;
-        FOREACH BUC IN bu_classes ?>
+[%# HTML Snippet, for import only %]
+[%- BLOCK business_classes;
+        FOREACH BUC IN bu_classes %]
         <tr>
-          <th align="right"><?lsmb text(BUC.label) ?></th>
-          <?lsmb b_units.${BUC.id}.unshift({}) ?>
-          <td colspan=3><?lsmb PROCESS select element_data = {
+          <th align="right">[% text(BUC.label) %]</th>
+          [% b_units.${BUC.id}.unshift({}) %]
+          <td colspan=3>[% PROCESS select element_data = {
                    name = 'business_unit_' _ loop.count
                    id = 'business_unit_' _ loop.count
                 options = b_units.${BUC.id}
               text_attr = 'text'
              value_attr = 'id'
                   class = 'business_unit'
-              } ?></td>
+              } %]</td>
         </tr>
-        <?lsmb END; # FOREACH BUC
+        [% END; # FOREACH BUC
         PROCESS input element_data = {
              type = 'hidden'
              name = 'bc_count'
              value = bu_classes.size
         };
-END # BLOCK -?>
+END # BLOCK -%]
 
-<?lsmb- BLOCK business_classes_div;
+[%- BLOCK business_classes_div;
     FOREACH BUC IN bu_classes;
-        b_units.${BUC.id}.unshift({}) ?>
+        b_units.${BUC.id}.unshift({}) %]
         <div class="inputrow"><div class="inputgroup">
-                  <?lsmb PROCESS select element_data = {
+                  [% PROCESS select element_data = {
                            name = 'business_unit_' _ loop.count
                            id = 'business_unit_' _ loop.count
                         options = b_units.${BUC.id}
@@ -33,20 +33,20 @@ END # BLOCK -?>
                      value_attr = 'id'
                           class = 'business_unit'
                           label = text(BUC.label)
-                      } ?>
+                      } %]
         </div></div>
-        <?lsmb END; # FOREACH BUC
+        [% END; # FOREACH BUC
                PROCESS input element_data = {
                type = 'hidden'
                name = 'bc_count'
                value = bu_classes.size
                };
-END # BLOCK -?>
+END # BLOCK -%]
 
-<?lsmb- BLOCK entity_class ?>
+[%- BLOCK entity_class %]
       <tr>
-      <th align="right"><?lsmb text('Entity Class') ?></th>
-      <td><?lsmb
+      <th align="right">[% text('Entity Class') %]</th>
+      <td>[%
         entity_classes.unshift({text = '', value_attr = ''});
         PROCESS select element_data = {
         name = "entity_class"
@@ -55,50 +55,50 @@ END # BLOCK -?>
         default_values = [entity_class]
         text_attr = 'class'
         value_attr = 'id'
-    } ?></td>
+    } %]</td>
        </tr>
-<?lsmb END # BLOCK -?>
+[% END # BLOCK -%]
 
-<?lsmb- BLOCK gifi_or_standard ?>
+[%- BLOCK gifi_or_standard %]
         <tr>
-          <th align="right"><?lsmb text('Accounts') ?></th>
+          <th align="right">[% text('Accounts') %]</th>
           <td>
-  <?lsmb PROCESS input element_data={
+  [% PROCESS input element_data={
     type = 'radio',
     name = 'accounttype',
     id = 'accounttype-standard',
     value = 'standard',
     label = text('Standard'),
     checked = 'checked',
-    } -?>
-  <?lsmb PROCESS input element_data={
+    } -%]
+  [% PROCESS input element_data={
     type = 'radio',
     name = 'accounttype',
     id = 'accounttype-gifi',
     value = 'gifi',
     label = text('GIFI'),
-    } -?>
+    } -%]
           </td>
         </tr>
-<?lsmb END # BLOCK -?>
+[% END # BLOCK -%]
 
-<?lsmb- BLOCK ignore_yearend ?>
+[%- BLOCK ignore_yearend %]
     <tr>
-      <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
+      <th align="right">[% text('Ignore Year-ends'); %]</th>
       <td>
-          <?lsmb PROCESS select element_data = {
+          [% PROCESS select element_data = {
                  options = form.yearend_options,
                  default_values = [form.ignore_yearend],
                  name = 'ignore_yearend',
                  id = 'ignore_yearend',
                  text_attr = 'label',
                  value_attr = 'id',
-           }?>
+           }%]
        </td>
     </tr>
-<?lsmb END # BLOCK -?>
-<?lsmb- BLOCK _date_block ?>
-    <?lsmb INCLUDE input element_data = {
+[% END # BLOCK -%]
+[%- BLOCK _date_block %]
+    [% INCLUDE input element_data = {
            type = "text"
           label = label
           class = "date"
@@ -106,36 +106,36 @@ END # BLOCK -?>
              id = name _ SUFFIX
            size = 11
        required = required
-          title = datestyle } ?>
-<?lsmb END #BLOCK -?>
+          title = datestyle } %]
+[% END #BLOCK -%]
 
-<?lsmb BLOCK date_from_date ?>
-    <?lsmb
+[% BLOCK date_from_date %]
+    [%
         IF !label.defined();    label    = text('From');      END;
         IF !name.defined();     name     = 'from_date'; END;
         IF !required.defined(); required = 'false';           END;
-    ?>
+    %]
       <td>
-        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        [% INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX %]
       </td>
-<?lsmb END # BLOCK ?>
+[% END # BLOCK %]
 
-<?lsmb BLOCK date_to_date ?>
-    <?lsmb
+[% BLOCK date_to_date %]
+    [%
         IF !label.defined();    label    = text('To');      END;
         IF !name.defined();     name     = 'to_date'; END;
         IF !required.defined(); required = 'false';         END;
-    ?>
+    %]
       <td>
-        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        [% INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX %]
       </td>
-<?lsmb END # BLOCK ?>
+[% END # BLOCK %]
 
-<?lsmb BLOCK date_period ?>
-   <th align="right"><?lsmb text('Period') ?></th>
+[% BLOCK date_period %]
+   <th align="right">[% text('Period') %]</th>
 
     <td colspan="5">
-        <?lsmb
+        [%
         all_months.unshift({});
         all_years.unshift({});
         PROCESS select element_data = {
@@ -157,79 +157,79 @@ END # BLOCK -?>
                class="radio"
                type="radio"
                value="none"
-               checked="checked" } ?>&nbsp;<?lsmb text('Current');
+               checked="checked" } %]&nbsp;[% text('Current');
         PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "day"
                class="radio"
                type="radio"
-               value="month" } ?>&nbsp;<?lsmb text('Day');
+               value="month" } %]&nbsp;[% text('Day');
         PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "week"
                class="radio"
                type="radio"
-               value="month" } ?>&nbsp;<?lsmb text('Week');
+               value="month" } %]&nbsp;[% text('Week');
         PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "month"
                class="radio"
                type="radio"
-               value="month" } ?>&nbsp;<?lsmb text('Month');
+               value="month" } %]&nbsp;[% text('Month');
         PROCESS input element_data = {
                name="interval" _ SUFFIX
                id="interval" _ SUFFIX _ "quarter"
                class="radio"
                type="radio"
-               value="quarter" } ?>&nbsp;<?lsmb text('Quarter');
+               value="quarter" } %]&nbsp;[% text('Quarter');
         PROCESS input element_data = {
                name="interval" _ SUFFIX
                id="interval" _ SUFFIX _ "year"
                class="radio"
                type="radio"
-               value="year" } ?>&nbsp;<?lsmb text('Year') ?>
+               value="year" } %]&nbsp;[% text('Year') %]
 
         </td>
-<?lsmb END # BLOCK ?>
+[% END # BLOCK %]
 
-<?lsmb- BLOCK date_row ?>
+[%- BLOCK date_row %]
         <tr>
-          <th align="right"><?lsmb text('Date Range') ?></th>
-          <?lsmb INCLUDE date_from_date required=required SUFFIX=SUFFIX ?>
-          <?lsmb INCLUDE date_to_date   required=required SUFFIX=SUFFIX ?>
+          <th align="right">[% text('Date Range') %]</th>
+          [% INCLUDE date_from_date required=required SUFFIX=SUFFIX %]
+          [% INCLUDE date_to_date   required=required SUFFIX=SUFFIX %]
         </tr>
     <tr>
-          <?lsmb PROCESS date_period ?>
+          [% PROCESS date_period %]
     </tr>
-<?lsmb END #BLOCK -?>
+[% END #BLOCK -%]
 
-<?lsmb- BLOCK date_from_date_div ?>
-    <?lsmb
+[%- BLOCK date_from_date_div %]
+    [%
         IF !label.defined();    label    = text('From');      END;
         IF !name.defined();     name     = text('from_date'); END;
         IF !required.defined(); required = 'false';           END;
-    ?>
+    %]
     <div class="input_group">
-        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        [% INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX %]
     </div>
-<?lsmb END #BLOCK -?>
+[% END #BLOCK -%]
 
-<?lsmb BLOCK date_to_date_div ?>
-    <?lsmb
+[% BLOCK date_to_date_div %]
+    [%
         IF !label.defined();    label    = text('To');      END;
         IF !name.defined();     name     = text('to_date'); END;
         IF !required.defined(); required = 'false';         END;
-    ?>
+    %]
     <div class="input_group">
-        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        [% INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX %]
     </div>
-<?lsmb END #BLOCK ?>
+[% END #BLOCK %]
 
-<?lsmb- BLOCK date_period_div ?>
+[%- BLOCK date_period_div %]
         <div class="input_row">
           <div class="input_group">
-              <label><?lsmb text('Period') ?></label>
-              <?lsmb
+              <label>[% text('Period') %]</label>
+              [%
                 all_months.unshift({});
                 all_years.unshift({});
 
@@ -250,21 +250,21 @@ END # BLOCK -?>
                        id="interval-current"
                        class="radio"
                        type="radio"
-                       value="none" } ?>&nbsp;<?lsmb text('Current');
+                       value="none" } %]&nbsp;[% text('Current');
 
                 PROCESS input element_data = {
                        name="interval"
                        id="interval-month"
                        class="radio"
                        type="radio"
-                       value="month" } ?>&nbsp;<?lsmb text('Month');
+                       value="month" } %]&nbsp;[% text('Month');
 
                 PROCESS input element_data = {
                        name="interval"
                        id="interval-quarter"
                        class="radio"
                        type="radio"
-                       value="quarter" } ?>&nbsp;<?lsmb text('Quarter');
+                       value="quarter" } %]&nbsp;[% text('Quarter');
 
                 PROCESS input element_data = {
                        name="interval"
@@ -272,23 +272,23 @@ END # BLOCK -?>
                        class="radio"
                        type="radio"
                        value="year"
-                       checked="checked" } ?>&nbsp;<?lsmb text('Year');
-              ?>
+                       checked="checked" } %]&nbsp;[% text('Year');
+              %]
           </div>
         </div>
-<?lsmb END #BLOCK -?>
+[% END #BLOCK -%]
 
-<?lsmb- BLOCK date_row_div ?>
+[%- BLOCK date_row_div %]
         <div class="input_row">
-        <?lsmb INCLUDE date_from_date_div required=required SUFFIX=SUFFIX ?>
-        <?lsmb INCLUDE date_to_date_div   required=required SUFFIX=SUFFIX ?>
+        [% INCLUDE date_from_date_div required=required SUFFIX=SUFFIX %]
+        [% INCLUDE date_to_date_div   required=required SUFFIX=SUFFIX %]
     </div>
         <div class="input_row">
-        <?lsmb PROCESS date_period_div ?>
+        [% PROCESS date_period_div %]
     </div>
-<?lsmb END #BLOCK -?>
+[% END #BLOCK -%]
 
-<?lsmb BLOCK employee_row;
+[% BLOCK employee_row;
   # DEFAULTS
   IF ! SELECTNAME.defined;
      #SELECTNAME = 'employee_id';
@@ -298,17 +298,17 @@ END # BLOCK -?>
      e.text = e.first_name _ ' ' _ e.last_name;
   END;
   #employees.push({})
-  employees.unshift({}) ?>
+  employees.unshift({}) %]
 <tr>
-  <th><?lsmb text('Employees') ?></th>
-  <td><?lsmb PROCESS select element_data = {
+  <th>[% text('Employees') %]</th>
+  <td>[% PROCESS select element_data = {
                  name = SELECTNAME
                  id = SELECTNAME
        default_values = [$SELECTNAME]
               options = employees
            value_attr = 'person_id' #??
                 class = 'employee'
-       } ?></td>
+       } %]</td>
 </tr>
 
-<?lsmb END # BLOCK employees ?>
+[% END # BLOCK employees %]

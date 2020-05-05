@@ -1,18 +1,18 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
   <form data-dojo-type="lsmb/Form"
         id="system-settings"
         method="post"
-        action="<?lsmb form.script ?>">
+        action="[% form.script %]">
     <table width="100%"><col width="25%" align="right"><col><col>
-      <tr><th colspan="3" class="listtop"><?lsmb text('System Defaults') ?></th></tr>
-        <?lsmb FOREACH GROUP IN default_settings ?>
-      <tr><th colspan="3" class="listheading"><?lsmb GROUP.title ?></th></tr>
-      <?lsmb FOREACH ITEM IN GROUP.items ?>
+      <tr><th colspan="3" class="listtop">[% text('System Defaults') %]</th></tr>
+        [% FOREACH GROUP IN default_settings %]
+      <tr><th colspan="3" class="listheading">[% GROUP.title %]</th></tr>
+      [% FOREACH ITEM IN GROUP.items %]
       <tr>
-        <th align="right"><?lsmb ITEM.label ?></th>
-        <td colspan="<?lsmb ITEM.info ? 1 : 2 ?>" style='white-space:nowrap'>
-          <?lsmb
+        <th align="right">[% ITEM.label %]</th>
+        <td colspan="[% ITEM.info ? 1 : 2 %]" style='white-space:nowrap'>
+          [%
              IF ITEM.name == 'password_duration';
                PROCESS input element_data = {
                        name = ITEM.name,
@@ -70,15 +70,15 @@
                 END;
                 "</td>";
              END;
-           ?>
+           %]
         </td>
       </tr>
-      <?lsmb END # FOREACH ITEM ?>
-      <?lsmb END # FOREACH GROUP ?>
+      [% END # FOREACH ITEM %]
+      [% END # FOREACH GROUP %]
     </table>
     <hr size="3" noshade="noshade" />
 
-    <?lsmb FOREACH hidden IN hiddens.keys;
+    [% FOREACH hidden IN hiddens.keys;
               PROCESS input element_data={
                       type => 'hidden',
                       name => hidden,
@@ -88,6 +88,6 @@
            PROCESS button element_data={
                    name => 'action'
                    value => 'save_defaults'
-                   text => text('Save')} ?>
+                   text => text('Save')} %]
   </form>
 </body>

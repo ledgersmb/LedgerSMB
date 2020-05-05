@@ -1,44 +1,44 @@
-<?lsmb# HTML Snippet, for import only ?>
+[%# HTML Snippet, for import only %]
 <div id="notes_div"
-     title="<?lsmb text('Notes') ?>"
+     title="[% text('Notes') %]"
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'notes_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'notes_div' %]data-dojo-props="selected:true"[% END %]
      >
-<div class="listtop"><?lsmb text('Notes') ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
-<?lsmb PROCESS input element_data = {
+<div class="listtop">[% text('Notes') %]</div>
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
+[% PROCESS input element_data = {
                 type = "hidden"
                 name = "target_div"
                 value = 'notes_div'
-        } ?>
-<?lsmb PROCESS input element_data = {
+        } %]
+[% PROCESS input element_data = {
                 type = "hidden"
                 name = "form_id"
                 value = form_id
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                 type="hidden"
                 name="entity_id"
                 value=entity_id
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                 type="hidden"
                 name="credit_id"
                 value=credit_act.id
-        } ?>
+        } %]
 <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
 <div class="input">
-   <?lsmb PROCESS input element_data = {
+   [% PROCESS input element_data = {
       title = text('Subject'),
       label = "_none_"
       name = "subject"
       value = subject
       type = "text"
       size = "20"
-        } ?>
+        } %]
 </div>
 <div class="input">
-<?lsmb
+[%
 IF credit_act.id;
     PROCESS select element_data = {
                         name = "note_class"
@@ -53,32 +53,32 @@ ELSE;
           type = "hidden"
           name = "note_class"
          value = "1"
-} ?>
-<label><?lsmb text('Note Class') ?></label><?lsmb text('Entity');
-END; ?>
+} %]
+<label>[% text('Note Class') %]</label>[% text('Entity');
+END; %]
 </div>
-<div class="input"><?lsmb PROCESS textarea element_data = {
+<div class="input">[% PROCESS textarea element_data = {
         title = text('Notes')
         label = "_none_"
         name = 'note'
          required = 'true'
           id = 'note_entry_note'
-} ?></div></div>
+} %]</div></div>
 <div class="input">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         text = text('Save')
         class = 'submit'
         name = 'action'
         value = 'save_notes'
-} ?>
+} %]
 </div>
 </form>
-<?lsmb FOREACH n = notes ?>
-<div class="note<?lsmb IF n.note_class == 3; ' eca_note'; END ?>">
-    <div class="note_subject"><?lsmb text('Subject: [_1]', n.subject)?></div>
-    <div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
-    <div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>
-    <div class="note_contents"><?lsmb n.note ?></div>
+[% FOREACH n = notes %]
+<div class="note[% IF n.note_class == 3; ' eca_note'; END %]">
+    <div class="note_subject">[% text('Subject: [_1]', n.subject)%]</div>
+    <div class="timestamp">[% text('Entered at: [_1]', n.created) %]</div>
+    <div class="author">[% text("Author: [_1]", n.created_by) %]</div>
+    <div class="note_contents">[% n.note %]</div>
 </div>
-<?lsmb END ?>
+[% END %]
 </div>

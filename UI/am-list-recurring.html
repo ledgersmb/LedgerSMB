@@ -1,39 +1,39 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" method="post" action="am.pl">
-  <?lsmb # This form is also rendered when form.script contains 'is.pl'
+  [% # This form is also rendered when form.script contains 'is.pl'
          # or 'ir.pl'; however, submission really must be taken to 'am.pl'
-         # so we have no option but to hard-code it ?>
+         # so we have no option but to hard-code it %]
 
 
 <table width="100%">
   <tr>
-    <th class="listtop"><?lsmb text('Recurring Transactions') ?></th>
+    <th class="listtop">[% text('Recurring Transactions') %]</th>
   </tr>
   <tr><td>&nbsp;</td></tr>
   <tr>
     <td>
       <table width=100%>
         <tr class="listtop">
-<?lsmb FOREACH column IN columns ?>
+[% FOREACH column IN columns %]
           <th class="listtop">
-  <?lsmb IF heading.$column.text.defined ?>
-  <a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
-  <?lsmb ELSE;
+  [% IF heading.$column.text.defined %]
+  <a class="listtop" href="[% heading.$column.href %]">[% heading.$column.text %]</a>
+  [% ELSE;
     heading.$column;
-  END ?>
+  END %]
           </th>
-<?lsmb END ?>
+[% END %]
         </tr>
-<?lsmb FOREACH transaction_type IN transactions ?>
+[% FOREACH transaction_type IN transactions %]
         <tr>
-          <th class="listheading" colspan="<?lsmb columns.size ?>"><?lsmb transaction_type.title ?></th>
+          <th class="listheading" colspan="[% columns.size %]">[% transaction_type.title %]</th>
         </tr>
-  <?lsmb FOREACH transaction IN transaction_type.transactions ?>
-      <tr class="listrow<?lsmb transaction.i ?>">
-    <?lsmb FOREACH column IN columns ?>
+  [% FOREACH transaction IN transaction_type.transactions %]
+      <tr class="listrow[% transaction.i %]">
+    [% FOREACH column IN columns %]
         <td>
-      <?lsmb IF transaction.$column.delimiter.defined;
+      [% IF transaction.$column.delimiter.defined;
         transaction.$column.text.replace(transaction.$column.delimiter, '<br />');
       ELSIF transaction.$column.href.defined;
         '<a href="'; transaction.$column.href; '">'; transaction.$column.text; '</a>';
@@ -41,12 +41,12 @@
         PROCESS input element_data=transaction.$column;
       ELSE;
         transaction.$column;
-      END ?>
+      END %]
         </td>
-    <?lsmb END ?>
+    [% END %]
       </tr>
-  <?lsmb END ?>
-<?lsmb END ?>
+  [% END %]
+[% END %]
       </table>
     </td>
   </tr>
@@ -55,12 +55,12 @@
   </tr>
 </table>
 
-<?lsmb FOREACH hidden IN hiddens.keys;
+[% FOREACH hidden IN hiddens.keys;
         PROCESS input element_data={
                 type => 'hidden',
                 name => hidden,
                 value => hiddens.item(hidden)
                 }; END;
-PROCESS button element_data={name => 'action', value => 'process_transactions' text => text('Process Transactions')} ?>
+PROCESS button element_data={name => 'action', value => 'process_transactions' text => text('Process Transactions')} %]
 </form>
 </body>

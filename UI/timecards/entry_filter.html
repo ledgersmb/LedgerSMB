@@ -1,23 +1,23 @@
-<?lsmb PROCESS 'elements.html';
+[% PROCESS 'elements.html';
        PROCESS 'utilities.html';
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" method="post" action="timecard.pl" title = "<?lsmb text('Timecard Criteria') ?>">
-<div class="listtop"><?lsmb text('Timecard Criteria') ?></div>
+%]
+<body class="lsmb [% dojo_theme %]">
+<form data-dojo-type="lsmb/Form" method="post" action="timecard.pl" title = "[% text('Timecard Criteria') %]">
+<div class="listtop">[% text('Timecard Criteria') %]</div>
 <div class="tabular col-1">
-<div><?lsmb IF employees;
+<div>[% IF employees;
           # Setting this to a conditional so that employee list can be
           # populated by add-on workflows.  Our standard ones will be set up
           # only to enter the timecards of the current user. --CT
           PROCESS employee element_name="person_id" label=text('Employee');
-       END ?>
+       END %]
 </div>
 <div>
-<?lsmb PROCESS business_unit_class label=text('Recording time for') _ ':' #'
-       text_attr="label" value_attr="id" ?>
+[% PROCESS business_unit_class label=text('Recording time for') _ ':' #'
+       text_attr="label" value_attr="id" %]
 </div>
 <div >
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
             name = 'num_days'
          options = [{text = text('Day'),  value = 1},
                     {text = text('Week'), value = 7}]
@@ -25,24 +25,24 @@
            label = text('Time Frame') #'
            class = 'timeframe'
        };
-?>
+%]
 </div>
 <div>
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        label = text('Starting Date') #'
         name = 'date_from'
         type = 'text'
         size = 12
        class = 'date'
     required = 'true'
-} ?>
+} %]
 </div></div>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
     text = text('Continue')
     name = 'action'
    value = 'timecard_screen'
     type = 'submit'
    class = 'submit'
-} ?>
+} %]
 </form>
 </body>

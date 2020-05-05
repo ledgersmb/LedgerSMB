@@ -1,6 +1,6 @@
-<?lsmb# HTML Snippet, for import only ?>
-<?lsmb BLOCK print_options ?>
-<div class="print-options"><?lsmb
+[%# HTML Snippet, for import only %]
+[% BLOCK print_options %]
+<div class="print-options">[%
 
 IF templates.size == 1;
 PROCESS input element_data = {
@@ -47,9 +47,9 @@ PROCESS select element_data = {
            name = "media"
         options = printers
  default_values = [media]
-}; ?></div>
-<?lsmb END ?>
-<?lsmb- BLOCK employee;
+}; %]</div>
+[% END %]
+[%- BLOCK employee;
 IF !element_name;
     element_name = 'employee';
 END;
@@ -99,4 +99,4 @@ PROCESS select element_data = {
 };
 
 END;
--?>
+-%]

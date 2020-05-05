@@ -1,58 +1,58 @@
-<?lsmb PROCESS elements.html ?>
-<?lsmb PROCESS 'dynatable.html' ?>
+[% PROCESS elements.html %]
+[% PROCESS 'dynatable.html' %]
 
-<body class="<?lsmb dojo_theme ?>">
+<body class="[% dojo_theme %]">
 
   <div id="system-rate">
 
-    <div class="listtop"><?lsmb name ?></div>
+    <div class="listtop">[% name %]</div>
 
-    <?lsmb PROCESS 'dynatable' tbody = { rows = rows }
-            attributes = { width = "100%" } ?>
+    [% PROCESS 'dynatable' tbody = { rows = rows }
+            attributes = { width = "100%" } %]
     <br />
 
     <form data-dojo-type="lsmb/Form"
           method="post"
-          action="<?lsmb request.script ?>"
+          action="[% request.script %]"
           enctype="multipart/form-data">
-      <?lsmb FOREACH hidden IN hiddens.keys;
+      [% FOREACH hidden IN hiddens.keys;
              PROCESS input element_data={
                         type => 'hidden',
                         name => hidden,
                         value => hiddens.item(hidden)
                   };
-             END ?>
+             END %]
 
-      <?lsmb PROCESS select element_data={
+      [% PROCESS select element_data={
              name='curr'
              label=text('Currency')
              options=currencies
              text_attr='curr'
              value_attr='curr'
              required=1
-             default_blank=1 } ?>
-      <?lsmb PROCESS select element_data={
+             default_blank=1 } %]
+      [% PROCESS select element_data={
              name='rate_type'
              label=text('Rate type')
              options=exchangerate_types
              text_attr='description'
              value_attr='id'
              required=1
-             default_values=[form.rate_type] } ?>
-      <?lsmb PROCESS input element_data={
+             default_values=[form.rate_type] } %]
+      [% PROCESS input element_data={
              label=text('Valid from')
              name='valid_from'
              type='date'
              required=1
-             value=form.valid_from } ?>
-      <?lsmb PROCESS input element_data={
+             value=form.valid_from } %]
+      [% PROCESS input element_data={
              label=text('Rate')
              name='rate'
              type='exchangerate'
              required=1
-         } ?>
+         } %]
 
-      <?lsmb PROCESS button element_data={
+      [% PROCESS button element_data={
              text = text('Add/Update'),
              class="submit"
              type="submit"
@@ -60,28 +60,28 @@
              value="save_exchangerate"
              accesskey="S"
              title="Save [Alt-S]"
-         } ?>
+         } %]
 
-      <?lsmb FOREACH button IN buttons;
+      [% FOREACH button IN buttons;
              PROCESS button element_data=button;
-             END ?>
+             END %]
     </form>
 
     <hr />
 
     <form data-dojo-type="lsmb/Form"
           method="post"
-          action="<?lsmb request.script ?>"
+          action="[% request.script %]"
           enctype="multipart/form-data">
 
-      <?lsmb PROCESS input element_data = {
+      [% PROCESS input element_data = {
              name = "import_file"
              type = "file"
              label = text('From File') #'
              class = "file"
-         } ?>
+         } %]
 
-      <?lsmb PROCESS button element_data={
+      [% PROCESS button element_data={
              text = text('Upload'),
              class="submit"
              type="submit"
@@ -89,7 +89,7 @@
              value="upload_exchangerates"
              accesskey="U"
              title="Upload [Alt-U]"
-         } ?>
+         } %]
 
     </form>
   </div>

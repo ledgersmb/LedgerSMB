@@ -1,85 +1,85 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb title ?></div>
-<div class="info"><?lsmb info ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post" enctype="multipart/form-data">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
+<div class="listtop">[% title %]</div>
+<div class="info">[% info %]</div>
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post" enctype="multipart/form-data">
 <div class="inputrow" id="ar-account-row">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
      label = text("AR account")
       name = "AR"
       options = AR_accounts
       text_attr = "value"
       value_attr = "value"
-} ?>
+} %]
 </div>
 <div class="inputrow" id="ap-account-row">
-<?lsmb PROCESS select element_data = {
+[% PROCESS select element_data = {
      label = text("AP account")
       name = "AP"
       options = AP_accounts
       text_attr = "value"
       value_attr = "value"
-} ?>
+} %]
 </div>
 <div class="inputrow" id="daterow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
      type = "text"
      class = "date"
      label = text("Transaction Date")
      name = "transdate"
      value = transdate
      size = 12
-} ?>
+} %]
 </div>
 <div class="inputrow" id="typerow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        name = "stock_type"
        id   = 'stock_type-absolute'
        type = "radio"
        value = "absolute"
        label = text("Onhand amount")
-} ?> <br />
-<?lsmb PROCESS input element_data = {
+} %] <br />
+[% PROCESS input element_data = {
        name = "stock_type"
        id   = 'stock_type-relative'
        type = "radio"
        value = "relative"
        label = text("Onhand delta")
-} ?>
+} %]
 </div>
 <div class="inputrow" id="typerow2">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        name = "type"
        id   = 'type-single'
        type = "radio"
        value = "inventory"
        label = text("Single date")
-} ?> <br />
-<?lsmb PROCESS input element_data = {
+} %] <br />
+[% PROCESS input element_data = {
        name = "type"
        id   = 'type-multiple'
        type = "radio"
        value = "inventory_multi"
        label = text("Multiple dates")
-} ?>
+} %]
 </div>
 <div class="inputrow" id="filerow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        name = "import_file"
        type = "file"
        label = text("From File")
        class = "file"
        accept = ".csv"
-} ?>
+} %]
 </div>
 <div class="inputrow" id="buttonrow">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         text = text("Save")
         type = "submit"
         class = "submit"
         name = "action"
         value = "run_import"
-} ?>
+} %]
 </div>
 </form>
 </body>

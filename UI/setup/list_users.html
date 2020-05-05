@@ -1,12 +1,12 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
                stylesheet="ledgersmb.css"
                include_stylesheet=["setup.css"];
        PROCESS "elements.html";
-       PROCESS "dynatable.html"; ?>
-<body id="setup-list-users" class="<?lsmb dojo_theme ?>">
+       PROCESS "dynatable.html"; %]
+<body id="setup-list-users" class="[% dojo_theme %]">
     <div class="setupconsole">
-        <div class="listtop"><?lsmb text('Available Users') ?></div>
-        <?lsmb INCLUDE dynatable
+        <div class="listtop">[% text('Available Users') %]</div>
+        [% INCLUDE dynatable
                     columns = [{col_id = 'name',
                                   name = text('Username'),
                                   type = 'href'
@@ -15,7 +15,7 @@
                  attributes = {
                                   id = 'user_list'
                               }
-        ?>
+        %]
     </div>
 </body>
 </html>

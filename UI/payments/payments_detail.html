@@ -1,92 +1,92 @@
-<?lsmb BLOCK format_money ?><?lsmb number
-?><?lsmb END # block ?>
- <?lsmb PROCESS elements.html  # Include form elements helper. ?>
-<?lsmb contact_type = (payment.account_class == 1) ? text('Vendor') : text('Customer')
-?>
-<?lsmb payment_type = (payment.account_class == 1) ? text('Payments') : text('Receipts')
-?>
-<body id="payment_2_body" onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
+[% BLOCK format_money %][% number
+%][% END # block %]
+ [% PROCESS elements.html  # Include form elements helper. %]
+[% contact_type = (payment.account_class == 1) ? text('Vendor') : text('Customer')
+%]
+[% payment_type = (payment.account_class == 1) ? text('Payments') : text('Receipts')
+%]
+<body id="payment_2_body" onLoad="init()" class="lsmb [% dojo_theme %]">
 <!-- CT:  This template produces invalid XHTML due to the use of nested tables.
     Because nested tables are widely used (perhaps improperly) for layout,
     most browsers should have no issues with them.  Furthermore, I cannot find
     any cleaner solution to embedding tabular data within tabular data than
     this -->
 <div id="payments-detail">
-<div class="listtop"><?lsmb payment.payment_type ?></div>
- <form data-dojo-type="lsmb/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
+<div class="listtop">[% payment.payment_type %]</div>
+ <form data-dojo-type="lsmb/Form" name="pay_dues" method="post" action="[% request.script %]">
  <!-- Moving all hidden variables to the top.  -CT -->
- <?lsmb INCLUDE input element_data = {
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "project_id"
         value = payment.project_id
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "form_id"
         value = request.form_id
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "account_class"
         value = payment.account_class
 
- } ?>
-<?lsmb INCLUDE input element_data = {
+ } %]
+[% INCLUDE input element_data = {
         type = "hidden"
         name = "payment_type_id"
         value = payment.payment_type_id
 
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "department_id"
         value = payment.department_id
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "meta_number"
         value = payment.meta_number
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "source_start"
         value = payment.source_start
-        } ?>
- <?lsmb INCLUDE input element_data = {
+        } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "approved"
         value = payment.approved
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "currency"
         value = payment.currency
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "ar_ap_accno"
         value = payment.ar_ap_accno
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "date_from"
         value = payment.date_from
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "date_to"
         value = payment.date_to
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "business_id"
         value = payment.business_id
- } ?>
- <?lsmb INCLUDE input element_data = {
+ } %]
+ [% INCLUDE input element_data = {
         type = "hidden"
         name = "batch_id"
         value = payment.batch_id
- } ?>
+ } %]
 
 
   <div class="container">
@@ -95,58 +95,58 @@
     <div class="heading_section report_header">
 
         <div id="date_row">
-            <label for="date_paid"><?lsmb text('Posting Date') ?></label>
-            <?lsmb IF payment.batch_id ?>
-                        <?lsmb IF ! payment.datepaid ?><?lsmb payment.datepaid = payment.batch_date ?><?lsmb END ?>
-                        <span id="date_paid"><?lsmb payment.datepaid ?></span>
-            <?lsmb END ?>
-            <?lsmb INCLUDE input element_data= {
+            <label for="date_paid">[% text('Posting Date') %]</label>
+            [% IF payment.batch_id %]
+                        [% IF ! payment.datepaid %][% payment.datepaid = payment.batch_date %][% END %]
+                        <span id="date_paid">[% payment.datepaid %]</span>
+            [% END %]
+            [% INCLUDE input element_data= {
                         value = payment.datepaid
                         name  = "datepaid"
                         size  = 20
                         class = (payment.batch_id) ? "hidden" : "date"
                         type  = (payment.batch_id) ? "hidden" : "text"
                 }
-            ?>
+            %]
         </div>
 
-        <?lsmb IF payment.date_from ?>
+        [% IF payment.date_from %]
         <div id="date_filter_from_row">
-            <label for="filter_from"><?lsmb text('Filtering From') ?></label>
-            <span id="filter_from"><?lsmb payment.date_from ?></span>
+            <label for="filter_from">[% text('Filtering From') %]</label>
+            <span id="filter_from">[% payment.date_from %]</span>
         </div>
-        <?lsmb END ?>
+        [% END %]
 
-        <?lsmb IF payment.date_to ?>
+        [% IF payment.date_to %]
         <div id="date_filter_to_row">
-            <label for="filter_to"><?lsmb text('To') ?></label>
-            <span id="filter_to"><?lsmb payment.date_to ?></span>
+            <label for="filter_to">[% text('To') %]</label>
+            <span id="filter_to">[% payment.date_to %]</span>
         </div>
-        <?lsmb END ?>
+        [% END %]
 
-        <?lsmb IF payment.department.value ?>
+        [% IF payment.department.value %]
         <div class="info">
-            <label for="department_info"><?lsmb text('Department') ?></label>
-            <span id="department_info"><?lsmb payment.department ?></span>
+            <label for="department_info">[% text('Department') %]</label>
+            <span id="department_info">[% payment.department %]</span>
         </div>
-        <?lsmb END ?>
+        [% END %]
 
         <div id="account_row">
-            <label for="account_info"><?lsmb text('Account') ?></label>
+            <label for="account_info">[% text('Account') %]</label>
             <span id="account_info">
-                        <?lsmb FOREACH a = payment.debt_accounts ?>
-                                <?lsmb IF a.accno == payment.ar_ap_accno ?>
-                                        <?lsmb a.accno ?> -- <?lsmb a.description ?>
-                                <?lsmb END # If a.accno... ?>
-                        <?lsmb  END # FOREACH a ?>
+                        [% FOREACH a = payment.debt_accounts %]
+                                [% IF a.accno == payment.ar_ap_accno %]
+                                        [% a.accno %] -- [% a.description %]
+                                [% END # If a.accno... %]
+                        [%  END # FOREACH a %]
             </span>
         </div>
 
-        <?lsmb  IF payment.default_currency != payment.currency ?>
+        [%  IF payment.default_currency != payment.currency %]
         <div id="exrate_row">
-                        <?lsmb IF payment.fx_from_db ?>
-                                <label><?lsmb text('Exchange Rate') ?></label> <?lsmb payment.exchangerate ?>
-                                <?lsmb PROCESS input element_data = {
+                        [% IF payment.fx_from_db %]
+                                <label>[% text('Exchange Rate') %]</label> [% payment.exchangerate %]
+                                [% PROCESS input element_data = {
                                         name  = 'exchangerate'
                                         value = payment.exchangerate
                                         type  = 'hidden'
@@ -162,43 +162,43 @@
                                         value = payment.exchangerate
                                         size  = 20
                                 };
-                        END ?>
+                        END %]
         </div>
-        <?lsmb END ?>
+        [% END %]
 
-        <?lsmb IF payment.business ?>
+        [% IF payment.business %]
         <div id="business_row">
-            <label for="business_info"><?lsmb text('Business') ?></label>
+            <label for="business_info">[% text('Business') %]</label>
             <span id="business_info">
-                                <?lsmb FOREACH b = payment.businesses ?>
-                                        <?lsmb IF b.id == payment.business ?>
-                                                <?lsmb b.id ?> -- <?lsmb b.description ?>
-                                        <?lsmb END # if b.id... ?>
-                                <?lsmb END # foreach b ?>
+                                [% FOREACH b = payment.businesses %]
+                                        [% IF b.id == payment.business %]
+                                                [% b.id %] -- [% b.description %]
+                                        [% END # if b.id... %]
+                                [% END # foreach b %]
             </span>
         </div>
-        <?lsmb END # if business ?>
+        [% END # if business %]
 
-        <?lsmb IF payment.payment_type ?>
+        [% IF payment.payment_type %]
         <div class="payment_type" id="payment_type_label_div">
-            <label for="filter_type_label"><?lsmb text('Payment Type') ?></label>
-            <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
+            <label for="filter_type_label">[% text('Payment Type') %]</label>
+            <span id="filter_type_label">[% payment_type_return_label %] </span>
         </div>
-        <?lsmb END ?>
+        [% END %]
 
         <div id="cash_account_div">
-                <?lsmb INCLUDE input element_data = {
+                [% INCLUDE input element_data = {
                         type  = "hidden"
                         name  = "cash_accno"
                         value = payment.cash_accno
-                } ?>
-                <label><?lsmb text('Pay From') ?></label>
+                } %]
+                <label>[% text('Pay From') %]</label>
                 <span id="cash_accno">
-                    <?lsmb FOR c = payment.cash_accounts -?>
-                        <?lsmb IF c.accno == payment.cash_accno -?>
-                                <?lsmb c.accno ?> -- <?lsmb c.description ?>
-                        <?lsmb END # if c.accno -?>
-                    <?lsmb END # for c -?>
+                    [% FOR c = payment.cash_accounts -%]
+                        [% IF c.accno == payment.cash_accno -%]
+                                [% c.accno %] -- [% c.description %]
+                        [% END # if c.accno -%]
+                    [% END # for c -%]
                 </span>
         </div>
 
@@ -210,7 +210,7 @@
                 <tr class="listheading">
                         <th class="account">
                                 <div class="selectall">
-                                        <?lsmb INCLUDE input element_data = {
+                                        [% INCLUDE input element_data = {
                                                 id    = 'checkbox-selectall'
                                                 name  = 'selectall'
                                                 class = 'selectall'
@@ -218,38 +218,38 @@
                                                 type  = 'checkbox'
                       "data-dojo-type" = "lsmb/PublishCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
-                                        } ?>
+                                        } %]
                                 </div>
-                                <?lsmb text('Account') ?>
+                                [% text('Account') %]
                         </th>
-                        <th class="entity_name"><?lsmb text('Name') ?></th>
-                        <th class="invoice"><?lsmb text('Invoice Total') ?></th>
-                        <th class="payment"><?lsmb text('Payment') ?></th>
-                        <th class="payment"><?lsmb text('Details') ?></th>
+                        <th class="entity_name">[% text('Name') %]</th>
+                        <th class="invoice">[% text('Invoice Total') %]</th>
+                        <th class="payment">[% text('Payment') %]</th>
+                        <th class="payment">[% text('Details') %]</th>
                 </tr>
             </thead>
             <tbody>
-                <?lsmb rc = 1 ?><?lsmb count = 0 ?>
-                <?lsmb FOREACH r = payment.contact_invoices ?>
-                        <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
-                        <tr class="listrow<?lsmb rc ?>">
+                [% rc = 1 %][% count = 0 %]
+                [% FOREACH r = payment.contact_invoices %]
+                        [% rc = (rc + 1) % 2; count = count + 1 %]
+                        <tr class="listrow[% rc %]">
                                 <td class="account_number" rowspan="2" >
-                                        <?lsmb INCLUDE input element_data = {
+                                        [% INCLUDE input element_data = {
                                                 type  = "hidden"
                                                 name  = "contact_$count"
                                                 value = r.contact_id
-                                        } ?>
-                                        <?lsmb INCLUDE input element_data = {
+                                        } %]
+                                        [% INCLUDE input element_data = {
                                                 type = "hidden"
                                                 name = "contact_label_" _ r.contact_id
                                                 value = r.econtrol_code _ "--" _ r.account_number _ "--" _ r.contact_name
-                                        } ?>
-                                        <?lsmb # IF payment.action == "update_payments" -?>
-                                                <?lsmb IF payment.${"id_$r.contact_id"} -?>
-                                                        <?lsmb r.selected = 1 -?>
-                                                <?lsmb END # IF payment.${"id_$r.contact_id"} -?>
-                                        <?lsmb # END # IF action ... -?>
-                                        <?lsmb INCLUDE input element_data = {
+                                        } %]
+                                        [% # IF payment.action == "update_payments" -%]
+                                                [% IF payment.${"id_$r.contact_id"} -%]
+                                                        [% r.selected = 1 -%]
+                                                [% END # IF payment.${"id_$r.contact_id"} -%]
+                                        [% # END # IF action ... -%]
+                                        [% INCLUDE input element_data = {
                                                 type    = "checkbox"
                                                 id      = "id_" _ r.contact_id
                                                 name    = "id_" _ r.contact_id
@@ -258,26 +258,26 @@
                   class   = 'contactcb'
                       "data-dojo-type" = "lsmb/SubscribeCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
-                                        } ?>
-                                        <?lsmb r.econtrol_code ?> --
-                                        <?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
+                                        } %]
+                                        [% r.econtrol_code %] --
+                                        [% r.account_number %] -- [% r.eca_description %]
                                 </td>
                                 <td class="entity_name">
-                                        <span class="<?lsmb
+                                        <span class="[%
                                                 IF r.has_vouchers; 'name_has_vouchers' ;
                                                 ELSE ; 'name_has_no_vouchers' ;
                                                 END
-                                                ?>">
-                                                <?lsmb r.contact_name ?>
+                                                %]">
+                                                [% r.contact_name %]
                                         </span>
                                 </td>
-                                <td class="invoice"><?lsmb r.to_pay ?>
-                                        <?lsmb payment.currency ?>
+                                <td class="invoice">[% r.to_pay %]
+                                        [% payment.currency %]
                                 </td>
                                 <td>
                                         <div class="details_select">
                                                 <div class="input">
-                                                        <?lsmb INCLUDE input element_data = {
+                                                        [% INCLUDE input element_data = {
                                                                 name    = "paid_" _ r.contact_id
                                                                 value   = "some"
                                                                 class   = "paid_some"
@@ -287,10 +287,10 @@
                                                                checked = (payment.${"paid_$r.contact_id"} == 'some') ? "checked" : ""
                         "data-dojo-type" = "lsmb/PublishRadioButton"
                         "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
-                                                         }      ?>
+                                                         }      %]
                                                 </div>
                                                 <div class="input">
-                                                        <?lsmb INCLUDE input element_data = {
+                                                        [% INCLUDE input element_data = {
                                                                 name    = "paid_" _ r.contact_id
                                                                 value   = "all"
                                                                 class   = "paid_all"
@@ -301,85 +301,85 @@
                                                                "data-dojo-type" = "lsmb/PublishRadioButton"
                         "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
 
-                                                 }      ?>
+                                                 }      %]
                                                 </div>
                                         </div>
                                 </td>
                                 <td rowspan = 2>
-                                        <?lsmb INCLUDE input element_data = {
+                                        [% INCLUDE input element_data = {
                                                 name  = "source_$r.contact_id"
                                                 id    = "source_$r.contact_id"
                                                 value = r.source
                                                 type  = "text"
                                                 size  = "20"
                                                 label = text('Source')
-                                        } ?>
+                                        } %]
                                 </td>
                         </tr>
 
-                        <tr class="listrow<?lsmb rc ?>">
+                        <tr class="listrow[% rc %]">
                                 <td class="invoice_detail_list" colspan="3">
 
-                                        <table id = "invoice-data-table-<?lsmb r.contact_id ?>"
+                                        <table id = "invoice-data-table-[% r.contact_id %]"
                       width="100%"
                       data-dojo-type="lsmb/SubscribeShowHide"
-                      data-dojo-props="topic:'ui/pay/bulk/invoice-data-table-<?lsmb r.contact_id ?>',showValues:['some']"
-                      <?lsmb IF 'some' != payment.${"paid_$r.contact_id"} ; -?>
+                      data-dojo-props="topic:'ui/pay/bulk/invoice-data-table-[% r.contact_id %]',showValues:['some']"
+                      [% IF 'some' != payment.${"paid_$r.contact_id"} ; -%]
                       style="display:none"
-                      <?lsmb END; ?>
+                      [% END; %]
                       >
                                             <thead>
                                                 <tr class="listheading">
-                                                        <th class="invoice_date_list"><?lsmb text('Date') ?>
+                                                        <th class="invoice_date_list">[% text('Date') %]
                                                         </th>
                                                         <th class="invoice_list">
-                                                                <?lsmb text('Invoice Number') ?>
+                                                                [% text('Invoice Number') %]
                                                         </th>
-                                                        <th class="total_due_list"><?lsmb text('Total') ?></th>
-                                                        <th class="paid_list"><?lsmb text('Paid') ?></th>
-                                                        <th class="discount_list"><?lsmb text('Discount') ?></th>
-                                                        <th class="net_due_list"><?lsmb text('Net Due') ?> </th>
-                                                        <th class="to_pay_list"><?lsmb text('To Pay') ?></th>
+                                                        <th class="total_due_list">[% text('Total') %]</th>
+                                                        <th class="paid_list">[% text('Paid') %]</th>
+                                                        <th class="discount_list">[% text('Discount') %]</th>
+                                                        <th class="net_due_list">[% text('Net Due') %] </th>
+                                                        <th class="to_pay_list">[% text('To Pay') %]</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?lsmb FOREACH i = r.invoices ?>
-                                                        <?lsmb # NEXT IF nothing to pay ?>
-                                                        <?lsmb IF i.to_pay ?>
+                                                [% FOREACH i = r.invoices %]
+                                                        [% # NEXT IF nothing to pay %]
+                                                        [% IF i.to_pay %]
                                                                 <tr>
                                                                         <td class="invoice_date_list">
-                                                                                <?lsmb i.transdate ?>
-                                                                                <?lsmb PROCESS input element_data = {
+                                                                                [% i.transdate %]
+                                                                                [% PROCESS input element_data = {
                                                                                         type = "hidden"
                                                                                         name = "invoice_date_" _ r.contact_id _ "_" _ i.id
-                                                                                        value = i.transdate } ?>
+                                                                                        value = i.transdate } %]
                                                                         </td>
                                                                         <td class="invoice_list">
-                                                                                <?lsmb i.invnumber ?>
-                                                                                <?lsmb PROCESS input element_data = {
+                                                                                [% i.invnumber %]
+                                                                                [% PROCESS input element_data = {
                                                                                         type = "hidden"
                                                                                         name = "invnumber_" _ r.contact_id _ "_" _ i.id
-                                                                                        value = i.invnumber } ?>
+                                                                                        value = i.invnumber } %]
                                                                         </td>
                                                                         <td class="total_due_list">
-                                                                                <?lsmb i.amount ?>
-                                                                                <?lsmb PROCESS input element_data = {
+                                                                                [% i.amount %]
+                                                                                [% PROCESS input element_data = {
                                                                                         type = "hidden"
                                                                                         name = "due_" _ r.contact_id _  "_" _ i.id
-                                                                                        value = i.due } ?>
+                                                                                        value = i.due } %]
                                                                         </td>
                                                                         <td class="paid_list">
-                                                                                <?lsmb i.paid ?>
+                                                                                [% i.paid %]
                                                                         </td>
                                                                         <td class="discount_list">
-                                                                                <?lsmb i.net ?>
+                                                                                [% i.net %]
                                                                         </td>
                                                                         <td class="net_due_list">
-                                                                                <?lsmb i.due ?>
-                                                                                <?lsmb currency ?>
+                                                                                [% i.due %]
+                                                                                [% currency %]
                                                                         </td>
                                                                         <td class="to_pay_list">
-                                                                          <?lsmb
+                                                                          [%
 fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                                                                             PROCESS input element_data = {
                                                                                         name = fld
@@ -387,59 +387,59 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                                                                                         value = payment.${fld}
                                                                                         size = 20
                                                                                         type = "text"
-                                                                                        class = "monetary" } ?>
-                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        class = "monetary" } %]
+                                                                                [% PROCESS input element_data = {
                                                                                         type = "hidden"
                                                                                         name = "invoice_" _ r.contact_id _  "_" _ i.id
-                                                                                        value = i.id } ?>
-                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        value = i.id } %]
+                                                                                [% PROCESS input element_data = {
                                                                                         type = "hidden"
                                                                                         name = "net_" _ r.contact_id _ "_" _ i.id
-                                                                                        value = i.to_pay } ?>
+                                                                                        value = i.to_pay } %]
                                                                         </td>
                                                                 </tr>
-                                                        <?lsmb ELSE #not $i.to_pay ?>
+                                                        [% ELSE #not $i.to_pay %]
                                                                 <tr>
                                                                         <td class="invoice_date_list">
-                                                                                <?lsmb i.transdate ?>
+                                                                                [% i.transdate %]
                                                                         </td>
                                                                         <td class="invoice_list">
-                                                                                <?lsmb i.invnumber ?>
+                                                                                [% i.invnumber %]
                                                                         </td>
                                                                         <td class="total_due_list">
-                                                                                <?lsmb i.amount ?>
+                                                                                [% i.amount %]
                                                                         </td>
                                                                         <td class="paid_list">
-                                                                                <?lsmb i.paid ?>
+                                                                                [% i.paid %]
                                                                         </td>
                                                                         <td class="net_due_list">
-                                                                                <?lsmb i.due ?>
-                                                                                <?lsmb currency ?>
+                                                                                [% i.due %]
+                                                                                [% currency %]
                                                                         </td>
                                                                         <td class="to_pay_list">
-                                                                                <?lsmb text("Locked by [_1]", i.8) ?>
+                                                                                [% text("Locked by [_1]", i.8) %]
                                                                         </td>
                                                                 </tr>
-                                                        <?lsmb END # if i.8 ?>
-                                                <?lsmb END # foreach i ?>
+                                                        [% END # if i.8 %]
+                                                [% END # foreach i %]
 
-                                                <?lsmb INCLUDE input element_data = {
+                                                [% INCLUDE input element_data = {
                                                                  type = "hidden"
                                                                  name = "invoice_count_" _ r.contact_id
                                                                  value = i.size()
-                                                                 } ?>
+                                                                 } %]
                                             </tbody>
                                             <tfoot>
                                                 <tr class="subtotal">
                                                         <td colspan="6" class="total_label">
-                                                                <?lsmb text('Contact Total (if paying "some")') ?>
+                                                                [% text('Contact Total (if paying "some")') %]
                                                         </td>
                                                         <td>
-                                                                <span id='<?lsmb ${"contact_total_$r.id"} ?>'>
-                                                                        <?lsmb r.contact_total ?>
+                                                                <span id='[% ${"contact_total_$r.id"} %]'>
+                                                                        [% r.contact_total %]
                                                                 </span>
                                                                 <span class="currency">
-                                                                        <?lsmb payment.currency ?>
+                                                                        [% payment.currency %]
                                                                 </span>
                                                         </td>
                                                 </tr>
@@ -447,7 +447,7 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                                         </table>
                                 </td>
                         </tr>
-                <?lsmb END # foreach r ?>
+                [% END # foreach r %]
             </tbody>
             <tfoot>
                 <tr class="subtotal">
@@ -455,65 +455,65 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                                 &nbsp;
                         </td>
                         <td class="total_label">
-                                <?lsmb text('Grand Total') ?>
+                                [% text('Grand Total') %]
                         </td>
                         <td>
                                 <span id="grand_total">
-                                        <?lsmb payment.grand_total ?>
+                                        [% payment.grand_total %]
                                 </span>
                                 <span id="grand_total_currency" class="currency">
-                                        <?lsmb payment.currency ?>
+                                        [% payment.currency %]
                                 </span>
                         </td>
                 </tr>
             </tfoot>
         </table>
 
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 type  = "hidden"
                 name  = "contact_count"
                 value = payment.contact_invoices.size
-        } ?>
-        <?lsmb PROCESS input element_data = {
+        } %]
+        [% PROCESS input element_data = {
                 name  = "multiple"
                 type  = "hidden"
                 value = '1'
-        } ?>
-        <?lsmb INCLUDE button element_data = {
+        } %]
+        [% INCLUDE button element_data = {
                 text  = text('Update'),
                 value = 'update_payments'
                 class = "submit"
                 name  = 'action'
-        } ?>
-        <?lsmb INCLUDE button element_data = {
+        } %]
+        [% INCLUDE button element_data = {
                 text  = text((batch_id) ? 'Save' : 'Post'),
                 # value = 'pre_bulk_post_report'
                 value = 'pre_bulk_post_report'
                 class = "submit"
                 name  = 'action'
-        } ?>
-        <?lsmb IF payment.can_print ?>
-                <?lsmb INCLUDE select element_data = {
+        } %]
+        [% IF payment.can_print %]
+                [% INCLUDE select element_data = {
                         name    = "media"
                         class   = "select"
                         options = payment.media_options
                         value   = payment.media
-                } ?>
-                <?lsmb INCLUDE select element_data = {
+                } %]
+                [% INCLUDE select element_data = {
                         name    = "format"
                         class   = "select"
                         options = payment.format_options
                         value   = payment.format
-                } ?>
-                <?lsmb INCLUDE button element_data = {
+                } %]
+                [% INCLUDE button element_data = {
                         text  = text('Print')
                         value = 'print'
                         class = 'submit'
                        name  = 'action'
                        'data-dojo-type' = 'lsmb/PrintButton'
                        'data-dojo-props' = "minimalGET: false"
-                } ?>
-        <?lsmb END # IF can_print ?>
+                } %]
+        [% END # IF can_print %]
 
   </div>
 

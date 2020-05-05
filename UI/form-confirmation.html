@@ -1,14 +1,14 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
-<h2 class="confirm"><?lsmb form.title ?></h2>
-<h4><?lsmb query ?></h4>
-<?lsmb FOREACH hidden IN hiddens.keys;
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
+<form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
+<h2 class="confirm">[% form.title %]</h2>
+<h4>[% query %]</h4>
+[% FOREACH hidden IN hiddens.keys;
         PROCESS input element_data={
                 type => 'hidden',
                 name => hidden,
                 value => hiddens.item(hidden)
-                }; END ?>
-<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+                }; END %]
+[% FOREACH button IN buttons; PROCESS button element_data=button; END %]
 </form>
 </body>

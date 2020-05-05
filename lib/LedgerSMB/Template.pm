@@ -427,12 +427,12 @@ sub get_template_args {
               # depend on 'dynatable.*'
               Template::Provider->new(
                   {
-                      INCLUDE_PATH => [ 'UI/lib/' ],
+                      INCLUDE_PATH => [ 'templates/lib/' ],
                       PARSER => $parser,
                   }),
             ];
     }
-    my $paths = ['UI/lib'];
+    my $paths = ['templates/lib'];
     unshift @$paths, $self->{include_path}
         if defined $self->{include_path};
     unshift @$paths, $self->{include_path_lang}

@@ -1,18 +1,18 @@
-<?lsmb PROCESS 'elements.html';
-       PROCESS 'report_base.html'; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html';
+       PROCESS 'report_base.html'; %]
+<body class="lsmb [% dojo_theme %]">
 <div id="balance-sheet-parameters">
     <form data-dojo-type="lsmb/Form"
           action="reports.pl" method="get">
-      <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
+      <div class="listtop">[% text('Balance Sheet') %]</div>
 
       <fieldset>
-        <legend><?lsmb text('Report type') ?></legend>
+        <legend>[% text('Report type') %]</legend>
         <div class="input_row">
-          <div class="label"><?lsmb text('GIFI') ?></div>
+          <div class="label">[% text('GIFI') %]</div>
           <div class="input_group">
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('Regular')
                  name = 'gifi'
@@ -21,10 +21,10 @@
                  checked = 'checked'
                  }
                  label_pos = 1 ;
-                 ?>
+                 %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('GIFI')
                  name = 'gifi'
@@ -32,7 +32,7 @@
                  type = 'radio'
                  }
                  label_pos = 1 ;
-                 ?>
+                 %]
             </div>
           </div>
         </div>
@@ -41,12 +41,12 @@
 
       <fieldset data-dojo-type="lsmb/reports/PeriodSelector"
                 data-dojo-props="channel:'ui/reports/date-selection'">
-        <legend><?lsmb text('Date selection') ?></legend>
+        <legend>[% text('Date selection') %]</legend>
         <div class="input_row">
           <div class="label">
-            <?lsmb text('Select using') ?>
+            [% text('Select using') %]
           </div>
-          <?lsmb
+          [%
              IF comparison_type == 'by_periods';
              YES="CHECKED";
              NO=undef;
@@ -54,10 +54,10 @@
              NO="CHECKED";
              YES=undef;
              END;
-             ?>
+             %]
           <div class="input_group">
             <div class="input_option">
-              <?lsmb
+              [%
                  label_pos = -1; # Something leaky again
                  PROCESS input element_data={
                  type = 'radio',
@@ -68,10 +68,10 @@
                  checked = NO
                  }
                  label_pos = 1;
-                 ?>
+                 %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data={
                  type = 'radio',
                  name = 'comparison_type',
@@ -81,12 +81,12 @@
                  checked = YES,
                  }
                  label_pos = 1;
-                 ?>
+                 %]
             </div>
           </div>
         </div>
         <div class="input_row" id="date_to_date_id">
-          <?lsmb
+          [%
              label_pos = -1;
              PROCESS input element_data = {
              label = text('As per') #'
@@ -95,19 +95,19 @@
              class = 'date'
              size = 12
              };
-             ?>
+             %]
         </div>
         <div class="input_row" id="date_period_id">
-          <?lsmb
-             PROCESS date_period_div; ?>
+          [%
+             PROCESS date_period_div; %]
         </div>
         <div class="input_row">
           <div class="label">
-            <?lsmb text('Ignore year-closing') ?>
+            [% text('Ignore year-closing') %]
           </div>
 
           <div class="input_group">
-            <?lsmb
+            [%
                PROCESS select element_data = {
                options = [
                {
@@ -128,7 +128,7 @@
                text_attr = 'label',
                value_attr = 'id',
                }
-               ?>
+               %]
           </div>
         </div>
       </fieldset>
@@ -136,7 +136,7 @@
 
       <fieldset data-dojo-type="lsmb/reports/ComparisonSelector"
                 data-dojo-props="channel:'ui/reports/date-selection'">
-        <legend><?lsmb
+        <legend>[%
                    PROCESS input element_data = {
                    label = text('Comparison Dates')
                    name = 'comparison_periods'
@@ -145,12 +145,12 @@
                    "data-dojo-type"="dijit/form/NumberSpinner"
                    "data-dojo-props"="constraints:{min:0,max:9,places:0},intermediateChanges:true,style:'width:7ex'"
                    };
-                   ?></legend>
+                   %]</legend>
         <div id="comparison_dates">
-          <?lsmb FOREACH c IN [1 .. 9]; ?>
+          [% FOREACH c IN [1 .. 9]; %]
           <div class="input_row">
-            <div id="comparison_dates_<?lsmb c ?>" style="display:none">
-              <?lsmb
+            <div id="comparison_dates_[% c %]" style="display:none">
+              [%
                  label_pos = -1; # we need to find the leaky stuff!
                  PROCESS input element_data = {
                  label = text('Through date') #'
@@ -159,10 +159,10 @@
                  class = 'date'
                  size = 12
                  };
-                 ?>
+                 %]
             </div>
           </div>
-          <?lsmb END ?>
+          [% END %]
         </div>
       </fieldset>
 
@@ -170,7 +170,7 @@
       <fieldset>
         <legend>Report options</legend>
         <div class="input_row">
-          <?lsmb
+          [%
              label_pos = -1;  # Something leaks label_pos...
              PROCESS input element_data = {
              label = text('Account numbers')    #'
@@ -179,14 +179,14 @@
              value = 1
              checked = 'checked' # checked by default
              };
-             ?>
+             %]
         </div>
         <div class="input_row">
           <div class="label">
-            <?lsmb text('Hierarchy type') ?>
+            [% text('Hierarchy type') %]
           </div>
           <div class="input_group">
-            <?lsmb
+            [%
                HIERARCHY_SETUP = earn_id;
                IF HIERARCHY_SETUP;
                full_checked = 'CHECKED';
@@ -197,9 +197,9 @@
                full_checked = undef;
                legacy_checked = 'CHECKED';
                END;
-               ?>
+               %]
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('Full')
                  type = 'radio'
@@ -210,17 +210,17 @@
                  disabled = full_disabled
                  }
                  label_pos = 1;
-                 ?>
-              <?lsmb IF full_disabled ?>
+                 %]
+              [% IF full_disabled %]
               <span class="setupwarning" id="warning-hierarchy-not-setup">
                 <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting"
                    target='_blank' rel="noopener noreferrer"
-                   ><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a>
+                   >[% text('Not set up for hierarchy reporting, please see linked instructions') %]</a>
         </span>
-              <?lsmb END ?>
+              [% END %]
             </div>
             <div class="input_option">
-              <?lsmb
+              [%
                  PROCESS input element_data = {
                  label = text('Account category')
                  type = 'radio'
@@ -230,12 +230,12 @@
                  checked = legacy_checked
                  }
                  label_pos = 1;
-                 ?>
+                 %]
             </div>
           </div>
         </div>
         <div class="input_row">
-          <?lsmb
+          [%
              PROCESS select_language element_data = {
              label = text('Language')
              name = 'language'
@@ -243,19 +243,19 @@
              text_attr = 'description'
              value_attr = 'code'
              default_values = [USER.language]
-             } ?>
+             } %]
         </div>
       </fieldset>
 
 
-        <?lsmb
+        [%
         PROCESS button element_data = {
             text = text('Continue')
             name = 'action'
            value = 'generate_balance_sheet'
             type = 'submit'
            class = 'submit'
-        } ?>
+        } %]
     </form>
 </div>
 </body>

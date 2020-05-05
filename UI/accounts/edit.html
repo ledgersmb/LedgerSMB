@@ -1,4 +1,4 @@
-<?lsmb
+[%
     PROCESS elements.html;
 
     # Build text for dropdown options
@@ -10,35 +10,35 @@
         id = -1,
         text = '-- ' _ text('NONE') _ ' --'
     }];
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+%]
+<body class="lsmb [% dojo_theme %]">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer"
      data-dojo-props="doLayout:false">
-<?lsmb IF form.charttype == 'H'; ?>
+[% IF form.charttype == 'H'; %]
 <div data-dojo-type="dijit/layout/ContentPane"
      data-dojo-props="selected:true"
-     title="<?lsmb text('Heading') ?>" id="H">
-  <?lsmb # if we put the FORM tag as the toplevel tab element,
+     title="[% text('Heading') %]" id="H">
+  [% # if we put the FORM tag as the toplevel tab element,
          # we get trouble: content gets cut off; wrap in a div
          # although maybe the point is not to have the toplevel
-         # be a *widget*...?  ?>
+         # be a *widget*...?  %]
   <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         value = 'H'
         name = 'charttype'
         type = 'hidden'
-} ?>
-<?lsmb PROCESS input element_data = {
+} %]
+[% PROCESS input element_data = {
         value = form.id
         name = 'id'
         type = 'hidden'
-} ?>
+} %]
 <div class="inputline" id="accno-line">
-  <label class="line" for="accno-h"><?lsmb text('Account Number') ?></label>
+  <label class="line" for="accno-h">[% text('Account Number') %]</label>
   <div class="inputgroup">
-    <?lsmb
+    [%
     INCLUDE input element_data = {
       name = 'accno'
        id  = 'accno-h'
@@ -46,13 +46,13 @@
      value = form.accno
       type = 'text'
      class = 'control-code'
-    } ?>
+    } %]
   </div>
 </div>
 <div class="inputline" id="desc-line">
-   <label class="line" for="desc-h"><?lsmb text('Description') ?></label>
+   <label class="line" for="desc-h">[% text('Description') %]</label>
    <div class="inputgroup">
-      <?lsmb
+      [%
     INCLUDE input element_data = {
         id = 'desc-h'
       name = 'description'
@@ -60,13 +60,13 @@
      value = form.description
       type = 'text'
      class = 'description'
-    } ?>
+    } %]
    </div>
 </div>
 <div class="inputline" id="heading-line">
-   <label class="line"><?lsmb text('Heading') ?></label>
+   <label class="line">[% text('Heading') %]</label>
    <div class="inputgroup">
-      <?lsmb
+      [%
     INCLUDE select element_data = {
                   name = 'parent'
                options = null_heading.merge(form.all_headings)
@@ -75,12 +75,12 @@
             value_attr = 'id'
                  class = 'account'
                     id = 'parent'
-    }; ?>
+    }; %]
    </div>
 </div>
 <hr size="3" noshade="noshade" />
 
-<?lsmb
+[%
     INCLUDE button element_data={
        name = 'action',
        value = 'save'
@@ -105,28 +105,28 @@
            accesskey = 'D'
         };
     END;
-?>
+%]
 
 <hr />
 </form>
 </div>
 </div>
-<?lsmb END ?>
-<?lsmb IF form.charttype == 'A' ?>
+[% END %]
+[% IF form.charttype == 'A' %]
 <div data-dojo-type="dijit/layout/ContentPane"
      data-dojo-props="selected:true"
-     title="<?lsmb text('Account') ?>" id="A">
+     title="[% text('Account') %]" id="A">
   <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
         value = 'A'
         name = 'charttype'
         type = 'hidden'
-} ?>
+} %]
 <div class="inputline" id="accno-line2">
-  <label class="line" for="accno-a"><?lsmb text('Account Number') ?></label>
+  <label class="line" for="accno-a">[% text('Account Number') %]</label>
   <div class="inputgroup">
-    <?lsmb
+    [%
     INCLUDE input element_data = {
       name = 'accno'
       size = '20'
@@ -134,13 +134,13 @@
       type = 'text'
      class = 'control-code'
         id = "accno-a"
-    } ?>
+    } %]
   </div>
 </div>
-<?lsmb IF form.id ?>
+[% IF form.id %]
 <div  class="inputline" id="obsolete-line">
-<label class="line" for='obsolete'><?lsmb text('Obsolete') ?></label>
-<?lsmb
+<label class="line" for='obsolete'>[% text('Obsolete') %]</label>
+[%
         IF form.obsolete;
            obsolete = 'CHECKED';
         END;
@@ -149,14 +149,14 @@
                type = 'checkbox',
             checked = obsolete
               value = '1'
-        } ?>
+        } %]
 
 </div>
-<?lsmb END #  IF ID ?>
+[% END #  IF ID %]
 <div class="inputline" id="desc-line2">
-   <label class="line" for="desc-a"><?lsmb text('Description') ?></label>
+   <label class="line" for="desc-a">[% text('Description') %]</label>
    <div class="inputgroup">
-      <?lsmb
+      [%
     INCLUDE input element_data = {
       name = 'description'
       size = '40'
@@ -164,13 +164,13 @@
       type = 'text'
      class = 'description'
         id = 'desc-a'
-    } ?>
+    } %]
    </div>
 </div>
 <div class="inputline" id="heading-line2">
-   <label class="line" for="heading-a"><?lsmb text('Heading') ?></label>
+   <label class="line" for="heading-a">[% text('Heading') %]</label>
    <div class="inputgroup">
-      <?lsmb
+      [%
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
@@ -179,14 +179,14 @@
             value_attr = 'id'
                  class = 'account'
                     id = 'heading-a'
-    }; ?>
+    }; %]
    </div>
 </div>
 <div id="accdetails">
 <div class="inputline" id="gifi-line">
-   <label class="line" for="gifi-a"><?lsmb text('GIFI') ?></label>
+   <label class="line" for="gifi-a">[% text('GIFI') %]</label>
    <div class="inputgroup">
-       <?lsmb
+       [%
           FOREACH g IN form.gifi_list;
              g.text = g.accno _ '--' _ g.description;
           END;
@@ -199,13 +199,13 @@
               value_attr = 'accno'
               id = 'gifi-a'
           };
-       ?>
+       %]
    </div>
 </div>
 <div class="inputline" id="acctype-line">
-   <label class="line" for="category-a"><?lsmb text('Account Type') ?></label>
+   <label class="line" for="category-a">[% text('Account Type') %]</label>
    <div class="inputgroup">
-      <?lsmb
+      [%
         a_types = [
               { value = 'A', text = text('Asset') }
               { value = 'L', text = text('Liability') }
@@ -219,13 +219,13 @@
                options = a_types
         default_values = [form.category]
                     id = 'category-a'
-    }; ?>
+    }; %]
   </div>
 </div>
 <div class="inputline" id="acc-options-line">
-   <label class="line"><?lsmb text('Options') ?></label>
+   <label class="line">[% text('Options') %]</label>
    <div class="inputgroup">
-       <?lsmb
+       [%
        IF form.contra;
           contra = 'CHECKED';
        END;
@@ -235,49 +235,49 @@
               label = text('Contra')
               value = '1'
             checked = contra
-       } ?>
+       } %]
    </div>
    <div class="inputgroup">
-     <?lsmb
+     [%
         INCLUDE input element_data={
                name = 'recon'
                type = 'checkbox',
               label = text('Recon')
             checked = form.account__is_recon ? 'checked' : ''
               value = '1'
-        } ?>
+        } %]
    </div>
    <div class="inputgroup">
-      <?lsmb
+      [%
         IF form.tax; tax = 'CHECKED'; END;
         INCLUDE input element_data={
                name = 'tax',
                type = 'checkbox',
               label = text('Tax'),
             checked = tax,
-              value = '1'} ?>
+              value = '1'} %]
    </div>
 </div>
-<?lsmb IF form.custom_link_descriptions.size ?>
+[% IF form.custom_link_descriptions.size %]
 <div class="inputline" id="acc-custom-flags-line">
-    <label class="line"><?lsmb text('Custom Flags') ?></label>
-    <?lsmb FOREACH link IN form.custom_link_descriptions ?>
+    <label class="line">[% text('Custom Flags') %]</label>
+    [% FOREACH link IN form.custom_link_descriptions %]
     <div class="inputgroup">
-        <?lsmb INCLUDE input element_data={
+        [% INCLUDE input element_data={
               name = link.description,
               type = 'checkbox',
              label = link.description,
            checked = form.${link.description} ? 'CHECKED' : '',
              value = link.description
-        } ?>
+        } %]
     </div>
-    <?lsmb END ?>
+    [% END %]
 </div>
-<?lsmb END ?>
+[% END %]
 <div class="inputline" id="summary-line">
-    <label class="line" for="summary-a"><?lsmb text('Summary account for') ?></label>
+    <label class="line" for="summary-a">[% text('Summary account for') %]</label>
     <div class="inputgroup">
-    <?lsmb
+    [%
         summary = [];
 
         # Localize summary account_link descriptions
@@ -303,238 +303,238 @@
              value_attr = 'description'
                      id = 'summary-a'
         };
-    ?>
+    %]
     </div>
 </div>
 </div> <!-- account details div -->
 <div id="dropdowns">
 <div class="subsectionhead">
-   <?lsmb text('Include in drop-down menus') ?>
+   [% text('Include in drop-down menus') %]
 </div>
 <div class="inputline" id="ar-line">
-   <label class="line"><?lsmb text('Receivables') ?></label>
+   <label class="line">[% text('Receivables') %]</label>
    <div class="inputgroup">
-      <?lsmb IF form.AR_amount; AR_amount = 'CHECKED'; END;
+      [% IF form.AR_amount; AR_amount = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AR_amount',
               type = 'checkbox',
              label = text('Income'),
            checked = AR_amount,
              value = 'AR_amount'
-         } ?>
+         } %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AR_paid; AR_paid = 'CHECKED'; END;
+      [% IF form.AR_paid; AR_paid = 'CHECKED'; END;
           INCLUDE input element_data={
               name = 'AR_paid',
               type = 'checkbox',
              label = text('Payment'),
            checked = AR_paid,
              value = 'AR_paid'
-     } ?>
+     } %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AR_tax; AR_tax = 'CHECKED'; END;
+      [% IF form.AR_tax; AR_tax = 'CHECKED'; END;
           INCLUDE input element_data={
               name = 'AR_tax',
               type = 'checkbox',
              label = text('Tax'),
            checked = AR_tax,
              value = 'AR_tax'
-     } ?>
+     } %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
+      [% IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AR_overpayment',
               type = 'checkbox',
              label = text('Overpayment'),
            checked = AR_overpayment,
              value = 'AR_overpayment'
-       } ?>
+       } %]
    </div>
    <div class="inputgroup">
-       <?lsmb IF form.AR_discount; AR_discount = 'CHECKED'; END;
+       [% IF form.AR_discount; AR_discount = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AR_discount',
               type = 'checkbox',
              label = text('Discount'),
            checked = AR_discount,
              value = 'AR_discount'
-        } ?>
+        } %]
    </div>
 </div>
 <div class="inputline" id="ap-line">
-   <label class="line"><?lsmb text('Payables') ?></label>
+   <label class="line">[% text('Payables') %]</label>
    <div class="inputgroup">
-      <?lsmb IF form.AP_amount; AP_amount= 'CHECKED'; END;
+      [% IF form.AP_amount; AP_amount= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AP_amount',
               type = 'checkbox',
              label = text('Expense/Asset'),
            checked = AP_amount,
-             value = 'AP_amount'} ?>
+             value = 'AP_amount'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AP_paid; AP_paid= 'CHECKED'; END;
+      [% IF form.AP_paid; AP_paid= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AP_paid',
               type = 'checkbox',
              label = text('Payment'),
            checked = AP_paid,
-             value = 'AP_paid'} ?>
+             value = 'AP_paid'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AP_tax; AP_tax = 'CHECKED'; END;
+      [% IF form.AP_tax; AP_tax = 'CHECKED'; END;
           INCLUDE input element_data={
               name = 'AP_tax',
               type = 'checkbox',
              label = text('Tax'),
            checked = AP_tax,
              value = 'AP_tax'
-     } ?>
+     } %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AP_overpayment; AP_overpayment= 'CHECKED'; END;
+      [% IF form.AP_overpayment; AP_overpayment= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AP_overpayment',
               type = 'checkbox',
              label = text('Overpayment'),
            checked = AP_overpayment,
-             value = 'AP_overpayment'} ?>
+             value = 'AP_overpayment'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AP_discount; AP_discount= 'CHECKED'; END;
+      [% IF form.AP_discount; AP_discount= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AP_discount',
               type = 'checkbox',
              label = text('Discount'),
            checked = AP_discount,
-             value = 'AP_discount'} ?>
+             value = 'AP_discount'} %]
    </div>
 </div>
 <div class="inputline" id="goods-line">
-   <label class="line"><?lsmb text('Tracking Items') ?></label>
+   <label class="line">[% text('Tracking Items') %]</label>
    <div class="inputgroup">
-      <?lsmb IF form.IC_sale; IC_sale= 'CHECKED'; END;
+      [% IF form.IC_sale; IC_sale= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_sale',
               type = 'checkbox',
              label = text('Income'),
            checked = IC_sale,
-             value = 'IC_sale'} ?>
+             value = 'IC_sale'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+      [% IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_cogs',
               type = 'checkbox',
              label = text('COGS'),
            checked = IC_cogs,
-             value = 'IC_cogs'} ?>
+             value = 'IC_cogs'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_taxpart; IC_taxpart= 'CHECKED'; END;
+      [% IF form.IC_taxpart; IC_taxpart= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_taxpart',
               type = 'checkbox',
              label = text('Tax'),
            checked = IC_taxpart,
-             value = 'IC_taxpart'} ?>
+             value = 'IC_taxpart'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_returns;IC_returns= 'CHECKED'; END;
+      [% IF form.IC_returns;IC_returns= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_returns',
               type = 'checkbox',
              label = text('Returns'),
            checked = IC_returns,
-             value = 'IC_returns'} ?>
+             value = 'IC_returns'} %]
    </div>
 </div>
 <div class="inputline" id="services-line">
-   <label class="line"><?lsmb text('Non-tracking Items') ?></label>
+   <label class="line">[% text('Non-tracking Items') %]</label>
    <div class="inputgroup">
-      <?lsmb IF form.IC_income;IC_income= 'CHECKED'; END;
+      [% IF form.IC_income;IC_income= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_income',
               type = 'checkbox',
              label = text('Income'),
            checked = IC_income,
-             value = 'IC_income'} ?>
+             value = 'IC_income'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_expense;IC_expense= 'CHECKED'; END;
+      [% IF form.IC_expense;IC_expense= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_expense',
               type = 'checkbox',
              label = text('Expense'),
            checked = IC_expense,
-             value = 'IC_expense'} ?>
+             value = 'IC_expense'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_taxservice; IC_taxservice= 'CHECKED'; END;
+      [% IF form.IC_taxservice; IC_taxservice= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_taxservice',
               type = 'checkbox',
              label = text('Tax'),
            checked = IC_taxservice,
-             value = 'IC_taxservice'} ?>
+             value = 'IC_taxservice'} %]
    </div>
 </div>
 <div class="inputline" id="assets-line">
-   <label class="line"><?lsmb text('Fixed Assets') ?></label>
+   <label class="line">[% text('Fixed Assets') %]</label>
    <div class="inputgroup">
-      <?lsmb IF form.Fixed_Asset;fixed_asset= 'CHECKED'; END;
+      [% IF form.Fixed_Asset;fixed_asset= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'Fixed_Asset',
               type = 'checkbox',
              label = text('Fixed Asset'), #'
            checked = fixed_asset,
-             value = 'Fixed_Asset'} ?>
+             value = 'Fixed_Asset'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.Asset_Dep;asset_dep = 'CHECKED'; END;
+      [% IF form.Asset_Dep;asset_dep = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'Asset_Dep',
               type = 'checkbox',
              label = text('Depreciation'),
            checked = asset_dep,
-             value = 'Asset_Dep'} ?>
+             value = 'Asset_Dep'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.asset_expense;asset_expense = 'CHECKED'; END;
+      [% IF form.asset_expense;asset_expense = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'asset_expense',
               type = 'checkbox',
              label = text('Expense'),
            checked = asset_expense,
-             value = 'asset_expense'} ?>
+             value = 'asset_expense'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.asset_gain;asset_gain = 'CHECKED'; END;
+      [% IF form.asset_gain;asset_gain = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'asset_gain',
               type = 'checkbox',
              label = text('Gain'),
            checked = asset_gain,
-             value = 'asset_gain'} ?>
+             value = 'asset_gain'} %]
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.asset_loss;asset_loss = 'CHECKED'; END;
+      [% IF form.asset_loss;asset_loss = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'asset_loss',
               type = 'checkbox',
              label = text('Loss'),
            checked = asset_loss,
-             value = 'asset_loss'} ?>
+             value = 'asset_loss'} %]
    </div>
 </div>
 </div> <!-- dropdown div -->
 
 <hr size="3" noshade="noshade" />
 
-<?lsmb
+[%
     PROCESS input element_data = {
         value = form.id
         name = 'id'
@@ -565,22 +565,22 @@
            accesskey = 'D'
         };
     END;
-?>
+%]
 
 <hr />
 </form>
 </div>
 </div>
-<?lsmb END ?>
-<?lsmb IF form.id ?>
+[% END %]
+[% IF form.id %]
 <div data-dojo-type="dijit/layout/ContentPane"
-     title="<?lsmb text('Translations') ?>" id="TranslationPane">
+     title="[% text('Translations') %]" id="TranslationPane">
   <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <table>
 <caption>Translations</caption>
 <tbody>
-<?lsmb
+[%
    PROCESS input element_data = {
        type="hidden"
        name="languagecount"
@@ -588,49 +588,49 @@
    };
    lang_index = 0;
    FOREACH language IN languages;
-     lang_index = lang_index + 1; ?>
+     lang_index = lang_index + 1; %]
   <tr>
     <td>
-      <label for="heading-languagetranslation-<?lsmb lang_index ?>">
-        <?lsmb language.description ?>
+      <label for="heading-languagetranslation-[% lang_index %]">
+        [% language.description %]
       </label>
-      <?lsmb PROCESS input element_data = {
+      [% PROCESS input element_data = {
              type="hidden"
              name = 'languagecode_' _ lang_index
-             value = language.code } ?>
+             value = language.code } %]
     </td>
-    <td><?lsmb PROCESS input element_data = {
+    <td>[% PROCESS input element_data = {
                name = 'languagetranslation_' _ lang_index
                id = 'heading-languagetranslation-' _ lang_index
                class = 'translation'
                value = form.translations.${language.code}.description
                title = text(language.description)
-       } ?>
+       } %]
       </td>
     </tr>
-  <?lsmb END ?>
+  [% END %]
 </tbody>
 </table>
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
     name = 'charttype'
     type = 'hidden'
    value = form.charttype
-}; ?>
-<?lsmb PROCESS input element_data = {
+}; %]
+[% PROCESS input element_data = {
     name = 'id'
     type = 'hidden'
    value = form.id
-}; ?>
-<?lsmb PROCESS button element_data = {
+}; %]
+[% PROCESS button element_data = {
     name = 'action',
     value = 'update_translations',
     type = 'submit',
     class = 'submit',
     text = text('Save Translations'),
-} ?>
+} %]
 </form>
 </div>
 </div>
-<?lsmb END ?>
+[% END %]
 </div>
 </body>

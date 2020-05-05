@@ -1,71 +1,71 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
-include_stylesheet=["setup.css"] ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-confirm-operation" class="lsmb <?lsmb dojo_theme ?>">
+include_stylesheet=["setup.css"] %]
+[% PROCESS elements.html %]
+<body id="setup-confirm-operation" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('Database Management Console') ?></h2>
-<?lsmb # notice, message, and operation are all localized. ?>
-<?lsmb INCLUDE 'setup/ui-db-credentials.html' ?>
-<div class="listtop"><?lsmb text('Confirm Operation') ?></div>
-<div id="notice"><?lsmb notice ?></div>
-<div id="message"><?lsmb message ?></div>
-<div id="operation"><?lsmb operation ?></div>
+<h2>[% text('Database Management Console') %]</h2>
+[% # notice, message, and operation are all localized. %]
+[% INCLUDE 'setup/ui-db-credentials.html' %]
+<div class="listtop">[% text('Confirm Operation') %]</div>
+<div id="notice">[% notice %]</div>
+<div id="message">[% message %]</div>
+<div id="operation">[% operation %]</div>
 <form data-dojo-type="lsmb/SimpleForm"
       action="setup.pl"
       method="POST"
       name="confirm_operation">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
    value = database
-} ?>
+} %]
 <div class="inputrow">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     name = 'action'
    value = next_action
     type = 'submit'
    class = 'submit'
     text = text('Yes')
-} ?>
+} %]
 </div>
-<div id="sep" class="listheading"><?lsmb text('Other Actions') ?></div>
-<?lsmb IF next_action == 'rebuild_modules' ?>
+<div id="sep" class="listheading">[% text('Other Actions') %]</div>
+[% IF next_action == 'rebuild_modules' %]
 <div id="copy-database">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'new_name'
     type = 'text'
    class = 'dbname'
    label = text('Copy to New Name') #'
-}; ?>
-<?lsmb INCLUDE button element_data = {
+}; %]
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'copy_db'
     type = 'submit'
    class = 'submit'
     text = text('Copy') #'
-}; ?>
+}; %]
 </div>
 <div id="user">
-<div><?lsmb text('Users') ?></div>
-<?lsmb INCLUDE button element_data = {
+<div>[% text('Users') %]</div>
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'add_user'
     type = 'submit'
    class = 'submit'
     text = text('Add User') #'
-}; ?>
-<?lsmb INCLUDE button element_data = {
+}; %]
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'list_users'
     type = 'submit'
    class = 'submit'
     text = text('List Users') #'
-}; ?>
+}; %]
 </div>
 <div id="templates">
-<div><?lsmb text('Templates') ?></div>
-<?lsmb INCLUDE button element_data = {
+<div>[% text('Templates') %]</div>
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'load_templates'
     type = 'submit'
@@ -76,57 +76,57 @@ INCLUDE input element_data = {
     name = "only_templates"
    value = "1"
     type = "hidden"
-}; ?>
+}; %]
 </div>
-<?lsmb END ?>
-<?lsmb IF next_action != 'create_db' ?>
-<div id="others"><?lsmb text('Backup') ?></div>
+[% END %]
+[% IF next_action != 'create_db' %]
+<div id="others">[% text('Backup') %]</div>
 <div class="inputrow">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'backup_db'
     type = 'submit'
    class = 'submit'
     text = text('Backup DB') #'
-} ?>
-<?lsmb INCLUDE button element_data = {
+} %]
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'backup_roles'
     type = 'submit'
    class = 'next'
     text = text('Backup Roles') #'
-} ?>
+} %]
 </div>
-<div id="diagnostics"><?lsmb text('System diagnostics') ?></div>
+<div id="diagnostics">[% text('System diagnostics') %]</div>
 <div class="inputrow">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'system_info'
     type = 'submit'
    class = 'submit'
     text = text('System Info') #'
-} ?>
+} %]
 </div>
-<?lsmb END ?>
+[% END %]
 </form>
-<?lsmb IF lsmb_info ?>
+[% IF lsmb_info %]
 <table class='lsmb_info'>
   <thead>
-  <tr><th colspan="2"><?lsmb text('LedgerSMB Database Statistics') ?></th></tr>
-  <tr><th colspan="2"><?lsmb text('Row counts') ?></th></tr>
+  <tr><th colspan="2">[% text('LedgerSMB Database Statistics') %]</th></tr>
+  <tr><th colspan="2">[% text('Row counts') %]</th></tr>
   </thead>
   <tbody>
-  <tr><th><?lsmb text('AP') ?></th><td><?lsmb lsmb_info.ap_count ?></td></tr>
-  <tr><th><?lsmb text('AR') ?></th><td><?lsmb lsmb_info.ar_count ?></td></tr>
-  <tr><th><?lsmb text('GL') ?></th><td><?lsmb lsmb_info.gl_count ?></td></tr>
-  <tr><th><?lsmb text('Journal Lines') ?></th><td><?lsmb lsmb_info.acc_trans_count ?></td></tr>
-  <tr><th><?lsmb text('Orders') ?></th><td><?lsmb lsmb_info.oe_count ?></td></tr>
-  <tr><th><?lsmb text('Customer/Vendor Accounts') ?></th><td><?lsmb lsmb_info.eca_count ?></td></tr>
-  <tr><th><?lsmb text('Transactions') ?></th><td><?lsmb lsmb_info.transactions_count ?></td></tr>
-  <tr><th><?lsmb text('Users') ?></th><td><?lsmb lsmb_info.users_count ?></td></tr>
+  <tr><th>[% text('AP') %]</th><td>[% lsmb_info.ap_count %]</td></tr>
+  <tr><th>[% text('AR') %]</th><td>[% lsmb_info.ar_count %]</td></tr>
+  <tr><th>[% text('GL') %]</th><td>[% lsmb_info.gl_count %]</td></tr>
+  <tr><th>[% text('Journal Lines') %]</th><td>[% lsmb_info.acc_trans_count %]</td></tr>
+  <tr><th>[% text('Orders') %]</th><td>[% lsmb_info.oe_count %]</td></tr>
+  <tr><th>[% text('Customer/Vendor Accounts') %]</th><td>[% lsmb_info.eca_count %]</td></tr>
+  <tr><th>[% text('Transactions') %]</th><td>[% lsmb_info.transactions_count %]</td></tr>
+  <tr><th>[% text('Users') %]</th><td>[% lsmb_info.users_count %]</td></tr>
   </tbody>
 </table>
-<?lsmb END ?>
+[% END %]
 </div>
 </body>
 </html>

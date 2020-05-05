@@ -1,34 +1,34 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
 <div id="assets">
-<div class="listtop"><?lsmb title ?></div>
-<div class="info"><?lsmb info ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
+<div class="listtop">[% title %]</div>
+<div class="info">[% info %]</div>
+<form data-dojo-type="lsmb/Form" action="[% script %]" method="post" enctype="multipart/form-data">
 <div class="inputrow" id="daterow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
      type = "text"
      class = "date"
      label = text("Depreciate Through") #'
      name = "report_date"
      value = report_date
-} ?>
+} %]
 </div>
 <div class="inputrow" id="filerow">
-<?lsmb PROCESS input element_data = {
+[% PROCESS input element_data = {
        name = "import_file"
        type = "file"
        label = text('From File') #'
        class = "file"
-} ?>
+} %]
 </div>
 <div class="inputrow" id="buttonrow">
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
         text = text("Save")
         type = "submit"
         class = "submit"
         name = "action"
         value = "run_import"
-} ?>
+} %]
 </div>
 </form>
 </div>

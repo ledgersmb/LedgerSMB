@@ -1,5 +1,5 @@
-<?lsmb# HTML Snippet, for import only ?>
-<?lsmb
+[%# HTML Snippet, for import only %]
+[%
    # Internal documentation for the DYNATABLE block
 
    # The block generates a table, originally designed to move over all
@@ -62,41 +62,41 @@
    #  - col_types    : a hash of ${col_id} values, overriding the column's
    #                   type, including 'spacer' as a supported type
    #  - dojo_type    : overrides the column's ${data_dojo_type}
-   -?>
-<?lsmb BLOCK dynatable ?>
-<table id="<?lsmb attributes.id ?>"
-       class="dynatable <?lsmb attributes.class ?>"
-       width="<?lsmb attributes.width ?>">
-<?lsmb- IF !hide_header -?>
+   -%]
+[% BLOCK dynatable %]
+<table id="[% attributes.id %]"
+       class="dynatable [% attributes.class %]"
+       width="[% attributes.width %]">
+[%- IF !hide_header -%]
 <thead>
    <tr>
-   <?lsmb- FOREACH COL IN columns;
-   IF COL.type != 'hidden'; -?>
-   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb
+   [%- FOREACH COL IN columns;
+   IF COL.type != 'hidden'; -%]
+   <th class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">[%
 
 IF attributes.order_url
-?> <a href="<?lsmb order_url | url ?>&amp;order_by=<?lsmb COL.col_id ?>"><?lsmb
+%] <a href="[% order_url | url %]&amp;order_by=[% COL.col_id %]">[%
 END;
 COL.name;
 IF attributes.order_url
-?></a><?lsmb
-END; ?>
+%]</a>[%
+END; %]
    </th>
-   <?lsmb- END; END; -?>
+   [%- END; END; -%]
    </tr>
 </thead>
-<?lsmb- END -?>
+[%- END -%]
 <tbody>
-   <?lsmb- ROWCOUNT = 0;
+   [%- ROWCOUNT = 0;
    PFX = attributes.input_prefix;
    FOREACH ROW IN tbody.rows;
-   ROWCOUNT = ROWCOUNT + 1 -?>
-   <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
-      <?lsmb PROCESS input element_data = {
+   ROWCOUNT = ROWCOUNT + 1 -%]
+   <tr class="[% ROW.html_class _ ' ' _ ROW.row_id %]">
+      [% PROCESS input element_data = {
                                  type="hidden"
                                  name=PFX _ "row_" _ ROWCOUNT
-             value=ROW.row_id } ?>
-      <?lsmb- FOREACH COL IN columns;
+             value=ROW.row_id } %]
+      [%- FOREACH COL IN columns;
             TYPE = COL.type;
             NOHREF = COL.col_id _ "_NOHREF";
             IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
@@ -111,33 +111,33 @@ END; ?>
          CHECKED = "checked";
       ELSE;
          CHECKED = '';
-      END; ?>
-      <?lsmb PROCESS input element_data = {
+      END; %]
+      [% PROCESS input element_data = {
                                  type="hidden"
              name=NAME
-             value=ROW.${COL.col_id} } ?>
-      <?lsmb- ELSE - ?>
-      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
-          <?lsmb- IF TYPE == 'input_text' -?>
-          <?lsmb
+             value=ROW.${COL.col_id} } %]
+      [%- ELSE - %]
+      <td class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">
+          [%- IF TYPE == 'input_text' -%]
+          [%
                  PROCESS input element_data = {
                                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="text"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
                                           name=PFX _ COL.col_id _ '_' _ ROW.row_id
-                                          value=ROW.${COL.col_id} } ?>
-         <?lsmb- ELSIF TYPE == 'password';
+                                          value=ROW.${COL.col_id} } %]
+         [%- ELSIF TYPE == 'password';
                  PROCESS input element_data = {
                                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="password"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
                                           name=PFX _ COL.col_id _ '_' _ ROW.row_id
-                                          value=ROW.${COL.col_id} } ?>
-         <?lsmb- ELSIF TYPE == 'checkbox';
-                   ?>
-         <?lsmb PROCESS input element_data = {
+                                          value=ROW.${COL.col_id} } %]
+         [%- ELSIF TYPE == 'checkbox';
+                   %]
+         [% PROCESS input element_data = {
                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                           type="checkbox"
                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
@@ -147,18 +147,18 @@ END; ?>
 
                ELSIF TYPE == 'boolean_checkmark';
                    IF ROW.${COL.col_id};
-                       ?>✓<?lsmb
+                       %]✓[%
                    END;
 
-               ELSIF TYPE == 'radio' ?>
-         <?lsmb PROCESS input element_data = {
+               ELSIF TYPE == 'radio' %]
+         [% PROCESS input element_data = {
                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class
                                          value=ROW.row_id
-                checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'select';
+                checked=CHECKED } %]
+         [%- ELSIF TYPE == 'select';
                 # ROW is passed as an argument if COL.options is a callback
                 # function, which allows dropdown options to be dynamically
                 # customised to each row. The ROW argument is harmlessly
@@ -174,8 +174,8 @@ END; ?>
                 class=COL.class
                 options=OPTION_LIST
                 default_blank=COL.default_blank
-                default_values=[ROW.${COL.col_id}] } ?>
-         <?lsmb- ELSIF TYPE == 'href';
+                default_values=[ROW.${COL.col_id}] } %]
+         [%- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF ROW.$HREF_SFX;
                       ESCAPED_HREF = COL.href_base _ ROW.$HREF_SFX | url;
@@ -187,22 +187,22 @@ END; ?>
                    IF COL.href_target;
                       HREF_TGT = ' target="' _ COL.href_target _ '"';
                    END;
-          ?><a href="<?lsmb ESCAPED_HREF ?>"<?lsmb HREF_TGT ?>><?lsmb ROW.${COL.col_id} ?></a>
-         <?lsmb- ELSE -?>
-            <?lsmb ROW.${COL.col_id} ?>
-         <?lsmb- END -?>
+          %]<a href="[% ESCAPED_HREF %]"[% HREF_TGT %]>[% ROW.${COL.col_id} %]</a>
+         [%- ELSE -%]
+            [% ROW.${COL.col_id} %]
+         [%- END -%]
       </td>
-      <?lsmb- END; END -?>
+      [%- END; END -%]
    </tr>
-   <?lsmb- END ?>
+   [%- END %]
 </tbody>
-<?lsmb- IF tfoot -?>
+[%- IF tfoot -%]
 <tfoot>
-   <?lsmb- FOREACH ROW IN tfoot.rows;
+   [%- FOREACH ROW IN tfoot.rows;
     SPACECOUNT = 0;
-    ROWCOUNT = ROWCOUNT + 1; -?>
+    ROWCOUNT = ROWCOUNT + 1; -%]
    <tr>
-     <?lsmb- FOREACH COL IN columns;
+     [%- FOREACH COL IN columns;
              COL_ID = COL.col_id;
              IF tfoot.coltypes.$COL_ID;
                 TYPE = tfoot.coltypes.$COL_ID;
@@ -222,65 +222,65 @@ END; ?>
                                  IF tfoot.coltypes.${COL.col_id} == 'spacer';
                                     SPACECOUNT = SPACECOUNT + 1;
                                  ELSE;
-                                 IF SPACECOUNT > 0 ?>
-          <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
-       <?lsmb END;
+                                 IF SPACECOUNT > 0 %]
+          <td colspan="[% SPACECOUNT %]">&nbsp;</td>
+       [% END;
        IF TYPE == 'hidden';
-       NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT; -?>
-       <?lsmb PROCESS input element_data = {
+       NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT; -%]
+       [% PROCESS input element_data = {
                                   type="hidden"
               name=NAME
-              value=ROW.${COL.col_id} } ?>
-     <?lsmb- ELSE ?>
-     <td class="<?lsmb COL.col_id ?>">
-       <?lsmb
-          IF TYPE == 'input_text' -?>
-       <?lsmb PROCESS input element_data = {
+              value=ROW.${COL.col_id} } %]
+     [%- ELSE %]
+     <td class="[% COL.col_id %]">
+       [%
+          IF TYPE == 'input_text' -%]
+       [% PROCESS input element_data = {
                                   id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                   type="text"
                                   class=COL.class
                                   "data-dojo-type"=DOJO
                                   "data-dojo-props"=DOJO_PROPS
                                   name=PFX _ COL.col_id _ '_tfoot_' _ ROWCOUNT
-                                  value=ROW.${COL.col_id} } ?>
-         <?lsmb- ELSIF TYPE == 'checkbox';
-                   ?>
-          <?lsmb PROCESS input element_data = {
+                                  value=ROW.${COL.col_id} } %]
+         [%- ELSIF TYPE == 'checkbox';
+                   %]
+          [% PROCESS input element_data = {
                                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="checkbox"
                                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                                           class=COL.class
                                           value=ROW.row_id
-                                          checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'radio' ?>
-         <?lsmb PROCESS input element_data = {
+                                          checked=CHECKED } %]
+         [%- ELSIF TYPE == 'radio' %]
+         [% PROCESS input element_data = {
                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class
                                          value=ROW.row_id
-                checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'href';
+                checked=CHECKED } %]
+         [%- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF row.$HREF_SFX;
                       HREF = COL.href_base _ ROW.$HREF_SFX;
                    ELSE;
                       HREF = COL.href_base _ ROW.row_id;
                    END
-          ?><a href="<?lsmb HREF | url ?>"><?lsmb ROW.${COL.col_id} ?></a>
-         <?lsmb- ELSE -?>
-            <?lsmb ROW.${COL.col_id} ?>
-         <?lsmb- END -?>
+          %]<a href="[% HREF | url %]">[% ROW.${COL.col_id} %]</a>
+         [%- ELSE -%]
+            [% ROW.${COL.col_id} %]
+         [%- END -%]
      </td>
-     <?lsmb- END; END #ifs -?>
-     <?lsmb- END -?>
+     [%- END; END #ifs -%]
+     [%- END -%]
    </tr>
-   <?lsmb- END -?>
+   [%- END -%]
 </tfoot>
-<?lsmb- END -?>
-<?lsmb PROCESS input element_data = {
+[%- END -%]
+[% PROCESS input element_data = {
        type="hidden"
        name="rowcount_" _ attributes.id
-       value=ROWCOUNT } ?>
+       value=ROWCOUNT } %]
 </table>
-<?lsmb END #block ?>
+[% END #block %]

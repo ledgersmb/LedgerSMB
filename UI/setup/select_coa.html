@@ -1,28 +1,28 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
-include_stylesheet=["setup.css"] ?>
-<?lsmb PROCESS elements.html ?>
-<body id="setup-select-coa" class="lsmb <?lsmb dojo_theme ?>">
+include_stylesheet=["setup.css"] %]
+[% PROCESS elements.html %]
+<body id="setup-select-coa" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
-<h2><?lsmb text('Database Management Console') ?></h2>
-<div class="listtop"><?lsmb title ?></div>
+<h2>[% text('Database Management Console') %]</h2>
+<div class="listtop">[% title %]</div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="credentials">
   <div id="sep" class="listheading">
     Pre-defined Chart-of-Accounts selection
   </div>
 
-  <?lsmb IF coa_lc;
+  [% IF coa_lc;
    INCLUDE input element_data = {
         name = 'coa_lc'
         type = 'hidden'
        value = coa_lc
          } ;
-         ?>
+         %]
   <p>
-    The selected country ('<?lsmb coa_lc ?>') has the following charts
+    The selected country ('[% coa_lc %]') has the following charts
     predefined.
   </p>
-  <?lsmb ELSE ?>
+  [% ELSE %]
   <p>
     Please select a country from the list of countries with predefined
     charts of accounts, or select Skip and define or import accounts and
@@ -30,9 +30,9 @@ include_stylesheet=["setup.css"] ?>
     for evaluation purposes as many functions depend on accounts of
     certain types being defined.
   </p>
-  <?lsmb END ?>
+  [% END %]
 <div class="inputrow">
-<?lsmb IF coa_lc;
+[% IF coa_lc;
     INCLUDE select element_data = {
          options = charts
             name = 'chart'
@@ -41,10 +41,10 @@ include_stylesheet=["setup.css"] ?>
            label = text('Chart of accounts')
     };
     IF gifis.size > 0;
--?>
+-%]
 </div>
 <div class="inputrow">
-<?lsmb
+[%
        INCLUDE select element_data = {
          options = gifis
             name = 'gifi'
@@ -54,10 +54,10 @@ include_stylesheet=["setup.css"] ?>
        };
     END;
     IF sics.size > 0;
--?>
+-%]
 </div>
 <div class="inputrow">
-<?lsmb
+[%
        INCLUDE select element_data = {
          options = sics
             name = 'sic'
@@ -74,32 +74,32 @@ include_stylesheet=["setup.css"] ?>
       value_attr = 'code'
            label = text('Country Code') #'
     };
-END ?>
+END %]
 </div>
 <div class="inputrow">
-<?lsmb INCLUDE input element_data = {
+[% INCLUDE input element_data = {
     name = 'database'
    value = database
     type = 'hidden'
-} ?>
+} %]
 </div>
 <div class="inputrow">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'select_coa'
     type = 'submit'
    class = 'submit'
     text = text('Next')
-} ?>
+} %]
 </div>
 <div class="inputrow">
-<?lsmb INCLUDE button element_data = {
+[% INCLUDE button element_data = {
     name = 'action'
    value = 'skip_coa'
     type = 'submit'
    class = 'submit'
     text = text('Skip')
-} ?>
+} %]
 </div>
 </form>
 </div>

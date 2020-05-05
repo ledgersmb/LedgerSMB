@@ -1,10 +1,10 @@
-<?lsmb# HTML Snippet, for import only ?>
+[%# HTML Snippet, for import only %]
 <div id="wage_div"
-     title='<?lsmb text("Wages and Deductions") ?>'
+     title='[% text("Wages and Deductions") %]'
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'wage_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'wage_div' %]data-dojo-props="selected:true"[% END %]
      >
-<?lsmb
+[%
 columns = [{ col_id = 'type', name = text('Type'), type = 'text' },
            { col_id = 'rate', name = text('Amount/Rate'), type = 'text' }];
 
@@ -16,65 +16,65 @@ PROCESS dynatable
 PROCESS dynatable
         columns = columns
         attributes = {id = 'deduction-table', width='100%' }
-        t_body = {rows = deductions}; ?>
+        t_body = {rows = deductions}; %]
 
 <table>
 <tr>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post" name="wage">
-<td><?lsmb PROCESS select element_data = {
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post" name="wage">
+<td>[% PROCESS select element_data = {
                 options = wage_types
              value_attr = 'id'
               text_attr = 'label'
                    name = 'type_id'
                      id = 'wage_type_id'
-} ?></td>
-<td><?lsmb PROCESS input element_data = {
+} %]</td>
+<td>[% PROCESS input element_data = {
               name = 'rate'
              value = rate
              class = 'number'
               type = 'text'
                 id = 'wage_rate'
-} ?></td>
-<?lsmb PROCESS input element_data = {
+} %]</td>
+[% PROCESS input element_data = {
           name = 'entity_id'
           type = 'hidden'
          value = entity_id
-} ?>
-<td><?lsmb PROCESS button element_data = {
+} %]
+<td>[% PROCESS button element_data = {
           text = text('Add/Change Wage') #'
           name = 'action'
           type = 'submit'
          class = 'submit'
-} ?></td>
+} %]</td>
 </form>
 </tr>
 <tr>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post" name="deduction">
-<td><?lsmb PROCESS select element_data = {
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post" name="deduction">
+<td>[% PROCESS select element_data = {
                 options = deduction_types
              value_attr = 'id'
               text_attr = 'label'
                    name = 'type_id'
                      id = 'deduction_type_id'
-} ?></td>
-<td><?lsmb PROCESS input element_data = {
+} %]</td>
+<td>[% PROCESS input element_data = {
               name = 'rate'
              value = rate
              class = 'number'
               type = 'text'
                 id = 'deduction_rate'
-} ?></td>
-<?lsmb PROCESS input element_data = {
+} %]</td>
+[% PROCESS input element_data = {
           name = 'entity_id'
           type = 'hidden'
          value = entity_id
-} ?>
-<td><?lsmb PROCESS button element_data = {
+} %]
+<td>[% PROCESS button element_data = {
           text = text('Add/Change Deductions') #'
           name = 'action'
           type = 'submit'
          class = 'submit'
-} ?></td>
+} %]</td>
 </form>
 </tr>
 </table>

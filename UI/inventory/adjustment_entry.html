@@ -1,33 +1,33 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
   <form data-dojo-type="lsmb/Form"
         id='part-adjust'
         action='inventory.pl'
         method='post'>
-    <div class="listtop"><?lsmb text('Enter Inventory')?></div>
+    <div class="listtop">[% text('Enter Inventory')%]</div>
         <div class="label" id="date_div">
-                <label for="date_span"><?lsmb text('Adjustment Date') ?></label>
-                <span id="date_span"><?lsmb transdate ?></span>
-                <?lsmb INCLUDE input element_data = {
+                <label for="date_span">[% text('Adjustment Date') %]</label>
+                <span id="date_span">[% transdate %]</span>
+                [% INCLUDE input element_data = {
                         name  = "source"
                         type  = "hidden"
                         value = source
-                } ?>
-                <?lsmb INCLUDE input element_data = {
+                } %]
+                [% INCLUDE input element_data = {
                         name  = "transdate"
                         type  = "hidden"
                         value = transdate
-                } ?>
+                } %]
         </div>
         <table>
         <tr class="listheading">
-                <th><?lsmb text('Partnumber') ?></th>
-                <th><?lsmb text('Description') ?></th>
-                <th><?lsmb text('Counted') ?></th>
-                <th><?lsmb text('On Hand') ?></th>
-                <th><?lsmb text('Adjustment') ?></th>
+                <th>[% text('Partnumber') %]</th>
+                <th>[% text('Description') %]</th>
+                <th>[% text('Counted') %]</th>
+                <th>[% text('On Hand') %]</th>
+                <th>[% text('Adjustment') %]</th>
         </tr>
-        <?lsmb IF ! rowcount;  rowcount = 1; END;
+        [% IF ! rowcount;  rowcount = 1; END;
            INCLUDE input element_data = {
                    name = 'rowcount'
                    type = 'hidden'
@@ -38,60 +38,60 @@
               IF ! $id_id;
                  $id_id = "new";
               END;
-                # ids are numeric -?>
-        <?lsmb INCLUDE input element_data = {
+                # ids are numeric -%]
+        [% INCLUDE input element_data = {
                 name  = id_id
                 value = $id_id
                 type  = "hidden"
-        } ?>
+        } %]
         <tr>
-                <td><?lsmb INCLUDE input element_data = {
+                <td>[% INCLUDE input element_data = {
                         name  = "partnumber_$i"
                         value = ${"partnumber_$i"}
                         class = "control_code"
                         type  = "text"
                         size  = "20"
-                } ?></td>
-                <td><?lsmb INCLUDE input element_data = {
+                } %]</td>
+                <td>[% INCLUDE input element_data = {
                         name  = "description_$i"
                         value = ${"description_$i"}
                         type  = "hidden"
-                } ?><?lsmb ${"description_$i"} ?></td>
-                <td><?lsmb INCLUDE input element_data = {
+                } %][% ${"description_$i"} %]</td>
+                <td>[% INCLUDE input element_data = {
                         name  = "counted_$i"
                         value = ${"counted_$i"}
                         class = "numeric"
                         type  = "text"
                         size  = "20"
-                } ?></td>
-                <td><?lsmb INCLUDE input element_data = {
+                } %]</td>
+                <td>[% INCLUDE input element_data = {
                         name  = "onhand_$i"
                         value = ${"onhand_$i"}
                         type  = "hidden"
-                } ?><?lsmb ${"onhand_$i"} ?></td>
-                <td><?lsmb INCLUDE input element_data = {
+                } %][% ${"onhand_$i"} %]</td>
+                <td>[% INCLUDE input element_data = {
                         name  = "qty_$i"
                         value = ${"qty_$i"}
                         type  = "hidden"
-                } ?><?lsmb ${"qty_$i"} ?></td>
+                } %][% ${"qty_$i"} %]</td>
         </tr>
-        <?lsmb END # foreach i -?>
+        [% END # foreach i -%]
         </table>
         <div id="button_div">
-                <?lsmb INCLUDE button element_data = {
+                [% INCLUDE button element_data = {
                         text  = text('Next')
                         type  = "submit"
                         class = "submit"
                         name  = "action"
                         value = "adjustment_next"
-                } ?>
-                <?lsmb INCLUDE button element_data = {
+                } %]
+                [% INCLUDE button element_data = {
                         text  = text('Save')
                         type  = "submit"
                         class = "submit"
                         name  = "action"
                         value = "adjustment_save"
-                } ?>
+                } %]
         </div>
         </form>
 </body>

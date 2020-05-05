@@ -1,5 +1,5 @@
 <workbook>
-<?lsmb 
+[% 
     PROCESS 'dynatable.odst';
     columns = [ 
               { col_id = 'parts_id',
@@ -53,5 +53,5 @@
              attributes = { id = 'pricegroup' }
              tbody = { rows = pricematrix_pricegroup };
     END;
-?>
+%]
 </workbook>

@@ -1,4 +1,4 @@
-<?lsmb
+[%
 
 PROCESS "elements.html";
 
@@ -6,22 +6,22 @@ PROCESS "dynatable.html";
 
 LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
 
-?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
-<span class="report_header"><?lsmb name ?></span>
+%]
+<body class="lsmb [% dojo_theme %]">
+<div class="report_header"><label>[% text('Report Name') %]:</label>
+<span class="report_header">[% name %]</span>
 </div>
-<div class="report_header"><label><?lsmb text('Company') ?>:</label>
-<span class="report_header"><?lsmb request.company ?></span>
+<div class="report_header"><label>[% text('Company') %]:</label>
+<span class="report_header">[% request.company %]</span>
 </div>
-<?lsmb FOREACH LINE IN hlines ?>
-<div class="report_header"><label><?lsmb LINE.text ?>:</label>
-<span class="report_header"><?lsmb request.${LINE.name} ?></span>
+[% FOREACH LINE IN hlines %]
+<div class="report_header"><label>[% LINE.text %]:</label>
+<span class="report_header">[% request.${LINE.name} %]</span>
 </div>
-<?lsmb END ?>
+[% END %]
 
 <form data-dojo-type="lsmb/Form" method="get" action="report_aging.pl">
-<?lsmb
+[%
 
 IF request.action == 'select_all';
    FOREACH ROW IN rows;
@@ -100,29 +100,29 @@ PROCESS button element_data = {
    'data-dojo-type' = 'lsmb/PrintButton'
    'data-dojo-props' = 'minimalGET:false'
 };
- ?>
+ %]
 </form><br />
-<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
-<?lsmb IF FORMATS.grep('PDF').size()
-?>
+<a href="[% LINK %]">[[% text('permalink') %]]</a>&nbsp;
+[% IF FORMATS.grep('PDF').size()
+%]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
-<?lsmb END;
+   href="[% LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
+[% END;
 IF FORMATS.grep('TXT').size();
-?>
+%]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('XLS').size() ?>
+   href="[% LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('XLS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('XLSX').size() ?>
+   href="[% LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('XLSX').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=XLSX' ?>">[<?lsmb text('XLSX') ?>]</a>&nbsp;
-<?lsmb END;
-IF FORMATS.grep('ODS').size() ?>
+   href="[% LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
+[% END;
+IF FORMATS.grep('ODS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="<?lsmb LINK _ '&amp;format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
-<?lsmb END; ?>
+   href="[% LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
+[% END; %]
 </body>

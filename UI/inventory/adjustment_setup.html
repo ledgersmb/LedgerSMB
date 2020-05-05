@@ -1,40 +1,40 @@
-<?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS 'elements.html' %]
+<body class="lsmb [% dojo_theme %]">
   <form data-dojo-type="lsmb/Form"
         id="part-adjust-setup"
         action="inventory.pl"
         method="post">
-    <div class="listtop"><?lsmb text('Adjustment Details'); ?></div>
+    <div class="listtop">[% text('Adjustment Details'); %]</div>
     <div class="tabular col-1">
       <div id="date_input_div">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 name  = "transdate"
                 class = "date"
                 size  = "12"
                 value = transdate
                 type  = "text"
                 label = text('Date')
-        } ?>
+        } %]
       </div>
       <div id="source_input_div">
-        <?lsmb INCLUDE input element_data = {
+        [% INCLUDE input element_data = {
                 name  = "source"
                 class = "control_code"
                 size  = "20"
                 value = source
                 type  = "text"
                 label = text('Source')
-        } ?>
+        } %]
       </div>
     </div>
     <div id="button_div">
-        <?lsmb INCLUDE button element_data = {
+        [% INCLUDE button element_data = {
                 name  = "action"
                 type  = "submit"
                 text  = text('Continue')
                 class = "submit"
                 value = "enter_adjust"
-        } ?>
+        } %]
     </div>
   </form>
 </body>

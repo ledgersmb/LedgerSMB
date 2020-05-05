@@ -1,135 +1,135 @@
-<?lsmb PROCESS elements.html;
-       PROCESS report_base.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html;
+       PROCESS report_base.html %]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" method="get" action="report_aging.pl">
 <table width="100%">
-  <tr><th class="listtop"><?lsmb text('Aging Report') ?></th></tr>
+  <tr><th class="listtop">[% text('Aging Report') %]</th></tr>
   <tr><td> </td></tr>
   <tr>
     <td>
       <table>
-       <?lsmb INCLUDE business_classes ?>
+       [% INCLUDE business_classes %]
       <tr>
-        <th align="right"><?lsmb IF entity_class == 1; text('Vendor');
+        <th align="right">[% IF entity_class == 1; text('Vendor');
                               ELSIF entity_class == 2; text('Customer');
-                               END ?></th>
-        <td><?lsmb PROCESS input element_data={
+                               END %]</th>
+        <td>[% PROCESS input element_data={
               name  = 'name_part'
               type  = 'text'
               class = 'name'
               value = name
-         } ?></td>
+         } %]</td>
       </tr>
       <tr>
-        <th align="right"><?lsmb text('Account') ?></th>
-        <td><?lsmb PROCESS input element_data={
+        <th align="right">[% text('Account') %]</th>
+        <td>[% PROCESS input element_data={
               name  = 'meta_number'
               type  = 'text'
               class = 'control_code'
               value = meta_number
-         } ?></td>
+         } %]</td>
       </tr>
       <tr>
-        <th align="right"><?lsmb text('To') ?></th>
-        <td><?lsmb PROCESS input element_data={
+        <th align="right">[% text('To') %]</th>
+        <td>[% PROCESS input element_data={
         class = 'date',
         name = 'to_date',
         size = '11',
-        } ?></td>
+        } %]</td>
       </tr>
       <tr>
         <th></th>
         <td>
-<?lsmb IF form.selectaccountingyear.defined ?>
-  <?lsmb PROCESS select element_data=form.selectaccountingmonth -?>
-  <?lsmb PROCESS select element_data=form.selectaccountingyear -?>
-<?lsmb END ?>
+[% IF form.selectaccountingyear.defined %]
+  [% PROCESS select element_data=form.selectaccountingmonth -%]
+  [% PROCESS select element_data=form.selectaccountingyear -%]
+[% END %]
         </td>
       </tr>
       <tr>
         <th></th>
         <td colspan="2">
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   type = 'radio',
   name = 'report_type',
   value = 'summary',
   label = text('Summary'),
   checked = 'checked',
-  } -?>
-<?lsmb PROCESS input element_data={
+  } -%]
+[% PROCESS input element_data={
   type = 'radio',
   name = 'report_type',
   value = 'detail',
   label = text('Detail'),
-  } -?>
+  } -%]
         </td>
       </tr>
       <tr><td colspan="2">
         <table class='criteria'>
           <tr>
-            <th align="right"><?lsmb text('Include in Report') ?></th>
+            <th align="right">[% text('Include in Report') %]</th>
             <td>
               <table>
                 <tr>
                   <td>
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   name = 'overdue',
   type = 'radio',
   value = '0',
   label = text('Aged'),
   checked = 'checked',
-  } -?>
+  } -%]
                   </td>
                   <td colspan="2">
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   name = 'overdue',
   type = 'radio',
   value = '1',
   label = text('Overdue'),
-  } -?>
+  } -%]
                   </td>
                 </tr>
                 <tr>
                   <td width="70">
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   name = 'c0',
   type = 'checkbox',
   value = '1',
   label = text('Current'),
   checked = 'checked',
-  } -?>
+  } -%]
                   </td>
                   <td width="70">
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   name = 'c30',
   type = 'checkbox',
   value = '1',
   label = '30',
   checked = 'checked',
-  } -?>
+  } -%]
                   </td>
                   <td width="70">
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   name = 'c60',
   type = 'checkbox',
   value = '1',
   label = '60',
   checked = 'checked',
-  } -?>
+  } -%]
                   </td>
                   <td width="70">
-<?lsmb PROCESS input element_data={
+[% PROCESS input element_data={
   name = 'c90',
   type = 'checkbox',
   value = '1',
   label = '90',
   checked = 'checked',
-  } -?>
-<?lsmb PROCESS input element_data = {
+  } -%]
+[% PROCESS input element_data = {
   name = 'entity_class'
   type = 'hidden'
   value = entity_class
-} ?>
+} %]
                   </td>
                 </tr>
               </table>
@@ -142,12 +142,12 @@
   </tr>
   <tr><td><hr size="3" noshade="noshade" /></td></tr>
 </table>
-<?lsmb PROCESS button element_data = {
+[% PROCESS button element_data = {
    name = 'action'
    text = text('Continue')
   value = 'run_report'
    type = 'submit'
   class = 'submit'
-} ?>
+} %]
 </form>
 </body>

@@ -1,21 +1,21 @@
-<?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" method=post action="oe.pl">
-<h2 class=confirm> <?lsmb text('Warning!') ?></h2>
-<?lsmb FOR h IN hiddens.keys;
+<h2 class=confirm> [% text('Warning!') %]</h2>
+[% FOR h IN hiddens.keys;
   PROCESS input element_data = {
     type = "hidden"
     name = h
     value = hiddens.$h
   };
-END ?>
-<h4><?lsmb text('Saving over an existing document.  Continue?') ?></h4>
-<?lsmb PROCESS button element_data = {
+END %]
+<h4>[% text('Saving over an existing document.  Continue?') %]</h4>
+[% PROCESS button element_data = {
       name="action"
      class="submit"
       type="submit"
      value="save"
       text=text('Continue')
-} ?>
+} %]
 </form>
 </body>

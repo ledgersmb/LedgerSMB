@@ -1,4 +1,4 @@
-<?lsmb- BLOCK dynatable;
+[%- BLOCK dynatable;
 
 ROWCOUNT = 1;
 
@@ -10,38 +10,38 @@ IF tfoot.rows.size;
   ROWCOUNT = ROWCOUNT + tbody.rows.size;
 END;
 
--?>
-<worksheet name="<?lsmb attributes.id | html ?>" rows="<?lsmb ROWCOUNT ?>" columns="<?lsmb columns.size + 1 ?>">
+-%]
+<worksheet name="[% attributes.id | html %]" rows="[% ROWCOUNT %]" columns="[% columns.size + 1 %]">
 <format bottom="5" bg_color="lime" bottom_color="magenta">
-<?lsmb IF !hide_header -?>
+[% IF !hide_header -%]
    <row>
-   <?lsmb FOREACH COL IN columns; 
-   IF COL.type != 'hidden'; -?>
-   <cell text="<?lsmb COL.name | html ?>" />
-   <?lsmb END; END; ?>
+   [% FOREACH COL IN columns; 
+   IF COL.type != 'hidden'; -%]
+   <cell text="[% COL.name | html %]" />
+   [% END; END; %]
    </row>
-<?lsmb END -?>
+[% END -%]
 </format>
 <format align="right">
-<?lsmb FOREACH ROW IN tbody.rows -?>
+[% FOREACH ROW IN tbody.rows -%]
    <row>
-      <?lsmb FOREACH COL IN columns -?>
-       <?lsmb IF COL.type != 'hidden'; -?>
-        <cell text="<?lsmb ROW.${COL.col_id} | html ?>" />
-      <?lsmb END; END -?>
+      [% FOREACH COL IN columns -%]
+       [% IF COL.type != 'hidden'; -%]
+        <cell text="[% ROW.${COL.col_id} | html %]" />
+      [% END; END -%]
         </row>
-        <?lsmb END -?>
-<?lsmb- IF tfoot -?>
-   <?lsmb- FOREACH ROW IN tfoot.rows; ?>
+        [% END -%]
+[%- IF tfoot -%]
+   [%- FOREACH ROW IN tfoot.rows; %]
         <row>
-        <?lsmb FOREACH COL IN columns ?>
-        <?lsmb IF COL.type != 'hidden'; -?>
-                <cell text="<?lsmb ROW.${COL.col_id} | html ?>" />
+        [% FOREACH COL IN columns %]
+        [% IF COL.type != 'hidden'; -%]
+                <cell text="[% ROW.${COL.col_id} | html %]" />
       
-        <?lsmb END; END ?>
+        [% END; END %]
         </row>
-        <?lsmb END;
-END ?>
+        [% END;
+END %]
 </format>
 </worksheet>
-<?lsmb END ?>
+[% END %]

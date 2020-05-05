@@ -1,5 +1,5 @@
-<?lsmb# HTML Snippet, for import only ?>
-<?lsmb INCLUDE 'report_base.html'?>
+[%# HTML Snippet, for import only %]
+[% INCLUDE 'report_base.html'%]
 
 <div class="content">
     <table>
@@ -9,13 +9,13 @@
             <td>Date Range</td>
             <td>Total</td>
         </tr>
-    <?lsmb FOR item IN reports?>
+    [% FOR item IN reports%]
         <tr>
-            <td><a href="recon.pl?action=report&amp;report_id=<?lsmb item.report_id?>"><?lsmb item.report_id?></a></td>
-            <td><?lsmb item.account?></td>
-            <td><?lsmb item.range?></td>
-            <td><?lsmb item.total?></td>
+            <td><a href="recon.pl?action=report&amp;report_id=[% item.report_id%]">[% item.report_id%]</a></td>
+            <td>[% item.account%]</td>
+            <td>[% item.range%]</td>
+            <td>[% item.total%]</td>
         </tr>
-    <?lsmb END?>
+    [% END%]
     </table>
 </div>

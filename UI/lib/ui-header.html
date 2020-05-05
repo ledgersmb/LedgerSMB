@@ -1,59 +1,59 @@
-<?lsmb
+[%
    # This helper should be included in files which will be served as
    # top-level responses (i.e. documents on their own); this includes
    # UI/login.html, UI/logout.html, UI/main.html and various UI/setup/ pages
 
    # Most LedgerSMB responses are handled by the 'xhr' Dojo module, which
    # *only* needs opening and closing BODY tags to be there (for now).
-   -?>
+   -%]
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-        <title><?lsmb title ?></title>
+        <title>[% title %]</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <?lsmb# HTML Snippet, for import only ?>
-        <?lsmb
+        [%# HTML Snippet, for import only %]
+        [%
             # source comment only!
             #
             # don't specify a title on the stylesheets: we want them to be
             # *persistent*
             # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
-        ?>
+        %]
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-        <link rel="stylesheet" href="js/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+        <link rel="stylesheet" href="js/dijit/themes/[% dojo_theme %]/[% dojo_theme %].css" type="text/css" />
 
-        <?lsmb IF form.stylesheet ?>
-            <link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" />
-        <?lsmb ELSIF stylesheet ?>
-            <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
-        <?lsmb END ?>
-        <?lsmb FOREACH s = include_stylesheet ?>
-            <link rel="stylesheet" href="css/<?lsmb s ?>" type="text/css" />
-        <?lsmb END ?>
-        <?lsmb IF warn_expire ?>
+        [% IF form.stylesheet %]
+            <link rel="stylesheet" href="css/[% form.stylesheet %]" type="text/css" />
+        [% ELSIF stylesheet %]
+            <link rel="stylesheet" href="css/[% stylesheet %]" type="text/css" />
+        [% END %]
+        [% FOREACH s = include_stylesheet %]
+            <link rel="stylesheet" href="css/[% s %]" type="text/css" />
+        [% END %]
+        [% IF warn_expire %]
         <script type="text/javascript">
-        window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
+        window.alert('[% text('Warning:  Your password will expire in [_1]', pw_expires)%]');
         </script>
-        <?lsmb END ?>
+        [% END %]
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
-                locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
+                locale: '[% USER.language.lower().replace('_','-') %]',
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
-                <?lsmb IF USER.dateformat ?>
-                 "dateformat": '<?lsmb USER.dateformat ?>'
-                 <?lsmb END ?>
+                [% IF USER.dateformat %]
+                 "dateformat": '[% USER.dateformat %]'
+                 [% END %]
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        <?lsmb FOREACH s = include_script ?>
-            <script type="text/javascript" src="<?lsmb s ?>" ></script>
-        <?lsmb END ?>
+        [% FOREACH s = include_script %]
+            <script type="text/javascript" src="[% s %]" ></script>
+        [% END %]
         <meta name="robots" content="noindex,nofollow" />
 </head>
-<?lsmb BLOCK end_html ?>
+[% BLOCK end_html %]
 </html>
-<?lsmb END ?>
+[% END %]

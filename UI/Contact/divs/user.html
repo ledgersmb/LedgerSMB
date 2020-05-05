@@ -1,12 +1,12 @@
-<?lsmb# HTML Snippet, for import only ?>
-<?lsmb IF employee.first_name ?>
+[%# HTML Snippet, for import only %]
+[% IF employee.first_name %]
 <div id="user_div"
-     title="<?lsmb text('User') ?>"
+     title="[% text('User') %]"
      data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'user_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     [% IF request.target_div == 'user_div' %]data-dojo-props="selected:true"[% END %]
      >
         <div class="listtop">
-            <?lsmb
+            [%
                IF request.pls_import;
                        text('Duplicate User Found: Importing User');
                        action = 'save_user';
@@ -16,60 +16,60 @@
                 ELSE;
                       text('New User');
                       action = 'save_user';
-                END ?>
+                END %]
         </div>
 
-    <form data-dojo-type="lsmb/Form" method="POST" action="<?lsmb request.script ?>">
-        <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-        <input type="hidden" name="id" value="<?lsmb user.id ?>" />
+    <form data-dojo-type="lsmb/Form" method="POST" action="[% request.script %]">
+        <input type="hidden" name="entity_id" value="[% entity_id %]"/>
+        <input type="hidden" name="id" value="[% user.id %]" />
         <table>
 
-            <?lsmb IF user.username and not request.pls_import ?>
+            [% IF user.username and not request.pls_import %]
             <tr>
-                <td><?lsmb text('Username') ?></td>
+                <td>[% text('Username') %]</td>
                 <td>
-                    <?lsmb user.username;
+                    [% user.username;
                     INCLUDE input element_data = {
                             name  = 'username'
                             type  = 'hidden'
                             value = user.username
-                    } ?>
+                    } %]
                 </td>
             </tr>
 
-            <?lsmb ELSE ?>
+            [% ELSE %]
             <tr>
-                <td><?lsmb text('Username') ?></td>
+                <td>[% text('Username') %]</td>
                 <td>
-                    <input type="text" name="username" value="<?lsmb user.username ?>" required/>
+                    <input type="text" name="username" value="[% user.username %]" required/>
                 </td>
             </tr>
-            <?lsmb END ?>
+            [% END %]
             <tr>
-                <td><?lsmb text('Password') ?></td>
+                <td>[% text('Password') %]</td>
                 <td>
-                    <?lsmb INCLUDE input element_data = {
+                    [% INCLUDE input element_data = {
                            type="password"
                            name="reset_password"
                            value="",
                            attributes = { autocomplete = 'off' }
-                           } ?>
+                           } %]
                 </td>
             </tr>
 
-            <?lsmb IF (request.pls_import == 1) OR !user.username ?>
+            [% IF (request.pls_import == 1) OR !user.username %]
             <tr>
-                <td><?lsmb text('User creation') ?></td>
-                <?lsmb
+                <td>[% text('User creation') %]</td>
+                [%
                   IF request.pls_import;
                       importc1 = 'CHECKED';
                       importc0 = '';
                   ELSE;
                       importc1 = '';
                       importc0 = 'CHECKED';
-                  END; ?>
+                  END; %]
                 <td><div class="input_line"><div overflow="auto" class="input_group">
-                            <?lsmb
+                            [%
                                PROCESS input element_data = {
                                label   = text("Create new user")
                                value   = '0'
@@ -78,10 +78,10 @@
                                type    = 'radio'
                                }
                                label_pos = 1 ;
-                               ?>
+                               %]
                     </div><div overflow="auto"
                                class="input_group">
-                      <?lsmb
+                      [%
                          PROCESS input element_data = {
                          label   = text("Import existing user")
                          value   = '1'
@@ -89,7 +89,7 @@
                          name    = 'pls_import'
                          type    = 'radio'
                          }
-                         label_pos = 1 ; ?>
+                         label_pos = 1 ; %]
                   </div></div>
                   <div data-dojo-type="dijit/Tooltip"
        data-dojo-props="connectId:'pls-import-1',position:['below']">
@@ -114,9 +114,9 @@
   </div>
 </td>
             </tr>
-            <?lsmb END # unless employee.entity_id ?>
+            [% END # unless employee.entity_id %]
         </table>
-           <?lsmb IF user.username and not request.pls_import;
+           [% IF user.username and not request.pls_import;
                 PROCESS button element_data  = {
                          text = text('Reset Password') #'
                          name = 'action'
@@ -138,13 +138,13 @@
                          name = 'form_id'
                         value = form_id
                 };
-    ?>
+    %]
     </form>
-    <?lsmb IF user.entity_id and not request.pls_import?>
+    [% IF user.entity_id and not request.pls_import%]
         <hr />
-        <form data-dojo-type="lsmb/Form" name="groups" method="POST" action="<?lsmb request.script ?>">
-            <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
-            <?lsmb PROCESS input element_data = {
+        <form data-dojo-type="lsmb/Form" name="groups" method="POST" action="[% request.script %]">
+            <input type="hidden" name="entity_id" value="[% entity_id %]" />
+            [% PROCESS input element_data = {
                type="hidden"
                name="user_id"
                value=user.id
@@ -154,22 +154,22 @@
                          name = 'form_id'
                         value = form_id
                 };
-           ?>
+           %]
 
             <table>
                 <!-- Groups section -->
                 <tr>
-                <?lsmb FOREACH role IN roles ?>
-                <?lsmb IF loop.count % 2 == 0?>
+                [% FOREACH role IN roles %]
+                [% IF loop.count % 2 == 0%]
                 </tr>
                 <tr>
-                <?lsmb END ?>
+                [% END %]
                     <td>
-                        <?lsmb rolcheck = undef;
+                        [% rolcheck = undef;
                            IF user.role_list.grep(role.rolname).size;
                               rolcheck = "checked";
-                           END ?>
-                        <?lsmb PROCESS input element_data = {
+                           END %]
+                        [% PROCESS input element_data = {
                                type = "checkbox"
                                title = role.description
                                label = role.description
@@ -177,23 +177,23 @@
                                name = "role__" _ role.rolname
                                id = role.rolname
                                checked = rolcheck
-                         }, label_pos = 1 ?>
+                         }, label_pos = 1 %]
                     </td>
-                <?lsmb END ?>
+                [% END %]
                 </tr>
             </table>
 
             <table>
                 <tr>
-                    <td><?lsmb PROCESS button element_data = {
+                    <td>[% PROCESS button element_data = {
                           text = text('Save Groups') #'
                           class = "submit"
                           name = "action"
                           value = "save_roles"
-                    } ?></td>
+                    } %]</td>
                 </tr>
             </table>
         </form>
-<?lsmb END ?>
+[% END %]
 </div>
-<?lsmb END ?>
+[% END %]

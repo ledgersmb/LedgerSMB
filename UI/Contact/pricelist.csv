@@ -1,5 +1,5 @@
-<?lsmb- PROCESS 'dynatable.csv' -?>
-<?lsmb-
+[%- PROCESS 'dynatable.csv' -%]
+[%-
     columns = [ 
               { col_id = 'parts_id',
                   type = 'hidden' },
@@ -49,4 +49,4 @@
       PROCESS dynatable
          tbody = { rows = pricematrix }
 
--?>
+-%]

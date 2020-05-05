@@ -1,12 +1,12 @@
-<?lsmb INCLUDE "ui-header.html"
+[% INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"];
        PROCESS "elements.html";
-       PROCESS "dynatable.html"; ?>
-<body id="setup-edit-user" class="<?lsmb dojo_theme ?>">
+       PROCESS "dynatable.html"; %]
+<body id="setup-edit-user" class="[% dojo_theme %]">
  <div class="setupconsole">
         <div class="listtop">
-            <?lsmb
+            [%
                IF request.pls_import;
                        text('Duplicate User Found: Importing User');
                        action = 'save_user';
@@ -16,37 +16,37 @@ include_stylesheet=["setup.css"];
                 ELSE;
                       text('New User');
                       action = 'save_user';
-                END ?>
+                END %]
         </div>
 
-    <form data-dojo-type="lsmb/SimpleForm" method="POST" action="<?lsmb request.script ?>">
-      <input type="hidden" name="id" value="<?lsmb request.id ?>" />
-      <input type="hidden" name="database" value="<?lsmb request.database ?>" />
+    <form data-dojo-type="lsmb/SimpleForm" method="POST" action="[% request.script %]">
+      <input type="hidden" name="id" value="[% request.id %]" />
+      <input type="hidden" name="database" value="[% request.database %]" />
         <table id="user-data">
 
-            <?lsmb IF user.user_id and not request.pls_import ?>
+            [% IF user.user_id and not request.pls_import %]
             <tr>
-                <td><?lsmb text('Username') ?></td>
+                <td>[% text('Username') %]</td>
                 <td>
-                    <?lsmb user.username;
+                    [% user.username;
                     INCLUDE input element_data = {
                             name  = 'username'
                             type  = 'hidden'
                             value = user.username
-                    } ?>
+                    } %]
                 </td>
             </tr>
 
-            <?lsmb ELSE ?>
+            [% ELSE %]
             <tr>
-                <td><?lsmb text('Username') ?></td>
+                <td>[% text('Username') %]</td>
                 <td>
-                    <input type="text" name="username" value="<?lsmb user.username ?>" required/>
+                    <input type="text" name="username" value="[% user.username %]" required/>
                 </td>
             </tr>
-            <?lsmb END ?>
+            [% END %]
             <tr>
-                <td><label for="password"><?lsmb text('Password') ?></label>
+                <td><label for="password">[% text('Password') %]</label>
                 </td>
                 <td>
                     <input type="password"
@@ -55,36 +55,36 @@ include_stylesheet=["setup.css"];
                 </td>
             </tr>
 
-            <?lsmb IF (request.pls_import == 1) OR !user.username ?>
+            [% IF (request.pls_import == 1) OR !user.username %]
             <tr>
-                <td><?lsmb text('Import') ?></td>
-                <?lsmb
+                <td>[% text('Import') %]</td>
+                [%
                   IF request.pls_import;
                       importc1 = 'CHECKED';
                       importc0 = '';
                   ELSE;
                       importc1 = '';
                       importc0 = 'CHECKED';
-                  END; ?>
+                  END; %]
                 <td><div class="input_line"><div overflow="auto" class="input_group">
-                  <?lsmb INCLUDE input element_data = {
+                  [% INCLUDE input element_data = {
                            label   = 'Yes'
                            value   = '1'
                            checked = importc1
                            name    = 'pls_import'
                            type    = 'radio'
-                   } ?></div><div overflow="auto" class="input_group"><?lsmb
+                   } %]</div><div overflow="auto" class="input_group">[%
                    INCLUDE input element_data = {
                            label   = 'No'
                            value   = '0'
                            checked = importc0
                            name    = 'pls_import'
                            type    = 'radio'
-                   } ?></div></div></td>
+                   } %]</div></div></td>
             </tr>
-            <?lsmb END # unless employee.entity_id ?>
+            [% END # unless employee.entity_id %]
         </table>
-           <?lsmb IF user.username and not request.pls_import;
+           [% IF user.username and not request.pls_import;
                 PROCESS button element_data  = {
                          text = text('Reset Password') #'
                          name = 'action'
@@ -102,58 +102,58 @@ include_stylesheet=["setup.css"];
                         value = 'create_user'
                 };
            END;
-    ?>
+    %]
     </form>
-    <?lsmb IF user.user_id and not request.pls_import?>
+    [% IF user.user_id and not request.pls_import%]
         <hr />
-        <form data-dojo-type="lsmb/SimpleForm" name="groups" method="POST" action="<?lsmb request.script ?>">
-            <input type="hidden" name="database" value="<?lsmb request.database ?>" />
-            <?lsmb PROCESS input element_data = {
+        <form data-dojo-type="lsmb/SimpleForm" name="groups" method="POST" action="[% request.script %]">
+            <input type="hidden" name="database" value="[% request.database %]" />
+            [% PROCESS input element_data = {
                type="hidden"
                name="id"
                value=request.id
               };
-           ?>
-        <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
+           %]
+        <input type="hidden" name="entity_id" value="[% entity_id %]"/>
            <div>
             <table id="user-roles">
                 <!-- Groups section -->
                 <tr>
-                <?lsmb FOREACH role IN roles ?>
-                <?lsmb IF loop.count % 2 == 0?>
+                [% FOREACH role IN roles %]
+                [% IF loop.count % 2 == 0%]
                 </tr>
                 <tr>
-                <?lsmb END ?>
+                [% END %]
                     <td>
-                        <?lsmb rolcheck = undef;
+                        [% rolcheck = undef;
                            IF user.roles.grep(role.name).size;
                               rolcheck = "checked";
-                           END ?>
-                        <?lsmb PROCESS input element_data = {
+                           END %]
+                        [% PROCESS input element_data = {
                                type = "checkbox"
                                label = role.description
                                value = 1
                                name = role.name
                                id = role.name
                                checked = rolcheck
-                         }, label_pos = 1 ?>
+                         }, label_pos = 1 %]
                     </td>
-                <?lsmb END ?>
+                [% END %]
                 </tr>
             </table>
 
             <table>
                 <tr>
-                    <td><?lsmb PROCESS button element_data = {
+                    <td>[% PROCESS button element_data = {
                           text = text('Save Groups') #'
                           class = "submit"
                           name = "action"
                           value = "save_user_roles"
-                    } ?></td>
+                    } %]</td>
                 </tr>
             </table></div>
         </form>
-<?lsmb END ?>
+[% END %]
 </div>
 </body>
 </html>

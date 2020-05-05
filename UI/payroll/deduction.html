@@ -1,8 +1,8 @@
-<?lsmb PROCESS "elements.html"; ?>
+[% PROCESS "elements.html"; %]
 <body>
-<div class="listtop"><?lsmb text('Deduction Type') ?></div>
+<div class="listtop">[% text('Deduction Type') %]</div>
 <div class="input_row">
-<div class="input_group"><?lsmb
+<div class="input_group">[%
 
 countries.push({});
 
@@ -13,9 +13,9 @@ PROCESS select_country element_data = {
                 text_attr = 'name',
                value_attr = 'id',
                     label = text('Country')
-}; ?></div></div>
+}; %]</div></div>
 <div class="input_row">
-<div class="input_group"><?lsmb
+<div class="input_group">[%
 
  deduction_classes.push({});
 
@@ -26,9 +26,9 @@ PROCESS select element_data = {
                 text_attr = 'label',
                value_attr = 'id',
                     label = text('Deduction Class') #'
-}; ?></div></div>
+}; %]</div></div>
 <div class="input_row">
-<div class="input_group"><?lsmb
+<div class="input_group">[%
 
 accounts.push({});
 
@@ -43,9 +43,9 @@ PROCESS select element_data = {
                 text_attr = 'label',
                value_attr = 'id',
                     label = text('Account')
-}; ?></div></div>
+}; %]</div></div>
 <div class="input_row">
-<div class="input_group"><?lsmb
+<div class="input_group">[%
 
 PROCESS input element_data = {
     name = 'label'
@@ -53,9 +53,9 @@ PROCESS input element_data = {
     type = 'text'
     size = '20'
    class = 'control_code'
-}; ?></div></div>
+}; %]</div></div>
 <div class="input_row">
-<div class="input_group"><?lsmb
+<div class="input_group">[%
 
 PROCESS input element_data = {
     name = 'unit'
@@ -63,9 +63,9 @@ PROCESS input element_data = {
     type = 'text'
     size = '10'
    class = 'unit'
-}; ?></div></div>
+}; %]</div></div>
 <div class="input_row">
-<div class="input_group"><?lsmb
+<div class="input_group">[%
 
 PROCESS input element_data = {
     name = 'default_amount'
@@ -73,9 +73,9 @@ PROCESS input element_data = {
     type = 'text'
     size = '25'
    class = 'amount'
-} ?></div></div>
+} %]</div></div>
 <div class="input_row">
-<?lsmb
+[%
 
 PROCESS button element_data = {
     name = 'action'
@@ -91,5 +91,5 @@ PROCESS button element_data = {
    class = 'submit'
     type = 'submit'
     text = text('Save')
-}; ?></div>
+}; %]</div>
 </body>
