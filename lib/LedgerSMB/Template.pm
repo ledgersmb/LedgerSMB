@@ -449,15 +449,6 @@ sub get_template_args {
         (%additional_options)
     };
 
-    if ($LedgerSMB::Sysconfig::cache_templates
-        && (!$self->{include_path} || $self->{include_path} ne 'DB')) {
-       # don't cache compiled database-retrieved templates
-       # they will vary between databases
-        $arghash->{COMPILE_EXT} = '.lttc';
-        $arghash->{COMPILE_DIR} =
-           File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
-                                File::Spec->tmpdir );
-    }
     $self->{binmode} = $binmode;
     return $arghash;
 }
@@ -578,7 +569,7 @@ sub render {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2007-2018 The LedgerSMB Core Team
+Copyright (C) 2007-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
