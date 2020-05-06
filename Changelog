@@ -95,7 +95,7 @@ Dependency updates
 Changelog for 1.7 Series
 2019-10-04
 
-Changelog for 1.7.13 (to be released)
+Changelog for 1.7.13
 * Fix listing asset classes throwing an error (#4569)
 * Solve failure to create initial user by requiring input (#4525)
 * Fix links at the bottom of the CoA screen (#4568)
