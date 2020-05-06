@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.7.13-dev"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-27 15:17+0000\n"
+"POT-Creation-Date: 2020-05-06 19:12+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Bulgarian (https://www.transifex.com/ledgersmb/teams/58325/"
 "bg/)\n"
@@ -1983,7 +1983,7 @@ msgstr ""
 msgid "Create New Tax Form"
 msgstr ""
 
-#: UI/setup/new_user.html:177
+#: UI/setup/new_user.html:182
 msgid "Create User"
 msgstr ""
 
@@ -2341,7 +2341,7 @@ msgstr ""
 msgid "Date from"
 msgstr ""
 
-#: UI/setup/new_user.html:137
+#: UI/setup/new_user.html:139
 msgid "Date of Birth"
 msgstr ""
 
@@ -3137,7 +3137,7 @@ msgid "Employee"
 msgstr "Сътрудник"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:127
+#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:128
 msgid "Employee Number"
 msgstr "Сътрудник номер"
 
@@ -3558,7 +3558,7 @@ msgstr ""
 msgid "First"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:106
+#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:107
 msgid "First Name"
 msgstr ""
 
@@ -4468,7 +4468,7 @@ msgstr ""
 msgid "Last Updated"
 msgstr ""
 
-#: UI/setup/new_user.html:117
+#: UI/setup/new_user.html:118
 msgid "Last name"
 msgstr ""
 
@@ -7932,7 +7932,7 @@ msgstr ""
 msgid "Tax ID"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:147
+#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:150
 msgid "Tax ID/SSN"
 msgstr ""
 

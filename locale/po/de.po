@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.7.13-dev"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-27 15:17+0000\n"
+"POT-Creation-Date: 2020-05-06 19:12+0000\n"
 "Last-Translator: e t <contacts@ethnoco.ch>, 2020\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -1995,7 +1995,7 @@ msgstr "Neuen Bericht erstellen"
 msgid "Create New Tax Form"
 msgstr "Neue Steuerform erstellen"
 
-#: UI/setup/new_user.html:177
+#: UI/setup/new_user.html:182
 msgid "Create User"
 msgstr "Benutzer anlegen"
 
@@ -2353,7 +2353,7 @@ msgstr "Bearbeitungsdatum "
 msgid "Date from"
 msgstr "Datum von"
 
-#: UI/setup/new_user.html:137
+#: UI/setup/new_user.html:139
 msgid "Date of Birth"
 msgstr "Geburtsdatum"
 
@@ -3150,7 +3150,7 @@ msgid "Employee"
 msgstr "Mitarbeiter"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:127
+#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:128
 msgid "Employee Number"
 msgstr "Mitarbeiternummer"
 
@@ -3574,7 +3574,7 @@ msgstr "Belege filtern"
 msgid "First"
 msgstr "Erst"
 
-#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:106
+#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:107
 msgid "First Name"
 msgstr "Vorname"
 
@@ -4497,7 +4497,7 @@ msgstr "Nachname"
 msgid "Last Updated"
 msgstr "Letzte Aktualisierung"
 
-#: UI/setup/new_user.html:117
+#: UI/setup/new_user.html:118
 msgid "Last name"
 msgstr "Nachname"
 
@@ -7965,7 +7965,7 @@ msgstr "Steuerformular"
 msgid "Tax ID"
 msgstr "Steuernummer"
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:147
+#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:150
 msgid "Tax ID/SSN"
 msgstr "Steuernummer/Sozialversicherungsnummer"
 

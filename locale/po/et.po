@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.7.13-dev"
+"Project-Id-Version: LedgerSMB 1.7.0\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-04-27 15:17+0000\n"
+"POT-Creation-Date: 2020-05-06 19:12+0000\n"
 "Last-Translator: Margus Lepmets <margus.lepmets@gmail.com>, 2019\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -1984,7 +1984,7 @@ msgstr "Lisa uus aruanne"
 msgid "Create New Tax Form"
 msgstr "Lisa uus maksuvorm"
 
-#: UI/setup/new_user.html:177
+#: UI/setup/new_user.html:182
 msgid "Create User"
 msgstr "Lisa kasutaja"
 
@@ -2342,7 +2342,7 @@ msgstr ""
 msgid "Date from"
 msgstr "Kuupäev alates"
 
-#: UI/setup/new_user.html:137
+#: UI/setup/new_user.html:139
 msgid "Date of Birth"
 msgstr "Sünnikuupäev"
 
@@ -3139,7 +3139,7 @@ msgid "Employee"
 msgstr "Töötaja"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:127
+#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:128
 msgid "Employee Number"
 msgstr "Töötaja number"
 
@@ -3560,7 +3560,7 @@ msgstr ""
 msgid "First"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:106
+#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:107
 msgid "First Name"
 msgstr "Eesnimi"
 
@@ -4469,7 +4469,7 @@ msgstr "Perekonnanimi"
 msgid "Last Updated"
 msgstr "Viimati uuendatud"
 
-#: UI/setup/new_user.html:117
+#: UI/setup/new_user.html:118
 msgid "Last name"
 msgstr "Perekonnanimi"
 
@@ -7933,7 +7933,7 @@ msgstr ""
 msgid "Tax ID"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:147
+#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:150
 msgid "Tax ID/SSN"
 msgstr ""
 
