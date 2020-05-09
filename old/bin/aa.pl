@@ -785,6 +785,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts" );
 
+     $selectARAP = $form->{"select$form->{ARAP}"};
+     $selectARAP =~ s/(\Qoption value="$form->{$form->{ARAP}}"\E)/$1 selected="selected"/;
     print qq|
         <tr class="transaction-line $form->{ARAP} total" id="line-total">
       <th align=left>$form->{invtotal}</th>
@@ -793,7 +795,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                                      $form->{invtotal}
                                      * $form->{exchangerate}, 2) : '') . qq|</td>
      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
-                 $form->{"select$form->{ARAP}"}
+                 $selectARAP
               </select></td>
         </tr>
         <tr>
