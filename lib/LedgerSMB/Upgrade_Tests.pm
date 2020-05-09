@@ -1220,12 +1220,11 @@ push @tests, __PACKAGE__->new(
        columns => ['cleared'],
     id_columns => ['trans_id', 'id'],
   instructions => marktext(
-                   'Reconciliations should be on asset, liability or equity accounts only.<br>
+                   'Pre-migration checks found reconciliations on income or expense accounts or accounts that have not been marked for receipts/payment. Reconciliations should be on asset, liability or equity accounts only.<br>
 Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel that you need to adjust more before migrating.'),
-           buttons => ['Save and Retry', 'Cancel', 'Force', 'Skip'],
+           buttons => ['Save and Retry', 'Cancel', 'Force'],
           tooltips => {
                'Force' => marktext('This will <b>keep</b> the transactions but will <b>ignore</b> the non-necessary reconciliations'),
-               'Skip'  => marktext('This will <b>skip</b> this test <b><u>without doing any correction</u></b>')
           },
      force_queries => [q(UPDATE acc_trans ac SET cleared = NULL
                          WHERE chart_id in ( SELECT id
