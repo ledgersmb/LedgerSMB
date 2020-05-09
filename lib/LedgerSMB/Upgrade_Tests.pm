@@ -1199,7 +1199,7 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-    test_query => q(SELECT ac.lsmb_entry_id, ac.trans_id, ac.id, ac.chart_id, ac.memo, ac.amount, xx.description,
+    test_query => q(SELECT ac.trans_id, ac.id, ac.chart_id, ac.memo, ac.amount, xx.description,
                           ch.description as account, ch.accno, ch.link, ch.charttype, ch.category, ac.cleared, approved
                      FROM acc_trans ac
                      JOIN (
@@ -1218,7 +1218,7 @@ push @tests, __PACKAGE__->new(
   display_cols => ['trans_id', 'memo', 'amount', 'description',
                    'accno', 'account', 'link', 'category', 'cleared', 'approved'],
        columns => ['cleared'],
-    id_columns => ['lsmb_entry_id'],
+    id_columns => ['trans_id', 'id'],
   instructions => marktext(
                    'Reconciliations should be on asset, liability or equity accounts only.<br>
 Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel that you need to adjust more before migrating.'),

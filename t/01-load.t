@@ -75,7 +75,6 @@ my @modules =
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld',
           'LedgerSMB::PGTimestamp',
           'LedgerSMB::Setting', 'LedgerSMB::Tax', 'LedgerSMB::Upgrade_Tests',
-          'LedgerSMB::Upgrade_Preparation',
           'LedgerSMB::Database::SchemaChecks::JSON',
           'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',

@@ -56,7 +56,6 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
-use LedgerSMB::Upgrade_Preparation;
 use LedgerSMB::Upgrade_Tests;
 
 
@@ -885,32 +884,11 @@ sub _upgrade_test_is_applicable {
             && ($test->appname eq $dbinfo->{appname}));
 }
 
-sub _applicable_upgrade_preparations {
-    my $dbinfo = shift;
-
-    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
-                  LedgerSMB::Upgrade_Preparation->get_migration_preparations;
-}
-
 sub _applicable_upgrade_tests {
     my $dbinfo = shift;
 
     return grep { _upgrade_test_is_applicable($dbinfo, $_) }
                   LedgerSMB::Upgrade_Tests->get_tests;
-}
-
-sub _prepare_upgrade {
-    my ($request, $dbinfo) = @_;
-
-    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
-        next if (defined $request->{"applied_$preparation->{name}"}
-                 && $request->{"applied_$preparation->{name}"} eq 'On');
-        my $sth = $request->{dbh}->prepare($preparation->preparation);
-        my $status = $sth->execute()
-            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
-        $request->{"applied_$preparation->{name}"} = 'On';
-        $sth->finish();
-    }
 }
 
 sub _run_upgrade_tests {
@@ -942,7 +920,6 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     $request->{dbh}->{AutoCommit} = 0;
-    _prepare_upgrade($request, $dbinfo);
 
     if (my $rv = _run_upgrade_tests($request, $dbinfo)) {
         return $rv;

@@ -17,6 +17,9 @@
 
 BEGIN;
 
+ALTER TABLE :slschema.acc_trans DROP COLUMN IF EXISTS lsmb_entry_id;
+ALTER TABLE :slschema.acc_trans add column lsmb_entry_id SERIAL UNIQUE;
+
 -- Migration functions
 -- TODO: Can we do without?
 
