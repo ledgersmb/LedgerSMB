@@ -17,6 +17,7 @@ This module has a single function that returns upgrade tests.
 
 use strict;
 use warnings;
+
 use Moose;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
@@ -239,7 +240,102 @@ has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
 
 =head1 Methods
 
+=over
+
+=item run($dbh, $cb)
+
+Runs the verification query against the C<$dbh>, calling the callback C<$cb>
+with these arguments on failure: C<$self>, C<$dbh>, C<$sth>.
+
+Returns a falsish value on failure or trueish on success.
+
 =cut
+
+sub run {
+    my ($self, $dbh, $cb) = @_;
+    my $sth = $dbh->prepare($self->test_query)
+        or die $dbh->errstr;
+
+    $sth->execute()
+        or die 'Failed to execute pre-migration check ' . $self->name . ', ' . $sth->errstr;
+
+    if ($sth->rows > 0) {
+        $cb->($self, $dbh, $sth);
+        return 0;
+    }
+    return 1;
+}
+
+=item fix($dbh, $fix_values)
+
+Applies data fixes. Intended to be used to resolve data-issues reported to
+the callback C<$cb> of the C<run> method.
+
+C<$fix_values> is an arrayref holding hashrefs with the keys being the names
+of the columns and the values the data to be applied for that column. Columns
+listed in C<id_columns> must be part of the data supplied.
+
+=cut
+
+sub fix {
+    my ($self, $dbh, $fixes) = @_;
+    my $table = $dbh->quote_identifier($self->table);
+
+    my $query;
+    my @bind_columns;
+    if ($self->insert) {
+        my $columns =
+            join ', ',
+            map { $dbh->quote_identifier($_) } @{$self->columns};
+        my $values =
+            join ', ', map { '?' } @{$self->columns};
+        $query = qq{INSERT INTO $table ($columns) VALUES ($values)};
+        @bind_columns = @{$self->columns};
+    }
+    else {
+        my $setters =
+            join ', ',
+            map { $dbh->quote_identifier($_) . ' = ?' } @{$self->columns};
+        $query = qq{UPDATE $table SET $setters WHERE }
+        . join(' AND ',
+               map { "$_ = ?" }
+               map { $dbh->quote_identifier($_) }
+               @{$self->id_columns});
+        @bind_columns = (@{$self->columns}, @{$self->id_columns});
+    }
+
+    my $sth = $dbh->prepare($query)
+        or die "Failed to compile query ($query) to apply fixes: " . $dbh->errstr;
+    for my $row (@$fixes) {
+        my $rv = $sth->execute(map { $row->{$_} } @bind_columns);
+        if (not $rv) {
+            die "Failed to execute data fix query for $self->{name}: " . $sth->errstr;
+        }
+
+        if ($rv != 1) {
+            die "Upgrade query affected $rv rows while a single row was expected";
+        }
+    }
+    $sth->finish;
+    $dbh->commit;
+}
+
+=item force($dbh)
+
+=cut
+
+sub force {
+    my ($self, $dbh) = @_;
+
+    for my $force_query ( @{$test->{force_queries}}) {
+        $dbh->do($force_query)
+            or die q{Failed to force ;
+    }
+    $dbh->commit;
+
+    return;
+}
+
 
 sub _get_tests {
     my ($request) = @_;
@@ -1235,9 +1331,11 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
     return @tests;
 }
 
+=back
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012-2018 The LedgerSMB Core Team
+Copyright (C) 2012-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

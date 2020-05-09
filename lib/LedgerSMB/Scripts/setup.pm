@@ -56,7 +56,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
-use LedgerSMB::Upgrade_Tests;
+use LedgerSMB::Database::Upgrade;
 
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -876,38 +876,21 @@ sub _load_templates {
 
 
 
-sub _upgrade_test_is_applicable {
-    my ($dbinfo, $test) = @_;
-
-    return (($test->min_version le $dbinfo->{version})
-            && ($test->max_version ge $dbinfo->{version})
-            && ($test->appname eq $dbinfo->{appname}));
-}
-
-sub _applicable_upgrade_tests {
-    my $dbinfo = shift;
-
-    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
-                  LedgerSMB::Upgrade_Tests->get_tests;
-}
-
 sub _run_upgrade_tests {
-    my ($request, $dbinfo) = @_;
+    my ($request, $database) = @_;
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => '.../...',
+        );
 
-    for my $check (_applicable_upgrade_tests($dbinfo)) {
-        next if ($check->skipable
-                 && defined $request->{"skip_$check->{name}"}
-                 && $request->{"skip_$check->{name}"} eq 'On');
-        my $sth = $request->{dbh}->prepare($check->test_query);
-        $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
-        if ($sth->rows > 0){ # Check failed --CT
-            return _failed_check($request, $check, $sth);
-        }
-        $sth->finish();
-    }
+    my $rv;
+    $upgrade->run_tests(
+        sub {
+            my ($check, $dbh, $sth) = @_;
+            $rv = _failed_check($request, $check, $sth);
+        });
 
-    return;
+    return $rv;
 }
 
 sub upgrade {
@@ -921,7 +904,7 @@ sub upgrade {
 
     $request->{dbh}->{AutoCommit} = 0;
 
-    if (my $rv = _run_upgrade_tests($request, $dbinfo)) {
+    if (my $rv = _run_upgrade_tests($request, $database)) {
         return $rv;
     }
 
@@ -1064,7 +1047,7 @@ script.
 
 =cut
 
-sub fix_tests{
+sub fix_tests {
     my ($request) = @_;
 
     my ($reauth, $database) = _init_db($request);
@@ -1074,63 +1057,35 @@ sub fix_tests{
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
-    my @fix_tests = grep { $_->name eq $request->{check} }
-        _applicable_upgrade_tests($dbinfo);
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => '.../...',
+        );
 
-    die "Inconsistent state fixing data for $request->{check}: "
-        . 'found multiple applicable tests by the same identifier'
-        if @fix_tests > 1;
+    my $check = $upgrade->applicable_test_by_name($request->{check});
     die "Inconsistent state fixing data for $request->{check}: "
         . 'found no applicable tests for given identifier'
-        if @fix_tests == 0;
+        unless $check;
 
-    my $check = shift @fix_tests;
     die "Inconsistent state fixing date for $request->{check}: "
         . 'found different test by the same name while fixing data'
         if $request->{verify_check} ne md5_hex($check->test_query);
 
-    my $table = $check->table;
-    my @edits = @{$check->columns};
-    # If we are inserting and id is displayed, we want to insert
-    # at this exact location
-    my $id_columns = join('|',@{$check->id_columns});
-    my $id_displayed = $check->{insert}
-                and grep( /^($id_columns)$/, @{$check->display_cols} );
-
-    my $query;
-    if ($check->{insert}) {
-        my @_edits = @edits;
-        unshift @_edits, @{$check->id_columns} if $id_displayed;
-        my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
-        my $values = join(', ', map { '?' } @_edits);
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-    }
-    else {
-        my $setters =
-            join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @edits);
-        $query = "UPDATE $table SET $setters WHERE "
-               . join(' AND ',map {"$_ = ? "} @{$check->id_columns});
-    }
-    my $sth = $dbh->prepare($query);
-
+    my @fixed_rows;
     for my $count (1 .. $request->{count}){
-        my @values;
-        push @values, @{$check->id_columns}
-            if $id_displayed;
-        for my $edit (@edits) {
-          push @values, $request->{"${edit}_$count"};
+        my %row_data;
+        for my $key (@{$check->columns}) {
+            $row_data{$key} = $request->{"${edit}_$count"};
         }
-        push @values, map { $_ ne '' ? MIME::Base64::decode($_) : undef} split(/,/,$request->{"id_$count"})
-           if ! $check->{insert};
+        @row_data{@{$check->id_columns}} =
+            map {
+                $_ ne '' ? MIME::Base64::decode($_) : undef
+        } split(/,/, $request->{"id_$count"});
 
-        my $rv = $sth->execute(@values) ||
-            $request->error($sth->errstr);
-        return LedgerSMB::PSGI::Util::internal_server_error(
-            qq{Upgrade query affected $rv rows, while a single row was expected})
-                if $rv != 1;
+        push @fixed_rows, \%row_data;
     }
-    $sth->finish();
-    $dbh->commit;
+
+    $check->fix($dbh, \@values);
     return upgrade($request);
 }
 
@@ -1617,19 +1572,19 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 
 =cut
 
-sub force{
+sub force {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $test = first { $_->name eq $request->{check} }
-                    LedgerSMB::Upgrade_Tests->get_tests();
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => '.../...',
+        );
 
-    for my $force_query ( @{$test->{force_queries}}) {
-        my $dbh = $request->{dbh};
-        $dbh->do($force_query);
-        $dbh->commit;
-    }
+    my $test = $upgrade->applicable_test_by_name($request->{check});
+    $test->force($request->{dbh});
+
     return upgrade($request);
 }
 

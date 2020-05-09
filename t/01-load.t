@@ -67,6 +67,7 @@ my @modules =
           'LedgerSMB::Company_Config',
           'LedgerSMB::Currency', 'LedgerSMB::Database',
           'LedgerSMB::Database::ChangeChecks', 'LedgerSMB::Database::Config',
+          'LedgerSMB::Database::Upgrade',
           'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::IIAA',
