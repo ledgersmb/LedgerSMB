@@ -27,15 +27,12 @@ use warnings;
 
 use Digest::MD5 qw(md5_hex);
 use Encode;
-use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
-use List::Util qw( first );
 use Locale::Country;
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
 use Try::Tiny;
-use Version::Compare;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
@@ -53,7 +50,6 @@ use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
@@ -766,43 +762,49 @@ sub _select_coa {
             or _dispatch_upgrade_workflow($request, '_select_coa'));
 }
 
-sub _run_sl28_upgrade {
-    my ($request) = @_;
+sub _process_and_run_upgrade_script {
+    my ($request, $type) = @_;
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'sl28', 'sl2.8')
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type     => $type,
+        );
+    $upgrade->run_upgrade_script(
+        {
+            %{$request}{qw( default_country default_ap default_ar
+                            slschema lsmbschema )}
+        });
+
+    return;
+}
+
+sub _run_sl28_upgrade {
+    my ($request) = @_;
+
+    return (_process_and_run_upgrade_script($request, 'sql-ledger/2.8')
             or _dispatch_upgrade_workflow($request, '_run_sl28_upgrade'));
 }
 
 sub _run_sl30_upgrade {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'sl30', 'sl3.0')
+    return (_process_and_run_upgrade_script($request, 'sql-ledger/3.0')
             or _dispatch_upgrade_workflow($request, '_run_sl30_upgrade'));
 }
 
 sub _run_ls12_upgrade {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'lsmb12', '1.2-1.5')
+    return (_process_and_run_upgrade_script($request, 'ledgersmb/1.2')
             or _dispatch_upgrade_workflow($request, '_run_ls12_upgrade'));
 }
 
 sub _run_ls13_upgrade {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'lsmb13', '1.3-1.5')
+    return (_process_and_run_upgrade_script($request, 'ledgersmb/1.3')
             or _dispatch_upgrade_workflow($request, '_run_ls13_upgrade'));
 }
 
@@ -1075,7 +1077,7 @@ sub fix_tests {
     for my $count (1 .. $request->{count}){
         my %row_data;
         for my $key (@{$check->columns}) {
-            $row_data{$key} = $request->{"${edit}_$count"};
+            $row_data{$key} = $request->{"${key}_$count"};
         }
         @row_data{@{$check->id_columns}} =
             map {
@@ -1085,7 +1087,7 @@ sub fix_tests {
         push @fixed_rows, \%row_data;
     }
 
-    $check->fix($dbh, \@values);
+    $check->fix($dbh, \@fixed_rows);
     return upgrade($request);
 }
 
@@ -1330,88 +1332,6 @@ sub _save_user {
     return;
 }
 
-
-=item process_and_run_upgrade_script
-
-=cut
-
-sub process_and_run_upgrade_script {
-    my ($request, $database, $src_schema, $template) = @_;
-    my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
-    my $temp = $database->loader_log_filename();
-
-    my $guard = Scope::Guard->new(
-        sub {
-            $dbh->rollback;
-            $dbh->do(
-                qq{DROP SCHEMA $LedgerSMB::Sysconfig::db_namespace CASCADE;
-                   ALTER SCHEMA $src_schema
-                         RENAME TO $LedgerSMB::Sysconfig::db_namespace});
-            $dbh->commit;
-        });
-
-    $dbh->do("ALTER SCHEMA  $LedgerSMB::Sysconfig::db_namespace
-                    RENAME TO $src_schema;
-              CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
-    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
-    $dbh->commit;
-
-    $database->load_base_schema(
-        log     => $temp . '_stdout',
-        errlog  => $temp . '_stderr',
-        upto_tag=> 'migration-target'
-        );
-
-    $dbh->do(q(
-       INSERT INTO defaults (setting_key, value)
-                     VALUES ('migration_ok', 'no')
-     ));
-    $dbh->do(qq(
-       INSERT INTO defaults (setting_key, value)
-                     VALUES ('migration_src_schema', '$src_schema')
-     ));
-    $dbh->commit;
-
-    my $dbtemplate = LedgerSMB::Template->new(
-        user => {},
-        path => 'sql/upgrade',
-        template => $template,
-        format_options => {extension => 'sql'},
-        format => 'TXT' );
-
-    $dbtemplate->render($request, {VERSION_COMPARE => \&Version::Compare::version_compare});
-
-    my $tempfile = File::Temp->new();
-    print $tempfile $dbtemplate->{output}
-       or die q{Failed to create upgrade instructions to be sent to 'psql'};
-    close $tempfile
-       or warn 'Failed to close temporary file';
-
-    $database->run_file(
-        file => $tempfile->filename,
-        stdout_log => $temp . '_stdout',
-        errlog => $temp . '_stderr'
-        );
-
-    my $sth = $dbh->prepare(q(select value='yes'
-                                 from defaults
-                                where setting_key='migration_ok'));
-    $sth->execute();
-
-    my ($success) = $sth->fetchrow_array();
-    $sth->finish();
-
-    $request->error(qq(Upgrade failed;
-           logs can be found in
-           ${temp}_stdout and ${temp}_stderr))
-    if ! $success;
-
-    $dbh->do(q{delete from defaults where setting_key like 'migration_%'});
-    $dbh->commit;
-
-    $guard->dismiss;
-    return;
-}
 
 
 sub _post_migration_schema_upgrade {

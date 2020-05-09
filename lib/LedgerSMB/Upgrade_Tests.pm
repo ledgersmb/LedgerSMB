@@ -327,9 +327,9 @@ sub fix {
 sub force {
     my ($self, $dbh) = @_;
 
-    for my $force_query ( @{$test->{force_queries}}) {
+    for my $force_query ( @{$self->{force_queries}}) {
         $dbh->do($force_query)
-            or die q{Failed to force ;
+            or die q{Failed to run 'force' data cleaning query};
     }
     $dbh->commit;
 
