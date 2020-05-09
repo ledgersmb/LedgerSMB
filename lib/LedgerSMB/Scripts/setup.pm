@@ -1024,8 +1024,6 @@ verify_check => md5_hex($check->test_query),
           cond => 1                         },
         { value => 'force',     label => 'Force',
           cond => $check->{force_queries}   },
-        { value => 'skip',      label => 'Skip',
-          cond => $check->skipable          }
     ) {
         if ( $buttons{$_->{label}} && $_->{cond}) {
             push @$enabled_buttons, {
@@ -1632,19 +1630,6 @@ sub force{
         $dbh->do($force_query);
         $dbh->commit;
     }
-    return upgrade($request);
-}
-
-=item skip
-
-Mark the test to be skipped
-
-=cut
-
-sub skip {
-    my ($request) = @_;
-
-    $request->{"skip_$request->{check}"} = 'On';
     return upgrade($request);
 }
 
