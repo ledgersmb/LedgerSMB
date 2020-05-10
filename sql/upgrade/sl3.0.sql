@@ -5,15 +5,15 @@
 -- to all Ledgersmb up to 1.6
 
 -- When moved to an interface, these will all be specified and preprocessed.
-\set default_country '''<?lsmb default_country ?>'''
-\set ar '''<?lsmb default_ar ?>'''
-\set ap '''<?lsmb default_ap ?>'''
+\set default_country '''[% default_country %]'''
+\set ar '''[% default_ar %]'''
+\set ap '''[% default_ap %]'''
 /* NOTE: PostgreSQL doesn't allow variable interpolation within $$ blocks
          so we will need to rely on the Template to substitude the proper schema
          for those. Elsewhere we will use :slschema for lisibility
  */
-\set slschema '<?lsmb slschema ?>'
-\set lsmbversion '<?lsmb lsmbversion ?>'
+\set slschema '[% slschema %]'
+\set lsmbversion '[% lsmbversion %]'
 
 BEGIN;
 
@@ -784,12 +784,12 @@ CREATE OR REPLACE FUNCTION pg_temp.f_insert_default(skey varchar(20),slname varc
 $$
 BEGIN
     UPDATE defaults SET value = (
-        SELECT fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        SELECT fldvalue FROM "[% slschema %]".defaults AS def
         WHERE def.fldname = slname
     )
     WHERE setting_key = skey AND value IS NULL;
     INSERT INTO defaults (setting_key, value)
-        SELECT skey,fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        SELECT skey,fldvalue FROM "[% slschema %]".defaults AS def
         WHERE def.fldname = slname
         AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = skey);
 END
@@ -809,12 +809,12 @@ CREATE OR REPLACE FUNCTION pg_temp.f_insert_count(slname varchar(20)) RETURNS VO
 $$
 BEGIN
     UPDATE defaults SET value = (
-        SELECT fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        SELECT fldvalue FROM "[% slschema %]".defaults AS def
         WHERE def.fldname = slname
     )
     WHERE setting_key = slname AND (value IS NULL OR value = '1');
     INSERT INTO defaults (setting_key, value)
-        SELECT fldname,fldvalue FROM "<?lsmb slschema ?>".defaults AS def
+        SELECT fldname,fldvalue FROM "[% slschema %]".defaults AS def
         WHERE def.fldname = slname
         AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = slname);
 END
@@ -849,15 +849,15 @@ BEGIN
     UPDATE defaults SET value = (
         SELECT id FROM account
         WHERE account.accno IN (
-            SELECT accno FROM "<?lsmb slschema ?>".chart
-            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM "<?lsmb slschema ?>".defaults WHERE fldname = skey ))
+            SELECT accno FROM "[% slschema %]".chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM "[% slschema %]".defaults WHERE fldname = skey ))
     )
     WHERE setting_key = skey AND value IS NULL;
     INSERT INTO defaults (setting_key, value)
         SELECT skey,id FROM account
         WHERE account.accno IN (
-            SELECT accno FROM "<?lsmb slschema ?>".chart
-            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM "<?lsmb slschema ?>".defaults WHERE fldname = skey ))
+            SELECT accno FROM "[% slschema %]".chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM "[% slschema %]".defaults WHERE fldname = skey ))
         AND NOT EXISTS ( SELECT value FROM defaults WHERE setting_key = skey);
 END
 $$
@@ -912,9 +912,9 @@ insert into ar
         id, invnumber, transdate, taxincluded,
         amount_bc, netamount_bc,
         amount_tc, netamount_tc,
-<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
         paid, datepaid,
-<?lsmb END; ?>
+[% END; %]
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
@@ -924,9 +924,9 @@ SELECT
         ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
         CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
         CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
-<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
         paid, datepaid,
-<?lsmb END; ?>
+[% END; %]
         duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
         intnotes,
         shipvia, ar.language_code, ponumber, shippingpoint,
@@ -942,9 +942,9 @@ insert into ap
 (entity_credit_account, person_id,
         id, invnumber, transdate, taxincluded, amount_bc, netamount_bc,
         amount_tc, netamount_tc,
-<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
         paid, datepaid,
-<?lsmb END; ?>
+[% END; %]
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
@@ -955,9 +955,9 @@ SELECT
         ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
         CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
         CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
-<?lsmb IF VERSION_COMPARE(lsmbversion,'1.6') < 0; ?>
+[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
         paid, datepaid,
-<?lsmb END; ?>
+[% END; %]
         duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
         intnotes,
         shipvia, ap.language_code, ponumber, shippingpoint,
@@ -1040,9 +1040,9 @@ BEGIN
            ap.entity_credit_account
     INTO var_datepaid, var_notes, var_lsmb_entry_id,
          var_entity_credit_account
-    FROM <?lsmb slschema ?>.payment sl_p
-    JOIN <?lsmb slschema ?>.acc_trans sl_ac ON (sl_p.trans_id = sl_ac.trans_id AND sl_p.id=sl_ac.id)
-    JOIN <?lsmb slschema ?>.chart sl_c on (sl_c.id = sl_ac.chart_id)
+    FROM [% slschema %].payment sl_p
+    JOIN [% slschema %].acc_trans sl_ac ON (sl_p.trans_id = sl_ac.trans_id AND sl_p.id=sl_ac.id)
+    JOIN [% slschema %].chart sl_c on (sl_c.id = sl_ac.chart_id)
     JOIN acc_trans ac ON ac.entry_id = sl_ac.lsmb_entry_id
     JOIN ap ON ap.id=ac.trans_id
     WHERE sl_c.link ~ 'AP' AND link ~ 'paid'

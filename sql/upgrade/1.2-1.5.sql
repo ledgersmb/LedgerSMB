@@ -1,9 +1,9 @@
 --Setup
 
 -- When moved to an interface, these will all be specified and preprocessed.
-\set default_country '''<?lsmb default_country ?>'''
-\set ar '''<?lsmb default_ar ?>'''
-\set ap '''<?lsmb default_ap ?>'''
+\set default_country '''[% default_country %]'''
+\set ar '''[% default_ar %]'''
+\set ap '''[% default_ap %]'''
 
 BEGIN;
 

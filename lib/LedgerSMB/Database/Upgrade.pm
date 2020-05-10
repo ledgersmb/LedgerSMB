@@ -181,9 +181,6 @@ sub run_upgrade_script {
         INCLUDE_PATH => [ 'sql/upgrade' ],
         ENCODING     => 'utf8',
         TRIM         => 1,
-        START_TAG    => quotemeta('<?lsmb'),
-        END_TAG      => quotemeta('?>'),
-        DELIMITER    => ';',
         );
 
     my $tempfile = File::Temp->new();
