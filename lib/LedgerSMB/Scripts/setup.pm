@@ -933,18 +933,8 @@ sub upgrade {
 sub _failed_check {
     my ($request, $check, $sth) = @_;
 
-    my %selectable_values = ();
-    for my $column (@{$check->columns // []}) {
-        if ( $check->selectable_values
-             && $check->selectable_values->{$column} ) {
-            my $sth = $request->{dbh}->prepare(
-                $check->selectable_values->{$column});
-
-            $sth->execute()
-                or die 'Failed to query drop-down data in ' . $check->name;
-            $selectable_values{$column} = $sth->fetchall_arrayref({});
-        }
-    }
+    my %selectable_values =
+        %{$check->query_selectable_values($request->{dbh})};
 
     my $hiddens = {
        check => $check->name,

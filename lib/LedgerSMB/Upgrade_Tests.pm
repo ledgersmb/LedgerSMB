@@ -336,6 +336,34 @@ sub force {
     return;
 }
 
+=item query_selectable_values($dbh)
+
+Returns an arrayref with the keys being the names of the columns and the
+values arrays of hashes. Each hash has two keys (C<text> and C<value>);
+the C<value>s are the allowable values for the given column in C<$fix_values>
+when calling C<fix()>.
+
+=cut
+
+sub query_selectable_values {
+    my ($self, $dbh) = @_;
+
+    return {} unless $self->selectable_values;
+
+    my %query_values;
+    for my $column (@{$self->columns // []}) {
+        my $query = $self->selectable_values->{$column};
+        next unless $query;
+
+        my $sth = $dbh->prepare($query)
+            or die 'Invalid query for drop-down data in ' . $self->name;
+
+        $sth->execute()
+            or die 'Failed to query for drop-down data in ' . $self->name;
+        $query_values{$column} = $sth->fetchall_arrayref({});
+    }
+    return \%query_values;
+}
 
 sub _get_tests {
     my ($request) = @_;
