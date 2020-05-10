@@ -1070,8 +1070,10 @@ verify_check => md5_hex($check->test_query),
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/migration_step', {
            form               => $request,
-           headers            => [$request->{_locale}->maketext($check->display_name),
-                                  $request->{_locale}->maketext($check->instructions)],
+           headers            => [
+               $request->{_locale}->maketext($check->display_name),
+               $request->{_locale}->maketext($check->instructions)
+               ],
            columns            => $cols,
            rows               => $rows,
            buttons            => $enabled_buttons,

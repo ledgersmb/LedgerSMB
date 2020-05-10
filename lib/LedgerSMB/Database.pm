@@ -42,8 +42,6 @@ use namespace::autoclean;
 
 extends 'PGObject::Util::DBAdmin';
 
-use LedgerSMB;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
 
 
@@ -546,7 +544,7 @@ sub upgrade_modules {
     my $sth = $dbh->prepare(
           q{UPDATE defaults SET value = ? WHERE setting_key = 'version'}
     );
-    $sth->execute($LedgerSMB::VERSION)
+    $sth->execute($version)
         or die 'Version not updated.';
 
     return 1;
