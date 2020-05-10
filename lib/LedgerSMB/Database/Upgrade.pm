@@ -16,12 +16,31 @@ use LedgerSMB::Upgrade_Tests;
 
 use File::Temp;
 use List::Util qw( first );
+use Locale::Country;
 use Scope::Guard qw( guard );
 use Template;
 use Version::Compare;
 
 use Moose;
 use namespace::autoclean;
+
+
+my %migration_schema = (
+    'sql-ledger/2.8' => 'sl28',
+    'sql-ledger/3.0' => 'sl30',
+    'sql-ledger/3.2' => 'sl32',
+    'ledgersmb/1.2'  => 'lsmb12',
+    'ledgersmb/1.3'  => 'lsmb13',
+    );
+
+my %migration_script = (
+    'sql-ledger/2.8' => 'sl2.8',
+    'sql-ledger/3.0' => 'sl3.0',
+    'sql-ledger/3.2' => undef,
+    'ledgersmb/1.2'  => '1.2-1.5',
+    'ledgersmb/1.3'  => '1.3-1.5',
+    );
+
 
 =head1 ATTRIBUTES
 
@@ -36,6 +55,10 @@ has database => (is => 'ro', required => 1);
 =cut
 
 has type => (is => 'ro', required => 1);
+
+
+
+
 
 =head1 METHODS
 
@@ -112,6 +135,71 @@ sub run_tests {
     return 1;
 }
 
+=head2 required_vars
+
+Returns a hashref where the keys of are the names of required variables
+for the migration. The values are arrays with allowable values, or C<undef>
+for any allowed value.
+
+=cut
+
+my %migration_required_vars = (
+    'ledgersmb/1.2'  => [qw( default_ar default_ap default_country )],
+    'ledgersmb/1.3'  => [],
+    'sql-ledger/2.8' => [qw( default_ar default_ap default_country slschema )],
+    'sql-ledger/3.0' => [qw( default_ar default_ap default_country slschema )],
+    );
+
+my %required_vars_values = (
+    default_ar      => sub { _linked_accounts($_[1], 'AR') },
+    default_ap      => sub { _linked_accounts($_[1], 'AP') },
+    default_country => \&_available_countries,
+    slschema        => sub { $migration_schema{$_[0]->type} },
+    );
+
+sub _linked_accounts {
+    my ($dbh, $link) = @_;
+    my @accounts;
+
+    my $sth = $dbh->prepare("select id, accno, description
+                               from chart where link = '$link'")
+        or die $dbh->errstr;
+
+    $sth->execute() or die $sth->errstr;
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @accounts, { value => $row->{accno},
+                          text => "$row->{accno} - $row->{description}",
+        };
+    }
+    $sth->finish();
+
+    return \@accounts;
+}
+
+sub _available_countries {
+    return [
+        sort { $a->{text} cmp $b->{text} }
+        map { +{ value => uc($_),
+                 text  => code2country($_) }
+        } all_country_codes()
+        ];
+}
+
+sub required_vars {
+    my ($self) = @_;
+    my $dbh = $self->database->connect({ PrintError => 0, AutoCommit => 0 });
+    my $guard = guard {
+        $dbh->rollback;
+        $dbh->disconnect;
+    };
+
+    return {
+        map {
+            $_ => $required_vars_values{$_}->($self, $dbh)
+        } @{$migration_required_vars{$self->type}}
+    };
+}
+
 =head2 run_upgrade_script($vars)
 
 Runs the upgrade script from the C<sql/upgrade/> directory.
@@ -119,22 +207,6 @@ Runs the upgrade script from the C<sql/upgrade/> directory.
 C<$vars> is a hashref to parameters required to run the upgrade script.
 
 =cut
-
-my %migration_schema = (
-    'sql-ledger/2.8' => 'sl28',
-    'sql-ledger/3.0' => 'sl30',
-    'sql-ledger/3.2' => 'sl32',
-    'ledgersmb/1.2'  => 'lsmb12',
-    'ledgersmb/1.3'  => 'lsmb13',
-    );
-
-my %migration_script = (
-    'sql-ledger/2.8' => 'sl2.8',
-    'sql-ledger/3.0' => 'sl3.0',
-    'sql-ledger/3.2' => undef,
-    'ledgersmb/1.2'  => '1.2-1.5',
-    'ledgersmb/1.3'  => '1.3-1.5',
-    );
 
 sub run_upgrade_script {
     my ($self, $vars) = @_;

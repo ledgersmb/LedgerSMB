@@ -38,9 +38,7 @@ INCLUDE input element_data = {
 </p>
 <div class="input_row">
 [% INCLUDE select element_data = {
-                          options = countries
-                       value_attr = 'code'
-                        text_attr = 'country'
+                          options = default_country
                             name  = 'default_country'
                            label  = text('Default Country') #'
                             class = 'country'
@@ -58,9 +56,7 @@ INCLUDE input element_data = {
                             name  = 'default_ar'
                            label  = text('Default AR') #'
                             class = 'accno'
-                            options = ar_accounts
-                            value_attr = 'accno'
-                            text_attr = 'desc'
+                            options = default_ar
 } %]
 </div>
 [% ELSE;
@@ -82,9 +78,7 @@ END %]
                             name  = 'default_ap'
                            label  = text('Default AP') #'
                             class = 'accno'
-                            options = ap_accounts
-                            value_attr = 'accno'
-                            text_attr = 'desc'
+                            options = default_ap
 } %]
 </div>
 [% ELSE;

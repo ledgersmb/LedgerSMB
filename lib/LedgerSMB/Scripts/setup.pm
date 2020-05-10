@@ -28,7 +28,6 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use Encode;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
-use Locale::Country;
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
@@ -548,138 +547,6 @@ sub load_templates {
             or login($request));
 }
 
-=item _get_linked_accounts
-
-Returns an array of hashrefs with keys ('id', 'accno', 'desc') identifying
-the accounts.
-
-Assumes a connected database.
-
-=cut
-
-sub _get_linked_accounts {
-    my ($request, $link) = @_;
-    my @accounts;
-
-    my $sth = $request->{dbh}->prepare("select id, accno, description
-                                          from chart
-                                         where link = '$link'");
-    $sth->execute();
-    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        push @accounts, { accno => $row->{accno},
-                          desc => "$row->{accno} - $row->{description}",
-                          id => $row->{id}
-        };
-    }
-    $sth->finish();
-
-    return @accounts;
-}
-
-
-=item upgrade_settigs
-
-=cut
-
-my %info_applicable_for_upgrade = (
-    'default_ar'      => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'default_ap'      => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'slschema'        => [ 'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ]
-    );
-
-=item applicable_for_upgrade
-
-Checks settings for applicability for a given upgrade, for the form.
-
-=cut
-
-sub applicable_for_upgrade {
-    my ($info, $upgrade) = @_;
-
-    foreach my $check (@{$info_applicable_for_upgrade{$info}}) {
-        return 1
-            if $check eq $upgrade;
-    }
-
-    return 0;
-}
-
-=item upgrade_info
-
-Displays the upgrade information screen,
-
-=cut
-
-sub upgrade_info {
-    my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
-
-    my $dbinfo = $database->get_info();
-    my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-    my $retval = 0;
-
-    if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-        @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-        my $n = scalar(@{$request->{ar_accounts}});
-        if ($n > 1) {
-            unshift @{$request->{ar_accounts}}, {};
-            $retval++;
-        }
-        elsif ($n == 1) {
-            # If there's only 1 (or none at all), don't ask the question
-            $request->{default_ar} =
-                (pop @{$request->{ar_accounts}})->{accno};
-        }
-        else {
-            $request->{default_ar} = 'null';
-        }
-    }
-
-    if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-        @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-        my $n = scalar(@{$request->{ap_accounts}});
-        if ($n > 1) {
-            unshift @{$request->{ap_accounts}}, {};
-            $retval++;
-        }
-        elsif ($n == 1) {
-            # If there's only 1 (or none at all), don't ask the question
-            $request->{default_ap} =
-                (pop @{$request->{ap_accounts}})->{accno};
-        }
-        else {
-            # If there's only 1 (or none at all), don't ask the question
-            $request->{default_ap} = 'null';
-        }
-    }
-
-    if (applicable_for_upgrade('default_country', $upgrade_type)) {
-        $retval++;
-        @{$request->{countries}} = (
-            {}, # empty initial row
-            sort { $a->{country} cmp $b->{country} }
-               map { { code    => uc($_),
-                       country => code2country($_) } } all_country_codes()
-            );
-    }
-
-    if (applicable_for_upgrade('slschema', $upgrade_type)) {
-        $retval++;
-        $request->{slschema} = 'sl' . $dbinfo->{version};
-        $request->{slschema} =~ s/\.//;
-    }
-    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
-    return $retval;
-}
 
 =item upgrade
 
@@ -878,23 +745,6 @@ sub _load_templates {
 
 
 
-sub _run_upgrade_tests {
-    my ($request, $database) = @_;
-    my $upgrade = LedgerSMB::Database::Upgrade->new(
-        database => $database,
-        type => '.../...',
-        );
-
-    my $rv;
-    $upgrade->run_tests(
-        sub {
-            my ($check, $dbh, $sth) = @_;
-            $rv = _failed_check($request, $check, $sth);
-        });
-
-    return $rv;
-}
-
 sub upgrade {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
@@ -906,28 +756,44 @@ sub upgrade {
 
     $request->{dbh}->{AutoCommit} = 0;
 
-    if (my $rv = _run_upgrade_tests($request, $database)) {
-        return $rv;
-    }
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => $upgrade_type,
+        );
 
-    if (upgrade_info($request) > 0) {
-        my $template = LedgerSMB::Template::UI->new_UI;
+    my $rv;
+    $upgrade->run_tests(
+        sub {
+            my ($check, $dbh, $sth) = @_;
+            $rv = _failed_check($request, $check, $sth);
+        });
 
-        my $step = $upgrade_run_step{$upgrade_type};
-        my $upgrade_action = $upgrade_next_steps{$step};
-        $request->{upgrade_action} = $upgrade_action;
+    return $rv if $rv;
 
-        die "Upgrade type $upgrade_type not associated with a next step (step: $step)"
-            unless $upgrade_action;
-
-        print STDERR "Upgrade type $upgrade_type associated with $upgrade_action\n";
-        return $template->render($request, 'setup/upgrade_info', $request);
-    } else {
+    my $required_vars = $upgrade->required_vars;
+    if (not %$required_vars) {
         $request->{dbh}->rollback();
 
         return _dispatch_upgrade_workflow($request,
                                           $upgrade_run_step{$upgrade_type});
     }
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+
+    my $step = $upgrade_run_step{$upgrade_type};
+    my $upgrade_action = $upgrade_next_steps{$step};
+    $request->{upgrade_action} = $upgrade_action;
+
+    die "Upgrade type $upgrade_type not associated with a next step (step: $step)"
+        unless $upgrade_action;
+
+    for my $key (keys %$required_vars) {
+        my $val = $required_vars->{$key};
+        $request->{$key} = (@$val > 1) ? [ {}, @$val ]
+            : ($val->[0] ? $val->[0]->{value} : 'null');
+    }
+    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
+    return $template->render($request, 'setup/upgrade_info', $request);
 }
 
 sub _failed_check {
