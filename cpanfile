@@ -135,6 +135,7 @@ on 'develop' => sub {
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Test2::V0';
+    requires 'Text::Diff';
     requires 'Weasel', '0.21';
     requires 'Weasel::Driver::Selenium2', '0.07';
     requires 'Weasel::Session', '0.11';
