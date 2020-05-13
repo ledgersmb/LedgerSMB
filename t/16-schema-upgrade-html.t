@@ -1,7 +1,6 @@
 # Database schema upgrade pre-checks
 
 use Test2::V0;
-use Text::Diff;
 
 use Data::Dumper;
 use DBI;
@@ -17,6 +16,8 @@ Log::Log4perl->easy_init($OFF);
 use LedgerSMB;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
+
+
 
 
 sub test_request {
@@ -37,17 +38,15 @@ sub filter_js_src {
     # perform in-place substitution of javascript paths
     # so that differences between built and unbuilt dojo
     # installations are ignored.
-    # Also make sure that we don't abort on whitespace differences
     my $lines = shift;
-    my $line = join("\n",@{$lines});
-    $line =~ s|"js-src/|"js/|g;
-    $line =~ s|\s*\n+|\n|g;
-    # Split in lines
-    @{$lines} = split(/\n/, $line);
+    foreach my $line(@{$lines}) {
+        $line =~ s|"js-src/|"js/|g;
+    }
 }
 
 
 ###############################################
+#
 #
 #  Test helper routines
 #
@@ -108,6 +107,7 @@ my $out;
 
 ###############################################
 #
+#
 #  First test: Render the description && title
 #
 ###############################################
@@ -147,16 +147,23 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-
-my @expected = split (/\n/, q{<!DOCTYPE html>
+is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
+        
+        
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
@@ -164,10 +171,12 @@ my @expected = split (/\n/, q{<!DOCTYPE html>
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
+                
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -179,18 +188,18 @@ my @expected = split (/\n/, q{<!DOCTYPE html>
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <div class="description">
   <h1>title</h1>
+
   <p>
     <p>a description</p>
+
   </p>
 </div>
 </form>
-</body>});
-
-is @$out, @expected, 'Render the description && title',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+</body>}, 'print a description on failure';
 
 
 ###############################################
+#
 #
 #  Second test: Render a custom description
 #
@@ -230,15 +239,23 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
+        
+        
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
@@ -246,10 +263,12 @@ filter_js_src($out);
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
+                
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -261,18 +280,18 @@ filter_js_src($out);
     <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
 <div class="description">
   <h1>title</h1>
+
   <p>
     <p>another description</p>
+
   </p>
 </div>
 </form>
-</body>});
-
-is @$out, @expected, 'Render a custom description',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+</body>}, 'print the custom description on failure';
 
 
 ###############################################
+#
 #
 #  Third test: Render a confirmation
 #
@@ -312,15 +331,23 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
+        
+        
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
@@ -328,10 +355,12 @@ filter_js_src($out);
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
+                
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -349,13 +378,10 @@ filter_js_src($out);
    data-dojo-type="dijit/form/Button"
    >Abc</button>
 </form>
-</body>});
-
-is @$out, @expected, 'Render a confirmation',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
-
+</body>}, 'print the button/confirmation on failure';
 
 ###############################################
+#
 #
 #  Fourth test: Render multiple confirmations
 #
@@ -395,15 +421,23 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
+        
+        
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
@@ -411,10 +445,12 @@ filter_js_src($out);
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
+                
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -439,13 +475,10 @@ filter_js_src($out);
    data-dojo-type="dijit/form/Button"
    >Def</button>
 </form>
-</body>});
-
-is @$out, @expected, 'Render multiple confirmations',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
-
+</body>}, 'print the buttons/confirmations on failure';
 
 ###############################################
+#
 #
 #  Fifth test: Render a grid (2-column p-key)
 #
@@ -495,15 +528,23 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+is join("\n", @$out), q{<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        
+        
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+
+        
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
+        
+        
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
@@ -511,10 +552,12 @@ filter_js_src($out);
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
+                
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
+        
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -537,9 +580,10 @@ filter_js_src($out);
 </tbody><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
 </table>
 </form>
-</body>});
+</body>}, 'print the grid on failure';
 
-is @$out, @expected, 'Render a grid (2-column p-key)',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+
+
+
 
 done_testing;
