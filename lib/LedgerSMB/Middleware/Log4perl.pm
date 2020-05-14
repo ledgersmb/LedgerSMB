@@ -44,10 +44,9 @@ Implements C<Plack::Middleware->call()>.
 sub call {
     my $self = shift;
     my ($env) = @_;
-
     my $logger = Log::Log4perl->get_logger('LedgerSMB.'
-                                           . $env->{'lsmb.script_name'}
-                                           . '.' . $env->{'lsmb.action_name'});
+                                    . ($env->{'lsmb.script_name'} // '')
+                                    . '.' . ($env->{'lsmb.action_name'} // ''));
     $env->{'psgix.logger'} = sub {
         my $args = shift;
         my $level = $args->{level};
