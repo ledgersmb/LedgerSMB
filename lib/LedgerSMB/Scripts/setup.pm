@@ -27,15 +27,11 @@ use warnings;
 
 use Digest::MD5 qw(md5_hex);
 use Encode;
-use File::Temp;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
-use List::Util qw( first );
-use Locale::Country;
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
 use Try::Tiny;
-use Version::Compare;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
@@ -53,11 +49,9 @@ use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
-use LedgerSMB::Upgrade_Preparation;
-use LedgerSMB::Upgrade_Tests;
+use LedgerSMB::Database::Upgrade;
 
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -553,138 +547,6 @@ sub load_templates {
             or login($request));
 }
 
-=item _get_linked_accounts
-
-Returns an array of hashrefs with keys ('id', 'accno', 'desc') identifying
-the accounts.
-
-Assumes a connected database.
-
-=cut
-
-sub _get_linked_accounts {
-    my ($request, $link) = @_;
-    my @accounts;
-
-    my $sth = $request->{dbh}->prepare("select id, accno, description
-                                          from chart
-                                         where link = '$link'");
-    $sth->execute();
-    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        push @accounts, { accno => $row->{accno},
-                          desc => "$row->{accno} - $row->{description}",
-                          id => $row->{id}
-        };
-    }
-    $sth->finish();
-
-    return @accounts;
-}
-
-
-=item upgrade_settigs
-
-=cut
-
-my %info_applicable_for_upgrade = (
-    'default_ar'      => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'default_ap'      => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'default_country' => [ 'ledgersmb/1.2',
-                           'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ],
-    'slschema'        => [ 'sql-ledger/2.7',
-                           'sql-ledger/2.8', 'sql-ledger/3.0' ]
-    );
-
-=item applicable_for_upgrade
-
-Checks settings for applicability for a given upgrade, for the form.
-
-=cut
-
-sub applicable_for_upgrade {
-    my ($info, $upgrade) = @_;
-
-    foreach my $check (@{$info_applicable_for_upgrade{$info}}) {
-        return 1
-            if $check eq $upgrade;
-    }
-
-    return 0;
-}
-
-=item upgrade_info
-
-Displays the upgrade information screen,
-
-=cut
-
-sub upgrade_info {
-    my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
-
-    my $dbinfo = $database->get_info();
-    my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-    my $retval = 0;
-
-    if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-        @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
-        my $n = scalar(@{$request->{ar_accounts}});
-        if ($n > 1) {
-            unshift @{$request->{ar_accounts}}, {};
-            $retval++;
-        }
-        elsif ($n == 1) {
-            # If there's only 1 (or none at all), don't ask the question
-            $request->{default_ar} =
-                (pop @{$request->{ar_accounts}})->{accno};
-        }
-        else {
-            $request->{default_ar} = 'null';
-        }
-    }
-
-    if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-        @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
-        my $n = scalar(@{$request->{ap_accounts}});
-        if ($n > 1) {
-            unshift @{$request->{ap_accounts}}, {};
-            $retval++;
-        }
-        elsif ($n == 1) {
-            # If there's only 1 (or none at all), don't ask the question
-            $request->{default_ap} =
-                (pop @{$request->{ap_accounts}})->{accno};
-        }
-        else {
-            # If there's only 1 (or none at all), don't ask the question
-            $request->{default_ap} = 'null';
-        }
-    }
-
-    if (applicable_for_upgrade('default_country', $upgrade_type)) {
-        $retval++;
-        @{$request->{countries}} = (
-            {}, # empty initial row
-            sort { $a->{country} cmp $b->{country} }
-               map { { code    => uc($_),
-                       country => code2country($_) } } all_country_codes()
-            );
-    }
-
-    if (applicable_for_upgrade('slschema', $upgrade_type)) {
-        $retval++;
-        $request->{slschema} = 'sl' . $dbinfo->{version};
-        $request->{slschema} =~ s/\.//;
-    }
-    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
-    return $retval;
-}
 
 =item upgrade
 
@@ -767,43 +629,49 @@ sub _select_coa {
             or _dispatch_upgrade_workflow($request, '_select_coa'));
 }
 
-sub _run_sl28_upgrade {
-    my ($request) = @_;
+sub _process_and_run_upgrade_script {
+    my ($request, $type) = @_;
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'sl28', 'sl2.8')
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type     => $type,
+        );
+    $upgrade->run_upgrade_script(
+        {
+            %{$request}{qw( default_country default_ap default_ar
+                            slschema lsmbschema )}
+        });
+
+    return;
+}
+
+sub _run_sl28_upgrade {
+    my ($request) = @_;
+
+    return (_process_and_run_upgrade_script($request, 'sql-ledger/2.8')
             or _dispatch_upgrade_workflow($request, '_run_sl28_upgrade'));
 }
 
 sub _run_sl30_upgrade {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'sl30', 'sl3.0')
+    return (_process_and_run_upgrade_script($request, 'sql-ledger/3.0')
             or _dispatch_upgrade_workflow($request, '_run_sl30_upgrade'));
 }
 
 sub _run_ls12_upgrade {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'lsmb12', '1.2-1.5')
+    return (_process_and_run_upgrade_script($request, 'ledgersmb/1.2')
             or _dispatch_upgrade_workflow($request, '_run_ls12_upgrade'));
 }
 
 sub _run_ls13_upgrade {
     my ($request) = @_;
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
 
-    return (process_and_run_upgrade_script($request, $database,
-                                           'lsmb13', '1.3-1.5')
+    return (_process_and_run_upgrade_script($request, 'ledgersmb/1.3')
             or _dispatch_upgrade_workflow($request, '_run_ls13_upgrade'));
 }
 
@@ -877,61 +745,6 @@ sub _load_templates {
 
 
 
-sub _upgrade_test_is_applicable {
-    my ($dbinfo, $test) = @_;
-
-    return (($test->min_version le $dbinfo->{version})
-            && ($test->max_version ge $dbinfo->{version})
-            && ($test->appname eq $dbinfo->{appname}));
-}
-
-sub _applicable_upgrade_preparations {
-    my $dbinfo = shift;
-
-    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
-                  LedgerSMB::Upgrade_Preparation->get_migration_preparations;
-}
-
-sub _applicable_upgrade_tests {
-    my $dbinfo = shift;
-
-    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
-                  LedgerSMB::Upgrade_Tests->get_tests;
-}
-
-sub _prepare_upgrade {
-    my ($request, $dbinfo) = @_;
-
-    for my $preparation (_applicable_upgrade_preparations($dbinfo)) {
-        next if (defined $request->{"applied_$preparation->{name}"}
-                 && $request->{"applied_$preparation->{name}"} eq 'On');
-        my $sth = $request->{dbh}->prepare($preparation->preparation);
-        my $status = $sth->execute()
-            or die 'Failed to execute migration preparation ' . $preparation->{name} . ', ' . $sth->errstr;
-        $request->{"applied_$preparation->{name}"} = 'On';
-        $sth->finish();
-    }
-}
-
-sub _run_upgrade_tests {
-    my ($request, $dbinfo) = @_;
-
-    for my $check (_applicable_upgrade_tests($dbinfo)) {
-        next if ($check->skipable
-                 && defined $request->{"skip_$check->{name}"}
-                 && $request->{"skip_$check->{name}"} eq 'On');
-        my $sth = $request->{dbh}->prepare($check->test_query);
-        $sth->execute()
-            or die 'Failed to execute pre-migration check ' . $check->{name} . ', ' . $sth->errstr;
-        if ($sth->rows > 0){ # Check failed --CT
-            return _failed_check($request, $check, $sth);
-        }
-        $sth->finish();
-    }
-
-    return;
-}
-
 sub upgrade {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
@@ -942,47 +755,52 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     $request->{dbh}->{AutoCommit} = 0;
-    _prepare_upgrade($request, $dbinfo);
 
-    if (my $rv = _run_upgrade_tests($request, $dbinfo)) {
-        return $rv;
-    }
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => $upgrade_type,
+        );
 
-    if (upgrade_info($request) > 0) {
-        my $template = LedgerSMB::Template::UI->new_UI;
+    my $rv;
+    $upgrade->run_tests(
+        sub {
+            my ($check, $dbh, $sth) = @_;
+            $rv = _failed_check($request, $check, $sth);
+        });
 
-        my $step = $upgrade_run_step{$upgrade_type};
-        my $upgrade_action = $upgrade_next_steps{$step};
-        $request->{upgrade_action} = $upgrade_action;
+    return $rv if $rv;
 
-        die "Upgrade type $upgrade_type not associated with a next step (step: $step)"
-            unless $upgrade_action;
-
-        print STDERR "Upgrade type $upgrade_type associated with $upgrade_action\n";
-        return $template->render($request, 'setup/upgrade_info', $request);
-    } else {
+    my $required_vars = $upgrade->required_vars;
+    if (not %$required_vars) {
         $request->{dbh}->rollback();
 
         return _dispatch_upgrade_workflow($request,
                                           $upgrade_run_step{$upgrade_type});
     }
+
+    my $template = LedgerSMB::Template::UI->new_UI;
+
+    my $step = $upgrade_run_step{$upgrade_type};
+    my $upgrade_action = $upgrade_next_steps{$step};
+    $request->{upgrade_action} = $upgrade_action;
+
+    die "Upgrade type $upgrade_type not associated with a next step (step: $step)"
+        unless $upgrade_action;
+
+    for my $key (keys %$required_vars) {
+        my $val = $required_vars->{$key};
+        $request->{$key} = (@$val > 1) ? [ {}, @$val ]
+            : ($val->[0] ? $val->[0]->{value} : 'null');
+    }
+    $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
+    return $template->render($request, 'setup/upgrade_info', $request);
 }
 
 sub _failed_check {
     my ($request, $check, $sth) = @_;
 
-    my %selectable_values = ();
-    for my $column (@{$check->columns // []}) {
-        if ( $check->selectable_values
-             && $check->selectable_values->{$column} ) {
-            my $sth = $request->{dbh}->prepare(
-                $check->selectable_values->{$column});
-
-            $sth->execute()
-                or die 'Failed to query drop-down data in ' . $check->name;
-            $selectable_values{$column} = $sth->fetchall_arrayref({});
-        }
-    }
+    my %selectable_values =
+        %{$check->query_selectable_values($request->{dbh})};
 
     my $hiddens = {
        check => $check->name,
@@ -1047,8 +865,6 @@ verify_check => md5_hex($check->test_query),
           cond => 1                         },
         { value => 'force',     label => 'Force',
           cond => $check->{force_queries}   },
-        { value => 'skip',      label => 'Skip',
-          cond => $check->skipable          }
     ) {
         if ( $buttons{$_->{label}} && $_->{cond}) {
             push @$enabled_buttons, {
@@ -1089,7 +905,7 @@ script.
 
 =cut
 
-sub fix_tests{
+sub fix_tests {
     my ($request) = @_;
 
     my ($reauth, $database) = _init_db($request);
@@ -1099,63 +915,35 @@ sub fix_tests{
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
-    my @fix_tests = grep { $_->name eq $request->{check} }
-        _applicable_upgrade_tests($dbinfo);
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => '.../...',
+        );
 
-    die "Inconsistent state fixing data for $request->{check}: "
-        . 'found multiple applicable tests by the same identifier'
-        if @fix_tests > 1;
+    my $check = $upgrade->applicable_test_by_name($request->{check});
     die "Inconsistent state fixing data for $request->{check}: "
         . 'found no applicable tests for given identifier'
-        if @fix_tests == 0;
+        unless $check;
 
-    my $check = shift @fix_tests;
     die "Inconsistent state fixing date for $request->{check}: "
         . 'found different test by the same name while fixing data'
         if $request->{verify_check} ne md5_hex($check->test_query);
 
-    my $table = $check->table;
-    my @edits = @{$check->columns};
-    # If we are inserting and id is displayed, we want to insert
-    # at this exact location
-    my $id_columns = join('|',@{$check->id_columns});
-    my $id_displayed = $check->{insert}
-                and grep( /^($id_columns)$/, @{$check->display_cols} );
-
-    my $query;
-    if ($check->{insert}) {
-        my @_edits = @edits;
-        unshift @_edits, @{$check->id_columns} if $id_displayed;
-        my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
-        my $values = join(', ', map { '?' } @_edits);
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-    }
-    else {
-        my $setters =
-            join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @edits);
-        $query = "UPDATE $table SET $setters WHERE "
-               . join(' AND ',map {"$_ = ? "} @{$check->id_columns});
-    }
-    my $sth = $dbh->prepare($query);
-
+    my @fixed_rows;
     for my $count (1 .. $request->{count}){
-        my @values;
-        push @values, @{$check->id_columns}
-            if $id_displayed;
-        for my $edit (@edits) {
-          push @values, $request->{"${edit}_$count"};
+        my %row_data;
+        for my $key (@{$check->columns}) {
+            $row_data{$key} = $request->{"${key}_$count"};
         }
-        push @values, map { $_ ne '' ? MIME::Base64::decode($_) : undef} split(/,/,$request->{"id_$count"})
-           if ! $check->{insert};
+        @row_data{@{$check->id_columns}} =
+            map {
+                $_ ne '' ? MIME::Base64::decode($_) : undef
+        } split(/,/, $request->{"id_$count"});
 
-        my $rv = $sth->execute(@values) ||
-            $request->error($sth->errstr);
-        return LedgerSMB::PSGI::Util::internal_server_error(
-            qq{Upgrade query affected $rv rows, while a single row was expected})
-                if $rv != 1;
+        push @fixed_rows, \%row_data;
     }
-    $sth->finish();
-    $dbh->commit;
+
+    $check->fix($dbh, \@fixed_rows);
     return upgrade($request);
 }
 
@@ -1401,88 +1189,6 @@ sub _save_user {
 }
 
 
-=item process_and_run_upgrade_script
-
-=cut
-
-sub process_and_run_upgrade_script {
-    my ($request, $database, $src_schema, $template) = @_;
-    my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
-    my $temp = $database->loader_log_filename();
-
-    my $guard = Scope::Guard->new(
-        sub {
-            $dbh->rollback;
-            $dbh->do(
-                qq{DROP SCHEMA $LedgerSMB::Sysconfig::db_namespace CASCADE;
-                   ALTER SCHEMA $src_schema
-                         RENAME TO $LedgerSMB::Sysconfig::db_namespace});
-            $dbh->commit;
-        });
-
-    $dbh->do("ALTER SCHEMA  $LedgerSMB::Sysconfig::db_namespace
-                    RENAME TO $src_schema;
-              CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
-    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
-    $dbh->commit;
-
-    $database->load_base_schema(
-        log     => $temp . '_stdout',
-        errlog  => $temp . '_stderr',
-        upto_tag=> 'migration-target'
-        );
-
-    $dbh->do(q(
-       INSERT INTO defaults (setting_key, value)
-                     VALUES ('migration_ok', 'no')
-     ));
-    $dbh->do(qq(
-       INSERT INTO defaults (setting_key, value)
-                     VALUES ('migration_src_schema', '$src_schema')
-     ));
-    $dbh->commit;
-
-    my $dbtemplate = LedgerSMB::Template->new(
-        user => {},
-        path => 'sql/upgrade',
-        template => $template,
-        format_options => {extension => 'sql'},
-        format => 'TXT' );
-
-    $dbtemplate->render($request, {VERSION_COMPARE => \&Version::Compare::version_compare});
-
-    my $tempfile = File::Temp->new();
-    print $tempfile $dbtemplate->{output}
-       or die q{Failed to create upgrade instructions to be sent to 'psql'};
-    close $tempfile
-       or warn 'Failed to close temporary file';
-
-    $database->run_file(
-        file => $tempfile->filename,
-        stdout_log => $temp . '_stdout',
-        errlog => $temp . '_stderr'
-        );
-
-    my $sth = $dbh->prepare(q(select value='yes'
-                                 from defaults
-                                where setting_key='migration_ok'));
-    $sth->execute();
-
-    my ($success) = $sth->fetchrow_array();
-    $sth->finish();
-
-    $request->error(qq(Upgrade failed;
-           logs can be found in
-           ${temp}_stdout and ${temp}_stderr))
-    if ! $success;
-
-    $dbh->do(q{delete from defaults where setting_key like 'migration_%'});
-    $dbh->commit;
-
-    $guard->dismiss;
-    return;
-}
-
 
 sub _post_migration_schema_upgrade {
     my ($request, $database, $entrypoint) = @_;
@@ -1642,32 +1348,19 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 
 =cut
 
-sub force{
+sub force {
     my ($request) = @_;
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $test = first { $_->name eq $request->{check} }
-                    LedgerSMB::Upgrade_Tests->get_tests();
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database => $database,
+        type => '.../...',
+        );
 
-    for my $force_query ( @{$test->{force_queries}}) {
-        my $dbh = $request->{dbh};
-        $dbh->do($force_query);
-        $dbh->commit;
-    }
-    return upgrade($request);
-}
+    my $test = $upgrade->applicable_test_by_name($request->{check});
+    $test->force($request->{dbh});
 
-=item skip
-
-Mark the test to be skipped
-
-=cut
-
-sub skip {
-    my ($request) = @_;
-
-    $request->{"skip_$request->{check}"} = 'On';
     return upgrade($request);
 }
 

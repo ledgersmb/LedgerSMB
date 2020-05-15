@@ -17,6 +17,7 @@ This module has a single function that returns upgrade tests.
 
 use strict;
 use warnings;
+
 use Moose;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
@@ -193,7 +194,7 @@ Enabled buttons
 
 subtype 'button'
     => as 'Str'
-    => where { $_ =~ /Save and Retry|Cancel|Force|Skip/ }
+    => where { $_ =~ /Save and Retry|Cancel|Force/ }
     => message { "Invalid button '$_'" };
 
 has buttons => (is => 'ro', isa => 'ArrayRef[button]',
@@ -239,7 +240,130 @@ has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
 
 =head1 Methods
 
+=over
+
+=item run($dbh, $cb)
+
+Runs the verification query against the C<$dbh>, calling the callback C<$cb>
+with these arguments on failure: C<$self>, C<$dbh>, C<$sth>.
+
+Returns a falsish value on failure or trueish on success.
+
 =cut
+
+sub run {
+    my ($self, $dbh, $cb) = @_;
+    my $sth = $dbh->prepare($self->test_query)
+        or die $dbh->errstr;
+
+    $sth->execute()
+        or die 'Failed to execute pre-migration check ' . $self->name . ', ' . $sth->errstr;
+
+    if ($sth->rows > 0) {
+        $cb->($self, $dbh, $sth);
+        return 0;
+    }
+    return 1;
+}
+
+=item fix($dbh, $fix_values)
+
+Applies data fixes. Intended to be used to resolve data-issues reported to
+the callback C<$cb> of the C<run> method.
+
+C<$fix_values> is an arrayref holding hashrefs with the keys being the names
+of the columns and the values the data to be applied for that column. Columns
+listed in C<id_columns> must be part of the data supplied.
+
+=cut
+
+sub fix {
+    my ($self, $dbh, $fixes) = @_;
+    my $table = $dbh->quote_identifier($self->table);
+
+    my $query;
+    my @bind_columns;
+    if ($self->insert) {
+        my $columns =
+            join ', ',
+            map { $dbh->quote_identifier($_) } @{$self->columns};
+        my $values =
+            join ', ', map { '?' } @{$self->columns};
+        $query = qq{INSERT INTO $table ($columns) VALUES ($values)};
+        @bind_columns = @{$self->columns};
+    }
+    else {
+        my $setters =
+            join ', ',
+            map { $dbh->quote_identifier($_) . ' = ?' } @{$self->columns};
+        $query = qq{UPDATE $table SET $setters WHERE }
+        . join(' AND ',
+               map { "$_ = ?" }
+               map { $dbh->quote_identifier($_) }
+               @{$self->id_columns});
+        @bind_columns = (@{$self->columns}, @{$self->id_columns});
+    }
+
+    my $sth = $dbh->prepare($query)
+        or die "Failed to compile query ($query) to apply fixes: " . $dbh->errstr;
+    for my $row (@$fixes) {
+        my $rv = $sth->execute(map { $row->{$_} } @bind_columns);
+        if (not $rv) {
+            die "Failed to execute data fix query for $self->{name}: " . $sth->errstr;
+        }
+
+        if ($rv != 1) {
+            die "Upgrade query affected $rv rows while a single row was expected";
+        }
+    }
+    $sth->finish;
+    $dbh->commit;
+}
+
+=item force($dbh)
+
+=cut
+
+sub force {
+    my ($self, $dbh) = @_;
+
+    for my $force_query ( @{$self->{force_queries}}) {
+        $dbh->do($force_query)
+            or die q{Failed to run 'force' data cleaning query};
+    }
+    $dbh->commit;
+
+    return;
+}
+
+=item query_selectable_values($dbh)
+
+Returns an arrayref with the keys being the names of the columns and the
+values arrays of hashes. Each hash has two keys (C<text> and C<value>);
+the C<value>s are the allowable values for the given column in C<$fix_values>
+when calling C<fix()>.
+
+=cut
+
+sub query_selectable_values {
+    my ($self, $dbh) = @_;
+
+    return {} unless $self->selectable_values;
+
+    my %query_values;
+    for my $column (@{$self->columns // []}) {
+        my $query = $self->selectable_values->{$column};
+        next unless $query;
+
+        my $sth = $dbh->prepare($query)
+            or die 'Invalid query for drop-down data in ' . $self->name;
+
+        $sth->execute()
+            or die 'Failed to query for drop-down data in ' . $self->name;
+        $query_values{$column} = $sth->fetchall_arrayref({});
+    }
+    return \%query_values;
+}
 
 sub _get_tests {
     my ($request) = @_;
@@ -1171,35 +1295,9 @@ push @tests, __PACKAGE__->new(
     max_version => '3.0'
     );
 
-push @tests, __PACKAGE__->new(
-    test_query => q{select concat(ac.trans_id,'-',ac.id) as id,
-                          ap.transdate, ap.datepaid,
-                          ac.cleared-ac.transdate as delay, ap.amount,v.name,
-                          ac.transdate,ac.cleared
-                  from ap
-                  join acc_trans ac on ap.id=ac.trans_id
-                  left join vendor v on v.id=ap.vendor_id
-                  where ((ac.cleared-ac.transdate > 150 or ac.cleared-ac.transdate < 0)
-                         or ac.cleared < ap.datepaid and ac.id = (select max(id) from acc_trans where ap.id=acc_trans.trans_id))
-                    and ac.id > 0
-                  order by ac.cleared,id, ac.transdate, ap.datepaid},
-  display_name => marktext('Invalid or suspect cleared delays'),
-          name => 'invalid_cleared_dates',
-  display_cols => ['name', 'datepaid', 'transdate', 'cleared', 'delay', 'amount'],
- instructions => marktext(
-                   'Suspect or invalid cleared delays have been detected. Please review the dates in the original application'),
-      buttons => ['Cancel', 'Skip'],
-     tooltips => {
-          'Skip'  => marktext('This will <b>skip</b> this test <b><u>without doing any correction</u></b>')
-     },
-        table => 'ap',
-      appname => 'sql-ledger',
-  min_version => '2.7',
-  max_version => '3.0'
-);
 
 push @tests, __PACKAGE__->new(
-    test_query => q(SELECT ac.lsmb_entry_id, ac.trans_id, ac.id, ac.chart_id, ac.memo, ac.amount, xx.description,
+    test_query => q(SELECT ac.trans_id, ac.id, ac.chart_id, ac.memo, ac.amount, xx.description,
                           ch.description as account, ch.accno, ch.link, ch.charttype, ch.category, ac.cleared, approved
                      FROM acc_trans ac
                      JOIN (
@@ -1218,14 +1316,13 @@ push @tests, __PACKAGE__->new(
   display_cols => ['trans_id', 'memo', 'amount', 'description',
                    'accno', 'account', 'link', 'category', 'cleared', 'approved'],
        columns => ['cleared'],
-    id_columns => ['lsmb_entry_id'],
+    id_columns => ['trans_id', 'id'],
   instructions => marktext(
-                   'Reconciliations should be on asset, liability or equity accounts only.<br>
+                   'Pre-migration checks found reconciliations on income or expense accounts or accounts that have not been marked for receipts/payment. Reconciliations should be on asset, liability or equity accounts only.<br>
 Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel that you need to adjust more before migrating.'),
-           buttons => ['Save and Retry', 'Cancel', 'Force', 'Skip'],
+           buttons => ['Save and Retry', 'Cancel', 'Force'],
           tooltips => {
                'Force' => marktext('This will <b>keep</b> the transactions but will <b>ignore</b> the non-necessary reconciliations'),
-               'Skip'  => marktext('This will <b>skip</b> this test <b><u>without doing any correction</u></b>')
           },
      force_queries => [q(UPDATE acc_trans ac SET cleared = NULL
                          WHERE chart_id in ( SELECT id
@@ -1262,9 +1359,11 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
     return @tests;
 }
 
+=back
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012-2018 The LedgerSMB Core Team
+Copyright (C) 2012-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
