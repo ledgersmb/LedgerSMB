@@ -43,6 +43,10 @@ INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
 
+INSERT INTO account_heading_translation(trans_id, language_code, description)
+SELECT id, language_code, description
+  FROM lsmb12.translation
+ WHERE id IN (select id from account_heading);
 
 CREATE OR REPLACE FUNCTION account__save
 (in_id int, in_accno text, in_description text, in_category char(1),
@@ -125,6 +129,12 @@ SELECT account__save(id, accno, description, category, gifi_accno, NULL, contra,
                     string_to_array(link,':'), false, false)
   FROM lsmb12.chart
  WHERE charttype = 'A';
+
+INSERT INTO account_translation (trans_id, language_code, description)
+SELECT id, language_code, description
+  FROM lsmb12.translation
+ WHERE id IN (select id from account);
+
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
