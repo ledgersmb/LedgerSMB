@@ -1063,6 +1063,13 @@ INSERT INTO business_unit_translation (trans_id, description, language_code)
 SELECT trans_id + 1000, description, language_code
 FROM lsmb12.translation where trans_id in (select id from lsmb12.project);
 
+INSERT INTO users (username, entity_id)
+SELECT login, entity_id FROM lsmb12.employee ;
+
+INSERT INTO user_preference (id)
+SELECT id FROM users;
+
+
 SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
