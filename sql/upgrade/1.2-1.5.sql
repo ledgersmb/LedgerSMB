@@ -1127,5 +1127,4 @@ SELECT setval('id', max(id)) FROM transactions;
 update defaults set value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
---TODO:  Translation migratiion.  Partsgroups?
--- TODO:  User/password Migration
+
