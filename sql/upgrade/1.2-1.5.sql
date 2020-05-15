@@ -722,6 +722,29 @@ UPDATE defaults
                  WHERE src.setting_key = defaults.setting_key)
  WHERE setting_key IN (select setting_key FROM lsmb12.defaults);
 
+INSERT INTO defaults (setting_key, value)
+SELECT setting_key, value FROM lsmb12.defaults
+WHERE setting_key NOT IN (select setting_key from defaults)
+  AND setting_key IN ('businessnumber', 'check_max_invoices',
+                      'check_prefix', 'company_address', 'company_fax',
+                      'company_license_number', 'company_name',
+                      'company_phone', 'company_sales_tax_id', 'curr',
+                      'customernumber', 'decimal_places',
+                      'default_buyexchange', 'default_country',
+                      'default_email_bcc', 'default_email_cc',
+                      'default_email_from', 'default_email_to',
+                      'default_language', 'disable_back', 'dojo_theme',
+                      'earn_id', 'employeenumber', 'enable_wage_screen',
+                      'expense_accno_id', 'format', 'fxgain_accno_id',
+                      'fxloss_accno_id', 'gapless_ar', 'glnumber',
+                      'income_accno_id', 'inventory_accno_id',
+                      'lock_description', 'min_empty', 'never_logout',
+                      'partnumber', 'password_duration', 'ponumber',
+                      'projectnumber', 'rfqnumber', 'separate_duties',
+                      'session_timeout', 'show_creditlimit', 'sinumber',
+                      'sonumber', 'sqnumber', 'template_immages', 'vclimit',
+                      'vendornumber', 'vinumber', 'weightunit');
+
 
 INSERT INTO parts (
   id,
