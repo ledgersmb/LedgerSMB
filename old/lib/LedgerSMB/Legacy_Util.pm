@@ -58,6 +58,21 @@ sub render_template {
     output_template($template, $form, (method => $method));
 }
 
+=head2 render_psgi($psgi_response)
+
+Renders a PSGI response from a C<LedgerSMB::Template::UI> as a CGI
+response as required by legacy code.
+
+=cut
+
+sub render_psgi {
+    my $psgi = shift;
+
+    binmode STDOUT, 'utf8';
+    print "Status: 200 OK\n";
+    print "Content-Type: text/html; charset=UTF-8\n\n";
+    print join('', @{$psgi->[2]});
+}
 
 =head2 output_template($template, %args)
 
