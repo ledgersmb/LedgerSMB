@@ -32,6 +32,8 @@ use parent qw ( Plack::Middleware );
 
 use Log::Log4perl;
 
+use Plack::Request;
+use Plack::Util::Accessor qw( script );
 
 =head1 METHODS
 
@@ -45,9 +47,11 @@ sub call {
     my $self = shift;
     my ($env) = @_;
 
-    my $logger = Log::Log4perl->get_logger('LedgerSMB.'
-                                           . $env->{'lsmb.script_name'}
-                                           . '.' . $env->{'lsmb.action_name'});
+    my $script_name = $self->script;
+    my $action_name =
+        Plack::Request->new($env)->parameters->get('action') // '__default';
+    my $logger_name = "LedgerSMB.$script_name.$action_name";
+    my $logger = Log::Log4perl->get_logger( $logger_name );
     $env->{'psgix.logger'} = sub {
         my $args = shift;
         my $level = $args->{level};
