@@ -43,6 +43,10 @@ INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
 
+INSERT INTO account_heading_translation(trans_id, language_code, description)
+SELECT id, language_code, description
+  FROM lsmb12.translation
+ WHERE id IN (select id from account_heading);
 
 CREATE OR REPLACE FUNCTION account__save
 (in_id int, in_accno text, in_description text, in_category char(1),
@@ -125,6 +129,12 @@ SELECT account__save(id, accno, description, category, gifi_accno, NULL, contra,
                     string_to_array(link,':'), false, false)
   FROM lsmb12.chart
  WHERE charttype = 'A';
+
+INSERT INTO account_translation (trans_id, language_code, description)
+SELECT id, language_code, description
+  FROM lsmb12.translation
+ WHERE id IN (select id from account);
+
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
@@ -1053,6 +1063,13 @@ INSERT INTO business_unit_translation (trans_id, description, language_code)
 SELECT trans_id + 1000, description, language_code
 FROM lsmb12.translation where trans_id in (select id from lsmb12.project);
 
+INSERT INTO users (username, entity_id)
+SELECT login, entity_id FROM lsmb12.employee ;
+
+INSERT INTO user_preference (id)
+SELECT id FROM users;
+
+
 SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
@@ -1110,5 +1127,4 @@ SELECT setval('id', max(id)) FROM transactions;
 update defaults set value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
---TODO:  Translation migratiion.  Partsgroups?
--- TODO:  User/password Migration
+

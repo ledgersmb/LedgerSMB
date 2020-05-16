@@ -12,6 +12,7 @@ LedgerSMB::Database::Upgrade - upgrade routines factored out of setup.pm
 use strict;
 use warnings;
 
+use LedgerSMB::Sysconfig;
 use LedgerSMB::Upgrade_Tests;
 
 use File::Temp;
@@ -226,10 +227,11 @@ sub run_upgrade_script {
             $dbh->commit;
         });
 
-    $dbh->do("ALTER SCHEMA  $LedgerSMB::Sysconfig::db_namespace
-                    RENAME TO $src_schema;
-              CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
-    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
+    my $schema =  $LedgerSMB::Sysconfig::db_namespace;
+    $dbh->do("ALTER SCHEMA $schema RENAME TO $src_schema;
+              CREATE SCHEMA $schema;
+              GRANT ALL ON SCHEMA $schema TO PUBLIC")
+    or die "Failed to create schema $schema (" . $dbh->errstr . ')';
     $dbh->commit;
 
     $self->database->load_base_schema(
