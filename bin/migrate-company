@@ -1,0 +1,433 @@
+#!/usr/bin/env perl
+
+package App::LedgerSMB::MigrateCompany;
+
+=head1 NAME
+
+migrate-company - Migrates various database schemas to LedgerSMB
+
+=head1 SYNOPSIS
+
+PGPASSWORD=abc migrate-company -h 127.0.0.1 -U postgres -d company1
+
+=head1 DESCRIPTION
+
+Migrate database schemas from LedgerSMB 1.2 and 1.3 as well as SQL Ledger
+2.8 and 3.0. This tool isn't required for upgrades from LedgerSMB 1.4 or
+later.
+
+The upgrade process runs over the following steps:
+
+=over
+
+=item * Prerequisite verification
+
+=item * Data migration
+
+=item * Schema upgrade
+
+=item * User creation
+
+=over
+
+Each of these steps is executed in sequence. Execution requires a directory
+to store data to communicate between steps as well as dump/reload data for
+exchange with the user. This directory can be passed using the C<--data>
+option.
+
+=head2 Prerequisite verification
+
+Verifies data in the database-to-be-migrated against a minimal list of checks
+the data needs to comply with in order to migrate successfully.
+
+Note that the checks assert that data complies with a set of known-causes
+for migration failure. Migration may still fail on data for which no check
+has been coded.
+
+=head2 Schema upgrade
+
+After the data is migrated, it exists in an old version of the LedgerSMB
+schema. This approach fixates both the starting point (1.2 or 1.3) as well
+as the end point of the migration and thus stabilizes the migration script.
+
+This step upgrades the schema from the old version to the current version.
+Part of this upgrade are further checks on the validity of the data, meaning
+that more questions on how to clean data may be asked.
+
+=head2 User creation
+
+@@TODOC
+
+=head1 OPTIONS
+
+=over
+
+=item --help
+
+Prints this help message
+
+=item --host, -h
+
+Host name or IP address of the database server, e.g. 127.0.0.1; when not
+given, the environment variable PGHOST will be used
+
+=item --user, -U
+
+Name of the database user for running the migration; when not given, the
+environment variable PGUSER will be used
+
+=item --dbname, -d
+
+The name of the database to migrate
+
+=item --log
+
+Sets the logging level
+
+=over
+
+=item info
+
+=item warn
+
+=item error
+
+=back
+
+=item --logconf
+
+Detailed logging configuration; see L<Log::Log4perl configuration files|https://metacpan.org/pod/Log::Log4perl#Configuration-files>
+
+=item --data
+
+Directory to retrieve and store additional migration data
+
+=back
+
+=cut
+
+use strict;
+use warnings;
+
+use Carp::Always;
+use Digest::MD5 qw(md5_hex);
+use File::Basename qw(dirname);
+use File::Spec;
+use Getopt::Long;
+use List::Util qw(none);
+use Log::Log4perl qw(:easy);
+use Pod::Usage qw( pod2usage );
+use Text::CSV qw( csv );
+
+use LedgerSMB::Database;
+use LedgerSMB::Database::ChangeChecks qw( load_checks run_checks );
+use LedgerSMB::Database::SchemaChecks::JSON qw( json_formatter_context );
+use LedgerSMB::Database::Upgrade;
+
+
+sub help {
+    my %args = @_;
+
+    pod2usage(-exitval => ($args{exitval} || $args{help} || 'NOEXIT'),
+              -message => $args{msg},
+              -verbose => $args{help}*99,
+              -sections => [ qw(SYNOPSIS DESCRIPTION OPTIONS ) ]);
+}
+
+my %loglevel_map = (
+    debug  => $DEBUG,
+    info   => $INFO,
+    warn   => $WARN,
+    error  => $ERROR,
+    fatal  => $FATAL,
+    );
+
+# Connection parameters
+my ($host, $user, $dbname) =
+    @ENV{qw(PGHOST PGUSER PGDATABASE)};
+
+# Directory to read data-fixes (and initial user data) from
+my $data = './data';
+my $settings = 'migration.ini';
+
+my $loglevel = 'error';
+my $logconf  = './migrate-company.log.conf';
+
+my $cfg;
+
+GetOptions(
+    'help'   => \&help,
+    'host|h=s'    => \$host,
+    'user|U=s'    => \$user,
+    'dbname|d=s'    => \$dbname,
+    'data=s' => \$data,
+    'log=s'  => \$loglevel,
+    'logconf'=> \$logconf,
+    )
+    or help(exitval => 1,
+            msg => 'Failed to parse command-line arguments');
+
+
+if (-e $logconf) {
+    Log::Log4perl::init($logconf);
+}
+else {
+    Log::Log4perl->easy_init($loglevel_map{$loglevel})
+}
+
+
+sub ensure_data_dir {
+    if (-d $data) {
+        return;
+    }
+    if (-e $data) {
+        die "Path '$data' exists but isn't a directory";
+    }
+
+    my $parent = dirname $data;
+    if (not -d $parent) {
+        die "Can't create directory '$data': Parent directory doesn't exist";
+    }
+    mkdir($data) or die "Failed to create directory '$data': $!";
+}
+
+sub ensure_ini_file {
+    my ($upgrade) = @_;
+    my $logger = Log::Log4perl->get_logger(__PACKAGE__ . '._ensure_ini');
+    my $vars = $upgrade->required_vars;
+    my $ini = File::Spec->catfile($data, $settings);
+    $logger->info("Checking existence of config file '$ini'");
+    if (not -f $ini) {
+        $logger->info("Config file '$ini' doesn't exist; generating");
+        if (-e $ini) {
+            die "Creation of config file $ini failed: path exists";
+        }
+
+        open(my $fh, '>:encoding(utf8)', $ini)
+            or die "Can't create config file $ini: $!";
+        print $fh "[vars]\n";
+        print "[vars]\n";
+        for my $var (keys %$vars) {
+            my $vals = $vars->{$var};
+            if (not ref $vals) {
+                print $fh "$var = $vals\n\n";
+                print "$var = $vals\n\n";
+                next;
+            }
+
+            if (@$vals == 1) {
+                print $fh "$var = $vals->[0]->{value}\n\n";
+                print "$var = $vals->[0]->{value}\n\n";
+                next;
+            }
+
+
+            print $fh ";  Select a value by uncommenting a line below\n";
+            print ";  Select a value by uncommenting a line below\n";
+            for my $val (@$vals) {
+                print $fh ";$var = $val->{value}\n";
+                print ";$var = $val->{value}\n";
+            }
+            print $fh "\n\n";
+            print "\n\n";
+        }
+
+        close($fh)
+            or $logger->warn("Failing to close $ini after generation");
+
+        print "Generated configuration file; check '$ini'\n";
+        return 4;
+    }
+
+    $cfg = Config::IniFiles->new( -file => $ini )
+        or die @Config::IniFiles::errors;
+
+    # verify all variables to be configured with allowed values
+    my $abort = 0;
+    for my $key (keys %$vars) {
+        $logger->debug("Should be aborting: $abort");
+        $logger->info("Checking value of variable $key");
+        next if not defined $vars->{$key};
+
+        my $val = $cfg->val('vars', $key);
+        $logger->info("Value of $key: $val");
+        if (not @{$vars->{$key}}) {
+            if (not (not $val or $val eq 'null')) {
+                $val //= '<undef>';
+                $logger->error("Variable $key has non-allowed value $val");
+                $abort = 1;
+                next;
+            }
+        }
+        if (not $val
+            or (none { $val eq $_->{value} } @{$vars->{$key}})) {
+            $val //= '<undef>';
+            $logger->error("Variable $key has non-allowed value $val");
+            $abort = 1;
+        }
+    }
+    return 5 if $abort;
+
+    return 0;
+}
+
+
+sub run_upgrade_tests {
+    my ($db, $upgrade) = @_;
+    my $logger = Log::Log4perl->get_logger(__PACKAGE__ . '.run_upgrade_tests');
+    my $last_failing_test;
+    while (1) {
+        my $failing_test;
+        $upgrade->run_tests(
+            sub {
+                my ($check, $dbh, $sth) = @_;
+                _failed_test($check, $dbh, $sth);
+
+                $failing_test = $check;
+            });
+
+        if (not defined $failing_test) {
+            last;
+        }
+        if (defined $last_failing_test
+            and defined $failing_test
+            and ($last_failing_test->name eq $failing_test->name)) {
+            return $failing_test;
+        }
+
+        $last_failing_test = $failing_test;
+        $logger->error('rerunning test after failing check: '
+                       . $failing_test->name);
+    }
+
+    return 0;
+}
+
+sub _failed_test {
+    my ($check, $dbh, $sth) = @_;
+    my $logger = Log::Log4perl->get_logger(__PACKAGE__ . '._failed_test');
+    my $filename = md5_hex($check->name);
+    ensure_data_dir();
+
+    my $path = File::Spec->catfile($data, "$filename.fail.csv");
+    open(my $fh, ">:encoding(utf8)", $path)
+        or die "Can't open $path: $!";
+
+    print $fh "Failed test: $check->{name}
+Failing rows listed below.
+Resolution instructions:
+$check->{instructions}
+
+";
+
+    $check->{fail_data} = $path;
+    $check->{column_data} = [];
+    my $rows = $sth->fetchall_arrayref({});
+    csv( in       => $rows,
+         out      => $fh,
+         headers  => [ @{$check->id_columns}, @{$check->display_cols} ],
+         encoding => 'utf8' );
+    close $fh or warn "Unable to close $path after storing failed data: $!";
+
+    my $select_values = $check->query_selectable_values($dbh);
+    for my $column (keys %$select_values) {
+        my $col_path = "$path.$column-values.csv";
+        push @{$check->{column_data}}, $col_path;
+        unlink $col_path;
+        csv( in       => $select_values->{$column},
+             out      => $col_path,
+             encoding => 'utf8',
+            );
+    }
+    $sth->finish;
+
+    my $fix_filename = File::Spec->catfile($data, "$filename.fix.csv");
+    if (-f $fix_filename) {
+        my $fix_data =
+            csv( in       => $fix_filename,
+                 headers  => 'auto',
+                 encoding => 'utf8',
+            );
+
+        $check->fix($dbh, $fix_data);
+        $dbh->commit;
+    }
+    else {
+        $logger->warn('Input file with fix-data not found: ' . $fix_filename);
+    }
+}
+
+sub run_schema_upgrades {
+    my ($upgrade) = @_;
+    my $logger =
+        Log::Log4perl->get_logger(__PACKAGE__ . '.run_schema_upgrades');
+
+    my $out = json_formatter_context {
+        return ! $upgrade->database->apply_changes( checks => 1 );
+    } $data;
+
+    if ($out) {
+        $logger->error("Conflicting data found. See $out");
+    }
+    else {
+        $logger->info('Schema changes successfully applied');
+    }
+
+    return 6 if $out;
+
+    return 0;
+}
+
+sub migrate {
+    my $logger = Log::Log4perl->get_logger(__PACKAGE__);
+
+    if (not $dbname) {
+        print "No database specified for migration; use '-d' option\n";
+        return 2;
+    }
+    my $db = LedgerSMB::Database->new(
+        username    => $user,
+        password    => $ENV{PGPASSWORD},
+        dbname      => $dbname
+        );
+    my $dbinfo = $db->get_info;
+    if (not $dbinfo->{status}
+        or $dbinfo->{status} eq 'does not exist') {
+        print "Database '$dbname' cannot be connected to\n";
+        return 3;
+    }
+    my $upgrade = LedgerSMB::Database::Upgrade->new(
+        database    => $db,
+        type        => "$dbinfo->{appname}/$dbinfo->{version}",
+        );
+
+    if (my $rv = ensure_ini_file($upgrade)) {
+        return $rv;
+    }
+    if (my $check = run_upgrade_tests($db, $upgrade)) {
+        $logger->error(
+            sprintf('Data consistency check "%s" failed; failing rows in %s',
+                    $check->name, $check->{fail_data})
+            );
+
+        return 1;
+    }
+
+    {
+        my @vars = keys %{$upgrade->required_vars};
+        my %vars;
+        $vars{$_} = $cfg->val('vars', $_) for @vars;
+
+        $upgrade->run_upgrade_script(\%vars);
+    }
+
+    if (my $rv = run_schema_upgrades($upgrade)) {
+        return $rv;
+    }
+
+    $logger->info('Completed.');
+    return 0;
+}
+
+exit migrate();
+
