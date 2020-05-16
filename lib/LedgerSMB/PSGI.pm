@@ -230,7 +230,8 @@ sub setup_url_space {
                 # can marshall state in, but not back out (due to forking)
                 # so have the inner scope handle serialization itself
                 inner_serialize => 1;
-            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Log4perl',
+                script          => $script;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'closed',
                 default_company    => LedgerSMB::Sysconfig::default_db();
@@ -252,7 +253,8 @@ sub setup_url_space {
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 script   => $script;
-            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Log4perl',
+                script   => $script;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
                 default_company => LedgerSMB::Sysconfig::default_db();
@@ -275,7 +277,8 @@ sub setup_url_space {
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 script   => 'login.pl';
-            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Log4perl',
+                script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'none',
                 default_company => LedgerSMB::Sysconfig::default_db();
@@ -313,7 +316,8 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 script => 'setup.pl';
-            enable '+LedgerSMB::Middleware::Log4perl';
+            enable '+LedgerSMB::Middleware::Log4perl',
+                script => 'setup.pl';
             enable '+LedgerSMB::Middleware::SetupAuthentication';
             enable '+LedgerSMB::Middleware::DisableBackButton';
             $psgi_app;
