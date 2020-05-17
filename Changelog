@@ -2,6 +2,11 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.14 (to be released)
+* Fix AR/AP account being reset to default on transaction Update-s (#4599)
+* Fix CSV, ODS or TXT reports being downloaded without extensions (#4613)
+
+
 Changelog for 1.7.13
 * Fix listing asset classes throwing an error (#4569)
 * Solve failure to create initial user by requiring input (#4525)
