@@ -45,15 +45,17 @@ sub add_row {
 sub update {
     my $self = shift;
 
-    $self->find('*button', text => 'Next')->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find('*button', text => 'Next');
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 sub save {
     my $self = shift;
 
-    $self->find('*button', text => 'Save')->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find('*button', text => 'Save');
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -23,8 +23,9 @@ sub search {
         $self->find('*labeled', text => $input)
             ->send_keys($args{$input});
     }
-    $self->find('*button', text => $self->_search_btn_title)->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find('*button', text => $self->_search_btn_title);
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 __PACKAGE__->meta->make_immutable;
