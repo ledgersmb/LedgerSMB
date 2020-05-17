@@ -379,8 +379,8 @@ sub new {
         $self->{format_options}{extension} = lc $self->{format};
         $self->{format_options}{filetype} = lc $self->{format};
         $self->{format} = 'TXT';
-    } elsif ($self->{format} eq 'ods') {
-        $self->{format_options}{filetype} = 'ods';
+    } else {
+        $self->{format_options}{extension} = lc $self->{format};
     }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
