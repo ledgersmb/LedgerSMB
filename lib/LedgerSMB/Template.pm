@@ -380,7 +380,7 @@ sub new {
         $self->{format_options}{filetype} = lc $self->{format};
         $self->{format} = 'TXT';
     } else {
-        $self->{format_options}{extension} = lc $self->{format};
+        $self->{format_options}{filetype} = lc $self->{format};
     }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
