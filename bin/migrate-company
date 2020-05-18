@@ -425,6 +425,7 @@ sub migrate {
     if (my $rv = run_schema_upgrades($upgrade)) {
         return $rv;
     }
+    $upgrade->run_post_upgrade_steps;
 
     $db->upgrade_modules('LOADORDER', $LedgerSMB::VERSION);
 

@@ -158,6 +158,13 @@ my %required_vars_values = (
     slschema        => sub { $migration_schema{$_[0]->type} },
     );
 
+my %migration_post_steps = (
+    'ledgersmb/1.2'  => [ qw(_post_upgrade_create_roles) ],
+    'ledgersmb/1.3'  => [],
+    'sql-ledger/2.8' => [],
+    'sql-ledger/3.0' => [],
+    );
+
 sub _linked_accounts {
     my ($dbh, $link) = @_;
     my @accounts;
@@ -293,6 +300,60 @@ sub run_upgrade_script {
 
     $guard->dismiss;
     return;
+}
+
+=head2 run_post_upgrade_steps
+
+Runs the post upgrade script steps.
+
+=cut
+
+sub _post_upgrade_create_roles {
+    my ($self, $dbh) = @_;
+
+    my $usth =
+        $dbh->prepare(q{SELECT username FROM users u
+                         WHERE NOT EXISTS (SELECT 1 FROM pg_roles r
+                      WHERE u.username = r.rolname)})
+        or die $dbh->errstr;
+    my $csth =
+        $dbh->prepare(q{CREATE ROLE ? WITH LOGIN NOSUPERUSER
+                                           NOCREATEDB NOCREATEROLE
+                                      ENCRYPTED PASSWORD 'whatever'
+                                      VALID UNTIL 'yesterday'})
+        or die $dbh->errstr;
+
+    $usth->execute
+        or die $usth->errstr;
+
+    while (my ($username) = $usth->fetch_rowarray) {
+        $csth->execute($username)
+            or die $csth->errstr;
+    }
+
+    ###TODO check users to see if they comply with the above definition
+    # and warn if not...
+}
+
+sub run_post_upgrade_steps {
+    my $self = shift;
+    my $steps = $migration_post_steps{$self->type};
+
+    my $dbh = $self->database->connect({ PrintError => 0, AutoCommit => 0 });
+    my $guard = Scope::Guard->new(
+        sub {
+            $dbh->rollback;
+            $dbh->disconnect;
+        });
+
+    for my $step (@$steps) {
+        $self->$step($dbh);
+    }
+    $guard->dismiss;
+    $dbh->commit;
+    $dbh->disconnect;
+
+    return 0;
 }
 
 =head1 LICENSE AND COPYRIGHT
