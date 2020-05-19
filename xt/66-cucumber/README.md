@@ -5,7 +5,6 @@ The category '66-cucumber' is a bit of a misnomer: these tests are
 really browser based tests and we use the principles from BDD to
 specify the test scripts and drive the browser engine.
 
-
 # Test groups
 
 Tests have been grouped by function:
@@ -41,40 +40,40 @@ In separate terminals, you need to run the following commands from the
 root of the development tree for the above to work:
 
 ```sh
- $ starman bin/ledgersmb-server.psgi
- $ phantomjs --webdriver=4422
+ starman bin/ledgersmb-server.psgi
+ phantomjs --webdriver=4422
 ```
 
 # Code structure
 
 The code consists of the following components:
 
- * Feature files (*.feature), grouped by function into the directories
+* Feature files (*.feature), grouped by function into the directories
    numbered as defined above (e.g. `t/66-cucumber/01-basic/`)
- * Step files, which implement function specific steps, in a
+* Step files, which implement function specific steps, in a
    `step_definitions` subdirectory of each numbered directory
    (e.g. `01-basic/step_definitions/`)
- * `pherkin` extensions in `xt/lib/Pherkin/Extension` which implement
-   * `LedgerSMB`: Steps which define application state (provides
+* `pherkin` extensions in `xt/lib/Pherkin/Extension` which implement
+    * `LedgerSMB`: Steps which define application state (provides
      database handle access)
-   * `PageObject`: Steps to access the browser UI, common to most
+    * `PageObject`: Steps to access the browser UI, common to most
      test scripts
- * `PageObject`s (in `xt/lib/`)
-   * implementing access to browser page
+* `PageObject`s (in `xt/lib/`)
+    * implementing access to browser page
      functionality, deriving from `Weasel::Element`, thereby referring
      to their root DOM element
-   * self-registering Weasel::WidgetHandler-s and Weasel::FindExpander-s,
+    * self-registering Weasel::WidgetHandler-s and Weasel::FindExpander-s,
      keeping DOM-tree knowledge local to the PageObject
 
 ## Structure of feature files
 
 The general structure of feature files is well documented elsewhere on
-the web ((See https://cucumber.io/docs/gherkin/reference/)[https://cucumber.io/docs/gherkin/reference/]).
+the web [(See https://cucumber.io/docs/gherkin/reference/](https://cucumber.io/docs/gherkin/reference/))
 The general structure consists of N sections:
 
- * Feature (only one section allowed)
- * Background (optional; only a single background allowed)
- * Scenario (at least one, but potentially many)
+* Feature (only one section allowed)
+* Background (optional; only a single background allowed)
+* Scenario (at least one, but potentially many)
 
 The `Feature` section describes the feature being tested. There's no need
 to be terse: this is for documentation purposes and sets the boundaries
@@ -86,8 +85,8 @@ to every scenario in the feature file.
 The `Scenario` sections test the various behaviours of the feature. There
 are several best practices for writing scenarios:
 
- * Each scenario tests one behaviour
- * Each scenario is independent from others
+* Each scenario tests one behaviour
+* Each scenario is independent from others
    which means that scenarios can be run without requiring
    the others to run as well, in any specific sequence
 
@@ -111,13 +110,13 @@ Scenario: Add payments to a new batch
 
 The following tags are available:
 
- * `@weasel`  
+* `@weasel`
    This tag signals to the Weasel plugin to expect browser-based
    tests (and thus to initialize the browser environment)
- * `@wip`  
+* `@wip`
    This tag signals to the test framework that the test isn't done
    and should be skipped during Continuous Integration test runs
- * `@one-db`  
+* `@one-db`
    This tag signals to the LedgerSMB plugin that all the scenarios
    in this feature should run against the same database. This is a
    performance optimization which should *only* be applied when the
@@ -136,11 +135,11 @@ and the single-page app) are identified through the 'id' attribute of the
 
 The single page app's DOM tree:
 
-  * Weasel::Session's `page` attribute (PageObject::Root)
+* Weasel::Session's `page` attribute (PageObject::Root)
     * `body` attribute (PageObject::App)
-      * `menu` attribute (PageObject::App::Menu)
-      * `maindiv` attribute (PageObject::App::Main)
-        * `content` attribute (PageObject::App::*)
+        * `menu` attribute (PageObject::App::Menu)
+        * `maindiv` attribute (PageObject::App::Main)
+            * `content` attribute (PageObject::App::*)
 
 The BDD scripts refer to the `body` attribute's value above as
 "the page", while they refer to the `content` attribute's value as

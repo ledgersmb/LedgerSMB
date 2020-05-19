@@ -1,3 +1,4 @@
+
 # LedgerSMB
 
 Small and Medium business accounting and ERP
@@ -39,9 +40,9 @@ and [current 1.7 version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system
 
 ## Server
 
- * Perl 5.20+
- * PostgreSQL 9.4+
- * Web server (e.g. nginx, Apache, lighttpd)
+* Perl 5.20+
+* PostgreSQL 9.4+
+* Web server (e.g. nginx, Apache, lighttpd)
 
 The web external server is only required for production installs;
 for evaluation purposes a simpler setup can be used, as detailed
@@ -82,49 +83,55 @@ The following non-Perl (system) dependencies need to be in place for the
 on the [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html)
 page on CPAN.
 
- * cpanminus  This can be manually installed, or installed as a system package.
-   It may not be necessary to install cpanminus if you are only going to install from debian packages.
- * PostgreSQL client libraries
- * PostgreSQL server
- * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
-   This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
-   in RedHat/Fedora
- * make       This is used by cpan dependencies during thier build process
+* cpanminus  This can be manually installed, or installed as a system package.
+  It may not be necessary to install cpanminus if you are only going to install
+  from debian packages.
+* PostgreSQL client libraries
+* PostgreSQL server
+* DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
+  This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
+  in RedHat/Fedora
+* make       This is used by cpan dependencies during thier build process
 
 Then, some of the features listed below have system requirements as well:
 
- * latex-pdf-ps depends on these binaries or libraries:
-   * latex (usually provided through a texlive package)
-   * pdflatex
-   * dvipdfm
-   * dvips
-   * pdf2ps
+* latex-pdf-ps depends on these binaries or libraries:
+    * latex (usually provided through a texlive package)
+    * pdflatex
+    * dvipdfm
+    * dvips
+    * pdf2ps
 
 ## Perl module dependencies
 
 This section depends on [a working local::lib installation](https://ledgersmb.org/content/setting-perls-locallib-ledgersmb-why-and-how)
 as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
-and `cpanminus` respectively). `cpanm` depends on the `make` and `gcc` commands being available.
+and `cpanminus` respectively). `cpanm` depends on the `make` and `gcc` commands
+being available.
 
 NOTE: gcc can be removed after all cpan dependencies are installed.
-      However, it may be necessary to reinstall it if additional modules are required during an upgrade
+      However, it may be necessary to reinstall it if additional modules are
+      required during an upgrade
 
 To install the Perl module dependencies, run:
 
 ```sh
- $ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
-
+ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 ```
-NOTE: Don't miss the "." at the end of the cpanm command!
-Don't forget to make sure the environment variable `PERL5LIB=/home/ledgersmb/perl5/lib/perl5` points at the running user's perl5 dir
-Also, NEVER run cpanm as root, it's best to run it as the user you intend to run ledgersmb as when possible.
-This installs the cpan modules in `~/perl5`
-If you can't run it as the final user, don't worry, just run it as any user (eg: johnny),
-and make sure the environment variable `PERL5LIB=/home/johhny/perl5/lib/perl5` points at jonny's perl5 dir
 
-Setting the `PERL5` environment variable is normally done by editing the initscript, or systemd service file.
-If you are running manually, then you will need to set and export `PERL5` before running starman/plack
+NOTE: Don't miss the "." at the end of the cpanm command!
+Don't forget to make sure the environment variable
+`PERL5LIB=/home/ledgersmb/perl5/lib/perl5` points at the running user's perl5 dir
+Also, NEVER run cpanm as root, it's best to run it as the user you intend to
+run ledgersmb as when possible. This installs the cpan modules in `~/perl5`
+If you can't run it as the final user, don't worry, just run it as any
+user (eg: johnny), and make sure the environment variable
+`PERL5LIB=/home/johhny/perl5/lib/perl5` points at jonny's perl5 dir
+
+Setting the `PERL5` environment variable is normally done by editing the
+initscript, or systemd service file. If you are running manually, then you will
+need to set and export `PERL5` before running starman/plack
 
 The following features may be selected by
 specifying ```--with-feature=<feature>```:
@@ -163,7 +170,8 @@ Enter password for new role: ****
 Enter it again: ****
 ```
 
-The ```pg_hba.conf``` file should have at least these lines in it (order of the entries matters):
+The ```pg_hba.conf``` file should have at least these lines in it (order of the
+entries matters):
 
 ```plain
 local   all                            postgres                         peer
@@ -192,10 +200,11 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 
 ## Configure LedgerSMB
 
-(Installation from tarball is highly preferred over installation from GitHub for production installs.)
+(Installation from tarball is highly preferred over installation from GitHub for
+production installs.)
 
 ```bash
- $ cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+ cp doc/conf/ledgersmb.conf.default ledgersmb.conf
 ```
 
 ## Running Starman
@@ -205,9 +214,11 @@ With the above steps completed, the system is ready to run the web server:
  > NOTE: DO NOT run starman (or any web service) as root, this is considered
  >     a serious security issue, and as such LedgerSMB doesn't support it.
  >     Instead, if you need to start LedgerSMB from a root process, drop
- >     privileges to a user that doesn't have write access to the LedgerSMB Directories first.
+ >     privileges to a user that doesn't have write access to the LedgerSMB
+ >     Directories first.
  >     Most daemonising mechanisms (eg: systemd) provide a mechanism to do this.
- >     Do not use the starman --user= mechanism, it currently drops privileges too late.
+ >     Do not use the starman --user= mechanism, it currently drops privileges
+ >     too late.
 
 ```bash
  $ starman -I lib -I old/lib --listen localhost:5762 bin/ledgersmb-server.psgi
@@ -221,36 +232,42 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 
 ## Environment Variables
 
-All regular Perl environment variables can be used. In particular, it's important to make sure
-`PERL5LIB` is set correctly when setting up `local::lib` for the first time.
+All regular Perl environment variables can be used. In particular, it's
+important to make sure `PERL5LIB` is set correctly when setting up `local::lib`
+for the first time.
 
 We support the following Environment Variables within our code
-- LSMB_WORKINGDIR : Optional
-     - Causes a chdir to the specified directory as the first thing done in starman.psgi
-     - If not set the current dir is used.
-     - An example would be
-    ```
+
+* LSMB_WORKINGDIR : Optional
+    * Causes a chdir to the specified directory as the first thing done in starman.psgi
+    * If not set the current dir is used.
+    * An example would be
+
+    ```bash
     LSMB_WORKINGDIR='/usr/local/ledgersmb/'
     ```
 
 
 We support the following Environment Variables for our dependencies
-- PGHOST : Optional
-     - Specifies the Postgres server Domain Name or IP address
-- PGPORT : Optional
-     - Sepcifies the Postgres server Port
-- PGSSLMODE : Optional
-     - Enables SSL for the Postgres connection
 
-All Environment Variables supported by our dependencies should be passed through to them,
-that includes the standard Postgres Variables and others
+* PGHOST : Optional
+    * Specifies the Postgres server Domain Name or IP address
+* PGPORT : Optional
+    * Sepcifies the Postgres server Port
+* PGSSLMODE : Optional
+    * Enables SSL for the Postgres connection
+
+All Environment Variables supported by our dependencies should be passed
+through to them, that includes the standard Postgres Variables and others
 
 
 ## Next steps
 
 The system is installed and should be available for evaluation through
-- http://localhost:5762/setup.pl    # creation and privileged management of company databases
-- http://localhost:5762/login.pl    # Normal login for the application
+
+* http://localhost:5762/setup.pl    # creation and privileged management of
+  company databases
+* http://localhost:5762/login.pl    # Normal login for the application
 
 The system is ready for [preparation for first
 use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
@@ -260,17 +277,20 @@ use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
 Web site: [http://ledgersmb.org/](http://ledgersmb.org)
 
 Live chat:
- * IRC: [irc://irc.freenode.net/#ledgersmb](irc://irc.freenode.net/#ledgersmb)
- * Matrix: [https://vector.im/#/room/#ledgersmb:matrix.org](https://vector.im/#/room/#ledgersmb:matrix.org) (bridged IRC channel)
+
+* IRC: [irc://irc.freenode.net/#ledgersmb](irc://irc.freenode.net/#ledgersmb)
+* Matrix: [https://vector.im/#/room/#ledgersmb:matrix.org](https://vector.im/#/room/#ledgersmb:matrix.org)
+  (bridged IRC channel)
 
 Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
 
 Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
 
 Mailing lists:
- * [https://lists.ledgersmb.org/mailman/listinfo/announce](https://lists.ledgersmb.org/mailman/listinfo/announce)
- * [https://lists.ledgersmb.org/mailman/listinfo/users](https://lists.ledgersmb.org/mailman/listinfo/users)
- * [https://lists.ledgersmb.org/mailman/listinfo/devel](https://lists.ledgersmb.org/mailman/listinfo/devel)
+
+* [https://lists.ledgersmb.org/mailman/listinfo/announce](https://lists.ledgersmb.org/mailman/listinfo/announce)
+* [https://lists.ledgersmb.org/mailman/listinfo/users](https://lists.ledgersmb.org/mailman/listinfo/users)
+* [https://lists.ledgersmb.org/mailman/listinfo/devel](https://lists.ledgersmb.org/mailman/listinfo/devel)
 
 Repository: https://github.com/ledgersmb/LedgerSMB
 
