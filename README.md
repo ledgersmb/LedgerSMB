@@ -170,8 +170,8 @@ Enter password for new role: ****
 Enter it again: ****
 ```
 
-The ```pg_hba.conf``` file should have at least these lines in it (order of the
-entries matters):
+The `pg_hba.conf` file should have at least these lines in it
+(order of the entries matters):
 
 ```plain
 local   all                            postgres                         peer

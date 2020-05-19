@@ -1,3 +1,4 @@
+
 # ledgersmb-database-doc
 
 Database documentation to assist LedgerSMB users and developers
@@ -7,9 +8,10 @@ Database documentation to assist LedgerSMB users and developers
 Copyright (c) 2006 - 2017 LedgerSMB Project
 ```
 
-## How to generate doc
 
-### Scripted
+# How to generate the documentation
+
+## Scripted
 
 You will need at least postgresql_autodoc and graphviz installed
 on your system.
@@ -40,7 +42,7 @@ user for a password.
 Viewing the .svg or .svg.html versions of the images will likely provide
 the best user experience
 
-### Manually
+## Manually
 
 Alternatively you can generate the documentation manually with
 

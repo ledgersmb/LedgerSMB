@@ -2,21 +2,23 @@
 
 Tools to assist LedgerSMB users and developers
 
-<!-- markdownlint-disable MD001 -->
-<!-- markdownlint-disable MD018 -->
-<!-- markdownlint-disable MD022 -->
-###### Copyright (c) 20115, 2016, 2017 LedgerSMB Project
-###### Written by SB Tech Services info@sbts.com.au
+```plain
+Copyright (c) 2006 - 2020 LedgerSMB Project
+Written by SB Tech Services info@sbts.com.au
+```
 
 For more information about any of these files, Read The Source Luke
 
 ## bash-functions.sh
 
-    A library of functions that are common to most of the scripts
+A library of functions that are common to most of the scripts
 
-    If you are intending to use the config file functiions
-    One Environment Variable MUST be set before sourcing this file.
-    eg:
-        ConfigFile="$HOME/.lsmb-release"
-    This can be set to any location/file you want as long as it is readable by
-    the library.
+If you are intending to use the config file functions
+One Environment Variable MUST be set before sourcing this file.
+
+eg:
+
+`ConfigFile="$HOME/.lsmb-release"`
+
+This can be set to any location/file you want as long as it is readable by
+the library.

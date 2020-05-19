@@ -14,9 +14,10 @@ modified as explained within the file.
 On debian systems it would be `/etc/systemd/system/`
 
 - ledgersmb_starman.service
-The recommended way to run the LedgerSMB service
-Starman preforks and preloads a number of workers and all code. This is know to
-be a performance gain over other ways of running perl web applications
+The recommended way to run the LedgerSMB service.
+Starman preforks and preloads a number of workers and all code.
+This is known to be a performance gain over other ways of running perl web
+applications
 - ledgersmb-development_plackup.service
 A development profile that runs LedgerSMB directly under plackup instead of
 starman, it WILL be slower, as it neither preloads, nor preforks.
@@ -32,12 +33,13 @@ well as running under starman, and is believed to not perform as well either.
 
 ## NOTE
 
-LedgerSMB should be run under starman or another plack runner, BUT it should
-not be directly exposed to a network this way.
+LedgerSMB should be run under starman or another plack runner,
+*but* it should not be directly exposed to a network this way.
 Instead it should be served behind a Reverse Proxy.
-There are many httpd's that can act as a reverse proxy, including, but not
-limited to
+There are many httpd's that can act as a reverse proxy, including,
+but not limited to:
 
 - nginx
 - apache
+- lighttpd
 - varnish
