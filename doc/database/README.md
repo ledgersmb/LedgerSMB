@@ -3,11 +3,9 @@
 
 Database documentation to assist LedgerSMB users and developers
 
-
 ```plain
 Copyright (c) 2006 - 2017 LedgerSMB Project
 ```
-
 
 # How to generate the documentation
 
@@ -36,7 +34,7 @@ regen_db_docs.sh will use these environment variables
 * PGDATABASE
 * PGPASSWORD
 
-It use a password from $PGPASSWORD, ~/.pgpass, or fallback to asking the
+It uses a password from $PGPASSWORD, ~/.pgpass, or falls back to asking the
 user for a password.
 
 Viewing the .svg or .svg.html versions of the images will likely provide
