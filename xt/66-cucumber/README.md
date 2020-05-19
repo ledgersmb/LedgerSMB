@@ -68,7 +68,7 @@ The code consists of the following components:
 ## Structure of feature files
 
 The general structure of feature files is well documented elsewhere on
-the web [(See https://cucumber.io/docs/gherkin/reference/](https://cucumber.io/docs/gherkin/reference/))
+the web ([See https://cucumber.io/docs/gherkin/reference/](https://cucumber.io/docs/gherkin/reference/))
 The general structure consists of N sections:
 
 * Feature (only one section allowed)
