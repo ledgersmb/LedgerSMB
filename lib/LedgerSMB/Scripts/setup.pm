@@ -643,6 +643,7 @@ sub _process_and_run_upgrade_script {
             %{$request}{qw( default_country default_ap default_ar
                             slschema lsmbschema )}
         });
+    $upgrade->run_post_upgrade_steps;
 
     return;
 }
