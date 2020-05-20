@@ -96,11 +96,11 @@ page on CPAN.
 Then, some of the features listed below have system requirements as well:
 
 * latex-pdf-ps depends on these binaries or libraries:
-    * latex (usually provided through a texlive package)
-    * pdflatex
-    * dvipdfm
-    * dvips
-    * pdf2ps
+  * latex (usually provided through a texlive package)
+  * pdflatex
+  * dvipdfm
+  * dvips
+  * pdf2ps
 
 ## Perl module dependencies
 
@@ -239,23 +239,23 @@ for the first time.
 We support the following Environment Variables within our code
 
 * LSMB_WORKINGDIR : Optional
-    * Causes a chdir to the specified directory as the first thing done in starman.psgi
-    * If not set the current dir is used.
-    * An example would be
+  * Causes a chdir to the specified directory as the first thing done in starman.psgi
+  * If not set the current dir is used.
+  * An example would be
 
-    ```bash
-    LSMB_WORKINGDIR='/usr/local/ledgersmb/'
-    ```
+  ```bash
+  LSMB_WORKINGDIR='/usr/local/ledgersmb/'
+  ```
 
 
 We support the following Environment Variables for our dependencies
 
 * PGHOST : Optional
-    * Specifies the Postgres server Domain Name or IP address
+  * Specifies the Postgres server Domain Name or IP address
 * PGPORT : Optional
-    * Sepcifies the Postgres server Port
+  * Sepcifies the Postgres server Port
 * PGSSLMODE : Optional
-    * Enables SSL for the Postgres connection
+  * Enables SSL for the Postgres connection
 
 All Environment Variables supported by our dependencies should be passed
 through to them, that includes the standard Postgres Variables and others

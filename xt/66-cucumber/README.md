@@ -49,20 +49,19 @@ root of the development tree for the above to work:
 The code consists of the following components:
 
 * Feature files (*.feature), grouped by function into the directories
-   numbered as defined above (e.g. `t/66-cucumber/01-basic/`)
+  numbered as defined above (e.g. `t/66-cucumber/01-basic/`)
 * Step files, which implement function specific steps, in a
-   `step_definitions` subdirectory of each numbered directory
+  `step_definitions` subdirectory of each numbered directory
    (e.g. `01-basic/step_definitions/`)
 * `pherkin` extensions in `xt/lib/Pherkin/Extension` which implement
-    * `LedgerSMB`: Steps which define application state (provides
+  * `LedgerSMB`: Steps which define application state (provides
      database handle access)
-    * `PageObject`: Steps to access the browser UI, common to most
+  * `PageObject`: Steps to access the browser UI, common to most
      test scripts
 * `PageObject`s (in `xt/lib/`)
-    * implementing access to browser page
-     functionality, deriving from `Weasel::Element`, thereby referring
-     to their root DOM element
-    * self-registering Weasel::WidgetHandler-s and Weasel::FindExpander-s,
+  * implementing access to browser page functionality, deriving from
+    `Weasel::Element`, thereby referring to their root DOM element
+  * self-registering Weasel::WidgetHandler-s and Weasel::FindExpander-s,
      keeping DOM-tree knowledge local to the PageObject
 
 ## Structure of feature files
@@ -123,7 +122,6 @@ The following tags are available:
    tests don't modify the database they're running againsts. That way
    independence of scenarios within the feature is maintained.
 
-
 # DOM tree mapping
 
 The DOM tree's root element (`html`), maps to PageObject::Root, by
@@ -136,10 +134,10 @@ and the single-page app) are identified through the 'id' attribute of the
 The single page app's DOM tree:
 
 * Weasel::Session's `page` attribute (PageObject::Root)
-    * `body` attribute (PageObject::App)
-        * `menu` attribute (PageObject::App::Menu)
-        * `maindiv` attribute (PageObject::App::Main)
-            * `content` attribute (PageObject::App::*)
+  * `body` attribute (PageObject::App)
+    * `menu` attribute (PageObject::App::Menu)
+      * `maindiv` attribute (PageObject::App::Main)
+        * `content` attribute (PageObject::App::*)
 
 The BDD scripts refer to the `body` attribute's value above as
 "the page", while they refer to the `content` attribute's value as

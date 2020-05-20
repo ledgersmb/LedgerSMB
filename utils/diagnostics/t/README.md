@@ -30,12 +30,12 @@ ____
 When run, any scripts matching utils/diagnostics/t/*.t will be executed in
 lexical order.
 
-- std in and std out are available to those scripts for user interaction.
-- fd5 will be redirected to a logfile named the same as the test script
-- all logfiles will be created in a tempdir created with `mktemp -dt lsmb-diag.XXXX`
-- a `.lock` file will be created within each tempdir and removed on exit from diagnose.sh
-- all non-locked tempdirs will be removed at the start of running `diagnose.sh`
-- `diagnose.sh` handles creation of the tempdir, and actual redirection of fd5
+* std in and std out are available to those scripts for user interaction.
+* fd5 will be redirected to a logfile named the same as the test script
+* all logfiles will be created in a tempdir created with `mktemp -dt lsmb-diag.XXXX`
+* a `.lock` file will be created within each tempdir and removed on exit from diagnose.sh
+* all non-locked tempdirs will be removed at the start of running `diagnose.sh`
+* `diagnose.sh` handles creation of the tempdir, and actual redirection of fd5
 to the logfile
-- `diagnose.sh` creates a tarball of the contents of the tempdir before
+* `diagnose.sh` creates a tarball of the contents of the tempdir before
 "normal" exit
