@@ -78,6 +78,7 @@ Dependency updates
 * Perl 5.20 (upgraded from 5.18)
 * Dojo Toolkit updated to 1.16.0
 * TeX::Encode >= 2.007
+* LaTeX::Driver >= 1.0.0
 * Authen::SASL (new)
 * Cookie::Baker (new)
 * Email::Sender (new)
