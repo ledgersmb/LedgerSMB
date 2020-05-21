@@ -48,6 +48,7 @@ use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
+use LedgerSMB::Template::UI;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Locale;
 
@@ -1267,17 +1268,13 @@ sub save {
     }
 
     if ( !$form->{repost}  && $form->{id}) {
-       $form->{repost} = 1;
-    my $template = LedgerSMB::Template->new(
-        format => 'HTML',
-        path => 'UI',
-        template => 'oe-save_warn',
-        user => $form->{_user},
-        locale => $form->{_locale});
-
-       return LedgerSMB::Legacy_Util::render_template($template, $form, {
-          hiddens => $form
-       });
+        $form->{repost} = 1;
+        my $template = LedgerSMB::Template::UI->new_UI;
+        return LedgerSMB::Legacy_Util::render_psgi(
+            $template->render($form, 'oe-save-warn',
+                              {
+                                  hiddens => $form,
+                              }));
     }
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
