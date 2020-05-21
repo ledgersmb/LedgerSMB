@@ -1034,7 +1034,8 @@ sub select_coa {
             }
        }
     } else {
-        $request->{coa_lcs} = [ values %$coa_data ];
+        $request->{coa_lcs} = [ sort { $a->{name} cmp $b->{name} }
+                                values %$coa_data ];
     }
 
     my $template = LedgerSMB::Template::UI->new_UI;
