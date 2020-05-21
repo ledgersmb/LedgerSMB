@@ -87,7 +87,9 @@ feature 'edi', "X12 EDI support" =>
 
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
-        requires 'LaTeX::Driver', '0.300.2';
+        # 1.0.0 reports much better errors than 0.300.2 in case of
+        # missing executables
+        requires 'LaTeX::Driver', '1.0.0';
         requires 'Template::Latex', '3.08';
         requires 'Template::Plugin::Latex', '3.08';
         # 2.007 contains a fix for two characters we used to have
