@@ -119,6 +119,7 @@ use Log::Log4perl qw(:easy);
 use Pod::Usage qw( pod2usage );
 use Text::CSV qw( csv );
 
+use LedgerSMB;
 use LedgerSMB::Database;
 use LedgerSMB::Database::ChangeChecks qw( load_checks run_checks );
 use LedgerSMB::Database::SchemaChecks::JSON qw( json_formatter_context );
@@ -420,10 +421,13 @@ sub migrate {
 
         $upgrade->run_upgrade_script(\%vars);
     }
+    $upgrade->run_post_upgrade_steps;
 
     if (my $rv = run_schema_upgrades($upgrade)) {
         return $rv;
     }
+
+    $db->upgrade_modules('LOADORDER', $LedgerSMB::VERSION);
 
     $logger->info('Completed.');
     return 0;
