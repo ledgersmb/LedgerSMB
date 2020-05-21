@@ -89,8 +89,8 @@ sub create_database {
     ok('Yes-button clicked on initial confirmation');
 
     $page->find('#setup-select-coa.done-parsing', scheme => 'css');
-    $page->find('*labeled', text => "Country Code")
-        ->find_option($param{"Country code"})
+    $page->find('*labeled', text => "Country")
+        ->find_option($param{"Country"})
         ->click;
     $page->find('*button', text => "Next")->click;
     ok('Next-button clicked after country selection');
