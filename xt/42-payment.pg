@@ -157,11 +157,13 @@ BEGIN;
     $$ LANGUAGE SQL;
 
     PREPARE test AS
-    SELECT amount::int, due::numeric, discount::numeric
+    SELECT amount::int, due::numeric, discount::numeric,
+           amount_tc::int, due_fx::numeric, discount_tc::numeric
      FROM payment_get_open_invoice(
             1, -101, 'XTS', null, null, null, null, 'test_show3', null);
     SELECT results_eq('test',
-                     $$VALUES (1000000::int, 999000::numeric, 1000::numeric)$$,
+                     $$VALUES (1000000::int, 999000::numeric, 1000::numeric,
+                               1000000::int, 999000::numeric, 1000::numeric)$$,
                      'On direct payment, a discount applies');
     DEALLOCATE test;
 

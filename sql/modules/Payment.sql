@@ -196,7 +196,7 @@ $$
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS discount,
-                        (CASE WHEN (c.discount_terms||' days')::interval > age(coalesce(in_datepaid, current_date), a.transdate)
+                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                         END) AS discount_tc,
