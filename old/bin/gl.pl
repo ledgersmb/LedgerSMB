@@ -48,7 +48,7 @@
 package lsmb_legacy;
 use LedgerSMB::GL;
 use LedgerSMB::PE;
-use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Legacy_Util;
@@ -301,19 +301,15 @@ sub display_form
       $form->{recurringset}=1;
   }
 
-  my $template = LedgerSMB::Template->new(
-      user => \%myconfig,
-      locale => $locale,
-      path => 'UI/journal',
-      template => 'journal_entry',
-      format => 'HTML' );
-
-  LedgerSMB::Legacy_Util::render_template($template, $form, {
-            form => $form,
-            buttons => \@buttons,
-            hiddens => \%hiddens,
-            displayrows => \@displayrows
-                   });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    LedgerSMB::Legacy_Util::render_psgi(
+        $template->render($form, 'journal/journal_entry',
+                          {
+                              form => $form,
+                              buttons => \@buttons,
+                              hiddens => \%hiddens,
+                              displayrows => \@displayrows
+                          }));
 }
 
 

@@ -42,6 +42,7 @@ package lsmb_legacy;
 use Try::Tiny;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
+use LedgerSMB::Template::UI;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
@@ -1082,19 +1083,16 @@ sub e_mail {
         name => 'action',
         value => 'send_email',
         text => $locale->text('Continue'),
-        });
-    my $template = LedgerSMB::Template->new(
-        format => 'HTML',
-        path => 'UI',
-        template => 'io-email',
-        user => $form->{_user},
-        locale => $form->{_locale});
-    LedgerSMB::Legacy_Util::render_template($template, $form, {
-        form => $form,
-        print => $print_options,
-        hiddens => \%hiddens,
-        buttons => \@buttons,
-    });
+                   });
+    my $template = LedgerSMB::Template::UI->new_UI;
+    LedgerSMB::Legacy_Util::render_psgi(
+        $template->render($form, 'io-email',
+                          {
+                              form => $form,
+                              print => $print_options,
+                              hiddens => \%hiddens,
+                              buttons => \@buttons,
+                          }));
 }
 
 sub send_email {
