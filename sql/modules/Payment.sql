@@ -157,7 +157,7 @@ DROP TYPE IF EXISTS payment_invoice CASCADE;
 CREATE TYPE payment_invoice AS (
         invoice_id int,
         invnumber text,
-    invoice bool,
+        invoice bool,
         invoice_date date,
         amount numeric,
         amount_tc numeric,
@@ -196,15 +196,15 @@ $$
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS discount,
-                        (CASE WHEN (c.discount_terms||' days')::interval > age(coalesce(in_datepaid, current_date), a.transdate)
+                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                         END) AS discount_tc,
-                        ac.due - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
+                       ac.due - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS due,
-              ac.due_fx - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
+                       ac.due_fx - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                          END) AS due_fx,
@@ -224,16 +224,15 @@ $$
                                entity_credit_account, approved
                          FROM ar
                          ) a
-                JOIN (SELECT trans_id, chart_id, sum(CASE WHEN in_account_class = 1 THEN amount_bc
-                                                  WHEN in_account_class = 2
-                                             THEN amount_bc * -1
-                                             END) as due,
-                                   sum(CASE WHEN in_account_class = 1 THEN amount_tc
-                                        WHEN in_account_class = 2
-                                   THEN amount_tc * -1
-                                   END) as due_fx
+                JOIN (SELECT trans_id, chart_id,
+                             sum(CASE WHEN in_account_class = 1 THEN amount_bc
+                                      WHEN in_account_class = 2 THEN amount_bc * -1
+                                  END) as due,
+                             sum(CASE WHEN in_account_class = 1 THEN amount_tc
+                                      WHEN in_account_class = 2 THEN amount_tc * -1
+                                 END) as due_fx
                         FROM acc_trans
-                        GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
+                      GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
                         JOIN account_link l ON (l.account_id = ac.chart_id)
                         JOIN entity_credit_account c ON (c.id = a.entity_credit_account)
                 --        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
