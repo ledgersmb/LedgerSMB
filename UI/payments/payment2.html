@@ -243,7 +243,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                 type = "hidden"
                   id = "orig_" _ row.topay_fx.id
                 name = "orig_" _ row.topay_fx.name
-                value = row.topay_fx.value
+                value = row.orig_topay_fx
           } %]
           <img src="payments/img/up.gif" alt=[% text('Up') %]
                data-dojo-type="lsmb/MaximizeMinimize"
