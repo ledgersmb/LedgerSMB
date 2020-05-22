@@ -941,24 +941,20 @@ sub payment2 {
         ? 'on'
             :  $request->{"optional_discount_$invoice->{invoice_id}"};
 
-        # LETS SET THE EXCHANGERATE VALUES
-        #tshvr4 meaning of next statement? does the same in either case!
-        my $due_fx = $invoice->{due_fx};
+        my $due_fx = $invoice->{due_fx} +
+            ($request->{"optional_discount_$invoice->{invoice_id}"}
+             ? 0 : $invoice->{discount_tc});
+        my $due = $invoice->{due} +
+            ($request->{"optional_discount_$invoice->{invoice_id}"}
+             ? 0 : $invoice->{discount});
 
-        my $topay_fx_value;
-        if ("$exchangerate") {
-            $topay_fx_value =   $due_fx;
-            if (!$request->{"optional_discount_$invoice->{invoice_id}"}) {
-                $topay_fx_value = $due_fx =
-                    $due_fx +
-                    ($invoice->{discount}/$invoice->{exchangerate});
-            }
-        } else {
-            #    $topay_fx_value = "N/A";
-        }
+        $invoice->{discount} = 0
+            if ! $request->{"optional_discount_$invoice->{invoice_id}"};
+        $invoice->{discount_tc} = 0
+            if ! $request->{"optional_discount_$invoice->{invoice_id}"};
 
-        my $paid = $invoice->{amount} -
-            $invoice->{due} - $invoice->{discount};
+
+        my $paid = $invoice->{amount_tc} - $due_fx - $invoice->{discount_tc};
         my $paid_formatted = $paid->to_output(money => 1);
         # Now its time to build the link to the invoice :)
         my $uri_module;
@@ -995,13 +991,13 @@ sub payment2 {
                 href   => $uri },
             invoice_date      => "$invoice->{invoice_date}",
             amount            => $invoice_amt ? $invoice_amt->to_output(money => 1) : '',
-            due               => LedgerSMB::PGNumber->from_input($request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount})->to_output(money => 1),
+            due               => $due->to_output(money => 1),
             paid              => $paid_formatted,
             discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
             optional_discount =>  $request->{"optional_discount_$invoice_id"},
             exchange_rate     =>  "$invoice->{exchangerate}",
             due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-            topay             => LedgerSMB::PGNumber->from_input($invoice->{due} - $invoice->{discount})->to_output(money => 1),
+            topay             => LedgerSMB::PGNumber->from_input($due),
             source_text       =>  $request->{"source_text_$invoice_id"},
             optional          =>  $request->{"optional_pay_$invoice_id"},
             selected_account  =>  $request->{"account_$invoice_id"},
@@ -1010,14 +1006,12 @@ sub payment2 {
                 name  => "memo_invoice_$invoice_id",
                 value => $request->{"memo_invoice_$invoice_id"}
             },#END HASH
-            orig_topay_fx     => ($request->{"topay_fx_$invoice->{invoice_id}"} // $due_fx),
+            orig_topay_fx     => ($request->{"topay_fx_$invoice->{invoice_id}"} // LedgerSMB::PGNumber->new($due_fx)->to_output(money => 1)),
             topay_fx          =>  {
                 name  => "topay_fx_$invoice_id",
                 value => ($request->{"topay_fx_$invoice_id"}
                           ? LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice_id"})->to_output(money => 1) :
-                    ( $topay_fx_value ?
-                      LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output(money => 1)
-                      : '')),
+                          LedgerSMB::PGNumber->new($due_fx)->to_output(money => 1) ),
             }#END HASH
         };# END PUSH
 
