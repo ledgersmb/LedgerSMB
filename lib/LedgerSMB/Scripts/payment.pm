@@ -920,7 +920,6 @@ sub payment2 {
     my @invoice_data;
     my @topay_state;
     my @open_invoices  = $Payment->get_open_invoices();
-    my $unhandled_overpayment;
     for my $invoice (@open_invoices) {
         $invoice->{invoice_date} = $invoice->{invoice_date}->to_output();
 
@@ -929,8 +928,13 @@ sub payment2 {
             next;
         }
 
-        my $request_topay_fx_bigfloat
-            = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
+        if (($request->{"topay_fx_$invoice->{invoice_id}"} // '')
+            eq ($request->{"orig_topay_fx_$invoice->{invoice_id}"} // '')) {
+            # When the 'topay' amount hasn't been changed, delete it
+            # so it will be recalculated somewhere below
+            delete $request->{"topay_fx_$invoice->{invoice_id}"}
+        }
+
         # SHOULD I APPLY DISCCOUNTS?
         $request->{"optional_discount_$invoice->{invoice_id}"} =
             $request->{first_load}
@@ -953,30 +957,6 @@ sub payment2 {
             #    $topay_fx_value = "N/A";
         }
 
-
-        # We need to check for unhandled overpayment, see the post
-        # function for details
-        # First we will see if the discount should apply?
-
-
-        # We need to compute the unhandled_overpayment, notice that
-        # all the values inside the if already have
-        # the exchangerate applied
-
-        # XXX:  This causes issues currently, so display of unhandled
-        # overpayment has disabled.  Was getting numbers that didn't make
-        # a lot of sense to me. --CT
-        $due_fx ||= 0;
-        $request_topay_fx_bigfloat ||= 0;
-        if ( $due_fx <  $request_topay_fx_bigfloat) {
-            # We need to store all the overpayments
-            # so we can use it on the screen
-            $unhandled_overpayment =
-                $unhandled_overpayment + $request_topay_fx_bigfloat
-                - $due_fx;
-            #$request->{"topay_fx_$invoice->{invoice_id}"} = "$due_fx";
-            $request_topay_fx_bigfloat=$due_fx;
-        }
         my $paid = $invoice->{amount} -
             $invoice->{due} - $invoice->{discount};
         my $paid_formatted = $paid->to_output(money => 1);
@@ -1145,9 +1125,6 @@ sub payment2 {
         vendorcustomer => {
             name => 'vendor-customer',
             value => $request->{'vendor-customer'} },
-        unhandled_overpayment => {
-            name => 'unhandledoverpayment',
-            value => $unhandled_overpayment   }  ,
         vc => {
             name => $Payment->{company_name}, # We will assume that the first Billing Information as default
             address => [
