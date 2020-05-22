@@ -248,7 +248,13 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                       name = row.topay_fx.name
                                       value = row.topay_fx.value
                                       class = "topay_amount amount"
-                                  } ?>
+                                 };
+          PROCESS input element_data = {
+                type = "hidden"
+                  id = "orig_" _ row.topay_fx.id
+                name = "orig_" _ row.topay_fx.name
+                value = row.orig_topay_fx
+          } ?>
           <img src="payments/img/up.gif" alt=<?lsmb text('Up') ?>
                data-dojo-type="lsmb/MaximizeMinimize"
                data-dojo-props="mmNodeId: 'div_topay_<?lsmb row.invoice.id ?>'"
