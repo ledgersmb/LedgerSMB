@@ -232,7 +232,7 @@ define([
                   c2c.push(name);
                };
                for (var x in data) {
-                  if ({}.prototype.hasOwnProperty.call(data, x)) {
+                  if (Object.prototype.hasOwnProperty.call(data, x)) {
                      var val = data[x];
                      if (lang.isArray(val) && val.length > 1) {
                         for (var i = 0; i < val.length; i++) {
