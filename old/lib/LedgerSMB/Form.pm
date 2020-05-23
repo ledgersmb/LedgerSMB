@@ -181,8 +181,8 @@ sub new {
             split(/:/, $self->{cookie});
     }
 
-    $self->{version}   = "1.7.14";
-    $self->{dbversion} = "1.7.14";
+    $self->{version}   = "1.7.15-dev";
+    $self->{dbversion} = "1.7.15-dev";
 
     bless $self, $type;
 
