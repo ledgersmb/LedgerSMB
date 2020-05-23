@@ -373,7 +373,8 @@ sub post_invoice {
 
                 # add purchase to inventory
                 push @{ $form->{acc_trans}{lineitems} },
-                  {
+                {
+                    row_num       => $i,
                     chart_id      => $form->{"inventory_accno_id_$i"},
                     amount        => $amount,
                     fxlinetotal   => $fxlinetotal,
@@ -397,7 +398,8 @@ sub post_invoice {
 
                 # add purchase to expense
                 push @{ $form->{acc_trans}{lineitems} },
-                  {
+                {
+                    row_num       => $i,
                     chart_id      => $form->{"expense_accno_id_$i"},
                     amount        => $amount,
                     fxlinetotal   => $fxlinetotal,
@@ -482,8 +484,10 @@ sub post_invoice {
         $diff   = 0;
         $fxdiff = 0;
         for my $cls(@{$form->{bu_class}}){
-            if ($form->{"b_unit_$cls->{id}_$i"}){
-             $b_unit_sth_ac->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+            if ($form->{"b_unit_$cls->{id}_$ref->{row_num}"}){
+             $b_unit_sth_ac->execute(
+                 $cls->{id},
+                 $form->{"b_unit_$cls->{id}_$ref->{row_num}"});
             }
         }
     }
