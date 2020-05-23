@@ -346,7 +346,7 @@ sub post_invoice {
 
             if ( $form->{"inventory_accno_id_$i"} ) {
                 my $totalqty = $form->{"qty_$i"};
-        if($form->{"qty_$i"}<0) {
+                if($form->{"qty_$i"}<0) {
                     # check for unallocated entries at the same price to match our entry
                     $query = qq|
                   SELECT i.id, i.qty, i.allocated, a.transdate
@@ -368,7 +368,7 @@ sub post_invoice {
                         $allocated += $qty;
                         last if ( ( $totalqty -= $qty ) >= 0 );
                     }
-        }
+                }
 
                 # add purchase to inventory
                 push @{ $form->{acc_trans}{lineitems} },
