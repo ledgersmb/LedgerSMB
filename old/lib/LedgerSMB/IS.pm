@@ -1139,8 +1139,10 @@ sub post_invoice {
         $diff   = 0;
         $fxdiff = 0;
         for my $cls(@{$form->{bu_class}}){
-            if ($form->{"b_unit_$cls->{id}_$i"}){
-               $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+            if ($form->{"b_unit_$cls->{id}_$ref->{row_num}"}){
+               $b_unit_sth->execute(
+                   $cls->{id},
+                   $form->{"b_unit_$cls->{id}_$ref->{row_num}"});
             }
         }
     }
