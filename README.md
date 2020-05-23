@@ -266,7 +266,7 @@ through to them, that includes the standard Postgres Variables and others
 The system is installed and should be available for evaluation through
 
 * http://localhost:5762/setup.pl    # creation and privileged management of
-  company databases
+                                      company databases
 * http://localhost:5762/login.pl    # Normal login for the application
 
 The system is ready for [preparation for first
@@ -278,8 +278,8 @@ Web site: [http://ledgersmb.org/](http://ledgersmb.org)
 
 Live chat:
 
-* IRC: [irc://irc.freenode.net/#ledgersmb](irc://irc.freenode.net/#ledgersmb)
-* Matrix: [https://vector.im/#/room/#ledgersmb:matrix.org](https://vector.im/#/room/#ledgersmb:matrix.org)
+* IRC: [freenode #ledgersmb](irc://irc.freenode.net/#ledgersmb)
+* Matrix: [#ledgersmb:matrix.org](https://vector.im/#/room/#ledgersmb:matrix.org)
   (bridged IRC channel)
 
 Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
@@ -288,9 +288,9 @@ Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.o
 
 Mailing lists:
 
-* [https://lists.ledgersmb.org/mailman/listinfo/announce](https://lists.ledgersmb.org/mailman/listinfo/announce)
-* [https://lists.ledgersmb.org/mailman/listinfo/users](https://lists.ledgersmb.org/mailman/listinfo/users)
-* [https://lists.ledgersmb.org/mailman/listinfo/devel](https://lists.ledgersmb.org/mailman/listinfo/devel)
+* [Announcements](https://lists.ledgersmb.org/mailman/listinfo/announce)
+* [User Discussion](https://lists.ledgersmb.org/mailman/listinfo/users)
+* [Developer Discussion](https://lists.ledgersmb.org/mailman/listinfo/devel)
 
 Repository: https://github.com/ledgersmb/LedgerSMB
 
