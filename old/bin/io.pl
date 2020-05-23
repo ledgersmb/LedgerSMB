@@ -1119,13 +1119,6 @@ sub print {
     if ($form->{type} eq 'invoice') {
         &invoice_links;
         &prepare_invoice;
-
-        if ($form->{vc} eq 'vendor') {
-            IR->retrieve_invoice(\%myconfig, $form);
-        }
-        else {
-            IS->retrieve_invoice(\%myconfig, $form);
-        }
     }
     else {
         &order_links;
