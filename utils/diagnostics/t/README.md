@@ -22,7 +22,7 @@ echo "this to the log: this test was run as user $USER" 1>&5
 
 ```
 
-As you can see, any output that is sent to FD5 will end up in the appropriate
+As you can see, any output that is sent to fd5 will end up in the appropriate
 log file.
 
 ____
