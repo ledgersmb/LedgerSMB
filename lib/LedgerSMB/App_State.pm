@@ -17,7 +17,6 @@ use strict;
 use warnings;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::User;
-use LedgerSMB::Locale;
 
 =head1 OBJECTS FOR STORAGE
 
