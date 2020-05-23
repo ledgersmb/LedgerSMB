@@ -1242,6 +1242,8 @@ sub post_payment {
     # a regular payment, and see where does this leave us.
     #
     $Payment->{vc_name} = $Payment->{company_name};
+    # get_entity_credit_account() expects 'credit_id' to be defined...
+    $Payment->{credit_id} = $Payment->{entity_credit_id};
     @array_options = $Payment->get_entity_credit_account();
     my $discount_account_id = $array_options[0]->{discount};
     @array_options = $Payment->get_open_invoices();
@@ -1257,8 +1259,8 @@ sub post_payment {
             if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})
                 && ($array_options[$ref]->{due_fx}
                     <=  $request_topay_fx_bigfloat
-                    +  $array_options[$ref]->{discount_fx})) {
-                $temporary_discount = $array_options[$ref]->{discount_fx};
+                    +  $array_options[$ref]->{discount_tc})) {
+                $temporary_discount = $array_options[$ref]->{discount_tc};
             }
             #
             # The prefix cash is to set the movements of the cash accounts,
