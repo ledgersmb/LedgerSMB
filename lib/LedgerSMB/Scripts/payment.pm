@@ -1226,6 +1226,8 @@ sub post_payment {
     # a regular payment, and see where does this leave us.
     #
     $Payment->{vc_name} = $Payment->{company_name};
+    # get_entity_credit_account() expects 'credit_id' to be defined...
+    $Payment->{credit_id} = $Payment->{entity_credit_id};
     @array_options = $Payment->get_entity_credit_account();
     my $discount_account_id = $array_options[0]->{discount};
     @array_options = $Payment->get_open_invoices();
@@ -1241,18 +1243,19 @@ sub post_payment {
             if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})
                 && ($array_options[$ref]->{due_fx}
                     <=  $request_topay_fx_bigfloat
-                        +  $array_options[$ref]->{discount_fx})) {
-         $temporary_discount = $array_options[$ref]->{discount_fx};
-     }
-         #
-         # The prefix cash is to set the movements of the cash accounts,
-         # same names are used for ap/ar accounts w/o the cash prefix.
-         #
-     my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($LedgerSMB::Company_Config::decimal_places)
-            <
-          $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
-     ){
+                    +  $array_options[$ref]->{discount_tc})) {
+                $temporary_discount = $array_options[$ref]->{discount_tc};
+            }
+            #
+            # The prefix cash is to set the movements of the cash accounts,
+            # same names are used for ap/ar accounts w/o the cash prefix.
+            #
+            my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
+            my $decimals = $request->{_company_config}->{decimal_places};
+            if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($decimals)
+                 <
+                 $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($decimals)
+                ){
                 # We need to store all the overpayments
                 # so we can use it on a new payment2 screen
                 $unhandled_overpayment += $request_topay_fx_bigfloat
