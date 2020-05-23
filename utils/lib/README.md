@@ -13,10 +13,10 @@ For more information about any of these files, Read The Source Luke
 
 A library of functions that are common to most of the scripts
 
-If you are intending to use the config file functions
+If you are intending to use the configuration file functions
 One Environment Variable MUST be set before sourcing this file.
 
-eg:
+e.g.:
 
 `ConfigFile="$HOME/.lsmb-release"`
 
