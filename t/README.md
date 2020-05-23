@@ -3,7 +3,7 @@
 # Running the tests
 
 ```sh
- $ prove
+ prove
 ```
 
 will run tests, depending on the installed features and environment
@@ -100,4 +100,3 @@ LSMB_COUNTRY_CODE   Country code for administrator and for loading chart of
 If the variable LSMB_INSTALL_DB is set, the database will NOT be removed after
 test cases are run.  Should be used with the `admin user creation` and
 `chart of accounts loading` variables.
-
