@@ -2,9 +2,14 @@
 Changelog for 1.7 Series
 2019-10-04
 
-Changelog for 1.7.14 (to be released)
+Changelog for 1.7.14
 * Fix AR/AP account being reset to default on transaction Update-s (#4599)
 * Fix CSV, ODS or TXT reports being downloaded without extensions (#4613)
+* Fix 'To pay' amount resetting on second updates in single payments (#4633)
+* Fix 'Paid' amount incorrect when 'Apply discount' unchecked (#4514)
+* Fix income statement failing to filter on invoice reporting units (#4615)
+* Fix payment discount not being posted (#4616)
+* Fix tax base and amount doubled on printed invoice (#4645)
 
 
 Changelog for 1.7.13
