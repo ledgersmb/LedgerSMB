@@ -1,0 +1,35 @@
+# markdown-spellcheck spelling configuration file
+# Format - lines beginning # are comments
+# global dictionary is at the start, file overrides afterwards
+# one word per line, to define a file override use ' - filename'
+# where filename is relative to this configuration file
+systemd
+ledgersmb
+httpd
+plackup
+starman
+debian
+lighttpd
+javascript
+unbuilt
+preforks
+preloads
+perl
+plack
+FCGI
+readme
+rfqs
+e.g.
+i.e.
+daemonizing
+updatable
+apache-vhost
+unbuilt-dojo
+submodules
+README.md
+travis-ci
+travis
+RedHat
+prepended
+accessor
+accessors
