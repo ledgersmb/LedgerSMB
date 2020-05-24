@@ -19,6 +19,7 @@ Added functionalities
 * New configuration keys in '[mail]' section of ledgersmb.conf (#4378)
 * Beginnings of a web services API, served at /erp/api/v0 (#4452)
 * Import of OFX bank statement files for reconciliation
+* New 'migrate-company' command line tool for migrations from 1.2 and 1.3
 
 Changed functionalities
 * Faster loading of the menu
@@ -46,7 +47,7 @@ Bugs fixed
 * Formatting of columns in the 'Inventory Activity' report
 * Incorrect calculation of discounts where posting date isn't 'today' (#4505)
 * Single-entry timecards work again after long-standing regression
-* LedgerSMB 1.2 migration fixes
+* LedgerSMB 1.2 migration fixes and completeness
 
 Code cleanup
 * Reduce use of LedgerSMB::App_State and LedgerSMB::App_State::Locale
@@ -73,6 +74,8 @@ Code cleanup
 * Refactored reconciliation screen logic for easier maintenance
 * Removal of dead code
 * JavaScript consistency clean-up due to ESLint checks
+* Changed UI templates from custom to standard TT delimiters ('[%' and '%]')
+* Refactored company migration logic into a separate module (out of setup.pl)
 
 Dependency updates
 * Perl 5.20 (upgraded from 5.18)
