@@ -204,6 +204,7 @@ sub prepare_order {
             ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
             $dec = length $dec;
             $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+            $form->{"precision_$i"} = $decimalplaces;
 
             for ( map { "${_}_$i" } qw(sellprice listprice) ) {
                 $form->{$_} =

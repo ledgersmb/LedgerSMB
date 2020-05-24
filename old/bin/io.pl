@@ -94,6 +94,8 @@ sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
     my $moneyplaces = $LedgerSMB::Company_Config::settings->{decimal_places};
     foreach my $i (1 .. $form->{rowcount}){
+        local $decimalplaces = $form->{"precision_$i"};
+
         my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
                                       * ($form->{"discount_$i"} / 100),
                                     $decimalplaces);
