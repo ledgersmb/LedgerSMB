@@ -267,7 +267,6 @@ DECLARE t_alloc numeric := 0;
         t_avail numeric;
 BEGIN
 
-
 IF in_qty > 0 THEN
    return (cogs__reverse_ap(in_parts_id, in_qty * -1))[1] * in_lastcost;
 END IF;
@@ -311,14 +310,14 @@ LOOP
        WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL
        UNION
-       SELECT income_accno_id,
+       SELECT inventory_accno_id,
               CASE WHEN t_transdate > coalesce(t_cp.end_date, t_transdate - 1)
                    THEN t_transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END,
-               -1 * (in_qty + t_alloc) * in_lastcost,
+               -1*(in_qty + t_alloc) * in_lastcost,
                defaults_get_defaultcurrency(),
-               -1 * (in_qty + t_alloc) * in_lastcost,
+               -1*(in_qty + t_alloc) * in_lastcost,
                t_inv.id, true,
               t_inv.trans_id
          FROM parts
@@ -339,22 +338,22 @@ LOOP
                    THEN t_transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END,
-               -1 * t_avail * in_lastcost,
+               -1*t_avail * in_lastcost,
                defaults_get_defaultcurrency(),
-               -1 * t_avail * in_lastcost,
+               -1*t_avail * in_lastcost,
               t_inv.id, true, t_inv.trans_id
          FROM parts
        WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL
        UNION
-       SELECT income_accno_id,
+       SELECT inventory_accno_id,
               CASE WHEN t_transdate > coalesce(t_cp.end_date, t_transdate - 1)
                    THEN t_transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END,
-               -t_avail * in_lastcost,
+               t_avail * in_lastcost,
                defaults_get_defaultcurrency(),
-               -t_avail * in_lastcost,
+               t_avail * in_lastcost,
                t_inv.id, true, t_inv.trans_id
          FROM parts
        WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
@@ -362,7 +361,6 @@ LOOP
        t_alloc := t_alloc + t_avail;
        t_cogs := t_cogs + t_avail * in_lastcost;
    END IF;
-
 
 END LOOP;
 
