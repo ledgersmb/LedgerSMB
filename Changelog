@@ -30,7 +30,6 @@ Changed functionalities
 * Colors of default scheme changed to follow the soft-tone of the Claro theme
 * Manual tax lines with 0 (zero) tax and taxable amounts are no longer posted
 * Employee 'Wages & Deductions' (experimental) page now hidden until enabled
-* Templates for printed documents need to escape inserted data (was automatic)
 * Search checkmarks 'Open/Closed' replaced by radio button 'Open/Closed/All'
 * Default exchange rates cannot be NULL
 * Don't display delete button for in-use currency or exchange rate types
