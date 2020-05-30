@@ -399,10 +399,46 @@ sub create_part {
         VALUES ($placeholders)
 |, undef, @values);
 
+    return $props->{partnumber};
 }
 
+my $vc_counter = 0;
 
+sub create_vc {
+    my ($self, $vc, $vc_name) = @_;
+    my $control_code = uc(substr($vc,0,1)) . '-' . ($vc_counter++);
+    my $admin_dbh = $self->admin_dbh;
+    my $company = LedgerSMB::Entity::Company->new(
+        country_id   => 1,
+        control_code => $control_code,
+        legal_name   => $vc_name,
+        name         => $vc_name,
+        entity_class => ($vc eq 'vendor' ? 1 : 2),
+        _dbh         => $admin_dbh,
+        );
+    $company = $company->save;
 
+    local $LedgerSMB::App_State::DBH = $admin_dbh;
+    my $account = LedgerSMB::DBObject::Account->new();
+    $account->set_dbh($admin_dbh);
+    my @accounts = $account->list();
+    my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
+
+    LedgerSMB::Entity::Credit_Account->new(
+        entity_id        => $company->entity_id,
+        entity_class     => ($vc eq 'vendor' ? 1 : 2),
+        _dbh             => $admin_dbh,
+        ar_ap_account_id => $accno_ids{($vc eq 'vendor' ? '2100' : '1200')},
+        meta_number      => $vc_name,
+        curr             => 'USD',
+        )->save;
+
+    my $vc_key = ($vc eq 'vendor') ? 'the vendor' : 'the customer';
+    return {
+        $vc_key       => $vc_name,
+#        'the company' => $control_code,
+    };
+}
 
 
 __PACKAGE__->meta->make_immutable(inline_constructor => 0);

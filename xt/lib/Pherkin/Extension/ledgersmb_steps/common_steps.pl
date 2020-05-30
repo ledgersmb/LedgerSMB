@@ -157,39 +157,12 @@ Given qr/a logged in user with these rights:/, sub {
 };
 
 
-my $entity_counter = 0;
-my $vc_counter = 0;
-my $customer_counter = 0;
-
 Given qr/a (vendor|customer) "(.*)"$/, sub {
     my $vc = $1;
     my $vc_name = $2;
-    my $control_code = uc(substr($vc,0,1)) . '-' . ($vc_counter++);
-    my $admin_dbh = S->{ext_lsmb}->admin_dbh;
-    my $company = LedgerSMB::Entity::Company->new(
-        country_id => 1,
-        control_code => $control_code,
-        legal_name => $vc_name,
-        name => $vc_name,
-        entity_class => ($vc eq 'vendor' ? 1 : 2),
-        _dbh => $admin_dbh,
-        );
-    $company = $company->save;
 
-    local $LedgerSMB::App_State::DBH = $admin_dbh;
-    my $account = LedgerSMB::DBObject::Account->new();
-    $account->set_dbh($admin_dbh);
-    my @accounts = $account->list();
-    my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
-
-    LedgerSMB::Entity::Credit_Account->new(
-        entity_id => $company->entity_id,
-        entity_class => ($vc eq 'vendor' ? 1 : 2),
-        _dbh => $admin_dbh,
-        ar_ap_account_id => $accno_ids{($vc eq 'vendor' ? '2100' : '1200')},
-        meta_number => $vc_name,
-        curr => 'USD',
-        )->save;
+    my $vc_data = S->{ext_lsmb}->create_vc($vc, $vc_name);
+    S->{$_} = $vc_data->{$_} for %$vc_data;
 };
 
 
@@ -276,13 +249,15 @@ my %part_props = (
     );
 
 
-Given qr/a part "([^\"]+)"$/, sub {
+Given qr/a part( "([^\"]+)")?$/, sub {
     my $partnumber = $1;
+    $partnumber //= 'P01';
     my %total_props = (%part_props,
                        partnumber => $partnumber,
         );
 
     S->{ext_lsmb}->create_part(\%total_props);
+    S->{'the part'} = $partnumber;
 };
 
 Given qr/a part with these properties:$/, sub {
@@ -356,6 +331,63 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
     }
     S->{ext_lsmb}->admin_dbh->commit
         if ! S->{ext_lsmb}->admin_dbh->{AutoCommit};
+};
+
+Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d+) ([A-Z]{3,3}) each/, sub {
+    my $count = $1;
+    my $choice = $2;
+    my $partnumber = $3;
+    my $price = $4;
+    my $curr = $5;
+
+    if ($choice eq 'a part') {
+        my %total_props =
+            (%part_props,
+             partnumber => $partnumber,
+            );
+
+        S->{'the part'} = S->{ext_lsmb}->create_part(\%total_props);
+    }
+
+    $partnumber = S->{'the part'}
+         if ($choice eq 'a part' or $choice eq 'the part');
+
+    # set up inventory in a single blow
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    $dbh->do(
+        q{
+        INSERT INTO gl (reference, description, transdate, person_id, approved)
+               VALUES ('INV-INIT', 'Initial setup', '2020-01-01', '1', true);
+        })
+        or die $dbh->errstr;
+
+    $dbh->do(
+        q{
+        INSERT INTO invoice (trans_id, parts_id, qty, sellprice, precision,
+                             fxsellprice, discount, unit, allocated)
+            VALUES (currval('id'), (select id from parts where partnumber = ?),
+                    ?, ?, 2, ?, 0, 'ea', 0);
+        },
+        {},
+        $partnumber, -$count, $price, 0)
+        or die $dbh->errstr;
+
+    $dbh->do(
+        q{
+        INSERT INTO acc_trans (trans_id, chart_id,
+                               transdate, invoice_id, approved,
+                               amount_bc, amount_tc, curr)
+            VALUES (currval('id'), (select id from account where accno='3350'),
+                    '2020-01-01', currval('invoice_id_seq'), true,
+                    ?, ?, ?),
+                   (currval('id'), (select id from account where accno='1510'),
+                    '2020-01-01', currval('invoice_id_seq'), true,
+                    ?, ?, ?);
+        },
+        {},
+        $count*$price, $count*$price, $curr,
+        -$count*$price, -$count*$price, $curr)
+        or die $dbh->errstr;
 };
 
 Given qr/(a batch|batches) with these properties:$/, sub {
