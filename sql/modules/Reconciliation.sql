@@ -50,11 +50,7 @@ LANGUAGE SQL AS
 $$
 WITH unapproved_tx as (
      SELECT 'unapproved_transactions'::text, sum(c)::text
-       FROM (SELECT count(*) as c FROM ar
-              WHERE approved IS FALSE AND transdate <= $1
-      UNION  SELECT count(*) as c FROM ap
-              WHERE approved IS FALSE AND transdate <= $1
-      UNION  SELECT count(*) FROM gl
+       FROM (SELECT count(*) as c FROM transactions
               WHERE approved IS FALSE AND transdate <= $1
       UNION  SELECT count(DISTINCT source) FROM acc_trans
               WHERE approved IS FALSE AND transdate <= $1 AND chart_id = $2
