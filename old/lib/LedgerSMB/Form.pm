@@ -62,6 +62,7 @@ use open ':utf8';
 use utf8;
 
 
+use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::PGNumber;
@@ -118,8 +119,7 @@ sub new {
         $self->{nextsub} //= '';
         $self->{action} //= $self->{nextsub};
     }
-    $self->{version}   = '1.8.0-dev';
-    $self->{dbversion} = '1.8.0-dev';
+    $self->{version} = $self->{dbversion} = $LedgerSMB::VERSION;
 
 
     $self;
