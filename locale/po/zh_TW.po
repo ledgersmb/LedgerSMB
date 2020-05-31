@@ -1,12 +1,14 @@
+#
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2018
+# asoo lin <asoolin1021@gmail.com>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.21-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-03-07 14:31+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
+"POT-Creation-Date: 2020-05-31 11:28+0000\n"
+"Last-Translator: asoo lin <asoolin1021@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/ledgersmb/"
 "teams/58325/zh_TW/)\n"
 "Language: zh_TW\n"
@@ -226,11 +228,11 @@ msgstr "帳戶"
 #: lib/LedgerSMB/Report/Trial_Balance.pm:160
 #: UI/payments/use_overpayment2.html:122
 msgid "Account Description"
-msgstr ""
+msgstr "帳戶描述"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:77
 msgid "Account Label"
-msgstr ""
+msgstr "帳戶標籤"
 
 #: lib/LedgerSMB/Report/GL.pm:152 UI/Reports/co/filter_bm.html:84
 #: UI/Reports/co/filter_cd.html:68 UI/Reports/filters/gl.html:279
@@ -271,12 +273,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:155
 msgid "Account Title"
-msgstr ""
+msgstr "帳戶名稱"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:78
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:177
 msgid "Account Type"
-msgstr ""
+msgstr "帳戶類型"
 
 #: old/lib/LedgerSMB/GL.pm:205
 msgid "Account [_1] not found"
@@ -289,7 +291,7 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:223
 #: UI/Reports/filters/income_statement.html:270
 msgid "Account category"
-msgstr ""
+msgstr "帳戶類型"
 
 #: old/bin/am.pl:129
 msgid "Account does not exist!"
@@ -298,12 +300,12 @@ msgstr "不存在帳戶！"
 #: UI/Reports/filters/balance_sheet.html:176
 #: UI/Reports/filters/income_statement.html:223
 msgid "Account numbers"
-msgstr ""
+msgstr "帳戶號碼"
 
 #: UI/payments/payments_detail.html:128 UI/reconciliation/report.html:31
 #: UI/Reports/filters/reconciliation_search.html:46
 msgid "Account:"
-msgstr ""
+msgstr "帳戶："
 
 #: UI/lib/report_base.html:64
 msgid "Accounts"
@@ -347,11 +349,11 @@ msgstr ""
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
-msgstr ""
+msgstr "動作"
 
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
-msgstr ""
+msgstr "動作："
 
 #: old/bin/aa.pl:1689 UI/business_units/list_classes.html:10
 #: UI/Reports/filters/contact_search.html:114
@@ -389,7 +391,7 @@ msgstr "新增帳戶"
 
 #: sql/Pg-database.sql:2794
 msgid "Add Accounts"
-msgstr ""
+msgstr "新增帳戶"
 
 #: old/bin/ic.pl:62 sql/Pg-database.sql:2869
 msgid "Add Assembly"
@@ -409,7 +411,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2916
 msgid "Add Budget"
-msgstr ""
+msgstr "新增預算"
 
 #: old/bin/am.pl:267 sql/Pg-database.sql:2843
 msgid "Add Business"
@@ -421,7 +423,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2790
 msgid "Add Contact"
-msgstr ""
+msgstr "新增聯絡人"
 
 #: old/bin/is.pl:97
 msgid "Add Credit Invoice"
@@ -474,11 +476,11 @@ msgstr "新增語言"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:80
 msgid "Add New Tax Form"
-msgstr ""
+msgstr "新增新報稅單"
 
 #: UI/budgetting/budget_entry.html:169
 msgid "Add Note"
-msgstr ""
+msgstr "新增註解"
 
 #: sql/Pg-database.sql:2935
 msgid "Add Overhead"
@@ -530,7 +532,7 @@ msgstr "新增服務"
 
 #: sql/Pg-database.sql:2875
 msgid "Add Tax Form"
-msgstr ""
+msgstr "新增報稅單"
 
 #: sql/Pg-database.sql:2834
 msgid "Add Timecard"
@@ -538,7 +540,7 @@ msgstr "新增工時卡"
 
 #: old/bin/io.pl:1800
 msgid "Add To List"
-msgstr ""
+msgstr "新增到清單"
 
 #: sql/Pg-database.sql:2797 sql/Pg-database.sql:2800
 msgid "Add Transaction"
@@ -546,7 +548,7 @@ msgstr "新增交易"
 
 #: UI/business_units/list_classes.html:103
 msgid "Add Unit"
-msgstr ""
+msgstr "新增單位"
 
 #: UI/Contact/divs/employee.html:219 UI/Contact/divs/user.html:127
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:96
@@ -563,7 +565,7 @@ msgstr "新增供應商發票"
 
 #: old/bin/ir.pl:110
 msgid "Add Vendor Return"
-msgstr ""
+msgstr "新增供應商歸還"
 
 #: old/bin/am.pl:712 sql/Pg-database.sql:2841
 msgid "Add Warehouse"
@@ -587,7 +589,7 @@ msgstr ""
 
 #: UI/Contact/divs/wage.html:44
 msgid "Add/Change Wage"
-msgstr ""
+msgstr "新增/更改工資"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:180
 msgid "Added id [_1]"
@@ -603,11 +605,11 @@ msgstr "地址"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr ""
+msgstr "地址1:"
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr ""
+msgstr "地址2:"
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
@@ -618,7 +620,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:3
 msgid "Addresses"
-msgstr ""
+msgstr "地址"
 
 #: old/bin/ic.pl:1272
 msgid "Adj"
@@ -626,7 +628,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:123
 msgid "Adjusted"
-msgstr ""
+msgstr "以調整"
 
 #: lib/LedgerSMB/Scripts/asset.pm:786
 msgid "Adjusted Basis"
@@ -858,7 +860,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/asset.pm:740 lib/LedgerSMB/Scripts/asset.pm:808
 #: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:395
 msgid "Approve"
-msgstr ""
+msgstr "核准"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:145
 #: UI/Reports/filters/gl.html:176 UI/Reports/filters/invoice_search.html:222
@@ -866,7 +868,7 @@ msgstr ""
 #: UI/Reports/filters/trial_balance.html:48
 #: UI/Reports/filters/unapproved.html:59
 msgid "Approved"
-msgstr ""
+msgstr "已核准"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:93
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:157
