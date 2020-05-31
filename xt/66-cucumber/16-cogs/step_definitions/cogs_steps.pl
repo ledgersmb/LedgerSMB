@@ -7,7 +7,7 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-Given qr/^(\d+) units sold/, sub {
+Given qr/^(-?\d+) units sold/, sub {
     my $count = $1;
     my $dbh = S->{ext_lsmb}->admin_dbh;
     if (not defined S->{'the customer'}) {
@@ -89,23 +89,27 @@ When qr/^(\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
         or die $dbh->errstr;
 };
 
-When qr/^(\d+) units are sold$/, sub {
+my $sales_count = 0;
+
+When qr/^(-?\d+) units are sold$/, sub {
     my $count = $1;
     my $dbh = S->{ext_lsmb}->admin_dbh;
     if (not defined S->{'the customer'}) {
         my $vc_data = S->{ext_lsmb}->create_vc('customer', 'C01');
         S->{$_} = $vc_data->{$_} for %$vc_data;
     }
+    $sales_count++;
     $dbh->do(
         q{
         INSERT INTO ar (invnumber, transdate, invoice, approved,
                         entity_credit_account)
-             VALUES ('sale', '2020-01-02', true, true,
+             VALUES (?, '2020-01-02', true, true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
         },
         {},
+        "sale-$sales_count",
         S->{'the customer'},
         )
         or die $dbh->errstr;
@@ -127,6 +131,48 @@ When qr/^(\d+) units are sold$/, sub {
         })
         or die $dbh->errstr;
 };
+
+When qr/^(\d+) units are credited$/, sub {
+    my $count = $1;
+    my $dbh = S->{ext_lsmb}->admin_dbh;
+    if (not defined S->{'the customer'}) {
+        my $vc_data = S->{ext_lsmb}->create_vc('customer', 'C01');
+        S->{$_} = $vc_data->{$_} for %$vc_data;
+    }
+    $sales_count++;
+    $dbh->do(
+        q{
+        INSERT INTO ar (invnumber, transdate, invoice, approved, reverse,
+                        entity_credit_account)
+             VALUES (?, '2020-01-02', true, true, true,
+                     (select id from entity_credit_account
+                       where meta_number=?)
+                    );
+        },
+        {},
+        "sale-$sales_count",
+        S->{'the customer'},
+        )
+        or die $dbh->errstr;
+
+    $dbh->do(
+        q{
+        INSERT INTO invoice (trans_id, parts_id, qty, sellprice, discount,
+                             allocated)
+               VALUES (currval('id'), (select id from parts where partnumber=?),
+                       ?, ?, ?, 0);
+        },
+        {},
+        S->{'the part'},
+        -$count, 0, 0)
+        or die $dbh->errstr;
+    $dbh->do(
+        q{
+        SELECT cogs__add_for_ar_line(currval('invoice_id_seq')::integer);
+        })
+        or die $dbh->errstr;
+};
+
 
 my %acc_name_map = (
     'the inventory' => 'inventory_accno_id',
