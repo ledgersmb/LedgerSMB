@@ -2,6 +2,12 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.15
+* Fix tax on invoice differs from search results (#4651)
+* Fix COGS for purchased-in-arrears parts (#4658)
+* Update Dojo to 1.15.3
+
+
 Changelog for 1.7.14
 * Fix AR/AP account being reset to default on transaction Update-s (#4599)
 * Fix CSV, ODS or TXT reports being downloaded without extensions (#4613)
