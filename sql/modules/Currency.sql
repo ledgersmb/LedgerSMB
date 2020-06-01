@@ -64,7 +64,7 @@ BEGIN
        OR EXISTS (SELECT 1 FROM oe WHERE curr = in_curr)
        OR EXISTS (SELECT 1 FROM partscustomer WHERE curr = in_curr)
        OR EXISTS (SELECT 1 FROM partsvendor WHERE curr = in_curr);
-END;$$ language plpgsql;
+END;$$ language plpgsql security definer;
 
 COMMENT ON FUNCTION currency__is_used(text) IS
 $$Returns true if currency 'in_curr' is used within the current commpany
