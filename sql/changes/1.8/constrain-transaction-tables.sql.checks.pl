@@ -4,16 +4,21 @@ use LedgerSMB::Database::ChangeChecks;
 
 check q|Ensure that the gl database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT *
+        SELECT id, reference, description, approved,
+               (select min(transdate) from acc_trans a where a.trans_id = gl.id)
+               as transdate
         FROM gl
-        WHERE transdate IS NULL
-        OR approved IS NULL
+        WHERE gl.transdate IS NULL
+        OR gl.approved IS NULL
         ORDER BY id
     |,
     description => q|
 The upgrade process found gl table entries with NULL transaction dates or
 approval flags. These are invalid and must be corrected as they are
 prohibited by stricter data integrity rules enforced by the update.
+
+The transaction dates offered in the table below are suggested values
+based on data in your database.
 
 Please fill in the missing data and press 'Save' to fix this issue.
 |,
@@ -51,16 +56,21 @@ Please fill in the missing data and press 'Save' to fix this issue.
 
 check q|Ensure that the ap database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT *
+        SELECT id, reference, description, approved,
+               (select min(transdate) from acc_trans a where a.trans_id = ap.id)
+               as transdate
         FROM ap
-        WHERE transdate IS NULL
-        OR approved IS NULL
+        WHERE ap.transdate IS NULL
+        OR ap.approved IS NULL
         ORDER BY id
     |,
     description => q|
 The upgrade process found ap table entries with NULL transaction dates or
 approval flags. These are invalid and must be corrected as they are
 prohibited by stricter data integrity rules enforced by the update.
+
+The transaction dates offered in the table below are suggested values
+based on data in your database.
 
 Please fill in the missing data and press 'Save' to fix this issue.
 |,
@@ -99,16 +109,21 @@ Please fill in the missing data and press 'Save' to fix this issue.
 
 check q|Ensure that the ar database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT *
+        SELECT id, reference, description, approved,
+               (select min(transdate) from acc_trans a where a.trans_id = ar.id)
+               as transdate
         FROM ar
-        WHERE transdate IS NULL
-        OR approved IS NULL
+        WHERE ar.transdate IS NULL
+        OR ar.approved IS NULL
         ORDER BY id
     |,
     description => q|
 The upgrade process found ar table entries with NULL transaction dates or
 approval flags. These are invalid and must be corrected as they are
 prohibited by stricter data integrity rules enforced by the update.
+
+The transaction dates offered in the table below are suggested values
+based on data in your database.
 
 Please fill in the missing data and press 'Save' to fix this issue.
 |,
