@@ -389,7 +389,7 @@ Please select either 'Delete' or 'Copy' below.
         FROM file_transaction f
         JOIN transactions t ON (f.ref_key = t.id)
         WHERE t.transdate IS NULL
-        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR trans_id = f.ref_key)
         AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
         AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
         AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
@@ -400,7 +400,7 @@ Please select either 'Delete' or 'Copy' below.
         USING transactions t
         WHERE (f.ref_key = t.id)
         AND t.transdate IS NULL
-        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR trans_id = f.ref_key)
         AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
         AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
         AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
@@ -427,20 +427,17 @@ check q|Clear orphaned transaction entries|,
         AND NOT EXISTS (SELECT 1 FROM file_transaction WHERE ref_key = t.id)
         AND NOT EXISTS (SELECT 1 FROM invoice WHERE trans_id = t.id)
         AND NOT EXISTS (SELECT 1 FROM new_shipto WHERE trans_id = t.id)
-        AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id)
-        AND NOT EXISTS (SELECT 1 FROM voucher WHERE trans_id = t.id);
+        AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id);
     |,
     description => q|
-The upgrade process found empty transaction table entries which are not
-referenced by anything else.
-
-These are invalid and must be removed to comply with stricter
-data integrity rules enforced by the update.
+The upgrade process found orphaned transaction table entries which are not
+referenced by anything else (meaning these transactions don't even have
+transaction lines).
 
 As the rows are not referenced by other tables and contain no data
 themselves, they can be removed without affecting accounting data.
 
-To remove these rows, press 'Delete'.
+Please remove the orphaned transactions by pressing 'Delete'.
 |,
     on_failure => sub {
         my ($dbh, $rows) = @_;
@@ -457,6 +454,19 @@ To remove these rows, press 'Delete'.
         my $confirm = provided 'confirm';
 
         if ($confirm eq 'delete') {
+            # It's possible vouchers are in the way of deleting
+            # the orphaned transactions. Remove them.
+            $dbh->do(q|
+               DELETE FROM voucher v
+               USING transactions t
+               WHERE (v.trans_id = t.id)
+               AND t.transdate IS NULL
+               AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+               AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
+               AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
+               AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
+               |);
+
             $dbh->do(
                 q{DELETE FROM transactions t }.
                 q{WHERE locked_by IS NULL }.
@@ -470,8 +480,7 @@ To remove these rows, press 'Delete'.
                 q{AND NOT EXISTS (SELECT 1 FROM file_transaction WHERE ref_key = t.id) }.
                 q{AND NOT EXISTS (SELECT 1 FROM invoice WHERE trans_id = t.id) }.
                 q{AND NOT EXISTS (SELECT 1 FROM new_shipto WHERE trans_id = t.id) }.
-                q{AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id) }.
-                q{AND NOT EXISTS (SELECT 1 FROM voucher WHERE trans_id = t.id)}
+                q{AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id) }
             ) or die "Failed to delete orphaned transactions records: " . $dbh->errstr;
         }
         else {
