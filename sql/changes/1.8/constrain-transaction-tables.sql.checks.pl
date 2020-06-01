@@ -319,6 +319,99 @@ To remove these rows and proceed with the update, press 'Delete'.
     }
 ;
 
+check q|Clear orphaned transaction's attached files|,
+    query => q|
+        SELECT id, transdate, file_name, uploaded_by, uploaded_at
+        FROM file_transaction f
+        JOIN transactions t ON (f.ref_key = t.id)
+        WHERE t.transdate IS NULL
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+        AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
+    |,
+    description => q|
+The upgrade process found files attached to orphaned transactions.
+
+Due to stricter integrity constraints, these transactions can't be stored in
+the database anymore. As a result, the files attached to these transactions
+cannot remain connected. Two options are available:
+
+1. 'Delete' the files listed below  
+   This action can't be undone. As the files aren't available in the
+   application, due to the fact that they are attached to orphaned
+   transactions, this may not make a difference.
+2. 'Copy' the files to the 'incoming' queue  
+   This action preserves the data in the database. At the moment the data
+   isn't accessible through the UI. Although data isn't directly accessible,
+   it *will* be retained for future reference.
+
+Please select either 'Delete' or 'Copy' below.
+    |,
+    on_failure => sub {
+        my ($dbh, $rows) = @_;
+        describe;
+        grid (
+            $rows,
+            name => 'files',
+            columns => [qw(id transdate file_name uploaded_by uploaded_at)],
+            dropdowns => {
+                uploaded_by => dropdown_sql($dbh, q|select entity_id as uploaded_by, name as description from employee_search|),
+            },
+        );
+        confirm delete => 'Delete';
+        confirm copy => 'Copy';
+    },
+    on_submit => sub {
+        my ($dbh, $rows) = @_;
+        my $confirm = provided 'confirm';
+
+        if ($confirm eq 'delete') {
+
+            $dbh->do(q|
+        DELETE FROM file_transaction f
+        USING transactions t
+        WHERE (f.ref_key = t.id)
+        AND t.transdate IS NULL
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR trans_id = f.ref_key)
+        AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
+               |);
+        }
+        elsif ($confirm eq 'copy') {
+            $dbh->do(q|
+        INSERT INTO file_incoming (content, mime_type_id, file_name,
+                     description, uploaded_by, uploaded_at, ref_key,
+                     file_class)
+        SELECT content, mime_type_id, file_name, description, uploaded_by,
+                     uploaded_at, 0, 7
+        FROM file_transaction f
+        JOIN transactions t ON (f.ref_key = t.id)
+        WHERE t.transdate IS NULL
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+        AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
+                     |)
+                and
+                $dbh->do(q|
+        DELETE FROM file_transaction f
+        USING transactions t
+        WHERE (f.ref_key = t.id)
+        AND t.transdate IS NULL
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+        AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
+        AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
+                         |);
+        }
+        else {
+            die "Unexpected confirmation value found: $confirm";
+        }
+    }
+;
+
 
 check q|Clear orphaned transaction entries|,
     query => q|
