@@ -247,6 +247,21 @@
          submit_session => [
              {
                  statement =>
+                     q|
+               DELETE FROM voucher v
+               USING transactions t
+               WHERE (v.trans_id = t.id)
+               AND t.transdate IS NULL
+               AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+               AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
+               AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
+               AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
+               |,
+                   bound_params => [],
+                   results => [],
+             },
+             {
+                 statement =>
                      q{DELETE FROM transactions t }.
                      q{WHERE locked_by IS NULL }.
                      q{AND approved_by IS NULL }.
@@ -259,8 +274,7 @@
                      q{AND NOT EXISTS (SELECT 1 FROM file_transaction WHERE ref_key = t.id) }.
                      q{AND NOT EXISTS (SELECT 1 FROM invoice WHERE trans_id = t.id) }.
                      q{AND NOT EXISTS (SELECT 1 FROM new_shipto WHERE trans_id = t.id) }.
-                     q{AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id) }.
-                     q{AND NOT EXISTS (SELECT 1 FROM voucher WHERE trans_id = t.id)},
+                     q{AND NOT EXISTS (SELECT 1 FROM recurring WHERE id = t.id) },
                   bound_params => [],
                   results => [],
              },
