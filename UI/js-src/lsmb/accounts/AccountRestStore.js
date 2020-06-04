@@ -30,7 +30,7 @@ define([
    var store = new cache(
       new accountsRest({
          idProperty: "accno",
-         target: "/erp/api/v0/accounts/"
+         target: "erp/api/v0/accounts/"
       }),
       new memory()
    );
