@@ -56,7 +56,7 @@ Please fill in the missing data and press 'Save' to fix this issue.
 
 check q|Ensure that the ap database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT id, reference, description, approved,
+        SELECT id, invnumber, description, approved,
                (select min(transdate) from acc_trans a where a.trans_id = ap.id)
                as transdate
         FROM ap
@@ -109,7 +109,7 @@ Please fill in the missing data and press 'Save' to fix this issue.
 
 check q|Ensure that the ar database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT id, reference, description, approved,
+        SELECT id, invnumber, description, approved,
                (select min(transdate) from acc_trans a where a.trans_id = ar.id)
                as transdate
         FROM ar
@@ -352,11 +352,11 @@ Due to stricter integrity constraints, these transactions can't be stored in
 the database anymore. As a result, the files attached to these transactions
 cannot remain connected. Two options are available:
 
-1. 'Delete' the files listed below  
+1. 'Delete' the files listed below
    This action can't be undone. As the files aren't available in the
    application, due to the fact that they are attached to orphaned
    transactions, this may not make a difference.
-2. 'Copy' the files to the 'incoming' queue  
+2. 'Copy' the files to the 'incoming' queue
    This action preserves the data in the database. At the moment the data
    isn't accessible through the UI. Although data isn't directly accessible,
    it *will* be retained for future reference.
