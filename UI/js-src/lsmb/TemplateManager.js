@@ -102,7 +102,7 @@ define([
          },
          updateTemplate: function () {
             return xhr(
-               "/erp/api/v0/templates/" +
+               "erp/api/v0/templates/" +
                   this.templateName.value +
                   "/" +
                   this.templateFormat.value +
