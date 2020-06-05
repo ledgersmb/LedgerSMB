@@ -56,7 +56,7 @@ Please fill in the missing data and press 'Save' to fix this issue.
 
 check q|Ensure that the ap database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT id, reference, description, approved,
+        SELECT id, invnumber, description, approved,
                (select min(transdate) from acc_trans a where a.trans_id = ap.id)
                as transdate
         FROM ap
@@ -109,7 +109,7 @@ Please fill in the missing data and press 'Save' to fix this issue.
 
 check q|Ensure that the ar database table doesn't contain NULL approval flags or transacton dates|,
     query => q|
-        SELECT id, reference, description, approved,
+        SELECT id, invnumber, description, approved,
                (select min(transdate) from acc_trans a where a.trans_id = ar.id)
                as transdate
         FROM ar
@@ -336,11 +336,11 @@ To remove these rows and proceed with the update, press 'Delete'.
 
 check q|Clear orphaned transaction's attached files|,
     query => q|
-        SELECT id, transdate, file_name, uploaded_by, uploaded_at
+        SELECT f.id, transdate, file_name, uploaded_by, uploaded_at
         FROM file_transaction f
         JOIN transactions t ON (f.ref_key = t.id)
         WHERE t.transdate IS NULL
-        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = v.id)
+        AND NOT EXISTS (SELECT 1 FROM acc_trans WHERE trans_id = t.id OR voucher_id = t.id)
         AND NOT EXISTS (SELECT 1 FROM ap WHERE ap.id = t.id)
         AND NOT EXISTS (SELECT 1 FROM ar WHERE ar.id = t.id)
         AND NOT EXISTS (SELECT 1 FROM gl WHERE gl.id = t.id)
