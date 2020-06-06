@@ -120,7 +120,7 @@ NOTE: `gcc` can be removed after all `cpan` dependencies are installed.
 To install the `Perl` module dependencies, run:
 
 ```sh
-$ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
+cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 ```
 
 **NOTES**
@@ -161,7 +161,7 @@ LedgerSMB should be able to run without configuration. If you need specific
 settings, please
 
 ```sh
-$ cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+cp doc/conf/ledgersmb.conf.default ledgersmb.conf
 ```
 
 and edit `ledgersmb.conf` to match your requirements.
