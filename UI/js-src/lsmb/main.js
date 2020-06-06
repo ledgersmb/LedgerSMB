@@ -13,6 +13,7 @@ define([
    "dojo/mouse",
    "dojo/ready",
    /* Every reference */
+   "dojo/has!webpack?dojo-webpack-plugin/amd/dojoES6Promise",
    "dijit/Dialog",
    "dijit/form/Button",
    "dijit/form/CheckBox",
