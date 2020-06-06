@@ -15,10 +15,12 @@ div.login div.login {
     padding-bottom: 2em;
     width: 21em;
 }
+
 div.labelledinput {
     clear: both;
     width: 100%;
 }
+
 div.label {
     border-width: 1px;
     float: left;
@@ -28,6 +30,7 @@ div.label {
     text-align: right;
     width: 5em;
 }
+
 div.input {
     border-width: 3px;
     float: left;
@@ -36,6 +39,7 @@ div.input {
     text-align: left;
     width: 14em;
 }
+
 img.logo {
     border-style: none;
     height: 8em;

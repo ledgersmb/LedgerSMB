@@ -2,32 +2,39 @@
  * This file relies on CSS3 variables defined in the main CSS version, ledgersmb.css
  * or any of the colored versions, ledgersmb-color.css
  */
+/* stylelint-disable no-descending-specificity */
+
 /*
 TODO: remaining issues:
-226:1  ✖  Expected selector "thead th" to come before selector "table.form th"                                     no-descending-specificity
-236:1  ✖  Expected selector "thead a:link" to come before selector ".submenu a:hover"                              no-descending-specificity
-368:1  ✖  Expected selector "#company_div div.note" to come before selector "#notes_div div.note:hover"            no-descending-specificity
-464:1  ✖  Expected selector "div.autocomplete ul" to come before selector "#top_menu ul"                           no-descending-specificity
-512:1  ✖  Expected selector ".financial-statement th" to come before selector "table.form th"                      no-descending-specificity
-512:1  ✖  Expected selector ".financial-statement th" to come before selector ".financial-statement tr.total th"   no-descending-specificity
-521:1  ✖  Expected selector ".financial-statement a" to come before selector ".submenu a:hover"                    no-descending-specificity
-521:1  ✖  Expected selector ".financial-statement a" to come before selector "thead a:link"                        no-descending-specificity
+ 229:1  ✖  Expected selector "thead th" to come before selector "table.form th"                                     no-descending-specificity
+ 239:1  ✖  Expected selector "thead a:link" to come before selector ".submenu a:hover"                              no-descending-specificity
+ 371:1  ✖  Expected selector "#company_div div.note" to come before selector "#notes_div div.note:hover"            no-descending-specificity
+ 461:1  ✖  Expected selector "div.autocomplete ul" to come before selector "#top_menu ul"                           no-descending-specificity
+ 509:1  ✖  Expected selector ".financial-statement th" to come before selector "table.form th"                      no-descending-specificity
+ 509:1  ✖  Expected selector ".financial-statement th" to come before selector ".financial-statement tr.total th"   no-descending-specificity
+ 518:1  ✖  Expected selector ".financial-statement a" to come before selector ".submenu a:hover"                    no-descending-specificity
+ 518:1  ✖  Expected selector ".financial-statement a" to come before selector "thead a:link"                        no-descending-specificity
 */
 @import url("system/global.css");
 
-td.money { text-align: right;
+td.money {
+    text-align: right;
 }
 
-td.date { white-space: nowrap !important;
+td.date {
+    white-space: nowrap !important;
 }
 
-td.check { text-align: center;
+td.check {
+    text-align: center;
 }
 
-div#title { font-size: var(--div-title-font-size);
+div#title {
+    font-size: var(--div-title-font-size);
 }
 
-th.header { text-align: center;
+th.header {
+    text-align: center;
 }
 
 /* general stuff */
@@ -35,7 +42,9 @@ a:link { text-decoration: none; }
 a:visited { text-decoration: none; }
 a:active { text-decoration: underline; }
 
-a:hover { background-color: var(--a-hover-bg-clr); text-decoration: underline;
+a:hover {
+    background-color: var(--a-hover-bg-clr);
+    text-decoration: underline;
 }
 
 #pwfeedback.success { background-color: var(--pwfeedback-success-bg-clr); }
@@ -44,218 +53,376 @@ a:hover { background-color: var(--a-hover-bg-clr); text-decoration: underline;
 #pw-strength.good { background-color: var(--pw-strength-good-bg-clr); }
 #pw-strength.strong { background-color: var(--pw-strength-strong-bg-clr); }
 
-body { background-color: var(--body-bg-clr); color: var(--body-clr);
-      font-family: var(--body-font-family); font-size: var(--body-font-size);
+body {
+    background-color: var(--body-bg-clr);
+    color: var(--body-clr);
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
 }
 
-span.warning_label { color: var(--span-warning_label-clr); font-weight: bold;
+span.warning_label {
+    color: var(--span-warning_label-clr);
+    font-weight: bold;
 }
 
-td { font-family: var(--td-font-family); font-size: var(--td-font-size);
+td {
+    font-family: var(--td-font-family);
+    font-size: var(--td-font-size);
 }
 
-th { font-family: var(--th-font-family); font-size: var(--th-font-size);
+th {
+    font-family: var(--th-font-family);
+    font-size: var(--th-font-size);
 }
 
-table.form th { text-align: right;
+table.form th {
+    text-align: right;
 }
 
 th.centered,
-table.form th.centered { text-align: center;
+table.form th.centered {
+    text-align: center;
 }
 
-table.criteria td { text-align: left;
+table.criteria td {
+    text-align: left;
 }
 
-table.warning { border: var(--table-warning-border);
+table.warning {
+    border: var(--table-warning-border);
 }
 
-#version_info { font-size: var(--version_info-font-size); font-weight: bold;
+#version_info {
+    font-size: var(--version_info-font-size);
+    font-weight: bold;
 }
 
 #company_info,
-#login_info { font-size: var(--company_info-font-size);
+#login_info {
+    font-size: var(--company_info-font-size);
 }
 
 /* login and admin */
-.login { font-family: var(--login-font-family);
+.login {
+    font-family: var(--login-font-family);
 }
 
-body#app-login { background: var(--body-app-login-bg);
-                 color: var(--body-app-login-clr);
+body#app-login {
+    background: var(--body-app-login-bg);
+    color: var(--body-app-login-clr);
 }
 
-h1.login { font-size: var(--h1-login-font-size);
+h1.login {
+    font-size: var(--h1-login-font-size);
 }
 
-table.login { background-color: var(--table-login-bg-clr); padding: 20px;
+table.login {
+    background-color: var(--table-login-bg-clr);
+    padding: 20px;
 }
 
-td.login { text-align: center;
+td.login {
+    text-align: center;
 }
 
-th.login { text-align: right;
+th.login {
+    text-align: right;
 }
 
-table.report { width: 100%;
+table.report {
+    width: 100%;
 }
 
-div.report_header { overflow: auto;
+div.report_header {
+    overflow: auto;
 }
 
-div.report_header label { display: block; float: left; font-weight: bold; margin-right: 1em; text-align: right; width: 12em;
+div.report_header label {
+    display: block;
+    float: left;
+    font-weight: bold;
+    margin-right: 1em;
+    text-align: right;
+    width: 12em;
 }
 
-body.admin { background-color: var(--body-admin-bg-clr);
-             color: var(--body-admin-clr);
+body.admin {
+    background-color: var(--body-admin-bg-clr);
+    color: var(--body-admin-clr);
 }
 
 body.menu,
-#menudiv { background-color: var(--body-menu-bg-clr);
-           color: var(--body-menu-clr); font-family: var(--body-font-family); font-size: var(--body-font-size);
+#menudiv {
+    background-color: var(--body-menu-bg-clr);
+    color: var(--body-menu-clr);
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
 }
 
-.cornerlogo { background: var(--cornerlogo-bg); border: var(--cornerlogo-border); margin-left: auto; margin-right: auto; padding: 4px;
+.cornerlogo {
+    background: var(--cornerlogo-bg);
+    border: var(--cornerlogo-border);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 4px;
 }
 
-.submenu { font-family: var(--submenu-font-family); font-size: var(--submenu-font-size); list-style: none; padding-left: 20px;
+.submenu {
+    font-family: var(--submenu-font-family);
+    font-size: var(--submenu-font-size);
+    list-style: none;
+    padding-left: 20px;
 }
 
-.menu_item { padding-left: 12px;
+.menu_item {
+    padding-left: 12px;
 }
 
-#top_menu { background-image: none; list-style: none; margin: 0; padding: 0; -webkit-padding-start: 0;
+#top_menu {
+    background-image: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    -webkit-padding-start: 0;
 }
 
-#top_menu ul { margin: 0; padding: 0;
+#top_menu ul {
+    margin: 0;
+    padding: 0;
 }
 
-.menu_open { background-image: url('../images/up.gif'); background-position: 0 0; background-repeat: no-repeat; padding-left: 12px;
+.menu_open {
+    background-image: url('../images/up.gif');
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    padding-left: 12px;
 }
 
-.menu_closed { background-image: url('../images/down.gif'); background-position: 0 0; background-repeat: no-repeat; padding-left: 12px;
+.menu_closed {
+    background-image: url('../images/down.gif');
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    padding-left: 12px;
 }
 
-.submenu a { color: var(--submenu-a-clr); text-decoration: none;
+.submenu a {
+    color: var(--submenu-a-clr);
+    text-decoration: none;
 }
 
-.submenu a:hover { background: var(--submenu-a-hover-clr); color: var(--submenu-a-clr); text-decoration: none;
+.submenu a:hover {
+    background: var(--submenu-a-hover-clr);
+    color: var(--submenu-a-clr);
+    text-decoration: none;
 }
 
-.listtop { background-color: var(--listtop-bg-clr); color: var(--listtop-clr); font-size: var(--listtop-font-size); font-weight: bold; padding-bottom: 0.1em; padding-left: 1ex; padding-top: 0.1em;
+.listtop {
+    background-color: var(--listtop-bg-clr);
+    color: var(--listtop-clr);
+    font-size: var(--listtop-font-size);
+    font-weight: bold;
+    padding-bottom: 0.1em;
+    padding-left: 1ex;
+    padding-top: 0.1em;
 }
 
 .listheading,
-thead th { background-color: var(--listheading-bg-clr); color: var(--listheading-clr); font-size: var(--listheading-font-size); font-weight: bold; padding-bottom: 0.1em; padding-left: 1ex; padding-top: 0.1em;
+thead th {
+    background-color: var(--listheading-bg-clr);
+    color: var(--listheading-clr);
+    font-size: var(--listheading-font-size);
+    font-weight: bold;
+    padding-bottom: 0.1em;
+    padding-left: 1ex;
+    padding-top: 0.1em;
 }
 
-thead a:link { color: var(--thead-a-link-clr); font-weight: bold; text-decoration: none;
+thead a:link {
+    color: var(--thead-a-link-clr);
+    font-weight: bold;
+    text-decoration: none;
 }
 
 a.listheading:link,
 a.listheading:active,
-a.listheading:visited { color: var(--a-listheading-link-clr); font-weight: bold; text-decoration: none;
+a.listheading:visited {
+    color: var(--a-listheading-link-clr);
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .listrow1,
 table.dynatable tr,
-.listrow0 { color: var(--listrow1-clr); font-size: var(--listrow1-font-size); vertical-align: top;
+.listrow0 {
+    color: var(--listrow1-clr);
+    font-size: var(--listrow1-font-size);
+    vertical-align: top;
 }
 
 .listrow1,
-table.dynatable tr:nth-child(odd) { background-color: var(--listrow1-bg-clr);
+table.dynatable tr:nth-child(odd) {
+    background-color: var(--listrow1-bg-clr);
 }
 
 .listrow0,
-table.dynatable tr:nth-child(even) { background-color: var(--listrow0-bg-clr);
+table.dynatable tr:nth-child(even) {
+    background-color: var(--listrow0-bg-clr);
 }
 
 .listrow1:hover,
-table.dynatable tbody tr:nth-child(odd):hover { background-color: var(--listrow1-hover-bg-clr);
+table.dynatable tbody tr:nth-child(odd):hover {
+    background-color: var(--listrow1-hover-bg-clr);
 }
 
 .listrow0:hover,
-table.dynatable tbody tr:nth-child(even):hover { background-color: var(--listrow0-hover-bg-clr);
+table.dynatable tbody tr:nth-child(even):hover {
+    background-color: var(--listrow0-hover-bg-clr);
 }
 
 .listsubtotal,
-table.dynatable tr.sublisttotal { background-color: var(--listsubtotal-bg-clr);
-    color: var(--listsubtotal-clr); font-size: var(--listsubtotal-font-size);
+table.dynatable tr.sublisttotal {
+    background-color: var(--listsubtotal-bg-clr);
+    color: var(--listsubtotal-clr);
+    font-size: var(--listsubtotal-font-size);
 }
 
 .listtotal,
-table.dynatable tr.listtotal { background-color: var(--listtotal-bg-clr);
-    color: var(--listtotal-clr); font-size: var(--listtotal-font-size); font-weight: bold;
+table.dynatable tr.listtotal {
+    background-color: var(--listtotal-bg-clr);
+    color: var(--listtotal-clr);
+    font-size: var(--listtotal-font-size);
+    font-weight: bold;
 }
 
-textarea { font-family: var(--textarea-font-family);
- /*   border: var(--textarea-border); */
- /*   font-size: var(--textarea-font-size); */
- /*   background-color: var(--textarea-bg-clr); */
- /*   font-weight: bold; */
+textarea {
+    font-family: var(--textarea-font-family);
+
+    /*   border: var(--textarea-border); */
+
+    /*   font-size: var(--textarea-font-size); */
+
+    /*   background-color: var(--textarea-bg-clr); */
+
+    /*   font-weight: bold; */
 }
 
-input { background-color: var(--input-bg-clr);
- /*  font-family: var(--input-font-family); */ border: var(--input-border); font-size: var(--input-font-size); font-weight: bold;
+input {
+    background-color: var(--input-bg-clr);
+
+    /*  font-family: var(--input-font-family); */
+    border: var(--input-border);
+    font-size: var(--input-font-size);
+    font-weight: bold;
 }
 
-select { font-family: var(--select-font-family); font-size: var(--select-font-size);
+select {
+    font-family: var(--select-font-family);
+    font-size: var(--select-font-size);
 }
 
-.submit { color: var(--submit-clr); font-size: var(--submit-font-size); font-weight: normal;
+.submit {
+    color: var(--submit-clr);
+    font-size: var(--submit-font-size);
+    font-weight: normal;
 }
 
 .checkbox,
-.radio { font-family: var(--checkbox-font-family); font-size: var(--checkbox-font-size);
+.radio {
+    font-family: var(--checkbox-font-family);
+    font-size: var(--checkbox-font-size);
 }
 
-.plus0 {    /* font color for negative numbers */ color: var(--plus0-clr);
+.plus0 {    /* font color for negative numbers */
+    color: var(--plus0-clr);
 }
 
-.plus1 { color: var(--plus1-clr);
+.plus1 {
+    color: var(--plus1-clr);
 }
 
-h2.confirm { color: var(--h2-confirm-clr); font-size: var(--h2-confirm-font-size);
+h2.confirm {
+    color: var(--h2-confirm-clr);
+    font-size: var(--h2-confirm-font-size);
 }
 
-h2.error { color: var(--h2-error-clr); font-size: var(--h2-error-font-size);
+h2.error {
+    color: var(--h2-error-clr);
+    font-size: var(--h2-error-font-size);
 }
 
-#notes_div div.note { background-color: var(--notes_div-div-note-bg-clr); border: var(--notes_div-div-note-border); border-style: var(--notes_div-div-note-border-style); height: 5em; margin: 1em; overflow: hidden; padding: 1em; width: 90%;
+#notes_div div.note {
+    background-color: var(--notes_div-div-note-bg-clr);
+    border: var(--notes_div-div-note-border);
+    border-style: var(--notes_div-div-note-border-style);
+    height: 5em;
+    margin: 1em;
+    overflow: hidden;
+    padding: 1em;
+    width: 90%;
 }
 
-#notes_div div.note:hover { background-color: var(--notes_div-div-note-hover-bg-clr); border-style: groove; height: 100%; min-height: 5em; overflow: auto; width: 90%;
+#notes_div div.note:hover {
+    background-color: var(--notes_div-div-note-hover-bg-clr);
+    border-style: groove;
+    height: 100%;
+    min-height: 5em;
+    overflow: auto;
+    width: 90%;
 }
 
-#company_div div.note { display: none;
+#company_div div.note {
+    display: none;
 }
 
-tr.active { background-color: var(--tr-active-bg-clr);
+tr.active {
+    background-color: var(--tr-active-bg-clr);
 }
 
-tr.record { background-color: var(--tr-record-bg-clr);
+tr.record {
+    background-color: var(--tr-record-bg-clr);
 }
 
-tr.suspect { background-color: var(--tr-suspect-bg-clr); color: var(--tr-suspect-clr); font-weight: bold;
+tr.suspect {
+    background-color: var(--tr-suspect-bg-clr);
+    color: var(--tr-suspect-clr);
+    font-weight: bold;
 }
 
 tr.warning,
-div.warning { background-color: var(--tr-warning-bg-clr); color: var(--tr-warning-clr);
+div.warning {
+    background-color: var(--tr-warning-bg-clr);
+    color: var(--tr-warning-clr);
 }
 
-span.no-submit { background: var(--span-no-submit-bg); color: var(--span-no-submit-clr); font-weight: bold;
+span.no-submit {
+    background: var(--span-no-submit-bg);
+    color: var(--span-no-submit-clr);
+    font-weight: bold;
 }
 
-td.cleared-future { background: wvar(--td-cleared-future-bg); color: var(--td-cleared-future-clr); font-weight: bold;
+td.cleared-future {
+    background: wvar(--td-cleared-future-bg);
+    color: var(--td-cleared-future-clr);
+    font-weight: bold;
 }
 
-td.cleared-past { background: var(--td-cleared-past-bg); color: var(--td-cleared-past-bg); font-weight: bold;
+td.cleared-past {
+    background: var(--td-cleared-past-bg);
+    color: var(--td-cleared-past-bg);
+    font-weight: bold;
 }
 
-input[type=checkbox].remove::before { background: var(--input-remove-before-bg); color: var(--input-remove--before-clr); content: ' X '; display: inline-block; text-align: center; width: 12px;
+input[type=checkbox].remove::before {
+    background: var(--input-remove-before-bg);
+    color: var(--input-remove--before-clr);
+    content: ' X ';
+    display: inline-block;
+    text-align: center;
+    width: 12px;
 }
 
-input[type=checkbox].remove:checked::before { background: var(--input-remove-checked-before-bg);
+input[type=checkbox].remove:checked::before {
+    background: var(--input-remove-checked-before-bg);
 }
 
 /* Theming controls based on transaction status */
@@ -274,56 +441,89 @@ input[type=checkbox].remove:checked::before { background: var(--input-remove-che
 
 /* media stuff */
 
-@media screen { .noscreen {   /* items with this class won't display */ display: none; }
+@media screen {
+    .noscreen { /* items with this class won't display */ display: none; }
 }
 
-@media print { .noprint {   /* items with this class won't print */ display: none; }
+@media print {
+    .noprint { /* items with this class won't print */ display: none; }
 }
 
 /* ajax-specific styling */
 
-div.autocomplete { background-color: var(--div-autocomplete-bg-clr); border: var(--div-autocomplete-border); margin: 0; padding: 0; position: absolute; width: 350px;
+div.autocomplete {
+    background-color: var(--div-autocomplete-bg-clr);
+    border: var(--div-autocomplete-border);
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 350px;
 }
 
-div.autocomplete ul { list-style-type: none; margin: 0; padding: 0;
+div.autocomplete ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 div.autocomplete ul li.selected { background-color: var(--div-autocomplete-bg-clr); }
 
-div.autocomplete ul li { cursor: pointer; display: block; font-size: var(--div-autocomplete-ul-li-font-size); height: 16px; list-style-type: none; margin: 0; padding: 2px;
+div.autocomplete ul li {
+    cursor: pointer;
+    display: block;
+    font-size: var(--div-autocomplete-ul-li-font-size);
+    height: 16px;
+    list-style-type: none;
+    margin: 0;
+    padding: 2px;
 }
 
-span.indicator { background-color: var(--span-indicator-bg-clr);
+span.indicator {
+    background-color: var(--span-indicator-bg-clr);
     border: var(--span-indicator-border);
-    font-size: var(--span-indicator-font-size); padding: 2px;
+    font-size: var(--span-indicator-font-size);
+    padding: 2px;
 }
 
 .financial-statement h1,
-.financial-statement h2 { text-align: center;
+.financial-statement h2 {
+    text-align: center;
 }
 
-.financial-statement table { margin-left: auto; margin-right: auto;
+.financial-statement table {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.financial-statement td.amount { padding-left: 4em; text-align: right;
+.financial-statement td.amount {
+    padding-left: 4em;
+    text-align: right;
 }
 
 .financial-statement tr.total td,
-.financial-statement tr.total th { padding-bottom: 2em;
+.financial-statement tr.total th {
+    padding-bottom: 2em;
 }
 
-.financial-statement tr.total td.amount { border-top: var(--financial-statement-tr-total-td-amount-border-top);
+.financial-statement tr.total td.amount {
+    border-top: var(--financial-statement-tr-total-td-amount-border-top);
 }
 
-.financial-statement th { text-align: left;
+.financial-statement th {
+    text-align: left;
 }
 
 .financial-statement tr.section-head th,
-.financial-statement tr.total th { text-align: center;
+.financial-statement tr.total th {
+    text-align: center;
 }
 
 .financial-statement a,
-.financial-statement a:visited { color: var(--financial-statement-a-clr); text-decoration: none;
+.financial-statement a:visited {
+    color: var(--financial-statement-a-clr);
+    text-decoration: none;
 }
 
-#plDebug .plDebugPanelContent { left: 207px; right: 207px;
+#plDebug .plDebugPanelContent {
+    left: 207px;
+    right: 207px;
 }
