@@ -1,7 +1,13 @@
 {
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["UI"]
+            }
+        }
+    },
     "plugins": [
         "amd",
-        //"amd-imports",
         "sort-dojo-dependency",
         "prettier"
     ],
@@ -11,6 +17,11 @@
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
+        },
+        "templateSettings": {
+            "evaluate":    ["[%", "%]"],
+            "interpolate": ["[%", "%]"],
+            "escape":      ["[%", "%]"]
         }
     },
     "env": {
@@ -27,68 +38,59 @@
         "plugin:import/errors",
         "plugin:import/warnings"
     ],
-      "ignorePatterns": ["dojo/", "dijit/", "node_modules/"],
+    "ignorePatterns": ["dojo/", "dijit/", "node_modules/", "js/"],
     "rules": {
-        "camelcase": 2,
-        "consistent-return": 2,
+        "camelcase": "error",
+        "consistent-return": "error",
         "curly": ["error", "all"],                  // Keep braces
-        "dot-notation": 2,
-        "eqeqeq": 2,
+        "dot-notation": "error",
+        "eqeqeq": "error",
         "func-names": 0,                            // Dojo define pattern uses unnamed functions
-        "global-require": 2,
-        "guard-for-in": 2,
+        "global-require": "error",
+        "guard-for-in": "error",
         "new-cap": 0,                               // Allow constructor name to start with a lowercase letter
-        "no-alert": 2,
-        "no-console": 2,
+        "no-alert": "error",
+        "no-console": "error",
         "no-continue": 0,                           // Disable to avoid confusion with .continue dojo function
-        "no-else-return": 2,
-        "no-lonely-if": 2,
-        "no-multi-assign": 2,
+        "no-else-return": "error",
+        "no-lonely-if": "error",
+        "no-multi-assign": "error",
         "no-multi-spaces": "error",
-        "no-new-object": 2,
-        "no-param-reassign": 2,
+        "no-new-object": "error",
+        "no-param-reassign": "error",
         "no-plusplus": 0,                           // Don't disable unary operator '++'
-        "no-restricted-globals": 2,
-        "no-shadow": 2,
-        "no-template-curly-in-string": 2,
-        "no-undef": 2,
+        "no-restricted-globals": "error",
+        "no-shadow": "error",
+        "no-template-curly-in-string": "error",
+        "no-undef": "error",
         "no-underscore-dangle": 0,                  // Allow underscores in identifiers
-        "no-unused-expressions": 2,
-        "no-unused-vars": 2,
-        "no-use-before-define": 2,
-        "no-useless-escape": 2,
-        "no-useless-return": 2,
-        "one-var": 2,
-        "radix": 2,
-        "spaced-comment": 2,
+        "no-unused-expressions": "error",
+        "no-unused-vars": "error",
+        "no-use-before-define": "error",
+        "no-useless-escape": "error",
+        "no-useless-return": "error",
+        "one-var": "error",
+        "radix": "error",
+        "spaced-comment": ["error", "always", { "block": { "balanced": true } }],
         "vars-on-top": 0,                           // Allow variable definition close to usage
-        "yoda": 2,
+        "yoda": "error",
         //"object-curly-spacing": ["error", "always"],
 
-        "amd/no-unused-dependencies": 2,
-        "amd/obsolete-dependencies": 2,
-        "amd/sane-dependency-names": 2,
-
-        //"amd-imports/no-restricted-imports": 2, 	// Restrict modules that can be imported.
-        //"amd-imports/no-unexisting-imports": 2,	// Verify that imported modules exist.
-        //"amd-imports/no-unused-imports": 2,	    // Verify that imported modules are used.
-                                                    // If a module is imported because it has side effects,
-                                                    // the imported module variable name may have the _ prefix
-                                                    // or suffix to skip this rule.
-        //"amd-imports/prefer-relative-imports": 2,	// Prefer relative imports within a single package
-                                                    // instead of top-level package absolute imports.
+        "amd/no-unused-dependencies": "error",
+        "amd/obsolete-dependencies": "error",
+        "amd/sane-dependency-names": "error",
 
         "prettier/prettier": ["error", {
-                                        "bracketSpacing": true, // Print spaces between brackets in object literals.
-                                        "printWidth": 80,       // Limit to 80 columns
-                                        "quote-props": ["error", "consistent"], // If at least one property in an object requires quotes, quote all properties.
-                                        "semi": true,           // Add a semicolon at the end of every statement.
-                                        "singleQuote": false,   // Use double quotes
-                                        "tabWidth": 3,          // Tabs width is 3 spaces
-                                        "trailingComma": "none",// No trailing commas
-                                        "useTabs": false,       // Indent lines with tabs instead of spaces.
-                                        "insertPragma": true,   // Prettier can insert a special @format marker at the top of files specifying that the file has been formatted with prettier.
-                                        "proseWrap": "preserve",// Prettier will wrap markdown text as-is since some services use a linebreak-sensitive renderer
+                            "bracketSpacing": true, // Print spaces between brackets in object literals.
+                            "printWidth": 80,       // Limit to 80 columns
+                            "quote-props": ["error", "consistent"], // If at least one property in an object requires quotes, quote all properties.
+                            "semi": true,           // Add a semicolon at the end of every statement.
+                            "singleQuote": false,   // Use double quotes
+                            "tabWidth": 3,          // Tabs width is 3 spaces
+                            "trailingComma": "none",// No trailing commas
+                            "useTabs": false,       // Indent lines with tabs instead of spaces.
+                            "insertPragma": true,   // Prettier can insert a special @format marker at the top of files specifying that the file has been formatted with prettier.
+                            "proseWrap": "preserve" // Prettier will wrap markdown text as-is since some services use a linebreak-sensitive renderer
         }],
         "no-restricted-syntax": ["error", "SequenceExpression"]
     }
