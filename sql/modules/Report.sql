@@ -430,7 +430,7 @@ RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.invnumber, a.ordnumber, a.ponumber, a.curr, a.amount_bc, a.netamount_bc,
-       a.netamount_bc - a.amount_bc as tax,
+       a.amount_bc - a.netamount_bc as tax,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
