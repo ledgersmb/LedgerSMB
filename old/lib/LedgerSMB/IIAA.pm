@@ -47,7 +47,7 @@ sub process_form_payments {
     my $dbh = $form->{dbh};
     my $query = qq|
 SELECT payment_post(?, ?, ?, ?, ?,
-                    ?, ?, ARRAY[(select id from account where accno = ?)], ?, ?,
+                    ?, ?, ARRAY[(select id from account where accno = ?)], ?,
                     ?, ?, ?, ?, ?,
                     ?, ?, ?, ?, ?)
 |;
@@ -89,7 +89,7 @@ SELECT payment_post(?, ?, ?, ?, ?,
 
                 $sth->execute($datepaid, $eca_class, $eca_id, $curr,
                               $exchangerate, undef, undef, $cashaccno,
-                              [$amount], [0],
+                              [$amount],
                               [$source], [$memo], [$trans_id], undef, undef,
                               undef, undef, undef, undef,
 
