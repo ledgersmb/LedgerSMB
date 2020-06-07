@@ -355,7 +355,7 @@ define("lsmb/layout/TableContainer", [
    // Add to widget base for benefit of parser.   Remove for 2.0.   Also, hide from doc viewer.
    lang.extend(
       _WidgetBase,
-      /*= ==== {} || ===== */ TableContainer.ChildWidgetProperties
+      /* ===== {} || ===== */ TableContainer.ChildWidgetProperties
    );
 
    return TableContainer;

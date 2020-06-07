@@ -87,6 +87,7 @@ define([
             }
          );
       },
+      /* eslint spaced-comment:0 */
       download_link: function (/*href*/) {
          // while it would have been nice for the code below
          // to work, content downloaded into the iframe through
