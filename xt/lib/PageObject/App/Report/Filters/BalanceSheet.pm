@@ -31,8 +31,9 @@ sub run {
     my ($self, %options) = @_;
 
     $self->find('.//input[@id="to-date"]')->send_keys($options{date});
-    $self->find('*button', text => 'Continue')->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find('*button', text => 'Continue');
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 __PACKAGE__->meta->make_immutable;
