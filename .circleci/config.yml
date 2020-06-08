@@ -36,7 +36,7 @@ commands:
                    --feature-option tags=~@wip t/ xt/
       - run:
           command: |
-            curl $PSGI_BASE_URL/stop.pl || true
+            kill -QUIT $(cat starman.pid)
             while [ ! -e plackup-done ];
             do
               echo -n "."
@@ -110,8 +110,8 @@ commands:
       - run:
           command: |
             echo $PWD
-            PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" plackup -I$HOME/project/lib -I$HOME/project/old/lib \
-                    -s HTTP::Server::PSGI --port 5762 \
+            PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" starman -I$HOME/project/lib -I$HOME/project/old/lib \
+                    --preload-app --pid starman.pid --port 5762 --workers 2 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done

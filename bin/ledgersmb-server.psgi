@@ -45,7 +45,6 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 LedgerSMB::PSGI::setup_url_space(
         development => ($ENV{PLACK_ENV} eq 'development'),
-        coverage => $ENV{COVERAGE}
         );
 
 
