@@ -201,7 +201,6 @@ sub _hook_psgi_logger {
 
 sub setup_url_space {
     my %args = @_;
-    my $coverage = $args{coverage};
     my $development = $args{development};
     my $psgi_app = \&psgi_app;
 
@@ -322,9 +321,6 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DisableBackButton';
             $psgi_app;
         };
-
-        mount '/stop.pl' => sub { exit; }
-            if $coverage;
 
         enable sub {
             my $app = shift;
