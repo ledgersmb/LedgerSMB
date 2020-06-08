@@ -183,7 +183,6 @@ appropriate PSGI handlers/apps.
 
 sub setup_url_space {
     my %args = @_;
-    my $coverage = $args{coverage};
     my $development = $args{development};
     my $old_app = old_app();
     my $psgi_app = \&psgi_app;
@@ -232,9 +231,6 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         };
-
-        mount '/stop.pl' => sub { exit; }
-            if $coverage;
 
         enable sub {
             my $app = shift;
