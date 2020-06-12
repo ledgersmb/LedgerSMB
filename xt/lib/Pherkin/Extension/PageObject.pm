@@ -20,6 +20,7 @@ use warnings;
 
 our $VERSION = '0.01';
 
+use List::Util qw(any);
 use PageObject::Loader;
 use Test::BDD::Cucumber::Extension;
 
@@ -62,6 +63,34 @@ sub post_scenario {
 
     # break the ref-counting cycle
     $self->last_stash(undef);
+}
+
+=item post_step
+
+=cut
+
+sub post_step {
+    my ($self, $step, $step_context, $failed, $result) = @_;
+    my $scenario = $step_context->scenario;
+
+    if ((lc($step_context->verb) eq 'when')
+        and (any { $_ eq 'weasel' } @{$scenario->tags})) {
+        my $s = $step_context->stash->{scenario};
+
+        # is there a maindiv element?
+        my $w        = $s->{ext_wsl};
+        my @maindivs = $w->page->find_all('.//div[@id="maindiv"]');
+        my $maindiv  = shift @maindivs;
+        if ($maindiv) {
+            $w->wait_for(
+                sub {
+                    my $rv = (any { $_ eq 'done-parsing' }
+                            split( /\s+/,
+                                   $maindiv->get_attribute('class')));
+                    return $rv;
+                });
+        }
+    }
 }
 
 =back
