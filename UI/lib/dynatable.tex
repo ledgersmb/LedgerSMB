@@ -3,14 +3,14 @@
 TOTAL_WIDTH=14; # cm. using A4 as a basis because it is slightly narrower than
                 # US Letter. This way the dynatable works for both paper sizes.
                 # This assumes a 1cm margin on either side. --CT
-DECLARED_WIDTH=0; 
+DECLARED_WIDTH=0;
 
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
 
 FOREACH COL IN columns;
     DECLARED_WIDTH = DECLARED_WIDTH + COL.pwidth; # pwidth is arbitrary scale
-END; 
+END;
 
 IF DECLARED_WIDTH > 0;
     WIDTH_PER_P = TOTAL_WIDTH / DECLARED_WIDTH;
@@ -36,13 +36,13 @@ FOREACH COL IN columns;
    IF COL.psep_after;
       '|';
    END;
-END; 
+END;
 -%]}
 [% IF firsthead; firsthead %]\\
 [%- END %]
 [% IF head; head %]\\[%- END %]
 [%- -%]
-[% 
+[%
 ADD_SEP = 0;
 FOREACH COL IN columns;
     IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
@@ -56,7 +56,7 @@ END;
 -%]\tabularnewline
 \hline\hline
 \endfirsthead
-[% 
+[%
 
 ADD_SEP = 0;
 FOREACH COL IN columns;

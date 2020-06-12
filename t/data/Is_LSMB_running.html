@@ -3,18 +3,18 @@
 <head>
         <title></title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        
-        
+
+
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
 
-        
+
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-        
-        
+
+
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
-        
-        
+
+
         <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
@@ -22,14 +22,14 @@
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
             var lsmbConfig = {
-                
+
                  "dateformat": 'yyyy-mm-dd'
-                 
+
             };
        </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
-        
+
         <meta name="robots" content="noindex,nofollow" />
 </head><body id="setup-login" class="lsmb claro">
     <div class="setupconsole" style="position:relative;height:100%">
@@ -68,19 +68,19 @@
                             <div class="inputrow">
                                 <label id="s-user-label" for="s-user" class="username">DB admin login</label>
           <select id="s-user" class="username" title="DB admin login" name="s_user" size="15" tabindex="1" data-dojo-type="dijit/form/ComboBox" data-dojo-props="value:'', placeHolder:'Select or Enter User'">
-            
+
             <option  id="s-user-1" value="lsmb_dbadmin" >lsmb_dbadmin</option><option  id="s-user-2" value="postgres" >postgres</option>
           </select>
                             </div>
                             <div class="inputrow">
                                 <label id="s-password-label" for="s-password" class="password">Password</label>
-      
+
           <input id="s-password" class="password" title="Password" type="password" name="s_password" size="15" data-dojo-type="dijit/form/ValidationTextBox" tabindex="2" />
                             </div>
                         </div>
                         <div class="inputrow">
                             <label id="database-label" for="database" class="database">Database</label>
-      
+
           <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" tabindex="3" maxlength="255" />
                         </div>
                     </div>
