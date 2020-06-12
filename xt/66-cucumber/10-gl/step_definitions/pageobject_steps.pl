@@ -57,6 +57,8 @@ When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
             );
             ok($link, "found $link_text link for $column '$value'");
             $link->click;
+            S->{ext_wsl}->page->body->maindiv->
+                wait_for_content(replaces => $link);
             last;
         }
     }
