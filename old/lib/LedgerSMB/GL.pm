@@ -118,9 +118,7 @@ sub post_transaction {
                       $form->{notes}, $form->{transdate})
             || $form->dberror($query);
 
-        ( $form->{id} ) = $dbh->selectrow_array($query, {},
-            $form->{reference}, $form->{description},
-            $form->{notes}, $form->{transdate});
+        ( $form->{id} ) = $sth->fetchrow_array();
     }
 
     ( $null, $department_id ) = split /--/, $form->{department};
