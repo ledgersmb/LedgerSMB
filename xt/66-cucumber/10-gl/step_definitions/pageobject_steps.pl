@@ -7,6 +7,7 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
+use PageObject::App::GL::Account;
 
 When qr/^I click Account Number "(.*)"$/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;
@@ -16,7 +17,9 @@ When qr/^I click Account Number "(.*)"$/, sub {
         qq{.//td[contains(\@class,"accno")]/a[.="$account_number"]}
     ) or die "failed to find link for Account Number $account_number";
 
-    ok($link->click, "clicked link for Account Number $account_number");
+    $link->click;
+    #ok(1, "clicked link for Account Number $account_number");
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $link);
 };
 
 
@@ -57,6 +60,8 @@ When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
             );
             ok($link, "found $link_text link for $column '$value'");
             $link->click;
+            S->{ext_wsl}->page->body->maindiv->
+                wait_for_content(replaces => $link);
             last;
         }
     }
