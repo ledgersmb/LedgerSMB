@@ -1,11 +1,15 @@
 <!-- prettier-disable -->
-[%#
+[%+#
    # This helper should be included in files which will be served as
    # top-level responses (i.e. documents on their own); this includes
    # UI/login.html, UI/logout.html, UI/main.html and various UI/setup/ pages
 
    # Most LedgerSMB responses are handled by the 'xhr' Dojo module, which
    # *only* needs opening and closing BODY tags to be there (for now).
+   #
+   # Note: To keep some comments as is and control pre or post white space
+   #       chomping, we make use of '+' or '-' beside the introducers in
+   #       comments like this one.
 -%]
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
