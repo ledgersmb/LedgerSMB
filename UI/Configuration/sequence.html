@@ -12,6 +12,7 @@
 <th class="listheading">[% text('Sequence') %]</th>
 <th class="listheading">[% text('Suffix') %]</th>
 </tr>
+[% count = 0 %]
 [% FOR seq IN sequence_list; count = loop.count %]
 <tr>
  <td>[% PROCESS input element_data = {
