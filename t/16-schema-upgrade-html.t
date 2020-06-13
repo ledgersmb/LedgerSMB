@@ -148,7 +148,8 @@ $out = html_formatter_context {
 
 filter_js_src($out);
 
-my @expected = split (/\n/, q{<!DOCTYPE html>
+my @expected = split (/\n/, q{<!-- prettier-disable -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
@@ -230,7 +231,8 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+@expected = split (/\n/, q{<!-- prettier-disable -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
@@ -312,7 +314,8 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+@expected = split (/\n/, q{<!-- prettier-disable -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
@@ -395,7 +398,8 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+@expected = split (/\n/, q{<!-- prettier-disable -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
@@ -495,7 +499,8 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, q{<!DOCTYPE html>
+@expected = split (/\n/, q{<!-- prettier-disable -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <title></title>
