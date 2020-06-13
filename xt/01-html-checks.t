@@ -84,7 +84,7 @@ sub content_test {
             },
             'elem-img-sizes-missing' => sub {
                 my $param = shift;
-                if ($param->{src} eq "images/ledgersmb.png"
+                if ($param->{src} eq "/images/ledgersmb.png"
                  || $param->{src} =~ /payments\/img\/(up|down)\.gif/ )  {
                     return 1;
                 }

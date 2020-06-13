@@ -1,5 +1,5 @@
 <body id="payment_2_body" class="lsmb [% dojo_theme %]"
-onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.gif','payments/img/up.gif') ">
+onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'img/down.gif','img/up.gif') ">
   <div id="payments">
   <form data-dojo-type="lsmb/Form" name="pay_single_dues" method="post" action="payment.pl">
 
@@ -159,16 +159,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                          <button type="button"
                                  style="margin-left:auto;margin-right:auto"
                                  id="checkbox_all"
-                                 data-dojo-type="dijit/form/Button">
+                                 data-dojo-type="lsmb/payments/ToggleIncludeButton">
                                 [% column.text -%]
-                                <script type="dojo/on" data-dojo-event="click">
-                                    require(["dojo/domReady!"], function(){
-                                        dojo.query('input[name^="checkbox_"]', this.domNode).forEach(function (node, index, arr) {
-                                            var n = dijit.getEnclosingWidget(node);
-                                            n.set('checked',!n.get('checked'));
-                                        });
-                                    });
-                                </script>
+                                <!--<script type="dojo/on" data-dojo-event="click"
+                                        src="lsmb/html/payments2_html"></script>-->
                             </button>
                          [% INCLUDE tooltip element_data = {
                                 ref_id => "checkbox_all"
@@ -245,7 +239,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                 name = "orig_" _ row.topay_fx.name
                 value = row.orig_topay_fx
           } %]
-          <img src="payments/img/up.gif" alt=[% text('Up') %]
+          <img src='/payments/img/up.gif' alt=[% text('Up') %]
                data-dojo-type="lsmb/MaximizeMinimize"
                data-dojo-props="mmNodeId: 'div_topay_[% row.invoice.id %]'"
                class="details-toggler">
