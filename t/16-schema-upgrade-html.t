@@ -184,7 +184,8 @@ my @expected = split (/\n/, q{<!DOCTYPE html>
   </p>
 </div>
 </form>
-</body>});
+</body>
+</html>});
 
 is @$out, @expected, 'Render the description && title',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -266,7 +267,8 @@ filter_js_src($out);
   </p>
 </div>
 </form>
-</body>});
+</body>
+</html>});
 
 is @$out, @expected, 'Render a custom description',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -349,7 +351,8 @@ filter_js_src($out);
    data-dojo-type="dijit/form/Button"
    >Abc</button>
 </form>
-</body>});
+</body>
+</html>});
 
 is @$out, @expected, 'Render a confirmation',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -439,7 +442,8 @@ filter_js_src($out);
    data-dojo-type="dijit/form/Button"
    >Def</button>
 </form>
-</body>});
+</body>
+</html>});
 
 is @$out, @expected, 'Render multiple confirmations',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -537,7 +541,8 @@ filter_js_src($out);
 </tbody><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
 </table>
 </form>
-</body>});
+</body>
+</html>});
 
 is @$out, @expected, 'Render a grid (2-column p-key)',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
