@@ -32,4 +32,9 @@ ledgersmb.conf
 *_Validations_Custom.pm
 
 # test output:
+/logs/*
 /screens/*
+
+# Webpack
+/node_modules/
+package-lock.json

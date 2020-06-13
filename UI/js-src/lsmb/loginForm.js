@@ -5,7 +5,7 @@ define([
    "dojo/request/xhr",
    "dojo/dom",
    "dojo/dom-style",
-    "dojo/json",
+   "dojo/json",
    "dijit/form/Form",
    "dijit/Dialog",
    "dijit/ProgressBar"

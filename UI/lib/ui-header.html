@@ -39,23 +39,15 @@
         window.alert("[% text('Warning:  Your password will expire in [_1]', pw_expires)%]");
     </script>
     [% END %]
+    <script src="js-src/lsmb/webpack.loaderConfig.js"></script>
     <script>
-         var dojoConfig = {
-             async: 1,
-             locale: '[% USER.language.lower().replace('_','-') %]',
-             packages: [{"name":"lsmb","location":"../lsmb"}]
-         };
-         var lsmbConfig = {
-             [% IF USER.dateformat %]
-             "dateformat": '[% USER.dateformat %]'
-             [% END %]
-         };
+        var dojoConfig = getConfig();
+        dojoConfig.locale = "[% USER.language.lower().replace('_','-') %]" || 'en-US';
+        var lsmbConfig = {
+            "dateformat": '[% USER.dateformat %]' || 'yyyy-mm-dd'
+        };
     </script>
-    <script src="js/dojo/dojo.js"></script>
-    <script src="js/lsmb/main.js"></script>
-    [% FOREACH s = include_script %]
-         <script src="[% s %]" ></script>
-    [% END %]
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 [% BLOCK end_html %]
