@@ -127,7 +127,6 @@ before_install:
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
   - perl -V
-  - npm install uglify-js@">=2.0 <3.0"
   #- pip3 install awscli --upgrade --user
 
 install:
@@ -222,4 +221,3 @@ after_failure:
       cat /tmp/plackup-error.log
       echo
     fi
- 
