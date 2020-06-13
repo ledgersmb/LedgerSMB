@@ -158,7 +158,7 @@ my @expected = split (/\n/, q{<!-- prettier-disable -->
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
-        <script type="text/javascript">
+        <script>
             var dojoConfig = {
                 async: 1,
                 locale: '',
@@ -167,8 +167,8 @@ my @expected = split (/\n/, q{<!-- prettier-disable -->
             var lsmbConfig = {
             };
        </script>
-        <script type="text/javascript" src="js/dojo/dojo.js"></script>
-        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        <script src="js/dojo/dojo.js"></script>
+        <script src="js/lsmb/main.js"></script>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -242,7 +242,7 @@ filter_js_src($out);
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
-        <script type="text/javascript">
+        <script>
             var dojoConfig = {
                 async: 1,
                 locale: '',
@@ -251,8 +251,8 @@ filter_js_src($out);
             var lsmbConfig = {
             };
        </script>
-        <script type="text/javascript" src="js/dojo/dojo.js"></script>
-        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        <script src="js/dojo/dojo.js"></script>
+        <script src="js/lsmb/main.js"></script>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -326,7 +326,7 @@ filter_js_src($out);
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
-        <script type="text/javascript">
+        <script>
             var dojoConfig = {
                 async: 1,
                 locale: '',
@@ -335,8 +335,8 @@ filter_js_src($out);
             var lsmbConfig = {
             };
        </script>
-        <script type="text/javascript" src="js/dojo/dojo.js"></script>
-        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        <script src="js/dojo/dojo.js"></script>
+        <script src="js/lsmb/main.js"></script>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -411,7 +411,7 @@ filter_js_src($out);
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
-        <script type="text/javascript">
+        <script>
             var dojoConfig = {
                 async: 1,
                 locale: '',
@@ -420,8 +420,8 @@ filter_js_src($out);
             var lsmbConfig = {
             };
        </script>
-        <script type="text/javascript" src="js/dojo/dojo.js"></script>
-        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        <script src="js/dojo/dojo.js"></script>
+        <script src="js/lsmb/main.js"></script>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -513,7 +513,7 @@ filter_js_src($out);
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
             <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
             <link rel="stylesheet" href="css/setup.css" type="text/css" />
-        <script type="text/javascript">
+        <script>
             var dojoConfig = {
                 async: 1,
                 locale: '',
@@ -522,8 +522,8 @@ filter_js_src($out);
             var lsmbConfig = {
             };
        </script>
-        <script type="text/javascript" src="js/dojo/dojo.js"></script>
-        <script type="text/javascript" src="js/lsmb/main.js"></script>
+        <script src="js/dojo/dojo.js"></script>
+        <script src="js/lsmb/main.js"></script>
         <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
