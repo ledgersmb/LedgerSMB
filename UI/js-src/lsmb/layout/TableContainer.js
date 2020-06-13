@@ -3,7 +3,6 @@
 // This file is copied from dojox/layout/TableContainer.
 
 define("lsmb/layout/TableContainer", [
-   // "dojo/_base/kernel",
    "dojo/_base/lang",
    "dojo/_base/declare",
    "dojo/dom-class",
@@ -14,7 +13,6 @@ define("lsmb/layout/TableContainer", [
    "dijit/_WidgetBase",
    "dijit/layout/_LayoutWidget"
 ], function (
-   // kernel,
    lang,
    declare,
    domClass,
@@ -25,54 +23,52 @@ define("lsmb/layout/TableContainer", [
    _WidgetBase,
    _LayoutWidget
 ) {
-   // kernel.experimental("dojox.layout.TableContainer");
-
    var TableContainer = declare("lsmb.layout.TableContainer", _LayoutWidget, {
       // summary:
-      //              A container that lays out its child widgets in a table layout.
+      //    A container that lays out its child widgets in a table layout.
       //
       // description:
-      //              The TableContainer lays out child widgets in a Table layout.
-      //              Each widget can specify a "label" or a "title" parameter.
-      //              This label is displayed either above or to the left of
-      //              a widget depending on whether the "orientation" attribute
-      //              is "horiz" or "vert", for horizontal and vertical respectively.
-      //              The number of columns is configured using the "cols" attribute.
-      //              The width of labels can be configured using the "labelWidth" parameter.
+      //    The TableContainer lays out child widgets in a Table layout.
+      //    Each widget can specify a "label" or a "title" parameter.
+      //    This label is displayed either above or to the left of
+      //    a widget depending on whether the "orientation" attribute
+      //    is "horiz" or "vert", for horizontal and vertical respectively.
+      //    The number of columns is configured using the "cols" attribute.
+      //    The width of labels can be configured using the "labelWidth" parameter.
       //
       // example:
-      // |    <div dojoType="dojox.layout.TableContainer" orientation="vert" cols="3>
-      // |            <div dojoType="dijit.form.TextInput" value="John" label="First Name:"></div>
-      // |            <div dojoType="dijit.form.CheckBox" label="Is Student?:"></div>
-      // |            <div dojoType="dojox.form.DateTextBox" label="Date Of Birth:"></div>
-      // |    </div>
+      // |  <div dojoType="dojox.layout.TableContainer" orientation="vert" cols="3>
+      // |    <div dojoType="dijit.form.TextInput" value="John" label="First Name:"></div>
+      // |    <div dojoType="dijit.form.CheckBox" label="Is Student?:"></div>
+      // |    <div dojoType="dojox.form.DateTextBox" label="Date Of Birth:"></div>
+      // |  </div>
       //
 
       cols: 1,
 
       // labelWidth: Number|String
-      //              Defines the width of a label.  If the value is a number, it is
-      //              treated as a pixel value.  The other valid value is a percentage,
-      //              e.g. "50%"
+      //    Defines the width of a label.  If the value is a number, it is
+      //    treated as a pixel value.  The other valid value is a percentage,
+      //    e.g. "50%"
       labelWidth: "100",
 
       // showLabels: Boolean
-      //              True if labels should be displayed, false otherwise.
+      //    True if labels should be displayed, false otherwise.
       showLabels: true,
 
       // orientation: String
-      //              Either "horiz" or "vert" for label orientation.
+      //    Either "horiz" or "vert" for label orientation.
       orientation: "horiz",
 
       // spacing: Number
-      //              The cell spacing to apply to the table.
+      //    The cell spacing to apply to the table.
       spacing: 1,
 
       // customClass: String
-      //              A CSS class that will be applied to child elements.  For example, if
-      //              the class is "myClass", the table will have "myClass-table" applied to it,
-      //              each label TD will have "myClass-labelCell" applied, and each
-      //              widget TD will have "myClass-valueCell" applied.
+      //    A CSS class that will be applied to child elements.  For example, if
+      //    the class is "myClass", the table will have "myClass-table" applied to it,
+      //    each label TD will have "myClass-labelCell" applied, and each
+      //    widget TD will have "myClass-valueCell" applied.
       customClass: "",
 
       postCreate: function () {
@@ -121,9 +117,9 @@ define("lsmb/layout/TableContainer", [
 
       resize: function () {
          // summary:
-         //              Resizes all children.  This widget itself
-         //              does not resize, as it takes up 100% of the
-         //              available width.
+         //    Resizes all children.  This widget itself
+         //    does not resize, as it takes up 100% of the
+         //    available width.
          arrayUtil.forEach(this.getChildren(), function (child) {
             if (typeof child.resize === "function") {
                child.resize();
@@ -133,7 +129,7 @@ define("lsmb/layout/TableContainer", [
 
       layout: function () {
          // summary:
-         //              Lays out the child widgets.
+         //    Lays out the child widgets.
          if (!this._initialized) {
             return;
          }
@@ -311,8 +307,8 @@ define("lsmb/layout/TableContainer", [
 
       destroyDescendants: function (/* Boolean */ preserveDom) {
          // summary:
-         //              Destroys all the widgets inside this.containerNode,
-         //              but not this widget itself
+         //    Destroys all the widgets inside this.containerNode,
+         //    but not this widget itself
          arrayUtil.forEach(this._children, function (child) {
             child.destroyRecursive(preserveDom);
          });
@@ -320,7 +316,7 @@ define("lsmb/layout/TableContainer", [
 
       _setSpacingAttr: function (value) {
          // summary:
-         //              Sets the spacing attribute.
+         //    Sets the spacing attribute.
          this.spacing = value;
          if (this.table) {
             this.table.cellspacing = Number(value);
@@ -330,25 +326,25 @@ define("lsmb/layout/TableContainer", [
 
    TableContainer.ChildWidgetProperties = {
       // summary:
-      //              Properties to be set on children of TableContainer
+      //    Properties to be set on children of TableContainer
 
       // label: String
-      //              The label to display for a given widget
+      //    The label to display for a given widget
       label: "",
 
       // title: String
-      //              The label to display for a given widget.  This is interchangeable
-      //              with the 'label' parameter, as some widgets already have a use
-      //              for the 'label', and this can be used instead to avoid conflicts.
+      //    The label to display for a given widget.  This is interchangeable
+      //    with the 'label' parameter, as some widgets already have a use
+      //    for the 'label', and this can be used instead to avoid conflicts.
       title: "",
 
       // spanLabel: Boolean
-      //              Setting spanLabel to true makes the widget take up both the
-      //              label and value cells. Defaults to false.
+      //    Setting spanLabel to true makes the widget take up both the
+      //    label and value cells. Defaults to false.
       spanLabel: false,
 
       // colspan: Number
-      //              The number of columns this widget should span.
+      //    The number of columns this widget should span.
       colspan: 1
    };
 

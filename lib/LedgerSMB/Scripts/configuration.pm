@@ -337,7 +337,7 @@ sub sequence_screen {
         for my $blacklist (qw(customernumber vendornumber employeenumber)){
             delete $request->{setting_keys}->[$count] if $item->{name} eq $blacklist;
         }
-    ++$count;
+        ++$count;
     }
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'Configuration/sequence', $request);

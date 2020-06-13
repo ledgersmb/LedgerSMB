@@ -5,13 +5,13 @@
 	] ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body>
-    <?lsmb IF name ?> 
+    <?lsmb IF name ?>
     <div class="pageheading"><?lsmb name?></font>
     <?lsmb END ?>
 <div class="navigation" id="nav_div">
 <?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
 ?><?lsmb operation = "Add"
-?><?lsmb END ?> 
+?><?lsmb END ?>
 <!-- CT: Keys for localization scripts:
 <?lsmb text("Add Customer") ?>
 <?lsmb text("Edit Customer") ?>
@@ -138,8 +138,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <?lsmb ELSE ?>
 <div class="container" id="customer_div">
 <?lsmb SWITCH entity_class
-	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
-	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
+	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor"
+	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer"
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
 <?lsmb FOREACH n = notes ?>
@@ -150,12 +150,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		type = "hidden"
 		name = "entity_id"
 		value = entity_id
-	} ?>	
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "account_class"
 		value = account_class
-	} ?>	
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		label = text('Name:'),
 		type= "text",
@@ -216,7 +216,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
             </td>
         </tr>
         <tr>
-            
+
             <td>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Tax Number/SSN:'),
@@ -245,7 +245,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			type = "text",
 			size = "3",
 			maxlength = 3
-		} ?>% / 
+		} ?>% /
 		<?lsmb INCLUDE input element_data = {
 			name = "discount_terms",
 			value = discount_terms,
@@ -292,7 +292,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			text_attr = "description"
 			value_attr = "id"
 			label = text('Business Type:') #'
-			} ?> 
+			} ?>
 	  </td>
           <td> <?lsmb INCLUDE input element_data = {
 			name = "threshold"
@@ -308,57 +308,57 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
             <hr/>
 		<?lsmb INCLUDE button element_data = {
 			text = text('Save'),
-			class="submit" 
-			type="submit" 
-			name="action" 
-			value="save" 
-			accesskey="S" 
+			class="submit"
+			type="submit"
+			name="action"
+			value="save"
+			accesskey="S"
 			title="Save [Alt-S]"
 		} ?>
 		<?lsmb INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="add_transaction" 
-                        accesskey="A" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="add_transaction"
+                        accesskey="A"
                         title="Transaction [Alt-A]"
 			text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
 		} ?>
 		<?lsmb INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="add_invoice" 
-                        accesskey="I" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="add_invoice"
+                        accesskey="I"
                         title="Invoice [Alt-I]"
-			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
+			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice')
 		} ?>
 		<?lsmb INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="add_order" 
-                        accesskey="O" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="add_order"
+                        accesskey="O"
                         title="Order [Alt-O]"
 			text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
 		} ?>
 		<?lsmb INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="rfq" 
-                        accesskey="Q" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="rfq"
+                        accesskey="Q"
                         title="Quotation [Alt-Q]"
 			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
 		} ?>
 		<?lsmb INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="pricelist" 
-                        accesskey="P" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="pricelist"
+                        accesskey="P"
                         title="Pricelist [Alt-P]"
-			text = text('Pricelist') 
+			text = text('Pricelist')
 		} ?>
     </form>
 </div>
@@ -370,13 +370,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	in order to prevent user confusion -CT -->
     <form id="location_form" action="<?lsmb script ?>">
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
+		type="hidden"
+		name="entity_id"
 		value=entity_id
 	} ?>
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="location_id" 
+		type="hidden"
+		name="location_id"
 		value=location_id
 	} ?>
     <table width="100%">
@@ -399,8 +399,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<td class="country"><?lsmb loc.country ?></td>
 	<td class="actions">
 		<!--  TODO:  Automate links with AJAX -->
-		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb id 
-			?>&location_id=<?lsmb loc.id ?>">[edit]</a> 
+		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb id
+			?>&location_id=<?lsmb loc.id ?>">[edit]</a>
 		<a href="<?lsmb script ?>?action=delete_location&entity_id=<?lsmb
 			id ?>&location_id=<?lmb loc.id ?>">[delete]</a>
 	</td>
@@ -415,7 +415,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<?lsmb END ?>
 		</select>
 	</div>
-	<div> 
+	<div>
 		<?lsmb PROCESS input element_data = {
 			label = text('Address:'),
 			name = "line_one",
@@ -424,7 +424,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} ?>
 	</div>
-	<div> 
+	<div>
 		<?lsmb PROCESS input element_data = {
 			name = "line_two",
 			value = line_two,
@@ -432,7 +432,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} ?>
 	</div>
-	<div> 
+	<div>
 		<?lsmb PROCESS input element_data = {
 			name = "line_three",
 			value = line_three,
@@ -440,7 +440,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} ?>
 	</div>
-	<div> 
+	<div>
 		<?lsmb PROCESS input element_data = {
 			label = text('City:'),
 			name = "city",
@@ -449,7 +449,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} ?>
 	</div>
-	<div> 
+	<div>
 		<?lsmb PROCESS input element_data = {
 			label = text('State/Province:'),
 			name = "state",
@@ -458,7 +458,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} ?>
 	</div>
-	<div> 
+	<div>
 		<?lsmb PROCESS input element_data = {
 			label = text('Zip/Post Code:'),
 			name = "mail_code",
@@ -474,15 +474,15 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			default_values = [country]
 			options = country_list
 			name = "country"
-			label = text('Country:') 
+			label = text('Country:')
 		} ?>
 	</div>
 	<div><?lsmb PROCESS button element_data = {
-		class = "submit" 
-		name = "action" 
-		value = "add_location" 
+		class = "submit"
+		name = "action"
+		value = "add_location"
 		id = "loc_save_location"
-		text = text('Save Location') 
+		text = text('Save Location')
 	} #' ?>
 	</div>
     </form>
@@ -500,12 +500,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<td class="contact_class"><?lsmb ct.class ?></td>
 		<td class="contact"><?lsmb ct.contact ?></td>
 		<td class="contact_actions">
-			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
-				?>&contact_id=<?lsmb ct.id 
+			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id
+				?>&contact_id=<?lsmb ct.id
 				?>&action=edit_contact"
 			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
-			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
-				?>&contact_id=<?lsmb ct.id 
+			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id
+				?>&contact_id=<?lsmb ct.id
 				?>&action=delete_contact"
 			>[<?lsmb text('Delete'); ?>]</a>
 		</td>
@@ -514,13 +514,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</table>
 	<form action="<?lsmb script ?>">
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
+		type="hidden"
+		name="entity_id"
 		value=entity_id
 	} ?>
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="contact_id" 
+		type="hidden"
+		name="contact_id"
 		value=contact_id
 	} ?>
 	<div><label for="contact_type"><?lsmb text('Type:') ?></label>
@@ -548,7 +548,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} #' ?>
 	</div>
 </form>
-	
+
 </div>
 <div class="container" id="bank_div">
 <div class="listtop"><?lsmb text('Bank Accounts') ?></div>
@@ -567,57 +567,57 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<td class="actions">
 		<a href="<?lsmb script ?>?action=edit_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id ?>"
-			>[Edit]</a> 
+			>[Edit]</a>
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id ?>"
-			>[Delete]</a> 
+			>[Delete]</a>
 	</td>
 </tr>
 <?lsmb END ?>
 </table>
 <form name="bank_acct" action="<?lsmb script ?>">
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
+		type="hidden"
+		name="entity_id"
 		value=entity_id
 	} ?>
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="bank_account_id" 
+		type="hidden"
+		name="bank_account_id"
 		value=bank_account_id
 	} ?>
 	<div><label for="bic">
 	<?lsmb INCLUDE input element_data = {
-		type="text" 
+		type="text"
 		label = text('BIC/SWIFT Code:')
-		name="bic" 
+		name="bic"
 		value=bic
 		size=20
 	} #' ?>
 	</div>
 	<div><label for="iban">
 	<?lsmb PROCESS input element_data = {
-		type="text" 
+		type="text"
 		label = text('Bank Account:')
-		name="iban" 
+		name="iban"
 		value=iban
 		size=20
 	} #' ?>
 	</div>
 	<div><label for="remark">
 	<?lsmb PROCESS input element_data = {
-		type="text" 
+		type="text"
 		label = text('Remark:')
-		name="remark" 
+		name="remark"
 		value=remark
 		size=20
 	} #' ?>
 	</div>
 	<div><?lsmb PROCESS button element_data = {
-		name="action" 
+		name="action"
 		value="save_bank_account"
 		class="submit"
-		text = text('Save') 
+		text = text('Save')
 		} ?>
 	</div>
 </form>
@@ -631,8 +631,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <?lsmb END ?>
 <form action="<?lsmb script ?>" method="post">
 	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
+		type="hidden"
+		name="entity_id"
 		value=entity_id
 	} ?>
 <div class="input"><?lsmb PROCESS textarea element_data = {
@@ -651,4 +651,4 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <?lsmb END ?>
 </body>
-</html>
+<?lsmb end_html ?>

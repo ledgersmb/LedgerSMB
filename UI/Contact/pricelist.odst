@@ -1,7 +1,7 @@
 <workbook>
-[% 
+[%
     PROCESS 'dynatable.odst';
-    columns = [ 
+    columns = [
               { col_id = 'parts_id',
                   type = 'hidden' },
               { col_id = 'int_partnumber'
@@ -39,12 +39,12 @@
                      name = text('Min Qty') #'
                      type = 'input_text'},
          );
-                        
+
      END;
      columns.push({col_id = 'currency',
                      name = text('Currency'),
                      type = 'text'}
-     ); 
+     );
     PROCESS dynatable
          attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix };
