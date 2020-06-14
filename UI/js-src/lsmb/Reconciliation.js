@@ -6,8 +6,7 @@ define("lsmb/Reconciliation", [
    "dojo/query",
    "lsmb/Form",
    "dijit/_Container",
-   "dojo/NodeList-dom", // To load extensions in query
-   "dojo/domReady!"
+   "dojo/NodeList-dom" // To load extensions in query
 ], function (declare, topic, query, Form, _Container) {
    return declare("lsmb/Reconciliation", [Form, _Container], {
       update: function (targetValue, prefix) {

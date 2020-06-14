@@ -95,7 +95,6 @@ var profile = (function () {
             include: [
                "dojo/dojo",
                "dojo/query",
-               "dojo/domReady",
                "dojo/on",
                "dijit/Tooltip"
             ],
