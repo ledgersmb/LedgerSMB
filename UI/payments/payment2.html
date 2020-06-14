@@ -162,12 +162,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                  data-dojo-type="dijit/form/Button">
                                 [% column.text -%]
                                 <script type="dojo/on" data-dojo-event="click">
-                                    require(["dojo/domReady!"], function(){
-                                        dojo.query('input[name^="checkbox_"]', this.domNode).forEach(function (node, index, arr) {
-                                            var n = dijit.getEnclosingWidget(node);
-                                            n.set('checked',!n.get('checked'));
-                                        });
-                                    });
+                                  dojo.query('input[name^="checkbox_"]', this.domNode).forEach(function (node, index, arr) {
+                                     var n = dijit.getEnclosingWidget(node);
+                                     n.set('checked',!n.get('checked'));
+                                  });
                                 </script>
                             </button>
                          [% INCLUDE tooltip element_data = {

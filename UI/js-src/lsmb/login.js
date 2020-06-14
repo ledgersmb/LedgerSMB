@@ -6,8 +6,7 @@ require([
    "dojo/dom-style",
    "dojo/json",
    "dijit/Dialog",
-   "dijit/ProgressBar",
-   "dojo/domReady!"
+   "dijit/ProgressBar"
 ], function (xhr, dom, domStyle, json, dialog, progressBar) {
    // Make indicator visible
    function showIndicator() {
@@ -86,10 +85,11 @@ require([
       return false;
    }
 
-   window.addEventListener('load',
-                           function () {
-                               setIndicator();
-                               // Make it public
-                               window.submitForm = submitForm;
-                           })
+   window.addEventListener(
+       'load',
+       function () {
+           setIndicator();
+           // Make it public
+           window.submitForm = submitForm;
+       });
 });
