@@ -86,7 +86,10 @@ require([
       return false;
    }
 
-   setIndicator();
-   // Make it public
-   window.submitForm = submitForm;
+   window.addEventListener('load',
+                           function () {
+                               setIndicator();
+                               // Make it public
+                               window.submitForm = submitForm;
+                           })
 });
