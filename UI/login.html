@@ -1,16 +1,17 @@
 [% INCLUDE 'ui-header.html'
         titlebar = "LedgerSMB $version"
         include_stylesheet = ["login.css", "ledgersmb.css"]
-        include_script = [ 'js/lsmb/login.js' ]
 %]
 [%
    PROCESS elements.html -%]
-<body class="login, [% dojo_theme %]"
+<body class="login [% dojo_theme %]"
       id="app-login">
   <br /><br />
   <center>
-    <form data-dojo-type="lsmb/Form" method="post" action="login.pl" name="login"
-          onsubmit="return submitForm()">
+    <form data-dojo-type="lsmb/loginForm"
+          method="post"
+          action="login.pl"
+          name="login">
       [% INCLUDE input element_data = {
              type = "hidden",
              name = "menubar",
