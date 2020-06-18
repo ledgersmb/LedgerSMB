@@ -80,15 +80,15 @@ define([
    }
 
    return declare("lsmb/loginForm", [Form], {
-       startup: function() {
-           this.inherited(arguments);
-           setIndicator();
-       },
-       onSubmit: function() {
-           showIndicator();
-           window.setTimeout(showIndicator, 0);
-           window.setTimeout(sendForm, 10);
-           return false;
-       }
+      startup: function () {
+         this.inherited(arguments);
+         setIndicator();
+      },
+      onSubmit: function () {
+         showIndicator();
+         window.setTimeout(showIndicator, 0);
+         window.setTimeout(sendForm, 10);
+         return false;
+      }
    });
 });
