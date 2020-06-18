@@ -74,7 +74,7 @@ function getConfig(env) {
 }
 // For Webpack, export the config.  This is needed both at build time and on the client at runtime
 // for the packed application.
-if (typeof module !== "undefined" && module) {
+if (typeof module !== "undefined") {
    module.exports = getConfig;
 } else {
    // No webpack.  This script was loaded by page via script tag, so load Dojo from CDN
