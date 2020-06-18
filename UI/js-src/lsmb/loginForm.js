@@ -1,13 +1,15 @@
 /** @format */
 
-require([
+define([
+   "dojo/_base/declare",
    "dojo/request/xhr",
    "dojo/dom",
    "dojo/dom-style",
    "dojo/json",
+   "dijit/form/Form",
    "dijit/Dialog",
    "dijit/ProgressBar"
-], function (xhr, dom, domStyle, json, dialog, progressBar) {
+], function (declare, xhr, dom, domStyle, json, Form, dialog, progressBar) {
    // Make indicator visible
    function showIndicator() {
       domStyle.set(dom.byId("login-indicator"), "visibility", "visible");
@@ -77,19 +79,16 @@ require([
       indicator.startup();
    }
 
-   // Submit form and show a 10 seconds progress bar
-   function submitForm() {
-      showIndicator();
-      window.setTimeout(showIndicator, 0);
-      window.setTimeout(sendForm, 10);
-      return false;
-   }
-
-   window.addEventListener(
-       'load',
-       function () {
-           setIndicator();
-           // Make it public
-           window.submitForm = submitForm;
-       });
+   return declare("lsmb/loginForm", [Form], {
+      startup: function () {
+         this.inherited(arguments);
+         setIndicator();
+      },
+      onSubmit: function () {
+         showIndicator();
+         window.setTimeout(showIndicator, 0);
+         window.setTimeout(sendForm, 10);
+         return false;
+      }
+   });
 });
