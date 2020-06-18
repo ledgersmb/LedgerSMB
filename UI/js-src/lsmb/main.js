@@ -44,7 +44,7 @@ define([
    "lsmb/InvoiceLines",
    "lsmb/journal/fx_checkbox",
    "lsmb/layout/TableContainer",
-   "lsmb/login",
+   "lsmb/loginForm",
    "lsmb/MainContentPane",
    "lsmb/MaximizeMinimize",
    "lsmb/menus/Tree",
