@@ -139,7 +139,7 @@ on 'develop' => sub {
     requires 'Test2::V0';
     requires 'Text::Diff';
     requires 'Weasel', '0.21';
-    requires 'Weasel::Driver::Selenium2', '0.07';
+    requires 'Weasel::Driver::Selenium2', '0.11';
     requires 'Weasel::Session', '0.11';
     requires 'Weasel::Widgets::Dojo', '0.04';
 
