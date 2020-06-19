@@ -158,12 +158,13 @@ my @expected = split (/\n/, q{<!-- prettier-disable -->
     <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
     <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
     <link rel="stylesheet" href="css/setup.css" type="text/css" />
-    <script src="js/lsmb/webpack.loaderConfig.js"></script>
     <script>
-        var dojoConfig = getConfig();
-        dojoConfig.locale = "" || 'en-US';
+        var dojoConfig = {
+            async: 1,
+            locale: "",
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
         var lsmbConfig = {
-            "dateformat": '' || 'yyyy-mm-dd'
         };
     </script>
     <script src="js/lsmb/main.js" charset="utf-8"></script>
@@ -240,12 +241,13 @@ filter_js_src($out);
     <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
     <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
     <link rel="stylesheet" href="css/setup.css" type="text/css" />
-    <script src="js/lsmb/webpack.loaderConfig.js"></script>
     <script>
-        var dojoConfig = getConfig();
-        dojoConfig.locale = "" || 'en-US';
+        var dojoConfig = {
+            async: 1,
+            locale: "",
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
         var lsmbConfig = {
-            "dateformat": '' || 'yyyy-mm-dd'
         };
     </script>
     <script src="js/lsmb/main.js" charset="utf-8"></script>
@@ -322,12 +324,13 @@ filter_js_src($out);
     <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
     <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
     <link rel="stylesheet" href="css/setup.css" type="text/css" />
-    <script src="js/lsmb/webpack.loaderConfig.js"></script>
     <script>
-        var dojoConfig = getConfig();
-        dojoConfig.locale = "" || 'en-US';
+        var dojoConfig = {
+            async: 1,
+            locale: "",
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
         var lsmbConfig = {
-            "dateformat": '' || 'yyyy-mm-dd'
         };
     </script>
     <script src="js/lsmb/main.js" charset="utf-8"></script>
@@ -405,12 +408,13 @@ filter_js_src($out);
     <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
     <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
     <link rel="stylesheet" href="css/setup.css" type="text/css" />
-    <script src="js/lsmb/webpack.loaderConfig.js"></script>
     <script>
-        var dojoConfig = getConfig();
-        dojoConfig.locale = "" || 'en-US';
+        var dojoConfig = {
+            async: 1,
+            locale: "",
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
         var lsmbConfig = {
-            "dateformat": '' || 'yyyy-mm-dd'
         };
     </script>
     <script src="js/lsmb/main.js" charset="utf-8"></script>
@@ -505,12 +509,13 @@ filter_js_src($out);
     <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
     <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
     <link rel="stylesheet" href="css/setup.css" type="text/css" />
-    <script src="js/lsmb/webpack.loaderConfig.js"></script>
     <script>
-        var dojoConfig = getConfig();
-        dojoConfig.locale = "" || 'en-US';
+        var dojoConfig = {
+            async: 1,
+            locale: "",
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
         var lsmbConfig = {
-            "dateformat": '' || 'yyyy-mm-dd'
         };
     </script>
     <script src="js/lsmb/main.js" charset="utf-8"></script>
