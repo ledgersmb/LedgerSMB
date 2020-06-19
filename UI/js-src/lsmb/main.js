@@ -10,6 +10,7 @@ define([
    "dojo/hash",
    "dojo/topic",
    "dojo/dom-class",
+   "dojo/dom-style",
    "dojo/mouse",
    "dojo/ready",
    /* Every reference */
@@ -83,6 +84,7 @@ define([
    hash,
    topic,
    domClass,
+   domStyle,
    mouse,
    ready
 ) {
@@ -137,6 +139,9 @@ define([
          query("a.menu-terminus").forEach(interceptClick);
 
          ready(999, function () {
+            query("#loading").forEach(function (node) {
+               domStyle.set(node, "display", "none");
+            });
             query("#console-container").forEach(function (node) {
                domClass.add(node, "done-parsing");
             });
