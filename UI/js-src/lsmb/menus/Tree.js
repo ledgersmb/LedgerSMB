@@ -100,7 +100,7 @@ define([
                location.origin +
                   location.pathname +
                   location.search +
-                  (url ? ("#" + url) : ""),
+                  (url ? "#" + url : ""),
                "_blank",
                "noopener,noreferrer"
             );

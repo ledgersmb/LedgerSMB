@@ -36,11 +36,11 @@ commands:
                    --feature-option tags=~@wip t/ xt/
       - run:
           command: |
-            kill -QUIT $(cat starman.pid)
-            while [ ! -e plackup-done ];
+            while [ $(pidof plackup) ];
             do
+              kill -SIGTERM `pidof plackup`
               echo -n "."
-              sleep 1
+              sleep 5
             done
             echo " done"
       - run:
@@ -64,10 +64,9 @@ commands:
     steps:
       - checkout
       - run:
-          name: Pull related Git repositories
+          name: Make Dojo
           command: |
-            git submodule sync
-            git submodule update --init
+            make dojo
       # Freshen up CPAN
       - run:
           name: Refresh modules from CPAN
@@ -81,7 +80,7 @@ commands:
               --with-feature=xls \
               --with-feature=edi \
               --installdeps .
-            cpanm --metacpan --notest Starlet
+            cpanm --metacpan --notest Gazelle
             if [ "x$COVERAGE" == "x1" ]
             then
               cpanm --metacpan --quiet --notest \
@@ -109,9 +108,9 @@ commands:
     steps:
       - run:
           command: |
-            echo $PWD
-            PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" starman -I$HOME/project/lib -I$HOME/project/old/lib \
-                    --preload-app --pid starman.pid --port 5762 --workers 2 \
+            PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" \
+                    plackup -I$HOME/project/lib -I$HOME/project/old/lib \
+                    -s Gazelle --port 5762 --workers=2 --max-reqs-per-child=50000 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
@@ -152,7 +151,7 @@ executors:
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
-#      DEVEL_COVER_OPTIONS: 
+#      DEVEL_COVER_OPTIONS:
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres

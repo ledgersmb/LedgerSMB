@@ -40,22 +40,18 @@
     </script>
     [% END %]
     <script>
-         var dojoConfig = {
-             async: 1,
-             locale: '[% USER.language.lower().replace('_','-') %]',
-             packages: [{"name":"lsmb","location":"../lsmb"}]
-         };
-         var lsmbConfig = {
-             [% IF USER.dateformat %]
-             "dateformat": '[% USER.dateformat %]'
-             [% END %]
-         };
+        var dojoConfig = {
+            async: 1,
+            locale: "[% USER.language.lower().replace('_','-') %]",
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
+        var lsmbConfig = {
+            [% IF USER.dateformat %]
+            "dateformat": '[% USER.dateformat %]'
+            [% END %]
+        };
     </script>
-    <script src="js/dojo/dojo.js"></script>
-    <script src="js/lsmb/main.js"></script>
-    [% FOREACH s = include_script %]
-         <script src="[% s %]" ></script>
-    [% END %]
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 [% BLOCK end_html %]
