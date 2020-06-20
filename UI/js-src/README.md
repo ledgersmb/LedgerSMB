@@ -1,23 +1,17 @@
-`Dojo` source files are no longer included in LedgerSMB.
 
-The directories here are `git` submodules.
+# Building the Javascript code
 
-To load them from the upstream `gitsources`, make sure you are in the project
-root and enter:
+In order to build the Javascript code in this directory
+into usable JS assets for the web application, please make
+sure `make` and `npm` are installed on your development machine.
 
-```bash
-git submodule init
-git submodule update
-```
-
-This will check out current releases of `Dojo`, `Dijit`, and `Dojo/Util`.
-
-To rebuild the `dojo` and `lsmb` `javascript`, you should have `node.js` installed.
-Change into the `UI/js-src/lsmb` directory, and run:
+Then, run:
 
 ```bash
-../util/buildscripts/build.sh --profile lsmb.profile.js
+ make dojo
 ```
 
-This command will clear out the `UI/js/` directory and create a new build of all
-`Javascript` files.
+This will automatically install the dependencies in the
+`./node_modules/` directory in working directory root. It will
+also transpile the javascript code into files in `./UI/js/`
+from where they can be used.
