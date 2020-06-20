@@ -113,7 +113,6 @@
     "web-webpack-plugin": "^4.6.7",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-debug-plugin": "1.0.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-entry-plus": "^1.0.18",
     "webpack-hasjs-plugin": "^1.0.3",
