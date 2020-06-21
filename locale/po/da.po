@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.16-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-05-31 12:42+0000\n"
+"POT-Creation-Date: 2020-06-21 21:05+0000\n"
 "Last-Translator: Søren Bro Thygesen <sbrothy@gmail.com>, 2019\n"
 "Language-Team: Danish (https://www.transifex.com/ledgersmb/teams/58325/da/)\n"
 "Language: da\n"
@@ -280,7 +280,7 @@ msgstr "Kontotitel"
 msgid "Account Type"
 msgstr "Kontotype"
 
-#: old/lib/LedgerSMB/GL.pm:226
+#: old/lib/LedgerSMB/GL.pm:224
 msgid "Account [_1] not found"
 msgstr "Konto [_1] ikke fundet"
 
@@ -969,9 +969,9 @@ msgstr ""
 msgid "Asset Tag"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:199
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:201 lib/LedgerSMB/Report/PNL.pm:200
-#: lib/LedgerSMB/Report/PNL.pm:202 sql/Pg-database.sql:2885
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:202
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:204 lib/LedgerSMB/Report/PNL.pm:203
+#: lib/LedgerSMB/Report/PNL.pm:205 sql/Pg-database.sql:2885
 msgid "Assets"
 msgstr ""
 
@@ -1185,7 +1185,7 @@ msgstr "Balance"
 msgid "Balance Sheet"
 msgstr "Status"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:288
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:291
 msgid "Balance sheet"
 msgstr ""
 
@@ -1252,7 +1252,7 @@ msgstr ""
 msgid "Batch ID"
 msgstr ""
 
-#: old/lib/LedgerSMB/GL.pm:144
+#: old/lib/LedgerSMB/GL.pm:142
 msgid "Batch ID Missing"
 msgstr ""
 
@@ -1439,7 +1439,7 @@ msgstr "CSV-fil:"
 msgid "Calculate Taxes"
 msgstr ""
 
-#: old/lib/LedgerSMB/GL.pm:201
+#: old/lib/LedgerSMB/GL.pm:199
 msgid "Can't post credits and debits on one line."
 msgstr ""
 
@@ -2089,9 +2089,9 @@ msgstr "Valuta"
 msgid "Current"
 msgstr "Aktuel"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:234
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:236 lib/LedgerSMB/Report/PNL.pm:222
-#: lib/LedgerSMB/Report/PNL.pm:224 lib/LedgerSMB/Scripts/configuration.pm:98
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:237
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:239 lib/LedgerSMB/Report/PNL.pm:225
+#: lib/LedgerSMB/Report/PNL.pm:227 lib/LedgerSMB/Scripts/configuration.pm:98
 msgid "Current earnings"
 msgstr ""
 
@@ -3281,15 +3281,15 @@ msgstr ""
 msgid "Environment"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:225
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:227 lib/LedgerSMB/Report/PNL.pm:214
-#: lib/LedgerSMB/Report/PNL.pm:216 UI/accounts/edit.html:211
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:228
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:230 lib/LedgerSMB/Report/PNL.pm:217
+#: lib/LedgerSMB/Report/PNL.pm:219 UI/accounts/edit.html:211
 #: UI/Reports/filters/gl.html:151
 msgid "Equity"
 msgstr "Egenkapital"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:207
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:209
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:210
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:212
 msgid "Equity & Liabilities"
 msgstr ""
 
@@ -3369,9 +3369,9 @@ msgstr ""
 msgid "Expense/Asset"
 msgstr "Udgift/Aktiv"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:184
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:186 lib/LedgerSMB/Report/PNL.pm:185
-#: lib/LedgerSMB/Report/PNL.pm:187
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:187
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:189 lib/LedgerSMB/Report/PNL.pm:188
+#: lib/LedgerSMB/Report/PNL.pm:190
 msgid "Expenses"
 msgstr ""
 
@@ -4001,9 +4001,9 @@ msgstr ""
 msgid "Including partnumber"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:191
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:193 lib/LedgerSMB/Report/PNL.pm:193
-#: lib/LedgerSMB/Report/PNL.pm:195 lib/LedgerSMB/Scripts/configuration.pm:104
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:194
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:196 lib/LedgerSMB/Report/PNL.pm:196
+#: lib/LedgerSMB/Report/PNL.pm:198 lib/LedgerSMB/Scripts/configuration.pm:104
 #: old/bin/ic.pl:519 old/bin/ic.pl:652 UI/accounts/edit.html:213
 #: UI/accounts/edit.html:320 UI/accounts/edit.html:422 UI/accounts/edit.html:461
 #: UI/Reports/filters/gl.html:159
@@ -4559,9 +4559,9 @@ msgstr ""
 msgid "Letterhead"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:216
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:218 lib/LedgerSMB/Report/PNL.pm:207
-#: lib/LedgerSMB/Report/PNL.pm:209
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:219
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:221 lib/LedgerSMB/Report/PNL.pm:210
+#: lib/LedgerSMB/Report/PNL.pm:212
 msgid "Liabilities"
 msgstr ""
 
@@ -9211,7 +9211,7 @@ msgstr ""
 msgid "Zip/Postal Code"
 msgstr ""
 
-#: lib/LedgerSMB/Report/PNL.pm:156
+#: lib/LedgerSMB/Report/PNL.pm:159
 msgid ""
 "[_1]\n"
 "[_2]"
