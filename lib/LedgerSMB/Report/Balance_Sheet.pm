@@ -142,6 +142,7 @@ sub run_report {
         sub { my ($line) = @_;
               $line->{account_number} = $line->{gifi_accno};
               $line->{account_desc} = $line->{gifi_description};
+              $line->{order} = $line->{account_number};
               return $line;
         } : ($self->legacy_hierarchy) ?
         sub { my ($line) = @_;
@@ -152,7 +153,9 @@ sub run_report {
               }
               return $line;
          } :
-         sub { my ($line) = @_; return $line; };
+         sub { my ($line) = @_;
+               $line->{order} = $line->{account_number};
+               return $line; };
 
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     $self->cheads->id_props($col_id,
