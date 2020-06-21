@@ -247,7 +247,7 @@ sub columns {
            name => LedgerSMB::Report::text('Date Paid'),
            type => 'text',
          pwidth => 8, },
-        {col_id => 'duedate',
+        {col_id => 'due_date',
            name => LedgerSMB::Report::text('Due Date'),
            type => 'text',
          pwidth => 8, },
