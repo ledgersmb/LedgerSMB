@@ -2,6 +2,16 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.16
+* Fix migration including NULL and zero exchange rate defaults (#4673)
+* Fix AR Outstanding report showing negative taxes (#4688)
+* Remove dev-mode server-killing /stop URL (#4705)
+* Fix GL journal creation silently inserting 2 'gl' records (#4719)
+* Fix sorting hierarchical balance sheet and income statement sections (#4740)
+* Update Dojo dependency to 1.15.4
+* Add SameSite policy on session cookie to prevent being ignored (#4748)
+
+
 Changelog for 1.7.15
 * Fix tax on invoice differs from search results (#4651)
 * Fix COGS for purchased-in-arrears parts (#4658)
