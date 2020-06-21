@@ -249,7 +249,7 @@ sub columns {
            name => $self->Text('Date Paid'),
            type => 'text',
          pwidth => 8, },
-        {col_id => 'duedate',
+        {col_id => 'due_date',
            name => $self->Text('Due Date'),
            type => 'text',
          pwidth => 8, },
