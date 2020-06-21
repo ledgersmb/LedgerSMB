@@ -172,6 +172,15 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.22
+* Update Dojo toolkit dependency to 1.13.8 (Erik H)
+* Fix sorting of hierarchical income statement and balance sheet (Erik H)
+* Fix columns not being populated in AR/AP Outstanding report (Erik H)
+* Add SameSite policy on session cookie to prevent being ignored (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.21
 * Fix COGS for purchased-in-arrears parts (Erik H)
 * Update Dojo toolkit dependency to 1.13.7 (Erik H)
