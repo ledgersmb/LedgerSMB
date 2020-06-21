@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.22-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-05-31 11:28+0000\n"
+"POT-Creation-Date: 2020-06-21 20:52+0000\n"
 "Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
@@ -974,9 +974,9 @@ msgstr ""
 msgid "Asset Tag"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:197
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:199 lib/LedgerSMB/Report/PNL.pm:198
-#: lib/LedgerSMB/Report/PNL.pm:200 sql/Pg-database.sql:2888
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:200
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:202 lib/LedgerSMB/Report/PNL.pm:201
+#: lib/LedgerSMB/Report/PNL.pm:203 sql/Pg-database.sql:2888
 msgid "Assets"
 msgstr "Attività"
 
@@ -1186,7 +1186,7 @@ msgstr "Saldo"
 msgid "Balance Sheet"
 msgstr "Stato Patrimoniale"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:286
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:289
 msgid "Balance sheet"
 msgstr ""
 
@@ -2097,9 +2097,9 @@ msgstr "Valuta"
 msgid "Current"
 msgstr "Corrente"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:232
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:234 lib/LedgerSMB/Report/PNL.pm:220
-#: lib/LedgerSMB/Report/PNL.pm:222 lib/LedgerSMB/Scripts/configuration.pm:83
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:235
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:237 lib/LedgerSMB/Report/PNL.pm:223
+#: lib/LedgerSMB/Report/PNL.pm:225 lib/LedgerSMB/Scripts/configuration.pm:83
 msgid "Current earnings"
 msgstr ""
 
@@ -3289,15 +3289,15 @@ msgstr "Busta"
 msgid "Environment"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:223
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:225 lib/LedgerSMB/Report/PNL.pm:212
-#: lib/LedgerSMB/Report/PNL.pm:214 UI/accounts/edit.html:183
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:226
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:228 lib/LedgerSMB/Report/PNL.pm:215
+#: lib/LedgerSMB/Report/PNL.pm:217 UI/accounts/edit.html:183
 #: UI/Reports/filters/gl.html:151
 msgid "Equity"
 msgstr "Capitale"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:205
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:207
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:208
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:210
 msgid "Equity & Liabilities"
 msgstr "Attività e passività"
 
@@ -3386,9 +3386,9 @@ msgstr "Conto di spesa"
 msgid "Expense/Asset"
 msgstr "Acquisti/Attivit&agrave;"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:182
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:184 lib/LedgerSMB/Report/PNL.pm:183
-#: lib/LedgerSMB/Report/PNL.pm:185
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:185
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:187 lib/LedgerSMB/Report/PNL.pm:186
+#: lib/LedgerSMB/Report/PNL.pm:188
 msgid "Expenses"
 msgstr "Costi"
 
@@ -4017,9 +4017,9 @@ msgstr ""
 msgid "Including partnumber"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:189
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:191 lib/LedgerSMB/Report/PNL.pm:191
-#: lib/LedgerSMB/Report/PNL.pm:193 lib/LedgerSMB/Scripts/configuration.pm:89
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:192
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:194 lib/LedgerSMB/Report/PNL.pm:194
+#: lib/LedgerSMB/Report/PNL.pm:196 lib/LedgerSMB/Scripts/configuration.pm:89
 #: old/bin/ic.pl:523 old/bin/ic.pl:656 UI/accounts/edit.html:185
 #: UI/accounts/edit.html:268 UI/accounts/edit.html:370 UI/accounts/edit.html:409
 #: UI/Reports/filters/gl.html:159
@@ -4568,9 +4568,9 @@ msgstr ""
 msgid "Letterhead"
 msgstr "Intestazione lettera"
 
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:214
-#: lib/LedgerSMB/Report/Balance_Sheet.pm:216 lib/LedgerSMB/Report/PNL.pm:205
-#: lib/LedgerSMB/Report/PNL.pm:207
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:217
+#: lib/LedgerSMB/Report/Balance_Sheet.pm:219 lib/LedgerSMB/Report/PNL.pm:208
+#: lib/LedgerSMB/Report/PNL.pm:210
 msgid "Liabilities"
 msgstr "Passività"
 
@@ -9224,7 +9224,7 @@ msgstr "CAP"
 msgid "Zip/Postal Code"
 msgstr "CAP"
 
-#: lib/LedgerSMB/Report/PNL.pm:154
+#: lib/LedgerSMB/Report/PNL.pm:157
 msgid ""
 "[_1]\n"
 "[_2]"
