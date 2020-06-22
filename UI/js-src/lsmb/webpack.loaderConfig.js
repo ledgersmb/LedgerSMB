@@ -18,27 +18,27 @@
 
 // eslint-disable-next-line no-unused-vars
 function getConfig(env) {
-   // env is set by the 'buildEnvironment' and/or 'environment' plugin options (see webpack.config.js),
-   // or by the code at the end of this file if using without webpack
-   var dojoConfig = {
-      packages: [
-         // An array of objects which provide the package name and location
-         "dojo",
-         "dijit",
-         {
-            name: "lsmb", // the name of the package
-            location: "js-src/lsmb" // the path to the directory where the package resides
-         }
-      ],
+    // env is set by the 'buildEnvironment' and/or 'environment' plugin options (see webpack.config.js),
+    // or by the code at the end of this file if using without webpack
+    var dojoConfig = {
+        packages: [
+            // An array of objects which provide the package name and location
+            "dojo",
+            "dijit",
+            {
+                name: "lsmb", // the name of the package
+                location: "js-src/lsmb" // the path to the directory where the package resides
+            }
+        ],
 
-      async: true, // Defines if Dojo core should be loaded asynchronously
-      blankGif: "./js/dojo/resources/blank.gif",
-      deps: ["lsmb/main"], // An array of resource paths which should load immediately once Dojo has loaded:
+        async: true, // Defines if Dojo core should be loaded asynchronously
+        blankGif: "./js/dojo/resources/blank.gif",
+        deps: ["lsmb/main"], // An array of resource paths which should load immediately once Dojo has loaded:
 
-      has: {
-         "dojo-config-api": 1, // Ensures that the build is configurable
-         "dojo-has-api": 1 // Ensures the has feature detection API is available.
-         /*
+        has: {
+            "dojo-config-api": 1, // Ensures that the build is configurable
+            "dojo-has-api": 1 // Ensures the has feature detection API is available.
+            /*
             'host-browser':                   1, // Ensures the code is built to run on a browser platform
             'dojo-config-require':            1, // Enables configuration via the require().
             'dojo-v1x-i18n-Api':              1, // Enables support for v1.x i18n loading (required for Dijit)
@@ -68,15 +68,15 @@ function getConfig(env) {
             'dojo-trace-api':                 1, // Disables the tracing of module loading.
             'dojo-undef-api':                 0, // Removes support for module unloading
 */
-      }
-   };
-   return dojoConfig;
+        }
+    };
+    return dojoConfig;
 }
 // For Webpack, export the config.  This is needed both at build time and on the client at runtime
 // for the packed application.
 if (typeof module !== "undefined") {
-   module.exports = getConfig;
+    module.exports = getConfig;
 } else {
-   // No webpack.  This script was loaded by page via script tag, so load Dojo from CDN
-   getConfig({ dojoRoot: "//ajax.googleapis.com/ajax/libs/dojo/1.16.0" });
+    // No webpack.  This script was loaded by page via script tag, so load Dojo from CDN
+    getConfig({ dojoRoot: "//ajax.googleapis.com/ajax/libs/dojo/1.16.0" });
 }

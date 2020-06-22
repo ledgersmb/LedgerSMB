@@ -1,7 +1,7 @@
 /** @format */
 
 define(["dijit/form/Form", "dojo/_base/declare"], function (Form, declare) {
-   /* The purpose of the SimpleForm is to be a regular dijit/form/Form,
+    /* The purpose of the SimpleForm is to be a regular dijit/form/Form,
               enhanced with the standard behaviours LedgerSMB wants in its
               application, such as form validation.
 
@@ -11,9 +11,9 @@ define(["dijit/form/Form", "dojo/_base/declare"], function (Form, declare) {
 
               Concluding: you only want to use this class in specific cases.
             */
-   return declare("lsmb/SimpleForm", [Form], {
-      onSubmit: function () {
-         return this.validate();
-      }
-   });
+    return declare("lsmb/SimpleForm", [Form], {
+        onSubmit: function () {
+            return this.validate();
+        }
+    });
 });

@@ -23,22 +23,22 @@ const javascript = {
    test: /\.js$/,
    use: [{
       loader: 'babel-loader',
-      options: {
+         options: {
          presets: ['@babel/preset-env']
-      }
+         }
     },{
-      loader: "eslint-loader",
-      options: {
-         configFile: ".eslintrc",
-         failOnError: true
-      }
+         loader: "eslint-loader",
+         options: {
+            configFile: ".eslintrc",
+            failOnError: true
+         }
    }]
 };
 
 // Used in css loader definition below and webpack-multiple-themes-compile plugin
 const cssRules = [
    // Creates `style` nodes from JS strings
-   //'style-loader', // requires a document, thus js code. Not for css only
+   // 'style-loader', // requires a document, thus js code. Not for css only
    // Translates CSS into CommonJS
    {
       loader: 'css-loader',
@@ -57,16 +57,16 @@ const cssRules = [
          plugins: (loader) => [
            require('postcss-import')(),
            require('postcss-url')(),
-           //require('postcss-preset-env')(),
+            // require('postcss-preset-env')(),
            require('cssnano')(!devMode),
-           // add your "plugins" here
-           // ...
-           // and if you want to compress,
-           // just use css-loader option that already use cssnano under the hood
-           require("postcss-browser-reporter")(),
-           require("postcss-reporter")()
+            // add your "plugins" here
+            // ...
+            // and if you want to compress,
+            // just use css-loader option that already use cssnano under the hood
+            require("postcss-browser-reporter")(),
+            require("postcss-reporter")()
          ]
-       }
+      }
    }
 ];
 
@@ -141,7 +141,7 @@ const multipleThemesCompileOptions = {
      nihilo: { dojo_theme: 'nihilo', import: [ "../../node_modules/dijit/themes/nihilo/nihilo.css" ]},
      soria:  { dojo_theme: 'soria',  import: [ "../../node_modules/dijit/themes/soria/soria.css" ]},
      tundra: { dojo_theme: 'tundra', import: [ "../../node_modules/dijit/themes/tundra/tundra.css" ]}
-   },
+      },
    lessContent: 'body{dojo_theme:@dojo_theme}'
 };
 
@@ -174,7 +174,7 @@ const UnusedWebpackPluginOptions = {
    exclude: ['*.test.js'],
    // Root directory (optional)
    root: path.join(__dirname, 'UI')
- };
+};
 
 const devServerOptions = {
    contentBase: 'js',
@@ -190,12 +190,12 @@ var pluginsDev = [
    new CleanWebpackPlugin(CleanWebpackPluginOptions),
    new webpack.DefinePlugin({
       VERSION: JSON.stringify(require("./package.json").version)
-    }),
-   //new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
+   }),
+   // new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
    new StylelintPlugin(StylelintPluginOptions),
 
    new DojoWebpackPlugin(DojoWebpackPluginOptions),
-   new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function(data) {
+   new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function (data) {
       data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
    }),
    new CopyWebpackPlugin(CopyWebpackPluginOptions),
@@ -219,7 +219,7 @@ var pluginsDev = [
       emitErrors: false,
       // Display full duplicates information? (Default: `false`)
       verbose: false
-    })
+   })
 ];
 
 const pluginsProd = pluginsDev; // TODO: refine...
@@ -289,15 +289,15 @@ const webpackConfigs = {
    },
 
    output: {
-        path: path.resolve("UI/js"), // js path
-        publicPath: "js/", // images path
-        pathinfo: !!devMode, // keep source references?
-        filename: "[name].js",
-        chunkFilename: "[name].[chunkhash].js"
+      path: path.resolve("UI/js"), // js path
+      publicPath: "js/", // images path
+      pathinfo: !!devMode, // keep source references?
+      filename: "[name].js",
+      chunkFilename: "[name].[chunkhash].js"
    },
 
    module: {
-      rules: [ javascript, css, images, svg, html, ...themes.module.rules ]
+      rules: [javascript, css, images, svg, html, ...themes.module.rules]
    },
 
    plugins: [...pluginsList, ...themes.plugins],
@@ -325,7 +325,7 @@ const webpackConfigs = {
 // For Webpack, export the config.  This is needed both at build time and on the client at runtime
 // for the packed application.
 if (typeof module !== 'undefined') {
-   module.exports =  (env) => {
+   module.exports = (env) => {
       return webpackConfigs;
    };
 } else {

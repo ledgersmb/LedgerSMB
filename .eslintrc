@@ -86,7 +86,7 @@
                             "quote-props": ["error", "consistent"], // If at least one property in an object requires quotes, quote all properties.
                             "semi": true,           // Add a semicolon at the end of every statement.
                             "singleQuote": false,   // Use double quotes
-                            "tabWidth": 3,          // Tabs width is 3 spaces
+                            "tabWidth": 4,          // Tabs width is 4 spaces
                             "trailingComma": "none",// No trailing commas
                             "useTabs": false,       // Indent lines with tabs instead of spaces.
                             "insertPragma": true,   // Prettier can insert a special @format marker at the top of files specifying that the file has been formatted with prettier.
