@@ -20,6 +20,7 @@ WorkingDirectory=WORKING_DIR
 User=ledgersmb
 Group=ledgersmb
 ExecStart=/usr/bin/starman                     \
+    --preload-app                              \
     --listen localhost:5762                    \
     -I lib                                     \
     -I old/lib                                 \
