@@ -61,6 +61,7 @@ start(){
         --status-file=$STATUS_FILE \
         -- \
         $STARMAN \
+          --preload-app \
           --workers $WORKERS \
           --user $USER \
           --group $GROUP \
