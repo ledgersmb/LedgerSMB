@@ -2368,7 +2368,7 @@ sub create_links {
 sub currencies {
     my ($self) = @_;
 
-    return $self->{currencies} if $self->{currencies};
+    return $self->{currencies} if ref $self->{currencies};
 
     $self->{defaultcurrency} = $self->get_setting('curr');
     my $dbh = $self->{dbh};
