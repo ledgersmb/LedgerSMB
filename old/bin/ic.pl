@@ -1236,6 +1236,7 @@ sub assembly_row {
     $form->{selectcustomer} = "";    # we seem to have run into a 40kb limit
     foreach my $key ( sort keys %$form ) {
 
+        next if grep { $_ eq $key } qw/ currencies version /;
         # escape ampersands
         $form->{$key} =~ s/&/%26/g;
         $previousform .= qq|$key=$form->{$key}&| if $form->{$key};
