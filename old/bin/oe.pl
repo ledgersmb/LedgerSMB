@@ -518,8 +518,8 @@ sub form_header {
             $eclass = 2
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" id=$form->{vc} name=$form->{vc} value="$form->{$form->{vc}}" size=35>
-             <a id="new-contact" target="new"
-                 href="login.pl?action=login&company=$form->{company}#contact.pl?action=add&entity_class=$eclass">
+             <a id="new-contact" target="_blank"
+                 href="erp.pl?action=root#contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
