@@ -17,8 +17,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via
 
 const devMode = process.env.NODE_ENV !== "production";
 
-// ////////////////////// LOADERS ////////////////////////
-// ///////////////////////////////////////////////////////
+/* LOADERS */
+
 const javascript = {
     enforce: "pre",
     test: /\.js$/,
@@ -101,8 +101,7 @@ const svg = {
     loader: "file-loader"
 };
 
-// ////////////////////// PLUGINS ////////////////////////
-// ///////////////////////////////////////////////////////
+/* PLUGINS */
 
 const CleanWebpackPluginOptions = {
     dry: false,
@@ -243,8 +242,8 @@ var pluginsList = devMode ? pluginsDev : pluginsProd;
 
 const themes = MultipleThemesCompile(multipleThemesCompileOptions);
 
-// /////////////////// OPTIMIZATIONS /////////////////////
-// ///////////////////////////////////////////////////////
+/* OPTIMIZATIONS */
+
 const optimizationList = {
     /*
       runtimeChunk: {
@@ -291,8 +290,8 @@ const optimizationList = {
           ]
 };
 
-// /////////////////// WEBPACK CONFIG /////////////////////
-// ////////////////////////////////////////////////////////
+/* WEBPACK CONFIG */
+
 const webpackConfigs = {
     context: path.join(__dirname, "UI"),
 
