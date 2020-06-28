@@ -39,9 +39,15 @@ Given qr/^(-?\d+) units sold/, sub {
         S->{'the part'},
         $count, 0, 0)
         or die $dbh->errstr;
+    $dbh->do(
+        q{
+        SELECT cogs__add_for_ar_line(currval('invoice_id_seq')::integer)
+        }
+        )
+        or die $dbh->errstr;
 };
 
-When qr/^(\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
+When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
     my $count = $1;
     my $price = $2;
     my $curr  = $3;
