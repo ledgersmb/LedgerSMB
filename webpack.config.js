@@ -15,7 +15,12 @@ const UnusedWebpackPlugin = require("unused-webpack-plugin");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
-const devMode = process.env.NODE_ENV !== "production";
+const argv = require("yargs").argv;
+const devMode = !(
+    process.env.NODE_ENV === "production" ||
+    argv.p ||
+    argv.mode === "production"
+);
 
 /* LOADERS */
 
