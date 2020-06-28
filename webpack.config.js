@@ -336,17 +336,7 @@ const webpackConfigs = {
     devServer: devServerOptions
 };
 
-// For Webpack, export the config.  This is needed both at build time and on the client at runtime
-// for the packed application.
-if (typeof module !== "undefined") {
-    module.exports = (env) => {
-        return webpackConfigs;
-    };
-} else {
-    // No webpack.  This script was loaded by page via script tag, so load Dojo from CDN
-    getConfig({
-        dojoRoot:
-            "//ajax.googleapis.com/ajax/libs/dojo/" +
-            JSON.stringify(require("package.json").dependencies.dojo)
-    });
-}
+/* eslint-disable-next-line no-unused-vars */
+module.exports = (env) => {
+    return webpackConfigs;
+};
