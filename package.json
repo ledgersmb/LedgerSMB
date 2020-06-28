@@ -132,7 +132,7 @@
   "scripts": {
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
     "build": "webpack --progress --display-error-details --display-modules",
-    "build:dev": "webpack-dashboard -- webpack --env.dev --mode=development --display-modules",
+    "build:dev": "webpack --env.dev --mode=development --display-modules",
     "serve": "webpack-dev-server --env.dev",
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules ."
