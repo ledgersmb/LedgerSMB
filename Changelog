@@ -2,6 +2,12 @@
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.23
+* Fix reversals of purchases failing to post due to COGS error (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.22
 * Update Dojo toolkit dependency to 1.13.8 (Erik H)
 * Fix sorting of hierarchical income statement and balance sheet (Erik H)
