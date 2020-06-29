@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.17-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-06-21 21:05+0000\n"
+"POT-Creation-Date: 2020-06-29 09:24+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Catalan (https://www.transifex.com/ledgersmb/teams/58325/ca/)\n"
 "Language: ca\n"
@@ -249,7 +249,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:87
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:82
 #: lib/LedgerSMB/Report/Trial_Balance.pm:156
-#: lib/LedgerSMB/Scripts/payment.pm:184 old/bin/ic.pl:1017 old/bin/ic.pl:1672
+#: lib/LedgerSMB/Scripts/payment.pm:184 old/bin/ic.pl:1017 old/bin/ic.pl:1673
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:38
 #: UI/accounts/edit.html:126 UI/Contact/divs/bank_act.html:23
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
@@ -366,7 +366,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
 #: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/am.pl:1496
-#: old/bin/ic.pl:2098 UI/Configuration/currency.html:35
+#: old/bin/ic.pl:2099 UI/Configuration/currency.html:35
 #: UI/Configuration/rate.html:62 UI/Configuration/ratetype.html:28
 msgid "Add"
 msgstr "Afegir"
@@ -585,7 +585,7 @@ msgstr ""
 msgid "Added id [_1]"
 msgstr ""
 
-#: old/bin/aa.pl:615 old/bin/arap.pl:172 old/bin/ic.pl:1675 old/bin/ir.pl:446
+#: old/bin/aa.pl:615 old/bin/arap.pl:172 old/bin/ic.pl:1676 old/bin/ir.pl:446
 #: old/bin/is.pl:482 old/bin/oe.pl:454 old/bin/pe.pl:665
 #: UI/Contact/divs/address.html:81 UI/Contact/divs/address.html:126
 #: UI/Reports/filters/contact_search.html:89
@@ -612,7 +612,7 @@ msgstr ""
 msgid "Addresses"
 msgstr ""
 
-#: old/bin/ic.pl:1272
+#: old/bin/ic.pl:1273
 msgid "Adj"
 msgstr ""
 
@@ -911,7 +911,7 @@ msgstr ""
 msgid "Assembled"
 msgstr ""
 
-#: old/bin/ic.pl:2218
+#: old/bin/ic.pl:2219
 msgid "Assemblies restocked!"
 msgstr ""
 
@@ -1150,7 +1150,7 @@ msgstr ""
 msgid "BIC/SWIFT Code:"
 msgstr ""
 
-#: old/bin/ic.pl:1271
+#: old/bin/ic.pl:1272
 msgid "BOM"
 msgstr ""
 
@@ -1305,7 +1305,7 @@ msgid "Billion"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
-#: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2091
+#: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2092
 #: old/bin/ic.pl:486 old/bin/io.pl:242 old/bin/oe.pl:1859
 #: templates/demo/bin_list.html:154 templates/demo/bin_list.tex:109
 #: templates/demo/pick_list.html:116 templates/demo/pick_list.tex:102
@@ -1486,7 +1486,7 @@ msgstr ""
 msgid "Cannot create Service; Income account does not exist!"
 msgstr ""
 
-#: old/bin/ic.pl:1989
+#: old/bin/ic.pl:1990
 msgid "Cannot delete item!"
 msgstr ""
 
@@ -1535,7 +1535,7 @@ msgstr ""
 msgid "Cannot save taxes!"
 msgstr ""
 
-#: old/bin/ic.pl:2221
+#: old/bin/ic.pl:2222
 msgid "Cannot stock assemblies!"
 msgstr ""
 
@@ -1594,7 +1594,7 @@ msgstr ""
 msgid "Check"
 msgstr ""
 
-#: old/bin/ic.pl:2027
+#: old/bin/ic.pl:2028
 msgid "Check Inventory"
 msgstr ""
 
@@ -1820,7 +1820,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1461 lib/LedgerSMB/Scripts/payment.pm:682
 #: lib/LedgerSMB/Scripts/payment.pm:744 old/bin/aa.pl:1749 old/bin/arap.pl:266
-#: old/bin/ic.pl:1764 old/bin/ic.pl:2046 old/bin/ic.pl:2195 old/bin/ic.pl:949
+#: old/bin/ic.pl:1765 old/bin/ic.pl:2047 old/bin/ic.pl:2196 old/bin/ic.pl:949
 #: old/bin/io.pl:1089 old/bin/io.pl:627 old/bin/oe.pl:1555 old/bin/oe.pl:2070
 #: old/bin/oe.pl:2566 old/bin/pe.pl:1183 old/bin/pe.pl:327 old/bin/pe.pl:746
 #: old/bin/pe.pl:916 UI/asset/begin_approval.html:65
@@ -1887,7 +1887,7 @@ msgid "Copy to New Name"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:125 old/bin/ic.pl:1019
-#: old/bin/ic.pl:1270 old/bin/oe.pl:2410
+#: old/bin/ic.pl:1271 old/bin/oe.pl:2410
 msgid "Cost"
 msgstr ""
 
@@ -2651,7 +2651,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:367
 #: lib/LedgerSMB/Scripts/asset.pm:652 lib/LedgerSMB/Scripts/asset.pm:717
 #: old/bin/aa.pl:1511 old/bin/aa.pl:624 old/bin/aa.pl:675 old/bin/am.pl:808
-#: old/bin/ic.pl:1264 old/bin/ic.pl:2020 old/bin/ic.pl:2087 old/bin/ic.pl:739
+#: old/bin/ic.pl:1265 old/bin/ic.pl:2021 old/bin/ic.pl:2088 old/bin/ic.pl:739
 #: old/bin/io.pl:1693 old/bin/io.pl:230 old/bin/ir.pl:461 old/bin/is.pl:500
 #: old/bin/oe.pl:1852 old/bin/oe.pl:2051 old/bin/oe.pl:2124 old/bin/oe.pl:2158
 #: old/bin/oe.pl:2402 old/bin/pe.pl:1035 old/bin/pe.pl:308 old/bin/pe.pl:354
@@ -3790,7 +3790,7 @@ msgstr ""
 msgid "Grand Total"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:55 old/bin/ic.pl:1273
+#: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:55 old/bin/ic.pl:1274
 #: old/bin/ic.pl:419 old/bin/io.pl:264 old/bin/oe.pl:2055 old/bin/oe.pl:2128
 #: old/bin/oe.pl:2163 old/bin/pe.pl:142 UI/io-email.html:86
 msgid "Group"
@@ -4030,7 +4030,7 @@ msgstr ""
 msgid "Incorrect Password"
 msgstr ""
 
-#: old/bin/ic.pl:1280
+#: old/bin/ic.pl:1281
 msgid "Individual Items"
 msgstr "Elements Individuals"
 
@@ -4116,13 +4116,13 @@ msgstr ""
 msgid "Inventory and COGS"
 msgstr ""
 
-#: old/bin/ic.pl:1807
+#: old/bin/ic.pl:1808
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
 "La quantitat en l'inventari ha de ser zero abans de marcar-lo com obsolet"
 
-#: old/bin/ic.pl:1806
+#: old/bin/ic.pl:1807
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 
@@ -4273,7 +4273,7 @@ msgstr ""
 msgid "Invoices"
 msgstr ""
 
-#: old/bin/ic.pl:1254 old/bin/io.pl:225 templates/demo/bin_list.html:146
+#: old/bin/ic.pl:1255 old/bin/io.pl:225 templates/demo/bin_list.html:146
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:139
 #: templates/demo/invoice.tex:138 templates/demo/packing_list.html:118
 #: templates/demo/packing_list.tex:113 templates/demo/pick_list.html:110
@@ -4312,7 +4312,7 @@ msgstr ""
 msgid "Item"
 msgstr ""
 
-#: old/bin/ic.pl:1986
+#: old/bin/ic.pl:1987
 msgid "Item deleted!"
 msgstr ""
 
@@ -4584,7 +4584,7 @@ msgstr "Total Línia"
 msgid "Link Accounts"
 msgstr "Enllaçar Comptes"
 
-#: old/bin/ic.pl:1268
+#: old/bin/ic.pl:1269
 msgid "List"
 msgstr ""
 
@@ -5218,7 +5218,7 @@ msgstr ""
 msgid "Null model numbers"
 msgstr ""
 
-#: old/bin/ic.pl:1261 old/bin/ic.pl:2014 old/bin/ic.pl:2083 old/bin/ic.pl:738
+#: old/bin/ic.pl:1262 old/bin/ic.pl:2015 old/bin/ic.pl:2084 old/bin/ic.pl:738
 #: old/bin/io.pl:227 old/bin/oe.pl:1849 old/bin/pe.pl:265 old/bin/pe.pl:347
 #: old/bin/pe.pl:379 templates/demo/bin_list.html:147
 #: templates/demo/invoice.html:140 templates/demo/invoice.tex:139
@@ -6281,8 +6281,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:89
 #: lib/LedgerSMB/Report/Inventory/History.pm:158
-#: lib/LedgerSMB/Report/Inventory/Search.pm:297 old/bin/ic.pl:1256
-#: old/bin/ic.pl:2094 old/bin/io.pl:233 old/bin/oe.pl:1855 old/bin/oe.pl:2137
+#: lib/LedgerSMB/Report/Inventory/Search.pm:297 old/bin/ic.pl:1257
+#: old/bin/ic.pl:2095 old/bin/io.pl:233 old/bin/oe.pl:1855 old/bin/oe.pl:2137
 #: old/bin/pe.pl:1038 templates/demo/bin_list.html:151
 #: templates/demo/bin_list.tex:108 templates/demo/invoice.html:143
 #: templates/demo/invoice.tex:142 templates/demo/packing_list.html:123
@@ -6333,7 +6333,7 @@ msgstr "Quantitat"
 msgid "Quantity"
 msgstr ""
 
-#: old/bin/ic.pl:2211
+#: old/bin/ic.pl:2212
 msgid "Quantity exceeds available units to stock!"
 msgstr ""
 
@@ -6416,7 +6416,7 @@ msgstr ""
 msgid "RFQs"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2096
+#: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2097
 #: old/bin/ic.pl:479 UI/Reports/filters/search_goods.html:300
 msgid "ROP"
 msgstr "ROP"
@@ -7188,7 +7188,7 @@ msgstr ""
 msgid "Select by Default:"
 msgstr ""
 
-#: old/bin/arap.pl:181 old/bin/ic.pl:1681 old/bin/pe.pl:669
+#: old/bin/arap.pl:181 old/bin/ic.pl:1682 old/bin/pe.pl:669
 msgid "Select from one of the names below"
 msgstr ""
 
@@ -7218,7 +7218,7 @@ msgstr ""
 msgid "Selected"
 msgstr ""
 
-#: old/bin/ic.pl:1266
+#: old/bin/ic.pl:1267
 msgid "Sell"
 msgstr ""
 
@@ -7743,7 +7743,7 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: old/bin/ic.pl:1996 old/bin/ic.pl:2103 sql/Pg-database.sql:2935
+#: old/bin/ic.pl:1997 old/bin/ic.pl:2104 sql/Pg-database.sql:2935
 msgid "Stock Assembly"
 msgstr "Inventari Compost"
 
@@ -8693,7 +8693,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:93
 #: lib/LedgerSMB/Report/Inventory/History.pm:133
-#: lib/LedgerSMB/Report/Inventory/Search.pm:209 old/bin/ic.pl:1258
+#: lib/LedgerSMB/Report/Inventory/Search.pm:209 old/bin/ic.pl:1259
 #: old/bin/ic.pl:783 old/bin/io.pl:235 old/bin/oe.pl:1857
 #: templates/demo/invoice.tex:143 templates/demo/product_receipt.tex:119
 #: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
@@ -9236,11 +9236,11 @@ msgstr ""
 msgid "[_1] [_2] Transaction"
 msgstr ""
 
-#: old/bin/ic.pl:1639
+#: old/bin/ic.pl:1640
 msgid "[_1]: Customer not on file!"
 msgstr ""
 
-#: old/bin/ic.pl:1561
+#: old/bin/ic.pl:1562
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
@@ -9388,7 +9388,7 @@ msgstr ""
 msgid "to_date"
 msgstr ""
 
-#: old/bin/ic.pl:1432
+#: old/bin/ic.pl:1433
 msgid "unexpected error!"
 msgstr ""
 
