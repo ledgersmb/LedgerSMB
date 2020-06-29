@@ -2,6 +2,11 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.17
+* Fix reversals of purchases failing to post due to COGS error (#4771)
+* Fix assemblies failing to save after 'Update' (#4755)
+
+
 Changelog for 1.7.16
 * Fix migration including NULL and zero exchange rate defaults (#4673)
 * Fix AR Outstanding report showing negative taxes (#4688)
