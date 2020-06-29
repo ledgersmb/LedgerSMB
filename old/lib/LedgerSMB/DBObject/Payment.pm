@@ -751,7 +751,7 @@ sub post_bulk {
             next if ! $pay_amount;
 
             $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount)
-                ->to_output(money => 1);
+                ->to_db();
 
             my $invoice_subarray = "{$invoice->{invoice},$pay_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
