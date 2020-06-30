@@ -40,45 +40,6 @@ const javascript = {
 };
 
 // Used in css loader definition below and webpack-multiple-themes-compile plugin
-const cssRules = [
-    // Creates `style` nodes from JS strings
-    // 'style-loader', // requires a document, thus js code. Not for css only
-    // Translates CSS into CommonJS
-    {
-        loader: "css-loader",
-        options: {
-            modules: true,
-            sourceMap: !devMode,
-            importLoaders: 1,
-            url: false
-        }
-    },
-    // inline images
-    {
-        loader: "postcss-loader",
-        options: {
-            ident: "postcss",
-            plugins: (loader) => [
-                require("postcss-import")(),
-                require("postcss-url")(),
-                // require('postcss-preset-env')(),
-                require("cssnano")(!devMode),
-                // add your "plugins" here
-                // ...
-                // and if you want to compress,
-                // just use css-loader option that already use cssnano under the hood
-                require("postcss-browser-reporter")(),
-                require("postcss-reporter")()
-            ]
-        }
-    }
-];
-
-const css = {
-    test: /\.s[ac]ss$/i,
-    use: cssRules
-};
-
 const images = {
     test: /\.(png|jpe?g|gif)$/i,
     use: [
@@ -311,7 +272,7 @@ const webpackConfigs = {
     },
 
     module: {
-        rules: [javascript, css, images, svg, html, ...themes.module.rules]
+        rules: [javascript, images, svg, html, ...themes.module.rules]
     },
 
     plugins: [...pluginsList, ...themes.plugins],
