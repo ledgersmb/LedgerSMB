@@ -161,16 +161,20 @@ const devServerOptions = {
     openPage: ""
 };
 
-var pluginsDev = [
+var pluginsProd = [
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
+
     new webpack.DefinePlugin({
         VERSION: JSON.stringify(require("./package.json").version)
     }),
+
     // new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
     new StylelintPlugin(StylelintPluginOptions),
 
     new DojoWebpackPlugin(DojoWebpackPluginOptions),
+
     new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function (data) {
+        /* eslint-disable-next-line no-param-reassign */
         data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
     }),
     new CopyWebpackPlugin(CopyWebpackPluginOptions),
@@ -179,14 +183,22 @@ var pluginsDev = [
         /^dojo\/domReady!/,
         NormalModuleReplacementPluginOptionsDomReady
     ),
+
     new webpack.NormalModuleReplacementPlugin(
         /^svg!/,
         NormalModuleReplacementPluginOptionsSVG
     ),
+
     new webpack.NormalModuleReplacementPlugin(
         /^css!/,
         NormalModuleReplacementPluginOptionsCSS
     ),
+
+];
+
+var pluginsDev = [
+
+    ...pluginsProd,
 
     new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
     new DuplicatesPlugin({
@@ -196,8 +208,6 @@ var pluginsDev = [
         verbose: false
     })
 ];
-
-const pluginsProd = pluginsDev; // TODO: refine...
 
 var pluginsList = devMode ? pluginsDev : pluginsProd;
 
