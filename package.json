@@ -110,8 +110,8 @@
     "webpack-multiple-themes-compile": "^2.0.0"
   },
   "dependencies": {
-    "dijit": "1.16.2",
-    "dojo": "1.16.2"
+    "dijit": "1.16.3",
+    "dojo": "1.16.3"
   },
   "optionalDependencies": {
     "fsevents": "*"
