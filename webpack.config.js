@@ -16,11 +16,13 @@ const UnusedWebpackPlugin = require("unused-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
 const argv = require("yargs").argv;
-const devMode = !(
+const prodMode =
     process.env.NODE_ENV === "production" ||
     argv.p ||
-    argv.mode === "production"
-);
+    argv.mode === "production";
+
+// Make sure all modules follow desired mode
+process.env.NODE_ENV = prodMode ? "production" : "development";
 
 /* LOADERS */
 
@@ -204,7 +206,7 @@ var pluginsDev = [
     })
 ];
 
-var pluginsList = devMode ? pluginsDev : pluginsProd;
+var pluginsList = prodMode ? pluginsProd : pluginsDev;
 
 const themes = MultipleThemesCompile(multipleThemesCompileOptions);
 
@@ -217,7 +219,7 @@ const optimizationList = {
       },
       */
     namedModules: false,
-    splitChunks: devMode
+    splitChunks: !prodMode
         ? false
         : {
               chunks: "all",
@@ -243,12 +245,13 @@ const optimizationList = {
                   ...themes.optimization.splitChunks.cacheGroups
               }
           },
-    minimizer: devMode
+    minimize: prodMode,
+    minimizer: !prodMode
         ? []
         : [
               new TerserPlugin({
                   parallel: true,
-                  sourceMap: !!devMode,
+                  sourceMap: !prodMode,
                   terserOptions: {
                       ecma: 6
                   }
@@ -271,7 +274,7 @@ const webpackConfigs = {
     output: {
         path: path.resolve("UI/js"), // js path
         publicPath: "js/", // images path
-        pathinfo: !!devMode, // keep source references?
+        pathinfo: !prodMode, // keep source references?
         filename: "[name].js",
         chunkFilename: "[name].[chunkhash].js"
     },
@@ -291,11 +294,11 @@ const webpackConfigs = {
         modules: ["node_modules"]
     },
 
-    mode: devMode ? "development" : "production",
+    mode: process.env.NODE_ENV,
 
     optimization: optimizationList,
 
-    performance: { hints: devMode ? "warning" : false }
+    performance: { hints: prodMode ? false : "warning" }
 };
 
 /* eslint-disable-next-line no-unused-vars */
