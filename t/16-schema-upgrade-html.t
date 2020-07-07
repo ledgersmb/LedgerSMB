@@ -42,6 +42,8 @@ sub filter_js_src {
     my $line = join("\n",@{$lines});
     $line =~ s|"js-src/|"js/|g;
     $line =~ s|\s*\n+|\n|g;
+    # Filter out chunks hashes
+    $line =~ s|[~\.]([0-9a-f]{8}\.)?[0-9a-f]{20}\.js|.js|g;
     # Split in lines
     @{$lines} = split(/\n/, $line);
 }
@@ -154,10 +156,10 @@ my @expected = split (/\n/, q{<!-- prettier-disable -->
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
-    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-    <link rel="stylesheet" href="css/setup.css" type="text/css" />
+    <link href="js/css/npm.dijit.css" rel="stylesheet">
+    <link href="js/css/claro.css" rel="stylesheet">
+    <link href="js/css/ledgersmb.css" rel="stylesheet">
+    <link href="js/css/setup.css" rel="stylesheet">
     <script>
         var dojoConfig = {
             async: 1,
@@ -167,7 +169,7 @@ my @expected = split (/\n/, q{<!-- prettier-disable -->
         var lsmbConfig = {
         };
     </script>
-    <script src="js/lsmb/main.js" charset="utf-8"></script>
+    <script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/claro~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledger.js"></script><script src="js/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -188,7 +190,7 @@ my @expected = split (/\n/, q{<!-- prettier-disable -->
 </html>});
 
 is $out,\@expected, 'Render the description && title',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 1 };
 
 
 ###############################################
@@ -237,10 +239,10 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
-    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-    <link rel="stylesheet" href="css/setup.css" type="text/css" />
+    <link href="js/css/npm.dijit.css" rel="stylesheet">
+    <link href="js/css/claro.css" rel="stylesheet">
+    <link href="js/css/ledgersmb.css" rel="stylesheet">
+    <link href="js/css/setup.css" rel="stylesheet">
     <script>
         var dojoConfig = {
             async: 1,
@@ -250,7 +252,7 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
-    <script src="js/lsmb/main.js" charset="utf-8"></script>
+    <script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/claro~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledger.js"></script><script src="js/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -320,10 +322,10 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
-    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-    <link rel="stylesheet" href="css/setup.css" type="text/css" />
+    <link href="js/css/npm.dijit.css" rel="stylesheet">
+    <link href="js/css/claro.css" rel="stylesheet">
+    <link href="js/css/ledgersmb.css" rel="stylesheet">
+    <link href="js/css/setup.css" rel="stylesheet">
     <script>
         var dojoConfig = {
             async: 1,
@@ -333,7 +335,7 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
-    <script src="js/lsmb/main.js" charset="utf-8"></script>
+    <script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/claro~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledger.js"></script><script src="js/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -404,10 +406,10 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
-    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-    <link rel="stylesheet" href="css/setup.css" type="text/css" />
+    <link href="js/css/npm.dijit.css" rel="stylesheet">
+    <link href="js/css/claro.css" rel="stylesheet">
+    <link href="js/css/ledgersmb.css" rel="stylesheet">
+    <link href="js/css/setup.css" rel="stylesheet">
     <script>
         var dojoConfig = {
             async: 1,
@@ -417,7 +419,7 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
-    <script src="js/lsmb/main.js" charset="utf-8"></script>
+    <script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/claro~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledger.js"></script><script src="js/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -505,10 +507,10 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
-    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-    <link rel="stylesheet" href="css/setup.css" type="text/css" />
+    <link href="js/css/npm.dijit.css" rel="stylesheet">
+    <link href="js/css/claro.css" rel="stylesheet">
+    <link href="js/css/ledgersmb.css" rel="stylesheet">
+    <link href="js/css/setup.css" rel="stylesheet">
     <script>
         var dojoConfig = {
             async: 1,
@@ -518,7 +520,7 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
-    <script src="js/lsmb/main.js" charset="utf-8"></script>
+    <script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/claro~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledger.js"></script><script src="js/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
