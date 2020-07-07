@@ -47,7 +47,8 @@ const javascript = {
                 failOnError: true
             }
         }
-    ]
+    ],
+    exclude: /node_modules/
 };
 
 // Used in css loader definition below and webpack-multiple-themes-compile plugin
