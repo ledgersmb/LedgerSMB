@@ -262,7 +262,7 @@ const optimizationList = {
         ? []
         : [
               new TerserPlugin({
-                  parallel: true,
+                  parallel: process.env.CIRCLECI || process.env.TRAVIS ? 2 : true,
                   sourceMap: !prodMode,
                   terserOptions: {
                       ecma: 6
