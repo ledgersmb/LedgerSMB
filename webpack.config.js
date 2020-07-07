@@ -204,6 +204,7 @@ const mapFilenamesToEntries = (pattern) =>
 const lsmbCSS = mapFilenamesToEntries(path.resolve("UI/css/*.css"));
 
 var pluginsProd = [
+
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
     new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
@@ -217,6 +218,7 @@ var pluginsProd = [
         /* eslint-disable-next-line no-param-reassign */
         data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
     }),
+
     new CopyWebpackPlugin(CopyWebpackPluginOptions),
 
     new webpack.NormalModuleReplacementPlugin(
@@ -402,8 +404,6 @@ const optimizationList = {
 
 const webpackConfigs = {
     context: path.join(__dirname, "UI"),
-
-    // stats: 'verbose',
 
     entry: {
         main: "lsmb/main.js",
