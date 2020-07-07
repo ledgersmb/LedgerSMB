@@ -300,11 +300,7 @@ const webpackConfigs = {
 
     optimization: optimizationList,
 
-    performance: { hints: devMode ? "warning" : false },
-
-    devtool: "#source-map",
-
-    devServer: devServerOptions
+    performance: { hints: devMode ? "warning" : false }
 };
 
 /* eslint-disable-next-line no-unused-vars */
