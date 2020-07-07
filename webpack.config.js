@@ -12,6 +12,7 @@ const { DuplicatesPlugin } = require("inspectpack/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MultipleThemesCompile = require("webpack-multiple-themes-compile");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -204,9 +205,7 @@ const lsmbCSS = mapFilenamesToEntries(path.resolve("UI/css/*.css"));
 var pluginsProd = [
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
-    new webpack.DefinePlugin({
-        VERSION: JSON.stringify(require("./package.json").version)
-    }),
+    new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
 
     // new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
     new StylelintPlugin(StylelintPluginOptions),
@@ -328,50 +327,74 @@ const groupsOptions = {
 };
 
 const optimizationList = {
-    /*
-      runtimeChunk: {
-        name: 'runtime',
-      },
-      */
-    namedModules: false,
+    moduleIds: 'hashed',
+    runtimeChunk: {
+      name: 'manifest' // runtimeChunk: "multiple", /* Fails */
+    },
+    namedChunks: true, // Keep names to load only 1 theme
     splitChunks: !prodMode
         ? false
         : {
               chunks: "all",
               maxInitialRequests: Infinity,
-              minSize: 0,
               cacheGroups: {
-                  /*
-              vendor: {
-                 // That should be empty for Dojo?
-                 test: /[\\/]node_modules[\\/]/,
-                 name(module) {
-                    // get the name. E.g. node_modules/packageName/not/this/part.js
-                    // or node_modules/packageName
-                    const packageName = module.context.match(
-                       /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                    )[1];
-
-                    // npm package names are URL-safe, but some servers don't like @ symbols
-                    return `npm.${packageName.replace("@", "")}`;
-                 }
-              },
-              */
-                  ...themes.optimization.splitChunks.cacheGroups
+                  main: {
+                      test: /lsmb[\\/]main.+\.js/,
+                      name: "main",
+                      ...groupsOptions
+                  },
+                  // TODO: Can't we map those 4 following entries
+                  claroTheme: {
+                      ...themes.optimization.splitChunks.cacheGroups.claroTheme,
+                      ...groupsOptions
+                  },
+                  nihiloTheme: {
+                      ...themes.optimization.splitChunks.cacheGroups
+                          .nihiloTheme,
+                      ...groupsOptions
+                  },
+                  soriaTheme: {
+                      ...themes.optimization.splitChunks.cacheGroups.soriaTheme,
+                      ...groupsOptions
+                  },
+                  tundraTheme: {
+                      ...themes.optimization.splitChunks.cacheGroups
+                          .tundraTheme,
+                      ...groupsOptions
+                  },
+                  node_modules: {
+                      test: /[\\/]node_modules[\\/]/,
+                      name(module) {
+                          const packageName = module.context.match(
+                              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                          )[1];
+                          return `npm.${packageName.replace("@", "")}`;
+                      },
+                      priority: 2,
+                      ...groupsOptions
+                  }
               }
           },
     minimize: prodMode,
-    minimizer: !prodMode
-        ? []
-        : [
-              new TerserPlugin({
-                  parallel: process.env.CIRCLECI || process.env.TRAVIS ? 2 : true,
-                  sourceMap: !prodMode,
-                  terserOptions: {
-                      ecma: 6
-                  }
-              })
-          ]
+    minimizer: [
+        new TerserPlugin({
+            parallel: process.env.CIRCLECI || process.env.TRAVIS ? 2 : true,
+            sourceMap: !prodMode,
+            terserOptions: {
+                ecma: 6
+            }
+        }),
+        new OptimizeCSSAssetsPlugin({
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: {
+              discardComments: { removeAll: true },
+              zindex: {
+                disabled: true
+              }
+            },
+            canPrint: true
+          })
+    ]
 };
 
 /* WEBPACK CONFIG */
