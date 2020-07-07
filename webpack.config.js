@@ -2,6 +2,7 @@
 /* eslint global-require:0, no-param-reassign:0, no-unused-vars:0 */
 /* global getConfig */
 
+const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
 
@@ -9,6 +10,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MultipleThemesCompile = require("webpack-multiple-themes-compile");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -48,6 +50,40 @@ const javascript = {
 };
 
 // Used in css loader definition below and webpack-multiple-themes-compile plugin
+const cssRules = [
+    {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+            hmr: !prodMode,
+            publicPath: "js"
+        }
+    },
+    {
+        loader: "css-loader",
+        options: {
+            sourceMap: !prodMode,
+            url: false
+        }
+    }
+];
+
+const css = {
+    test: /\.css$/i,
+    use: cssRules
+};
+
+const lessRules = [
+    ...cssRules,
+    {
+        loader: "less-loader" // compiles Less to CSS
+    }
+];
+
+const less = {
+    test: /\.(less)$/,
+    use: lessRules
+};
+
 const images = {
     test: /\.(png|jpe?g|gif)$/i,
     use: [
@@ -105,8 +141,8 @@ const DojoWebpackPluginOptions = {
 const multipleThemesCompileOptions = {
     cwd: "UI",
     cacheDir: "js",
-    preHeader: "/* stylelint-disable */",
-    outputName: "/dijit/themes/[name]/[name].css",
+    preHeader: "/* eslint-disable */",
+    outputName: "css/[name].css",
     themesConfig: {
         claro: {
             dojo_theme: "claro",
@@ -125,7 +161,7 @@ const multipleThemesCompileOptions = {
             import: ["../../node_modules/dijit/themes/tundra/tundra.css"]
         }
     },
-    lessContent: "body{dojo_theme:@dojo_theme}"
+    lessContent: ""
 };
 
 // dojo/domReady (only works if the DOM is ready when invoked)
@@ -145,13 +181,6 @@ const NormalModuleReplacementPluginOptionsSVG = function (data) {
         match[1];
 };
 
-const NormalModuleReplacementPluginOptionsCSS = function (data) {
-    data.request = data.request.replace(
-        /^css!/,
-        "!style-loader!css-loader!less-loader!"
-    );
-};
-
 const UnusedWebpackPluginOptions = {
     // Source directories
     directories: ["js-src/lsmb"],
@@ -161,15 +190,16 @@ const UnusedWebpackPluginOptions = {
     root: path.join(__dirname, "UI")
 };
 
-const devServerOptions = {
-    contentBase: "js",
-    compress: true,
-    port: 6969,
-    stats: "errors-only",
-    open: true,
-    hot: true,
-    openPage: ""
-};
+const themes = MultipleThemesCompile(multipleThemesCompileOptions);
+
+// Generate entries from file pattern
+const mapFilenamesToEntries = (pattern) =>
+    glob.sync(pattern).reduce((entries, filename) => {
+        const [, name] = filename.match(/([^/]+)\.css$/);
+        return { ...entries, [name]: filename };
+    }, {});
+
+const lsmbCSS = mapFilenamesToEntries(path.resolve("UI/css/*.css"));
 
 var pluginsProd = [
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
@@ -204,7 +234,8 @@ var pluginsProd = [
         minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
         filename: "ui-header.html",
         excludeChunks: [
-            ...Object.keys(multipleThemesCompileOptions.themesConfig)
+            ...Object.keys(multipleThemesCompileOptions.themesConfig),
+            ...Object.keys(lsmbCSS)
         ],
         templateContent: ({ htmlWebpackPlugin }) => `` +
             `<!-- prettier-disable -->\n` +
@@ -268,10 +299,6 @@ var pluginsProd = [
             `[% END %]`
     }),
 
-    new webpack.NormalModuleReplacementPlugin(
-        /^css!/,
-        NormalModuleReplacementPluginOptionsCSS
-    )
 ];
 
 var pluginsDev = [
@@ -290,9 +317,15 @@ var pluginsDev = [
 
 var pluginsList = prodMode ? pluginsProd : pluginsDev;
 
-const themes = MultipleThemesCompile(multipleThemesCompileOptions);
-
 /* OPTIMIZATIONS */
+
+const groupsOptions = {
+    chunks: "all",
+    minSize: 0,
+    minChunks: 1,
+    reuseExistingChunk: true,
+    enforce: true
+};
 
 const optimizationList = {
     /*
@@ -349,7 +382,8 @@ const webpackConfigs = {
     // stats: 'verbose',
 
     entry: {
-        "lsmb/main": "lsmb/main.js",
+        main: "lsmb/main.js",
+        ...lsmbCSS,
         ...themes.entry
     },
 
