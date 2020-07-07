@@ -130,11 +130,13 @@ const multipleThemesCompileOptions = {
 // dojo/domReady (only works if the DOM is ready when invoked)
 const NormalModuleReplacementPluginOptionsDomReady = function (data) {
     const match = /^dojo\/domReady!(.*)$/.exec(data.request);
+    /* eslint-disable-next-line no-param-reassign */
     data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
 };
 
 const NormalModuleReplacementPluginOptionsSVG = function (data) {
     var match = /^svg!(.*)$/.exec(data.request);
+    /* eslint-disable-next-line no-param-reassign */
     data.request =
         "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
         match[1] +
@@ -199,8 +201,7 @@ var pluginsProd = [
     new webpack.NormalModuleReplacementPlugin(
         /^css!/,
         NormalModuleReplacementPluginOptionsCSS
-    ),
-
+    )
 ];
 
 var pluginsDev = [
@@ -208,6 +209,7 @@ var pluginsDev = [
     ...pluginsProd,
 
     new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
+
     new DuplicatesPlugin({
         // Emit compilation warning or error? (Default: `false`)
         emitErrors: false,
