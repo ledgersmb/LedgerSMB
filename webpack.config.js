@@ -10,7 +10,6 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MultipleThemesCompile = require("webpack-multiple-themes-compile");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const StylelintPlugin = require("stylelint-webpack-plugin");
@@ -49,41 +48,6 @@ const javascript = {
         }
     ],
     exclude: /node_modules/
-};
-
-// Used in css loader definition below and webpack-multiple-themes-compile plugin
-const cssRules = [
-    {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-            hmr: !prodMode,
-            publicPath: "js"
-        }
-    },
-    {
-        loader: "css-loader",
-        options: {
-            sourceMap: !prodMode,
-            url: false
-        }
-    }
-];
-
-const css = {
-    test: /\.css$/i,
-    use: cssRules
-};
-
-const lessRules = [
-    ...cssRules,
-    {
-        loader: "less-loader" // compiles Less to CSS
-    }
-];
-
-const less = {
-    test: /\.(less)$/,
-    use: lessRules
 };
 
 const images = {
