@@ -8,6 +8,7 @@ const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MultipleThemesCompile = require("webpack-multiple-themes-compile");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -197,6 +198,75 @@ var pluginsProd = [
         /^svg!/,
         NormalModuleReplacementPluginOptionsSVG
     ),
+
+    new HtmlWebpackPlugin({
+        inject: false, // Tags are injected manually in the content below
+        minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
+        filename: "ui-header.html",
+        excludeChunks: [
+            ...Object.keys(multipleThemesCompileOptions.themesConfig)
+        ],
+        templateContent: ({ htmlWebpackPlugin }) => `` +
+            `<!-- prettier-disable -->\n` +
+            `[%#\n` +
+            `    # This helper should be included in files which will be served as\n` +
+            `    # top-level responses (i.e. documents on their own); this includes\n` +
+            `    # UI/login.html, UI/logout.html, UI/main.html and various UI/setup/ pages\n` +
+
+            `    # Most LedgerSMB responses are handled by the 'xhr' Dojo module, which\n` +
+            `    # *only* needs opening and closing BODY tags to be there (for now).\n` +
+            `    #\n` +
+            `    # Note: To keep some comments as is and control pre or post white space\n` +
+            `    #       chomping, we make use of '+' or '-' beside the introducers in\n` +
+            `    #       comments like this one.\n` +
+            ` -%]\n` +
+            `<!DOCTYPE html>\n` +
+            `<html xmlns="http://www.w3.org/1999/xhtml">\n` +
+            `<head>\n` +
+            `    <title>[% title %]</title>\n` +
+            `    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />\n` +
+            `    [%+# HTML Snippet, for import only %]\n` +
+            `    [%+#\n` +
+            `        # source comment only!\n` +
+            `        #\n` +
+            `        # don't specify a title on the stylesheets: we want them to be\n` +
+            `        # *persistent*\n` +
+            `        # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1\n` +
+            `    %]\n` +
+            `    ${htmlWebpackPlugin.tags.headTags}\n` +
+            `    <link href="js/css/[% dojo_theme %].css" rel="stylesheet">\n` +
+            `    [% IF form.stylesheet %]\n` +
+            `    <link href="js/css/[% form.stylesheet %]" rel="stylesheet">\n` +
+            `    [% ELSIF stylesheet %]\n` +
+            `    <link href="js/css/[% stylesheet %]" rel="stylesheet">\n` +
+            `    [% END %]\n` +
+            `    [% FOREACH s = include_stylesheet %]\n` +
+            `    <link href="js/css/[% s %]" rel="stylesheet">\n` +
+            `    [% END %]\n` +
+            `    [% IF warn_expire %]\n` +
+            `    <script>\n` +
+            `        window.alert("[% text('Warning:  Your password will expire in [_1]', pw_expires)%]");\n` +
+            `    </script>\n` +
+            `    [% END %]\n` +
+            `    <script>\n` +
+            `        var dojoConfig = {\n` +
+            `            async: 1,\n` +
+            `            locale: "[% USER.language.lower().replace('_','-') %]",\n` +
+            `            packages: [{"name":"lsmb","location":"../lsmb"}]\n` +
+            `        };\n` +
+            `        var lsmbConfig = {\n` +
+            `            [% IF USER.dateformat %]\n` +
+            `            "dateformat": '[% USER.dateformat %]'\n` +
+            `            [% END %]\n` +
+            `        };\n` +
+            `    </script>\n` +
+            `    ${htmlWebpackPlugin.tags.bodyTags}\n` +
+            `    <meta name="robots" content="noindex,nofollow" />\n` +
+            `</head>\n` +
+            `[% BLOCK end_html %]\n` +
+            `</html>\n` +
+            `[% END %]`
+    }),
 
     new webpack.NormalModuleReplacementPlugin(
         /^css!/,
