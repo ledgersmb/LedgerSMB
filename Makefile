@@ -45,7 +45,7 @@ help:
 #   builds dojo for production/release
 SHELL := /bin/bash
 HOMEDIR := ~/dojo_archive
-SHA := $(shell find UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit -exec sha1sum {} + 2>&1 | sort | sha1sum | cut -d' ' -f 1)
+SHA := $(shell find UI/js-src/lsmb node_modules/dojo node_modules/dojo-webpack-plugin node_modules/dijit -exec sha1sum {} + 2>&1 | sort | sha1sum | cut -d' ' -f 1)
 ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
 TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
@@ -84,7 +84,7 @@ submodules:
 #   builds release distribution archive
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
-	find . | grep -vE '^.$$|^\./\.|^\./UI/js-src/(dojo|dijit|util)/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
+	find . | grep -vE '^.$$|^\./\.|^\./node_modules/(dojo(-webpack-plugin)?|dijit|util)/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
 # Genarate displayable documentation
 pod:
