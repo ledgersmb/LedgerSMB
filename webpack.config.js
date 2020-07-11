@@ -169,10 +169,6 @@ var pluginsProd = [
 
     new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
 
-    new webpack.DefinePlugin({
-        VERSION: JSON.stringify(require("./package.json").version)
-    }),
-
     // new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
     new StylelintPlugin(StylelintPluginOptions),
 
@@ -208,7 +204,6 @@ var pluginsProd = [
         filename: "ui-header.html",
         excludeChunks: [...Object.keys(lsmbCSS)],
         templateContent: ({ htmlWebpackPlugin }) =>
-            `` +
             `<!-- prettier-disable -->\n` +
             `[%#\n` +
             `    # This helper should be included in files which will be served as\n` +
@@ -362,8 +357,6 @@ const optimizationList = {
 
 const webpackConfigs = {
     context: path.join(__dirname, "UI"),
-
-    // stats: 'verbose',
 
     entry: {
         main: "lsmb/main.js",
