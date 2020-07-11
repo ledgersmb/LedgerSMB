@@ -9,9 +9,9 @@ const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -55,7 +55,7 @@ const css = {
     use: [
         {
             loader: ExtractCssChunks.loader,
-            options:{
+            options: {
                 hmr: !prodMode
             }
         },
@@ -63,7 +63,6 @@ const css = {
     ]
 };
 
-// Used in css loader definition below and webpack-multiple-themes-compile plugin
 const images = {
     test: /\.(png|jpe?g|gif)$/i,
     use: [
@@ -121,11 +120,13 @@ const DojoWebpackPluginOptions = {
 // dojo/domReady (only works if the DOM is ready when invoked)
 const NormalModuleReplacementPluginOptionsDomReady = function (data) {
     const match = /^dojo\/domReady!(.*)$/.exec(data.request);
+    /* eslint-disable-next-line no-param-reassign */
     data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
 };
 
 const NormalModuleReplacementPluginOptionsSVG = function (data) {
     var match = /^svg!(.*)$/.exec(data.request);
+    /* eslint-disable-next-line no-param-reassign */
     data.request =
         "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
         match[1] +
@@ -149,12 +150,18 @@ const mapFilenamesToEntries = (pattern) =>
         return { ...entries, [name]: filename };
     }, {});
 
-const dijit_themes = '+(claro|nihilo|soria|tundra)';
+const _dijitThemes = "+(claro|nihilo|soria|tundra)";
 const lsmbCSS = {
     ...mapFilenamesToEntries(path.resolve("UI/css/*.css")),
-    ...mapFilenamesToEntries(path.resolve(
-        "node_modules/dijit/themes/" + dijit_themes + "/" + dijit_themes + ".css"
-    ))
+    ...mapFilenamesToEntries(
+        path.resolve(
+            "node_modules/dijit/themes/" +
+                _dijitThemes +
+                "/" +
+                _dijitThemes +
+                ".css"
+        )
+    )
 };
 
 var pluginsProd = [
@@ -175,6 +182,7 @@ var pluginsProd = [
         /* eslint-disable-next-line no-param-reassign */
         data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
     }),
+
     new CopyWebpackPlugin(CopyWebpackPluginOptions),
 
     new webpack.NormalModuleReplacementPlugin(
@@ -189,8 +197,8 @@ var pluginsProd = [
 
     new ExtractCssChunks({
         filename: prodMode ? "css/[name].[contenthash].css" : "css/[name].css",
-        chunkFilename: 'css/[id].css',
-        moduleFilename: ({ name }) => `${name.replace('js/', 'js/css/')}.css`
+        chunkFilename: "css/[id].css",
+        moduleFilename: ({ name }) => `${name.replace("js/", "js/css/")}.css`
         // publicPath: "js"
     }),
 
@@ -198,16 +206,14 @@ var pluginsProd = [
         inject: false, // Tags are injected manually in the content below
         minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
         filename: "ui-header.html",
-        excludeChunks: [
-            ...Object.keys(lsmbCSS)
-        ],
-        templateContent: ({ htmlWebpackPlugin }) => `` +
+        excludeChunks: [...Object.keys(lsmbCSS)],
+        templateContent: ({ htmlWebpackPlugin }) =>
+            `` +
             `<!-- prettier-disable -->\n` +
             `[%#\n` +
             `    # This helper should be included in files which will be served as\n` +
             `    # top-level responses (i.e. documents on their own); this includes\n` +
             `    # UI/login.html, UI/logout.html, UI/main.html and various UI/setup/ pages\n` +
-
             `    # Most LedgerSMB responses are handled by the 'xhr' Dojo module, which\n` +
             `    # *only* needs opening and closing BODY tags to be there (for now).\n` +
             `    #\n` +
@@ -248,7 +254,9 @@ var pluginsProd = [
             `            async: 1,\n` +
             `            locale: "[% USER.language.lower().replace('_','-') %]",\n` +
             `            packages: [{"name":"lsmb","location":"../lsmb"}],\n` +
-            `            mode: "` + ( prodMode ? 'production' : 'development') + `"\n` +
+            `            mode: "` +
+            (prodMode ? "production" : "development") +
+            `"\n` +
             `        };\n` +
             `        var lsmbConfig = {\n` +
             `            [% IF USER.dateformat %]\n` +
@@ -262,15 +270,14 @@ var pluginsProd = [
             `[% BLOCK end_html %]\n` +
             `</html>\n` +
             `[% END %]`
-    }),
-
+    })
 ];
 
 var pluginsDev = [
-
     ...pluginsProd,
 
     new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
+
     new DuplicatesPlugin({
         // Emit compilation warning or error? (Default: `false`)
         emitErrors: false,
@@ -290,15 +297,15 @@ const groupsOptions = {
 };
 
 const optimizationList = {
-    moduleIds: 'hashed',
+    moduleIds: "hashed",
     runtimeChunk: {
-      name: 'manifest' // runtimeChunk: "multiple", // Fails
+        name: "manifest" // runtimeChunk: "multiple", // Fails
     },
     namedChunks: true, // Keep names to load only 1 theme
     splitChunks: !prodMode
         ? false
         : {
-              chunks (chunk) {
+              chunks(chunk) {
                   // exclude dijit themes
                   return !chunk.name.match(/(claro|nihilo|soria|tundra)/);
               },
@@ -311,11 +318,15 @@ const optimizationList = {
                   },
                   node_modules: {
                       test(module, chunks) {
-                        // `module.resource` contains the absolute path of the file on disk.
-                        // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
-                        return module.resource &&
-                             !module.resource.endsWith('.css') &&
-                             module.resource.includes(`${path.sep}node_modules${path.sep}`);
+                          // `module.resource` contains the absolute path of the file on disk.
+                          // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
+                          return (
+                              module.resource &&
+                              !module.resource.endsWith(".css") &&
+                              module.resource.includes(
+                                  `${path.sep}node_modules${path.sep}`
+                              )
+                          );
                       },
                       name(module) {
                           const packageName = module.context.match(
@@ -326,24 +337,24 @@ const optimizationList = {
                       priority: 2,
                       ...groupsOptions
                   }
-            }
+              }
           },
     minimize: prodMode,
     minimizer: [
         new TerserPlugin({
             parallel: process.env.CIRCLECI || process.env.TRAVIS ? 2 : true,
-            sourceMap: !prodMode,
+            sourceMap: !prodMode
         }),
         new OptimizeCSSAssetsPlugin({
-            cssProcessor: require('cssnano'),
+            cssProcessor: require("cssnano"),
             cssProcessorOptions: {
-              discardComments: { removeAll: true },
-              zindex: {
-                disabled: true  // Don't touch zindex
-              }
+                discardComments: { removeAll: true },
+                zindex: {
+                    disabled: true // Don't touch zindex
+                }
             },
             canPrint: true
-          })
+        })
     ]
 };
 
