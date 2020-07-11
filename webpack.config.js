@@ -2,14 +2,15 @@
 /* eslint global-require:0, no-param-reassign:0, no-unused-vars:0 */
 /* global getConfig */
 
+const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
 
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MultipleThemesCompile = require("webpack-multiple-themes-compile");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -44,6 +45,19 @@ const javascript = {
                 failOnError: true
             }
         }
+    ]
+};
+
+const css = {
+    test: /\.css$/i,
+    use: [
+        {
+            loader: ExtractCssChunks.loader,
+            options:{
+                hmr: !prodMode
+            }
+        },
+        "css-loader"
     ]
 };
 
@@ -102,32 +116,6 @@ const DojoWebpackPluginOptions = {
     noConsole: true
 };
 
-const multipleThemesCompileOptions = {
-    cwd: "UI",
-    cacheDir: "js",
-    preHeader: "/* stylelint-disable */",
-    outputName: "/dijit/themes/[name]/[name].css",
-    themesConfig: {
-        claro: {
-            dojo_theme: "claro",
-            import: ["../../node_modules/dijit/themes/claro/claro.css"]
-        },
-        nihilo: {
-            dojo_theme: "nihilo",
-            import: ["../../node_modules/dijit/themes/nihilo/nihilo.css"]
-        },
-        soria: {
-            dojo_theme: "soria",
-            import: ["../../node_modules/dijit/themes/soria/soria.css"]
-        },
-        tundra: {
-            dojo_theme: "tundra",
-            import: ["../../node_modules/dijit/themes/tundra/tundra.css"]
-        }
-    },
-    lessContent: "body{dojo_theme:@dojo_theme}"
-};
-
 // dojo/domReady (only works if the DOM is ready when invoked)
 const NormalModuleReplacementPluginOptionsDomReady = function (data) {
     const match = /^dojo\/domReady!(.*)$/.exec(data.request);
@@ -143,13 +131,6 @@ const NormalModuleReplacementPluginOptionsSVG = function (data) {
         match[1];
 };
 
-const NormalModuleReplacementPluginOptionsCSS = function (data) {
-    data.request = data.request.replace(
-        /^css!/,
-        "!style-loader!css-loader!less-loader!"
-    );
-};
-
 const UnusedWebpackPluginOptions = {
     // Source directories
     directories: ["js-src/lsmb"],
@@ -157,6 +138,21 @@ const UnusedWebpackPluginOptions = {
     exclude: ["*.test.js"],
     // Root directory (optional)
     root: path.join(__dirname, "UI")
+};
+
+// Generate entries from file pattern
+const mapFilenamesToEntries = (pattern) =>
+    glob.sync(pattern).reduce((entries, filename) => {
+        const [, name] = filename.match(/([^/]+)\.css$/);
+        return { ...entries, [name]: filename };
+    }, {});
+
+const dijit_themes = '+(claro|nihilo|soria|tundra)';
+const lsmbCSS = {
+    ...mapFilenamesToEntries(path.resolve("UI/css/*.css")),
+    ...mapFilenamesToEntries(path.resolve(
+        "node_modules/dijit/themes/" + dijit_themes + "/" + dijit_themes + ".css"
+    ))
 };
 
 var pluginsProd = [
@@ -186,6 +182,13 @@ var pluginsProd = [
         /^svg!/,
         NormalModuleReplacementPluginOptionsSVG
     ),
+
+    new ExtractCssChunks({
+        filename: prodMode ? "css/[name].[contenthash].css" : "css/[name].css",
+        chunkFilename: 'css/[id].css',
+        moduleFilename: ({ name }) => `${name.replace('js/', 'js/css/')}.css`
+        // publicPath: "js"
+    }),
 
     new HtmlWebpackPlugin({
         inject: false, // Tags are injected manually in the content below
@@ -256,10 +259,6 @@ var pluginsProd = [
             `</html>\n` +
             `[% END %]`
     }),
-    new webpack.NormalModuleReplacementPlugin(
-        /^css!/,
-        NormalModuleReplacementPluginOptionsCSS
-    ),
 
 ];
 
@@ -277,8 +276,6 @@ var pluginsDev = [
 ];
 
 var pluginsList = prodMode ? pluginsProd : pluginsDev;
-
-const themes = MultipleThemesCompile(multipleThemesCompileOptions);
 
 /* OPTIMIZATIONS */
 
@@ -337,8 +334,8 @@ const webpackConfigs = {
     // stats: 'verbose',
 
     entry: {
-        "lsmb/main": "lsmb/main.js",
-        ...themes.entry
+        main: "lsmb/main.js",
+        ...lsmbCSS
     },
 
     output: {
@@ -350,10 +347,10 @@ const webpackConfigs = {
     },
 
     module: {
-        rules: [javascript, images, svg, html, ...themes.module.rules]
+        rules: [javascript, css, images, svg, html]
     },
 
-    plugins: [...pluginsList, ...themes.plugins],
+    plugins: pluginsList,
 
     resolve: {
         extensions: [".js"],
