@@ -79,6 +79,7 @@
     "eslint-plugin-snakecasejs": "^2.2.0",
     "eslint-plugin-sort-dojo-dependency": "^0.0.1",
     "eslint-plugin-standard": "^4.0.1",
+    "extract-css-chunks-webpack-plugin": "^4.7.5",
     "file-loader": "^6.0.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
@@ -108,8 +109,7 @@
     "webpack-entry-plus": "^1.0.18",
     "webpack-hasjs-plugin": "^1.0.3",
     "webpack-i18n-extractor-plugin": "^2.0.7",
-    "webpack-log": "^3.0.1",
-    "webpack-multiple-themes-compile": "^2.0.0"
+    "webpack-log": "^3.0.1"
   },
   "dependencies": {
     "dijit": "1.16.3",
