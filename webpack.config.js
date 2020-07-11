@@ -151,16 +151,6 @@ const UnusedWebpackPluginOptions = {
     root: path.join(__dirname, "UI")
 };
 
-const devServerOptions = {
-    contentBase: "js",
-    compress: true,
-    port: 6969,
-    stats: "errors-only",
-    open: true,
-    hot: true,
-    openPage: ""
-};
-
 var pluginsProd = [
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
