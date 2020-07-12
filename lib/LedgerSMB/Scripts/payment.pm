@@ -378,13 +378,29 @@ successful.
 
 sub post_payments_bulk {
     my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new(%$request);
     if ($request->close_form){
+        my $payment =  LedgerSMB::DBObject::Payment->new(
+            dbh          => $request->{dbh},
+            payment_date => LedgerSMB::PGDate->from_input(
+                $request->{datepaid})
+            );
         my $data = $bulk_post_map->($request);
+        $data->{contacts} = [ grep { $_->{id} } @{$data->{contacts}} ];
+        for my $contact (@{$data->{contacts}}) {
+            for my $invoice (@{$contact->{invoices}}) {
+                if ($contact->{paid} eq 'all') {
+                    $invoice->{payment} = $invoice->{net};
+                }
+
+                $invoice->{payment} =
+                    LedgerSMB::PGNumber->from_input($invoice->{payment});
+            }
+        }
+
         $payment->post_bulk($data);
     } else {
-        $payment->{notice} =
-           $payment->{_locale}->text('Data not saved.  Please try again.');
+        $request->{notice} =
+           $request->{_locale}->text('Data not saved.  Please try again.');
         return display_payments($request);
     }
 
