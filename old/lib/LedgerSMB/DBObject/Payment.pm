@@ -22,6 +22,8 @@ package LedgerSMB::DBObject::Payment;
 use base qw(LedgerSMB::PGOld LedgerSMB::Num2text);
 use strict;
 use warnings;
+
+use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 
 use LedgerSMB::Magic qw(BC_PAYMENT);
@@ -741,6 +743,8 @@ sub post_bulk {
     }
 
     $self->{payment_date} //= $data->{payment_date};
+    $self->{payment_date} =
+        LedgerSMB::PGDate->from_input($self->{payment_date});
     for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
         my $invoice_array = "{}"; # Pg Array
         for my $invoice (@{$contact->{invoices}}) {
