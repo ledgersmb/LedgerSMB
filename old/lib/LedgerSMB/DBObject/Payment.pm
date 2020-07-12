@@ -22,6 +22,8 @@ package LedgerSMB::DBObject::Payment;
 use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
+
+use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 
 use LedgerSMB::Magic qw(BC_PAYMENT);
@@ -649,7 +651,8 @@ sub post_bulk {
             args => {
                 transactions => $transactions,
                 source => $contact->{source},
-                payment_date => $self->{datepaid},
+                payment_date =>
+                    LedgerSMB::PGDate->from_input($self->{datepaid}),
             }
         );
     }
