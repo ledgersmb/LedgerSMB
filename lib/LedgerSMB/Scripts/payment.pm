@@ -380,9 +380,15 @@ sub post_payments_bulk {
     my ($request) = @_;
     if ($request->close_form){
         my $payment =  LedgerSMB::DBObject::Payment->new(
-            dbh          => $request->{dbh},
-            payment_date => LedgerSMB::PGDate->from_input(
-                $request->{datepaid})
+            dbh           => $request->{dbh},
+            ar_ap_accno   => $request->{ar_ap_accno},
+            account_class => $request->{account_class},
+            batch_id      => $request->{batch_id},
+            cash_accno    => $request->{cash_accno},
+            currency      => $request->{currency},
+            exchangerate  => $request->{exchangerate},
+            payment_date  => LedgerSMB::PGDate->from_input(
+                $request->{datepaid}),
             );
         my $data = $bulk_post_map->($request);
         $data->{contacts} = [ grep { $_->{id} } @{$data->{contacts}} ];
