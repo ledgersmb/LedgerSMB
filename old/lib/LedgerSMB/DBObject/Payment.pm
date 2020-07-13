@@ -617,20 +617,14 @@ partial payment (C<paid == 'some'>).
 sub post_bulk {
     my ($self, $data) = @_;
 
-    for my $contact (grep { $_->{id} } @{$data->{contacts}}) {
+    for my $contact (@{$data->{contacts}}) {
 
         my @invoice_elements;
         for my $invoice (@{$contact->{invoices}}) {
 
-            my $pay_amount =
-                ($contact->{"paid"} eq 'all' )
-                ? $invoice->{net} : $invoice->{payment};
-            next if ! $pay_amount;
-
-            $pay_amount = LedgerSMB::PGNumber->from_input($pay_amount)
-                ->to_db();
-
-            my $invoice_subarray = "{$invoice->{invoice},$pay_amount}";
+            next if $invoice->{payment} == 0.0;
+            my $db_amount = $invoice->{payment}->to_db();
+            my $invoice_subarray = "{$invoice->{invoice},$db_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 die "Invalid subarray: $invoice_subarray";
             }
@@ -647,9 +641,9 @@ sub post_bulk {
         $self->call_dbmethod(
             funcname => 'payment_bulk_post',
             args => {
+                source       => $contact->{source},
+                payment_date => $self->{payment_date},
                 transactions => $transactions,
-                source => $contact->{source},
-                payment_date => $self->{datepaid},
             }
         );
     }
