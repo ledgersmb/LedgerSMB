@@ -87,7 +87,7 @@ BEGIN;
     SELECT test_account_link_description('AR_overpayment1', false, true);
 
     SELECT account__save (null, accno, description, category::char(1),
-                null, null, false, false,
+                null, (select id from account_heading limit 1), false, false,
                 case when link is not null then link::text[] else '{}' END,
                 false, false)
       FROM (VALUES ('TEST testing 1', 'A', 'A', '00001', null),

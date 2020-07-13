@@ -37,10 +37,10 @@ BEGIN;
     INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id, curr)
     VALUES (-1001, '_testc', 2, -1000, -1000, 'XTS');
     SELECT account__save
-           (NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
+           (NULL, '00001', 'test only', 'A', NULL, (select id from account_heading limit 1), FALSE, FALSE,'{}', false,
            false);
     SELECT account__save
-           (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
+           (NULL, '00002', 'test only', 'A', NULL, (select id from account_heading limit 1), FALSE, FALSE,'{}', false,
            false);
     INSERT INTO ap (invnumber, entity_credit_account, amount_bc, netamount_bc,
             amount_tc, netamount_tc, approved, curr)
