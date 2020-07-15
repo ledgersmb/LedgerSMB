@@ -24,15 +24,16 @@
         # *persistent*
         # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
     %]
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/[% dojo_theme %]/[% dojo_theme %].css" type="text/css" />
+    <%= htmlWebpackPlugin.tags.headTags %>
+    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
+    <link href="js/css/[% dojo_theme %].css" rel="stylesheet">
     [% IF form.stylesheet %]
-    <link rel="stylesheet" href="css/[% form.stylesheet %]" type="text/css" />
+    <link href="js/css/[% form.stylesheet %]" rel="stylesheet">
     [% ELSIF stylesheet %]
-    <link rel="stylesheet" href="css/[% stylesheet %]" type="text/css" />
+    <link href="js/css/[% stylesheet %]" rel="stylesheet">
     [% END %]
     [% FOREACH s = include_stylesheet %]
-    <link rel="stylesheet" href="css/[% s %]" type="text/css" />
+    <link href="js/css/[% s %]" rel="stylesheet">
     [% END %]
     [% IF warn_expire %]
     <script>
@@ -43,7 +44,8 @@
         var dojoConfig = {
             async: 1,
             locale: "[% USER.language.lower().replace('_','-') %]",
-            packages: [{"name":"lsmb","location":"../lsmb"}]
+            packages: [{"name":"lsmb","location":"../lsmb"}],
+            mode: "<%= htmlWebpackPlugin.options.mode %>"
         };
         var lsmbConfig = {
             [% IF USER.dateformat %]
@@ -51,7 +53,7 @@
             [% END %]
         };
     </script>
-    <script src="js/lsmb/main.js" charset="utf-8"></script>
+    ${htmlWebpackPlugin.tags.bodyTags}
     <meta name="robots" content="noindex,nofollow" />
 </head>
 [% BLOCK end_html %]
