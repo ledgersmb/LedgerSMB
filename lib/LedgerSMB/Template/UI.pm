@@ -78,7 +78,7 @@ sub new_UI {
         if (!defined $engine) {
             $engine = Template->new(
                 ### TODO: These should be configurable absolute paths
-                INCLUDE_PATH => [ 'UI/js', 'UI/', 'UI/lib/' ],
+                INCLUDE_PATH => [ 'UI/', 'UI/lib/' ],
                 ENCODING => 'utf8',
                 TRIM => 1,
                 START_TAG => quotemeta('[%'),

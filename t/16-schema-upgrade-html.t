@@ -42,20 +42,10 @@ sub filter_js_src {
     my $line = join("\n",@{$lines});
     $line =~ s|"js-src/|"js/|g;
     $line =~ s|\s*\n+|\n|g;
-    # Filter out chunks hashes
-    $line =~ s|[~\.]([0-9a-f]{8}\.)?[0-9a-f]{20}\.js|.js|g;
     # Split in lines
     @{$lines} = split(/\n/, $line);
 }
 
-
-sub find_application_mode {
-    my $lines = shift;
-    my $pattern = qr/^\s+mode:\s*"(production|development)"$/;
-    my @mode = grep {/$pattern/} @$lines;
-    return if @mode != 1; # We need only a single line
-    return ($mode[0] =~ /$pattern/)[0];
-}
 
 ###############################################
 #
@@ -157,32 +147,27 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-my $mode = find_application_mode($out);
 
-my @expected = split (/\n/, qq{<!-- prettier-disable -->
+my @expected = split (/\n/, q{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+    <link rel="stylesheet" href="css/setup.css" type="text/css" />
     <script>
         var dojoConfig = {
             async: 1,
             locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
+            packages: [{"name":"lsmb","location":"../lsmb"}]
         };
         var lsmbConfig = {
         };
     </script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
-    ) . qq{
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -203,7 +188,7 @@ my @expected = split (/\n/, qq{<!-- prettier-disable -->
 </html>});
 
 is $out,\@expected, 'Render the description && title',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 1 };
+    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
 
 
 ###############################################
@@ -246,30 +231,26 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+@expected = split (/\n/, q{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+    <link rel="stylesheet" href="css/setup.css" type="text/css" />
     <script>
         var dojoConfig = {
             async: 1,
             locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
+            packages: [{"name":"lsmb","location":"../lsmb"}]
         };
         var lsmbConfig = {
         };
     </script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
-    ) . qq{
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -333,30 +314,26 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+@expected = split (/\n/, q{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+    <link rel="stylesheet" href="css/setup.css" type="text/css" />
     <script>
         var dojoConfig = {
             async: 1,
             locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
+            packages: [{"name":"lsmb","location":"../lsmb"}]
         };
         var lsmbConfig = {
         };
     </script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
-    ) . qq{
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -421,30 +398,26 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+@expected = split (/\n/, q{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+    <link rel="stylesheet" href="css/setup.css" type="text/css" />
     <script>
         var dojoConfig = {
             async: 1,
             locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
+            packages: [{"name":"lsmb","location":"../lsmb"}]
         };
         var lsmbConfig = {
         };
     </script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
-    ) . qq{
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -526,30 +499,26 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+@expected = split (/\n/, q{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
+    <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+    <link rel="stylesheet" href="css/setup.css" type="text/css" />
     <script>
         var dojoConfig = {
             async: 1,
             locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
+            packages: [{"name":"lsmb","location":"../lsmb"}]
         };
         var lsmbConfig = {
         };
     </script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
-    ) . qq{
+    <script src="js/lsmb/main.js" charset="utf-8"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
