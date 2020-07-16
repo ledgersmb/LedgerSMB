@@ -165,6 +165,7 @@ my @expected = split (/\n/, qq{<!-- prettier-disable -->
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/claro.css" rel="stylesheet">
     <link href="js/css/ledgersmb.css" rel="stylesheet">
     <link href="js/css/setup.css" rel="stylesheet">
@@ -252,6 +253,7 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/claro.css" rel="stylesheet">
     <link href="js/css/ledgersmb.css" rel="stylesheet">
     <link href="js/css/setup.css" rel="stylesheet">
@@ -339,6 +341,7 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/claro.css" rel="stylesheet">
     <link href="js/css/ledgersmb.css" rel="stylesheet">
     <link href="js/css/setup.css" rel="stylesheet">
@@ -427,6 +430,7 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/claro.css" rel="stylesheet">
     <link href="js/css/ledgersmb.css" rel="stylesheet">
     <link href="js/css/setup.css" rel="stylesheet">
@@ -532,6 +536,7 @@ filter_js_src($out);
 <head>
     <title></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/claro.css" rel="stylesheet">
     <link href="js/css/ledgersmb.css" rel="stylesheet">
     <link href="js/css/setup.css" rel="stylesheet">
