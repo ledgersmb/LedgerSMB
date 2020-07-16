@@ -2,20 +2,30 @@
 /* eslint global-require:0, no-param-reassign:0, no-unused-vars:0 */
 /* global getConfig */
 
+const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
 
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
-const MultipleThemesCompile = require("webpack-multiple-themes-compile");
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
-const devMode = process.env.NODE_ENV !== "production";
+const argv = require("yargs").argv;
+const prodMode =
+    process.env.NODE_ENV === "production" ||
+    argv.p ||
+    argv.mode === "production";
+
+// Make sure all modules follow desired mode
+process.env.NODE_ENV = prodMode ? "production" : "development";
 
 /* LOADERS */
 
@@ -36,10 +46,23 @@ const javascript = {
                 failOnError: true
             }
         }
+    ],
+    exclude: /node_modules/
+};
+
+const css = {
+    test: /\.css$/i,
+    use: [
+        {
+            loader: ExtractCssChunks.loader,
+            options: {
+                hmr: !prodMode
+            }
+        },
+        "css-loader"
     ]
 };
 
-// Used in css loader definition below and webpack-multiple-themes-compile plugin
 const images = {
     test: /\.(png|jpe?g|gif)$/i,
     use: [
@@ -94,52 +117,21 @@ const DojoWebpackPluginOptions = {
     noConsole: true
 };
 
-const multipleThemesCompileOptions = {
-    cwd: "UI",
-    cacheDir: "js",
-    preHeader: "/* stylelint-disable */",
-    outputName: "/dijit/themes/[name]/[name].css",
-    themesConfig: {
-        claro: {
-            dojo_theme: "claro",
-            import: ["../../node_modules/dijit/themes/claro/claro.css"]
-        },
-        nihilo: {
-            dojo_theme: "nihilo",
-            import: ["../../node_modules/dijit/themes/nihilo/nihilo.css"]
-        },
-        soria: {
-            dojo_theme: "soria",
-            import: ["../../node_modules/dijit/themes/soria/soria.css"]
-        },
-        tundra: {
-            dojo_theme: "tundra",
-            import: ["../../node_modules/dijit/themes/tundra/tundra.css"]
-        }
-    },
-    lessContent: "body{dojo_theme:@dojo_theme}"
-};
-
 // dojo/domReady (only works if the DOM is ready when invoked)
 const NormalModuleReplacementPluginOptionsDomReady = function (data) {
     const match = /^dojo\/domReady!(.*)$/.exec(data.request);
+    /* eslint-disable-next-line no-param-reassign */
     data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
 };
 
 const NormalModuleReplacementPluginOptionsSVG = function (data) {
     var match = /^svg!(.*)$/.exec(data.request);
+    /* eslint-disable-next-line no-param-reassign */
     data.request =
         "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
         match[1] +
         "!" +
         match[1];
-};
-
-const NormalModuleReplacementPluginOptionsCSS = function (data) {
-    data.request = data.request.replace(
-        /^css!/,
-        "!style-loader!css-loader!less-loader!"
-    );
 };
 
 const UnusedWebpackPluginOptions = {
@@ -151,12 +143,31 @@ const UnusedWebpackPluginOptions = {
     root: path.join(__dirname, "UI")
 };
 
+// Generate entries from file pattern
+const mapFilenamesToEntries = (pattern) =>
+    glob.sync(pattern).reduce((entries, filename) => {
+        const [, name] = filename.match(/([^/]+)\.css$/);
+        return { ...entries, [name]: filename };
+    }, {});
+
+const _dijitThemes = "+(claro|nihilo|soria|tundra)";
+const lsmbCSS = {
+    ...mapFilenamesToEntries(path.resolve("UI/css/*.css")),
+    ...mapFilenamesToEntries(
+        path.resolve(
+            "node_modules/dijit/themes/" +
+                _dijitThemes +
+                "/" +
+                _dijitThemes +
+                ".css"
+        )
+    )
+};
+
 var pluginsProd = [
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
-    new webpack.DefinePlugin({
-        VERSION: JSON.stringify(require("./package.json").version)
-    }),
+    new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
 
     // new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
     new StylelintPlugin(StylelintPluginOptions),
@@ -167,6 +178,7 @@ var pluginsProd = [
         /* eslint-disable-next-line no-param-reassign */
         data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
     }),
+
     new CopyWebpackPlugin(CopyWebpackPluginOptions),
 
     new webpack.NormalModuleReplacementPlugin(
@@ -179,18 +191,88 @@ var pluginsProd = [
         NormalModuleReplacementPluginOptionsSVG
     ),
 
-    new webpack.NormalModuleReplacementPlugin(
-        /^css!/,
-        NormalModuleReplacementPluginOptionsCSS
-    ),
+    new ExtractCssChunks({
+        filename: prodMode ? "css/[name].[contenthash].css" : "css/[name].css",
+        chunkFilename: "css/[id].css",
+        moduleFilename: ({ name }) => `${name.replace("js/", "js/css/")}.css`
+        // publicPath: "js"
+    }),
 
+    new HtmlWebpackPlugin({
+        inject: false, // Tags are injected manually in the content below
+        minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
+        filename: "ui-header.html",
+        excludeChunks: [...Object.keys(lsmbCSS)],
+        templateContent: ({ htmlWebpackPlugin }) =>
+            `<!-- prettier-disable -->\n` +
+            `[%#\n` +
+            `    # This helper should be included in files which will be served as\n` +
+            `    # top-level responses (i.e. documents on their own); this includes\n` +
+            `    # UI/login.html, UI/logout.html, UI/main.html and various UI/setup/ pages\n` +
+            `    # Most LedgerSMB responses are handled by the 'xhr' Dojo module, which\n` +
+            `    # *only* needs opening and closing BODY tags to be there (for now).\n` +
+            `    #\n` +
+            `    # Note: To keep some comments as is and control pre or post white space\n` +
+            `    #       chomping, we make use of '+' or '-' beside the introducers in\n` +
+            `    #       comments like this one.\n` +
+            ` -%]\n` +
+            `<!DOCTYPE html>\n` +
+            `<html xmlns="http://www.w3.org/1999/xhtml">\n` +
+            `<head>\n` +
+            `    <title>[% title %]</title>\n` +
+            `    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />\n` +
+            `    [%+# HTML Snippet, for import only %]\n` +
+            `    [%+#\n` +
+            `        # source comment only!\n` +
+            `        #\n` +
+            `        # don't specify a title on the stylesheets: we want them to be\n` +
+            `        # *persistent*\n` +
+            `        # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1\n` +
+            `    %]\n` +
+            `    ${htmlWebpackPlugin.tags.headTags}\n` +
+            `    <link href="js/css/[% dojo_theme %].css" rel="stylesheet">\n` +
+            `    [% IF form.stylesheet %]\n` +
+            `    <link href="js/css/[% form.stylesheet %]" rel="stylesheet">\n` +
+            `    [% ELSIF stylesheet %]\n` +
+            `    <link href="js/css/[% stylesheet %]" rel="stylesheet">\n` +
+            `    [% END %]\n` +
+            `    [% FOREACH s = include_stylesheet %]\n` +
+            `    <link href="js/css/[% s %]" rel="stylesheet">\n` +
+            `    [% END %]\n` +
+            `    [% IF warn_expire %]\n` +
+            `    <script>\n` +
+            `        window.alert("[% text('Warning:  Your password will expire in [_1]', pw_expires)%]");\n` +
+            `    </script>\n` +
+            `    [% END %]\n` +
+            `    <script>\n` +
+            `        var dojoConfig = {\n` +
+            `            async: 1,\n` +
+            `            locale: "[% USER.language.lower().replace('_','-') %]",\n` +
+            `            packages: [{"name":"lsmb","location":"../lsmb"}],\n` +
+            `            mode: "` +
+            (prodMode ? "production" : "development") +
+            `"\n` +
+            `        };\n` +
+            `        var lsmbConfig = {\n` +
+            `            [% IF USER.dateformat %]\n` +
+            `            "dateformat": '[% USER.dateformat %]'\n` +
+            `            [% END %]\n` +
+            `        };\n` +
+            `    </script>\n` +
+            `    ${htmlWebpackPlugin.tags.bodyTags}\n` +
+            `    <meta name="robots" content="noindex,nofollow" />\n` +
+            `</head>\n` +
+            `[% BLOCK end_html %]\n` +
+            `</html>\n` +
+            `[% END %]`
+    })
 ];
 
 var pluginsDev = [
-
     ...pluginsProd,
 
     new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
+
     new DuplicatesPlugin({
         // Emit compilation warning or error? (Default: `false`)
         emitErrors: false,
@@ -199,56 +281,76 @@ var pluginsDev = [
     })
 ];
 
-var pluginsList = devMode ? pluginsDev : pluginsProd;
-
-const themes = MultipleThemesCompile(multipleThemesCompileOptions);
+var pluginsList = prodMode ? pluginsProd : pluginsDev;
 
 /* OPTIMIZATIONS */
 
+const groupsOptions = {
+    chunks: "all",
+    reuseExistingChunk: true,
+    enforce: true
+};
+
 const optimizationList = {
-    /*
-      runtimeChunk: {
-        name: 'runtime',
-      },
-      */
-    namedModules: false,
-    splitChunks: devMode
+    moduleIds: "hashed",
+    runtimeChunk: {
+        name: "manifest" // runtimeChunk: "multiple", // Fails
+    },
+    namedChunks: true, // Keep names to load only 1 theme
+    splitChunks: !prodMode
         ? false
         : {
-              chunks: "all",
-              maxInitialRequests: Infinity,
-              minSize: 0,
-              cacheGroups: {
-                  /*
-              vendor: {
-                 // That should be empty for Dojo?
-                 test: /[\\/]node_modules[\\/]/,
-                 name(module) {
-                    // get the name. E.g. node_modules/packageName/not/this/part.js
-                    // or node_modules/packageName
-                    const packageName = module.context.match(
-                       /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                    )[1];
-
-                    // npm package names are URL-safe, but some servers don't like @ symbols
-                    return `npm.${packageName.replace("@", "")}`;
-                 }
+              chunks(chunk) {
+                  // exclude dijit themes
+                  return !chunk.name.match(/(claro|nihilo|soria|tundra)/);
               },
-              */
-                  ...themes.optimization.splitChunks.cacheGroups
+              maxInitialRequests: Infinity,
+              cacheGroups: {
+                  main: {
+                      test: /lsmb[\\/]main.+\.js/,
+                      name: "main",
+                      ...groupsOptions
+                  },
+                  node_modules: {
+                      test(module, chunks) {
+                          // `module.resource` contains the absolute path of the file on disk.
+                          // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
+                          return (
+                              module.resource &&
+                              !module.resource.endsWith(".css") &&
+                              module.resource.includes(
+                                  `${path.sep}node_modules${path.sep}`
+                              )
+                          );
+                      },
+                      name(module) {
+                          const packageName = module.context.match(
+                              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                          )[1];
+                          return `npm.${packageName.replace("@", "")}`;
+                      },
+                      priority: 2,
+                      ...groupsOptions
+                  }
               }
           },
-    minimizer: devMode
-        ? []
-        : [
-              new TerserPlugin({
-                  parallel: true,
-                  sourceMap: !!devMode,
-                  terserOptions: {
-                      ecma: 6
-                  }
-              })
-          ]
+    minimize: prodMode,
+    minimizer: [
+        new TerserPlugin({
+            parallel: process.env.CIRCLECI || process.env.TRAVIS ? 2 : true,
+            sourceMap: !prodMode
+        }),
+        new OptimizeCSSAssetsPlugin({
+            cssProcessor: require("cssnano"),
+            cssProcessorOptions: {
+                discardComments: { removeAll: true },
+                zindex: {
+                    disabled: true // Don't touch zindex
+                }
+            },
+            canPrint: true
+        })
+    ]
 };
 
 /* WEBPACK CONFIG */
@@ -256,26 +358,24 @@ const optimizationList = {
 const webpackConfigs = {
     context: path.join(__dirname, "UI"),
 
-    // stats: 'verbose',
-
     entry: {
-        "lsmb/main": "lsmb/main.js",
-        ...themes.entry
+        main: "lsmb/main.js",
+        ...lsmbCSS
     },
 
     output: {
         path: path.resolve("UI/js"), // js path
         publicPath: "js/", // images path
-        pathinfo: !!devMode, // keep source references?
+        pathinfo: !prodMode, // keep source references?
         filename: "[name].js",
         chunkFilename: "[name].[chunkhash].js"
     },
 
     module: {
-        rules: [javascript, images, svg, html, ...themes.module.rules]
+        rules: [javascript, css, images, svg, html]
     },
 
-    plugins: [...pluginsList, ...themes.plugins],
+    plugins: pluginsList,
 
     resolve: {
         extensions: [".js"],
@@ -286,11 +386,11 @@ const webpackConfigs = {
         modules: ["node_modules"]
     },
 
-    mode: devMode ? "development" : "production",
+    mode: process.env.NODE_ENV,
 
     optimization: optimizationList,
 
-    performance: { hints: devMode ? "warning" : false }
+    performance: { hints: prodMode ? false : "warning" }
 };
 
 /* eslint-disable-next-line no-unused-vars */
