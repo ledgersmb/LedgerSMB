@@ -23,7 +23,7 @@ define("lsmb/layout/TableContainer", [
     _WidgetBase,
     _LayoutWidget
 ) {
-    var TableContainer = declare("lsmb.layout.TableContainer", _LayoutWidget, {
+    var TableContainer = declare("lsmb/layout/TableContainer", _LayoutWidget, {
         // summary:
         //    A container that lays out its child widgets in a table layout.
         //
