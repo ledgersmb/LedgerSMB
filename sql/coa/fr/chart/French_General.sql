@@ -3,22 +3,9 @@ BEGIN;
 -- according to Autorité des normes comptables de France, rule #2014-03
 -- sample only, Plan de comptes général, système développé
 --
--- Add wrapper for lisibility. It will vanish at the end of this transaction
-CREATE OR REPLACE FUNCTION pg_temp._account_heading_save
-(in_id int, in_accno text, in_description text, in_accno_parent text)
-RETURNS int AS
-$$
-DECLARE parent_id int;
-BEGIN
-        SELECT id INTO parent_id
-        FROM account_heading
-        WHERE accno = in_accno_parent;
-        RETURN account_heading_save(in_id, in_accno, in_description, parent_id);
-END;
-$$ LANGUAGE PLPGSQL;
 
 SELECT account_heading_save(NULL, '000', '', NULL);
-SELECT pg_temp._account_heading_save(NULL,'1', 'Classe 1: Comptes de capitaux', '000');
+SELECT account_heading_save(NULL,'1', 'Classe 1: Comptes de capitaux', '000');
 --
 SELECT account__save(NULL,'101', 'Capital','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1011', 'Capital souscrit non appelé','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -964,84 +951,84 @@ SELECT account__save(NULL,'797', 'Transferts de charges except.','I',NULL, NULL,
 --
 SELECT account_heading_save(NULL,'8', 'Classe 8: Comptes spéciaux', null);
 --
-SELECT pg_temp._account_heading_save(NULL,'10', 'Capital et réserves', null);
-SELECT pg_temp._account_heading_save(NULL,'20', 'Immobilisations incorporelles', null);
---SELECT pg_temp._account_heading_save(NULL,'30', '', null);
-SELECT pg_temp._account_heading_save(NULL,'40', 'Fournisseurs et comptes rattachés', null);
-SELECT pg_temp._account_heading_save(NULL,'50', 'Valeurs mobilières de placement', null);
-SELECT pg_temp._account_heading_save(NULL,'60', 'Achats (sauf 603)', null);
-SELECT pg_temp._account_heading_save(NULL,'603', 'Variation des stocks (approvisionnements et marchandises)', null);
-SELECT pg_temp._account_heading_save(NULL,'70', 'Ventes de produits fabriqués prestations de services, marchandises', null);
+SELECT account_heading_save(NULL,'10', 'Capital et réserves', null);
+SELECT account_heading_save(NULL,'20', 'Immobilisations incorporelles', null);
+--SELECT account_heading_save(NULL,'30', '', null);
+SELECT account_heading_save(NULL,'40', 'Fournisseurs et comptes rattachés', null);
+SELECT account_heading_save(NULL,'50', 'Valeurs mobilières de placement', null);
+SELECT account_heading_save(NULL,'60', 'Achats (sauf 603)', null);
+SELECT account_heading_save(NULL,'603', 'Variation des stocks (approvisionnements et marchandises)', null);
+SELECT account_heading_save(NULL,'70', 'Ventes de produits fabriqués prestations de services, marchandises', null);
 
-SELECT pg_temp._account_heading_save(NULL,'11', 'Report à nouveau', '10');
-SELECT pg_temp._account_heading_save(NULL,'12', 'Résultat de l''exercice', '10');
-SELECT pg_temp._account_heading_save(NULL,'13', 'Subventions d''investissement', '10');
-SELECT pg_temp._account_heading_save(NULL,'14', 'Provisions réglementées', '10');
-SELECT pg_temp._account_heading_save(NULL,'15', 'Provisions pour risques et charges', '10');
-SELECT pg_temp._account_heading_save(NULL,'16', 'Emprunts et dettes assimilées', '10');
-SELECT pg_temp._account_heading_save(NULL,'17', 'Dettes rattachées à des participations', '10');
-SELECT pg_temp._account_heading_save(NULL,'18', 'Comptes de liaison des établissements et sociétés en participation', '10');
---SELECT pg_temp._account_heading_save(NULL,'19', '', '10');
+SELECT account_heading_save(NULL,'11', 'Report à nouveau', '10');
+SELECT account_heading_save(NULL,'12', 'Résultat de l''exercice', '10');
+SELECT account_heading_save(NULL,'13', 'Subventions d''investissement', '10');
+SELECT account_heading_save(NULL,'14', 'Provisions réglementées', '10');
+SELECT account_heading_save(NULL,'15', 'Provisions pour risques et charges', '10');
+SELECT account_heading_save(NULL,'16', 'Emprunts et dettes assimilées', '10');
+SELECT account_heading_save(NULL,'17', 'Dettes rattachées à des participations', '10');
+SELECT account_heading_save(NULL,'18', 'Comptes de liaison des établissements et sociétés en participation', '10');
+--SELECT account_heading_save(NULL,'19', '', '10');
 
-SELECT pg_temp._account_heading_save(NULL,'21', 'Immobilisations corporelles', '20');
-SELECT pg_temp._account_heading_save(NULL,'22', 'Immobilisations mises en concession', '20');
-SELECT pg_temp._account_heading_save(NULL,'23', 'Immobilisations en cours', '20');
---SELECT pg_temp._account_heading_save(NULL,'24', '', '20');
---SELECT pg_temp._account_heading_save(NULL,'25', '', '20');
-SELECT pg_temp._account_heading_save(NULL,'26', 'Participations et créances rattachées à des participations', '20');
-SELECT pg_temp._account_heading_save(NULL,'27', 'Autres immobilisations finacières', '20');
-SELECT pg_temp._account_heading_save(NULL,'28', 'Amortissements des immobilisations', '20');
-SELECT pg_temp._account_heading_save(NULL,'29', 'Dépréciations des immobilisations', '20');
+SELECT account_heading_save(NULL,'21', 'Immobilisations corporelles', '20');
+SELECT account_heading_save(NULL,'22', 'Immobilisations mises en concession', '20');
+SELECT account_heading_save(NULL,'23', 'Immobilisations en cours', '20');
+--SELECT account_heading_save(NULL,'24', '', '20');
+--SELECT account_heading_save(NULL,'25', '', '20');
+SELECT account_heading_save(NULL,'26', 'Participations et créances rattachées à des participations', '20');
+SELECT account_heading_save(NULL,'27', 'Autres immobilisations finacières', '20');
+SELECT account_heading_save(NULL,'28', 'Amortissements des immobilisations', '20');
+SELECT account_heading_save(NULL,'29', 'Dépréciations des immobilisations', '20');
 
-SELECT pg_temp._account_heading_save(NULL,'31', 'Matières premières (et fournitures)', '30');
-SELECT pg_temp._account_heading_save(NULL,'32', 'Autres approvisionnements', '30');
-SELECT pg_temp._account_heading_save(NULL,'33', 'En-cours de production de biens', '30');
-SELECT pg_temp._account_heading_save(NULL,'34', 'En-cours de production de services', '30');
-SELECT pg_temp._account_heading_save(NULL,'35', 'Stocks de produits', '30');
---SELECT pg_temp._account_heading_save(NULL,'36', '', '30');
-SELECT pg_temp._account_heading_save(NULL,'37', 'Stocks de marchandises', '30');
---SELECT pg_temp._account_heading_save(NULL,'38', '', '30');
-SELECT pg_temp._account_heading_save(NULL,'39', 'Provisions pour dépréciation des stocks et encours', '30');
+SELECT account_heading_save(NULL,'31', 'Matières premières (et fournitures)', '30');
+SELECT account_heading_save(NULL,'32', 'Autres approvisionnements', '30');
+SELECT account_heading_save(NULL,'33', 'En-cours de production de biens', '30');
+SELECT account_heading_save(NULL,'34', 'En-cours de production de services', '30');
+SELECT account_heading_save(NULL,'35', 'Stocks de produits', '30');
+--SELECT account_heading_save(NULL,'36', '', '30');
+SELECT account_heading_save(NULL,'37', 'Stocks de marchandises', '30');
+--SELECT account_heading_save(NULL,'38', '', '30');
+SELECT account_heading_save(NULL,'39', 'Provisions pour dépréciation des stocks et encours', '30');
 
-SELECT pg_temp._account_heading_save(NULL,'41', 'Clients et comptes rattachés', '40');
-SELECT pg_temp._account_heading_save(NULL,'42', 'Personnel et comptes rattachés', '40');
-SELECT pg_temp._account_heading_save(NULL,'43', 'Sécurité sociale et autres organismes sociaux', '40');
-SELECT pg_temp._account_heading_save(NULL,'44', 'Etat et autres collectivités publiques', '40');
-SELECT pg_temp._account_heading_save(NULL,'45', 'Groupe et associés', '40');
-SELECT pg_temp._account_heading_save(NULL,'46', 'Débiteurs divers et créditeurs divers', '40');
-SELECT pg_temp._account_heading_save(NULL,'47', 'Comptes transitoires ou d''attente', '40');
-SELECT pg_temp._account_heading_save(NULL,'48', 'Comptes de régularisation', '40');
-SELECT pg_temp._account_heading_save(NULL,'49', 'Provision pour dépréciation des comptes de tiers', '40');
+SELECT account_heading_save(NULL,'41', 'Clients et comptes rattachés', '40');
+SELECT account_heading_save(NULL,'42', 'Personnel et comptes rattachés', '40');
+SELECT account_heading_save(NULL,'43', 'Sécurité sociale et autres organismes sociaux', '40');
+SELECT account_heading_save(NULL,'44', 'Etat et autres collectivités publiques', '40');
+SELECT account_heading_save(NULL,'45', 'Groupe et associés', '40');
+SELECT account_heading_save(NULL,'46', 'Débiteurs divers et créditeurs divers', '40');
+SELECT account_heading_save(NULL,'47', 'Comptes transitoires ou d''attente', '40');
+SELECT account_heading_save(NULL,'48', 'Comptes de régularisation', '40');
+SELECT account_heading_save(NULL,'49', 'Provision pour dépréciation des comptes de tiers', '40');
 
-SELECT pg_temp._account_heading_save(NULL,'51', 'Banques, établissements financiers et assimilés', '50');
-SELECT pg_temp._account_heading_save(NULL,'52', 'Instruments de trésorerie', '50');
-SELECT pg_temp._account_heading_save(NULL,'53', 'Caisse', '50');
-SELECT pg_temp._account_heading_save(NULL,'54', 'Régies d''avances et accréditifs', '50');
---SELECT pg_temp._account_heading_save(NULL,'55', '', '50');
---SELECT pg_temp._account_heading_save(NULL,'56', '', '50');
---SELECT pg_temp._account_heading_save(NULL,'57', '', '50');
-SELECT pg_temp._account_heading_save(NULL,'58', 'Virements internes', '50');
-SELECT pg_temp._account_heading_save(NULL,'59', 'Provisions pour dépréciation des comptes financiers', '50');
+SELECT account_heading_save(NULL,'51', 'Banques, établissements financiers et assimilés', '50');
+SELECT account_heading_save(NULL,'52', 'Instruments de trésorerie', '50');
+SELECT account_heading_save(NULL,'53', 'Caisse', '50');
+SELECT account_heading_save(NULL,'54', 'Régies d''avances et accréditifs', '50');
+--SELECT account_heading_save(NULL,'55', '', '50');
+--SELECT account_heading_save(NULL,'56', '', '50');
+--SELECT account_heading_save(NULL,'57', '', '50');
+SELECT account_heading_save(NULL,'58', 'Virements internes', '50');
+SELECT account_heading_save(NULL,'59', 'Provisions pour dépréciation des comptes financiers', '50');
 
-SELECT pg_temp._account_heading_save(NULL,'61', 'Services extérieurs ', '60');
-SELECT pg_temp._account_heading_save(NULL,'62', 'Autres services extérieurs', '60');
-SELECT pg_temp._account_heading_save(NULL,'63', 'Impôts, taxes et versements assimilés', '60');
-SELECT pg_temp._account_heading_save(NULL,'64', 'Charges de personnel', '60');
-SELECT pg_temp._account_heading_save(NULL,'65', 'Autres charges de gestion courante', '60');
-SELECT pg_temp._account_heading_save(NULL,'66', 'Charges financières', '60');
-SELECT pg_temp._account_heading_save(NULL,'67', 'Charges exceptionnelles', '60');
-SELECT pg_temp._account_heading_save(NULL,'68', 'Dotations aux amortissements et aux provisions', '60');
-SELECT pg_temp._account_heading_save(NULL,'69', 'Participation des salariés, impôts sur les bénéfices et assimilés', '60');
+SELECT account_heading_save(NULL,'61', 'Services extérieurs ', '60');
+SELECT account_heading_save(NULL,'62', 'Autres services extérieurs', '60');
+SELECT account_heading_save(NULL,'63', 'Impôts, taxes et versements assimilés', '60');
+SELECT account_heading_save(NULL,'64', 'Charges de personnel', '60');
+SELECT account_heading_save(NULL,'65', 'Autres charges de gestion courante', '60');
+SELECT account_heading_save(NULL,'66', 'Charges financières', '60');
+SELECT account_heading_save(NULL,'67', 'Charges exceptionnelles', '60');
+SELECT account_heading_save(NULL,'68', 'Dotations aux amortissements et aux provisions', '60');
+SELECT account_heading_save(NULL,'69', 'Participation des salariés, impôts sur les bénéfices et assimilés', '60');
 
-SELECT pg_temp._account_heading_save(NULL,'71', 'Production stockée (ou déstockage)', '70');
-SELECT pg_temp._account_heading_save(NULL,'72', 'Production immobilisée', '70');
---SELECT pg_temp._account_heading_save(NULL,'73', '', '70');
-SELECT pg_temp._account_heading_save(NULL,'74', 'Subventions d''exploitation', '70');
-SELECT pg_temp._account_heading_save(NULL,'75', 'Autre produits de gestion courante', '70');
-SELECT pg_temp._account_heading_save(NULL,'76', 'Produits financiers', '70');
-SELECT pg_temp._account_heading_save(NULL,'77', 'Produits exceptionnels', '70');
-SELECT pg_temp._account_heading_save(NULL,'78', 'Reprises sur amortissements et provisions', '70');
-SELECT pg_temp._account_heading_save(NULL,'79', 'Transferts de charges', '70');
+SELECT account_heading_save(NULL,'71', 'Production stockée (ou déstockage)', '70');
+SELECT account_heading_save(NULL,'72', 'Production immobilisée', '70');
+--SELECT account_heading_save(NULL,'73', '', '70');
+SELECT account_heading_save(NULL,'74', 'Subventions d''exploitation', '70');
+SELECT account_heading_save(NULL,'75', 'Autre produits de gestion courante', '70');
+SELECT account_heading_save(NULL,'76', 'Produits financiers', '70');
+SELECT account_heading_save(NULL,'77', 'Produits exceptionnels', '70');
+SELECT account_heading_save(NULL,'78', 'Reprises sur amortissements et provisions', '70');
+SELECT account_heading_save(NULL,'79', 'Transferts de charges', '70');
 --
 -- SELECT account_heading_save(NULL,'90', 'Classe 9: comptabilité analytique', null);
 -- SELECT account__save(NULL,'99900','Foreign Exchange Gain','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
