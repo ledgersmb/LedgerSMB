@@ -55,7 +55,7 @@ if (-e $gifi_file) {
 my $content = $orig_content;
 
 my $sql_re = qr/(?(DEFINE)
-             (?<STRING_PAT>'(?:[^']|'')*')
+             (?<STRING_PAT>'(?:[^']|''|\\')*')
              (?<NUM_PAT>[+-]?[0-9]+(\.[0-9]+)?|\.[0-9]+)
              (?<IDENT_PAT>[a-zA-Z_][a-zA-Z0-9_]*)
              (?<LITT_PAT>(?&NUM_PAT)|(?&IDENT_PAT))
@@ -136,7 +136,7 @@ while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
               (?<HEAD>(?&ARG_PAT))\s*,\s*
               (?<CONTRA>(?&ARG_PAT))\s*,\s*
               (?<TAX>(?&ARG_PAT))\s*,\s*
-              (?:'\{\}'|(?:string_to_array\s*\(\s*(?<LINKS>(?&STRING_PAT))\s*,\s*':'\s*\)))\s*,\s*
+              (?:'\{\}'(?:\:\:text\[\])?|string_to_array\s*\(\s*(?<LINKS>(?&STRING_PAT))\s*,\s*':'\s*\))\s*,\s*
               (?<OBSOL>(?&ARG_PAT))\s*,\s*
               (?<TEMP>(?&ARG_PAT))\s*\)
 
