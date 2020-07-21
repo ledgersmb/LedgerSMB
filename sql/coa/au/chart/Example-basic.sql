@@ -89,11 +89,18 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '63002'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'AUD:USD:EUR');
+ INSERT INTO defaults (setting_key, value) VALUES ('curr', 'AUD');
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
 commit;
+
+insert into currency (curr, description)
+  values ('AUD', 'AUD'),
+         ('USD', 'USD'),
+         ('EUR', 'EUR');
+
+
 UPDATE account
    SET tax = true
 WHERE id

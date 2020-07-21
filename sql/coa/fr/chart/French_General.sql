@@ -1077,8 +1077,13 @@ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id 
 INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '601'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '999'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '99901'));
-INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
+
+insert into currency (curr, description)
+   values ('EUR', 'EUR'),
+          ('USD', 'USD');
+
 COMMIT;
 --
 UPDATE account

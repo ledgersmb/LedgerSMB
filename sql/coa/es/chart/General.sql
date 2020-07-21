@@ -1744,5 +1744,9 @@ INSERT INTO defaults (setting_key, value)
 INSERT INTO defaults (setting_key, value)
      VALUES ('fxloss_accno_id', '334');
 
+
+insert into currency (curr, description)
+   values ('EUR', 'EUR');
+
 -- END of transaction
 COMMIT;

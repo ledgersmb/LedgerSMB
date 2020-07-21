@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://ledgersmb.org/xml-schemas/configuration"
+           xmlns:t="http://ledgersmb.org/xml-schemas/configuration"
+           xmlns="http://ledgersmb.org/xml-schemas/configuration"
+           elementFormDefault="qualified">
+
+  <xs:annotation>
+    <xs:documentation>
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:simpleType name="account-category">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Asset" />
+      <xs:enumeration value="Liability" />
+      <xs:enumeration value="Equity" />
+      <xs:enumeration value="Equity (temporary)" />
+      <xs:enumeration value="Income" />
+      <xs:enumeration value="Expense" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="translation">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lang" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="gifi-list">
+    <xs:sequence>
+      <xs:element name="gifi" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="code" type="xs:string" use="required" />
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="custom-account-link-list">
+    <xs:sequence>
+      <xs:element name="link" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="code" type="xs:string" use="required" />
+          <xs:attribute name="summary" type="xs:boolean" default="false" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="tax">
+    <xs:attribute name="rate" type="xs:decimal" use="required" />
+    <xs:attribute name="valid-to" type="xs:date" />
+    <xs:attribute name="pass" type="xs:positiveInteger" default="1" />
+    <xs:attribute name="min-value" type="xs:decimal" />
+    <xs:attribute name="max-value" type="xs:decimal" />
+    <xs:attribute name="taxmodule" type="xs:string" default="simple" />
+  </xs:complexType>
+
+  <xs:complexType name="account-heading">
+    <xs:sequence>
+      <xs:element name="translation" type="translation"
+                  minOccurs="0" maxOccurs="unbounded" />
+      <xs:group ref="coa-node" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+
+    <xs:attribute name="code" type="xs:string" use="required" />
+    <xs:attribute name="description" type="xs:string" use="required" />
+    <xs:attribute name="id" type="xs:ID" />
+  </xs:complexType>
+
+  <xs:complexType name="account">
+    <xs:sequence>
+      <xs:element name="link" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="code" type="xs:string" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="tax" type="tax" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="translation" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+
+    <xs:attribute name="code" type="xs:string" use="required" />
+    <xs:attribute name="description" type="xs:string" use="required" />
+    <xs:attribute name="gifi" type="xs:string" />
+    <xs:attribute name="contra" type="xs:boolean" default="false" />
+    <xs:attribute name="recon" type="xs:boolean" default="false" />
+    <xs:attribute name="obsolete" type="xs:boolean" default="false" />
+    <xs:attribute name="category" use="required" type="account-category" />
+    <xs:attribute name="id" type="xs:ID" />
+  </xs:complexType>
+
+  <xs:group name="coa-node">
+    <xs:choice>
+      <xs:element name="account-heading" type="account-heading" />
+      <xs:element name="account" type="account">
+      </xs:element>
+
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="coa">
+    <xs:sequence>
+      <xs:element name="account-heading" type="account-heading"
+                  minOccurs="1" maxOccurs="unbounded">
+      </xs:element>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="currencies">
+    <xs:sequence>
+      <xs:element name="currency" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="code" use="required">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Z]{3}" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+
+    <xs:attribute name="default" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="settings">
+    <xs:sequence>
+      <xs:element name="setting" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required" />
+          <xs:attribute name="value" type="xs:string" />
+          <xs:attribute name="accno" type="xs:string" />
+          <xs:attribute name="type" type="xs:string" />
+        </xs:complexType>
+        <xs:key name="value-or-account">
+          <xs:annotation>
+            <xs:documentation>
+              Ensures that either a 'value' or an 'accno' field is provided.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:selector xpath="." />
+          <xs:field xpath="@value | @accno" />
+        </xs:key>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="configuration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="gifi-list" type="gifi-list"
+                    minOccurs="0" maxOccurs="1"/>
+        <xs:element name="custom-account-link-list"
+                    minOccurs="0" maxOccurs="1"/>
+        <xs:element name="coa" type="coa">
+        </xs:element>
+        <xs:element name="currencies" type="currencies" />
+        <xs:element name="settings" type="settings" />
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:key name="accno">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that 'accno' values are unique across accounts
+          and headings.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath=".//t:account-heading|.//t:account" />
+      <xs:field xpath="@code" />
+    </xs:key>
+
+    <xs:key name="gifi">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that every gifi code exists exactly once in the
+          list of definitions.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="./t:gifi-list/t:gifi" />
+      <xs:field xpath="@code" />
+    </xs:key>
+
+    <xs:key name="currency">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that every currency code exists exactly once in the
+          list of definitions.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="./t:currencies/t:currency" />
+      <xs:field xpath="@code" />
+    </xs:key>
+
+    <xs:key name="custom-account-link">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that every custom link code exists exactly once in the
+          list of definitions.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="./t:custom-account-link-list/link" />
+      <xs:field xpath="@code" />
+    </xs:key>
+
+
+    <xs:keyref name="account-gifi" refer="gifi">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that the gifi codes referred to from the account definitions,
+          exist in the gifi definition list.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath=".//t:account" />
+      <xs:field xpath="@gifi" />
+    </xs:keyref>
+
+    <xs:keyref name="setting-account" refer="accno">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that the value of the 'accno' field in settings, exists
+          in the list of accounts.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="./t:settings/t:setting" />
+      <xs:field xpath="@accno" />
+    </xs:keyref>
+
+    <xs:keyref name="default-currency" refer="currency">
+      <xs:annotation>
+        <xs:documentation>
+          Ensures that the value of the 'default' field of the 'currencies'
+          element, exists in the list of currencies defined.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="./t:currencies" />
+      <xs:field xpath="@default" />
+    </xs:keyref>
+
+  </xs:element>
+</xs:schema>

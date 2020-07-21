@@ -83,10 +83,10 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
 INSERT INTO currency (curr, description)
    VALUES
-      ('R  ', 'R  '),
+      ('BRL', 'BRL'),
       ('EUR', 'EUR'),
       ('USD', 'USD');
-INSERT INTO defaults (setting_key, value) VALUES ('curr', 'R  ');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'BRL');
 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
