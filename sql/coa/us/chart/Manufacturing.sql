@@ -13,9 +13,9 @@ SELECT account__save(NULL,'1205','Allowance for doubtful accounts','A','', NULL,
 SELECT account_heading_save(NULL,'1500','INVENTORY ASSETS', NULL);
 
 SELECT account__save(NULL,'1520','Inventory / General','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1530','Inventory / Raw Materials','A','1126', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1540','Inventory / Work in process','A','1125', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1550','Inventory / Finished Goods','A','1121', NULL, false, false, string_to_array('IC', ':'), false, false);
+SELECT account__save(NULL,'1530','Inventory / Raw Materials','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
+SELECT account__save(NULL,'1540','Inventory / Work in process','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
+SELECT account__save(NULL,'1550','Inventory / Finished Goods','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
 
 SELECT account_heading_save(NULL,'1800','CAPITAL ASSETS', NULL);
 SELECT account__save(NULL,'1820','Office Furniture & Equipment','A','', NULL, false, false, string_to_array('', ':'), false, false);
