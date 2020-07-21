@@ -101,6 +101,10 @@ FOR t_inv IN
             union
             select id, approved, transdate from gl) a ON a.id = i.trans_id
      WHERE allocated > 0 and a.approved and parts_id = in_parts_id
+           -- the sellprice check is here because of github issue #4791:
+           -- when a negative number of assemblies has been "stocked",
+           -- reversal of a sales invoice for that part, fails.
+           and sellprice is not null
   ORDER BY a.transdate DESC, a.id DESC, i.id DESC
 LOOP
    t_reversed := least((in_qty - t_alloc) * -1, t_inv.allocated);
