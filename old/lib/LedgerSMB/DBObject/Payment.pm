@@ -743,14 +743,14 @@ return @{$self->{available_overpayment_amount}};
 
 sub overpayment_reverse {
     my ($self, $args) = @_;
-    return __PACKAGE__->call_procedure(
-                                 funcname => 'overpayment__reverse',
-                                     args => [$args->{id},
-                                              $args->{post_date},
-                                              $args->{batch_id},
-                                              $args->{account_class},
-                                              $args->{exchangerate},
-                                              $args->{curr}] );
+    return $self->call_procedure(
+        funcname => 'overpayment__reverse',
+        args => [$args->{id},
+                 $args->{post_date},
+                 $args->{batch_id},
+                 $args->{account_class},
+                 $args->{exchangerate},
+                 $args->{curr}] );
 }
 
 =item init
