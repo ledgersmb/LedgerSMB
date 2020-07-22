@@ -561,6 +561,7 @@ INSERT INTO gifi (accno,description) VALUES ('9221','Électricité');
 INSERT INTO gifi (accno,description) VALUES ('9222','Eau');
 INSERT INTO gifi (accno,description) VALUES ('9223','Chauffage');
 INSERT INTO gifi (accno,description) VALUES ('9224','Frais de carburant');
+INSERT INTO gifi (accno,description) VALUES ('9225','Téléphone & Communications');
 INSERT INTO gifi (accno,description) VALUES ('9270','Autres dépenses');
 INSERT INTO gifi (accno,description) VALUES ('9271','Écarts de caisse');
 INSERT INTO gifi (accno,description) VALUES ('9272','Remboursement de frais de la société mère');
