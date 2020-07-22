@@ -352,18 +352,29 @@ while ($orig_content =~ m/insert\s+into\s+tax\s*\(\s*((?&LITT_PAT))\s*,\s*((?&LI
 
 
 while ($orig_content =~ m/select\s+cr_coa_to_account_save\s*\(\s*[^)]*\)\s*
-       from\s+account\s+where\s+accno(\s*=\s*(?&STRING_PAT)|\s+in\s*\(\s*[^)]*\))
+       from\s+account\s+where\s+(?:
+          accno(\s*=\s*(?&STRING_PAT)|\s+in\s*\(\s*[^)]*\))
+          |id\s+in\s+\(\s*select\s+account_id\s+from\s+account_link\s+where\s+
+             description\s*=\s*'AP_paid'\s*\)
+          )
 
        $sql_re/gisx) {
     my $accno_extract = $1;
 
-    for my $accno (extract_accnos($accno_extract)) {
-        die "Reconciliation account is an empty string" unless $accno;
+    if ($accno_extract) {
+        for my $accno (extract_accnos($accno_extract)) {
+            die "Reconciliation account is an empty string" unless $accno;
 
-        my @acc_elm = $xpc->findnodes(".//account[\@code=\"$accno\"]", $root);
-        die "Cannot find account $accno to mark for reconciliation" unless $acc_elm[0];
+            my @acc_elm = $xpc->findnodes(".//account[\@code=\"$accno\"]", $root);
+            die "Cannot find account $accno to mark for reconciliation" unless $acc_elm[0];
 
-        $acc_elm[0]->addChild( $xml->createAttribute('recon', 'true') );
+            $acc_elm[0]->addChild( $xml->createAttribute('recon', 'true') );
+        }
+    }
+    else {
+        for my $acc ($xpc->findnodes('.//account[./link[@code="AP_paid"]]', $root)) {
+            $acc->addChild( $xml->createAttribute('recon', 'true') );
+        }
     }
 }
 
