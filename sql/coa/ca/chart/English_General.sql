@@ -20,10 +20,10 @@ SELECT account__save(NULL,'1840','Vehicle','A','1742', NULL, false, false, strin
 SELECT account__save(NULL,'1845','Accum. Amort. -Vehicle','A','1743', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL, '2000', 'CURRENT LIABILITIES', NULL);
 SELECT account__save(NULL,'2100','Accounts Payable','L','2621', NULL, false, false, string_to_array('AP', ':'), false, false);
-SELECT account__save(NULL,'2160','Federal Taxes Payable','L','2683', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2170','Provincial Taxes Payable','L','2684', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2310','GST','L','2685', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
-SELECT account__save(NULL,'2320','PST','L','2686', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'2160','Federal Taxes Payable','L','2680', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2170','Provincial Taxes Payable','L','2680', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2310','GST','L','2680', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'2320','PST','L','2680', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'2380','Vacation Pay Payable','L','2624', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2390','WCB Payable','L','2627', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL, '2400', 'PAYROLL DEDUCTIONS', NULL);
