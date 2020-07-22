@@ -739,25 +739,11 @@ SELECT account__save(NULL,'4135950001','Loquevendomos','I','', NULL, false, fals
 SELECT account__save(NULL,'4150300001','Vendo hasta mi mama!','I','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5230750001','Soat - Seguro Obligatorio Vehiculos','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '1355150003'), -0.07);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '1355170001'), -0.12);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365150001'), -0.1);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365150002'), -0.11);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365150003'), -0.1);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365150004'), -0.11);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365200001'), -0.11);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365250001'), -0.06);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365250003'), -0.01);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365250004'), -0.01);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365300001'), -0.035);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365300003'), -0.04);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365300004'), -0.02);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365400001'), -0.035);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2365400002'), -0.001);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2367050001'), -0.12);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2367050002'), -0.0525);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2367100001'), -0.12);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2367100002'), -0.15);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2367100003'), -0.0525);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2368030002'), -0.008);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408050001'), 0.16);
@@ -765,7 +751,6 @@ INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408050003'), 0.07);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408050004'), 0.08);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408050005'), 0.2);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408050006'), 0.2);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408050010'), 0.12);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408100001'), 0.16);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '2408100002'), 0.07);

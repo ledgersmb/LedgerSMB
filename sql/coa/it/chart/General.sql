@@ -91,7 +91,7 @@ SELECT account__save(NULL,'6480010','IVA su fatture emesse (20%)','L','', NULL, 
 SELECT account__save(NULL,'6480011','IVA a debito su acquisti U.E.','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
 SELECT account__save(NULL,'6480012','IVA su fatture emesse (21%)','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
 SELECT account__save(NULL,'6480013','IVA su fatture emesse (22%)','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
-SELECT account__save(NULL,'6480015','IVA su corrispettivi','L','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'6480015','IVA su corrispettivi','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
 SELECT account__save(NULL,'6480020','IVA versata','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480025','IVA acconto','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480030','IVA a credito','L','', NULL, false, false, string_to_array('', ':'), false, false);
