@@ -137,6 +137,7 @@ INSERT INTO gifi (accno,description) VALUES ('3.E', 'PROVENTI E ONERI STRAORDINA
 INSERT INTO gifi (accno,description) VALUES ('3.E.20', 'proventi straordinari');
 INSERT INTO gifi (accno,description) VALUES ('3.E.21', 'oneri straordinari');
 INSERT INTO gifi (accno,description) VALUES ('3.E.22', 'Imposte sul reddito dell\'esercizio');
+INSERT INTO gifi (accno,description) VALUES ('3.E.23', '');
 INSERT INTO gifi (accno,description) VALUES ('3.E.26', 'Utile o perdita di esercizio');
 
 commit;
