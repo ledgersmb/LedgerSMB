@@ -61,12 +61,14 @@ my $sql_re = qr/(?(DEFINE)
              (?<LITT_PAT>(?&NUM_PAT)|(?&IDENT_PAT))
              (?<STR_EXPR>(?:(?&LITT_PAT)|(?&STRING_PAT))\s*(\|\|\s*(?:(?&LITT_PAT)|(?&STRING_PAT)))+)
              (?<ACCID>select\s+id\s+from\s+account\s+where\s+accno\s+(?:=\s+'[^']*'|in\s+\([^)]+\))\s*)
+             (?<HEADID>select\s+id\s+from\s+account_heading\s+where\s+accno\s+=\s+'[^']*'\s*)
              (?<ARG_PAT>(?&STRING_PAT)
                         |(?&LITT_PAT)\s*(?&ARGS_PAT)?
-                        |\((?&ACCID)\)
+                        |\(\s*(?&ACCID)\)
+                        |\(\s*(?&HEADID)\)
                         |(?&STR_EXPR))
              (?<ARGS_PAT>\(\s*(?:(?&ARG_PAT)(?:\s*,\s*(?&ARG_PAT))*)\s*\))
-    )/x;
+    )/ix ;
 
 my $root = $xml->createElement('configuration');
 $root->addChild( $xml->createAttribute('xmlns', 'http://ledgersmb.org/xml-schemas/configuration') );
@@ -91,23 +93,35 @@ while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
             \(\s*
               NULL\s*,\s*
               (?<ACCNO>(?&ARG_PAT))\s*,\s*
-              (?<DESC>(?&STRING_PAT))
+              (?<DESC>(?&STRING_PAT))\s*,\s*
+              (?<HEAD>(?&ARG_PAT))
             $sql_re
-              /xs;
-        my $accno = strip_sq($+{ACCNO});
+              /ixs;
+        my %m = %+;
+        my $accno = strip_sq($m{ACCNO});
         my $h = $xml->createElement('account-heading');
         $accno_map{$accno} = $h;
         $h->addChild( $xml->createAttribute('id', 'h-' . ++$hc) );
         $h->addChild( $xml->createAttribute('code', $accno) );
-        $h->addChild( $xml->createAttribute('description', strip_sq($+{DESC})) );
-        $coa->appendChild($h);
-        $head = $h;
-        @h = sort {
-            # reverse-sort so we can search for the first header being smaller than
-            # the accno being inserted... (which is the same as the last one being smaller
-            # in regular search order)
-            $b->{code} cmp $a->{code} } (@h, { code => $accno,
-                                               elem => $h });
+        $h->addChild( $xml->createAttribute('description', strip_sq($m{DESC})) );
+
+        if ($m{HEAD} =~ m/null/i) {
+            $coa->appendChild($h);
+            $head = $h;
+            @h = sort {
+                # reverse-sort so we can search for the first header being smaller than
+                # the accno being inserted... (which is the same as the last one being smaller
+                # in regular search order)
+                $b->{code} cmp $a->{code} } (@h, { code => $accno,
+                                                   elem => $h });
+        }
+        else {
+            my $head_accno = extract_accno($m{HEAD});
+            my @head_elm = $xpc->findnodes(".//account-heading[\@code=\"$head_accno\"]", $root);
+            die "Unable to find heading $head_accno to link $accno to" unless @head_elm == 1;
+
+            $head_elm[0]->addChild( $h );
+        }
     }
     elsif ('account__save' eq $1) {
         my %cats = (
@@ -140,7 +154,7 @@ while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
               (?<OBSOL>(?&ARG_PAT))\s*,\s*
               (?<TEMP>(?&ARG_PAT))\s*\)
 
-                               $sql_re/xs or die "$content doesn't match account__save args";
+                               $sql_re/ixs or die "$content doesn't match account__save args";
 
         my %m = %+;
         my $accno = strip_sq($m{ACCNO});
@@ -169,8 +183,18 @@ while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
             $a->addChild( $xml->createAttribute( 'gifi', strip_sq($m{GIFI})) );
         }
         my $code = strip_sq($m{ACCNO});
-        my $h = first { $code gt $_->{code} } @h;
-        $h->{elem}->appendChild( $a );
+
+        if ($m{HEAD} =~ m/null/i) {
+            my $h = first { $code gt $_->{code} } @h;
+            $h->{elem}->appendChild( $a );
+        }
+        else {
+            my $head_accno = extract_accno($m{HEAD});
+            my @head_elm = $xpc->findnodes(".//account-heading[\@code=\"$head_accno\"]", $root);
+            die "Unable to find heading $head_accno to link $code to" unless @head_elm == 1;
+
+            $head_elm[0]->appendChild( $a );
+        }
     }
     else {
         die;
