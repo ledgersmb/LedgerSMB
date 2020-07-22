@@ -322,7 +322,7 @@ while ($orig_content =~ m/insert\s+into\s+gifi\s*\(\s*((?&LITT_PAT))\s*,\s*((?&L
 
         my $s = $xml->createElement('gifi');
         $s->addChild( $xml->createAttribute('code', strip_sq($ch{accno})) );
-        $s->addChild( $xml->createTextNode(strip_sq($ch{description})) );
+        $s->addChild( $xml->createAttribute('description', strip_sq($ch{description})) );
         $gifi->addChild( $s );
     }
 }

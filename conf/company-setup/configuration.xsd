@@ -34,11 +34,8 @@
     <xs:sequence>
       <xs:element name="gifi" minOccurs="1" maxOccurs="unbounded">
         <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:string">
-              <xs:attribute name="code" type="xs:string" use="required" />
-            </xs:extension>
-          </xs:simpleContent>
+          <xs:attribute name="code" type="xs:string" use="required" />
+          <xs:attribute name="description" type="xs:string" use="required" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
