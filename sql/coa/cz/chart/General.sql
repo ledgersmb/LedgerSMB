@@ -332,10 +332,6 @@ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id 
 
 INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '50000'));
 
-INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '99998'));
-
-INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '99999'));
-
 
 INSERT INTO currency (curr, description)
    VALUES
