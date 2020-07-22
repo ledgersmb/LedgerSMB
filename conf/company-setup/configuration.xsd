@@ -56,12 +56,18 @@
   </xs:complexType>
 
   <xs:complexType name="tax">
-    <xs:attribute name="rate" type="xs:decimal" use="required" />
-    <xs:attribute name="valid-to" type="xs:date" />
-    <xs:attribute name="pass" type="xs:positiveInteger" default="1" />
-    <xs:attribute name="min-value" type="xs:decimal" />
-    <xs:attribute name="max-value" type="xs:decimal" />
-    <xs:attribute name="taxmodule" type="xs:string" default="simple" />
+    <xs:sequence>
+      <xs:element name="rate" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="value" type="xs:decimal" use="required" />
+          <xs:attribute name="valid-to" type="xs:date" />
+          <xs:attribute name="pass" type="xs:positiveInteger" default="1" />
+          <xs:attribute name="min-value" type="xs:decimal" />
+          <xs:attribute name="max-value" type="xs:decimal" />
+          <xs:attribute name="taxmodule" type="xs:string" default="simple" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="account-heading">
@@ -83,7 +89,7 @@
           <xs:attribute name="code" type="xs:string" use="required" />
         </xs:complexType>
       </xs:element>
-      <xs:element name="tax" type="tax" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="tax" type="tax" minOccurs="0" maxOccurs="1" />
       <xs:element name="translation" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
 

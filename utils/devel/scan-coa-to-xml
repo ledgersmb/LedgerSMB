@@ -85,6 +85,7 @@ my $hc = 0;
 my @h = ();
 my $head;
 my %accno_map = ();
+my %tax_map = ();
 
 while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
     $content = $2;
@@ -167,17 +168,29 @@ while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
             $m{CAT} = 'Qt';
         }
         $a->addChild( $xml->createAttribute( 'category', $cats{ strip_sq($m{CAT}) }) );
-        $a->addChild( $xml->createAttribute( 'contra', $bools{$m{CONTRA}}) );
-        $a->addChild( $xml->createAttribute( 'obsolete', $bools{$m{OBSOL}}) );
+
+        if ($bools{$m{CONTRA}} eq 'true') {
+            $a->addChild( $xml->createAttribute( 'contra', $bools{$m{CONTRA}}) );
+        }
+        if ($bools{$m{OBSOL}} eq 'true') {
+            $a->addChild( $xml->createAttribute( 'obsolete', $bools{$m{OBSOL}}) );
+        }
         if ($m{LINKS} and strip_sq($m{LINKS})) {
             my $l = strip_sq($m{LINKS});
             for my $link (split /:/, $l) {
                 my $lnk_elm = $xml->createElement('link');
                 $lnk_elm->addChild( $xml->createAttribute('code', $link) );
                 $a->addChild($lnk_elm);
+                if ($link =~ /_tax$/) {
+                    $m{TAX} = 'true';
+                }
             }
         }
 
+        if ($bools{$m{TAX}} eq 'true') {
+            $tax_map{$accno} = $xml->createElement( 'tax' );
+            $a->addChild( $tax_map{$accno} );
+        }
         if ($m{GIFI} !~ m/^(?:null|'')$/i) {
             # Excluding the empty string is a cleanup action; those should have been null
             $a->addChild( $xml->createAttribute( 'gifi', strip_sq($m{GIFI})) );
@@ -315,38 +328,29 @@ while ($orig_content =~ m/insert\s+into\s+gifi\s*\(\s*((?&LITT_PAT))\s*,\s*((?&L
 }
 
 
-while ($orig_content =~ m/insert\s+into\s+tax\s*\(\s*((?&LITT_PAT))\s*,\s*((?&LITT_PAT))\s*\)\s*
-       values\s*((?&ARGS_PAT)(?:\s*,\s*(?&ARGS_PAT))*)\s*;
+while ($orig_content =~ m/
+       insert\s+into\s+tax\s*\(\s*((?&LITT_PAT)\s*(?:,\s*(?&LITT_PAT)\s*)*)\)\s*values\s*
+       (.*?);
 
        $sql_re/gisx) {
-    my $col1 = $1;
-    my $col2 = $2;
-    my $tax_insert = $3;
+    my $cols = $1;
+    my $tax_insert = $2;
+
+    my @cols = split /\s*,\s*/, $cols;
+    my $re = '\(\s*' . join(',\\s*', map {"(?<$_>(?&ARG_PAT))\\s*"} @cols) . '\)';
 
     while ($tax_insert =~ m/
-           ((?&ARGS_PAT))\s*,?
+           $re\s*,?
 
            $sql_re /gisx) {
-        my $tax_match = $1;
 
-        $tax_match =~ m/
-            \(\s*
-              (?<COL1>(?&ARG_PAT))
-              \s*,\s*
-              (?<COL2>(?&ARG_PAT))
-              \s*\)
-
-              $sql_re/gisx;
-        my %ch = (
-            lc($col1) => $+{COL1},
-            lc($col2) => $+{COL2},
-            );
-
-        my $tax = $xml->createElement('tax');
-        my $accno = strip_sq(extract_accno($ch{chart_id}));
+        my $accno = strip_sq(extract_accno($+{chart_id}));
         die "Can't specify tax for undeclared account $accno" unless $accno_map{$accno};
-        $tax->addChild( $xml->createAttribute('rate', strip_sq($ch{rate})) );
-        $accno_map{$accno}->addChild( $tax );
+        die "Can't specify tax for non-tax account $accno" unless $tax_map{$accno};
+
+        my $rate = $xml->createElement('rate');
+        $rate->addChild( $xml->createAttribute('value', strip_sq($+{rate})) );
+        $tax_map{$accno}->addChild( $rate );
     }
 }
 
