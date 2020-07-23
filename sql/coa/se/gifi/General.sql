@@ -98,4 +98,45 @@ INSERT  INTO gifi (accno,description) VALUES ('594','Övriga avgående bokslutsd
 INSERT  INTO gifi (accno,description) VALUES ('596','Redovisad förlust enligt bokföringen');
 INSERT  INTO gifi (accno,description) VALUES ('598','Skatter');
 INSERT  INTO gifi (accno,description) VALUES ('599','Redovisad vinst enligt bokföringen');
+
+INSERT INTO gifi (accno, description) VALUES ('233/230', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('241/233', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('241/234', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('241/235', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('241/236', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('329/302', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('329/303', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('329/304', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('337', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('352', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('360/370', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('362/364', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('362/365', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('363/366', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('363/367', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('363/369', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('368/369', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('509/509', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('509/510', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('520/511', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('524/511', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('550/551', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('553/554', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('553/570', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('578/590', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('586/589', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('586/594', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/593', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/594', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/595', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/596', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/597', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/598', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('589/599', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('591', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('593/594', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('597', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('599/596', 'missing; generated');
+
+
 commit;

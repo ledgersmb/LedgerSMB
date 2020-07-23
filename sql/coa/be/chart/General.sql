@@ -461,4 +461,4 @@ WHERE id
        WHERE description LIKE '%_tax');
 
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
-FROM account WHERE accno = '55';
+FROM account WHERE accno in ('552000', '553000', '554000', '555000');

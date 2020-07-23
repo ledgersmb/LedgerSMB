@@ -274,12 +274,6 @@ INSERT INTO gifi (accno,description) VALUES ('2627', 'Employee Deductions Payabl
 INSERT INTO gifi (accno,description) VALUES ('2628', 'Withholding Taxes Payable');
 INSERT INTO gifi (accno,description) VALUES ('2629', 'Intrest Payable');
 INSERT INTO gifi (accno,description) VALUES ('2680', 'Taxes Payable');
-INSERT INTO gifi (accno,description) VALUES ('2681', 'Capital Taxes Payable');
-INSERT INTO gifi (accno,description) VALUES ('2682', 'Foreign Taxes Payable');
-INSERT INTO gifi (accno,description) VALUES ('2683', 'Federal Taxes Payable');
-INSERT INTO gifi (accno,description) VALUES ('2684', 'Provincial Taxes Payable');
-INSERT INTO gifi (accno,description) VALUES ('2685', 'GST Payable');
-INSERT INTO gifi (accno,description) VALUES ('2686', 'PST Payable');
 INSERT INTO gifi (accno,description) VALUES ('2700', 'Short Term Debt');
 INSERT INTO gifi (accno,description) VALUES ('2701', 'Loans From Canadian Banks');
 INSERT INTO gifi (accno,description) VALUES ('2702', 'Liability For Securities Sold Short');

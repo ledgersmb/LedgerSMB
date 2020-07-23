@@ -28,10 +28,10 @@ SELECT account__save(NULL,'1840','Véhicules automobiles','A','1742', NULL, fals
 SELECT account__save(NULL,'1845','Amortissement cumulé des véhicules automobiles','A','1743', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL, '2000', 'PASSIF COURANT', NULL);
 SELECT account__save(NULL,'2100','Comptes fournisseurs','L','2621', NULL, false, false, string_to_array('AP', ':'), false, false);
-SELECT account__save(NULL,'2160','Taxes fédérales à payer','L','2683', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2170','Taxes provinciales à payer','L','2684', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2310','TPS','L','2685', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
-SELECT account__save(NULL,'2320','TVQ','L','2686', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'2160','Taxes fédérales à payer','L','2680', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2170','Taxes provinciales à payer','L','2680', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2310','TPS','L','2680', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'2320','TVQ','L','2680', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'2380','Indemnités de vacances à payer','L','2624', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2390','CSST à payer','L','2627', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL, '2400', 'RETENUES SUR SALAIRE', NULL);

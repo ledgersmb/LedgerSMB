@@ -118,19 +118,23 @@ insert into tax (chart_id,rate) values ((select id from account where accno = '2
 INSERT INTO defaults (setting_key, value) VALUES ('earn_id', (select id from account where accno = '38000'));
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '15001'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '40010'));
-
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '51001'));
-
  INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '42020'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '58002'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'NZD:AUD:USD:EUR');
+ INSERT INTO defaults (setting_key, value) VALUES ('curr', 'NZD');
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
 commit;
+
+ INSERT INTO currency (curr, description)
+      VALUES ('NZD', 'NZD'),
+             ('AUD', 'AUD'),
+             ('USD', 'USD'),
+             ('EUR', 'EUR');
+
+
 UPDATE account
    SET tax = true
 WHERE id

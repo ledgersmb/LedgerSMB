@@ -67,4 +67,13 @@ INSERT INTO gifi (accno,description) VALUES ('76','Produits exceptionnels');
 INSERT INTO gifi (accno,description) VALUES ('77','Régularisations d''impôts et reprises provisions fiscales');
 INSERT INTO gifi (accno,description) VALUES ('78','Prélèvements s/réserves immunisées et impôts différés');
 INSERT INTO gifi (accno,description) VALUES ('79','Affectations et prélèvements');
+
+INSERT INTO gifi (accno, description) VALUES ('411', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('416', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('451', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('717', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('760', 'missing; generated');
+INSERT INTO gifi (accno, description) VALUES ('771', 'missing; generated');
+
+
 commit;

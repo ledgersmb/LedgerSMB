@@ -83,11 +83,16 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '5810'));
 
- UPDATE defaults SET value  = 'IDR:USD:CAD:EUR'
-  where setting_key = 'curr';
+ INSERT INTO defaults (setting_key, value) VALUES ('curr', 'IDR');
+ INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
- UPDATE defaults SET value = 'kg'
-  WHERE setting_key = 'weightunit';
+insert into currency (curr, description)
+       values ('IDR', 'IDR'),
+              ('USD', 'USD'),
+              ('CAD', 'CAD'),
+              ('EUR', 'EUR');
+
+
 --
 commit;
 UPDATE account
