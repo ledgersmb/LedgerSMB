@@ -437,6 +437,8 @@ SELECT account__save(NULL,'6812', 'Dotations aux amortissements des charges d''e
 SELECT account__save(NULL,'6815', 'Dotations aux provisions pour risques et charges d''exploitation','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6816', 'Dotations aux provisions pour dépréciation des immobilisations incorporelles et corporelles','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6817', 'Dotations aux provisions pour dépréciation des actifs circulants (autres que les valeurs mobilières de placement)','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'68173', 'Stocks et en-cours','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'68174', 'Créances','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'686', 'Dotations aux amortissements et aux provisions - Charges financières','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6866', 'Dotations aux provisions pour dépréciation des éléments financiers','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'68662', 'Dotations aux provisions financières','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
