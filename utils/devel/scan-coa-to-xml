@@ -52,6 +52,8 @@ if (-e $gifi_file) {
     $orig_content .= <$in>;
 }
 
+$orig_content =~ s/^\s*--.*$//mg;
+
 my $content = $orig_content;
 
 my $sql_re = qr/(?(DEFINE)
