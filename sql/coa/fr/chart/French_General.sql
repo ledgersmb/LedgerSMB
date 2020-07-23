@@ -45,9 +45,9 @@ SELECT account__save(NULL,'107', 'Écart d''équivalence','L',NULL, NULL, false,
 SELECT account__save(NULL,'108','Compte de l''exploitant','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1081','Compte de l''exploitant','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'109', 'Actionn. capital sousc. non appelé','L',NULL, NULL, true, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'11', 'Report à nouveau (solde créditeur)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'110', 'Report à nouveau (solde créditeur)','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'119', 'Report à nouveau (solde débiteur)','L',NULL, NULL, true, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'12', 'Résultat de l''exercice (bénéfice)','Q',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'120', 'Résultat de l''exercice (bénéfice)','Q',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'129', 'Résultat de l''exercice (perte)','Q',NULL, NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'131', 'Subventions d''équipement','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1311', 'État','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -244,7 +244,7 @@ SELECT account__save(NULL,'2771', 'Actions propres ou parts propres','A',NULL, N
 SELECT account__save(NULL,'2772', 'Act. pro. ou parts pro. voie d''annul.','A',NULL, NULL, false, false, string_to_array('AR', ':'), false, false);
 SELECT account__save(NULL,'279', 'Versem. à effect. sur t.i.n.l.','A',NULL, NULL, false, false, string_to_array('AR', ':'), false, false);
 -- Amortissements
-SELECT account__save(NULL,'28', 'Amortiss. immobilisations incorp.','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'280', 'Amortiss. immobilisations incorp.','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2801', 'Frais d''établissement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2803', 'Frais de recherche et développ.','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2805', 'Concessions et droits similaires','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -259,7 +259,7 @@ SELECT account__save(NULL,'2815', 'Install tech. mat. outil. indust.','A',NULL, 
 SELECT account__save(NULL,'2818', 'Autres immobilisations corporelles','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'282', 'Amortiss. immobil. en concession','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 -- Dépréciations
-SELECT account__save(NULL,'29', 'Provis. dépréciation immob. incorp','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'290', 'Provis. dépréciation immob. incorp','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2905', 'Marques procédés droits et valeurs','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2906', 'Droit au bail','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2907', 'Fonds commercial','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -348,7 +348,6 @@ SELECT account__save(NULL,'3972', 'Marchandise ou groupe b','A',NULL, NULL, fals
 --
 SELECT account_heading_save(NULL,'4', 'Classe 4: Comptes de tiers', null);
 --
-SELECT account__save(NULL,'40', 'Fournisseurs et comptes rattaches','L',NULL, NULL, false, false, string_to_array('AP', ':'), false, false);
 SELECT account__save(NULL,'401', 'Fournisseurs divers','L',NULL, NULL, false, false, string_to_array('AP', ':'), false, false);
 SELECT account__save(NULL,'403', 'Fournisseurs - effets à payer','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'404', 'Fournisseurs d''immobilisations','L',NULL, NULL, false, false, string_to_array('AP', ':'), false, false);
@@ -366,7 +365,7 @@ SELECT account__save(NULL,'4097', 'Fournisseurs autres avoirs','L',NULL, NULL, f
 SELECT account__save(NULL,'40971', 'Fournisseurs d''exploitation','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'40974', 'Fournisseurs d''immobilisations','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4098', 'Rabais remises ristour. à obtenir','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'41', 'Clients et comptes rattachés','A',NULL, NULL, false, false, string_to_array('AR', ':'), false, false);
+SELECT account__save(NULL,'410', 'Clients et comptes rattachés','A',NULL, NULL, false, false, string_to_array('AR', ':'), false, false);
 SELECT account__save(NULL,'411', 'Clients divers','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'413', 'Clients effets à recevoir','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'416', 'Clients douteux ou litigieux','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
@@ -553,16 +552,14 @@ SELECT account__save(NULL,'519', 'Concours bancaires courants', 'L',NULL, NULL, 
 SELECT account__save(NULL,'5191', 'Crédit mobil. créanc. cciales cmcc','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5193', 'Mobil. créances nées à l''étranger','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5198', 'Int. courus sur concours bancaires', 'L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'52', 'Instruments de trésorerie','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'53','Caisse','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'531', 'Caisse siège social','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5311', 'Caisse en monnaie nationale','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5314', 'Caisse en devises','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'532', 'Caisse succursale (ou usine) a','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'533', 'Caisse succursale (ou usine) b','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'58','Virement interne','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'580','Virement interne','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5801', 'Virement de trésorerie à trésorerie','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'59', 'Provis. pour dépréc. valeurs mob.','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'590', 'Provis. pour dépréc. valeurs mob.','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5903', 'Actions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5904', 'Autres tit. conférant droit prop.','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5906', 'Obligations','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -588,7 +585,6 @@ SELECT account__save(NULL,'6026', 'Emballages','E',NULL, NULL, false, false, str
 SELECT account__save(NULL,'60261', 'Emballages perdus','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'60265', 'Emball. reçupera. non identif.','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'60267', 'Emballages à usage mixte','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
-SELECT account__save(NULL,'603', 'Variation des stocks','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'6031', 'Variat. stocks mat. prem. et fourn','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'6032', 'Variat. stocks autres approvision.','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'6037', 'Variation stocks de marchandises','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
@@ -748,7 +744,6 @@ SELECT account__save(NULL,'655', 'Quote-parts résult. opér. en comm.','E',NULL
 SELECT account__save(NULL,'6551', 'Q-p bénéf. transf. (cpta gérant)','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6555', 'Quote-part perte supp. (cpta ass)','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'658', 'Charges diverses gestion courante','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT account__save(NULL,'66','Charges financières','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'661', 'Charges d''intérêts','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6611', 'Intérêts des emprunts et dettes','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'66116', 'Des emprunts et dettes assimilées','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
@@ -765,7 +760,6 @@ SELECT account__save(NULL,'666','Pertes de change','E',NULL, NULL, false, false,
 SELECT account__save(NULL,'667', 'Charg. nettes sur cess. val. mobil','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'668', 'Autres charges financières','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6688', 'Écart de conversion','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-SELECT account__save(NULL,'67','Charges financières','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'671', 'Charg. except. sur opérat. gestion','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6711', 'Pénalités sur marchés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6712', 'Pénalités amendes fisc. & pénales','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -812,7 +806,6 @@ SELECT account__save(NULL,'6873', 'Dotat. aux prov. règlem. (stocks)','E',NULL,
 SELECT account__save(NULL,'6874', 'Dotat. aux autres prov. règlement.','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6875', 'Dotat. prov. risq. & charg. excep.','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6876','Dotat. aux prov. dépréc. except.','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'69','Particip. sal. / impôts sur bén.','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'691', 'Participations des salariés','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'695','Impôts sur les bénéfices','E',NULL, NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'6951','Impôts dus en France','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -883,7 +876,6 @@ SELECT account__save(NULL,'755', 'Quotes-parts résult. op. en commun','I',NULL,
 SELECT account__save(NULL,'7551', 'Quote-part perte transférée','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7555', 'Quote-part bénéfice attribuée','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'758', 'Produits divers gestion courante','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'76','Produits financiers','I',NULL, NULL, false, false, string_to_array('AR_amount', ':'), false, false);
 SELECT account__save(NULL,'761', 'Produits de participations','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7611', 'Revenus titres de participation','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7616', 'Revenus autres formes particip.','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -896,11 +888,10 @@ SELECT account__save(NULL,'7631', 'Revenus créances commerciales','I',NULL, NUL
 SELECT account__save(NULL,'7638', 'Revenus des créances diverses','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'764', 'Revenus valeurs mobil. placement','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'765', 'Escomptes obtenus','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'766','Gains de change','I','8', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
+SELECT account__save(NULL,'766','Gains de change','I',NULL, NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'767', 'Prod. nets sur cess. valeurs mob.','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7671', 'Revenus cre. ratt. participations','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'768', 'Autres produits financiers','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'77','Produits exceptionnels','I',NULL, NULL, false, false, string_to_array('AR_amount', ':'), false, false);
 SELECT account__save(NULL,'771', 'Produits except. sur opér. gestion','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7711', 'Dédits pénal. sur achats & ventes','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7713', 'Libéralités perçues','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -949,7 +940,11 @@ SELECT account__save(NULL,'791', 'Transferts de charges d''exploit.','I',NULL, N
 SELECT account__save(NULL,'796', 'Transferts de charges financ.','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'797', 'Transferts de charges except.','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 --
-SELECT account_heading_save(NULL,'8', 'Classe 8: Comptes spéciaux', null);
+--SELECT account__save(NULL,'80', 'Engagements','?',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+--SELECT account__save(NULL,'88', 'Résultat en instance d''affectation','?',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+--SELECT account__save(NULL,'89', 'Bilan','?',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+--
+--SELECT account_heading_save(NULL,'8', 'Classe 8: Comptes spéciaux', null);
 --
 SELECT account_heading_save(NULL,'10', 'Capital et réserves', null);
 SELECT account_heading_save(NULL,'20', 'Immobilisations incorporelles', null);
@@ -959,6 +954,7 @@ SELECT account_heading_save(NULL,'50', 'Valeurs mobilières de placement', null)
 SELECT account_heading_save(NULL,'60', 'Achats (sauf 603)', null);
 SELECT account_heading_save(NULL,'603', 'Variation des stocks (approvisionnements et marchandises)', null);
 SELECT account_heading_save(NULL,'70', 'Ventes de produits fabriqués prestations de services, marchandises', null);
+--SELECT account_heading_save(NULL,'80', 'Engagements', null);
 
 SELECT account_heading_save(NULL,'11', 'Report à nouveau', '10');
 SELECT account_heading_save(NULL,'12', 'Résultat de l''exercice', '10');
@@ -1030,9 +1026,19 @@ SELECT account_heading_save(NULL,'77', 'Produits exceptionnels', '70');
 SELECT account_heading_save(NULL,'78', 'Reprises sur amortissements et provisions', '70');
 SELECT account_heading_save(NULL,'79', 'Transferts de charges', '70');
 --
--- SELECT account_heading_save(NULL,'90', 'Classe 9: comptabilité analytique', null);
--- SELECT account__save(NULL,'99900','Foreign Exchange Gain','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
--- SELECT account__save(NULL,'99901','Foreign Exchange Loss','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+--SELECT account_heading_save(NULL,'81', '', NULL);
+--SELECT account_heading_save(NULL,'82', '', NULL);
+--SELECT account_heading_save(NULL,'83', '', NULL);
+--SELECT account_heading_save(NULL,'84', '', NULL);
+--SELECT account_heading_save(NULL,'85', '', NULL);
+--SELECT account_heading_save(NULL,'86', '', NULL);
+--SELECT account_heading_save(NULL,'87', '', NULL);
+--SELECT account_heading_save(NULL,'88', 'Résultat en instance d''affectation', '80');
+--SELECT account_heading_save(NULL,'89', 'Bilan', '80');
+
+--SELECT account_heading_save(NULL,'90', 'Classe 9: comptabilité analytique', null);
+--SELECT account__save(NULL,'99900','Foreign Exchange Gain','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
+--SELECT account__save(NULL,'99901','Foreign Exchange Loss','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 --
 -- Reconciliations accounts
 --

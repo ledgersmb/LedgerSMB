@@ -488,7 +488,7 @@ SELECT account__save(NULL,'7621', 'Revenus des titres immobilisés','I',NULL, NU
 SELECT account__save(NULL,'7624', 'Revenus des prêts','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'764', 'Revenus des valeurs mobilières de placement','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'765', 'Escomptes obtenus','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'766','Gains de change','I','8', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
+SELECT account__save(NULL,'766','Gains de change','I',NULL, NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'767', 'Produits nets sur cessions de valeurs mobilières de placement','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'768', 'Autres produits financiers','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7681', 'Intérêts des comptes financiers débiteurs','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -570,7 +570,7 @@ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id 
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
-insert into currency
+insert into currency (curr, description)
   values ('EUR', 'EUR'),
          ('USD', 'USD');
 
