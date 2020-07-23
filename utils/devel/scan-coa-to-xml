@@ -87,7 +87,7 @@ my $head;
 my %accno_map = ();
 my %tax_map = ();
 
-while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
+while ($content =~ m/(?<!--SELECT\s)(account_(?:heading)?_save)(.*)/s) {
     $content = $2;
     if ('account_heading_save' eq $1) {
         $content =~ m/
