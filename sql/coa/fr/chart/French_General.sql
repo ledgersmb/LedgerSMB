@@ -948,7 +948,7 @@ SELECT account__save(NULL,'797', 'Transferts de charges except.','I',NULL, NULL,
 --
 SELECT account_heading_save(NULL,'10', 'Capital et réserves', null);
 SELECT account_heading_save(NULL,'20', 'Immobilisations incorporelles', null);
---SELECT account_heading_save(NULL,'30', '', null);
+SELECT account_heading_save(NULL,'30', '', null);
 SELECT account_heading_save(NULL,'40', 'Fournisseurs et comptes rattachés', null);
 SELECT account_heading_save(NULL,'50', 'Valeurs mobilières de placement', null);
 SELECT account_heading_save(NULL,'60', 'Achats (sauf 603)', null);

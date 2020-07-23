@@ -4,9 +4,8 @@ BEGIN;
 -- sample only, Plan de comptes général, système développé
 --
 
-SELECT account_heading_save(NULL, '000', '', NULL);
 
-SELECT account_heading_save(NULL,'1', 'CLASSE 1: Comptes de capitaux', (SELECT id FROM account_heading WHERE accno = '000'));
+SELECT account_heading_save(NULL,'1', 'CLASSE 1: Comptes de capitaux', NULL);
 SELECT account_heading_save(NULL,'10', 'Capital et réserves', (SELECT id FROM account_heading WHERE accno = '1'));
 SELECT account__save(NULL,'102', 'Fonds associatif sans droit de reprise','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1021', 'Valeur du patrimoine intégré','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -74,7 +73,7 @@ SELECT account__save(NULL,'195', 'Fonds dédiés sur dons manuels affectés','L'
 SELECT account__save(NULL,'197', 'Fonds dédiés sur legs et donations affectés','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'198', 'Excédent disponible après affectation au projet associatif','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'199', 'Reprise des fonds affectés au projet associatif','L',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'2', 'CLASSE 2. Comptes d''immobilisations', (SELECT id FROM account_heading WHERE accno = '2'));
+SELECT account_heading_save(NULL,'2', 'CLASSE 2. Comptes d''immobilisations', NULL);
 SELECT account_heading_save(NULL,'20', 'IMMOBILISATIONS INCORPORELLES', (SELECT id FROM account_heading WHERE accno = '2'));
 SELECT account__save(NULL,'201', 'Frais d''établissement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2012', 'Frais de premier établissement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -153,7 +152,7 @@ SELECT account__save(NULL,'2972', 'Titres immobilisés (droit de créance) (mêm
 SELECT account__save(NULL,'2974', 'Prêts (même ventilation que celle du compte 274)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2975', 'Dépôts et cautionnements versés (même ventilation que celle du compte 275)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2976', 'Autres créances immobilisées (même ventilation que celle du compte 276)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'3', 'CLASSE 3. Comptes de stocks et en-cours', (SELECT id FROM account_heading WHERE accno = '3'));
+SELECT account_heading_save(NULL,'3', 'CLASSE 3. Comptes de stocks et en-cours', NULL);
 SELECT account_heading_save(NULL,'31', 'MATIERES PREMIERES ET FOURNITURES', (SELECT id FROM account_heading WHERE accno = '3'));
 SELECT account_heading_save(NULL,'32', 'AUTRES APPROVISIONNEMENTS', (SELECT id FROM account_heading WHERE accno = '3'));
 SELECT account_heading_save(NULL,'33', 'EN-COURS DE PRODUCTION DE BIENS', (SELECT id FROM account_heading WHERE accno = '3'));
@@ -167,7 +166,7 @@ SELECT account__save(NULL,'393', 'Provisions pour dépréciation des en-cours de
 SELECT account__save(NULL,'394', 'Provisions pour dépréciation des en-cours de production de services','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'395', 'Provisions pour dépréciation des stocks de produits','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'397', 'Provisions pour dépréciation des stocks de marchandises','A',NULL, NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account_heading_save(NULL,'4', 'CLASSE 4. Comptes de tiers', (SELECT id FROM account_heading WHERE accno = '4'));
+SELECT account_heading_save(NULL,'4', 'CLASSE 4. Comptes de tiers', NULL);
 SELECT account_heading_save(NULL,'40', 'FOURNISSEURS ET COMPTES RATTACHES', (SELECT id FROM account_heading WHERE accno = '4'));
 SELECT account__save(NULL,'401', 'Fournisseurs','A',NULL, NULL, false, false, string_to_array('AP', ':'), false, false);
 SELECT account__save(NULL,'4011', 'Fournisseurs - Achats de biens ou de prestations de services','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -263,7 +262,7 @@ SELECT account__save(NULL,'487', 'Produits constatés d''avance','L',NULL, NULL,
 SELECT account_heading_save(NULL,'49', 'PROVISIONS POUR DEPRECIATION DES COMPTES DE TIERS', (SELECT id FROM account_heading WHERE accno = '4'));
 SELECT account__save(NULL,'491', 'Provisions pour dépréciation des comptes d''usagers (et organismes de prise en charge)','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'496', 'Provisions pour dépréciation des comptes de débiteurs divers','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'5', 'CLASSE 5. Comptes financiers', (SELECT id FROM account_heading WHERE accno = '5'));
+SELECT account_heading_save(NULL,'5', 'CLASSE 5. Comptes financiers', NULL);
 SELECT account_heading_save(NULL,'50', 'VALEURS MOBILIERES DE PLACEMENT', (SELECT id FROM account_heading WHERE accno = '5'));
 SELECT account__save(NULL,'503', 'Actions','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5031', 'Titres cotés','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
@@ -294,7 +293,7 @@ SELECT account_heading_save(NULL,'58', 'VIREMENTS INTERNES', (SELECT id FROM acc
 SELECT account__save(NULL,'581', 'Virements de fonds','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'59', 'PROVISIONS POUR DEPRECIATION DES COMPTES FINANCIERS', (SELECT id FROM account_heading WHERE accno = '5'));
 SELECT account__save(NULL,'590', 'Provisions pour dépréciation des valeurs mobilières de placement','A',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'6', 'CLASSE 6. Comptes de charges', (SELECT id FROM account_heading WHERE accno = '6'));
+SELECT account_heading_save(NULL,'6', 'CLASSE 6. Comptes de charges', NULL);
 SELECT account_heading_save(NULL,'60', 'ACHATS (sauf 603)', (SELECT id FROM account_heading WHERE accno = '6'));
 SELECT account__save(NULL,'601','Achats stockés - Matières premières et fournitures','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
 SELECT account__save(NULL,'602','Achats stockés - Autres approvisionnements','E',NULL, NULL, false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
@@ -451,7 +450,7 @@ SELECT account__save(NULL,'6895', 'Engagements à réaliser sur dons manuels aff
 SELECT account__save(NULL,'6897', 'Engagements à réaliser sur legs et donations affectés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'69', 'IMPOTS SUR LES BENEFICES', (SELECT id FROM account_heading WHERE accno = '6'));
 SELECT account__save(NULL,'695', 'Impôts sur les sociétés','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'7', 'CLASSE 7. Comptes de produits', (SELECT id FROM account_heading WHERE accno = '7'));
+SELECT account_heading_save(NULL,'7', 'CLASSE 7. Comptes de produits', NULL);
 SELECT account_heading_save(NULL,'70', 'VENTES DE PRODUITS FINIS, PRESTATIONS DE SERVICES, MARCHANDISES', (SELECT id FROM account_heading WHERE accno = '7'));
 SELECT account__save(NULL,'701', 'Ventes de produits finis','I',NULL, NULL, false, false, string_to_array('IC_sale', ':'), false, false);
 SELECT account__save(NULL,'706','Prestations de services','I',NULL, NULL, false, false, string_to_array('IC_income', ':'), false, false);
@@ -523,7 +522,7 @@ SELECT account_heading_save(NULL,'79', 'TRANSFERTS DE CHARGES', (SELECT id FROM 
 SELECT account__save(NULL,'791', 'Transferts de charges d''exploitation','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'796', 'Transferts de charges financière','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'797', 'Transferts de charges exceptionnelles','I',NULL, NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'8', 'CLASSE 8. CONTRIBUTIONS VOLONTAIRES', (SELECT id FROM account_heading WHERE accno = '8'));
+SELECT account_heading_save(NULL,'8', 'CLASSE 8. CONTRIBUTIONS VOLONTAIRES', NULL);
 SELECT account_heading_save(NULL,'86', 'EMPLOIS DES CONTRIBUTIONS VOLONTAIRES EN NATURE', (SELECT id FROM account_heading WHERE accno = '8'));
 SELECT account__save(NULL,'860', 'Secours en nature, alimentaires, vestimentaires, ...','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'861', 'Mise à disposition gratuite de biens','E',NULL, NULL, false, false, string_to_array('', ':'), false, false);
