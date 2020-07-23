@@ -6,29 +6,39 @@ use diagnostics;
 
 use DBI;
 
+binmode(STDOUT, ":utf8");
+
+sub insert_formatter {
+    my $table = shift;
+    my @columns = @_;
+
+    return sub {
+        my $v = shift;
+
+        print qq|INSERT INTO $table (| . join(', ', @columns) . qq|) VALUES|
+            . "    (" . join(
+            ", ",
+            map { defined $_ ? "'$_'" : 'NULL' }
+            map { $v->{$_} } @columns
+            ) . ");\n"
+    }
+}
+
+sub nv { return (defined $_[0]) ? $_[0] : 'NULL'; }
+sub ns { return (defined $_[0]) ? "'$_[0]'" : 'NULL'; }
+sub nb { return (defined $_[0]) ? ($_[0] ? "true" : "false") : 'NULL' }
+
+
 sub Print_SQL_Insert {
     my $dbh = shift;
     my $qry = shift;
-    my $account = shift;
-    my @columns = @_;
+    my $formatter = shift;
 
     my $sth = $dbh->prepare( $qry ) or die "Unable to prepare statement: $dbh->errstr\n";
     $sth->execute() or die "Unable to execute statement: $sth->errstr\n";
 
-    my $v;
-    my $values;
-    $values = join(
-        ",\n",
-        map {
-            $v = $_;
-            "    (" . join(
-                ",\t",
-                map { defined $_ ? "'$_'" : 'NULL' } map { $v->{$_} } @columns
-            ) . ')'
-        } @{ $sth->fetchall_arrayref({}) }
-    );
-    if ($values) {
-        print qq|INSERT INTO $account (| . join(', ', @columns) . qq|) VALUES\n$values;\n|;
+    for my $row (@{ $sth->fetchall_arrayref({}) }) {
+        $formatter->($row)
     }
 }
 
@@ -50,42 +60,57 @@ my $query = qq|
     join account_heading h on t.id = h.id
         order by level asc, t.accno asc
 |;
-Print_SQL_Insert( $dbh, $query, 'account_heading', qw|id parent_id accno description| );
+Print_SQL_Insert( $dbh, $query, sub {
+    my $v = shift;
+    print sprintf(qq|SELECT account_heading_save(NULL, %s, %s, %s);\n|,
+                  ns($v->{accno}), ns($v->{description}), nv($v->{parent_id})
+        );
+    });
 
 
 print "\n\n\n-- GIFI DEFINITION (need gifi before account creation)\n";
 $query = qq|
-    select * from account
+    select * from gifi order by accno
 |;
-Print_SQL_Insert( $dbh, $query, 'gifi', qw|accno description| );
+Print_SQL_Insert( $dbh, $query, insert_formatter( 'gifi', qw|accno description| ) );
 
 
 print "\n\n\n-- ACCOUNTS DEFINITION\n";
 $query = qq|
-    select * from account
+    select r.id as id, a.accno, a.category, a.is_temp, a.gifi_accno as gifi_accno, coalesce(r.link,'') as link, h.accno as heading_accno, contra, tax, obsolete, r.description as description from report__coa() r join account a using (id) left join account_heading h on a.heading = h.id where not is_heading order by a.accno
 |;
-Print_SQL_Insert( $dbh, $query, 'account', qw|id accno is_temp category gifi_accno heading contra tax obsolete description| );
+Print_SQL_Insert( $dbh, $query, sub {
+    my $v = shift;
+    print sprintf(qq|SELECT account__save(NULL, %s, %s, %s, %s, %s, %s, %s, string_to_array(%s, ':'), %s, %s);\n|,
+                  ns($v->{accno}),ns($v->{description}),ns($v->{category}),
+                  ns($v->{gifi_accno}), "(select id from account_heading where accno = '$v->{heading_accno}')",
+                  nb($v->{contra}), nb($v->{tax}), ns($v->{link}), nb($v->{obsolete}), nb($v->{is_temp}));
+                  });
 
 
 print "\n\n\n-- CUSTOM ACCOUNT LINK DEFINITION\n";
 $query = qq|
     select * from account_link_description where custom
 |;
-Print_SQL_Insert( $dbh, $query, 'account_link_description', qw|description summary custom| );
-
-
-print "\n\n\n-- ACCOUNT LINKS\n";
-$query = qq|
-    select * from account_link
-|;
-Print_SQL_Insert( $dbh, $query, 'account_link', qw|account_id description| );
+Print_SQL_Insert( $dbh, $query, insert_formatter( 'account_link_description', qw|description summary custom| ) );
 
 
 print "\n\n\n-- TAX DEFINITION\n";
-$query = qq|
-    select * from tax
-|;
-Print_SQL_Insert( $dbh, $query, 'tax', qw|chart_id rate minvalue maxvalue taxnumber validto pass taxmodule| );
+$query = qq#
+    select * from tax join account a on tax.chart_id = a.id
+#;
+Print_SQL_Insert( $dbh, $query, sub {
+    my $v = shift;
+    print sprintf(qq|INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = %s), %s);\n|,
+                  ns($v->{accno}), ns($v->{rate}));
+                  });
+
+
+print "\n\n\n-- CURRENCIES\n";
+$query = qq#
+    select * from currency
+#;
+Print_SQL_Insert( $dbh, $query, insert_formatter( 'currency', qw|curr description| ) );
 
 
 print "\n\n\n-- SET UP DEFAULTS\n";
@@ -117,11 +142,11 @@ $query = qq|
 print "-- FIRST Delete the Keys we intend to set\n";
 print "$delete_query\n";
 print "-- NOW ACTUALLY SET the KEYS\n";
-Print_SQL_Insert( $dbh, $query, 'defaults', qw|value setting_key| );
+Print_SQL_Insert( $dbh, $query, insert_formatter( 'defaults', qw|setting_key value| ) );
 
 print "\n\n\n-- SET UP DEFAULTS that require Lookups\n";
 print "-- FIRST Delete the Keys we intend to set\n\n";
-my $delete_query = qq|delete from defaults where setting_key in ('default_country');|;
+$delete_query = qq|delete from defaults where setting_key in ('default_country');|;
 print "$delete_query\n";
 print "-- NOW ACTUALLY SET the KEYS\n";
 $query = qq|
