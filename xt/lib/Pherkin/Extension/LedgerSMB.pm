@@ -235,6 +235,25 @@ sub create_template {
                              AutoCommit => 0 });
     $dbh->do(q{set client_min_messages = 'warning'});
 
+    # Set up sequence randomization
+$dbh->do(q|
+do
+$$
+declare
+   r record;
+begin
+  for r in
+     select s.oid as seqoid
+       from pg_class s
+       join pg_namespace sn on s.relnamespace = sn.oid
+      where relkind = 'S'
+  loop
+     perform setval(r.seqoid, nextval(r.seqoid)+(RANDOM()*1000+1)::int);
+  end loop;
+end;
+$$;
+|);
+
     my $emp = $self->create_employee(dbh => $dbh);
     my $user = $self->create_user(dbh => $dbh,
         entity_id => $emp->entity_id,
