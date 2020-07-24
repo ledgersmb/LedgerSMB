@@ -67,6 +67,28 @@ ok(! $version,
         or bail_out(q{LedgerSMB::DBH reports incorrect database version - no use continuing});
 
 
+$dbh = $db->connect;
+# Set up sequence randomization
+$dbh->do(q|
+do
+$$
+declare
+   r record;
+begin
+  for r in
+     select s.oid as seqoid
+       from pg_class s
+       join pg_namespace sn on s.relnamespace = sn.oid
+      where relkind = 'S'
+  loop
+     perform setval(r.seqoid, nextval(r.seqoid)+(RANDOM()*1000+1)::int);
+  end loop;
+end;
+$$;
+|);
+$dbh->disconnect;
+
+
 if (!$ENV{LSMB_INSTALL_DB}){
 
     # This lock file is used by xt/89-dropdb.t to determine
