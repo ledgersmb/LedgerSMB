@@ -210,6 +210,7 @@ sub add_vouchers {
                 $request->{account_class} = 1;
                                 if ($request->{overpayment}){
                                     $request->{report_name} = 'overpayments';
+                                    $request->{post_date} = $request->{batch_date};
                                     return LedgerSMB::Scripts::reports::start_report($request);
                                 } else {
                     return LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
@@ -222,6 +223,7 @@ sub add_vouchers {
                 $request->{account_class} = 2;
                                 if ($request->{overpayment}){
                                     $request->{report_name} = 'overpayments';
+                                    $request->{post_date} = $request->{batch_date};
                                     return LedgerSMB::Scripts::reports::start_report($request);
                                 } else {
                        return LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
