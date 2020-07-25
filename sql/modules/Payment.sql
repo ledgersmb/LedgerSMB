@@ -1474,8 +1474,12 @@ DROP FUNCTION IF EXISTS overpayment__reverse
 (in_id int, in_transdate date, in_batch_id int, in_account_class int,
 in_cash_accno text, in_exchangerate numeric, in_curr char(3));
 
+DROP FUNCTION IF EXISTS overpayment__reverse
+(in_id int, in_transdate date, in_batch_id int, in_account_class int, in_exchangerate numeric, in_curr char(3));
+
+
 CREATE OR REPLACE FUNCTION overpayment__reverse
-(in_id int, in_transdate date, in_batch_id int, in_account_class int, in_exchangerate numeric, in_curr char(3))
+(in_id int, in_transdate date, in_batch_id int, in_account_class int)
 returns bool LANGUAGE PLPGSQL AS
 $$
 declare t_id int;
@@ -1498,27 +1502,39 @@ t_id := currval('id');
 INSERT INTO voucher (batch_id, trans_id, batch_class)
 VALUES (in_batch_id, t_id, CASE WHEN in_account_class = 1 THEN 4 ELSE 7 END);
 
-INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)
-SELECT in_transdate, t_id, chart_id, amount * -1
+INSERT INTO acc_trans (transdate, trans_id, chart_id,
+                       amount_bc, curr, amount_tc)
+SELECT in_transdate, t_id, chart_id, amount_bc * -1, curr, amount_tc * -1
   FROM acc_trans
  WHERE trans_id = in_id;
 
+PERFORM * FROM payment__overpayments_list(null, null, null, null, null)
+    WHERE available<>amount and payment_id = in_id;
+
+IF FOUND THEN
+   RAISE 'Cannot reverse used overpayment: reverse payments first';
+END IF;
+
 -- reverse overpayment usage
-PERFORM payment__reverse(ac.source, ac.transdate, eca.id, at.accno,
-        in_transdate, eca.entity_class, in_batch_id, null,
-        in_exchangerate, in_curr)
-  FROM acc_trans ac
-  JOIN account at ON ac.chart_id = at.id
-  JOIN account_link al ON at.id = al.account_id AND al.description like 'A%paid'
-  JOIN (select id, entity_credit_account FROM ar UNION
-        select id, entity_credit_account from ap) a ON a.id = ac.trans_id
-  JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
-  JOIN payment_links pl ON pl.entry_id = ac.entry_id
-  JOIN overpayments op ON op.payment_id = pl.payment_id
-  JOIN payment p ON p.id = op.payment_id
- WHERE p.gl_id = in_id
-GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
-         at.accno, al.description;
+--
+-- The query below will automatically do what the above simply bails out on.
+-- However, it doesn't work and I don't understand it enough - right now -
+-- to fix it.
+-- PERFORM payment__reverse(ac.source, ac.transdate, eca.id, at.accno,
+--         in_transdate, eca.entity_class, in_batch_id, null,
+--         in_exchangerate, in_curr)
+--   FROM acc_trans ac
+--   JOIN account at ON ac.chart_id = at.id
+--   JOIN account_link al ON at.id = al.account_id AND al.description like 'A%paid'
+--   JOIN (select id, entity_credit_account FROM ar UNION
+--         select id, entity_credit_account from ap) a ON a.id = ac.trans_id
+--   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
+--   JOIN payment_links pl ON pl.entry_id = ac.entry_id
+--   JOIN overpayments op ON op.payment_id = pl.payment_id
+--   JOIN payment p ON p.id = op.payment_id
+--  WHERE p.gl_id = in_id
+-- GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
+--          at.accno, al.description;
 
 RETURN TRUE;
 END;

@@ -873,8 +873,7 @@ sub overpayment_reverse {
                  $args->{post_date},
                  $args->{batch_id},
                  $args->{account_class},
-                 $args->{exchangerate},
-                 $args->{curr}] );
+        ] );
 }
 
 =item init

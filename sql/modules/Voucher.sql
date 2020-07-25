@@ -363,8 +363,7 @@ $$
 
         UPDATE gl SET approved = true
         WHERE id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class = 5);
+                WHERE batch_id = in_batch_id);
 
         UPDATE acc_trans SET approved = true
         WHERE voucher_id IN (select id FROM voucher

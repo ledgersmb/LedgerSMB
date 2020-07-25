@@ -228,7 +228,7 @@ Reverses overpayments selected from the search overpayments screen.
 
 sub reverse_overpayment {
     my ($request) = @_;
-    my $payment = LedgerSMB::DBObject::Payment->new(%$request);
+    my $payment = LedgerSMB::DBObject::Payment->new({ base => $request });
     for my $rc (1 .. $request->{rowcount_}){
         next unless $request->{"select_$rc"};
         my $args = {id => $request->{"select_$rc"}};
