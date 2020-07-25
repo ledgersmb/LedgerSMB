@@ -6,7 +6,7 @@ Changelog for 1.7.18
 * Fix payment posting due to number formatting errors (#4781)
 * Fix payment posting due to date formatting errors (#4794)
 * Fix posting reversal of sales invoice after assembly reversal (#4791)
-* Fix overpayment reversal failing to post (#4803)
+* Fix overpayment reversal failing to post (#4803, #4816)
 
 
 Changelog for 1.7.17
