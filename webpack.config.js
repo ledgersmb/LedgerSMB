@@ -314,8 +314,8 @@ const webpackConfigs = {
         path: path.resolve("UI/js"), // js path
         publicPath: "js/", // images path
         pathinfo: !prodMode, // keep source references?
-        filename: "[name].js",
-        chunkFilename: "[name].[chunkhash].js"
+        filename: "_scripts/[name]js",
+        chunkFilename: "_scripts/[name].[chunkhash].js"
     },
 
     module: {
