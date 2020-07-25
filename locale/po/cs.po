@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.18\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-06-29 09:24+0000\n"
+"POT-Creation-Date: 2020-07-25 09:08+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Czech (https://www.transifex.com/ledgersmb/teams/58325/cs/)\n"
 "Language: cs\n"
@@ -9256,11 +9256,11 @@ msgstr ""
 msgid "balance"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Payment.pm:510
+#: old/lib/LedgerSMB/DBObject/Payment.pm:512
 msgid "cash"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Payment.pm:511
+#: old/lib/LedgerSMB/DBObject/Payment.pm:513
 msgid "check"
 msgstr ""
 
@@ -9287,7 +9287,7 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Payment.pm:512
+#: old/lib/LedgerSMB/DBObject/Payment.pm:514
 msgid "deposit"
 msgstr ""
 
@@ -9352,7 +9352,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Payment.pm:513
+#: old/lib/LedgerSMB/DBObject/Payment.pm:515
 msgid "other"
 msgstr ""
 
