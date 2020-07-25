@@ -244,6 +244,7 @@ const optimizationList = {
         name: "manifest" // runtimeChunk: "multiple", // Fails
     },
     namedChunks: true, // Keep names to load only 1 theme
+    noEmitOnErrors: true,
     splitChunks: !prodMode
         ? false
         : {
