@@ -11,7 +11,7 @@ FOREACH COL IN columns;
             COLNUMBER = COLNUMBER + 1;
     END;
 END;
- FILTER latex { format=FORMAT _ "(xelatex)" };
+ FILTER latex { format="$FORMAT(xelatex)" };
 -?>
 \documentclass[<?lsmb papersize ?>]{article}
 \usepackage{longtable}
