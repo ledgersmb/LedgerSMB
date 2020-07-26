@@ -1,10 +1,9 @@
-<?lsmb FILTER latex { format=FORMAT _ "(pdflatex)" } ?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } ?>
 \documentclass{scrartcl}
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
-
 
 <?lsmb PROCESS check_base ?>
 
@@ -35,4 +34,4 @@
 \clearpage
 <?lsmb END # FOR check ?>
 \end{document}
-<?lsmb END # FILTER latex { format=FORMAT _ "(pdflatex)" } ?>
+<?lsmb END # FILTER latex { format="$FORMAT(pdflatex)" } ?>

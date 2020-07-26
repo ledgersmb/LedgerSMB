@@ -1,4 +1,4 @@
-<?lsmb FILTER latex { format=FORMAT _ "(pdflatex)" } -?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } -?>
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
@@ -107,7 +107,7 @@
    & \textbf{<?lsmb text('Shipping Point') ?>}
    & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5ex]
   \hline
-  <?lsmb invnumber ?> & <?lsmb orddate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  <?lsmb invnumber ?> & <?lsmb transdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
 
