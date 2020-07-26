@@ -2,6 +2,7 @@
 /* eslint global-require:0, no-param-reassign:0, no-unused-vars:0 */
 /* global getConfig */
 
+const fs = require("fs");
 const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
@@ -15,6 +16,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
+const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
@@ -26,6 +28,60 @@ const prodMode =
 
 // Make sure all modules follow desired mode
 process.env.NODE_ENV = prodMode ? "production" : "development";
+
+/* FUNCTIONS */
+
+var includedRequires = [
+    "dojo/has!webpack?dojo-webpack-plugin/amd/dojoES6Promise",
+    "dijit/Dialog",
+    "dijit/form/Button",
+    "dijit/form/CheckBox",
+    "dijit/form/ComboBox",
+    "dijit/form/CurrencyTextBox",
+    "dijit/form/MultiSelect",
+    "dijit/form/NumberSpinner",
+    "dijit/form/NumberTextBox",
+    "dijit/form/RadioButton",
+    "dijit/form/Select",
+    "dijit/form/Textarea",
+    "dijit/form/TextBox",
+    "dijit/form/ToggleButton",
+    "dijit/form/ValidationTextBox",
+    "dijit/layout/BorderContainer",
+    "dijit/layout/ContentPane",
+    "dijit/layout/TabContainer",
+    "dijit/Tooltip"
+];
+
+function findDataDojoTypes(fileName) {
+    var content = "" + fs.readFileSync(fileName);
+    // Return unique data-dojo-type refereces
+    return (
+        content.match(
+            /(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi
+        ) || []
+    ).filter((x, i, a) => a.indexOf(x) === i);
+}
+
+// Compute used data-dojo-type
+glob.sync("**/*.html", {
+    ignore: ["lib/ui-header.html", "js/**"],
+    cwd: "UI"
+}).map(function (filename) {
+    const requires = findDataDojoTypes("UI/" + filename);
+    includedRequires.push(...requires);
+});
+
+// Pull UI/js-src/lsmb
+includedRequires = includedRequires
+.concat(
+   glob.sync("lsmb/**/!(main|bootstrap|lsmb.profile|webpack.loaderConfig).js", {
+            cwd: "UI/js-src/"
+    }).map(function(file) {
+	    return file.replace(/\.js$/,'')
+    }))
+.filter((x, i, a) => a.indexOf(x) === i)
+.sort();
 
 /* LOADERS */
 
@@ -171,12 +227,29 @@ const lsmbCSS = {
     )
 };
 
+// Compile bootstrap module as a virtual one
+const VirtualModulePluginOptions = {
+    moduleName: "js-src/lsmb/bootstrap.js",
+    contents:
+       `/* eslint-disable */
+        define(["dojo/parser","dojo/ready","`
+        + includedRequires.join('","')
+        + `"], function(parser, ready) {
+            ready(function() {
+            });
+            return {};
+        });`
+};
+
+// console.log(VirtualModulePluginOptions.contents);
+
 var pluginsProd = [
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
     new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
 
-    // new webpack.HashedModuleIdsPlugin(webpack.HashedModuleIdsPluginOptions),
+    new VirtualModulePlugin(VirtualModulePluginOptions),
+
     new StylelintPlugin(StylelintPluginOptions),
 
     new DojoWebpackPlugin(DojoWebpackPluginOptions),
@@ -244,6 +317,7 @@ const optimizationList = {
         name: "manifest" // runtimeChunk: "multiple", // Fails
     },
     namedChunks: true, // Keep names to load only 1 theme
+    noEmitOnErrors: true,
     splitChunks: !prodMode
         ? false
         : {
@@ -307,6 +381,7 @@ const webpackConfigs = {
 
     entry: {
         main: "lsmb/main.js",
+        bootstrap: "js-src/lsmb/bootstrap.js",  // Virtual file
         ...lsmbCSS
     },
 
@@ -314,8 +389,8 @@ const webpackConfigs = {
         path: path.resolve("UI/js"), // js path
         publicPath: "js/", // images path
         pathinfo: !prodMode, // keep source references?
-        filename: "[name].js",
-        chunkFilename: "[name].[chunkhash].js"
+        filename: "_scripts/[name].[contenthash].js",
+        chunkFilename: "_scripts/[name].[contenthash].js"
     },
 
     module: {

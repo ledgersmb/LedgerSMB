@@ -112,6 +112,7 @@
     "unused-webpack-plugin": "^2.4.0",
     "url-loader": "^4.1.0",
     "yargs": "^15.4.1",
+    "virtual-module-webpack-plugin": "^0.4.1",
     "web-webpack-plugin": "^4.6.7",
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.8.0",
