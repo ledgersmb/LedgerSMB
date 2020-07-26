@@ -14,8 +14,8 @@
 
     <th colspan=3>
       <h4 style="text-transform:uppercase">
-          <?lsmb IF reverse; text('Credit'); END; ?>
-          <?lsmb text('Invoice') ?></h4>
+        <?lsmb IF reverse; text('Credit Invoice'); ELSE; text('Invoice'); END; ?>
+      </h4>
     </th>
   </tr>
 
@@ -167,7 +167,7 @@
           <td colspan=9><hr noshade></td>
         </tr>
 
-          <?lsmb IF tax; ?>
+        <?lsmb IF tax -?>
         <tr>
           <th colspan=7 align=right><?lsmb text('Subtotal') ?></th>
           <td colspan=2 align=right><?lsmb subtotal ?></td>
@@ -180,8 +180,7 @@
           <td colspan=2 align=right><?lsmb tax.${loop_count} ?></td>
         </tr>
         <?lsmb END ?>
-        <?lsmb END ?>
-
+        <?lsmb END -?>
         <tr>
           <th colspan=7 align=right><?lsmb text('Total') ?></th>
           <td colspan=2 align=right><?lsmb invtotal ?></td>
