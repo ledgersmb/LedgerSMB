@@ -1,4 +1,4 @@
-<?lsmb FILTER latex { format=FORMAT _ "(xelatex)" } ?>
+<?lsmb FILTER latex { format="$FORMAT(xelatex)" } ?>
 \documentclass{scrartcl}
 \usepackage{tabularx}
 \usepackage[paperheight=11cm, paperwidth=23cm,top=3.5cm,bottom=3cm,left=12cm,right=1cm]{geometry}
@@ -12,4 +12,4 @@
 <?lsmb city ?>
 <?lsmb- IF state -?>, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>\\
 \end{document}
-<?lsmb END ?>
+<?lsmb END -?>
