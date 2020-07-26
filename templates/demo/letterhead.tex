@@ -1,14 +1,29 @@
 \parbox{\textwidth}{%
   \parbox[b]{.42\textwidth}{%
     <?lsmb company ?>
-   
+
     <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
-    % If you want to use a logo uncomment this and set images to
-    % an absolute path to the images, or set the path appropriately here.
-    %\includegraphics[scale=0.3]{<?lsmb images ?>/logo}
-  }\hfill
+  <?lsmb#  using "comment block" template tag to suppress output
+
+  To include a logo in your LaTeX document, it needs to be retrieved from
+  the database and temporarily stored in a location accessible to the PDF
+  generator. The function 'dbfile_path' handles that.
+
+  To use this functionality, (a) remove the percent sign before the
+  \includegraphics command and (b) make sure all templates which INCLUDE
+  'letterhead', contain '\usepackage{graphics}'
+
+  If the generated output is to be PDF output, make sure that the image is
+  a PNG image as shown below. In case Postscript (PS) or EPS output, make
+  sure the image is (E)PS.
+
+  For information on the avaliable options for the 'includegraphics'
+  command, see https://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+    ?>
+    %\includegraphics[scale=0.3]{<?lsmb dbfile_path('logo.png') ?>}
+    }\hfill
   \begin{tabular}[b]{rr@{}}
   <?lsmb text('Tel:') ?> & <?lsmb tel ?>\\
   <?lsmb text('Fax:') ?> & <?lsmb fax ?>
