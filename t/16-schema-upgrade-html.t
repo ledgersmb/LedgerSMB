@@ -181,8 +181,8 @@ my @expected = split (/\n/, qq{<!-- prettier-disable -->
     </script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
+        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
     ) . qq{
     <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -269,8 +269,8 @@ filter_js_src($out);
     </script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
+        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
     ) . qq{
     <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -357,8 +357,8 @@ filter_js_src($out);
     </script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
+        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
     ) . qq{
     <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -446,8 +446,8 @@ filter_js_src($out);
     </script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
+        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
     ) . qq{
     <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -552,8 +552,8 @@ filter_js_src($out);
     </script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/manifest.js"></script><script src="js/npm.dijit.js"></script><script src="js/npm.dojo.js"></script><script src="js/npm.dojo-webpack-plugin.js"></script><script src="js/gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~ledgersmb-re.js"></script><script src="js/main.js"></script>}
-        : q{<script src="js/manifest.js"></script><script src="js/main.js"></script>}
+        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
     ) . qq{
     <meta name="robots" content="noindex,nofollow" />
 </head>
