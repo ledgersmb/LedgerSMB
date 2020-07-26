@@ -215,6 +215,10 @@ Fax: <?lsmb shiptofax ?>
 \end{tabularx}
 <?lsmb END ?>
 
+<?lsmb FOR FILE IN file_list ?>
+\includegraphics[scale=0.3]{<?lsmb file_path _ '/' _ FILE.file_name ?>}
+<?lsmb END ?>
+
 \vspace{1cm}
 
 \centerline{\textbf{<?lsmb text('Thank You for your valued business!') ?>}}

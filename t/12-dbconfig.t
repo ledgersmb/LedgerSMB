@@ -32,7 +32,7 @@ for my $type (qw( chart gifi sic )) {
 
 my $templates = LedgerSMB::Database::Config->new->templates;
 
-is_deeply [ sort keys %$templates ], [ qw( demo demo_with_images xedemo ) ],
+is_deeply [ sort keys %$templates ], [ qw( demo xedemo ) ],
     'Returned template sets are the example templates';
 for my $template (keys %$templates) {
     ok( -f $_, "Returned template item ($_) is a file" )
