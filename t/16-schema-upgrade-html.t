@@ -40,8 +40,9 @@ sub filter_js_src {
     # Also make sure that we don't abort on whitespace differences
     my $lines = shift;
     my $line = join("\n",@{$lines});
+    $line =~ s|</script><script|</script>\n<script|g;
     $line =~ s|"js-src/|"js/|g;
-    $line =~ s|\s*\n+|\n|g;
+    $line =~ s|\s*\n+\s*|\n|g;
     # Filter out chunks hashes
     $line =~ s|[~\.]([0-9a-f]{8}\.)?[0-9a-f]{20}\.js|.js|g;
     # Split in lines
@@ -51,7 +52,7 @@ sub filter_js_src {
 
 sub find_application_mode {
     my $lines = shift;
-    my $pattern = qr/^\s+mode:\s*"(production|development)"$/;
+    my $pattern = qr/^\bmode:\s*"(production|development)"$/;
     my @mode = grep {/$pattern/} @$lines;
     return if @mode != 1; # We need only a single line
     return ($mode[0] =~ /$pattern/)[0];
@@ -159,7 +160,7 @@ $out = html_formatter_context {
 filter_js_src($out);
 my $mode = find_application_mode($out);
 
-my @expected = split (/\n/, qq{<!-- prettier-disable -->
+my $check = qq{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -179,11 +180,17 @@ my @expected = split (/\n/, qq{<!-- prettier-disable -->
         var lsmbConfig = {
         };
     </script>
+    <script src="js/_scripts/manifest.js"></script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
-        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        ? q{<script src="js/_scripts/npm.dojo.js"></script>
+			<script src="js/_scripts/npm.dijit.js"></script>
+			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+        : ''
     ) . qq{
+    <script src="js/_scripts/main.js"></script>
+    <script src="js/_scripts/bootstrap.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -201,7 +208,10 @@ my @expected = split (/\n/, qq{<!-- prettier-disable -->
 </div>
 </form>
 </body>
-</html>});
+</html>};
+
+$check =~ s|\n+\s*|\n|g;
+my @expected = split (/\n/, $check);
 
 is $out,\@expected, 'Render the description && title',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 1 };
@@ -247,7 +257,7 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+$check = qq{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -267,11 +277,17 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
+    <script src="js/_scripts/manifest.js"></script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
-        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        ? q{<script src="js/_scripts/npm.dojo.js"></script>
+			<script src="js/_scripts/npm.dijit.js"></script>
+			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+        : ''
     ) . qq{
+    <script src="js/_scripts/main.js"></script>
+    <script src="js/_scripts/bootstrap.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -289,7 +305,10 @@ filter_js_src($out);
 </div>
 </form>
 </body>
-</html>});
+</html>};
+
+$check =~ s|\n+\s*|\n|g;
+@expected = split (/\n/, $check);
 
 is $out, \@expected, 'Render a custom description',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -335,7 +354,7 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+$check = qq{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -355,11 +374,17 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
+    <script src="js/_scripts/manifest.js"></script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
-        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        ? q{<script src="js/_scripts/npm.dojo.js"></script>
+			<script src="js/_scripts/npm.dijit.js"></script>
+			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+        : ''
     ) . qq{
+    <script src="js/_scripts/main.js"></script>
+    <script src="js/_scripts/bootstrap.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -378,7 +403,10 @@ filter_js_src($out);
    >Abc</button>
 </form>
 </body>
-</html>});
+</html>};
+
+$check =~ s|\n+\s*|\n|g;
+@expected = split (/\n/, $check);
 
 is $out, \@expected, 'Render a confirmation',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -424,7 +452,7 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+$check = qq{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -444,11 +472,17 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
+    <script src="js/_scripts/manifest.js"></script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
-        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        ? q{<script src="js/_scripts/npm.dojo.js"></script>
+			<script src="js/_scripts/npm.dijit.js"></script>
+			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+        : ''
     ) . qq{
+    <script src="js/_scripts/main.js"></script>
+    <script src="js/_scripts/bootstrap.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -474,7 +508,10 @@ filter_js_src($out);
    >Def</button>
 </form>
 </body>
-</html>});
+</html>};
+
+$check =~ s|\s*\n+\s*|\n|g;
+@expected = split (/\n/, $check);
 
 is $out, \@expected, 'Render multiple confirmations',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
@@ -530,7 +567,7 @@ $out = html_formatter_context {
 } test_request();
 
 filter_js_src($out);
-@expected = split (/\n/, qq{<!-- prettier-disable -->
+$check = qq{<!-- prettier-disable -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -550,11 +587,17 @@ filter_js_src($out);
         var lsmbConfig = {
         };
     </script>
+    <script src="js/_scripts/manifest.js"></script>
     } .
     ($mode eq "production"
-        ? q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/npm.dojo.js"></script><script src="js/_scripts/npm.dijit.js"></script><script src="js/_scripts/npm.dojo-webpack-plugin.js"></script><script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
-        : q{<script src="js/_scripts/manifest.js"></script><script src="js/_scripts/main.js"></script><script src="js/_scripts/bootstrap.js"></script>}
+        ? q{<script src="js/_scripts/npm.dojo.js"></script>
+			<script src="js/_scripts/npm.dijit.js"></script>
+			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+        : ''
     ) . qq{
+    <script src="js/_scripts/main.js"></script>
+    <script src="js/_scripts/bootstrap.js"></script>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 <body class="claro">
@@ -578,7 +621,10 @@ filter_js_src($out);
 </table>
 </form>
 </body>
-</html>});
+</html>};
+
+$check =~ s|\n+\s*|\n|g;
+@expected = split (/\n/, $check);
 
 is $out, \@expected, 'Render a grid (2-column p-key)',
     diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
