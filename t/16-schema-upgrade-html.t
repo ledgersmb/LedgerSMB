@@ -184,9 +184,9 @@ my $check = qq{<!-- prettier-disable -->
     } .
     ($mode eq "production"
         ? q{<script src="js/_scripts/npm.dojo.js"></script>
-			<script src="js/_scripts/npm.dijit.js"></script>
-			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+            <script src="js/_scripts/npm.dijit.js"></script>
+            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
         : ''
     ) . qq{
     <script src="js/_scripts/main.js"></script>
@@ -281,9 +281,9 @@ $check = qq{<!-- prettier-disable -->
     } .
     ($mode eq "production"
         ? q{<script src="js/_scripts/npm.dojo.js"></script>
-			<script src="js/_scripts/npm.dijit.js"></script>
-			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+            <script src="js/_scripts/npm.dijit.js"></script>
+            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
         : ''
     ) . qq{
     <script src="js/_scripts/main.js"></script>
@@ -378,9 +378,9 @@ $check = qq{<!-- prettier-disable -->
     } .
     ($mode eq "production"
         ? q{<script src="js/_scripts/npm.dojo.js"></script>
-			<script src="js/_scripts/npm.dijit.js"></script>
-			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+            <script src="js/_scripts/npm.dijit.js"></script>
+            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
         : ''
     ) . qq{
     <script src="js/_scripts/main.js"></script>
@@ -476,9 +476,9 @@ $check = qq{<!-- prettier-disable -->
     } .
     ($mode eq "production"
         ? q{<script src="js/_scripts/npm.dojo.js"></script>
-			<script src="js/_scripts/npm.dijit.js"></script>
-			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+            <script src="js/_scripts/npm.dijit.js"></script>
+            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
         : ''
     ) . qq{
     <script src="js/_scripts/main.js"></script>
@@ -591,9 +591,9 @@ $check = qq{<!-- prettier-disable -->
     } .
     ($mode eq "production"
         ? q{<script src="js/_scripts/npm.dojo.js"></script>
-			<script src="js/_scripts/npm.dijit.js"></script>
-			<script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-			<script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
+            <script src="js/_scripts/npm.dijit.js"></script>
+            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
+            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
         : ''
     ) . qq{
     <script src="js/_scripts/main.js"></script>
