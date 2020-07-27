@@ -527,3 +527,9 @@ span.indicator {
     left: 207px;
     right: 207px;
 }
+
+#pwcontainer label {
+    display: block;
+    float: left;
+    width: 16ex;
+}
