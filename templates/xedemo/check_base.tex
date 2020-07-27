@@ -52,7 +52,7 @@ format_amount({amount = amount, format = '1,000.00', money = 1}) ?>
 \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Invoice Date') ?>}
   & \textbf{<?lsmb text('Amount Due') ?>} & \textbf{<?lsmb text('Applied') ?>} \\
 <?lsmb FOR inv = invoices ?>
-<?lsmb inv.invnumber ?> & <?lsmb inv.invdate ?> \dotfill
+<?lsmb inv.invnumber ?> & <?lsmb inv.invoice_date ?> \dotfill
   & <?lsmb inv.due ?> & <?lsmb inv.paid ?> \\
 <?lsmb END # FOREACH inv ?>
 \end{tabularx}
