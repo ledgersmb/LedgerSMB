@@ -6,6 +6,7 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dijit/registry",
+    "dojo/dom-attr",
     "dojo/on",
     "dojo/text!./templates/PasswordChange.html",
     "dojo/request"
@@ -15,6 +16,7 @@ define([
     _templatedMixin,
     _widgetsInTemplateMixin,
     registry,
+    domAttr,
     on,
     passwordChange,
     request
@@ -52,26 +54,43 @@ define([
                     "pwtitle"
                 ).innerHTML = this.lstrings.title;
                 var I = this;
+                on(this.newpw, "change", function () {
+                    I.setStrengthClass();
+                });
                 on(this.newpw, "keypress", function () {
                     I.setStrengthClass();
                 });
 
-                registry.byId("old-pw").set("title", this.text("old password"));
-                registry.byId("new-pw").set("title", this.text("new password"));
-                registry.byId("verify-pw").set("title", this.text("verify"));
+                domAttr.set(
+                    "old-pw-label",
+                    "innerHTML",
+                    this.text("old password")
+                );
+                domAttr.set(
+                    "new-pw-label",
+                    "innerHTML",
+                    this.text("new password")
+                );
+                domAttr.set(
+                    "verify-pw-label",
+                    "innerHTML",
+                    this.text("verify")
+                );
+                domAttr.set(
+                    "pw-strength-label",
+                    "innerHTML",
+                    this.text("strength")
+                );
                 registry
                     .byId("pw-change")
                     .set("innerHTML", this.text("change"));
-                registry
-                    .byId("pw-strength")
-                    .set("title", this.text("strength"));
                 on(this.submitbutton, "click", function () {
                     I.submitForm();
                 });
                 this.inherited(arguments);
             },
             scorePassword: function () {
-                var pass = registry.byId("new-pw").get("value");
+                var pass = this.newpw.get("value");
                 var score = 0;
                 if (!pass) {
                     return score;
@@ -106,9 +125,8 @@ define([
                 } else if (score >= 30) {
                     bgclass = "weak";
                 }
-                var elem = registry.byId("pw-strength");
-                elem.set("class", bgclass);
-                elem.set("innerHTML", score);
+                domAttr.set("pw-strength", "class", bgclass);
+                domAttr.set("pw-strength", "innerHTML", score);
             },
             submitForm: function () {
                 var I = this;
