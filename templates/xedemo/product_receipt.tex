@@ -97,7 +97,7 @@
 \vspace{1cm}
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Date') ?>} 
-   & \textbf{<?lsmb text('Required by') ?>} & \textbf{<?lsmb text('Contact') ?>} 
+   & \textbf{<?lsmb text('Required by') ?>} & \textbf{<?lsmb text('Contact') ?>}
    & \textbf{<?lsmb text('Shipping Point') ?>} 
    & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5ex]
   \hline
@@ -142,7 +142,7 @@
 
 \vspace{12pt}
 
-<?lsmb FOREACH P IN notes.split('\n\n') ?>
+<?lsmb FOREACH P IN notes.split('\n\n+') ?>
 <?lsmb P ?>\medskip
 
 <?lsmb END ?>
