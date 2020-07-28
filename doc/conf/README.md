@@ -7,7 +7,13 @@ the copies to match your installation
 ## Directories
 
 * systemd
-This directory provides sample systemd service files to run ledgersmb on boot
+  Sample systemd service files to run ledgersmb on boot
+
+* sysvinit
+  Sample sysvinit service files to run ledgersmb on boot
+
+* webserver
+  Httpd & cache daemon configuration file examples
 
 ## Httpd & cache daemon configuration files
 
