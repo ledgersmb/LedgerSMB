@@ -333,3 +333,19 @@ span.indicator { background-color: var(--span-indicator-bg-clr);
     float: left;
     width: 16ex;
 }
+
+#assetclass-edit label,
+#assetclass-search label,
+#asset-search label,
+#asset-edit label {
+    display: inline-block;
+    width: 25ex;
+}
+
+#assetclass-edit .inputgroup,
+#assetclass-search .inputgroup,
+#asset-search .inputgroup,
+#asset-edit .inputgroup {
+    display: inline-block;
+    width: 60ex;
+}
