@@ -1330,8 +1330,8 @@ sub reset_password {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
-    my $user = LedgerSMB::DBObject::User->new(%$request);
-    my $result = $user->save();
+    my $user = LedgerSMB::Entity::User->new(%$request);
+    $user->reset_password($request->{password});
 
     $request->{password} = '';
 
