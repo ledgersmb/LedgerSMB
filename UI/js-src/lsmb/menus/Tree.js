@@ -12,7 +12,8 @@ define([
     "dojo/store/Memory",
     "dijit/Tree",
     "dijit/tree/ObjectStoreModel",
-    "dijit/registry"
+    "dijit/registry",
+    "dojo/_base/connect"
 ], function (
     declare,
     on,
@@ -24,14 +25,17 @@ define([
     Memory,
     Tree,
     ObjectStoreModel,
-    registry
+    registry,
+    connect
 ) {
     // set up the store to get the tree data, plus define the method
     // to query the children of a node
-    var restStore = new JsonRest({
-        target: "erp/api/v0/menu-nodes/",
-        idProperty: "id"
-    });
+    var restStore = new Observable(
+        new JsonRest({
+            target: "erp/api/v0/menu-nodes/",
+            idProperty: "id"
+        })
+    );
     var memoryStore = new Memory({ idProperty: "id" });
     memoryStore = new Observable(memoryStore);
 
@@ -79,6 +83,39 @@ define([
                     lang.hitch(this, this.__onClick)
                 )
             );
+        },
+        refresh: function () {
+            // Destruct the references to any selected nodes so that
+            // the refreshed tree will not attempt to unselect destructed nodes
+            // when a new selection is made.
+            // These references are contained in Tree.selectedItem,
+            // Tree.selectedItems, Tree.selectedNode, and Tree.selectedNodes.
+            this.dndController.selectNone();
+
+            this.model.store.clearOnClose = true;
+
+            // Completely delete every node from the dijit.Tree
+            this._itemNodesMap = {};
+            this.rootNode.state = "UNCHECKED";
+
+            // Destroy the widget
+            this.rootNode.destroyRecursive();
+
+            // Recreate the model, (with the model again)
+            complete = false;
+            this.model.constructor(dijit.byId(this.id).model);
+
+            // Rebuild the tree
+            this.postMixInProperties();
+            this._load();
+        },
+        startup: function () {
+            this.inherited(arguments);
+            var _this = this;
+            /* eslint no-unused-vars:0 */
+            connect.subscribe("lsmb/menus/Tree/refresh", function (message) {
+                _this.refresh();
+            });
         },
         onClick: function (item, node, _event) {
             // regular handling of non-leafs
