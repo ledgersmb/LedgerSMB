@@ -1,7 +1,13 @@
 
 # CSV import format documentation
 
-All CSV files start with the column headings on the first row.
+Notes about the format:
+
+ * All CSV files start with the column headings on the first row
+ * Column separator is a comma (,)
+ * Numbers are parsed using the number format of the importing user(!)  
+   **Caveat**: if the importing user uses a comma as the decimal separator,
+   a different format has to be selected temporarily during the import
 
 ## Chart of Accounts
 
