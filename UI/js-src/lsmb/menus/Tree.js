@@ -112,6 +112,7 @@ define([
         startup: function () {
             this.inherited(arguments);
             var _this = this;
+            /* eslint no-unused-vars:0 */
             connect.subscribe("lsmb/menus/Tree/refresh", function (message) {
                 _this.refresh();
             });
