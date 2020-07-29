@@ -26,7 +26,6 @@ password_strings = "title:'" _ text("Change Password") _
  <form data-dojo-type="lsmb/Form" method="post" id="prefs" name="prefs" action="user.pl">
   <script type="dojo/on" data-dojo-event="submit">
     if(this.validate()){
-      /* eslint no-console:0 */
       var language = this.value.language;
       require(["dojo/_base/connect"], function(connect){
         connect.publish("lsmb/menus/Tree/refresh", [{
