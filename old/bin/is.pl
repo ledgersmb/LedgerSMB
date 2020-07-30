@@ -649,7 +649,7 @@ sub form_header {
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
-            elsif ($closedto) {
+            elsif ($closedto and $transdate) {
                 %button = ();
             }
             else {
