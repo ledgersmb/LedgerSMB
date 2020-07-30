@@ -161,6 +161,8 @@ sub get {
     $self->{user} = $user;
     my ($prefs) = $self->call_dbmethod(funcname=>'user__get_preferences');
     $self->{prefs} = $prefs;
+    $self->{prefs}{language} =~ s/_[a-z]{2}//gi
+        if $self->{prefs}{language} && !code2language($self->{prefs}{language});
     my ($emp) = $self->call_procedure(
         funcname=>'employee__get',
         args=>[$self->{user}->{entity_id}]
@@ -221,4 +223,3 @@ sub get_all_users {
 =cut
 
 1;
-
