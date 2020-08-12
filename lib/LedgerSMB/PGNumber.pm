@@ -181,6 +181,7 @@ sub from_input {
             -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
             -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
+        local $Math::BigFloat::downgrade = undef;
         $newval = $formatter->unformat_number($string);
         $pgnum = LedgerSMB::PGNumber->new($newval);
         $self->round_mode('+inf');
