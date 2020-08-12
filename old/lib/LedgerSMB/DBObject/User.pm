@@ -11,8 +11,7 @@ use warnings;
 
 use base qw(LedgerSMB::PGOld);
 
-use Locale::Country;
-use Locale::Language;
+use Locale::CLDR;
 
 use Log::Log4perl;
 
@@ -90,6 +89,8 @@ Sets the options for the user preference screen.
 
 sub get_option_data {
     my $self = shift @_;
+    # Load localized data from current locale
+    my $locale = Locale::CLDR->new($self->{prefs}{language});
     $self->{dateformats} = [];
     $self->{numberformats} = [];
     for my $opt (qw(mm-dd-yyyy mm/dd/yyyy dd-mm-yyyy dd/mm/yyyy dd.mm.yyyy yyyy-mm-dd)){
@@ -101,22 +102,24 @@ sub get_option_data {
     }
     use warnings;
 
-    foreach my $key ( all_country_codes() )
-    {
-        push @{$self->{country_codes}}, {
-            label => code2country($key),
-            id => $key,
-        };
-    }
-    @{$self->{country_codes}} =
-        sort { $a->{label} cmp $b->{label} } @{$self->{country_codes}};
+    # Pull supported languages codes
+    my @rows = $self->call_dbmethod(funcname => 'person__list_languages');
 
-    foreach my $key ( all_language_codes() )
-    {
+    my %regions = %{$locale->all_regions}; # Localized countries
+    my %languages = %{$locale->all_languages()}; # Localized languages
+
+    # Localize the list, making sure to keep the language key as is
+    foreach my $row ( @rows ) {
+        my ($language,$region) = split /_/, $row->{code};
+        # Use the language_country localized version if available
+        my $label = $languages{$row->{code}} // $languages{$language};
+        # Append the country if required
+        $label .= ' - ' . $regions{$region}
+            if $region && !$languages{$row->{code}};
         push @{$self->{language_codes}}, {
-            label => code2language($key),
-            id => $key,
-        };
+            label => $label,
+            id => $row->{code},
+        }
     }
     @{$self->{language_codes}} =
         sort { $a->{label} cmp $b->{label} } @{$self->{language_codes}};
