@@ -17,7 +17,7 @@ use LedgerSMB::Upgrade_Tests;
 
 use File::Temp;
 use List::Util qw( first );
-use Locale::Country;
+use Locale::CLDR;
 use Scope::Guard qw( guard );
 use Template;
 use Version::Compare;
@@ -185,11 +185,15 @@ sub _linked_accounts {
 }
 
 sub _available_countries {
+    # user locale?
+    my %regions = %{Locale::CLDR
+                    ->new(LedgerSMB::Sysconfig::language())
+                    ->all_regions};
     return [
         sort { $a->{text} cmp $b->{text} }
         map { +{ value => uc($_),
-                 text  => code2country($_) }
-        } all_country_codes()
+                 text  => $regions{uc($_)} }
+        } (keys %regions)
         ];
 }
 

@@ -20,6 +20,8 @@ workflows.
 use strict;
 use warnings;
 
+use Locale::CLDR;
+
 use LedgerSMB::Payroll::Income_Type;
 use LedgerSMB::Report::Payroll::Income_Types;
 use LedgerSMB::Template::UI;
@@ -46,6 +48,12 @@ sub show_income_type {
     @{$request->{countries}} = $request->call_procedure(
        funcname => 'location_list_country'
     );
+    my %regions = %{Locale::CLDR
+                    ->new($request->{_user}->{language})
+                    ->all_regions};
+    foreach (@{$request->{countries}}) {
+      $_->{name} = $regions{$_->{short_name}}
+    }
     @{$request->{pics}} = $request->call_procedure(
        funcname => 'payroll_pic__list', args => [$request->{country_id}]
     ) if $request->{country_id};
@@ -91,6 +99,12 @@ sub search_income_type {
     @{$request->{countries}} = $request->call_procedure(
        funcname => 'location_list_country'
     );
+    my %regions = %{Locale::CLDR
+                        ->new($request->{_user}->{language})
+                        ->all_regions};
+    foreach (@{$request->{countries}}) {
+      $_->{name} = $regions{$_->{short_name}}
+    }
 
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'payroll/income_search', $request);

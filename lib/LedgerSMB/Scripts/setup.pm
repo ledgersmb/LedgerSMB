@@ -28,6 +28,7 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use Encode;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
+use Locale::CLDR;
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
@@ -1084,6 +1085,12 @@ sub _render_user {
     @{$request->{countries}} = $request->call_procedure(
         funcname => 'location_list_country'
     );
+    my %regions = %{Locale::CLDR
+                        ->new($request->{_user}->{language})
+                        ->all_regions};
+    foreach (@{$request->{countries}}) {
+      $_->{name} = $regions{$_->{short_name}}
+    }
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (

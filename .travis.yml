@@ -115,10 +115,9 @@ before_install:
   #- pip3 install awscli --upgrade --user
 
 install:
-  # Suppress warnings in Perl 5.28 about Locale::* being moved out of 'core'
-  # Further more is there a warning regarding redifinition of JSON::PP::Boolean
+  # Suppress warnings in Perl 5.28 about redifinition of JSON::PP::Boolean
   # which is fixed in 4.03 (so, reinstall, in order to get to newest)
-  - cpanm --reinstall --notest Locale::Country Locale::Codes Locale::Language JSON::PP
+  - cpanm --reinstall --notest JSON::PP
   - cpanm --quiet --notest Cpanel::JSON::XS~3.0206
   - cpanm --quiet --notest Starlet
   - cpanm --quiet --notest --metacpan --installdeps --with-develop --with-feature=edi --with-feature=latex-pdf-ps --with-feature=openoffice  --with-feature=starman --with-feature=xls .

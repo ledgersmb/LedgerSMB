@@ -23,6 +23,8 @@ This module does not specify any methods.
 use strict;
 use warnings;
 
+use Locale::CLDR;
+
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template::UI;
 
@@ -189,6 +191,14 @@ sub defaults_screen {
     my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
     );
+    my %regions = %{Locale::CLDR
+                      ->new(
+                          $request->{_company_config}->{default_language} //
+                          $request->{_user}->{language})
+                      ->all_regions};
+    foreach (@country_list) {
+      $_->{name} = $regions{$_->{short_name}}
+    }
     unshift @country_list, {}
         if ! defined $request->{default_country};
 

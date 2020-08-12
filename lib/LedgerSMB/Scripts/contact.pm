@@ -18,6 +18,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 use strict;
 use warnings;
 
+use Locale::CLDR;
 use Try::Tiny;
 
 use LedgerSMB;
@@ -303,6 +304,13 @@ sub _main_screen {
     my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
       );
+    my %regions = %{Locale::CLDR
+                        ->new($request->{_user}->{language})
+                        ->all_regions
+                   };
+    foreach (@country_list) {
+      $_->{name} = $regions{$_->{short_name}}
+    }
     my @entity_classes =
         map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
         $request->call_procedure(
