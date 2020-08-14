@@ -142,6 +142,18 @@ my $lsmb_neg_formats = {
 
 =over
 
+=item new;
+
+Constructor to prevent BigFloat downgrades to BigInt
+
+=cut
+
+sub new {
+    my $class = shift;
+    local $Math::BigFloat::downgrade = undef;
+    return $class->SUPER::new(@_);
+}
+
 =item from_input(string $input, hashref %args);
 
 The input is formatted.
@@ -181,7 +193,6 @@ sub from_input {
             -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
             -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
-        local $Math::BigFloat::downgrade = undef;
         $newval = $formatter->unformat_number($string);
         $pgnum = LedgerSMB::PGNumber->new($newval);
         $self->round_mode('+inf');
