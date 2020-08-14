@@ -57,7 +57,7 @@ password_strings = "title:'" _ text("Change Password") _
                 <th class="listtop" colspan="2">[% text('Settings') %]</th>
               </tr>
               <tr>
-                <th align="right">[% text('Date Format') %]</th>
+                <th align="right"><label for="dateformat">[% text('Date Format') %]</label></th>
                 <td>[% PROCESS select element_data={
                       name = 'dateformat'
                       options = user.dateformats
@@ -67,7 +67,7 @@ password_strings = "title:'" _ text("Change Password") _
                     } %]</td>
               </tr>
               <tr>
-                <th align="right">[% text('Number Format') %]</th>
+                <th align="right"><label for="numberformat">[% text('Number Format') %]</label></th>
                 <td>[% PROCESS select element_data={
                       name = 'numberformat',
                       options = user.numberformats,
@@ -77,7 +77,7 @@ password_strings = "title:'" _ text("Change Password") _
                     } %]</td>
               </tr>
               <tr>
-                <th align="right">[% text('Language') %]</th>
+                <th align="right"><label for="language">[% text('Language') %]</label></th>
                 <td>[% PROCESS select_language element_data={
                      name = 'language',
                      options = user.language_codes,
@@ -88,7 +88,7 @@ password_strings = "title:'" _ text("Change Password") _
                    }%] </td>
               </tr>
               <tr>
-                <th align="right">[% text('Stylesheet') %]</th>
+                <th align="right"><label for="stylesheet">[% text('Stylesheet') %]</label></th>
                 <td>[% PROCESS select element_data={
                       name = 'stylesheet'
                       options = user.cssfiles

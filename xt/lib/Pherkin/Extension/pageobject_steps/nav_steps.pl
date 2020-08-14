@@ -63,7 +63,12 @@ Then qr/I should see the (.*) page/, sub {
        "the page is of expected class: " . ref $page);
 };
 
-
+Then qr/I should see a(n error)? message "(.+)"/, sub {
+    my $message = $2;
+    S->{ext_wsl}->page->body->maindiv
+        ->find('*button', text => 'Change Password')->click;
+    S->{ext_wsl}->page->find(".//*[\@id='pwfeedback' and text()='$message']");
+};
 
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
