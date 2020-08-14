@@ -6,29 +6,32 @@ PROCESS "ui-header.html"
 PROCESS "dynatable.html";
 
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
+  <title></title>
+</head>
 <body class="lsmb <?lsmb dojo_theme ?>">
   <div class="heading_section">
-    <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
-      <span class="report_header"><?lsmb name ?></span>
+    <div class="report_header">
+      <label><?lsmb text('Report Name') ?>:</label> <span class=
+      "report_header"><?lsmb name ?></span>
     </div>
-    <div class="report_header"><label><?lsmb text('Company') ?>:</label>
-      <span class="report_header"><?lsmb request.company ?></span>
-    </div>
-    <?lsmb FOREACH LINE IN hlines ?>
-    <div class="report_header"><label><?lsmb LINE.text ?>:</label>
-      <span class="report_header">
-        <?lsmb
+    <div class="report_header">
+      <label><?lsmb text('Company') ?>:</label> <span class=
+      "report_header"><?lsmb request.company ?></span>
+    </div><?lsmb FOREACH LINE IN hlines ?>
+    <div class="report_header">
+      <label><?lsmb LINE.text ?>:</label> <span class="report_header"><?lsmb
            IF request.${LINE.name};
               request.${LINE.name};
            ELSE;
               report.${LINE.name};
            END;
-           ?>
-      </span>
-    </div>
-    <?lsmb END ?>
-  </div>
-  <?lsmb PROCESS dynatable tbody = {rows = rows }
+           ?></span>
+    </div><?lsmb END ?>
+  </div><?lsmb PROCESS dynatable tbody = {rows = rows }
                  attributes = {class = 'report', order_url = order_url } ?>
 </body>
-<?lsmb end_html ?>
+</html>

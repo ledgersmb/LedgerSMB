@@ -1,31 +1,45 @@
   <tr>
-    <td width=10>&nbsp;</td>
-
+    <td width="10">&nbsp;</td>
     <td>
       <table width="100%">
         <tr>
           <td>
-            <h4>
-            <?lsmb company ?><br>
-            <?lsmb address ?>
-            </h4>
-          </td>
-          <!-- Commenting out the image tag for now.  In general, folks can
-               customize this to their servers, but if the server is behind a
-               firewall, then this won't work.  Recommend that if people do this,
-               they hardwire in a link to a publically accessible image. - CT -->
-          <th><!-- <img src=<?lsmb images ?>/logo.png border=0 height=58> --></th>
+            <h4><?lsmb company ?><br>
+            <?lsmb address ?></h4>
+          </td><?lsmb# using "comment block" template tag to suppress output
 
-          <td align=right>
-            <h4>
-            <?lsmb text('Tel: [_1]', tel) ?><br>
-            <?lsmb text('Fax: [_1]', fax) ?>
-            </h4>
+           There are two options of including a picture in the output:
+
+           1. An external image available from your webserver
+              This option has the downside that the webserver and image
+              need to remain available for extended periods.
+
+              <img src="https://example.com/logo.png" border="0" height="58">
+
+           2. An image embedded in the invoice itself
+              This option has the downside that the invoice file will
+              be larger and the HTML source will be less readable, however,
+              it eliminates external dependencies, retaining the integrity
+              of the invoice, independent of what happens to publicly hosted
+              images
+
+              <img src="data:image/png;base64,<-?lsmb dbfile_base64('logo.png') ?->"
+                   border="0" height="58">
+
+              Please note that this is dependent on having a file uploaded by
+              the name 'logo.png' under "System - Files". Also, when using this
+              option, please remove the hyphens from '<-?lsmb' and '?->'; they
+              are used to hide the text from the template processor.
+
+          ?>
+          <th><!--Replace this comment with one of the two image tags above --></th>
+          <td align="right">
+            <h4><?lsmb text('Tel: [_1]', tel) ?><br>
+            <?lsmb text('Fax: [_1]', fax) ?></h4>
           </td>
         </tr>
-
         <tr>
-          <td colspan=3>
+          <td colspan="3">
             <hr noshade>
           </td>
         </tr>
