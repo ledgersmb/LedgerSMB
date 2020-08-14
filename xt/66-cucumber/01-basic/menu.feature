@@ -213,10 +213,10 @@ Scenario Outline: Navigate to menu and open screen
   @wip
   Examples:
     | path                                       | screen                   |
-    | Preferences                                |                          |
     | Quotations > Quotation                     |                          |
   Examples:
     | path                                       | screen                   |
+    | Preferences                                | Preferences              |
     | Quotations > Reports > Quotations          | Quotation search         |
     | Quotations > Reports > RFQs                | RFQ search               |
 

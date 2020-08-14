@@ -112,6 +112,7 @@ my %screens = (
     'Single Payment Entry' => 'PageObject::App::Cash::Entry',
     'Payment Batch Summary' => 'PageObject::App::Search::ReportDynatable',
     'Payments Detail' => 'PageObject::App::Cash::Vouchers::Payments::Detail',
+    'Preferences' => 'PageObject::App::Preference',
     'Purchase History Report' => 'PageObject::App::Search::ReportDynatable',
     'Purchase History Search' => 'PageObject::App::AR::PurchaseHistorySearch',
     'Purchase order entry' => 'PageObject::App::Orders::Purchase',
