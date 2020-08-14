@@ -1,16 +1,12 @@
   <tr>
-    <td width=10>&nbsp;</td>
-
+    <td width="10">&nbsp;</td>
     <td>
       <table width="100%">
         <tr>
           <td>
-            <h4>
-            <?lsmb company ?><br>
-            <?lsmb address ?>
-            </h4>
-          </td>
-          <?lsmb# using "comment block" template tag to suppress output
+            <h4><?lsmb company ?><br>
+            <?lsmb address ?></h4>
+          </td><?lsmb# using "comment block" template tag to suppress output
 
            There are two options of including a picture in the output:
 
@@ -36,20 +32,14 @@
               are used to hide the text from the template processor.
 
           ?>
-          <th>
-            <!--Replace this comment with one of the two image tags above -->
-          </th>
-
-          <td align=right>
-            <h4>
-            <?lsmb text('Tel: [_1]', tel) ?><br>
-            <?lsmb text('Fax: [_1]', fax) ?>
-            </h4>
+          <th><!--Replace this comment with one of the two image tags above --></th>
+          <td align="right">
+            <h4><?lsmb text('Tel: [_1]', tel) ?><br>
+            <?lsmb text('Fax: [_1]', fax) ?></h4>
           </td>
         </tr>
-
         <tr>
-          <td colspan=3>
+          <td colspan="3">
             <hr noshade>
           </td>
         </tr>

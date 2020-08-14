@@ -1,4 +1,13 @@
-<?lsmb INCLUDE 'ui-header.html';
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
+  <title>[% title %]</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <style type="text/css">
+  table.c1 {border-collapse: collapse}
+  </style>
+</head><?lsmb 
 
 DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
        _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
@@ -18,78 +27,69 @@ ELSE ;
 END ;
  ?>
 <body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
-<div id="PNL" class="financial-statement <?lsmb hierarchy ?> balance-sheet">  <!-- TODO: Find better name!! -->
-<h1><?lsmb text('Balance Sheet') ?></h1>
-
-<div class="company-name"><?lsmb company_name ?></div>
-<div class="company-address"><?lsmb company_address ?></div>
-
-<table class="balancesheet" style="border-collapse: collapse">
-<colgroup class="headings">
-<?lsmb i = 1;
-   WHILE i <= max_path_depth;
-     '  <col class="level' _ i _ '" />';
-     i = i + 1;
-   END;
-?>
-</colgroup>
-<colgroup class="values">
-<?lsmb i = 1;
-   WHILE i <= report.cheads.ids.keys.size;
-     '  <col class="values' _ i _ '" />';
-     i = i + 1;
-   END;
-?>
-</colgroup>
-  <tbody>
-    <tr class="report-head">
-      <th colspan="<?lsmb max_path_depth ?>"> </th>
-      <?lsmb FOREACH col IN report.sorted_col_ids -?>
-      <th><?lsmb report.cheads.ids.$col.props.description ?></th>
-      <?lsmb END -?>
-    </tr>
-<?lsmb FOREACH row IN report.sorted_row_ids ;
-   path_depth = report.rheads.ids.$row.path.size;
-   path_prefix_len = path_depth - 1;
-   path_suffix_len = max_path_depth - path_prefix_len;
-   IF report.rheads.ids.$row.props.account_type == 'H' ;
-     class = 'class="heading' _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type _ '"';
-     clazz = "heading" _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type;
-   ELSIF report.rheads.ids.$row.props.section_for ;
-     row_id = report.rheads.ids.$row.props.section_for ;
-     class = 'class="section' _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category _ '"';
-     clazz = "section" _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category;
-   ELSE;
-     class = 'class="account"';
-     clazz = 'account';
-   END;
- ?>
-<tr <?lsmb class; IF report.rheads.ids.$row.props.account_number;
-                     ' data-lsmb-account="';
-                     report.rheads.ids.$row.props.account_number;
-                     '"';
-                  END ?>>
-  <?lsmb IF path_prefix_len > 0 ?>
-  <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th>
-  <?lsmb END ?>
-  <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
-<?lsmb IF report.rheads.ids.$row.props.section_for ;
-  head_id = report.rheads.ids.$row.props.section_for;
-  report.rheads.ids.$head_id.props.account_description; ?>
-</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
-<?lsmb ELSE -?>
-<?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
-<?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
-<?lsmb report.rheads.ids.$row.props.account_desc ?></th>
-<?lsmb FOREACH col IN report.sorted_col_ids -?>
-  <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
- DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
-           _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date ?>"><?lsmb report.cells.$row.$col ?></a></td><?lsmb END ?>
-<?lsmb END ?>
-</tr>
-<?lsmb END ?>
-
-<!--
+  <div id="PNL" class="financial-statement <?lsmb hierarchy ?> balance-sheet">
+    <!-- TODO: Find better name!! -->
+    <h1><?lsmb text('Balance Sheet') ?></h1>
+    <div class="company-name">
+      <?lsmb company_name ?>
+    </div>
+    <div class="company-address">
+      <?lsmb company_address ?>
+    </div>
+    <table class="balancesheet c1">
+      <colgroup class="headings">
+        <?lsmb i = 1;
+        WHILE i <= max_path_depth;
+        '  <col class="level' _ i _ '" />';
+        i = i + 1;
+        END;
+        ?>
+      </colgroup>
+      <colgroup class="values">
+        <?lsmb i = 1;
+        WHILE i <= report.cheads.ids.keys.size;
+        '  <col class="values' _ i _ '" />';
+        i = i + 1;
+        END;
+        ?>
+      </colgroup>
+      <tbody>
+        <tr class="report-head">
+          <th colspan="<?lsmb max_path_depth ?>">
+          </th><?lsmb FOREACH col IN report.sorted_col_ids -?>
+          <th><?lsmb report.cheads.ids.$col.props.description ?></th><?lsmb END -?>
+        </tr><?lsmb FOREACH row IN report.sorted_row_ids ;
+        path_depth = report.rheads.ids.$row.path.size;
+        path_prefix_len = path_depth - 1;
+        path_suffix_len = max_path_depth - path_prefix_len;
+        IF report.rheads.ids.$row.props.account_type == 'H' ;
+        class = 'class="heading' _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type _ '"';
+        clazz = "heading" _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type;
+        ELSIF report.rheads.ids.$row.props.section_for ;
+        row_id = report.rheads.ids.$row.props.section_for ;
+        class = 'class="section' _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category _ '"';
+        clazz = "section" _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category;
+        ELSE;
+        class = 'class="account"';
+        clazz = 'account';
+        END;
+        ?>
+        <tr>
+          <?lsmb IF path_prefix_len > 0 ?>
+          <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th><?lsmb END ?>
+          <th colspan="<?lsmb path_suffix_len ?>">
+          <?lsmb IF report.rheads.ids.$row.props.section_for ;
+          head_id = report.rheads.ids.$row.props.section_for;
+          report.rheads.ids.$head_id.props.account_description; ?></th>
+          <th colspan="<?lsmb report.cheads.ids.keys.size ?>">
+          <?lsmb ELSE -?><?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?><?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
+          <?lsmb report.rheads.ids.$row.props.account_desc ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
+          <td class="amount <?lsmb clazz ?>">
+            <a href=
+            "<?lsmb DRILLBASE _ '&accno=' _ report.rheads.ids.$row.props.account_number _ '&to_date=' _ report.cheads.ids.$col.props.to_date ?>">
+            <?lsmb report.cells.$row.$col ?></a>
+          </td><?lsmb END ?><?lsmb END ?>
+        </tr><?lsmb END ?><!--
 <h2><?lsmb text('Key Ratios'); ?></h2>
 <h2><?lsmb text('First column only') ?></h2>
 <table>
@@ -103,10 +103,8 @@ END ;
     <td><?lsmb report.balance_sheet.ratios.QL ?></td>
 </tr>
 -->
-</tbody>
-</table>
-
-</div>
-
+      </tbody>
+    </table>
+  </div>
 </body>
-<?lsmb end_html ?>
+</html>
