@@ -121,6 +121,7 @@ C<UI/reports/display_report> template will be used.
 use List::Util qw{ any };
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
+use Scalar::Util qw{ blessed };
 
 use Moose;
 use namespace::autoclean;
@@ -363,7 +364,7 @@ sub output_name {
     $self->format('html')
         unless defined $self->format;
 
-    my $name = $self->name || '';
+    my $name = $self->name // '';
     $name =~ s/ /_/g;
 
     $name = $name . '_' . $self->from_date->to_output
@@ -395,7 +396,7 @@ sub _render {
     # template --CT
     local $@ = undef;
     eval {$template = $self->template};
-    $template ||= 'display_report';
+    $template //= 'display_report';
 
     # Sorting and Subtotal logic
     my $url = $request->get_relative_url();
@@ -444,8 +445,8 @@ sub _render {
             next if $exclude->{$k};
 
             local $@ = undef;
-            if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
-                $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
+            if (blessed $r->{$k} and $r->{$k}->isa('LedgerSMB::PGNumber') ){
+                $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
                 $total_row->{$k}->badd($r->{$k});
             }
         }
@@ -475,7 +476,8 @@ sub _render {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
                 local $@ = undef;
-                if ( eval {$row->{$col->{col_id}}->can('to_output')}){
+                if ( blessed $row->{$col->{col_id}}
+                     and $row->{$col->{col_id}}->can('to_output') ){
                     $row->{$col->{col_id}} =
                         $row->{$col->{col_id}}->to_output(money => 1);
                 }
