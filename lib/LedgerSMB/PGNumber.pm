@@ -21,6 +21,7 @@ use base qw(PGObject::Type::BigFloat);
 
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
+use Memoize;
 use Number::Format;
 use PGObject::Type::BigFloat;
 
@@ -232,6 +233,16 @@ Specifies the negative format
 
 =cut
 
+sub _formatter {
+    return Number::Format->new(@_);
+}
+
+# Together with the memoization in PGNumber,
+# this workaround shaved off 25% rendering time off a 10k acc_trans
+# table (being GL>Search-ed without restrictions)
+memoize('_formatter');
+
+
 sub to_output {
     my $self = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
@@ -250,7 +261,7 @@ sub to_output {
     $places = 0 unless defined $places and ($places > 0);
     my $zfill = ($places > 0) ? 1 : 0;
     $dplaces = DEFAULT_NUM_PREC  unless defined $dplaces;
-    my $formatter = Number::Format->new(
+    my $formatter = _formatter(
         -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
         -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         -decimal_fill => $zfill,

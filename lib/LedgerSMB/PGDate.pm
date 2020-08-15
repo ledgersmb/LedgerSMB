@@ -21,6 +21,7 @@ use base qw(PGObject::Type::DateTime);
 use Carp;
 use DateTime;
 use DateTime::Format::Strptime;
+use Memoize;
 use PGObject;
 
 use LedgerSMB::App_State;
@@ -242,6 +243,15 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 =cut
 
+sub _formatter {
+    return DateTime::Format::Strptime->new(@_);
+}
+
+# Together with the memoization in PGNumber,
+# this workaround shaved off 25% rendering time off a 10k acc_trans
+# table (being GL>Search-ed without restrictions)
+memoize('_formatter');
+
 sub to_output {
     my ($self) = @_;
     return '' if not $self->is_date();
@@ -259,7 +269,7 @@ sub to_output {
     # the hard-coded 'en_US' locale here is no problem: it's used
     # for the %b format ('mon') to look up the names of the months;
     # however, we only support numeric formats
-    my $formatter = DateTime::Format::Strptime->new(
+    my $formatter = _formatter(
              pattern => $fmt,
               locale => 'en_US',
             on_error => 'croak',

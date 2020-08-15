@@ -298,7 +298,7 @@ use Module::Runtime qw(use_module);
 use Template;
 use Template::Parser;
 use Template::Provider;
-use Scalar::Util qw(reftype);
+use Scalar::Util qw(blessed reftype);
 
 use parent qw( Exporter );
 our @EXPORT_OK = qw( preprocess );
@@ -359,28 +359,21 @@ sub preprocess {
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
 
-    local $@ = undef;
-    if (eval {$rawvars->can('to_output')}){
-        $rawvars = $rawvars->to_output;
+    if (blessed $rawvars and $rawvars->can('to_output') ){
+        return $escape->( $rawvars->to_output );
     }
-    my $type = ref $rawvars;
-    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
-    return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
-    my $vars;
-    if ( $reftype and $reftype eq 'ARRAY' ) {
-        $vars = [];
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_, $escape );
-        }
-    } elsif (!$type) {
+    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
+
+    if (not $reftype) {
         return $escape->($rawvars);
-    } elsif ($reftype eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return $escape->($$rawvars);
-    } elsif ($reftype eq 'CODE'){ # a code reference makes no sense
-        return $rawvars;
-    } elsif ($reftype eq 'HASH') { # Hashes and objects
-        $vars = {};
+    }
+
+    if ($reftype eq 'HASH') { # Hashes and objects
+        my $type = ref $rawvars;
+        return $rawvars if $type eq 'LedgerSMB::Locale';
+
+        my $vars = {};
         for ( keys %{$rawvars} ) {
             # don't encode the object's internals; TT won't forward anyway...
             # btw, some (internal) objects are XS objects, on which this trick
@@ -388,9 +381,23 @@ sub preprocess {
             next if /^_/;
             $vars->{$_} = preprocess( $rawvars->{$_}, $escape );
         }
+        return $vars;
     }
+
+    if ( $reftype eq 'ARRAY' ) {
+        return [ map { preprocess( $_, $escape ) } @{$rawvars} ];
+    }
+
+    if ($reftype eq 'CODE'){ # a code reference makes no sense
+        return $rawvars;
+    }
+
+    if ($reftype eq 'SCALAR' or (ref $rawvars) eq 'Math::BigInt::GMP') {
+        return $escape->($$rawvars);
+    }
+
     # return undef for GLOB references (includes IO::File objects)
-    return $vars;
+    return undef;
 }
 
 sub get_template_source {
