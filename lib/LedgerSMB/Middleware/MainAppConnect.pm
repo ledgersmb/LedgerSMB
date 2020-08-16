@@ -35,7 +35,6 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use DBI;
 use HTTP::Status qw/ is_server_error /;
 use Plack::Request;
 use Plack::Util;
