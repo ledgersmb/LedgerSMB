@@ -238,28 +238,6 @@ sub _set_system_info {
     return;
 }
 
-sub connect {
-    my $options = shift;
-    my $trace   = shift // $self->default_connect_trace;
-
-    my $dbh = $self->SUPER::connect(
-        {
-            ( %{ $self->default_options }, %{ $options }, )
-        });
-
-    $dbh->{private_LedgerSMB} = {
-        schema    =>  LedgerSMB::Sysconfig::db_namespace(),
-    };
-    $dbh->do(q{set client_min_messages = 'warning'});
-
-    if ($trace) {
-        # See https://metacpan.org/pod/release/TIMB/DBI-1.616/DBI.pm#TRACING
-        my @trace_args = split /=/, $trace, 2;
-        $dbh->trace(@trace_args);
-    }
-
-    return $dbh;
-}
 
 sub get_info {
     my $self = shift @_;
@@ -387,6 +365,77 @@ sub get_info {
        $dbh->rollback;
    }
     return $retval;
+}
+
+=head2 connect($options)
+
+Calls C<PGObject::Util::DBAdmin>'s C<connect> method with C<$options>,
+merged with C<default_options> attribute's value.
+
+Upon succesfull return, sets DBI tracing parameters as specified by
+the C<default_connect_trace> attribute and connection's
+C<client_min_messages> to C<warning>.
+
+This routine claims the C<private_LedgerSMB> slot in the database handle
+for storage of LedgerSMB internal data.
+
+=cut
+
+sub connect {
+    my $self    = shift;
+    my $options = shift;
+    my $trace   = shift // $self->default_connect_trace;
+
+    my $dbh = $self->SUPER::connect(
+        {
+            ( %{ $self->default_connect_options }, %{ $options }, )
+        })
+        or return undef;
+
+    $dbh->{private_LedgerSMB} = {
+        schema    =>  $self->schema,
+    };
+    $dbh->do(q{set client_min_messages = 'warning'});
+
+    if ($trace) {
+        # See https://metacpan.org/pod/DBI#TRACING
+        my @trace_args = split /=/, $trace, 2;
+        $dbh->trace(@trace_args);
+    }
+
+    return $dbh;
+}
+
+=head2 require_version($dbh, $version)
+
+Checks for a setting called 'ignore_version' and returns immediately if this is
+set and true.
+
+Otherwise, requires a specific version (exactly).  Dies if doesn't match.
+
+The ignore_version setting is intended to be temporarily set during
+zero-downtime upgrades.
+
+=cut
+
+sub require_version {
+    my ($self, $dbh, $expected_version) = @_;
+
+
+    my $settings = $dbh->selectall_hashref(
+        q{SELECT * FROM defaults
+           WHERE setting_key IN ('ignore_version', 'version')},
+        'setting_key')
+        or die $dbh->errstr;
+
+    return if $settings->{ignore_version};
+
+    if ($expected_version eq $settings->{version}) {
+        return '';
+    }
+    else {
+        return $settings->{version};
+    }
 }
 
 =head2 $db->copy('new_name')

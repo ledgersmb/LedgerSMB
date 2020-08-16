@@ -53,7 +53,7 @@ my @modules =
      'LedgerSMB::Template::ODS',
      'LedgerSMB::Template::LaTeX',
           'LedgerSMB::App_State',
-          'LedgerSMB::DBH', 'LedgerSMB::I18N',
+          'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer',
           'LedgerSMB::User', 'LedgerSMB::Entity',
           'LedgerSMB::GL', 'LedgerSMB::Timecard',
