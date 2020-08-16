@@ -37,9 +37,10 @@ use DBI;
 use File::Spec;
 use File::Temp;
 use Log::Log4perl;
+
+
 use Moose;
 use namespace::autoclean;
-
 extends 'PGObject::Util::DBAdmin';
 
 use LedgerSMB::Database::Loadorder;
@@ -52,9 +53,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 =head1 PROPERTIES
 
-=over
-
-=item source_dir
+=head2 source_dir
 
 Indicates the path to the directory which holds the 'Pg-database.sql' file
 and the associated changes, charts and gifi files.
@@ -66,10 +65,26 @@ to be the root of the LedgerSMB source tree.
 
 has source_dir => (is => 'ro', default => './sql');
 
-=back
+=head2 default_connect_options
 
 =cut
 
+has default_connect_options => (is => 'rw',
+                                default => sub {
+                                    {
+                                        PrintError          => 0,
+                                        AutoCommit          => 0,
+                                        AutoInactiveDestroy => 1,
+                                        pg_enable_utf8      => 1,
+                                        pg_server_prepare   => 0,
+                                    }
+                                });
+
+=head2 schema
+
+=cut
+
+has schema => (is => 'ro', default => 'public');
 
 =head1 METHODS
 
@@ -221,6 +236,29 @@ sub _set_system_info {
     };
 
     return;
+}
+
+sub connect {
+    my $options = shift;
+    my $trace   = shift // $self->default_connect_trace;
+
+    my $dbh = $self->SUPER::connect(
+        {
+            ( %{ $self->default_options }, %{ $options }, )
+        });
+
+    $dbh->{private_LedgerSMB} = {
+        schema    =>  LedgerSMB::Sysconfig::db_namespace(),
+    };
+    $dbh->do(q{set client_min_messages = 'warning'});
+
+    if ($trace) {
+        # See https://metacpan.org/pod/release/TIMB/DBI-1.616/DBI.pm#TRACING
+        my @trace_args = split /=/, $trace, 2;
+        $dbh->trace(@trace_args);
+    }
+
+    return $dbh;
 }
 
 sub get_info {

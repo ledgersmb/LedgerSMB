@@ -49,7 +49,7 @@ use Plack::Util;
 use Plack::Util::Accessor qw( provide_connection default_company );
 use Scope::Guard qw( guard );
 
-use LedgerSMB::DBH;
+use LedgerSMB::Database;
 use LedgerSMB::PSGI::Util;
 
 =head1 METHODS
@@ -82,18 +82,20 @@ sub _connect {
     my ($env, $login, $password, $company) = @_;
 
     my $session = $env->{'lsmb.session'};
-    my @creds = (! $login)
+    my %creds;
+    @creds{qw/dbname username password/} = (! $login)
         ? (@{$session}{qw/company login password/})
         : ($company, $login, $password);
 
-    unless ($creds[1] && $creds[2]) {
+    unless ($creds{username} && $creds{password}) {
         if (! wantarray) {
             die q{Expected username and password};
         }
         return (undef, LedgerSMB::PSGI::Util::unauthorized());
     }
 
-    my $dbh = $env->{'lsmb.db'} = LedgerSMB::DBH->connect(@creds);
+    my $dbh = $env->{'lsmb.db'} =
+        LedgerSMB::Database->new(%creds)->connect;
 
     if (! defined $dbh) {
         $env->{'psgix.logger'}->(
