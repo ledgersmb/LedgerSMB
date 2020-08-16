@@ -72,7 +72,6 @@ use LedgerSMB::Setting;
 
 
 use Carp;
-use DBI;
 use List::Util qw(first);
 use Log::Log4perl;
 use LWP::Simple;
@@ -410,14 +409,14 @@ sub numtextrows {
 
 =item $form->dberror($msg);
 
-Outputs a message as in $form->error but with $DBI::errstr automatically
+Outputs a message as in $form->error but with $form->{dbh}->errstr automatically
 appended to $msg.
 
 =cut
 
 sub dberror {
     my ( $self, $msg ) = @_;
-    $self->error( "$msg\n" . $DBI::errstr );
+    $self->error( "$msg\n" . $self->{dbh}->errstr );
 }
 
 =item $form->isblank($name, $msg);
@@ -1264,7 +1263,7 @@ Returns true if any roles are allowed, false otherwise.
 sub is_allowed_role {
     my ($self, $rolelist) = @_;
     my $sth = $self->{dbh}->prepare('SELECT lsmb__is_allowed_role(?)');
-    $sth->execute($rolelist) || die $DBI::errstr;
+    $sth->execute($rolelist) || die $sth->errstr;
     my ($access) = $sth->fetchrow_array;
     return $access;
 }

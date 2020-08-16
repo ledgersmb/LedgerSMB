@@ -511,7 +511,7 @@ sub post_transaction {
 
     # save printed and queued
     $form->save_status($dbh);
-    return 1 unless $DBI::errstr;
+    return 1 unless $dbh->errstr;
 }
 
 =item get_files

@@ -99,8 +99,7 @@ sub init_taxes {
 
         push @taxes, $tax;
     }
-    # http://search.cpan.org/dist/DBI/DBI.pm#finish
-    # documents we should NOT call $sth->finish here.
+
     return @taxes;
 }
 
