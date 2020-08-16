@@ -12,7 +12,8 @@ This module wraps both DBI and the PostgreSQL commandline tools.
   my $db = LedgerSMB::Database->new({
        dbname => 'mycompany',
        username => 'foo',
-       password => 'foospassword'
+       password => 'foospassword',
+       schema   => 'non_public',
   });
 
   $db->load_modules('LOADORDER');
@@ -37,9 +38,10 @@ use DBI;
 use File::Spec;
 use File::Temp;
 use Log::Log4perl;
+
+
 use Moose;
 use namespace::autoclean;
-
 extends 'PGObject::Util::DBAdmin';
 
 use LedgerSMB::Database::Loadorder;
@@ -52,9 +54,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 =head1 PROPERTIES
 
-=over
-
-=item source_dir
+=head2 source_dir
 
 Indicates the path to the directory which holds the 'Pg-database.sql' file
 and the associated changes, charts and gifi files.
@@ -66,10 +66,26 @@ to be the root of the LedgerSMB source tree.
 
 has source_dir => (is => 'ro', default => './sql');
 
-=back
+=head2 default_connect_options
 
 =cut
 
+has default_connect_options => (is => 'rw',
+                                default => sub {
+                                    {
+                                        PrintError          => 0,
+                                        AutoCommit          => 0,
+                                        AutoInactiveDestroy => 1,
+                                        pg_enable_utf8      => 1,
+                                        pg_server_prepare   => 0,
+                                    }
+                                });
+
+=head2 schema
+
+=cut
+
+has schema => (is => 'ro', default => 'public');
 
 =head1 METHODS
 
@@ -223,6 +239,7 @@ sub _set_system_info {
     return;
 }
 
+
 sub get_info {
     my $self = shift @_;
     my $retval = { # defaults
@@ -351,6 +368,70 @@ sub get_info {
     return $retval;
 }
 
+=head2 connect($options)
+
+Calls C<PGObject::Util::DBAdmin>'s C<connect> method with C<$options>,
+merged with C<default_options> attribute's value.
+
+Upon succesfull return, sets the connection's C<client_min_messages>
+to C<warning>.
+
+This routine claims the C<private_LedgerSMB> slot in the database handle
+for storage of LedgerSMB internal data.
+
+=cut
+
+sub connect {
+    my $self    = shift;
+    my $options = shift // {};
+
+    my $dbh = $self->SUPER::connect(
+        {
+            ( %{ $self->default_connect_options }, %{ $options }, )
+        })
+        or return undef;
+
+    $dbh->{private_LedgerSMB} = {
+        schema    =>  $self->schema,
+    };
+    $dbh->do(q{set client_min_messages = 'warning'});
+
+    return $dbh;
+}
+
+=head2 require_version($dbh, $version)
+
+Checks for a setting called 'ignore_version' and returns immediately if this is
+set and true.
+
+Otherwise, requires a specific version (exactly).  Dies if doesn't match.
+
+The ignore_version setting is intended to be temporarily set during
+zero-downtime upgrades.
+
+=cut
+
+sub require_version {
+    my ($self, $dbh, $expected_version) = @_;
+
+
+    my $settings = $dbh->selectall_hashref(
+        q{SELECT * FROM defaults
+           WHERE setting_key IN ('ignore_version', 'version')},
+        'setting_key')
+        or die $dbh->errstr;
+
+    return if ($settings->{ignore_version}
+               and $settings->{ignore_version}->{value});
+
+    if ($expected_version eq $settings->{version}->{value}) {
+        return '';
+    }
+    else {
+        return $settings->{version};
+    }
+}
+
 =head2 $db->copy('new_name')
 
 Copies the existing database to a new name.
@@ -366,7 +447,7 @@ sub copy {
          dbname    => $new_name,
          username  => $self->username,
          password  => $self->password,
-     ))->connect->do(
+     ))->connect({ AutoCommit => 1 })->do(
         q|SELECT setting__set('role_prefix',
                               coalesce((setting_get('role_prefix')).value,?))|,
         undef, 'lsmb_' . $self->dbname . '__');

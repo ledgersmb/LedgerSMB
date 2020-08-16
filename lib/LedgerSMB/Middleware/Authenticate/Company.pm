@@ -46,10 +46,11 @@ use DBI;
 use HTTP::Status qw( is_server_error );
 use Plack::Request;
 use Plack::Util;
-use Plack::Util::Accessor qw( provide_connection default_company );
+use Plack::Util::Accessor
+    qw( provide_connection default_company schema );
 use Scope::Guard qw( guard );
 
-use LedgerSMB::DBH;
+use LedgerSMB::Database;
 use LedgerSMB::PSGI::Util;
 
 =head1 METHODS
@@ -79,21 +80,23 @@ storage available through C<$env->{'lsmb.session'}>.
 =cut
 
 sub _connect {
-    my ($env, $login, $password, $company) = @_;
+    my ($self, $env, $login, $password, $company) = @_;
 
     my $session = $env->{'lsmb.session'};
-    my @creds = (! $login)
+    my %creds;
+    @creds{qw/dbname username password/} = (! $login)
         ? (@{$session}{qw/company login password/})
         : ($company, $login, $password);
 
-    unless ($creds[1] && $creds[2]) {
+    unless ($creds{username} && $creds{password}) {
         if (! wantarray) {
             die q{Expected username and password};
         }
         return (undef, LedgerSMB::PSGI::Util::unauthorized());
     }
 
-    my $dbh = $env->{'lsmb.db'} = LedgerSMB::DBH->connect(@creds);
+    my $dbh = $env->{'lsmb.db'} =
+        LedgerSMB::Database->new(schema => $self->schema, %creds)->connect;
 
     if (! defined $dbh) {
         $env->{'psgix.logger'}->(
@@ -128,7 +131,7 @@ sub call {
     if ($self->provide_connection eq 'open'
         or $self->provide_connection eq 'closed') {
         my $r;
-        ($dbh, $r) = _connect($env);
+        ($dbh, $r) = _connect($self, $env);
         return $r if defined $r;
 
         if ($self->provide_connection) {
@@ -139,7 +142,9 @@ sub call {
                 if ($self->provide_connection eq 'closed') {
                     $env->{'lsmb.db_cb'} = sub {
                         my $env = shift;
-                        return $dbh = $env->{'lsmb.db'} = _connect($env, @_);
+                        return $dbh =
+                            $env->{'lsmb.db'} =
+                            _connect($self, $env, @_);
                     };
                 }
                 $dbh->disconnect;
@@ -155,7 +160,7 @@ sub call {
         # It may not want a pre-initialized db, but... it might request one.
         $env->{'lsmb.db_cb'} = sub {
             my $env = shift;
-            return _connect($env, @_);
+            return _connect($self, $env, @_);
         };
     }
 

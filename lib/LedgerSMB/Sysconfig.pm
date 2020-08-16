@@ -20,7 +20,6 @@ use warnings;
 
 use Config;
 use Config::IniFiles;
-use DBI qw(:sql_types);
 # After Perl 5.20 is the minimum required version,
 # we can drop the restriction on the match vars
 # because 5.20 doesn't copy the data (but uses
@@ -314,11 +313,6 @@ The default is to use the iso date format (yyyy-mm-dd).};
 def 'log_level',
     section => 'main',
     default => 'ERROR',
-    doc => q{};
-
-def 'DBI_TRACE',
-    section => 'main', # SHOULD BE 'debug' ????
-    default => 0,
     doc => q{};
 
 def 'cache_templates',

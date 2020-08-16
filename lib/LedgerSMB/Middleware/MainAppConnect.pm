@@ -35,7 +35,6 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use DBI;
 use HTTP::Status qw/ is_server_error /;
 use Plack::Request;
 use Plack::Util;
@@ -43,7 +42,7 @@ use Plack::Util::Accessor
     qw( host port user password provide_connection require_version );
 use Scope::Guard qw/ guard /;
 
-use LedgerSMB::DBH;
+use LedgerSMB::Database;
 use LedgerSMB::PSGI::Util;
 
 =head1 METHODS
@@ -71,7 +70,7 @@ sub _connect {
 
     if ($self->require_version) {
         my $version =
-            LedgerSMB::DBH->require_version($dbh, $self->require_version);
+            LedgerSMB::Database->require_version($dbh, $self->require_version);
         if ($version) {
             $env->{'lsmb.session.expire'} = 1;
             return (undef, LedgerSMB::PSGI::Util::incompatible_database(

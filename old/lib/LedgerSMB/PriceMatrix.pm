@@ -60,7 +60,7 @@ use warnings;
 
 =item price_matrix_query( $dbh, $form )
 
-Returns a DBI statement handle from $dbh, based on the values provided in $form
+Returns statement handle from $dbh, based on the values provided in $form
 
 =cut
 

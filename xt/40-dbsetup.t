@@ -6,7 +6,6 @@ use Test2::V0;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
-use LedgerSMB::DBH;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 use DBI;
@@ -60,14 +59,14 @@ $patch_log_dbh->disconnect; # Without disconnecting, the copy below fails...
 
 my $version;
 my $dbh = $db->connect;
-$version = LedgerSMB::DBH->require_version($dbh, $LedgerSMB::VERSION);
+$version = LedgerSMB::Database->require_version($dbh, $LedgerSMB::VERSION);
 $dbh->disconnect;
-ok(! $version,
+is($version, '',
    q{Database matches required version ('require_version' returns false)})
-        or bail_out(q{LedgerSMB::DBH reports incorrect database version - no use continuing});
+    or bail_out(q{LedgerSMB::Database reports incorrect database version - no use continuing});
 
 
-$dbh = $db->connect;
+$dbh = $db->connect({AutoCommit=>1});
 # Set up sequence randomization
 $dbh->do(q|
 do
@@ -150,7 +149,7 @@ $copy_sth->finish;
 $copy_dbh->disconnect;
 
 {
-    my $dbh = $db->connect;
+    my $dbh = $db->connect({AutoCommit => 1});
     $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy"|);
     $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy_copy"|);
 }
