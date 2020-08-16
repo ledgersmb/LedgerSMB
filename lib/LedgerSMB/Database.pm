@@ -421,9 +421,10 @@ sub require_version {
         'setting_key')
         or die $dbh->errstr;
 
-    return if $settings->{ignore_version};
+    return if ($settings->{ignore_version}
+               and $settings->{ignore_version}->{value});
 
-    if ($expected_version eq $settings->{version}) {
+    if ($expected_version eq $settings->{version}->{value}) {
         return '';
     }
     else {
@@ -446,7 +447,7 @@ sub copy {
          dbname    => $new_name,
          username  => $self->username,
          password  => $self->password,
-     ))->connect->do(
+     ))->connect({ AutoCommit => 1 })->do(
         q|SELECT setting__set('role_prefix',
                               coalesce((setting_get('role_prefix')).value,?))|,
         undef, 'lsmb_' . $self->dbname . '__');

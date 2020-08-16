@@ -66,7 +66,7 @@ is($version, '',
     or bail_out(q{LedgerSMB::Database reports incorrect database version - no use continuing});
 
 
-$dbh = $db->connect;
+$dbh = $db->connect({AutoCommit=>1});
 # Set up sequence randomization
 $dbh->do(q|
 do
@@ -149,7 +149,7 @@ $copy_sth->finish;
 $copy_dbh->disconnect;
 
 {
-    my $dbh = $db->connect;
+    my $dbh = $db->connect({AutoCommit => 1});
     $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy"|);
     $dbh->do(qq|DROP DATABASE "$ENV{LSMB_NEW_DB}_copy_copy"|);
 }
