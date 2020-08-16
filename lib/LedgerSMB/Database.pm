@@ -383,8 +383,7 @@ for storage of LedgerSMB internal data.
 
 sub connect {
     my $self    = shift;
-    my $options = shift;
-    my %args = @_;
+    my $options = shift // {};
 
     my $dbh = $self->SUPER::connect(
         {
