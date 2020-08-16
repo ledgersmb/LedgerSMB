@@ -618,7 +618,6 @@ a limiting transdate of the current date.
 sub project_sales_order {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query = qq|SELECT current_date|;

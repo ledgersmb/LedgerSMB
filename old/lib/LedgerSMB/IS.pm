@@ -88,7 +88,6 @@ sub invoice_details {
 
     $form->{duedate} = $form->{transdate} unless ( $form->{duedate} );
 
-    # connect to database
 
     my $dbh = $form->{dbh};
 

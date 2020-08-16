@@ -493,7 +493,6 @@ sub save {
 sub delete {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     # delete spool files
@@ -561,7 +560,6 @@ sub retrieve {
     use LedgerSMB::PriceMatrix;
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $bu_sth = $dbh->prepare(
@@ -769,7 +767,6 @@ sub exchangerate_defaults {
 sub order_details {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
     my $query;
     my $sth;
@@ -1938,7 +1935,6 @@ sub transfer {
 sub get_soparts {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $id;
@@ -2068,7 +2064,6 @@ sub generate_orders {
         }
     }
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     # foreign exchange rates

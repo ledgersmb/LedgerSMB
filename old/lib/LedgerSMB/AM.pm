@@ -74,7 +74,6 @@ sub get_gifi {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
     my $sth;
 
@@ -169,7 +168,6 @@ sub delete_gifi {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     # id is the old account number!
@@ -197,7 +195,6 @@ sub get_warehouse {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
     my $sth;
 
@@ -244,7 +241,6 @@ sub save_warehouse {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $sth;
@@ -284,7 +280,6 @@ sub delete_warehouse {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     $query = qq|
@@ -308,7 +303,6 @@ sub get_business {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query = qq|
@@ -339,7 +333,6 @@ sub save_business {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     $form->{description} =~ s/-(-)+/-/g;
@@ -383,7 +376,6 @@ $myconfig is unused.
 sub delete_business {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     $query = qq|
@@ -408,7 +400,6 @@ sub get_sic {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query = qq|
@@ -507,7 +498,6 @@ sub get_language {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query = qq|
@@ -540,7 +530,6 @@ sub save_language {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     $form->{code} =~ s/ //g;
@@ -584,7 +573,6 @@ sub delete_language {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     $query = qq|
@@ -1016,7 +1004,6 @@ sub taxes {
     my ( $self, $myconfig, $form ) = @_;
     my $taxaccounts = '';
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query = qq|
@@ -1075,7 +1062,6 @@ sub save_taxes {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     foreach my $item ( split / /, $form->{taxaccounts} ) {

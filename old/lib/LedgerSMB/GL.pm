@@ -76,7 +76,6 @@ sub post_transaction {
     my $department_id;
     my $i;
 
-    # connect to database, turn off AutoCommit
     my $dbh = $form->{dbh};
 
     my $query;
@@ -253,7 +252,6 @@ sub transaction {
 
     my ( $query, $sth, $ref );
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     if ( $form->{id} ) {
@@ -368,7 +366,6 @@ sub get_all_acc_dep_pro
 
    my ( $query, $sth, $ref );
 
-   # connect to database
    my $dbh = $form->{dbh};
 
     $query = qq|SELECT id,accno,description
