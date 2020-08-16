@@ -12,7 +12,8 @@ This module wraps both DBI and the PostgreSQL commandline tools.
   my $db = LedgerSMB::Database->new({
        dbname => 'mycompany',
        username => 'foo',
-       password => 'foospassword'
+       password => 'foospassword',
+       schema   => 'non_public',
   });
 
   $db->load_modules('LOADORDER');

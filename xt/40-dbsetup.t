@@ -6,7 +6,6 @@ use Test2::V0;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
-use LedgerSMB::DBH;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 use DBI;
@@ -60,11 +59,11 @@ $patch_log_dbh->disconnect; # Without disconnecting, the copy below fails...
 
 my $version;
 my $dbh = $db->connect;
-$version = LedgerSMB::DBH->require_version($dbh, $LedgerSMB::VERSION);
+$version = LedgerSMB::Database->require_version($dbh, $LedgerSMB::VERSION);
 $dbh->disconnect;
 ok(! $version,
    q{Database matches required version ('require_version' returns false)})
-        or bail_out(q{LedgerSMB::DBH reports incorrect database version - no use continuing});
+        or bail_out(q{LedgerSMB::Database reports incorrect database version - no use continuing});
 
 
 $dbh = $db->connect;

@@ -46,7 +46,8 @@ use DBI;
 use HTTP::Status qw( is_server_error );
 use Plack::Request;
 use Plack::Util;
-use Plack::Util::Accessor qw( provide_connection default_company );
+use Plack::Util::Accessor
+    qw( provide_connection default_company schema );
 use Scope::Guard qw( guard );
 
 use LedgerSMB::Database;
@@ -79,7 +80,7 @@ storage available through C<$env->{'lsmb.session'}>.
 =cut
 
 sub _connect {
-    my ($env, $login, $password, $company) = @_;
+    my ($self, $env, $login, $password, $company) = @_;
 
     my $session = $env->{'lsmb.session'};
     my %creds;
@@ -95,7 +96,7 @@ sub _connect {
     }
 
     my $dbh = $env->{'lsmb.db'} =
-        LedgerSMB::Database->new(%creds)->connect;
+        LedgerSMB::Database->new(schema => $self->schema, %creds)->connect;
 
     if (! defined $dbh) {
         $env->{'psgix.logger'}->(
@@ -130,7 +131,7 @@ sub call {
     if ($self->provide_connection eq 'open'
         or $self->provide_connection eq 'closed') {
         my $r;
-        ($dbh, $r) = _connect($env);
+        ($dbh, $r) = _connect($self, $env);
         return $r if defined $r;
 
         if ($self->provide_connection) {
@@ -141,7 +142,9 @@ sub call {
                 if ($self->provide_connection eq 'closed') {
                     $env->{'lsmb.db_cb'} = sub {
                         my $env = shift;
-                        return $dbh = $env->{'lsmb.db'} = _connect($env, @_);
+                        return $dbh =
+                            $env->{'lsmb.db'} =
+                            _connect($self, $env, @_);
                     };
                 }
                 $dbh->disconnect;
@@ -157,7 +160,7 @@ sub call {
         # It may not want a pre-initialized db, but... it might request one.
         $env->{'lsmb.db_cb'} = sub {
             my $env = shift;
-            return _connect($env, @_);
+            return _connect($self, $env, @_);
         };
     }
 
