@@ -159,6 +159,12 @@ body.menu,
     font-size: var(--body-font-size);
 }
 
+.mainpanel,
+.menupanel {
+    position: absolute !important;
+    z-index: 1000 !important;
+}
+
 .cornerlogo {
     background: var(--cornerlogo-bg);
     border: var(--cornerlogo-border);

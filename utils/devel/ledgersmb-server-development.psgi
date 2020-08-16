@@ -29,8 +29,8 @@ require Plack::Middleware::Pod
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
-die "Library verification failed (found $version from '$path', expected 1.7)"
-    unless $version =~ /^1\.7\./;
+die "Library verification failed (found $version from '$path', expected 1.9)"
+    unless $version =~ /^1\.9\./;
 
 # Report to the console what type of dojo we are running
 if ( $LedgerSMB::Sysconfig::dojo_built) {
@@ -76,7 +76,7 @@ builder {
                 enable "Debug::$_";
             }
         }
-        for (qw(LazyLoadModules Log4perl)) {
+        for (qw(LazyLoadModules Log4perl RefCounts)) {
             enable "Debug::$_"
                 if check_config_option("$_","Plack::Middleware::Debug::$_");
         }
