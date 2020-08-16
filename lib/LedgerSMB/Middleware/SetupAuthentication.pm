@@ -32,17 +32,9 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use DBI;
 use Plack::Request;
-use Plack::Util;
-use Plack::Util::Accessor;
 
-use LedgerSMB;
 use LedgerSMB::Auth;
-use LedgerSMB::App_State;
-use LedgerSMB::DBH;
-use LedgerSMB::PSGI::Util;
-use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 
