@@ -61,9 +61,9 @@ my $version;
 my $dbh = $db->connect;
 $version = LedgerSMB::Database->require_version($dbh, $LedgerSMB::VERSION);
 $dbh->disconnect;
-ok(! $version,
+is($version, '',
    q{Database matches required version ('require_version' returns false)})
-        or bail_out(q{LedgerSMB::Database reports incorrect database version - no use continuing});
+    or bail_out(q{LedgerSMB::Database reports incorrect database version - no use continuing});
 
 
 $dbh = $db->connect;
