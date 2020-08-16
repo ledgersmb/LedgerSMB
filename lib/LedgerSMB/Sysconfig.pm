@@ -315,11 +315,6 @@ def 'log_level',
     default => 'ERROR',
     doc => q{};
 
-def 'DBI_TRACE',
-    section => 'main', # SHOULD BE 'debug' ????
-    default => 0,
-    doc => q{};
-
 def 'cache_templates',
     section => 'main',
     default => 0,

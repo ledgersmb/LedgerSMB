@@ -373,9 +373,8 @@ sub get_info {
 Calls C<PGObject::Util::DBAdmin>'s C<connect> method with C<$options>,
 merged with C<default_options> attribute's value.
 
-Upon succesfull return, sets DBI tracing parameters as specified by
-the C<default_connect_trace> attribute and connection's
-C<client_min_messages> to C<warning>.
+Upon succesfull return, sets the connection's C<client_min_messages>
+to C<warning>.
 
 This routine claims the C<private_LedgerSMB> slot in the database handle
 for storage of LedgerSMB internal data.
@@ -385,7 +384,7 @@ for storage of LedgerSMB internal data.
 sub connect {
     my $self    = shift;
     my $options = shift;
-    my $trace   = shift // $self->default_connect_trace;
+    my %args = @_;
 
     my $dbh = $self->SUPER::connect(
         {
@@ -397,12 +396,6 @@ sub connect {
         schema    =>  $self->schema,
     };
     $dbh->do(q{set client_min_messages = 'warning'});
-
-    if ($trace) {
-        # See https://metacpan.org/pod/DBI#TRACING
-        my @trace_args = split /=/, $trace, 2;
-        $dbh->trace(@trace_args);
-    }
 
     return $dbh;
 }
