@@ -78,7 +78,6 @@ sub post_transaction {
 
     $form->{crdate} ||= 'now';
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query;
@@ -579,7 +578,6 @@ sub get_name {
         $form->{vc} = 'customer';
     }
 
-    # grab the db connection
     my $dbh = $form->{dbh};
 
     my $dateformat = $myconfig->{dateformat};

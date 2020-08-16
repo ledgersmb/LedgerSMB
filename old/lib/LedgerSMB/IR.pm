@@ -608,7 +608,6 @@ sub post_invoice {
 sub retrieve_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query;
@@ -943,7 +942,6 @@ sub retrieve_item {
 sub vendor_details {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     # get rest for the vendor
@@ -991,7 +989,6 @@ sub vendor_details {
 sub item_links {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $query = qq|

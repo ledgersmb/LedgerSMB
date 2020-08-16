@@ -72,7 +72,6 @@ sub get_files {
 sub get_part {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to db
     my $dbh = $form->{dbh};
     my $i;
 
@@ -673,7 +672,6 @@ sub update_assembly {
 sub retrieve_assemblies {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $where = '1 = 1';
@@ -935,7 +933,6 @@ sub create_links {
 
     $logger->debug('start');
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     my $ref;
