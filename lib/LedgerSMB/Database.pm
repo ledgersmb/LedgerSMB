@@ -621,12 +621,13 @@ sub upgrade_modules {
                 })
         or die 'Modules failed to be loaded.';
 
-    my $dbh = $self->connect({PrintError=>0});
+    my $dbh = $self->connect({PrintError=>0, AutoCommit=>1});
     my $sth = $dbh->prepare(
           q{UPDATE defaults SET value = ? WHERE setting_key = 'version'}
     );
     $sth->execute($version)
         or die 'Version not updated.';
+    $dbh->disconnect;
 
     return 1;
 }
@@ -706,6 +707,7 @@ sub stats {
        { table => $_, query => $qt };
     } @tables;
 
+    $dbh->disconnect;
     return $results;
 }
 
