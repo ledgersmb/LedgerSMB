@@ -221,6 +221,11 @@ def 'PerlConfig',
     default => 0,
     doc => q{};
 
+def 'RefCounts',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
 def 'Response',
     section => 'debug',
     default => 0,

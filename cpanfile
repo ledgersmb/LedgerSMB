@@ -153,6 +153,7 @@ on 'develop' => sub {
             recommends 'Plack::Middleware::Debug::LazyLoadModules';
             recommends 'Plack::Middleware::Debug::Log4perl';
             recommends 'Plack::Middleware::Debug::Profiler::NYTProf';
+            recommends 'Plack::Middleware::Debug::RefCounts';
             recommends 'Plack::Middleware::Debug::TraceENV';
             recommends 'Plack::Middleware::Debug::W3CValidate';
             recommends 'Plack::Middleware::InteractiveDebugger';
