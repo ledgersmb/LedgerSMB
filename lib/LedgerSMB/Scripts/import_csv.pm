@@ -351,8 +351,8 @@ sub _process_gl_multi {
                           $voucher_id, -1*$entry{amount}, -1*$entry{amount_fx})
             or die $sth_acc->errstr;
         # credit row
-        $sth_acc->execute($trans_id, @entry{qw(transdate source_debit memo
-                                               debit_accno curr )},
+        $sth_acc->execute($trans_id, @entry{qw(transdate source_credit memo
+                                               credit_accno curr )},
                           $voucher_id, $entry{amount}, $entry{amount_fx})
             or die $sth_acc->errstr;
     }
