@@ -110,7 +110,15 @@ sub get_option_data {
 
     # Localize the list, making sure to keep the language key as is
     foreach my $row ( @rows ) {
+        # Pull languages codes are of the form
+        # 'Language(_country)?' where country is set when there is a variant
+        # for a specific country.
         my ($language,$region) = split /_/, $row->{code};
+        # Locale::CLDR defines all language and country codes and some variants
+        # have their name defined in specific
+        # For example, fr_CA (French Canadian) has a translation availablr in
+        # Spanish and French languages but nowhere else, so we need to compose
+        # one for those others.
         # Use the language_country localized version if available
         my $label = $languages{$row->{code}} // $languages{$language};
         # Append the country if required
@@ -224,4 +232,3 @@ sub get_all_users {
 =cut
 
 1;
-
