@@ -66,6 +66,8 @@ requires 'MooX::Types::MooseLike::Base';  # for Email::Sender::Transport::SMTP w
 requires 'Moose';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
+# Locale::CLDR depends on MooX::ClassAttribute, but our classes are Moose
+# classes which means MooX::* gets upgraded to MooseX::*
 requires 'MooseX::ClassAttribute';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
