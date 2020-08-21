@@ -176,6 +176,7 @@ COMMENT ON TABLE pricegroup IS
 $$ Pricegroups are groups of customers who are assigned prices and discounts
 together.$$;
 --TABLE language moved here because of later references
+-- Keep this in sync with the Locale::CLDR::Locales::* required in cpanfile
 INSERT INTO language (code, description)
 VALUES ('ar_EG', 'Arabic (Egypt)'),
        ('es_AR', 'Spanish (Argentina)'),
@@ -4774,4 +4775,3 @@ WHERE language_code is null; -- Pseudo-Pkey
 
 
 commit;
-

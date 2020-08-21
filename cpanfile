@@ -27,6 +27,7 @@ recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
 recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';
 requires 'Locale::CLDR';
+# Keep thoss in sync with the languages defined in Pg-database.sql
 requires 'Locale::CLDR::Locales::Ar';
 requires 'Locale::CLDR::Locales::Bg';
 requires 'Locale::CLDR::Locales::Ca';
