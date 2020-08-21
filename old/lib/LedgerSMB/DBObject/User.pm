@@ -116,7 +116,7 @@ sub get_option_data {
         my ($language,$region) = split /_/, $row->{code};
         # Locale::CLDR defines all language and country codes and some variants
         # have their name defined in specific
-        # For example, fr_CA (French Canadian) has a translation availablr in
+        # For example, fr_CA (French Canadian) has a translation available in
         # Spanish and French languages but nowhere else, so we need to compose
         # one for those others.
         # Use the language_country localized version if available
