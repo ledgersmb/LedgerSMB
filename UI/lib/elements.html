@@ -191,7 +191,7 @@
         PROCESS attributes
            attribute_data        = element_data,
            attribute_defaults    =
-                (element_data.type == "multiselect") ? element_defaults.multiselect : element_defaults.select,
+                ((element_data.type == "multiselect") ? element_defaults.multiselect : element_defaults.select),
            element_keys          = select_keys,
            custom_attribute_data = element_data.attributes;
 
@@ -203,10 +203,8 @@
            PROCESS option parent_id = parent_id, optindex = 0, option_data = {};
         END;
 
-        IF element_data.default_values;
-            FOREACH option IN element_data.options;
-                PROCESS option  parent_id = parent_id, optindex = loop.count, option_data = option;
-            END;
+        FOREACH option IN element_data.options;
+            PROCESS option  parent_id = parent_id, optindex = loop.count, option_data = option;
         END;
         "</select>";
       END %]
@@ -230,7 +228,7 @@
          element_keys          = option_keys,
          custom_attribute_data = option_data.attributes;
 
-     "<option $all_attributes$option_selected >" _ option_data.text "</option>";
+     "<option $all_attributes$option_selected >" _ option_data.text _ "</option>";
   %]
 [% END %]
 
@@ -294,11 +292,11 @@
        IF attribute_data.$element_attribute.defined() and (attribute_data.$element_attribute != "");
           all_attributes =
              "$all_attributes $element_attribute=\"" _ attribute_data.$element_attribute _ "\"";
-       ELSIF attribute_defaults.$element_attribute.defined() and (attribute_defaults.element_attribute != "");
+       ELSIF attribute_defaults.$element_attribute.defined() and (attribute_defaults.$element_attribute != "");
           all_attributes =
              "$all_attributes $element_attribute=\"" _ attribute_defaults.$element_attribute _ "\"";
        END;
-     END
+     END;
     FOREACH element_attribute IN custom_attribute_data;
        all_attributes = all_attributes _ " " _ element_attribute.key _ '="' _ element_attribute.value _ '"';
     END;
@@ -353,8 +351,8 @@
 [% BLOCK tooltip;
    IF element_data && element_data.msg.defined();
       ref_if = element_data.ref_id;
-      position = element_data.position.defined() ?
-            (", position:['" _ element_data.position.join("','") _ "']") : '';
+      position = (element_data.position.defined() ?
+            (", position:['" _ element_data.position.join("','") _ "']") : "");
 
       "<div data-dojo-type=\"dijit/Tooltip\" data-dojo-props=\"connectId:'$ref_id'$position\"  >";
       INCLUDE decorated_text element_data = { msg => element_data.msg };
