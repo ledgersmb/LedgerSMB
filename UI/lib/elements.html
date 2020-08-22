@@ -316,10 +316,10 @@
 [% BLOCK attributes %]
   [% all_attributes = "";
      FOREACH element_attribute IN element_keys;  # Loop through each allowed attribute.
-       IF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");
+       IF attribute_data.$element_attribute.defined() and (attribute_data.$element_attribute != "");
           all_attributes =
              "$all_attributes $element_attribute=\"" _ attribute_data.$element_attribute _ "\"";
-       ELSIF attribute_defaults.defined(element_attribute) and (attribute_defaults.${element_attribute} != "");
+       ELSIF attribute_defaults.$element_attribute.defined() and (attribute_defaults.element_attribute != "");
           all_attributes =
              "$all_attributes $element_attribute=\"" _ attribute_defaults.$element_attribute _ "\"";
        END;
@@ -337,19 +337,19 @@
 [% END %]
 
 [% BLOCK auto_id  # Automatically builds the id tag for the element if possible. %]
-  [% UNLESS element_data.defined('id');
+  [% UNLESS element_data.id.defined();
         # id attribute should always be set, so auto-set it if it is not defined.
         element_id = "";
         # Label ids default to [for]-label.
-        IF element_type == 'label' AND (element_data.defined('for') OR element_type == 'toggle');
+        IF element_type == 'label' AND (element_data.for.defined() OR element_type == 'toggle');
            element_id = element_data.for _ "-label";
         ELSIF ((element_type == 'input' AND element_data.type == 'radio')
                OR element_type == 'button')
-              AND element_data.defined('name') AND element_data.defined('value');
+              AND element_data.name.defined() AND element_data.value.defined();
            # radios and buttons get name-value for uniqueness.
            element_id = element_data.name _ "-" _ element_data.value;
         ELSIF (element_type == 'input' OR element_type == 'textarea' OR element_type == 'select')
-              AND element_data.defined('name');
+              AND element_data.name.defined();
            element_id = element_data.name;
         END;
 
@@ -363,7 +363,7 @@
 [% BLOCK auto_label  # Sets a label for a form element if the special 'label' key is passed. %]
   [% IF element_data.label.defined() and element_data.label != '_none_';
         # Add a 'for' attribute for the label if possible.
-        IF element_data.defined('id');
+        IF element_data.id.defined();
            label_id = ' id="' _ element_data.id _ '-label"';
            label_for = ' for="' _ element_data.id _ '"';
         ELSE;
@@ -372,7 +372,7 @@
         END;
 
         # Label inherits class of the related element if possible.
-        IF element_data.defined('class');
+        IF element_data.class.defined();
            label_class = ' class="' _ element_data.class _ '"';
         ELSE;
            label_class = "";
