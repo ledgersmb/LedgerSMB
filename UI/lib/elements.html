@@ -139,8 +139,8 @@
          input_defaults  = element_defaults.${element_data.type} or {};
 
          IF 'text' == element_data.type and 'date' == element_data.class;
-             input_type_keys = default_input_keys;
-             input_defaults = date_defaults;
+             input_type_keys = input_keys.date;
+             input_defaults = element_defaults.date;
          END;
 
          PROCESS attributes
@@ -152,7 +152,7 @@
          IF label_pos == -1;
             PROCESS auto_label;
          END;
-         "<input $all_attributes />";
+         "<input$all_attributes />";
          IF label_pos == 1;
            PROCESS auto_label;
          END;
@@ -168,13 +168,13 @@
 
         PROCESS attributes
             attribute_data        = element_data,
-            attribute_defaults    = textarea_defaults,
+            attribute_defaults    = element_defaults.textarea,
             element_keys          = textarea_keys,
             custom_attribute_data = element_data.attributes;
 
         PROCESS auto_label;
 
-        "<textarea $all_attributes >" _ element_data.text _ "</textarea>";
+        "<textarea$all_attributes >" _ element_data.text _ "</textarea>";
      END %]
 [% END %]
 
@@ -198,7 +198,7 @@
 
         PROCESS auto_label;
 
-        "<select $all_attributes >";
+        "<select$all_attributes >";
         IF element_data.default_blank;
            # loop.count starts at 1, so using index 0 here is safe: it won't overlap below
            PROCESS option parent_id = parent_id, optindex = 0, option_data = {};
@@ -229,7 +229,7 @@
          element_keys          = option_keys,
          custom_attribute_data = option_data.attributes;
 
-     "<option $all_attributes$option_selected >" _ option_data.text _ "</option>";
+     "<option$all_attributes$option_selected >" _ option_data.text _ "</option>";
   %]
 [% END %]
 
@@ -244,7 +244,7 @@
             custom_attribute_data = element_data.attributes;
         PROCESS auto_label;
 
-        "<button $all_attributes >" _ element_data.text _ "</button>";
+        "<button$all_attributes >" _ element_data.text _ "</button>";
         IF element_data.tooltip.msg;
            INCLUDE tooltip element_data = {
                 id       => element_data.tooltip.id,
@@ -262,13 +262,13 @@
 
         PROCESS attributes
             attribute_data        = element_data,
-            attribute_defaults    = toggle_defaults,
+            attribute_defaults    = element_defaults.toggle,
             element_keys          = toggle_keys,
             custom_attribute_data = element_data.attributes;
 
-        PROCESS auto_label  # Process element label. %]
-        "<button $all_attributes >" _ element_data.text _ "</button>";
-  [% END %]
+        PROCESS auto_label  # Process element label.
+        "<button$all_attributes >" _ element_data.text _ "</button>";
+     END; %]
 [% END %]
 
 [% # LABEL ELEMENT %]
