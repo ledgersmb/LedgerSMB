@@ -8,6 +8,7 @@
           'data-dojo-type','data-dojo-props', 'data-dojo-attach-point',
           'required', 'tabindex'])
 
+  input_keys.hidden       = default_keys.merge(['type', 'name', 'value'])
   input_keys.file         = default_input_keys.merge(['accept'])
   input_keys.image        = default_input_keys.merge(['alt', 'src'])
   input_keys.checkbox     = default_input_keys.merge(['checked'])
