@@ -133,11 +133,7 @@
              element_data.title = element_data.label
              element_data.type = "text";
 
-         # we need to set 'element_type' for labels to get a 'for' attribute
-         # on type='password' inputs
-         element_type = 'input';
-
-         PROCESS auto_id;
+         PROCESS auto_id  element_type = 'input';;
          input_type_keys = input_keys.${element_data.type} or default_input_keys;
          input_defaults  = element_defaults.${element_data.type} or {};
 
@@ -167,8 +163,7 @@
   [% IF element_data;
         DEFAULT element_data.title = element_data.label;
 
-        element_type = 'textarea';
-        PROCESS auto_id;
+        PROCESS auto_id element_type = 'textarea';
 
         PROCESS attributes
             attribute_data        = element_data,
@@ -187,14 +182,11 @@
    [% IF element_data;
         DEFAULT element_data.title = element_data.label;
 
-        default_blank = element_data.default_blank;
         text_attr     = element_data.text_attr or 'text';
         value_attr    = element_data.value_attr or 'value';
-        element_type = 'select';
 
-        PROCESS auto_id;
+        PROCESS auto_id element_type = 'select';
         parent_id = element_data.id;
-        optindex = 1;
 
         PROCESS attributes
            attribute_data        = element_data,
@@ -206,8 +198,8 @@
         PROCESS auto_label;
 
         "<select $all_attributes >";
-        IF default_blank;
-           # loop.count starts at 1, so using index 0 here is safe
+        IF element_data.default_blank;
+           # loop.count starts at 1, so using index 0 here is safe: it won't overlap below
            PROCESS option parent_id = parent_id, optindex = 0, option_data = {};
         END;
 
@@ -245,8 +237,7 @@
 [% # BUTTON ELEMENT %]
 [% BLOCK button %]
   [% IF element_data;
-        element_type = 'button';
-        PROCESS auto_id;
+        PROCESS auto_id element_type = 'button';
         PROCESS attributes
             attribute_data        = element_data
             attribute_defaults    = element_defaults.button
@@ -268,8 +259,7 @@
 [% # TOGGLE ELEMENT %]
 [% BLOCK toggle %]
   [% IF element_data;
-        element_type = 'toggle';
-        PROCESS auto_id;
+        PROCESS auto_id element_type = 'toggle';
 
         PROCESS attributes
             attribute_data        = element_data,
@@ -285,8 +275,7 @@
 [% # LABEL ELEMENT %]
 [% BLOCK label %]
   [% IF element_data.text;
-        element_type = 'label';
-        PROCESS auto_id;
+        PROCESS auto_id element_type = 'label';
 
         PROCESS attributes
             attribute_data        = element_data,
