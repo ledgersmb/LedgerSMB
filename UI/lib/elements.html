@@ -147,17 +147,15 @@
          END;
 
          PROCESS attributes
-            attribute_data = element_data
-            attribute_defaults = input_defaults
-            element_keys = input_type_keys;
-
-         PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes;
+            attribute_data        = element_data,
+            attribute_defaults    = input_defaults,
+            element_keys          = input_type_keys,
+            custom_attribute_data = element_data.attributes;
 
          IF label_pos == -1;
             PROCESS auto_label;
          END;
-         "<input $all_attributes $all_custom_attributes />";
+         "<input $all_attributes />";
          IF label_pos == 1;
            PROCESS auto_label;
          END;
@@ -173,16 +171,14 @@
         PROCESS auto_id;
 
         PROCESS attributes
-            attribute_data=element_data
-            attribute_defaults = textarea_defaults
-            element_keys = textarea_keys;
-
-        PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes;
+            attribute_data        = element_data,
+            attribute_defaults    = textarea_defaults,
+            element_keys          = textarea_keys,
+            custom_attribute_data = element_data.attributes;
 
         PROCESS auto_label;
 
-        "<textarea $all_attributes $all_custom_attributes >" _ element_data.text _ "</textarea>";
+        "<textarea $all_attributes >" _ element_data.text _ "</textarea>";
      END %]
 [% END %]
 
@@ -201,17 +197,15 @@
         optindex = 1;
 
         PROCESS attributes
-           attribute_data=element_data
-           attribute_defaults =
-                (element_data.type == "multiselect") ? element_defaults.multiselect : element_defaults.select
-           element_keys=select_keys;
-
-        PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes;
+           attribute_data        = element_data,
+           attribute_defaults    =
+                (element_data.type == "multiselect") ? element_defaults.multiselect : element_defaults.select,
+           element_keys          = select_keys,
+           custom_attribute_data = element_data.attributes;
 
         PROCESS auto_label;
 
-        "<select $all_attributes $all_custom_attributes >";
+        "<select $all_attributes >";
         IF default_blank;
            # loop.count starts at 1, so using index 0 here is safe
            PROCESS option parent_id = parent_id, optindex = 0, option_data = {};
@@ -240,13 +234,11 @@
      END;
 
      PROCESS attributes
-         attribute_data=option_data
-         element_keys=option_keys;
+         attribute_data        = option_data,
+         element_keys          = option_keys,
+         custom_attribute_data = option_data.attributes;
 
-     PROCESS custom_attributes
-         custom_attribute_data=option_data.attributes
-
-     "<option $all_attributes $all_custom_attributes$option_selected >" _ option_data.text "</option>";
+     "<option $all_attributes$option_selected >" _ option_data.text "</option>";
   %]
 [% END %]
 
@@ -256,15 +248,13 @@
         element_type = 'button';
         PROCESS auto_id;
         PROCESS attributes
-            attribute_data     = element_data
-            attribute_defaults = element_defaults.button
-            element_keys       = button_keys;
-
-        PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes;
+            attribute_data        = element_data
+            attribute_defaults    = element_defaults.button
+            element_keys          = button_keys,
+            custom_attribute_data = element_data.attributes;
         PROCESS auto_label;
 
-        "<button $all_attributes $all_custom_attributes >" _ element_data.text _ "</button>";
+        "<button $all_attributes >" _ element_data.text _ "</button>";
         IF element_data.tooltip.msg;
            INCLUDE tooltip element_data = {
                 id       => element_data.tooltip.id,
@@ -282,15 +272,13 @@
         PROCESS auto_id;
 
         PROCESS attributes
-            attribute_data=element_data
-            attribute_defaults = toggle_defaults
-            element_keys=toggle_keys;
-
-        PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes;
+            attribute_data        = element_data,
+            attribute_defaults    = toggle_defaults,
+            element_keys          = toggle_keys,
+            custom_attribute_data = element_data.attributes;
 
         PROCESS auto_label  # Process element label. %]
-        "<button $all_attributes $all_custom_attributes >" _ element_data.text _ "</button>";
+        "<button $all_attributes >" _ element_data.text _ "</button>";
   [% END %]
 [% END %]
 
@@ -301,14 +289,12 @@
         PROCESS auto_id;
 
         PROCESS attributes
-            attribute_data=element_data
-            attribute_defaults = {}
-            element_keys=for_keys;
+            attribute_data        = element_data,
+            attribute_defaults    = {},
+            element_keys          = for_keys,
+            custom_attribute_data = element_data.attributes;
 
-        PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes;
-
-        "<label $all_attributes $all_custom_attributes >" _ element_data.text _ "</label>";
+        "<label $all_attributes >" _ element_data.text _ "</label>";
      END; %]
 [% END %]
 
@@ -323,17 +309,11 @@
           all_attributes =
              "$all_attributes $element_attribute=\"" _ attribute_defaults.$element_attribute _ "\"";
        END;
-     END %]
-[% END %]
-
-[% # CUSTOM ATTRIBUTE PROCESSING -- any other attributes passed in the 'attributes' key are processed here. %]
-[% BLOCK custom_attributes %]
-  [% all_custom_attributes = "" %]
-  [%  # Loop through each attribute and add it to the custom attribute string.
+     END
     FOREACH element_attribute IN custom_attribute_data;
-      all_custom_attributes = all_custom_attributes _ " " _ element_attribute.key _ '="' _ element_attribute.value _ '"';
+       all_attributes = all_attributes _ " " _ element_attribute.key _ '="' _ element_attribute.value _ '"';
     END;
-  %]
+%]
 [% END %]
 
 [% BLOCK auto_id  # Automatically builds the id tag for the element if possible. %]
