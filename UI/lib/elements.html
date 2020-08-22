@@ -1,37 +1,61 @@
 [%# HTML Snippet, for import only %]
 [%
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
-   # Defaults for input attributes
-  input_keys = ['type', 'name', 'disabled', 'size', 'value',
-                'data-dojo-type','data-dojo-props', 'data-dojo-attach-point',
-                'required', 'tabindex']
+
+  # Defaults for input attributes
+  default_input_keys = default_keys.merge(
+         ['type', 'name', 'disabled', 'size', 'value',
+          'data-dojo-type','data-dojo-props', 'data-dojo-attach-point',
+          'required', 'tabindex'])
+
+  input_keys.file         = default_input_keys.merge(['accept'])
+  input_keys.image        = default_input_keys.merge(['alt', 'src'])
+  input_keys.checkbox     = default_input_keys.merge(['checked'])
+  input_keys.toggle       = default_input_keys.merge(['checked'])
+  input_keys.radio        = default_input_keys.merge(['checked'])
+  input_keys.password     = default_input_keys
+  input_keys.date         = default_input_keys
+  input_keys.text         = default_input_keys
+  input_keys.currency     = default_input_keys
+  input_keys.monetary     = default_input_keys
+  input_keys.exchangerate = default_input_keys
+  input_keys.text         = default_input_keys.merge(['maxlength', 'readonly'])
+
+
+  textarea_keys           = default_input_keys.merge(['cols', 'rows',
+                                                      'readonly', 'accesskey',
+                                                      'style', 'wrap' ])
+  select_keys             = default_input_keys.merge(['multiple', 'accesskey'])
+  option_keys             = default_keys.merge(['tabindex', 'disabled', 'value'])
+  button_keys             = default_input_keys.merge(['accesskey'])
+  toggle_keys             = default_input_keys.merge(['accesskey', 'showLabel', 'label'])
+  for_keys                = default_keys.merge(['for'])
 
   # ELEMENT DEFAULTS
 
-  #checkbox
-  checkbox_defaults = {
+  element_defaults.checkbox = {
     value = '1',
     'data-dojo-type' = 'dijit/form/CheckBox'
   }
 
   #radio
-  radiobutton_defaults = {
+  element_defaults.radio = {
          'data-dojo-type' = 'dijit/form/RadioButton'
   }
 
   #file
-  file_defaults = {
+  element_defaults.file = {
     size = '60'
   }
 
   #password
-  password_defaults = {
+  element_defaults.password = {
     size = '60',
     "data-dojo-type" = "dijit/form/ValidationTextBox"
   }
 
   # text
-  text_defaults = {
+  element_defaults.text = {
     size = '60',
     maxlength = '255',
     "data-dojo-type" = "dijit/form/ValidationTextBox"
@@ -39,7 +63,7 @@
 
   # default currency
   # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
-  currency_defaults = text_defaults
+  element_defaults.currency = text_defaults
 #  currency_defaults = {
 #    "data-dojo-type" = 'dijit/form/CurrencyTextBox',
 #    "data-dojo-props" = "currency:'$SETTINGS.default_currency'"
@@ -47,14 +71,14 @@
 
   # default monetary (currency without currency indicator)
   # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
-  monetary_defaults = text_defaults
+  element_defaults.monetary = text_defaults
 #  monetary_defaults = {
 #    "data-dojo-type" = 'dijit/form/NumberTextBox',
 #    "data-dojo-props" = "constraints:{pattern:'0.00'}"
 #  }
 
   # default exchangerate
-  exchangerate_defaults = {
+  element_defaults.exchangerate = {
     size = '5',
     maxlength = '20',
     "data-dojo-type" = "dijit/form/ValidationTextBox"
@@ -62,38 +86,38 @@
 
   # date
   USER.dojo_dateformat = USER.dateformat.replace('mm','MM');
-  date_defaults = {
+  element_defaults.date = {
     "data-dojo-type" = 'lsmb/DateTextBox',
     'data-dojo-props' = "constraints: {datePattern: '$USER.dojo_dateformat'},placeholder: '$USER.dateformat'"
     size = '8',
   }
 
   # textarea
-  textarea_defaults = {
+  element_defaults.textarea = {
     rows = '1',
     cols = '60',
     "data-dojo-type" = "lsmb/ResizingTextarea"
   }
 
   #button
-  button_defaults = {
+  element_defaults.button = {
     type = 'submit',
     "data-dojo-type" = "dijit/form/Button"
   }
 
   #select
-  select_defaults = {
+  element_defaults.select = {
     "data-dojo-type" = "dijit/form/Select"
   }
 
   #multiselect
-  multiselect_defaults = {
+  element_defaults.multiselect = {
     "data-dojo-type" = "dijit/form/MultiSelect"
     "multiple" = "true"
   }
 
   #toggle
-  toggle_defaults = {
+  element_defaults.toggle = {
     type = 'submit',
     "data-dojo-type"  = "dijit/form/ToggleButton"
     "data-dojo-props" = "iconClass:'dijitCheckBoxIcon'"
@@ -103,289 +127,203 @@
 
 [% # INPUT ELEMENT %]
 [% BLOCK input %]
-  [% IF label_pos != 1 and label_pos != -1; label_pos = -1; END %]
-  [% IF element_data;  # Only process element if one exists.
-         IF !element_data.title.defined();
-             element_data.title = element_data.label;
-         END;
-             IF !element_data.type.defined();
-                 element_data.type = "text";
-             END;
-         # Some inputs have no defaults,
-         # so make sure everything is empty to start with.
-         input_defaults = {};
+  [% IF label_pos != 1 and label_pos != -1; label_pos = -1; END;
+     IF element_data;  # Only process element if one exists.
+         DEFAULT
+             element_data.title = element_data.label
+             element_data.type = "text";
 
          # we need to set 'element_type' for labels to get a 'for' attribute
          # on type='password' inputs
          element_type = 'input';
-              PROCESS auto_id;
-              SWITCH element_data.type;  # Merge in type-specific attributes.
-              CASE 'file';
-                input_type_keys = input_keys.merge(['accept']);
-                input_defaults = file_defaults;
-              CASE 'image';
-                input_type_keys = input_keys.merge(['alt', 'src']);
-              CASE ['checkbox'];
-                input_type_keys = input_keys.merge(['checked']);
-                input_defaults = checkbox_defaults;
-              CASE ['toggle'];
-                input_type_keys = input_keys.merge(['checked']);
-                input_defaults = toggle_defaults;
-              CASE ['radio'];
-                input_type_keys = input_keys.merge(['checked']);
-                input_defaults = radiobutton_defaults;
-              CASE ['password'];
-                input_type_keys = input_keys;
-                input_defaults = password_defaults;
-              CASE 'date';
-                input_type_keys = input_keys;
-                input_defaults = date_defaults;
-              CASE 'text';
-                IF 'date' == element_data.class;
-                    input_type_keys = input_keys;
-                    input_defaults = date_defaults;
-                ELSE;
-                    input_type_keys = input_keys.merge(['maxlength', 'readonly']);
-                    input_defaults = text_defaults;
-                END;
-              CASE 'currency';
-                input_type_keys = input_keys;
-                input_defaults = currency_defaults;
-              CASE 'monetary';
-                input_type_keys = input_keys;
-                input_defaults = monetary_defaults;
-              CASE 'exchangerate';
-                input_type_keys = input_keys;
-                input_defaults = exchangerate_defaults;
-              CASE;
-                input_type_keys = input_keys;
-            END;
-          %]
-          [% PROCESS attributes  # Process regular attributes.
+
+         PROCESS auto_id;
+         input_type_keys = input_keys.${element_data.type} or default_input_keys;
+         input_defaults  = element_defaults.${element_data.type} or {};
+
+         IF 'text' == element_data.type and 'date' == element_data.class;
+             input_type_keys = default_input_keys;
+             input_defaults = date_defaults;
+         END;
+
+         PROCESS attributes
             attribute_data = element_data
             attribute_defaults = input_defaults
-            element_keys = input_type_keys
-          %]
-          [% PROCESS custom_attributes  # Process custom attributes.
-            custom_attribute_data=element_data.attributes
-          %]
-      [% IF label_pos == -1 %]
-        [% PROCESS auto_label  # Process element label. %]
-      [% END %]
-          <input[% all_attributes %][% all_custom_attributes %] />
-      [% IF label_pos == 1 %]
-        [% PROCESS auto_label  # Process element label. %]
-      [% END %]
-  [% END %]
+            element_keys = input_type_keys;
+
+         PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes;
+
+         IF label_pos == -1;
+            PROCESS auto_label;
+         END;
+         "<input $all_attributes $all_custom_attributes />";
+         IF label_pos == 1;
+           PROCESS auto_label;
+         END;
+     END; %]
 [% END %]
 
 [% # TEXTAREA ELEMENT %]
 [% BLOCK textarea %]
-  [% IF element_data;  # Only process element if one exists.
-              IF !element_data.title.defined();
-                  element_data.title = element_data.label;
-              END; %]
-        [%
-            element_type = 'textarea';
-            PROCESS auto_id;
-          %]
-          [% PROCESS attributes  # Process regular attributes.
+  [% IF element_data;
+        DEFAULT element_data.title = element_data.label;
+
+        element_type = 'textarea';
+        PROCESS auto_id;
+
+        PROCESS attributes
             attribute_data=element_data
             attribute_defaults = textarea_defaults
+            element_keys = textarea_keys;
 
-                 # Attributes that apply to textareas.
-            element_keys = [
-                 'name', 'cols', 'rows', 'disabled', 'readonly',
-                 'tabindex', 'accesskey', 'value', 'style', 'wrap',
-                 'data-dojo-type', 'data-dojo-props', 'data-dojo-attach-point']
-          %]
-          [% PROCESS custom_attributes  # Process custom attributes.
-            custom_attribute_data=element_data.attributes
-          %]
-          [% PROCESS auto_label  # Process element label. %]
-          <textarea[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</textarea>
-  [% END %]
+        PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes;
+
+        PROCESS auto_label;
+
+        "<textarea $all_attributes $all_custom_attributes >" _ element_data.text _ "</textarea>";
+     END %]
 [% END %]
 
 [% # SELECT ELEMENT %]
 [% BLOCK select %]
-  [% IF element_data;  # Only process element if one exists.
-              IF !element_data.title.defined();
-                  element_data.title = element_data.label;
-              END; %]
-    [% default_blank = element_data.default_blank;
-           element_data.delete('default_blank'); %]
-    [% IF element_data.defined('text_attr') %]
-        [% text_attr =  element_data.text_attr %]
-        [% element.delete('text_attr') %]
-    [% ELSE %]
-        [% text_attr = 'text' %]
-    [% END %]
-    [% IF element_data.defined('value_attr') %]
-        [% value_attr =  element_data.value_attr %]
-        [% element.delete('value_attr') %]
-    [% ELSE %]
-        [% value_attr = 'value' %]
-    [% END %]
-    [% IF element_data.defined('default_values') %]
-            [%  # Undef items must be removed, or they choke in the options defaults check later.
-        i = 0;
-        FOREACH select_default IN element_data.default_values;
-          UNLESS select_default.defined;
-            element_data.default_values = element_data.default_values.splice(1, i);
-          END;
-          i = i + 1;
-        END;
-      %]
-    [% END %]
-        [%
-            element_type = 'select';
-            PROCESS auto_id;
-            parent_id = element_data.id;
-            optindex = 1;
-          %]
-          [% PROCESS attributes  # Process regular attributes.
-            attribute_data=element_data
-            attribute_defaults =
-                (element_data.type.defined() && element_data.type == "multiselect")
-                ? multiselect_defaults
-                : select_defaults
-            # Attributes that apply to selects and multiselect.
-            element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
-            'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
-          %]
-          [% PROCESS custom_attributes  # Process custom attributes.
-            custom_attribute_data=element_data.attributes
-          %]
-          [% PROCESS auto_label  # Process element label. %]
-          <select[% all_attributes %][% all_custom_attributes %]>
-            [% IF default_blank;
-                     option_data={};
-                     PROCESS option parent_id=parent_id, optindex = optindex;
-                     optindex=optindex+1 ;
-                   END %]
-            [%  # Build options.
-              FOREACH optionds IN element_data.options;
-                  option_data = {};
-                  FOREACH key IN optionds.keys;
-                      option_data.$key = optionds.$key;
-                  END;
-                PROCESS option  parent_id = parent_id, optindex = optindex;
-                optindex=optindex+1;
+   [% IF element_data;
+        DEFAULT element_data.title = element_data.label;
 
-              END;
-            %]
-          </select>
-  [% END %]
+        default_blank = element_data.default_blank;
+        text_attr     = element_data.text_attr or 'text';
+        value_attr    = element_data.value_attr or 'value';
+        element_type = 'select';
+
+        PROCESS auto_id;
+        parent_id = element_data.id;
+        optindex = 1;
+
+        PROCESS attributes
+           attribute_data=element_data
+           attribute_defaults =
+                (element_data.type == "multiselect") ? element_defaults.multiselect : element_defaults.select
+           element_keys=select_keys;
+
+        PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes;
+
+        PROCESS auto_label;
+
+        "<select $all_attributes $all_custom_attributes >";
+        IF default_blank;
+           # loop.count starts at 1, so using index 0 here is safe
+           PROCESS option parent_id = parent_id, optindex = 0, option_data = {};
+        END;
+
+        IF element_data.default_values;
+            FOREACH option IN element_data.options;
+                PROCESS option  parent_id = parent_id, optindex = loop.count, option_data = option;
+            END;
+        END;
+        "</select>";
+      END %]
 [% END %]
 
 [% # OPTION ELEMENT %]
 [% BLOCK option %]
-  [% option_data.value = option_data.$value_attr %]
-  [% option_data.text = option_data.$text_attr %]
-  [% option_data.id = "${parent_id}-${optindex}" -%]
-  [%  # Selected is a special case -- no attribute key, so it is handled here by looking for the option value in the default_values list.
-    option_data.selected = "";
-    FOREACH test_val IN element_data.default_values;
-       IF option_data.value == test_val;
-           option_data.selected = ' selected="selected"';
-       END;
-    END;
+  [% option_data.value = option_data.$value_attr;
+     option_data.text = option_data.$text_attr;
+     option_data.id = "${parent_id}-${optindex}";
+     # Selected is a special case
+     # -- no attribute key, so it is handled here by looking for the option value in the default_values list.
+     FOREACH test_val IN element_data.default_values;
+        IF test_val and option_data.value == test_val;
+            option_selected = ' selected="selected"';
+        END;
+     END;
+
+     PROCESS attributes
+         attribute_data=option_data
+         element_keys=option_keys;
+
+     PROCESS custom_attributes
+         custom_attribute_data=option_data.attributes
+
+     "<option $all_attributes $all_custom_attributes$option_selected >" _ option_data.text "</option>";
   %]
-  [% PROCESS attributes  # Process regular attributes.
-    attribute_data=option_data
-    element_keys=['tabindex', 'disabled', 'value']  # Attributes that apply to options.
-  %]
-  [% PROCESS custom_attributes  # Process custom attributes.
-    custom_attribute_data=option_data.attributes
-  %]
-  <option [% all_attributes %] [% all_custom_attributes %][% option_data.selected %]>[% option_data.text %]</option>
 [% END %]
 
 [% # BUTTON ELEMENT %]
 [% BLOCK button %]
-  [% IF element_data  # Only process element if one exists. %]
-        [%
-            element_type = 'button';
-            PROCESS auto_id;
-          %]
-          [% PROCESS attributes  # Process regular attributes.
-            attribute_data=element_data
-            attribute_defaults = button_defaults
-            element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
-                 'tabindex', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to buttons.
-          %]
-          [% PROCESS custom_attributes  # Process custom attributes.
-            custom_attribute_data=element_data.attributes
-          %]
-          [% PROCESS auto_label  # Process element label. %]
-          <button[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</button>
-          [% IF element_data.tooltip.msg;
-                INCLUDE tooltip element_data = {
+  [% IF element_data;
+        element_type = 'button';
+        PROCESS auto_id;
+        PROCESS attributes
+            attribute_data     = element_data
+            attribute_defaults = element_defaults.button
+            element_keys       = button_keys;
+
+        PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes;
+        PROCESS auto_label;
+
+        "<button $all_attributes $all_custom_attributes >" _ element_data.text _ "</button>";
+        IF element_data.tooltip.msg;
+           INCLUDE tooltip element_data = {
                 id       => element_data.tooltip.id,
                 ref_id   => element_data.id,
                 position => element_data.tooltip.position,
                 msg      => element_data.tooltip.msg };
-          END %]
-  [% END %]
+        END;
+     END; %]
 [% END %]
 
-[% # BUTTON ELEMENT %]
+[% # TOGGLE ELEMENT %]
 [% BLOCK toggle %]
-  [% IF element_data  # Only process element if one exists. %]
-        [%
-            element_type = 'toggle';
-            PROCESS auto_id;
-          %]
-          [% PROCESS attributes  # Process regular attributes.
+  [% IF element_data;
+        element_type = 'toggle';
+        PROCESS auto_id;
+
+        PROCESS attributes
             attribute_data=element_data
             attribute_defaults = toggle_defaults
-            element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
-                 'showLabel', 'label',
-                 'tabindex', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to toggles.
-          %]
-          [% PROCESS custom_attributes  # Process custom attributes.
-            custom_attribute_data=element_data.attributes
-          %]
-          [% PROCESS auto_label  # Process element label. %]
-          <button[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</button>
+            element_keys=toggle_keys;
+
+        PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes;
+
+        PROCESS auto_label  # Process element label. %]
+        "<button $all_attributes $all_custom_attributes >" _ element_data.text _ "</button>";
   [% END %]
 [% END %]
 
 [% # LABEL ELEMENT %]
 [% BLOCK label %]
-  [% IF element_data  # Only process element if one exists. %]
-        [%
-            element_type = 'label';
-            PROCESS auto_id;
-          %]
-          [% PROCESS attributes
+  [% IF element_data.text;
+        element_type = 'label';
+        PROCESS auto_id;
+
+        PROCESS attributes
             attribute_data=element_data
-            attribute_defaults = {}  # Make sure old defaults are cleared out.
-            element_keys=['for']  # Attributes that apply to labels.
-          %]
-          [% PROCESS custom_attributes
-            custom_attribute_data=element_data.attributes
-          %]
-          <label[% all_attributes %][% all_custom_attributes %]>[% element_data.text %]</label>
-  [% END %]
+            attribute_defaults = {}
+            element_keys=for_keys;
+
+        PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes;
+
+        "<label $all_attributes $all_custom_attributes >" _ element_data.text _ "</label>";
+     END; %]
 [% END %]
 
 [% # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here. %]
 [% BLOCK attributes %]
-  [%
-    all_attributes = ""
-    all_keys = default_keys.merge(element_keys)  # Merge in attributes that apply to this element.
-  %]
-  [% FOREACH element_attribute IN all_keys  # Loop through each allowed attribute. %]
-    [%
-      IF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");  # Add the attribute to the element if it's been set.
-        all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_data.${element_attribute} _ '"';
-      ELSIF attribute_defaults.defined(element_attribute);  # Fall back to default value if one is supplied.
-        all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_defaults.${element_attribute} _ '"';
-      END;
-    %]
-  [% END %]
+  [% all_attributes = "";
+     FOREACH element_attribute IN element_keys;  # Loop through each allowed attribute.
+       IF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");
+          all_attributes =
+             "$all_attributes $element_attribute=\"" _ attribute_data.$element_attribute _ "\"";
+       ELSIF attribute_defaults.defined(element_attribute) and (attribute_defaults.${element_attribute} != "");
+          all_attributes =
+             "$all_attributes $element_attribute=\"" _ attribute_defaults.$element_attribute _ "\"";
+       END;
+     END %]
 [% END %]
 
 [% # CUSTOM ATTRIBUTE PROCESSING -- any other attributes passed in the 'attributes' key are processed here. %]
@@ -399,68 +337,60 @@
 [% END %]
 
 [% BLOCK auto_id  # Automatically builds the id tag for the element if possible. %]
-  [% UNLESS element_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. %]
-    [% element_id = "" %]
-    [%  # Label id's default to [for]-label.
-      IF element_type == 'label' AND (element_data.defined('for') OR element_type == 'toggle');
-        element_id = element_data.for _ "-label";
-      ELSIF ((element_type == 'input' AND element_data.type == 'radio') OR element_type == 'button') AND element_data.defined('name') AND element_data.defined('value');
-        element_id = element_data.name _ "-" _ element_data.value;  # radios and buttons get name-value for uniqueness.
-      ELSIF (element_type == 'input' OR element_type == 'textarea' OR element_type == 'select') AND element_data.defined('name');
-        element_id = element_data.name;
-      END;
-    %]
-    [%  # Add the id if it's been generated.  Replace all non alphanumeric characters with dashes -- nicer CSS.
-      IF element_id;
-        element_data.id = element_id.replace('[^\p{IsAlnum}]', '-');
-      END;
-    %]
-  [% END %]
+  [% UNLESS element_data.defined('id');
+        # id attribute should always be set, so auto-set it if it is not defined.
+        element_id = "";
+        # Label ids default to [for]-label.
+        IF element_type == 'label' AND (element_data.defined('for') OR element_type == 'toggle');
+           element_id = element_data.for _ "-label";
+        ELSIF ((element_type == 'input' AND element_data.type == 'radio')
+               OR element_type == 'button')
+              AND element_data.defined('name') AND element_data.defined('value');
+           # radios and buttons get name-value for uniqueness.
+           element_id = element_data.name _ "-" _ element_data.value;
+        ELSIF (element_type == 'input' OR element_type == 'textarea' OR element_type == 'select')
+              AND element_data.defined('name');
+           element_id = element_data.name;
+        END;
+
+        # Add the id if it has been generated.  Replace all non alphanumeric characters with dashes -- nicer CSS.
+        IF element_id;
+           element_data.id = element_id.replace('[^\p{IsAlnum}]', '-');
+        END;
+     END %]
 [% END %]
 
 [% BLOCK auto_label  # Sets a label for a form element if the special 'label' key is passed. %]
-  [% IF element_data.defined('label')  # Check for label. %]
-  [% IF element_data.label != '_none_' %]
-    [%  # Add a for attribute for the label if possible.
-      IF element_data.defined('id');
-        label_id = ' id="' _ element_data.id _ '-label"';
-        label_for = ' for="' _ element_data.id _ '"';
-      ELSE;
-        label_id = "";
-        label_for = "";
-      END;
-    %]
-    [%  # Label inherits class of the related element if possible.
-      IF element_data.defined('class');
-        label_class = ' class="' _ element_data.class _ '"';
-      ELSE;
-        label_class = "";
-      END;
-    %]
-    <label[% label_id %][% label_for %][% label_class %]>[% text(element_data.label) %]</label>
-  [% END %]
-  [% END %]
+  [% IF element_data.label.defined() and element_data.label != '_none_';
+        # Add a 'for' attribute for the label if possible.
+        IF element_data.defined('id');
+           label_id = ' id="' _ element_data.id _ '-label"';
+           label_for = ' for="' _ element_data.id _ '"';
+        ELSE;
+           label_id = "";
+           label_for = "";
+        END;
+
+        # Label inherits class of the related element if possible.
+        IF element_data.defined('class');
+           label_class = ' class="' _ element_data.class _ '"';
+        ELSE;
+           label_class = "";
+        END;
+     "<label $label_id $label_for $label_class >" _ text(element_data.label) _ "</label>";
+     END; %]
 [% END %]
 
 [% BLOCK tooltip;
-  IF element_data && element_data.msg.defined();
-     props="\"connectId:'" _ element_data.ref_id _ "'";
-     IF element_data.position.defined();
-        positions = [];
-        FOREACH position IN element_data.position
-            "<!-- == $position == -->"; # Prevent loop variable optimization
-            positions.push("'$position'");
-        END;
-        props = props _ ',position:[' _ positions.join(',') _ ']';
-    END;
-    props = props _ '"';
-    %]
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props=[% props %]  >
-         [% INCLUDE decorated_text element_data = {
-                msg => element_data.msg };
-         %]
-    </div>
-  [% END;
+   IF element_data && element_data.msg.defined();
+      ref_if = element_data.ref_id;
+      position = element_data.position.defined() ?
+            (", position:['" _ element_data.position.join("','") _ "']") : '';
+
+      "<div data-dojo-type=\"dijit/Tooltip\" data-dojo-props=\"connectId:'$ref_id'$position\"  >";
+      INCLUDE decorated_text element_data = { msg => element_data.msg };
+      "</div>";
+   END;
 END %]
 
 [% BLOCK select_language;
