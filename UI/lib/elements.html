@@ -442,25 +442,6 @@
   [% END %]
 [% END %]
 
-[% BLOCK OPEN_STATUS_DIV;
-   CLASS = 'new';
-   IF id and approved;
-       CLASS = 'posted';
-   ELSIF id;
-       CLASS = 'saved';
-   END;
-%]<div id="statusdiv" class="[% CLASS %]">
-<div id="history">[% text('Action: [_1], ID: [_2]', action, id); %]</div>
-[% END %]
-
-[% BLOCK CLOSE_STATUS_DIV %]</div>[% END %]
-
-[% BLOCK decorated_text;
-  IF element_data && element_data.msg.defined();
-    element_data.msg.replace('&lt;((/?[ibup]|br))&gt;','<$1>');
-  END;
-END %]
-
 [% BLOCK tooltip;
   IF element_data && element_data.msg.defined();
      props="\"connectId:'" _ element_data.ref_id _ "'";
