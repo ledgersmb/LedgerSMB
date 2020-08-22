@@ -301,7 +301,7 @@ sub get_user_info {
 sub _set_default_locale {
     my ($self) = @_;
 
-    my $lang = $LedgerSMB::Sysconfig::language;
+    my $lang = LedgerSMB::Sysconfig::language();
     $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
     $self->error( __FILE__ . ':' . __LINE__
                   . ": Locale ($lang) not loaded: $!\n" )
