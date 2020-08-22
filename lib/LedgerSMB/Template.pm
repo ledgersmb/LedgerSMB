@@ -356,36 +356,39 @@ sub new {
 }
 
 sub preprocess {
+    #
+    # Note: before changing *anything* in the function below,
+    #  please note that it's extremely performance sensitive
+    #  and that the current code is the result of extensive
+    #  profiling work.
+    #
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
+
+    if (not ref $rawvars) {
+        return $escape->($rawvars);
+    }
 
     if (blessed $rawvars and $rawvars->can('to_output') ){
         return $escape->( $rawvars->to_output );
     }
 
     my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
-
-    if (not $reftype) {
-        return $escape->($rawvars);
-    }
-
     if ($reftype eq 'HASH') { # Hashes and objects
-        my $type = ref $rawvars;
-        return $rawvars if $type eq 'LedgerSMB::Locale';
-
-        my $vars = {};
-        for ( keys %{$rawvars} ) {
-            # don't encode the object's internals; TT won't forward anyway...
-            # btw, some (internal) objects are XS objects, on which this trick
-            # treating it as a hashref really doesn't work...
-            next if /^_/;
-            $vars->{$_} = preprocess( $rawvars->{$_}, $escape );
-        }
-        return $vars;
+        return {
+            map { $_ => (ref $rawvars->{$_})
+                      ? preprocess( $rawvars->{$_}, $escape )
+                      : $escape->($rawvars->{$_}) }
+            grep { not /^(?:_|dbh$)/ }
+            keys %{$rawvars}
+        };
     }
 
     if ( $reftype eq 'ARRAY' ) {
-        return [ map { preprocess( $_, $escape ) } @{$rawvars} ];
+        return [ map { (ref $_)
+                           ? preprocess( $_, $escape )
+                           : $escape->($_)
+                 } @{$rawvars} ];
     }
 
     if ($reftype eq 'CODE'){ # a code reference makes no sense
