@@ -225,7 +225,7 @@ SKIP: {
         'Template, new (ODS): Object creation with format and template');
     is($template->{include_path}, 'templates/demo',
         'Template, new (ODS): Object creation with format and template');
-    isa_ok($template->render({'name' => 'foo&bar'}),
+    isa_ok($template->render({'name' => 'foo&bar', rows => [], columns => []}),
         ['LedgerSMB::Template'],
         'Template, render (ODS): Simple ODS template, default filename');
     # ods is actualy a zip file.
