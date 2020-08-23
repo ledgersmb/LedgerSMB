@@ -91,22 +91,6 @@ matrix:
             - *default_packages
             - postgresql-9.6-pgtap
       env:
-    # - perl: '5.22'
-    #   addons:
-    #     postgresql: "9.6"
-    #     apt:
-    #       packages:
-    #         - *default_packages
-    #         - postgresql-9.6-pgtap
-    #   env:
-    - perl: '5.20'
-      addons:
-        postgresql: "9.6"
-        apt:
-          packages:
-            - *default_packages
-            - postgresql-9.6-pgtap
-      env:
         - COA_TESTING=1
 
 before_cache:
