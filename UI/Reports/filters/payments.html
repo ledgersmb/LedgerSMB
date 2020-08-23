@@ -50,11 +50,11 @@
       <label for="cash-accno">[% text('Cash Account') %]</label>
       <div class="value">
         [%
-             IF !batch_id; cash_accounts.unshift({}); END;
              INCLUDE select element_data = {
                 name           = "cash_accno"
                 options        = cash_accounts
                 default_values = [cash_accno]
+                default_blank  = (not batch_id)
                 class          = "account"
                 value_attr     = "accno"
         } %]

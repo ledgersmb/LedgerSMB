@@ -78,13 +78,13 @@ password_strings = "title:'" _ text("Change Password") _
               </tr>
               <tr>
                 <th align="right">[% text('Language') %]</th>
-                <td>[% language_codes.unshift({}) %]
-                    [% PROCESS select_language element_data={
+                <td>[% PROCESS select_language element_data={
                      name = 'language',
                      options = user.language_codes,
                      default_values = [ user.prefs.language ],
                      text_attr = 'label',
                      value_attr = 'id',
+                     default_blank = 1,
                    }%] </td>
               </tr>
               <tr>

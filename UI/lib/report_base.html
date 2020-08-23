@@ -3,13 +3,13 @@
         FOREACH BUC IN bu_classes %]
         <tr>
           <th align="right">[% text(BUC.label) %]</th>
-          [% b_units.${BUC.id}.unshift({}) %]
           <td colspan=3>[% PROCESS select element_data = {
                    name = 'business_unit_' _ loop.count
                    id = 'business_unit_' _ loop.count
                 options = b_units.${BUC.id}
               text_attr = 'text'
              value_attr = 'id'
+          default_blank = 1
                   class = 'business_unit'
               } %]</td>
         </tr>
@@ -22,8 +22,7 @@
 END # BLOCK -%]
 
 [%- BLOCK business_classes_div;
-    FOREACH BUC IN bu_classes;
-        b_units.${BUC.id}.unshift({}) %]
+    FOREACH BUC IN bu_classes; %]
         <div class="inputrow"><div class="inputgroup">
                   [% PROCESS select element_data = {
                            name = 'business_unit_' _ loop.count
@@ -31,6 +30,7 @@ END # BLOCK -%]
                         options = b_units.${BUC.id}
                       text_attr = 'text'
                      value_attr = 'id'
+                  default_blank = 1
                           class = 'business_unit'
                           label = text(BUC.label)
                       } %]
@@ -47,12 +47,12 @@ END # BLOCK -%]
       <tr>
       <th align="right">[% text('Entity Class') %]</th>
       <td>[%
-        entity_classes.unshift({text = '', value_attr = ''});
         PROCESS select element_data = {
         name = "entity_class"
         id = "entity_class"
         options = entity_classes
         default_values = [entity_class]
+        default_blank = 1
         text_attr = 'class'
         value_attr = 'id'
     } %]</td>
@@ -230,18 +230,18 @@ END # BLOCK -%]
           <div class="input_group">
               <label>[% text('Period') %]</label>
               [%
-                all_months.unshift({});
-                all_years.unshift({});
-
                 PROCESS select element_data = {
                        name = "from_month"
                        id = "from_month"
-                       options = all_months};
+                       options = all_months
+                       default_blank = 1
+                };
 
                 PROCESS select element_data = {
                        name="from_year"
                        id="from_year"
                        options = all_years
+                       default_blank = 1
                        text_attr = "date_get_all_years"
                        value_attr = "date_get_all_years"};
 
@@ -297,14 +297,14 @@ END # BLOCK -%]
   FOREACH e IN employees;
      e.text = e.first_name _ ' ' _ e.last_name;
   END;
-  #employees.push({})
-  employees.unshift({}) %]
+        %]
 <tr>
   <th>[% text('Employees') %]</th>
   <td>[% PROCESS select element_data = {
                  name = SELECTNAME
                  id = SELECTNAME
        default_values = [$SELECTNAME]
+        default_blank = 1
               options = employees
            value_attr = 'person_id' #??
                 class = 'employee'

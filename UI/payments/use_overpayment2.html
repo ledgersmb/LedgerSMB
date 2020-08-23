@@ -289,7 +289,7 @@
                                   item.value = item.value _ '--' _ item.name _ '--' _ item.vc_discount_accno ;
                                   IF item.id == entity_credit_id ;
                                     selected_value = item.value ;
-              END ; vc_list.unshift({});
+              END ;
             END  %]
           [% PROCESS select element_data = {
                                 name = 'new_entity_id'
@@ -297,6 +297,7 @@
                                 text_attr = 'name'
                                 options = vc_list
                                 default_values = [ request.new_entity_id ] } %]
+                                default_blank = 1
    </td>
    <td align="center">N/A</td>
    <td align="center">N/A</td>

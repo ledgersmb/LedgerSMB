@@ -135,8 +135,7 @@ required = 'required'
 <div class="input_row">
 [% INCLUDE input element_data = {
     name = 'dob'
-   class = 'date'
-    type = 'text'
+    type = 'date'
     size = '10'
    label = text('Date of Birth') #'
    value = dob
@@ -155,7 +154,7 @@ required = 'required'
 } %]
 </div>
 <div class="input_row">
-[%  countries.unshift({});
+[%
 INCLUDE select element_data = {
           options = countries
         text_attr = 'name'

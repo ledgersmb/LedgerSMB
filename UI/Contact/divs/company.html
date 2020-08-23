@@ -91,7 +91,7 @@
         } %]
 </div>
 <div class="input_group2">
-       [% country_list.unshift({});
+       [%
                 company_country_id = company.country_id;
                 IF !company_country_id;
                           company_country_id = default_country;
@@ -106,6 +106,7 @@
                         title = text('Country')
                         label = '_none_'
                         required = 'true'
+                        default_blank = 1
         } %]
 </div>
 </div>

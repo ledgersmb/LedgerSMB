@@ -14,7 +14,6 @@
         FOREACH T IN accounts;
            T.text = T.accno _ '--' _ T.description;
         END;
-        accounts.unshift({});
 %]
 <body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" action="invoice.pl" method="GET"
@@ -33,6 +32,7 @@
        value_attr = 'id',
         text_attr = 'text',
    default_values = [account_id],
+    default_blank = 1
             class = 'account',
           options = accounts
        } %]</td>
@@ -75,12 +75,12 @@
         FOREACH T IN tax_accounts;
            T.text = T.accno _ '--' _ T.description;
         END;
-        tax_accounts.unshift({});
         PROCESS select element_data = {
              name = 'tax_account_id',
        value_attr = 'id',
         text_attr = 'text',
    default_values = [tax_account_id],
+    default_blank = 1
             class = 'account',
           options = tax_accounts
        } %]</td>

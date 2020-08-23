@@ -34,13 +34,13 @@
                         id = "ref_1"
                 };
              IF form.sequences;
-                 form.sequences.unshift({});
                  PROCESS select element_data = {
                     name = 'setting_sequence'
           default_values = [form.setting_sequence]
                  options = form.sequences
                text_attr = 'label'
               value_attr = 'label'
+           default_blank = 1
                  };
              END; %]
          </td>
@@ -266,11 +266,12 @@
                        [% clsid = cls.id;
                               bucid = "b_unit_$clsid";
                               burow = "${bucid}_$INDEX";
-                       form.b_units.${clsid}.unshift({});
+
                        INCLUDE select element_data = {
                               text_attr = "control_code"
                              value_attr = "id"
                          default_values = [displayrow.${bucid}]
+                          default_blank = 1
                                    name = "$burow"
                                 options = form.b_units.${clsid}
                        } %]
