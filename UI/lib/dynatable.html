@@ -104,14 +104,8 @@ END; %]
               TYPE = 'text';
             END;
           IF TYPE == 'hidden';
-      NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
-
-      # Used both by 'checkbox' and 'radio' types
-      IF ROW.${COL.col_id};
-         CHECKED = "checked";
-      ELSE;
-         CHECKED = '';
-      END; %]
+             NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
+      %]
       [% PROCESS input element_data = {
                                  type="hidden"
              name=NAME
@@ -143,7 +137,7 @@ END; %]
                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                           class=COL.class
                           value=ROW.row_id
-                          checked=CHECKED };
+                          checked=(ROW.${COL.col_id} ? "checked" : '') };
 
                ELSIF TYPE == 'boolean_checkmark';
                    IF ROW.${COL.col_id};
@@ -157,7 +151,7 @@ END; %]
                                          name=PFX _ COL.col_id
                                          class=COL.class
                                          value=ROW.row_id
-                checked=CHECKED } %]
+                checked=(ROW.${COL.col_id} ? "checked" : '') } %]
          [%- ELSIF TYPE == 'select';
                 # ROW is passed as an argument if COL.options is a callback
                 # function, which allows dropdown options to be dynamically
