@@ -350,6 +350,12 @@
      END; %]
 [% END %]
 
+[% BLOCK decorated_text;
+  IF element_data && element_data.msg.defined();
+    element_data.msg.replace('&lt;((/?[ibup]|br))&gt;','<$1>');
+  END;
+END %]
+
 [% BLOCK tooltip;
    IF element_data && element_data.msg.defined();
       ref_if = element_data.ref_id;
