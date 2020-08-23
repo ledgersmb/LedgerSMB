@@ -27,7 +27,7 @@
                                                       'readonly', 'accesskey',
                                                       'style', 'wrap' ])
   select_keys             = default_input_keys.merge(['multiple', 'accesskey'])
-  option_keys             = default_keys.merge(['tabindex', 'disabled', 'value'])
+  option_keys             = default_keys.merge(['tabindex', 'disabled', 'value', 'selected'])
   button_keys             = default_input_keys.merge(['accesskey'])
   toggle_keys             = default_input_keys.merge(['accesskey', 'showLabel', 'label'])
   for_keys                = default_keys.merge(['for'])
@@ -198,11 +198,21 @@
         "<select$all_attributes >";
         IF element_data.default_blank;
            # loop.count starts at 1, so using index 0 here is safe: it won't overlap below
-           PROCESS option parent_id = element_data.id, optindex = 0, option_data = {};
+           PROCESS option
+               parent_id   = element_data.id,
+               optindex    = 0,
+               option_data = {},
+               text_attr   = text_attr,
+               value_attr  = value_attr;
         END;
 
         FOREACH option IN element_data.options;
-            PROCESS option  parent_id = element_data.id, optindex = loop.count, option_data = option;
+           PROCESS option
+               parent_id   = element_data.id,
+               optindex    = loop.count,
+               option_data = option,
+               text_attr   = text_attr,
+               value_attr  = value_attr;
         END;
         "</select>";
       END %]
@@ -210,23 +220,25 @@
 
 [% # OPTION ELEMENT %]
 [% BLOCK option %]
-  [% option_data.value = option_data.$value_attr;
-     option_data.text = option_data.$text_attr;
-     option_data.id = "${parent_id}-${optindex}";
-     # Selected is a special case
+  [% # Selected is a special case
      # -- no attribute key, so it is handled here by looking for the option value in the default_values list.
+     option_selected = "";
      FOREACH test_val IN element_data.default_values;
-        IF test_val and option_data.value == test_val;
-            option_selected = ' selected="selected"';
+        IF test_val and option_data.$value_attr == test_val;
+            option_selected = 'selected';
         END;
      END;
 
      PROCESS attributes
-         attribute_data        = option_data,
+         attribute_data        = {
+              value    => option_data.$value_attr,
+              id       => "${parent_id}-${optindex}",
+              selected => option_selected,
+         },
          element_keys          = option_keys,
          custom_attribute_data = option_data.attributes;
 
-     "<option$all_attributes$option_selected >" _ option_data.text _ "</option>";
+     "<option$all_attributes >" _ option_data.$text_attr _ "</option>";
   %]
 [% END %]
 
