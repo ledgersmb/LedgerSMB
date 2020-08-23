@@ -64,101 +64,99 @@
    #  - dojo_type    : overrides the column's ${data_dojo_type}
    -%]
 [% BLOCK dynatable %]
-<table id="[% attributes.id %]"
-       class="dynatable [% attributes.class %]"
-       width="[% attributes.width %]">
-[%- IF !hide_header -%]
-<thead>
-   <tr>
-   [%- FOREACH COL IN columns;
-   IF COL.type != 'hidden'; -%]
-   <th class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">[%
+
+ <table id="[% attributes.id %]"
+        class="dynatable [% attributes.class %]"
+        width="[% attributes.width %]">
+[%- IF !hide_header %]
+  <thead>
+   <tr>[%
+      FOREACH COL IN columns;
+        IF COL.type != 'hidden'; %]
+    <th class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">[%
 
 IF attributes.order_url
-%] <a href="[% order_url | url %]&amp;order_by=[% COL.col_id %]">[%
+%]<a href="[% order_url | url %]&amp;order_by=[% COL.col_id %]">[%
 END;
 COL.name;
 IF attributes.order_url
 %]</a>[%
-END; %]
-   </th>
-   [%- END; END; -%]
+END; %]</th>
+   [%- END; END; %]
    </tr>
-</thead>
-[%- END -%]
-<tbody>
-   [%- ROWCOUNT = 0;
+  </thead>
+[% END -%]
+  <tbody>
+[%
+   ROWCOUNT = 0;
    PFX = attributes.input_prefix;
    FOREACH ROW IN tbody.rows;
-   ROWCOUNT = ROWCOUNT + 1 -%]
+      ROWCOUNT = ROWCOUNT + 1 -%]
    <tr class="[% ROW.html_class _ ' ' _ ROW.row_id %]">
       [% PROCESS input element_data = {
                                  type="hidden"
                                  name=PFX _ "row_" _ ROWCOUNT
-             value=ROW.row_id } %]
-      [%- FOREACH COL IN columns;
+                    value=ROW.row_id };
+         "\n";
+         FOREACH COL IN columns;
             TYPE = COL.type;
             NOHREF = COL.col_id _ "_NOHREF";
             IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
                OR (ROW.$NOHREF AND TYPE == 'href');
               TYPE = 'text';
             END;
-          IF TYPE == 'hidden';
-      NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
+            IF TYPE == 'hidden';
+               NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
 
-      # Used both by 'checkbox' and 'radio' types
-      IF ROW.${COL.col_id};
-         CHECKED = "checked";
-      ELSE;
-         CHECKED = '';
-      END; %]
-      [% PROCESS input element_data = {
-                                 type="hidden"
-             name=NAME
-             value=ROW.${COL.col_id} } %]
-      [%- ELSE - %]
-      <td class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">
-          [%- IF TYPE == 'input_text' -%]
-          [%
+               PROCESS input element_data = {
+                           type  = "hidden"
+                           name  = NAME
+                           value = ROW.${COL.col_id}
+               };
+               "\n";
+            ELSE; -%]
+      <td class="[% COL.col_id %] [% COL.class %] [% COL.type %]">[%
+               IF TYPE == 'text';
+                 ROW.${COL.col_id};
+               ELSIF TYPE == 'input_text';
                  PROCESS input element_data = {
                                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="text"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
                                           name=PFX _ COL.col_id _ '_' _ ROW.row_id
-                                          value=ROW.${COL.col_id} } %]
-         [%- ELSIF TYPE == 'password';
+                                          value=ROW.${COL.col_id} };
+               ELSIF TYPE == 'password';
                  PROCESS input element_data = {
                                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                           type="password"
                                           "data-dojo-type" = COL.data_dojo_type
                                           class=COL.class
                                           name=PFX _ COL.col_id _ '_' _ ROW.row_id
-                                          value=ROW.${COL.col_id} } %]
-         [%- ELSIF TYPE == 'checkbox';
-                   %]
-         [% PROCESS input element_data = {
+                                          value=ROW.${COL.col_id} };
+               ELSIF TYPE == 'checkbox';
+                 PROCESS input element_data = {
                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                           type="checkbox"
                           name=PFX _ COL.col_id _ '_' _ ROWCOUNT
                           class=COL.class
                           value=ROW.row_id
-                          checked=CHECKED };
+                          checked=(ROW.${COL.col_id} ? "checked" : '') };
 
                ELSIF TYPE == 'boolean_checkmark';
-                   IF ROW.${COL.col_id};
-                       %]✓[%
-                   END;
+                 IF ROW.${COL.col_id};
+                       '✓';
+                 END;
 
-               ELSIF TYPE == 'radio' %]
-         [% PROCESS input element_data = {
+               ELSIF TYPE == 'radio';
+                 PROCESS input element_data = {
                                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
                                          name=PFX _ COL.col_id
                                          class=COL.class
                                          value=ROW.row_id
-                checked=CHECKED } %]
-         [%- ELSIF TYPE == 'select';
+                                         checked=(ROW.${COL.col_id} ? "checked" : '') };
+               ELSIF TYPE == 'select';
                 # ROW is passed as an argument if COL.options is a callback
                 # function, which allows dropdown options to be dynamically
                 # customised to each row. The ROW argument is harmlessly
@@ -174,8 +172,8 @@ END; %]
                 class=COL.class
                 options=OPTION_LIST
                 default_blank=COL.default_blank
-                default_values=[ROW.${COL.col_id}] } %]
-         [%- ELSIF TYPE == 'href';
+                default_values=[ROW.${COL.col_id}] };
+               ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF ROW.$HREF_SFX;
                       ESCAPED_HREF = COL.href_base _ ROW.$HREF_SFX | url;
@@ -187,17 +185,20 @@ END; %]
                    IF COL.href_target;
                       HREF_TGT = ' target="' _ COL.href_target _ '"';
                    END;
-          %]<a href="[% ESCAPED_HREF %]"[% HREF_TGT %]>[% ROW.${COL.col_id} %]</a>
-         [%- ELSE -%]
-            [% ROW.${COL.col_id} %]
-         [%- END -%]
-      </td>
-      [%- END; END -%]
+                "<a href=\"" _ ESCAPED_HREF _ "\"" _ HREF_TGT _ ">" _ ROW.${COL.col_id} _ "</a>";
+               ELSE;
+                 ROW.${COL.col_id};
+               END; # enumeration TYPE
+             %]</td>
+[%
+            END; # IF hidden ELSE
+         END; # FOREACH
+      -%]
    </tr>
-   [%- END %]
-</tbody>
-[%- IF tfoot -%]
-<tfoot>
+[%   END -%]
+  </tbody>
+[% IF tfoot -%]
+  <tfoot>
    [%- FOREACH ROW IN tfoot.rows;
     SPACECOUNT = 0;
     ROWCOUNT = ROWCOUNT + 1; -%]
@@ -276,11 +277,11 @@ END; %]
      [%- END -%]
    </tr>
    [%- END -%]
-</tfoot>
-[%- END -%]
-[% PROCESS input element_data = {
+  </tfoot>
+[% END; -%]
+  [% PROCESS input element_data = {
        type="hidden"
        name="rowcount_" _ attributes.id
        value=ROWCOUNT } %]
-</table>
+ </table>
 [% END #block %]
