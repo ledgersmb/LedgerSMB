@@ -136,12 +136,11 @@ END # BLOCK -%]
 
     <td colspan="5">
         [%
-        all_months.unshift({});
-        all_years.unshift({});
         PROCESS select element_data = {
                name = "from_month" _ SUFFIX
                id = "from_month" _ SUFFIX
                options = all_months
+               default_blank = 1
         };
 
         PROCESS select element_data = {
@@ -150,6 +149,7 @@ END # BLOCK -%]
                options = all_years
                text_attr = "date_get_all_years"
                value_attr = "date_get_all_years"
+               default_blank = 1
         };
         PROCESS input element_data = {
                name="interval" _ SUFFIX
