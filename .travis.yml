@@ -150,7 +150,7 @@ before_script:
   - coverage-setup
   - sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
-  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" starman --preload-app --pid starman.pid --workers $(test-jobs) -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
+  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" starman --preload-app --pid starman.pid --workers $(test-jobs) -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log > /tmp/plackup-stdout.log 2> /tmp/plackup-stderr.log &
   - nginx -c /tmp/nginx.conf
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
@@ -217,8 +217,14 @@ after_failure:
       cat /tmp/plackup-access.log
       echo
       echo ===============================
-      echo === /tmp/plackup-error.log ===
+      echo === /tmp/plackup-stderr.log ===
       echo ===============================
-      cat /tmp/plackup-error.log
+      cat /tmp/plackup-stderr.log
+      echo
+      echo
+      echo ===============================
+      echo === /tmp/plackup-stdout.log ===
+      echo ===============================
+      cat /tmp/plackup-stdout.log
       echo
     fi
