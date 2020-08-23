@@ -104,9 +104,9 @@ END; %]
               TYPE = 'text';
             END;
           IF TYPE == 'hidden';
-      NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
-
-      PROCESS input element_data = {
+             NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
+      %]
+      [% PROCESS input element_data = {
                                  type="hidden"
              name=NAME
              value=ROW.${COL.col_id} } %]
