@@ -2,8 +2,17 @@
 
 <body class="lsmb [% dojo_theme %]">
 
-[% INCLUDE OPEN_STATUS_DIV
-             id=form.id approved = form.approved action=form.action %]
+[% CLASS = 'new';
+   IF form.id and form.approved;
+       CLASS = 'posted';
+   ELSIF id;
+       CLASS = 'saved';
+   END;
+%]<div id="statusdiv" class="[% CLASS %]">
+    <div id="history">[% text('Action: [_1], ID: [_2]', form.action, form.id);
+      %]</div>
+
+
 <form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
 <table width="100%">
 <tr>
@@ -398,5 +407,5 @@ FOREACH link IN form.file_links;
    %]&amp;file_class=1&amp;callback=[% callback | uri %]">[[% text('Attach') %]]</a>
 [% END # IF for[% INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved %]
 </form>
-[% INCLUDE CLOSE_STATUS_DIV %]
+</div>
 </body>
