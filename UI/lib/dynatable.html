@@ -112,7 +112,9 @@ END; %]
              value=ROW.${COL.col_id} } %]
       [%- ELSE - %]
       <td class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">
-          [%- IF TYPE == 'input_text' -%]
+         [%- IF TYPE == 'text';
+                 ROW.${COL.col_id};
+             ELSIF TYPE == 'input_text' -%]
           [%
                  PROCESS input element_data = {
                                           id=PFX _ COL.col_id _ '-' _ ROWCOUNT
