@@ -1,7 +1,7 @@
 #!perl
 
 
-requires 'perl', '5.20.0';
+requires 'perl', '5.24.0';
 
 requires 'Authen::SASL';
 requires 'CGI::Emulate::PSGI';
