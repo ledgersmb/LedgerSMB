@@ -97,12 +97,13 @@
               </tr>
               <tr>
                 <th align=right nowrap>[% text('Country') %]</th>
-                <td>[% country_list.unshift({});
+                <td>[%
                      INCLUDE select_country element_data = {
                          name = "country_id",
                          text_attr = 'name',
                          value_attr = 'id',
                          options = country_list,
+                         default_blank = 1,
                     } %]</td>
               </tr>
               <tr>

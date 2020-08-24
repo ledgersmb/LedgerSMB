@@ -190,10 +190,11 @@
           FOREACH g IN form.gifi_list;
              g.text = g.accno _ '--' _ g.description;
           END;
-          form.gifi_list.unshift({});
+
           INCLUDE select element_data={
               name = 'gifi_accno'
               default_values = [form.gifi_accno]
+              default_blank = 1
               options = form.gifi_list
               text_attr = 'text'
               value_attr = 'accno'

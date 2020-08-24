@@ -114,7 +114,6 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
 </div>
 <div class="input_line" id="person-country-div">
 <div class="input_group solo">
-       [% country_list.unshift({}) %]
                 [% INCLUDE select_country element_data = {
                         text_attr = "name"
                         value_attr = "id"
@@ -124,6 +123,7 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
                         required = 'true'
                         title = text('Country')
                         label = "_none_"
+                        default_blank = 1
         } %]
 </div>
 </div>

@@ -226,7 +226,7 @@ PROCESS dynatable
         </tr>
         <tr id="business-threshold-row">
            <td> [% IF business_types.size %]
-                [% business_types.unshift({});
+                [%
                        INCLUDE select element_data = {
                         name = "business_id"
                         options = business_types
@@ -235,11 +235,12 @@ PROCESS dynatable
                         value_attr = "id"
                         title = text('Business Type') #'
                         label = text('Business Type') #'
+                        default_blank = 1
                         } %]
                 [% END %]
           </td>
           <td>[% IF pricegroups.size %]
-              <div id="pricegroup-div">[% pricegroups.unshift({});
+              <div id="pricegroup-div">[%
                 INCLUDE select element_data = {
                      default_values = [credit_act.pricegroup_id],
                                name = 'pricegroup_id'
@@ -248,13 +249,14 @@ PROCESS dynatable
                               label = text('Pricegroup')
                          value_attr = 'id'
                           text_attr = 'pricegroup'
+                      default_blank = 1
                 } %]</div>
               [% END %]</td>
         </tr>
 
         <tr id="taxform-threshold-row">
          <td> [% IF taxform_list.size %]
-              [% taxform_list.unshift({});
+              [%
                      INCLUDE select element_data = {
                         name = "taxform_id"
                         options = taxform_list
@@ -263,6 +265,7 @@ PROCESS dynatable
                         value_attr = "id"
                         title = text('Tax Form') #'
                         label = text('Tax Form') #'
+                        default_blank = 1
                         } %]
               [% END %]
           </td>

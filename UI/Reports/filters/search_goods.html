@@ -68,12 +68,12 @@
 <tr>
  <th><label for="partsgroup_id">[% text('Part Group') %]</label></th>
  <td>[%
-        partsgroups.unshift({});
         PROCESS select element_data = {
           name = 'partsgroup_id'
          class = 'partsgroup'
        options = partsgroups
 default_values = [partsgroup_id]
+ default_blank = 1
      text_attr = 'partsgroup'
     value_attr = 'id'
  } %]</td>
