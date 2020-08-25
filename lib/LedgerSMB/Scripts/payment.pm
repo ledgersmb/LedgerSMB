@@ -49,6 +49,7 @@ Original copyright notice below.
 use strict;
 use warnings;
 
+use HTTP::Status qw( HTTP_OK );
 use List::Util qw/sum/;
 
 use LedgerSMB::Batch;
@@ -485,11 +486,22 @@ sub print {
                filename => 'printed-checks',
             },
             );
-        return $template->render(
+        $template->render(
             {
                 DBNAME   => $request->{company},
                 %$payment,
             });
+
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my $filename = "printed-checks.$payment->{format}";
+        return
+            [ HTTP_OK,
+              [
+               'Content-Type' => $template->{mimetype},
+               'Content-Disposition' => qq{attachment; filename="$filename"},
+              ],
+              [ $body ] ];
     } else {
 
     }
