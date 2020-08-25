@@ -24,6 +24,8 @@ This module does not specify any methods.
 use strict;
 use warnings;
 
+use HTTP::Status qw( HTTP_OK );
+
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
@@ -205,15 +207,22 @@ sub print {
         path     => 'DB',
         template => 'timecard',
         format   => $request->{format} || 'HTML',
-        output_options => {
-           filename => 'timecard-' . $request->{id}
-                            . '.' . lc($request->{format} || 'HTML')
-        }
     );
 
     if (lc($request->{media}) eq 'screen') {
         $request->{DBNAME} = $request->{company};
-        return $template->render($request);
+        $template->render($request);
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my $filename = 'timecard-' . $request->{id} .
+            '.' . lc($request->{format} || 'HTML');
+        return
+            [ HTTP_OK,
+              [
+               'Content-Type' => $template->{mimetype},
+               'Content-Disposition' => qq{attachment; filename="$filename"},
+              ],
+              [ $body ] ];
     }
     else {
         $template->render($request);
