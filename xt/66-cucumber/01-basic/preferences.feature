@@ -8,7 +8,7 @@ Background:
   Given a standard test company
     And a logged in admin
 
-Scenario: I select a different language
+Scenario: I change user preferences to the <selection> language
   When I navigate the menu and select the item at "Preferences"
    And I select the "Preferences" tab
    And I select "<selection>" from the drop down "Language"
@@ -20,6 +20,7 @@ Scenario: I select a different language
     | selection                  | translation                          | language         |
     | American English           | American English                     | Language         |
     | British English            | British English                      | Language         |
+    | Canadian English           | Canadian English                     | Language         |
     | Danish                     | dansk                                | Sprog            |
     | Dutch                      | Nederlands                           | Taal             |
     | English                    | English                              | Language         |
@@ -29,15 +30,16 @@ Scenario: I select a different language
     | Hungarian                  | magyar                               | Nyelv            |
     | Indonesian                 | Indonesia                            | Bahasa           |
     | Italian                    | italiano                             | Lingua           |
+    | Malay - Malaysia           | Melayu - Malaysia                    | Bahasa           |
     | Swiss High German          | Schweizer Hochdeutsch                | Sprache          |
 
+# prove has problems with UTF8
   @wip
   Examples:
     | selection                  | translation                          | language         |
-    | Arabic - Egypt             | اللغة   |                   العربية - مصر              |
+    | Arabic - Egypt             | اللغة |                       العربية - مصر            |
     | Brazilian Portuguese       | português - Brasil                   | Idioma           |
     | Bulgarian                  | български                            | Език             |
-    | Canadian English           | Canadian English                     | Language         |
     | Canadian French            | français canadien                    | Langue           |
     | Catalan                    | català                               | Idioma           |
     | Chinese - China            | 中文 - 中国                           | 语言             |
@@ -49,7 +51,6 @@ Scenario: I select a different language
     | Greek                      | Ελληνικά                             | Γλώσσα           |
     | Icelandic                  | íslenska                             | Túngumál         |
     | Lithuanian                 | lietuvių                             | Kalba            |
-    | Malay - Malaysia           | Melayu - Malaysia                    | Bahasa           |
     | Mexican Spanish            | español de México                    | Lenguaje         |
     | Norwegian Bokmål           | norsk bokmål                         | Språk            |
     | Polish                     | polski                               | Język            |
@@ -65,4 +66,3 @@ Scenario: I select a different language
     | Swedish                    | svenska                              | Språk            |
     | Turkish                    | Türkçe                               | Dil              |
     | Ukrainian                  | українська                           | Мова             |
-    |                            |                                      |                  |

@@ -25,7 +25,7 @@ Background:
 ##    | General Journal > Year End                | year-end                 | Ro-open Books |
 
 
-Scenario Outline: Navigate to menu and open screen
+Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
    When I navigate the menu and select the item at "<path>"
    Then I should see the <screen> screen
 
