@@ -22,6 +22,8 @@ information depending on what one clicks.
 use strict;
 use warnings;
 
+use HTTP::Status qw( HTTP_OK );
+
 use LedgerSMB::DBObject::TaxForm;
 use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
@@ -187,12 +189,20 @@ sub print {
         path     => 'DB',
         template => $request->{taxform_name},
         format   => $request->{format},
-        output_options => {
-           filename => 'summary_report-' . $request->{tax_form_id}
-                            . '.' . lc($request->{format})
-        },
     );
-    return $template->render($request);
+    $template->render($request);
+
+    my $body = $template->{output};
+    utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+    my $filename = 'summary_report-' . $request->{tax_form_id} .
+        '.' . lc($request->{format});
+    return
+        [ HTTP_OK,
+          [
+           'Content-Type' => $template->{mimetype},
+           'Content-Disposition' => qq{attachment; filename="$filename"},
+          ],
+          [ $body ] ];
 }
 
 =item list_all

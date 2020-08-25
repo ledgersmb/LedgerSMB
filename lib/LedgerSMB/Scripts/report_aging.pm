@@ -16,6 +16,8 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 use strict;
 use warnings;
 
+use HTTP::Status qw( HTTP_OK );
+
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Entity;
 use LedgerSMB::Entity::Company;
@@ -127,9 +129,6 @@ sub generate_statement {
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
         method => $request->{media},
-        output_options => {
-          filename => 'aging-report.' . lc($request->{print_format})
-        }
     );
     if ($request->{media} eq 'email'){
 
@@ -137,11 +136,21 @@ sub generate_statement {
        return;
 
     } elsif ($request->{media} eq 'screen'){
-        return $template->render(
+        $template->render(
             {
                 statements => \@statements,
                 DBNAME     => $request->{company},
             });
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my $filename = 'aging-report.' . lc($request->{print_format});
+        return
+            [ HTTP_OK,
+              [
+               'Content-Type' => $template->{mimetype},
+               'Content-Disposition' => qq{attachment; filename="$filename"},
+              ],
+              [ $body ] ];
     } else {
         LedgerSMB::Legacy_Util::render_template($template, $request, {
              statements => \@statements });
