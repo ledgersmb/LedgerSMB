@@ -239,7 +239,7 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my $locales = [ map { { text => code2country($_), value => $_ } }
-                    sort all_country_codes()
+                    sort (all_country_codes(), )
                   ];
     my $printer = [ {text => 'Screen', value => 'zip'},
                     map { {
