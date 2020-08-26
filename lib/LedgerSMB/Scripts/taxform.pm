@@ -90,7 +90,7 @@ sub edit {
     my $tf =
         LedgerSMB::DBObject::TaxForm->new(%$request)
         ->get($request->{id});
-    $request->merge($tf);
+    $request->{$_} = $tf->{$_} for keys %$tf;
     return _taxform_screen($request);
 }
 
