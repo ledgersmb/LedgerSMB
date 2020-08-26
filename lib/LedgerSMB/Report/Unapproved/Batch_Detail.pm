@@ -38,7 +38,6 @@ use LedgerSMB::Sysconfig;
 
 use Moose;
 use namespace::autoclean;
-use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
 
 =head1 PROPERTIES

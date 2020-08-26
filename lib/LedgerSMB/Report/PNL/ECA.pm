@@ -115,12 +115,6 @@ sub report_base {
 
 =over
 
-=item LedgerSMB::DBObject
-
-=item LedgerSMB::DBObject::Moose
-
-=item LedgerSMB::MooseTypes
-
 =item LedgerSMB::Report
 
 =item LedgerSMB::Report::Dates
