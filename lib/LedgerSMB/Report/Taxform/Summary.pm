@@ -142,7 +142,9 @@ sub buttons {
 
 sub run_report {
     my ($self) = @_;
-    my $tf = LedgerSMB::DBObject::TaxForm->get($self->tax_form_id);
+    my $tf = LedgerSMB::DBObject::TaxForm
+        ->new(dbh => $self->_dbh )
+        ->get($self->tax_form_id);
     $self->taxform($tf->{form_name});
     my $fname = 'tax_form_summary_report';
     $fname .= '_accrual' if $tf->{is_accrual};
