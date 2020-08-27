@@ -5,137 +5,138 @@
                name = "username"
                type = "hidden"
                value = user.login
-} %]
-  [% INCLUDE input element_data = {
+    } %]
+    [% INCLUDE input element_data = {
                name = "company"
                type = "hidden"
                value = user.company
-};
+    };
 
-password_strings = "title:'" _ text("Change Password") _
-                   "', old password:'" _ text("Old Password") _
-                   "', new password:'" _ text("New password") _
-                   "', verify:'" _ text("Verify") _
-                   "', change:'" _ text("Change Password") _
-                   "', no-oldpw:'" _ text("No Old Password") _
-                   "', strength:'" _    text("Strength");
-%]
+    password_strings = "title:'" _ text("Change Password") _
+                      "', old password:'" _ text("Old Password") _
+                      "', new password:'" _ text("New password") _
+                      "', verify:'" _ text("Verify") _
+                      "', change:'" _ text("Change Password") _
+                      "', no-oldpw:'" _ text("No Old Password") _
+                      "', strength:'" _    text("Strength");
+    %]
     <div data-dojo-type="dijit/layout/TabContainer" style="width: 100%; height: 500px;">
-        <div data-dojo-type="dijit/layout/ContentPane" title="Preferences"
-         data-dojo-props="selected:false">
- <form data-dojo-type="lsmb/Form" method="post" id="prefs" name="prefs" action="user.pl">
-  <script type="dojo/on" data-dojo-event="submit">
-    if(this.validate()){
-      var language = this.value.language;
-      require(["dojo/_base/connect"], function(connect){
-        connect.publish("lsmb/menus/Tree/refresh", [{
-          language: language
-        }]);
-      });    }
-    return true;
-</script>
-<table width="100%">
-  <tr><th class="listtop">[% text('Preferences for ')%][% user.login %]</th></tr>
-  [% IF action == 'save_preferences' %] <tr><th class="info">
-          [% text('Preferences Saved') %]</th>
-  </tr>[% END # if action %]
-  <tr><th class="info">
-          <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
-          <!-- tracked in issue #1699 -->
-          [% text('Your password will expire in ')%][% user.password_expires %]
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <table width="100%">
-        <tr valign="top">
-          <td>
-            <table>
-              <tbody>
+      <div data-dojo-type="dijit/layout/ContentPane" title="Preferences"
+           data-dojo-props="selected:false">
+        <form data-dojo-type="lsmb/Form" method="post" id="prefs" name="prefs" action="user.pl">
+          <script type="dojo/on" data-dojo-event="submit">
+            if(this.validate()){
+              var language = this.value.language;
+              require(["dojo/_base/connect"], function(connect){
+                connect.publish("lsmb/menus/Tree/refresh", [{
+                  language: language
+                }]);
+              });
+            }
+            return true;
+          </script>
+          <table width="100%">
+            <tr><th class="listtop">[% text('Preferences for ')%][% user.login %]</th></tr>
+            [% IF action == 'save_preferences' %] <tr><th class="info">
+                    [% text('Preferences Saved') %]</th>
+            </tr>[% END # if action %]
+            <tr><th class="info">
+                    <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
+                    <!-- tracked in issue #1699 -->
+                    [% text('Your password will expire in ')%][% user.password_expires %]
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <table width="100%">
+                  <tr valign="top">
+                    <td>
+                      <table>
+                        <tbody>
 
-              <tr>
-                <th class="listtop" colspan="2">[% text('Settings') %]</th>
-              </tr>
-              <tr>
-                <th align="right"><label for="dateformat">[% text('Date Format') %]</label></th>
-                <td>[% PROCESS select element_data={
-                      name = 'dateformat'
-                      options = user.dateformats
-                      default_values = [ user.prefs.dateformat ]
-                      text_attr = 'format'
-                      value_attr = 'format'
-                    } %]</td>
-              </tr>
-              <tr>
-                <th align="right"><label for="numberformat">[% text('Number Format') %]</label></th>
-                <td>[% PROCESS select element_data={
-                      name = 'numberformat',
-                      options = user.numberformats,
-                      default_values = [ user.prefs.numberformat ],
-                      text_attr = 'format',
-                      value_attr = 'format',
-                    } %]</td>
-              </tr>
-              <tr>
-                <th align="right"><label for="language">[% text('Language') %]</label></th>
-                <td>[% PROCESS select_language element_data={
-                     name = 'language',
-                     options = user.language_codes,
-                     default_values = [ user.prefs.language ],
-                     text_attr = 'label',
-                     value_attr = 'id',
-                     default_blank = 1,
-                   }%] </td>
-              </tr>
-              <tr>
-                <th align="right"><label for="stylesheet">[% text('Stylesheet') %]</label></th>
-                <td>[% PROCESS select element_data={
-                      name = 'stylesheet'
-                      options = user.cssfiles
-                      default_values = [ user.prefs.stylesheet ]
-                      text_attr = 'file'
-                      value_attr = 'file'
-                     } %]</td>
-              </tr>
-[% IF printers.defined %]
-              <tr>
-                <th align="right">[% text('Printer') %]</th>
-                <td>[% PROCESS select element_data={
-                     name = 'printer'
-                     options = user.printers
-                     default_values = [ user.prefs.printer]
-                     text_attr = 'printer'
-                     value_attr = 'printer'
-                     }%]</td>
-              </tr>
-              [% END %]
-              <tr>
-                <td colspan="2"></td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size="3" noshade="noshade" /></td>
-  </tr>
-</table>
+                          <tr>
+                            <th class="listtop" colspan="2">[% text('Settings') %]</th>
+                          </tr>
+                          <tr>
+                            <th align="right"><label for="dateformat">[% text('Date Format') %]</label></th>
+                            <td>[% PROCESS select element_data={
+                                  name = 'dateformat'
+                                  options = user.dateformats
+                                  default_values = [ user.prefs.dateformat ]
+                                  text_attr = 'format'
+                                  value_attr = 'format'
+                                } %]</td>
+                          </tr>
+                          <tr>
+                            <th align="right"><label for="numberformat">[% text('Number Format') %]</label></th>
+                            <td>[% PROCESS select element_data={
+                                  name = 'numberformat',
+                                  options = user.numberformats,
+                                  default_values = [ user.prefs.numberformat ],
+                                  text_attr = 'format',
+                                  value_attr = 'format',
+                                } %]</td>
+                          </tr>
+                          <tr>
+                            <th align="right"><label for="language">[% text('Language') %]</label></th>
+                            <td>[% PROCESS select_language element_data={
+                                name = 'language',
+                                options = user.language_codes,
+                                default_values = [ user.prefs.language ],
+                                text_attr = 'label',
+                                value_attr = 'id',
+                                default_blank = 1,
+                              }%] </td>
+                          </tr>
+                          <tr>
+                            <th align="right"><label for="stylesheet">[% text('Stylesheet') %]</label></th>
+                            <td>[% PROCESS select element_data={
+                                  name = 'stylesheet'
+                                  options = user.cssfiles
+                                  default_values = [ user.prefs.stylesheet ]
+                                  text_attr = 'file'
+                                  value_attr = 'file'
+                                } %]</td>
+                          </tr>
+          [% IF printers.defined %]
+                          <tr>
+                            <th align="right">[% text('Printer') %]</th>
+                            <td>[% PROCESS select element_data={
+                                name = 'printer'
+                                options = user.printers
+                                default_values = [ user.prefs.printer]
+                                text_attr = 'printer'
+                                value_attr = 'printer'
+                                }%]</td>
+                          </tr>
+          [% END %]
+                          <tr>
+                            <td colspan="2"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td><hr size="3" noshade="noshade" /></td>
+            </tr>
+          </table>
 
-[% PROCESS button element_data = {
-       type = "submit"
-       class = "submit"
-       name = "action"
-       value = "save_preferences"
-       text = text('Save') } %]
-  </form>
-        </div>
-        <div data-dojo-type="dijit/layout/ContentPane" title="Password" data-dojo-props="selected:true">
-          <div data-dojo-type="lsmb/users/ChangePassword"
-               data-dojo-properties="lstrings:{[% password_strings | html %]}"></div>
-        </div>
+          [% PROCESS button element_data = {
+            type = "submit"
+            class = "submit"
+            name = "action"
+            value = "save_preferences"
+            text = text('Save') } %]
+        </form>
+      </div>
+      <div data-dojo-type="dijit/layout/ContentPane" title="Password" data-dojo-props="selected:true">
+        <div data-dojo-type="lsmb/users/ChangePassword"
+             data-dojo-properties="lstrings:{[% password_strings | html %]}"></div>
+      </div>
     </div>
-</div>
+  </div>
 </body>
