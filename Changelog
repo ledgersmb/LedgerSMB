@@ -1,5 +1,35 @@
                                                         -*- fundamental -*-
 
+Changelog for 1.9 Series
+forthcoming
+
+Changelog for 1.9.0
+
+Added functionalities
+* List of countries in preferences now translated
+
+
+Changed functionalities
+* Faster HTML response generation (optimized HTML preprocessing)
+* `demo_with_images` document template set merged with standard `demo` set
+* JavaScript now built using WebPack (no longer using Dojo's build only)
+
+Bugs fixed
+* Default CoA referential integrity and consistency
+
+Code cleanup
+* Align HTML templates between `demo` and `xedemo` document template sets
+* Clean up and align XeLaTeX vs LaTeX(pdflatex) document template sets
+* Centralize database connection set-up
+* Reformat UI HTML templates & HTML5 upgrade (from 4.01 Transitional)
+* Simplify UI HTML template libraries elements.html & dynatable.html
+
+Dependency updates
+* perl 5.24 (updated from 5.20)
+* Locale::CLDR::* (new)
+* MooseX::ClassAttribute (new)
+
+
 Changelog for 1.8 Series
 forthcoming
 
