@@ -2,6 +2,11 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.19
+* Fix purchase order HTML template mis-alignment (#4854)
+* Fix tax form reports throwing an error when opened (#4881)
+
+
 Changelog for 1.7.18
 * Fix payment posting due to number formatting errors (#4781)
 * Fix payment posting due to date formatting errors (#4794)
