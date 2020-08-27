@@ -43,9 +43,11 @@ When qr/^I update the page$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
 };
 
-When qr/^I save the page( as new)?$/, sub {
+When qr/^I (click "(.+)" to )?save the page( as new)?$/, sub {
     my $maindiv = S->{ext_wsl}->page->body->maindiv->find('./*');
-    my $text = ($1) ? 'Save as new' : 'Save';
+    my $text = ($3) ? 'Save as new' :
+               ($1) ? $2
+                    : 'Save';
     S->{ext_wsl}->page->body->maindiv
         ->find('*button', text => $text)->click;
     S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
