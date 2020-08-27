@@ -23,6 +23,8 @@ __PACKAGE__->self_register(
 sub _verify {
     my ($self) = @_;
 
+    $self->find('*labeled', text => $_)
+        for ("Date Format", "Number Format", "Language". "Stylesheet");
     return $self;
 };
 
