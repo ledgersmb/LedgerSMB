@@ -132,6 +132,9 @@ Changelog for 1.7 Series
 Changelog for 1.7.19
 * Fix purchase order HTML template mis-alignment (#4854)
 * Fix tax form reports throwing an error when opened (#4881)
+* Fix 'missing method "error"' on bulk payments 'Print and Post' (#4780)
+* Fix bulk payments cheque/source numbering (#4780)
+* Fix error when deleting a template transaction (#4848)
 
 
 Changelog for 1.7.18
