@@ -28,7 +28,7 @@ use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 
-use Locale::CLDR;
+use LedgerSMB::I18N;
 
 =item save
 Saves the tax form. Inputs are:
@@ -155,15 +155,8 @@ sub get_metadata
 {
     my ($self) = @_;
 
-    @{$self->{countries}} = $self->call_dbmethod(
-                funcname => 'location_list_country'
-    );
-    my %regions = %{Locale::CLDR
-                    ->new($self->{_user}->{language})
-                    ->all_regions};
-    foreach (@{$self->{countries}}) {
-      $_->{name} = $regions{$_->{short_name}}
-    }
+    @{$self->{countries}} =
+        LedgerSMB::I18N::location_list_country_localized($self);
 
     my ($ref) = $self->call_procedure(funcname => 'setting_get', args => ['default_country']);
     return $self->{default_country} = $ref->{setting_get};

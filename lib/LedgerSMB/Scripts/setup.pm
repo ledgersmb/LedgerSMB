@@ -28,7 +28,6 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use Encode;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
-use Locale::CLDR;
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
@@ -42,6 +41,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
+use LedgerSMB::I18N;
 use LedgerSMB::Locale;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Mailer;
@@ -1082,15 +1082,8 @@ sub _render_user {
         funcname => 'person__list_salutations'
     );
 
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
-    my %regions = %{Locale::CLDR
-                        ->new($request->{_user}->{language})
-                        ->all_regions};
-    foreach (@{$request->{countries}}) {
-      $_->{name} = $regions{$_->{short_name}}
-    }
+    @{$request->{countries}} =
+        LedgerSMB::I18N::location_list_country_localized($request);
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (

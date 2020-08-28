@@ -12,12 +12,12 @@ LedgerSMB::Database::Upgrade - upgrade routines factored out of setup.pm
 use strict;
 use warnings;
 
+use LedgerSMB::I18N;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Upgrade_Tests;
 
 use File::Temp;
 use List::Util qw( first );
-use Locale::CLDR;
 use Scope::Guard qw( guard );
 use Template;
 use Version::Compare;
@@ -154,7 +154,7 @@ my %migration_required_vars = (
 my %required_vars_values = (
     default_ar      => sub { _linked_accounts($_[1], 'AR') },
     default_ap      => sub { _linked_accounts($_[1], 'AP') },
-    default_country => \&_available_countries,
+    default_country => sub { LedgerSMB::I18N::get_country_list($_[0]) },
     slschema        => sub { $migration_schema{$_[0]->type} },
     );
 
@@ -182,19 +182,6 @@ sub _linked_accounts {
     $sth->finish();
 
     return \@accounts;
-}
-
-sub _available_countries {
-    # user locale?
-    my %regions = %{Locale::CLDR
-                    ->new(LedgerSMB::Sysconfig::language())
-                    ->all_regions};
-    return [
-        sort { $a->{text} cmp $b->{text} }
-        map { +{ value => uc($_),
-                 text  => $regions{uc($_)} }
-        } (keys %regions)
-        ];
 }
 
 sub required_vars {

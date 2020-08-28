@@ -23,8 +23,7 @@ This module does not specify any methods.
 use strict;
 use warnings;
 
-use Locale::CLDR;
-
+use LedgerSMB::I18N;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template::UI;
 
@@ -188,17 +187,9 @@ sub defaults_screen {
         $request->{$skey} = $request->setting->get($skey);
     }
 
-    my @country_list = $request->call_procedure(
-                     funcname => 'location_list_country'
-    );
-    my %regions = %{Locale::CLDR
-                      ->new(
-                          $request->{_company_config}->{default_language} //
-                          $request->{_user}->{language})
-                      ->all_regions};
-    foreach (@country_list) {
-      $_->{name} = $regions{$_->{short_name}}
-    }
+    my @country_list =
+        LedgerSMB::I18N::location_list_country_localized($request,
+            $request->{_company_config}->{default_language});
     unshift @country_list, {}
         if ! defined $request->{default_country};
 

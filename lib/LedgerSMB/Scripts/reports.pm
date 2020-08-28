@@ -16,11 +16,10 @@ This module holds common workflow routines for reports.
 use strict;
 use warnings;
 
-use Locale::CLDR;
-
 use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::I18N;
 use LedgerSMB::Report::Balance_Sheet;
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::GIFI;
@@ -97,16 +96,8 @@ sub start_report {
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
-    @{$request->{country_list}} = $request->call_procedure(
-                   funcname => 'location_list_country'
-    );
-    my %regions = %{Locale::CLDR
-                        ->new($request->{_user}->{language})
-                        ->all_regions
-                   };
-    foreach (@{$request->{country_list}}) {
-      $_->{name} = $regions{$_->{short_name}}
-    }
+    @{$request->{country_list}} =
+        LedgerSMB::I18N::location_list_country_localized($request);
     @{$request->{employees}} =  $request->call_procedure(
         funcname => 'employee__all_salespeople'
     );

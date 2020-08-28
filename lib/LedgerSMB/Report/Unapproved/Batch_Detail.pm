@@ -31,8 +31,7 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 =cut
 
-use Locale::CLDR;
-
+use LedgerSMB::I18N;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
@@ -237,15 +236,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    my %regions = %{Locale::CLDR
-                   ->new($self->{_user}->{language})
-                    ->all_regions};
-    my $locales = [
-        sort { $a->{text} cmp $b->{text} }
-        map { +{ value => uc($_),
-                 text  => $regions{uc($_)} }
-        } (keys %regions)
-                  ];
+    my $locales = LedgerSMB::I18N::get_country_list($self);
     my $printer = [ {text => 'Screen', value => 'zip'},
                     map { {
                          text => $_, value => $LedgerSMB::Sysconfig::printer{$_}

@@ -17,6 +17,7 @@ we look only to the current locale.
 
 =cut
 
+use Locale::CLDR;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::App_State;
@@ -115,6 +116,45 @@ sub maketext {
     return LedgerSMB::App_State->Locale->maketext(@_);
 }
 
+=item $self->get_country_list
+
+Get a country localized list to allow user selection
+
+=cut
+
+sub get_country_list {
+    my $self = shift;
+    my %regions = %{Locale::CLDR
+                   ->new($self->{_user}->{language})
+                    ->all_regions};
+    return [
+        sort { $a->{text} cmp $b->{text} }
+        map { +{ value => uc($_),
+                 text  => $regions{uc($_)} }
+        } (keys %regions)
+    ];
+}
+
+=item $self->location_list_country_localized($language)
+
+Get the country list, localized according to the desired language
+
+Use the provided language of default to user
+
+=cut
+
+sub location_list_country_localized {
+    my $self = shift;
+    my $language = shift // $self->{_user}->{language};
+    my @country_list = $self->call_procedure(
+                     funcname => 'location_list_country'
+    );
+    my %regions = %{Locale::CLDR->new($language)->all_regions};
+    foreach (@country_list) {
+      $_->{name} = $regions{$_->{short_name}}
+    }
+    return @country_list;
+}
 =back
 
 =head1 LICENSE AND COPYRIGHT

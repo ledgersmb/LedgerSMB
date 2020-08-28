@@ -18,7 +18,6 @@ This module is the UI controller for the customer, vendor, etc functions; it
 use strict;
 use warnings;
 
-use Locale::CLDR;
 use Try::Tiny;
 
 use LedgerSMB;
@@ -35,6 +34,7 @@ use LedgerSMB::Entity::Bank;
 use LedgerSMB::Entity::Note;
 use LedgerSMB::Entity::User;
 use LedgerSMB::File;
+use LedgerSMB::I18N;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
@@ -301,16 +301,7 @@ sub _main_screen {
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
-    my @country_list = $request->call_procedure(
-                     funcname => 'location_list_country'
-      );
-    my %regions = %{Locale::CLDR
-                        ->new($request->{_user}->{language})
-                        ->all_regions
-                   };
-    foreach (@country_list) {
-      $_->{name} = $regions{$_->{short_name}}
-    }
+    my @country_list = LedgerSMB::I18N::location_list_country_localized($request);
     my @entity_classes =
         map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
         $request->call_procedure(
