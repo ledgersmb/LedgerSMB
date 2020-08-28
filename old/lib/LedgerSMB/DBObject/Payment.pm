@@ -459,10 +459,8 @@ C<$request> is a L<LedgerSMB> request object.
 Required request parameters:
 
   * dbh
-  * action
   * account_class [1|2]
   * batch_id
-  * source_start (unless account_class == 2)
 
 Optionally accepts the following filtering parameters:
 
@@ -483,46 +481,11 @@ database query:
 sub get_payment_detail_data {
     my ($self) = @_;
     $self->get_metadata();
-    if ( $self->{account_class} != 2 && !defined $self->{source_start} ){
-        die 'No source start defined!';
-    }
-    #$self->error('No source start defined!') unless defined $self->{source_start};
-
-    my $source_inc;
-    my $source_src;
-    $self->{source_start} =~ /(\d*)\D*$/;
-    $source_src = $1;
-    if ($source_src) {
-        $source_inc = $source_src;
-    } else {
-        $source_inc = 0;
-    }
-    my $source_length = length($source_inc);
 
     @{$self->{contact_invoices}} = $self->call_dbmethod(
         funcname => 'payment_get_all_contact_invoices');
 
     for my $inv (@{$self->{contact_invoices}}) {
-        if (($self->{action} ne 'update_payments') or
-        (defined $self->{"id_$inv->{contact_id}"})
-        ) {
-            my $source = $self->{source_start};
-            $source = "" unless defined $source;
-            if (length($source_inc) < $source_length) {
-                $source_inc = sprintf('%0*s', $source_length, $source_inc);
-            }
-            $source =~ s/$source_src(\D*)$/$source_inc$1/;
-            ++ $source_inc;
-        if ($self->{account_class} == 1) { # skip for AR Receipts
-          $inv->{source} = $source;
-          $self->{"source_$inv->{contact_id}"} = $source;
-        }
-        } else {
-        # Clear source numbers every time.
-        $inv->{source} = "";
-        $self->{"source_$inv->{contact_id}"} = "";
-        }
-
         $inv->{invoices} =
             [  sort { $a->{transdate} cmp $b->{transdate} }
                map { { id => $_->[0],
