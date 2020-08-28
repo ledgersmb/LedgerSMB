@@ -50,7 +50,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK );
-use List::Util qw/sum/;
+use List::Util qw/any sum/;
 
 use LedgerSMB::Batch;
 use LedgerSMB::DBObject::Payment;
@@ -565,7 +565,21 @@ sub display_payments {
     $payment->get_payment_detail_data();
     $payment->{exchangerate} = undef;
     $payment->{grand_total} = LedgerSMB::PGNumber->from_db('0');
+    my $have_selected =
+        any {
+            $request->{"id_$_->{contact_id}"}
+    } @{$payment->{contact_invoices}};
     my $source = $request->{source_start};
+    my $source_inc;
+    my $source_src;
+    $request->{source_start} =~ /(\d*)\D*$/;
+    $source_src = $1;
+    if ($source_src) {
+        $source_inc = $source_src;
+    } else {
+        $source_inc = 0;
+    }
+    my $source_length = length($source_inc);
     for (@{$payment->{contact_invoices}}){
         my $contact_total = LedgerSMB::PGNumber->from_db(0);
         my $contact_to_pay = LedgerSMB::PGNumber->from_db(0);
@@ -619,10 +633,17 @@ sub display_payments {
         }
 
         if ($payment->{account_class} == 1
-            && $request->{"id_$_->{contact_id}"}) {
-            # AP && selected
+            && (not $have_selected or $request->{"id_$_->{contact_id}"})) {
+            # AP && selected item or AP and no selected items
+            my $source = $request->{source_start};
+            $source = '' unless defined $source;
+            if (length($source_inc) < $source_length) {
+                $source_inc = sprintf('%0*s', $source_length, $source_inc);
+            }
+            $source =~ s/$source_src(\D*)$/$source_inc$1/;
+            ++ $source_inc;
             $_->{source} = $source;
-            $source++;
+            $request->{"source_$_->{contact_id}"} = $source;
         }
         if ($payment->{account_class} == 2) {
             $_->{source} = $request->{"source_$_->{contact_id}"};
