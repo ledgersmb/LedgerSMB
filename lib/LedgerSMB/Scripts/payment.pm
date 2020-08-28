@@ -437,7 +437,7 @@ sub print {
                     $invoice->{paid} = LedgerSMB::PGNumber
                         ->from_input($invoice->{net});
                 } else {
-                    $payment->error('Invalid Payment Amount Option');
+                    $request->error('Invalid Payment Amount Option');
                 }
                 $check->{amount} += $invoice->{paid};
                 $invoice->{paid} = $invoice->{paid}->to_output(
@@ -1192,7 +1192,8 @@ sub post_payment {
     my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 
     if (!$request->{exrate}) {
-     $Payment->error($locale->text('Exchange rate hasn\'t been defined!'));}
+        $request->error($locale->text('Exchange rate hasn\'t been defined!'));
+    }
     # LETS GET THE CUSTOMER/VENDOR INFORMATION
     ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
     # LETS GET THE DEPARTMENT INFO
