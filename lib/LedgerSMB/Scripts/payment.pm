@@ -601,7 +601,7 @@ sub display_payments {
             && (not $have_selected or $request->{"id_$_->{contact_id}"})) {
             # AP && selected item or AP and no selected items
             my $source = $request->{source_start};
-            $source = "" unless defined $source;
+            $source = '' unless defined $source;
             if (length($source_inc) < $source_length) {
                 $source_inc = sprintf('%0*s', $source_length, $source_inc);
             }
