@@ -140,7 +140,8 @@ Delete transaction templates
 
 sub delete {
     my ($request) = @_;
-    my $templates = LedgerSMB::DBObject::TransTemplate->new;
+    my $templates =
+        LedgerSMB::DBObject::TransTemplate->new(dbh => $request->{dbh});
 
     for my $row ( 1 .. $request->{rowcount_} ) {
         $templates->delete($request->{"row_select_$row"})
