@@ -556,7 +556,7 @@ sub _redirect {
 
     my $form = Form->new($argv);
     $form->{$_} = $self->{$_} for qw(
-      dbh login favicon stylesheet titlebar password vc header _auth
+      dbh login favicon stylesheet titlebar password vc header _auth _locale
     );
     $form->{action} ||= $self->{action}; # default to old action if not set
     $form->{script} = $script;
