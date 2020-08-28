@@ -116,16 +116,16 @@ sub maketext {
     return LedgerSMB::App_State->Locale->maketext(@_);
 }
 
-=item $self->get_country_list
+=item get_country_list($request)
 
 Get a country localized list to allow user selection
 
 =cut
 
 sub get_country_list {
-    my $self = shift;
+    my $request = shift;
     my %regions = %{Locale::CLDR
-                   ->new($self->{_user}->{language})
+                   ->new($request->{_user}->{language})
                     ->all_regions};
     return [
         sort { $a->{text} cmp $b->{text} }
@@ -135,7 +135,7 @@ sub get_country_list {
     ];
 }
 
-=item $self->location_list_country_localized($language)
+=item location_list_country_localized($request,$language)
 
 Get the country list, localized according to the desired language
 
@@ -144,9 +144,9 @@ Use the provided language of default to user
 =cut
 
 sub location_list_country_localized {
-    my $self = shift;
-    my $language = shift // $self->{_user}->{language};
-    my @country_list = $self->call_procedure(
+    my $request = shift;
+    my $language = shift // $request->{_user}->{language};
+    my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
     );
     my %regions = %{Locale::CLDR->new($language)->all_regions};
