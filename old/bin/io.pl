@@ -331,6 +331,13 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             $column_data{description} = qq|<td>$form->{"description_$i"} |
              . qq|<input type="hidden" name="description_$i"
                         value="$form->{"description_$i"}" /></td>|
+        } elsif ($form->{"partnumber_$i"}) {
+            $form->{"description_$i"} //= '';
+            $column_data{description} =
+                qq|<td><div data-dojo-type="dijit/form/Textarea"
+                            id="description_$i" name="description_$i"
+                            size=48 style="width: 100%;font:inherit !important"
+                            >$form->{"description_$i"}</div></td>|;
         } else {
             $form->{"description_$i"} //= '';
             $column_data{description} =
