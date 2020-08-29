@@ -100,6 +100,7 @@ cache:
   directories:
     - $HOME/locallib
     - $HOME/dojo_archive
+    - $TRAVIS_BUILD_DIR/node_modules
 
 before_install:
   - sudo mount -o remount,size=50% /var/ramfs
