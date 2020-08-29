@@ -36,14 +36,14 @@
             return true;
           </script>
           <table width="100%">
-            <tr><th class="listtop">[% text('Preferences for ')%][% user.login %]</th></tr>
+            <tr><th class="listtop">[% text('Preferences for [_1]',user.login) %]</th></tr>
             [% IF action == 'save_preferences' %] <tr><th class="info">
                     [% text('Preferences Saved') %]</th>
             </tr>[% END # if action %]
             <tr><th class="info">
                     <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
                     <!-- tracked in issue #1699 -->
-                    [% text('Your password will expire in ')%][% user.password_expires %]
+                    [% text('Your password will expire in [_1]',user.password_expires) %]
               </th>
             </tr>
             <tr>
