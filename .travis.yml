@@ -100,7 +100,6 @@ cache:
   directories:
     - $HOME/locallib
     - $HOME/dojo_archive
-    - $HOME/perl5
 
 before_install:
   - sudo mount -o remount,size=50% /var/ramfs
