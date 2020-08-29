@@ -51,8 +51,8 @@ for (qw(        drafts     login      payment
 
 my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, undef);
 ok($dbh->{_dbh}, "Opened db $ENV{PGDATABASE}");
-my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} );
-ok($locale, "Opened ${LedgerSMB::Sysconfig::language} locale");
+my $locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() );
+ok($locale, "Opened " . LedgerSMB::Sysconfig::language() . " locale");
 
 for my $test (@$test_request_data){
     my $argstr="";
@@ -167,4 +167,3 @@ sub error {
     $self->{_error} = shift;
     $self->{_died} = 1;
 }
-

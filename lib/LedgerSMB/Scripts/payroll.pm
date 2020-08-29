@@ -20,6 +20,7 @@ workflows.
 use strict;
 use warnings;
 
+use LedgerSMB::I18N;
 use LedgerSMB::Payroll::Income_Type;
 use LedgerSMB::Report::Payroll::Income_Types;
 use LedgerSMB::Template::UI;
@@ -43,9 +44,7 @@ with different inputs.
 
 sub show_income_type {
     my ($request) = @_;
-    @{$request->{countries}} = $request->call_procedure(
-       funcname => 'location_list_country'
-    );
+    my @country_list = LedgerSMB::I18N::location_list_country_localized($request);
     @{$request->{pics}} = $request->call_procedure(
        funcname => 'payroll_pic__list', args => [$request->{country_id}]
     ) if $request->{country_id};
@@ -88,9 +87,7 @@ Displays the income type search screen
 
 sub search_income_type {
     my ($request) = @_;
-    @{$request->{countries}} = $request->call_procedure(
-       funcname => 'location_list_country'
-    );
+    my @country_list = LedgerSMB::I18N::location_list_country_localized($request);
 
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'payroll/income_search', $request);

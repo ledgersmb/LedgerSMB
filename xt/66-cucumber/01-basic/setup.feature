@@ -16,10 +16,10 @@ Scenario: Create a company *with* CoA
    And I log into the company using the super-user credentials
   Then I should see the company creation page
   When I confirm database creation with these parameters:
-      | parameter name    | value                    |
-      | Country           | United States of America |
-      | Chart of accounts | General.sql              |
-      | Templates         | demo                     |
+      | parameter name    | value         |
+      | Country           | United States |
+      | Chart of accounts | General.sql   |
+      | Templates         | demo          |
   Then I should see the user creation page
   When I create a user with these values:
       | label              | value            |
@@ -158,14 +158,14 @@ Scenario: Create database with ampersand in the name
    And I log into the company using the super-user credentials
   Then I should see the company creation page
   When I confirm database creation with these parameters:
-      | parameter name    | value                    |
-      | Country           | United States of America |
-      | Chart of accounts | General.sql              |
-      | Templates         | demo                     |
+      | parameter name    | value         |
+      | Country           | United States |
+      | Chart of accounts | General.sql   |
+      | Templates         | demo          |
   Then I should see the user creation page
   When I create a user with these values:
       | label              | value            |
-      | Username           | the&.user         |
+      | Username           | the&.user        |
       | Password           | abcd3fg          |
       | Salutation         | Mr.              |
       | First Name         | A                |

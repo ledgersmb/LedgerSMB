@@ -41,6 +41,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
+use LedgerSMB::I18N;
 use LedgerSMB::Locale;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Mailer;
@@ -1081,9 +1082,8 @@ sub _render_user {
         funcname => 'person__list_salutations'
     );
 
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
+    @{$request->{countries}} =
+        LedgerSMB::I18N::location_list_country_localized($request);
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (
