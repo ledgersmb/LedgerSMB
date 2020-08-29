@@ -457,11 +457,17 @@ sub get_template_args {
 
 sub _dbfile_path {
     my $self = shift;
+    my ($name) = @_;
     my $content = $self->_dbfile_string(@_);
 
     $self->{_tmpdir} = File::Temp->newdir() unless defined $self->{_tmpdir};
     $self->{_files} = [] unless defined $self->{_files};
-    my $file = File::Temp->new( DIR => $self->{_tmpdir} );
+
+    # PDFLaTeX wants the extension of the original file...
+    $name =~ m/([.][a-zA-Z0-9]*)$/;
+    my $ext = $1 // '';
+    my $file = File::Temp->new( SUFFIX => $ext,
+                                DIR => $self->{_tmpdir} );
 
     syswrite($file, $content)
         or die "Unable to write content for database-file $_[0]: $!";
