@@ -69,7 +69,7 @@ my $is_update;
 # $locale->text('February')
 # $locale->text('March')
 # $locale->text('April')
-# $locale->text('May ')
+# $locale->text('May')
 # $locale->text('June')
 # $locale->text('July')
 # $locale->text('August')
