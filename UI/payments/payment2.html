@@ -184,8 +184,9 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       [% FOREACH row IN rows %]
       [% i = i + 1; j = i % 2; alterning_style = "listrow$j" %]
       <tr class="[% alterning_style %] open-item-row">
-        <td class="invoice-number"><a href="[% row.invoice.href %]"
-                                      target="_new">[% row.invoice.number %]</a>
+        <td class="invoice-number"
+            ><a href="erp.pl?action=root#[% row.invoice.href %]"
+                target="_blank">[% row.invoice.number %]</a>
         </td>
         [% # we can use an href to link this invoice number to the invoice %]
         <td class="invoice-date">
