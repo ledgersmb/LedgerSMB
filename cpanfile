@@ -26,6 +26,8 @@ requires 'JSON::MaybeXS';
 recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
 recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';
+requires 'Locale::Country';
+requires 'Locale::Language';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'Log::Log4perl::Layout::PatternLayout';
