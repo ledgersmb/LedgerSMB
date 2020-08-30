@@ -21,12 +21,12 @@ Scenario: I change user preferences to the <selection> language
   Then I expect "English" to be selected for "Language"
 
 # Non UTF8 accented characters are confirmed working
-  @wip
   Examples:
     | selection              | translation            | language     | default         | save          |
     | American English       | American English       | Language     | English         | Save          |
     | Brazilian Portuguese   | português - Brasil     | Idioma       | inglês          | Salvar        |
     | British English        | British English        | Language     | English         | Save          |
+    | Canadian English       | Canadian English       | Language     | English         | Save          |
     | Canadian French        | français canadien      | Langue       | anglais         | Enregistrer   |
     | Catalan                | català                 | Idioma       | anglès          | Guardar       |
     | Danish                 | dansk                  | Sprog        | engelsk         | Gem           |
@@ -54,11 +54,6 @@ Scenario: I change user preferences to the <selection> language
     | Spanish - Venezuela    | español - Venezuela    | Idioma       | inglés          | Guardar       |
     | Swedish                | svenska                | Språk        | engelska        | Spara         |
     | Swiss High German      | Schweizer Hochdeutsch  | Sprache      | Englisch        | Speichern     |
-
-# Failing for an unknown reason, yet
-  Examples:
-    | selection              | translation            | language     | default         | save          |
-    | Canadian English       | Canadian English       | Language     | English         | Save          |
 
 # prove has problems displaying UTF8, even though tests works
   @wip
