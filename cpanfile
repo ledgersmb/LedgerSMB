@@ -121,7 +121,7 @@ on 'develop' => sub {
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.58';
-    requires 'Test::Dependencies', '0.20';
+    requires 'Test::Dependencies', '0.28';
     requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
