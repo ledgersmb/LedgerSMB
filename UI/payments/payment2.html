@@ -195,7 +195,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       <?lsmb FOREACH row IN rows ?>
       <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
       <tr class="<?lsmb alterning_style ?>">
-        <td><a href="<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
+        <td><a href="login.pl?action=login#<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
         </td>
         <?lsmb # we can use an href to link this invoice number to the invoice ?>
         <td>
