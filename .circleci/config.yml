@@ -63,11 +63,31 @@ commands:
     description: "Prepare environment"
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "~/package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-npm-deps-
       - run:
           name: Make Dojo
           command: |
             make dojo
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "~/package-lock.json" }}
+          paths:
+            - node_modules
       # Freshen up CPAN
+      - restore_cache:
+          keys:
+            # Get latest cache for the current specs
+            - v1-cpanminus-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}
+            # Fall back to the latest for the current branch
+            - v1-cpanminus-{{ .Branch }}-
+            # Fall back to the latest for master
+            - v1-cpanminus-master-
+            # Don't fall back any further
       - run:
           name: Refresh modules from CPAN
           command: |
@@ -87,6 +107,10 @@ commands:
                     Devel::Cover \
                     Devel::Cover::Report::Coveralls
             fi
+      - save_cache:
+           key: v1-cpanminus-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}
+           paths:
+             - ~/perl5
       - run:
           name: Set up dirs and files
           command: |
