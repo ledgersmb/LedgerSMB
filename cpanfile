@@ -19,6 +19,8 @@ requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
 recommends 'Cpanel::JSON::XS';
 requires 'List::MoreUtils';
+requires 'Locale::Country';
+requires 'Locale::Language';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'Log::Log4perl::Layout::PatternLayout';
