@@ -80,7 +80,7 @@ commands:
       - run:
           name: Refresh modules from CPAN
           command: |
-            cpanm --quiet --notest \
+            cpanm --metacpan --quiet --notest \
               --with-develop \
               --with-feature=starman \
               --with-feature=latex-pdf-images \

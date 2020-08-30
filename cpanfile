@@ -21,6 +21,8 @@ requires 'JSON::MaybeXS';
 recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
 recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';
+requires 'Locale::Country';
+requires 'Locale::Language';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'Log::Log4perl::Layout::PatternLayout';
@@ -119,7 +121,7 @@ on 'develop' => sub {
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.58';
-    requires 'Test::Dependencies', '0.20';
+    requires 'Test::Dependencies', '0.28';
     requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
