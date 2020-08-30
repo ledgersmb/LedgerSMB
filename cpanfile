@@ -138,7 +138,7 @@ on 'develop' => sub {
     requires 'Test::Class::Moose';
     requires 'Test::Class::Moose::Role';
     requires 'Test::Class::Moose::Role::ParameterizedInstances';
-    requires 'Test::Dependencies', '0.20';
+    requires 'Test::Dependencies', '0.28';
     requires 'Test::Exception';
     requires 'Test::Harness', '3.36';
     requires 'Test::Pod', '1.00';
