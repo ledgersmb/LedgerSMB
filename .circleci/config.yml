@@ -81,6 +81,7 @@ commands:
               --with-feature=xls \
               --with-feature=edi \
               --installdeps .
+            cpanm --metacpan --notest JSON::PP~4.03
             cpanm --metacpan --notest Starlet
             if [ "x$COVERAGE" == "x1" ]
             then
