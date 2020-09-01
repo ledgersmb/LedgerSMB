@@ -64,7 +64,7 @@
 
   # default currency
   # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
-  element_defaults.currency = text_defaults
+  element_defaults.currency = element_defaults.text
 #  currency_defaults = {
 #    "data-dojo-type" = 'dijit/form/CurrencyTextBox',
 #    "data-dojo-props" = "currency:'$SETTINGS.default_currency'"
@@ -72,7 +72,7 @@
 
   # default monetary (currency without currency indicator)
   # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
-  element_defaults.monetary = text_defaults
+  element_defaults.monetary = element_defaults.text
 #  monetary_defaults = {
 #    "data-dojo-type" = 'dijit/form/NumberTextBox',
 #    "data-dojo-props" = "constraints:{pattern:'0.00'}"
