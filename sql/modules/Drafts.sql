@@ -17,7 +17,7 @@ CREATE TYPE draft_search_result AS (
 );
 
 CREATE OR REPLACE FUNCTION draft__search(in_type text, in_with_accno text,
-in_from_date date, in_to_date date, in_amount_le numeric, in_amount_ge numeric)
+in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)
 returns setof draft_search_result AS
 $$
         SELECT id, transdate, invoice, reference, description,
@@ -56,6 +56,8 @@ $$
                                     WHERE v.trans_id = ar.id)) trans
         WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
           AND (in_to_date IS NULL or trans.transdate <= in_to_date)
+          AND (in_amount_gt IS NULL or amount > in_amount_gt)
+          AND (in_amount_lt IS NULL or amount < in_amount_lt)
           AND (in_with_accno IS NULL
                OR id IN (SELECT line.trans_id
                            FROM acc_trans line
