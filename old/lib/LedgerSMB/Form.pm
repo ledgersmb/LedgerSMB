@@ -1250,8 +1250,10 @@ sub generate_selects {
                 }
           }
 
-          if ($form->{rowcount}) {
-                for my $i ( 1 .. $form->{rowcount} ) {
+        my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty} // 0;
+        my $rowcount = $form->{rowcount} + $min_lines;
+        if ($rowcount) {
+                for my $i ( 1 .. $rowcount ) {
                      $form->{"select$form->{ARAP}_amount_$i"} =
                           $form->{"select$form->{ARAP}_amount"};
                      $form->{"select$form->{ARAP}_amount_$i"} =~
