@@ -62,8 +62,6 @@ my $json = JSON::MaybeXS->new( pretty => 1,
 sub authenticate {
     my ($request) = @_;
 
-    $request->{company} ||= $LedgerSMB::Sysconfig::default_db;
-
     if ($request->{_req}->content_length > 4096) {
         # Obviously, the request to log in can't be slurped into memory
         # when bigger than 4k (which it ***NEVER*** should be...
@@ -80,6 +78,7 @@ sub authenticate {
         || ! $r->{password}) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
+    $r->{company} ||= $LedgerSMB::Sysconfig::default_db;
     if ($request->{_create_session}->($r->{login},
                                       $r->{password},
                                       $r->{company})) {
