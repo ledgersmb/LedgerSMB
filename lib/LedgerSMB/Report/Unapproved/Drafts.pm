@@ -138,6 +138,10 @@ sub header_lines {
              text => $self->Text('Draft Type')},
             {name => 'reference',
              text => $self->Text('Reference')},
+            {name => 'from_date',
+             text => $self->Text('From Date')},
+            {name => 'to_date',
+             text => $self->Text('To Date')},
             {name => 'amount_gt',
              text => $self->Text('Amount Greater Than')},
             {name => 'amount_lt',
@@ -167,6 +171,22 @@ ar for AR drafts, ap for AP drafts, gl for GL ones.
 =cut
 
 has 'type' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item from_date
+
+Transaction date must be between from date and to date.
+
+=cut
+
+has 'from_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+
+=item to_date
+
+Transaction date must be between from date and to date.
+
+=cut
+
+has 'to_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item amount_gt
 

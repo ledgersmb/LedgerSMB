@@ -35,6 +35,24 @@
                 name = "reference"
         } ?>
         </div>
+<div class="input" id="date_div">
+        <?lsmb INCLUDE input element_data = {
+                title = text('From Date')
+                type = "text",
+                class = "date",
+                size = 12,
+                value = from_date,
+                name = "from_date"
+        } ?>
+        <?lsmb INCLUDE input element_data = {
+            title = text('To Date')
+            type = "text",
+            class = "date",
+            size = 12,
+            value = to_date,
+            name = "to_date"
+        } ?>
+</div>
 <div class="input" id="amounts_div">
         <?lsmb INCLUDE input element_data = {
                 title = "Minimum Value"
