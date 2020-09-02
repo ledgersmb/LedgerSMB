@@ -77,8 +77,10 @@ sub columns {
     my ($self) = @_;
     return [
     {col_id => 'select',
-       name => '',
-       type => 'checkbox' },
+       name => 'X',
+       type => 'checkbox',
+     toggle => 1,
+    },
 
     {col_id => 'type',
        name => $self->Text('Type'),

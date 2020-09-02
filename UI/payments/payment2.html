@@ -159,7 +159,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                          <button type="button"
                                  style="margin-left:auto;margin-right:auto"
                                  id="checkbox_all"
-                                 data-dojo-type="lsmb/payments/ToggleIncludeButton">
+                                 data-dojo-type="lsmb/ToggleIncludeButton"
+                                 data-dojo-props="query: 'input[name^=\'checkbox_\']'">
                                 [% column.text -%]
                             </button>
                          [% INCLUDE tooltip element_data = {

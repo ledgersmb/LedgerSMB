@@ -50,7 +50,8 @@ var includedRequires = [
     "dijit/layout/BorderContainer",
     "dijit/layout/ContentPane",
     "dijit/layout/TabContainer",
-    "dijit/Tooltip"
+    "dijit/Tooltip",
+    "lsmb/ToggleIncludeButton"
 ];
 
 function findDataDojoTypes(fileName) {
@@ -78,7 +79,7 @@ includedRequires = includedRequires
    glob.sync("lsmb/**/!(main|bootstrap|lsmb.profile|webpack.loaderConfig).js", {
             cwd: "UI/js-src/"
     }).map(function(file) {
-	    return file.replace(/\.js$/,'')
+           return file.replace(/\.js$/,'')
     }))
 .filter((x, i, a) => a.indexOf(x) === i)
 .sort();
