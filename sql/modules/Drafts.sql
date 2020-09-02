@@ -56,8 +56,8 @@ $$
                                     WHERE v.trans_id = ar.id)) trans
         WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
           AND (in_to_date IS NULL or trans.transdate <= in_to_date)
-          AND (in_amount_gt IS NULL or amount > in_amount_gt)
-          AND (in_amount_lt IS NULL or amount < in_amount_lt)
+          AND (in_amount_gt IS NULL or amount >= in_amount_gt)
+          AND (in_amount_lt IS NULL or amount <= in_amount_lt)
           AND (in_with_accno IS NULL
                OR id IN (SELECT line.trans_id
                            FROM acc_trans line
