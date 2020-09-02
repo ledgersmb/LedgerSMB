@@ -38,6 +38,8 @@
    #  - class        : the (additional) css classes to be applied to the column
    #  - data_dojo_type : Dojo type for the inputs in the column
    #  - name         : the value presented in the table header for this column
+   #  - toggle       : a boolean indicating that the header is to be a button
+   #                   changing state of the checkboxes in its column
    #  - href_base    : the URL base to use for 'href' typed columns
    #  - href_target  : value for the 'target' attribute of the 'a' tag
    #  - options      : items to be selected from in case of SELECT type
@@ -70,12 +72,13 @@
    IF COL.type != 'hidden'; -?>
    <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb
 
-IF attributes.order_url
-?> <a href="<?lsmb order_url ?>&amp;order_by=<?lsmb COL.col_id ?>"><?lsmb
-END;
-COL.name;
-IF attributes.order_url
-?></a><?lsmb
+IF attributes.order_url and not COL.toggle
+?><a href="<?lsmb order_url | url ?>&amp;order_by=<?lsmb COL.col_id ?>"><?lsmb COL.name ?></a><?lsmb
+ELSIF COL.toggle ;
+  query = "input[name^=\\'" _ PFX _ COL.col_id _ "_\\']";
+?><button type="button" data-dojo-type="lsmb/ToggleIncludeButton" data-dojo-props="query:'<?lsmb query ?>'"><?lsmb COL.name ?></button><?lsmb
+ELSE;
+      COL.name;
 END; ?>
    </th>
    <?lsmb- END; END; -?>
