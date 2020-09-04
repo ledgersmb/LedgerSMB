@@ -3704,7 +3704,7 @@ sub sequence_dropdown{
     my ($self, $setting_key) = @_;
     return undef if $self->{id} and ($setting_key ne 'sinumber');
     my @sequences = LedgerSMB::Setting::Sequence->list($setting_key);
-    my $retval = qq|<select name='setting_sequence' class='sequence'>\n|;
+    my $retval = qq|<select data-dojo-type="dijit/form/Select" name='setting_sequence' class='sequence'>\n|;
     $retval .= qq|<option></option>|;
 
     for my $seq (@sequences){
