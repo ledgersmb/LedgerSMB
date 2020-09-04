@@ -1167,9 +1167,11 @@ sub generate_selects {
         if ($rowcount) {
                 for my $i ( 1 .. $rowcount ) {
                      $form->{"select$form->{ARAP}_amount_$i"} =
-                          $form->{"select$form->{ARAP}_amount"};
-                     $form->{"select$form->{ARAP}_amount_$i"} =~
-                          s/(value="\Q$form->{"$form->{ARAP}_amount_$i"}\E")/$1 selected="selected"/;
+                         $form->{"select$form->{ARAP}_amount"};
+                     if ($form->{"$form->{ARAP}_amount_$i"}) {
+                         $form->{"select$form->{ARAP}_amount_$i"} =~
+                             s/(value="\Q$form->{"$form->{ARAP}_amount_$i"}\E")/$1 selected="selected"/;
+                     }
                 }
           }
      }
@@ -2085,7 +2087,7 @@ sub create_links {
         $sth->finish;
 
         for (qw(printed emailed queued)) {
-            $self->{$_} =~ s/ +$//g
+            $self->{$_} =~ s/ +$//g if $self->{$_}
         }
 
     # get customer e-mail accounts
