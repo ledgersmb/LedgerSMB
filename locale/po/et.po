@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.24-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-06-29 08:24+0000\n"
+"POT-Creation-Date: 2020-09-04 17:13+0000\n"
 "Last-Translator: Peeter Pärtel <peeter@sigma.ee>, 2018\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -109,7 +109,7 @@ msgstr "Tasumata arved"
 #: templates/demo_with_images/ap_transaction.tex:18
 #: templates/xedemo/ap_transaction.html:4
 #: templates/xedemo/ap_transaction.html:18
-#: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:350
+#: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:351
 #: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
 msgid "AP Transaction"
 msgstr "Ostukanne"
@@ -1840,7 +1840,7 @@ msgstr ""
 #: old/bin/oe.pl:2581 old/bin/pe.pl:1183 old/bin/pe.pl:327 old/bin/pe.pl:746
 #: old/bin/pe.pl:916 UI/asset/begin_approval.html:65
 #: UI/asset/begin_depreciation_all.html:24 UI/asset/begin_report.html:59
-#: UI/Contact/divs/credit.html:402 UI/create_batch.html:53
+#: UI/Contact/divs/credit.html:403 UI/create_batch.html:53
 #: UI/inventory/adjustment_setup.html:40 UI/oe-save_warn.html:18
 #: UI/payments/payments_filter.html:183 UI/Reports/co/filter_bm.html:138
 #: UI/Reports/co/filter_cd.html:114 UI/Reports/filters/aging.html:147
@@ -6099,7 +6099,7 @@ msgstr "Hinnagrupp puudub!"
 msgid "Pricegroup saved!"
 msgstr "Hinnagrupp salvestatud!"
 
-#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:380
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:381
 #: UI/Contact/pricelist.html:15
 msgid "Pricelist"
 msgstr "Hinnakiri"
@@ -6208,7 +6208,7 @@ msgstr "Töödeldakse tehingut"
 msgid "Product Receipt"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:385
+#: UI/Contact/divs/credit.html:386
 msgid "Profit and Loss"
 msgstr ""
 
@@ -6271,7 +6271,7 @@ msgstr "Ostu ajalugu"
 #: templates/xedemo/product_receipt.html:18
 #: templates/xedemo/purchase_order.html:4
 #: templates/xedemo/purchase_order.html:18
-#: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:368
+#: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:369
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2814 sql/Pg-database.sql:2955
 #: sql/Pg-database.sql:2968
 msgid "Purchase Order"
@@ -6421,7 +6421,7 @@ msgid "Quotations"
 msgstr "Müügipakkumised"
 
 #: old/bin/oe.pl:240 old/bin/oe.pl:670 old/bin/oe.pl:869 old/bin/printer.pl:61
-#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:377
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:378
 #: sql/Pg-database.sql:1935 sql/Pg-database.sql:2827 sql/Pg-database.sql:2959
 #: sql/Pg-database.sql:2974
 msgid "RFQ"
@@ -6985,7 +6985,7 @@ msgstr "Salvesta uuena"
 msgid "Save Batch"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:325
+#: UI/Contact/divs/credit.html:326
 msgid "Save Changes"
 msgstr "Salvesta muudatused"
 
@@ -7009,7 +7009,7 @@ msgstr "Salvesta info"
 msgid "Save Location"
 msgstr "Salvesta asukoht"
 
-#: UI/Contact/divs/credit.html:335
+#: UI/Contact/divs/credit.html:336
 msgid "Save New"
 msgstr "Salvesta uus"
 
@@ -7942,7 +7942,7 @@ msgid "Tax ID/SSN"
 msgstr ""
 
 #: old/bin/ir.pl:636 old/bin/is.pl:740 old/bin/oe.pl:765
-#: UI/Contact/divs/credit.html:314 UI/Contact/divs/credit.html:315
+#: UI/Contact/divs/credit.html:315 UI/Contact/divs/credit.html:316
 #: UI/orders/order.html:232
 msgid "Tax Included"
 msgstr "Koos maksuga"
@@ -7986,7 +7986,7 @@ msgstr ""
 msgid "Taxable"
 msgstr "Maksustatav"
 
-#: old/bin/am.pl:523 UI/Contact/divs/credit.html:287 sql/Pg-database.sql:2839
+#: old/bin/am.pl:523 UI/Contact/divs/credit.html:288 sql/Pg-database.sql:2839
 msgid "Taxes"
 msgstr "Maksud"
 
@@ -8959,7 +8959,7 @@ msgid "Vendor History"
 msgstr "Tarnija ajalugu"
 
 #: old/bin/oe.pl:663 old/bin/oe.pl:867 t/data/04-complex_template.html:334
-#: UI/Contact/divs/credit.html:359 sql/Pg-database.sql:2901
+#: UI/Contact/divs/credit.html:360 sql/Pg-database.sql:2901
 msgid "Vendor Invoice"
 msgstr "Ostuarve"
 
