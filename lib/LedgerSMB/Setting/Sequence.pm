@@ -173,10 +173,8 @@ sub increment {
        $vars = $val2;
     }
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'sequence__increment',
-                                          args => [$label]);
-    my ($value) = values %$ref;
-    return increment_process($value, $vars);
-
+                                            args => [$label]);
+    return increment_process($ref->{value}, $vars);
 }
 
 =head2 should_increment($vars, $fldname, [$label]);
