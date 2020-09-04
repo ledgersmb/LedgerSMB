@@ -104,7 +104,7 @@ sub new {
 
     my %orig;
     if (defined $argstr) {
-        %orig = split( /[&=]/, $argstr);
+        %orig = split( /[&=]/, $argstr, -1);
         for ( keys %orig ) {
             $self->{unescape( "", $_) } = unescape( "", $orig{$_} );
         }

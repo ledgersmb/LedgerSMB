@@ -137,7 +137,9 @@ sub add {
 
     $form->{title} = "Add";
 
-    $form->{callback} = "$form->{script}?action=add&transfer=$form->{transfer}"
+    my $transfer
+        = ($form->{transfer}) ? "&transfer=$form->{transfer}" : '';
+    $form->{callback} = "$form->{script}?action=add$transfer"
       unless $form->{callback};
 
     if (!$form->{rowcount}){
@@ -166,10 +168,10 @@ sub display_form
     $form->open_form;
     my ($init) = @_;
     # Form header part begins -------------------------------------------
-    if (@{$form->{all_department}}){
+    if ($form->{all_department}){
         unshift @{ $form->{all_department} }, {};
     }
-    if (@{$form->{all_project}}){
+    if ($form->{all_project}){
        unshift @{ $form->{all_project} }, {};
     }
     $title = $locale->maketext($form->{title});
@@ -239,7 +241,9 @@ sub display_form
   $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
   my @buttons;
   if ( !$form->{readonly} ) {
-      my $i=1;
+      my $i;
+
+      $i=1;
       @buttons = (
           { action => 'update', key => 'U', value => $locale->text('Update') },
           { action => 'post', key => 'O', value =>
@@ -281,7 +285,7 @@ sub display_form
           }
       }
 
-      my $i=1;
+      $i=1;
       @buttons = map {
           {
               name => 'action',
@@ -343,7 +347,7 @@ sub save_temp {
                    amount => $amount,
                    amount_fx => $amount_fx,
                    curr => $form->{"curr_$iter"},
-                   cleared => false,
+                   cleared => 'false',
                   };
         }
     }
@@ -380,8 +384,8 @@ sub display_row {
                 LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
             $form->{"credit_$i"} =
                 LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
-            $form->{totaldebit}  += $form->{"debit_$i"};
-            $form->{totalcredit} += $form->{"credit_$i"};
+            $form->{totaldebit}  += ($form->{"debit_$i"} // 0);
+            $form->{totalcredit} += ($form->{"credit_$i"} // 0);
 
             for (qw(debit debit_fx credit credit_fx)) {
                 $form->{"${_}_$i"} = ($form->{"${_}_$i"})
@@ -433,7 +437,8 @@ sub edit {
     # readonly
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1
-          if $myconfig{acs} =~ /General Ledger--Add Transaction/;
+            if ($myconfig{acs}
+                and $myconfig{acs} =~ /General Ledger--Add Transaction/);
     }
     $form->{title} = "Edit";
     if ($form->{department_id}) {
@@ -446,7 +451,9 @@ sub edit {
 
     foreach my $ref (@{ $form->{GL} }) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
-        $form->{"projectnumber_$i"} = "$ref->{projectnumber}--$ref->{project_id}";
+        $form->{"projectnumber_$i"} =
+            "$ref->{projectnumber}--$ref->{project_id}"
+            if $ref->{projectnumber};
         for (qw(curr source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
         if ( $ref->{amount_bc} < 0 ) {
             $form->{totaldebit} -= $ref->{amount_bc};
@@ -621,7 +628,7 @@ sub post {
 
     $form->error(
         $locale->text('Cannot post transaction for a closed period!') )
-      if ( $transdate <= $closedto );
+      if ( $closedto and $transdate and $transdate <= $closedto );
 
     check_balanced($form);
     if ( !$form->{repost} ) {

@@ -132,7 +132,7 @@ sub handle {
         %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
         $LedgerSMB::App_State::User = \%myconfig;
         map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
-            unless ( $form->{type} eq 'preferences' );
+            unless ( $form->{type} and $form->{type} eq 'preferences' );
 
         if ($myconfig{language}){
             $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
