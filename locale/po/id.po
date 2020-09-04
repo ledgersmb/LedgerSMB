@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-08-28 21:35+0000\n"
+"POT-Creation-Date: 2020-09-04 19:18+0000\n"
 "Last-Translator: allphoneso donie <allphoneso.m6@gmail.com>, 2019\n"
 "Language-Team: Indonesian (https://www.transifex.com/ledgersmb/teams/58325/"
 "id/)\n"
@@ -104,7 +104,7 @@ msgstr "Hutang Belum Lunas"
 #: templates/demo_with_images/ap_transaction.tex:18
 #: templates/xedemo/ap_transaction.html:4
 #: templates/xedemo/ap_transaction.html:18
-#: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:350
+#: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:351
 #: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
 msgid "AP Transaction"
 msgstr "Transkasi Hutang"
@@ -177,7 +177,7 @@ msgid "AR account available when customers defined"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:154
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:109
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:111
 msgid "AR/AP/GL Amount"
 msgstr ""
 
@@ -779,12 +779,12 @@ msgid "Amount From"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:194
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:142
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:148
 msgid "Amount Greater Than"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:196
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:144
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:150
 msgid "Amount Less Than"
 msgstr ""
 
@@ -848,7 +848,7 @@ msgid "Approval Status"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:202
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:224
 #: lib/LedgerSMB/Scripts/asset.pm:553 lib/LedgerSMB/Scripts/asset.pm:615
 #: lib/LedgerSMB/Scripts/asset.pm:677 lib/LedgerSMB/Scripts/asset.pm:738
 #: lib/LedgerSMB/Scripts/budgets.pm:114 UI/reconciliation/report.html:394
@@ -1827,7 +1827,7 @@ msgstr ""
 #: old/bin/oe.pl:2566 old/bin/pe.pl:1183 old/bin/pe.pl:327 old/bin/pe.pl:746
 #: old/bin/pe.pl:916 UI/asset/begin_approval.html:65
 #: UI/asset/begin_depreciation_all.html:24 UI/asset/begin_report.html:59
-#: UI/Contact/divs/credit.html:402 UI/create_batch.html:49
+#: UI/Contact/divs/credit.html:403 UI/create_batch.html:49
 #: UI/inventory/adjustment_setup.html:40 UI/oe-save_warn.html:18
 #: UI/payments/payments_filter.html:131 UI/Reports/co/filter_bm.html:138
 #: UI/Reports/co/filter_cd.html:114 UI/Reports/filters/aging.html:147
@@ -2235,7 +2235,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Orders.pm:216
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:104
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:93
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:95
 #: lib/LedgerSMB/Scripts/asset.pm:498 lib/LedgerSMB/Scripts/payment.pm:186
 #: lib/LedgerSMB/Scripts/payment.pm:868 old/bin/aa.pl:833 old/bin/ir.pl:829
 #: old/bin/is.pl:938 old/bin/oe.pl:1538 old/bin/pe.pl:1025
@@ -2504,7 +2504,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:131
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:121
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:245
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:208 old/bin/aa.pl:941
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:230 old/bin/aa.pl:941
 #: old/bin/aa.pl:972 old/bin/am.pl:177 old/bin/am.pl:186 old/bin/am.pl:67
 #: old/bin/am.pl:79 old/bin/ic.pl:828 old/bin/ic.pl:850 old/bin/ir.pl:944
 #: old/bin/is.pl:1058 old/bin/oe.pl:687 old/bin/oe.pl:878 old/bin/pe.pl:171
@@ -2648,7 +2648,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:115
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:149
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:192
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:104
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:106
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:75
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:367
 #: lib/LedgerSMB/Scripts/asset.pm:652 lib/LedgerSMB/Scripts/asset.pm:717
@@ -2854,11 +2854,11 @@ msgstr ""
 msgid "Draft Posted"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:126
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:128
 msgid "Draft Search"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:138
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:140
 msgid "Draft Type"
 msgstr ""
 
@@ -3646,6 +3646,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:114
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:110
 #: lib/LedgerSMB/Report/Timecards.pm:161
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:144
+#: UI/Reports/filters/unapproved.html:40
 msgid "From Date"
 msgstr ""
 
@@ -3878,7 +3880,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Orders.pm:212 lib/LedgerSMB/Report/Timecards.pm:111
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:94
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:133
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:88
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:90
 #: lib/LedgerSMB/Scripts/asset.pm:497 old/bin/aa.pl:1606 old/bin/am.pl:807
 #: templates/demo/timecard.html:35 templates/demo/timecard.tex:23
 #: templates/demo_with_images/timecard.html:35
@@ -5538,7 +5540,7 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1270
+#: old/bin/am.pl:1019 old/lib/LedgerSMB/Form.pm:1272
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:111
 #: UI/Reports/balance_sheet.html:115 UI/Reports/display_report.html:75
 #: UI/Reports/PNL.html:100
@@ -6009,7 +6011,7 @@ msgstr ""
 msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1268
+#: old/bin/am.pl:1018 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1270
 msgid "Postscript"
 msgstr ""
 
@@ -6079,7 +6081,7 @@ msgstr "Kelompok Harga harap diisi!"
 msgid "Pricegroup saved!"
 msgstr "Kelompok Harga sudah disimpan!"
 
-#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:380
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:381
 #: UI/Contact/pricelist.html:15
 msgid "Pricelist"
 msgstr "Daftar Harga"
@@ -6188,7 +6190,7 @@ msgstr ""
 msgid "Product Receipt"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:385
+#: UI/Contact/divs/credit.html:386
 msgid "Profit and Loss"
 msgstr "Laba dan Rugi"
 
@@ -6251,7 +6253,7 @@ msgstr ""
 #: templates/xedemo/product_receipt.html:18
 #: templates/xedemo/purchase_order.html:4
 #: templates/xedemo/purchase_order.html:16
-#: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:368
+#: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:369
 #: sql/Pg-database.sql:1930 sql/Pg-database.sql:2811 sql/Pg-database.sql:2952
 #: sql/Pg-database.sql:2965
 msgid "Purchase Order"
@@ -6393,7 +6395,7 @@ msgid "Quotations"
 msgstr "Quotation"
 
 #: old/bin/oe.pl:251 old/bin/oe.pl:683 old/bin/oe.pl:882 old/bin/printer.pl:61
-#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:377
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:378
 #: sql/Pg-database.sql:1932 sql/Pg-database.sql:2824 sql/Pg-database.sql:2956
 #: sql/Pg-database.sql:2971
 msgid "RFQ"
@@ -6541,8 +6543,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/GL.pm:95
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:106
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:109
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:140
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:98 old/bin/am.pl:803
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:100
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:142 old/bin/am.pl:803
 #: old/bin/arap.pl:569 UI/accounts/yearend.html:32
 #: UI/budgetting/budget_entry.html:16 UI/import_csv/import_csv.html:26
 #: UI/journal/journal_entry.html:17 UI/Reports/filters/budget_search.html:18
@@ -6958,7 +6960,7 @@ msgstr ""
 msgid "Save Batch"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:325
+#: UI/Contact/divs/credit.html:326
 msgid "Save Changes"
 msgstr ""
 
@@ -6982,7 +6984,7 @@ msgstr ""
 msgid "Save Location"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:335
+#: UI/Contact/divs/credit.html:336
 msgid "Save New"
 msgstr ""
 
@@ -7054,7 +7056,7 @@ msgstr "Layar"
 #: UI/Reports/filters/search_goods.html:391
 #: UI/Reports/filters/search_partsgroups.html:17
 #: UI/Reports/filters/search_pricegroups.html:17
-#: UI/Reports/filters/timecards.html:41 UI/Reports/filters/unapproved.html:59
+#: UI/Reports/filters/timecards.html:41 UI/Reports/filters/unapproved.html:77
 #: sql/Pg-database.sql:2778 sql/Pg-database.sql:2786 sql/Pg-database.sql:2799
 #: sql/Pg-database.sql:2809 sql/Pg-database.sql:2867 sql/Pg-database.sql:2914
 #: sql/Pg-database.sql:2977
@@ -7934,7 +7936,7 @@ msgid "Tax ID/SSN"
 msgstr ""
 
 #: old/bin/ir.pl:642 old/bin/is.pl:749 old/bin/oe.pl:778
-#: UI/Contact/divs/credit.html:314 UI/Contact/divs/credit.html:315
+#: UI/Contact/divs/credit.html:315 UI/Contact/divs/credit.html:316
 #: UI/orders/order.html:232
 msgid "Tax Included"
 msgstr "Termasuk Pajak"
@@ -7978,7 +7980,7 @@ msgstr ""
 msgid "Taxable"
 msgstr "Kena Pajak"
 
-#: old/bin/am.pl:545 UI/Contact/divs/credit.html:287 sql/Pg-database.sql:2836
+#: old/bin/am.pl:545 UI/Contact/divs/credit.html:288 sql/Pg-database.sql:2836
 msgid "Taxes"
 msgstr ""
 
@@ -8364,6 +8366,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:111
 #: lib/LedgerSMB/Report/Timecards.pm:163
 #: lib/LedgerSMB/Report/Trial_Balance.pm:208
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:146
+#: UI/Reports/filters/unapproved.html:48
 msgid "To Date"
 msgstr ""
 
@@ -8634,7 +8638,7 @@ msgstr "Dua"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:149
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:129
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:84
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:86
 #: lib/LedgerSMB/Scripts/asset.pm:499 old/bin/io.pl:1687
 #: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:80
 #: UI/Contact/divs/address.html:120 UI/Contact/divs/contact_info.html:30
@@ -8953,7 +8957,7 @@ msgid "Vendor History"
 msgstr "Historis Supplier"
 
 #: old/bin/oe.pl:676 old/bin/oe.pl:880 t/data/04-complex_template.html:334
-#: UI/Contact/divs/credit.html:359 sql/Pg-database.sql:2898
+#: UI/Contact/divs/credit.html:360 sql/Pg-database.sql:2898
 msgid "Vendor Invoice"
 msgstr "Invoice Supplier"
 
