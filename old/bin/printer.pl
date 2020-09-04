@@ -197,10 +197,12 @@ sub print_select { # Needed to print new printoptions output from non-template
     my $name = $select->{name};
     my $id = $name;
     $id =~ s/\_/-/;
-    print qq|<select data-dojo-type="dijit/form/Select" id="$id" name="$name" class="$select->{class}">\n|;
+    $class = $select->{class} // '';
+    print qq|<select data-dojo-type="dijit/form/Select" id="$id" name="$name" class="$class">\n|;
     for my $opt (@{$select->{options}}){
         print qq|<option value="$opt->{value}" |;
-        if ($form->{$select->{name}} eq $opt->{value}){
+        if ($form->{$select->{name}}
+            and $form->{$select->{name}} eq $opt->{value}){
             print qq|SELECTED="SELECTED"|;
         }
         print qq|>$opt->{text}</option>\n|;

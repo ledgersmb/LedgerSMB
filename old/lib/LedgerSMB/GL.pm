@@ -120,8 +120,9 @@ sub post_transaction {
         ( $form->{id} ) = $sth->fetchrow_array();
     }
 
-    ( $null, $department_id ) = split /--/, $form->{department};
-    $department_id *= 1;
+    ( $null, $department_id ) =
+        split( /--/, $form->{department}) if $form->{department};
+    ($department_id //= 0) *= 1;
 
     if (! $form->{reference} ) {
         $form->{reference} = $form->{id};
@@ -213,7 +214,9 @@ UPDATE gl
         # add the record
         if ( !$posted ) {
 
-            ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
+            ( $null, $project_id ) =
+                split( /--/, $form->{"projectnumber_$i"})
+                if $form->{"projectnumber_$i"};
             $project_id ||= undef;
             $s_sth->execute($accno)
                 or $form->dberror($s_sth->errstr);

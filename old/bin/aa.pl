@@ -500,8 +500,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     $form->header;
 
  print qq|
-<body class="lsmb $form->{dojo_theme}"
-      onload="document.forms[0].${focus}.focus()" /> | .
+<body> | .
 $form->open_status_div($status_div_id) . qq|
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
@@ -589,7 +588,9 @@ $form->open_status_div($status_div_id) . qq|
 
 
 
-        if ($form->{entity_control_code}){
+        if ($form->{entity_control_code}) {
+            $form->{$_} //= '' for (qw/entity_control_code tax_id
+                                    meta_number address city/);
             print qq|
             <tr>
         <th align="right" nowrap>| .
@@ -620,7 +621,7 @@ $form->open_status_div($status_div_id) . qq|
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>
                </th>
                <td><input data-dojo-type="dijit/form/TextBox" type="text" name="description" id="description" size="40"
-                   value="| . $form->{description} . qq|" /></td>
+                   value="| . ($form->{description} // '') . qq|" /></td>
             </tr>
         </table>
       </td>
