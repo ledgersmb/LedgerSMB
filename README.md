@@ -34,7 +34,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 # System requirements
 
 Note that these are the system requirements for LedgerSMB 1.8. Please check
-the system requirements for [the 1.6 old stable
+the system requirements for [the 1.6
 version](https://github.com/ledgersmb/LedgerSMB/tree/1.6#system-requirements)
 and [the 1.7 version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system-requirements).
 
