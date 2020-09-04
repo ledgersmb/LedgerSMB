@@ -129,6 +129,18 @@ Dependency updates
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.20
+* Fix Arabic being default language on Account creation (#4439)
+* Add Locale::Codes as explicit dependencies after removal from CORE
+* Fix invoices opened from payments screen missing CSS (#4890)
+* Add date-filter to Draft search filter screen
+* Fix amounts filter in Draft search not working (#4929)
+* Fix missing accounts in AR/AP transactions using 'Min Empty Lines (#4930)
+* Add 'select all' column toggle button to Draft search
+* Fix sequences returning 'invnumber' instead of sequence number (#4949)
+* Make AR/AP transaction sequence drop-down follow application style
+
+
 Changelog for 1.7.19
 * Fix purchase order HTML template mis-alignment (#4854)
 * Fix tax form reports throwing an error when opened (#4881)
