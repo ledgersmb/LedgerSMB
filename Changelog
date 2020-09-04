@@ -299,6 +299,17 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.24
+* Fix Arabic as standard language selection on Account creation (Erik H, #4439)
+* Add Locale::Codes explicit dependencies, due to removal from CORE (Erik H)
+* Fix invoice opened from payment screen missing CSS (Erik H, #4890)
+* Fix amount filters on Draft search not working (Erik H, #4929)
+* Fix sequences returning 'invnumber' instead of sequence number (Erik H, #4949)
+* Make AR/AP transaction sequence drop-down follow application style (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.23
 * Fix reversals of purchases failing to post due to COGS error (Erik H)
 
