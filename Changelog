@@ -1,7 +1,7 @@
                                                         -*- fundamental -*-
 
 Changelog for 1.8 Series
-forthcoming
+Released 2020-09-04
 
 Changelog for 1.8.0
 
@@ -97,7 +97,7 @@ Dependency updates
 
 
 Changelog for 1.7 Series
-2019-10-04
+Released 2019-10-04
 
 Changelog for 1.7.20
 * Fix Arabic being default language on Account creation (#4439)
