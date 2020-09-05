@@ -104,6 +104,7 @@ my %screens = (
     'Employee search' => 'PageObject::App::Search::Contact',
     'Enter Inventory' => ' PageObject::App::Parts::AdjustSetup',
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
+    'GL entry'  => 'PageObject::App::GL::JournalEntry',
     'GL search' => 'PageObject::App::Search::GL',
     'New Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::NewReport',
     'Single Payment Vendor Selection' => 'PageObject::App::Cash::SelectVC',

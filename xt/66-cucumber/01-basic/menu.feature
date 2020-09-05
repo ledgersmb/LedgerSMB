@@ -148,11 +148,11 @@ Scenario Outline: Navigate to menu and open screen
     | path                                       | screen                   |
     | General Journal > Import                   |                          |
     | General Journal > Import Chart             |                          |
-    | General Journal > Journal Entry            |                          |
   Examples:
-    | path                                       | screen                   |
-    | General Journal > Search                   | GL search                |
-    | Goods and Services > Add Assembly          | assembly entry           |
+    | path                              | screen         |
+    | General Journal > Journal Entry   | GL entry       |
+    | General Journal > Search          | GL search      |
+    | Goods and Services > Add Assembly | assembly entry |
 
 
   @wip
