@@ -1,7 +1,7 @@
 [% PROCESS elements.html %]
 
 <body class="lsmb [% dojo_theme %]">
-
+<div id="journal-entry">
 [% CLASS = 'new';
    IF form.id and form.approved;
        CLASS = 'posted';
@@ -408,5 +408,6 @@ FOREACH link IN form.file_links;
    %]&amp;file_class=1&amp;callback=[% callback | uri %]">[[% text('Attach') %]]</a>
 [% END # IF for[% INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved %]
 </form>
+</div>
 </div>
 </body>

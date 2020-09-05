@@ -148,11 +148,11 @@ Scenario Outline: Navigate to menu and open screen
     | path                                       | screen                   |
     | General Journal > Import                   |                          |
     | General Journal > Import Chart             |                          |
-    | General Journal > Journal Entry            |                          |
   Examples:
-    | path                                       | screen                   |
-    | General Journal > Search                   | GL search                |
-    | Goods and Services > Add Assembly          | assembly entry           |
+    | path                              | screen         |
+    | General Journal > Journal Entry   | GL entry       |
+    | General Journal > Search          | GL search      |
+    | Goods and Services > Add Assembly | assembly entry |
 
 
   @wip
@@ -273,21 +273,28 @@ Scenario Outline: Navigate to menu and open screen
 
   @wip
   Examples:
-    | path                                       | screen                   |
-    | System > Type of Business > Add Business   |                          |
-    | System > Type of Business > List Businesses|                          |
-    | System > Warehouses > Add Warehouse        |                          |
-    | System > Warehouses > List Warehouse       |                          |
-    | Tax Forms > Add Tax Form                   |                          |
-    | Tax Forms > List Tax Forms                 |                          |
-    | Tax Forms > Reports                        |                          |
-    | Timecards > Add Timecard                   |                          |
-    | Timecards > Generate > Sales Orders        |                          |
-    | Timecards > Import                         |                          |
-    | Timecards > Search                         |                          |
-    | Timecards > Translations > Description     |                          |
-    | Transaction Approval > Batches             |                          |
-    | Transaction Approval > Drafts              |                          |
-    | Transaction Approval > Inventory           | unapproved inventory adjustments search screen |
-    | Transaction Approval > Reconciliation      |                          |
-    | Transaction Templates                      |                          |
+    | path                                        | screen                                         |
+    | System > Type of Business > Add Business    |                                                |
+    | System > Type of Business > List Businesses |                                                |
+    | System > Warehouses > Add Warehouse         |                                                |
+    | System > Warehouses > List Warehouse        |                                                |
+    | Tax Forms > Add Tax Form                    |                                                |
+    | Tax Forms > List Tax Forms                  |                                                |
+    | Tax Forms > Reports                         |                                                |
+    | Timecards > Add Timecard                    |                                                |
+
+  Examples:
+    | path                                        | screen                                         |
+    | Timecards > Generate > Sales Orders         | timecard order generation                      |
+
+  @wip
+  Examples:
+    | path                                        | screen                                         |
+    | Timecards > Import                          |                                                |
+    | Timecards > Search                          |                                                |
+    | Timecards > Translations > Description      |                                                |
+    | Transaction Approval > Batches              |                                                |
+    | Transaction Approval > Drafts               |                                                |
+    | Transaction Approval > Inventory            | unapproved inventory adjustments search screen |
+    | Transaction Approval > Reconciliation       |                                                |
+    | Transaction Templates                       |                                                |

@@ -88,6 +88,7 @@ my %menu_path_pageobject_map = (
     "Quotations > Reports > Quotations" => 'PageObject::App::Search::Order',
     "Quotations > Reports > RFQs" => 'PageObject::App::Search::Order',
 
+    "General Journal > Journal Entry" => 'PageObject::App::GL::JournalEntry',
     "General Journal > Search" => 'PageObject::App::Search::GL',
     "General Journal > Chart of Accounts" => 'PageObject::App::Search::ReportDynatable',
     "General Journal > Year End" => 'PageObject::App::Closing',
@@ -101,6 +102,7 @@ my %menu_path_pageobject_map = (
     "Goods and Services > Add Overhead" => 'PageObject::App::Parts::Overhead',
     "Goods and Services > Enter Inventory" => 'PageObject::App::Parts::AdjustSetup',
 
+    "Timecards > Generate > Sales Orders" => 'PageObject::App::Timecards::ToSalesOrders',
     "System > Currency > Edit currencies" => 'PageObject::App::System::Currency::EditCurrencies',
     "System > Currency > Edit rate types" => 'PageObject::App::System::Currency::EditRateTypes',
     "System > Currency > Edit rates" => 'PageObject::App::System::Currency::EditRates',
