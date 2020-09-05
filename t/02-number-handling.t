@@ -19,6 +19,8 @@ my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
 
+
+LedgerSMB::App_State::set_User(\%myconfig);
 like(
     dies { $form->format_amount({'apples' => '1000.00'}, 'foo', 2) },
     qr/LedgerSMB::PGNumber No Format Set/,

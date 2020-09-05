@@ -1150,8 +1150,11 @@ sub _save_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     $request->{control_code} = $request->{employeenumber};
-    $request->{dob} = LedgerSMB::PGDate->from_input($request->{dob});
-    my $emp = LedgerSMB::Entity::Person::Employee->new(%$request);
+    local $LedgerSMB::App_State::User = {};
+    my $emp = LedgerSMB::Entity::Person::Employee->new(
+        %$request,
+        dob => LedgerSMB::PGDate->from_input($request->{dob})
+        );
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
@@ -1271,6 +1274,7 @@ sub edit_user_roles {
         unless $request->{dbh};
     return $reauth if $reauth;
 
+    local $LedgerSMB::App_State::User = {};
     my $admin = LedgerSMB::DBObject::Admin->new();
     $admin->set_dbh($request->{dbh});
     my $all_roles = $admin->get_roles($request->{database});

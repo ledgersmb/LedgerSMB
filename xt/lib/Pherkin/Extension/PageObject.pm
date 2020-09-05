@@ -21,6 +21,8 @@ use warnings;
 our $VERSION = '0.01';
 
 use List::Util qw(any);
+
+use LedgerSMB::App_State;
 use LedgerSMB::PGDate;
 use PageObject::Loader;
 use Test::BDD::Cucumber::Extension;
@@ -53,6 +55,8 @@ sub pre_scenario {
 
     $self->last_stash($stash);
     $stash->{ext_page} = $self;
+
+    local $LedgerSMB::App_State::User = {};
     $stash->{today} = LedgerSMB::PGDate->today->to_output;
 }
 
