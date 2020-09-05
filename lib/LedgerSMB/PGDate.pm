@@ -211,8 +211,8 @@ sub from_input{
     if ($format) {
         @fmts = @{$regexes->{uc($format)}};
     }
-    elsif (defined $LedgerSMB::App_State::User->{dateformat}) {
-        @fmts = @{$regexes->{uc($LedgerSMB::App_State::User->{dateformat})}};
+    elsif (defined LedgerSMB::App_State::User()->{dateformat}) {
+        @fmts = @{$regexes->{uc(LedgerSMB::App_State::User()->{dateformat})}};
     }
 
     for my $fmt (@fmts, @{$regexes->{'YYYY-MM-DD'}} ) {
@@ -256,8 +256,8 @@ sub to_output {
     my ($self) = @_;
     return '' if not $self->is_date();
     my $fmt;
-    if (defined $LedgerSMB::App_State::User->{dateformat}){
-        $fmt = $LedgerSMB::App_State::User->{dateformat};
+    if (defined LedgerSMB::App_State::User()->{dateformat}){
+        $fmt = LedgerSMB::App_State::User()->{dateformat};
     } else {
         $fmt = '%F';
     }

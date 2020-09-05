@@ -4,8 +4,13 @@ use Test2::V0;
 
 use Data::Dumper;
 
+use LedgerSMB::App_State;
 use LedgerSMB::Report::PNL::Income_Statement;
 use LedgerSMB::Report::Balance_Sheet;
+
+
+LedgerSMB::App_State::set_User({});
+
 
 #   Test report date and comparison period calculations
 

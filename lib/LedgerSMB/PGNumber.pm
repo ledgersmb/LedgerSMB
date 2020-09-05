@@ -174,7 +174,7 @@ sub from_input {
     }
     my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
     my $format = ($args{format}) ? $args{format}
-                                 : $LedgerSMB::App_State::User->{numberformat};
+                                 : LedgerSMB::App_State::User()->{numberformat};
     die 'LedgerSMB::PGNumber No Format Set' if !$format;
     #return undef if !defined $string;
     my $negate;
@@ -249,7 +249,7 @@ sub to_output {
     my $is_neg = $self->is_neg;
 
     my $format = ($args{format}) ? $args{format}
-                              : $LedgerSMB::App_State::User->{numberformat};
+                              : LedgerSMB::App_State::User()->{numberformat};
     die 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
 
     my $places = undef;

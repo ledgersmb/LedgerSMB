@@ -166,7 +166,7 @@ sub save_translations {
         $trans_del_func = 'account_heading__delete_translation';
     }
     for my $lang_code (keys %{$self->{translations}}) {
-        if ($self->{translations}->{$lang_code} eq '') {
+        if (($self->{translations}->{$lang_code} // '') eq '') {
             $self->call_procedure(funcname => $trans_del_func,
                                   args => [ $self->{id}, $lang_code ]);
         }

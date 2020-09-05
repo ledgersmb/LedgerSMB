@@ -170,6 +170,7 @@ sub create_employee {
     my $dbh = $args{dbh} // $self->admin_dbh;
     my $employeenumber = 'E-' . ($emp_counter++);
 
+    local $LedgerSMB::App_State::User = {};
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         employeenumber => $employeenumber,
         control_code => $employeenumber,

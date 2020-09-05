@@ -3154,7 +3154,7 @@ sub update_invnumber {
         or $self->dberror($query);
     $sth->execute(
         $self->update_defaults(
-            $LedgerSMB::App_State::User,
+            LedgerSMB::App_State::User(),
             'sinumber'
         ),
         $self->{id}
