@@ -1272,26 +1272,6 @@ sub is_allowed_role {
     return $access;
 }
 
-=item $form->dbquote($var);
-
-If $var is an empty string, return NULL, otherwise return $var as quoted by
-$form->{dbh}->quote($var).
-
-=cut
-
-sub dbquote {
-
-    my ( $self, $var ) = @_;
-
-    if ( $var eq '' ) {
-        $_ = "NULL";
-    }
-    else {
-        $_ = $self->{dbh}->quote($var);
-    }
-    $_;
-}
-
 =item $form->update_balance($dbh, $table, $field, $where, $value);
 
 B<WARNING>: This is a dangerous private function.  All apps calling it must be
@@ -1674,26 +1654,6 @@ sub get_regular_metadata {
     $self->all_business_units( $transdate, $self->{"${vc}_id"} );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
     $self->all_languages();
-}
-
-=item $form->all_accounts()
-
-Sets $form->{accounts} to all accounts.  Returns the list as well.
-Example:  my @account_list = $form->all_accounts();
-
-=cut
-
-sub all_accounts {
-    my ($self) = @_;
-    my $ref;
-    $self->{all_accounts} = [];
-    my $sth = $self->{dbh}->prepare('SELECT * FROM chart_list_all()');
-    $sth->execute || $self->dberror('SELECT * FROM chart_list_all()');
-    while ($ref = $sth->fetchrow_hashref('NAME_lc')){
-        push(@{$self->{all_accounts}}, $ref);
-    }
-    $sth->finish;
-    return @{$self->{all_accounts}};
 }
 
 =item $form->all_taxaccounts($myconfig, $dbh2[, $transdate]);
