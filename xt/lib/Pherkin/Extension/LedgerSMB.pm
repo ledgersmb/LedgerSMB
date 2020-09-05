@@ -254,6 +254,12 @@ end;
 $$;
 |);
 
+    $dbh->do(q|
+UPDATE business_unit_class SET active = true WHERE id = 2; -- project
+INSERT INTO business_unit (class_id, control_code, description)
+                   VALUES (2, 'P01', 'Project 01');
+             |);
+
     my $emp = $self->create_employee(dbh => $dbh);
     my $user = $self->create_user(dbh => $dbh,
         entity_id => $emp->entity_id,

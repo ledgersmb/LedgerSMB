@@ -139,6 +139,7 @@ my %screens = (
     'system files' => 'PageObject::App::System::Files',
     'system taxes' => 'PageObject::App::System::Taxes',
     'system templates' => 'PageObject::App::System::Templates',
+    'timecard order generation' => 'PageObject::App::Timecards::ToSalesOrders',
     'unapproved inventory adjustments search screen' => ' PageObject::App::Parts::AdjustSearchUnapproved',
     'year-end confirmation' => 'PageObject::App::ClosingConfirm',
     'year-end' => ' PageObject::App::Closing',
