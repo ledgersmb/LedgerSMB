@@ -33,9 +33,9 @@ set logger => 'erp.api.goods';
 get '/goods/' => sub {
     my ($env) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
-    my $type = ($r->parameters->{type} =~ s/[*]//gr);
-    my $partnumber = ($r->parameters->{partnumber} =~ s/[*]//gr);
-    my $description = ($r->parameters->{description} =~ s/[*]//gr);
+    my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
+    my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
+    my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
 
     return [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              [ json()->encode(
