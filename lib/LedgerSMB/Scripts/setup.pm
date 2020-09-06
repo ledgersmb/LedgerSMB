@@ -513,7 +513,7 @@ sub template_screen {
     my ($request, $entrypoint) = @_;
     $request->{template_dirs} =
         [ map { +{ text => $_, value => $_ } }
-          keys %{ LedgerSMB::Database::Config->new->templates } ];
+          sort keys %{ LedgerSMB::Database::Config->new->templates } ];
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'setup/template_info',
                  { %$request, templates_action => $entrypoint });
