@@ -339,8 +339,6 @@ sub create_links {
     }
 
     $form->{rowcount}++ if ( $form->{id} || !$form->{rowcount} );
-
-    $form->{ $form->{ARAP} } = $form->{"$form->{ARAP}_1"};
     $form->{rowcount} = 1 unless $form->{"$form->{ARAP}_amount_1"};
 
     $form->{locked} =
