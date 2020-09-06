@@ -1,10 +1,17 @@
 
+-include Makefile.local
+
+
 DIST_VER=$(shell git rev-parse --short HEAD)
 DIST_DIR=/tmp
 ifeq ($(DIST_VER),travis)
 DIST_DEPS=cached_dojo
 else
 DIST_DEPS=dojo
+endif
+
+ifneq ($(origin CONTAINER),undefined)
+DOCKER_CMD=docker exec -ti $(CONTAINER)
 endif
 
 .DEFAULT_GOAL := help
@@ -93,12 +100,18 @@ dist: $(DIST_DEPS)
 pod:
 	rm -rf UI/pod
 	mkdir UI/pod
+	chmod 777 UI/pod
 	utils/pod2projdocs.pl 2>&1 pod2projdocs.log
 
+test: TESTS ?= t/
 test:
-	prove -Ilib t/*.t
+	$(DOCKER_CMD) prove $(TESTS)
 
+devtest: TESTS ?= t/ xt/
 devtest:
-	prove -Ilib t/*.t
-	prove -Ilib xt/*.t
+	$(DOCKER_CMD) prove --time --recurse \
+	                    --pgtap-option dbname=lsmbinstalltest \
+	                    --pgtap-option username=postgres \
+	                    --feature-option tags=~@wip \
+	                    $(TESTS)
 
