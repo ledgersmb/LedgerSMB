@@ -1,4 +1,6 @@
 
+-include Makefile.local
+
 DIST_VER=$(shell git rev-parse --short HEAD)
 DIST_DIR=/tmp
 ifeq ($(DIST_VER),travis)
@@ -6,6 +8,14 @@ DIST_DEPS=cached_dojo
 else
 DIST_DEPS=dojo
 endif
+
+ifneq ($(origin CONTAINER),undefined)
+DOCKER_CMD=docker exec -ti $(CONTAINER)
+endif
+
+PHERKIN_OPTS ?= --tags ~@wip $(PHERKIN_EXTRA_OPTS)
+
+
 
 .DEFAULT_GOAL := help
 
@@ -21,16 +31,17 @@ Help on installing LedgerSMB can be found in
 Help on using this Makefile
   The following make targets are available
     - help         : This help text
+    - dist         : Builds the release distribution archive
     - dojo         : Builds the minified dojo blob we serve to clients
-    - cached_dojo  : Uses the cached minified dojo, or builds one
-    - dojo_archive : Builds a cached minified dojo archive
-    - blacklist    : Builds sql blacklist (required after adding functions)
-    - submodules   : Initialises and updates our git submodules
     - pod          : Builds POD documentation
-    - test         : Runs tests
-    - devtest      : Runs all tests including development/author tests
-    - dist         : builds the release distribution archive
+    - test         : Runs tests (TESTS='t/')
+    - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
+    - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
 
+    - blacklist    : Builds sql blacklist (required after adding functions)
+
+The targets 'test', 'devtest' and 'pherkin' take a TESTS parameter which
+can be used to specify a subset of tests to be run.
 
 endef
 export HELP
@@ -55,14 +66,16 @@ dojo:
 	npm install --save-dev;
 	./node_modules/webpack/bin/webpack.js -p
 
+# TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
-	#TODO: Protect for concurrent invocations
+# TODO: Protect for concurrent invocations
 	mkdir -p $(HOMEDIR)
 	touch $(FLAG)
 	tar cf $(TEMP) UI/js
 	mv $(TEMP) $(ARCHIVE)
 	rm $(FLAG)
 
+# TravisCI specific target -- need to find a way to get rid of it
 cached_dojo:
 ifeq ($(wildcard $(ARCHIVE)),)
 	$(MAKE) dojo_archive
@@ -70,31 +83,31 @@ endif
 	tar xf $(ARCHIVE)
 
 
-# make blacklist
 blacklist:
 	perl utils/test/makeblacklist.pl --regenerate
 
-# make pod
-#make submodules
-#   Initialises and updates our git submodules
-submodules:
-	git submodule update --init --recursive
-
-# make dist
-#   builds release distribution archive
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
 	find . | grep -vE '^.$$|^\./\.|^\./node_modules/(dojo(-webpack-plugin)?|dijit|util)/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
-# Genarate displayable documentation
 pod:
 	rm -rf UI/pod
 	mkdir UI/pod
-	utils/pod2projdocs.pl 2>&1 pod2projdocs.log
+	chmod 777 UI/pod
+	$(DOCKER_CMD) utils/pod2projdocs.pl 2>&1 pod2projdocs.log
 
+test: TESTS ?= t/
 test:
-	prove -Ilib t/*.t
+	$(DOCKER_CMD) prove --time --recurse $(TESTS)
 
+devtest: TESTS ?= t/ xt/
 devtest:
-	prove -Ilib t/*.t
-	prove -Ilib xt/*.t
+	$(DOCKER_CMD) prove --time --recurse \
+	                    --pgtap-option dbname=lsmbinstalltest \
+	                    --pgtap-option username=postgres \
+	                    --feature-option tags=~@wip \
+	                    $(TESTS)
+
+pherkin: TESTS ?= xt/
+pherkin:
+	$(DOCKER_CMD) pherkin $(PHERKIN_OPTS) $(TESTS)
