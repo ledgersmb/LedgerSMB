@@ -487,7 +487,7 @@ sub save {
         action   => 'saved',
         id       => $form->{id}
     );
-
+    return 1;
 }
 
 sub delete {
