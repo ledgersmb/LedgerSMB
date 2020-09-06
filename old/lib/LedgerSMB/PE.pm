@@ -860,6 +860,7 @@ sub allocate_projectitems {
         }
     }
 
+    return 1;
 }
 
 1;
