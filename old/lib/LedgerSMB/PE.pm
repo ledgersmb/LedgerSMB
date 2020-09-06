@@ -765,7 +765,7 @@ sub get_jcitems {
 # XXX Note that this is aimed at current customer functionality only.  In the
 # future, this will be more generaly constructed.
     $query = qq|
-           SELECT j.id, j.description, j.qty - j.allocated AS qty,
+           SELECT j.id, j.description, j.qty - coalesce(j.allocated,0) AS qty,
                   j.sellprice, j.parts_id, pr.credit_id as customer_id,
                   j.business_unit_id as project_id,
                           j.checkedin::date AS transdate,
@@ -777,7 +777,7 @@ sub get_jcitems {
              JOIN parts p ON (p.id = j.parts_id)
         LEFT JOIN entity_credit_account eca ON (eca.id = pr.credit_id)
                 LEFT JOIN company c ON eca.entity_id = c.entity_id
-            WHERE j.allocated != j.qty $where
+            WHERE (j.allocated is null or j.allocated != j.qty) $where
          ORDER BY pr.description, c.legal_name, j.checkedin::date|;
     if ( $form->{summary} ) {
         $query =~ s/j\.description/p\.description/;
