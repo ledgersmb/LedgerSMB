@@ -86,12 +86,6 @@ endif
 blacklist:
 	perl utils/test/makeblacklist.pl --regenerate
 
-# make pod
-#make submodules
-#   Initialises and updates our git submodules
-submodules:
-	git submodule update --init --recursive
-
 # make dist
 #   builds release distribution archive
 dist: $(DIST_DEPS)
