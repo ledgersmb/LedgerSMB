@@ -144,6 +144,7 @@ sub add {
 sub edit {
 
     &create_links;
+    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"};
     $form->{title} = $locale->text("Edit");
     if ($form->{reverse}){
         if ($form->{ARAP} eq 'AR'){
