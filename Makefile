@@ -33,13 +33,12 @@ Help on using this Makefile
     - help         : This help text
     - dist         : Builds the release distribution archive
     - dojo         : Builds the minified dojo blob we serve to clients
-    - cached_dojo  : Uses the cached minified dojo, or builds one
-    - dojo_archive : Builds a cached minified dojo archive
-    - blacklist    : Builds sql blacklist (required after adding functions)
     - pod          : Builds POD documentation
     - test         : Runs tests (TESTS='t/')
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
+
+    - blacklist    : Builds sql blacklist (required after adding functions)
 
 The targets 'test', 'devtest' and 'pherkin' take a TESTS parameter which
 can be used to specify a subset of tests to be run.
@@ -67,14 +66,16 @@ dojo:
 	npm install --save-dev;
 	./node_modules/webpack/bin/webpack.js -p
 
+# TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
-	#TODO: Protect for concurrent invocations
+# TODO: Protect for concurrent invocations
 	mkdir -p $(HOMEDIR)
 	touch $(FLAG)
 	tar cf $(TEMP) UI/js
 	mv $(TEMP) $(ARCHIVE)
 	rm $(FLAG)
 
+# TravisCI specific target -- need to find a way to get rid of it
 cached_dojo:
 ifeq ($(wildcard $(ARCHIVE)),)
 	$(MAKE) dojo_archive
@@ -82,17 +83,13 @@ endif
 	tar xf $(ARCHIVE)
 
 
-# make blacklist
 blacklist:
 	perl utils/test/makeblacklist.pl --regenerate
 
-# make dist
-#   builds release distribution archive
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
 	find . | grep -vE '^.$$|^\./\.|^\./node_modules/(dojo(-webpack-plugin)?|dijit|util)/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
-# Genarate displayable documentation
 pod:
 	rm -rf UI/pod
 	mkdir UI/pod
