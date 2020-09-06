@@ -38,3 +38,6 @@ ledgersmb.conf
 # Webpack
 /node_modules/
 package-lock.json
+
+# local configurations
+*.local
