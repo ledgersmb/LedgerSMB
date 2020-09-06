@@ -102,7 +102,8 @@ dist: $(DIST_DEPS)
 pod:
 	rm -rf UI/pod
 	mkdir UI/pod
-	utils/pod2projdocs.pl 2>&1 pod2projdocs.log
+	chmod 777 UI/pod
+	$(DOCKER_CMD) utils/pod2projdocs.pl 2>&1 pod2projdocs.log
 
 test: TESTS ?= t/
 test:
