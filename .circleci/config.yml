@@ -170,8 +170,8 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: latest
-      postgres: latest
+      perl: '5.28'
+      postgres: '11'
       browser: phantomjs
     steps:
       - prep_env
