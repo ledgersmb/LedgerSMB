@@ -525,7 +525,7 @@ This method creates a blank screen for entering a company's information.
 
 sub add {
     my ($request) = @_;
-    $request->{target_div} = 'company_div';
+    $request->{target_div} //= 'company_div';
     return _main_screen($request, $request);
 }
 
