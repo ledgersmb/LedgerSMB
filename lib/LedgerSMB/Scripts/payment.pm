@@ -1323,10 +1323,13 @@ sub post_payment {
             #
             my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
             my $decimals = $request->{_company_config}->{decimal_places};
-            if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($decimals)
-                 <
-                 $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($decimals)
-                ){
+            my $_due_fx =
+                LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})
+                ->bfround(-$decimals); # round right of decimal sep
+            my $_to_pay_fx =
+                LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)
+                ->bfround(-$decimals); # round right of decimal sep
+            if ( $sign * $_due_fx < $sign * $_to_pay_fx ){
                 # We need to store all the overpayments
                 # so we can use it on a new payment2 screen
                 $unhandled_overpayment += $request_topay_fx_bigfloat
