@@ -133,3 +133,4 @@ mc/delete-migration-validation-data.sql
 1.8/constrain-transactions-table-name.sql
 1.8/add-gl-batch-import-menu.sql
 1.8/fix-reporting-units-pks.sql
+1.8/fix-issue-1672.sql
