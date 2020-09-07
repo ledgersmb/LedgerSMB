@@ -33,6 +33,14 @@ Dependency updates
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.1
+* Fix incorrect rounding on payments leading to under/overpayment (#4986)
+* Fix AR/AP dropdown on transactions not retained after 'Update' (#4927)
+* Fix sales order generation from timecards (#4984)
+* Better defaults for 'HR > Add Employee' screen (#1672)
+* Fix timecard Save feedback screen showing zero quantities (#4982)
+
+
 Changelog for 1.8.0
 
 Added functionalities
