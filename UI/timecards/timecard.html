@@ -105,7 +105,7 @@ END; %]
 <tr><th>[% text('Chargeable') %]</th>
     <td>[% PROCESS input element_data = {
        name = 'qty'
-      value = defined(qty) ? qty : 0
+      value = qty.defined ? qty : 0
        type = 'text'
       class = 'qty'
        size = 16 } %]</td>
@@ -113,7 +113,7 @@ END; %]
 <tr><th>[% text('Non-Chargeable') %]</th>
     <td>[% PROCESS input element_data = {
        name = 'non_billable'
-      value = defined(non_billable) ? non_billable : 0
+      value = non_billable.defined ? non_billable : 0
        type = 'text'
       class = 'qty'
        size = 16 } %]</td>
