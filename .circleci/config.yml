@@ -145,6 +145,8 @@ executors:
     docker:
       - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
       - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
+        environment:
+          POSTGRES_PASSWORD: test
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
