@@ -48,9 +48,10 @@ package LedgerSMB::Scripts::payment;
 use LedgerSMB::Template;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
-use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
+use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH BRU_DEPARTMENT EC_VENDOR );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
@@ -594,9 +595,12 @@ sub payment {
     my $date = LedgerSMB::DBObject::Date->new({base => $request});
     $date->build_filter_by_period($request->{_locale});
     # Lets set the data in a hash for the template system. :)
+    my @departments = LedgerSMB::Business_Unit
+        ->list(BRU_DEPARTMENT, undef, undef, LedgerSMB::PGDate->today());
     my $select = {
         script => 'payment.pl',
         stylesheet => $request->{_user}->{stylesheet},
+        departments => \@departments,
         login    => { name  => 'login',
                       value => $request->{_user}->{login}   },
         curr => {
