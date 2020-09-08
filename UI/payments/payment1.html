@@ -29,7 +29,12 @@
         <tr id="cost-center-row">
                 <td id="cost-center-label-column" class="label-left">[% text('Departments') %]</td>
                 <td id="department-column">
-                        [% PROCESS select element_data=department %]
+                  [% PROCESS select element_data={
+                                options=departments
+                                default_blank=1
+                  text_attr='description'
+                  value_attr='id'
+                  } %]
         </td>
         </tr>
         <tr id="vc-currency-row">
