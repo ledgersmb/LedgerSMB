@@ -57,7 +57,7 @@
           class = "control-code"
        } %]</td>
 </tr>
-[% PROCESS employee_row %]
+[% PROCESS employee_row SELECTNAME='employee_id' %]
 [% PROCESS business_classes %]
 <tr id="taxable-row">
   <th>[% text('Tax Status') %]</th>
