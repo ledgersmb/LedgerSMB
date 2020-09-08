@@ -53,8 +53,9 @@ use HTTP::Status qw( HTTP_OK );
 use List::Util qw/any sum/;
 
 use LedgerSMB::Batch;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::DBObject::Payment;
-use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
+use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH  BRU_DEPARTMENT  EC_VENDOR );
 use LedgerSMB::Num2text;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
@@ -719,9 +720,12 @@ sub payment {
 
     }
     # Lets set the data in a hash for the template system. :)
+    my @departments = LedgerSMB::Business_Unit
+        ->list(BRU_DEPARTMENT, undef, undef, LedgerSMB::PGDate->today());
     my $select = {
         script => 'payment.pl',
         stylesheet => $request->{_user}->{stylesheet},
+        departments => \@departments,
         login    => { name  => 'login',
                       value => $request->{_user}->{login}   },
         curr => {
