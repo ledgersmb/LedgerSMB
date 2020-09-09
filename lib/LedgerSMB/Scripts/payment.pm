@@ -52,10 +52,11 @@ use warnings;
 use List::Util qw/any sum/;
 
 use LedgerSMB::App_State;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
-use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
+use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH BRU_DEPARTMENT EC_VENDOR );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
@@ -665,9 +666,12 @@ sub payment {
     my $date = LedgerSMB::DBObject::Date->new({base => $request});
     $date->build_filter_by_period($request->{_locale});
     # Lets set the data in a hash for the template system. :)
+    my @departments = LedgerSMB::Business_Unit
+        ->list(BRU_DEPARTMENT, undef, undef, LedgerSMB::PGDate->today());
     my $select = {
         script => 'payment.pl',
         stylesheet => $request->{_user}->{stylesheet},
+        departments => \@departments,
         login    => { name  => 'login',
                       value => $request->{_user}->{login}   },
         curr => {
