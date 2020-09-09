@@ -15,6 +15,13 @@ our @EXPORT_OK = qw(
     BC_RECEIPT_REVERSAL
     BC_SALES_INVOICE
     BC_VENDOR_INVOICE
+    BRU_DEPARTMENT
+    BRU_PROJECT
+    BRU_JOB
+    BRU_FUND
+    BRU_CUSTOMER
+    BRU_VENDOR
+    BRU_LOT
     CENTURY_START_YEAR
     DEFAULT_NUM_PREC
     DAYS_PER_WEEK
@@ -127,7 +134,25 @@ use constant BC_RECEIPT_REVERSAL => 7;
 use constant BC_SALES_INVOICE    => 8;
 use constant BC_VENDOR_INVOICE   => 9;
 
+=head3  Business (reporting) units enumeration.
 
+    BRU_DEPARTMENT      1
+    BRU_PROJECT         2
+    BRU_JOB             3
+    BRU_FUND            4
+    BRU_CUSTOMER        5
+    BRU_VENDOR          6
+    BRU_LOT             7
+
+=cut
+
+use constant BRU_DEPARTMENT     => 1;
+use constant BRU_PROJECT        => 2;
+use constant BRU_JOB            => 3;
+use constant BRU_FUND           => 4;
+use constant BRU_CUSTOMER       => 5;
+use constant BRU_VENDOR         => 6;
+use constant BRU_LOT            => 7;
 
 =head3  LedgerSMB entity class code enumeration.
 
