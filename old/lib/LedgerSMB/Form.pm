@@ -1668,7 +1668,6 @@ sub get_regular_metadata {
     my $dbh = $self->{dbh};
     local $@;
     $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
-
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
     $self->all_business_units( $transdate, $self->{"${vc}_id"} );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
@@ -1780,7 +1779,7 @@ sub all_employees {
     }
 
     if ($sales) {
-        $query .= qq| sales = '1' AND|;
+        $query .= qq| sales AND|;
     }
 
     $query =~ s/(WHERE|AND)$//;
