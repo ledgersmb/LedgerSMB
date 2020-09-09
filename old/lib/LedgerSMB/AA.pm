@@ -919,6 +919,28 @@ sub save_intnotes {
     $sth->execute($form->{intnotes}, $form->{id});
 }
 
+=item save_employee($form)
+
+Saves the $form->{employee} into the ar/ap.person_id field.
+
+=cut
+
+sub save_employee {
+    my ($self,$form) = @_;
+    my $table;
+    if ($form->{arap} eq 'ar') {
+        $table = 'ar';
+    } elsif ($form->{arap} eq 'ap') {
+        $table = 'ap';
+    } else {
+        $form->error('Bad arap in save_employee');
+    }
+    my $sth = $form->{dbh}->prepare("UPDATE $table SET person_id = ? " .
+                                    "where id = ?");
+    my ($name, $person_id) = split(/--/, $form->{employee}, 2);
+    $sth->execute($person_id, $form->{id});
+}
+
 =back
 
 =head1 COPTYRIGHT
