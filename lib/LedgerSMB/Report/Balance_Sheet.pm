@@ -141,7 +141,7 @@ sub run_report {
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
               $line->{account_number} = $line->{gifi_accno};
-              $line->{account_desc} = $line->{gifi_description};
+              $line->{account_description} = $line->{gifi_description};
               $line->{order} = $line->{account_number};
               return $line;
         } : ($self->legacy_hierarchy) ?
@@ -169,7 +169,7 @@ sub run_report {
 
         for my $path (@$paths) {
             my $row_id = $self->rheads->map_path($path);
-            $self->accum_cell_value($row_id, $col_id, $line->{balance});
+            $self->accum_cell_value($row_id, $col_id, $line->{amount});
             $self->rheads->id_props($row_id, $props)
                 if defined $props;
 
@@ -183,31 +183,23 @@ sub run_report {
         %header_desc = ( 'E' => { 'account_number' => 'E',
                                   'account_category' => 'E',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Expenses'),
                                   'account_description' =>
                                       $self->Text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Income'),
                                   'account_description' =>
                                       $self->Text('Income') },
                          'A' => { 'order' => '1',
                                   'account_number' => '',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Assets'),
                                   'account_description' =>
                                       $self->Text('Assets') },
                          'QL' => { 'order' => '2',
                                   'account_number' => '',
                                   'account_category' => 'QL',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Equity & Liabilities'),
                                   'account_description' =>
                                       $self->Text('Equity & Liabilities') },
                          'L' => { 'order' => '2',
@@ -215,8 +207,6 @@ sub run_report {
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'QL' ],
-                                  'account_desc' =>
-                                      $self->Text('Liabilities'),
                                   'account_description' =>
                                       $self->Text('Liabilities') },
                          'Q' => { 'order' => '3',
@@ -224,8 +214,6 @@ sub run_report {
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'QL' ],
-                                  'account_desc' =>
-                                      $self->Text('Equity'),
                                   'account_description' =>
                                       $self->Text('Equity') },
                          'q' => { 'order' => '1',
@@ -233,8 +221,6 @@ sub run_report {
                                   'account_category' => '',
                                   'account_type' => 'A',
                                   'heading_path' => [ 'QL', 'Q' ],
-                                  'account_desc' =>
-                                      $self->Text('Current earnings'),
                                   'account_description' =>
                                       $self->Text('Current earnings') },
             );
@@ -242,7 +228,6 @@ sub run_report {
     else {
         %header_desc =
             map { $_->{accno} => { 'account_number' => $_->{accno},
-                                   'account_desc'   => $_->{description},
                                    'account_description' => $_->{description} }
             }
             $self->call_dbmethod(funcname => 'account__all_headings');

@@ -184,45 +184,33 @@ sub run_report {
                                   'account_number' => '',
                                   'account_category' => 'E',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Expenses'),
                                   'account_description' =>
                                       $self->Text('Expenses') },
                          'I' => { 'order' => '1', # Sort *before* Expenses
                                   'account_number' => '',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Income'),
                                   'account_description' =>
                                       $self->Text('Income') },
                          'A' => { 'account_number' => 'A',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Assets'),
                                   'account_description' =>
                                       $self->Text('Assets') },
                          'L' => { 'account_number' => 'L',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Liabilities'),
                                   'account_description' =>
                                       $self->Text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
-                                  'account_desc' =>
-                                      $self->Text('Equity'),
                                   'account_description' =>
                                       $self->Text('Equity') },
                          'q' => { 'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'Q', 'q' ],
-                                  'account_desc' =>
-                                      $self->Text('Current earnings'),
                                   'account_description' =>
                                       $self->Text('Current earnings') },
             );
@@ -230,7 +218,6 @@ sub run_report {
     else {
         %header_desc =
             map { $_->{accno} => { 'account_number' => $_->{accno},
-                                   'account_desc'   => $_->{description},
                                    'account_description' => $_->{description} }
             }
             $self->call_dbmethod(funcname => 'account__all_headings');

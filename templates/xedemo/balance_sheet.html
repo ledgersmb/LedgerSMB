@@ -83,7 +83,7 @@ END ;
           report.rheads.ids.$head_id.props.account_description; ?></th>
           <th colspan="<?lsmb report.cheads.ids.keys.size ?>">
           <?lsmb ELSE -?><?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?><?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
-          <?lsmb report.rheads.ids.$row.props.account_desc ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
+          <?lsmb report.rheads.ids.$row.props.account_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
           <td class="amount <?lsmb clazz ?>">
             <a href=
             "<?lsmb DRILLBASE _ '&accno=' _ report.rheads.ids.$row.props.account_number _ '&to_date=' _ report.cheads.ids.$col.props.to_date ?>">
