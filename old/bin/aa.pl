@@ -1391,7 +1391,8 @@ sub save_info {
 
         $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
             $form->{arap} = lc($form->{ARAP});
-            AA->save_intnotes($form);
+        AA->save_intnotes($form);
+        AA->save_employee($form);
 
         foreach my $i(1..($form->{rowcount}))
         {
