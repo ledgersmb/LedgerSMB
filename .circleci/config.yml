@@ -91,22 +91,20 @@ commands:
       - run:
           name: Refresh modules from CPAN
           command: |
-            cpanm --metacpan --quiet --notest \
+            cpm install --local-lib-contained=$HOME/perl5 --no-test \
               --with-develop \
-              --with-feature=starman \
-              --with-feature=latex-pdf-images \
-              --with-feature=latex-pdf-ps \
-              --with-feature=openoffice \
-              --with-feature=xls \
-              --with-feature=edi \
-              --installdeps .
-            cpanm --metacpan --notest JSON::PP~4.03
-            cpanm --metacpan --notest Gazelle
+              --feature=starman \
+              --feature=latex-pdf-ps \
+              --feature=openoffice \
+              --feature=xls \
+              --feature=edi
+            cpm install --local-lib-contained=$HOME/perl5 --no-test \
+                JSON::PP~4.03 Gazelle
             if [ "x$COVERAGE" == "x1" ]
             then
-              cpanm --metacpan --quiet --notest \
-                    Devel::Cover \
-                    Devel::Cover::Report::Coveralls
+              cpm install --local-lib-contained=$HOME/perl5 --no-test \
+                  Devel::Cover \
+                  Devel::Cover::Report::Coveralls
             fi
       - save_cache:
            key: v1-cpanminus-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}
@@ -193,8 +191,8 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: latest
-      postgres: latest
+      perl: '5.28'
+      postgres: '11'
       browser: phantomjs
     steps:
       - prep_env
