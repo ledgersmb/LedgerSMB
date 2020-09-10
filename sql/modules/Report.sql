@@ -641,9 +641,9 @@ CREATE TYPE balance_sheet_line AS (
     account_desc text,
     account_type char,
     account_category char,
-    account_contra boolean,
     gifi_accno text,
     gifi_description text,
+    contra boolean,
     balance numeric,
     heading_path int[]
 );
@@ -714,13 +714,15 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          hm.contra, null::text as gifi_accno,
-          null::text as gifi_description, hb.balance, hm.path
+          null::text as gifi_accno,
+          null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          am.contra, am.gifi_accno, am.gifi_description, ab.balance, am.path
+          am.gifi_accno, am.gifi_description, am.contra,
+          ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
