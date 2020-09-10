@@ -4,7 +4,7 @@ version: 2.1
 
 # Define defaults
 _defaults: &defaults
-    # Make sure that .profile is sourced for Perlbrew
+    # Make sure that .profile is sourced to local::lib
     shell: /bin/bash --login -eo pipefail
 
 
@@ -60,6 +60,9 @@ commands:
             fi
       - *store_artifacts
   prep_env:
+    parameters:
+      perl:
+        type: string
     description: "Prepare environment"
     steps:
       - checkout
@@ -82,11 +85,11 @@ commands:
       - restore_cache:
           keys:
             # Get latest cache for the current specs
-            - v1-cpanminus-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}
+            - v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "~/project/cpanfile" }}
             # Fall back to the latest for the current branch
-            - v1-cpanminus-{{ .Branch }}-
+            - v2-cpm-<< parameters.perl >>-{{ .Branch }}-
             # Fall back to the latest for master
-            - v1-cpanminus-master-
+            - v2-cpm-<< parameters.perl >>-master-
             # Don't fall back any further
       - run:
           name: Refresh modules from CPAN
@@ -107,7 +110,7 @@ commands:
                   Devel::Cover::Report::Coveralls
             fi
       - save_cache:
-           key: v1-cpanminus-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}
+           key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "~/project/cpanfile" }}
            paths:
              - ~/perl5
       - run:
@@ -156,10 +159,8 @@ executors:
     parameters:
       perl:
         type: string
-        default: latest
       postgres:
         type: string
-        default: latest
       browser:
         type: string
         default: chrome
@@ -191,11 +192,12 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.28'
+      perl: '5.30'
       postgres: '11'
       browser: phantomjs
     steps:
-      - prep_env
+      - prep_env:
+          perl: '5.30'
       - start_plackup
       - start_proxy
       - prove
