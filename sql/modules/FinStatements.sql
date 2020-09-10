@@ -15,7 +15,7 @@ BEGIN;
 
 DROP FUNCTION IF EXISTS pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[]);
 DROP TYPE IF EXISTS pnl_line CASCADE;
-CREATE TYPE pnl_line AS (
+CREATE TYPE financial_statement_line AS (
     account_id int,
     account_number text,
     account_description text,
@@ -29,7 +29,7 @@ CREATE TYPE pnl_line AS (
 );
 
 CREATE OR REPLACE FUNCTION pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[], in_language text)
-  RETURNS SETOF pnl_line LANGUAGE SQL AS
+  RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
   SELECT a.id, a.accno,
