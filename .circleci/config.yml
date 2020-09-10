@@ -191,7 +191,7 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.28'
+      perl: '5.30'
       postgres: '11'
       browser: phantomjs
     steps:
