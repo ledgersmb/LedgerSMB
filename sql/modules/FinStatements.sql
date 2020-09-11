@@ -15,7 +15,8 @@ BEGIN;
 
 DROP FUNCTION IF EXISTS pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[]);
 DROP TYPE IF EXISTS pnl_line CASCADE;
-CREATE TYPE pnl_line AS (
+DROP TYPE IF EXISTS financial_statement_line CASCADE;
+CREATE TYPE financial_statement_line AS (
     account_id int,
     account_number text,
     account_description text,
@@ -29,7 +30,7 @@ CREATE TYPE pnl_line AS (
 );
 
 CREATE OR REPLACE FUNCTION pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[], in_language text)
-  RETURNS SETOF pnl_line LANGUAGE SQL AS
+  RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
   SELECT a.id, a.accno,
@@ -159,7 +160,7 @@ $$;
 
 DROP FUNCTION IF EXISTS  pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text)
-  RETURNS SETOF pnl_line AS
+  RETURNS SETOF financial_statement_line AS
 $BODY$
 WITH acc_meta AS (
   SELECT a.id, a.accno,
@@ -280,7 +281,7 @@ $BODY$
 
 DROP FUNCTION IF EXISTS pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text)
-  RETURNS SETOF pnl_line LANGUAGE SQL AS
+  RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
   SELECT a.id, a.accno,
@@ -403,7 +404,7 @@ $$;
 
 DROP FUNCTION IF EXISTS pnl__invoice(in_id integer);
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id integer, in_language text)
-  RETURNS SETOF pnl_line LANGUAGE SQL AS
+  RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
   SELECT a.id, a.accno,
@@ -495,7 +496,7 @@ $$;
 
 DROP FUNCTION IF EXISTS pnl__customer(in_id integer, in_from_date date, in_to_date date);
 CREATE OR REPLACE FUNCTION pnl__customer(in_id integer, in_from_date date, in_to_date date, in_language text)
-  RETURNS SETOF pnl_line LANGUAGE SQL AS
+  RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
   SELECT a.id, a.accno,
@@ -593,6 +594,94 @@ hdr_balance AS (
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
+
+
+DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date);
+CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date,
+                                                 in_language text)
+RETURNS SETOF financial_statement_line LANGUAGE SQL AS
+$$
+WITH hdr_meta AS (
+   SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
+          aht.path,
+          ahc.derived_category as category, 'H'::char as account_type,
+          'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($2,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all headers
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
+),
+acc_meta AS (
+  SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
+         aht.path, a.category, 'A'::char as account_type, contra,
+         a.gifi_accno, gifi.description as gifi_description
+     FROM account a
+    INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
+     LEFT JOIN (SELECT trans_id, description
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($2,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all accounts; bug?
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
+),
+acc_balance AS (
+   SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
+     FROM acc_trans ac
+     JOIN tx_report t ON t.approved AND t.id = ac.trans_id
+    WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
+ GROUP BY ac.chart_id
+   HAVING sum(ac.amount_bc) <> 0.00
+),
+hdr_balance AS (
+   select ahd.id, sum(balance) as balance
+     FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
+    INNER JOIN account_heading_descendant ahd
+            ON acc.heading = ahd.descendant_id
+    GROUP BY ahd.id
+)
+   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
+          null::text as gifi_accno,
+          null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
+     FROM hdr_meta hm
+    INNER JOIN hdr_balance hb ON hm.id = hb.id
+   UNION
+   SELECT am.id, am.accno, am.description, am.account_type, am.category,
+          am.gifi_accno, am.gifi_description, am.contra,
+          ab.balance, am.path
+     FROM acc_meta am
+    INNER JOIN acc_balance ab on am.id = ab.id
+$$;
+
+COMMENT ON function report__balance_sheet(date, text) IS
+$$ This produces a balance sheet and the paths (acount numbers) of all headings
+necessary; output is generated in the language requested, or in the
+users default language if not available. $$;
+
+
+
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 

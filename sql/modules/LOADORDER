@@ -23,7 +23,7 @@ Date.sql
 Employee.sql
 Payment.sql
 Person.sql
-PNL.sql
+FinStatements.sql
 trial_balance.sql
 Report.sql
 Voucher.sql

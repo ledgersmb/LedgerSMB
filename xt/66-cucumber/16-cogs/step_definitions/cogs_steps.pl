@@ -202,7 +202,7 @@ Then qr/^(the inventory|COGS) should be at (\d+) ([A-Z]{3,3})$/, sub {
         or die $dbh->errstr;
 
     # the balance sheet returns technical amounts, assets/expenses as negatives
-    is($rows->[0]->{balance} // 0, -1*$2, q{account balance matches expectation});
+    is($rows->[0]->{amount} // 0, -1*$2, q{account balance matches expectation});
 };
 
 

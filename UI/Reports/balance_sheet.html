@@ -83,7 +83,7 @@ END ;
 [% ELSE -%]
 [% IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -%]
 [% report.rheads.ids.$row.props.account_number %]&nbsp;-&nbsp;[% END; -%]
-[% report.rheads.ids.$row.props.account_desc %]</th>
+[% report.rheads.ids.$row.props.account_description %]</th>
 [% FOREACH col IN report.sorted_col_ids -%]
   <td class="amount [% clazz %]"><a href="[%
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
