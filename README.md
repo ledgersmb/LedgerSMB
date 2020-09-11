@@ -62,7 +62,7 @@ explicitly doesn't make any attempts to support Internet Explorer.
 The quickest way to get the `Docker` image up and running is by using the
 docker-compose file available through the `GitHub` repository at:
 
-https://github.com/ledgersmb/ledgersmb-docker/blob/1.7/docker-compose.yml
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.8/docker-compose.yml
 
 which sets up both the LedgerSMB image and a supporting database image for
 production purposes (i.e. with persistent (database) data, with the
@@ -132,7 +132,7 @@ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 3. `[other features]` are described in the [in-depth installation
    instructions](https://ledgersmb.org/content/installing-ledgersmb-18)
 4. The [in-depth installation
-   instructions](http://ledgersmb.org/topic/installing-ledgersmb-16)
+   instructions](http://ledgersmb.org/topic/installing-ledgersmb-18)
    contain a list of distribution provided packages to reduce the
    number of dependencies installed from CPAN.
 
@@ -223,7 +223,7 @@ The system is installed and should be available for evaluation through
 * `http://localhost:5762/login.pl`    # Normal login for the application
 
 The system is ready for [preparation for first
-use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
+use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-18-first-use).
 
 # Project information
 
