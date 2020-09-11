@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(14);
+    SELECT plan(13);
 
     -- Add data
 
@@ -21,7 +21,6 @@ BEGIN;
     SELECT has_function('report__aa_outstanding',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
     SELECT has_function('report__aa_outstanding_details',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
     SELECT has_function('report__aa_transactions',ARRAY['integer','integer','text','text','integer','integer','text','text','text','text','text','text','text','date','date','boolean','boolean','integer','boolean','boolean','boolean','text']);
-    SELECT has_function('report__balance_sheet',ARRAY['date','text']);
     SELECT has_function('report__cash_summary',ARRAY['date','date','text','text']);
     SELECT has_function('report__general_balance',ARRAY['date','date']);
     SELECT has_function('report__gl',ARRAY['text','text','character','text','text','text','date','date','boolean','numeric','numeric','integer[]']);
