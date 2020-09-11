@@ -245,6 +245,8 @@ UPDATE gl
     }
 
     $form->save_recurring( $dbh, $myconfig );
+
+    return 1;
 }
 
 sub transaction {
