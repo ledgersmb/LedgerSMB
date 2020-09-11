@@ -140,6 +140,7 @@
               CASE 'date';
                 input_type_keys = input_keys;
                 input_defaults = date_defaults;
+                element_data.type = 'text'; # Make sure Dojo and HTML5 don't clash
               CASE 'text';
                 IF 'date' == element_data.class;
                     input_type_keys = input_keys;
