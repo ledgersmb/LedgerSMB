@@ -141,6 +141,11 @@
              input_type_keys = input_keys.date;
              input_defaults = element_defaults.date;
          END;
+         IF 'date' == element_data.type;
+             # we can't add 'type="date"' because HTML5 defines it,
+             # which conflicts with our use for Dojo
+             element_data.type = 'text';
+         END;
 
          PROCESS auto_id  element_type = 'input';;
          PROCESS attributes
