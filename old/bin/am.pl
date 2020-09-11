@@ -1057,7 +1057,7 @@ sub process_transactions {
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
             for (qw(header dbversion company dbh login path sessionid _auth
-                    stylesheet timeout id)
+                    stylesheet timeout id _locale)
             ) {
                 $form->{$_} = $pt->{$_};
             }
@@ -1307,27 +1307,30 @@ sub process_transactions {
 
             }
             else {
-
                 # GL transaction
                 GL->transaction( \%myconfig, \%$form );
 
                 $form->{reference} = $pt->{reference};
                 $form->{transdate} = $pt->{nextdate};
+                $form->{fx_transaction} = $ref->{fx_transaction};
 
                 $j = 0;
                 foreach my $ref ( @{ $form->{GL} } ) {
                     $form->{"accno_$j"} = "$ref->{accno}--$ref->{description}";
 
+                    $form->{"${_}_$j"} =
+                        $ref->{$_} for (qw/curr source memo/);
                     $form->{"projectnumber_$j"} =
                       "$ref->{projectnumber}--$ref->{project_id}"
                       if $ref->{project_id};
-                    $form->{"fx_transaction_$j"} = $ref->{fx_transaction};
 
-                    if ( $ref->{amount} < 0 ) {
-                        $form->{"debit_$j"} = $ref->{amount} * -1;
+                    if ( $ref->{amount_bc} < 0 ) {
+                        $form->{"debit_$j"} = $ref->{amount_bc} * -1;
+                        $form->{"debit_fx_$j"} = $ref->{amount_tc} * -1;
                     }
                     else {
-                        $form->{"credit_$j"} = $ref->{amount};
+                        $form->{"credit_$j"} = $ref->{amount_bc};
+                        $form->{"credit_fx_$j"} = $ref->{amount_tc};
                     }
 
                     $j++;
