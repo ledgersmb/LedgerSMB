@@ -272,8 +272,8 @@ $$
                         m.method, ac.method,
                         ac.label
                 FROM asset_class ac
-                JOIN account aa ON (aa.id = ac.asset_account_id)
-                JOIN account ad ON (ad.id = ac.dep_account_id)
+                LEFT JOIN account aa ON (aa.id = ac.asset_account_id)
+                LEFT JOIN account ad ON (ad.id = ac.dep_account_id)
                 JOIN asset_dep_method m ON (ac.method = m.id)
                 WHERE
                         (in_asset_account_id is null
