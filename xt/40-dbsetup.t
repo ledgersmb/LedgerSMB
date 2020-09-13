@@ -24,7 +24,7 @@ $ENV{LSMB_NEW_DB} or bail_out('LSMB_NEW_DB is not set');
 my $temp = $ENV{TEMP} || '/tmp/';
 
 $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-#$LedgerSMB::Sysconfig::db_namespace = 'altschema';
+#LedgerSMB::Sysconfig::db_namespace('altschema');
 
 my $db = LedgerSMB::Database->new({
          dbname       => $ENV{LSMB_NEW_DB},
