@@ -148,6 +148,17 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.21
+* Fix AR/AP account dropdown not retained on 'Update' (#4927)
+* Fix AR/AP search Employee filter not limiting the result (#4606)
+* Fix Departments dropdown not populated on Receipts/Payments (#4636)
+* Fix missing sales employee on existing AR/AP transactions (#1015)
+* Fix error when posting recurring GL transactions (#4946)
+* Fix incorrectly populated dropdowns on Asset screen (#5017)
+* Fix conflict between HTML5 and our 'date' INPUT widgets (#5017)
+* Fix asset classes with missing accounts not being in search result (#5021)
+
+
 Changelog for 1.7.20
 * Fix Arabic being default language on Account creation (#4439)
 * Add Locale::Codes as explicit dependencies after removal from CORE
