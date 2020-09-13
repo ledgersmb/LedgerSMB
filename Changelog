@@ -3,6 +3,17 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.2
+* Fix AR/AP search sales person not limiting selection (#4604)
+* Fix departments dropdown not populated on Receipts/Payments entry (#4636)
+* Fix sales person not shown on existing AR/AP transactions (#5004)
+* Fix failure to post recurring GL transaction (#4946)
+* Resolve conflict between HTML5 and our 'date' INPUT tags (#5016)
+* Fix asset screen dropdowns not populating correctly (#5016)
+* Fix asset classes not in search output when missing accounts (#5020)
+* Fix address-type (Billing, etc) not correctly initialized on edit (#2564)
+
+
 Changelog for 1.8.1
 * Fix incorrect rounding on payments leading to under/overpayment (#4986)
 * Fix AR/AP dropdown on transactions not retained after 'Update' (#4927)
