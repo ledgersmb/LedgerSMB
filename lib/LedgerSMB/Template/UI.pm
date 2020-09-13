@@ -48,16 +48,16 @@ our @pre_render_cbs = (
 sub _available_formats {
     my @retval = ('HTML', 'TXT');
 
-    if ($LedgerSMB::Sysconfig::template_latex){
+    if ( LedgerSMB::Sysconfig::template_latex() ) {
         push @retval, 'PDF', 'PS';
     }
-    if ($LedgerSMB::Sysconfig::template_xls){
+    if ( LedgerSMB::Sysconfig::template_xls() ) {
         push @retval, 'XLS';
     }
-    if ($LedgerSMB::Sysconfig::template_xlsx){
+    if ( LedgerSMB::Sysconfig::template_xlsx() ) {
         push @retval, 'XLSX';
     }
-    if ($LedgerSMB::Sysconfig::template_ods){
+    if ( LedgerSMB::Sysconfig::template_ods() ) {
         push @retval, 'ODS';
     }
     return \@retval;
@@ -86,7 +86,7 @@ sub new_UI {
                 DELIMITER => ';',
                 COMPILE_EXT => '.lttc',
                 COMPILE_DIR =>
-                   File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
+                   File::Spec->rel2abs( LedgerSMB::Sysconfig::templates_cache(),
                                         File::Spec->tmpdir ),
                 VARIABLES => {
                     LIST_FORMATS => sub {
@@ -152,7 +152,7 @@ sub render_string {
               || LedgerSMB::Sysconfig::dojo_theme()),
           PRINTERS => [
               ( ( map { { text => $_, value => $_ } }
-                  keys %LedgerSMB::Sysconfig::printers ),
+                  keys LedgerSMB::Sysconfig::printer()->%* ),
                 {
                     text  => $request->{_locale}->text('Screen'),
                     value => 'screen'

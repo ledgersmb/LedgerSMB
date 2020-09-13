@@ -67,9 +67,11 @@ our @EXPORT_OK = qw(
     RC_DISPOSAL
     RC_IMPORT
     RC_PARTIAL_DISPOSAL
+    SCRIPT_OLDSCRIPTS
+    SCRIPT_NEWSCRIPTS
     SATURDAY
     SEC_PER_HOUR
-    NEW_BUDGET_ROWS 
+    NEW_BUDGET_ROWS
     SUNDAY
     YEARS_PER_CENTURY
 );
@@ -264,6 +266,28 @@ use constant RC_DEPRECIATION     => 1;
 use constant RC_DISPOSAL         => 2;
 use constant RC_IMPORT           => 3;
 use constant RC_PARTIAL_DISPOSAL => 4;
+
+=head3  Entrypoint defining scripts
+
+Whitelist for e.g. redirect destination
+
+=cut
+
+use constant SCRIPT_NEWSCRIPTS => [ qw(
+   account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
+   configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl erp.pl
+   file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
+   journal.pl login.pl lreports_co.pl order.pl payment.pl
+   payroll.pl pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl
+   template.pl timecard.pl transtemplate.pl trial_balance.pl user.pl vouchers.pl
+                                    ) ];
+
+use constant SCRIPT_OLDSCRIPTS => [
+    'aa.pl', 'am.pl',    'ap.pl',
+    'ar.pl', 'arap.pl',  'arapprn.pl', 'gl.pl',
+    'ic.pl', 'ir.pl',
+    'is.pl', 'oe.pl',    'pe.pl',
+    ];
 
 
 =head3  LedgerSMB temporal constants

@@ -31,7 +31,7 @@ die "Library verification failed (found $version from '$path', expected 1.9)"
     unless $version =~ /^1\.9\./;
 
 # Report to the console what type of dojo we are running
-if ( $LedgerSMB::Sysconfig::dojo_built) {
+if ( LedgerSMB::Sysconfig::dojo_built() ) {
     print "Starting Worker on PID $$ Using Built Dojo\n";
 } else {
     print "Starting Worker on PID $$ Using Dojo Source\n";
@@ -40,7 +40,8 @@ if ( $LedgerSMB::Sysconfig::dojo_built) {
 Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
     sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+my $log_config = LedgerSMB::Sysconfig::log4perl_config();
+Log::Log4perl::init(\$log_config);
 
 
 LedgerSMB::PSGI::setup_url_space(

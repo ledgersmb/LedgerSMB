@@ -65,6 +65,7 @@ use utf8;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Magic qw( SCRIPT_OLDSCRIPTS );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting::Sequence;
@@ -537,21 +538,11 @@ sub _redirect {
         return;
     }
 
-    if (first { $_ eq $script } @{LedgerSMB::Sysconfig::newscripts}) {
+    unless (first { $_ eq $script } SCRIPT_OLDSCRIPTS->@*) {
         print "Location: $self->{callback}\n";
         print "Content-type: text/html\n\n";
         return;
     }
-
-    $self->error(
-        $self->{_locale}->text(
-            "[_1]:[_2]:[_3]: Invalid Redirect",
-            __FILE__,
-            __LINE__,
-           $script
-        )
-    ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
-
 
     my $form = Form->new($argv);
     $form->{$_} = $self->{$_} for qw(
@@ -1178,7 +1169,7 @@ sub generate_selects {
 
      # formats
     $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         $form->{selectformat} .= qq|
             <option value="postscript">|
                 . $form->{_locale}->text('Postscript')

@@ -390,7 +390,7 @@ sub backup_roles {
 # Private method, basically just passes the inputs on to the next screen.
 sub _begin_backup {
     my $request = shift @_;
-    $request->{can_email} = defined $LedgerSMB::Sysconfig::backup_email_from;
+    $request->{can_email} = defined LedgerSMB::Sysconfig::backup_email_from();
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/begin_backup', $request);
 };
@@ -431,7 +431,7 @@ sub run_backup {
     if ($request->{backup_type} eq 'email') {
 
         my $mail = LedgerSMB::Mailer->new(
-            from     => $LedgerSMB::Sysconfig::backup_email_from,
+            from     => LedgerSMB::Sysconfig::backup_email_from(),
             to       => $request->{email},
             subject  => 'Email of Backup',
             message  => 'The Backup is Attached',

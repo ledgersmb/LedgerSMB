@@ -215,17 +215,17 @@ sub run_upgrade_script {
     my $dbh = $self->database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $self->database->loader_log_filename();
 
+    my $schema =  LedgerSMB::Sysconfig::db_namespace();
     my $guard = Scope::Guard->new(
         sub {
             $dbh->rollback;
             $dbh->do(
-                qq{DROP SCHEMA $LedgerSMB::Sysconfig::db_namespace CASCADE;
+                qq{DROP SCHEMA $schema CASCADE;
                    ALTER SCHEMA $src_schema
-                         RENAME TO $LedgerSMB::Sysconfig::db_namespace});
+                         RENAME TO $schema});
             $dbh->commit;
         });
 
-    my $schema =  $LedgerSMB::Sysconfig::db_namespace;
     $dbh->do("ALTER SCHEMA $schema RENAME TO $src_schema;
               CREATE SCHEMA $schema;
               GRANT ALL ON SCHEMA $schema TO PUBLIC")

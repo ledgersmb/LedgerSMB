@@ -141,8 +141,9 @@ sub get_option_data {
 
     $self->{printers} = [];
 
-    if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
-        foreach my $item ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
+    if ( LedgerSMB::Sysconfig::printer()->%*
+         && LedgerSMB::Sysconfig::latex() ) {
+        foreach my $item ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
             push @{$self->{printers}}, {printer => $item};
         }
     }

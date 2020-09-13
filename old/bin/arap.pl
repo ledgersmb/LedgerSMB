@@ -440,12 +440,12 @@ sub schedule {
 
     }
 
-    if (   %{LedgerSMB::Sysconfig::printer}
-        && ${LedgerSMB::Sysconfig::latex}
+    if (   LedgerSMB::Sysconfig::printer()->%*
+        && LedgerSMB::Sysconfig::latex()
         && %formname )
     {
         $selectprinter = qq|<option>\n|;
-        for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
+        for ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
             $selectprinter .= qq|<option value="$_">$_\n|;
         }
 

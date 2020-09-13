@@ -278,8 +278,6 @@ ok(!defined $form->{callback}, 'redirect: No callback set');
 is(capture_stdout { eval { $form->redirect;}; },
    "Location: login.pl\nContent-type: text/html\n\n", 'redirect: No message or callback redirect');
 $form->{callback} = 1;
-is(capture_stdout { eval { $form->redirect;}; }, "", 'redirect: callback, no message redirect');
-is(capture_stdout { eval { $form->redirect("hello world\n")}; }, "", 'redirect: callback and message redirect');
 
 
 done_testing;

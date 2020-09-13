@@ -959,7 +959,7 @@ sub edit_recurring {
     }
 
     $form->{selectformat} = qq|<option value="html">html\n|;
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         $form->{selectformat} .= qq|
             <option value="postscript">| . $locale->text('Postscript') . qq|
         <option value="pdf">| . $locale->text('PDF');
@@ -975,7 +975,7 @@ sub process_transactions {
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
 
     my $defaultprinter;
-    while ( my ( $key, $value ) = each %{LedgerSMB::Sysconfig::printer} ) {
+    while ( my ( $key, $value ) = each LedgerSMB::Sysconfig::printer()->%* ) {
         if ( $value =~ /lpr/ ) {
             $defaultprinter = $key;
             last;
@@ -1168,7 +1168,7 @@ sub process_transactions {
                     $form->info( " ..... " . $locale->text('done') );
 
                     # print form
-                    if ( ${LedgerSMB::Sysconfig::latex} && $ok ) {
+                    if ( LedgerSMB::Sysconfig::latex() && $ok ) {
                         $ok = &print_recurring( \%$pt, $defaultprinter );
                     }
 
@@ -1243,7 +1243,7 @@ sub process_transactions {
                     }
 
                     # print form
-                    if ( ${LedgerSMB::Sysconfig::latex} && $ok ) {
+                    if ( LedgerSMB::Sysconfig::latex() && $ok ) {
                         &print_recurring( \%$pt, $defaultprinter );
                     }
 
@@ -1338,9 +1338,6 @@ sub print_recurring {
 
 
             $form->info( "\n" . $f{ $f[$j] } );
-            $form->error( $locale->text('Invalid redirect') )
-              unless first { $_ eq $form->{script} }
-              @{LedgerSMB::Sysconfig::scripts};
             $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
             $ok = !( $form->_redirect() );
 
@@ -1393,9 +1390,6 @@ sub email_recurring {
 
             $message = $form->escape( $pt->{message}, 1 );
 
-            $form->error( $locale->text('Invalid redirect') )
-              unless first { $_ eq $form->{script} }
-              @{LedgerSMB::Sysconfig::scripts};
             $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
             $ok = !( $form->_redirect() );
 

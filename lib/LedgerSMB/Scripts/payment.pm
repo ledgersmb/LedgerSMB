@@ -679,12 +679,12 @@ sub display_payments {
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'),
              value => 'screen'});
-    for (keys %LedgerSMB::Sysconfig::printer){
+    for (keys LedgerSMB::Sysconfig::printer()->%* ){
          push @{$payment->{media_options}},
               {text  => $_,
                value => $_};
     }
-    if ($LedgerSMB::Sysconfig::latex){
+    if ( LedgerSMB::Sysconfig::latex() ){
         @{$payment->{format_options}} = (
               {text => 'PDF',        value => 'PDF'},
               {text => 'Postscript', value => 'Postscript'},
@@ -1139,8 +1139,8 @@ sub payment2 {
     # We need to set the available media and format from printing
     my @media_options;
     push  @media_options, {value => 1, text => 'Screen'};
-    if ($#{LedgerSMB::Sysconfig::printer}) {
-        for (keys %{LedgerSMB::Sysconfig::printer}) {
+    if (LedgerSMB::Sysconfig::printer()->%*) {
+        for (keys LedgerSMB::Sysconfig::printer()->%*) {
             push  @media_options, {value => 1, text => $_};
         }
     }
@@ -1149,7 +1149,7 @@ sub payment2 {
     #$request->error("@media_options");
     my @format_options;
     push @format_options, {value => 1, text => 'HTML'};
-    if (${LedgerSMB::Sysconfig::latex}) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         push  @format_options,
         {value => 2, text => 'PDF' },
         {value => 3, text => 'POSTSCRIPT' };

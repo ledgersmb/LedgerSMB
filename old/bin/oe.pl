@@ -689,7 +689,7 @@ sub form_header {
 
         %a = ();
         for ( "update", "ship_to", "save" ) { $a{$_} = 1 }
-        $a{'print_and_save'} = 1 if ${LedgerSMB::Sysconfig::latex};
+        $a{'print_and_save'} = 1 if LedgerSMB::Sysconfig::latex();
 
         if ( $form->{id} ) {
 
@@ -697,7 +697,7 @@ sub form_header {
             $a{'delete'}                = 1;
             $a{'print'}                 = 1;
             $a{'save_as_new'}           = 1;
-            $a{'print_and_save_as_new'} = 1 if ${LedgerSMB::Sysconfig::latex};
+            $a{'print_and_save_as_new'} = 1 if LedgerSMB::Sysconfig::latex();
 
             if ( $form->{type} =~ /sales_/ ) {
                 if ( $myconfig{acs} !~ /AR--Sales Invoice/ ) {
@@ -1360,7 +1360,7 @@ sub yes {
         $err = $locale->text('Cannot delete quotation!');
     }
 
-    if ( OE->delete( \%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool} ) ) {
+    if ( OE->delete( \%myconfig, \%$form, LedgerSMB::Sysconfig::spool() ) ) {
         $form->redirect($msg);
     }
     else {

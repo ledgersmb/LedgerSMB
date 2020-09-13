@@ -25,6 +25,7 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::oldHandler;
+use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS );
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Router keywords => [ qw( router ) ];
 use LedgerSMB::Routes::ERP::API::Accounts;
@@ -216,7 +217,8 @@ sub setup_url_space {
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
 
-        # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
+        # not using LedgerSMB::Sysconfig::scripts():
+        #   it has more than only entry-points
         mount "/$_.pl" => builder {
             my $script = $_;
             enable '+LedgerSMB::Middleware::RequestID';
@@ -266,7 +268,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
-        for  (grep { $_ !~ m/^(login|setup)[.]pl$/ } @LedgerSMB::Sysconfig::newscripts);
+        for  (grep { $_ !~ m/^(login|setup)[.]pl$/ } (SCRIPT_NEWSCRIPTS)->@*);
 
         mount '/login.pl' => builder {
             enable '+LedgerSMB::Middleware::RequestID';
@@ -341,7 +343,7 @@ sub setup_url_space {
             }
         };
 
-        if (! $LedgerSMB::Sysconfig::dojo_built) {
+        if (! LedgerSMB::Sysconfig::dojo_built() ) {
             mount '/js/' => Plack::App::File->new(root => 'UI/js-src')->to_app
         }
 
