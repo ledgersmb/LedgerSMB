@@ -341,6 +341,18 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.25
+* Fix AR/AP account on transactions retained on 'Update' (Erik H, #4927)
+* Fix AR/AP search not limited by Employee selection (Erik H, #4604)
+* Fix Departments dropdown not populated on Receipts/Payments (Erik H, #4636)
+* Fix showing sales employees on existing AR/AP transactions (Erik H, #1015)
+* Fix populating values in Asset screen dropdowns (Erik H, #5018)
+* Fix conflict between HTML5 and 'date' INPUT widgets (Erik H, #5018)
+* Fix asset class report to include classes missing accounts (Erik H, #5022)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.24
 * Fix Arabic as standard language selection on Account creation (Erik H, #4439)
 * Add Locale::Codes explicit dependencies, due to removal from CORE (Erik H)
