@@ -341,7 +341,7 @@ sub setup_url_space {
             }
         };
 
-        if (! $LedgerSMB::Sysconfig::dojo_built) {
+        if (! LedgerSMB::Sysconfig::dojo_built() ) {
             mount '/js/' => Plack::App::File->new(root => 'UI/js-src')->to_app
         }
 

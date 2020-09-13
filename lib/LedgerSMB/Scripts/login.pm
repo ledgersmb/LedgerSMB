@@ -78,7 +78,7 @@ sub authenticate {
         || ! $r->{password}) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
-    $r->{company} ||= $LedgerSMB::Sysconfig::default_db;
+    $r->{company} ||= LedgerSMB::Sysconfig::default_db();
     if ($request->{_create_session}->($r->{login},
                                       $r->{password},
                                       $r->{company})) {

@@ -684,7 +684,7 @@ sub display_payments {
               {text  => $_,
                value => $_};
     }
-    if ($LedgerSMB::Sysconfig::latex){
+    if ( LedgerSMB::Sysconfig::latex() ){
         @{$payment->{format_options}} = (
               {text => 'PDF',        value => 'PDF'},
               {text => 'Postscript', value => 'Postscript'},

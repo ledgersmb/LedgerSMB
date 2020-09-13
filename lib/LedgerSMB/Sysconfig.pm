@@ -469,16 +469,19 @@ def 'db_sslmode',
     envvar => 'PGSSLMODE',
     doc => '';
 
+### SECTION  ---   programs
+
+def 'zip',
+    section => 'programs',
+    default => 'zip -r %dir %dir',
+    doc => '';
+
 
 # available printers
 our %printer;
 for ($cfg->Parameters('printers')){
      $printer{$_} = $cfg->val('printers', $_);
 }
-
-
-# Programs
-our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
 
 
 # Whitelist for redirect destination / this isn't really configuration.
@@ -513,8 +516,9 @@ for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
         $cfg->val('log4perl_config_modules_loglevel', $_)."\n";
 }
 # Log4perl configuration
+my $log_level = log_level();
 our $log4perl_config = qq(
-    log4perl.rootlogger = $LedgerSMB::Sysconfig::log_level, Basic, Debug, DebugPanel
+    log4perl.rootlogger = $log_level, Basic, Debug, DebugPanel
     )
     .
     $modules_loglevel_overrides
@@ -553,6 +557,8 @@ our $log4perl_config = qq(
     #log4perl.appender.DebugPanel.Threshold = TRACE
 
     );
+
+
 #some examples of loglevel setting for modules
 #FATAL, ERROR, WARN, INFO, DEBUG, TRACE
 #log4perl.logger.LedgerSMB = DEBUG
@@ -560,6 +566,10 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
 #log4perl.logger.LedgerSMB.Handler = ERROR
 #log4perl.logger.LedgerSMB.User = WARN
+
+sub log4perl_config {
+    return $log4perl_config;
+}
 
 
 # if you have latex installed set to 1
@@ -574,27 +584,27 @@ sub override_defaults {
     $latex = eval {require Template::Plugin::Latex; 1;};
 
     # Check availability and loadability
-    $LedgerSMB::Sysconfig::template_latex = (
-        $LedgerSMB::Sysconfig::template_latex ne 'disabled' &&
+    LedgerSMB::Sysconfig::template_latex(
+        LedgerSMB::Sysconfig::template_latex() ne 'disabled' &&
         eval {require LedgerSMB::Template::LaTeX}
     );
-    $LedgerSMB::Sysconfig::template_xls = (
-        $LedgerSMB::Sysconfig::template_xls ne 'disabled' &&
+    LedgerSMB::Sysconfig::template_xls(
+        LedgerSMB::Sysconfig::template_xls() ne 'disabled' &&
         eval {require LedgerSMB::Template::XLS}
     );
-    $LedgerSMB::Sysconfig::template_xlsx = (
-        $LedgerSMB::Sysconfig::template_xlsx ne 'disabled' &&
+    LedgerSMB::Sysconfig::template_xlsx(
+        LedgerSMB::Sysconfig::template_xlsx() ne 'disabled' &&
         eval {require LedgerSMB::Template::XLSX}
     );
-    $LedgerSMB::Sysconfig::template_ods = (
-        $LedgerSMB::Sysconfig::template_ods ne 'disabled' &&
+    LedgerSMB::Sysconfig::template_ods(
+        LedgerSMB::Sysconfig::template_ods() ne 'disabled' &&
         eval {require LedgerSMB::Template::ODS}
     );
 
     return;
 }
 
-override_defaults;
+override_defaults();
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -552,7 +552,7 @@ sub print_batch {
         @{$report->rows};
 
     if (@files) {
-        my $zipcmd = $LedgerSMB::Sysconfig::zip;
+        my $zipcmd = LedgerSMB::Sysconfig::zip();
         $zipcmd =~ s/\%dir/$dirname/g;
         `$zipcmd`;
 

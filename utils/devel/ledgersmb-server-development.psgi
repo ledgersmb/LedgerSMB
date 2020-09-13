@@ -33,7 +33,7 @@ die "Library verification failed (found $version from '$path', expected 1.9)"
     unless $version =~ /^1\.9\./;
 
 # Report to the console what type of dojo we are running
-if ( $LedgerSMB::Sysconfig::dojo_built) {
+if ( LedgerSMB::Sysconfig::dojo_built() ) {
     print "Starting Worker on PID $$ Using Built Dojo\n";
 } else {
     print "Starting Worker on PID $$ Using Dojo Source\n";
@@ -52,7 +52,7 @@ use Plack::Builder;
 # Development specific
 sub check_config_option {
     my ($name,$module) = @_;
-    return 0 if !eval "\$LedgerSMB::Sysconfig::$name";
+    return 0 if !eval "LedgerSMB::Sysconfig::$name()";
     return 1 if !defined $module;
     unless (eval "require $module") {
         warn "$name requires $module";
@@ -62,7 +62,8 @@ sub check_config_option {
 }
 #TODO: Explore https://github.com/elindsey/Devel-hdb
 
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+my $log_config = LedgerSMB::Sysconfig::log4perl_config();
+Log::Log4perl::init(\$log_config);
 
 builder {
 
@@ -80,17 +81,27 @@ builder {
             enable "Debug::$_"
                 if check_config_option("$_","Plack::Middleware::Debug::$_");
         }
-        enable 'Debug::W3CValidate', validator_uri => $LedgerSMB::Sysconfig::W3CValidate_uri
-            if check_config_option('Log4perl','Plack::Middleware::Debug::W3CValidate');
-        enable 'Debug::DBIProfile', profile => $LedgerSMB::Sysconfig::DBIProfile_profile
-            if check_config_option('DBIProfile','Plack::Middleware::Debug::DBIProfile');
-        enable 'Debug::DBITrace', level => $LedgerSMB::Sysconfig::DBITrace_level
-            if check_config_option('DBITrace','Plack::Middleware::Debug::DBITrace');
-        enable 'Debug::TraceENV', method => $LedgerSMB::Sysconfig::TraceENV_method
-            if check_config_option('TraceENV','Plack::Middleware::Debug::TraceENV');
-        enable 'Debug::Profiler::NYTProf', exclude => [$LedgerSMB::Sysconfig::NYTProf_exclude],
-                                           minimal  => $LedgerSMB::Sysconfig::NYTProf_minimal
-            if check_config_option('NYTProf','Plack::Middleware::Debug::Profiler::NYTProf');
+        enable 'Debug::W3CValidate',
+            validator_uri => LedgerSMB::Sysconfig::W3CValidate_uri()
+            if check_config_option('Log4perl',
+                                   'Plack::Middleware::Debug::W3CValidate');
+        enable 'Debug::DBIProfile',
+            profile => LedgerSMB::Sysconfig::DBIProfile_profile()
+            if check_config_option('DBIProfile',
+                                   'Plack::Middleware::Debug::DBIProfile');
+        enable 'Debug::DBITrace',
+            level => LedgerSMB::Sysconfig::DBITrace_level()
+            if check_config_option('DBITrace',
+                                   'Plack::Middleware::Debug::DBITrace');
+        enable 'Debug::TraceENV',
+            method => LedgerSMB::Sysconfig::TraceENV_method()
+            if check_config_option('TraceENV',
+                                   'Plack::Middleware::Debug::TraceENV');
+        enable 'Debug::Profiler::NYTProf',
+            exclude => [ LedgerSMB::Sysconfig::NYTProf_exclude() ],
+            minimal  => LedgerSMB::Sysconfig::NYTProf_minimal()
+            if check_config_option('NYTProf',
+                                   'Plack::Middleware::Debug::Profiler::NYTProf');
     }
 #   qw/Dancer::Settings Dancer::Logger Dancer::Version/
 
