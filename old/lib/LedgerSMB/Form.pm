@@ -537,21 +537,11 @@ sub _redirect {
         return;
     }
 
-    if (first { $_ eq $script } @{LedgerSMB::Sysconfig::newscripts}) {
+    unless (first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts}) {
         print "Location: $self->{callback}\n";
         print "Content-type: text/html\n\n";
         return;
     }
-
-    $self->error(
-        $self->{_locale}->text(
-            "[_1]:[_2]:[_3]: Invalid Redirect",
-            __FILE__,
-            __LINE__,
-           $script
-        )
-    ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
-
 
     my $form = Form->new($argv);
     $form->{$_} = $self->{$_} for qw(
