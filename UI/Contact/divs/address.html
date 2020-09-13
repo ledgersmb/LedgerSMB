@@ -93,7 +93,7 @@
         };
        %] <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1"><div>
              [% IF credit_act.id;
-                    IF is_for_credit;
+                    IF DISPLAY.is_for_credit;
                        attach_to = 3;
                     ELSE;
                        attach_to = 1;
