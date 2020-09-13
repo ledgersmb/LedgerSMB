@@ -1338,9 +1338,6 @@ sub print_recurring {
 
 
             $form->info( "\n" . $f{ $f[$j] } );
-            $form->error( $locale->text('Invalid redirect') )
-              unless first { $_ eq $form->{script} }
-              @{LedgerSMB::Sysconfig::scripts};
             $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
 
             $form->info( " ..... " . $locale->text('done') );
@@ -1386,9 +1383,6 @@ sub email_recurring {
 
             $message = $form->escape( $pt->{message}, 1 );
 
-            $form->error( $locale->text('Invalid redirect') )
-              unless first { $_ eq $form->{script} }
-              @{LedgerSMB::Sysconfig::scripts};
             $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
             $ok = !( $form->_redirect() );
 
