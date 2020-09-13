@@ -1342,8 +1342,15 @@ sub print_recurring {
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
             $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
+            $ok = !( $form->_redirect() );
 
-            $form->info( " ..... " . $locale->text('done') );
+            if ($ok) {
+                $form->info( " ..... " . $locale->text('done') );
+            }
+            else {
+                $form->info( " ..... " . $locale->text('failed') );
+                last;
+            }
         }
         $form->{callback} = $orig_callback;
     }
