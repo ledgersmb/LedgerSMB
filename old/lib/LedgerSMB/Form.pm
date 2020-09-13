@@ -1178,7 +1178,7 @@ sub generate_selects {
 
      # formats
     $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         $form->{selectformat} .= qq|
             <option value="postscript">|
                 . $form->{_locale}->text('Postscript')

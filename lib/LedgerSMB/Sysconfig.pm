@@ -509,15 +509,25 @@ for my $var (qw(PATH PERL5LIB)) {
 
 
 
-my $modules_loglevel_overrides='';
 
-for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
-  $modules_loglevel_overrides.='log4perl.logger.'.$_.'='.
-        $cfg->val('log4perl_config_modules_loglevel', $_)."\n";
-}
-# Log4perl configuration
-my $log_level = log_level();
-our $log4perl_config = qq(
+#some examples of loglevel setting for modules
+#FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+#log4perl.logger.LedgerSMB = DEBUG
+#log4perl.logger.LedgerSMB.DBObject = INFO
+#log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
+#log4perl.logger.LedgerSMB.Handler = ERROR
+#log4perl.logger.LedgerSMB.User = WARN
+sub log4perl_config {
+
+    my $modules_loglevel_overrides='';
+
+    for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
+        $modules_loglevel_overrides.='log4perl.logger.'.$_.'='.
+            $cfg->val('log4perl_config_modules_loglevel', $_)."\n";
+    }
+    # Log4perl configuration
+    my $log_level = log_level();
+    return qq(
     log4perl.rootlogger = $log_level, Basic, Debug, DebugPanel
     )
     .
@@ -557,24 +567,14 @@ our $log4perl_config = qq(
     #log4perl.appender.DebugPanel.Threshold = TRACE
 
     );
-
-
-#some examples of loglevel setting for modules
-#FATAL, ERROR, WARN, INFO, DEBUG, TRACE
-#log4perl.logger.LedgerSMB = DEBUG
-#log4perl.logger.LedgerSMB.DBObject = INFO
-#log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
-#log4perl.logger.LedgerSMB.Handler = ERROR
-#log4perl.logger.LedgerSMB.User = WARN
-
-sub log4perl_config {
-    return $log4perl_config;
 }
 
 
 # if you have latex installed set to 1
-our $latex = 0;
-
+my $latex = 0;
+sub latex {
+    return $latex;
+}
 
 sub override_defaults {
 

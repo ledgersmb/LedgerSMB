@@ -131,7 +131,7 @@ sub print_options {
                 value => 'screen'}
                 ]};
         if (   %{LedgerSMB::Sysconfig::printer}
-            && ${LedgerSMB::Sysconfig::latex} )
+            && LedgerSMB::Sysconfig::latex() )
         {
             for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
                 push @{$options{media}{options}}, {text => $_, value => $_};
@@ -145,7 +145,7 @@ sub print_options {
         options => [{text => 'HTML', value => 'html'},
                     {text => 'CSV', value => 'csv'} ],
         };
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         push @{$options{format}{options}}, {
             text => $locale->text('Postscript'),
             value => 'postscript',
@@ -163,7 +163,7 @@ sub print_options {
     }
 
     if (   %{LedgerSMB::Sysconfig::printer}
-        && ${LedgerSMB::Sysconfig::latex}
+        && LedgerSMB::Sysconfig::latex()
         && $form->{media} ne 'email' )
     {
         $options{copies} = 1;

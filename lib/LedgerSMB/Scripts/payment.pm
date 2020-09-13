@@ -1149,7 +1149,7 @@ sub payment2 {
     #$request->error("@media_options");
     my @format_options;
     push @format_options, {value => 1, text => 'HTML'};
-    if (${LedgerSMB::Sysconfig::latex}) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         push  @format_options,
         {value => 2, text => 'PDF' },
         {value => 3, text => 'POSTSCRIPT' };

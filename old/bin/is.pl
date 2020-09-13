@@ -630,7 +630,7 @@ sub form_header {
                  for qw(post_as_new post e_mail sales_order void print on_hold);
            }
 
-            if ( !${LedgerSMB::Sysconfig::latex} ) {
+            if ( ! LedgerSMB::Sysconfig::latex() ) {
                 for ( "print_and_post", "print_and_post_as_new" ) {
                     delete $button{$_};
                 }
@@ -645,7 +645,7 @@ sub form_header {
                 {
                     $allowed{$_} = 1;
                 }
-                $a{'print_and_post'} = 1 if ${LedgerSMB::Sysconfig::latex};
+                $a{'print_and_post'} = 1 if LedgerSMB::Sysconfig::latex();
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }

@@ -959,7 +959,7 @@ sub edit_recurring {
     }
 
     $form->{selectformat} = qq|<option value="html">html\n|;
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
+    if ( LedgerSMB::Sysconfig::latex() ) {
         $form->{selectformat} .= qq|
             <option value="postscript">| . $locale->text('Postscript') . qq|
         <option value="pdf">| . $locale->text('PDF');
@@ -1168,7 +1168,7 @@ sub process_transactions {
                     $form->info( " ..... " . $locale->text('done') );
 
                     # print form
-                    if ( ${LedgerSMB::Sysconfig::latex} && $ok ) {
+                    if ( LedgerSMB::Sysconfig::latex() && $ok ) {
                         $ok = &print_recurring( \%$pt, $defaultprinter );
                     }
 
@@ -1243,7 +1243,7 @@ sub process_transactions {
                     }
 
                     # print form
-                    if ( ${LedgerSMB::Sysconfig::latex} && $ok ) {
+                    if ( LedgerSMB::Sysconfig::latex() && $ok ) {
                         &print_recurring( \%$pt, $defaultprinter );
                     }
 

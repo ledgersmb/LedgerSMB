@@ -441,7 +441,7 @@ sub schedule {
     }
 
     if (   %{LedgerSMB::Sysconfig::printer}
-        && ${LedgerSMB::Sysconfig::latex}
+        && LedgerSMB::Sysconfig::latex()
         && %formname )
     {
         $selectprinter = qq|<option>\n|;

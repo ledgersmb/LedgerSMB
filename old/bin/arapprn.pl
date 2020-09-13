@@ -102,7 +102,7 @@ sub print {
 
     if ( $filename = $queued{ $form->{formname} } ) {
         $form->{queued} =~ s/$form->{formname} $filename//;
-        unlink "${LedgerSMB::Sysconfig::spool}/$filename";
+        unlink( LedgerSMB::Sysconfig::spool() . "/$filename");
         $filename =~ s/\..*$//g;
     }
     else {
@@ -113,7 +113,7 @@ sub print {
     $filename .= ( $form->{format} eq 'postscript' ) ? '.ps' : '.pdf';
 
     if ( $form->{media} ne 'screen' ) {
-        $form->{OUT} = "${LedgerSMB::Sysconfig::spool}/$filename";
+        $form->{OUT} = LedgerSMB::Sysconfig::spool() . "/$filename";
         $form{printmode} = '>';
     }
 
@@ -248,7 +248,7 @@ sub print_transaction {
 
         if ( $filename = $queued{ $form->{formname} } ) {
             $form->{queued} =~ s/$form->{formname} $filename//;
-            unlink "${LedgerSMB::Sysconfig::spool}/$filename";
+            unlink LedgerSMB::Sysconfig::spool() . "/$filename";
             $filename =~ s/\..*$//g;
         }
         else {
@@ -257,7 +257,7 @@ sub print_transaction {
         }
 
         $filename .= ( $form->{format} eq 'postscript' ) ? '.ps' : '.pdf';
-        $form->{OUT}       = "${LedgerSMB::Sysconfig::spool}/$filename";
+        $form->{OUT}       = LedgerSMB::Sysconfig::spool() . "/$filename";
         $form->{printmode} = '>';
 
         $form->{queued} .= " $form->{formname} $filename";
