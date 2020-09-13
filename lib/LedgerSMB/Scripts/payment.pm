@@ -679,7 +679,7 @@ sub display_payments {
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'),
              value => 'screen'});
-    for (keys %LedgerSMB::Sysconfig::printer){
+    for (keys LedgerSMB::Sysconfig::printer()->%* ){
          push @{$payment->{media_options}},
               {text  => $_,
                value => $_};
@@ -1139,8 +1139,8 @@ sub payment2 {
     # We need to set the available media and format from printing
     my @media_options;
     push  @media_options, {value => 1, text => 'Screen'};
-    if ($#{LedgerSMB::Sysconfig::printer}) {
-        for (keys %{LedgerSMB::Sysconfig::printer}) {
+    if (LedgerSMB::Sysconfig::printer()->%*) {
+        for (keys LedgerSMB::Sysconfig::printer()->%*) {
             push  @media_options, {value => 1, text => $_};
         }
     }

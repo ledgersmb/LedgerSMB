@@ -239,9 +239,10 @@ sub run_report{
     my $locales = LedgerSMB::I18N::get_country_list($self);
     my $printer = [ {text => 'Screen', value => 'zip'},
                     map { {
-                         text => $_, value => $LedgerSMB::Sysconfig::printer{$_}
+                        text  => $_,
+                        value => LedgerSMB::Sysconfig::printer()->{$_}
                           } }
-                  keys %LedgerSMB::Sysconfig::printer];
+                  keys LedgerSMB::Sysconfig::printer()->%*];
     $self->options([{
        name => 'language',
        options => $locales,

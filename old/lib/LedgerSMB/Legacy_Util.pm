@@ -227,7 +227,7 @@ sub _output_template_lpr {
     if ($self->{format} ne 'LaTeX') {
         die 'Invalid Format';
     }
-    my $lpr = $LedgerSMB::Sysconfig::printer{$args->{method}};
+    my $lpr = LedgerSMB::Sysconfig::printer()->{$args->{method}};
 
     open my $pipe, '|-', $lpr
         or die "Failed to open lpr pipe $lpr : $!";

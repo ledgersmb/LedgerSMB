@@ -130,10 +130,10 @@ sub print_options {
                 text => $locale->text('Screen'),
                 value => 'screen'}
                 ]};
-        if (   %{LedgerSMB::Sysconfig::printer}
+        if (   LedgerSMB::Sysconfig::printer()->%*
             && LedgerSMB::Sysconfig::latex() )
         {
-            for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
+            for ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
                 push @{$options{media}{options}}, {text => $_, value => $_};
             }
         }
@@ -162,7 +162,7 @@ sub print_options {
             };
     }
 
-    if (   %{LedgerSMB::Sysconfig::printer}
+    if (   LedgerSMB::Sysconfig::printer()->%*
         && LedgerSMB::Sysconfig::latex()
         && $form->{media} ne 'email' )
     {

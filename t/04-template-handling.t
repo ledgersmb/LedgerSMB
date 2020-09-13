@@ -309,8 +309,7 @@ SKIP: {
         skip 'Template::Latex not installed', 2;
 
     my $temp = File::Temp->new();
-    %LedgerSMB::Sysconfig::printer = ('test' => "cat > $temp");
-
+    LedgerSMB::Sysconfig::printer('test' => "cat > $temp");
     $template = LedgerSMB::Template->new(
         'format'   => 'PDF',
         'template' => '04-template',

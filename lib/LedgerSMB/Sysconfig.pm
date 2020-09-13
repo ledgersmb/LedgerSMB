@@ -477,10 +477,20 @@ def 'zip',
     doc => '';
 
 
+
 # available printers
-our %printer;
-for ($cfg->Parameters('printers')){
-     $printer{$_} = $cfg->val('printers', $_);
+my $printer;
+sub printer {
+    $printer = { @_ } if @_;
+    return $printer if $printer;
+
+    my %printer;
+    for ($cfg->Parameters('printers')){
+        $printer{$_} = $cfg->val('printers', $_);
+    }
+
+    $printer = \%printer;
+    return $printer;
 }
 
 

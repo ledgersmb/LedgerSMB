@@ -975,7 +975,7 @@ sub process_transactions {
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
 
     my $defaultprinter;
-    while ( my ( $key, $value ) = each %{LedgerSMB::Sysconfig::printer} ) {
+    while ( my ( $key, $value ) = each LedgerSMB::Sysconfig::printer()->%* ) {
         if ( $value =~ /lpr/ ) {
             $defaultprinter = $key;
             last;
