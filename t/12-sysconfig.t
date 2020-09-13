@@ -10,7 +10,7 @@ use English qw(-no_match_vars); # required to 'require Sysconfig'
 chdir 't/data';
 
 require LedgerSMB::Sysconfig;
-
+use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS SCRIPT_OLDSCRIPTS );
 
 is LedgerSMB::Sysconfig::auth(), 'DB2', 'Auth set correctly';
 is LedgerSMB::Sysconfig::cache_templates(), 5, 'template caching working';
@@ -43,11 +43,11 @@ tests latex_detection => sub {
 
 like $ENV{PATH}, qr/foo$/, 'appends config path correctly';
 
-for my $script (@LedgerSMB::Sysconfig::scripts) {
+for my $script (SCRIPT_OLDSCRIPTS->@*) {
     ok(-f '../../old/bin/' . $script, "Whitelisted oldcode script $script exists");
 }
 
-for my $script (@LedgerSMB::Sysconfig::newscripts) {
+for my $script (SCRIPT_NEWSCRIPTS->@*) {
     $script =~ s/\.pl$/.pm/;
     ok(-f '../../lib/LedgerSMB/Scripts/' . $script,
        "Whitelisted script $script exists");

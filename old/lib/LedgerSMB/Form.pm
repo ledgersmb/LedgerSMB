@@ -65,6 +65,7 @@ use utf8;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Magic qw( SCRIPT_OLDSCRIPTS );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting::Sequence;
@@ -537,7 +538,7 @@ sub _redirect {
         return;
     }
 
-    unless (first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts}) {
+    unless (first { $_ eq $script } SCRIPT_OLDSCRIPTS->@*) {
         print "Location: $self->{callback}\n";
         print "Content-type: text/html\n\n";
         return;

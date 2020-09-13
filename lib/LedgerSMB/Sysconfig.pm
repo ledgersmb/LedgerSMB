@@ -484,24 +484,6 @@ for ($cfg->Parameters('printers')){
 }
 
 
-# Whitelist for redirect destination / this isn't really configuration.
-#
-our @newscripts = qw(
-   account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
-   configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl erp.pl
-   file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
-   journal.pl login.pl lreports_co.pl order.pl payment.pl
-   payroll.pl pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl
-   template.pl timecard.pl transtemplate.pl trial_balance.pl user.pl vouchers.pl
-);
-
-our @scripts = (
-    'aa.pl', 'am.pl',    'ap.pl',
-    'ar.pl', 'arap.pl',  'arapprn.pl', 'gl.pl',
-    'ic.pl', 'ir.pl',
-    'is.pl', 'oe.pl',    'pe.pl',
-);
-
 # ENV Paths
 for my $var (qw(PATH PERL5LIB)) {
      $ENV{$var} .= $Config{path_sep} . ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
