@@ -135,7 +135,6 @@ sub prepare_message {
         ->header( 'Message-ID' => $self->generate_message_id );
 
     $self->{_message}->cc( $self->{cc} ) if $self->{cc};
-    $self->{_message}->bcc( $self->{bcc} ) if $self->{bcc};
 
     # Annoy people with read receipt requests
     $self->{_message}->header( 'Disposition-Notification-To' => $self->{from} )
@@ -252,6 +251,14 @@ sub send {
         }
 
         # On failure, send() throws an exception
+        if ($self->{bcc}) {
+            Email::Sender::Simple->send(
+                $self->{_message}->email,
+                {
+                    to => $self->{bcc},
+                    @transport,
+                });
+        }
         Email::Sender::Simple->send(
             $self->{_message}->email,
             {
