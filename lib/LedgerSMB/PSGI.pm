@@ -53,11 +53,7 @@ use Plack::Builder::Conditionals;
 use Plack::Util;
 
 
-# After Perl 5.20 is the minimum required version,
-# we can drop the restriction on the match vars
-# because 5.20 doesn't copy the data (but uses
-# string slices)
-use English qw(-no_match_vars);
+use English;
 if ($EUID == 0) {
     die join("\n",
         'Running a Web Service as root is a security problem.',

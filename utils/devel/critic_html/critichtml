@@ -9,7 +9,7 @@ use Perl::Critic::Utils;
 use Template;
 use Cwd qw(abs_path);
 use File::Basename;
-use English qw(-no_match_vars);
+use English;
 
 use constant SEVERITY  => 1; # Include all violations.
 use constant SKIP_GOOD => 0; # Skip files with no violations?
