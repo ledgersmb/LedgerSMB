@@ -4,9 +4,6 @@ use Test2::V0;
 use Test2::Tools::Spec;
 no warnings 'once';
 
-use English qw(-no_match_vars); # required to 'require Sysconfig'
-
-
 chdir 't/data';
 
 require LedgerSMB::Sysconfig;
