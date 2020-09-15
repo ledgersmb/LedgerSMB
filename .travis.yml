@@ -67,6 +67,7 @@ matrix:
             - postgresql-9.6-pgtap
       env:
         - DB_TESTING=1
+        - POSTGRESQL=9.6
     - perl: '5.28'
       addons:
         postgresql: '9.6'
@@ -75,6 +76,7 @@ matrix:
             - *default_packages
             - postgresql-9.6-pgtap
       env:
+        - POSTGRESQL=9.6
     # - perl: '5.26'
     #   addons:
     #     postgresql: '9.6'
@@ -92,6 +94,7 @@ matrix:
             - postgresql-9.6-pgtap
       env:
         - COA_TESTING=1
+        - POSTGRESQL=9.6
 
 before_cache:
   - mkdir -p $HOME/dojo_archive
@@ -112,6 +115,13 @@ before_install:
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
   - perl -V
+  - sudo cat > "/etc/postgresql/$POSTGRESQL/main/pg_hba.conf" <<'__END__'
+local   all             postgres                                trust
+host    all             postgres        127.0.0.1/32            trust
+host    all             postgres        ::1/128                 trust
+host    all             all             all                     md5
+__END__
+  - sudo service postgresql restart
   #- pip3 install awscli --upgrade --user
 
 install:
