@@ -71,7 +71,6 @@ sub change_my_password {
     );
     if (!$verify){
         $self->error($self->{_locale}->text('Incorrect Password'));
-        die;
     }
     $verify->disconnect;
     $self->{password} = $self->{new_password};
