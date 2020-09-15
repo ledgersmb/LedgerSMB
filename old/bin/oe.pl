@@ -124,16 +124,6 @@ sub order_links {
              billing => 0,
              job => 1 );
 
-    # get projects, departments, languages
-    $form->get_regular_metadata(
-        \%myconfig,
-        $form->{vc},
-        $form->{transdate},
-        1,
-    );
-
-    $form->generate_selects;
-
     # retrieve order/quotation
     OE->retrieve( \%myconfig, \%$form );
 
