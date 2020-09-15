@@ -154,7 +154,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             ) as ar
          where
             r.oid = ar.roleid
-            and r.rolname like (lsmb__role_prefix() || '%')
+            and position(lsmb__role_prefix() in r.rolname) = 1
          LOOP
 
             RETURN NEXT lsmb__global_role(u_role.rolname);
@@ -218,7 +218,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
             ) as ar
          where
             r.oid = ar.roleid
-            and r.rolname like (lsmb__role_prefix() || '%')
+            and position(lsmb__role_prefix() in r.rolname) = 1
          LOOP
 
             RETURN NEXT lsmb__global_role(u_role.rolname);
