@@ -35,6 +35,7 @@
         value = asset.tag
         label = text('Tag:')
         size = 32
+        required = 1
 } %]
 </div>
 <div class="inputrow" id="classrow">
@@ -48,6 +49,7 @@
         label = text("Asset Class:") #'
        "data-dojo-type" = "lsmb/PublishSelect"
        "data-dojo-props" = "topic:'ui/assets/class'"
+        required = 1
 } %]
 </div>
 <div class="inputrow" id="descrow">
@@ -155,6 +157,7 @@
         default_values = [asset.asset_account_id]
         value_attr = 'id'
         text_attr = 'text'
+        required = 1
        "data-dojo-type" = "lsmb/SubscribeSelect"
        "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_asset_account"
 } %]
@@ -167,6 +170,7 @@
         default_values = [asset.dep_account_id]
         value_attr = 'id'
         text_attr = 'text'
+        required = 1
        "data-dojo-type" = "lsmb/SubscribeSelect"
        "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_depreciation_account"
 } %]
@@ -180,6 +184,7 @@
      options = asset.exp_accounts
      text_attr = 'text'
      value_attr = 'id'
+     required = 1
      default_values = [asset.exp_account_id]
      label = text('Expense Account') #'
 } %]
