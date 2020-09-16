@@ -6,6 +6,7 @@
           action="reports.pl" method="get">
       <div class="listtop">[% text('Balance Sheet') %]</div>
 
+[% IF gifi_list.size > 0 -%]
       <fieldset>
         <legend>[% text('Report type') %]</legend>
         <div class="input_row">
@@ -37,7 +38,7 @@
           </div>
         </div>
       </fieldset>
-
+[% END -%]
 
       <fieldset data-dojo-type="lsmb/reports/PeriodSelector"
                 data-dojo-props="channel:'ui/reports/date-selection'">

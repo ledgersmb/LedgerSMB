@@ -183,6 +183,7 @@
    </div>
 </div>
 <div id="accdetails">
+[% IF form.gifi_list.size > 0 -%]
 <div class="inputline" id="gifi-line">
    <label class="line" for="gifi-a">[% text('GIFI') %]</label>
    <div class="inputgroup">
@@ -203,6 +204,7 @@
        %]
    </div>
 </div>
+[% END -%]
 <div class="inputline" id="acctype-line">
    <label class="line" for="category-a">[% text('Account Type') %]</label>
    <div class="inputgroup">

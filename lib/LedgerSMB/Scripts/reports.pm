@@ -85,6 +85,8 @@ sub start_report {
                       funcname => 'account_heading_list');
     @{$request->{account_list}} =  $request->call_procedure(
                       funcname => 'account__list_by_heading');
+    @{$request->{gifi_list}} =  $request->call_procedure(
+                      funcname => 'gifi__list');
     @{$request->{batch_classes}} = $request->call_procedure(
                       funcname => 'batch_list_classes'
     );

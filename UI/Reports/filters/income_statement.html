@@ -44,6 +44,7 @@
             </div>
           </div>
         </div>
+[% IF gifi_list.size > 0 -%]
         <div class="input_row">
           <div class="label">[% text('GIFI') %]</div>
           <div class="input_group">
@@ -72,6 +73,7 @@
             </div>
           </div>
         </div>
+[% END -%]
       </fieldset>
 
       <fieldset data-dojo-type="lsmb/reports/PeriodSelector"
