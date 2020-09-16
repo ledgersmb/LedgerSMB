@@ -72,6 +72,10 @@ text('Password') %]</label>
       This username exists because it is being used with another database;
       using it with the current database requires it to be <em>imported</em>.
       <br /><br />
+      <em>The password for both databases will be the same. Providing a password
+        when importing a user, also resets the password for the other companies.
+      </em>
+      <br /><br />
       Note that technically any existing PostgreSQL &quot;role&quot; that is to
       be used as a username needs to be imported this way, regardless of whether
       it is a username in a different database.
