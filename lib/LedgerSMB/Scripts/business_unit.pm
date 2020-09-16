@@ -68,11 +68,12 @@ sub add {
           unless $request->{id};
     $request->{control_code} = '';
     $request->{description} = '';
-    my $b_unit = LedgerSMB::Business_Unit->new(%$request);
-    @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
     $request->{mode} = 'add';
-    return _display($request, $b_unit);
+    my $b_unit = LedgerSMB::Business_Unit->new(%$request);
+    return _display($request, {
+        parent_options => [ $b_unit->list($request->{class_id} ) ],
+        %$b_unit });
 }
 
 =item edit
