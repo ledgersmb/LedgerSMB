@@ -115,6 +115,7 @@ business_unit__get_tree_for
 business_unit__list_by_class
 business_unit__list_classes
 business_unit__save
+business_unit_class__delete
 business_unit_class__get_modules
 business_unit_class__save
 business_unit_class__save_modules
