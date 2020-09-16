@@ -594,8 +594,11 @@ sub save {
 
             my $validfrom;
             my $validto;
+            my $customerqty;
             $validfrom = $form->{"validfrom_$i"} if $form->{"validfrom_$i"};
             $validto   = $form->{"validto_$i"}   if $form->{"validto_$i"};
+            $customerqty =
+                $form->{"customerqty_$i"} if $form->{"customerqty_$i"};
             $query     = qq|
                 INSERT INTO partscustomer
                             (parts_id, credit_id,
@@ -609,7 +612,7 @@ sub save {
                 $pricegroup_id,              $form->{"pricebreak_$i"},
                 $form->{"customerprice_$i"}, $form->{"customercurr_$i"},
                 $validfrom,                  $validto,
-                $form->{"customerqty_$i"}
+                $customerqty
             ) || $form->dberror($query);
         }
     }
