@@ -572,7 +572,7 @@ sub form_header {
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
             elsif ($closedto) {
-                %buttons = ();
+                %buttons = %button{qw(update)};
             }
             else {
                 for ( keys %button ) { delete $button{$_} unless $_ eq 'update' };
