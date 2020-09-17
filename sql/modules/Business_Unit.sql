@@ -143,6 +143,15 @@ END;
 
 $$LANGUAGE PLPGSQL;
 
+
+CREATE OR REPLACE FUNCTION business_unit_class__delete(in_id int)
+RETURNS business_unit_class AS
+$$
+  DELETE FROM business_unit_class WHERE id = in_id
+  RETURNING *;
+$$ LANGUAGE SQL;
+
+
 CREATE OR REPLACE FUNCTION business_unit__save
 (in_id int, in_class_id int, in_control_code text, in_description text,
 in_start_date date, in_end_date date, in_parent_id int, in_credit_id int)
