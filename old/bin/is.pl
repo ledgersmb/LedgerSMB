@@ -650,7 +650,7 @@ sub form_header {
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
             elsif ($closedto and $transdate) {
-                %button = ();
+                %button = %button{qw(update)};
             }
             else {
                 for ( keys %button ) { delete $button{$_} unless $_ eq 'update' };
