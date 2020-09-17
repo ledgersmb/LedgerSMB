@@ -28,8 +28,6 @@ use LedgerSMB::Report::Listings::Business_Unit;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Template::UI;
 
-$Carp::Verbose = 1;
-
 =head1 FUNCTIONS
 
 All functions take a single $request object as their sole argument
