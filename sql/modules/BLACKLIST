@@ -71,6 +71,7 @@ business_type__list
 business_unit__get
 business_unit__get_tree_for
 business_unit__list_classes
+business_unit_class__delete
 business_unit_class__get_modules
 business_unit_get
 chart_get_ar_ap
