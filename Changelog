@@ -162,6 +162,16 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.22
+* Fix duplicated sales persons list on order entry (#5035)
+* Fix inability to open employee screen under specific circumstances (#5043)
+* Fix creation of assets class without required accounts (#4624)
+* Fix saving part's customer rate without 'Min QTY' (#4849)
+* Fix 'Parent' dropdown empty in Report Unit entry screen (#4625)
+* Explain password reset when importing user on company creation (#3249)
+* Fix inability to delete business unit class (#4597)
+
+
 Changelog for 1.7.21
 * Fix AR/AP account dropdown not retained on 'Update' (#4927)
 * Fix AR/AP search Employee filter not limiting the result (#4606)
