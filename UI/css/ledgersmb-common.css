@@ -179,7 +179,7 @@ table.dynatable tbody tr:nth-child(even):hover { background-color: var(--listrow
 }
 
 .listsubtotal,
-table.dynatable tr.sublisttotal { background-color: var(--listsubtotal-bg-clr);
+table.dynatable tr.listsubtotal { background-color: var(--listsubtotal-bg-clr);
     color: var(--listsubtotal-clr); font-size: var(--listsubtotal-font-size);
 }
 

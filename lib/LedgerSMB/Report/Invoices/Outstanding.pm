@@ -102,6 +102,15 @@ Bool match for on-hold invoices.  1 shows only onhold, 0 active, and undef all.
 
 has on_hold => (is => 'ro', isa => 'Bool', required => 0);
 
+=item +order_by str
+
+Inherited from C<LedgerSMB::Report>; adds default sorting by
+transaction date.
+
+=cut
+
+has '+order_by' => (default => 'meta_number');
+
 =back
 
 =cut
