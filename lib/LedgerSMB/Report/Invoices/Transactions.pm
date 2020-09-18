@@ -175,6 +175,16 @@ If taxable is set this filters only transactions of a specific tax account.
 
 has tax_account_id => (is => 'ro', isa => 'Int', required => 0);
 
+=item +order_by str
+
+Inherited from C<LedgerSMB::Report>; adds default sorting by
+transaction date.
+
+=cut
+
+has '+order_by' => (default => 'transdate');
+
+
 =back
 
 =head1 INTERNLS
