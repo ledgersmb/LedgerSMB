@@ -395,6 +395,16 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.26
+* Fix inability to open employee screen (Erik H, #5043)
+* Fix creation of assets class without required accounts (Erik H, #4624)
+* Fix saving part's customer rate without 'Min QTY' (Erik H, #4849)
+* Explain password reset when importing user on company creation (Erik H, #3249)
+* Fix inability to delete business unit class (Erik H, #4597)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.25
 * Fix AR/AP account on transactions retained on 'Update' (Erik H, #4927)
 * Fix AR/AP search not limited by Employee selection (Erik H, #4604)
