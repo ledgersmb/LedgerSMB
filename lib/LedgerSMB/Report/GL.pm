@@ -48,7 +48,7 @@ Read-only accessor, returns a list of columns.
 
 =item reference
 
-=item vencusname
+=item eca_name
 
 =item description
 
@@ -99,7 +99,7 @@ sub columns {
   href_base => '',
      pwidth => '3', },
 
-    {col_id => 'vencusname',
+    {col_id => 'eca_name',
        name => $self->Text('Vendor/Customer'),
        type => 'text',
      pwidth => '3', },

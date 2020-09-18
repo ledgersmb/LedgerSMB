@@ -102,7 +102,7 @@ sub columns {
   href_base => '',
      pwidth => '3', },
 
-    {col_id => 'vencusname',
+    {col_id => 'eca_name',
        name => $self->Text('Vendor/Customer'),
        type => 'text',
      pwidth => '3', },
