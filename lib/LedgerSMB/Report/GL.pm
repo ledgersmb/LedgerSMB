@@ -48,6 +48,8 @@ Read-only accessor, returns a list of columns.
 
 =item reference
 
+=item vencusname
+
 =item description
 
 =item transdate
@@ -95,6 +97,11 @@ sub columns {
        name => $self->Text('Reference'),
        type => 'href',
   href_base => '',
+     pwidth => '3', },
+
+    {col_id => 'vencusname',
+       name => $self->Text('Vendor/Customer'),
+       type => 'text',
      pwidth => '3', },
 
     {col_id => 'description',
