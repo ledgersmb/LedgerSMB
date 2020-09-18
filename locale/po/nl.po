@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-09-13 19:06+0000\n"
+"POT-Creation-Date: 2020-09-18 07:27+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -932,8 +932,8 @@ msgstr "Assemblage Aangevuld!"
 msgid "Asset"
 msgstr "Activa"
 
-#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:74 UI/asset/edit_asset.html:152
-#: UI/asset/edit_class.html:36 UI/asset/search_asset.html:140
+#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:74 UI/asset/edit_asset.html:154
+#: UI/asset/edit_class.html:37 UI/asset/search_asset.html:140
 #: UI/asset/search_class.html:44
 msgid "Asset Account"
 msgstr "Activa rekening"
@@ -947,7 +947,7 @@ msgstr "Activa soort"
 msgid "Asset Class List"
 msgstr "Activasoortenlijst"
 
-#: UI/asset/edit_asset.html:48 UI/asset/search_asset.html:48
+#: UI/asset/edit_asset.html:49 UI/asset/search_asset.html:48
 msgid "Asset Class:"
 msgstr "Activa soort:"
 
@@ -1994,7 +1994,7 @@ msgstr "Rapport maken"
 msgid "Create New Tax Form"
 msgstr "Belastingformulier maken"
 
-#: UI/setup/new_user.html:177
+#: UI/setup/new_user.html:181
 msgid "Create User"
 msgstr "Gebruiker maken"
 
@@ -2364,7 +2364,7 @@ msgstr "Datum gewerkt"
 msgid "Date from"
 msgstr "Datum vanaf"
 
-#: UI/setup/new_user.html:137
+#: UI/setup/new_user.html:141
 msgid "Date of Birth"
 msgstr "Geboortedatum"
 
@@ -2591,7 +2591,7 @@ msgid "Dep. this run"
 msgstr "Afschr. dit rapport"
 
 #: old/bin/aa.pl:450 old/bin/ir.pl:350 old/bin/is.pl:344 old/bin/oe.pl:517
-#: UI/asset/edit_asset.html:145 UI/asset/search_asset.html:133
+#: UI/asset/edit_asset.html:147 UI/asset/search_asset.html:133
 #: UI/payments/payment2.html:75 UI/payments/payments_detail.html:119
 #: UI/payments/payments_filter.html:48
 msgid "Department"
@@ -2618,8 +2618,8 @@ msgstr "Afschrijvingen door"
 msgid "Depreciation"
 msgstr "Afschrijving"
 
-#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:77 UI/asset/edit_asset.html:164
-#: UI/asset/edit_class.html:46 UI/asset/search_asset.html:150
+#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:77 UI/asset/edit_asset.html:167
+#: UI/asset/edit_class.html:48 UI/asset/search_asset.html:150
 #: UI/asset/search_class.html:55
 msgid "Depreciation Account"
 msgstr "Afschrijvingsrekening"
@@ -2630,7 +2630,7 @@ msgstr "Afschrijvingsrekening"
 msgid "Depreciation Method"
 msgstr "Afschrijvingsmethode"
 
-#: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:106
+#: UI/asset/edit_asset.html:119 UI/asset/search_asset.html:106
 msgid "Depreciation Starts"
 msgstr "Afschrijving begint"
 
@@ -2751,7 +2751,7 @@ msgstr "Vertalingen Omschrijving"
 msgid "Description missing!"
 msgstr "Omschrijving ontbreekt"
 
-#: UI/asset/edit_asset.html:55 UI/asset/search_asset.html:53
+#: UI/asset/edit_asset.html:57 UI/asset/search_asset.html:53
 #: UI/business_units/edit.html:71 UI/business_units/filter.html:22
 #: UI/taxform/add_taxform.html:43
 msgid "Description:"
@@ -3156,7 +3156,7 @@ msgid "Employee"
 msgstr "Werknemer"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:113 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:127
+#: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:131
 msgid "Employee Number"
 msgstr "Werknemer Nummer"
 
@@ -3384,7 +3384,7 @@ msgstr "Verwacht"
 msgid "Expense"
 msgstr "Uitgaven"
 
-#: UI/asset/edit_asset.html:184
+#: UI/asset/edit_asset.html:189
 msgid "Expense Account"
 msgstr "Kostenrekening"
 
@@ -3583,7 +3583,7 @@ msgstr "Selecteren ontvangsten"
 msgid "First"
 msgstr "Eerste"
 
-#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:106
+#: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:110
 msgid "First Name"
 msgstr "Voornaam"
 
@@ -4248,7 +4248,7 @@ msgstr "Factuurnr"
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:87
 #: lib/LedgerSMB/Report/Taxform/Details.pm:86 old/bin/aa.pl:1482
 #: old/bin/aa.pl:1596 old/bin/aa.pl:621 old/bin/ir.pl:464 old/bin/is.pl:512
-#: UI/asset/edit_asset.html:200 UI/asset/search_asset.html:172
+#: UI/asset/edit_asset.html:205 UI/asset/search_asset.html:172
 #: UI/orders/order.html:77 UI/payments/payments_detail.html:320
 #: UI/payments/use_overpayment2.html:148
 #: UI/Reports/filters/invoice_outstanding.html:141
@@ -4499,7 +4499,7 @@ msgstr "Achternaam"
 msgid "Last Updated"
 msgstr "Laatst bijgewerkt"
 
-#: UI/setup/new_user.html:117
+#: UI/setup/new_user.html:121
 msgid "Last name"
 msgstr "Achternaam"
 
@@ -4671,7 +4671,7 @@ msgstr "Lijst van businesstypen"
 msgid "Load Templates"
 msgstr "Laad sjablonen"
 
-#: UI/asset/edit_asset.html:135 UI/asset/search_asset.html:123
+#: UI/asset/edit_asset.html:137 UI/asset/search_asset.html:123
 #: UI/payments/payment2.html:36 UI/payments/use_overpayment2.html:32
 msgid "Location"
 msgstr "Plaats"
@@ -4842,7 +4842,7 @@ msgstr "Boodschap: "
 msgid "Method"
 msgstr "Gebruikt stelsel"
 
-#: UI/asset/edit_asset.html:99
+#: UI/asset/edit_asset.html:101
 msgid "Method Default"
 msgstr "Standaardmethode"
 
@@ -6288,7 +6288,7 @@ msgstr "Projecten"
 msgid "Purchase Date"
 msgstr "Inkoopdatum"
 
-#: UI/asset/edit_asset.html:65 UI/asset/search_asset.html:63
+#: UI/asset/edit_asset.html:67 UI/asset/search_asset.html:63
 msgid "Purchase Date:"
 msgstr "Inkoopdatum:"
 
@@ -6329,7 +6329,7 @@ msgstr "Inkooporders"
 msgid "Purchase Value"
 msgstr "Inkoopprijs"
 
-#: UI/asset/edit_asset.html:76 UI/asset/search_asset.html:73
+#: UI/asset/edit_asset.html:78 UI/asset/search_asset.html:73
 msgid "Purchase Value:"
 msgstr "Inkoopwaarde"
 
@@ -6981,7 +6981,7 @@ msgstr "Verkoper"
 msgid "Salutation"
 msgstr "Titulatuur"
 
-#: UI/asset/edit_asset.html:104 UI/asset/search_asset.html:94
+#: UI/asset/edit_asset.html:106 UI/asset/search_asset.html:94
 msgid "Salvage Value:"
 msgstr "Restwaarde:"
 
@@ -6997,8 +6997,8 @@ msgstr "Zater"
 #: old/bin/pe.pl:164 old/bin/pe.pl:236 old/bin/pe.pl:604
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
 #: t/data/04-complex_template.html:620 t/data/04-complex_template.html:644
-#: UI/accounts/edit.html:545 UI/am-taxes.html:76 UI/asset/edit_asset.html:211
-#: UI/asset/edit_class.html:57 UI/asset/import_asset.html:26
+#: UI/accounts/edit.html:545 UI/am-taxes.html:76 UI/asset/edit_asset.html:216
+#: UI/asset/edit_class.html:60 UI/asset/import_asset.html:26
 #: UI/business_units/edit.html:93 UI/business_units/edit.html:103
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:7
 #: UI/Configuration/sequence.html:116 UI/Configuration/settings.html:82
@@ -7975,7 +7975,7 @@ msgstr "Belasting formulieren"
 msgid "Tax ID"
 msgstr "BTW#"
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:147
+#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:151
 msgid "Tax ID/SSN"
 msgstr "BTW/BSN#"
 
@@ -8880,7 +8880,7 @@ msgstr "Ge-upload door"
 msgid "Url"
 msgstr "Url"
 
-#: lib/LedgerSMB/Report/Listings/Asset.pm:95 UI/asset/edit_asset.html:89
+#: lib/LedgerSMB/Report/Listings/Asset.pm:95 UI/asset/edit_asset.html:91
 #: UI/asset/search_asset.html:85
 msgid "Usable Life"
 msgstr "Verwacht gebruik in jaren"
@@ -9015,7 +9015,7 @@ msgstr "Leveranciernaam"
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:113
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:183
 #: lib/LedgerSMB/Scripts/configuration.pm:115 old/bin/aa.pl:1582
-#: old/bin/io.pl:1571 UI/asset/edit_asset.html:190
+#: old/bin/io.pl:1571 UI/asset/edit_asset.html:195
 #: UI/asset/search_asset.html:162 UI/payments/payments_filter.html:60
 #: UI/Reports/filters/invoice_outstanding.html:6
 #: UI/Reports/filters/invoice_search.html:6
