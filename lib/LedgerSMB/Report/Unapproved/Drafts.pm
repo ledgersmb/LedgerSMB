@@ -102,6 +102,11 @@ sub columns {
   href_base => '',
      pwidth => '3', },
 
+    {col_id => 'eca_name',
+       name => $self->Text('Vendor/Customer'),
+       type => 'text',
+     pwidth => '3', },
+
     {col_id => 'description',
        name => $self->Text('Description'),
        type => 'text',

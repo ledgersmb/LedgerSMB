@@ -203,6 +203,7 @@ CREATE TYPE gl_report_item AS (
     type text,
     invoice bool,
     reference text,
+    eca_name text,
     description text,
     transdate date,
     source text,
@@ -254,7 +255,7 @@ FOR retval IN
               FROM business_unit bu
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
-       SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
+       SELECT g.id, g.type, g.invoice, g.reference, g.eca_name, g.description, ac.transdate,
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description AS accname,
               ac.chart_id, ac.entry_id,
@@ -264,17 +265,17 @@ FOR retval IN
                 as running_balance,
               compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
          FROM (select id, 'gl' as type, false as invoice, reference,
-                      description, approved,
+                      null::text as eca_name, description, approved,
                       null::text as till
                  FROM gl
                UNION
-               SELECT ar.id, 'ar', invoice, invnumber, e.name, approved, till
+               SELECT ar.id, 'ar', invoice, invnumber, e.name, ar.description, approved, till
                  FROM ar
                  JOIN entity_credit_account eca ON ar.entity_credit_account
                       = eca.id
                  JOIN entity e ON e.id = eca.entity_id
                UNION
-               SELECT ap.id, 'ap', invoice, invnumber, e.name, approved,
+               SELECT ap.id, 'ap', invoice, invnumber, e.name, ap.description, approved,
                       null as till
                  FROM ap
                  JOIN entity_credit_account eca ON ap.entity_credit_account
@@ -303,7 +304,7 @@ FOR retval IN
               AND (in_to_amount IS NULL
                    OR abs(ac.amount_bc) <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
-     GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
+     GROUP BY g.id, g.type, g.invoice, g.reference, g.eca_name, g.description, ac.transdate,
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id, ac.trans_id

@@ -11,6 +11,7 @@ CREATE TYPE draft_search_result AS (
         transdate date,
         invoice bool,
         reference text,
+        eca_name text,
         description text,
         type text,
         amount numeric
@@ -20,9 +21,9 @@ CREATE OR REPLACE FUNCTION draft__search(in_type text, in_with_accno text,
 in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)
 returns setof draft_search_result AS
 $$
-        SELECT id, transdate, invoice, reference, description,
+        SELECT id, transdate, invoice, reference, eca_name, description,
                type, amount FROM (
-            SELECT id, transdate, reference,
+            SELECT id, transdate, reference, null::text as eca_name,
                    description, false as invoice,
                    (SELECT SUM(line.amount_bc)
                       FROM acc_trans line
@@ -37,8 +38,8 @@ $$
                                    WHERE v.trans_id = gl.id)
             UNION
             SELECT id, transdate, invnumber as reference,
-                (SELECT name FROM eca__get_entity(entity_credit_account)),
-                invoice, amount_bc as amount, 'ap' as type
+                (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
+                description, invoice, amount_bc as amount, 'ap' as type
               FROM ap
              WHERE (lower(in_type) = 'ap' or in_type is null)
                    AND NOT approved
@@ -47,6 +48,7 @@ $$
                                     WHERE v.trans_id = ap.id)
             UNION
             SELECT id, transdate, invnumber as reference,
+                (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
                 description, invoice, amount_bc as amount, 'ar' as type
               FROM ar
              WHERE (lower(in_type) = 'ar' or in_type is null)
