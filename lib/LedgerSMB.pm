@@ -50,6 +50,9 @@ If an index is specified, the merged keys are given a form of
 Returns the script and query string part of the URL of the GET request,
 without the script path, or undef.
 
+Returns a URL-decoded string to prevent double-encoding when the URL
+is round-tripped.x
+
 =cut
 
 =item upload([$filename])
@@ -193,6 +196,7 @@ use HTTP::Status qw( HTTP_OK ) ;
 use Log::Log4perl;
 use PGObject;
 use Plack;
+use URI::Escape;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
@@ -325,8 +329,11 @@ sub _process_args {
 sub get_relative_url {
     my ($self) = @_;
 
-    return $self->{script} .
-        ($self->{query_string} ? "?$self->{query_string}" : '');
+    return Encode::decode(
+        'utf8',
+        uri_unescape(
+            $self->{script} .
+            ($self->{query_string} ? "?$self->{query_string}" : '')));
 }
 
 sub upload {

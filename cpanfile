@@ -99,6 +99,7 @@ requires 'Template::Provider';
 requires 'Text::CSV';
 requires 'Text::Markdown';
 requires 'Try::Tiny';
+requires 'URI::Escape';
 requires 'Version::Compare';
 requires 'XML::LibXML';
 requires 'XML::LibXML::XPathContext';
