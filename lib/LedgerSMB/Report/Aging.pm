@@ -86,7 +86,10 @@ sub columns {
     }
     push @COLUMNS,
       {col_id => 'select',
-         type => 'checkbox'},
+         type => 'checkbox',
+         name => 'X',
+       toggle => 1,
+      },
 
       {col_id => 'name',
          name => $credit_label,
