@@ -50,6 +50,9 @@ If an index is specified, the merged keys are given a form of
 Returns the script and query string part of the URL of the GET request,
 without the script path, or undef.
 
+Returns a URL-decoded string to prevent double-encoding when the URL
+is round-tripped.x
+
 =cut
 
 =item upload([$filename])
@@ -325,8 +328,14 @@ sub _process_args {
 sub get_relative_url {
     my ($self) = @_;
 
-    return $self->{script} .
+    my $url =
+        $self->{script} .
         ($self->{query_string} ? "?$self->{query_string}" : '');
+
+    # This approach for 1.8 prevents adding a dependency after
+    #  the .0 release
+    $url =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg; # from URI-1.76
+    return Encode::decode('utf8', $url);
 }
 
 sub upload {
