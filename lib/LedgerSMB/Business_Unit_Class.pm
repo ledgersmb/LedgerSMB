@@ -107,9 +107,9 @@ changed in the process.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit_class__save');
+    $self->{id} = $ref->{id};
     $self->save_modules();
-    $self = $self->new(%$ref);
-    return $self;
+    return $self->new(%$ref);
 }
 
 =item save_modules
