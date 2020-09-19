@@ -8,14 +8,21 @@
 # See the VCL chapters in the Users Guide at https://www.varnish-cache.org/docs/
 # and https://www.varnish-cache.org/trac/wiki/VCLExamples for more examples.
 
+# Also see https://docs.varnish-software.com/varnish-cache-plus/features/client-ssl/
+# if you need SSL/TLS, only Varnish Enterprise has it directly available
+
 # Marker to tell the VCL compiler that this VCL has been adapted to the
 # new 4.0 format.
 vcl 4.0;
 
+# Please replace the following parameters:
+#
+#   * STARMAN_HOST
+
 # Default backend definition. Set this to point to your content server.
 backend default {
-    .host = "127.0.0.1";
-    .port = "5000";
+    .host = "STARMAN_HOST";
+    .port = "5762";
 }
 
 sub vcl_recv {
@@ -28,8 +35,10 @@ sub vcl_recv {
     # appears twice, once here and again in vcl_fetch so make sure you edit both
     # and keep them equal.
 
+    set req.backend_hint = default;
     if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?.*)?$") {
         unset req.http.Cookie;
+        return (hash);
     }
 }
 
