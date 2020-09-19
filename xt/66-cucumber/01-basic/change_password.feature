@@ -1,9 +1,9 @@
-@one-db @weasel
+@wip @weasel
 Feature: Check correct operation of Change Password screen
 
 Background:
-  Given a standard test company
-    And a logged in admin
+  Given a logged in user with a password "a6m1n"
+
 
 Scenario: Error when "Old Password" field is empty
   When I navigate the menu and select the item at "Preferences"
@@ -31,11 +31,12 @@ Scenario: Error when the "Old Password" field is incorrect
    And I enter "the wrong password" into "Old Password"
    And I enter "a new password" into "New password"
    And I enter "a new password" into "Verify"
-  Then I should see an error message "Error changing password."
+  Then I should see an error message "Bad username/Password"
 
 Scenario: Successfully change password
   When I navigate the menu and select the item at "Preferences"
-   And I enter "password" into "Old Password"
+   And I enter "a6m1n" into "Old Password"
    And I enter "a new password" into "New password"
    And I enter "a new password" into "Verify"
   Then I should see a message "Password Changed"
+

@@ -62,6 +62,7 @@ sub change_my_password {
         die;
     }
 
+
     $self->get unless $self->{user};
 
     my $dbname = $self->{company};
@@ -72,7 +73,10 @@ sub change_my_password {
     if (!$verify){
         $self->error($self->{_locale}->text('Incorrect Password'));
     }
-    $verify->disconnect;
+    else {
+        $verify->disconnect;
+    }
+
     $self->{password} = $self->{new_password};
     return $self->call_dbmethod(funcname => 'user__change_password');
 }

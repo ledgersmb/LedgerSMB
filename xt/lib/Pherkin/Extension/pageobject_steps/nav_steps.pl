@@ -43,11 +43,9 @@ When qr/^I update the page$/, sub {
     S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
 };
 
-When qr/^I (click "(.+)" to )?save the page( as new)?$/, sub {
+When qr/^I save the page( as new)?$/, sub {
     my $maindiv = S->{ext_wsl}->page->body->maindiv->find('./*');
-    my $text = ($3) ? 'Save as new' :
-               ($1) ? $2
-                    : 'Save';
+    my $text = ($1) ? 'Save as new' : 'Save';
     S->{ext_wsl}->page->body->maindiv
         ->find('*button', text => $text)->click;
     S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
@@ -65,12 +63,7 @@ Then qr/I should see the (.*) page/, sub {
        "the page is of expected class: " . ref $page);
 };
 
-Then qr/I should see a(n error)? message "(.+)"/, sub {
-    my $message = $2;
-    S->{ext_wsl}->page->body->maindiv
-        ->find('*button', text => 'Change Password')->click;
-    S->{ext_wsl}->page->find(".//*[\@id='pwfeedback' and text()='$message']");
-};
+
 
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
@@ -119,7 +112,6 @@ my %screens = (
     'Single Payment Entry' => 'PageObject::App::Cash::Entry',
     'Payment Batch Summary' => 'PageObject::App::Search::ReportDynatable',
     'Payments Detail' => 'PageObject::App::Cash::Vouchers::Payments::Detail',
-    'Preferences' => 'PageObject::App::Preference',
     'Purchase History Report' => 'PageObject::App::Search::ReportDynatable',
     'Purchase History Search' => 'PageObject::App::AR::PurchaseHistorySearch',
     'Purchase order entry' => 'PageObject::App::Orders::Purchase',
