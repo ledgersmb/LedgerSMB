@@ -28,6 +28,7 @@ extends 'LedgerSMB::Report';
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 
+use List::Util qw(none);
 
 =head1 PROPERTIES
 
@@ -249,6 +250,15 @@ Customer/Vendor entity id
 has entity_id => (is => 'ro', isa => 'Maybe[Int]');
 has name_part => (is => 'ro', isa => 'Maybe[Str]');
 
+=item details_filter
+
+=cut
+
+has details_filter => (is => 'ro', isa => 'Maybe[ArrayRef]',
+                       predicate => 'has_details_filter');
+
+
+
 has c0total => (is => 'rw', init_arg => undef);
 has c30total => (is => 'rw', init_arg => undef);
 has c60total => (is => 'rw', init_arg => undef);
@@ -271,9 +281,15 @@ sub run_report{
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__invoice_aging_' .
                                                 $self->report_type);
-    for my $row(@rows){
+    my @result;
+    for my $row (@rows) {
+        next if ($self->has_details_filter
+                 and none { $_ == $row->{id} } $self->details_filter->@*);
+        push @result, $row;
+
         if ($self->report_type eq 'detail') {
-            $row->{row_id} = $row->{id};
+            $row->{row_id} =
+                "$row->{account_number}:$row->{entity_id}:$row->{id}";
         } else {
             $row->{row_id} = "$row->{account_number}:$row->{entity_id}";
         }
@@ -284,7 +300,7 @@ sub run_report{
         $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
         $self->total($self->total + $row->{total});
     }
-    return $self->rows(\@rows);
+    return $self->rows(\@result);
 }
 
 =back
