@@ -186,6 +186,16 @@ invoices will be shown.
 has open => (is => 'ro', isa => 'Bool', required => 0);
 has closed => (is => 'ro', isa => 'Bool', required => 0);
 
+=item +order_by str
+
+Inherited from C<LedgerSMB::Report>; adds default sorting by
+transaction date.
+
+=cut
+
+has '+order_by' => (default => 'transdate');
+
+
 =back
 
 =head1 INTERNLS
