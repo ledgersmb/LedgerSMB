@@ -23,13 +23,7 @@ LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
 <form data-dojo-type="lsmb/Form" method="get" action="report_aging.pl">
 [%
 
-IF request.action == 'select_all';
-   FOREACH ROW IN rows;
-      ROW.select = 1;
-   END;
-END;
-
-FOREACH KEY IN [ 'to_date', 'report_type',
+FOREACH KEY IN [ 'entity_class', 'to_date', 'report_type',
                  'overdue', 'c0', 'c30', 'c60', 'c90'];
     IF KEY == 'rows';
        NEXT;
@@ -50,13 +44,8 @@ PROCESS input element_data = {
 
 PROCESS dynatable tbody = {rows = rows }
                attributes = {id = 'aging', class = 'report' };
-PROCESS button element_data = {
-    text = text('Select All') #'
-    name = 'action'
-   value = 'select_all'
-    type = 'submit'
-   class = 'submit'
-};
+
+
 PROCESS select element_data = {
     name = 'print_template'
  options = [{text = 'Statement', value = 'statement'}]
@@ -65,9 +54,7 @@ PROCESS select element_data = {
 
 PRINTERS.push({text = text('Email'), value = 'email' });
 
-PFORMATS = [ {text = 'PDF', value = 'pdf'},
-             {text = 'HTML', value = 'html'} ];
-
+PFORMATS = [ ];
 FOREACH F IN LIST_FORMATS();
   PFORMATS.push({text = F, value = F});
 END;
@@ -75,6 +62,7 @@ END;
 PROCESS select element_data = {
    name = 'print_format'
 options = PFORMATS
+default_values = [ 'PDF' ]
   class = 'print_format'
 };
 
