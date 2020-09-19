@@ -182,7 +182,7 @@ A.listheading:link, A.listheading:active, A.listheading:visited {
 .listrow0, table.dynatable tr:nth-child(even) { font-size: 10pt; background-color: #FFFF88; color: black; vertical-align: top; }
 .listrow1:hover, table.dynatable tbody tr:nth-child(odd):hover { background-color: #cbcbcc; }
 .listrow0:hover, table.dynatable tbody tr:nth-child(even):hover { background-color: #aaa2a0; }
-.listsubtotal, table.dynatable tr.sublisttotal { font-size: 10pt; background-color: #880000; color: white; }
+.listsubtotal, table.dynatable tr.listsubtotal { font-size: 10pt; background-color: #880000; color: white; }
 .listtotal, table.dynatable tr.listtotal { font-size: 10pt; background-color: #004d99; color: white; font-weight: bold}
 
 textarea {
