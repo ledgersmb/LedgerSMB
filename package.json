@@ -46,7 +46,6 @@
     "not IE 11",
     "not IE_Mob 11",
     "not op_mini all",
-    "not op_mob 46",
     "phantomjs 2.1",
     "maintained node versions"
   ],
