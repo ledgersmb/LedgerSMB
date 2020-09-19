@@ -55,16 +55,6 @@ sub run_report{
 }
 
 
-=item select_all
-
-Runs a report again, selecting all items
-
-=cut
-
-sub select_all {
-    return run_report(@_);
-}
-
 =item generate_statement
 
 This generates a statement and sends it off to the printer, the screen, or
