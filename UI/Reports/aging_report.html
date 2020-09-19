@@ -54,9 +54,7 @@ PROCESS select element_data = {
 
 PRINTERS.push({text = text('Email'), value = 'email' });
 
-PFORMATS = [ {text = 'PDF', value = 'pdf'},
-             {text = 'HTML', value = 'html'} ];
-
+PFORMATS = [ ];
 FOREACH F IN LIST_FORMATS();
   PFORMATS.push({text = F, value = F});
 END;
@@ -64,6 +62,7 @@ END;
 PROCESS select element_data = {
    name = 'print_format'
 options = PFORMATS
+default_values = [ 'PDF' ]
   class = 'print_format'
 };
 
