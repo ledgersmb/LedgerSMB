@@ -55,16 +55,6 @@ sub run_report{
 }
 
 
-=item select_all
-
-Runs a report again, selecting all items
-
-=cut
-
-sub select_all {
-    return run_report(@_);
-}
-
 =item generate_statement
 
 This generates a statement and sends it off to the printer, the screen, or
@@ -79,16 +69,25 @@ sub generate_statement {
     $request->{report_type} = 'detail'; # needed to generate statement
 
     my @statements;
-    my $old_meta = $request->{meta_number};
-
-    # The reason to work backwards here is that if we are sending emails out, we
-    # can hide form submission info and not lose track of where we are.  This
-    # will need additional documentation, however.  --CT
-    while ($request->{rowcount} > 0){
+    my %filters;
+    while ($request->{rowcount} > 0) {
         my $rc = $request->{rowcount};
         --$request->{rowcount};
         next unless $request->{"select_$rc"};
-        my ($meta_number, $entity_id) = split /:/, $request->{"select_$rc"};
+
+        my ($meta_number, $entity_id, $id) =
+            split /:/, $request->{"select_$rc"};
+        if (defined $id) {
+            $filters{"$meta_number:$entity_id"} //= [];
+            push @{$filters{"$meta_number:$entity_id"}}, $id;
+        }
+        else {
+            $filters{"$meta_number:$entity_id"} = 1;
+        }
+    }
+
+    for my $eca (keys %filters) {
+        my ($meta_number, $entity_id) = split /:/, $eca;
         my $company = LedgerSMB::Entity::get($entity_id);
         my $credit_act =
               LedgerSMB::Entity::Credit_Account->get_by_meta_number(
@@ -108,7 +107,9 @@ sub generate_statement {
                  {entity_id => $entity_id, credit_id => $credit_act->{id} }
         );
         $request->{entity_id} = $entity_id;
-        my $aging_report = LedgerSMB::Report::Aging->new(%$request);
+        my $aging_report = LedgerSMB::Report::Aging->new(
+            (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
+            %$request);
         $aging_report->run_report;
         my $statement = {
               aging => $aging_report,
@@ -120,7 +121,6 @@ sub generate_statement {
         last if $request->{media} eq 'email';
     }
     $request->{report_type} = $rtype;
-    $request->{meta_number} = $old_meta;
     my $template = LedgerSMB::Template->new( # printed document
         path => 'DB',
         dbh  => $request->{dbh},
