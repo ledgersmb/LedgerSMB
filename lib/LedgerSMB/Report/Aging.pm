@@ -284,7 +284,7 @@ sub run_report{
     my @result;
     for my $row (@rows) {
         next if ($self->has_details_filter
-                 and none { $_ == $row->{id} } $self->details_filter->@*);
+                 and none { $_ == $row->{id} } @{$self->details_filter});
         push @result, $row;
 
         if ($self->report_type eq 'detail') {

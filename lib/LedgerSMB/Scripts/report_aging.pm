@@ -79,7 +79,7 @@ sub generate_statement {
             split /:/, $request->{"select_$rc"};
         if (defined $id) {
             $filters{"$meta_number:$entity_id"} //= [];
-            push $filters{"$meta_number:$entity_id"}->@*, $id;
+            push @{$filters{"$meta_number:$entity_id"}}, $id;
         }
         else {
             $filters{"$meta_number:$entity_id"} = 1;
