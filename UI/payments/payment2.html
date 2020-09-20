@@ -475,8 +475,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
          text = text("POST AND PRINT")
          "data-dojo-type" = "lsmb/payments/PostPrintButton"
          } %]
-  [% PROCESS select element_data=format %]
-  [% PROCESS select element_data=media %]
   <div id=div_topay_state>
   [% FOREACH item IN topay_state -%]
         [%  PROCESS input element_data= {
