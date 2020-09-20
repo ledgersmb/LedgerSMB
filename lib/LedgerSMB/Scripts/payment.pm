@@ -1478,7 +1478,8 @@ sub print_payment {
     return
         [ 200,
           [ 'Content-Disposition' =>
-            'attachment; filename="printPayment.html"' ],
+            'attachment; filename="printPayment.html"',
+            'Content-Type' => 'text/html; charset=utf-8' ],
           [ $template->{output} ] ];
 }
 
