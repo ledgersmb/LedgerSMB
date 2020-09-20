@@ -54,11 +54,18 @@ define([
                     "pwtitle"
                 ).innerHTML = this.lstrings.title;
                 var I = this;
+                on(this.oldpw, "keypress", function () {
+                    I.setFeedback(0, "");
+                });
                 on(this.newpw, "change", function () {
                     I.setStrengthClass();
                 });
                 on(this.newpw, "keypress", function () {
                     I.setStrengthClass();
+                    I.setFeedback(0, "");
+                });
+                on(this.verified, "keypress", function () {
+                    I.setFeedback(0, "");
                 });
 
                 domAttr.set(
