@@ -1398,7 +1398,7 @@ sub post_payment {
     $Payment->post_payment();
     if ($request->{continue_to_calling_sub}) {
         $request->{payment_id} = $Payment->{payment_id};
-        return;
+        return $request->{payment_id};
     }
     else {
         # Our work here is done, ask for more payments.
