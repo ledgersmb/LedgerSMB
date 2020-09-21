@@ -718,8 +718,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     <tr valign=top class="transaction-line $form->{ARAP}" id="line-$i">
      <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
-              ? $form->format_amount(\%myconfig, $form->{"amount_$i"}
-                                                  * $form->{exchangerate},2)
+              ? $form->format_amount(\%myconfig, $form->parse_amount( \%myconfig, $form->{"amount_$i"} )
+                                                  * $form->parse_amount( \%myconfig, $form->{exchangerate} ),2)
               : '')  . qq|</td>
      <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
       $description
