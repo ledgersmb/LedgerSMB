@@ -419,7 +419,12 @@ sub print {
     }
 
     $payment->{format_amount} =
-        sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(money => 1); };
+        sub {
+            my $args = shift;
+            return LedgerSMB::PGNumber
+                ->from_input($args->{amount})
+                ->to_output(%$args);
+    };
 
     my $data = $bulk_post_map->($request);
     if ($data->{multiple}){
