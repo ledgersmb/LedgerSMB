@@ -361,6 +361,21 @@ sub run_report{
         }
         $self->process_bclasses($ref);
     }
+    # to add opening balance and closing balance as first row and last row respectively
+    # firstly, check whether user filtered report by account number or not
+    # and check there is data rows
+    if (defined $self->accno && @rows){
+       my $first_row = $rows[0];
+       my $last_row = $rows[$#rows];
+       unshift(@rows, {
+          description => 'Starting Balance',
+          running_balance => $first_row->{running_balance} - $first_row->{amount}
+       });
+       push(@rows, {
+          description => 'Ending Balance',
+          running_balance => $last_row->{running_balance}
+       });
+    }
     return $self->rows(\@rows);
 }
 
