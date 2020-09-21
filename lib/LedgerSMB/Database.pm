@@ -242,6 +242,7 @@ sub _set_system_info {
 
 sub get_info {
     my $self = shift @_;
+    my $authdb = shift @_;
     my $retval = { # defaults
          appname => undef,
          version => undef,
@@ -253,7 +254,7 @@ sub get_info {
     my $dbh = eval { $self->connect({PrintError => 0, AutoCommit => 0}) };
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
-        $dbh = $self->new($self->export, (dbname => 'postgres'))
+        $dbh = $self->new($self->export, (dbname => $authdb))
             ->connect({PrintError=>0});
         return $retval unless $dbh;
         $logger->debug("DBI->connect dbh=$dbh");

@@ -250,7 +250,8 @@ sub login {
 
     my $server_info = $database->server_version;
 
-    my $version_info = $database->get_info();
+    my $version_info =
+        $database->get_info(LedgerSMB::Sysconfig::auth_db());
 
     ($reauth) = _init_db($request);
     return $reauth if $reauth;
@@ -313,7 +314,7 @@ sub list_databases {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my @results = $database->list_dbs;
+    my @results = $database->list_dbs(LedgerSMB::Sysconfig::admin_db());
     $request->{dbs} = [];
     # Ideally we would extend DBAdmin->list_dbs to accept an argument containing a list of databases to exclude using a method similar to that shown at https://git.framasoft.org/framasoft/OCB/commit/7a6e94edd83e9e73e56d2d148e3238618
     # also, we should add a new function DBAdmin->list_dbs_this_user which only returns db's the currently auth'd user has access to. Once again the framasoft.org link shows a method of doing this
@@ -758,7 +759,7 @@ sub upgrade {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $dbinfo = $database->get_info();
+    my $dbinfo = $database->get_info(LedgerSMB::Sysconfig::auth_db());
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $locale = $request->{_locale};
 
@@ -919,7 +920,7 @@ sub fix_tests {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $dbinfo = $database->get_info();
+    my $dbinfo = $database->get_info(LedgerSMB::Sysconfig::auth_db());
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
@@ -967,7 +968,8 @@ sub create_db {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $version_info = $database->get_info;
+    my $version_info =
+        $database->get_info(LedgerSMB::Sysconfig::auth_db());
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} ne 'does not exist') {
         $request->{message} = $request->{_locale}->text(
@@ -1457,7 +1459,8 @@ sub system_info {
     # the intent here is to get a much more sophisticated system which
     # asks registered modules for their system and dependency info
     my $info = {
-        db => $database->get_info->{system_info},
+        db => $database->get_info(LedgerSMB::Sysconfig::auth_db())
+            ->{system_info},
         system => LedgerSMB::system_info()->{system},
         environment => \%ENV,
         modules => \%INC,
