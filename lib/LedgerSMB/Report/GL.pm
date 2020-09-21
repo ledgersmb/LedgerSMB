@@ -367,7 +367,6 @@ sub run_report{
     if (defined $self->accno && @rows){
        my $first_row = $rows[0];
        my $last_row = $rows[$#rows];
-       
        unshift(@rows, {
           description => 'Starting Balance',
           running_balance => $first_row->{running_balance} - $first_row->{amount}
