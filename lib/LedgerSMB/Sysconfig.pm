@@ -465,6 +465,19 @@ def 'db_sslmode',
     envvar => 'PGSSLMODE',
     doc => '';
 
+def 'auth_db',
+    section => 'database',
+    default => 'postgres',
+    doc => q{Database used to log into when collecting information
+    about the system, e.g. from the setup.pl status page.};
+
+def 'admin_db',
+    section => 'database',
+    default => 'template1',
+    doc => q{Database used to log into when authenticating setup.pl
+admin users and determining the list of database names available for
+administration};
+
 ### SECTION  ---   programs
 
 def 'zip',
