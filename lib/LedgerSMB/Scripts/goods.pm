@@ -20,6 +20,8 @@ inventory activity screens.
 use strict;
 use warnings;
 
+use List::Util qw(any);
+
 use LedgerSMB::Report::Inventory::Search;
 use LedgerSMB::Report::Inventory::History;
 use LedgerSMB::Report::Invoices::COGS;
@@ -51,12 +53,11 @@ sub search_screen {
 
 sub search {
     my ($request) = @_;
-    for (qw(so po is ir quo rfq)){
+    if (any { $request->{"inc_$_"} } qw(so po is ir quo rfq) ) {
        $request->{col_ordnumber} = 1;
        return $request->render_report(
            LedgerSMB::Report::Inventory::History->new(%$request)
-           )
-           if ($request->{"inc_$_"});
+           );
     }
     return $request->render_report(
         LedgerSMB::Report::Inventory::Search->new(%$request)
