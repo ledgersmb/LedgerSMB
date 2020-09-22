@@ -131,6 +131,13 @@ DROP FUNCTION IF EXISTS goods__search
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date);
 
+DROP FUNCTION IF EXISTS goods__search
+(in_parttype text, in_partnumber text, in_description text,
+ in_partsgroup_id int, in_serial_number text, in_make text,
+ in_model text, in_drawing text, in_microfiche text,
+ in_status text, in_date_from date, in_date_to date);
+
+
 CREATE OR REPLACE FUNCTION goods__search
 (in_parttype text, in_partnumber text, in_description text,
  in_partsgroup_id int, in_serialnumber text, in_make text,
@@ -489,6 +496,13 @@ sellprice numeric,
 qty numeric,
 discount numeric,
 serialnumber text
+);
+
+DROP FUNCTION IF EXISTS goods__history(
+  in_date_from date, in_date_to date,
+  in_partnumber text, in_description text, in_serial_number text,
+  in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
+  in_inc_is bool, in_inc_ir bool
 );
 
 CREATE OR REPLACE FUNCTION goods__history(
