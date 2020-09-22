@@ -131,9 +131,16 @@ DROP FUNCTION IF EXISTS goods__search
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date);
 
-CREATE OR REPLACE FUNCTION goods__search
+DROP FUNCTION IF EXISTS goods__search
 (in_parttype text, in_partnumber text, in_description text,
  in_partsgroup_id int, in_serial_number text, in_make text,
+ in_model text, in_drawing text, in_microfiche text,
+ in_status text, in_date_from date, in_date_to date);
+
+
+CREATE OR REPLACE FUNCTION goods__search
+(in_parttype text, in_partnumber text, in_description text,
+ in_partsgroup_id int, in_serialnumber text, in_make text,
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date)
 RETURNS SETOF goods_search_result
@@ -160,10 +167,9 @@ LANGUAGE SQL STABLE AS $$
               AND (in_drawing IS NULL OR p.drawing ilike in_drawing || '%')
               AND (in_microfiche IS NULL
                   OR p.microfiche ilike in_microfiche || '%')
-              AND (in_serial_number IS NULL OR p.id IN
+              AND (in_serialnumber IS NULL OR p.id IN
                       (select parts_id from invoice
-                        where in_serial_number is not null
-                              and serialnumber = in_serial_number))
+                        where serialnumber = in_serialnumber))
               AND (in_parttype IS NULL
                    OR (in_parttype = 'assemblies' and p.assembly)
                    OR (in_parttype = 'services'
@@ -489,12 +495,19 @@ name text,
 sellprice numeric,
 qty numeric,
 discount numeric,
-serial_number text
+serialnumber text
+);
+
+DROP FUNCTION IF EXISTS goods__history(
+  in_date_from date, in_date_to date,
+  in_partnumber text, in_description text, in_serial_number text,
+  in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
+  in_inc_is bool, in_inc_ir bool
 );
 
 CREATE OR REPLACE FUNCTION goods__history(
   in_date_from date, in_date_to date,
-  in_partnumber text, in_description text, in_serial_number text,
+  in_partnumber text, in_description text, in_serialnumber text,
   in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
   in_inc_is bool, in_inc_ir bool
 ) RETURNS SETOF parts_history_result LANGUAGE SQL AS
@@ -530,6 +543,7 @@ $$
               OR p.description @@ plainto_tsquery(in_description))
          AND (in_date_from is null or in_date_from <= o.transdate)
          and (in_date_to is null or in_date_to >= o.transdate)
+         AND (in_serialnumber is null or i.serialnumber = in_serialnumber)
          AND ((in_inc_po IS NULL AND in_inc_so IS NULL
                 AND in_inc_quo IS NULL AND in_inc_rfq IS NULL
                 AND in_inc_ir IS NULL AND in_inc_is IS NULL)

@@ -48,7 +48,7 @@ This is a serial number of the part, for a prefix search
 
 =cut
 
-has serial_number => (is => 'ro', isa => 'Str', required => 0);
+has serialnumber => (is => 'ro', isa => 'Str', required => 0);
 
 =item inc_is bool
 

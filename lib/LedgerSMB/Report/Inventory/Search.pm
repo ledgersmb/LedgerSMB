@@ -58,13 +58,13 @@ Limit search to partsgroup specified
 
 has partsgroup_id => (is => 'ro', isa => 'Int', required => 0);
 
-=item serial_number text
+=item serialnumber text
 
 This is a serial number of the part, for a prefix search
 
 =cut
 
-has serial_number => (is => 'ro', isa => 'Str', required => 0);
+has serialnumber => (is => 'ro', isa => 'Str', required => 0);
 
 =item make
 
