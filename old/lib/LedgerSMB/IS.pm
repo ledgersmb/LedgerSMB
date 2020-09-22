@@ -40,7 +40,6 @@ LedgerSMB::IS - Inventory Invoicing
 package IS;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Num2text;
 use LedgerSMB::IIAA;

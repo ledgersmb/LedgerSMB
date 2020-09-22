@@ -19,7 +19,6 @@ use strict;
 use warnings;
 
 use HTML::Escape;
-use LedgerSMB::Sysconfig;
 
 my $binmode = ':utf8';
 my $extension = 'html';

@@ -27,7 +27,6 @@ replacement is available.
 
 
 package AA;
-use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use LedgerSMB::File;
 use LedgerSMB::PGNumber;

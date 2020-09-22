@@ -15,7 +15,6 @@ user, and other application state objects.
 
 use strict;
 use warnings;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::User;
 
 =head1 OBJECTS FOR STORAGE
