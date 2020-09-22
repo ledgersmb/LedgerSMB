@@ -107,15 +107,10 @@ RETURNS session AS
 $$
 DECLARE out_row session%ROWTYPE;
 BEGIN
-        PERFORM * FROM defaults
-            WHERE setting_key='never_logout' and value = '1';
-        IF NOT FOUND THEN
-                DELETE FROM session
-                WHERE last_used < now() - coalesce((SELECT value FROM defaults
-                                                        WHERE setting_key = 'session_timeout')::interval,
-                                                   '90 minutes'::interval);
-        END IF;
-
+        DELETE FROM session
+         WHERE last_used < now() - coalesce((SELECT value FROM defaults
+                                              WHERE setting_key = 'session_timeout')::interval,
+                                            '90 minutes'::interval);
         UPDATE session
            SET last_used = now()
          WHERE session_id = in_session_id
