@@ -331,8 +331,7 @@ sub post_transaction {
          person_id, entity_credit_account, approved,
          setting_sequence
         )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-              (SELECT u.entity_id FROM users u WHERE u.username = ?), ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       RETURNING id
     |;
    }
@@ -344,8 +343,7 @@ sub post_transaction {
          notes, intnotes, ponumber, crdate, reverse,
          person_id, entity_credit_account, approved
         )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-              (SELECT u.entity_id FROM users u WHERE u.username = ?), ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       RETURNING id
     |;
    }
@@ -364,7 +362,7 @@ sub post_transaction {
         $form->{duedate},
         $form->{notes},            $form->{intnotes},
         $form->{ponumber},         $form->{crdate},
-        $form->{reverse},          $form->{employee_name},
+        $form->{reverse},          $form->{employee_id},
         $form->{"$form->{vc}_id"}, $form->{approved}
         );
    if ($table eq 'ar') {
