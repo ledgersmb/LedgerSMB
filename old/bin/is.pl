@@ -1147,7 +1147,7 @@ sub update {
 
     $form->{taxes} = {};
 
-    ( $form->{employee}, $form->{employee_id} ) = split /--/, $form->{employee}
+    ( undef, $form->{employee_id} ) = split /--/, $form->{employee}
         if $form->{employee} && ! $form->{employee_id};
     if ( $newname = &check_name(customer) ) {
         $form->rebuild_vc('customer', $form->{transdate}, 1);
@@ -1166,6 +1166,9 @@ sub update {
             delete $form->{exchangerate};
         }
 
+    }
+    else {
+        $form->get_regular_metadata;
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
@@ -1343,12 +1346,12 @@ sub update {
             }
         }
     }
-    $form->create_links( module => "AR",
-             myconfig => \%myconfig,
-             vc => "customer",
-             billing => 1,
-             job => 1 );
-    $form->generate_selects(\%myconfig);
+#    $form->create_links( module => "AR",
+#             myconfig => \%myconfig,
+#             vc => "customer",
+#             billing => 1,
+#             job => 1 );
+#    $form->generate_selects(\%myconfig);
     check_form();
 
     $form->{rowcount}--;
