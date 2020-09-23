@@ -56,6 +56,19 @@
                 created_as_class = entity_class;
         END; # IF !created_as_class %]
 </div>
+<div class="input_group2">
+        [%
+        PROCESS select element_data = {
+                id = 'person-entity-class'
+                name = "entity_class"
+                options = entity_classes
+                default_values = [entity_class]
+                text_attr = 'class'
+                value_attr = 'id'
+                title = text('Class')
+                label = "_none_"
+        } %]
+</div>
 </div>
 <div class="input_line">
 <div class="input_group1">

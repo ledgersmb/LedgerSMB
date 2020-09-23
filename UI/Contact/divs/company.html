@@ -62,7 +62,20 @@
         END; # IF !created_as_class %]
 </div>
 <div class="input_group2">
-        [% company_entity_class = company.entity_class %]
+        [% company_entity_class = company.entity_class;
+        IF !company_entity_class;
+              company_entity_class = request.entity_class;
+        END;
+        PROCESS select element_data = {
+                id = 'company-entity-class'
+                name = "entity_class"
+                options = entity_classes
+                default_values = [company_entity_class]
+                text_attr = 'class'
+                value_attr = 'id'
+                title = text('Class')
+                label = '_none_'
+        } %]
 </div>
 </div>
 <div class="input_line">
