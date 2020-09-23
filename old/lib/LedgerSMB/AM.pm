@@ -54,7 +54,6 @@ This module provides some administrative functions
 
 package AM;
 use LedgerSMB::Tax;
-use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use LedgerSMB::Magic qw( DAYS_PER_WEEK );
 

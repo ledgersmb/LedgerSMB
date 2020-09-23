@@ -287,7 +287,6 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::File;
 use LedgerSMB::Locale;
 use LedgerSMB::Magic qw( FC_INTERNAL );
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
 
 use File::Spec;

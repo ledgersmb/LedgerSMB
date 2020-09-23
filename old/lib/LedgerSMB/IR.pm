@@ -40,7 +40,6 @@ LedgerSMB::IR - Inventory received module
 package IR;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::PGNumber;
 use LedgerSMB::IIAA;
