@@ -175,9 +175,9 @@ sub display_form {
         unless $form->{id} and ($form->{vc} eq 'vendor');
     $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
+    $form->generate_selects(\%myconfig);
     $form->open_form;
     AA->get_files($form, $locale);
-    $form->generate_selects(\%myconfig);
     &form_header;
     &form_footer;
 
@@ -367,6 +367,7 @@ sub create_links {
 sub form_header {
      my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty} // 0;
 
+     $form->generate_selects(\%myconfig) unless $form->{"select$form->{ARAP}"};
     $title = $form->{title};
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
