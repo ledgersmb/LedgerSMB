@@ -5,17 +5,12 @@
                name = "username"
                type = "hidden"
                value = user.login
-    } %]
-    [% INCLUDE input element_data = {
+    };
+    INCLUDE input element_data = {
                name = "company"
                type = "hidden"
                value = user.company
-};
-INCLUDE input element_data = {
-              name = "action"
-              type = "hidden"
-              value = request.action
-};
+    };
 
     password_strings = "title:'" _ text("Change Password") _
                       "', old password:'" _ text("Old Password") _
@@ -33,22 +28,28 @@ INCLUDE input element_data = {
             if(this.validate()){
               var language = this.value.language;
               require(["dojo/_base/connect"], function(connect){
-                connect.publish("lsmb/menus/Tree/refresh", [{
-                  language: language
-                }]);
+                var handle = connect.subscribe("lsmb/page-fresh-content", function(message){
+                  // only runs once in this case:
+                  connect.unsubscribe(handle);
+                  connect.publish("lsmb/menus/Tree/refresh", [{
+                    language: language
+                  }]);
+                });
               });
             }
             return true;
           </script>
           <table width="100%">
             <tr><th class="listtop">[% text('Preferences for [_1]',user.login) %]</th></tr>
-            [% IF request.action == 'save_preferences' %] <tr><th class="info">
-                    [% text('Preferences Saved') %]</th>
-            </tr>[% END # if action %]
+            [% IF request.action == 'save_preferences' %]
+              <tr><th class="info">
+                  [% text('Preferences Saved') %]</th>
+              </tr>
+            [% END # if action %]
             <tr><th class="info">
-                    <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
-                    <!-- tracked in issue #1699 -->
-                    [% text('Your password will expire in [_1]',user.password_expires) %]
+                <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
+                <!-- tracked in issue #1699 -->
+                [% text('Your password will expire in [_1]',user.password_expires) %]
               </th>
             </tr>
             <tr>
@@ -79,18 +80,18 @@ INCLUDE input element_data = {
                                   options = user.numberformats,
                                   default_values = [ user.prefs.numberformat ],
                                   text_attr = 'format',
-                                  value_attr = 'format',
+                                  value_attr = 'format'
                                 } %]</td>
                           </tr>
                           <tr>
                             <th align="right"><label for="language">[% text('Language') %]</label></th>
-                            <td>[% PROCESS select_language element_data={
+                            <td>[% PROCESS select element_data={
                                 name = 'language',
                                 options = user.language_codes,
                                 default_values = [ user.prefs.language ],
                                 text_attr = 'label',
                                 value_attr = 'id',
-                                default_blank = 1,
+                                default_blank = 1
                               }%] </td>
                           </tr>
                           <tr>

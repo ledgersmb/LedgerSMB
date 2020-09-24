@@ -11,7 +11,8 @@ define([
     "dojo/request/xhr",
     "dojo/query",
     //   "dojo/request/iframe",
-    "dojo/dom-class"
+    "dojo/dom-class",
+    "dojo/_base/connect"
 ], function (
     ContentPane,
     declare,
@@ -23,7 +24,8 @@ define([
     xhr,
     query,
     //   iframe,
-    domClass
+    domClass,
+    connect
 ) {
     return declare("lsmb/MainContentPane", [ContentPane], {
         last_page: null,
@@ -124,6 +126,7 @@ define([
             domStyle.set(this.domNode, "visibility", "visible");
             domStyle.set(this.domNode, "opacity", "1");
             domClass.replace(this.domNode, "done-parsing", "parsing");
+            connect.publish("lsmb/page-fresh-content", [{}]);
         },
         set: function () {
             var newContent = null;
