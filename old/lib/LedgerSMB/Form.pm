@@ -1926,6 +1926,7 @@ sub all_employees {
     my $sth = $dbh->prepare($query);
     $sth->execute(@whereargs) || $self->dberror($query);
 
+    $self->{all_employee} = [];
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_employee} }, $ref;
     }
