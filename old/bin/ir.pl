@@ -430,7 +430,7 @@ sub form_header {
             <tr>
         <th align="right" nowrap>| .
             $locale->text('Entity Code') . qq|</th>
-        <td colspan="2" nowrap>$form->{entity_control_code}</td>
+        <td colspan="2" nowrap><a href="erp.pl?action=root#contact.pl?action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
         <th align="right" nowrap>| .
             $locale->text('Account') . qq|</th>
         <td colspan=3>$form->{meta_number}</td>
