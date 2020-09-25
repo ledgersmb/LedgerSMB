@@ -1987,7 +1987,7 @@ sub create_links {
             a.amount_tc AS oldinvtotal,
             case when a.amount_tc = 0 then 0
             else a.amount_bc / a.amount_tc end as exchangerate,
-                a.person_id, e.name AS employee,
+                a.person_id as employee_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,
                                 a.description, a.on_hold, a.crdate,
