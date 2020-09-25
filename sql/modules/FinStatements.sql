@@ -649,7 +649,7 @@ acc_balance AS (
    SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
      FROM acc_trans ac
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
-    WHERE ac.transdate <= coalesce(in_to_date, (select max(transdate) from acc_trans))
+    WHERE (in_to_date is null OR ac.transdate <= in_to_date)
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc) <> 0.00
 ),
