@@ -146,7 +146,8 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
        options = all_managers
 default_values = [employee.manager_id]
      text_attr = 'label'
-    value_attr = 'id'
+    value_attr = 'entity_id'
+ default_blank = 1
 } ?>
 </div>
 <div class="input_group g3">
