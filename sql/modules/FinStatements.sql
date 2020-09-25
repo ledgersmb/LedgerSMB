@@ -611,7 +611,7 @@ WITH hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($2,
+                       coalesce(in_language,
                          (SELECT up.language
                             FROM user_preference up
                       INNER JOIN users ON up.id = users.id
@@ -633,7 +633,7 @@ acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($2,
+                        coalesce(in_language,
                           (SELECT up.language
                              FROM user_preference up
                        INNER JOIN users ON up.id = users.id
@@ -649,7 +649,7 @@ acc_balance AS (
    SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
      FROM acc_trans ac
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
-    WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
+    WHERE ac.transdate <= coalesce(in_to_date, (select max(transdate) from acc_trans))
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc) <> 0.00
 ),
