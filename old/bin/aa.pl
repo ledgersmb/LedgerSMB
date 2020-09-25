@@ -595,7 +595,7 @@ $form->open_status_div($status_div_id) . qq|
             <tr>
         <th align="right" nowrap>| .
             $locale->text('Entity Control Code') . qq|</th>
-        <td colspan=3>$form->{entity_control_code}</td>
+        <td colspan=3><a href="erp.pl?action=root#contact.pl?action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
           </tr>
             <tr>
         <th align="right" nowrap>| .
