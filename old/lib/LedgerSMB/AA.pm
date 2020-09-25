@@ -360,7 +360,7 @@ sub post_transaction {
                 entity_credit_account)
                  VALUES (?,    (select  u.entity_id from users u
                  join entity e on(e.id = u.entity_id)
-                 where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
+                 where e.name=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
 
         # the second param is undef, as the DBI api expects a hashref of
         # attributes to pass to $dbh->prepare. This is not used here.
