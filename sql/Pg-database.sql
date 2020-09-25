@@ -4718,20 +4718,6 @@ CREATE TYPE trial_balance__entry AS (
 ALTER TABLE cr_report_line ADD FOREIGN KEY(ledger_id) REFERENCES acc_trans(entry_id);
 
 
-CREATE VIEW tx_report AS
-SELECT id, reference, null::int as entity_credit_account, 'gl' as table,
-       approved
-  FROM gl
-UNION ALL
-SELECT id, invnumber, entity_credit_account, 'ap', approved
-  FROM ap
-UNION ALL
-SELECT id, invnumber, entity_credit_account, 'ar', approved
-  FROM ar;
-
-COMMENT ON VIEW tx_report IS
-$$ This view provides join and approval information for transactions.$$;
-
 CREATE VIEW cash_impact AS
 SELECT id, '1'::numeric AS portion, 'gl' as rel, gl.transdate FROM gl
 UNION ALL
