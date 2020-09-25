@@ -29,7 +29,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('report__balance_sheet',ARRAY['date','text']);
+    SELECT has_function('report__balance_sheet',ARRAY['date','text', 'text']);
     SELECT has_function('pnl__customer',ARRAY['integer','date','date','text']);
     SELECT has_function('pnl__income_statement_accrual',ARRAY['date','date','text','integer[]','text']);
     SELECT has_function('pnl__income_statement_cash',ARRAY['date','date','text','integer[]','text']);

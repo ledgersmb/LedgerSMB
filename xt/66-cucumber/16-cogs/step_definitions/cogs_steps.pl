@@ -193,7 +193,7 @@ Then qr/^(the inventory|COGS) should be at (\d+) ([A-Z]{3,3})$/, sub {
 
     my $rows = $dbh->selectall_arrayref(
         qq{
-        select * from report__balance_sheet(null, null)
+        select * from report__balance_sheet(null, null,'ultimo')
          where account_id = (select $acc_name_map{$account}
                                from parts where partnumber = ?)
         },

@@ -597,8 +597,10 @@ $$;
 
 
 DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date);
+DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date, in_language text);
 CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date,
-                                                 in_language text)
+                                                 in_language text,
+                                                 in_timing text)
 RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH hdr_meta AS (
@@ -648,8 +650,16 @@ acc_meta AS (
 acc_balance AS (
    SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
      FROM acc_trans ac
-     JOIN tx_report t ON t.approved AND t.id = ac.trans_id
-    WHERE (in_to_date is null OR ac.transdate <= in_to_date)
+     JOIN tx_report t ON t.id = ac.trans_id
+    WHERE t.approved AND
+          (in_to_date is null
+           OR ((in_timing is null OR in_timing='ultimo')
+               AND ac.transdate <= in_to_date
+               AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
+                                                   FROM yearend
+                                                  WHERE transdate = in_to_date
+                                                    AND NOT reversed))
+           OR (in_timing='primo'  AND ac.transdate < in_to_date))
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc) <> 0.00
 ),
@@ -675,7 +685,7 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-COMMENT ON function report__balance_sheet(date, text) IS
+COMMENT ON function report__balance_sheet(date, text, text) IS
 $$ This produces a balance sheet and the paths (acount numbers) of all headings
 necessary; output is generated in the language requested, or in the
 users default language if not available. $$;
