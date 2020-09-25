@@ -171,6 +171,10 @@ sub _main_screen {
     $request->{target_div} ||= 'person_div' if defined $person;
     $request->{target_div} ||= 'company_div';
 
+    my @all_managers =
+        map { $_->{label} = "$_->{first_name} $_->{last_name}"; $_ }
+    ($request->call_procedure( funcname => 'employee__all_managers' ),);
+
     my @all_years =  $request->call_procedure(
               funcname => 'date_get_all_years'
     );
@@ -354,6 +358,7 @@ sub _main_screen {
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
                all_months =>  $request->all_months->{dropdown},
+             all_managers => \@all_managers,
           default_country => $default_country,
          default_language => $default_language
     });
