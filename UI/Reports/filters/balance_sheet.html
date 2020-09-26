@@ -90,7 +90,7 @@
           [%
              label_pos = -1;
              PROCESS input element_data = {
-             label = text('As per') #'
+             label = text('As per')
              name = 'to_date'
              value = to_date
              class = 'date'
@@ -104,7 +104,7 @@
         </div>
         <div class="input_row">
           <div class="label">
-            [% text('Ignore year-closing') %]
+            [% text("Timing") %]
           </div>
 
           <div class="input_group">
@@ -112,20 +112,16 @@
                PROCESS select element_data = {
                options = [
                {
-               label="All",
-               id="all",
+               label=text("Closing balance"),
+               id="ultimo",
                },
                {
-               label="Last",
-               id="last"
+               label=text("Opening balance"),
+               id="primo"
                },
-               {
-               label="None",
-               id="none",
-               }
                ],
-               default_values = [report.ignore_yearend],
-               name = 'ignore_yearend',
+               default_values = ['ultimo'],
+               name = 'timing',
                text_attr = 'label',
                value_attr = 'id',
                }

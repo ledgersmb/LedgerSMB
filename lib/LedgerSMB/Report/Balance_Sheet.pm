@@ -55,6 +55,15 @@ has column_path_prefix => (is => 'ro', isa => 'ArrayRef',
                            default => sub { [ 1 ] });
 
 
+=item timing
+
+Can be one of C<ultimo> (the default) or C<primo> for ending or
+starting balance respectively.
+
+=cut
+
+has timing => (is => 'ro', isa => 'Str', default => 'ultimo');
+
 =item incl_accnos
 
 =cut
@@ -253,6 +262,20 @@ sub run_report {
     }
 
     return $self->rows([]);
+}
+
+=head2 header_lines
+
+=cut
+
+sub header_lines {
+    my $self = shift;
+
+    return [
+        $self->timing eq 'ultimo'
+        ? $self->Text('Closing Balance')
+        : $self->Text('Opening Balance')
+        ];
 }
 
 =head2 template
