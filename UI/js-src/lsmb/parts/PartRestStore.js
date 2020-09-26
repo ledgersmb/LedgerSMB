@@ -29,12 +29,12 @@ define([
       query: function (query, options) {
          var _query = query;
          if (_query && typeof _query === "object") {
-            _query = "?" + ioQuery.objectToQuery(_query);
+            _query = ioQuery.objectToQuery(_query);
          }
          if (options && options.type) {
-            _query = "?type=" + options.type + "&" + _query;
+            _query = "type=" + options.type + "&" + _query;
          }
-         return this.inherited(arguments, [_query, options]);
+         return this.inherited(arguments, ["?" + _query, options]);
       }
    });
    var store = new Observable(
