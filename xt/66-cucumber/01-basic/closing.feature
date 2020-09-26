@@ -50,6 +50,11 @@ Scenario: Post year-end
    And I press "Post Yearend"
   Then I should see the year-end confirmation screen
    And the Balance Sheet per 2015-12-31 looks like:
+     | accno               |  type      |  amount  |
+     | 1060                |  asset     |   200.00 |
+     | 2210                |  liability |   -15.00 |
+     | current earnings    |  equity    |   215.00 |
+   And the Balance Sheet per 2016-01-01 looks like:
      | accno  |  type      |  amount  |
      | 1060   |  asset     |   200.00 |
      | 2210   |  liability |   -15.00 |
