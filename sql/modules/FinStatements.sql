@@ -235,7 +235,7 @@ acc_balance AS (
    )
    SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      FROM acc_trans ac
-    INNER JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
+    INNER JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
      LEFT JOIN (SELECT array_agg(path) AS bu_ids, entry_id
                   FROM business_unit_ac buac
                  INNER JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -356,7 +356,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
 )
    SELECT ac.chart_id AS id, sum(ac.amount_bc * ca.portion) AS balance
      FROM acc_trans ac
-     JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
+     JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
      JOIN (SELECT id, sum(portion) as portion
              FROM cash_impact ca
             WHERE ($1 IS NULL OR ca.transdate >= $1)
@@ -650,7 +650,7 @@ acc_meta AS (
 acc_balance AS (
    SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
      FROM acc_trans ac
-     JOIN tx_report t ON t.id = ac.trans_id
+     JOIN transactions t ON t.approved AND t.id = ac.trans_id
     WHERE t.approved AND
           (in_to_date is null
            OR ((in_timing is null OR in_timing='ultimo')

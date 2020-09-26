@@ -998,7 +998,7 @@ SELECT lsmb__grant_menu('financial_reports', node_id, 'allow')
   FROM unnest(array[75,110,111,112,113,114]) node_id;
 
 SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
-  FROM unnest(array['yearend'::text, 'cash_impact', 'tx_report']) obj;
+  FROM unnest(array['yearend'::text, 'cash_impact']) obj;
 
 \echo RECURRING TRANSACTIONS
 SELECT lsmb__create_role('recurring');
