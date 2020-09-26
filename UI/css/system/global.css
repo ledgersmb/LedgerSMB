@@ -274,8 +274,19 @@ body {
 #reports fieldset,
 #balance-sheet-parameters fieldset {
     border: 1px solid black;
+    border-radius: 4px;
     margin: 0.5ex 1ex;
     padding: 0.5ex 1ex;
+}
+
+#reports .option {
+    float: left;
+    width: 199px;
+}
+
+#balance-sheet-parameters,
+#reports {
+    max-width: 1200px;
 }
 
 #reports legend label#comparison-periods-label,
