@@ -55,7 +55,7 @@ define([
         },
         _update_display: function () {
             domStyle.set(
-                dom.byId("date_to_date_id"),
+                dom.byId("date_dates_id"),
                 "display",
                 this._by_dates.get("checked") ? "" : "none"
             );

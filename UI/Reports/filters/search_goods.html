@@ -1,74 +1,44 @@
 [% PROCESS "report_base.html";
        PROCESS "elements.html" %]
 <body class="lsmb [% dojo_theme %]">
-<form data-dojo-type="lsmb/Form"
-      id="search-goods"
-      action="goods.pl"
-      method="GET">
-  <div class="listtop">[% text('Search Goods and Services') %]</div>
-<table>
-<tr><th>[% text('Type') %]</th>
-  <td colspan="3">[%
-    old_label_pos = label_pos;
-    label_pos = -1;
-    PROCESS input element_data = {
-        name = "parttype"
-        type = 'radio'
-     checked = 'CHECKED'
-       value = ''
-       label = text('All')
-    };
-    PROCESS input element_data = {
-        name = "parttype"
-        type = 'radio'
-       value = 'parts'
-       label = text('Parts') #'
-    };
-    PROCESS input element_data = {
-        name = "parttype"
-        type = 'radio'
-       value = 'services'
-       label = text('Services')
-    };
-    PROCESS input element_data = {
-        name = "parttype"
-        type = 'radio'
-       value = 'overhead'
-       label = text('Overhead')
-    };
-    PROCESS input element_data = {
-        name = "parttype"
-        type = 'radio'
-       value = 'assemblies'
-       label = text('Assemblies')
-    };
-    label_pos = old_label_pos;
-  %]</td>
-</tr>
-<tr>
- <th><label for="partnumber">[% text('Part Number') %]</label></th>
- <td>[% PROCESS input element_data = {
-         name = 'partnumber'
-        class = 'control_code'
-         type = 'text'
-        value = partnumber
-         size = 16
- } %]</td>
-</tr>
-<tr>
- <th><label for="description">[% text('Description') %]</label></th>
- <td colspan="3">[% PROCESS input element_data = {
-         name = 'description'
-        class = 'description'
-         type = 'text'
-        value = description
-         size = 32
- } %]</td>
-</tr>
-<tr>
- <th><label for="partsgroup_id">[% text('Part Group') %]</label></th>
- <td>[%
+  <form data-dojo-type="lsmb/Form"
+        id="search-goods"
+        action="goods.pl"
+        method="GET">
+    <div id="reports">
+    <div class="listtop">[% text('Search Goods and Services') %]</div>
+    <fieldset>
+      <legend>[% text('Part criteria') %]</legend>
+      <div>
+      <label for="parttype">[% text('Type') %]</label>
+      <select data-dojo-type="dijit/form/Select"
+              id="parttype"
+              name="parttype">
+        <option value="all">[% text('All') %]</option>
+        <option value="parts">[% text('Parts') %]</option>
+        <option value="services">[% text('Services') %]</option>
+        <option value="overhead">[% text('Overhead') %]</option>
+        <option value="assemblies">[% text('Assemblies') %]</option>
+      </select>
+      </div>
+      <div>
+        <label for="status">[% text('Status') %]</label>
+        <select data-dojo-type="dijit/form/Select"
+                id="status"
+                name="status">
+          <option value="active">[% text('Active') %]</option>
+          <option value="onhand">[% text('On hand') %]</option>
+          <option value="short">[% text('Short') %]</option>
+          <option value="obsolete">[% text('Obsolete') %]</option>
+          <option value="unused">[% text('Unused') %]</option>
+        </select>
+      </div>
+      [% IF partsgroups.size > 0 -%]
+      <div>
+        <label for="partsgroup_id">[% text('Part Group') %]</label>
+        [%
         PROCESS select element_data = {
+   "data-dojo-type" = "dijit/form/FilteringSelect"
           name = 'partsgroup_id'
          class = 'partsgroup'
        options = partsgroups
@@ -76,351 +46,398 @@ default_values = [partsgroup_id]
  default_blank = 1
      text_attr = 'partsgroup'
     value_attr = 'id'
- } %]</td>
- <th><label for="serialnumber">[% text('Serial Number') %]</label></th>
- <td>[% PROCESS input element_data = {
+          } %]
+      </div>
+      [% END -%]
+      <div>
+      <label for="partnumber">[% text('Part Number') %]</label>
+      [% PROCESS input element_data = {
+         name = 'partnumber'
+        class = 'control_code'
+         type = 'text'
+        value = partnumber
+         size = 16
+      } %]
+      </div>
+      <div>
+      <label for="description">[% text('Description') %]</label>
+      [% PROCESS input element_data = {
+          name = 'description'
+          class = 'description'
+          type = 'text'
+          value = description
+          size = 32
+      } %]
+      </div>
+      <div>
+        <label for="serialnumber">[% text('Serial Number') %]</label>
+        [% PROCESS input element_data = {
          name = 'serialnumber'
         class = 'control_code'
          type = 'text'
         value = serialnumber
          size = 16
- } %]</td>
-</tr>
-<tr>
- <th><label for="make">[% text('Make') %]</label></th>
- <td>[% PROCESS input element_data = {
+        } %]
+      </div>
+      <fieldset data-dojo-type="dijit/Fieldset"
+                data-dojo-props="toggleable:true,open:false">
+        <legend>[% text('Part details') %]</legend>
+        <div>
+          <label for="make">[% text('Make') %]</label>
+          [% PROCESS input element_data = {
          name = 'make'
         class = 'control_code'
          type = 'text'
         value = make
          size = 16
- } %]</td>
- <th><label for="model">[% text('Model') %]</label></th>
- <td>[% PROCESS input element_data = {
+          } %]
+        </div>
+        <div>
+          <label for="model">[% text('Model') %]</label>
+          [% PROCESS input element_data = {
          name = 'model'
         class = 'control_code'
          type = 'text'
         value = model
          size = 16
- } %]</td>
-</tr>
-<tr>
- <th><label for="drawing">[% text('Drawing') %]</label></th>
- <td>[% PROCESS input element_data = {
+          } %]
+        </div>
+        <div>
+          <label for="drawing">[% text('Drawing') %]</label>
+          [% PROCESS input element_data = {
          name = 'drawing'
         class = 'control_code'
          type = 'text'
         value = make
          size = 16
- } %]</td>
- <th><label for="microfiche">[% text('Microfiche') %]</label></th>
- <td>[% PROCESS input element_data = {
+          } %]
+        </div>
+        <div>
+          <label for="microfiche">[% text('Microfiche') %]</label>
+          [% PROCESS input element_data = {
          name = 'microfiche'
         class = 'control_code'
          type = 'text'
         value = model
          size = 16
- } %]</td>
-</tr>
-<tr><th>&nbsp;</th>
-  <td colspan="3">[%
-    old_label_pos = label_pos;
-    label_pos = -1;
-    PROCESS input element_data = {
-        name = "status"
-        id   = 'status-active'
-        type = 'radio'
-     checked = 'CHECKED'
-       value = 'active'
-       label = text('Active')
-    };
-    PROCESS input element_data = {
-        name = "status"
-        id   = 'status-onhand'
-        type = 'radio'
-       value = 'onhand'
-       label = text('On Hand') #'
-    };
-    PROCESS input element_data = {
-        name = "status"
-        id   = 'status-short'
-        type = 'radio'
-       value = 'short'
-       label = text('Short')
-    };
-    PROCESS input element_data = {
-        name = "status"
-        id   = 'status-obsolete'
-        type = 'radio'
-       value = 'obsolete'
-       label = text('Obsolete')
-    };
-    PROCESS input element_data = {
-        name = "status"
-        id   = 'status-unused'
-        type = 'radio'
-       value = 'unused'
-       label = text('Unused')
-    };
-    label_pos = old_label_pos;
-  %]</td>
-</tr>
-<tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
-<tr>
-  <th>&nbsp;</th>
-  <td class="centered" colspan="3">[% text('Items Found In') %]</td>
-</tr>
-[% PROCESS date_row %]
-<tr><th rowspan="2">&nbsp;</th>
-  <td>[% label_pos = 1;
+          } %]
+        </div>
+      </fieldset>
+    </fieldset>
+    <fieldset>
+      <legend>[% text('Items Found In') %]</legend>
+      <div>
+      [%
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_is"
        value = 1
-       label = text('AR Invoices') #'
-     } %]</td>
-  <td>[%
+       label = text('AR Invoices')
+        } ;
+        '</div><div>';
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_so"
        value = 1
-       label = text('Sales Orders') #'
-     } %]</td>
-  <td>[%
+       label = text('Sales Orders')
+          } ;
+        '</div><div>';
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_quo"
        value = 1
        label = text('Quotations')
-     } %]</td>
-</tr>
-<tr>
-  <td>[%
+          } ;
+        '</div><div>';
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_ir"
        value = 1
-       label = text('AP Invoices') #'
-     } %]</td>
-  <td>[%
+       label = text('AP Invoices')
+          } ;
+        '</div><div>';
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_po"
        value = 1
-       label = text('Purchase Orders') #'
-     } %]</td>
-  <td>[%
+       label = text('Purchase Orders')
+          } ;
+        '</div><div>';
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_rfq"
        value = 1
        label = text('RFQs')
-     } %]</td>
-</tr>
-<tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
-<tr>
-  <th rowspan="2">&nbsp;</th>
-  <td class="centered" colspan="3">[% text('Include in Report') %]</td>
-</tr>
-<tr><td colspan="4">
-  <table>
-    <tr><td>
-       [% PROCESS input element_data = {
+          } %]
+        </div>
+    </fieldset>
+
+
+    <fieldset data-dojo-type="lsmb/reports/PeriodSelector"
+              data-dojo-props="channel:'ui/reports/period-selection'">
+      <legend>[% text('Period selection') %]</legend>
+      <div class="input_row">
+        <div class="label">
+          [% text('Select using') %]
+        </div>
+        <div class="input_group">
+            [%
+               IF comparison_type == 'by_periods';
+               YES="CHECKED";
+               NO=undef;
+               ELSE;
+               NO="CHECKED";
+               YES=undef;
+               END; -%]
+            <div class="input_option">
+              [%    PROCESS input element_data={
+                        type = 'radio',
+                        name = 'comparison_type',
+                        id = 'comparison_by_dates',
+                        value = 'by_dates',
+                        label = text('Dates'),
+                        checked = NO
+                        }
+                        label_pos = 1 ;
+                        %]
+            </div>
+            <div class="input_option">
+              [%
+                 PROCESS input element_data={
+                 type = 'radio',
+                 name = 'comparison_type',
+                 id = 'comparison_by_periods',
+                 value = 'by_periods',
+                 label = text('Periods'),
+                 checked = YES,
+                 } label_pos = 1 ;
+              %]</div>
+        </div>
+      </div>
+      <div class="input_row" id="date_dates_id">
+        <div style="display:inline-block">
+          <div id="date_from_date_id">
+              [% label_pos = -1; # apparently, there's something leaky
+                     PROCESS input element_data = {
+                     label=text('From')
+                     class="date"
+                     name="from_date"
+                     id="from_date"
+                     size="11"
+                     title=datestyle } %]
+          </div>
+        </div>
+        <div style="display:inline-block">
+          <div id="date_to_date_id">
+              [% label_pos = -1; # apparently, there's something leaky
+                     PROCESS input element_data = {
+                     label=text('To')
+                     class="date"
+                     name="to_date"
+                     id="to_date"
+                     size="11"
+                     title=datestyle } %]
+          </div>
+        </div>
+      </div>
+      <div class="input_row" id="date_period_id">
+        [% PROCESS date_period_div; %]
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>[% text('Include in Report') %]</legend>
+      <div class="option">
+             [% PROCESS input element_data = {
            name = 'col_running_number'
            type = 'checkbox'
           value = '1'
           label = text('No.')
-       } %]</td>
-       <td>
+      } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_partnumber'
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
-          label = text('Part Number') #'
-       } %]</td>
-       <td>
+          label = text('Part Number')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_description'
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
           label = text('Description')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_onhand'
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
           label = text('On hand')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_unit'
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
           label = text('Unit')
-       } %]</td>
-    </tr>
-    <tr><td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_priceupdate'
            type = 'checkbox'
           value = '1'
-          label = text('Price Updated') #'
-       } %]</td>
-       <td>
+          label = text('Price Updated')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_partsgroup'
            type = 'checkbox'
           value = '1'
-          label = text('Part Group') #'
-       } %]</td>
-       <td>
+          label = text('Part Group')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_listprice'
            type = 'checkbox'
           value = '1'
-          label = text('List Price') #'
-       } %]</td>
-       <td>
+          label = text('List Price')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_sellprice'
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
-          label = text('Sell Price') #'
-       } %]</td>
-       <td>
+          label = text('Sell Price')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_lastcost'
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
-          label = text('Last Cost') #'
-       } %]</td>
-    </tr>
-    <tr><td>
+          label = text('Last Cost')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_avgcost'
            type = 'checkbox'
           value = '1'
-          label = text('Average Cost') #'
-       } %]</td>
-       <td>
+          label = text('Average Cost')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_linetotal'
            type = 'checkbox'
           value = '1'
-          label = text('Line Total') #'
-       } %]</td>
-       <td>
+          label = text('Line Total')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_markup'
            type = 'checkbox'
           value = '1'
           label = text('Markup')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_bin'
            type = 'checkbox'
           value = '1'
           label = text('Bin')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_rop'
            type = 'checkbox'
           value = '1'
           label = text('ROP')
-       } %]</td>
-    </tr>
-    <tr><td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_weight'
            type = 'checkbox'
           value = '1'
           label = text('Weight')
-       } %]</td>
-       <td>
-       [% PROCESS input element_data = {
+       } %]
+      </div><div class="option">
+         [% PROCESS input element_data = {
            name = 'col_notes'
            type = 'checkbox'
           value = '1'
           label = text('Notes')
-       } %]</td>
-       <td>
+         } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_image'
            type = 'checkbox'
           value = '1'
           label = text('Image')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_drawing'
            type = 'checkbox'
           value = '1'
           label = text('Drawing')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_microfiche'
            type = 'checkbox'
           value = '1'
           label = text('Microfiche')
-       } %]</td>
-    </tr>
-    <tr><td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_make'
            type = 'checkbox'
           value = '1'
           label = text('Make')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_model'
            type = 'checkbox'
           value = '1'
           label = text('Model')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_warehouse'
            type = 'checkbox'
           value = '1'
           label = text('Warehouse')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_curr'
            type = 'checkbox'
           value = '1'
           label = text('Currency')
-       } %]</td>
-       <td>
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'col_serialnumber'
            type = 'checkbox'
           value = '1'
-          label = text('Serial Number') #'
-       } %]</td>
-    </tr>
-    <tr><td>
+          label = text('Serial Number')
+       } %]
+      </div><div class="option">
        [% PROCESS input element_data = {
            name = 'subtotal'
            type = 'checkbox'
           value = '1'
-          label = text('subtotal')
-       } %]</td>
-    </tr>
-  </table>
-</td></tr>
-</table>
+          label = text('Subtotal')
+       } %]
+      </div>
+
+    </fieldset>
 [% PROCESS button element_data = {
    name = 'action'
   class = 'submit'
@@ -428,5 +445,6 @@ default_values = [partsgroup_id]
   value = 'search'
    text = text('Search')
 } %]
-</form>
+</div>
+  </form>
 </body>
