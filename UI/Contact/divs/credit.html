@@ -340,45 +340,45 @@ PROCESS dynatable
                         value="save_credit_new"
                         title="Save Credit Account as New"
                 };
-                IF credit_act.id;
-                    INCLUDE button element_data = {
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="add_transaction"
-                        accesskey="A"
-                        title="Transaction [Alt-A]"
-                        text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
-                    };
-                    INCLUDE button element_data = {
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="add_invoice"
-                        accesskey="I"
-                        title="Invoice [Alt-I]"
-                        text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice')
-                    };
-                    INCLUDE button element_data = {
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="add_order"
-                        accesskey="O"
-                        title="Order [Alt-O]"
-                        text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
-                    };
-                    INCLUDE button element_data = {
-                        class="submit"
-                        type="submit"
-                        name="action"
-                        value="rfq"
-                        accesskey="Q"
-                        title="Quotation [Alt-Q]"
-                        text = (entity_class == 1) ? text('RFQ') : text('Quotation')
-                    }; ?>
-                <a href="contact.pl?action=get_pricelist&amp;credit_id=<?lsmb
-                        credit_act.id ?>"><?lsmb text('Pricelist') ?></a>
+        IF credit_act.id;
+        IF (entity_class == 1); ?>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'ap.pl?type=transaction&amp;action=add&amp;vc=vendor&amp;vendor_id=<?lsmb credit_act.id ?>'"
+                accesskey="A"
+                title="Transaction [Alt-A]"><?lsmb text('AP Transaction') ?></button>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'ir.pl?type=invoice&amp;action=add&amp;vc=vendor&amp;vendor_id=<?lsmb credit_act.id ?>'"
+                accesskey="I"
+                title="Invoice [Alt-I]"><?lsmb text('Vendor Invoice') ?></button>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'oe.pl?type=purchase_order&amp;action=add&amp;vc=vendor&amp;vendor_id=<?lsmb credit_act.id ?>'"
+                accesskey="O"
+                title="Order [Alt-O]"><?lsmb text('Purchase Order') ?></button>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'oe.pl?type=request_quotation&amp;action=add&amp;vc=vendor&amp;vendor_id=<?lsmb credit_act.id ?>'"
+                accesskey="O"
+                title="Order [Alt-O]"><?lsmb text('RFQ') ?></button>
+<?lsmb ELSE ?>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'ar.pl?type=transaction&amp;action=add&amp;vc=customer&amp;customer_id=<?lsmb credit_act.id ?>'"
+                accesskey="A"
+                title="Transaction [Alt-A]"><?lsmb text('AR Transaction') ?></button>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'is.pl?type=invoice&amp;action=add&amp;vc=customer&amp;customer_id=<?lsmb credit_act.id ?>'"
+                accesskey="I"
+                title="Invoice [Alt-I]"><?lsmb text('Customer Invoice') ?></button>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'oe.pl?type=sales_order&amp;action=add&amp;vc=customer&amp;customer_id=<?lsmb credit_act.id ?>'"
+                accesskey="O"
+                title="Order [Alt-O]"><?lsmb text('Sales Order') ?></button>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'oe.pl?type=sales_quotation&amp;action=add&amp;vc=customer&amp;customer_id=<?lsmb credit_act.id ?>'"
+                accesskey="O"
+                title="Order [Alt-O]"><?lsmb text('Quotation') ?></button>
+        <?lsmb END ?>
+        <button data-dojo-type="lsmb/JumpScreenButton"
+                data-dojo-props="url:'contact.pl?action=get_pricelist&amp;credit_id=<?lsmb credit_act.id ?>'"
+                title="Pricelist"><?lsmb text('Pricelist') ?></button>
                 <?lsmb END ?>
         </div>
     </form>
