@@ -161,6 +161,20 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.23
+* Fix subtotals not showing on AR/AP outstanding report (#4732)
+* Apply default sorting to AR/AP outstanding and transactions reports (#5080)
+* Fix failure saving new reporting unit classes with modules checked (#4614)
+* Fix subtotals not working in GL report (#5098)
+* Fix AR/AP transaction applying exchangerate without locale conversion (#4879)
+* Various sales person related fixes (#5115)
+  * Fix sales person failing to save on AR/AP Transactions
+  * Fix sales person selection retained on Update in sales invoice
+  * Fix loading sales person from database on document retrieval
+* Fix 'Manager' drop down not populated in employee page (#5125)
+* Fix Account contact screen buttons populating customer on invoice/... (#932)
+
+
 Changelog for 1.7.22
 * Fix duplicated sales persons list on order entry (#5035)
 * Fix inability to open employee screen under specific circumstances (#5043)
