@@ -114,6 +114,7 @@ sub new {
         for my $p(keys %$self){
             utf8::decode($self->{$p});
             utf8::upgrade($self->{$p});
+            delete $self->{$p} if $self->{$p} eq '_!lsmb!empty!_';
             $self->{$p} =~ s/\N{NULL}//g;
         }
         $self->{nextsub} //= '';

@@ -321,7 +321,10 @@ sub _process_args {
         my @values = grep { defined $_ && $_ ne '' } $args->get_all($key);
         next if ! @values;
 
-        $self->{$key} = (@values == 1) ? $values[0] : \@values;
+        my $value = (@values == 1) ? $values[0] : \@values;
+        next if $value eq '_!lsmb!empty!_';
+
+        $self->{$key} = $value;
     }
     return;
 }
