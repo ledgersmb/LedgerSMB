@@ -62,9 +62,9 @@ TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dojo:
-	rm -rf UI/js/*;
-	npm install --save-dev;
-	./node_modules/webpack/bin/webpack.js -p
+	$(DOCKER_CMD) rm -rf UI/js/*;
+	$(DOCKER_CMD) npm install --save-dev;
+	$(DOCKER_CMD) ./node_modules/webpack/bin/webpack.js -p
 
 # TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
@@ -84,7 +84,7 @@ endif
 
 
 blacklist:
-	perl utils/test/makeblacklist.pl --regenerate
+	$(DOCKER_CMD) perl -Ilib utils/test/makeblacklist.pl --regenerate
 
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
