@@ -3,6 +3,35 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.4
+* Fix subtotals not showing on AR/AP outstanding report (#4732)
+* Apply default sorting to AR/AP outstanding and transactions reports (#5080)
+* Fix failure saving new reporting unit classes with modules checked (#4614)
+* Fix failure sorting AR > Search results for filter with spaces (#4872)
+* Fix aging detail overview throwing error when generating report (#4018, #3572)
+* Fix various aging report problems (#5091)
+  * Duplicate PDF/HTML format selectors
+  * 'Date' column in PDF/PS output remaining empty
+  * 'Select all' functionality fixed (now handled in the browser)
+* Fix various payment transaction issues (#5094)
+  * POST AND PRINT html output on payments screen returned as text (#5077)
+  * Payment report not containing payment lines
+  * Remove unavailable PDF and PS output options for POST AND PRINT
+* Fix check printing showing random number in amount block (#5078)
+* Fix subtotals not working in GL report (#5098)
+* Add starting and ending balance to GL report filtered on account (#4985)
+* Fix AR/AP transaction applying exchangerate without locale conversion (#4879)
+* Fix parts searches failing to filter by serial number (#5107)
+* Various sales person related fixes (#5115)
+  * Fix sales person failing to save on AR/AP Transactions
+  * Fix sales person selection retained on Update in sales invoice
+  * Fix loading sales person from database on document retrieval
+* Fix upgrades from 1.7 failing on self-created exchange rate types (#5112)
+* Fix 'Manager' drop down not populated in employee page (#5125)
+* Fix parts lookup on invoice not filtered by entered text (#5138)
+* Fix Account contact screen buttons populating customer on invoice/... (#932)
+
+
 Changelog for 1.8.3
 * Fix broken Bcc e-mail support (#5034)
 * Fix duplicated sales persons list on order entry (#5035)
