@@ -408,6 +408,15 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.27
+* Fix sales person failing to save on AR/AP Transactions (Aung ZW, 5115)
+* Fix 'Manager' drop down not populated in employee page (Erik H, #5125)
+* Fix contact screen buttons populating customer on invoice/... (Erik H, #932)
+
+Aung ZW is Aung Zaw Win
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.26
 * Fix inability to open employee screen (Erik H, #5043)
 * Fix creation of assets class without required accounts (Erik H, #4624)
