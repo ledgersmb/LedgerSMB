@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.27-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-09-18 07:27+0000\n"
+"POT-Creation-Date: 2020-09-27 18:43+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -111,7 +111,7 @@ msgstr "Offene Verbindlichkeiten"
 #: templates/demo_with_images/ap_transaction.tex:18
 #: templates/xedemo/ap_transaction.html:4
 #: templates/xedemo/ap_transaction.html:18
-#: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:351
+#: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:348
 #: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
 msgid "AP Transaction"
 msgstr "Eingangsbuchung"
@@ -162,8 +162,8 @@ msgstr "Offene Forderungen"
 #: templates/demo_with_images/ar_transaction.tex:33
 #: templates/xedemo/ar_transaction.html:4
 #: templates/xedemo/ar_transaction.html:18
-#: templates/xedemo/ar_transaction.tex:33 sql/Pg-database.sql:2949
-#: sql/Pg-database.sql:2962
+#: templates/xedemo/ar_transaction.tex:33 UI/Contact/divs/credit.html:365
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
 msgid "AR Transaction"
 msgstr "Ausgangsbuchung"
 
@@ -553,7 +553,7 @@ msgstr "Buchung anlegen"
 msgid "Add Unit"
 msgstr "Einheit hinzufügen"
 
-#: UI/Contact/divs/employee.html:219 UI/Contact/divs/user.html:127
+#: UI/Contact/divs/employee.html:220 UI/Contact/divs/user.html:127
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:96
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
@@ -620,7 +620,7 @@ msgstr "Adresse:"
 msgid "Address: [_1]"
 msgstr "Adresse: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:30
+#: lib/LedgerSMB/Scripts/contact.pm:196 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:3
 msgid "Addresses"
 msgstr "Adressen"
@@ -1207,7 +1207,7 @@ msgstr "Bankkonto"
 msgid "Bank Account:"
 msgstr "Bankkonto:"
 
-#: lib/LedgerSMB/Scripts/contact.pm:194 t/data/04-complex_template.html:32
+#: lib/LedgerSMB/Scripts/contact.pm:198 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:3
 #: UI/Contact/divs/bank_act.html:7
 msgid "Bank Accounts"
@@ -1729,7 +1729,7 @@ msgstr "Verkaufsaufträge kombinieren"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:74
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:71
-#: lib/LedgerSMB/Scripts/contact.pm:186 UI/Contact/contact.html:10
+#: lib/LedgerSMB/Scripts/contact.pm:190 UI/Contact/contact.html:10
 #: UI/Contact/divs/company.html:3 UI/login.html:82 UI/main.html:30
 #: UI/Reports/aging_report.html:17 UI/Reports/display_report.html:31
 #: UI/Reports/display_report.tex:24
@@ -1811,7 +1811,7 @@ msgstr ""
 msgid "Contact"
 msgstr "Kontakt"
 
-#: lib/LedgerSMB/Scripts/contact.pm:193 t/data/04-complex_template.html:31
+#: lib/LedgerSMB/Scripts/contact.pm:197 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:3 UI/Contact/divs/contact_info.html:32
 #: UI/Contact/divs/contact_info.html:112
 #: UI/Reports/filters/purchase_history.html:28
@@ -2025,7 +2025,7 @@ msgstr "Erstellt am"
 msgid "Credit"
 msgstr "Haben"
 
-#: lib/LedgerSMB/Scripts/contact.pm:313
+#: lib/LedgerSMB/Scripts/contact.pm:317
 msgid "Credit Account"
 msgstr "Kreditkonto"
 
@@ -2033,7 +2033,7 @@ msgstr "Kreditkonto"
 msgid "Credit Account Number"
 msgstr "Kontonummer"
 
-#: lib/LedgerSMB/Scripts/contact.pm:191 UI/Contact/divs/credit.html:3
+#: lib/LedgerSMB/Scripts/contact.pm:195 UI/Contact/divs/credit.html:3
 msgid "Credit Accounts"
 msgstr "Kundenkreditkonto"
 
@@ -2136,6 +2136,11 @@ msgstr "Kundenkonto"
 msgid "Customer History"
 msgstr "Alle Belege für Kunde"
 
+#: UI/Contact/divs/credit.html:369
+#, fuzzy
+msgid "Customer Invoice"
+msgstr "Kunde nicht in der Datei!"
+
 #: UI/payments/payment1.html:40 UI/payments/payment2.html:28
 #: UI/Reports/filters/orders.html:8
 msgid "Customer Name"
@@ -2184,7 +2189,7 @@ msgstr "T M"
 msgid "DB admin login"
 msgstr "Datenbankadministrator Login"
 
-#: UI/Contact/divs/employee.html:167
+#: UI/Contact/divs/employee.html:168
 msgid "DOB"
 msgstr "DOB"
 
@@ -3096,7 +3101,7 @@ msgstr "Dienstleistung bearbeiten"
 msgid "Edit Tax Form"
 msgstr "Steuerformular bearbeiten"
 
-#: UI/Contact/divs/employee.html:212
+#: UI/Contact/divs/employee.html:213
 msgid "Edit User"
 msgstr "Benutzerdaten bearbeiten"
 
@@ -3144,7 +3149,7 @@ msgstr "elf-o"
 msgid "Email"
 msgstr "E-mail"
 
-#: lib/LedgerSMB/Report/Orders.pm:264 lib/LedgerSMB/Scripts/contact.pm:188
+#: lib/LedgerSMB/Report/Orders.pm:264 lib/LedgerSMB/Scripts/contact.pm:192
 #: old/bin/aa.pl:1458 old/bin/aa.pl:476 old/bin/oe.pl:541 old/bin/pe.pl:862
 #: templates/demo/ap_transaction.html:93 templates/demo/ap_transaction.tex:68
 #: templates/demo/ar_transaction.tex:85 templates/demo/timecard.html:31
@@ -3213,7 +3218,7 @@ msgstr "Leere Lieferantennummern"
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:127 UI/budgetting/budget_entry.html:48
 #: UI/business_units/edit.html:63 UI/Contact/divs/credit.html:32
 #: UI/Contact/divs/credit.html:123 UI/Contact/divs/credit.html:124
-#: UI/Contact/divs/employee.html:189 UI/Reports/filters/budget_search.html:51
+#: UI/Contact/divs/employee.html:190 UI/Reports/filters/budget_search.html:51
 msgid "End Date"
 msgstr "Datum Ende"
 
@@ -3270,7 +3275,7 @@ msgstr "Eingegeben am"
 msgid "Entered at: [_1]"
 msgstr "Eingegeben am: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:311 sql/Pg-database.sql:1068
+#: lib/LedgerSMB/Scripts/contact.pm:315 sql/Pg-database.sql:1068
 msgid "Entity"
 msgstr "Entität"
 
@@ -3563,7 +3568,7 @@ msgstr "Dateiname"
 msgid "File type"
 msgstr "Dateityp"
 
-#: lib/LedgerSMB/Scripts/contact.pm:196 UI/Contact/divs/files.html:3
+#: lib/LedgerSMB/Scripts/contact.pm:200 UI/Contact/divs/files.html:3
 msgid "Files"
 msgstr "Dateien"
 
@@ -5058,7 +5063,7 @@ msgstr "neunzig"
 msgid "No"
 msgstr "Nr"
 
-#: lib/LedgerSMB/Scripts/contact.pm:622
+#: lib/LedgerSMB/Scripts/contact.pm:627
 msgid "No AR or AP Account Selected"
 msgstr "Kein Forderungen oder Verbindlichkeiten Konto gewÃ¤hlt"
 
@@ -5195,7 +5200,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:270
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:255
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:291
-#: lib/LedgerSMB/Scripts/contact.pm:195 old/bin/aa.pl:1502 old/bin/aa.pl:1635
+#: lib/LedgerSMB/Scripts/contact.pm:199 old/bin/aa.pl:1502 old/bin/aa.pl:1635
 #: old/bin/aa.pl:780 old/bin/ic.pl:768 old/bin/ir.pl:755 old/bin/is.pl:851
 #: old/bin/oe.pl:810 t/data/04-complex_template.html:33
 #: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
@@ -5861,7 +5866,7 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:187 UI/Contact/divs/person.html:3
+#: lib/LedgerSMB/Scripts/contact.pm:191 UI/Contact/divs/person.html:3
 msgid "Person"
 msgstr "Person"
 
@@ -6302,7 +6307,7 @@ msgstr "Kaufhistorie"
 #: templates/xedemo/product_receipt.html:18
 #: templates/xedemo/purchase_order.html:4
 #: templates/xedemo/purchase_order.html:18
-#: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:369
+#: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:356
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2814 sql/Pg-database.sql:2955
 #: sql/Pg-database.sql:2968
 msgid "Purchase Order"
@@ -6413,8 +6418,9 @@ msgstr ""
 #: templates/demo_with_images/sales_quotation.tex:69
 #: templates/xedemo/sales_quotation.html:4
 #: templates/xedemo/sales_quotation.html:17
-#: templates/xedemo/sales_quotation.tex:70 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2826 sql/Pg-database.sql:2958 sql/Pg-database.sql:2973
+#: templates/xedemo/sales_quotation.tex:70 UI/Contact/divs/credit.html:377
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2826 sql/Pg-database.sql:2958
+#: sql/Pg-database.sql:2973
 msgid "Quotation"
 msgstr "Angebot"
 
@@ -6452,7 +6458,7 @@ msgid "Quotations"
 msgstr "Angebote"
 
 #: old/bin/oe.pl:240 old/bin/oe.pl:670 old/bin/oe.pl:869 old/bin/printer.pl:61
-#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:378
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:360
 #: sql/Pg-database.sql:1935 sql/Pg-database.sql:2827 sql/Pg-database.sql:2959
 #: sql/Pg-database.sql:2974
 msgid "RFQ"
@@ -6920,8 +6926,9 @@ msgstr "Ausgangsrechnung/Transaktionsnummer ausstehende Rechnung"
 #: templates/demo_with_images/sales_order.html:18
 #: templates/demo_with_images/sales_order.tex:99
 #: templates/xedemo/sales_order.html:4 templates/xedemo/sales_order.html:18
-#: templates/xedemo/sales_order.tex:99 sql/Pg-database.sql:1932
-#: sql/Pg-database.sql:2813 sql/Pg-database.sql:2953 sql/Pg-database.sql:2966
+#: templates/xedemo/sales_order.tex:99 UI/Contact/divs/credit.html:373
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2813 sql/Pg-database.sql:2953
+#: sql/Pg-database.sql:2966
 msgid "Sales Order"
 msgstr "Verkaufsauftrag"
 
@@ -6997,7 +7004,7 @@ msgstr "Sat"
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:7
 #: UI/Configuration/sequence.html:116 UI/Configuration/settings.html:82
 #: UI/Contact/divs/bank_act.html:86 UI/Contact/divs/company.html:182
-#: UI/Contact/divs/employee.html:202 UI/Contact/divs/notes.html:69
+#: UI/Contact/divs/employee.html:203 UI/Contact/divs/notes.html:69
 #: UI/Contact/divs/person.html:197 UI/Contact/pricelist.html:95
 #: UI/import_csv/import_csv.html:70 UI/import_csv/import_inventory_csv.html:77
 #: UI/inventory/adjustment_entry.html:89 UI/payroll/deduction.html:93
@@ -7713,7 +7720,7 @@ msgstr "Branchenklassifikation SIC"
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:133
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:125 UI/budgetting/budget_entry.html:38
 #: UI/business_units/edit.html:55 UI/Contact/divs/credit.html:31
-#: UI/Contact/divs/employee.html:178 UI/Reports/filters/budget_search.html:41
+#: UI/Contact/divs/employee.html:179 UI/Reports/filters/budget_search.html:41
 msgid "Start Date"
 msgstr "Anfangsdatum"
 
@@ -7968,7 +7975,7 @@ msgstr "Steuerformular"
 msgid "Tax ID"
 msgstr "Steuernummer"
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:151
+#: UI/Contact/divs/employee.html:155 UI/setup/new_user.html:151
 msgid "Tax ID/SSN"
 msgstr "Steuernummer/Sozialversicherungsnummer"
 
@@ -8815,7 +8822,7 @@ msgstr "Nicht unterstützte Kontokategorien"
 msgid "Unsupported account link combinations"
 msgstr "Nicht unterstützte Kombination der Kontoverknüpfung"
 
-#: lib/LedgerSMB/Scripts/contact.pm:469
+#: lib/LedgerSMB/Scripts/contact.pm:474
 msgid "Unsupported account type"
 msgstr "Nicht unterstützte Kontenart"
 
@@ -8901,7 +8908,7 @@ msgstr ""
 msgid "Used"
 msgstr "Gebraucht"
 
-#: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:36
+#: lib/LedgerSMB/Scripts/contact.pm:193 t/data/04-complex_template.html:36
 #: UI/Contact/divs/user.html:4 UI/main.html:26
 msgid "User"
 msgstr "Benutzer"
@@ -8990,7 +8997,7 @@ msgid "Vendor History"
 msgstr "Alle Belege für Lieferant"
 
 #: old/bin/oe.pl:663 old/bin/oe.pl:867 t/data/04-complex_template.html:334
-#: UI/Contact/divs/credit.html:360 sql/Pg-database.sql:2901
+#: UI/Contact/divs/credit.html:352 sql/Pg-database.sql:2901
 msgid "Vendor Invoice"
 msgstr "Lieferantenrechnung"
 
@@ -9069,7 +9076,7 @@ msgstr ""
 msgid "Wages and Deductions"
 msgstr "Löhne und Abzüge"
 
-#: lib/LedgerSMB/Scripts/contact.pm:190
+#: lib/LedgerSMB/Scripts/contact.pm:194
 msgid "Wages/Deductions"
 msgstr "LÃ¶hne/Absetzungen"
 
