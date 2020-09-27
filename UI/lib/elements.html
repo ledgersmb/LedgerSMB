@@ -206,7 +206,10 @@
            PROCESS option
                parent_id   = element_data.id,
                optindex    = 0,
-               option_data = {},
+               option_data = {
+                  $text_attr = "",
+                  $value_attr = element_data.required ? "" : "_!lsmb!empty!_"
+               },
                text_attr   = text_attr,
                value_attr  = value_attr;
         END;
