@@ -10,7 +10,12 @@
                name = "company"
                type = "hidden"
                value = user.company
-    };
+};
+INCLUDE input element_data = {
+              name = "action"
+              type = "hidden"
+              value = request.action
+};
 
     password_strings = "title:'" _ text("Change Password") _
                       "', old password:'" _ text("Old Password") _
@@ -37,7 +42,7 @@
           </script>
           <table width="100%">
             <tr><th class="listtop">[% text('Preferences for [_1]',user.login) %]</th></tr>
-            [% IF action == 'save_preferences' %] <tr><th class="info">
+            [% IF request.action == 'save_preferences' %] <tr><th class="info">
                     [% text('Preferences Saved') %]</th>
             </tr>[% END # if action %]
             <tr><th class="info">
