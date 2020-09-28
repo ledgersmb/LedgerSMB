@@ -231,5 +231,28 @@
         }],
         "no-restricted-syntax": ["error", "SequenceExpression"]
     }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "plugins": [
+        "stylelint-no-unsupported-browser-features",
+        "stylelint-order"
+    ],
+    "ignoreFiles": [
+      "**/*.js","**/*.jsx","**/*.html",
+      "UI/**/dojo/**/*.css",
+      "UI/**/dijit/**/*.css",
+      "UI/**/util/**/*.css",
+      "UI/js/**"
+    ],
+    "rules": {
+      "indentation": 4,
+      "order/order": [
+        "custom-properties",
+        "declarations"
+      ],
+      "order/properties-alphabetical-order": true,
+      "plugin/no-unsupported-browser-features": true
+    }
   }
 }
