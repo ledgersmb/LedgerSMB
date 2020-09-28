@@ -70,7 +70,8 @@
                                   options = user.dateformats
                                   default_values = [ user.prefs.dateformat ]
                                   text_attr = 'format'
-                                  value_attr = 'format'
+                                  value_attr = 'format',
+                                  required = 1
                                 } %]</td>
                           </tr>
                           <tr>
@@ -80,7 +81,8 @@
                                   options = user.numberformats,
                                   default_values = [ user.prefs.numberformat ],
                                   text_attr = 'format',
-                                  value_attr = 'format'
+                                  value_attr = 'format',
+                                  required = 1
                                 } %]</td>
                           </tr>
                           <tr>
@@ -91,7 +93,7 @@
                                 default_values = [ user.prefs.language ],
                                 text_attr = 'label',
                                 value_attr = 'id',
-                                default_blank = 1
+                                required = 1
                               }%] </td>
                           </tr>
                           <tr>
@@ -101,7 +103,8 @@
                                   options = user.cssfiles
                                   default_values = [ user.prefs.stylesheet ]
                                   text_attr = 'file'
-                                  value_attr = 'file'
+                                  value_attr = 'file',
+                                  required = 1
                                 } %]</td>
                           </tr>
           [% IF printers.defined %]
