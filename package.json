@@ -54,7 +54,7 @@
     "autoprefixer": "^9.8.4",
     "babel-eslint": "^10.1.0",
     "babel-loader": "8.1.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "bundlesize": "^0.18.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
@@ -71,7 +71,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^4.0.2",
     "eslint-plugin-amd": "^1.1.0",
     "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-import": "^2.22.0",
@@ -85,6 +84,7 @@
     "eslint-plugin-snakecasejs": "^2.2.0",
     "eslint-plugin-sort-dojo-dependency": "^0.0.1",
     "eslint-plugin-standard": "^4.0.1",
+    "eslint-webpack-plugin": "^2.1.0",
     "extract-css-chunks-webpack-plugin": "^4.7.5",
     "file-loader": "^6.0.0",
     "html-loader": "^1.1.0",
@@ -137,5 +137,122 @@
     "serve": "webpack-dev-server --env.dev",
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules ."
+  },
+  "eslintConfig": {
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["UI"]
+            }
+        }
+    },
+    "plugins": [
+        "amd",
+        "sort-dojo-dependency",
+        "prettier"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "templateSettings": {
+            "evaluate":    ["[%", "%]"],
+            "interpolate": ["[%", "%]"],
+            "escape":      ["[%", "%]"]
+        }
+    },
+    "env": {
+        "browser": true,
+        "node":    true,
+        "amd":     true,
+        "es6":     true
+    },
+    "extends": [
+        "airbnb-base/legacy", "prettier",
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "ignorePatterns": ["dojo/", "dijit/", "node_modules/", "js/"],
+    "rules": {
+        "camelcase": "error",
+        "consistent-return": "error",
+        "curly": ["error", "all"],
+        "dot-notation": "error",
+        "eqeqeq": "error",
+        "func-names": 0,
+        "global-require": "error",
+        "guard-for-in": "error",
+        "new-cap": 0,
+        "no-alert": "error",
+        "no-console": "error",
+        "no-continue": 0,
+        "no-else-return": "error",
+        "no-lonely-if": "error",
+        "no-multi-assign": "error",
+        "no-multi-spaces": "error",
+        "no-new-object": "error",
+        "no-param-reassign": "error",
+        "no-plusplus": 0,
+        "no-restricted-globals": "error",
+        "no-shadow": "error",
+        "no-template-curly-in-string": "error",
+        "no-undef": "error",
+        "no-underscore-dangle": 0,
+        "no-unused-expressions": "error",
+        "no-unused-vars": "error",
+        "no-use-before-define": "error",
+        "no-useless-escape": "error",
+        "no-useless-return": "error",
+        "one-var": "error",
+        "radix": "error",
+        "spaced-comment": ["error", "always", { "block": { "balanced": true } }],
+        "vars-on-top": 0,
+        "yoda": "error",
+
+        "amd/no-unused-dependencies": "error",
+        "amd/obsolete-dependencies": "error",
+        "amd/sane-dependency-names": "error",
+
+        "prettier/prettier": ["error", {
+                            "bracketSpacing": true,
+                            "printWidth": 80,
+                            "quote-props": ["error", "consistent"],
+                            "semi": true,
+                            "singleQuote": false,
+                            "tabWidth": 4,
+                            "trailingComma": "none",
+                            "useTabs": false,
+                            "insertPragma": true,
+                            "proseWrap": "preserve"
+        }],
+        "no-restricted-syntax": ["error", "SequenceExpression"]
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "plugins": [
+        "stylelint-no-unsupported-browser-features",
+        "stylelint-order"
+    ],
+    "ignoreFiles": [
+      "**/*.js","**/*.jsx","**/*.html",
+      "UI/**/dojo/**/*.css",
+      "UI/**/dijit/**/*.css",
+      "UI/**/util/**/*.css",
+      "UI/js/**"
+    ],
+    "rules": {
+      "indentation": 4,
+      "order/order": [
+        "custom-properties",
+        "declarations"
+      ],
+      "order/properties-alphabetical-order": true,
+      "plugin/no-unsupported-browser-features": true
+    }
   }
 }
