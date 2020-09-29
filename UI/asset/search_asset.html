@@ -46,6 +46,7 @@
         text_attr = "label"
         value_attr = "id"
         label = text("Asset Class:") #'
+        default_blank = 1
 } %]
 </div>
 <div class="inputrow" id="descrow">
@@ -121,6 +122,7 @@
         text_attr = "description"
         default_values = [asset.warehouse_id]
         label = text('Location')
+        default_blank = 1
 } %]
 </span>
 <span class="inputgroup" id="departmentgroup">
@@ -131,6 +133,7 @@
         text_attr = "description"
         default_values = [asset.department_id]
         label = text('Department')
+        default_blank = 1
 } %]
 </span>
 </div>
@@ -143,6 +146,7 @@
         default_values = [asset.asset_account_id]
         value_attr = 'id'
         text_attr = 'text'
+        default_blank = 1
 } %]
 </span>
 <span class="inputgroup" id="depaccgroup">
@@ -153,6 +157,7 @@
         default_values = [asset.dep_account_id]
         value_attr = 'id'
         text_attr = 'text'
+        default_blank = 1
 } %]
 </span>
 </div>
