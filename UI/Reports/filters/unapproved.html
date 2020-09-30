@@ -2,7 +2,6 @@
        PROCESS 'report_base.html';
 
    batch_classes = [
-       {},
        { text = text('AP'), value = 'ap'},
        { text = text('AR'), value = 'ar'},
        { text = text('GL'), value = 'gl'},
@@ -26,6 +25,7 @@
                 text_attr = "text"
                 name = "type"
                 default_values = [class_id]
+                default_blank = 1
         } %]
 </div>
 <div class="input" id="reference_div">

@@ -63,10 +63,10 @@
   <th>[% text('Tax Status') %]</th>
   <td>[% PROCESS select element_data = {
               name = "taxable"
-           options = [{} # all
-                      {text = text('Taxable'), value = 1}
+           options = [{text = text('Taxable'), value = 1}
                       {text = text('Nontaxable'), value = 0}]
     default_values = taxable
+     default_blank = 1
        } %]</td>
 </tr>
 <tr id="tax-account-row">

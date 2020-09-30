@@ -129,7 +129,7 @@ sub partsgroup_header {
           <th align="right">| . $locale->text('Parent') . qq|</th>
           <td><select data-dojo-type="dijit/form/Select"
                       id='parent' name='parent'>
-              <option></option>|;
+              <option>&nbsp;</option>|;
               for my $pg (@{$form->{item_list}}){
                   my $selected = '';
                   $selected = 'SELECTED="SELECTED"'
