@@ -27,11 +27,11 @@
           <script type="dojo/on" data-dojo-event="submit">
             if(this.validate()){
               var language = this.value.language;
-              require(["dojo/_base/connect"], function(connect){
-                var handle = connect.subscribe("lsmb/page-fresh-content", function(message){
+              require(["dojo/topic"], function(topic){
+                var handle = topic.subscribe("lsmb/page-fresh-content", function(message){
                   // only runs once in this case:
-                  connect.unsubscribe(handle);
-                  connect.publish("lsmb/menus/Tree/refresh", [{
+                  handle.remove();
+                  topic.publish("lsmb/menus/Tree/refresh", [{
                     language: language
                   }]);
                 });
@@ -70,8 +70,7 @@
                                   options = user.dateformats
                                   default_values = [ user.prefs.dateformat ]
                                   text_attr = 'format'
-                                  value_attr = 'format',
-                                  required = 1
+                                  value_attr = 'format'
                                 } %]</td>
                           </tr>
                           <tr>
@@ -81,19 +80,19 @@
                                   options = user.numberformats,
                                   default_values = [ user.prefs.numberformat ],
                                   text_attr = 'format',
-                                  value_attr = 'format',
-                                  required = 1
+                                  value_attr = 'format'
                                 } %]</td>
                           </tr>
                           <tr>
                             <th align="right"><label for="language">[% text('Language') %]</label></th>
-                            <td>[% PROCESS select element_data={
+                            <td>[% PROCESS select_language element_data={
                                 name = 'language',
                                 options = user.language_codes,
                                 default_values = [ user.prefs.language ],
                                 text_attr = 'label',
                                 value_attr = 'id',
-                                required = 1
+                                default_blank = 1,
+                                required = 'required'
                               }%] </td>
                           </tr>
                           <tr>
@@ -103,8 +102,7 @@
                                   options = user.cssfiles
                                   default_values = [ user.prefs.stylesheet ]
                                   text_attr = 'file'
-                                  value_attr = 'file',
-                                  required = 1
+                                  value_attr = 'file'
                                 } %]</td>
                           </tr>
           [% IF printers.defined %]

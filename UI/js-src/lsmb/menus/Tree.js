@@ -13,7 +13,7 @@ define([
     "dijit/Tree",
     "dijit/tree/ObjectStoreModel",
     "dijit/registry",
-    "dojo/_base/connect"
+    "dojo/topic"
 ], function (
     declare,
     on,
@@ -26,7 +26,7 @@ define([
     Tree,
     ObjectStoreModel,
     registry,
-    connect
+    topic
 ) {
     // set up the store to get the tree data, plus define the method
     // to query the children of a node
@@ -113,7 +113,7 @@ define([
             this.inherited(arguments);
             var _this = this;
             /* eslint no-unused-vars:0 */
-            connect.subscribe("lsmb/menus/Tree/refresh", function (message) {
+            topic.subscribe("lsmb/menus/Tree/refresh", function (message) {
                 _this.refresh();
             });
         },

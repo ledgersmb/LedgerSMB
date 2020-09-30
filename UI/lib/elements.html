@@ -390,7 +390,7 @@ END %]
     IF ! element_data.default_values || element_data.default_values.size == 0 ;
        element_data.default_values = [ SETTINGS.default_language ] ;
     END ;
-    INCLUDE select element_data=element_data ;
+    PROCESS select element_data=element_data ;
   END ;
    %]
 
