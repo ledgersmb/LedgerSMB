@@ -11,7 +11,8 @@ define([
     "dojo/request/xhr",
     "dojo/query",
     //   "dojo/request/iframe",
-    "dojo/dom-class"
+    "dojo/dom-class",
+    "dojo/topic"
 ], function (
     ContentPane,
     declare,
@@ -23,7 +24,8 @@ define([
     xhr,
     query,
     //   iframe,
-    domClass
+    domClass,
+    topic
 ) {
     return declare("lsmb/MainContentPane", [ContentPane], {
         last_page: null,
@@ -55,7 +57,7 @@ define([
         },
         set_main_div: function (doc) {
             var self = this;
-            var body = doc.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
+            var body = doc.match(/<body[^>]*>([\s\S]*)(<\/body>)+?/i);
 
             if (!body) {
                 this.report_error(
@@ -124,6 +126,7 @@ define([
             domStyle.set(this.domNode, "visibility", "visible");
             domStyle.set(this.domNode, "opacity", "1");
             domClass.replace(this.domNode, "done-parsing", "parsing");
+            topic.publish("lsmb/page-fresh-content");
         },
         set: function () {
             var newContent = null;
