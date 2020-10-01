@@ -84,6 +84,7 @@ body {
 
 #maindiv {
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 .financial-statement.flat-hierarchy table {
