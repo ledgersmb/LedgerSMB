@@ -83,6 +83,7 @@ body {
 }
 
 #maindiv {
+    overflow-x: auto;
     overflow-y: auto;
 }
 
