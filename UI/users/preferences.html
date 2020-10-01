@@ -76,22 +76,22 @@
                           <tr>
                             <th align="right"><label for="numberformat">[% text('Number Format') %]</label></th>
                             <td>[% PROCESS select element_data={
-                                  name = 'numberformat',
-                                  options = user.numberformats,
-                                  default_values = [ user.prefs.numberformat ],
-                                  text_attr = 'format',
+                                  name = 'numberformat'
+                                  options = user.numberformats
+                                  default_values = [ user.prefs.numberformat ]
+                                  text_attr = 'format'
                                   value_attr = 'format'
                                 } %]</td>
                           </tr>
                           <tr>
                             <th align="right"><label for="language">[% text('Language') %]</label></th>
                             <td>[% PROCESS select_language element_data={
-                                name = 'language',
-                                options = user.language_codes,
-                                default_values = [ user.prefs.language ],
-                                text_attr = 'label',
-                                value_attr = 'id',
-                                default_blank = 1,
+                                name = 'language'
+                                options = user.language_codes
+                                default_values = [ user.prefs.language ]
+                                text_attr = 'label'
+                                value_attr = 'id'
+                                default_blank = 1
                                 required = 'required'
                               }%] </td>
                           </tr>
