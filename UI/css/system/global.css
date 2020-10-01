@@ -80,6 +80,7 @@ html, body {
 
 #maindiv {
     overflow-y: auto;
+    overflow-x: auto;
 }
 .financial-statement.flat-hierarchy table {
     min-width: 60ex;
