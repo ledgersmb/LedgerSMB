@@ -387,22 +387,154 @@ PROCESS dynatable
     </form>
 [% IF credit_act.id %]
 <div class="listtop">[% text('Profit and Loss') %]</div>
-<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET">
-<div class="inputrow">
-[%
-PROCESS 'report_base.html';
-PROCESS input element_data = {
+<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET" id="reports">
+  <input type="hidden" name="pnl_type" value="eca">
+  [%
+  PROCESS input element_data = {
      type = "hidden"
      name = "id"
     value = credit_act.id
-};
-PROCESS input element_data = {
-     type = "hidden"
-     name = "pnl_type"
-    value = "eca"
-};
-PROCESS date_row_div;
-PROCESS button element_data = {
+}; %]
+        <fieldset data-dojo-type="lsmb/reports/PeriodSelector"
+                data-dojo-props="channel:'ui/reports/period-selection'">
+        <legend>[% text('Period selection') %]</legend>
+        <div class="input_row">
+          <div class="label">
+            [% text('Select using') %]
+          </div>
+          <div class="input_group">
+            [%
+               IF comparison_type == 'by_periods';
+               YES="CHECKED";
+               NO=undef;
+               ELSE;
+               NO="CHECKED";
+               YES=undef;
+               END; -%]
+            <div class="input_option">
+              [%    PROCESS input element_data={
+                        type = 'radio',
+                        name = 'comparison_type',
+                        id = 'comparison_by_dates',
+                        value = 'by_dates',
+                        label = text('Dates'),
+                        checked = NO
+                        }
+                        label_pos = 1 ;
+                        %]
+            </div>
+            <div class="input_option">
+              [%
+                 PROCESS input element_data={
+                 type = 'radio',
+                 name = 'comparison_type',
+                 id = 'comparison_by_periods',
+                 value = 'by_periods',
+                 label = text('Periods'),
+                 checked = YES,
+                 } label_pos = 1 ;
+                 %]</div>
+          </div>
+        </div>
+        <div class="input_row" id="date_dates_id">
+          <div style="display:inline-block">
+            <div id="date_from_date_id">
+              [% label_pos = -1; # apparently, there's something leaky
+                     PROCESS input element_data = {
+                     label=text('From')
+                     class="date"
+                     name="from_date"
+                     id="from_date"
+                     size="11"
+                     title=datestyle } %]
+            </div>
+          </div>
+          <div style="display:inline-block">
+            <div id="date_to_date_id">
+              [% label_pos = -1; # apparently, there's something leaky
+                     PROCESS input element_data = {
+                     label=text('To')
+                     class="date"
+                     name="to_date"
+                     id="to_date"
+                     size="11"
+                     title=datestyle } %]
+            </div>
+          </div>
+        </div>
+        <div class="input_row" id="date_period_id">
+          [% PROCESS date_period_div; %]
+        </div>
+      </fieldset>
+     <fieldset>
+        <legend>Report options</legend>
+        <div class="input_row">
+          [%
+             PROCESS input element_data = {
+             label = text('Account numbers')
+             name = 'incl_accnos'
+             type = 'checkbox'
+             value = 1
+             checked = 'checked' # checked by default
+             };
+             %]
+        </div>
+        <div class="input_row">
+          <div class="label">
+            [% text('Hierarchy type') %]
+          </div>
+          <div class="input_group">
+            [%
+               HIERARCHY_SETUP = earn_id;
+               IF HIERARCHY_SETUP;
+               full_checked = 'CHECKED';
+               full_disabled = undef;
+               legacy_checked = undef;
+               ELSE;
+               full_disabled = 'DISABLED';
+               full_checked = undef;
+               legacy_checked = 'CHECKED';
+               END;
+               %]
+            <div class="input_option">
+              [%
+                 PROCESS input element_data = {
+                 label = text('Full')
+                 type = 'radio'
+                 name = 'legacy_hierarchy'
+                 value = 0
+                 id = 'legacy-hierarchy-0'
+                 checked = full_checked
+                 disabled = full_disabled
+                 }
+                 label_pos = 1;
+                 %]
+              [% IF full_disabled %]
+              <span class="setupwarning" id="warning-hierarchy-not-setup">
+                <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting"
+                   target="_blank" rel="noopener noreferrer"
+                   >[% text('Not set up for hierarchy reporting, please see linked instructions') %]</a>
+              </span>
+              [% END %]
+            </div>
+            <div class="input_option">
+              [%
+                 PROCESS input element_data = {
+                 label = text('Account category')
+                 type = 'radio'
+                 name = 'legacy_hierarchy'
+                 value = 1
+                 id = 'legacy-hierarchy-1'
+                 checked = legacy_checked
+                 }
+                 label_pos = 1;
+                 %]
+            </div>
+          </div>
+        </div>
+     </fieldset>
+[%
+     PROCESS button element_data = {
      text = text('Continue')
      type = 'submit'
     class = 'submit'
@@ -410,7 +542,6 @@ PROCESS button element_data = {
     value = 'generate_income_statement'
 };
 %]
-</div>
 </form>
 [% END # IF credit_act.id %]
 </div>
