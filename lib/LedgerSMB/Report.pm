@@ -343,6 +343,7 @@ sub render {
     my $self = shift;
     my $request = shift;
 
+    $self->run_report if not defined $self->rows;
     return $self->_render($request, renderer => 'render', @_);
 }
 
@@ -389,8 +390,6 @@ sub _render {
     my $template;
     my %args = ( @_ );
 
-    my $testref = $self->rows;
-    $self->run_report if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
     local $@ = undef;
