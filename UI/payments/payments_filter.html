@@ -33,9 +33,11 @@
 
 
 [% IF request.account_class == 1 %]
-[% vendor_customer_code = text("Vendor Number") # ' %]
+[% vendor_customer_code = text("Vendor Number");
+   vendor_customer = text("Vendor") %]
 [% ELSIF request.account_class == 2 %]
-[% vendor_customer_code = text("Customer Number") # ' %]
+[% vendor_customer_code = text("Customer Number");
+   vendor_customer = text("Customer") %]
 [% END %]
 
 [% PROCESS input element_data = {
@@ -44,6 +46,12 @@
         value = payment.meta_number
         label = vendor_customer_code
         size = '15'
+} %]
+[% PROCESS input element_data = {
+        name = "contact_name"
+        type = "text"
+        label = vendor_customer
+        size = '60'
 } %]
 
 <div class="inputgroup" id="account_input">

@@ -26,7 +26,7 @@ BEGIN;
     SELECT has_function('payment_gather_header_info',ARRAY['integer','integer']);
     SELECT has_function('payment_gather_line_info',ARRAY['integer','integer']);
     SELECT has_function('payment_get_all_accounts',ARRAY['integer']);
-    SELECT has_function('payment_get_all_contact_invoices',ARRAY['integer','integer','character','date','date','integer','text','text','date']);
+    SELECT has_function('payment_get_all_contact_invoices',ARRAY['integer','integer','character','date','date','integer','text','text','text','date']);
     SELECT has_function('payment_get_available_overpayment_amount',ARRAY['integer','integer']);
     SELECT has_function('payment_get_entity_account_payment_info',ARRAY['integer']);
     SELECT has_function('payment_get_entity_accounts',ARRAY['integer','text','text','date','date']);
@@ -182,7 +182,7 @@ BEGIN;
       FROM (
         SELECT invoices
           FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                        NULL, (:batch_id)::int, '00001', 'TEST1', NULL)
+                        NULL, (:batch_id)::int, '00001', 'TEST1', NULL, NULL)
         ) p;
     SELECT results_eq('test',ARRAY[true],'Batch Voucher In Payment Selection');
     DEALLOCATE test;
@@ -193,7 +193,7 @@ BEGIN;
         SELECT invoices
          FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
                        NULL, currval('batch_id_seq')::int, '00001',
-                       'TEST1', NULL)
+                       'TEST1', NULL, NULL)
       ) p;
     SELECT results_eq('test',ARRAY[true],'Locked Invoice In Payment Selection');
     DEALLOCATE test;
@@ -203,7 +203,7 @@ BEGIN;
       FROM (
         SELECT invoices
           FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                        NULL, NULL, '00001', 'TEST1', NULL)
+                        NULL, NULL, '00001', 'TEST1', NULL, NULL)
       ) p;
     SELECT results_eq('test',ARRAY[true],'Threshold met');
     DEALLOCATE test;
@@ -214,7 +214,7 @@ BEGIN;
          SELECT invoices
            FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
                          NULL, currval('batch_id_seq')::int, '00001',
-                         'TEST1', NULL)
+                         'TEST1', NULL, NULL)
        ) p;
     SELECT results_eq('test', ARRAY[true],
                       'Non-Batch Voucher Not In Payment Selection');
@@ -223,7 +223,8 @@ BEGIN;
     PREPARE test AS
     SELECT total_due < 1000000
       FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL,
-                    NULL, currval('batch_id_seq')::int, '00001', 'TEST1', NULL);
+                    NULL, currval('batch_id_seq')::int, '00001', 'TEST1',
+                    NULL, NULL);
     SELECT results_eq('test', ARRAY[true], 'Locked Invoice not in total');
     DEALLOCATE test;
 
