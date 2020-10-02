@@ -310,10 +310,16 @@ CREATE TYPE payment_contact_invoice AS (
         got_lock bool
 );
 
+DROP FUNCTION IF EXISTS payment_get_all_contact_invoices
+(in_account_class int, in_business_id int, in_currency char(3),
+        in_date_from date, in_date_to date, in_batch_id int,
+        in_ar_ap_accno text, in_meta_number text, in_payment_date date);
+
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
         in_date_from date, in_date_to date, in_batch_id int,
-        in_ar_ap_accno text, in_meta_number text, in_payment_date date)
+        in_ar_ap_accno text, in_meta_number text, in_contact_name text,
+        in_payment_date date)
 RETURNS SETOF payment_contact_invoice AS
 $$
                   SELECT c.id AS contact_id, e.control_code as econtrol_code,
@@ -412,7 +418,9 @@ $$
                                                                = in_ar_ap_accno)
                                     )))
                          AND (in_meta_number IS NULL OR
-                             in_meta_number = c.meta_number)
+                              in_meta_number = c.meta_number)
+                         AND (in_contact_name IS NULL OR
+                              e.name ilike '%' || in_contact_name || '%')
                 GROUP BY c.id, e.name, c.meta_number, c.threshold,
                         e.control_code, c.description
                   HAVING  c.threshold is null or (sum(p.due) >= c.threshold
@@ -424,7 +432,8 @@ $$ LANGUAGE sql;
 COMMENT ON FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
         in_date_from date, in_date_to date, in_batch_id int,
-        in_ar_ap_accno text, in_meta_number text, in_datepaid date) IS
+        in_ar_ap_accno text, in_meta_number text, in_contact_name text,
+        in_datepaid date) IS
 $$
 This function takes the following arguments (all prefaced with in_ in the db):
 account_class: 1 for vendor, 2 for customer
