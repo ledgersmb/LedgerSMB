@@ -1,4 +1,5 @@
 [% PROCESS 'elements.html';
+   PROCESS 'report_base.html';
 PROCESS "dynatable.html"  %]
 [% IF !country_id; country_id = default_country; END -%]
 [% IF !country_id_t; country_id_t = default_country; END -%]
