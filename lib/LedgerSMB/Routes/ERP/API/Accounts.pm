@@ -41,6 +41,14 @@ get '/accounts/', sub {
              [ 'Content-Type' => '' ],
              [ json()->encode(
                    [
+                    # if there's a $label, non-matching items are filtered
+                    # meaning that it doesn't matter that index() returns -1
+                    # on no match...
+                    # a lower index means higher relevance
+                    sort {
+                        index($a->{label},$label) <=> index($b->{label},$label)
+                            || $a cmp $b
+                    }
                     grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
                     map { $_->{label} = $_->{accno} . '--' . $_->{description};
                           $_ }
