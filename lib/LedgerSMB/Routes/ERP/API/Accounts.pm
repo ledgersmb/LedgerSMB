@@ -47,7 +47,7 @@ get '/accounts/', sub {
                     # a lower index means higher relevance
                     sort {
                         index($a->{label},$label) <=> index($b->{label},$label)
-                            || $a cmp $b
+                            || ($a->{label} cmp $b->{label})
                     }
                     grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
                     map { $_->{label} = $_->{accno} . '--' . $_->{description};
