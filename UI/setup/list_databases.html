@@ -4,7 +4,7 @@ include_stylesheet=["setup.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; %]
 <body id="setup-list-databases" class="lsmb [% dojo_theme %]">
-<div class="setupconsole">
+<div class="setupconsole" data-dojo-type="lsmb/main">
 [% INCLUDE 'setup/ui-db-credentials.html' %]
 <div class="listtop">[% text('Available Databases') %]</div>
 [%
