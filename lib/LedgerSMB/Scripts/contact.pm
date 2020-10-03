@@ -283,6 +283,8 @@ sub _main_screen {
     my @business_types =
                $request->call_procedure(funcname => 'business_type__list');
 
+    my @sic_list = $request->call_procedure(funcname => 'sic__list');
+
     my @all_currencies =
         map { { curr => $_ } }
         (LedgerSMB::Setting->new(%$request))->get_currencies;
@@ -351,6 +353,7 @@ sub _main_screen {
      attach_level_options => $attach_level_options,
                 entity_id => $entity_id,
              entity_class => $entity_class,
+                 sic_list => \@sic_list,
       location_class_list => \@location_class_list,
        contact_class_list => \@contact_class_list,
            business_types => \@business_types,
