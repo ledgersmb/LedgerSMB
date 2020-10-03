@@ -1,38 +1,70 @@
 /** @format */
+/* eslint no-param-reassign:0 */
 
 define([
     "dijit/layout/ContentPane",
     "dojo/_base/declare",
+    "dojo/_base/event",
+    "dojo/_base/lang",
     "dijit/registry",
     "dojo/dom-style",
-    "dojo/_base/lang",
+    "dojo/on",
     "dojo/promise/Promise",
     "dojo/promise/all",
     "dojo/request/xhr",
+    "dojo/hash",
     "dojo/query",
-    //   "dojo/request/iframe",
+    "dojo/mouse",
     "dojo/dom-class",
     "dojo/topic"
 ], function (
     ContentPane,
     declare,
+    event,
+    lang,
     registry,
     domStyle,
-    lang,
+    on,
     Promise,
     all,
     xhr,
+    hash,
     query,
-    //   iframe,
+    mouse,
     domClass,
     topic
 ) {
+    var c = 0;
+
     return declare("lsmb/MainContentPane", [ContentPane], {
         last_page: null,
-        interceptClick: null,
         startup: function () {
             this.inherited("startup", arguments);
             domClass.add(this.domNode, "done-parsing");
+        },
+        interceptClick: function (dnode) {
+            var self = this;
+
+            if (dnode.target || !dnode.href) {
+                return;
+            }
+
+            var href = dnode.href + "#s";
+            on(dnode, "click", function (e) {
+                if (!e.ctrlKey && !e.shiftKey && mouse.isLeft(e)) {
+                    event.stop(e);
+                    c++;
+                    hash(href + c.toString(16));
+                    self.fade_main_div();
+                }
+            });
+            var l = window.location;
+            dnode.href =
+                l.origin +
+                l.pathname +
+                l.search +
+                "#" +
+                dnode.href.substring(l.origin.length);
         },
         report_request_error: function (err) {
             var d = registry.byId("errorDialog");

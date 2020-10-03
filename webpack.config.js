@@ -78,7 +78,7 @@ glob.sync("**/*.html", {
 // Pull UI/js-src/lsmb
 includedRequires = includedRequires
 .concat(
-   glob.sync("lsmb/**/!(main|bootstrap|lsmb.profile|webpack.loaderConfig).js", {
+   glob.sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
             cwd: "UI/js-src/"
     }).map(function(file) {
            return file.replace(/\.js$/,'')
@@ -332,11 +332,6 @@ const optimizationList = {
               },
               maxInitialRequests: Infinity,
               cacheGroups: {
-                  main: {
-                      test: /lsmb[\\/]main.+\.js/,
-                      name: "main",
-                      ...groupsOptions
-                  },
                   node_modules: {
                       test(module, chunks) {
                           // `module.resource` contains the absolute path of the file on disk.
@@ -385,7 +380,6 @@ const webpackConfigs = {
     context: path.join(__dirname, "UI"),
 
     entry: {
-        main: "lsmb/main.js",
         bootstrap: "js-src/lsmb/bootstrap.js",  // Virtual file
         ...lsmbCSS
     },
