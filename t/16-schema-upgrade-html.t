@@ -46,17 +46,10 @@ sub filter_js_src {
     # Filter out chunks hashes
     $line =~ s|[~\.]([0-9a-f]{8}\.)?[0-9a-f]{20}\.js|.js|g;
     # Split in lines
-    @{$lines} = split(/\n/, $line);
+    return $line;
 }
 
 
-sub find_application_mode {
-    my $lines = shift;
-    my $pattern = qr/^\bmode:\s*"(production|development)"$/;
-    my @mode = grep {/$pattern/} @$lines;
-    return if @mode != 1; # We need only a single line
-    return ($mode[0] =~ /$pattern/)[0];
-}
 
 ###############################################
 #
@@ -157,64 +150,20 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-filter_js_src($out);
-my $mode = find_application_mode($out);
+$out = filter_js_src($out);
 
-my $check = qq{<!-- prettier-disable -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
-    <script>
-        var dojoConfig = {
-            async: 1,
-            locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
-        };
-        var lsmbConfig = {
-        };
-    </script>
-    <script src="js/_scripts/manifest.js"></script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/_scripts/npm.dojo.js"></script>
-            <script src="js/_scripts/npm.dijit.js"></script>
-            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
-        : ''
-    ) . qq{
-    <script src="js/_scripts/main.js"></script>
-    <script src="js/_scripts/bootstrap.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-</head>
-<body class="claro">
-  <form method="POST"
-        enctype="multipart/form-data"
-        action="script.pl?action=rebuild">
-    <input type="hidden" name="action" value="rebuild_modules">
-    <input type="hidden" name="database" value="">
-    <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
+my $check = qq{
 <div class="description">
   <h1>title</h1>
   <p>
     <p>a description</p>
   </p>
-</div>
-</form>
-</body>
-</html>};
+</div>};
 
 $check =~ s|\n+\s*|\n|g;
-my @expected = split (/\n/, $check);
 
-is $out,\@expected, 'Render the description && title',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 1 };
+ok( (index($out,$check)>0), 'Render the description && title')
+    or diff([ split /\n/, $out ], [ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 1 });
 
 
 ###############################################
@@ -256,62 +205,18 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-filter_js_src($out);
-$check = qq{<!-- prettier-disable -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
-    <script>
-        var dojoConfig = {
-            async: 1,
-            locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
-        };
-        var lsmbConfig = {
-        };
-    </script>
-    <script src="js/_scripts/manifest.js"></script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/_scripts/npm.dojo.js"></script>
-            <script src="js/_scripts/npm.dijit.js"></script>
-            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
-        : ''
-    ) . qq{
-    <script src="js/_scripts/main.js"></script>
-    <script src="js/_scripts/bootstrap.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-</head>
-<body class="claro">
-  <form method="POST"
-        enctype="multipart/form-data"
-        action="script.pl?action=rebuild">
-    <input type="hidden" name="action" value="rebuild_modules">
-    <input type="hidden" name="database" value="">
-    <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
-<div class="description">
+$out = filter_js_src($out);
+$check = qq{<div class="description">
   <h1>title</h1>
   <p>
     <p>another description</p>
   </p>
-</div>
-</form>
-</body>
-</html>};
+</div>};
 
 $check =~ s|\n+\s*|\n|g;
-@expected = split (/\n/, $check);
 
-is $out, \@expected, 'Render a custom description',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+ok( (index($out,$check)>0), 'Render a custom description')
+    or diff([ split /\n/, $out ], [ split /\n/, $check ], { STYLE => 'Table', CONTEXT => 2 });
 
 
 ###############################################
@@ -353,63 +258,19 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-filter_js_src($out);
-$check = qq{<!-- prettier-disable -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
-    <script>
-        var dojoConfig = {
-            async: 1,
-            locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
-        };
-        var lsmbConfig = {
-        };
-    </script>
-    <script src="js/_scripts/manifest.js"></script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/_scripts/npm.dojo.js"></script>
-            <script src="js/_scripts/npm.dijit.js"></script>
-            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
-        : ''
-    ) . qq{
-    <script src="js/_scripts/main.js"></script>
-    <script src="js/_scripts/bootstrap.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-</head>
-<body class="claro">
-  <form method="POST"
-        enctype="multipart/form-data"
-        action="script.pl?action=rebuild">
-    <input type="hidden" name="action" value="rebuild_modules">
-    <input type="hidden" name="database" value="">
-    <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
-<button
+$out = filter_js_src($out);
+$check = qq{<button
    type="submit"
    id="confirm-0"
    name="confirm"
    value="abc"
    data-dojo-type="dijit/form/Button"
-   >Abc</button>
-</form>
-</body>
-</html>};
+   >Abc</button>};
 
 $check =~ s|\n+\s*|\n|g;
-@expected = split (/\n/, $check);
 
-is $out, \@expected, 'Render a confirmation',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+ok( index($out, $check)>0, 'Render a confirmation')
+    or diff([ split /\n/, $out ],[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
 
 
 ###############################################
@@ -451,48 +312,8 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-filter_js_src($out);
-$check = qq{<!-- prettier-disable -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
-    <script>
-        var dojoConfig = {
-            async: 1,
-            locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
-        };
-        var lsmbConfig = {
-        };
-    </script>
-    <script src="js/_scripts/manifest.js"></script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/_scripts/npm.dojo.js"></script>
-            <script src="js/_scripts/npm.dijit.js"></script>
-            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
-        : ''
-    ) . qq{
-    <script src="js/_scripts/main.js"></script>
-    <script src="js/_scripts/bootstrap.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-</head>
-<body class="claro">
-  <form method="POST"
-        enctype="multipart/form-data"
-        action="script.pl?action=rebuild">
-    <input type="hidden" name="action" value="rebuild_modules">
-    <input type="hidden" name="database" value="">
-    <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
-<button
+$out = filter_js_src($out);
+$check = qq{<button
    type="submit"
    id="confirm-0"
    name="confirm"
@@ -505,16 +326,13 @@ $check = qq{<!-- prettier-disable -->
    name="confirm"
    value="def"
    data-dojo-type="dijit/form/Button"
-   >Def</button>
-</form>
-</body>
-</html>};
+   >Def</button>};
 
 $check =~ s|\s*\n+\s*|\n|g;
-@expected = split (/\n/, $check);
 
-is $out, \@expected, 'Render multiple confirmations',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+
+ok( index($out,$check)>0, 'Render multiple confirmations')
+    or diff([ split /\n/, $out ],[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
 
 
 ###############################################
@@ -566,49 +384,8 @@ $out = html_formatter_context {
     return ! run_checks($dbh, checks => \@checks);
 } test_request();
 
-filter_js_src($out);
-$check = qq{<!-- prettier-disable -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="js/dojo/resources/dojo.css" rel="stylesheet">
-    <link href="js/css/claro.css" rel="stylesheet">
-    <link href="js/css/ledgersmb.css" rel="stylesheet">
-    <link href="js/css/setup.css" rel="stylesheet">
-    <script>
-        var dojoConfig = {
-            async: 1,
-            locale: "",
-            packages: [{"name":"lsmb","location":"../lsmb"}],
-            mode: "$mode"
-        };
-        var lsmbConfig = {
-        };
-    </script>
-    <script src="js/_scripts/manifest.js"></script>
-    } .
-    ($mode eq "production"
-        ? q{<script src="js/_scripts/npm.dojo.js"></script>
-            <script src="js/_scripts/npm.dijit.js"></script>
-            <script src="js/_scripts/npm.dojo-webpack-plugin.js"></script>
-            <script src="js/_scripts/bootstrap~gnome~gnome2~ledgersmb~ledgersmb-blue~ledgersmb-brown~ledgersmb-common~ledgersmb-purple~le.js"></script>}
-        : ''
-    ) . qq{
-    <script src="js/_scripts/main.js"></script>
-    <script src="js/_scripts/bootstrap.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-</head>
-<body class="claro">
-  <form method="POST"
-        enctype="multipart/form-data"
-        action="script.pl?action=rebuild">
-    <input type="hidden" name="action" value="rebuild_modules">
-    <input type="hidden" name="database" value="">
-    <input type="hidden" name="check_id" value="d5d3db1765287eef77d7927cc956f50a">
- 
- <table id="grid"
+$out = filter_js_src($out);
+$check = qq{<table id="grid"
         class="dynatable "
         width="">
   <thead>
@@ -628,15 +405,11 @@ $check = qq{<!-- prettier-disable -->
    </tr>
   </tbody>
   <input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
- </table>
-</form>
-</body>
-</html>};
+ </table>};
 
 $check =~ s|\n+\s*|\n|g;
-@expected = split (/\n/, $check);
 
-is $out, \@expected, 'Render a grid (2-column p-key)',
-    diff $out,\@expected,{ STYLE => 'Table', CONTEXT => 2 };
+ok( index($out,$check)>0, 'Render a grid (2-column p-key)')
+    or diff( $out,[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
 
 done_testing;
