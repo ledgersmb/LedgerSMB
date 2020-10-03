@@ -121,17 +121,19 @@
                         size = "19"
                 } #' %]
 </div>
+[% IF sic_list.size > 0 %]
 <div class="input_group2">
-                [% INCLUDE input element_data = {
+                [% INCLUDE select element_data = {
                         label = '_none_'
                         title = text('SIC'),
                         name = "sic_code",
-                        value = company.sic_code,
-                        type = "text",
-                        size = "19",
+                        options = sic_list
+                        default_values = [ company.sic_code ],
+                        default_blank = 1
                         class = 'sic'
                 } %]
 </div>
+[% END %]
 </div>
 <div class="input_line"
      id="sales-tax-info">

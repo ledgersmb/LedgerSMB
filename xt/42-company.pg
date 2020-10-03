@@ -65,6 +65,7 @@ BEGIN;
 
     -- Run tests
 
+    INSERT INTO sic (code, description) VALUES ('1234', '1234 Desc');
     PREPARE test AS SELECT
         company__save ('TESTING...', 1,'TESTING', 'TESTING', NULL, '1234',
                         232, 'st-123', 'ubi-123-456-789')
