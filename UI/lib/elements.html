@@ -246,7 +246,8 @@
          element_keys          = option_keys,
          custom_attribute_data = option_data.attributes;
 
-     "<option$all_attributes >" _ option_data.$text_attr _ "</option>";
+     "<option$all_attributes >" _ ((option_data.$text_attr == '_!lsmb!empty!_')
+                           ? "" : option_data.$text_attr) _ "</option>";
   %]
 [% END %]
 
