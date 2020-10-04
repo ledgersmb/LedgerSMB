@@ -48,8 +48,11 @@ Code cleanup
 Dependency updates
 * perl 5.24 (updated from 5.20)
 * Locale::CLDR::* (new)
+* Locale::Country (dropped)
+* Locale::Language (dropped)
 * MooseX::ClassAttribute (new)
 * PGObject::Util::DBAdmin 1.1.0 (updated from 1.0.1)
+* URI::Escape (new)
 
 
 Changelog for 1.8 Series
