@@ -9,6 +9,8 @@ Added functionalities
 * List of countries in preferences now translated
 * Database used for authentication in setup.pl now configurable (auth_db)
 * Database used to query system characteristics now configurable (admin_db)
+* Add link to customer screen from invoice entry
+* Add option to search by customer/vendor name on payments search
 
 Changed functionalities
 * Faster HTML response generation (optimized HTML preprocessing)
@@ -16,6 +18,7 @@ Changed functionalities
 * JavaScript now built using WebPack (no longer using Dojo's build only)
 * Report filters and account settings hide GIFI when not configured
 * Invoice 'Save Info' now saves changes to 'Salesperson'
+* Add option to report opening or closing balance on balance sheet
 
 Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
@@ -24,6 +27,10 @@ Bugs fixed
 * Default CoA referential integrity and consistency
 * Templates in setup.pl appearing in changing, random order
 * Fix type problems due to BigFloat being downgraded to BigInt
+* Parts search filter screen needs better layout
+* Value selection on non-required select can be undone with empty item
+* Update menu to conform to selected language after preferences save
+* SIC value is free entry instead of selection from configured SIC list
 
 Code cleanup
 * Align HTML templates between `demo` and `xedemo` document template sets
