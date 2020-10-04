@@ -48,6 +48,13 @@ Dependency updates
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.5
+* Fix failure to post recurring AR/AP transaction (#5152)
+* Add horizontal scrolling for wide content (#5156)
+* Fix Customer (ECA) Income statement not working (#2501)
+* Change GL account selector to sort prefix-matches on top (#3908)
+
+
 Changelog for 1.8.4
 * Fix subtotals not showing on AR/AP outstanding report (#4732)
 * Apply default sorting to AR/AP outstanding and transactions reports (#5080)
