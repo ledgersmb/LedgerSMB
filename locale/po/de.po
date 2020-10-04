@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.5-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-09-27 19:14+0000\n"
+"POT-Creation-Date: 2020-10-04 18:31+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2020\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -227,7 +227,7 @@ msgstr "Zugriff verweigert"
 #: templates/demo_with_images/printPayment.html:39
 #: templates/xedemo/invoice.html:254 templates/xedemo/printPayment.html:39
 #: UI/accounts/edit.html:118 UI/budgetting/budget_entry.html:57
-#: UI/Contact/contact.html:14 UI/Contact/divs/credit.html:188
+#: UI/Contact/contact.html:15 UI/Contact/divs/credit.html:188
 #: UI/Contact/divs/credit.html:189 UI/journal/journal_entry.html:129
 #: UI/orders/order.html:252 UI/payments/payment2.html:86
 #: UI/payments/payment2.html:257 UI/payments/payment2.html:321
@@ -297,7 +297,7 @@ msgstr "Kontotyp"
 msgid "Account [_1] not found"
 msgstr "Konto [_1] nicht gefunden"
 
-#: UI/Reports/filters/balance_sheet.html:225
+#: UI/Contact/divs/credit.html:520 UI/Reports/filters/balance_sheet.html:225
 #: UI/Reports/filters/income_statement.html:272
 msgid "Account category"
 msgstr "Kontokategorie"
@@ -306,7 +306,7 @@ msgstr "Kontokategorie"
 msgid "Account does not exist!"
 msgstr "Konto existiert nicht!"
 
-#: UI/Reports/filters/balance_sheet.html:176
+#: UI/Contact/divs/credit.html:471 UI/Reports/filters/balance_sheet.html:176
 #: UI/Reports/filters/income_statement.html:223
 msgid "Account numbers"
 msgstr "Kontennummern"
@@ -437,7 +437,7 @@ msgstr "Eingangsrechnung hinzufügen"
 msgid "Add Credit Note"
 msgstr "Gutschrift hinzufügen"
 
-#: t/data/04-complex_template.html:16 UI/Contact/contact.html:25
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:26
 msgid "Add Customer"
 msgstr "Kunden hinzufügen"
 
@@ -453,7 +453,7 @@ msgstr "Debitorenrechnung hinzufügen"
 msgid "Add Debit Note"
 msgstr "Lastschrift hinzufügen"
 
-#: t/data/04-complex_template.html:20 UI/Contact/contact.html:29
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:30
 #: sql/Pg-database.sql:2695
 msgid "Add Employee"
 msgstr "Mitarbeiter hinzufügen"
@@ -555,7 +555,7 @@ msgstr "Einheit hinzufügen"
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
-#: t/data/04-complex_template.html:18 UI/Contact/contact.html:27
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:28
 msgid "Add Vendor"
 msgstr "Lieferanten hinzufügen"
 
@@ -1751,7 +1751,7 @@ msgstr "Verkaufsaufträge kombinieren"
 #: templates/demo_with_images/display_report.html:14
 #: templates/demo_with_images/display_report.tex:24
 #: templates/xedemo/display_report.html:14
-#: templates/xedemo/display_report.tex:24 UI/Contact/contact.html:11
+#: templates/xedemo/display_report.tex:24 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:3 UI/login.html:86 UI/main.html:30
 #: UI/Reports/aging_report.html:14 UI/Reports/display_report.html:28
 msgid "Company"
@@ -1869,7 +1869,7 @@ msgstr "Inhalt"
 #: old/bin/io.pl:1087 old/bin/io.pl:625 old/bin/oe.pl:1534 old/bin/oe.pl:2049
 #: old/bin/oe.pl:2545 old/bin/pe.pl:1182 old/bin/pe.pl:326 old/bin/pe.pl:745
 #: old/bin/pe.pl:915 UI/asset/begin_approval.html:65
-#: UI/asset/begin_report.html:59 UI/Contact/divs/credit.html:403
+#: UI/asset/begin_report.html:59 UI/Contact/divs/credit.html:535
 #: UI/create_batch.html:44 UI/inventory/adjustment_setup.html:34
 #: UI/oe-save-warn.html:18 UI/payments/payments_filter.html:131
 #: UI/Reports/co/filter_bm.html:138 UI/Reports/co/filter_cd.html:114
@@ -2154,9 +2154,8 @@ msgid "Customer History"
 msgstr "Alle Belege für Kunde"
 
 #: UI/Contact/divs/credit.html:369
-#, fuzzy
 msgid "Customer Invoice"
-msgstr "Kunde nicht in der Datei!"
+msgstr ""
 
 #: UI/payments/payment1.html:44 UI/payments/payment2.html:28
 #: UI/Reports/filters/orders.html:8
@@ -2412,7 +2411,7 @@ msgstr ""
 msgid "Date: [_1]"
 msgstr "Datum: [_1]"
 
-#: UI/Reports/filters/balance_sheet.html:67
+#: UI/Contact/divs/credit.html:417 UI/Reports/filters/balance_sheet.html:67
 #: UI/Reports/filters/income_statement.html:99
 msgid "Dates"
 msgstr "Datum"
@@ -2983,7 +2982,7 @@ msgstr "EDI ID"
 msgid "EDI Interchange ID"
 msgstr "EDI-Austausch-ID"
 
-#: old/bin/aa.pl:148 old/bin/arapprn.pl:62 t/data/04-complex_template.html:506
+#: old/bin/aa.pl:147 old/bin/arapprn.pl:62 t/data/04-complex_template.html:506
 #: UI/Contact/divs/address.html:52 UI/Contact/divs/contact_info.html:11
 #: UI/templates/widget.html:125
 msgid "Edit"
@@ -3017,7 +3016,7 @@ msgstr "Gutschrift bearbeiten"
 msgid "Edit Credit Note"
 msgstr "Gutschrift bearbeiten"
 
-#: t/data/04-complex_template.html:17 UI/Contact/contact.html:26
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:27
 msgid "Edit Customer"
 msgstr "Kunden bearbeiten"
 
@@ -3033,7 +3032,7 @@ msgstr "Lastschrift bearbeiten"
 msgid "Edit Description Translations"
 msgstr "Übersetzung der Beschreibungen bearbeiten"
 
-#: t/data/04-complex_template.html:21 UI/Contact/contact.html:30
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:31
 msgid "Edit Employee"
 msgstr "Mitarbeiter bearbeiten"
 
@@ -3101,7 +3100,7 @@ msgstr "Steuerformular bearbeiten"
 msgid "Edit User"
 msgstr "Benutzerdaten bearbeiten"
 
-#: t/data/04-complex_template.html:19 UI/Contact/contact.html:28
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:29
 msgid "Edit Vendor"
 msgstr "Lieferanten bearbeiten"
 
@@ -3668,9 +3667,9 @@ msgstr "Fr."
 #: templates/demo_with_images/bin_list.html:28
 #: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
 #: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:22
-#: UI/lib/report_base.html:114 UI/lib/report_base.html:208
-#: UI/Reports/co/filter_bm.html:20 UI/Reports/co/filter_cd.html:38
-#: UI/Reports/filters/contact_search.html:116
+#: UI/Contact/divs/credit.html:441 UI/lib/report_base.html:114
+#: UI/lib/report_base.html:208 UI/Reports/co/filter_bm.html:20
+#: UI/Reports/co/filter_cd.html:38 UI/Reports/filters/contact_search.html:116
 #: UI/Reports/filters/income_statement.html:123
 #: UI/Reports/filters/income_statement.html:198
 #: UI/Reports/filters/purchase_history.html:116
@@ -3706,7 +3705,8 @@ msgstr "Aus Warenlager"
 msgid "From date"
 msgstr "Von Datum"
 
-#: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:204
+#: UI/asset/begin_report.html:31 UI/Contact/divs/credit.html:499
+#: UI/Reports/filters/balance_sheet.html:204
 #: UI/Reports/filters/income_statement.html:251
 #: UI/Reports/filters/trial_balance.html:9
 msgid "Full"
@@ -3883,7 +3883,7 @@ msgstr "HTML Vorlagen"
 msgid "Heading"
 msgstr "Überschrift"
 
-#: UI/Reports/filters/balance_sheet.html:186
+#: UI/Contact/divs/credit.html:481 UI/Reports/filters/balance_sheet.html:186
 #: UI/Reports/filters/income_statement.html:233
 msgid "Hierarchy type"
 msgstr "Hierarchietyp"
@@ -5097,7 +5097,7 @@ msgstr ""
 msgid "No changes"
 msgstr ""
 
-#: old/bin/aa.pl:210 old/bin/ir.pl:159 old/bin/is.pl:151
+#: old/bin/aa.pl:209 old/bin/ir.pl:159 old/bin/is.pl:151
 msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr ""
 "Keine WÃ¤hrungen definiert.  Bitte richten sie diese unter System/"
@@ -5185,7 +5185,7 @@ msgstr ""
 msgid "Not Submitted"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:218
+#: UI/Contact/divs/credit.html:513 UI/Reports/filters/balance_sheet.html:218
 #: UI/Reports/filters/income_statement.html:265
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
@@ -5852,11 +5852,11 @@ msgstr "Prozent verbleibend"
 msgid "Period"
 msgstr "Zeitraum"
 
-#: UI/Reports/filters/income_statement.html:79
+#: UI/Contact/divs/credit.html:397 UI/Reports/filters/income_statement.html:79
 msgid "Period selection"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:80
+#: UI/Contact/divs/credit.html:430 UI/Reports/filters/balance_sheet.html:80
 #: UI/Reports/filters/income_statement.html:112
 msgid "Periods"
 msgstr ""
@@ -7297,7 +7297,7 @@ msgstr "WÃ¤hle Postscript oder PDF!"
 msgid "Select txt, postscript or PDF!"
 msgstr "WÃ¤hle TXT, Postscript oder PDF!"
 
-#: UI/Reports/filters/balance_sheet.html:47
+#: UI/Contact/divs/credit.html:400 UI/Reports/filters/balance_sheet.html:47
 #: UI/Reports/filters/income_statement.html:82
 msgid "Select using"
 msgstr "Ausgewählt mit"
@@ -8431,10 +8431,11 @@ msgstr "Zeiten"
 #: templates/demo/work_order.html:28 templates/xedemo/invoice.html:28
 #: templates/xedemo/request_quotation.tex:27
 #: templates/xedemo/sales_order.html:28 templates/xedemo/work_order.html:28
-#: UI/asset/begin_approval.html:30 UI/lib/report_base.html:125
-#: UI/lib/report_base.html:219 UI/payments/payments_detail.html:122
-#: UI/Reports/co/filter_bm.html:26 UI/Reports/co/filter_cd.html:44
-#: UI/Reports/filters/aging.html:33 UI/Reports/filters/income_statement.html:135
+#: UI/asset/begin_approval.html:30 UI/Contact/divs/credit.html:453
+#: UI/lib/report_base.html:125 UI/lib/report_base.html:219
+#: UI/payments/payments_detail.html:122 UI/Reports/co/filter_bm.html:26
+#: UI/Reports/co/filter_cd.html:44 UI/Reports/filters/aging.html:33
+#: UI/Reports/filters/income_statement.html:135
 #: UI/Reports/filters/income_statement.html:206
 #: UI/Reports/filters/purchase_history.html:124
 #: UI/Reports/filters/purchase_history.html:144
