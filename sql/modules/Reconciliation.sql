@@ -205,14 +205,11 @@ Note that currently contra accounts will show negative balances.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) returns INT as $$
 
-    DECLARE
-        current_row RECORD;
-        ac_entries int[];
     BEGIN
         UPDATE cr_report SET approved = 't',
                 approved_by = person__get_my_entity_id(),
                 approved_username = SESSION_USER
-        WHERE id = in_report_id;
+         WHERE id = in_report_id;
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No report at %.', $1;
         END IF;
@@ -225,7 +222,6 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
                         where rll.entry_id = ac.entry_id
                               and rl.cleared
                               and rl.report_id = in_report_id);
-
         return 1;
     END;
 
