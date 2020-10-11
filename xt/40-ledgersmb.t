@@ -7,9 +7,14 @@ use Test2::V0;
 use Math::BigFloat;
 
 use LedgerSMB;
+use LedgerSMB::Locale;
+use LedgerSMB::Sysconfig;
 use Plack::Request;
 
 use Log::Log4perl qw(:easy);
+
+LedgerSMB::Sysconfig->initialize;
+LedgerSMB::Locale->initialize;
 Log::Log4perl->easy_init($OFF);
 
 my $request = Plack::Request->new({});

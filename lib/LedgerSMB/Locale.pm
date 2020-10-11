@@ -13,6 +13,10 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 
 =over
 
+=item initialize
+
+Class method to load the translation lexicons.
+
 =item get_handle ($language_code)
 
 Returns a locale handle for accessing the other methods.  Inherited from

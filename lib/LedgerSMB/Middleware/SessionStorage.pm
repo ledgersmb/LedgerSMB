@@ -39,6 +39,10 @@ use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 
+=head2 $self->prepare_app
+
+Implements C<Plack::Component->prepare_app()>.
+
 =head2 $self->call($env)
 
 Implements C<Plack::Middleware->call()>.
@@ -46,10 +50,15 @@ Implements C<Plack::Middleware->call()>.
 =cut
 
 # this variable exists to deal with the code in old/
-our $store = Session::Storage::Secure->new(
-    secret_key => LedgerSMB::Sysconfig::cookie_secret,
-    default_duration => 24*60*60*90, # 90 days
-    );
+our $store;
+
+sub prepare_app {
+    # delay initializing $store to allow LedgerSMB::Sysconfig to be loaded
+    $store = Session::Storage::Secure->new(
+        secret_key => LedgerSMB::Sysconfig::cookie_secret,
+        default_duration => 24*60*60*90, # 90 days
+        );
+}
 
 sub call {
     my $self = shift;

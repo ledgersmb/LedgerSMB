@@ -24,6 +24,9 @@ if ($ENV{COVERAGE} && $ENV{CI}) {
 }
 
 
+use LedgerSMB::Sysconfig;
+LedgerSMB::Sysconfig->initialize;
+
 #### Test setup
 
 my @on_disk;

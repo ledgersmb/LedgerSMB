@@ -5,9 +5,14 @@ use Test2::V0;
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::App_State;
+use LedgerSMB::Locale;
+use LedgerSMB::Sysconfig;
+
 use Log::Log4perl qw(:easy);
 use Plack::Request;
 
+LedgerSMB::Sysconfig->initialize;
+LedgerSMB::Locale->initialize;
 Log::Log4perl->easy_init($OFF);
 
 $ENV{REQUEST_METHOD} = 'GET';
