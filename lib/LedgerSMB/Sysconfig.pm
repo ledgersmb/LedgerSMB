@@ -36,9 +36,6 @@ else {
     $cfg = Config::IniFiles->new();
 }
 
-our %config;
-our %docs;
-
 =head2 def $name, %args;
 
 A function to define config keys and set their values on initialisation.
@@ -99,9 +96,7 @@ sub def {
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
 
-    $docs{$sec}->{$key} = $args{doc};
     {
-
         my $ref = qualify_to_ref $name;
         no warnings 'redefine';     ## no critic ( ProhibitNoWarnings ) # sniff
 
