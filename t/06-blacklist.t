@@ -1,11 +1,13 @@
 #!/usr/bin/perl
 
-use LedgerSMB::Sysconfig;
+use LedgerSMB::Sysconfig qw(initialize);
 
 use Test2::V0;
 use Test2::Plugin::BailOnFail;
 use Digest::SHA 'sha512_base64'; #already a dependency
 use FindBin;
+
+initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 my $sqldir = "$FindBin::Bin/../sql/modules";
 my $blacklist_file = "$sqldir/BLACKLIST";

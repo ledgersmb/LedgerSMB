@@ -8,7 +8,7 @@ use warnings;
 use Test2::V0;
 use Math::BigFloat;
 
-use LedgerSMB::Sysconfig;
+use LedgerSMB::Sysconfig qw(initialize);
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
@@ -16,6 +16,8 @@ use LedgerSMB::App_State;
 use Plack::Request;
 
 use Log::Log4perl qw( :easy );
+
+initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 Log::Log4perl->easy_init($OFF);
 
 

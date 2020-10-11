@@ -6,7 +6,7 @@ use Test2::V0;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
-use LedgerSMB::Sysconfig;
+use LedgerSMB::Sysconfig qw(initialize);
 use LedgerSMB::DBObject::Admin;
 use DBI;
 use Plack::Request;
@@ -20,6 +20,8 @@ defined $ENV{LSMB_TEST_DB} or plan skip_all => 'LSMB_TEST_DB is not set';
 # the database will be created when this test is run and later dropped
 # by xt/89-dropdb.t
 $ENV{LSMB_NEW_DB} or bail_out('LSMB_NEW_DB is not set');
+
+initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 my $temp = $ENV{TEMP} || '/tmp/';
 

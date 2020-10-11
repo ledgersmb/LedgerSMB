@@ -594,10 +594,11 @@ sub override_defaults {
     return;
 }
 
+
 sub initialize {
     my $cfg_file = shift;
 
-    if (-r $cfg_file) {
+    if ($cfg_file and -r $cfg_file) {
         $cfg = Config::IniFiles->new( -file => $cfg_file )
             or die @Config::IniFiles::errors;
     }
@@ -617,8 +618,6 @@ sub initialize {
 
     override_defaults();
 }
-
-initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 =head1 LICENSE AND COPYRIGHT
 
