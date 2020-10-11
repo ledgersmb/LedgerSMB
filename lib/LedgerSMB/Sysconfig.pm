@@ -497,11 +497,6 @@ sub printer {
 }
 
 
-# ENV Paths
-for my $var (qw(PATH PERL5LIB)) {
-     $ENV{$var} .= $Config{path_sep} . ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
-}
-
 
 
 
@@ -611,6 +606,14 @@ sub initialize {
         $cfg = Config::IniFiles->new();
     }
     $_->() for (@initializers);
+
+    # ENV Paths
+    for my $var (qw(PATH PERL5LIB)) {
+        $ENV{$var} .=
+            $Config{path_sep} .
+            ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
+    }
+
 
     override_defaults();
 }
