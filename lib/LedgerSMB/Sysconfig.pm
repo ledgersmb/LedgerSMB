@@ -24,17 +24,10 @@ use English;
 use String::Random;
 use Symbol;
 
+use parent qw(Exporter);
 
+our @EXPORT_OK = qw(initialize);
 
-my $cfg_file = $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf';
-my $cfg;
-if (-r $cfg_file) {
-    $cfg = Config::IniFiles->new( -file => $cfg_file ) || die @Config::IniFiles::errors;
-}
-else {
-    warn "No configuration file; running with default settings\n";
-    $cfg = Config::IniFiles->new();
-}
 
 =head2 def $name, %args;
 
@@ -86,34 +79,40 @@ A description of the use of this key. Should normally be a scalar.
 
 =cut
 
+my $cfg;
+my @initializers;
 sub def {
     my ($name, %args) = @_;
     my $sec = $args{section};
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
+    my $ref = qualify_to_ref $name;
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
 
-    {
-        my $ref = qualify_to_ref $name;
-        no warnings 'redefine';     ## no critic ( ProhibitNoWarnings ) # sniff
 
+
+    my $var;
+    push @initializers, sub {
         # get the value of config key $section.$key.
         #  If it doesn't exist use $default instead
-        my $var = $cfg->val($sec, $key, $default);
+        $var = $cfg->val($sec, $key, $default);
 
         # If an environment variable is associated and currently defined,
         #  override the configfile and default with the ENV VAR
         $var = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );
 
         # If an environment variable is associated, set it  based on the
-        # current value (taken from the config file, default, or pre-existing
-        #  env var.
-        $ENV{$envvar} = $var
+        # current value (taken from the config file, default, or
+        # pre-existing env var.
+        $ENV{$envvar} = $var    ## no critic (RequireLocalizedPunctuationVars)
             if $envvar && defined $var;
+    };
 
+    {
+        no warnings 'redefine';     ## no critic ( ProhibitNoWarnings )
         # create a functional interface
         *{$ref} = sub {
             my ($nv) = @_; # new value to be assigned
@@ -600,7 +599,23 @@ sub override_defaults {
     return;
 }
 
-override_defaults();
+sub initialize {
+    my $cfg_file = shift;
+
+    if (-r $cfg_file) {
+        $cfg = Config::IniFiles->new( -file => $cfg_file )
+            or die @Config::IniFiles::errors;
+    }
+    else {
+        warn "No configuration file; running with default settings\n";
+        $cfg = Config::IniFiles->new();
+    }
+    $_->() for (@initializers);
+
+    override_defaults();
+}
+
+initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 =head1 LICENSE AND COPYRIGHT
 
