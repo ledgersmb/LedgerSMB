@@ -218,6 +218,7 @@ my @modules =
 
 use Test2::Require::Module 'LedgerSMB::Sysconfig';
 delete $on_disk{'LedgerSMB::Sysconfig'};
+LedgerSMB::Sysconfig->initialize;
 
 module_loads 'LedgerSMB::Template::ODS' => qw( XML::Twig OpenOffice::OODoc );
 

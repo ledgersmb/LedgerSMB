@@ -7,9 +7,9 @@ use lib "$FindBin::Bin/../lib";
 use 5.010; # say makes things easier
 no lib '.'; # can run from anywhere
 
-use LedgerSMB::Sysconfig qw(initialize);
+use LedgerSMB::Sysconfig;
 
-initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 =head1 NAME
 

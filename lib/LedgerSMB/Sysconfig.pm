@@ -24,10 +24,6 @@ use English;
 use String::Random;
 use Symbol;
 
-use parent qw(Exporter);
-
-our @EXPORT_OK = qw(initialize);
-
 
 =head2 def $name, %args;
 
@@ -596,7 +592,7 @@ sub override_defaults {
 
 
 sub initialize {
-    my $cfg_file = shift;
+    my ($module, $cfg_file) = @_;
 
     if ($cfg_file and -r $cfg_file) {
         $cfg = Config::IniFiles->new( -file => $cfg_file )

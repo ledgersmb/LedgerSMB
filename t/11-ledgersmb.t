@@ -8,6 +8,11 @@ use Test2::V0;
 use LedgerSMB;
 use Plack::Request;
 
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Locale;
+LedgerSMB::Sysconfig->initialize;
+LedgerSMB::Locale->initialize;
+
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 

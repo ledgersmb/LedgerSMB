@@ -6,14 +6,15 @@ BEGIN {
     use lib 'xt/lib';
     use LedgerSMB;
     use LedgerSMB::Template;
-    use LedgerSMB::Sysconfig qw(initialize);
+    use LedgerSMB::Sysconfig;
     use LedgerSMB::DBTest;
     use LedgerSMB::App_State;
     use LedgerSMB::Locale;
     use Plack::Request;
 }
 
-initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Locale->initialize();
 
 # TODO: FIXME
 # This is a hack, and it's very bad!

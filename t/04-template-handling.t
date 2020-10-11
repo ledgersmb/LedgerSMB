@@ -7,7 +7,7 @@ use Test2::V0;
 
 use File::Temp;
 use LedgerSMB;
-use LedgerSMB::Sysconfig qw(initialize);
+use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
@@ -16,7 +16,8 @@ use Plack::Request;
 
 use Log::Log4perl qw(:easy);
 
-initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Locale->initialize();
 Log::Log4perl->easy_init($OFF);
 
 

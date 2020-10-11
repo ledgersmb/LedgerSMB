@@ -15,8 +15,13 @@ use Log::Log4perl qw( :easy );
 Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB;
+use LedgerSMB::Locale;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
+use LedgerSMB::Sysconfig;
+
+LedgerSMB::Sysconfig->initialize;
+LedgerSMB::Locale->initialize;
 
 
 sub test_request {

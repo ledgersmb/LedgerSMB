@@ -50,7 +50,6 @@ use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Legacy_Util;
-use LedgerSMB::Locale;
 
 require "old/bin/arap.pl";
 require "old/bin/io.pl";

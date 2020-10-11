@@ -5,9 +5,9 @@ use Test::More;
 
 
 use LedgerSMB::Database::Config;
-use LedgerSMB::Sysconfig qw(initialize);
+use LedgerSMB::Sysconfig;
 
-initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 my $coa = LedgerSMB::Database::Config->new->charts_of_accounts;
 

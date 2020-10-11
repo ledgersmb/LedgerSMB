@@ -3,6 +3,11 @@
 use Test2::V0;
 use MIME::Base64;
 
+BEGIN {
+    use LedgerSMB::Sysconfig;
+    LedgerSMB::Sysconfig->initialize;
+}
+
 use ok 'LedgerSMB::Auth';
 
 my $colonpasswd = 'Test:Test2';

@@ -100,13 +100,15 @@ use LedgerSMB::Sysconfig;
 use Locale::Maketext::Lexicon;
 use Encode;
 
-Locale::Maketext::Lexicon->import(
-    {
-        '*'     => [ Gettext => (LedgerSMB::Sysconfig::localepath() . '/*.po'), ],
-        _auto   => 1,
-        _decode => 1,
-    }
-);
+sub initialize {
+    Locale::Maketext::Lexicon->import(
+        {
+            '*'     => [ Gettext => (LedgerSMB::Sysconfig::localepath() . '/*.po'), ],
+                _auto   => 1,
+                _decode => 1,
+        }
+        );
+}
 
 sub marktext {
     return shift;
