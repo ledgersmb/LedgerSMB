@@ -599,7 +599,8 @@ sub initialize {
             or die @Config::IniFiles::errors;
     }
     else {
-        warn "No configuration file; running with default settings\n";
+        warn "No configuration file; running with default settings\n"
+            if $cfg_file;  # no name provided? no need to warn...
         $cfg = Config::IniFiles->new();
     }
     $_->() for (@initializers);
