@@ -107,24 +107,24 @@ sub def {
 
         # get the value of config key $section.$key.
         #  If it doesn't exist use $default instead
-        ${*{$ref}} = $cfg->val($sec, $key, $default);
+        my $var = $cfg->val($sec, $key, $default);
 
         # If an environment variable is associated and currently defined,
         #  override the configfile and default with the ENV VAR
-        ${*{$ref}} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );
+        $var = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );
 
         # If an environment variable is associated, set it  based on the
         # current value (taken from the config file, default, or pre-existing
         #  env var.
-        $ENV{$envvar} = ${*{$ref}}    ## no critic   # sniff
-            if $envvar && defined ${*{$ref}};
+        $ENV{$envvar} = $var
+            if $envvar && defined $var;
 
         # create a functional interface
         *{$ref} = sub {
             my ($nv) = @_; # new value to be assigned
-            my $cv = ${*{$ref}};
+            my $cv = $var;
 
-            ${*{$ref}} = $nv if scalar(@_) > 0;
+            $var = $nv if scalar(@_) > 0;
             return $cv;
         };
     }
