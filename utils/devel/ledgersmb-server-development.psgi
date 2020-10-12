@@ -17,12 +17,17 @@ no lib '.';
 
 use FindBin;
 use lib $FindBin::Bin . '/../..'; # For our 'old code'-"require"s
+
+use LedgerSMB::Locale;
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
+
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Locale->initialize;
 
 require Plack::Middleware::Pod
     if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );

@@ -21,6 +21,8 @@ defined $ENV{LSMB_TEST_DB} or plan skip_all => 'LSMB_TEST_DB is not set';
 # by xt/89-dropdb.t
 $ENV{LSMB_NEW_DB} or bail_out('LSMB_NEW_DB is not set');
 
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+
 my $temp = $ENV{TEMP} || '/tmp/';
 
 $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};

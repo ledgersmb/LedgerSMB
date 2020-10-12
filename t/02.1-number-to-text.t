@@ -6,6 +6,10 @@ use LedgerSMB::Locale;
 use LedgerSMB::Num2text;
 use LedgerSMB::PGNumber;
 
+use LedgerSMB::Sysconfig;
+LedgerSMB::Sysconfig->initialize;
+LedgerSMB::Locale->initialize;
+
 my %english = (
     0 => 'Zero',
     1 => 'One',

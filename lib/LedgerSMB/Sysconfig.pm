@@ -25,20 +25,6 @@ use String::Random;
 use Symbol;
 
 
-
-my $cfg_file = $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf';
-my $cfg;
-if (-r $cfg_file) {
-    $cfg = Config::IniFiles->new( -file => $cfg_file ) || die @Config::IniFiles::errors;
-}
-else {
-    warn "No configuration file; running with default settings\n";
-    $cfg = Config::IniFiles->new();
-}
-
-our %config;
-our %docs;
-
 =head2 def $name, %args;
 
 A function to define config keys and set their values on initialisation.
@@ -89,42 +75,46 @@ A description of the use of this key. Should normally be a scalar.
 
 =cut
 
+my $cfg;
+my @initializers;
 sub def {
     my ($name, %args) = @_;
     my $sec = $args{section};
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
+    my $ref = qualify_to_ref $name;
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
 
-    $docs{$sec}->{$key} = $args{doc};
-    {
 
-        my $ref = qualify_to_ref $name;
-        no warnings 'redefine';     ## no critic ( ProhibitNoWarnings ) # sniff
 
+    my $var;
+    push @initializers, sub {
         # get the value of config key $section.$key.
         #  If it doesn't exist use $default instead
-        ${*{$ref}} = $cfg->val($sec, $key, $default);
+        $var = $cfg->val($sec, $key, $default);
 
         # If an environment variable is associated and currently defined,
         #  override the configfile and default with the ENV VAR
-        ${*{$ref}} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );
+        $var = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );
 
         # If an environment variable is associated, set it  based on the
-        # current value (taken from the config file, default, or pre-existing
-        #  env var.
-        $ENV{$envvar} = ${*{$ref}}    ## no critic   # sniff
-            if $envvar && defined ${*{$ref}};
+        # current value (taken from the config file, default, or
+        # pre-existing env var.
+        $ENV{$envvar} = $var    ## no critic (RequireLocalizedPunctuationVars)
+            if $envvar && defined $var;
+    };
 
+    {
+        no warnings 'redefine';     ## no critic ( ProhibitNoWarnings )
         # create a functional interface
         *{$ref} = sub {
             my ($nv) = @_; # new value to be assigned
-            my $cv = ${*{$ref}};
+            my $cv = $var;
 
-            ${*{$ref}} = $nv if scalar(@_) > 0;
+            $var = $nv if scalar(@_) > 0;
             return $cv;
         };
     }
@@ -503,11 +493,6 @@ sub printer {
 }
 
 
-# ENV Paths
-for my $var (qw(PATH PERL5LIB)) {
-     $ENV{$var} .= $Config{path_sep} . ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
-}
-
 
 
 
@@ -605,7 +590,31 @@ sub override_defaults {
     return;
 }
 
-override_defaults();
+
+sub initialize {
+    my ($module, $cfg_file) = @_;
+
+    if ($cfg_file and -r $cfg_file) {
+        $cfg = Config::IniFiles->new( -file => $cfg_file )
+            or die @Config::IniFiles::errors;
+    }
+    else {
+        warn "No configuration file; running with default settings\n"
+            if $cfg_file;  # no name provided? no need to warn...
+        $cfg = Config::IniFiles->new();
+    }
+    $_->() for (@initializers);
+
+    # ENV Paths
+    for my $var (qw(PATH PERL5LIB)) {
+        $ENV{$var} .=
+            $Config{path_sep} .
+            ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
+    }
+
+
+    override_defaults();
+}
 
 =head1 LICENSE AND COPYRIGHT
 

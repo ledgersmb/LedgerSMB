@@ -45,7 +45,6 @@ package LedgerSMB::Num2text;
 use utf8;
 use strict;
 use warnings;
-use LedgerSMB::Locale;
 
 sub new {
     my ( $type, $locale ) = @_;

@@ -13,6 +13,9 @@ BEGIN {
     use Plack::Request;
 }
 
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+LedgerSMB::Locale->initialize();
+
 # TODO: FIXME
 # This is a hack, and it's very bad!
 # This is here because the subroutines _http_output,

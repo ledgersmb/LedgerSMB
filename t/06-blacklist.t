@@ -7,6 +7,8 @@ use Test2::Plugin::BailOnFail;
 use Digest::SHA 'sha512_base64'; #already a dependency
 use FindBin;
 
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+
 my $sqldir = "$FindBin::Bin/../sql/modules";
 my $blacklist_file = "$sqldir/BLACKLIST";
 

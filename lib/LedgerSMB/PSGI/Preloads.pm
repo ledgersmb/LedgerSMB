@@ -35,7 +35,6 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;
-use LedgerSMB::Locale;
 use LedgerSMB::File;
 use LedgerSMB::Scripts::login;
 use LedgerSMB::PGObject;

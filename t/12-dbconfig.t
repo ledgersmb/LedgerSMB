@@ -7,6 +7,8 @@ use Test::More;
 use LedgerSMB::Database::Config;
 use LedgerSMB::Sysconfig;
 
+LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+
 my $coa = LedgerSMB::Database::Config->new->charts_of_accounts;
 
 ok( m/^[[:alnum:]]{2,2}(_[[:alnum:]]{2,2})?$/,

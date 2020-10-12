@@ -53,17 +53,21 @@ use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use Module::Runtime qw(use_module);
+use Module::Runtime qw(use_module compose_module_name);
 
 
-my $plugin = 'LedgerSMB::Auth::' . LedgerSMB::Sysconfig::auth;
-use_module($plugin) or die "Can't locate Auth parser plugin $plugin";
+my $plugin = '';
 
 sub factory {
     my ($psgi_env, $domain) = @_;
 
-    return use_module($plugin)->new(env => $psgi_env,
-                                    domain => $domain);
+    unless ($plugin) {
+        $plugin =
+            compose_module_name('LedgerSMB::Auth', LedgerSMB::Sysconfig::auth);
+        use_module($plugin);
+    }
+
+    return $plugin->new(env => $psgi_env, domain => $domain);
 }
 
 

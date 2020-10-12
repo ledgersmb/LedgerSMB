@@ -13,6 +13,10 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 
 =over
 
+=item initialize
+
+Class method to load the translation lexicons.
+
 =item get_handle ($language_code)
 
 Returns a locale handle for accessing the other methods.  Inherited from
@@ -100,13 +104,15 @@ use LedgerSMB::Sysconfig;
 use Locale::Maketext::Lexicon;
 use Encode;
 
-Locale::Maketext::Lexicon->import(
-    {
-        '*'     => [ Gettext => (LedgerSMB::Sysconfig::localepath() . '/*.po'), ],
-        _auto   => 1,
-        _decode => 1,
-    }
-);
+sub initialize {
+    Locale::Maketext::Lexicon->import(
+        {
+            '*'     => [ Gettext => (LedgerSMB::Sysconfig::localepath() . '/*.po'), ],
+                _auto   => 1,
+                _decode => 1,
+        }
+        );
+}
 
 sub marktext {
     return shift;
