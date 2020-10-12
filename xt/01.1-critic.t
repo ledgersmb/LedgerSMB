@@ -49,8 +49,12 @@ my @on_disk_tests =
     grep { m#^(t|xt)/# }
     @on_disk;
 
+my @on_disk_cli_commands =
+    grep { m#^lib/LedgerSMB/Admin/Command/# }
+    @on_disk;
+
 @on_disk =
-    grep { ! m#^(old|t|xt)/# }
+    grep { ! m#^(old|t|xt|lib/LedgerSMB/Admin/Command/)/# }
     @on_disk;
 
 test_files(
@@ -59,6 +63,14 @@ test_files(
         -theme => 'lsmb_new',
     ),
     \@on_disk
+);
+
+test_files(
+    Perl::Critic->new(
+        -profile => 'xt/perlcriticrc',
+        -theme => 'lsmb_new',
+    ),
+    \@on_disk_cli_commands
 );
 
 test_files(

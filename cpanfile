@@ -17,6 +17,7 @@ requires 'Email::Sender::Simple';
 requires 'Email::Sender::Transport::SMTP';
 requires 'Email::Stuffer';
 requires 'File::Find::Rule';
+requires 'Hash::Merge';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
@@ -92,6 +93,7 @@ requires 'Plack::Request';
 requires 'Plack::Request::WithEncoding';
 requires 'Plack::Util';
 requires 'Plack::Util::Accessor';
+requires 'Pod::Find';
 requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
@@ -105,6 +107,7 @@ requires 'URI::Escape';
 requires 'Version::Compare';
 requires 'XML::LibXML';
 requires 'XML::LibXML::XPathContext';
+requires 'YAML';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
