@@ -274,8 +274,8 @@ sub report_save{
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
     $report->{asset_ids} = [];
-    for my $count (0 .. $request->{rowcount}){
-        my $id = $request->{"id_$count"};
+    for my $count (1 .. $request->{rowcount_}){
+        my $id = $request->{"row_$count"};
         if ($request->{"asset_$count"}){
            push @{$report->{asset_ids}}, $id;
         }
