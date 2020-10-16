@@ -48,9 +48,6 @@ export HELP
 
 help:
 	@echo "$$HELP"
-	$(warning OSTYPE   = $(OSTYPE))
-	$(warning OSDISTRO = $(OSDISTRO))
-	$(warning REDHAT_RELEASE_FILE = $(REDHAT_RELEASE_FILE))
 
 # make dojo
 #   builds dojo for production/release
