@@ -589,12 +589,16 @@ Returns true when successful, dies on error.
 
 sub create_and_load {
     my ($self, $args) = @_;
+    $logger->info('Creating database');
     $self->create;
+    $logger->info('Loading schema');
     $self->load_base_schema(
         log_stdout     => $args->{log},
         errlog  => $args->{errlog},
         );
+    $logger->info('Applying schema changes');
     $self->apply_changes();
+    $logger->info('Loading LedgerSMB application database modules');
     return $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},

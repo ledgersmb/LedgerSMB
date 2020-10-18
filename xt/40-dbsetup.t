@@ -11,6 +11,10 @@ use LedgerSMB::DBObject::Admin;
 use DBI;
 use Plack::Request;
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
+
 # This entire test suite will be skipped unless environment
 # variable LSMB_TEST_DB is true
 defined $ENV{LSMB_TEST_DB} or plan skip_all => 'LSMB_TEST_DB is not set';
