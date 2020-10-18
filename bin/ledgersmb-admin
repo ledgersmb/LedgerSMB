@@ -27,7 +27,7 @@ is created as a LedgerSMB company. These are the common commands:
   copy*      Create a copy of the database including content and access rights
   create*    Create a new database, optionally with configuration and users
   destroy*   Delete a database
-  rename*    Rename a database, retaining access rights
+  rename     Rename a database, retaining access rights
   restore*   Restore database from backup file
 
 =head2 Manage company setup
