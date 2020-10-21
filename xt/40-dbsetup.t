@@ -29,11 +29,12 @@ $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 #LedgerSMB::Sysconfig::db_namespace('altschema');
 LedgerSMB::Sysconfig::language('en');
 
-my $db = LedgerSMB::Database->new({
+my $db = LedgerSMB::Database->new(
+    connect_data => {
          dbname       => $ENV{LSMB_NEW_DB},
-         username     => $ENV{PGUSER},
+         user         => $ENV{PGUSER},
          password     => $ENV{PGPASSWORD},
-});
+    });
 
 # Manual tests
 ok($db->create, 'Database Created')
@@ -117,7 +118,7 @@ my $copy_sth =
     $copy_dbh->prepare(q|select value from defaults
                           where setting_key='role_prefix'|);
 ok($copy_sth, 'Prepare validation statement');
-$copy_sth->execute();
+ok lives { $copy_sth->execute() or die $copy_sth->errstr };
 my ($role_prefix) =
     @{$copy_sth->fetchrow_arrayref()};
 is($role_prefix, "lsmb_$ENV{LSMB_NEW_DB}__",
