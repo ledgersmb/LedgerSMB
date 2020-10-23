@@ -9,12 +9,14 @@ LedgerSMB::Database - APIs for database creation and management.
 
 This module wraps both DBI and the PostgreSQL commandline tools.
 
-  my $db = LedgerSMB::Database->new({
-       dbname => 'mycompany',
-       username => 'foo',
-       password => 'foospassword',
+  my $db = LedgerSMB::Database->new(
+       connect_data => {
+          user     => 'foo',
+          dbname   => 'mycompany',
+          password => 'foospassword',
+       },
        schema   => 'non_public',
-  });
+  );
 
   $db->load_modules('LOADORDER');
 
@@ -38,7 +40,7 @@ use DBI;
 use File::Spec;
 use File::Temp;
 use Log::Log4perl;
-
+use PGObject::Util::DBAdmin 'v1.2.1';
 
 use Moose;
 use namespace::autoclean;

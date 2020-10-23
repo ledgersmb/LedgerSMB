@@ -41,9 +41,9 @@ for my $sqlfile (@files) {
         ok((system('psql', $db, '-f', $sqlfile) >> 8) == 0, "psql run file succeeded ($!)");
 
         my $lsmb_db = LedgerSMB::Database->new(
-            {
+            connect_data => {
                 dbname       => $db,
-                username     => $ENV{PGUSER},
+                user         => $ENV{PGUSER},
                 password     => $ENV{PGPASSWORD},
             });
         my $dbh = $lsmb_db->connect;
