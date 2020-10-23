@@ -27,6 +27,11 @@ use DBI;
 use IO::Scalar;
 use Carp::Always;
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
+
+
 ####### Create test run conditions
 
 my $dbh = DBI->connect("dbi:Pg:dbname=$ENV{LSMB_NEW_DB}", undef, undef,

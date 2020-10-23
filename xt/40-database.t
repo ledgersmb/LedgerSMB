@@ -9,6 +9,9 @@ use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
 skip_all( 'LSMB_TEST_DB not set' )
     if not $ENV{LSMB_TEST_DB};
 

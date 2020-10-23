@@ -10,6 +10,10 @@ use Capture::Tiny qw(capture);
 
 use LedgerSMB::Database;
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
+
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
 skip_all((join ', ', @missing) . ' not set') if @missing;
 

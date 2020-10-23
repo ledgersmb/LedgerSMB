@@ -20,6 +20,7 @@ use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
 use Test::BDD::Cucumber::Extension;
 use List::Util qw(any);
+use Log::Log4perl qw(:easy);
 
 use Moose;
 use namespace::autoclean;
@@ -75,6 +76,9 @@ sub step_directories {
 my $startup_pid = $$;
 
 sub pre_execute {
+    if (not Log::Log4perl->initialized()) {
+        Log::Log4perl->easy_init($OFF);
+    }
 }
 
 sub post_execute {

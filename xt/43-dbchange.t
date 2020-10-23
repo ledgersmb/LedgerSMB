@@ -9,6 +9,9 @@ use Test2::V0;
 use LedgerSMB::Database::Change;
 use DBI;
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
 #
 #
 ######################################
