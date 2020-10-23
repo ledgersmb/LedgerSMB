@@ -95,6 +95,7 @@ commands:
           name: Refresh modules from CPAN
           command: |
             cpm install --local-lib-contained=$HOME/perl5 --no-test \
+              --resolver=metacpan \
               --with-develop \
               --feature=starman \
               --feature=latex-pdf-ps \
@@ -102,10 +103,12 @@ commands:
               --feature=xls \
               --feature=edi
             cpm install --local-lib-contained=$HOME/perl5 --no-test \
+              --resolver=metacpan \
                 JSON::PP~4.03 Gazelle
             if [ "x$COVERAGE" == "x1" ]
             then
               cpm install --local-lib-contained=$HOME/perl5 --no-test \
+                  --resolver=metacpan \
                   Devel::Cover \
                   Devel::Cover::Report::Coveralls
             fi
