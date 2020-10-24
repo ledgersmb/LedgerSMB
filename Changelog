@@ -51,8 +51,10 @@ Dependency updates
 * Locale::Country (dropped)
 * Locale::Language (dropped)
 * MooseX::ClassAttribute (new)
-* PGObject::Util::DBAdmin 1.1.0 (updated from 1.0.1)
+* PGObject::Util::DBAdmin 1.2.2 (updated from 1.0.1)
+* Syntax::Keyword::Try (0.15)
 * URI::Escape (new)
+* Try::Tiny (dropped)
 
 
 Changelog for 1.8 Series
