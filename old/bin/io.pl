@@ -39,7 +39,7 @@
 #######################################################################
 
 package lsmb_legacy;
-use Try::Tiny;
+
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;

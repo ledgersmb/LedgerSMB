@@ -30,7 +30,6 @@ Saving permissions:
 
 use Moose;
 use namespace::autoclean;
-use Try::Tiny;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES

@@ -42,7 +42,6 @@ package IC;
 use Log::Log4perl;
 use LedgerSMB::File;
 use LedgerSMB::Setting;
-use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('IC');
 

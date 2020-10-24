@@ -20,10 +20,11 @@ use LedgerSMB::FileFormats::OFX::BankStatement;
 
 use strict;
 use warnings;
-
-use Try::Tiny;
 use base qw(LedgerSMB::PGOld);
 
+use Syntax::Keyword::Try;
+
+sub ___init {
 # Import installation-specific parsing functions
 try {
     no warnings;
@@ -40,7 +41,11 @@ try {
             }
         }
     }
-};
+}
+catch {}
+}
+
+___init();
 
 =head1 METHODS
 

@@ -2,7 +2,7 @@ package LedgerSMB::FileFormats::OFX::BankStatement;
 
 use warnings;
 use strict;
-use Try::Tiny;
+use Syntax::Keyword::Try;
 use XML::LibXML;
 
 =head1 NAME
@@ -95,7 +95,8 @@ sub new {
             string => $content
         );
         $is_ofx = $dom->find('/processing-instruction("OFX")')
-    };
+    }
+    catch { }
 
     return unless $dom and $is_ofx;
 

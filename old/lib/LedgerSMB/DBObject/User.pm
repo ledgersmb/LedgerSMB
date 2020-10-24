@@ -15,8 +15,6 @@ use Locale::CLDR;
 
 use Log::Log4perl;
 
-use Try::Tiny;
-
 =head2 NOTES
 
 This badly needs to be rewritten and moved to later frameworks.  Planned for

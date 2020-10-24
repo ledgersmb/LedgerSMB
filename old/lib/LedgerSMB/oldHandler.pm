@@ -58,7 +58,7 @@ use LedgerSMB::Sysconfig;
 use Cookie::Baker;
 use Digest::MD5;
 use Log::Log4perl;
-use Try::Tiny;
+use Syntax::Keyword::Try;
 
 our $logger;
 
@@ -158,12 +158,11 @@ sub handle {
                           . $locale->text('action not defined!'));
         }
     }
-    catch  {
+    catch  ($err) {
         # We have an exception here because otherwise we always get an exception
         # when output terminates.  A mere 'die' will no longer trigger an automatic
         # error, but die 'foo' will map to $form->error('foo')
         # -- CT
-        my $err = $_;
         $form->{_error} = 1;
         if ($err =~ /^Died/i or $err =~ /^exit at /) {
             $form->{dbh}->commit if defined $form->{dbh};
@@ -172,7 +171,7 @@ sub handle {
             $form->{dbh}->rollback if defined $form->{dbh};
             _error($form, "'$err'");
         }
-    };
+    }
 
     $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 

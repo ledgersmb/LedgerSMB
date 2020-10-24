@@ -40,7 +40,6 @@
 #
 
 package lsmb_legacy;
-use Try::Tiny;
 
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;

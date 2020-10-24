@@ -18,7 +18,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 use strict;
 use warnings;
 
-use Try::Tiny;
+use Syntax::Keyword::Try;
 
 use LedgerSMB;
 use LedgerSMB::DBObject::Pricelist;
@@ -900,12 +900,14 @@ sub create_user {
        my $return_with_import;
        try {
            $user->create($request->{reset_password});
-       } catch {
+       }
+       catch {
            my $err = $_;
            die $err unless $err =~ /duplicate user/i;
            $request->{dbh}->rollback;
            $return_with_import = 1;
-       };
+       }
+
        if ($return_with_import){
            $request->{pls_import} = 1;
        }
