@@ -24,7 +24,7 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::PGOld);
 
-use Syntax::Keyword::Try qw(try try_value :experimental );
+use Syntax::Keyword::Try qw|try :experimental(typed)|;
 
 sub _get_translations {
     my ($self) = @_;
@@ -133,13 +133,15 @@ sub save {
         $func = 'account_heading_save';
     }
 
-    my ($id_ref) =
-        try do { $self->call_dbmethod(funcname => $func) }
-        catch ($var =~ m/Invalid link settings:\s*Summary/) {
-                       die $self->{_locale}->text(
-                 'Error: Cannot include summary account in other dropdown menus'
-                           );
-    };
+    my $id_ref;
+    try {
+        ($id_ref) = $self->call_dbmethod(funcname => $func);
+    }
+    catch ($var =~ m/Invalid link settings:\s*Summary/) {
+        die $self->{_locale}->text(
+            'Error: Cannot include summary account in other dropdown menus'
+            );
+    }
 
     $self->{id} = $id_ref->{$func};
 
