@@ -78,7 +78,6 @@ use Log::Log4perl;
 use LWP::Simple;
 use Symbol;
 use Time::Local;
-use Try::Tiny;
 
 
 

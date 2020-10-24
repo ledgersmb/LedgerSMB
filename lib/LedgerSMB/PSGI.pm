@@ -37,10 +37,10 @@ use LedgerSMB::Sysconfig;
 
 use CGI::Emulate::PSGI;
 use HTTP::Status qw( HTTP_FOUND );
-use Try::Tiny;
 use List::Util qw{  none };
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
+use Syntax::Keyword::Try;
 
 # To build the URL space
 use Plack;
@@ -103,9 +103,10 @@ sub old_app {
                             warn "Failed to execute old request ($!): $@\n";
                         }
                     }
-                };
-
-                exit;
+                }
+                finally {
+                    exit;
+                }
             }
             return;
         });
@@ -166,7 +167,7 @@ sub psgi_app {
         else {
             $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
         }
-    };
+    }
 
     return $res;
 }

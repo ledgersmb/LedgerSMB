@@ -32,7 +32,7 @@ use LedgerSMB::Form;
 use Log::Log4perl;
 use POSIX 'SEEK_SET';
 use Symbol;
-use Try::Tiny;
+use Syntax::Keyword::Try;
 
 use base qw(Exporter);
 our @EXPORT_OK = qw(dispatch);

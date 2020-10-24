@@ -31,7 +31,7 @@ use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
-use Try::Tiny;
+use Syntax::Keyword::Try qw( try try_value :experimental );
 
 use LedgerSMB;
 use LedgerSMB::App_State;
@@ -1161,20 +1161,16 @@ sub _save_user {
     my $user = LedgerSMB::Entity::User->new(%$request);
 
     my $rerendered_user =
-        try { $user->create($request->{password}); 0 }
-    catch {
-        if ($_ =~ /duplicate user/i){
-           $request->{dbh}->rollback;
-           $request->{notice} = $request->{_locale}->text(
-                       'User already exists. Import?'
-            );
-           $request->{pls_import} = 1;
+        try do { $user->create($request->{password}); 0 }
+        catch ($var =~ /duplicate user/i) {
+            $request->{dbh}->rollback;
+            $request->{notice} = $request->{_locale}->text(
+                'User already exists. Import?'
+                );
+            $request->{pls_import} = 1;
 
-           # return from the 'catch' block
-           return _render_user($request, $entrypoint);
-       } else {
-           die $_;
-       }
+            # return from the 'catch' block
+            _render_user($request, $entrypoint);
     };
     return $rerendered_user if $rerendered_user;
 
