@@ -306,6 +306,11 @@ def 'log_level',
     default => 'ERROR',
     doc => q{};
 
+def 'log_config',
+    section => 'main',
+    default => '',
+    doc     => q{};
+
 def 'cache_templates',
     section => 'main',
     default => 0,
@@ -492,68 +497,6 @@ sub printer {
     return $printer;
 }
 
-
-
-
-
-#some examples of loglevel setting for modules
-#FATAL, ERROR, WARN, INFO, DEBUG, TRACE
-#log4perl.logger.LedgerSMB = DEBUG
-#log4perl.logger.LedgerSMB.DBObject = INFO
-#log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
-#log4perl.logger.LedgerSMB.Handler = ERROR
-#log4perl.logger.LedgerSMB.User = WARN
-sub log4perl_config {
-
-    my $modules_loglevel_overrides='';
-
-    for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
-        $modules_loglevel_overrides.='log4perl.logger.'.$_.'='.
-            $cfg->val('log4perl_config_modules_loglevel', $_)."\n";
-    }
-    # Log4perl configuration
-    my $log_level = log_level();
-    return qq(
-    log4perl.rootlogger = $log_level, Basic, Debug, DebugPanel
-    )
-    .
-    $modules_loglevel_overrides
-    .
-    q(
-    log4perl.appender.Screen = Log::Log4perl::Appender::Screen
-    log4perl.appender.Screen.layout = PatternLayout
-    log4perl.appender.Screen.layout.ConversionPattern = Req:%Z %p - %m%n
-    # Filter for debug level
-    log4perl.filter.MatchDebug = Log::Log4perl::Filter::LevelMatch
-    log4perl.filter.MatchDebug.LevelToMatch = INFO
-    log4perl.filter.MatchDebug.AcceptOnMatch = false
-
-    # Filter for everything but debug,trace level
-    log4perl.filter.MatchRest = Log::Log4perl::Filter::LevelMatch
-    log4perl.filter.MatchRest.LevelToMatch = INFO
-    log4perl.filter.MatchRest.AcceptOnMatch = true
-
-    # layout for DEBUG,TRACE messages
-    log4perl.appender.Debug = Log::Log4perl::Appender::Screen
-    log4perl.appender.Debug.layout = PatternLayout
-    log4perl.appender.Debug.layout.ConversionPattern = Req:%Z %d - %p - %l -- %m%n
-    log4perl.appender.Debug.Filter = MatchDebug
-
-    # layout for non-DEBUG messages
-    log4perl.appender.Basic = Log::Log4perl::Appender::Screen
-    log4perl.appender.Basic.layout = PatternLayout
-    log4perl.appender.Basic.layout.ConversionPattern = Req:%Z %d - %p - %M -- %m%n
-    log4perl.appender.Basic.Filter = MatchRest
-
-    log4perl.appender.DebugPanel              = Log::Log4perl::Appender::TestBuffer
-    log4perl.appender.DebugPanel.name         = psgi_debug_panel
-    log4perl.appender.DebugPanel.mode         = append
-    log4perl.appender.DebugPanel.layout       = PatternLayout
-    log4perl.appender.DebugPanel.layout.ConversionPattern = %r >> %p >> %m >> %c >> at %F line %L%n
-    #log4perl.appender.DebugPanel.Threshold = TRACE
-
-    );
-}
 
 
 # if you have latex installed set to 1

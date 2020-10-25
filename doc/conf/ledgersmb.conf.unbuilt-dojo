@@ -24,8 +24,19 @@ language =
 #  (default: yyyy-mm-dd; unset means detected from the browser)
 date_format = yyyy-mm-dd
 
-# todo
+# Specifies the logging level to be used
+# This setting is ignored when the 'log_config' setting is supplied and
+# indicates an existing file.
+#
+# Available values are OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE
 log_level = ERROR
+
+# Set the name of the extended logging configuration file
+# This file uses the log4j/Log::Log4perl syntax described at
+#  https://metacpan.org/pod/Log::Log4perl#Configuration-files
+#
+# Examples in doc/conf/ledgersmb.log.conf.*
+#log_config = ledgersmb.log.conf
 
 # Maximum POST size to prevent DoS (4MB default)
 max_post_size = 4194304
@@ -115,7 +126,3 @@ dojo_built = 0
 #template_xls = disabled
 #template_xlsx = disabled
 #template_ods = disabled
-
-[log4perl_config_modules_loglevel]
-LedgerSMB = INFO
-LedgerSMB.DBObject = INFO

@@ -46,8 +46,25 @@ if ( LedgerSMB::Sysconfig::dojo_built() ) {
 Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
     sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
-my $log_config = LedgerSMB::Sysconfig::log4perl_config();
-Log::Log4perl->init(\$log_config);
+
+my $log_config = LedgerSMB::Sysconfig::log_config();
+if ($log_config) {
+    Log::Log4perl->init($log_config);
+}
+else {
+    my %log_levels = (
+        OFF   => $OFF,
+        FATAL => $FATAL,
+        ERROR => $ERROR,
+        WARN  => $WARN,
+        INFO  => $INFO,
+        DEBUG => $DEBUG,
+        TRACE => $TRACE,
+        );
+    my $log_level = LedgerSMB::Sysconfig::log_level();
+    die "Invalid log level: $log_level" unless exists $log_levels{$log_level};
+    Log::Log4perl->easy_init($log_levels{$log_level});
+}
 Log::Any::Adapter->set('Log4perl');
 
 LedgerSMB::PSGI::setup_url_space(
