@@ -1,0 +1,5 @@
+log4perl.rootlogger = ERROR, Screen
+
+log4perl.appender.Screen = Log::Log4perl::Appender::Screen
+log4perl.appender.Screen.layout = PatternLayout
+
