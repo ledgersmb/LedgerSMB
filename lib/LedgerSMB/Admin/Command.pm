@@ -10,6 +10,7 @@ LedgerSMB::Admin::Command - ledgersmb-admin abstract command class
 use strict;
 use warnings;
 
+use Log::Log4perl;
 use Pod::Find qw(pod_where);
 use Pod::Usage qw(pod2usage);
 
@@ -22,6 +23,11 @@ use LedgerSMB::Database;
 has config => (is => 'ro', required => 1,
                isa => 'LedgerSMB::Admin::Configuration');
 has db => (is => 'rw');
+has logger => (is => 'ro', lazy => 1, builder => '_build_logger');
+
+sub _build_logger {
+    return Log::Log4perl->get_logger(ref $_[0]);
+}
 
 
 sub help {

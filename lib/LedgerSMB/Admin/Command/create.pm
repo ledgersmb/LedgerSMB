@@ -10,7 +10,6 @@ LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
 use strict;
 use warnings;
 
-use Log::Log4perl;
 use Syntax::Keyword::Try;
 
 use LedgerSMB::Admin::Command;
@@ -23,7 +22,7 @@ use namespace::autoclean;
 
 sub run {
     my ($self, $dbname) = @_;
-    my $logger = Log::Log4perl->get_logger(ref $self);
+    my $logger = $self->logger;
     my $connect_data = {
         $self->config->get('connect_data')->%*,
         dbname => $dbname,
