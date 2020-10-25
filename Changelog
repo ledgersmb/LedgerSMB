@@ -53,7 +53,7 @@ Dependency updates
 * Log::Any (new)
 * Log::Any::Adapter::Log4perl (new)
 * MooseX::ClassAttribute (new)
-* PGObject::Util::DBAdmin 1.2.2 (updated from 1.0.1)
+* PGObject::Util::DBAdmin 1.4.0 (updated from 1.0.1)
 * Syntax::Keyword::Try (0.15)
 * URI::Escape (new)
 * Try::Tiny (dropped)

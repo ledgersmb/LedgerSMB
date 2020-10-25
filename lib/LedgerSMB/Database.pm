@@ -39,8 +39,7 @@ use DBD::Pg;
 use DBI;
 use File::Spec;
 use File::Temp;
-use Log::Log4perl;
-use PGObject::Util::DBAdmin 'v1.2.1';
+use PGObject::Util::DBAdmin 'v1.4.0';
 
 use Moose;
 use namespace::autoclean;
@@ -50,8 +49,6 @@ use LedgerSMB::Database::Loadorder;
 
 
 our $VERSION = '1.2';
-
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 
 =head1 PROPERTIES
@@ -259,7 +256,7 @@ sub get_info {
         $dbh = $self->new($self->export, (dbname => $authdb))
             ->connect({PrintError=>0});
         return $retval unless $dbh;
-        $logger->debug("DBI->connect dbh=$dbh");
+        $self->logger->debug("DBI->connect dbh=$dbh");
         _set_system_info($dbh, $retval);
 
         # don't assign to App_State::DBH, since we're a fallback connection,
@@ -284,7 +281,7 @@ sub get_info {
         return $retval;
    } else { # Got a db handle... try to find the version and app by a few
             # different means
-       $logger->debug("DBI->connect dbh=$dbh");
+       $self->logger->debug("DBI->connect dbh=$dbh");
 
        $retval->{status} = 'exists';
        _set_system_info($dbh, $retval);
@@ -591,16 +588,16 @@ Returns true when successful, dies on error.
 
 sub create_and_load {
     my ($self, $args) = @_;
-    $logger->info('Creating database');
+    $self->logger->info('Creating database');
     $self->create;
-    $logger->info('Loading schema');
+    $self->logger->info('Loading schema');
     $self->load_base_schema(
         log_stdout     => $args->{log},
         errlog  => $args->{errlog},
         );
-    $logger->info('Applying schema changes');
+    $self->logger->info('Applying schema changes');
     $self->apply_changes();
-    $logger->info('Loading LedgerSMB application database modules');
+    $self->logger->info('Loading LedgerSMB application database modules');
     return $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},
