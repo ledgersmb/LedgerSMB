@@ -53,6 +53,7 @@ my @modules =
      'LedgerSMB::Template::ODS',
      'LedgerSMB::Template::LaTeX',
      'LedgerSMB::Admin', 'LedgerSMB::Admin::Command',
+     'LedgerSMB::Admin::Command::create',
      'LedgerSMB::Admin::Command::rename',
      'LedgerSMB::Admin::Command::template',
      'LedgerSMB::Admin::Configuration',
