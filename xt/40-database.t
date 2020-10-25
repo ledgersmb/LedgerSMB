@@ -103,7 +103,7 @@ $db = LedgerSMB::Database->new(
     source_dir => './xt/data/40-database/schema-failure'
     );
 like( dies { $db->create_and_load; },
-          qr/(ERROR:\s*relation "defal" does not exist|error running command)/,
+          qr/(ERROR:\s*relation "defal" does not exist|error running (command|file))/,
     'Database creation fails on base schema load failure');
 
 
