@@ -50,15 +50,14 @@ sub dispatch {
     my ($self, $command, @args) = @_;
 
     $command //= 'help';
+    my $dispatch = $self->can($command);
     die "Unknown command '$command'"
-        unless $command =~ m/^([a-zA-Z]+|run)$/;
+        if (not $dispatch
+            or ($command eq 'run')
+            or ($command !~ m/^([a-zA-Z]+)$/));
 
     return $self->help($command, @args)
         if $command eq 'help';
-
-    my $dispatch = $self->can($command);
-    die "Unknown command $command"
-        unless $dispatch;
 
     @args = $self->_before_dispatch(@args);
     return $self->$dispatch(@args);
