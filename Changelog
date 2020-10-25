@@ -50,6 +50,8 @@ Dependency updates
 * Locale::CLDR::* (new)
 * Locale::Country (dropped)
 * Locale::Language (dropped)
+* Log::Any (new)
+* Log::Any::Adapter::Log4perl (new)
 * MooseX::ClassAttribute (new)
 * PGObject::Util::DBAdmin 1.2.2 (updated from 1.0.1)
 * Syntax::Keyword::Try (0.15)

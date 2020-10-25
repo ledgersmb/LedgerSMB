@@ -115,6 +115,7 @@ use File::Basename qw(dirname);
 use File::Spec;
 use Getopt::Long;
 use List::Util qw(none);
+use Log::Any::Adapter;
 use Log::Log4perl qw(:easy);
 use Pod::Usage qw( pod2usage );
 use Text::CSV qw( csv );
@@ -170,12 +171,12 @@ GetOptions(
 
 
 if (-e $logconf) {
-    Log::Log4perl::init($logconf);
+    Log::Log4perl->init($logconf);
 }
 else {
     Log::Log4perl->easy_init($loglevel_map{$loglevel})
 }
-
+Log::Any::Adapter->set('Log4perl');
 
 sub ensure_data_dir {
     if (-d $data) {

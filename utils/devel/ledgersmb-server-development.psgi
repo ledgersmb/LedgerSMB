@@ -22,6 +22,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
+use Log::Any::Adapter;
 use Log::Log4perl;
 use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
@@ -68,7 +69,8 @@ sub check_config_option {
 #TODO: Explore https://github.com/elindsey/Devel-hdb
 
 my $log_config = LedgerSMB::Sysconfig::log4perl_config();
-Log::Log4perl::init(\$log_config);
+Log::Log4perl->init(\$log_config);
+Log::Any::Adapter->set('Log4perl');
 
 builder {
 

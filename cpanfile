@@ -56,6 +56,8 @@ requires 'Locale::CLDR::Locales::Tr';
 requires 'Locale::CLDR::Locales::Uk';
 requires 'Locale::CLDR::Locales::Zh';
 requires 'Locale::Maketext::Lexicon', '0.62';
+requires 'Log::Any::Adapter';
+requires 'Log::Any::Adapter::Log4perl';
 requires 'Log::Log4perl';
 requires 'Log::Log4perl::Layout::PatternLayout';
 requires 'LWP::Simple';
