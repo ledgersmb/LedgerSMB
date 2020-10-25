@@ -1,0 +1,90 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use LedgerSMB::Admin;
+
+
+exit LedgerSMB::Admin::run_command( @ARGV );
+
+__END__
+
+=head1 SYNOPSIS
+
+ ledgersmb-admin [--version] [--help] <command> [<args>]
+
+=head1 DESCRIPTION
+
+This command allows you to run commands against a postgresql database that
+is created as a LedgerSMB company. These are the common commands:
+
+=head1 COMMANDS
+
+=head2 Manage databases
+
+  backup*    Create a backup of the database (excluding the access rights)
+  copy       Create a copy of the database including content and access rights
+  create     Create a new database, optionally with configuration and users
+  destroy*   Delete a database
+  rename     Rename a database, retaining access rights
+  restore*   Restore database from backup file
+
+=head2 Manage company setup
+
+  template   Import, export, list (printed) document templates
+  setting*   Add or change setting values
+  setup*     Import, export or update configuration
+  user*      Create, delete, list users and change access rights
+
+Additionally, the C<config*> command can be used to manage the content
+of the configuration file.
+
+* To be implemented
+
+=head1 OPTIONS
+
+=head2 --help
+
+Prints this help output
+
+=head2 --version
+
+Prints short message with version output
+
+=head1 CONFIGURATION
+
+The configuration is read from the first file that exists, iterating over
+
+    $HOME/.ledgersmb-admin.conf
+    /usr/local/etc/ledgersmb-admin.conf
+    /etc/ledgersmb-admin.conf
+
+If no configuration file is found, or the configuration file doesn't specify
+the all connection parameters, PostgreSQL's PG* environment variables provide
+fallback values.
+
+The configuration file format is YAML. The minimal configuration file specifies
+the C<connect_data> key with C<username>, C<password> and C<company> keys,
+e.g.:
+
+   connect_data:
+      username: postgres
+      password: abc
+      company: test
+
+For more information on the configuration file and available configuration
+keys, see the output of C<config help>.
+
+=head1 EXIT STATUS
+
+...
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2020 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
