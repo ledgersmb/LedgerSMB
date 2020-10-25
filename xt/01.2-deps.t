@@ -21,11 +21,15 @@ push @on_disk, 'bin/ledgersmb-server.psgi';
 
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
-                ignores => [ 'LedgerSMB', 'PageObject',
-                             'LaTeX::Driver',
-                             'Starman', 'TeX::Encode::charmap',
-                             'Locale::CLDR::Locales',
-                             'MooseX::ClassAttribute'
-                              ] );
+                ignores => [
+                    'LaTeX::Driver',
+                    'LedgerSMB',
+                    'Locale::CLDR::Locales',
+                    'Log::Any::Adapter::Log4perl', # used as plugin
+                    'MooseX::ClassAttribute',
+                    'PageObject',
+                    'Starman',
+                    'TeX::Encode::charmap',
+                ] );
 
 done_testing;
