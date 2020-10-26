@@ -4,18 +4,22 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
+DROP FUNCTION IF EXISTS asset_dep__straight_line_base
+                        (numeric, numeric, numeric, numeric, numeric)
+     CASCADE;
+
 CREATE OR REPLACE FUNCTION asset_dep__straight_line_base
-(in_base_life numeric, in_life numeric, in_used numeric, in_basis numeric,
-in_dep_to_date numeric)
+(in_base_life numeric, in_used numeric, in_basis numeric, in_dep_to_date numeric)
 returns numeric as $$
-SELECT CASE WHEN $3/$1 * $4 < $4 - $5 THEN $3/$1 * $4
-            ELSE $4 - $5
+SELECT CASE WHEN in_used/in_base_life * in_basis < in_basis - in_dep_to_date
+                 THEN in_used/in_base_life * in_basis
+            ELSE in_basis - in_dep_to_date
             END;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_dep__straight_line_base
-(in_base_life numeric, in_life numeric, in_used numeric, in_basis numeric,
-in_dep_to_date numeric) IS
+(in_base_life numeric, in_used numeric, in_basis numeric,
+ in_dep_to_date numeric) IS
 $$ This function is a basic function which does the actual calculation for
 straight line depreciation.$$;
 
@@ -75,27 +79,23 @@ RETURNS bool AS
 $$
      INSERT INTO asset_report_line (asset_id, report_id, amount, department_id,
                                    warehouse_id)
-     SELECT ai.id, $3,
+     SELECT ai.id, in_report_id,
             asset_dep__straight_line_base(
                   ai.usable_life, -- years
-                  ai.usable_life -
                   get_fractional_year(coalesce(max(report_date),
                                                start_depreciation),
-                                      start_depreciation),
-                  get_fractional_year(coalesce(max(report_date),
-                                               start_depreciation),
-                                $2),
+                                      in_report_date),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
   LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
-      WHERE ai.id = ANY($1)
+      WHERE ai.id = ANY(in_asset_ids)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
             ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
 
-    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+    UPDATE asset_report SET report_class = 1 WHERE id = in_report_id;
 
     select true;
 $$ language sql;
@@ -108,27 +108,23 @@ RETURNS bool AS
 $$
      INSERT INTO asset_report_line (asset_id, report_id, amount, department_id,
                                    warehouse_id)
-     SELECT ai.id, $3,
+     SELECT ai.id, in_report_id,
             asset_dep__straight_line_base(
-                  ai.usable_life * 12,
-                  ai.usable_life * 12 --months
-                  - months_passed(start_depreciation,
-                                  coalesce(max(report_date),
-                                           start_depreciation)),
+                  ai.usable_life * 12, --months
                   months_passed(coalesce(max(report_date),
                                          start_depreciation),
-                                $2),
+                                in_report_date),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
   LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
-      WHERE ai.id = ANY($1)
+      WHERE ai.id = ANY(in_asset_ids)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
             ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
 
-    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+    UPDATE asset_report SET report_class = 1 WHERE id = in_report_id;
 
     select true;
 $$ language sql;
@@ -147,27 +143,23 @@ RETURNS bool AS
 $$
      INSERT INTO asset_report_line (asset_id, report_id, amount, department_id,
                                    warehouse_id)
-     SELECT ai.id, $3,
+     SELECT ai.id, in_report_id,
             asset_dep__straight_line_base(
-                  ai.usable_life,
-                  ai.usable_life --months
-                  - months_passed(start_depreciation,
-                                  coalesce(max(report_date),
-                                           start_depreciation)),
+                  ai.usable_life, --months
                   months_passed(coalesce(max(report_date),
                                          start_depreciation),
-                                $2),
+                                in_report_date),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
   LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
-      WHERE ai.id = ANY($1)
+      WHERE ai.id = ANY(in_asset_ids)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
             ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
 
-    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+    UPDATE asset_report SET report_class = 1 WHERE id = in_report_id;
 
     select true;
 $$ language sql;
