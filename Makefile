@@ -60,7 +60,7 @@ FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dojo:
 	$(DOCKER_CMD) rm -rf UI/js/*
-	$(DOCKER_CMD) npm install
+	$(DOCKER_CMD) npm install --no-save
 	$(DOCKER_CMD) ./node_modules/webpack/bin/webpack.js -p
 
 # TravisCI specific target -- need to find a way to get rid of it
