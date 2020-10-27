@@ -22,7 +22,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('asset_dep__straight_line_base',array['numeric', 'numeric', 'numeric', 'numeric', 'numeric']);
+    SELECT has_function('asset_dep__straight_line_base',array['numeric', 'numeric', 'numeric', 'numeric']);
     SELECT has_function('asset_dep__used_months',array['date', 'date', 'numeric']);
     SELECT has_function('asset_dep_get_usable_life_yr',array['numeric', 'date', 'date']);
     SELECT has_function('months_passed',ARRAY['timestamp without time zone','timestamp without time zone']);

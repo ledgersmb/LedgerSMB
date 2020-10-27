@@ -4,18 +4,22 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
+DROP FUNCTION IF EXISTS asset_dep__straight_line_base
+                        (numeric, numeric, numeric, numeric, numeric)
+     CASCADE;
+
 CREATE OR REPLACE FUNCTION asset_dep__straight_line_base
-(in_base_life numeric, in_life numeric, in_used numeric, in_basis numeric,
-in_dep_to_date numeric)
+(in_base_life numeric, in_used numeric, in_basis numeric, in_dep_to_date numeric)
 returns numeric as $$
-SELECT CASE WHEN $3/$1 * $4 < $4 - $5 THEN $3/$1 * $4
-            ELSE $4 - $5
+SELECT CASE WHEN in_used/in_base_life * in_basis < in_basis - in_dep_to_date
+                 THEN in_used/in_base_life * in_basis
+            ELSE in_basis - in_dep_to_date
             END;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_dep__straight_line_base
-(in_base_life numeric, in_life numeric, in_used numeric, in_basis numeric,
-in_dep_to_date numeric) IS
+(in_base_life numeric, in_used numeric, in_basis numeric,
+ in_dep_to_date numeric) IS
 $$ This function is a basic function which does the actual calculation for
 straight line depreciation.$$;
 
@@ -23,10 +27,10 @@ CREATE OR REPLACE FUNCTION asset_dep__used_months
 (in_last_dep date, in_dep_date date, in_usable_life numeric)
 RETURNS numeric AS
 $$
-select CASE WHEN extract('MONTHS' FROM (date_trunc('day', $2) - date_trunc('day', $1)))
-                 > $3
-            THEN $3
-            ELSE extract('MONTHS' FROM (date_trunc('day', $2) - date_trunc('day', $1)))::numeric
+select CASE WHEN extract('MONTHS' FROM (date_trunc('day', in_dep_date) - date_trunc('day', in_last_dep)))
+                 > in_usable_life
+            THEN in_usable_life
+            ELSE extract('MONTHS' FROM (date_trunc('day', in_dep_date) - date_trunc('day', in_last_dep)))::numeric
             END;
 $$ language sql;
 
@@ -41,11 +45,12 @@ CREATE OR REPLACE FUNCTION asset_dep_get_usable_life_yr
 (in_usable_life numeric, in_start_date date, in_dep_date date)
 returns numeric as
 $$
-   SELECT CASE WHEN $3 IS NULL or get_fractional_year($2, $3) > $1
-               then $1
-               WHEN get_fractional_year($2, $3) < 0
+   SELECT CASE WHEN in_dep_date IS NULL
+                    or get_fractional_year(in_start_date, in_dep_date) > in_usable_life
+               then in_usable_life
+               WHEN get_fractional_year(in_start_date, in_dep_date) < 0
                THEN 0
-               ELSE get_fractional_year($2, $3)
+               ELSE get_fractional_year(in_start_date, in_dep_date)
           END;
 $$ language sql;
 
@@ -62,8 +67,8 @@ $$
 -- The addition of one day is so that it will return '1' when run on the end
 -- day of consecutive months.
 
-select (extract (months from age($2 + '1 day', $1 + '1 day'))
-       + extract (years from age($2, $1)) * 12)::int;
+select (extract (months from age(in_end + '1 day', in_start + '1 day'))
+       + extract (years from age(in_end, in_start)) * 12)::int;
 $$ language sql;
 
 COMMENT ON FUNCTION months_passed (in_start timestamp, in_end timestamp) IS
@@ -75,27 +80,23 @@ RETURNS bool AS
 $$
      INSERT INTO asset_report_line (asset_id, report_id, amount, department_id,
                                    warehouse_id)
-     SELECT ai.id, $3,
+     SELECT ai.id, in_report_id,
             asset_dep__straight_line_base(
                   ai.usable_life, -- years
-                  ai.usable_life -
                   get_fractional_year(coalesce(max(report_date),
                                                start_depreciation),
-                                      start_depreciation),
-                  get_fractional_year(coalesce(max(report_date),
-                                               start_depreciation),
-                                $2),
+                                      in_report_date),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
   LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
-      WHERE ai.id = ANY($1)
+      WHERE ai.id = ANY(in_asset_ids)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
             ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
 
-    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+    UPDATE asset_report SET report_class = 1 WHERE id = in_report_id;
 
     select true;
 $$ language sql;
@@ -108,27 +109,23 @@ RETURNS bool AS
 $$
      INSERT INTO asset_report_line (asset_id, report_id, amount, department_id,
                                    warehouse_id)
-     SELECT ai.id, $3,
+     SELECT ai.id, in_report_id,
             asset_dep__straight_line_base(
-                  ai.usable_life * 12,
-                  ai.usable_life * 12 --months
-                  - months_passed(start_depreciation,
-                                  coalesce(max(report_date),
-                                           start_depreciation)),
+                  ai.usable_life * 12, --months
                   months_passed(coalesce(max(report_date),
                                          start_depreciation),
-                                $2),
+                                in_report_date),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
   LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
-      WHERE ai.id = ANY($1)
+      WHERE ai.id = ANY(in_asset_ids)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
             ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
 
-    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+    UPDATE asset_report SET report_class = 1 WHERE id = in_report_id;
 
     select true;
 $$ language sql;
@@ -147,27 +144,23 @@ RETURNS bool AS
 $$
      INSERT INTO asset_report_line (asset_id, report_id, amount, department_id,
                                    warehouse_id)
-     SELECT ai.id, $3,
+     SELECT ai.id, in_report_id,
             asset_dep__straight_line_base(
-                  ai.usable_life,
-                  ai.usable_life --months
-                  - months_passed(start_depreciation,
-                                  coalesce(max(report_date),
-                                           start_depreciation)),
+                  ai.usable_life, --months
                   months_passed(coalesce(max(report_date),
                                          start_depreciation),
-                                $2),
+                                in_report_date),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
        FROM asset_item ai
   LEFT JOIN asset_report_line l ON (l.asset_id = ai.id and l.amount > 0)
   LEFT JOIN asset_report r ON (l.report_id = r.id)
-      WHERE ai.id = ANY($1)
+      WHERE ai.id = ANY(in_asset_ids)
    GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
             ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
 
-    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+    UPDATE asset_report SET report_class = 1 WHERE id = in_report_id;
 
     select true;
 $$ language sql;
@@ -524,7 +517,7 @@ Tag and description allow for partial match.  All other matches are exact.$$;
 CREATE OR REPLACE FUNCTION asset_class__get_dep_method (in_asset_class int)
 RETURNS asset_dep_method AS $$
 SELECT * from asset_dep_method
-WHERE id = (select method from asset_class where id = $1);
+WHERE id = (select method from asset_class where id = in_asset_class);
 $$ language sql;
 
 COMMENT ON FUNCTION asset_class__get_dep_method (in_asset_class int) IS
@@ -628,13 +621,13 @@ $$
                                                   ELSE 0
                                               END) as gain_loss
      FROM asset_item ai
-     JOIN asset_report_line l   ON (l.report_id = $1 AND ai.id = l.asset_id)
+     JOIN asset_report_line l   ON (l.report_id = in_id AND ai.id = l.asset_id)
      JOIN asset_report r        ON (l.report_id = r.id)
 LEFT JOIN asset_rl_to_disposal_method adm
                              USING (report_id, asset_id)
      JOIN asset_disposal_method dm
                                 ON (adm.disposal_method_id = dm.id)
-LEFT JOIN asset_report_line prl ON (prl.report_id <> $1
+LEFT JOIN asset_report_line prl ON (prl.report_id <> in_id
                                    AND ai.id = prl.asset_id)
 LEFT JOIN asset_report pr       ON (prl.report_id = pr.id)
  GROUP BY ai.id, ai.tag, ai.description, ai.start_depreciation, r.report_date,
@@ -720,7 +713,7 @@ SELECT ai.id, ai.tag, ai.start_depreciation, ai.purchase_value, ai.description,
   JOIN asset_report ar ON (ar.id = l.report_id)
   JOIN asset_rl_to_disposal_method arld
        ON  ((arld.report_id, arld.asset_id) = (l.report_id, l.asset_id))
- WHERE ar.id = $1;
+ WHERE ar.id = in_id;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION asset_report_partial_disposal_details(in_id int) IS
@@ -770,7 +763,7 @@ $$
     FROM asset_report
     JOIN asset_report_line ON (asset_report.id = asset_report_line.report_id)
     JOIN asset_item        ON (asset_report_line.asset_id = asset_item.id)
-   WHERE asset_report.id = $1
+   WHERE asset_report.id = in_id
 GROUP BY asset_report.id, asset_report.report_date;
 
   INSERT
@@ -779,7 +772,7 @@ GROUP BY asset_report.id, asset_report.report_date;
   SELECT a.dep_account_id, currval('id')::int, sum(r.accum_depreciation) * -1,
          defaults_get_defaultcurrency(), sum(r.accum_depreciation) * -1,
          TRUE, r.disposed_on
-    FROM asset_report__get_disposal($1) r
+    FROM asset_report__get_disposal(in_id) r
     JOIN asset_item a ON (r.id = a.id)
 GROUP BY a.dep_account_id, r.disposed_on;
 
@@ -787,11 +780,11 @@ GROUP BY a.dep_account_id, r.disposed_on;
   INSERT
     INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
                     approved, transdate)
-  SELECT case when sum(r.gain_loss) > 0 THEN $3 else $2 end,
+  SELECT case when sum(r.gain_loss) > 0 THEN in_loss_acct else in_gain_acct end,
          currval('id')::int, sum(r.gain_loss), defaults_get_defaultcurrency(),
          sum(r.gain_loss),
          TRUE, r.disposed_on
-    FROM asset_report__get_disposal($1) r
+    FROM asset_report__get_disposal(in_id) r
     JOIN asset_item ai ON (r.id = ai.id)
 GROUP BY r.disposed_on;
 
@@ -801,7 +794,7 @@ GROUP BY r.disposed_on;
   SELECT a.asset_account_id, currval('id')::int, sum(r.purchase_value),
          defaults_get_defaultcurrency(), sum(r.purchase_value),
          TRUE, r.disposed_on
-    FROM asset_report__get_disposal($1) r
+    FROM asset_report__get_disposal(in_id) r
     JOIN asset_item a ON (r.id = a.id)
 GROUP BY a.asset_account_id, r.disposed_on;
 
@@ -817,7 +810,8 @@ $$ Generates GL transactions for ful disposal reports.$$;
 CREATE OR REPLACE FUNCTION asset_item__add_note(in_id int, in_subject text, in_note text)
 RETURNS asset_note AS
 $$
-INSERT INTO asset_note (ref_key, subject, note) values ($1, $2, $3);
+INSERT INTO asset_note (ref_key, subject, note)
+                values (in_id, in_subject, in_note);
 SELECT * FROM asset_note WHERE id = currval('note_id_seq');
 $$ language sql;
 
@@ -857,7 +851,7 @@ CREATE OR REPLACE FUNCTION asset_report__get(in_id int)
 RETURNS asset_report
 AS
 $$
-select * from asset_report where id = $1;
+select * from asset_report where id = in_id;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_report__get(in_id int) IS
@@ -905,7 +899,7 @@ as $$
      JOIN asset_report r ON (rl.report_id = r.id)
 LEFT JOIN asset_report_line prl ON (prl.asset_id = ai.id)
 LEFT JOIN asset_report pr ON (prl.report_id = pr.id)
-    WHERE rl.report_id = $1
+    WHERE rl.report_id = in_id
  GROUP BY ai.tag, ai.start_depreciation, ai.purchase_value, m.short_name,
           ai.usable_life, ai.salvage_value, r.report_date, rl.amount,
           ai.description, ai.purchase_date;
@@ -941,13 +935,13 @@ returns setof asset_report_result AS $$
          r.depreciated_qty, r.dont_approve, r.submitted, sum(l.amount)
     FROM asset_report r
     JOIN asset_report_line l ON (l.report_id = r.id)
-   where ($1 is null or $1 <= report_date)
-         and ($2 is null or $2 >= report_date)
-         and ($3 is null or $3 = asset_class)
-         and ($4 is null
-              or ($4 is true and approved_by is not null)
-              or ($4 is false and approved_by is null))
-         and ($5 is null or $5 = entered_by)
+   where (in_start_date is null or in_start_date <= report_date)
+         and (in_end_date is null or in_end_date >= report_date)
+         and (in_asset_class is null or in_asset_class = asset_class)
+         and (in_approved is null
+              or (in_approved is true and approved_by is not null)
+              or (in_approved is false and approved_by is null))
+         and (in_entered_by is null or in_entered_by = entered_by)
 GROUP BY r.id, r.report_date, r.gl_id, r.asset_class, r.report_class,
          r.entered_by, r.approved_by, r.entered_at, r.approved_at,
          r.depreciated_qty, r.dont_approve, r.submitted;
@@ -969,7 +963,7 @@ $$
      JOIN asset_class ac ON (ai.asset_class_id = ac.id)
 LEFT JOIN asset_report_line arl ON (arl.asset_id = ai.id)
 LEFT JOIN asset_report ar ON (arl.report_id = ar.id)
-    WHERE ai.start_depreciation <= $3 AND ac.id = $2
+    WHERE ai.start_depreciation <= in_report_date AND ac.id = in_asset_class
           AND obsolete_by IS NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.purchase_value, ai.usable_life,
           ai.purchase_date, ai.location_id, ai.invoice_id, ai.asset_account_id,
@@ -980,7 +974,7 @@ LEFT JOIN asset_report ar ON (arl.report_id = ar.id)
           and 4 <> ALL(as_array(ar.report_class))))
           AND ((ai.purchase_value - coalesce(sum(arl.amount), 0)
                > ai.salvage_value) and ai.obsolete_by is null)
-               OR $1 is not true;
+               OR in_depreciation is not true;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_report__generate
@@ -994,7 +988,7 @@ returns asset_report as
 $$
 INSERT INTO asset_report (asset_class, report_date, entered_at, entered_by,
             report_class, dont_approve)
-     VALUES ($1, $2, now(), person__get_my_entity_id(),
+     VALUES (in_asset_class, in_report_date, now(), person__get_my_entity_id(),
             3, true);
 
 SELECT * FROM asset_report where id = currval('asset_report_id_seq');
@@ -1006,23 +1000,23 @@ COMMENT ON FUNCTION asset_report__begin_import
 $$Creates the outline of an asset import report$$;
 
 CREATE OR REPLACE FUNCTION asset_report__import(
-        in_description text,       -- $1
-        in_tag text,               -- $2
-        in_purchase_value numeric, -- $3
-        in_salvage_value numeric,  -- $4
-        in_usable_life numeric,    -- $5
-        in_purchase_date date,     -- $6
-        in_start_depreciation date,-- $7
-        in_location_id int,        -- $8
-        in_department_id int,      -- $9
-        in_asset_account_id int,   -- $10
-        in_dep_account_id int,     -- $11
-        in_exp_account_id int,     -- $12
-        in_asset_class_id int,     -- $13
-        in_invoice_id int,         -- $14
-        in_dep_report_id int,      -- $15
-        in_accum_dep numeric,      -- $16
-        in_obsolete_other bool     -- $17
+        in_description text,
+        in_tag text,
+        in_purchase_value numeric,
+        in_salvage_value numeric,
+        in_usable_life numeric,
+        in_purchase_date date,
+        in_start_depreciation date,
+        in_location_id int,
+        in_department_id int,
+        in_asset_account_id int,
+        in_dep_account_id int,
+        in_exp_account_id int,
+        in_asset_class_id int,
+        in_invoice_id int,
+        in_dep_report_id int,
+        in_accum_dep numeric,
+        in_obsolete_other bool
 )
 RETURNS bool AS
 $$
@@ -1030,21 +1024,21 @@ $$
 INSERT
   INTO asset_report_line
        (report_id, asset_id, amount, department_id, warehouse_id)
-select $15, id, $16, department_id, location_id
+select in_dep_report_id, id, in_accum_dep, department_id, location_id
   from asset__save
-       (NULL, $13, $1, $2, $6, $3, $5, coalesce($4, 0), $7, $8, $9, $14, $10,
-        $11, $12, (select min(id) from asset_item where tag = $2));
+       (NULL, in_asset_class_id, in_description, in_tag, in_purchase_date, in_purchase_value, in_usable_life, coalesce(in_salvage_value, 0), in_start_depreciation, in_location_id, in_department_id, in_invoice_id, in_asset_account_id,
+        in_dep_account_id, in_exp_account_id, (select min(id) from asset_item where tag = in_tag));
       -- use 'min(id)' because the first record in the series will be deprecated
       -- by by another one; chances are nil that it's actually deprecat*ing* one
 
 UPDATE asset_item
    SET obsolete_by = currval('asset_item_id_seq')
- WHERE tag = $2 and $17 is true
-       and id = (select min(id) from asset_item where tag = $2);
+ WHERE tag = in_tag and in_obsolete_other is true
+       and id = (select min(id) from asset_item where tag = in_tag);
 
 UPDATE asset_item
    SET obsolete_by = NULL
- WHERE tag = $2 and $17 is true
+ WHERE tag = in_tag and in_obsolete_other is true
        and id = currval('asset_item_id_seq');
 
 SELECT true;
@@ -1104,9 +1098,9 @@ as $$
 UPDATE asset_report
    set approved_by = person__get_my_entity_id(),
        approved_at = now()
- where id = $1;
+ where id = in_id;
 
-select * from asset_report where id = $1;
+select * from asset_report where id = in_id;
 
 $$ language sql;
 
