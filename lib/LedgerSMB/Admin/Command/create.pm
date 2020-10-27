@@ -44,9 +44,11 @@ sub run {
             });
     }
     catch ($e) {
-        ###TODO error reporting?!
         ###TODO remove database after failed creation
         $logger->error("ERROR: $e");
+        for my $line (split /\n/, $self->db->stderr) {
+            $logger->error($line);
+        }
         return 1;
     }
     $logger->info('Database successfully created');
