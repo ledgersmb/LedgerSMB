@@ -25,8 +25,9 @@ __PACKAGE__->self_register(
 sub start_adjustment {
     my $self = shift;
 
-    $self->find('*button', text => 'Continue')->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find('*button', text => 'Continue');
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 sub set_date {

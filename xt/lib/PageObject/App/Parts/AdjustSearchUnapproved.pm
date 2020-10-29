@@ -31,8 +31,9 @@ sub run_report {
     for my $key (keys %args) {
         $self->find('*labeled', text => $key)->send_keys($args{$key});
     }
-    $self->find('*button', text => 'Run Report')->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find('*button', text => 'Run Report');
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 
