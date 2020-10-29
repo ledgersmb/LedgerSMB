@@ -3,7 +3,7 @@ package LedgerSMB::Admin::Command::backup;
 
 =head1 NAME
 
-LedgerSMB::Admin::Command::create - ledgersmb-admin 'backup' command
+LedgerSMB::Admin::Command::backup - ledgersmb-admin 'backup' command
 
 =cut
 
@@ -57,7 +57,8 @@ __END__
 
 =head1 DESCRIPTION
 
-This command creates a new database to hold a company set named <database-name>.
+This command saves a database to a backup file for later restore through
+the C<restore> command.
 
 
 
