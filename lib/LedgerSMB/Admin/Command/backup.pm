@@ -1,9 +1,9 @@
 
-package LedgerSMB::Admin::Command::create;
+package LedgerSMB::Admin::Command::backup;
 
 =head1 NAME
 
-LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
+LedgerSMB::Admin::Command::backup - ledgersmb-admin 'backup' command
 
 =cut
 
@@ -21,7 +21,7 @@ use namespace::autoclean;
 
 
 sub run {
-    my ($self, $dbname) = @_;
+    my ($self, $dbname, $filename) = @_;
     my $logger = $self->logger;
     my $connect_data = {
         $self->config->get('connect_data')->%*,
@@ -29,19 +29,9 @@ sub run {
     };
     $self->db(LedgerSMB::Database->new(
                   connect_data => $connect_data,
-                  source_dir   => $self->config->sql_directory,
               ));
-    ###TODO shouldn't we want to generate the logging output as part of
-    ## the the regular logging output ? Meaning that STDERR gets logged
-    ## as WARN output while STDOUT gets logged as INFO ?
-    my $log = LedgerSMB::Database::loader_log_filename;
-    my $errlog = LedgerSMB::Database::loader_log_filename;
     try {
-        $self->db->create_and_load(
-            {
-                log    => $log,
-                errlog => $errlog,
-            });
+        $filename = $self->db->backup(file => $filename);
     }
     catch ($e) {
         ###TODO remove database after failed creation
@@ -51,10 +41,9 @@ sub run {
         }
         return 1;
     }
-    $logger->info('Database successfully created');
+    $logger->info("Backup successfully created as '$filename'");
     return 0;
 }
-
 
 __PACKAGE__->meta->make_immutable;
 
@@ -64,14 +53,14 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin create <database-name>
+   ledgersmb-admin backup <database-name> [<filename>]
 
 =head1 DESCRIPTION
 
-This command creates a new database to hold a company set named <database-name>.
+This command saves a database to a backup file for later restore through
+the C<restore> command.
 
-The resulting database does not have any setup, settings or users. See the
-C<setup>, C<setting> and C<user> commands.
+
 
 =head1 SUBCOMMANDS
 
@@ -81,7 +70,7 @@ None
 
 =head2 run(@args)
 
-Runs the C<create> command, according to the C<LedgerSMB::Admin::Command>
+Runs the C<backup> command, according to the C<LedgerSMB::Admin::Command>
 protocol.
 
 
