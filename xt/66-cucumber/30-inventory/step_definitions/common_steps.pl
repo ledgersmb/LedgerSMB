@@ -47,12 +47,14 @@ When qr/I approve the inventory adjustment/, sub {
         'To' => S->{'the inventory adjustment date'}
     );
     my $link_text = S->{'the inventory adjustment source'};
-    S->{ext_wsl}->page->body->maindiv->content
-        ->find(qq|.//a[text()="$link_text"]|)->click;
-    S->{ext_wsl}->page->body->maindiv->wait_for_content;
-    S->{ext_wsl}->page->body->maindiv->content
-        ->find('*button', text => 'Approve')->click;
-    S->{ext_wsl}->page->body->maindiv->wait_for_content;
+    my $btn = S->{ext_wsl}->page->body->maindiv->content
+        ->find(qq|.//a[text()="$link_text"]|);
+    $btn->click;
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $btn);
+    $btn = S->{ext_wsl}->page->body->maindiv->content
+        ->find('*button', text => 'Approve');
+    $btn->click;
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $btn);
 };
 
 1;
