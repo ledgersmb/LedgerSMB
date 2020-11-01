@@ -901,8 +901,7 @@ sub create_user {
        try {
            $user->create($request->{reset_password});
        }
-       catch {
-           my $err = $_;
+       catch ($err) {
            die $err unless $err =~ /duplicate user/i;
            $request->{dbh}->rollback;
            $return_with_import = 1;

@@ -146,9 +146,7 @@ sub psgi_app {
 
         $request->{dbh}->commit if defined $request->{dbh};
     }
-    catch {
-        my $error = $_;
-
+    catch ($error) {
         # Explicitly roll back, because middleware may require the
         # database connection to be in a working state (e.g. DisableBackbutton)
         $request->{dbh}->rollback
