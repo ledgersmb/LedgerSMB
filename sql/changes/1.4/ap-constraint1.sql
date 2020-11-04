@@ -1,2 +1,2 @@
 
-ALTER TABLE ap ADD COLUMN is_return bool default false;
+ALTER TABLE ap ADD COLUMN IF NOT EXISTS is_return bool default false;

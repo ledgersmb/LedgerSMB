@@ -1,2 +1,2 @@
 
-ALTER TABLE inventory RENAME TO warehouse_inventory;
+ALTER TABLE IF EXISTS inventory RENAME TO warehouse_inventory;

@@ -1,1 +1,2 @@
-ALTER TABLE ar ADD setting_sequence TEXT;
+
+ALTER TABLE ar ADD COLUMN IF NOT EXISTS setting_sequence TEXT;

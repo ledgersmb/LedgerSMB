@@ -1,5 +1,5 @@
 
-ALTER TABLE invoice ADD COLUMN IF NOT EXISTS vendor_sku text;
+ALTER TABLE invoice ADD vendor_sku text;
 UPDATE invoice SET vendor_sku = (select min(partnumber) from partsvendor
                                   where parts_id = invoice.parts_id
                                         AND credit_id = (

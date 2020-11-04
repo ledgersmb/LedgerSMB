@@ -1,5 +1,5 @@
 
-CREATE TABLE IF NOT EXISTS account_translation
+CREATE TABLE account_translation
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
 ALTER TABLE account_translation
 ADD foreign key (trans_id) REFERENCES account(id);
@@ -7,7 +7,7 @@ ADD foreign key (trans_id) REFERENCES account(id);
 COMMENT ON TABLE account_translation IS
 $$Translations for account descriptions.$$;
 
-CREATE TABLE IF NOT EXISTS account_heading_translation
+CREATE TABLE account_heading_translation
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
 ALTER TABLE account_heading_translation
 ADD foreign key (trans_id) REFERENCES account_heading(id);
