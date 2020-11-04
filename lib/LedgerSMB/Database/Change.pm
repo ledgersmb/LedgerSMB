@@ -443,13 +443,12 @@ Returns true if the tracking system needs to be initialized
 
 sub needs_init {
     my ($dbh) = @_;
-    local $@ = undef;
-    my $rows = eval { my $sth = $dbh->prepare(
-       'select 1 from db_patches'
-                          )->execute(); };
-    $dbh->rollback;
-    return 0 if $rows;
-    return 1;
+    my $count = $dbh->prepare(q{
+        select relname from pg_class
+         where relname = 'db_patches'
+               and pg_table_is_visible(oid)
+    })->execute();
+    return !int($count);
 }
 
 =head1 TODO
