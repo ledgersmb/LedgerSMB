@@ -3,8 +3,7 @@ UPDATE menu_node set position = (position * -1) - 1
 UPDATE menu_node set position = position * -1 where position < 0;
 INSERT INTO menu_node (id, parent, position, label)
 VALUES (90, 172, 2, 'Product Receipt'),
-       (99, 156, 2, 'Product Receipt')
-ON CONFLICT ON CONSTRAINT menu_node_pkey DO NOTHING;
+       (99, 156, 2, 'Product Receipt');
 
 INSERT INTO menu_attribute
 (id, node_id, attribute, value) VALUES
@@ -15,5 +14,4 @@ INSERT INTO menu_attribute
 (240, 99, 'module', 'template.pm'),
 (241, 99, 'action', 'display'),
 (242, 99, 'template_name', 'product_receipt'),
-(245, 99, 'format', 'html')
-ON CONFLICT ON CONSTRAINT menu_attribute_pkey DO NOTHING;
+(245, 99, 'format', 'html');

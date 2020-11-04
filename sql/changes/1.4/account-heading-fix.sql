@@ -1,1 +1,2 @@
-ALTER TABLE account_heading ADD COLUMN category CHAR(1);
+
+ALTER TABLE account_heading ADD COLUMN IF NOT EXISTS category CHAR(1);

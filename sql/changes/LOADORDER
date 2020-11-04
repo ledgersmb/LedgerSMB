@@ -1,5 +1,5 @@
 # This is the base file used to build the LOAD.idx file
-# It specifies a lost of db changes in order.
+# It specifies a list of db changes in order.
 # lines beginning with ! denote fixes where the fix is deemed applied even if it
 # errors (legacy fixes that may error).
 # comments begin with # (but you knew that....)
@@ -20,7 +20,6 @@
 1.4/chart-view.sql
 !1.4/account-heading-fix.sql
 1.4/locale-update.sql
-!1.4/account-heading-fix2.sql
 !1.4/inventory-fix.sql
 !1.4/inventory-fix2.sql
 !1.4/bu-fix.sql
@@ -43,7 +42,6 @@
 # fail, but we didn't detect, causing them to be added to the log of
 # applied patches. By ignoring errors here, we simulate the same
 # even though we now correctly catch errors
-!1.5/template_menu.sql
 1.5/template_menu2.sql
 1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
 # these lines were added after 1.5.0
