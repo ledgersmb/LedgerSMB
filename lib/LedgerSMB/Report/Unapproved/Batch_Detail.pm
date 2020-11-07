@@ -236,7 +236,8 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    my $locales = LedgerSMB::I18N::get_country_list($self);
+    my $locales =
+        LedgerSMB::I18N::get_country_list($self->{_user}->{language});
     my $printer = [ {text => 'Screen', value => 'zip'},
                     map { {
                         text  => $_,

@@ -204,6 +204,7 @@ though the fullversion may give you an idea of what the actual version is run.
 
 sub _stringify_db_ver {
     my ($ver) = @_;
+    $ver = 0.0;
     return join('.',
                 reverse
                 map {
@@ -223,14 +224,15 @@ sub _set_system_info {
     my %utf8_mode_desc = (
         '-1' => 'Auto-detect',
         '0'  => 'Never',
-        '1'  => 'Always'
+        '1'  => 'Always',
+        ''   => '<unspecified>', # happens when testing with DBD::Mock
         );
     $rv->{system_info} = {
         'PostgreSQL (client)' => _stringify_db_ver($dbh->{pg_lib_version}),
         'PostgreSQL (server)' => _stringify_db_ver($dbh->{pg_server_version}),
         'DBD::Pg (version)' => $DBD::Pg::VERSION->stringify,
         'DBI (version)' => $DBI::VERSION,
-         'DBD::Pg UTF-8 mode' => $utf8_mode_desc{$dbh->{pg_enable_utf8}},
+         'DBD::Pg UTF-8 mode' => $utf8_mode_desc{$dbh->{pg_enable_utf8} // ''},
         'PostgreSQL server encoding' => $server_encoding,
         'PostgreSQL client encoding' => $client_encoding,
     };
@@ -312,25 +314,24 @@ sub get_info {
        $sth->finish();
 
        if ($have_version_column) {
-       # Legacy SL and LSMB
-       $sth = $dbh->prepare(
-           'SELECT version FROM defaults'
-           );
-       #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
-       my $rv=$sth->execute();
-       if(defined($rv))
-       {
-           if (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
-           if ($ref->{version}){
-               $retval->{appname} = 'ledgersmb';
-               $retval->{version} = 'legacy';
-               $retval->{full_version} = $ref->{version};
+           # Legacy SL and LSMB
+           $sth = $dbh->prepare(
+               'SELECT version FROM defaults'
+               );
+           #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
+           my $rv=$sth->execute();
+           if (defined($rv)) {
+               if (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+                   if ($ref->{version}){
+                       $retval->{appname} = 'ledgersmb';
+                       $retval->{version} = 'legacy';
+                       $retval->{full_version} = $ref->{version};
 
-               $dbh->rollback();
-               return $retval;
+                       $dbh->rollback();
+                       return $retval;
+                   }
+               }
            }
-           }
-       }
        }
        $dbh->rollback;
        # LedgerSMB 1.2 and above

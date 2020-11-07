@@ -45,13 +45,18 @@ my %migration_script = (
 
 =head1 ATTRIBUTES
 
-=head2 database
+=head2 database (required)
+
+
 
 =cut
 
 has database => (is => 'ro', required => 1);
 
-=head2 type
+=head2 type (required)
+
+The value indicates the source type of the migration C<< <source>/<version> >>,
+e.g. C<ledgersmb/1.2>.
 
 =cut
 
@@ -154,7 +159,8 @@ my %migration_required_vars = (
 my %required_vars_values = (
     default_ar      => sub { _linked_accounts($_[1], 'AR') },
     default_ap      => sub { _linked_accounts($_[1], 'AP') },
-    default_country => sub { LedgerSMB::I18N::get_country_list($_[0]) },
+    default_country => sub {
+        LedgerSMB::I18N::get_country_list(LedgerSMB::Sysconfig::language()) },
     slschema        => sub { $migration_schema{$_[0]->type} },
     );
 
@@ -290,6 +296,7 @@ sub run_upgrade_script {
     $dbh->commit;
 
     $guard->dismiss;
+    $dbh->disconnect;
     return;
 }
 
