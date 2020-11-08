@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="000000000" description="Aktywa Trwa³e">
+      <account code="001000000" description="¦rodki Trwa³e" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="001010000" description="Grunty w³asne i prawa wieczystego u¿ytkowania gruntów" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="001020000" description="Budynki, locale i obiekty in¿ynierii l±dowej i wodnej" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="001030000" description="Urz±dzenia techniczne i maszyny" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="001040000" description="¦rodki transportu" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="001050000" description="Inne ¶rodki trwa³e" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="002000000" description="Warto¶ci niematerialne i prawne" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="002010000" description="Koszty zakoñczonych prac rozwojowych" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="002020000" description="Nabyta warto¶æ firmy" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="002080000" description="Inne warto¶ci niematerialne i prawne" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="002090000" description="Zaliczki na warto¶ci niematerialne i prawne" category="Asset"/>
+      <account code="003000000" description="D³ugoterminowe aktywa finansowe" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="003010000" description="W jednostkach powi±zanych" category="Asset"/>
+      <account code="003010100" description="Udzia³y lub akcje" category="Asset"/>
+      <account code="003010200" description="Inne papiery warto¶ciowe" category="Asset"/>
+      <account code="003010300" description="Udzielone porzyczki" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="003010400" description="Inne d³ugoterminowe aktywa finansowe" category="Asset"/>
+      <account code="003020000" description="W pozosta³ych jednostkach" category="Asset"/>
+      <account code="003020100" description="Udzia³y lub akcje" category="Asset"/>
+      <account code="003020200" description="Inne papiery warto¶ciowe" category="Asset"/>
+      <account code="003020300" description="Udzielone po¿yczki" category="Asset"/>
+      <account code="003020400" description="Inne d³ugoterminowe aktywa finansowe" category="Asset"/>
+      <account code="003090000" description="Inne investycje d³ugoterminowe" category="Asset"/>
+      <account code="003090100" description="Inne rodzaje d³ugoterminowych aktywów finansowych" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="004000000" description="Investycje w nieruchomo¶ci i prawa" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="004010000" description="Nieruchomo¶ci" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="004020000" description="Warto¶ci niematerialne i prawne" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="005000000" description="D³ugoterminowe rozliczenia miêdzyokresowe" category="Asset"/>
+      <account code="005010000" description="Aktywa z tytu³u odroczonego podatku dochodowego" category="Asset"/>
+      <account code="005020000" description="Inne rozliczenia miêdzyokresowe" category="Asset"/>
+      <account code="006000000" description="Nale¿no¶ci d³ugoterminowe" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="006010000" description="Od jednostek powi±zanych" category="Asset"/>
+      <account code="006020000" description="Od pozosta³ych jednostek" category="Asset"/>
+      <account code="007000000" description="Odpisy umorzeniowe ¶rodków trwa³ych oraz warto¶ci niematerialnych i prawnych" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="007010000" description="Odpisy umorzeniowe warto¶ci gruntów i prawa wieczystego u¿ytkowania gruntów" category="Asset"/>
+      <account code="007020000" description="Odpisy umorzeniowe budynków, lokali i obiektów in¿ynierii l±dowej i wodnej" category="Asset"/>
+      <account code="007030000" description="Odpisy umorzeniowe urz±dzeñ technicznych i maszyn" category="Asset"/>
+      <account code="007040000" description="Odpisy umorzeniowe ¶rodków transportu" category="Asset"/>
+      <account code="007050000" description="Odpisy umorzeniowe ulepszeñ obcych ¶rodków trwa³ych" category="Asset"/>
+      <account code="007090000" description="Odpisy umorzeniowe innych ¶rodków trwa³ych" category="Asset"/>
+      <account code="008000000" description="¦rodki trwa³e w budowie" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="008010000" description="Inwestycje budowy ¶rodka trwa³ego" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="008020000" description="Ulepszenia ¶rodka trwa³ego" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="008030000" description="Nak³ady na budowê ¶rodka trwa³ego" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="008040000" description="Zaliczki na ¶rodki trwa³e w budowie" category="Asset"/>
+      <account code="008050000" description="Ulepszenia obcych ¶rodków trwa³ych" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="009000000" description="Odpisy aktualizuj±ce d³ugoterminowe aktywa finansowe" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="009010000" description="Odpisy aktualizuj±ce udzia³y i akcje w obcych jednostkach" category="Asset"/>
+      <account code="009020000" description="Odpisy aktualizuj±ce lokaty" category="Asset"/>
+      <account code="009030000" description="Odpisy aktualizuj±ce udzielone porzyczki d³ugoterminowe" category="Asset"/>
+      <account code="009090000" description="Odpisy aktualizuj±ce inne rodzaje d³ugoterminowych aktywów finansowych" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="100000000" description="¦rodki pieniê¿ne, rachunki bankowe oraz inne krótkoterminowe aktywa finansowe">
+      <account code="110000000" description="¦rodki pieniê¿ne w kasie" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="110010000" description="Kasa krajowych ¶rodków pieniê¿nych" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="110020000" description="Kasa zagranicznych ¶rodków pieniê¿nych" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="113000000" description="Rachunki i kredyty bankowe" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="113010000" description="Rachunek bie¿±cy" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="113020000" description="Rachunek ¶rodków wyodrêbnionych i zablokowanych" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="113030000" description="Rachunki kredytów bankowych" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="113040000" description="Rachunek ¶rodków walutowych" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="114000000" description="Krótkoterminowe aktywa finansowe" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="114010000" description="Krótkoterminowe aktywa finansowe w jednostkach powi±zanych" category="Asset"/>
+      <account code="114010100" description="Udzia³y lub akcje" category="Asset"/>
+      <account code="114010200" description="Inne papiery warto¶ciowe" category="Asset"/>
+      <account code="114010300" description="Udzielone po¿yczki" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="114010400" description="Inne krótkoterminowe aktywa finansowe" category="Asset"/>
+      <account code="114020000" description="Krótkoterminowe aktywa finansowe w pozosta³ych jednostkach" category="Asset"/>
+      <account code="114020100" description="Udzia³y lub akcje" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="114020200" description="Inne papiery warto¶ciowe" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="114020400" description="Inne krótkoterminowe aktywa finansowe" category="Asset"/>
+      <account code="115000000" description="Inne ¶rodki pieniê¿ne" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="116000000" description="Inne aktywa pieniê¿ne" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="117000000" description="Inne inwestycje krótkoterminowe" category="Asset"/>
+      <account code="118000000" description="Krótkoterminowe rozliczenia miêdzyokresowe" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-3" code="200000000" description="Rozrachunki i roszczenia">
+      <account code="220000000" description="Nale¿no¶ci krótkoterminowe" category="Liability">
+        <link code="AR"/>
+      </account>
+      <account code="220010000" description="Nale¿no¶ci od jednostek powi±zanych" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="220010100" description="Nale¿no¶ci z tytu³u dostaw i us³ug" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="220010110" description="Nale¿no¶ci z tytu³u dostaw i us³ug, o okresie sp³aty do 12 miesiêcy" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="220010120" description="Nale¿no¶ci z tytu³u dostaw i us³ug, o okresie sp³aty powy¿ej 12 miesiêcy" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="220010200" description="Inne nale¿no¶ci" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="220010210" description="Zobowi±zania z tytu³u pokrycia kosztów ogólnego zarz±du" category="Liability"/>
+      <account code="220010220" description="Zobowi±zania z tytu³u rozliczeñ VAT" category="Liability"/>
+      <account code="221010000" description="Nale¿no¶ci od pozosta³ych jednostek" category="Liability">
+        <link code="AR"/>
+      </account>
+      <account code="221020100" description="Nale¿no¶ci z tytu³u dostaw i us³ug" category="Liability">
+        <link code="AR"/>
+      </account>
+      <account code="221020110" description="Nale¿no¶ci z tytu³u dostaw i us³ug, o okresie sp³aty do 12 miesiêcy" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="221020120" description="Nale¿no¶ci z tytu³u dostaw i us³ug, o okresie sp³aty powy¿ej 12 miesiêcy" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="221020200" description="Nale¿no¶ci z tytu³u podatków, dotacji, ce³, ubezpieczeñ spo³ecznych i zdrowotnych oraz innych ¶wiadczeñ" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="221020300" description="Zaliczki przekazane dostawcom" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="221020400" description="Nale¿no¶ci dochodzone na drodze s±dowej" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="221020500" description="Inne nale¿no¶ci" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="222000000" description="Zobowi±zania krótkoterminowe" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="222010000" description="Zobowi±zania wobec jednostek powiazanych" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222010100" description="Zobowi±zania z tytu³u dostaw i us³ug" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222010200" description="Zobowi±zania o okresie wymagalno¶ci do 12 miesiêcy" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222010300" description="Zobowi±zania o okresie wymagalno¶ci powy¿ej 12 miesiêcy" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222010400" description="Inne zobowi±zania" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222020000" description="Zobowi±zania wobec pozosta³ych jednostek" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="222020100" description="Kredyty i po¿yczki" category="Liability"/>
+      <account code="222020200" description="Zobowi±zania z tytu³u emisji d³u¿nych papierów warto¶ciowych" category="Liability"/>
+      <account code="222020300" description="Inne zobowi±zania finasowe" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222020400" description="Zobowiazania z tytu³u dostaw i us³ug" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="222020500" description="Zobowi±zania o okresie wymagalno¶ci do 12 miesiêcy " category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222020600" description="Zobowi±zania o okresie wymagalno¶ci powy¿ej 12 miesiêy" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222020700" description="Zaliczki otrzmane na dostawy" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="222020800" description="Zobowi±zania wekslowe" category="Liability"/>
+      <account code="222020900" description="Zobowi±zania z tytu³u podatków, ce³, ubezpieczeñ i innych ¶wiadczeñ" category="Liability"/>
+      <account code="222021000" description="Zobowi±zania z tytu³u wynagrodzeñ" category="Liability"/>
+      <account code="222021100" description="Inne zobowi±zania" category="Liability"/>
+      <account code="223000000" description="Rozrachunki publicznoprawne" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="223010000" description="Rozrachunki z urzêdem skarbowym z tytu³u VAT" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="223020000" description="Rozliczenie nale¿nego VAT" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="223020100" description="Rozliczenie nale¿nego VAT-22%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.22"/>
+        </tax>
+      </account>
+      <account code="223020200" description="Rozliczenie nale¿nego VAT-7%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.07"/>
+        </tax>
+      </account>
+      <account code="223020300" description="Rozliczenie nale¿nego VAT-0%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0"/>
+        </tax>
+      </account>
+      <account code="223030000" description="Rozliczenie naliczonego VAT" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="223030100" description="Rozliczenie naliczonego VAT-22%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.22"/>
+        </tax>
+      </account>
+      <account code="223030200" description="Rozliczenie naliczonego VAT-7%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.07"/>
+        </tax>
+      </account>
+      <account code="223030300" description="Rozliczenie naliczonego VAT-0%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0"/>
+        </tax>
+      </account>
+      <account code="223040000" description="Korekty naliczonego VAT" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="223050000" description="Rozrachunki z Urzêdem Celnym" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="223060000" description="Rozrachunki z Urzêdem Skarbowym z tytu³u znaków akcyzy" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="223070000" description="Rozrachunki z Urzêdem Skarbowym z tytu³u podatku akcyzowego" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="223080000" description="Rozliczenie znaków akcyzy" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="223090000" description="Rozrachunki z ZUS" category="Liability"/>
+      <account code="223100000" description="Rozrachunki z Urzêdem Skarbowym z tytu³u podatku dochodowego od osób prawnych" category="Liability">
+        <link code="AR_amount"/>
+      </account>
+      <account code="224000000" description="Rozrachunki z pracownikami" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="224010000" description="Rozrachunki z tytu³u wynagrodzeñ" category="Liability"/>
+      <account code="224020000" description="Rozrachunki z tytu³u po¿yczek udzielonych pracownikom" category="Liability"/>
+      <account code="224090000" description="Inne rozrachunki z pracownikami" category="Liability"/>
+      <account code="225000000" description="Zobowi±zania d³ugoterminowe" category="Liability"/>
+      <account code="225010000" description="Zobowi±zania wobec jednostek powi±zanych" category="Liability"/>
+      <account code="225010100" description="Zobowi±zania z tytu³u wyodrêbnienia sk³adników maj±tkowych" category="Liability"/>
+      <account code="225010200" description="Zobowi±zania z tytu³u podzia³u zysku" category="Liability"/>
+      <account code="225020000" description="Zobowi±zania wobec pozosta³ych jednostek" category="Liability"/>
+      <account code="225020100" description="Kredyty i po¿yczki otrzymane" category="Liability">
+        <link code="AR_amount"/>
+        <link code="AP_amount"/>
+      </account>
+      <account code="225020200" description="Kredyty i po¿yczki udzielone" category="Liability"/>
+      <account code="225020300" description="Zobowi±zania z tytu³u emisji d³u¿nych papierów warto¶ciowych" category="Liability"/>
+      <account code="225020400" description="Inne zobowi±zania kredytowe" category="Liability"/>
+      <account code="225020500" description="Inne zobowi±zania" category="Liability"/>
+      <account code="225030000" description="Rozrachunki z tytu³u wp³at na kapita³ zak³adowy" category="Liability">
+        <link code="AR_amount"/>
+        <link code="AP_amount"/>
+      </account>
+      <account code="225040000" description="Rozrachunki z tytu³u wk³adów niepieniê¿nych na kapita³ zak³adowy" category="Liability">
+        <link code="AR_amount"/>
+        <link code="AP_amount"/>
+      </account>
+      <account code="225050000" description="Rozrachunki z tytu³u podwy¿szenia kapita³u ze ¶rodków w³asnych spó³ki" category="Liability"/>
+      <account code="225060000" description="Rozrachunki z tytu³u umorzenia udzia³ów w³asnych" category="Liability"/>
+      <account code="225070000" description="Rozrachunki z tytu³u dywident" category="Liability"/>
+      <account code="225080000" description="Rozrachunki z tytu³u dop³at i zwrotu dop³at" category="Liability"/>
+      <account code="225090000" description="Pozosta³e rozrachunki ze wspólnikami" category="Liability"/>
+      <account code="229000000" description="Odpisy aktualizuj±ce rozrachunki" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-4" code="300000000" description="Materia³y i towary">
+      <account code="330000000" description="Rozliczenie zakupu" category="Asset"/>
+      <account code="330010000" description="Rozliczenie warto¶ci materia³ów i towarów w drodze" category="Asset"/>
+      <account code="330020000" description="Warto¶ci dostaw niefakturowanych" category="Asset"/>
+      <account code="330030000" description="Przychody wszelkich dostaw i us³ug i ich rozliczanie" category="Asset"/>
+      <account code="330040000" description="Odhylenia cen ewidencyjnych od rzeczywistych cen nabycia lub zakupu" category="Asset"/>
+      <account code="330050000" description="Koszty zakupu zawarte w fakturach dostawców" category="Asset"/>
+      <account code="330060000" description="Op³aty manipulacyjne policzone przez Urz±d Celny" category="Asset"/>
+      <account code="330070000" description="Niedobory, szkody i nadwy¿ki w transporcie" category="Asset"/>
+      <account code="330080000" description="Znaki akcyzy wed³ug dokumentu SAD" category="Asset"/>
+      <account code="330090000" description="Reklamacje faktur dostawców" category="Asset"/>
+      <account code="331000000" description="Materia³y" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="331010000" description="Materia³y w magazynach w³asnych" category="Asset"/>
+      <account code="331020000" description="Materia³y w magazynach obcych" category="Asset"/>
+      <account code="331030000" description="Materia³y w przerobie" category="Asset"/>
+      <account code="333000000" description="Towary" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="333010000" description="Towary w magazynach w³asnych" category="Asset">
+        <link code="IC_sale"/>
+      </account>
+      <account code="333020000" description="Towary w magazynach obcych" category="Asset"/>
+      <account code="333030000" description="Towary w detalu" category="Asset"/>
+      <account code="334000000" description="Odchylenia od cen ewidencyjnych materia³ów i towarów" category="Asset"/>
+      <account code="334010000" description="Odpisy aktualizuj±ce warto¶æ materia³ów" category="Asset"/>
+      <account code="334020000" description="Odpisy aktualizuj±ce warto¶æ towarów" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-5" code="400000000" description="Koszty wed³ug rodzajów i ich rozliczeñ">
+      <account code="440000000" description="Koszty wed³ug rodzajów" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="440010000" description="Zu¿ycie materia³ów i energii" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440010100" description="Zu¿ycie materia³ów biurowych" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440020000" description="Us³ugi obce" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="440020100" description="Us³ugi celne" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440020200" description="Us³ugi telekomunikacyjne" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440020300" description="Us³ugi pocztowe" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440020400" description="Us³ugi kurierskie i transportowe" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="440020500" description="Analizy sanitarne" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440020600" description="Us³ugi graficzne i drukarskie" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440030000" description="Podatki i op³aty" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440030100" description="Op³aty i prowizje bankowe" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440030200" description="Op³aty s±dowe, prawnicze i notarialne" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440030300" description="Op³aty skarbowe" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440030400" description="Koncesje" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="440040000" description="Wynagrodzenia za pracê" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="441000000" description="¦wiadczenia na rzecz pracowników" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="442000000" description="Amortyzacja" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="443000000" description="Pozosta³e" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="449000000" description="Rozliczenie kosztów" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="449010000" description="Nie podlegaj±ce rozliczeniu w czasie" category="Expense"/>
+      <account code="449020000" description="Przypadaj±ce na przysz³e okresy" category="Expense"/>
+      <account code="449030000" description="Koszty zgromadzone" category="Expense"/>
+      <account code="449040000" description="Koszty nie wliczane do warto¶ci sprzeda¿y" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-6" code="500000000" description="Koszty wed³ug typów dzia³alno¶ci i ich rozliczenie">
+      <account code="550000000" description="Koszty dzia³alno¶ci podstawowej-produkcyjnej" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="550010000" description="Rozliczone koszta dzia³alno¶ci" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="550020000" description="Koszty nie zakoñczonych d³ugotrwa³ych us³ug" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="550030000" description="Straty zwi±zane z wykonaniem d³ugotrwa³ych us³ug" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="552000000" description="Koszty dzia³alno¶ci podstawowej-handlowej" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="552010000" description="Koszty utrzymania punktów sprzeda¼y detalicznej" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="550200000" description="Koszty utrzymania hurtowni" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="552030000" description="Koszty sprzeda¿y wyrobów" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="552040000" description="Podatek akcyzowy" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="552050000" description="Op³aty celne" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="553000000" description="Koszty dzia³alno¶ci pomocniczej" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="553010000" description="¦wiadczenia us³ug transportowych" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="555000000" description="Koszty zarz±du" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="555010000" description="Koszty zarz±dzania jednostk±" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="555020000" description="¦wiadczenia us³ug na potrzeby reprezentacji i reklamy" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="558000000" description="Rozliczenie kosztów dzia³alno¶ci" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="600000000" description="Produkty i rozliczenia miêdzyokresowe">
+      <account code="660000000" description="Pó³produkty i produkty w toku" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="661000000" description="Produkty gotowe" category="Asset"/>
+      <account code="661010000" description="Wyroby gotowe" category="Asset"/>
+      <account code="661020000" description="Wyroby poza jednostk±" category="Asset"/>
+      <account code="662000000" description="Odchylenia od cen ewidencyjnych produktów" category="Asset"/>
+      <account code="662010000" description="Odchylenia od cen evidencyjnych wyrobów gotowych" category="Asset"/>
+      <account code="662020000" description="Odhylenia od cen evidencyjnych pó³fabrykatów" category="Asset"/>
+      <account code="664000000" description="Rozliczenia miêdzyokresowe kosztów" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="664010000" description="Czynne rozliczenia miêdzyokresowe kosztów" category="Liability"/>
+      <account code="664020000" description="Bierne rozliczenia miêdzyokresowe kosztów" category="Liability"/>
+      <account code="665000000" description="Pozosta³e rozliczenia miêdzyokresowe" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="665010000" description="Czynne rozliczenia przysz³ych okresów" category="Liability"/>
+      <account code="665020000" description="Bierne rozliczenia przysz³ych okresów" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-8" code="700000000" description="Przychody i koszty zwi±zane z ich osi±gniêciem">
+      <account code="770000000" description="Sprzeda¿ produktów" category="Income">
+        <link code="AR"/>
+      </account>
+      <account code="770010000" description="Sprzeda¿ produktów na kraj" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="770020000" description="Sprzeda¿ produktów na eksport" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="770030000" description="Sprzeda¿ us³ug na kraj" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="770040000" description="Sprzeda¿ us³ug na eksport" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="770100000" description="Koszty sprzedanych produktów" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="770110000" description="Koszt w³asny sprzeda¿y produktów na kraj" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="770120000" description="Koszt w³asny sprzeda¿y produktów na eksport" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="770130000" description="Koszt w³asny sprzeda¿y us³ug na kraj" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="770140000" description="Koszt w³asny sprzeda¿y us³ug na export" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="773000000" description="Sprzeda¿ towarów" category="Income">
+        <link code="AR"/>
+      </account>
+      <account code="773010000" description="Sprzeda¿ hurtowa towarów" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="773020000" description="Sprzeda¿ detaliczna towarów" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="773030000" description="Sprzeda¿ wysy³kowa towarów" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="773040000" description="Prowizja komisowa" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="773100000" description="Warto¶æ sprzedanych towarów w cenach zakupu" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="773110000" description="Warto¶æ sprzedanych towarów w sprzeda¿y hurtowej" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="773120000" description="Warto¶æ sprzedanych towarów w sprzeda¿y detalicznej" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="773130000" description="Warto¶æ sprzedanych towarów w sprzeda¿y wysy³kowej" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="773140000" description="Prowizja komisowa" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="774000000" description="Sprzeda¿ materia³ów" category="Income">
+        <link code="AR"/>
+      </account>
+      <account code="774010000" description="Materia³y" category="Income">
+        <link code="AP_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="774020000" description="Opakowania" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="774030000" description="Odpady" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="774100000" description="Warto¶æ sprzedanych materia³ów" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="774110000" description="Warto¶æ w cenach zakupu sprzedanych materia³ów" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="774120000" description="Warto¶æ w cenach zakupu sprzedanych opakowañ" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="774130000" description="Warto¶æ w cenach zakupu sprzedanych odpadów" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="775000000" description="Przychody finansowe" category="Income">
+        <link code="AR"/>
+      </account>
+      <account code="775010000" description="Kwoty nale¿ne ze sprzeda¿y aktywów finansowych" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="775020000" description="Kwoty nale¿ne z tytu³u dywident" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="775030000" description="Otrzymane odsetki" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="775040000" description="Przychody ze zbycia investycji" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="775050000" description="Aktualizacja warto¶ci investycji-przychody" category="Income"/>
+      <account code="775060000" description="Dodatnie ró¿nice kursu walut" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="775070000" description="Pozosta³e przychody finansowe" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="775100000" description="Koszty finansowe" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="775110000" description="Warto¶æ sprzedanych investycji" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="775120000" description="Odpisy z tytu³u utraty warto¶ci investycji-koszty" category="Expense"/>
+      <account code="775130000" description="Odsetki zap³acone" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="775140000" description="Ujemne ró¿nice kursu walut" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="775190000" description="Pozosta³e koszty finansowe" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="776000000" description="Pozosta³e przychody operacyjne" category="Income">
+        <link code="AR"/>
+      </account>
+      <account code="776010000" description="Przychody ze zbycia niefinansowych aktywów trwa³ych" category="Income"/>
+      <account code="776020000" description="Otrzymane dotacje" category="Income"/>
+      <account code="776030000" description="Przychody z us³ug socjalnych" category="Income"/>
+      <account code="776040000" description="Przychody ze wzrostu warto¶ci niefinansowych aktywów trwa³ych" category="Income"/>
+      <account code="776090000" description="Inne pozosta³e przychody operacyjne" category="Income"/>
+      <account code="776100000" description="Pozosta³e koszty operacyjne" category="Expense">
+        <link code="AP"/>
+      </account>
+      <account code="776110000" description="Warto¶æ sprzedanych niefinansowych aktywów trwa³ych" category="Expense"/>
+      <account code="776120000" description="Dotacje przekazane" category="Expense"/>
+      <account code="776130000" description="Odpisy z tytu³u utraty warto¶ci aktywów niefinansowych" category="Expense"/>
+      <account code="776140000" description="Inne pozosta³e koszty operacyjne" category="Expense"/>
+      <account code="777000000" description="Zyski nadzwyczajne" category="Income"/>
+      <account code="777100000" description="Straty nadzwyczajne" category="Expense"/>
+      <account code="779000000" description="Obroty wewnêtrzne" category="Income"/>
+      <account code="779010000" description="Koszt wyrobów w³asnej produkcji wydanych do w³asnych sklepów" category="Income"/>
+      <account code="779020000" description="¦wiadczenia na rzecz ¶rodków trwa³ych w budowie" category="Income"/>
+      <account code="779040000" description="Koszt niedoborów produktów" category="Income"/>
+      <account code="779050000" description="Koszt zaniechania okre¶lonego rodzaju dzia³alno¶ci" category="Income"/>
+      <account code="779100000" description="Koszt obrotów wewnêtrznych" category="Expense"/>
+      <account code="779110000" description="Koszt wytworzenia wyrobów gotowych wydanych do w³asnych sklepów" category="Expense"/>
+      <account code="779120000" description="Koszt wytworzenia ¶wiadczeñ na rzecz ¶rodków trwa³ych w budowie" category="Expense"/>
+      <account code="779130000" description="Koszt wytworzenia zakoñczonych prac rozwojowych" category="Expense"/>
+      <account code="779140000" description="Koszt wytworzenia produktów uznanych za niedobory" category="Expense"/>
+      <account code="779150000" description="Koszt zaniechania okre¶lonego rodzaju dzia³alno¶ci" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-9" code="800000000" description="Kapita³y w³asne i wynik finansowy">
+      <account code="880000000" description="Kapita³ podstawowy" category="Equity"/>
+      <account code="880010000" description="Kapita³ zak³adowy" category="Equity">
+        <link code="AP"/>
+      </account>
+      <account code="881000000" description="Fundusze wydzielone jednostkom zale¿nym" category="Equity"/>
+      <account code="882000000" description="Nale¿ne wp³aty na kapita³ podstawowy" category="Equity"/>
+      <account code="883000000" description="Fundusze wydzielone jednostkom zale¿nym" category="Equity"/>
+      <account code="884000000" description="Kapita³ zapasowy" category="Equity"/>
+      <account code="885000000" description="Kapita³ rezerwowy" category="Equity"/>
+      <account code="886000000" description="Kapita³ z aktualizacji wyceny" category="Equity"/>
+      <account code="887000000" description="Rozliczenia wyniku finansowego" category="Equity"/>
+      <account code="888000000" description="Rezerwy" category="Equity"/>
+      <account code="888010000" description="Rezerwa z tytu³u odroczonego podatku dochodowego" category="Equity"/>
+      <account code="888020000" description="Rezerwa na ¶wiadczenia" category="Equity"/>
+      <account code="888020100" description="Rezerwa d³ugoterminowa na ¶wiadczenia emerytalne i podobne" category="Equity"/>
+      <account code="888020200" description="Rezerwa krótkoterminowa na ¶wiadczenia emerytalne i podobne" category="Equity"/>
+      <account code="889090000" description="Pozosta³e rezerwy" category="Equity"/>
+      <account code="889090100" description="Pozosta³e rezerwy d³ugoterminowe" category="Equity"/>
+      <account code="889090200" description="Pozosta³e rezerwy krótkoterminowe" category="Equity"/>
+      <account code="890000000" description="Rozliczenia miêdzyokresowe" category="Equity"/>
+      <account code="890010000" description="Ujemna warto¶æ firmy" category="Equity"/>
+      <account code="890020000" description="Inne rozliczenia miêdzyokresowe" category="Equity"/>
+      <account code="890020100" description="Inne rozliczenia miêdzyokresowe d³ugoterminowe" category="Equity"/>
+      <account code="890020200" description="Inne rozliczenia miêdzyokresowe krótkoterminowe" category="Equity"/>
+      <account code="891000000" description="Fundusze specjalne" category="Equity"/>
+      <account code="892000000" description="Wynik finansowy" category="Equity"/>
+      <account code="893000000" description="Odpisy z zysku netto w ci±gu roku obrotowego" category="Equity"/>
+      <account code="893010000" description="Podatek dochodowy" category="Equity"/>
+      <account code="893020000" description="Inne obowi±zkowe obci±¿enia wyniku finansowego" category="Equity"/>
+    </account-heading>
+  </coa>
+  <currencies default="PLN">
+    <currency code="PLN">
+      PLN
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="333000000"/>
+    <setting name="income_accno_id" accno="773010000"/>
+    <setting name="expense_accno_id" accno="773110000"/>
+    <setting name="fxgain_accno_id" accno="775060000"/>
+    <setting name="fxloss_accno_id" accno="775140000"/>
+    <setting name="invnumber" value="1000"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

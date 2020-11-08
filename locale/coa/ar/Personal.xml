@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="0." description="SUMARIO">
+      <account code="0.00" description="A Cobrar" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="0.10" description="A Pagar" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="0.20" description="Inventario" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-2" code="1." description="ACTIVO">
+      <account-heading id="h-3" code="1.1." description="CORRIENTE">
+        <account code="1.1.00" description="Efectivo" category="Asset" recon="true">
+          <link code="AR_paid"/>
+          <link code="AP_paid"/>
+        </account>
+        <account code="1.1.10" description="Caja Seguridad" category="Asset" recon="true">
+          <link code="AR_paid"/>
+          <link code="AP_paid"/>
+        </account>
+        <account code="1.1.20" description="Caja Ahorro Banco1" category="Asset" recon="true">
+          <link code="AR_paid"/>
+          <link code="AP_paid"/>
+        </account>
+        <account code="1.1.21" description="Caja Ahorro Banco2" category="Asset" recon="true">
+          <link code="AR_paid"/>
+          <link code="AP_paid"/>
+        </account>
+        <account code="1.1.30" description="TC Banco1" category="Asset" recon="true">
+          <link code="AR_paid"/>
+          <link code="AP_paid"/>
+        </account>
+        <account code="1.1.31" description="TC Banco2" category="Asset" recon="true">
+          <link code="AR_paid"/>
+          <link code="AP_paid"/>
+        </account>
+        <account code="1.1.40" description="Credito a Terceros" category="Asset">
+          <link code="AR_overpayment"/>
+          <link code="AR_amount"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-4" code="1.2." description="INVENTARIO">
+        <account code="1.2.00" description="Articulos" category="Asset">
+          <link code="IC_sale"/>
+          <link code="AR_amount"/>
+        </account>
+        <account code="1.2.10" description="Manufacturas" category="Asset">
+          <link code="IC_sale"/>
+          <link code="AR_amount"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-5" code="1.3." description="NO CORRIENTE">
+        <account code="1.3.00" description="Propiedades" category="Asset">
+          <link code="Fixed_Asset"/>
+        </account>
+        <account code="1.3.10" description="Vehiculos" category="Asset">
+          <link code="Fixed_Asset"/>
+        </account>
+        <account code="1.3.20" description="Muebles" category="Asset">
+          <link code="Fixed_Asset"/>
+        </account>
+        <account code="1.3.30" description="Electrodomesticos" category="Asset">
+          <link code="Fixed_Asset"/>
+        </account>
+        <account code="1.3.40" description="Herramientas" category="Asset">
+          <link code="Fixed_Asset"/>
+        </account>
+        <account code="1.3.100" description="(-)Depresiacion" category="Asset">
+          <link code="Asset_Dep"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-6" code="1.4." description="OTROS">
+        <account code="1.4.00" description="(-)Amortizacion" category="Asset"/>
+        <account code="1.4.10" description="IVA a Favor" category="Asset">
+          <link code="AP_tax"/>
+          <tax/>
+        </account>
+        <account code="1.4.20" description="Depositos de Alquiler" category="Asset"/>
+      </account-heading>
+    </account-heading>
+    <account-heading id="h-7" code="2." description="PASIVO">
+      <account-heading id="h-8" code="2.1." description="CORRIENTE">
+        <account code="2.1.00" description="Servicios" category="Liability">
+          <link code="AP_amount"/>
+        </account>
+        <account code="2.1.10" description="Proveedores" category="Liability">
+          <link code="AP_amount"/>
+        </account>
+        <account code="2.1.20" description="Ganancias (9% - 35%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+        <account code="2.1.21" description="Jubilacion (11%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+        <account code="2.1.22" description="Jubilacion INSSJP (3%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+        <account code="2.1.23" description="Servicio Social (3%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+        <account code="2.1.24" description="Bienes Personales (0,5% - 1,25%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+        <account code="2.1.25" description="Valor Agregado (IVA 10,5% - 27%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+        <account code="2.1.26" description="Ingresos Brutos (3%)" category="Liability">
+          <link code="IC_taxservice"/>
+          <link code="IC_taxpart"/>
+          <link code="AR_tax"/>
+          <tax/>
+        </account>
+      </account-heading>
+      <account-heading id="h-9" code="2.2." description="LARGO PLAZO">
+        <account code="2.2.00" description="Hipotecario Banco X" category="Liability">
+          <link code="AP_amount"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-10" code="2.3." description="OTROS PASIVOS"/>
+    </account-heading>
+    <account-heading id="h-11" code="3." description="PATRIMONIO">
+      <account-heading id="h-12" code="3.1." description="PATRIMONIO NETO">
+        <account code="3.1.00" description="Capital Social" category="Equity"/>
+      </account-heading>
+    </account-heading>
+    <account-heading id="h-13" code="4." description="INGRESOS">
+      <account-heading id="h-14" code="4.1." description="OPERACIONALES">
+        <account code="4.1.00" description="Acreditacion de Haberes" category="Income">
+          <link code="IC_income"/>
+          <link code="AR_amount"/>
+        </account>
+        <account code="4.1.10" description="Servicios Prestados" category="Income">
+          <link code="IC_income"/>
+          <link code="AR_amount"/>
+        </account>
+        <account code="4.1.20" description="Articulos Vendidos" category="Income">
+          <link code="IC_income"/>
+          <link code="AR_amount"/>
+        </account>
+        <account code="4.1.30" description="Manufacturas Vendidas" category="Income">
+          <link code="IC_income"/>
+          <link code="AR_amount"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-15" code="4.2." description="NO OPERACIONALES">
+        <account code="4.2.00" description="Intereses Ganados" category="Income">
+          <link code="asset_gain"/>
+        </account>
+        <account code="4.2.10" description="Venta de Activo Fijo" category="Income">
+          <link code="asset_gain"/>
+        </account>
+        <account code="4.2.20" description="Rentas" category="Income">
+          <link code="asset_gain"/>
+        </account>
+        <account code="4.2.30" description="Cambio de Moneda Ganado" category="Income">
+          <link code="asset_gain"/>
+        </account>
+      </account-heading>
+    </account-heading>
+    <account-heading id="h-16" code="5." description="GASTOS   ">
+      <account-heading id="h-17" code="5.1." description="COSTO">
+        <account code="5.1.00" description="Servicios" category="Expense">
+          <link code="AP_amount"/>
+          <link code="IC_expense"/>
+        </account>
+        <account code="5.1.10" description="Articulos" category="Expense">
+          <link code="AP_amount"/>
+          <link code="IC_cogs"/>
+        </account>
+        <account code="5.1.20" description="Manufacturas" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_loss"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-18" code="5.2." description="SERVICIOS">
+        <account code="5.2.00" description="Alquiler inmobiliario" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.2.01" description="Electricidad" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.2.02" description="Gas" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.2.03" description="Municipal" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.2.04" description="Telefonia" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.2.05" description="Internet" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-19" code="5.3." description="MANTENIMIENTO">
+        <account code="5.3.00" description="Propiedades" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.3.10" description="Vehiculos" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+        <account code="5.3.20" description="Varios" category="Expense">
+          <link code="AP_amount"/>
+          <link code="asset_expense"/>
+        </account>
+      </account-heading>
+      <account-heading id="h-20" code="5.4." description="OTROS GASTOS">
+        <account code="5.4.00" description="Vacaciones" category="Expense">
+          <link code="AP_amount"/>
+        </account>
+        <account code="5.4.10" description="Cooperadora Escuela" category="Expense">
+          <link code="AP_amount"/>
+        </account>
+        <account code="5.4.20" description="Cambio de Moneda Perdido" category="Expense">
+          <link code="AP_amount"/>
+        </account>
+      </account-heading>
+    </account-heading>
+  </coa>
+  <currencies default="ARS">
+    <currency code="ARS">
+      ARS
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="0.20"/>
+    <setting name="income_accno_id" accno="4.1.00"/>
+    <setting name="expense_accno_id" accno="5.1.00"/>
+    <setting name="fxgain_accno_id" accno="4.2.30"/>
+    <setting name="fxloss_accno_id" accno="5.4.20"/>
+    <setting name="weightunit" value="Kg"/>
+  </settings>
+</configuration>

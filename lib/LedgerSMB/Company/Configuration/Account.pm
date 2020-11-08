@@ -198,6 +198,9 @@ sub save {
     $log->infof('Saving account %s (%s)', $self->accno, $self->description);
     my ($row) = $self->call_dbmethod(funcname => 'account__save',
                                      args => { heading => $self->heading_id });
+    if ($self->recon) {
+        $self->call_dbmethod(funcname => 'cr_coa_to_account_save');
+    }
     return $self->_id($row->{account__save});
 }
 

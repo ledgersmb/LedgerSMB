@@ -545,9 +545,7 @@ sub load_modules {
     return 1;
 }
 
-=head2 $db->load_coa({ country => '2-char-country-code',
-                       chart => 'name-of-chart',
-                       gifi => 'name-of-gifi',
+=head2 $db->load_sic({ country => '2-char-country-code',
                        sic => 'name-of-sic' })
 
 Loads the chart of accounts (and possibly GIFI/SIC tables) as specified in
@@ -555,20 +553,9 @@ the chart of accounts file name given for the given 2-char (iso) country code.
 
 =cut
 
-sub load_coa {
+sub load_sic {
     my ($self, $args) = @_;
 
-    $self->run_file (
-        file         => "$self->{source_dir}/coa/$args->{country}/chart/$args->{chart}",
-        );
-
-    $args->{gifi} //= $args->{chart};
-    if (defined $args->{gifi}
-        && -f "$self->{source_dir}/coa/$args->{country}/gifi/$args->{gifi}"){
-        $self->run_file(
-            file        => "$self->{source_dir}/coa/$args->{country}/gifi/$args->{gifi}",
-            );
-    }
     if (defined $args->{sic}
         && -f "$self->{source_dir}/coa/$args->{country}/sic/$args->{sic}"){
         $self->run_file(

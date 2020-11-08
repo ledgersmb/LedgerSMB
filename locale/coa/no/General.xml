@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="10" description="Immaterielle eiendeler">
+      <account code="1000" description="Forskning og utvikling" category="Asset"/>
+      <account code="1030" description="Patenter" category="Asset"/>
+      <account code="1040" description="Lisenser" category="Asset"/>
+      <account code="1050" description="Varemerker" category="Asset"/>
+      <account code="1060" description="Andre rettigheter" category="Asset"/>
+      <account code="1070" description="Utsatt skattefordel" category="Asset"/>
+      <account code="1080" description="Goodwill" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="11" description="Varige driftsmidler">
+      <account code="1100" description="Bygninger" category="Asset"/>
+      <account code="1120" description="Bygningsmessige anlegg" category="Asset"/>
+      <account code="1140" description="Jord- og skogbrukseiendommer" category="Asset"/>
+      <account code="1150" description="Tomter og andre grunnarealer" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-3" code="12" description="Transportmidler, inventar, maskiner o.l.">
+      <account code="1200" description="Maskiner og anlegg" category="Asset"/>
+      <account code="1210" description="Maskiner og anlegg under utførelse" category="Asset"/>
+      <account code="1230" description="Biler" category="Asset"/>
+      <account code="1240" description="Andre transportmidler" category="Asset"/>
+      <account code="1250" description="Inventar" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1260" description="Fast bygningsinventar med annen avskrivning" category="Asset"/>
+      <account code="1270" description="Verktøy mv." category="Asset"/>
+      <account code="1280" description="Kontormaskiner" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-4" code="13" description="Finansielle anleggsmidler">
+      <account code="1300" description="Investeringer i datterselskaper" category="Asset"/>
+      <account code="1350" description="Investeringer i aksjer og andeler" category="Asset"/>
+      <account code="1360" description="Obligasjoner" category="Asset"/>
+      <account code="1370" description="Fordringer på eiere, styremedlemmer mv." category="Asset"/>
+      <account code="1380" description="Fordringer på ansatte" category="Asset"/>
+      <account code="1390" description="Andre langsiktige fordringer" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-5" code="14" description="Varer">
+      <account code="1400" description="Råvarer og innkjøpte halvfabrikata" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1420" description="Varer under tilvirkning" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1440" description="Ferdige egentilvirkede varer" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1460" description="Innkjøpte varer for videresalg" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1480" description="Forskuddsbetaling til leverandører" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-6" code="15" description="Fordringer">
+      <account code="1500" description="Kundefordringer" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1520" description="Andre kortsiktige fordringer" category="Asset"/>
+      <account code="1530" description="Opptjente, ikke fakturerte driftsinntekter" category="Asset"/>
+      <account code="1570" description="Andre kortsiktige fordringer" category="Asset"/>
+      <account code="1580" description="Avsetning tap på fordringer" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-7" code="17" description="Andre fordringer">
+      <account code="1700" description="Forskuddsbetalt leie" category="Asset"/>
+      <account code="1710" description="Forskuddsbetalt rente" category="Asset"/>
+      <account code="1720" description="Forskuddsbetalt lønn" category="Asset"/>
+      <account code="1750" description="Påløpte leieinntekter" category="Asset"/>
+      <account code="1760" description="Påløpte renteinntekter" category="Asset"/>
+      <account code="1780" description="Krav på innbetaling av selskapskapital" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-8" code="18" description="Investeringer">
+      <account code="1800" description="Aksjer &amp; andeler i foretak i samme kons." category="Asset"/>
+      <account code="1810" description="Markesdbaserte aksjer" category="Asset"/>
+      <account code="1820" description="Andre aksjer" category="Asset"/>
+      <account code="1830" description="Markedsbaserte obligasjoner" category="Asset"/>
+      <account code="1840" description="Andre obligasjoner" category="Asset"/>
+      <account code="1850" description="Markedsbaserte sertifikater" category="Asset"/>
+      <account code="1860" description="Andre sertifikater" category="Asset"/>
+      <account code="1880" description="Andre finansielle instrumenter" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-9" code="19" description="Bankinnskudd, kontanter o.l.">
+      <account code="1900" description="Kontanter" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1910" description="Kasse" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1920" description="Bankinnskudd" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1950" description="Bankinnskudd for skattetrekk" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="20" description="Egenkapital"/>
+    <account-heading id="h-11" code="200" description="Innskutt egenkapital">
+      <account code="2000" description="Aksjekapital" category="Equity"/>
+      <account code="2010" description="Egne aksjer" category="Equity"/>
+      <account code="2020" description="Overkursfond" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-12" code="204" description="Opptj. egenkapital">
+      <account code="2040" description="Fond for vurderingsforskjeller" category="Equity"/>
+      <account code="2050" description="Annen egenkapital" category="Equity"/>
+      <account code="2080" description="Udisponert overskudd" category="Equity"/>
+      <account code="2090" description="Udekket tap" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-13" code="210" description="Avsetninger for forpliktelser">
+      <account code="2100" description="Pensjonsforpliktelser" category="Liability"/>
+      <account code="2120" description="Utsatt skatt" category="Liability"/>
+      <account code="2140" description="Avsetn. for garanti- &amp; serviceforpl." category="Liability"/>
+      <account code="2180" description="Andre avsetninger for forpiktelser" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-14" code="220" description="Annen langsiktig gjeld">
+      <account code="2200" description="Konvertible lån" category="Liability"/>
+      <account code="2210" description="Obligsjonslån" category="Liability"/>
+      <account code="2220" description="Gjeld til kredittinstitusjoner" category="Liability"/>
+      <account code="2240" description="Pantelån" category="Liability"/>
+      <account code="2260" description="Gjeld til selskap i samme konsern" category="Liability"/>
+      <account code="2270" description="Andre valutalån" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-15" code="230" description="Kortsiktig gjeld">
+      <account code="2300" description="Konvertible lån" category="Liability"/>
+      <account code="2320" description="Sertifikatlån" category="Liability"/>
+      <account code="2340" description="Andre valutalån" category="Liability"/>
+      <account code="2360" description="Byggelån" category="Liability"/>
+      <account code="2380" description="Kassakreditt" category="Liability"/>
+      <account code="2400" description="Leverandørgjeld" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2500" description="Avsatt betalbar skatt" category="Liability"/>
+      <account code="2510" description="Skattebetaling" category="Liability"/>
+      <account code="2600" description="Skattetrekk" category="Liability"/>
+      <account code="2620" description="Påleggstrekk" category="Liability"/>
+      <account code="2630" description="Bidragstrekk" category="Liability"/>
+      <account code="2640" description="Trygdetrekk" category="Liability"/>
+      <account code="2650" description="Forsikringstrekk" category="Liability"/>
+      <account code="2660" description="Fagforeningstrekk" category="Liability"/>
+      <account code="2690" description="Andre trekk" category="Liability"/>
+      <account code="2710" description="Utgående 25% mva" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.25"/>
+        </tax>
+      </account>
+      <account code="2720" description="Utgående 14% mva" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.14"/>
+        </tax>
+      </account>
+      <account code="2730" description="Utgående 8% mva" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.08"/>
+        </tax>
+      </account>
+      <account code="2717" description="Beregnet avgift utlandet" category="Liability"/>
+      <account code="2715" description="Inngående 25% mva" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.25"/>
+        </tax>
+      </account>
+      <account code="2725" description="Inngående 14% mva" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.14"/>
+        </tax>
+      </account>
+      <account code="2735" description="Inngående 25% mva" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.08"/>
+        </tax>
+      </account>
+      <account code="2745" description="Grunnlag 1 tjenester utlandet" category="Liability"/>
+      <account code="2746" description="Grunnlag 2 tjenester utlandet" category="Liability"/>
+      <account code="2750" description="Oppgjørskonto merverdiavgift" category="Liability"/>
+      <account code="2770" description="Påløpt arbeidsgiveravgift" category="Liability"/>
+      <account code="2780" description="Skyldig arbeidsgiveravgift" category="Liability"/>
+      <account code="2781" description="Arb.giv.avg. pål. feriep." category="Liability"/>
+      <account code="2800" description="Avsatt utbytte" category="Liability"/>
+      <account code="2900" description="Forskudd fra kunder" category="Liability"/>
+      <account code="2910" description="Skyldig lønn" category="Liability"/>
+      <account code="2920" description="Skyldig feriepenger" category="Liability"/>
+      <account code="2930" description="Gjeld til ansatte og aksjonærer" category="Liability"/>
+      <account code="2950" description="Påløpte renter" category="Liability"/>
+      <account code="2960" description="Påløpte kostn. og forskuddsbet. inskudd" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-16" code="3" description="Salgs- og driftsinntekter">
+      <account code="3010" description="Salgsinntekter, 24% mva" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="3019" description="Frakt" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="3020" description="Salgsinntekter, 12% mva" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="3060" description="Uttak av varer" category="Income"/>
+      <account code="3080" description="Rabatter og andre salgsinntektsreduksjon" category="Income"/>
+      <account code="3099" description="Miljøavgift" category="Income"/>
+      <account code="3110" description="Salgsinntekter, avgiftsfrie" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="3160" description="Uttak av varer" category="Income"/>
+      <account code="3180" description="Rabatter og andre salgsinntektsreduksjon" category="Income"/>
+      <account code="3300" description="Spes. offent. avg. tilvirk./solgte varer" category="Income"/>
+      <account code="3400" description="Spes. offent. avg. tilvirk./solgte varer" category="Income"/>
+      <account code="3440" description="Spes. offentlige tilskudd for tjenester" category="Income"/>
+      <account code="3500" description="Uopptjente inntekter garanti" category="Income"/>
+      <account code="3510" description="Uopptjente inntekter service" category="Income"/>
+      <account code="3600" description="Leieinntekter fast eiendom" category="Income"/>
+      <account code="3610" description="Leieinntekter andre varige driftsmidler" category="Income"/>
+      <account code="3620" description="Andre leieinntekter" category="Income"/>
+      <account code="3700" description="Provisjonsinntekter" category="Income"/>
+      <account code="3800" description="Gevinst ved avgang av anleggsmidler" category="Income"/>
+      <account code="3900" description="Andre driftsrelaterte inntekter" category="Income"/>
+    </account-heading>
+    <account-heading id="h-17" code="4" description="Varekostnad"/>
+    <account-heading id="h-18" code="40" description="Råvarer og halvfabrikata">
+      <account code="4010" description="Innkjøp varer, avgiftspliktig 24% mva" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="4020" description="Innkjøp varer, avgiftspliktig 12% mva" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="4060" description="Innkjøpsprisreduksjoner" category="Expense"/>
+      <account code="4070" description="Frakt, toll og spedisjon" category="Expense"/>
+      <account code="4090" description="Beholdningsendring" category="Expense"/>
+      <account code="4110" description="Innkjøp varer, avgiftsfritt" category="Expense"/>
+      <account code="4160" description="Frakt, toll og spedisjon" category="Expense"/>
+      <account code="4170" description="Frakt, toll og spedisjon, avgiftsfritt" category="Expense"/>
+      <account code="4180" description="Innkjøpsprisreduksjoner" category="Expense"/>
+      <account code="4190" description="Beholdningsendring" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-19" code="43" description="Varer for videresalg">
+      <account code="4310" description="Innkjøp av varer for videresalg, 24% mva" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="4320" description="Innkjøp av varer for videresalg, 12% mva" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="4360" description="Frakt, toll m.m. vedr. innkjøp av varer for videresalg" category="Expense"/>
+      <account code="4370" description="Rabatter m.m. vedr. innkjøp av varer for videresalg" category="Expense"/>
+      <account code="4380" description="Varekostnad" category="Expense"/>
+      <account code="4390" description="Beholdningsendring varer for videresalg" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-20" code="5" description="Lønnskostnader">
+      <account code="5010" description="Faste lønninger" category="Expense"/>
+      <account code="5090" description="Periodiseringskonto lønn" category="Expense"/>
+      <account code="5190" description="Påløpne feriepenger" category="Expense"/>
+      <account code="5210" description="Fri bil" category="Expense"/>
+      <account code="5220" description="Fri telefon" category="Expense"/>
+      <account code="5230" description="Fri avis" category="Expense"/>
+      <account code="5240" description="Fri losji og bolig" category="Expense"/>
+      <account code="5250" description="Rentefordel" category="Expense"/>
+      <account code="5260" description="Smusstillegg" category="Expense"/>
+      <account code="5280" description="Andre fordeler i arbeidsforhold" category="Expense"/>
+      <account code="5291" description="Motkonto for gruppe 52" category="Expense"/>
+      <account code="5330" description="Godtgj. til styre- og bedriftsforsamling" category="Expense"/>
+      <account code="5410" description="Arbeidsgiveravgift" category="Expense"/>
+      <account code="5411" description="Arb.giv.avg. pål. feriep." category="Expense"/>
+      <account code="5420" description="Innberetningspliktige pensjonskostnader" category="Expense"/>
+      <account code="5430" description="Premie pensjonsordning" category="Expense"/>
+      <account code="5500" description="Andre kostnadsgodtgjørelser" category="Expense"/>
+      <account code="5510" description="Overtidsmat etter regning" category="Expense"/>
+      <account code="5520" description="Kantinekostnader" category="Expense"/>
+      <account code="5800" description="Refusjon av sykepenger" category="Expense"/>
+      <account code="5820" description="Refusjon av arbeidsgiveravgift" category="Expense"/>
+      <account code="5920" description="Yrkesskadeforsikring" category="Expense"/>
+      <account code="5930" description="Andre ikke arb.giv.avg.pliktige forsikr." category="Expense"/>
+      <account code="5950" description="Personalforsikring" category="Expense"/>
+      <account code="5960" description="Gaver til ansatte" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-21" code="6" description="Andre driftskostnader, av- og nedskrivninger">
+      <account code="6000" description="Avskrivning på bygn. &amp; annen fast eiend." category="Expense"/>
+      <account code="6010" description="Avskrivning på transportmidler, maskiner" category="Expense"/>
+      <account code="6020" description="Avskrivning på immaterielle eiendeler" category="Expense"/>
+      <account code="6050" description="Nedskr. varige driftsmidl. &amp; imat. eiend" category="Expense"/>
+      <account code="6100" description="Frakter, transportkostnader og forsikring" category="Expense"/>
+      <account code="6110" description="Toll og spedisjonskostnader ved forsend" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-22" code="62" description="Energi, brensel o.l. vedr. produksjon">
+      <account code="6200" description="Elektrisitet" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6260" description="Vann" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-23" code="63" description="Kostnader. vedr. lokaler">
+      <account code="6300" description="Leie lokaler" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6320" description="Renovasjon, vann, avløp mv." category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6340" description="Lys, varme" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6360" description="Renhold" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-24" code="64" description="Leie av maskiner, inventar o.l.">
+      <account code="6400" description="Leie av driftsmidler" category="Expense"/>
+      <account code="6430" description="Leie andre kontormaskiner" category="Expense"/>
+      <account code="6540" description="Inventar" category="Expense"/>
+      <account code="6550" description="Driftsmaterialer" category="Expense"/>
+      <account code="6560" description="Rekvisita" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6570" description="Arbeidsklær og verneutstyr" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6600" description="Reparasjoner og vedlikehold bygninger" category="Expense"/>
+      <account code="6620" description="Reparasjoner og vedlikehold utstyr" category="Expense"/>
+      <account code="6700" description="Revisjonshonorar" category="Expense"/>
+      <account code="6720" description="Honorar for økonomisk &amp; juridisk bistand" category="Expense"/>
+      <account code="6750" description="Honorar regnskapsfører" category="Expense"/>
+      <account code="6800" description="Kontorrekvisita" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6820" description="Trykksaker" category="Expense"/>
+      <account code="6840" description="Aviser, tidsskrifter, bøker mv." category="Expense"/>
+      <account code="6860" description="Møter, kurs, oppdatering mv." category="Expense"/>
+      <account code="6900" description="Telefon" category="Expense"/>
+      <account code="6940" description="Porto" category="Expense"/>
+      <account code="7000" description="Drivstoff" category="Expense"/>
+      <account code="7020" description="Vedlikehold" category="Expense"/>
+      <account code="7040" description="Forsikringer" category="Expense"/>
+      <account code="7100" description="Bilgodtgjørelse, oppgavepliktig" category="Expense"/>
+      <account code="7105" description="Øreavrunding" category="Expense"/>
+      <account code="7130" description="Reisekostnader, oppgavepliktige" category="Expense"/>
+      <account code="7140" description="Reisekostnader, ikke oppgavepliktig" category="Expense"/>
+      <account code="7150" description="Diettkostnader, oppgaveplikig" category="Expense"/>
+      <account code="7160" description="Diettkostnader, ikke oppgavepliktig" category="Expense"/>
+      <account code="7200" description="Provisjonskostnader, oppgavepliktige" category="Expense"/>
+      <account code="7210" description="Provisjonskostnader, ikke oppgavepliktig" category="Expense"/>
+      <account code="7300" description="Salgskostnader" category="Expense"/>
+      <account code="7320" description="Reklamekostnader" category="Expense"/>
+      <account code="7350" description="Representasjon, fradragsberettiget" category="Expense"/>
+      <account code="7360" description="Representasjon, ikke fradragsberettiget" category="Expense"/>
+      <account code="7400" description="Kontingenter og gaver" category="Expense"/>
+      <account code="7500" description="Forsikringspremier" category="Expense"/>
+      <account code="7550" description="Garanti- og servicekostnader" category="Expense"/>
+      <account code="7600" description="Lisenesavgifter og royalties" category="Expense"/>
+      <account code="7700" description="Styre- og bedriftsforsamlingsmøter" category="Expense"/>
+      <account code="7710" description="Generalforsamling" category="Expense"/>
+      <account code="7730" description="Kostnader ved egne aksjer" category="Expense"/>
+      <account code="7750" description="Eiendoms- og festeavgift" category="Expense"/>
+      <account code="7770" description="Bank og kortgebyrer" category="Expense"/>
+      <account code="7800" description="Tap ved avgang anleggsmidler" category="Expense"/>
+      <account code="7820" description="Innkommet på tidligere nedskrevne fordri" category="Expense"/>
+      <account code="7830" description="Tap på fordringer" category="Expense"/>
+      <account code="7850" description="Tap pga. brannskade" category="Expense"/>
+      <account code="7860" description="Tap på kontrakter" category="Expense"/>
+      <account code="7900" description="Beholdningsendring anlegg under utførels" category="Expense"/>
+      <account code="7990" description="Andre driftskostnader" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-25" code="8" description="Finansinntekter og -kostnader, skatter, m.m.">
+      <account code="8000" description="Inntekter på investeringer i datterselskap" category="Expense"/>
+      <account code="8040" description="Renteinntekter, skattefrie" category="Expense"/>
+      <account code="8050" description="Annen renteinntekt" category="Expense"/>
+      <account code="8060" description="Purregebyr, kunder" category="Expense"/>
+      <account code="8070" description="Renteinntekter, kunder" category="Expense"/>
+      <account code="8080" description="Agio gevinst" category="Expense"/>
+      <account code="8090" description="Andre finansinntekter" category="Expense"/>
+      <account code="8100" description="Verdired. av markedsbas.finans. omløps." category="Expense"/>
+      <account code="8110" description="Nedskrivn. av andre finansielle omløps." category="Expense"/>
+      <account code="8120" description="Nedskrivning av finansielle anleggsmidl." category="Expense"/>
+      <account code="8140" description="Rentekostnader, ikke fradragsberettigede" category="Expense"/>
+      <account code="8150" description="Annen rentekostnad" category="Expense"/>
+      <account code="8160" description="Purregebyr. leverandør" category="Expense"/>
+      <account code="8180" description="Agio tap" category="Expense"/>
+      <account code="8300" description="Betalbar skatt" category="Expense"/>
+      <account code="8320" description="Utsatt skatt" category="Expense"/>
+      <account code="8350" description="Skattekostnad" category="Expense"/>
+      <account code="8600" description="Betalbar skatt" category="Expense"/>
+      <account code="8620" description="Utsatt skatt" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-26" code="880" description="Fond for vurderingsforskjeller">
+      <account code="8800" description="Årsresultat" category="Expense"/>
+      <account code="8900" description="Overføringer fond for vurderingsforskjel" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-27" code="892" description="Utbytte">
+      <account code="8920" description="Avsatt utbytte/renter på grunnfondsbevis" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-28" code="893" description="Konsernbidrag">
+      <account code="8930" description="Konsernbidrag" category="Expense"/>
+      <account code="8940" description="Aksjonærbidrag" category="Expense"/>
+      <account code="8950" description="Fondsemisjon" category="Expense"/>
+      <account code="8960" description="Overføringer annen egenkapital" category="Expense"/>
+      <account code="8980" description="Avsatt til fri egenkapital" category="Expense"/>
+      <account code="8990" description="Udekket tap" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-29" code="891" description="Annen egenkapital">
+      <account code="8910" description="Overføringer felleseid andelskapital for" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="NOK">
+    <currency code="NOK">
+      NOK
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1250"/>
+    <setting name="income_accno_id" accno="3010"/>
+    <setting name="expense_accno_id" accno="4010"/>
+    <setting name="fxgain_accno_id" accno="8080"/>
+    <setting name="fxloss_accno_id" accno="8180"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="HUIDIGE ACTIVA">
+      <account code="1061" description="Bank" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="Kas" category="Asset">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Debiteuren" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Toelage voor precaire rekeningen" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="VOORRAAD ACTIVA">
+      <account code="1520" description="Voorraad / Hardware" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Voorraad / Software" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="Voorraad / Aftermarket Parts" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="LANGE TERMIJN ACTIVA">
+      <account code="1820" description="Inventaris" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1825" description="Afschrijving inventaris" category="Asset" contra="true"/>
+      <account code="1840" description="Auto" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1845" description="Afschrijving auto" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="HUIDIGE PASSIVA">
+      <account code="2100" description="Crediteuren" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2160" description="Niet-rijks Belastingen" category="Liability"/>
+      <account code="2170" description="Omzetbelasting" category="Liability"/>
+      <account code="2190" description="Vennootschapsbelasting" category="Liability"/>
+      <account code="2310" description="BTW hoog" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.19"/>
+        </tax>
+      </account>
+      <account code="2311" description="BTW laag" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.06"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="2600" description="LANGE TERMIJN PASSIVA">
+      <account code="2620" description="Bank Leningen" category="Liability"/>
+      <account code="2680" description="Aandelenvermogen" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="3300" description="AANDELEN KAPITAAL">
+      <account code="3350" description="Aandelen in portefeuille" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-7" code="3500" description="WINSTRESERVE">
+      <account code="3590" description="Winstreserve voorgaande jaren" category="Equity"/>
+      <account code="3600" description="Huidige winstreserve" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-8" code="4000" description="VERKOOP INKOMSTEN">
+      <account code="4020" description="Verkoop / Hardware" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="Verkoop / Software" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4040" description="Verkoop / Aftermarket Parts" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4300" description="CONSULTANCY INKOMSTEN">
+      <account code="4320" description="Consultancy" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4330" description="Programmeren" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="4400" description="ANDERE INKOMSTEN">
+      <account code="4430" description="Verzend &amp; Administratie" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Rente" category="Income"/>
+      <account code="4450" description="Foreign Exchange Gain" category="Income"/>
+    </account-heading>
+    <account-heading id="h-11" code="5000" description="INKOOPPRIJS VERKOPEN">
+      <account code="5010" description="Inkoopkosten algemeen" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5020" description="Inkoopkosten / Hardware" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5030" description="Inkoopkosten / Software" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5040" description="Inkoopkosten / Aftermarket Parts" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="Vrachtkosten" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="5400" description="PERSONEELS KOSTEN">
+      <account code="5410" description="Salarissen" category="Expense"/>
+      <account code="5420" description="EI Expense" category="Expense"/>
+      <account code="5430" description="CPP Expense" category="Expense"/>
+      <account code="5440" description="WCB Expense" category="Expense"/>
+      <account code="5470" description="Employee Benefits" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-13" code="5600" description="GENERAL &amp; ADMINISTRATIVE EXPENSES">
+      <account code="5610" description="Boekhouding- &amp; Rechtkosten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Reclame- &amp; Promotiekosten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="Slechte Schulden" category="Expense"/>
+      <account code="5660" description="Afschrijvingskosten" category="Expense"/>
+      <account code="5680" description="Inkomsten Belastingen" category="Expense"/>
+      <account code="5685" description="Verzekeringen" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Rente &amp; Bankkosten" category="Expense"/>
+      <account code="5700" description="Kantoorvoorzieningen" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Huurkosten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Reparatie- &amp; Onderhoudskosten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telefoonkosten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5781" description="Internetkosten" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5785" description="Reis- &amp; Vermaakkosten" category="Expense"/>
+      <account code="5790" description="NUTS Kosten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5795" description="Registratie's" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licenties" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Foreign Exchange Loss" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="CURRENT ASSETS">
+      <account code="1060" description="Checking Account" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="Petty Cash" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Accounts Receivables" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Allowance for doubtful accounts" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="INVENTORY ASSETS">
+      <account code="1510" description="Inventory" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="CAPITAL ASSETS">
+      <account code="1820" description="Office Furniture &amp; Equipment" category="Asset"/>
+      <account code="1825" description="Accum. Amort. -Furn. &amp; Equip." category="Asset" contra="true"/>
+      <account code="1840" description="Vehicle" category="Asset"/>
+      <account code="1845" description="Accum. Amort. -Vehicle" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="CURRENT LIABILITIES">
+      <account code="2100" description="Accounts Payable" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2110" description="Accrued Income Tax - Federal" category="Liability"/>
+      <account code="2120" description="Accrued Income Tax - State" category="Liability"/>
+      <account code="2130" description="Accrued Franchise Tax" category="Liability"/>
+      <account code="2140" description="Accrued Real &amp; Personal Prop Tax" category="Liability"/>
+      <account code="2150" description="Sales Tax" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.05"/>
+        </tax>
+      </account>
+      <account code="2160" description="Accrued Use Tax Payable" category="Liability"/>
+      <account code="2210" description="Accrued Wages" category="Liability"/>
+      <account code="2220" description="Accrued Comp Time" category="Liability"/>
+      <account code="2230" description="Accrued Holiday Pay" category="Liability"/>
+      <account code="2240" description="Accrued Vacation Pay" category="Liability"/>
+      <account code="2310" description="Accr. Benefits - 401K" category="Liability"/>
+      <account code="2320" description="Accr. Benefits - Stock Purchase" category="Liability"/>
+      <account code="2330" description="Accr. Benefits - Med, Den" category="Liability"/>
+      <account code="2340" description="Accr. Benefits - Payroll Taxes" category="Liability"/>
+      <account code="2350" description="Accr. Benefits - Credit Union" category="Liability"/>
+      <account code="2360" description="Accr. Benefits - Savings Bond" category="Liability"/>
+      <account code="2370" description="Accr. Benefits - Garnish" category="Liability"/>
+      <account code="2380" description="Accr. Benefits - Charity Cont." category="Liability"/>
+    </account-heading>
+    <account-heading id="h-5" code="2600" description="LONG TERM LIABILITIES">
+      <account code="2620" description="Bank Loans" category="Liability"/>
+      <account code="2680" description="Loans from Shareholders" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="3300" description="SHARE CAPITAL">
+      <account code="3350" description="Common Shares" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-7" code="3500" description="RETAINED EARNINGS">
+      <account code="3590" description="Retained Earnings - prior years" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-8" code="4000" description="SALES REVENUE">
+      <account code="4010" description="Sales" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4400" description="OTHER REVENUE">
+      <account code="4430" description="Shipping &amp; Handling" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Interest" category="Income"/>
+      <account code="4450" description="Foreign Exchange Gain" category="Income"/>
+    </account-heading>
+    <account-heading id="h-10" code="5000" description="COST OF GOODS SOLD">
+      <account code="5010" description="Purchases" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5100" description="Freight" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="5400" description="PAYROLL EXPENSES">
+      <account code="5410" description="Wages &amp; Salaries" category="Expense"/>
+      <account code="5420" description="Wages - Overtime" category="Expense"/>
+      <account code="5430" description="Benefits - Comp Time" category="Expense"/>
+      <account code="5440" description="Benefits - Payroll Taxes" category="Expense"/>
+      <account code="5450" description="Benefits - Workers Comp" category="Expense"/>
+      <account code="5460" description="Benefits - Pension" category="Expense"/>
+      <account code="5470" description="Benefits - General Benefits" category="Expense"/>
+      <account code="5510" description="Inc Tax Exp - Federal" category="Expense"/>
+      <account code="5520" description="Inc Tax Exp - State" category="Expense"/>
+      <account code="5530" description="Taxes - Real Estate" category="Expense"/>
+      <account code="5540" description="Taxes - Personal Property" category="Expense"/>
+      <account code="5550" description="Taxes - Franchise" category="Expense"/>
+      <account code="5560" description="Taxes - Foreign Withholding" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-12" code="5600" description="GENERAL &amp; ADMINISTRATIVE EXPENSES">
+      <account code="5610" description="Accounting &amp; Legal" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Advertising &amp; Promotions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="Bad Debts" category="Expense"/>
+      <account code="5660" description="Amortization Expense" category="Expense"/>
+      <account code="5685" description="Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Interest &amp; Bank Charges" category="Expense"/>
+      <account code="5700" description="Office Supplies" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Rent" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Repair &amp; Maintenance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telephone" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Travel &amp; Entertainment" category="Expense"/>
+      <account code="5790" description="Utilities" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5795" description="Registrations" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licenses" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Foreign Exchange Loss" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="USD">
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="CAD">
+      CAD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1510"/>
+    <setting name="income_accno_id" accno="4010"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="lbs"/>
+  </settings>
+</configuration>

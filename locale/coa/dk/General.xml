@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="KORTFRISTEDE AKTIVER">
+      <account code="1061" description="Bank" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="Kasse" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Indbetalinger" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Hensættelser til formodet gæld" category="Asset"/>
+      <account code="1210" description="Moms indgående" category="Asset">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.25"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="LAGER-AKTIVER">
+      <account code="1520" description="Lager / udstyr" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Lager / programmel" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="Lager / tillægssalg" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1550" description="Lager / arrangementer" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="AKTIVER">
+      <account code="1820" description="Kontorinventar og -udstyr" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1825" description="Samlede afskrivninger, inventar, udstyr" category="Asset" contra="true"/>
+      <account code="1840" description="Køretøjer" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1845" description="Samlede afskrivninger, køretøjer" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="KORTFRISTET GÆLD">
+      <account code="2100" description="Udbetalinger" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2160" description="Selskabsskat" category="Liability"/>
+      <account code="2190" description="Afgifter" category="Liability"/>
+      <account code="2311" description="Moms udgående" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.25"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="2600" description="LANGFRISTET GÆLD">
+      <account code="2620" description="Banklån" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-6" code="3300" description="AKTIEKAPITAL">
+      <account code="3350" description="Almindelige aktier" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-7" code="3500" description="EGENKAPITAL">
+      <account code="3510" description="Egenkapital primo" category="Equity"/>
+      <account code="3600" description="Årets resultat" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-8" code="4000" description="SALGSINDTÆGT">
+      <account code="4020" description="Salg / udstyr" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="Salg / programmel" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4040" description="Salg / tillægssalg" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4050" description="Salg / arrangementer" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4300" description="KONSULENTINDTÆGT">
+      <account code="4320" description="Konsulentbistand" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4330" description="Programmering" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="4400" description="ANDEN INDTÆGT">
+      <account code="4440" description="Renter" category="Income"/>
+      <account code="4450" description="Foreign Exchange Gain" category="Income"/>
+    </account-heading>
+    <account-heading id="h-11" code="5000" description="SALGSOMKOSTNINGER">
+      <account code="5020" description="Omkostninger / udstyr" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5010" description="Anskaffelser under 8.000" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5011" description="Anskaffelser over 8.000" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5030" description="Omkostninger / programmel" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5040" description="Omkostninger / tillægssalg" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5050" description="Omkostninger / arrangementer" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="Fragt, post" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="5400" description="LØNUDGIFTER">
+      <account code="5410" description="Lønninger og honorarer" category="Expense"/>
+      <account code="5420" description="ATP" category="Expense"/>
+      <account code="5470" description="Personalegoder" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-13" code="5600" description="GENERELLE &amp; ADMINISTRATIVE UDGIFTER">
+      <account code="5610" description="Bogføring, revision, advokat" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Marketing" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="Dårlige skyldnere" category="Expense"/>
+      <account code="5660" description="Afdrag på lån" category="Expense"/>
+      <account code="5680" description="A-skat" category="Expense"/>
+      <account code="5685" description="Forsikringer" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Renter og bankgebyrer" category="Expense"/>
+      <account code="5700" description="Kontorudgifter" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Husleje" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Vedligeholdelse og reparation" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telefon" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Rejser &amp; repræsentation" category="Expense"/>
+      <account code="5790" description="El, vand, varme" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licenser" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Foreign Exchange Loss" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="DKK">
+    <currency code="DKK">
+      DKK
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

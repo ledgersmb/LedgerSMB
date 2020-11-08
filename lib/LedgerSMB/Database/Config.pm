@@ -112,7 +112,7 @@ List of available files defining a Standard of Industry Codes
 
 sub charts_of_accounts {
     ###TODO: Define a parameter to the SQL directory!!
-    my $basedir = File::Spec->catfile('.', 'sql', 'coa');
+    my $basedir = File::Spec->catfile('.', 'locale', 'coa');
     my $countries = _list_directory($basedir);
     my %regions = %{Locale::CLDR
                     ->new(LedgerSMB::Sysconfig::language())
@@ -124,9 +124,9 @@ sub charts_of_accounts {
             $_ => {
                 code => $_,
                 name => $regions{uc($_)},
-                chart => _list_directory(File::Spec->catfile($dir, 'chart')),
-                gifi => _list_directory(File::Spec->catfile($dir, 'gifi')),
-                sic => _list_directory(File::Spec->catfile($dir, 'sic')),
+                chart => _list_directory($dir),
+                sic => _list_directory(File::Spec->catfile('.', 'sql', 'coa',
+                                                           $_, 'sic')),
               }
         } @$countries
     };

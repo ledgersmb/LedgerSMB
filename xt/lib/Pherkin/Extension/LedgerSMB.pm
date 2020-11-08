@@ -14,6 +14,7 @@ package Pherkin::Extension::LedgerSMB;
 use strict;
 use warnings;
 
+use LedgerSMB::Company;
 use LedgerSMB::Database;
 use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
@@ -230,8 +231,17 @@ sub create_template {
         host     => $self->host);
 
     $db->create_and_load;
-    $db->load_coa({ country => 'us',
-                    chart => 'General.sql' });
+    my $c = LedgerSMB::Company->new(
+        dbh => $db->connect(),
+        )->configuration;
+     my $fn = './locale/coa/us/General.xml';
+    open my $fh, '<:encoding(UTF-8)', $fn
+        or die "Failed to open $fn: $!";
+    $c->from_xml($fh);
+    $c->dbh->commit;
+    $c->dbh->disconnect;
+    close $fh
+        or warn "Error closing $fn: $!";
 
     # NOTE: $db is connected with the template, *not* with the
     #  test database (which means we can't use $self->super_dbh!)

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="AKTIVA LANCAR">
+      <account code="1060" description="Bank" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="Kas Kecil" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Piutang" category="Asset">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="INVENTORY">
+      <account code="1520" description="Inventory / Umum" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Inventory / Aftermarket Parts" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="AKTIVA TETAP">
+      <account code="1820" description="Perabot Kantor &amp; Peralatan" category="Asset"/>
+      <account code="1825" description="Akumulasi Amort. Perabot &amp; Peralatan" category="Asset" contra="true"/>
+      <account code="1840" description="Kendaraan" category="Asset"/>
+      <account code="1845" description="Akumulasi Amort. Kendaraan" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="HUTANG LANCAR">
+      <account code="2100" description="Hutang Dagang" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2160" description="Hutang Pajak" category="Liability"/>
+      <account code="2250" description="Hutang Rencana Pensiun" category="Liability"/>
+      <account code="2260" description="Hutang Asuransi Karyawan" category="Liability"/>
+      <account code="2280" description="Hutang Pajak Gaji" category="Liability"/>
+      <account code="2310" description="PPn (10%)" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="2600" description="HUTANG JANGKA PANJANG">
+      <account code="2620" description="Hutang Bank" category="Liability"/>
+      <account code="2680" description="Hutang ke Pemegang Saham" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="3300" description="MODAL">
+      <account code="3350" description="Modal Umum" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-7" code="4000" description="PENDAPATAN PENJUALAN">
+      <account code="4020" description="Penjualan / General" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="Penjualan / Aftermarket Parts" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-8" code="4300" description="PENDAPATAN KONSULTASI">
+      <account code="4320" description="Jasa Konsultasi" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4400" description="PENDAPATAN LAIN">
+      <account code="4430" description="Jasa Pengiriman dan Pengepakan" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Bunga" category="Income"/>
+      <account code="4450" description="Keuntungan Selisih Kurs" category="Income"/>
+    </account-heading>
+    <account-heading id="h-10" code="5000" description="BIAYA PENJUALAN">
+      <account code="5010" description="Pembelian" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5020" description="COGS / General" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5030" description="COGS / Aftermarket Parts" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="Ongkos Kirim" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="5400" description="BIAYA GAJI">
+      <account code="5410" description="Biaya Gaji" category="Expense"/>
+      <account code="5420" description="Biaya Asuransi Karyawan" category="Expense"/>
+      <account code="5430" description="Biaya Rencana Pensiun" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-12" code="5600" description="BIAYA UMUM DAN ADMINISTRASI">
+      <account code="5610" description="Akunting dan Legalitas" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Iklan dan Promosi" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5650" description="Capital Cost Allowance Expense" category="Expense"/>
+      <account code="5660" description="Biaya Amortisasi" category="Expense"/>
+      <account code="5680" description="Biaya Pajak Pendapatan" category="Expense"/>
+      <account code="5685" description="Asuransi" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Biaya Bank dan Bunga" category="Expense"/>
+      <account code="5700" description="Biaya Keperluan Kantor" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Biaya Sewa" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Reparasi &amp; Maintenance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telephone" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Perjalanan dan Entertainment" category="Expense"/>
+      <account code="5790" description="Utilitas" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5795" description="Registrasi" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licensi" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Rugi Selisih Kurs" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="IDR">
+    <currency code="IDR">
+      IDR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="CAD">
+      CAD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

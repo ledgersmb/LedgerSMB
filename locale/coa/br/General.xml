@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="RECURSOS ATUAIS">
+      <account code="1060" description="Checando Cliente" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="Caixa Baixo" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Contas a Receber" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Provisão para devedors duvidosos" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="INVENTÁRIO DE CLIENTES">
+      <account code="1520" description="Inventário / Geral" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Inventário / Mercado Secundário" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="Inventário / Computer Parts" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="CAPITAL ASSETS">
+      <account code="1820" description="Escritório Móvel &amp; Equipamentos" category="Asset"/>
+      <account code="1825" description="Accum. Amort. -Móvel. &amp; Equip." category="Asset" contra="true"/>
+      <account code="1840" description="Veículo" category="Asset"/>
+      <account code="1845" description="Accum. Amort. -Veículo" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="BALANÇO ATUAL">
+      <account code="2100" description="Contas a Pagar" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2170" description="Taxas federais" category="Liability"/>
+      <account code="2310" description="VAT (7%)" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.07"/>
+        </tax>
+      </account>
+      <account code="2320" description="VAT (8%)" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.08"/>
+        </tax>
+      </account>
+      <account code="2380" description="Contas a pagar de férias" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-5" code="2400" description="DEDUÇÕES DE FOLHA DE PAGAMENTO">
+      <account code="2450" description="Imposto de Renda Devido" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-6" code="2600" description="Passivi exigível a longo prazo">
+      <account code="2620" description="Empréstimo bancário" category="Liability"/>
+      <account code="2680" description="Empréstimo de Acionistas" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="3300" description="DIVISÃO DE CAPITAL">
+      <account code="3350" description="Divisão comum" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-8" code="4000" description="VENDAS RECEITAS">
+      <account code="4020" description="Vendas Gerais" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="Partes para mercado secundário" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4040" description="Parte Computacional" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4300" description="CONSULTANDO FONTES DE RENDA">
+      <account code="4320" description="Consultando" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4330" description="Programando" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4340" description="Loja" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="4400" description="OUTRAS RENDAS">
+      <account code="4430" description="Transporte &amp; Taxa" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Juros Acumulados" category="Income"/>
+      <account code="4450" description="Ganho de câmbio estrangeiro" category="Income"/>
+    </account-heading>
+    <account-heading id="h-11" code="5000" description="CUSTO DE VENDAS DE PRODUTOS">
+      <account code="5010" description="Compras" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5050" description="Mercado Secundário" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5060" description="Parte Computacional" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="Frete" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="5400" description="DESPESAS E FOLHA DE PAGAMENTO">
+      <account code="5410" description="Salários" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-13" code="5600" description="GERAL E DESPESAS ADMINISTRATIVAS">
+      <account code="5610" description="Contabilidade &amp; Leis" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Publicidade &amp; Promoções" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="Balanço" category="Expense"/>
+      <account code="5660" description="Amortização" category="Expense"/>
+      <account code="5680" description="Imposto de Renda" category="Expense"/>
+      <account code="5685" description="Seguro" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Interesses &amp; Encargos Bancários" category="Expense"/>
+      <account code="5700" description="Materiais de Escritório" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Aluguel" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Manutenção &amp; Reparos" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telefone" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Cursos &amp; Entretenimentos" category="Expense"/>
+      <account code="5790" description="Serviços Públicos" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licenciamento para exportações" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Troca com Estrangeiro" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="BRL">
+    <currency code="BRL">
+      BRL
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

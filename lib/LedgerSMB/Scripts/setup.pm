@@ -27,6 +27,7 @@ use warnings;
 
 use Digest::MD5 qw(md5_hex);
 use Encode;
+use File::Spec;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Log::Log4perl;
 use MIME::Base64;
@@ -35,6 +36,7 @@ use Syntax::Keyword::Try qw|try :experimental(typed)|;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Company;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
 use LedgerSMB::DBObject::Admin;
@@ -1009,7 +1011,7 @@ sub select_coa {
             die $request->{_locale}->text('Invalid request');
         }
 
-        for my $coa_type (qw( chart gifi sic )) {
+        for my $coa_type (qw( chart sic )) {
             if ($request->{$coa_type}) {
                 if (! grep { $_ eq $request->{$coa_type} }
                     @{$coa_data->{$coa_lc}->{$coa_type}}) {
@@ -1017,25 +1019,34 @@ sub select_coa {
                 }
             }
         }
-    }
 
-    if ($request->{coa_lc}){
-        if ($request->{chart}){
+        if ($request->{chart}) {
             my ($reauth, $database) = _get_database($request);
             return $reauth if $reauth;
 
-            $database->load_coa(
+            my $c = LedgerSMB::Company->new(
+                dbh => $database->connect(),
+                )->configuration;
+            my $fn = File::Spec->catdir('.', 'locale', 'coa',
+                                        $request->{coa_lc}, $request->{chart});
+            open my $fh, '<:encoding(UTF-8)', $fn
+                or die "Failed to open $fn: $!";
+            $c->from_xml($fh);
+            $c->dbh->commit;
+            $c->dbh->disconnect;
+            close $fh
+                or warn "Error closing $fn: $!";
+
+            $database->load_sic(
                 {
                     country => $request->{coa_lc},
-                    chart => $request->{chart},
-                    gifi => $request->{gifi},
                     sic => $request->{sic}
                 });
 
             # successful completion returns 'undef'
             return _dispatch_upgrade_workflow($request, '_select_coa');
         } else {
-            for my $select (qw(chart gifi sic)) {
+            for my $select (qw( chart sic )) {
                 $request->{"${select}s"} =
                     [ map { +{ name => $_ } }
                       @{$coa_data->{$request->{coa_lc}}->{$select}} ];

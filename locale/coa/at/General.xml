@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="0" description="Anlagevermögen und Aufwendungen für das Ingangsetzen und Erweitern eines Betriebes"/>
+    <gifi code="00" description="Aufwendungen für das Ingangsetzen und Erweitern eines Betriebes"/>
+    <gifi code="001" description="Aufwendungen für das Ingangsetzen und Erweitern eines Betriebes"/>
+    <gifi code="009" description="Kumulierte Abschreibungen"/>
+    <gifi code="01" description="Immaterielle Vermögensgegenstände"/>
+    <gifi code="010" description="Konzessionen"/>
+    <gifi code="011" description="Patentrechte und Lizenzen"/>
+    <gifi code="012" description="Datenverarbeitungsprogramme"/>
+    <gifi code="013" description="Marken, Warenzeichen und Musterschutzrechte, sonstige Urheberrechte"/>
+    <gifi code="014" description="Pacht- und Mietrechte"/>
+    <gifi code="015" description="Geschäfts(Firmen)wert"/>
+    <gifi code="018" description="Geleistete Anzahlungen"/>
+    <gifi code="019" description="Kumulierte Abschreibungen"/>
+    <gifi code="02-03" description="Grundstücke, grundstücksgleiche Rechte und Bauten, einschließlich der Bauten auf fremden Grund"/>
+    <gifi code="020" description="Unbebaute Grundstücke"/>
+    <gifi code="021" description="Bebaute Grundstücke (Grundwert)"/>
+    <gifi code="022" description="Grundstücksgleiche Rechte"/>
+    <gifi code="030" description="Betriebs- und Geschäftsgebäude auf eigenem Grund"/>
+    <gifi code="031" description="Wohn- und Sozialgebäude auf eigenem Grund"/>
+    <gifi code="032" description="Betriebs- und Geschäftsgebäude auf fremdem Grund"/>
+    <gifi code="033" description="Wohn- und Sozialgebäude auf fremdem Grund"/>
+    <gifi code="034" description="Grundstückseinrichtungen auf eigenem Grund"/>
+    <gifi code="035" description="Grundstückseinrichtungen auf fremdem Grund"/>
+    <gifi code="036" description="Bauliche Investitionen in fremden (gepachteten) Betriebs- und Geschäftsgebäuden"/>
+    <gifi code="037" description="Bauliche Investitionen in fremden (gepachteten) Wohn- und Sozialgebäuden"/>
+    <gifi code="039" description="Kumulierte Abschreibungen"/>
+    <gifi code="04-05" description="Technische Anlagen und Maschinen"/>
+    <gifi code="040" description="Fertigungsmaschinen"/>
+    <gifi code="041" description="Antriebsmaschinen"/>
+    <gifi code="042" description="Energieversorgungsanlagen"/>
+    <gifi code="043" description="Transportanlagen"/>
+    <gifi code="044-049" description="Sonstige Maschinen und maschinelle Anlagen"/>
+    <gifi code="050" description="Maschinenwerkzeuge"/>
+    <gifi code="051" description="Allgemeine Werkzeuge und Handwerkzeuge"/>
+    <gifi code="052" description="Vorrichtungen, Formen und Modelle"/>
+    <gifi code="053" description="Andere Erzeugungshilfsmittel"/>
+    <gifi code="054" description="Hebezeuge und Montageanlagen"/>
+    <gifi code="055" description="Geringwertige Vermögensgegenstände, soweit im Erzeugungsprozeß verwendet"/>
+    <gifi code="06" description="Andere Anlagen, Betriebs- und Geschäftsausstattung"/>
+    <gifi code="060" description="Beheizungs- und Beleuchtungsanlagen"/>
+    <gifi code="061" description="Nachrichten- und Kontrollanlagen"/>
+    <gifi code="062" description="Büromaschinen, EDV-Anlagen"/>
+    <gifi code="063" description="PKW"/>
+    <gifi code="064" description="LKW"/>
+    <gifi code="065" description="Andere Beförderungsmittel"/>
+    <gifi code="066" description="Andere Betriebs- und Geschäftsausstattung"/>
+    <gifi code="067" description="Gebinde"/>
+    <gifi code="068" description="Geringwertige Vermögensgegenstände, soweit nicht im Erzeugungsprozeß verwendet"/>
+    <gifi code="069" description="Kumulierte Abschreibungen"/>
+    <gifi code="07" description="Geleistete Anzahlungen und Anlagen in Bau"/>
+    <gifi code="070" description="Geleistete Anzahlungen"/>
+    <gifi code="071" description="Anlagen in Bau"/>
+    <gifi code="079" description="Kumulierte Abschreibungen"/>
+    <gifi code="08-09" description="Finanzanlagen"/>
+    <gifi code="080" description="Anteile an verbundenen Unternehmen"/>
+    <gifi code="081" description="Beteiligungen an Gemeinschaftsunternehmen"/>
+    <gifi code="082" description="Beteiligungen an angeschlossenen (assoziierten) Unternehmen"/>
+    <gifi code="083" description="Sonstige Beteiligungen"/>
+    <gifi code="084" description="Ausleihungen an verbundene Unternehmen"/>
+    <gifi code="085" description="Ausleihungen an Unternehmen, mit denen ein Beteiligungsverhältnis besteht"/>
+    <gifi code="086" description="Sonstige Ausleihungen"/>
+    <gifi code="087" description="Anteile an Kapitalgesellschaften ohne Beteiligungscharakter"/>
+    <gifi code="088" description="Anteile an Personengesellschaften ohne Beteiligungscharakter"/>
+    <gifi code="090" description="Genossenschaftsanteile ohne Beteiligungscharakter"/>
+    <gifi code="091" description="Anteile an Investmentfonds"/>
+    <gifi code="092-093" description="Festverzinsliche Wertpapiere des Anlagevermögens"/>
+    <gifi code="094-097" description="Sonstige Finanzanlagen, Wertrechte"/>
+    <gifi code="098" description="Geleistete Anzahlungen"/>
+    <gifi code="099" description="Kumulierte Abschreibungen"/>
+    <gifi code="1" description="Vorräte"/>
+    <gifi code="100-109" description="Bezugsverrechnung"/>
+    <gifi code="110-119" description="Rohstoffe"/>
+    <gifi code="120-129" description="Bezogene Teile"/>
+    <gifi code="130-134" description="Hilfsstoffe"/>
+    <gifi code="135-139" description="Betriebsstoffe"/>
+    <gifi code="140-149" description="Unfertige Erzeugnisse"/>
+    <gifi code="150-159" description="Fertige Erzeugnisse"/>
+    <gifi code="160-169" description="Waren"/>
+    <gifi code="170-179" description="Noch nicht abrechenbare Leistungen"/>
+    <gifi code="180" description="Geleistete Anzahlungen"/>
+    <gifi code="190-199" description="Wertberichtigungen"/>
+    <gifi code="2" description="Sonstiges Umlaufvermögen, Rechnungsabgrenzungsposten"/>
+    <gifi code="20-21" description="Forderungen aus Lieferungen und Leistungen"/>
+    <gifi code="200-207" description="Forderungen aus Lieferungen und Leistungen Inland"/>
+    <gifi code="208" description="Einzelwertberichtigungen zu Forderungen aus Lieferungen und Leistungen Inland"/>
+    <gifi code="209" description="Pauschalwertberichtigungen zu Forderungen aus Lieferungen und Leistungen Inland"/>
+    <gifi code="210-212" description="Forderungen aus Lieferungen und Leistungen Währungsunion"/>
+    <gifi code="213" description="Einzelwertberichtigungen zu Forderungen aus Lieferungen und Leistungen Währungsunion"/>
+    <gifi code="214" description="Pauschalwertberichtigungen zu Forderungen aus Lieferungen und Leistungen Währungsunion"/>
+    <gifi code="215-217" description="Forderungen aus Lieferungen und Leistungen sonstiges Ausland"/>
+    <gifi code="218" description="Einzelwertberichtigungen zu Forderungen aus Lieferungen und Leistungen sonstiges Ausland"/>
+    <gifi code="219" description="Pauschalwertberichtigungen zu Forderungen aus Lieferungen und Leistungen sonstiges Ausland"/>
+    <gifi code="22" description="Forderungen gegenüber verbundenen Unternehmen und Unternehmen, mit denen ein Beteiligungsverhältnis besteht"/>
+    <gifi code="220-222" description="Forderungen gegenüber verbundenen Unternehmen"/>
+    <gifi code="223" description="Einzelwertberichtigungen zu Forderungen gegenüber verbundenen Unternehmen"/>
+    <gifi code="224" description="Pauschalwertberichtigungen zu Forderungen gegenüber verbundenen Unternehmen"/>
+    <gifi code="225-227" description="Forderungen gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht"/>
+    <gifi code="228" description="Einzelwertberichtigungen zu Forderungen gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht"/>
+    <gifi code="229" description="Pauschalwertberichtigungen zu Forderungen gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht"/>
+    <gifi code="23-24" description="Sonstige Forderungen und Vermögensgegenstände"/>
+    <gifi code="230-246" description="Sonstige Forderungen und Vermögensgegenstände"/>
+    <gifi code="247" description="Eingeforderte, aber noch nicht eingezahlte Einlagen"/>
+    <gifi code="248" description="Einzelwertberichtigungen zu sonstigen Forderungen und Vermögensgegenständen"/>
+    <gifi code="249" description="Pauschalwertberichtigungen zu sonstigen Forderungen und Vermögensgegenständen"/>
+    <gifi code="25" description="Forderungen aus der Abgabenverrechnung"/>
+    <gifi code="250-259" description="Forderungen aus der Abgabenverrechnung"/>
+    <gifi code="26" description="Wertpapiere und Anteile"/>
+    <gifi code="260" description="Eigene Anteile"/>
+    <gifi code="261" description="Anteile an verbundenen Unternehmen"/>
+    <gifi code="262" description="Sonstige Anteile"/>
+    <gifi code="263-267" description="Sonstige Wertpapiere"/>
+    <gifi code="268" description="Besitzwechsel, soweit dem Unternehmen nicht die der Ausstellung zugrundeliegenden Forderungen zustehen"/>
+    <gifi code="269" description="Wertberichtigungen"/>
+    <gifi code="27-28" description="Kassenbestand, Schecks, Guthaben bei Kreditinstituten"/>
+    <gifi code="270-272" description="Kassenbestände in Inlandswährung"/>
+    <gifi code="273" description="Postwertzeichen"/>
+    <gifi code="274" description="Stempelmarken"/>
+    <gifi code="275-277" description="Kassenbestände in Fremdwährung"/>
+    <gifi code="278" description="Schecks in Inlandswährung"/>
+    <gifi code="280-288" description="Guthaben bei Kreditinstituten"/>
+    <gifi code="289" description="Wertberichtigungen"/>
+    <gifi code="29" description="Rechnungsabgrenzungsposten"/>
+    <gifi code="290" description="Aktive Rechnungsabgrenzungsposten"/>
+    <gifi code="295" description="Disagio"/>
+    <gifi code="296" description="Unterschiedsbetrag zur gebotenen Pensionsrückstellung"/>
+    <gifi code="297" description="Unterschiedsbetrag gem. Abschnitt XII Pensionskassengesetz"/>
+    <gifi code="298" description="Steuerabgrenzung"/>
+    <gifi code="3" description="Rückstellungen, Verbindlichkeiten und Rechnungsabgrenzungsposten"/>
+    <gifi code="30" description="Rückstellungen"/>
+    <gifi code="300" description="Rückstellungen für Abfertigungen"/>
+    <gifi code="301" description="Rückstellungen für Pensionen"/>
+    <gifi code="302-303" description="Steuerrückstellungen"/>
+    <gifi code="304-309" description="Sonstige Rückstellungen"/>
+    <gifi code="31" description="Anleihen, Verbindlichkeiten gegenüber Kreditinstituten und Finanzinstituten"/>
+    <gifi code="310" description="Anleihen (einschließlich konvertibler)"/>
+    <gifi code="311-317" description="Verbindlichkeiten gegenüber Kreditinstituten"/>
+    <gifi code="318-319" description="Verbindlichkeiten gegenüber Finanzinstituten"/>
+    <gifi code="32" description="Erhaltene Anzahlungen auf Bestellungen"/>
+    <gifi code="320" description="Erhaltene Anzahlungen auf Bestellungen"/>
+    <gifi code="321" description="Umsatzsteuer-Evidenzkonto für erhaltene Anzahlungen auf Bestellungen"/>
+    <gifi code="33" description="Verbindlichkeiten aus Lieferungen und Leistungen, Verbindlichkeiten aus der Annahme gezogener und der Ausstellung eigener Wechsel"/>
+    <gifi code="330-335" description="Verbindlichkeiten aus Lieferungen und Leistungen Inland"/>
+    <gifi code="336" description="Verbindlichkeiten aus Lieferungen und Leistungen Währungsunion"/>
+    <gifi code="337" description="Verbindlichkeiten aus Lieferungen und Leistungen sonstiges Ausland"/>
+    <gifi code="338-339" description="Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel"/>
+    <gifi code="34" description="Verbindlichkeiten gegenüber verbundenen Unternehmen, gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht und gegenüber Gesellschaftern"/>
+    <gifi code="340-347" description="Verbindlichkeiten gegenüber verbundenen Unternehmen, Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht"/>
+    <gifi code="348" description="Verbindlichkeiten gegenüber Gesellschaftern"/>
+    <gifi code="35" description="Verbindlichkeiten aus Steuern"/>
+    <gifi code="350-359" description="Verbindlichkeiten aus Steuern"/>
+    <gifi code="36" description="Verbindlichkeiten im Rahmen der sozialen Sicherheit"/>
+    <gifi code="360-369" description="Verbindlichkeiten im Rahmen der sozialen Sicherheit"/>
+    <gifi code="37-38" description="Übrige sonstige Verbindlichkeiten"/>
+    <gifi code="370-389" description="Übrige sonstige Verbindlichkeiten"/>
+    <gifi code="39" description="Rechnungsabgrenzungsposten"/>
+    <gifi code="390-399" description="Passive Rechnungsabgrenzungsposten"/>
+    <gifi code="4" description="Betriebliche Erträge"/>
+    <gifi code="40-44" description="Brutto-Umsatzerlöse und Erlösschmälerungen"/>
+    <gifi code="400-439" description="Brutto-Umsatzerlöse"/>
+    <gifi code="440-449" description="Erlösschmälerungen"/>
+    <gifi code="45" description="Bestandsveränderungen und aktivierte Eigenleistungen"/>
+    <gifi code="450-457" description="Veränderungen des Bestandes an fertigen und unfertigen Erzeugnissen sowie an noch nicht abrechenbaren Leistungen"/>
+    <gifi code="458-459" description="andere aktivierte Eigenleistungen"/>
+    <gifi code="46-49" description="Sonstige betriebliche Erträge"/>
+    <gifi code="460-462" description="Erlöse aus dem Abgang vom Anlagevermögen, ausgenommen Finanzanlagen"/>
+    <gifi code="463-465" description="Erträge aus dem Abgang vom Anlagevermögen, ausgenommen Finanzanlagen"/>
+    <gifi code="466-467" description="Erträge aus der Zuschreibung zum Anlagevermögen, ausgenommen Finanzanlagen"/>
+    <gifi code="470-479" description="Erträge aus der Auflösung von Rückstellungen"/>
+    <gifi code="480-499" description="Übrige betriebliche Erträge"/>
+    <gifi code="5" description="Materialaufwand und sonstige bezogene Herstellungsleistungen"/>
+    <gifi code="500-509" description="Wareneinsatz"/>
+    <gifi code="510-519" description="Verbrauch von Rohstoffen"/>
+    <gifi code="520-529" description="Verbrauch von bezogenen Fertig- und Einzelteilen"/>
+    <gifi code="530-539" description="Verbrauch von Hilfsstoffen"/>
+    <gifi code="540-549" description="Verbrauch von Betriebsstoffen"/>
+    <gifi code="550-559" description="Verbrauch von Werkzeugen und anderen Erzeugungshilfsmitteln"/>
+    <gifi code="560-569" description="Verbrauch von Brenn- und Treibstoffen, Energie und Wasser"/>
+    <gifi code="570-579" description="Sonstige bezogene Herstellungsleistungen"/>
+    <gifi code="580" description="Skontoerträge auf Materialaufwand"/>
+    <gifi code="581" description="Skontoerträge auf sonstige bezogene Herstellungsleistungen"/>
+    <gifi code="590" description="Aufwandsstellenrechnung"/>
+    <gifi code="6" description="Personalaufwand"/>
+    <gifi code="600-619" description="Löhne"/>
+    <gifi code="620-639" description="Gehälter"/>
+    <gifi code="640-644" description="Aufwendungen für Abfertigungen"/>
+    <gifi code="645-649" description="Aufwendungen für Altersversorgung"/>
+    <gifi code="650-655" description="Gesetzlicher Sozialaufwand Arbeiter"/>
+    <gifi code="656-659" description="Gesetzlicher Sozialaufwand Angestellte"/>
+    <gifi code="660-665" description="Lohnabhängige Abgaben und Pflichtbeiträge"/>
+    <gifi code="666-669" description="Gehaltsabhängige Abgaben und Pflichtbeiträge"/>
+    <gifi code="670-689" description="Sonstige Sozialaufwendungen"/>
+    <gifi code="690" description="Aufwandsstellenrechnung"/>
+    <gifi code="7" description="Abschreibungen und sonstige betriebliche Aufwendunge"/>
+    <gifi code="70" description="Abschreibungen"/>
+    <gifi code="700" description="Abschreibungen auf aktivierte Aufwendungen für das Ingangsetzen und Erweitern eines Betriebes"/>
+    <gifi code="701-708" description="Abschreibungen auf das Anlagevermögen (ausgenommen Finanzanlagen)"/>
+    <gifi code="709" description="Abschreibungen vom Umlaufvermögen, soweit diese die im Unternehmen üblichen Abschreibungen übersteigen"/>
+    <gifi code="71" description="Sonstige Steuern"/>
+    <gifi code="710-719" description="Sonstige Steuern"/>
+    <gifi code="72-78" description="Übrige betriebliche Aufwendungen"/>
+    <gifi code="72" description="Instandhaltung und Reinigung durch Dritte, Entsorgung, Beleuchtung"/>
+    <gifi code="720-729" description="Instandhaltung und Reinigung durch Dritte, Entsorgung, Beleuchtung"/>
+    <gifi code="73" description="Transport-, Reise- und Fahrtaufwand, Nachrichtenaufwand"/>
+    <gifi code="730-731" description="Transporte durch Dritte"/>
+    <gifi code="732-733" description="Kfz-Aufwand"/>
+    <gifi code="734-735" description="Reise- und Fahrtaufwand"/>
+    <gifi code="736-737" description="Tag- und Nächtigungsgelder"/>
+    <gifi code="738-739" description="Nachrichtenaufwand"/>
+    <gifi code="74" description="Miet-, Pacht-, Leasing- und Lizenzaufwand"/>
+    <gifi code="740-743" description="Miet- und Pachtaufwand"/>
+    <gifi code="744-747" description="Leasingaufwand"/>
+    <gifi code="748-749" description="Lizenzaufwand"/>
+    <gifi code="75" description="Aufwand für beigestelltes Personal, Provisionen an Dritte, Aufsichtsratsvergütungen"/>
+    <gifi code="750-753" description="Aufwand für beigestelltes Personal"/>
+    <gifi code="754-757" description="Provisionen an Dritte"/>
+    <gifi code="758-759" description="Aufsichtsratsvergütungen"/>
+    <gifi code="76" description="Büro-, Werbe- und Repräsentationsaufwand"/>
+    <gifi code="760" description="Büromaterial und Drucksorten"/>
+    <gifi code="761-762" description="Druckerzeugnisse und Vervielfältigungen"/>
+    <gifi code="763" description="Fachliteratur und Zeitungen"/>
+    <gifi code="765-768" description="Werbung und Repräsentation"/>
+    <gifi code="769" description="Spenden und Trinkgelder"/>
+    <gifi code="77-78" description="Versicherungen, Übrige Aufwendungen"/>
+    <gifi code="770-774" description="Versicherungen"/>
+    <gifi code="775-776" description="Beratungs- und Prüfungsaufwand"/>
+    <gifi code="777" description="Aus- und Fortbildung"/>
+    <gifi code="778" description="Mitgliedsbeiträge"/>
+    <gifi code="779" description="Spesen des Geldverkehrs"/>
+    <gifi code="780-781" description="Schadensfälle"/>
+    <gifi code="782" description="Buchwert abgegangener Anlagen, ausgenommen Finanzanlagen"/>
+    <gifi code="783" description="Verluste aus dem Abgang vom Anlagevermögen, ausgenommen Finanzanlagen"/>
+    <gifi code="784-788" description="Verschiedene betriebliche Aufwendungen"/>
+    <gifi code="789" description="Skontoerträge auf sonstige betriebliche Aufwendungen"/>
+    <gifi code="79" description="Konten für das Umsatzkostenverfahren"/>
+    <gifi code="790" description="Aufwandsstellenrechnung"/>
+    <gifi code="791-799" description="Aufwandsstellen im Rahmen des Umsatzkostenverfahrens"/>
+    <gifi code="791-795" description="Aufwandsstellen der Herstellung"/>
+    <gifi code="796" description="Herstellungskosten der zur Erzielung der Umsatzerlöse erbrachten Leistungen"/>
+    <gifi code="797" description="Vertriebskosten"/>
+    <gifi code="798" description="Verwaltungskosten"/>
+    <gifi code="799" description="Sonstige betriebliche Aufwendungen"/>
+    <gifi code="8" description="Finanzerträge und Finanzaufwendungen, a.o. Erträge und a.o. Aufwendungen, Steuern vom Einkommen und vom Ertrag, Rücklagenbewegung"/>
+    <gifi code="80-83" description="Finanzerträge und Finanzaufwendungen"/>
+    <gifi code="800-804" description="Erträge aus Beteiligungen"/>
+    <gifi code="805-809" description="Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens"/>
+    <gifi code="810-813" description="Sonstige Zinsen und ähnliche Erträge"/>
+    <gifi code="814" description="Erlöse aus dem Abgang von Beteiligungen"/>
+    <gifi code="815" description="Erlöse aus dem Abgang von sonstigen Finanzanlagen"/>
+    <gifi code="816" description="Erlöse aus dem Abgang von Wertpapieren des Umlaufvermögens"/>
+    <gifi code="817" description="Buchwert abgegangener Beteiligungen"/>
+    <gifi code="818" description="Buchwert abgegangener sonstiger Finanzanlagen"/>
+    <gifi code="819" description="Buchwert abgegangener Wertpapiere des Umlaufvermögens"/>
+    <gifi code="820" description="Erträge aus dem Abgang von und der Zuschreibung zu Finanzanlagen"/>
+    <gifi code="821" description="Erträge aus dem Abgang von und der Zuschreibung zu Wertpapieren des Umlaufvermögens"/>
+    <gifi code="822-825" description="Aufwendungen aus Beteiligungen"/>
+    <gifi code="826-827" description="Aufwendungen aus sonstigen Finanzanlagen und aus Wertpapieren des Umlaufvermögens"/>
+    <gifi code="828-834" description="Zinsen und ähnliche Aufwendungen"/>
+    <gifi code="835" description="Nicht ausgenützte Lieferantenskonti"/>
+    <gifi code="84" description="Außerordentliche Erträge und außerordentliche Aufwendungen"/>
+    <gifi code="840-844" description="Außerordentliche Erträge"/>
+    <gifi code="845-849" description="Außerordentliche Aufwendungen"/>
+    <gifi code="85" description="Steuern vom Einkommen und vom Ertrag"/>
+    <gifi code="850-859" description="Steuern vom Einkommen und vom Ertrag"/>
+    <gifi code="86-89" description="Rücklagenbewegung, Ergebnisüberrechnung"/>
+    <gifi code="860-869" description="Auflösung unversteuerter Rücklagen"/>
+    <gifi code="870-874" description="Auflösung von Kapitalrücklagen"/>
+    <gifi code="875-879" description="Auflösung von Gewinnrücklagen"/>
+    <gifi code="880-889" description="Zuweisung zu unversteuerten Rücklagen"/>
+    <gifi code="890-895" description="Zuweisung zu Gewinnrücklagen"/>
+    <gifi code="899" description="Gewinnabfuhr bzw. Verlustüberrechnung aus Ergebnisabführungsverträgen"/>
+    <gifi code="9" description="Eigenkapital, unversteuerte Rücklagen, Einlagen Stiller Gesellschafter, Abschluß- und Evidenzkonten"/>
+    <gifi code="900-918" description="Gezeichnetes bzw. gewidmetes Kapital"/>
+    <gifi code="919" description="Nicht eingeforderte ausstehende Einlagen"/>
+    <gifi code="920-929" description="Kapitalrücklagen"/>
+    <gifi code="930-938" description="Gewinnrücklagen"/>
+    <gifi code="939" description="Bilanzgewinn (-verlust)"/>
+    <gifi code="940-959" description="Bewertungsreserven und sonstige unversteuerte Rücklagen"/>
+    <gifi code="960-969" description="Privat- und Verrechnungskonten bei Einzelunternehmen und Personengesellschaften"/>
+    <gifi code="970-979" description="Einlagen Stiller Gesellschafter"/>
+    <gifi code="980" description="Eröffnungsbilanz"/>
+    <gifi code="985" description="Schlußbilanz"/>
+    <gifi code="989" description="Gewinn- und Verlustrechnung"/>
+    <gifi code="990-999" description="Evidenzkonten"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="0000" description="AUFWENDUNGEN FÜR INGANGSETZEN UND ERWEITERN DES BETRIEBES">
+      <account code="0010" description="Firmenwert" category="Asset" gifi="015">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-2" code="0100" description="IMMATERIELLE VERMÖGENSGEGENSTÄNDE">
+      <account code="0110" description="Rechte" category="Asset" gifi="011">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="0200" description="GRUNDSTÜCKE">
+      <account code="0210" description="unbebaute Grundstücke" category="Asset" gifi="020">
+        <link code="AP_amount"/>
+      </account>
+      <account code="0220" description="bebaute Grundstücke" category="Asset" gifi="021">
+        <link code="AP_amount"/>
+      </account>
+      <account code="0229" description="kum. Abschreibung bebaute Grundstücke" category="Asset" contra="true" gifi="039"/>
+    </account-heading>
+    <account-heading id="h-4" code="0400" description="MASCHINEN">
+      <account code="0410" description="Maschinen" category="Asset" gifi="041">
+        <link code="AP_amount"/>
+      </account>
+      <account code="0419" description="kum. Abschreibung Maschinen" category="Asset" contra="true" gifi="069"/>
+    </account-heading>
+    <account-heading id="h-5" code="0500" description="FAHRZEUGE">
+      <account code="0510" description="Fahrzeuge" category="Asset" gifi="063">
+        <link code="AP_amount"/>
+      </account>
+      <account code="0519" description="kum. Abschreibung Fahrzeuge" category="Asset" contra="true" gifi="069"/>
+    </account-heading>
+    <account-heading id="h-6" code="0600" description="BETRIEBS- UND GESCHÄFTSAUSSTATTUNG">
+      <account code="0620" description="Büroeinrichtungen" category="Asset" gifi="066">
+        <link code="AP_amount"/>
+      </account>
+      <account code="0625" description="kum. Abschreibung Betriebs- und Geschäftsausstattung" category="Asset" contra="true" gifi="069"/>
+    </account-heading>
+    <account-heading id="h-7" code="0700" description="GELEISTETE ANZAHLUNGEN"/>
+    <account-heading id="h-8" code="0800" description="FINANZANLAGEN">
+      <account code="0810" description="Beteiligungen" category="Asset" gifi="081">
+        <link code="AP_amount"/>
+      </account>
+      <account code="0820" description="Wertpapiere" category="Asset" gifi="080">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="1100" description="ROHSTOFFE">
+      <account code="1120" description="Vorräte - Rohstoffe" category="Asset" gifi="110-119">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="1200" description="BEZOGENE TEILE">
+      <account code="1220" description="Vorräte - bezogene Teile" category="Asset" gifi="120-129">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="1300" description="HILFS- UND BETRIEBSSTOFFE">
+      <account code="1320" description="Hilfsstoffe" category="Asset" gifi="130-134">
+        <link code="IC"/>
+      </account>
+      <account code="1350" description="Betriebssstoffe" category="Asset" gifi="135-139">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="1400" description="UNFERTIGE ERZEUGNISSE">
+      <account code="1420" description="Vorräte - unfertige Erzeugnisse" category="Asset" gifi="140-149">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-13" code="1500" description="FERTIGE ERZEUGNISSE">
+      <account code="1520" description="Vorräte - Hardware" category="Asset" gifi="150-159">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Vorräte - Software" category="Asset" gifi="150-159">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="Vorräte - Ersatzteile" category="Asset" gifi="150-159">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-14" code="1600" description="WAREN"/>
+    <account-heading id="h-15" code="1700" description="NOCH NICHT ABGERECHNETE LEISTUNGEN"/>
+    <account-heading id="h-16" code="1800" description="GELEISTETE ANZAHLUNGEN"/>
+    <account-heading id="h-17" code="1900" description="WERTBERICHTIGUNGEN"/>
+    <account-heading id="h-18" code="2000" description="FORDEUNGEN AUS LIEFERUNGEN UND LEISTUNGEN">
+      <account code="2010" description="Forderungen Lieferung &amp; Leistung" category="Asset" gifi="200-207">
+        <link code="AR"/>
+      </account>
+      <account code="2019" description="Wertberichtigung uneinbringliche Forderungen" category="Asset" gifi="20-21"/>
+    </account-heading>
+    <account-heading id="h-19" code="2300" description="SONSTIGE FORDERUNGEN">
+      <account code="2320" description="sonstige Forderungen" category="Asset" gifi="23-24">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-20" code="2500" description="FORDERUNGEN AUS ABGABENVERRECHNUNG">
+      <account code="2520" description="sonstige Forderungen aus Abgebenverrechnung" category="Asset" gifi="25">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-21" code="2600" description="WERTPAPIERE UND ANTEILE">
+      <account code="2620" description="Wertpapiere Umlaufvermögen" category="Asset" gifi="26">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-22" code="2700" description="KASSABESTAND">
+      <account code="2701" description="Kassa" category="Asset" gifi="27-28">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-23" code="2800" description="SCHECKS, GUTHABEN BEI KREDITINSTITUTEN">
+      <account code="2810" description="Schecks" category="Asset" gifi="27-28" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="2820" description="Bankguthaben" category="Asset" gifi="280-288">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-24" code="3100" description="LANGFRISTIGE VERBINDLICHKEITEN">
+      <account code="3110" description="Bank Verbindlichkeiten" category="Liability" gifi="31"/>
+      <account code="3120" description="Kredite von Eigentümern" category="Liability" gifi="310">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-25" code="3300" description="VERBINDLICHKEITEN AUS LIEFERUNGEN UND LEISTUNGEN">
+      <account code="3310" description="Verbindlichkeiten aus Lieferungen und Leistungen" category="Liability" gifi="330-335">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-26" code="3500" description="VERBINDLICHKEITEN FINANZAMT">
+      <account code="3510" description="Finanzamt Verrechnung Körperschaftssteuer" category="Liability" gifi="350-359"/>
+      <account code="3520" description="Finanzamt Verrechnung Umsatzsteuer" category="Liability" gifi="350-359"/>
+      <account code="3530" description="Mehrwertsteuer 0%" category="Liability" gifi="350-359">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.00"/>
+        </tax>
+      </account>
+      <account code="3531" description="Mehrwertsteuer 10%" category="Liability" gifi="350-359">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.10"/>
+        </tax>
+      </account>
+      <account code="3532" description="Mehrwertsteuer 20%" category="Liability" gifi="350-359">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.20"/>
+        </tax>
+      </account>
+      <account code="3540" description="Vorsteuer 0%" category="Liability" gifi="350-359">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3541" description="Vorsteuer 10%" category="Liability" gifi="350-359">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3542" description="Vorsteuer 20%" category="Liability" gifi="350-359">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+    </account-heading>
+    <account-heading id="h-27" code="4000" description="UMSATZ">
+      <account code="4020" description="Verkauf - Hardware" category="Income" gifi="40-44">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="Verkauf - Software " category="Income" gifi="40-44">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4040" description="Verkauf - Ersatzteile" category="Income" gifi="40-44">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-28" code="4300" description="UMSATZ BERATUNG">
+      <account code="4320" description="Erlöse Beratung" category="Income" gifi="40-44">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4330" description="Erlöse Programmierung" category="Income" gifi="40-44">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-29" code="4600" description="SONSTIGE ERLÖSE">
+      <account code="4630" description="Frachterlöse" category="Income" gifi="46-49">
+        <link code="IC_income"/>
+      </account>
+      <account code="4640" description="Devisengewinne" category="Income" gifi="80-83"/>
+    </account-heading>
+    <account-heading id="h-30" code="5000" description="WARENEINSATZ">
+      <account code="5020" description="Wareneinsatz / Hardware" category="Expense" gifi="500-509">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5030" description="Wareneinsatz / Software" category="Expense" gifi="500-509">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5040" description="Wareneinsatz / Ersatzteile" category="Expense" gifi="520-529">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-31" code="5600" description="VERBRAUCH BRENN- UND TREIBSTOFFEN, ENERGIE UND WASSER">
+      <account code="5610" description="Energie, Wasser" category="Expense" gifi="560-569">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-32" code="6000" description="LOHNAUFWAND">
+      <account code="6010" description="Lohn " category="Expense" gifi="600-619"/>
+    </account-heading>
+    <account-heading id="h-33" code="6200" description="GEAHLTSAUFWAND">
+      <account code="6210" description="Gehalt " category="Expense" gifi="620-639"/>
+    </account-heading>
+    <account-heading id="h-34" code="6500" description="GESETZLICHER SOZIALAUFWAND">
+      <account code="6510" description="Dienstgeberanteile" category="Expense" gifi="645-649"/>
+    </account-heading>
+    <account-heading id="h-35" code="6700" description="FREIWILLIGER SOZIALAUFWAND">
+      <account code="6710" description="freiwilliger Sozialaufwand" category="Expense" gifi="660-665"/>
+    </account-heading>
+    <account-heading id="h-36" code="7000" description="ABSCHREIBUNGEN">
+      <account code="7010" description="Abschreibungen" category="Expense" gifi="700"/>
+      <account code="7020" description="geringwertige Wirtschaftsgüter" category="Expense" gifi="701-708">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-37" code="7100" description="SONSTIGE STEUERN">
+      <account code="7110" description="Ertragssteuern" category="Expense" gifi="710-719"/>
+      <account code="7120" description="Grundsteuern" category="Expense" gifi="710-719"/>
+    </account-heading>
+    <account-heading id="h-38" code="7200" description="INSTANDHALTUNGSAUFWAND">
+      <account code="7210" description="Reparatur und Instandhaltung" category="Expense" gifi="720-729">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-39" code="7300" description="TRANSPORTKOSTEN">
+      <account code="7310" description="Frachtaufwand" category="Expense" gifi="730-731">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-40" code="7400" description="MIET-,PACHT-,LEASING-, LIZENZAUFWAND">
+      <account code="7410" description="Miete" category="Expense" gifi="740-743">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7411" description="Lizenzen" category="Expense" gifi="748-749">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-41" code="7600" description="VERWALTUNGSKOSTEN">
+      <account code="7610" description="Beratungsaufwand" category="Expense" gifi="775-776">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7611" description="Büromaterialien" category="Expense" gifi="760">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7615" description="Werbung und Marketing" category="Expense" gifi="765-768">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7620" description="uneinbringliche Forderungen" category="Expense" gifi="799"/>
+      <account code="7630" description="Telephonkosten" category="Expense" gifi="738-739">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7631" description="Internetkosten" category="Expense" gifi="738-739">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="7632" description="Reise- und Repräsentationsaufwand" category="Expense" gifi="734-735"/>
+      <account code="7634" description="Registrierungsgebühren" category="Expense" gifi="748-749">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-42" code="7700" description="VERSICHERUNGEN">
+      <account code="7710" description="Versicherung" category="Expense" gifi="770-774">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-43" code="8000" description="FINANZERTRÄGE UND FINANZAUFWENDUNGEN">
+      <account code="8020" description="Bankzinsen und Gebühren" category="Expense" gifi="80-83"/>
+      <account code="8050" description="Devisenverluste" category="Expense" gifi="80-83"/>
+    </account-heading>
+    <account-heading id="h-44" code="8100" description="BETEILIGUNGSERTRÄGE">
+      <account code="8110" description="Erträge aus Beteiligungen" category="Income" gifi="800-804"/>
+    </account-heading>
+    <account-heading id="h-45" code="9000" description="KAPITAL">
+      <account code="9010" description="Aktien, Geschäftsanteile" category="Equity" gifi="900-918"/>
+      <account code="9020" description="nicht einbezahltes Kapital" category="Equity" gifi="919"/>
+    </account-heading>
+    <account-heading id="h-46" code="9200" description="KAPITALRÜCKLAGEN">
+      <account code="9210" description="freie Rücklage" category="Equity" gifi="920-929"/>
+    </account-heading>
+    <account-heading id="h-47" code="9300" description="GEWINN">
+      <account code="9310" description="Gewinnvortrag Vorjahr" category="Equity" gifi="980"/>
+      <account code="9320" description="Jahresgewinn" category="Equity" gifi="985"/>
+    </account-heading>
+    <account-heading id="h-48" code="9400" description="RÜCKSTELLUNGEN">
+      <account code="9420" description="Abfertigungsrückstellung" category="Liability" gifi="300"/>
+      <account code="9430" description="Urlaubsrückstellung" category="Liability" gifi="304-309"/>
+    </account-heading>
+    <account-heading id="h-49" code="9700" description="EINLAGEN STILLER GESELLSCHAFTER"/>
+    <account-heading id="h-50" code="9800" description="EB,SB,G+V KONTEN"/>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="7610"/>
+    <setting name="fxgain_accno_id" accno="4640"/>
+    <setting name="fxloss_accno_id" accno="8050"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

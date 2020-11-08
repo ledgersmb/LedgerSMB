@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="الاصول المتداولة">
+      <account code="1060" description="نقدية بالبنك" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="نقديةبالصندوق" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="عملاء" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="مخصص ديون معدومة" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="المخزون كاصل">
+      <account code="1520" description="مخزون - قطع غيار كمبيوتر" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="مخزون - برامج" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="مخزون - قطع اخرى" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="الاصول الثابتة">
+      <account code="1840" description="سيارات" category="Asset"/>
+      <account code="1845" description="مخصص اهلاك سيارات" category="Asset" contra="true"/>
+      <account code="1820" description="اثاث مكتبى و معدات" category="Asset"/>
+      <account code="1825" description="مخصص اهلاك اثاث مكتبى و معدات" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="التزامات قصيرة الاجل">
+      <account code="2210" description="Workers Comp Payable" category="Liability"/>
+      <account code="2220" description="Vacation Pay Payable" category="Liability"/>
+      <account code="2250" description="Pension Plan Payable" category="Liability"/>
+      <account code="2260" description="Employment Insurance Payable" category="Liability"/>
+      <account code="2310" description="ضريبة مبيعات (10%)" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="2320" description="ضريبة مبيعات (14%)" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.14"/>
+        </tax>
+      </account>
+      <account code="2330" description="ضريبة مبيعات (30%)" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.3"/>
+        </tax>
+      </account>
+      <account code="2100" description="موردين" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2160" description="ضريبة شركات مستحقة" category="Liability"/>
+      <account code="2190" description="ضريبة دخل مستحقة" category="Liability"/>
+      <account code="2280" description="ضرائب مرتبات مستحقة" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-5" code="2600" description="التزامات طويلة الاجل">
+      <account code="5420" description="Employment Insurance Expense" category="Expense"/>
+      <account code="5430" description="Pension Plan Expense" category="Expense"/>
+      <account code="5440" description="Workers Comp Expense" category="Expense"/>
+      <account code="5470" description="Employee Benefits" category="Expense"/>
+      <account code="5650" description="Capital Cost Allowance Expense" category="Expense"/>
+      <account code="2620" description="قروض من البنوك" category="Liability"/>
+      <account code="2680" description="قروض من حملة الاسهم" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="3300" description="حقوق الملكية">
+      <account code="4020" description="مبيعات - قطع غيار" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="مبيعات برامج" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4040" description="مبيعات اخرى" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="3350" description="الاسهم" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-7" code="4000" description="ايراد المبيعات"/>
+    <account-heading id="h-8" code="4300" description="ايراد استشارات">
+      <account code="4320" description="استشارات" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4330" description="برمجة" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4400" description="ايرادات اخرى">
+      <account code="4430" description="شحن و تعبئة" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="فائدة" category="Income"/>
+      <account code="4450" description="ارباح تغيير عملة" category="Income"/>
+    </account-heading>
+    <account-heading id="h-10" code="5000" description="تكلفة البضاعة المباعة">
+      <account code="5010" description="مشتريات" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5020" description="تكلفة البضاعة المباعة - قطع غيار" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5030" description="تكلفة البضاعة المباعة - برامج" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5040" description="تكلفة البضاعة المباعة - اخرى" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="شحن" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="5400" description="مصروفات الاجور">
+      <account code="5410" description="المرتبات" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-12" code="5600" description="مصروفات ادارية و عمومية">
+      <account code="5610" description="قانونية و محاسبية" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="دعاية و اعلان" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="اصلاح و صيانة" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5680" description="ضريبة دخل" category="Expense"/>
+      <account code="5685" description="تامين" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="ديون معدومة " category="Expense"/>
+      <account code="5660" description="مصاريف اهلاك" category="Expense"/>
+      <account code="5690" description="قوائد و مصاريف بنكية" category="Expense"/>
+      <account code="5700" description="مهمات مكتبية" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="تلفون" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="ايجار" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="مصاريف سفر" category="Expense"/>
+      <account code="5795" description="رسوم" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="رخص" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="خسارة تحويل عملة" category="Expense"/>
+      <account code="5790" description="مرافق" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+  </coa>
+  <currencies default="USD">
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="CAD">
+      CAD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

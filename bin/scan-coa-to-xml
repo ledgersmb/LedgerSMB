@@ -1,0 +1,365 @@
+#!/usr/bin/env perl
+
+use v5.020;
+use strict;
+use warnings;
+
+use Data::Dumper;
+use List::Util qw/first/;
+use XML::LibXML;
+use XML::LibXML::PrettyPrint;
+
+my $xmlns = 'http://ledgersmb.org/xml-schemas/configuration';
+my $xpc = XML::LibXML::XPathContext->new;
+$xpc->registerNs('t', $xmlns);
+
+sub strip_sq {
+    return ($_[0] =~ s/(?:^'|'$)//rg) =~ s/''/'/rg;
+}
+
+sub extract_accno {
+    my $select = shift;
+
+    $select =~ m/accno\s*=\s*'([^']*)'/
+       or return $select;
+
+    return $1;
+}
+
+sub extract_accnos {
+    my $accnos = shift;
+    my @accnos;
+
+    while ($accnos =~ m/'(?<ACCNO>[^']*)'/igsx) {
+        push @accnos, $+{ACCNO};
+    }
+    return @accnos;
+}
+
+my $xml = XML::LibXML::Document->new( "1.0", "UTF-8" );
+
+my $infile = $ARGV[0];
+open my $in, '<:encoding(utf-8)', $infile
+    or die "Error opening $infile: $!";
+
+local $/ = undef;
+my $orig_content = <$in>;
+
+my $gifi_file = ($infile =~ s:/chart/:/gifi/:r);
+if (-e $gifi_file) {
+    open $in, '<:encoding(utf-8)', $gifi_file
+        or die "Error opening gifi file $gifi_file: $!";
+    $orig_content .= <$in>;
+}
+
+my $content = $orig_content;
+
+my $sql_re = qr/(?(DEFINE)
+             (?<STRING_PAT>'(?:[^']|'')*')
+             (?<NUM_PAT>[+-]?[0-9]+(\.[0-9]+)?|\.[0-9]+)
+             (?<IDENT_PAT>[a-zA-Z_][a-zA-Z0-9_]*)
+             (?<LITT_PAT>(?&NUM_PAT)|(?&IDENT_PAT))
+             (?<STR_EXPR>(?:(?&LITT_PAT)|(?&STRING_PAT))\s*(\|\|\s*(?:(?&LITT_PAT)|(?&STRING_PAT)))+)
+             (?<ACCID>select\s+id\s+from\s+account\s+where\s+accno\s+(?:=\s+'[^']*'|in\s+\([^)]+\))\s*)
+             (?<ARG_PAT>(?&STRING_PAT)
+                        |(?&LITT_PAT)\s*(?&ARGS_PAT)?
+                        |\((?&ACCID)\)
+                        |(?&STR_EXPR))
+             (?<ARGS_PAT>\(\s*(?:(?&ARG_PAT)(?:\s*,\s*(?&ARG_PAT))*)\s*\))
+    )/x;
+
+my $root = $xml->createElement('configuration');
+$root->addChild( $xml->createAttribute('xmlns', 'http://ledgersmb.org/xml-schemas/configuration') );
+my $gifi;
+$xml->setDocumentElement($root);
+my $coa = $xml->createElement('coa');
+$root->appendChild( $coa );
+my $curr = $xml->createElement('currencies');
+$root->appendChild( $curr );
+my $settings = $xml->createElement('settings');
+$root->appendChild( $settings );
+
+my $hc = 0;
+my @h = ();
+my $head;
+my %accno_map = ();
+
+while ($content =~ m/(account_(?:heading)?_save)(.*)/s) {
+    $content = $2;
+    if ('account_heading_save' eq $1) {
+        $content =~ m/
+            \(\s*
+              NULL\s*,\s*
+              (?<ACCNO>(?&ARG_PAT))\s*,\s*
+              (?<DESC>(?&STRING_PAT))
+            $sql_re
+              /xs;
+        my $accno = strip_sq($+{ACCNO});
+        my $h = $xml->createElement('account-heading');
+        $accno_map{$accno} = $h;
+        $h->addChild( $xml->createAttribute('id', 'h-' . ++$hc) );
+        $h->addChild( $xml->createAttribute('code', $accno) );
+        $h->addChild( $xml->createAttribute('description', strip_sq($+{DESC})) );
+        $coa->appendChild($h);
+        $head = $h;
+        @h = sort {
+            # reverse-sort so we can search for the first header being smaller than
+            # the accno being inserted... (which is the same as the last one being smaller
+            # in regular search order)
+            $b->{code} cmp $a->{code} } (@h, { code => $accno,
+                                               elem => $h });
+    }
+    elsif ('account__save' eq $1) {
+        my %cats = (
+            'A'  => 'Asset',
+            'L'  => 'Liability',
+            'E'  => 'Expense',
+            'I'  => 'Income',
+            'Q'  => 'Equity',
+            'Qt' => 'Equity (temporary)',
+            );
+        my %bools = (
+            q{'true'} => 'true',
+            q{true}   => 'true',
+            q{'t'}    => 'true',
+            q{'false'}=> 'false',
+            q{false}  => 'false',
+            q{'f'}    => 'false',
+            );
+        $content =~ m/
+            \(\s*
+              NULL\s*,\s*
+              (?<ACCNO>(?&STRING_PAT))\s*,\s*
+              (?<DESC>(?&STRING_PAT))\s*,\s*
+              (?<CAT>(?&STRING_PAT))\s*,\s*
+              (?<GIFI>(?&ARG_PAT))\s*,\s*
+              (?<HEAD>(?&ARG_PAT))\s*,\s*
+              (?<CONTRA>(?&ARG_PAT))\s*,\s*
+              (?<TAX>(?&ARG_PAT))\s*,\s*
+              (?:'[{][}]'|(?:string_to_array\s*\(\s*(?<LINKS>(?&STRING_PAT))\s*,\s*':'\s*\)))\s*,\s*
+              (?<OBSOL>(?&ARG_PAT))\s*,\s*
+              (?<TEMP>(?&ARG_PAT))\s*\)
+
+                               $sql_re/xs or die "$content doesn't match account__save args";
+
+        my %m = %+;
+        my $accno = strip_sq($m{ACCNO});
+        my $a = $xml->createElement('account');
+        $accno_map{$accno} = $a;
+        $a->addChild( $xml->createAttribute( 'code', $accno) );
+        $a->addChild( $xml->createAttribute( 'description', strip_sq($m{DESC})) );
+
+        if ($m{CAT} =~ m/^.?Q.?$/ and $bools{$m{TEMP}} eq 'true') {
+            $m{CAT} = 'Qt';
+        }
+        $a->addChild( $xml->createAttribute( 'category', $cats{ strip_sq($m{CAT}) }) );
+        $a->addChild( $xml->createAttribute( 'contra', $bools{$m{CONTRA}}) );
+        $a->addChild( $xml->createAttribute( 'obsolete', $bools{$m{OBSOL}}) );
+        use Data::Dumper;
+        die "Match misses LINKS: " . Dumper(\%m) unless $m{LINKS};
+        if ($m{LINKS} and strip_sq($m{LINKS})) {
+            my $l = strip_sq($m{LINKS});
+            for my $link (split /:/, $l) {
+                my $lnk_elm = $xml->createElement('link');
+                $lnk_elm->addChild( $xml->createAttribute('code', $link) );
+                $a->addChild($lnk_elm);
+            }
+        }
+
+        if ($m{GIFI} !~ m/^(?:null|'')$/i) {
+            # Excluding the empty string is a cleanup action; those should have been null
+            $a->addChild( $xml->createAttribute( 'gifi', strip_sq($m{GIFI})) );
+        }
+        my $code = strip_sq($m{ACCNO});
+        my $h = first { $code gt $_->{code} } @h;
+        $h->{elem}->appendChild( $a );
+    }
+    else {
+        die;
+    }
+}
+
+while ($orig_content =~ m/insert\s+into\s+currency\s*\(\s*((?&LITT_PAT))\s*,\s*((?&LITT_PAT))\s*\)\s*
+       values\s*((?&ARGS_PAT)(?:\s*,\s*(?&ARGS_PAT))*)\s*;
+
+       $sql_re/gisx) {
+    my $col1 = $1;
+    my $col2 = $2;
+    my $currencies = $3;
+
+    while ($currencies =~ m/
+           ((?&ARGS_PAT))\s*,?
+
+           $sql_re /gisx) {
+        my $curr_match = $1;
+
+        $curr_match =~ m/
+            \(\s*
+              (?<COL1>(?&ARG_PAT))
+              \s*,\s*
+              (?<COL2>(?&ARG_PAT))
+              \s*\)
+
+              $sql_re/gisx;
+        my %ch = (
+            lc($col1) => $+{COL1},
+            lc($col2) => $+{COL2},
+            );
+        my $c = $xml->createElement('currency');
+        $c->addChild( $xml->createAttribute('code', strip_sq($ch{curr})) );
+        $c->addChild( $xml->createTextNode(strip_sq($ch{description})) );
+        $curr->addChild( $c );
+    }
+};
+
+while ($orig_content =~ m/insert\s+into\s+defaults\s*\(\s*((?&LITT_PAT))\s*,\s*((?&LITT_PAT))\s*\)\s*
+       values\s*((?&ARGS_PAT)(?:\s*,\s*(?&ARGS_PAT))*)\s*;
+
+       $sql_re/gisx) {
+    my $col1 = $1;
+    my $col2 = $2;
+    my $defaults = $3;
+
+    while ($defaults =~ m/
+           ((?&ARGS_PAT))\s*,?
+
+           $sql_re /gisx) {
+        my $default = $1;
+
+        $default =~ m/
+            \(\s*
+              (?<COL1>(?&ARG_PAT))
+              \s*,\s*
+              (?<COL2>(?&ARG_PAT))
+              \s*\)
+
+              $sql_re/gisx;
+        my %ch = (
+            lc($col1) => $+{COL1},
+            lc($col2) => $+{COL2},
+            );
+
+        if (strip_sq($ch{setting_key}) eq 'curr') {
+            $curr->addChild( $xml->createAttribute('default', strip_sq($ch{value})) );
+        }
+        else {
+            my $s = $xml->createElement('setting');
+            $s->addChild( $xml->createAttribute('name', strip_sq($ch{setting_key})) );
+            if ($ch{setting_key} =~ m/accno/) {
+                $s->addChild( $xml->createAttribute('accno', extract_accno($ch{value})) );
+            }
+            else {
+                $s->addChild( $xml->createAttribute('value', strip_sq($ch{value})) );
+            }
+            $settings->addChild( $s );
+        }
+    }
+}
+
+
+while ($orig_content =~ m/insert\s+into\s+gifi\s*\(\s*((?&LITT_PAT))\s*,\s*((?&LITT_PAT))\s*\)\s*
+       values\s*((?&ARGS_PAT)(?:\s*,\s*(?&ARGS_PAT))*)\s*;
+
+       $sql_re/gisx) {
+    my $col1 = $1;
+    my $col2 = $2;
+    my $gifi_insert = $3;
+
+    $gifi = $xml->createElement('gifi-list') unless $gifi;
+    while ($gifi_insert =~ m/
+           ((?&ARGS_PAT))\s*,?
+
+           $sql_re /gisx) {
+        my $gifi_match = $1;
+
+        $gifi_match =~ m/
+            \(\s*
+              (?<COL1>(?&ARG_PAT))
+              \s*,\s*
+              (?<COL2>(?&ARG_PAT))
+              \s*\)
+
+              $sql_re/gisx;
+        my %ch = (
+            lc($col1) => $+{COL1},
+            lc($col2) => $+{COL2},
+            );
+
+        my $s = $xml->createElement('gifi');
+        $s->addChild( $xml->createAttribute('code', strip_sq($ch{accno})) );
+        $s->addChild( $xml->createTextNode(strip_sq($ch{description})) );
+        $gifi->addChild( $s );
+    }
+}
+
+
+while ($orig_content =~ m/insert\s+into\s+tax\s*\(\s*((?&LITT_PAT))\s*,\s*((?&LITT_PAT))\s*\)\s*
+       values\s*((?&ARGS_PAT)(?:\s*,\s*(?&ARGS_PAT))*)\s*;
+
+       $sql_re/gisx) {
+    my $col1 = $1;
+    my $col2 = $2;
+    my $tax_insert = $3;
+
+    while ($tax_insert =~ m/
+           ((?&ARGS_PAT))\s*,?
+
+           $sql_re /gisx) {
+        my $tax_match = $1;
+
+        $tax_match =~ m/
+            \(\s*
+              (?<COL1>(?&ARG_PAT))
+              \s*,\s*
+              (?<COL2>(?&ARG_PAT))
+              \s*\)
+
+              $sql_re/gisx;
+        my %ch = (
+            lc($col1) => $+{COL1},
+            lc($col2) => $+{COL2},
+            );
+
+        my $tax = $xml->createElement('tax');
+        my $accno = strip_sq(extract_accno($ch{chart_id}));
+        die "Can't specify tax for undeclared account $accno" unless $accno_map{$accno};
+        $tax->addChild( $xml->createAttribute('rate', strip_sq($ch{rate})) );
+        $accno_map{$accno}->addChild( $tax );
+    }
+}
+
+
+while ($orig_content =~ m/select\s+cr_coa_to_account_save\s*\(\s*[^)]*\)\s*
+       from\s+account\s+where\s+accno(\s*=\s*(?&STRING_PAT)|\s+in\s*\(\s*[^)]*\))
+
+       $sql_re/gisx) {
+    my $accno_extract = $1;
+
+    for my $accno (extract_accnos($accno_extract)) {
+        die "Reconciliation account is an empty string" unless $accno;
+
+        my @acc_elm = $xpc->findnodes(".//account[\@code=\"$accno\"]", $root);
+        die "Cannot find account $accno to mark for reconciliation" unless $acc_elm[0];
+
+        $acc_elm[0]->addChild( $xml->createAttribute('recon', 'true') );
+    }
+}
+
+
+
+
+if ($gifi) {
+    if ($root->hasChildNodes) {
+        $root->insertBefore( $gifi, $root->firstChild );
+    }
+    else {
+        $root->addChild($gifi);
+    }
+}
+
+print STDERR "\n";
+my $pp = XML::LibXML::PrettyPrint->new(indent_string => "  ");
+$pp->pretty_print($xml);
+$xml->toFH(\*STDOUT);
+
+exit 0;

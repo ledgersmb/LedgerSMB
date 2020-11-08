@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="1" description="AKTIVEN"/>
+    <gifi code="2" description="PASSIVEN"/>
+    <gifi code="4" description="AUFWAND FÜR MATERIAL, WAREN UND DIENSTLEISTUNGEN"/>
+    <gifi code="5" description="PERSONALAUFWAND"/>
+    <gifi code="10000" description="ANLAGEVERMÖGEN"/>
+    <gifi code="11000" description="Forderungen"/>
+    <gifi code="11100" description="Bank"/>
+    <gifi code="11110" description="MWST Vorsteuer auf Investitionen"/>
+    <gifi code="11120" description="Angefangene Arbeiten"/>
+    <gifi code="14150" description="Büromaschinen, EDV"/>
+    <gifi code="18000" description="Gründungsaufwand"/>
+    <gifi code="20000" description="FREMDKAPITAL LANGFRISTIG"/>
+    <gifi code="21000" description="Kurzfristige Finanzverbindlichkeiten"/>
+    <gifi code="21200" description="Sozialversicherungen"/>
+    <gifi code="21210" description="Gesellschafter"/>
+    <gifi code="21220" description="MWST (3,6)"/>
+    <gifi code="21230" description="Passive Rechnungsabgrenzung"/>
+    <gifi code="24000" description="Gesellschafter"/>
+    <gifi code="28000" description="Stammkapital"/>
+    <gifi code="28290" description="Gewinnvortrag"/>
+    <gifi code="30000" description="ÜBRIGER ERTRAG"/>
+    <gifi code="31000" description="Computer"/>
+    <gifi code="32000" description="Software kommerz."/>
+    <gifi code="34000" description="Beratung"/>
+    <gifi code="36000" description="Essen"/>
+    <gifi code="37000" description="Eigenleistungen"/>
+    <gifi code="38000" description="Bestandesänderungen"/>
+    <gifi code="39000" description="Rabatte, Preisnachlässe"/>
+    <gifi code="40000" description="AUFWANDMINDERUNGEN"/>
+    <gifi code="41000" description="Übrige Produkte"/>
+    <gifi code="42000" description="Software kommerz."/>
+    <gifi code="44000" description="Aufwand für Drittleistungen"/>
+    <gifi code="47000" description="Einkaufsspesen"/>
+    <gifi code="48000" description="Bestandesänderungen"/>
+    <gifi code="49000" description="Aufwandminderungen"/>
+    <gifi code="50000" description="Löhne und Gehälter"/>
+    <gifi code="57000" description="FAK"/>
+    <gifi code="58000" description="Spesen"/>
+    <gifi code="60000" description="VERWALTUNGS- UND INFORMATIKAUFWAND"/>
+    <gifi code="61000" description="Reinigung"/>
+    <gifi code="61900" description="Unterhalt"/>
+    <gifi code="62000" description="Fahrzeugaufwand"/>
+    <gifi code="63000" description="Betriebsversicherungen"/>
+    <gifi code="65000" description="Übriger Verwaltungsaufwand"/>
+    <gifi code="66000" description="Werbeaufwand"/>
+    <gifi code="67000" description="Produkteentwicklung"/>
+    <gifi code="68000" description="Finanzaufwand"/>
+    <gifi code="69000" description="Abschreibungen"/>
+    <gifi code="80000" description="AUSSERORDENTLICHER UND BETRIEBSFREMDER ERFOLG, STEUERN"/>
+    <gifi code="90000" description="ABSCHLUSS"/>
+    <gifi code="91000" description="ERFOLGSRECHNUNG"/>
+    <gifi code="92000" description="BILANZ"/>
+    <gifi code="93000" description="GEWINNVERWENDUNG"/>
+    <gifi code="99000" description="SAMMEL- UND FEHLBUCHUNGEN"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="10000" description="AKTIVEN"/>
+    <account-heading id="h-2" code="11000" description="UMLAUFSVERMÖGEN"/>
+    <account-heading id="h-3" code="11100" description="Flüssige Mittel">
+      <account code="11102" description="Bank CS Kt. 177929-11" category="Asset" gifi="11100" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="11101" description="Kasse" category="Asset" gifi="11100">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="11110" description="Forderungen">
+      <account code="11119" description="Verrechnungssteuer" category="Asset" gifi="11110"/>
+      <account code="11118" description="MWST Vorsteuer auf Investitionen" category="Asset" gifi="11110"/>
+      <account code="11117" description="MWST Vorsteuer auf Aufwand" category="Asset" gifi="11110"/>
+      <account code="11111" description="Debitoren" category="Asset" gifi="11110">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="11120" description="Vorräte und angefangene Arbeiten">
+      <account code="11128" description="Angefangene Arbeiten" category="Asset" gifi="11120"/>
+      <account code="11130" description="Aktive Rechnungsabgrenzung" category="Asset" gifi="11000"/>
+      <account code="11121" description="Warenvorräte" category="Asset" gifi="11120">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="14000" description="ANLAGEVERMÖGEN">
+      <account code="14151" description="Mobiliar und Einrichtungen" category="Asset" gifi="14150">
+        <link code="IC"/>
+      </account>
+      <account code="14152" description="Büromaschinen, EDV" category="Asset" gifi="14150">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="18000" description="AKTIVIERTER AUFWAND UND AKTIVE BERICHTIGUNGSPOSTEN">
+      <account code="18182" description="Entwicklungsaufwand" category="Asset" gifi="18000"/>
+      <account code="18181" description="Gründungsaufwand" category="Asset" gifi="18000">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-8" code="20000" description="PASSIVEN"/>
+    <account-heading id="h-9" code="21000" description="FREMDKAPITAL KURZFRISTIG"/>
+    <account-heading id="h-10" code="21200" description="Kurzfristige Verbindlichkeiten aus Lieferungen und Leistungen">
+      <account code="21201" description="Lieferanten" category="Liability" gifi="21200">
+        <link code="AP"/>
+      </account>
+      <account code="21202" description="Personalaufwand" category="Liability" gifi="21200">
+        <link code="AP"/>
+      </account>
+      <account code="21203" description="Sozialversicherungen" category="Liability" gifi="21200">
+        <link code="AP"/>
+      </account>
+      <account code="21205" description="Leasing" category="Liability" gifi="21200">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="21210" description="Kurzfristige Finanzverbindlichkeiten">
+      <account code="21216" description="Gesellschafter" category="Liability" gifi="21210">
+        <link code="AP"/>
+      </account>
+      <account code="21217" description="Privat" category="Liability" gifi="21210">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="21220" description="Andere kurzfristige Verbindlichkeiten">
+      <account code="21222" description="MWST (3,6)" category="Liability" gifi="21220">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.036"/>
+        </tax>
+      </account>
+      <account code="21229" description="Gewinnausschüttung" category="Liability" gifi="21220"/>
+      <account code="21228" description="Geschuldete Steuern" category="Liability" gifi="21220">
+        <link code="AP"/>
+      </account>
+      <account code="21223" description="MWST (7,6)" category="Liability" gifi="21220">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_expense"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.076"/>
+        </tax>
+      </account>
+      <account code="21221" description="MWST (2,4)" category="Liability" gifi="21220">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.024"/>
+        </tax>
+      </account>
+      <account code="21224" description="MWST (7.6) 1/2" category="Liability" gifi="21220">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_expense"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.076"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-13" code="21230" description="Passive Rechnungsabgrenzung, kurzfristige Rückstellungen">
+      <account code="21235" description="Rückstellungen" category="Liability" gifi="21230"/>
+      <account code="21231" description="Passive Rechnungsabgrenzung" category="Liability" gifi="21230"/>
+    </account-heading>
+    <account-heading id="h-14" code="24000" description="FREMDKAPITAL LANGFRISTIG">
+      <account code="24256" description="Gesellschafter" category="Liability" gifi="24000"/>
+    </account-heading>
+    <account-heading id="h-15" code="28000" description="EIGENKAPITAL">
+      <account code="28280" description="Stammkapital" category="Equity" gifi="28000"/>
+    </account-heading>
+    <account-heading id="h-16" code="28290" description="Reserven, Bilanzgewinn">
+      <account code="28291" description="Reserven" category="Equity" gifi="28290"/>
+      <account code="28295" description="Gewinnvortrag" category="Equity" gifi="28290"/>
+      <account code="28296" description="Jahresgewinn" category="Equity" gifi="28290"/>
+    </account-heading>
+    <account-heading id="h-17" code="30000" description="BETRIEBSERTRAG AUS LIEFERUNGEN UND LEISTUNGEN"/>
+    <account-heading id="h-18" code="31000" description="PRODUKTIONSERTRAG">
+      <account code="31001" description="Computer" category="Income" gifi="31000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="31005" description="Übrige Produkte" category="Income" gifi="31000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-19" code="32000" description="HANDELSERTRAG">
+      <account code="32001" description="Hardware" category="Income" gifi="32000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="32002" description="Software OSS" category="Income" gifi="32000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="32003" description="Software kommerz." category="Income" gifi="32000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="32005" description="Übrige" category="Income" gifi="32000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-20" code="34000" description="DIENSTLEISTUNGSERTRAG">
+      <account code="34001" description="Beratung" category="Income" gifi="34000">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="34002" description="Installation" category="Income" gifi="34000">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-21" code="36000" description="ÜBRIGER ERTRAG">
+      <account code="36005" description="Kursgewinn" category="Income" gifi="39000">
+        <link code="IC_sale"/>
+        <link code="IC_cogs"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="36004" description="Versand" category="Income" gifi="36000">
+        <link code="IC_income"/>
+      </account>
+      <account code="36001" description="Reisezeit" category="Income" gifi="36000">
+        <link code="IC_income"/>
+      </account>
+      <account code="36002" description="Reise (Fahrt)" category="Income" gifi="36000">
+        <link code="IC_income"/>
+      </account>
+      <account code="36003" description="Essen" category="Income" gifi="36000">
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-22" code="37000" description="EIGENLEISTUNGEN UND EIGENVERBRAUCH">
+      <account code="37001" description="Eigenleistungen" category="Income" gifi="37000"/>
+      <account code="37002" description="Eigenverbrauch" category="Income" gifi="37000"/>
+    </account-heading>
+    <account-heading id="h-23" code="38000" description="BESTANDESÄNDERUNGEN ANGEFANGENE UND FERTIGGESTELLTE ARBEITUNG AUS PRODUKTION UND DIENSTLEISTUNG">
+      <account code="38001" description="Bestandesänderungen" category="Income" gifi="38000"/>
+    </account-heading>
+    <account-heading id="h-24" code="39000" description="ERTRAGSMINDERUNGEN AUS PRODUKTIONS-, HANDELS- UND DIENSTLEISTUNGSERTRÄGEN">
+      <account code="39001" description="Skonti" category="Income" gifi="39000">
+        <link code="IC_sale"/>
+        <link code="IC_cogs"/>
+        <link code="IC_income"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="39002" description="Rabatte, Preisnachlässe" category="Income" gifi="39000">
+        <link code="IC_sale"/>
+        <link code="IC_cogs"/>
+        <link code="IC_income"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="39006" description="Kursverlust" category="Expense" gifi="39000">
+        <link code="IC_sale"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="39005" description="Verluste aus Forderungen" category="Expense" gifi="39000">
+        <link code="IC_sale"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="39004" description="Rundungsdifferenzen" category="Income" gifi="39000">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-25" code="40000" description="AUFWAND FÜR MATERIAL, WAREN UND DIENSTLEISTUNGEN"/>
+    <account-heading id="h-26" code="41000" description="MATERIALAUFWAND">
+      <account code="41001" description="Computer" category="Expense" gifi="41000">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="41005" description="Übrige Produkte" category="Expense" gifi="41000">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-27" code="42000" description="HANDELSWARENAUFWAND">
+      <account code="42001" description="Hardware" category="Expense" gifi="42000">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="42002" description="Software OSS" category="Income" gifi="32000">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="42003" description="Software kommerz." category="Income" gifi="42000">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="42005" description="Übrige" category="Expense" gifi="42000">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-28" code="44000" description="AUFWAND FÜR DRITTLEISTUNGEN">
+      <account code="44001" description="Aufwand für Drittleistungen" category="Expense" gifi="44000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-29" code="46000" description="ÜBRIGER AUFWAND"/>
+    <account-heading id="h-30" code="47000" description="DIREKTE EINKAUFSSPESEN">
+      <account code="47001" description="Einkaufsspesen" category="Expense" gifi="47000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-31" code="48000" description="BESTANDESVERÄNDERUNGEN, MATERIAL- UND WARENVERLUSTE">
+      <account code="48001" description="Bestandesänderungen" category="Expense" gifi="48000"/>
+    </account-heading>
+    <account-heading id="h-32" code="49000" description="AUFWANDMINDERUNGEN">
+      <account code="49005" description="Aufwandminderungen" category="Expense" gifi="49000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-33" code="50000" description="PERSONALAUFWAND">
+      <account code="50001" description="Löhne und Gehälter" category="Expense" gifi="50000">
+        <link code="IC_expense"/>
+      </account>
+      <account code="50002" description="Erfolgsbeteiligungen" category="Expense" gifi="50000">
+        <link code="IC_expense"/>
+      </account>
+      <account code="50005" description="Leistungen von Sozialversicherung" category="Expense" gifi="50000">
+        <link code="AP_amount"/>
+        <link code="IC_income"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-34" code="57000" description="SOZIALVERSICHERUNGSAUFWAND">
+      <account code="57004" description="Unfallversicherung" category="Expense" gifi="57000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="57005" description="Krankentaggeldversicherung" category="Expense" gifi="57000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="57003" description="Berufliche Vorsorge" category="Expense" gifi="57000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="57002" description="FAK" category="Expense" gifi="57000">
+        <link code="AP_amount"/>
+        <link code="IC_income"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="57001" description="AHV, IV, EO, ALV" category="Expense" gifi="57000">
+        <link code="AP_amount"/>
+        <link code="IC_income"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-35" code="58000" description="ÜBRIGER PERSONALAUFWAND">
+      <account code="58005" description="Sonstiger Personalaufwand" category="Expense" gifi="58000"/>
+      <account code="58003" description="Spesen" category="Expense" gifi="58000">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-36" code="59000" description="ARBEITSLEISTUNGEN DRITTER"/>
+    <account-heading id="h-37" code="60000" description="SONSTIGER BETRIEBSAUFWAND"/>
+    <account-heading id="h-38" code="61000" description="RAUMAUFWAND">
+      <account code="61001" description="Miete" category="Expense" gifi="61000">
+        <link code="IC_expense"/>
+      </account>
+      <account code="61002" description="Reinigung" category="Expense" gifi="61000">
+        <link code="IC_expense"/>
+      </account>
+      <account code="61005" description="Übriger Raumaufwand" category="Expense" gifi="61000">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-39" code="61900" description="UNTERHALT, REPARATUREN, ERSATZ, LEASINGAUFWAND MOBILE SACHANLAGEN">
+      <account code="61901" description="Unterhalt" category="Expense" gifi="61900">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-40" code="62000" description="FAHRZEUG- UND TRANSPORTAUFWAND">
+      <account code="62002" description="Transportaufwand" category="Expense" gifi="62000">
+        <link code="AP_amount"/>
+      </account>
+      <account code="62001" description="Fahrzeugaufwand" category="Expense" gifi="62000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-41" code="63000" description="SACHVERSICHERUNGEN, ABGABEN, GEBÜHREN, BEWILLIGUNGEN">
+      <account code="63001" description="Betriebsversicherungen" category="Expense" gifi="63000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-42" code="65000" description="VERWALTUNGS- UND INFORMATIKAUFWAND">
+      <account code="65009" description="Übriger Verwaltungsaufwand" category="Expense" gifi="65000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="65003" description="Porti" category="Expense" gifi="65000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="65002" description="Telekomm" category="Expense" gifi="65000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="65001" description="Büromaterial" category="Expense" gifi="65000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="65004" description="Fachliteratur" category="Expense" gifi="65000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="65005" description="Informatikaufwand" category="Expense" gifi="65000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-43" code="66000" description="WERBEAUFWAND">
+      <account code="66001" description="Werbeaufwand" category="Expense" gifi="66000">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-44" code="67000" description="ÜBRIGER BETRIEBSAUFWAND">
+      <account code="67001" description="Übriger Betriebsaufwand" category="Expense" gifi="67000"/>
+      <account code="67002" description="Produkteentwicklung" category="Expense" gifi="67000"/>
+    </account-heading>
+    <account-heading id="h-45" code="68000" description="FINANZERFOLG">
+      <account code="68001" description="Finanzaufwand" category="Expense" gifi="68000"/>
+      <account code="68002" description="Bankspesen" category="Expense" gifi="68000"/>
+      <account code="68005" description="Finanzertrag" category="Expense" gifi="68000"/>
+    </account-heading>
+    <account-heading id="h-46" code="69000" description="ABSCHREIBUNGEN">
+      <account code="69001" description="Abschreibungen" category="Expense" gifi="69000"/>
+    </account-heading>
+    <account-heading id="h-47" code="80000" description="AUSSERORDENTLICHER UND BETRIEBSFREMDER ERFOLG, STEUERN">
+      <account code="80001" description="Ausserordentlicher Ertrag" category="Income" gifi="80000"/>
+      <account code="80002" description="Ausserordentlicher Aufwand" category="Income" gifi="80000"/>
+    </account-heading>
+    <account-heading id="h-48" code="89000" description="STEUERAUFWAND">
+      <account code="89001" description="Steuern" category="Expense" gifi="80000"/>
+    </account-heading>
+    <account-heading id="h-49" code="90000" description="ABSCHLUSS"/>
+    <account-heading id="h-50" code="91000" description="ERFOLGSRECHNUNG"/>
+    <account-heading id="h-51" code="92000" description="BILANZ"/>
+    <account-heading id="h-52" code="93000" description="GEWINNVERWENDUNG"/>
+    <account-heading id="h-53" code="99000" description="SAMMEL- UND FEHLBUCHUNGEN"/>
+  </coa>
+  <currencies default="CHF">
+    <currency code="CHF">
+      CHF
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="11121"/>
+    <setting name="income_accno_id" accno="34002"/>
+    <setting name="expense_accno_id" accno="42005"/>
+    <setting name="fxgain_accno_id" accno="36005"/>
+    <setting name="fxloss_accno_id" accno="39006"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

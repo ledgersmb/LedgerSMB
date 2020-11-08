@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="0000" description="Minimal heading">
+      <account code="0010" description="Freehold Property" category="Asset"/>
+      <account code="0011" description="Goodwill" category="Asset"/>
+      <account code="0012" description="Goodwill Amortisation" category="Asset"/>
+      <account code="0020" description="Plant and Machinery" category="Asset"/>
+      <account code="0021" description="Plant/Machinery Depreciation" category="Asset" contra="true"/>
+      <account code="0030" description="Office Equipment" category="Asset"/>
+      <account code="0031" description="Office Equipment Depreciation" category="Asset" contra="true"/>
+      <account code="0040" description="Furniture and Fixtures" category="Asset"/>
+      <account code="0041" description="Furniture/Fixture Depreciation" category="Asset" contra="true"/>
+      <account code="0050" description="Motor Vehicles" category="Asset"/>
+      <account code="0051" description="Motor Vehicles Depreciation" category="Asset" contra="true"/>
+      <account code="1001" description="Stock" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1002" description="Work in Progress" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1100" description="Debtors Control Account" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1102" description="Other Debtors" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1103" description="Prepayments" category="Asset"/>
+      <account code="1200" description="Bank Current Account" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1210" description="Bank Deposit Account" category="Asset" recon="true"/>
+      <account code="1220" description="Building Society Account" category="Asset" recon="true"/>
+      <account code="1230" description="Petty Cash" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1240" description="Company Credit Card" category="Liability" recon="true"/>
+      <account code="2100" description="Creditors Control Account" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2102" description="Other Creditors" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2109" description="Accruals" category="Liability"/>
+      <account code="2200" description="VAT - Standard rate" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.20"/>
+        </tax>
+      </account>
+      <account code="2205" description="VAT - Reduced rate" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.05"/>
+        </tax>
+      </account>
+      <account code="2209" description="VAT - Zero rate" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.00"/>
+        </tax>
+      </account>
+      <account code="2210" description="P.A.Y.E. &amp; National Insurance" category="Liability"/>
+      <account code="2220" description="Net Wages" category="Liability"/>
+      <account code="2250" description="Corporation Tax" category="Liability"/>
+      <account code="2300" description="Bank Loan" category="Liability"/>
+      <account code="2305" description="Directors loan account" category="Liability"/>
+      <account code="2310" description="Hire Purchase" category="Liability"/>
+      <account code="2330" description="Mortgages" category="Liability"/>
+      <account code="3000" description="Ordinary Shares" category="Equity"/>
+      <account code="3010" description="Preference Shares" category="Equity"/>
+      <account code="3100" description="Share Premium Account" category="Equity"/>
+      <account code="3200" description="Profit and Loss Account" category="Equity"/>
+      <account code="4000" description="Sales" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4010" description="Export Sales" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4009" description="Discounts Allowed" category="Income"/>
+      <account code="4900" description="Miscellaneous Income" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4904" description="Rent Income" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4906" description="Interest received" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4920" description="Foreign Exchange Gain" category="Income"/>
+      <account code="5000" description="Materials Purchased" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5001" description="Materials Imported" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5002" description="Opening Stock" category="Expense"/>
+      <account code="5003" description="Closing Stock" category="Expense"/>
+      <account code="5200" description="Packaging" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5201" description="Discounts Taken" category="Expense"/>
+      <account code="5202" description="Carriage" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5203" description="Import Duty" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5204" description="Transport Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5205" description="Equipment Hire" category="Expense"/>
+      <account code="5220" description="Foreign Exchange Loss" category="Expense"/>
+      <account code="6000" description="Productive Labour" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6001" description="Cost of Sales Labour" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6002" description="Sub-Contractors" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7000" description="Staff wages &amp; salaries" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7002" description="Directors Remuneration" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7006" description="Employers N.I." category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7007" description="Employers Pensions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7008" description="Recruitment Expenses" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7100" description="Rent" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7102" description="Water Rates" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7103" description="General Rates" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7104" description="Premises Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7200" description="Light &amp; heat" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7300" description="Motor expenses" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7350" description="Travelling" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7400" description="Advertising" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7402" description="P.R. (Literature &amp; Brochures)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7403" description="U.K. Entertainment" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7404" description="Overseas Entertainment" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7500" description="Postage and Carriage" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7501" description="Office Stationery" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7502" description="Telephone" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7506" description="Web Site costs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7600" description="Legal Fees" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7601" description="Audit and Accountancy Fees" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7603" description="Professional Fees" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7701" description="Office Machine Maintenance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7710" description="Computer expenses" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7800" description="Repairs and Renewals" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7801" description="Cleaning" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7802" description="Laundry" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7900" description="Bank Interest Paid" category="Expense"/>
+      <account code="7901" description="Bank Charges" category="Expense"/>
+      <account code="7903" description="Loan Interest Paid" category="Expense"/>
+      <account code="7904" description="H.P. Interest" category="Expense"/>
+      <account code="8000" description="Depreciation" category="Expense"/>
+      <account code="8005" description="Goodwill Amortisation" category="Expense"/>
+      <account code="8100" description="Bad Debt Write Off" category="Expense"/>
+      <account code="8201" description="Subscriptions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8202" description="Clothing Costs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8203" description="Training Costs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8204" description="Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8205" description="Refreshments" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8500" description="Dividends" category="Expense"/>
+      <account code="8600" description="Corporation Tax" category="Expense"/>
+      <account code="9999" description="Suspense Account" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="GBP">
+    <currency code="GBP">
+      GBP
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1001"/>
+    <setting name="income_accno_id" accno="4000"/>
+    <setting name="expense_accno_id" accno="5000"/>
+    <setting name="fxgain_accno_id" accno="4920"/>
+    <setting name="fxloss_accno_id" accno="5220"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1" description="Ilgtermiòa ieguldîjumi"/>
+    <account-heading id="h-2" code="2" description="Apgrozâmie lîdzekïi"/>
+    <account-heading id="h-3" code="11" description="Nemateriâlie ieguldîjumi">
+      <account code="1130" description="Uzòçmuma nemateriâlâ vçrtîba" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1180" description="Avansa maksâjumi par nemateriâliem aktîviem" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1190" description="Nemateriâlo ieguldîjumu vçrtîbas norakstîtâ daïa (pasîvâ)" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1110" description="Pçtniecîbas un uzòçmuma attîstîbas izmaksas" category="Asset"/>
+      <account code="1120" description="Koncesijas, patenti, licences, tirdzniecîbas zîmes un lîdzîgas tiesîbas; datoru programmas" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="12" description="Pamatlîdzekïi">
+      <account code="1210" description="Zemes gabali, çkas, bûves, ilggadîgie stâdîjumi un citi nekustamâ îpaðuma objekti" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1290" description="Pamatlîdzekïu nolietojums (pasîvâ)" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1220" description="Tehnoloìiskâs  iekârtas un maðînas" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1240" description="Pamatlîdzekïu izveidoðana un nepabeigto celtniecîbas objektu izmaksas" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1230" description="Pârçjie pamatlîdzekïi un inventârs" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="13" description="Ilgtermiòa finansu ieguldîjumi">
+      <account code="1380" description="Aizdevumi uzòçmuma dalîbniekiem un valdei" category="Asset"/>
+      <account code="1310" description="Lîdzdalîba meitas uzòçmumu kapitâlâ" category="Asset"/>
+      <account code="1340" description="Aizdevumi saistîtajiem uzòçmumiem" category="Asset"/>
+      <account code="1350" description="Pârçjie vçrtspapîri" category="Asset"/>
+      <account code="1370" description="Paðu akcijas un daïas" category="Asset"/>
+      <account code="1360" description="Pârçjie aizdevumi" category="Asset"/>
+      <account code="1320" description="Aizdevumi meitas uzòçmumam" category="Asset"/>
+      <account code="1330" description="Lîdzdalîbas saistîto uzòçmumu kapitâlâ" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-6" code="21" description="Krâjumi">
+      <account code="2130" description="Gatavâs preces pârdoðanai" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="2310" description="Norçíini ar pircçjiem un pasûtîtâjiem" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2210" description="Pieauguðie produktîvie lopi" category="Asset"/>
+      <account code="2220" description="Jaunlopi un sîkie dzîvnieki" category="Asset"/>
+      <account code="2140" description="Nepabeigtie pasûtîjumi" category="Asset"/>
+      <account code="2120" description="Nepabeigtie raþojumi" category="Asset"/>
+      <account code="2110" description="Izejvielas un materiâli" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="2190" description="Avansa maksâjumi par precçm" category="Asset">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="23" description="Norçíini par prasîbâm (ar debitoriem)">
+      <account code="2350" description="Norçíini ar citiem debitoriem" category="Asset">
+        <link code="AR_amount"/>
+      </account>
+      <account code="2320" description="Par piegâdçm un pasûtîjumiem saòemtie vekseïi" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="2370" description="Îstermiòa aizdevumi sabiedrîbâm dalîbniekiem un vadîbai" category="Asset" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="2330" description="Meitas uzòçmumu parâdi" category="Asset"/>
+      <account code="2340" description="Saistîto uzòçmumu parâdi" category="Asset"/>
+      <account code="2380" description="Norçíini par prasîbâm pret personâlu un îstermiòa aizdevumi personâlam" category="Asset"/>
+      <account code="2410" description="Nâkamo periodu izdevumi" category="Asset"/>
+      <account code="2420" description="Akciju emisijas  nocenojums (disagio)" category="Asset"/>
+      <account code="2360" description="Norçíini par parakstîtâ sabiedrîbas kapitâlâ neiemaksâtâm summâm" category="Asset">
+        <link code="AR_paid"/>
+      </account>
+      <account code="2390" description="Pârmaksâtie nodokïi, iepriekð samaksâtie nodokïi" category="Asset"/>
+      <account code="2354" description="PVN samaksâts 18%" category="Expense">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.18"/>
+        </tax>
+      </account>
+      <account code="2352" description="PVN ieòemtais 18%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.18"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-8" code="26" description="Naudas lîdzekïi">
+      <account code="2610" description="Kase" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3350" description="Statûtos paredzçtâs rezerves" category="Equity"/>
+      <account code="2640" description="Akreditîvi, èeki un îpaðu norçíina  formu konti" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="2650" description="Citi konti bankâs" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="2670" description="Pârçjie naudas lîdzekïi" category="Asset"/>
+      <account code="2620" description="Norçíinu konti bankâ" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="5" description="Kreditori"/>
+    <account-heading id="h-10" code="25" description="Vçrtspapîri apgrozâmo lîdzekïu sastâvâ un îstermiòa lîdzdalîba kapitâlos">
+      <account code="2510" description="Meitas  uzòçmuma akcijas un daïas " category="Asset"/>
+      <account code="2520" description="Saistîto uzòçmuma akcijas un daïas " category="Asset"/>
+      <account code="2530" description="Paðu  uzòçmuma akcijas un daïas " category="Asset"/>
+      <account code="2540" description="Pârçjie vçrtspapîri un lîdzdalîba kapitâlos" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-11" code="3" description="Paðu kapitâls">
+      <account code="3130" description="Ilgtermiòa ieguldîjuma pârvçrtçðanas rezerve" category="Equity"/>
+      <account code="3120" description="Akciju emisijas uzcenojums (agio)" category="Equity"/>
+      <account code="3110" description="Pamatkapitâls vai lîdzdalîbas kapitâls" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-12" code="32" description="Privâtkonti">
+      <account code="3210" description="Privâtiem nolûkiem izòemtie lîdzekïi" category="Equity"/>
+      <account code="3220" description="Privâtie ieguldîjumi" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-13" code="33" description="Rezerves ">
+      <account code="3310" description="Rezerves kapitâls" category="Equity"/>
+      <account code="3330" description="Citas likumâ paredzçtâs  rezerves" category="Equity"/>
+      <account code="3340" description="Rezerves paðu akcijâm un daïâm" category="Equity"/>
+      <account code="3360" description="Pârçjâs rezerves" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-14" code="34" description="Nesadalîtâ peïòa vai nesegtie zaudçjumi">
+      <account code="3410" description="Pârskata gada nesadalîtâ peïòa" category="Equity"/>
+      <account code="3420" description="Iepriekðçjo gadu nesadalîtâ peïòa" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-15" code="4" description="Uzkrâjumi">
+      <account code="4110" description="Uzkrâjumi pensijâm pielîdzinâtâm saistîbâm" category="Liability"/>
+      <account code="4310" description="Citi uzkrâjumi" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-16" code="41" description="Uzkrâjumi pensijâm pielîdzinâmâtâm saistîbâm"/>
+    <account-heading id="h-17" code="43" description="Citi uzkrâjumi"/>
+    <account-heading id="h-18" code="42" description="Uzkrâjumi paredzamiem nodokïiem">
+      <account code="4210" description="Uzkrâjumi paredzamiem nodokïiem" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-19" code="51" description="Norçíini par aizòçmumiem">
+      <account code="5110" description="Aizòçmumi pret obligâcijâm" category="Liability"/>
+      <account code="5120" description="Akcijâs pârvçðamie aizòçmumi" category="Liability"/>
+      <account code="5130" description="Aizòçmumi ar lîdzdalîbu peïòâ" category="Liability"/>
+      <account code="5140" description="Citi aizòçmumi" category="Liability"/>
+      <account code="5150" description="Îstermiòa aizòçmumi  no kredîtiestâdçm" category="Liability"/>
+      <account code="5160" description="Ilgtermiòa aizòçmumi no kredîtiestâdçm" category="Liability"/>
+      <account code="5170" description="Aizòçmumi no kredîtiestâdçm bez norâdîtâ termiòa" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-20" code="52" description="Norçíini par saòemtajiem avansiem">
+      <account code="5210" description="Norçíini par saòemtiem avansiem" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-21" code="54" description="Maksâjamie vekseïi">
+      <account code="5410" description="Norçíini par paðu izdotajiem vekseïiem" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="5510" description="Norçíini par parâdiem meitas uzòçmumiem" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="5540" description="Norçíini par parâdiem citiem uzòçmumiem un dalîbniekiem" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="5550" description="Norçíini par parâdiem personâlam" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="5520" description="Norçíini par parâdiem saistîtiem uzòçmumiem" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="5530" description="Norçíini par parâdiem uzòçmumiem, ar kuriem ir lîgums par lîdzdalîbu" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-22" code="53" description="Norçíini par piegâdâtâjiem un darbuzòçmçjiem">
+      <account code="5310" description="Norçíini par piegâdâtâjiem un darbuzòçmçjiem" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-23" code="57" description="Norçíini par nodokïiem">
+      <account code="5710" description="Norçíini par peïòas nodokli" category="Liability"/>
+      <account code="5720" description="Norçíini par citiem nodokïiem, nodevâm un maksâjumiem budþetam" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-24" code="58" description="Norçíini par  dividendçm">
+      <account code="5820" description="Norçíini par iepriekðçjo gadu neizmaksâtajâm dividendçm" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="5810" description="Norçíini par pârskata gada dividendçm" category="Liability" recon="true">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-25" code="61" description="Ieòçmumi no pârdoðanas, kas apliekami ar nodokïiem vispârçjâ kârtîbâ">
+      <account code="6110" description="Ieòçmumi no pamatdarbîbas  produkcijas un pakalpojumu pârdoðanas" category="Income">
+        <link code="AR_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-26" code="62" description="Ieòçmumi no pârdoðanas, kas citâdi  apliekami ar nodokïiem">
+      <account code="6220" description="Ar îpaðiem nodokïiem apliekamie pârdoðanas ieòçmumi" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="6210" description="Ar nodokïiem neapliekamie pârdoðanas ieòçmumi" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-27" code="63" description="Komisijas, starpniecîbas un citi ieòçmumi">
+      <account code="6310" description="Komisijas un starpniecîbas ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6320" description="Ieòçmumi no atkritumu pârstrâdes un realizâcijas" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="6330" description="Ieòçmumi no taras realizâcijas" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="6340" description="Ar nodokïiem neapliekamie apgrozîjumi" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-28" code="64" description="Ieòçmumus samazinoðas atlaides">
+      <account code="6410" description="Pieðíirtâs skonto atlaides" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6420" description="Pieðíirtie bonusi" category="Income"/>
+      <account code="6430" description="Pieðíirtie rabati un citas tirdzniecîbas  atlaides" category="Income"/>
+    </account-heading>
+    <account-heading id="h-29" code="59" description="Nâkamo periodu ieòçmumi">
+      <account code="5910" description="Nâkamo periodu ieòçmumi" category="Income"/>
+    </account-heading>
+    <account-heading id="h-30" code="65" description="Pârçjie uzòçmuma ieòçmumi">
+      <account code="6510" description="Ieòçmumi no vçrtspapîru kursa paaugstinâðanâs" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="6530" description="Ieòçmumi no zemes gabalu iznomâðanas" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="6540" description="Ieòçmumi no apgrozâmo lîdzekïu pârdoðanas" category="Income"/>
+      <account code="6550" description="Ieòçmumi no pamatlîdzekïu iznomâðanas" category="Income"/>
+      <account code="6560" description="Ieòçmumos pârskaitîtais rezervju un uzkrâjumu samazinâjums" category="Income"/>
+      <account code="6570" description="Iepriekðçjo gadu nodokïu samazinâjums" category="Income"/>
+      <account code="6580" description="Papildus  ieguldîjumi un citi ieòçmumi" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="6590" description="Paðu uzòçmuma kapitâlieguldîjumiem izpildîtie darbi" category="Income">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-31" code="67" description="Citu periodu ieòçmumi, kas attiecas uz pârskata periodu">
+      <account code="6710" description="Citu periodu ieòçmumi, kas attiecas uz pârskata periodu" category="Income">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-32" code="69" description="Sociâlâs infrastruktûras iestâþu un pasâkumu ieòçmumi">
+      <account code="6930" description="Sadzîves paklpojumu ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6920" description="Komunâlâs  saimniecîbas ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6940" description="Sabiedriskâs çdinâðanas ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6950" description="Izglîtîbas iestâþu ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6960" description="Medicînas iestâþu ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="6970" description="Kultûras un sporta ietâþu un pasâkumu ieòçmumi" category="Income"/>
+      <account code="6980" description="Pârçjie sociâlâs infrastruktûras iestâþu un pasâkumu ieòçmumi" category="Income"/>
+      <account code="6910" description="Dzîvokïu saimniecîbas ieòçmumi" category="Income">
+        <link code="AR_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-33" code="66" description="Gatavâs produkcijas  un nepabeigto  raþojumu krâjumu un vçrtîbas  izmaiòas">
+      <account code="6610" description="Gatavâs produkcijas krâjumu un vçrtîbas izmaiòas" category="Income"/>
+      <account code="6620" description="Nepabeigto raþojumu krâjumu un vçrtîbas  izmaiòas" category="Income"/>
+      <account code="6630" description="Nepabeigto pasûtîjumu atlikumu un vçtîbas izmaiòas" category="Income"/>
+      <account code="6640" description="Produktîvo  un darba dzîvnieku ganâmpulka vçrtîbas izmaiòas" category="Income"/>
+    </account-heading>
+    <account-heading id="h-34" code="7" description="Saimnieciskâs darbîbas izdevumi"/>
+    <account-heading id="h-35" code="71" description="Izdevumi izejvielu, materiâlu un preèu iepirkðanai">
+      <account code="7110" description="Izejvielu un materiâlu iepirkðanas un piegâdes izdevumi" category="Expense"/>
+      <account code="7120" description="Preèu iepirkðanas un piegâdes izdevumi" category="Expense"/>
+      <account code="7130" description="Saòemtâs atlaides" category="Expense"/>
+      <account code="7140" description="Taras izdevumi" category="Expense"/>
+      <account code="7150" description="Muitas un ievednodevas" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7160" description="Pârçjie ârçjie izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7170" description="Samaksa par darbiem un pakalpojumiem no ârienes" category="Expense"/>
+      <account code="7190" description="Pirkto materiâlu un preèu krâjumu un vçrtîbas izmaiòas" category="Expense"/>
+      <account code="7180" description="Pârçjie materiâlie izdevumi (nodoklis par dabas resursu izmantoðanu, celmu nauda u.c.)" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-36" code="72" description="Personâla izmaksas">
+      <account code="7210" description="Strâdnieku algas" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7230" description="Sociâlâs  infrastruktûras  iestâþu un pasâkumu darbinieku algas" category="Expense"/>
+      <account code="7240" description="Pârçjâs personâla izmaksas" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7220" description="Pârvaldes personâla un administratîvâ personâla algas" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-37" code="73" description="Sociâlâs nodevas un izmaksas">
+      <account code="7320" description="Pârçjâs sociâlâs izmaksas" category="Expense">
+        <link code="AP_tax"/>
+        <tax/>
+      </account>
+      <account code="7310" description="Sociâlais nodoklis" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-38" code="74" description="Pamatlîdzekïu nolietojums un citu ieguldîjumu vçrtîbas norakstîjumi">
+      <account code="7410" description="Nemateriâlo ieguldîjumu vçrtîbas norakstîðana" category="Expense"/>
+      <account code="7440" description="Apgrozâmo lîdzekïu vçrtîbas norakstîðana" category="Expense"/>
+      <account code="7420" description="Pamatlîdzekïu nolietojums" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-39" code="75" description="Pârçjie saimnieciskâs darbîbas  izdevumi">
+      <account code="7510" description="Dabas aizsardzîbas izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7530" description="Nodevas par raþoðanâ izmantotiem zemes gabaliem" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7540" description="Apdroðinnâðanas maksâjumi (izòemot darbinieku apdroðinâðanu)" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7550" description="Pârçjie saimnieciskâs darbîbas izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7560" description="Strâdnieku vervçðanas un apmâcîbas izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7570" description="Komandçjuma izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-40" code="76" description="Preèu pârdoðanas izdevumi">
+      <account code="7610" description="Iesaiòojamais materiâls, tara" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7620" description="Preèu transporta izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7630" description="Preèu transporta apdroðinâðana" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7640" description="Samaksâtâs komisijas naudas" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7650" description="Citi pârdoðanas izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-41" code="77" description="Administrâcijas izdevumi">
+      <account code="7710" description="Sakaru izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7720" description="Kantora (biroja) izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7730" description="Juristu pakalpojumu apmaksa" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7740" description="Gada pârskata un revîzijas izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7750" description="Naudas apgrozîjuma blakus izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7760" description="Transporta izdevumi administrâcijas vajadzîbâm" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7770" description="Citi vadîðanas un administrâcijas izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-42" code="78" description="Pârskata periodâ iekïaujamie iepriekðçjo periodu izdevumi">
+      <account code="7810" description="Pârskata periodâ iekïaujamie iepriekðçjo periodu izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-43" code="79" description="Sociâlâs  infrastruktûras uzturçðanas izdevumi">
+      <account code="7920" description="Komuâlâs saimniecîbas izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7940" description="Sabiedriskâs çdinâðanas izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7950" description="Izglîtîbas iestâþu izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7910" description="Dzîvokïu saimniecîbas izdevumi" category="Expense" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="7930" description="Sadzîves pakalpojumu izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7960" description="Medicîniskâs apkalpoðanas izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7970" description="Kultûras un sporta iestâþu un pasâkumu izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="7980" description="Pârçjie sociâlâs infrastruktûras uzturçðanas izdevumi" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-44" code="8" description="Daþâdi ieòçmumi un izdevumi, peïòa un zaudçjumi"/>
+    <account-heading id="h-45" code="81" description="Daþâdi ieòçmumi">
+      <account code="8110" description="Ieòçmumi no lîdzdalîbas, vçrtspapîriem un aizdevumiem" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8120" description="Pârçjie ieòçmumi no procentiem un tiem pielîdzinâmi ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8130" description="Vekseïu diskonta ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8150" description="Ienâkumi no valûtas kursa paaugstinâðanâs" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8160" description="Saòemtâs soda naudas un lîgumsodi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8170" description="Peïòa no ârzemju valûtas pârdoðanas vai pirkðanas" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8190" description="Citi ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="8140" description="Ziedojumi un citi tiem pielîdzinâmi ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-46" code="82" description="Daþâdi izdevumi">
+      <account code="8210" description="Îstermiòa finansu ieguldîjumu vçrtîbas norakstîðana" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8220" description="Samaksâtie procenti un tiem pielîdzinâmie izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8230" description="Vekseïu diskonta izmaksas" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8240" description="Ilgtermiòa aizdevumu procentu samaksa" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8260" description="Samaksâtâs soda naudas un lîgumsodi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8270" description="Zaudçjumi no ârzemju valûtas pirkðanas un pârdoðanas" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8290" description="Citi izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="8250" description="Zaudçjumi no valûtu  kursa pazeminâðanâs" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-47" code="83" description="Ârkârtas ieòçmumi">
+      <account code="8310" description="Ârkârtas ieòçmumi" category="Income">
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-48" code="84" description="Ârkârtas izdevumi">
+      <account code="8410" description="Ârkârtas izdevumi" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-49" code="86" description="Peïòa vai zaudçjumi">
+      <account code="8610" description="Peïòa vai zaudçjumi" category="Income">
+        <link code="IC_income"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-50" code="22" description="Produktîvie un darba dzîvnieki">
+      <account code="2230" description="Darba lopi" category="Asset"/>
+      <account code="2290" description="Darba lopu norakstîtâ vçrtîba (pasîvâ)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-51" code="24" description="Nâkamo periodu izdevumi"/>
+    <account-heading id="h-52" code="55" description="Norçíini ar uzòçmumiem, dalîbniekiem un personâlu"/>
+    <account-heading id="h-53" code="56" description="Norçíini  par darba samaksu  un ieturçjumiem (izòemot nodokïus)">
+      <account code="5610" description="Norçíini par darba algu" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="Norçíini par ieturçjumiem no darba algas (izòemot nodokïus)" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-54" code="6" description="Ieòçmumi no uzòçmuma saimnieciskâs darbîbas"/>
+    <account-heading id="h-55" code="87" description="Peïòas izlietojums (bez nodokïiem)">
+      <account code="8710" description="Peïòas izlietojums" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-56" code="88" description="Nodoïi no peïòas un citi saimnieciskâs darbîbas izdevumos neiekïaujamie nodokïi">
+      <account code="8830" description="Nodoklis par zemi" category="Expense"/>
+      <account code="8840" description="Citi saimnieciskâs darbîbas izmaksâs neiekïaujamie nodokïi" category="Expense"/>
+      <account code="8820" description="Nodoklis par dabas resursu izmantoðanu no peïòas  maksâjamâ daïâ" category="Expense"/>
+      <account code="8810" description="Nodoklis no peïòas" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="LVL">
+    <currency code="LVL">
+      LVL
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1230"/>
+    <setting name="expense_accno_id" accno="7110"/>
+    <setting name="fxgain_accno_id" accno="8170"/>
+    <setting name="fxloss_accno_id" accno="8270"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

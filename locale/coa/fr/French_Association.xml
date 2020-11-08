@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1" description="CLASSE 1: Comptes de capitaux">
+      <account-heading id="h-2" code="10" description="Capital et réserves"/>
+      <account code="102" description="Fonds associatif sans droit de reprise" category="Liability"/>
+      <account code="1021" description="Valeur du patrimoine intégré" category="Liability"/>
+      <account code="1022" description="Fonds statutaire (à éclater en fonction des statuts)" category="Liability"/>
+      <account code="1023" description="Subventions d'investissement non renouvelables" category="Liability"/>
+      <account code="1024" description="Apports sans droit de reprise" category="Liability"/>
+      <account code="1025" description="Legs et donations avec contrepartie d'actifs immobilisés" category="Liability"/>
+      <account code="1026" description="Subventions d'investissement affectées à des biens renouvelables" category="Liability"/>
+      <account code="103" description="Fonds associatif avec droit de reprise" category="Liability"/>
+      <account code="1031" description="Valeur des biens affectés repris à la fin du contrat d'apport" category="Liability"/>
+      <account code="1032" description="Valeur des biens affectés repris à la dissolution de l'association" category="Liability"/>
+      <account code="1033" description="Valeur des biens non affectés repris à la fin du contrat d'apport" category="Liability"/>
+      <account code="1034" description="Apports avec droit de reprise" category="Liability"/>
+      <account code="1035" description="Legs et donations avec contrepartie d'actifs immobilisés assortis d'une obligation ou d'une condition" category="Liability"/>
+      <account code="1036" description="Subventions d'investissement affectées à des biens renouvelables" category="Liability"/>
+      <account code="1039" description="Fonds associatif avec doit de reprise inscrit au compte de résultat" category="Liability"/>
+      <account code="105" description="Ecarts de réévaluation" category="Liability"/>
+      <account code="1051" description="Ecarts de réévaluation sur des biens sans droit de reprise" category="Liability"/>
+      <account code="1052" description="Ecarts de réévaluation (immobilisations non grevées d'un droit de reprise)" category="Liability"/>
+      <account code="1053" description="Ecarts de réévaluation (immobilisations grevées d'un droit de reprise)" category="Liability"/>
+      <account code="10531" description="Ecarts de réévaluation (immobilisations grevées d'un droit de reprise avant dissolution de l'association)" category="Liability"/>
+      <account code="10532" description="Ecarts de réévaluation (immobilisations grevées d'un droit de reprise à la dissolution de l'association)" category="Liability"/>
+      <account code="106" description="Réserves" category="Liability"/>
+      <account code="1062" description="Réserves indisponibles" category="Liability"/>
+      <account code="1063" description="Réserves statutaires ou contractuelles" category="Liability"/>
+      <account code="1064" description="Réserves réglementées" category="Liability"/>
+      <account code="1068" description="Autres réserves (dont réserves pour projet associatif)" category="Liability"/>
+      <account code="10682" description="Réserves pour investissements" category="Liability"/>
+      <account code="10683" description="Réserves de trésorerie (provenant du résultat)" category="Liability"/>
+      <account code="10688" description="Réserves diverses" category="Liability"/>
+      <account-heading id="h-3" code="11" description="ELEMENTS EN INSTANCE D'AFFECTATION"/>
+      <account code="110" description="Report à nouveau (solde créditeur)" category="Liability"/>
+      <account code="115" description="Résultats sous contrôle de tiers financeurs" category="Liability"/>
+      <account code="119" description="Report à nouveau (solde débiteur) " category="Liability"/>
+      <account-heading id="h-4" code="12" description="RESULTAT NET DE L'EXERCICE"/>
+      <account code="120" description="Résultat de l'exercice (excédent)" category="Liability"/>
+      <account code="129" description="Résultat de l'exercice (déficit)" category="Liability"/>
+      <account-heading id="h-5" code="13" description="SUBVENTIONS D'INVESTISSEMENT (affectés à des biens renouvelables)"/>
+      <account code="131" description="Subventions d'investissement (renouvelables)" category="Liability"/>
+      <account code="139" description="Subventions d'investissement inscrites au compte de résultat" category="Liability"/>
+      <account-heading id="h-6" code="15" description="PROVISIONS POUR RISQUES ET CHARGES"/>
+      <account code="151" description="Provisions pour risques" category="Liability"/>
+      <account code="1516" description="Provisions pour risques d'emploi" category="Liability"/>
+      <account code="1518" description="Autres provisions pour risques" category="Liability"/>
+      <account code="157" description="Provisions pour charges à répartir sur plusieurs exercices" category="Liability"/>
+      <account code="1572" description="Provisions pour grosses réparations" category="Liability"/>
+      <account-heading id="h-7" code="16" description="EMPRUNTS ET DETTES ASSIMILEES"/>
+      <account code="164" description="Emprunts auprès des établissements de crédit" category="Liability"/>
+      <account code="1641" description="Emprunts (à détailler)" category="Liability"/>
+      <account code="167" description="Emprunts et dettes assorties de conditions particulières" category="Liability"/>
+      <account code="1672" description="Titres associatifs" category="Liability"/>
+      <account code="168" description="Autres emprunts et dettes assimilées" category="Liability"/>
+      <account code="1681" description="Autres emprunts (à détailler)" category="Liability"/>
+      <account code="1685" description="Rentes viagères capitalisées" category="Liability"/>
+      <account code="1687" description="Autres dettes (à détailler)" category="Liability"/>
+      <account code="1688" description="Intérêts courus (à détailler)" category="Liability"/>
+      <account-heading id="h-8" code="18" description="COMPTES DE LIAISON DES ETABLISSEMENTS"/>
+      <account code="181" description="Apports permanents entre siège social et établissements" category="Liability"/>
+      <account code="185" description="Biens et prestations de services échangés entre établissements et siège social" category="Liability"/>
+      <account code="186" description="Biens et prestations de services échangés entre établissements (charges)" category="Liability"/>
+      <account code="187" description="Biens et prestations de services échangés entre établissements (produits)" category="Liability"/>
+      <account-heading id="h-9" code="19" description="FONDS DEDIES"/>
+      <account code="194" description="Fonds dédiés sur subventions de fonctionnement" category="Liability"/>
+      <account code="195" description="Fonds dédiés sur dons manuels affectés" category="Liability"/>
+      <account code="197" description="Fonds dédiés sur legs et donations affectés" category="Liability"/>
+      <account code="198" description="Excédent disponible après affectation au projet associatif" category="Liability"/>
+      <account code="199" description="Reprise des fonds affectés au projet associatif" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-10" code="2" description="CLASSE 2. Comptes d'immobilisations">
+      <account-heading id="h-11" code="20" description="IMMOBILISATIONS INCORPORELLES"/>
+      <account code="201" description="Frais d'établissement" category="Asset"/>
+      <account code="2012" description="Frais de premier établissement" category="Asset"/>
+      <account code="206" description="Droit au bail" category="Asset"/>
+      <account code="208" description="Autres immobilisations incorporelles" category="Asset"/>
+      <account-heading id="h-12" code="21" description="IMMOBILISATIONS CORPORELLES"/>
+      <account code="211" description="Terrains" category="Asset"/>
+      <account code="212" description="Agencements et aménagements des constructions" category="Asset"/>
+      <account code="213" description="Constructions" category="Asset"/>
+      <account code="2131" description="Bâtiments" category="Asset"/>
+      <account code="2135" description="Installations générales, agencements, aménagements des constructions" category="Asset"/>
+      <account code="214" description="Constructions sur sol d'autrui" category="Asset"/>
+      <account code="215" description="Installations techniques, matériel et outillage industriels" category="Asset"/>
+      <account code="2151" description="Installations complexes spécialisées" category="Asset"/>
+      <account code="2154" description="Matériel industriel" category="Asset"/>
+      <account code="2155" description="Outillage industriel" category="Asset"/>
+      <account code="218" description="Autres immobilisations corporelles" category="Asset"/>
+      <account code="2181" description="Installations générales, agencements, aménagements divers" category="Asset"/>
+      <account code="2182" description="Matériel de transport" category="Asset"/>
+      <account code="2183" description="Matériel de bureau et matériel informatique" category="Asset"/>
+      <account code="2184" description="Mobilier" category="Asset"/>
+      <account code="2185" description="Cheptel" category="Asset"/>
+      <account code="228" description="Immobilisations grevées de droits" category="Asset"/>
+      <account code="229" description="Droits des propriétaires" category="Asset"/>
+      <account-heading id="h-13" code="23" description="IMMOBILISATIONS EN COURS"/>
+      <account code="231" description="Immobilisations corporelles en cours" category="Asset"/>
+      <account code="2313" description="Constructions" category="Asset"/>
+      <account code="2315" description="Installations techniques, matériel et outillage industriels" category="Asset"/>
+      <account code="2318" description="Autres immobilisations corporelles" category="Asset"/>
+      <account code="238" description="Avances et acomptes versés sur commande d'immobilisations corporelles" category="Asset"/>
+      <account-heading id="h-14" code="26" description="PARTICIPATIONS ET CREANCES RATTACHEES A DES PARTICIPATIONS"/>
+      <account code="261" description="Titres de participation" category="Asset"/>
+      <account code="266" description="Autres formes de participation" category="Asset"/>
+      <account code="267" description="Créances rattachées à des participations" category="Asset"/>
+      <account code="269" description="Versements restant à effectuer sur titres de participation non libérés" category="Asset"/>
+      <account-heading id="h-15" code="27" description="AUTRES IMMOBILISATIONS FINANCIERES"/>
+      <account code="271" description="Titres immobilisés (droit de propriété)" category="Asset"/>
+      <account code="2711" description="Actions" category="Asset"/>
+      <account code="272" description="Titres immobilisés (droit de créance)" category="Asset"/>
+      <account code="2721" description="Obligations" category="Asset"/>
+      <account code="2722" description="Bons" category="Asset"/>
+      <account code="2728" description="Autres" category="Asset"/>
+      <account code="274" description="Prêts" category="Asset"/>
+      <account code="2743" description="Prêts au personnel" category="Asset"/>
+      <account code="2748" description="Autres prêts" category="Asset"/>
+      <account code="275" description="Dépôts et cautionnements versés" category="Asset"/>
+      <account code="2751" description="Dépôts" category="Asset"/>
+      <account code="2755" description="Cautionnements" category="Asset"/>
+      <account code="276" description="Autres créances immobilisées" category="Asset"/>
+      <account code="2761" description="Créances diverses" category="Asset"/>
+      <account code="2768" description="Intérêts courus (à détailler)" category="Asset"/>
+      <account code="279" description="Versement restant à effectuer sur titres immobilisés non libérés" category="Asset"/>
+      <account-heading id="h-16" code="28" description="AMORTISSEMENTS DES IMMOBILISATIONS"/>
+      <account code="280" description="Amortissements des immobilisations incorporelles" category="Asset"/>
+      <account code="2801" description="Frais d'établissement (même ventilation que celle du compte 201)" category="Asset"/>
+      <account code="2808" description="Autres immobilisations incorporelles" category="Asset"/>
+      <account code="281" description="Amortissements des immobilisations corporelles" category="Asset"/>
+      <account code="2812" description="Agencements, aménagements de terrains (même ventilation que celle du compte 212)" category="Asset"/>
+      <account code="2813" description="Constructions (même ventilation que celle du compte 213)" category="Asset"/>
+      <account code="2814" description="Constructions sur sol d'autrui (même ventilation que celle du compte 214)" category="Asset"/>
+      <account code="2815" description="Installations techniques, matériel et outillage industriels (même ventilation que celle du compte 215)" category="Asset"/>
+      <account code="2818" description="Autres immobilisations corporelles (même ventilation que celle du compte 218)" category="Asset"/>
+      <account-heading id="h-17" code="29" description="PROVISIONS POUR DEPRECIATION DES IMMOBILISATIONS"/>
+      <account code="290" description="Provisions pour dépréciation des immobilisations incorporelles" category="Asset"/>
+      <account code="2906" description="Droit au bail" category="Asset"/>
+      <account code="2908" description="Autres immobilisations incorporelles" category="Asset"/>
+      <account code="291" description="Provisions pour dépréciation des autres immobilisations corporelles" category="Asset"/>
+      <account code="2911" description="Terrains" category="Asset"/>
+      <account code="296" description="Provisions pour dépréciation des participations et créances rattachées à des participations" category="Asset"/>
+      <account code="2961" description="Titres de participation" category="Asset"/>
+      <account code="2966" description="Autres formes de participation" category="Asset"/>
+      <account code="2967" description="Créances rattachées à des participations (même ventilation que celle du compte 267)" category="Asset"/>
+      <account code="297" description="Provisions pour dépréciation des autres immobilisations financières" category="Asset"/>
+      <account code="2971" description="Titres immobilisés (droit de propriété) (même ventilation que celle du compte 271)" category="Asset"/>
+      <account code="2972" description="Titres immobilisés (droit de créance) (même ventilation que celle du compte 272)" category="Asset"/>
+      <account code="2974" description="Prêts (même ventilation que celle du compte 274)" category="Asset"/>
+      <account code="2975" description="Dépôts et cautionnements versés (même ventilation que celle du compte 275)" category="Asset"/>
+      <account code="2976" description="Autres créances immobilisées (même ventilation que celle du compte 276)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-18" code="3" description="CLASSE 3. Comptes de stocks et en-cours">
+      <account-heading id="h-19" code="31" description="MATIERES PREMIERES ET FOURNITURES"/>
+      <account-heading id="h-20" code="32" description="AUTRES APPROVISIONNEMENTS"/>
+      <account-heading id="h-21" code="33" description="EN-COURS DE PRODUCTION DE BIENS"/>
+      <account-heading id="h-22" code="34" description="EN-COURS DE PRODUCTION DE SERVICES"/>
+      <account-heading id="h-23" code="35" description="STOCKS DE PRODUITS"/>
+      <account-heading id="h-24" code="37" description="STOCKS DE MARCHANDISES"/>
+      <account-heading id="h-25" code="39" description="PROVISIONS POUR DEPRECIATION DES STOCKS ET EN-COURS"/>
+      <account code="391" description="Provisions pour dépréciation des matières premières et fournitures" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="392" description="Provisions pour dépréciation des autres approvisionnements" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="393" description="Provisions pour dépréciation des en-cours de production de biens" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="394" description="Provisions pour dépréciation des en-cours de production de services" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="395" description="Provisions pour dépréciation des stocks de produits" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="397" description="Provisions pour dépréciation des stocks de marchandises" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-26" code="4" description="CLASSE 4. Comptes de tiers">
+      <account-heading id="h-27" code="40" description="FOURNISSEURS ET COMPTES RATTACHES"/>
+      <account code="401" description="Fournisseurs" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="4011" description="Fournisseurs - Achats de biens ou de prestations de services" category="Asset"/>
+      <account code="404" description="Fournisseurs d'immobilisations" category="Asset"/>
+      <account code="4041" description="Fournisseurs - achats d'immobilisations" category="Asset"/>
+      <account code="4047" description="Fournisseurs d'immobilisations - Retenues de garantie" category="Asset"/>
+      <account code="408" description="Fournisseurs - Factures non parvenues" category="Asset"/>
+      <account code="4081" description="Fournisseurs - Achats de biens ou de prestations de services" category="Asset"/>
+      <account code="4084" description="Fournisseurs - achats d'immobilisations" category="Asset"/>
+      <account code="409" description="Fournisseurs débiteurs" category="Asset"/>
+      <account code="4091" description="Fournisseurs - Avances et acomptes versés sur commandes" category="Asset"/>
+      <account code="4096" description="Fournisseurs - Créances pour emballage et matériel à rendre" category="Asset"/>
+      <account-heading id="h-28" code="41" description="USAGERS ET COMPTES RATTACHES"/>
+      <account code="411" description="Usagers (et organismes de prise en charge)" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="416" description="Créances douteuses ou litigieuses" category="Asset"/>
+      <account code="418" description="Usagers - Produits non encore facturés" category="Asset"/>
+      <account code="419" description="Usagers créditeurs" category="Asset"/>
+      <account-heading id="h-29" code="42" description="PERSONNEL ET COMPTES RATTACHES"/>
+      <account code="421" description="Personnel - Rémunérations dues" category="Liability"/>
+      <account code="422" description="Comités d'entreprises, d'établissement..." category="Liability"/>
+      <account code="425" description="Personnel - Avances et acomptes" category="Liability"/>
+      <account code="427" description="Personnel - Oppositions" category="Liability"/>
+      <account code="428" description="Personnel - Charges à payer et produits à recevoir" category="Liability"/>
+      <account code="4282" description="Dettes provisionnées pour congés à payer" category="Liability"/>
+      <account code="4286" description="Autres charges à payer" category="Liability"/>
+      <account code="4287" description="Produits à recevoir" category="Asset"/>
+      <account-heading id="h-30" code="43" description="SECURITE SOCIALE ET AUTRES ORGANISMES SOCIAUX"/>
+      <account code="431" description="Sécurité sociale" category="Liability"/>
+      <account code="437" description="Autres organismes sociaux" category="Liability"/>
+      <account code="4372" description="Mutuelles" category="Liability"/>
+      <account code="4373" description="Caisses de retraites et de prévoyance" category="Liability"/>
+      <account code="4374" description="Caisses d'allocations de chômage - ASSEDIC" category="Liability"/>
+      <account code="4378" description="Autres organismes sociaux - divers" category="Liability"/>
+      <account code="438" description="Organismes sociaux - Charges à payer et produits à recevoir" category="Liability"/>
+      <account code="4382" description="Charges sociales sur congés à payer" category="Liability"/>
+      <account code="4386" description="Autres charges à payer" category="Liability"/>
+      <account code="4387" description="Produits à recevoir" category="Asset"/>
+      <account-heading id="h-31" code="44" description="ETAT ET AUTRES COLLECTIVITES PUBLIQUES"/>
+      <account code="441" description="Etat - Subventions à recevoir" category="Asset"/>
+      <account code="4411" description="Subventions d'investissement" category="Asset"/>
+      <account code="4417" description="Subventions d'exploitation" category="Asset"/>
+      <account code="4419" description="Avances sur subventions" category="Asset"/>
+      <account code="444" description="Etat - Impôts sur les bénéfices" category="Liability"/>
+      <account code="4445" description="Etat - Impôt sur les société (organismes sans but lucratif)" category="Liability"/>
+      <account code="445" description="Etat - Taxes sur le chiffre d'affaires" category="Liability"/>
+      <account code="4452" description="TVA due intracommunautaire" category="Liability">
+        <tax/>
+      </account>
+      <account code="4455" description="Taxes sur ca à decaisser" category="Liability">
+        <tax/>
+      </account>
+      <account code="4456" description="Taxes sur le ca déductibles" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="445621" description="TVA sur immo.  5.5%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <tax/>
+      </account>
+      <account code="445622" description="TVA sur immo. 20.6%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <tax/>
+      </account>
+      <account code="445623" description="TVA sur immo. 19.6%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <tax/>
+      </account>
+      <account code="445661" description="TVA déductible 5.5%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="445662" description="TVA déductible 20.6%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="445663" description="TVA déductible 19.6%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="44567" description="Crédit de TVA à reporter" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="4457" description="Taxe sur le c.a. collect. entrepr." category="Asset">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="445711" description="TVA collectée 5.5%" category="Asset">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="445712" description="TVA collectée 20.6%" category="Asset">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="445713" description="TVA collectée 19.6%" category="Asset">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="447" description="Autres impôts, taxes et versements assimilés" category="Liability"/>
+      <account code="4471" description="Impôts, taxes et versements assimilés sur rémunérations (administration des impôts)" category="Liability"/>
+      <account code="44711" description="Taxe sur les salaires" category="Liability"/>
+      <account code="44713" description="Participation des employeurs à la formation professionnelle continue" category="Liability"/>
+      <account code="44714" description="Cotisation pour défaut d'investissement obligatoire dans la construction" category="Liability"/>
+      <account code="44718" description="Autres impôts, taxes et versements assimilés" category="Liability"/>
+      <account code="4473" description="Impôts, taxes et versements assimilés sur rémunérations (autres organismes)" category="Liability"/>
+      <account code="44733" description="Participation des employeurs à la formation professionnelle continue" category="Liability"/>
+      <account code="44734" description="Participation des employeurs à l'effort de construction (versements à fonds perdus)" category="Liability"/>
+      <account code="4475" description="Autres impôts, taxes et versements assimilés (administration des impôts)" category="Liability"/>
+      <account code="4477" description="Autres impôts, taxes et versements assimilés (autres organismes)" category="Liability"/>
+      <account code="448" description="Etat - Charges à payer et produits à recevoir" category="Liability"/>
+      <account code="4482" description="Charges fiscales sur congés à payer" category="Liability"/>
+      <account code="4486" description="Autres charges à payer" category="Liability"/>
+      <account code="4487" description="Produits à recevoir" category="Asset"/>
+      <account-heading id="h-32" code="45" description="CONFEDERATION, FEDERATION, UNION, ASSOCIATIONS AFFILIEES ET SOCIETAIRES "/>
+      <account code="451" description="Confédération, fédération, union et associations affiliées - Compte courant" category="Asset"/>
+      <account code="455" description="Sociétaires - Comptes courants" category="Asset"/>
+      <account-heading id="h-33" code="46" description="DEBITEURS DIVERS ET CREDITEURS DIVERS"/>
+      <account code="467" description="Autres comptes débiteurs ou créditeurs" category="Asset"/>
+      <account code="468" description="Divers - Charges à payer et produits à recevoir" category="Asset"/>
+      <account code="4686" description="Charges à payer" category="Liability"/>
+      <account code="4687" description="Produits à recevoir" category="Asset"/>
+      <account-heading id="h-34" code="47" description="COMPTES D'ATTENTE"/>
+      <account code="471" description="Recettes à classer" category="Asset"/>
+      <account code="472" description="Dépenses à classer et à régulariser" category="Liability"/>
+      <account code="475" description="Legs et donations en cours de réalisation" category="Asset"/>
+      <account-heading id="h-35" code="48" description="COMPTE DE REGULARISATION"/>
+      <account code="481" description="Charges à répartir sur plusieurs exercices" category="Asset"/>
+      <account code="4812" description="Frais d'acquisition des immobilisations" category="Asset"/>
+      <account code="4818" description="Charges à étaler" category="Asset"/>
+      <account code="486" description="Charges constatées d'avance" category="Asset"/>
+      <account code="487" description="Produits constatés d'avance" category="Liability"/>
+      <account-heading id="h-36" code="49" description="PROVISIONS POUR DEPRECIATION DES COMPTES DE TIERS"/>
+      <account code="491" description="Provisions pour dépréciation des comptes d'usagers (et organismes de prise en charge)" category="Asset"/>
+      <account code="496" description="Provisions pour dépréciation des comptes de débiteurs divers" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-37" code="5" description="CLASSE 5. Comptes financiers">
+      <account-heading id="h-38" code="50" description="VALEURS MOBILIERES DE PLACEMENT"/>
+      <account code="503" description="Actions" category="Asset"/>
+      <account code="5031" description="Titres cotés" category="Asset"/>
+      <account code="5035" description="Titres non cotés" category="Asset"/>
+      <account code="506" description="Obligations" category="Asset"/>
+      <account code="5061" description="Titres cotés" category="Asset"/>
+      <account code="5065" description="Titres non cotés" category="Asset"/>
+      <account code="507" description="Bons du Trésor et bons de caisse à court terme" category="Asset"/>
+      <account code="508" description="Autres valeurs mobilières et créances assimilées" category="Asset"/>
+      <account code="5081" description="Autres valeurs mobilières" category="Asset"/>
+      <account code="5088" description="Intérêts courus sur obligations, bons et valeurs assimilées" category="Asset"/>
+      <account-heading id="h-39" code="51" description="BANQUES, ETABLISSEMENTS FINANCIERS ET ASSIMILES"/>
+      <account code="512" description="Banque" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="514" description="Chèques postaux" category="Asset"/>
+      <account code="515" description="Caisses du trésor et ets publics" category="Asset"/>
+      <account code="517" description="Autres organismes financiers" category="Asset"/>
+      <account code="5171" description="Caisse d'épargne" category="Asset"/>
+      <account code="518" description="Intérêts en cours" category="Asset">
+        <link code="IC_income"/>
+      </account>
+      <account code="5186" description="Intérêts courus à payer" category="Liability"/>
+      <account code="5187" description="Intérêts courus à recevoir" category="Asset">
+        <link code="IC_income"/>
+      </account>
+      <account-heading id="h-40" code="53" description="CAISSE"/>
+      <account code="531" description="Caisse du siège" category="Asset" recon="true"/>
+      <account code="532" description="Caisses des lieux d'activités" category="Asset" recon="true"/>
+      <account-heading id="h-41" code="54" description="REGIES D'AVANCES ET ACCREDITIFS"/>
+      <account code="541" description="Régies d'avances" category="Asset"/>
+      <account code="542" description="Accréditifs" category="Asset"/>
+      <account-heading id="h-42" code="58" description="VIREMENTS INTERNES"/>
+      <account code="581" description="Virements de fonds" category="Asset"/>
+      <account-heading id="h-43" code="59" description="PROVISIONS POUR DEPRECIATION DES COMPTES FINANCIERS"/>
+      <account code="590" description="Provisions pour dépréciation des valeurs mobilières de placement" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-44" code="6" description="CLASSE 6. Comptes de charges">
+      <account-heading id="h-45" code="60" description="ACHATS (sauf 603)"/>
+      <account code="601" description="Achats stockés - Matières premières et fournitures" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="602" description="Achats stockés - Autres approvisionnements" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="603" description="Variation des stocks (approvisionnements et marchandises)" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="6031" description="Variation des stocks de matières premières et fournitures" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="6032" description="Variation des stocks des autres approvisionnements" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="6037" description="Variation stocks de marchandises" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="604" description="Achats d'études et prestations de services" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="606" description="Achats non stockés de matières et fournitures" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6061" description="Fournitures non stockables (eau, énergie...)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6063" description="Fournitures d'entretien et de petit équipement" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6064" description="Fournitures administratives" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6068" description="Autres matières et fournitures" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="607" description="Achats de marchandises" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6071" description="Marchandise (ou groupe) A" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6072" description="Marchandise (ou groupe) B" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="609" description="Rabais, remises et ristournes obtenues sur achats" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-46" code="61" description="AUTRES CHARGES EXTERNES"/>
+      <account code="611" description="Sous-traitance générale" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="612" description="Redevances de crédit-bail" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6122" description="Crédit-bail mobilier" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="613" description="Locations" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6132" description="Locations immobilières" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6135" description="Locations mobilières" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="614" description="Charges locatives &amp; de copropriété" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="615" description="Entretien et réparations" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6152" description="Entretien et réparations sur biens immobiliers" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6155" description="Entretien et réparations sur biens mobiliers" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6156" description="Maintenance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="616" description="Primes d'assurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6161" description="Multirisques" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6162" description="Assur. obligat. dommage-construction" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6168" description="Autres assurances" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="617" description="Études et recherches" category="Expense"/>
+      <account code="618" description="Divers" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6181" description="Documentation générale" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6183" description="Documentation technique" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6185" description="Frais de colloques, séminaires, conférences" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="619" description="Rabais, remises et ristournes obtenues sur services extérieurs" category="Expense" contra="true">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-47" code="62" description="AUTRES SERVICES EXTERIEURS"/>
+      <account code="621" description="Personnel extérieur à l'association" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="622" description="Rémunérations d'intermédiaires et honoraires" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6226" description="Honoraires" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6227" description="Frais d'actes et de contentieux" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="623" description="Publicité, publications, relations publiques" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6231" description="Annonces et insertions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6233" description="Foires et expositions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6236" description="Catalogues et imprimés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6237" description="Publications" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6238" description="Divers (pourboires, dons courants)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="624" description="Transports de biens et transports collectifs du personnel" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6241" description="Transports sur achats" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6243" description="Transports entre établissements" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6244" description="Transports administratifs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6247" description="Transports collectifs du personnel" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6248" description="Divers" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="625" description="Déplacements, missions et réceptions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6251" description="Voyages et déplacements" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6256" description="Missions" category="Expense"/>
+      <account code="6257" description="Réceptions" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="626" description="Frais postaux et télécommunications" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="627" description="Services bancaires et assimilés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="628" description="Divers" category="Expense"/>
+      <account code="6281" description="Cotisations (liées à l'activité économique)" category="Expense"/>
+      <account code="6284" description="Frais de recrutement du personnel" category="Expense"/>
+      <account code="629" description="Rabais, remises et ristournes obtenus sur autres services extérieurs" category="Expense" contra="true">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-48" code="63" description="IMPOTS, TAXES ET VERSEMENTS ASSIMILES"/>
+      <account code="631" description="Impôts, taxes et versements assimilés sur rémunérations" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6311" description="Taxe sur les salaires" category="Expense"/>
+      <account code="6313" description="Participation des employeurs à la formation professionnelle continue" category="Expense"/>
+      <account code="6314" description="Cotisation pour défaut d'investissement obligatoire dans la construction" category="Expense"/>
+      <account code="633" description="Impôts, taxes et versements assimilés sur rémunérations" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6331" description="Versement de transport" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6333" description="Participation des employeurs à la formation professionnelle continue" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6334" description="Participation des employeurs à l'effort de construction (versements à fonds perdus)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="635" description="Autres impôts, taxes et versements assimilés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6351" description="Impôts directs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="63512" description="Taxes foncières" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="63513" description="Autres impôts locaux" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="63518" description="Autres impôts directs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6353" description="Impôts indirects" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6354" description="Droits d'enregistrement et timbre" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6358" description="Autres droits" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="637" description="Autres impôts, taxes et versements assimilés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-49" code="64" description="CHARGES DE PERSONNEL"/>
+      <account code="641" description="Rémunérations du personnel" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6411" description="Salaires appointements" category="Expense"/>
+      <account code="6412" description="Conges payés" category="Expense"/>
+      <account code="6413" description="Primes et gratifications" category="Expense"/>
+      <account code="6414" description="Indemnités et avantages divers" category="Expense"/>
+      <account code="6415" description="Supplément familial" category="Expense"/>
+      <account code="645" description="Charges de sécurité sociale et de prévoyance" category="Expense"/>
+      <account code="6451" description="Cotisations à l'URSSAF" category="Expense"/>
+      <account code="6452" description="Cotisations aux mutueles" category="Expense"/>
+      <account code="6453" description="Cotisations aux caisses de retraites et de prévoyance" category="Expense"/>
+      <account code="6454" description="Cotisations aux ASSEDIC" category="Expense"/>
+      <account code="6458" description="Cotisations aux autres organismes sociaux" category="Expense"/>
+      <account code="647" description="Autres charges sociales" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6472" description="Versements aux comités d'entreprise et d'établissement" category="Expense"/>
+      <account code="6475" description="Médecine du travail, pharmacie" category="Expense"/>
+      <account code="648" description="Autres charges de personnel" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-50" code="65" description="AUTRES CHARGES DE GESTION COURANTE"/>
+      <account code="651" description="Redevances pour concessions, brevets, licences, marques, procédés, droits et valeurs similaires" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6511" description="Redevances pour concessions, brevets, licences, marques, procédés" category="Expense"/>
+      <account code="6516" description="Droits d'auteur et de reproduction (SACEM)" category="Expense"/>
+      <account code="6518" description="Autres droits &amp; valeurs similaires" category="Expense"/>
+      <account code="654" description="Pertes sur créances irrécouvrables" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6541" description="Créances de l'exercice" category="Expense"/>
+      <account code="6544" description="Créances des exercices antérieurs" category="Expense"/>
+      <account code="657" description="Subventions versées par l'association" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6571" description="Bourses accordées aux usagers" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="658" description="Charges diverses gestion courante" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6586" description="Cotisations (liées à la vie statutaire)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-51" code="66" description="CHARGES FINANCIERES"/>
+      <account code="661" description="Charges d'intérêts" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6611" description="Intérêts des emprunts et dettes" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6616" description="Intérêts bancaires" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6618" description="Intérêts des autres dettes" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="666" description="Pertes de change" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="667" description="Charges nettes sur cessions de valeurs mobilières de placement" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-52" code="67" description="CHARGES EXCEPTIONNELLES"/>
+      <account code="671" description="Charges exceptionnelles sur opérations de gestion" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6712" description="Pénalités et amendes fiscales ou pénales" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6713" description="Dons, libéralités" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6714" description="Créances devenues irrécouvrables dans l'exercice" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6717" description="Rappels d'impôts (autres qu'impôts sur les bénéfices)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6718" description="Autres charges exceptionnelles sur opérations de gestion" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="672" description="Charges sur exercices antérieurs (à reclasser)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="675" description="Valeurs comptables des éléments d'actif cédés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6751" description="Immobilisations incorporelles" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6752" description="Immobilisations corporelles" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6756" description="Immobilisations financières" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="678" description="Autres charges exceptionnelles " category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account-heading id="h-53" code="68" description="DOTATIONS AUX AMORTISSEMENTS, PROVISIONS ET ENGAGEMENTS"/>
+      <account code="681" description="Dotations aux amortissements, provisions et engagements" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6811" description="Dotations aux amortissements des immobilisations incorporelles et corporelles" category="Expense"/>
+      <account code="68111" description="Dotations aux amortissements des immobilisations incorporelles" category="Expense"/>
+      <account code="68112" description="Dotations aux amortissements des immobilisations corporelles" category="Expense"/>
+      <account code="6812" description="Dotations aux amortissements des charges d'exploitation à répartir" category="Expense"/>
+      <account code="6815" description="Dotations aux provisions pour risques et charges d'exploitation" category="Expense"/>
+      <account code="6816" description="Dotations aux provisions pour dépréciation des immobilisations incorporelles et corporelles" category="Expense"/>
+      <account code="6817" description="Dotations aux provisions pour dépréciation des actifs circulants (autres que les valeurs mobilières de placement)" category="Expense"/>
+      <account code="68173" description="Stocks et en-cours" category="Expense"/>
+      <account code="68174" description="Créances" category="Expense"/>
+      <account code="686" description="Dotations aux amortissements et aux provisions - Charges financières" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6866" description="Dotations aux provisions pour dépréciation des éléments financiers" category="Expense"/>
+      <account code="68662" description="Dotations aux provisions financières" category="Expense"/>
+      <account code="68665" description="Valeurs mobilières de placement" category="Expense"/>
+      <account code="687" description="Dotations aux amortissements et aux provisions - Charges exceptionnelles" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6871" description="Dotations aux amortissements exceptionnels des immobilisations" category="Expense"/>
+      <account code="6876" description="Dotations aux provisions pour dépréciations exceptionnelles" category="Expense"/>
+      <account code="689" description="Engagements à réaliser sur ressources affectées" category="Expense"/>
+      <account code="6894" description="Engagements à réaliser sur subventions attribuées" category="Expense"/>
+      <account code="6895" description="Engagements à réaliser sur dons manuels affectés" category="Expense"/>
+      <account code="6897" description="Engagements à réaliser sur legs et donations affectés" category="Expense"/>
+      <account-heading id="h-54" code="69" description="IMPOTS SUR LES BENEFICES"/>
+      <account code="695" description="Impôts sur les sociétés" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-55" code="7" description="CLASSE 7. Comptes de produits">
+      <account-heading id="h-56" code="70" description="VENTES DE PRODUITS FINIS, PRESTATIONS DE SERVICES, MARCHANDISES"/>
+      <account code="701" description="Ventes de produits finis" category="Income">
+        <link code="IC_sale"/>
+      </account>
+      <account code="706" description="Prestations de services" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="707" description="Ventes de marchandises" category="Income">
+        <link code="IC_sale"/>
+      </account>
+      <account code="708" description="Produits des activités annexes" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="7081" description="Produits des prestations fournies au personnel" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="7083" description="Locations diverses" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="7084" description="Mise à disposition de personnel facturée" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="7088" description="Autres produits d'activités annexes" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="709" description="Rabais, remises et ristournes accordés par l'association" category="Income" contra="true">
+        <link code="IC_sale"/>
+      </account>
+      <account-heading id="h-57" code="71" description="PRODUCTION STOCKEE (OU DESTOCKAGE)"/>
+      <account code="713" description="Variation des stocks (en-cours de production, produits)" category="Income"/>
+      <account code="7133" description="Variation des en-cours de production de biens" category="Income"/>
+      <account code="7134" description="Variation des en-cours de production de services" category="Income"/>
+      <account code="7135" description="Variation des stocks de produits" category="Income"/>
+      <account-heading id="h-58" code="74" description="PRODUCTION IMMOBILISEE"/>
+      <account code="740" description="Subventions d'exploitation" category="Income"/>
+      <account-heading id="h-59" code="75" description="AUTRES PRODUITS DE GESTION COURANTE"/>
+      <account code="751" description="Redevances pour concessions, brevets, licences, marques, procédés, droits et valeurs similaires" category="Income"/>
+      <account code="754" description="Collectes" category="Income"/>
+      <account code="756" description="Cotisations" category="Income"/>
+      <account code="757" description="Quote-part d'éléments du fonds associatif virée au compte de résultat" category="Income"/>
+      <account code="7571" description="Quote-part de subventions d'investissement (renouvelables) virée au compte de résultat" category="Income"/>
+      <account code="7573" description="Quote-part des apports virée au compte de résultat" category="Income"/>
+      <account code="758" description="Produits divers de gestion courante" category="Income"/>
+      <account code="7585" description="Contributions volontaires 1" category="Income"/>
+      <account code="7586" description="Contributions volontaires 2" category="Income"/>
+      <account code="7587" description="Contributions volontaires 3" category="Income"/>
+      <account code="7588" description="Contributions volontaires 4" category="Income"/>
+      <account-heading id="h-60" code="76" description="PRODUITS FINANCIERS"/>
+      <account code="761" description="Produits de participations" category="Income"/>
+      <account code="762" description="Produits des autres immobilisations financières" category="Income"/>
+      <account code="7621" description="Revenus des titres immobilisés" category="Income"/>
+      <account code="7624" description="Revenus des prêts" category="Income"/>
+      <account code="764" description="Revenus des valeurs mobilières de placement" category="Income"/>
+      <account code="765" description="Escomptes obtenus" category="Income"/>
+      <account code="766" description="Gains de change" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="767" description="Produits nets sur cessions de valeurs mobilières de placement" category="Income"/>
+      <account code="768" description="Autres produits financiers" category="Income"/>
+      <account code="7681" description="Intérêts des comptes financiers débiteurs" category="Income"/>
+      <account-heading id="h-61" code="77" description="PRODUITS EXCEPTIONNELS"/>
+      <account code="771" description="Produits exceptionnels sur opérations de gestion" category="Income"/>
+      <account code="7713" description="Libéralités perçues" category="Income"/>
+      <account code="7714" description="Rentrées sur créances amorties" category="Income"/>
+      <account code="7715" description="Subventions d'équilibre" category="Income"/>
+      <account code="7717" description="Dégrèvements d'impôts (autres qu'impôts sur les bénéfices)" category="Income"/>
+      <account code="7718" description="Autres produits exceptionnels sur opérations de gestion" category="Income"/>
+      <account code="772" description="Produits sur exercices antérieurs" category="Income"/>
+      <account code="775" description="Produits cessions d'éléments d'actif" category="Income"/>
+      <account code="7751" description="Immobilisations incorporelles" category="Income"/>
+      <account code="7752" description="Immobilisations corporelles" category="Income"/>
+      <account code="7756" description="Immobilisations financières" category="Income"/>
+      <account code="777" description="Quote-part des subventions d'investissement virée au résultat de l'exercice" category="Income"/>
+      <account code="778" description="Autres produits exceptionnels" category="Income"/>
+      <account-heading id="h-62" code="78" description="REPRISES SUR AMORTISSEMENTS ET PROVISIONS"/>
+      <account code="781" description="Reprises sur amortiss. &amp; provisions" category="Income"/>
+      <account code="7811" description="Reprises sur amortissements des immobilisations incorporelles et corporelles" category="Income"/>
+      <account code="7815" description="Reprises sur provisions pour risques et charges d'exploitation" category="Income"/>
+      <account code="7816" description="Reprises sur provisions pour dépréciation des immobilisations incorporelles et corporelles" category="Income"/>
+      <account code="7817" description="Reprises sur provisions pour dépréciation des actifs circulants" category="Income"/>
+      <account code="786" description="Reprises sur provisions" category="Income"/>
+      <account code="7866" description="Reprises sur provisions pour dépréciation des éléments financiers" category="Income"/>
+      <account code="78662" description="Immobilisations financières" category="Income"/>
+      <account code="78665" description="Valeurs mobilières de placement" category="Income"/>
+      <account code="787" description="Reprises sur provisions" category="Income"/>
+      <account code="7876" description="Reprise sur provisions pour dépréciations exceptionnelles" category="Income"/>
+      <account code="789" description="Report des ressources non utilisées des exercices antérieurs" category="Income"/>
+      <account-heading id="h-63" code="79" description="TRANSFERTS DE CHARGES"/>
+      <account code="791" description="Transferts de charges d'exploitation" category="Income"/>
+      <account code="796" description="Transferts de charges financière" category="Income"/>
+      <account code="797" description="Transferts de charges exceptionnelles" category="Income"/>
+    </account-heading>
+    <account-heading id="h-64" code="8" description="CLASSE 8. CONTRIBUTIONS VOLONTAIRES">
+      <account-heading id="h-65" code="86" description="EMPLOIS DES CONTRIBUTIONS VOLONTAIRES EN NATURE"/>
+      <account code="860" description="Secours en nature, alimentaires, vestimentaires, ..." category="Expense"/>
+      <account code="861" description="Mise à disposition gratuite de biens" category="Expense"/>
+      <account code="8611" description="Mise à disposition gratuite de locaux" category="Expense"/>
+      <account code="8612" description="Mise à disposition gratuite de matériels" category="Expense"/>
+      <account code="862" description="Prestations" category="Expense"/>
+      <account code="864" description="Personnel bénévole" category="Expense"/>
+      <account-heading id="h-66" code="87" description="CONTRIBUTIONS VOLONTAIRES EN NATURE"/>
+      <account code="870" description="Bénévolat" category="Expense"/>
+      <account code="871" description="Prestations en nature" category="Expense"/>
+      <account code="875" description="Dons en nature" category="Expense"/>
+      <account-heading id="h-67" code="89" description="BILAN"/>
+    </account-heading>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="68173"/>
+    <setting name="income_accno_id" accno="707"/>
+    <setting name="expense_accno_id" accno="601"/>
+    <setting name="fxgain_accno_id" accno="766"/>
+    <setting name="fxloss_accno_id" accno="666"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

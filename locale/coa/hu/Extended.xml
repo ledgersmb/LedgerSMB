@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1" description="BEFEKTETETT ESZKÖZÖK"/>
+    <account-heading id="h-2" code="11" description="Immateriális javak">
+      <account code="1111" description="Alapítás, átszervezés aktivált értéke" category="Asset"/>
+      <account code="1131" description="Vagyoni értékű jogok" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-3" code="114" description="Szellemi termékek">
+      <account code="1141" description="Szellemi termékek" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-4" code="117" description="Immateriális javak értékhelyesbítése">
+      <account code="1171" description="Immateriális javak értékhelyesbítése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-5" code="118" description="Immateriális javak terven felüli értékcsökkenése">
+      <account code="1181" description="Immateriális javak terven felüli értékcsökkenése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-6" code="119" description="Immateriális javak értékcsökkenése">
+      <account code="1191" description="Alapítás, átszervezés elszámolt értékcsökkenése" category="Asset"/>
+      <account code="1193" description="Vagyoni értékű jogok elszámolt értékcsökkenése" category="Asset"/>
+      <account code="1194" description="Szellemi termékek elszámolt értékcsökkenése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-7" code="12" description="Ingatlanok"/>
+    <account-heading id="h-8" code="13" description="Műszaki gépek, berendezések, járművek"/>
+    <account-heading id="h-9" code="131" description="Termelő gépek, berendezések">
+      <account code="1311" description="Termelő gépek, berendezések" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-10" code="132" description="Járművek">
+      <account code="1321" description="Járművek" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-11" code="137" description="Műszaki gépek, berendezések járművek értékhelyesbítése">
+      <account code="1371" description="Műszaki gépek, berendezések, járművek értékhelyesbítése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-12" code="138" description="Műszaki gépek, berendezések, járművek terven felüli értékcsökkenése">
+      <account code="1381" description="Műszaki gépek, berendezések, járművek tereven felüli értékcsökkenése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-13" code="139" description="Műszaki gépek, berendezések, járművek értékcsökkenése">
+      <account code="1391" description="Termelő gépek, berendezések elszámolt értékcsökkenése" category="Asset"/>
+      <account code="1392" description="Járművek értékcsökkenése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-14" code="14" description="Egyéb gépek, berendezések, járművek"/>
+    <account-heading id="h-15" code="141" description="Egyéb gép, berendezés, szerszám">
+      <account code="1411" description="Egyéb gép, berendezése, szerszám" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-16" code="142" description="Egyéb járművek">
+      <account code="1421" description="Egyéb járművek" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-17" code="143" description="Irodai, igazgatási berendezés, felszerelés">
+      <account code="1431" description="Irodai, igazgatási berendezés, felszerelés" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-18" code="145" description="Kis értékű tárgyi eszköz">
+      <account code="1451" description="Kis értékű gép, berendezés, felszerelés" category="Asset"/>
+      <account code="1452" description="Kis értékű irodai, igazgatási berendezés, felszerelés" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-19" code="147" description="Egyéb gépek, berendezések, járművek értékhelyesbítése">
+      <account code="1471" description="Egyéb gép, berendezés, szerszám értékhelyesbítése" category="Asset"/>
+      <account code="1472" description="Egyéb járművek értékhelyesbítése" category="Asset"/>
+      <account code="1473" description="Irodai, igazgatási berendezés, felszerelés értékhelyesbítése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-20" code="148" description="Egyéb gépek, berendezések, járművek terven felüli értékcsökkenése">
+      <account code="1481" description="Egyéb gép, berendezés, felszerelés terven felüli értékcsökkenése" category="Asset"/>
+      <account code="1482" description="Egyéb járművek terven felüli értékcsökkenése" category="Asset"/>
+      <account code="1483" description="Irodai, igazgatási berendezések terven felüli értékcsökkenése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-21" code="149" description="Egyéb gépek, berendezések, járművek elszámolt értékcsökkenése">
+      <account code="1491" description="Egyéb gép, berendezés, szerszám elszámolt értékcsökkenése" category="Asset"/>
+      <account code="1492" description="Egyéb járművek elszámolt értékcsökkenése" category="Asset"/>
+      <account code="1493" description="Irodai, igazgatási berendezés, felszerelés elszámolt értékcsökkenése" category="Asset"/>
+      <account code="1495" description="Kis értékű tárgyi eszközök értékcsökkenése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-22" code="15" description="Beruházások"/>
+    <account-heading id="h-23" code="161" description="Befejezetlen beruházások">
+      <account code="1611" description="Befejezetlen beruházás" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1612" description="Befejezetlen beruházás 100e-ig" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-24" code="2" description="KÉSZLETEK"/>
+    <account-heading id="h-25" code="21" description="Anyagok"/>
+    <account-heading id="h-26" code="26" description="Kereskedelmi áruk">
+      <account code="2610" description="Áruk beszerzési áron" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="2620" description="Göngyöleg beszerzési áron" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="2690" description="Úton lévő készlet" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-27" code="3" description="KÖVETELÉSEK"/>
+    <account-heading id="h-28" code="31" description="Követelések áruszállításból, szolgáltatásból"/>
+    <account-heading id="h-29" code="311" description="Belföldi vevők">
+      <account code="3111" description="Belföldi vevők" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="3150" description="Belföldi követelések értékvesztése és visszairása" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-30" code="316" description="Külföldi vevők">
+      <account code="3161" description="Külföldi vevők" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="3190" description="Külföldi követelések értékvesztése és visszairása" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-31" code="32" description="Követelések kapcsolt vállalkozással szemben"/>
+    <account-heading id="h-32" code="321" description="Követelések">
+      <account code="3211" description="Követelések anyavállalattal szemben" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-33" code="325" description="Jegyzett de be nem fizetett tőke">
+      <account code="3251" description="Jegyzett, de még be nem fizetett tőke" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-34" code="329" description="Követelések értékvesztése">
+      <account code="3291" description="Követelések értékvesztése " category="Asset"/>
+    </account-heading>
+    <account-heading id="h-35" code="33" description="Követelések egyéb részesedési viszonyban lévő vállalkozással szemben"/>
+    <account-heading id="h-36" code="331" description="Követelések egyéb részesedési viszonyban lévő vállalattal szemben">
+      <account code="3311" description="Követelések egyéb részesedési viszonyban lévő vállalattal szemben" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-37" code="332" description="Jegyzett, de még be nem fizetett tőke egyéb részesedési viszonyban lévő vállalkozástól">
+      <account code="3321" description="Jegyzett, de még be nem fizetett tőke" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-38" code="339" description="Egyéb részesedési viszonyban lévő vállalkozással szembeni követelés értékvesztése">
+      <account code="3391" description="Egyéb részesedési viszonyban lévő vállakozással szembeni követelés értékvesztése" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-39" code="34" description="Váltókövetelések">
+      <account code="3410" description="Belföldi váltókövetelések" category="Asset"/>
+      <account code="3460" description="Külföldi váltókövetelések" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-40" code="35" description="Adott előlegek">
+      <account code="3510" description="Immateriális javakra adott előleg" category="Asset"/>
+      <account code="3520" description="Beruházásokra adott előleg" category="Asset"/>
+      <account code="3530" description="Készletekre adott előleg" category="Asset"/>
+      <account code="3540" description="Osztalék előleg" category="Asset"/>
+      <account code="3550" description="VPOP ÁFA elszámolási számla" category="Asset"/>
+      <account code="3560" description="Egyéb előlegek" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-41" code="36" description="Egyéb követelések">
+      <account code="3610" description="Munkavállalókkal szembeni követelés" category="Asset"/>
+      <account code="3620" description="Költségvetési kiutálási igények" category="Asset"/>
+      <account code="3630" description="Költségvetési kiutalási igények teljesitése" category="Asset"/>
+      <account code="3640" description="Vevőtől kapott előleg ÁFÁ-ja" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-42" code="366" description="Rövid lejáratra adott pénzkölcsönök">
+      <account code="3661" description="Rövid lejáratra adott pénzkölcsön" category="Asset"/>
+      <account code="3662" description="Rövid lejáratú betétek" category="Asset"/>
+      <account code="3680" description="Egyéb követelések" category="Asset"/>
+      <account code="3690" description="Egyéb követelések értékvesztése és visszairása" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-43" code="37" description="Értékpapírok">
+      <account code="3710" description="Részesedés kapcsolt vállakozásban" category="Asset"/>
+      <account code="3720" description="Egyéb részesedés" category="Asset"/>
+      <account code="3790" description="Értékpapírok értékvesztése és visszaírása" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-44" code="38" description="Pénzeszközök"/>
+    <account-heading id="h-45" code="381" description="Pénztárak">
+      <account code="3811" description="Főpénztár" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-46" code="382" description="Valutapénztárak">
+      <account code="3821" description="EURO valutapénztár" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3822" description="USD valutapénztár" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-47" code="384" description="Elszámolási betétszámlák (Ft)">
+      <account code="3841" description="Bankszámla (Ft)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3842" description="Bankkártya számla(Ft)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3843" description="Hitelszámla(Ft)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3844" description="Bankkártya MONEYbookers(Ft)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3849" description="Kompenzációs Bank (Ft)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-48" code="386" description="Deviza betétszámlák">
+      <account code="3861" description="Bankszámla (EUR)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3862" description="Deviza betétszámla USD" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3863" description="PAYPAL számla USD" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-49" code="389" description="Átvezetési számlák">
+      <account code="3891" description="Átvezetés Bank (HUF) - Pénztár (HUF)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3892" description="Átvezetés Bank (EUR) - Pénztár (EUR)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3893" description="Átvezetés Bank (HUF) - Bank (HUF)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3894" description="Átvezetés Pénztár (HUF) - Pénztár (EUR)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3895" description="Átvezetés Bank (HUF) - Bank (USD)" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3896" description="Bankkártya átvezetés" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3897" description="Hiteltörlesztés átvezetés" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-50" code="39" description="Aktív időbeli elhatárolások">
+      <account code="3910" description="Bevételek aktív időbeli elhatárolása" category="Asset"/>
+      <account code="3920" description="Költségek ráfordítások aktív időbeli elhatárolása" category="Asset"/>
+      <account code="3930" description="Halasztott ráfordítások" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-51" code="4" description="FORRÁSOK"/>
+    <account-heading id="h-52" code="41" description="Saját tőke"/>
+    <account-heading id="h-53" code="411" description="Jegyzett tőke">
+      <account code="4110" description="Jegyzett tőke" category="Equity"/>
+      <account code="4120" description="Tőketartalék" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-54" code="4130" description="Eredménytartalék">
+      <account code="41308" description="Eredménytartalék" category="Equity"/>
+      <account code="41309" description="Eredménytartalék" category="Equity"/>
+      <account code="41310" description="Eredménytartalék" category="Equity"/>
+      <account code="4140" description="Lekötött tartalék" category="Equity"/>
+      <account code="4170" description="Értékelési tartalék" category="Equity"/>
+      <account code="4190" description="Mérleg szerinti eredmény" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-55" code="42" description="Céltartalékok">
+      <account code="4210" description="Céltartalékok várható kötelezettségekre" category="Liability"/>
+      <account code="4220" description="Céltartalékok a jövőbeni költségekre" category="Liability"/>
+      <account code="4230" description="Egyéb céltartalékok" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-56" code="43" description="Hátrasorolt kötelezettségek"/>
+    <account-heading id="h-57" code="44" description="Hosszú lejáratú kötelezettségek"/>
+    <account-heading id="h-58" code="442" description="Hosszú lejáratra kapott kölcsönök">
+      <account code="4421" description="Hosszú lejáratra kapott kölcsönök" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-59" code="443" description="Beruházási fejlesztési hitelek">
+      <account code="4431" description="Beruházási és fejlesztési hitelek" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-60" code="444" description="Egyéb hosszú lejáratú hitelek">
+      <account code="4441" description="Egyéb hosszú lejáratú hitel" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-61" code="446" description="Tartós kötelezettség kapcsolt vállalkozással szemben">
+      <account code="4461" description="Tartós kötelezettség" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-62" code="447" description="Tartós kötelezettség egyéb vállalkozással szemben">
+      <account code="4471" description="Tartós kötelezettség egyéb vállakozással szemben" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-63" code="449" description="Egyéb hosszú lejáratú kötelezettség">
+      <account code="4491" description="Egyéb hosszú lejáratú kötelezettség" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-64" code="45" description="Rövid lejáratú kötelezettségek"/>
+    <account-heading id="h-65" code="451" description="Vevőktől kapott előlegek">
+      <account code="4511" description="Vevőktől kapott előleg" category="Liability"/>
+      <account code="4512" description="Egyéb rövid éejáratú kölcsönök" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-66" code="452" description="Rövid lejáratú kölcsönök">
+      <account code="4521" description="Tagi kölcsön" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-67" code="453" description="Rövid lejáratú hitelek"/>
+    <account-heading id="h-68" code="454" description="Kötelezettségek áruszállításból és szolgáltatás nyújtásából">
+      <account code="4541" description="Belföldi szállítók" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="4542" description="Külföldi szállítók" category="Liability">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-69" code="455" description="Pénzügyi lízing miatti kötelezettség">
+      <account code="4551" description="Pénzügyi lízing (éven belüli)" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-70" code="456" description="Rövid lejáratú kötelezettség kapcsolt vállalkozással szemben">
+      <account code="4561" description="Rövid lejáratú kötelezettség" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-71" code="457" description="Rövid lejáratú kötelezettség egyéb vállalkozással szemben">
+      <account code="4571" description="Rövid lejáratú kötelezettség egyéb" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-72" code="459" description="Egyéb rövid lejáratú kötelezettség">
+      <account code="4591" description="Egyéb rövid lejáratú kötelezettség" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-73" code="46" description="Adóhatósággal szembeni kötelezettségek"/>
+    <account-heading id="h-74" code="461" description="Társasági adó elszámolása">
+      <account code="4611" description="Társasági adó" category="Liability"/>
+      <account code="4612" description="Különadó adó 2009-ig" category="Liability"/>
+      <account code="4619" description="Társasági adó megfizetése" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-75" code="462" description="SZJA elszámolás">
+      <account code="4621" description="Munkaviszonyból származó SZJA" category="Liability"/>
+      <account code="4629" description="SZJA befizetés" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-76" code="463" description="Költségvetési befizetési kötelezettség">
+      <account code="4631" description="Nyugdíjbiztosítás" category="Liability"/>
+      <account code="4632" description="Egészségbiztosítás" category="Liability"/>
+      <account code="4633" description="Munkaadói járulék" category="Liability"/>
+      <account code="4634" description="Munkavállalói járulék" category="Liability"/>
+      <account code="4635" description="Szakképzési hozzájárulás" category="Liability"/>
+      <account code="4636" description="Rehabilitációs hozzájárulás" category="Liability"/>
+      <account code="4637" description="EHO" category="Liability"/>
+      <account code="4638" description="Önellenőrzési, késedelmi pótlék" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-77" code="464" description="Költségvetési befizetési kötelezettség teljesítése">
+      <account code="4641" description="Nyugdíjbiztosítás teljesítése" category="Liability"/>
+      <account code="4642" description="Egészségbiztosítás teljesítése" category="Liability"/>
+      <account code="4643" description="Munkaadói járulék teljesítése" category="Liability"/>
+      <account code="4644" description="Munkavállalói járulék teljesítése" category="Liability"/>
+      <account code="4645" description="Szakképzési hozzájárulás teljesítése" category="Liability"/>
+      <account code="4646" description="Rehabilitációs hozzájárulás teljesítése" category="Liability"/>
+      <account code="4647" description="EHO teljesítése" category="Liability"/>
+      <account code="4648" description="Önellenőrzési, késedelmi pótlék teljesítése" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-78" code="465" description="VPOP elszámolási számla">
+      <account code="4651" description="VPOP elszámolási számla" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-79" code="466" description="Előzetesen felszámított ÁFA">
+      <account code="4660" description="Előzetesen felszámított ÁFA mentes" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.0"/>
+        </tax>
+      </account>
+      <account code="4661" description="Előzetesen felszámított ÁFA 0%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.0"/>
+        </tax>
+      </account>
+      <account code="4662" description="Előzetesen felszámított ÁFA 27%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.27"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-80" code="467" description="Fizetendő ÁFA">
+      <account code="4670" description="Fizetendő ÁFA mentes" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.0"/>
+        </tax>
+      </account>
+      <account code="4671" description="Fizetendő ÁFA 0%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.0"/>
+        </tax>
+      </account>
+      <account code="4672" description="Fizetendő ÁFA 27%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.27"/>
+        </tax>
+      </account>
+      <account code="4680" description="ÁFA elszámolási számla" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-81" code="469" description="Helyi adók elszámolási számla">
+      <account code="4691" description="Iparűzési adó" category="Liability"/>
+      <account code="4692" description="Gépjárműadó" category="Liability"/>
+      <account code="4693" description="Kommunális adó" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-82" code="47" description="Egyéb kötelezettségek"/>
+    <account-heading id="h-83" code="471" description="Jövedelem elszámolási számla">
+      <account code="47101" description="Jövedelem elszámolás január" category="Liability"/>
+      <account code="47102" description="Jövedelem elszámolás február" category="Liability"/>
+      <account code="47103" description="Jövedelem elszámolás március" category="Liability"/>
+      <account code="47104" description="Jövedelem elszámolás április" category="Liability"/>
+      <account code="47105" description="Jövedelem elszámolás május" category="Liability"/>
+      <account code="47106" description="Jövedelem elszámolás június" category="Liability"/>
+      <account code="47107" description="Jövedelem elszámolás július" category="Liability"/>
+      <account code="47108" description="Jövedelem elszámolás augusztus" category="Liability"/>
+      <account code="47109" description="Jövedelem elszámolás szeptember" category="Liability"/>
+      <account code="47110" description="Jövedelem elszámolás október" category="Liability"/>
+      <account code="47111" description="Jövedelem elszámolás november" category="Liability"/>
+      <account code="47112" description="Jövedelem elszámolás december" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-84" code="472" description="Fel nem vett járandóság">
+      <account code="4721" description="Fel nem vett járandóság" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-85" code="473" description="Nyugdíj- és egészségbiztosítás"/>
+    <account-heading id="h-86" code="4731" description="Nyugdíjbiztosítási Alap">
+      <account code="47311" description="Nyugdíjbiztosítási Alap kötelezettség" category="Liability"/>
+      <account code="47319" description="Nyugdíjbiztosítási Alap kötelezettség teljesítése" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-87" code="4732" description="Egészségbiztosítási Alap">
+      <account code="47321" description="Egészségbiztosítási Alap kötelezettség" category="Liability"/>
+      <account code="47322" description="Munkaerőpiaci Alap kötelezettség" category="Liability"/>
+      <account code="47328" description="Munkaerőpiaci Alap kötelezettség teljesítése" category="Liability"/>
+      <account code="47329" description="Egészségbiztosítási Alap kötelezettség teljesítése" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-88" code="4733" description="Magánnyugdíjpénztár">
+      <account code="47331" description="Magánnyugdíjpénztár" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-89" code="474" description="Egyéb járulékos ktsg">
+      <account code="4741" description="Szakképzési hozzájárulás" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-90" code="478" description="Osztalékelszámolási számla">
+      <account code="4781" description="Osztalék" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-91" code="479" description="Egyéb rövid lejáratú kötelezettség">
+      <account code="4799" description="Technikai számla" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-92" code="48" description="Passzív időbeli elhatárolások">
+      <account code="4810" description="Költségek, ráfordítások passzív időbeli elhatárolása" category="Liability"/>
+      <account code="4820" description="Árbevételek passzív időbeli elhatárolása" category="Liability"/>
+      <account code="4830" description="Halasztott bevételek" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-93" code="49" description="Évi mérlegszámlák">
+      <account code="4910" description="Nyitómérleg számla" category="Liability"/>
+      <account code="4920" description="Záró mérleg számla" category="Liability"/>
+      <account code="4930" description="Adózott eredmény elszámolási számla" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-94" code="5" description="KÖLTSÉGNEMEK"/>
+    <account-heading id="h-95" code="51" description="Anyagjellegű költségek">
+      <account code="5110" description="Anyagköltség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5120" description="Egy éven belül elhaszn. eszk. ktsg.-e" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5130" description="Üzemanyag" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5140" description="Nyomtatványok, irodaszerek" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5150" description="Tisztítószer" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5160" description="Szakkönyv, folyóirat" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5190" description="Egyéb anyagköltség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-96" code="52" description="Igénybe vett szolgáltatások költségei"/>
+    <account-heading id="h-97" code="521" description="Szállítási, rakodási költség">
+      <account code="5211" description="Belföldi szállítási költség" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5212" description="Külföldi szállítási költség" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-98" code="522" description="Bérleti díjak">
+      <account code="5221" description="Irodabérleti díj" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-99" code="524" description="Utazás, szállás költség">
+      <account code="5241" description="Belföldi utazási költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5242" description="Külföldi utazási költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-100" code="525" description="Hirdetés és reklám költség">
+      <account code="5251" description="Reklám költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5252" description="Hirdetés költsége" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-101" code="526" description="Oktatás, továbbképzés költsége">
+      <account code="5261" description="Oktatás költsége" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-102" code="527" description="Szolgáltatások">
+      <account code="5271" description="Számítástechnikai szolg." category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-103" code="528" description="Kommunikációs költségek">
+      <account code="5281" description="Telefonköltség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5282" description="Internet költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5283" description="Mobil Internet költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5284" description="POSTA költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-104" code="529" description="Egyéb igénybe vett szolgáltatások">
+      <account code="52901" description="Könyvvezetés költsége" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52902" description="Ügyvédi költség" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52903" description="Tanácsadás" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52904" description="Vámügyintézés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52907" description="Számítástechnikai szolgáltatás" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5299" description="Egyéb igénybe vett szolgáltatás" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-105" code="53" description="Egyéb szolgáltatások költségei"/>
+    <account-heading id="h-106" code="531" description="Hatósági, igazgatási, szolg. illeték">
+      <account code="5311" description="Illetékek, tagdíjak" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5314" description="Vámügyintézés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-107" code="532" description="Bankköltség">
+      <account code="5321" description="Bankköltség" category="Expense">
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-108" code="533" description="Biztosítási díjak">
+      <account code="5331" description="Vagyonbiztosítás" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-109" code="539" description="Egyéb szolgáltatások ">
+      <account code="5391" description="Faktordíj" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-110" code="54" description="Bérköltség">
+      <account code="5410" description="Bérköltség (munkavállaló, tag)" category="Expense"/>
+      <account code="5420" description="Megbízási jogviszony költsége" category="Expense"/>
+      <account code="5450" description="Prémium" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-111" code="55" description="Személyi jellegű egyéb kifizetés">
+      <account code="5510" description="Étkezési jegy" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5520" description="Reprezentáció" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5590" description="Egyéb személyi jellegű kifizetés" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-112" code="56" description="Bérjárulékok"/>
+    <account-heading id="h-113" code="561" description="Nyugdíj és egészségbiztosítás">
+      <account code="5611" description="Nyugdíjbiztosítási járulék" category="Expense"/>
+      <account code="5612" description="Egészségbiztosítási járulék" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-114" code="562" description="EHO">
+      <account code="5621" description="Tételes EHO" category="Expense"/>
+      <account code="5622" description="Százalékos EHO" category="Expense"/>
+      <account code="5630" description="Munkaadói járulék" category="Expense"/>
+      <account code="5640" description="Szakképzési hozzájárulás" category="Expense"/>
+      <account code="5650" description="Rehabilitációs hozzájárulás" category="Expense"/>
+      <account code="5660" description="Munkaerőpiaci járulék" category="Expense"/>
+      <account code="5690" description="Egyéb bérjárulékok" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-115" code="57" description="Értékcsökkenési leírás">
+      <account code="5710" description="Terv szerinti értékcsökkenési leírás" category="Expense"/>
+      <account code="5720" description="Kis értékű eszközök értékcsökkenése" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-116" code="8" description="RÁFORDÍTÁSOK"/>
+    <account-heading id="h-117" code="81" description="Anyagjellegű ráfordítások">
+      <account code="8110" description="Anyagköltség" category="Expense"/>
+      <account code="8120" description="Igénybe vett szolgáltatás" category="Expense"/>
+      <account code="8130" description="Eladott szolgáltatások értéke" category="Expense"/>
+      <account code="8140" description="ELÁBÉ" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="8150" description="Eladott (közvetített) szolgáltatás értéke" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-118" code="86" description="Egyéb ráfordítások"/>
+    <account-heading id="h-119" code="861" description="Értékesített eszközök nyilvántartási értéke">
+      <account code="8611" description="Értékesített immateriális javak nyilvántartási értéke" category="Expense"/>
+      <account code="8612" description="Értékesített tárgyi eszközök nyilvántartási értéke" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-120" code="863" description="Egyéb eredményt csökkentő tételek">
+      <account code="8631" description="késedelmi kamatok" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-121" code="864" description="Céltartalék képzése">
+      <account code="8641" description="Céltartalék képzése" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-122" code="865" description="Értékvesztés, terven felüli értékcsökkenés">
+      <account code="8651" description="Követelések értékvesztése" category="Expense"/>
+      <account code="8652" description="Immateriális javak terven felüli értékcsökkenése" category="Expense"/>
+      <account code="8653" description="Tárgyi eszközök terven felüli értékcsökkenése" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-123" code="866" description="Önkormányzatokkal elszámolt adók, illetékek">
+      <account code="8661" description="Iparűzési adó" category="Expense"/>
+      <account code="8662" description="Gépjárműadó" category="Expense"/>
+      <account code="8663" description="Kommunális adó" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-124" code="867" description="Költségvetéssel elszámolt adók, illetékek">
+      <account code="8671" description="Szakképzési hozzájárulás" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-125" code="868" description="Állami költségvetéssel elszámolt adók">
+      <account code="8681" description="Le nem vonható ÁFA" category="Expense"/>
+      <account code="8682" description="Önellenőrzési pótlék" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-126" code="869" description="Különféle egyéb ráfordítások">
+      <account code="8691" description="Káresemények" category="Expense"/>
+      <account code="8694" description="Előző évet terhelő ráfordítások" category="Expense"/>
+      <account code="8698" description="Kerekítési különbözet" category="Expense"/>
+      <account code="8699" description="Egyéb ráfordítások" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-127" code="87" description="Pénzügyi műveletek ráfordításai">
+      <account code="8710" description="Fizetett osztalék, részesedés" category="Expense"/>
+      <account code="8720" description="Részesedések, értékpapírok, bankbetétek értékvesztése" category="Expense"/>
+      <account code="8730" description="Befektetett pénzügyi eszközök árfolyamvesztesége" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-128" code="874" description="Fizetendő kamatok és kamatjellegű ráfordítások">
+      <account code="8741" description="Fizetett kamatok kapcsolt vállalkozásnak" category="Expense"/>
+      <account code="8742" description="Fizetett kamatok egyéb vállalkozásoknak" category="Expense"/>
+      <account code="8743" description="Pénzintézetnek fizetett kamatok" category="Expense"/>
+      <account code="8744" description="Magánszemélyeknek fizetett kamatok" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-129" code="876" description="Átváltáskori és értékesítéskori árfolyamveszteségek">
+      <account code="8761" description="Deviza és valutakészletek átváltási árfolyamvesztesége" category="Expense"/>
+      <account code="8762" description="Követelések és kötelezettségek árfolyamvesztesége" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-130" code="879" description="Egyéb pénzügyi ráfordítások">
+      <account code="8791" description="Faktordíj" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-131" code="88" description="Rendkívüli ráfordítások"/>
+    <account-heading id="h-132" code="881" description="Térítés nélkül átadott eszközök nyilvántartási értéke">
+      <account code="8820" description="Társaságba bevitt vagyontárgyak nyilvántartás szerinti értéke" category="Expense"/>
+      <account code="8830" description="Véglegesen átadott pénzeszköz" category="Expense"/>
+      <account code="8840" description="Elengedett követelés" category="Expense"/>
+      <account code="8890" description="Egyéb rendkívüli ráfordítások" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-133" code="89" description="Nyereséget terhelő adók">
+      <account code="8910" description="Társasági adó" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-134" code="9" description="BEVÉTELEK"/>
+    <account-heading id="h-135" code="91" description="Értékesítés árbevétele"/>
+    <account-heading id="h-136" code="911" description="Belföldi értékesítés árbevétele">
+      <account code="9111" description="Belföldi termékértékesítés árbevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="9112" description="Belföldi szolgáltatás árbevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-137" code="93" description="EU és Export értékesítés árbevétele"/>
+    <account-heading id="h-138" code="931" description="Export értékesítés árbevétele">
+      <account code="9311" description="Export termékértékesítés árbevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="9312" description="Export szolgáltatás árbevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-139" code="932" description="EU értékesítés árbevétele">
+      <account code="9321" description="EU termékértékesítés árbevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="9322" description="EU szolgáltatás árbevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-140" code="96" description="Egyéb bevételek"/>
+    <account-heading id="h-141" code="961" description="Értékesített eszközök bevétele">
+      <account code="9611" description="Értékesített immateriális javak bevétele" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="9612" description="Értékesített tárgyi eszközök bevétele" category="Income"/>
+    </account-heading>
+    <account-heading id="h-142" code="962" description="Közvetített szolg bevétele">
+      <account code="9621" description="Közvetített szolgáltatás bevétele" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-143" code="963" description="Egyéb eredményt növelő tételek">
+      <account code="9631" description="Kapott késedelmi kamatok" category="Income"/>
+    </account-heading>
+    <account-heading id="h-144" code="964" description="Céltartalék képzése">
+      <account code="9641" description="Céltartalék képzése" category="Income"/>
+    </account-heading>
+    <account-heading id="h-145" code="965" description="Értékvesztés, terven felüli értékcsökkenés visszaírása">
+      <account code="9651" description="Követelések értékvesztésének visszaírása" category="Income"/>
+      <account code="9652" description="Immateriális javak terven felüli értékcsökkenésének visszaírása" category="Income"/>
+      <account code="9653" description="Tárgyi eszközök terven felüli értékcsökkenésének visszaírása" category="Income"/>
+    </account-heading>
+    <account-heading id="h-146" code="969" description="Különféle egyéb bevételek">
+      <account code="9691" description="Káresemények bevételei" category="Income"/>
+      <account code="9698" description="Kerekítési különbözet" category="Income"/>
+      <account code="9699" description="Egyéb bevételek" category="Income"/>
+    </account-heading>
+    <account-heading id="h-147" code="97" description="Pénzügyi bevételek">
+      <account code="9710" description="Kapott osztalék, részesedés" category="Income"/>
+      <account code="9720" description="Részesedések, értékpapírok, bankbetétek értékvesztésének visszairása" category="Income"/>
+      <account code="9730" description="Befektetett pénzügyi eszközök árfolyam nyeresége" category="Income"/>
+    </account-heading>
+    <account-heading id="h-148" code="974" description="Kapott kamatok és kamatjellegű ráfordítások">
+      <account code="9741" description="Kapott kamatok kapcsolt vállalkozástól" category="Income"/>
+      <account code="9742" description="Kapott kamatok egyéb vállalkozástól" category="Income"/>
+      <account code="9743" description="Kapott kamatok pénzintézettől" category="Income"/>
+      <account code="9744" description="Magánszemélytől kapott kamatok" category="Income"/>
+    </account-heading>
+    <account-heading id="h-149" code="976" description="Átváltáskori és értékesítéskori árfolyamnyereség">
+      <account code="9761" description="Deviza és valutakészlet átváltási árfolyamnyeresége" category="Income"/>
+      <account code="9762" description="Követelések és kötelezettségek árfolyamnyeresége" category="Income"/>
+    </account-heading>
+    <account-heading id="h-150" code="979" description="Egyéb pénzügyi bevételek">
+      <account code="9791" description="Egyéb pénzügyi bevételek" category="Income"/>
+    </account-heading>
+    <account-heading id="h-151" code="98" description="Rendkívüli bevételek">
+      <account code="9810" description="Ellenérték nélkül kapott eszközök értéke" category="Income"/>
+      <account code="9820" description="Társaságba bevitt vagyontárgyak szerződés szerinti értéke" category="Income"/>
+      <account code="9830" description="Véglegesen kapott pénzeszköz" category="Income"/>
+      <account code="9840" description="Elengedett kötelezettség" category="Income"/>
+      <account code="9890" description="Egyéb rendkívüli bevételek" category="Income"/>
+    </account-heading>
+  </coa>
+  <currencies default="HUF">
+    <currency code="HUF">
+      HUF
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="2610"/>
+    <setting name="income_accno_id" accno="9111"/>
+    <setting name="expense_accno_id" accno="8140"/>
+    <setting name="fxgain_accno_id" accno="9762"/>
+    <setting name="fxloss_accno_id" accno="8762"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

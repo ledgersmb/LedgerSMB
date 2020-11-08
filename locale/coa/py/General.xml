@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="1" description="ACTIVOS"/>
+    <gifi code="1-01" description="ACTIVO CORRIENTE"/>
+    <gifi code="1-01-01" description="DISPONIBILIDADES"/>
+    <gifi code="1-01-01-01" description="Caja"/>
+    <gifi code="1-01-01-02" description="Recaudaciones a Depositar"/>
+    <gifi code="1-01-01-03" description="Bancos"/>
+    <gifi code="1-01-01-04" description="Otros valores"/>
+    <gifi code="1-01-02" description="INVERSIONES TEMPORARIAS"/>
+    <gifi code="1-01-02-01" description="Valores"/>
+    <gifi code="1-01-03" description="CRÉDITOS"/>
+    <gifi code="1-01-03-01" description="Clientes"/>
+    <gifi code="1-01-03-10" description="Menos: Previsión para incobrables"/>
+    <gifi code="1-01-03-11" description="Deudores varios"/>
+    <gifi code="1-01-03-12" description="Documentos / Cuentas a cobrar a Directores y Funcionarios"/>
+    <gifi code="1-01-03-13" description="Intereses a vencer"/>
+    <gifi code="1-01-03-14" description="Tarjetas de Créditos"/>
+    <gifi code="1-01-03-20" description="Menos: Previsión para Incobrables"/>
+    <gifi code="1-01-10" description="INVENTARIOS"/>
+    <gifi code="1-01-10-01" description="Mercaderías - Productos Terminados"/>
+    <gifi code="1-01-10-02" description="Productos en proceso"/>
+    <gifi code="1-01-10-03" description="Materias primas - Materiales"/>
+    <gifi code="1-01-10-04" description="Menos: Previsión por Obsolencia"/>
+    <gifi code="1-01-15" description="ANTICIPOS"/>
+    <gifi code="1-01-15-01" description="Importaciones en curso"/>
+    <gifi code="1-01-15-02" description="Proveedores"/>
+    <gifi code="1-01-20" description="OTROS ACTIVOS"/>
+    <gifi code="1-01-20-01" description="Gastos no devengados"/>
+    <gifi code="1-02" description="ACTIVO NO CORRIENTE"/>
+    <gifi code="1-02-01" description="CRÉDITOS"/>
+    <gifi code="1-02-01-01" description="Fondos con destino especial"/>
+    <gifi code="1-02-01-02" description="Documentos / Cuentas a cobrar a Directores y Funcionarios"/>
+    <gifi code="1-02-01-03" description="Documentos por cobrar"/>
+    <gifi code="1-02-01-04" description="Deudores varios"/>
+    <gifi code="1-02-01-05" description="Créditos en Gestión de Cobro"/>
+    <gifi code="1-02-01-06" description="Menos: Previsiones para incobrables"/>
+    <gifi code="1-02-10" description="PROPIEDAD, PLANTA Y EQUIPO"/>
+    <gifi code="1-02-10-01" description="Bienes en operación"/>
+    <gifi code="1-02-10-02" description="Depreciación acumulada"/>
+    <gifi code="1-02-10-03" description="Bienes fuera de operación"/>
+    <gifi code="1-02-20" description="ACTIVOS INTANGIBLES"/>
+    <gifi code="1-02-20-01" description="Licencia de manufactura"/>
+    <gifi code="1-02-20-02" description="Marcas"/>
+    <gifi code="1-02-20-03" description="Gastos de desarrollo"/>
+    <gifi code="1-02-20-04" description="Amortización Acumulada"/>
+    <gifi code="2" description="PASIVOS Y PATRIMONIO NETO"/>
+    <gifi code="2-01" description="PASIVO CORRIENTE"/>
+    <gifi code="2-01-01" description="CUENTAS A PAGAR"/>
+    <gifi code="2-01-01-01" description="Proveedores Locales"/>
+    <gifi code="2-01-01-02" description="Proveedores del Exterior"/>
+    <gifi code="2-01-01-03" description="Intereses a Vencer"/>
+    <gifi code="2-01-01-04" description="Acreedores varios"/>
+    <gifi code="2-01-05" description="PRÉSTAMOS FINANCIEROS"/>
+    <gifi code="2-01-05-01" description="Sobregiros en cuenta corriente"/>
+    <gifi code="2-01-05-02" description="Documentos a pagar"/>
+    <gifi code="2-01-05-03" description="Porción circulante de préstamos a largo plazo"/>
+    <gifi code="2-01-05-04" description="Intereses a devengar"/>
+    <gifi code="2-01-10" description="PROVISIONES"/>
+    <gifi code="2-01-10-01" description="Impuesto a la Renta a pagar"/>
+    <gifi code="2-01-10-02" description="IVA a pagar"/>
+    <gifi code="2-01-10-03" description="Retenciones de Impuestos"/>
+    <gifi code="2-01-10-04" description="Para pago de planes de beneficios para empleados"/>
+    <gifi code="2-01-10-05" description="Aportes y Retenciones a Pagar"/>
+    <gifi code="2-01-10-06" description="Gastos Acumulados a Pagar"/>
+    <gifi code="2-01-20" description="OTROS PASIVOS"/>
+    <gifi code="2-01-20-01" description="Préstamos de Terceros"/>
+    <gifi code="2-01-20-02" description="Anticipo de Clientes"/>
+    <gifi code="2-01-40" description="GANANCIAS DIFERIDAS"/>
+    <gifi code="2-01-40-01" description="Ingresos no realizados"/>
+    <gifi code="2-01-40-02" description="Costos y gastos aplicables a los ingresos no realizables"/>
+    <gifi code="2-02" description="PASIVOS NO CORRIENTES"/>
+    <gifi code="2-02-01" description="PRÉSTAMOS FINANCIEROS"/>
+    <gifi code="2-02-01-01" description="Préstamos en Bancos"/>
+    <gifi code="2-02-05" description="PREVISIONES"/>
+    <gifi code="2-02-05-01" description="Previsión para indemnización"/>
+    <gifi code="2-02-05-02" description="Otras Contingencias"/>
+    <gifi code="2-03" description="PATRIMONIO NETO"/>
+    <gifi code="2-03-01" description="CAPITAL"/>
+    <gifi code="2-03-01-01" description="Capital suscripto"/>
+    <gifi code="2-03-01-02" description="Capital a integrar"/>
+    <gifi code="2-03-01-03" description="Capital realizado"/>
+    <gifi code="2-03-02" description="RESERVAS"/>
+    <gifi code="2-03-02-01" description="Reserva Legal"/>
+    <gifi code="2-03-02-02" description="Reservas facultativas"/>
+    <gifi code="2-03-02-03" description="Reserva de revalúo"/>
+    <gifi code="2-03-03" description="RESULTADOS"/>
+    <gifi code="2-03-03-01" description="Resultados Acumulados"/>
+    <gifi code="2-03-03-02" description="Resultado del Ejercicio"/>
+    <gifi code="3-01" description="Ventas Netas. Sector Público"/>
+    <gifi code="3-02" description="Ventas Netas. Sector Privado"/>
+    <gifi code="3-10" description="Más otros ingresos"/>
+    <gifi code="3-10-01" description="Intereses ganados"/>
+    <gifi code="3-10-02" description="Otros (indicar naturaleza)"/>
+    <gifi code="3-20" description="Menos:"/>
+    <gifi code="3-20-01" description="Gastos financieros"/>
+    <gifi code="3-30-01" description="Ganancias"/>
+    <gifi code="4-01" description="Costo de Mercaderías (productos o servicios vendidos"/>
+    <gifi code="4-10" description="Menos:"/>
+    <gifi code="4-11" description="Gastos operacionales"/>
+    <gifi code="4-12" description="Gastos de ventas"/>
+    <gifi code="4-13" description="Gastos de administración"/>
+    <gifi code="4-20" description="Otros (indicar naturaleza)"/>
+    <gifi code="4-30" description="Pérdidas"/>
+    <gifi code="5-10" description="Más: (o menos) efectos de los precios cambiantes"/>
+    <gifi code="5-20" description="Más: (o menos) ajuste de ejercicios anteriores"/>
+    <gifi code="5-50" description="Impuesto a la Renta"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="1.000" description="ACTIVO"/>
+    <account-heading id="h-2" code="1.110" description="DISPONIBLE"/>
+    <account-heading id="h-3" code="1.111" description="Caja">
+      <account code="1.111.01" description="Recaudaciones a depositar" category="Asset"/>
+      <account code="1.111.02" description="Fondo fijo" category="Asset"/>
+      <account code="1.111.03" description="Valores a depositar" category="Asset"/>
+      <account code="1.111.04" description="Monedas extranjeras" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-4" code="1.112" description="Bancos">
+      <account code="1.112.01" description="Cuenta Corriente" category="Asset"/>
+      <account code="1.112.02" description="Caja de Ahorro" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-5" code="1.120" description="VALORES NEGOCIABLES / INVERSIONES TRANSITORIAS">
+      <account code="1.120.01" description="Títulos y acciones" category="Asset"/>
+      <account code="1.120.02" description="Títulos públicos" category="Asset"/>
+      <account code="1.120.03" description="Depósito a plazo fijo" category="Asset"/>
+      <account code="1.120.04" description="Previsión fluctuaciones y desvalorizaciones (regularizadora)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-6" code="1.130" description="CRÉDITOS">
+      <account code="1.131" description="Créditos por ventas" category="Asset"/>
+      <account code="1.132" description="Otros créditos" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-7" code="1.140" description="BIENES DE CAMBIO">
+      <account code="1.141" description="Mercaderías de reventa" category="Asset"/>
+      <account code="1.142" description="Mercaderías en proceso de producción" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-8" code="1.150" description="OTROS ACTIVOS CORRIENTES">
+      <account code="1.151" description="Muestras y otros materiales de propaganda" category="Asset"/>
+      <account code="1.152" description="Combustibles" category="Asset"/>
+      <account code="1.153" description="Repuestos" category="Asset"/>
+      <account code="1.154" description="Embalajes y envases" category="Asset"/>
+      <account code="1.155" description="Materiales de oficina" category="Asset"/>
+      <account code="1.156" description="Materiales diversos" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-9" code="1.200" description="REALIZABLE A LARGO PLAZO"/>
+    <account-heading id="h-10" code="1.210" description="INVERSIONES PERMANENTES">
+      <account code="1.211" description="Títulos públicos" category="Asset"/>
+      <account code="1.212" description="Debenturas" category="Asset"/>
+      <account code="1.213" description="Inversiones en otras empresas" category="Asset"/>
+      <account code="1.214" description="Previsión fluctuaciones y desvalorzaciones" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-11" code="1.220" description="CRÉDITOS">
+      <account code="1.221" description="Créditos por ventas" category="Asset"/>
+      <account code="1.222" description="Otros créditos" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-12" code="1.300" description="ACTIVO FIJO"/>
+    <account-heading id="h-13" code="1.310" description="MUEBLES, ÚTILES Y ENSERES"/>
+    <account-heading id="h-14" code="1.311" description="MUEBLES Y EQUIPOS">
+      <account code="1.311.01" description="Muebles y equipos - Costo de origen" category="Asset"/>
+      <account code="1.311.02" description="Muebles y equipos - Mejoras" category="Asset"/>
+      <account code="1.311.03" description="Muebles y equipos - Revalúo" category="Asset"/>
+      <account code="1.311.04" description="Muebles y equipos - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-15" code="1.312" description="ÚTILES Y ENSERES">
+      <account code="1.312.01" description="Útiles y enseres - Costo de origen" category="Asset"/>
+      <account code="1.312.02" description="Útiles y enseres - Mejoras" category="Asset"/>
+      <account code="1.312.03" description="Útiles y enseres - Revalúo" category="Asset"/>
+      <account code="1.312.04" description="Útiles y enseres - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-16" code="1.320" description="MAQUINARIAS, HERRAMIENTAS Y EQUIPOS"/>
+    <account-heading id="h-17" code="1.321" description="MAQUINARIAS">
+      <account code="1.321.01" description="Maquinarias - Costo de origen" category="Asset"/>
+      <account code="1.321.02" description="Maquinarias - Mejoras" category="Asset"/>
+      <account code="1.321.03" description="Maquinarias - Revalúo" category="Asset"/>
+      <account code="1.321.04" description="Maquinarias - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-18" code="1.322" description="HERRAMIENTAS Y EQUIPOS">
+      <account code="1.322.01" description="Herramientas y Equipos - Costo de origen" category="Asset"/>
+      <account code="1.322.02" description="Herramientas y Equipos - Mejoras" category="Asset"/>
+      <account code="1.322.03" description="Herramientas y Equipos - Revalúo" category="Asset"/>
+      <account code="1.322.04" description="Herramientas y Equipos - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-19" code="1.323" description="EQUIPOS INFORMÁTICOS">
+      <account code="1.323.01" description="Equipos informáticos - Costo de origen" category="Asset"/>
+      <account code="1.323.02" description="Equipos informáticos - Mejoras" category="Asset"/>
+      <account code="1.323.03" description="Equipos informáticos - Revalúo" category="Asset"/>
+      <account code="1.323.04" description="Equipos informáticos - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-20" code="1.330" description="TRANSPORTE TERRESTRE"/>
+    <account-heading id="h-21" code="1.331" description="AUTOS, CAMIONETAS, CAMIONES O ACOPLADOS">
+      <account code="1.331.01" description="Autos, camionetas, camiones o acoplados - Costo de origen" category="Asset"/>
+      <account code="1.331.02" description="Autos, camionetas, camiones o acoplados - Mejoras" category="Asset"/>
+      <account code="1.331.03" description="Autos, camionetas, camiones o acoplados - Revalúo" category="Asset"/>
+      <account code="1.331.04" description="Autos, camionetas, camiones o acoplados - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-22" code="1.332" description="MOTOCICLETAS, TRICICLOS Y BICICLETAS">
+      <account code="1.332.01" description="Motocicletas, triciclos y bicicletas - Costo de origen" category="Asset"/>
+      <account code="1.332.02" description="Motocicletas, triciclos y bicicletas - Mejoras" category="Asset"/>
+      <account code="1.332.03" description="Motocicletas, triciclos y bicicletas - Revalúo" category="Asset"/>
+      <account code="1.332.04" description="Motocicletas, triciclos y bicicletas - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-23" code="1.333" description="BIENES PARA TRANSPORTE TERRESTRE">
+      <account code="1.333.01" description="Bienes para transporte terrestre - Costo de origen" category="Asset"/>
+      <account code="1.333.02" description="Bienes para transporte terrestre - Mejoras" category="Asset"/>
+      <account code="1.333.03" description="Bienes para transporte terrestre - Revalúo" category="Asset"/>
+      <account code="1.333.04" description="Bienes para transporte terrestre - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-24" code="1.340" description="TRANSPORTE AÉREO"/>
+    <account-heading id="h-25" code="1.341" description="AVIONES Y MATERIAL DE VUELO">
+      <account code="1.341.01" description="Aviones y material de vuelo - Costo de origen" category="Asset"/>
+      <account code="1.341.02" description="Aviones y material de vuelo - Mejoras" category="Asset"/>
+      <account code="1.341.03" description="Aviones y material de vuelo - Revalúo" category="Asset"/>
+      <account code="1.341.04" description="Aviones y material de vuelo - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-26" code="1.342" description="INSTALACIONES DE TIERRA">
+      <account code="1.342.01" description="Instalaciones de tierra - Costo de origen" category="Asset"/>
+      <account code="1.342.02" description="Instalaciones de tierra - Mejoras" category="Asset"/>
+      <account code="1.342.03" description="Instalaciones de tierra - Revalúo" category="Asset"/>
+      <account code="1.342.04" description="Instalaciones de tierra - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-27" code="1.350" description="TRANSPORTE MARÍTIMO Y FLUVIAL"/>
+    <account-heading id="h-28" code="1.351" description="EMBARCACIONES EN GENERAL">
+      <account code="1.351.01" description="Embarcaciones en general - Costo de origen" category="Asset"/>
+      <account code="1.351.02" description="Embarcaciones en general - Mejoras" category="Asset"/>
+      <account code="1.351.03" description="Embarcaciones en general - Revalúo" category="Asset"/>
+      <account code="1.351.04" description="Embarcaciones en general - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-29" code="1.352" description="CANOAS, BOTES Y DEMÁS BIENES">
+      <account code="1.352.01" description="Canoas, botes y demás bienes - Costo de origen" category="Asset"/>
+      <account code="1.352.02" description="Canoas, botes y demás bienes - Mejoras" category="Asset"/>
+      <account code="1.352.03" description="Canoas, botes y demás bienes - Revalúo" category="Asset"/>
+      <account code="1.352.04" description="Canoas, botes y demás bienes - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-30" code="1.360" description="TRANSPORTE FERROVIARIO"/>
+    <account-heading id="h-31" code="1.361" description="MATERIALES RODANTES">
+      <account code="1.361.01" description="Materiales rodantes - Costo de origen" category="Asset"/>
+      <account code="1.361.02" description="Materiales rodantes - Mejoras" category="Asset"/>
+      <account code="1.361.03" description="Materiales rodantes - Revalúo" category="Asset"/>
+      <account code="1.361.04" description="Materiales rodantes - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-32" code="1.362" description="VÍAS Y DEMÁS BIENES">
+      <account code="1.362.01" description="Vías y demás bienes - Costo de origen" category="Asset"/>
+      <account code="1.362.02" description="Vías y demás bienes - Mejoras" category="Asset"/>
+      <account code="1.362.03" description="Vías y demás bienes - Revalúo" category="Asset"/>
+      <account code="1.362.04" description="Vías y demás bienes - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-33" code="1.370" description="INMUEBLES"/>
+    <account-heading id="h-34" code="1.371" description="CONSTRUCCIONES EN INMUEBLES URBANOS">
+      <account code="1.371.01" description="Construcciones en inmuebles urbanos - Costo de origen" category="Asset"/>
+      <account code="1.371.02" description="Construcciones en inmuebles urbanos - Mejoras" category="Asset"/>
+      <account code="1.371.03" description="Construcciones en inmuebles urbanos - Revalúo" category="Asset"/>
+      <account code="1.371.04" description="Construcciones en inmuebles urbanos - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-35" code="1.372" description="CONSTRUCCIONES EN INMUEBLES RURALES">
+      <account code="1.372.01" description="Construcciones en inmuebles rurales - Costo de origen" category="Asset"/>
+      <account code="1.372.02" description="Construcciones en inmuebles rurales - Mejoras" category="Asset"/>
+      <account code="1.372.03" description="Construcciones en inmuebles rurales - Revalúo" category="Asset"/>
+      <account code="1.372.04" description="Construcciones en inmuebles rurales - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-36" code="1.373" description="CONSTRUCCIONES EN INMUEBLES AJENOS">
+      <account code="1.373.01" description="Construcciones en inmuebles ajenos - Costo de origen" category="Asset"/>
+      <account code="1.373.02" description="Construcciones en inmuebles ajenos - Mejoras" category="Asset"/>
+      <account code="1.373.03" description="Construcciones en inmuebles ajenos - Revalúo" category="Asset"/>
+      <account code="1.373.04" description="Construcciones en inmuebles ajenos - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-37" code="1.381" description="RESTANTES BIENES">
+      <account code="1.381.01" description="Restantes bienes - Costo de origen" category="Asset"/>
+      <account code="1.381.02" description="Restantes bienes - Mejoras" category="Asset"/>
+      <account code="1.381.03" description="Restantes bienes - Revalúo" category="Asset"/>
+      <account code="1.381.04" description="Restantes bienes - (Depreciaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-38" code="1.390" description="BIENES INTANGIBLES">
+      <account code="1.391" description="Llave de negocio" category="Asset"/>
+      <account code="1.392" description="Marcas registradas" category="Asset"/>
+      <account code="1.393" description="Concesiones" category="Asset"/>
+      <account code="1.394" description="Patente de invención" category="Asset"/>
+      <account code="1.395" description="Gastos de constitución y organización" category="Asset"/>
+      <account code="1.396" description="Gastos de reorganización" category="Asset"/>
+      <account code="1.397" description="Gastos de proyectos de inversión" category="Asset"/>
+      <account code="1.398" description="Gastos de desarrollo e investigación" category="Asset"/>
+      <account code="1.399" description="(Amortizaciones acumuladas)" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-39" code="2.000" description="PASIVO"/>
+    <account-heading id="h-40" code="2.100" description="CIRCULANTE"/>
+    <account-heading id="h-41" code="2.110" description="DEUDAS">
+      <account code="2.111" description="Acreedores por compras" category="Liability"/>
+      <account code="2.112" description="Deudas bancarias y financieras" category="Liability"/>
+      <account code="2.113" description="Otras deudas" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-42" code="2.150" description="PROVISIONES">
+      <account code="2.151" description="IVA a pagar" category="Liability">
+        <link code="AR_tax"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-43" code="2.200" description="EXIGIBLE A LARGO PLAZO"/>
+    <account-heading id="h-44" code="2.210" description="DEUDAS">
+      <account code="2.211" description="Acreedores por compras" category="Liability"/>
+      <account code="2.212" description="Deudas bancarias y financieras" category="Liability"/>
+      <account code="2.213" description="Otras deudas" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-45" code="2.220" description="PREVISIONES">
+      <account code="2.221" description="Previsición para indemnización por despidos" category="Liability"/>
+      <account code="2.222" description="Previsición para indemnización por accidente" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-46" code="3.000" description="PATRIMONIO NETO"/>
+    <account-heading id="h-47" code="3.100" description="CAPITAL"/>
+    <account-heading id="h-48" code="3.200" description="RESERVAS">
+      <account code="3.210" description="Reserva legal" category="Equity"/>
+      <account code="3.220" description="Reserva de revalúo" category="Equity"/>
+      <account code="3.230" description="Prima de emisión" category="Equity"/>
+      <account code="3.240" description="Reserva estatutaria" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-49" code="3.300" description="RESULTADOS">
+      <account code="3.310" description="Resultados acumulados" category="Equity"/>
+      <account code="3.320" description="Resultados del ejercicio" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-50" code="4.000" description="INGRESOS"/>
+    <account-heading id="h-51" code="4.100" description="INGRESOS OPERATIVOS">
+      <account code="4.110" description="Venta de mercadrías" category="Income"/>
+      <account code="4.120" description="Venta de servicios" category="Income"/>
+      <account code="4.130" description="Otros ingresos operativos" category="Income"/>
+      <account code="4.130.01" description="Intereses ganados" category="Income"/>
+      <account code="4.130.02" description="Descuentos obtenidos" category="Income"/>
+      <account code="4.130.03" description="Comisiones obtenidas" category="Income"/>
+    </account-heading>
+    <account-heading id="h-52" code="4.200" description="INGRESOS NO OPERATIVOS">
+      <account code="4.210" description="Utilidad en venta de bienes de uso" category="Income"/>
+      <account code="4.220" description="Alquileres ganados" category="Income"/>
+      <account code="4.230" description="Incobrables recuperados" category="Income"/>
+      <account code="4.240" description="Utilidad en venta de bienes intangibles" category="Income"/>
+      <account code="4.250" description="Utilidades varias" category="Income"/>
+    </account-heading>
+    <account-heading id="h-53" code="4.300" description="INGRESOS EXTRAORDINARIOS">
+      <account code="4.310" description="Utilidad en venta de bienes de uso" category="Income"/>
+      <account code="4.320" description="Donaciones y premios" category="Income"/>
+      <account code="4.330" description="Premios" category="Income"/>
+      <account code="4.340" description="Diferencias de cambios positivos" category="Income"/>
+    </account-heading>
+    <account-heading id="h-54" code="5.000" description="EGRESOS"/>
+    <account-heading id="h-55" code="5.100" description="EGRESOS OPERATIVOS"/>
+    <account-heading id="h-56" code="5.110" description="COSTO DE MERCADERÍAS VENDIDAS">
+      <account code="5.110.01" description="Costo de ventas sección 1" category="Expense"/>
+      <account code="5.110.20" description="Costo de ventas producto 1" category="Expense"/>
+      <account code="5.110.40" description="Costo de ventas diversas" category="Expense"/>
+      <account code="5.110.60" description="Costo de ventas productos elaborados" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-57" code="5.120" description="COSTO DE SERVICIOS VENDIDOS">
+      <account code="5.120.01" description="Costo de servicios" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-58" code="5.130" description="GASTOS DE VENTAS">
+      <account code="5.130.01" description="Comisiones sobre ventas" category="Expense"/>
+      <account code="5.130.02" description="Publicidad y propaganda" category="Expense"/>
+      <account code="5.130.03" description="Gastos de viajes" category="Expense"/>
+      <account code="5.130.04" description="Gastos de exportación" category="Expense"/>
+      <account code="5.130.05" description="Otros gastos de ventas" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-59" code="5.140" description="GASTOS DE ADMINISTRACIÓN">
+      <account code="5.140.01" description="Aguinaldos" category="Expense"/>
+      <account code="5.140.02" description="Alquileres pagados" category="Expense"/>
+      <account code="5.140.03" description="Depreciación bienes de uso" category="Expense"/>
+      <account code="5.140.04" description="Depreciación bienes intangibles" category="Expense"/>
+      <account code="5.140.05" description="Bonificación familiar" category="Expense"/>
+      <account code="5.140.06" description="Créditos incobrables" category="Expense"/>
+      <account code="5.140.07" description="Aporte patronal sobre salarios" category="Expense"/>
+      <account code="5.140.08" description="Fletes y acarreos" category="Expense"/>
+      <account code="5.140.09" description="Luz, teléfono y agua" category="Expense"/>
+      <account code="5.140.10" description="Impuestos, tasas y contribuciones" category="Expense"/>
+      <account code="5.140.11" description="Seguros" category="Expense"/>
+      <account code="5.140.12" description="Gastos de útiles e impresos" category="Expense"/>
+      <account code="5.140.13" description="Sueldos y jornales" category="Expense"/>
+      <account code="5.140.14" description="Remuneración personal superior" category="Expense"/>
+      <account code="5.140.15" description="Honorarios profesionales" category="Expense"/>
+      <account code="5.140.16" description="Gastos de representación" category="Expense"/>
+      <account code="5.140.17" description="Gastos de cobranza" category="Expense"/>
+      <account code="5.140.18" description="Gastos judiciales" category="Expense"/>
+      <account code="5.140.19" description="Otros gastos de administración" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-60" code="5.150" description="GASTOS FINANCIEROS">
+      <account code="5.150.01" description="Intereses pagados" category="Expense"/>
+      <account code="5.150.02" description="Gastos bancarios" category="Expense"/>
+      <account code="5.150.03" description="Otros gastos financieros" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-61" code="5.200" description="EGRESOS NO OPERATIVOS">
+      <account code="5.210" description="Bajas bienes de uso" category="Expense"/>
+      <account code="5.220" description="Gastos inmuebles alquileres" category="Expense"/>
+      <account code="5.230" description="Pérdidas en ventas bienes de uso" category="Expense"/>
+      <account code="5.240" description="Otros resultados negativos no operativos" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-62" code="5.300" description="EGRESOS EXTRAORDINARIOS">
+      <account code="5.310" description="Pérdidas en ventas bienes de uso" category="Expense"/>
+      <account code="5.320" description="Donaciones y contribuciones negativas" category="Expense"/>
+      <account code="5.330" description="Indemnizaciones a terceros" category="Expense"/>
+      <account code="5.340" description="Diferencias de cambios negativos" category="Expense"/>
+      <account code="5.350" description="Otros resultados negativos extraordinarios" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="PYG">
+    <currency code="PYG">
+      PYG
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1.141"/>
+    <setting name="income_accno_id" accno="4.110"/>
+    <setting name="expense_accno_id" accno="5.110.01"/>
+    <setting name="fxgain_accno_id" accno="4.340"/>
+    <setting name="fxloss_accno_id" accno="5.340"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>
