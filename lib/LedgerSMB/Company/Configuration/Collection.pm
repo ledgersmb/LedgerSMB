@@ -2,31 +2,34 @@ package LedgerSMB::Company::Configuration::Collection;
 
 =head1 NAME
 
-LedgerSMB::Company::Configuration::Collection - Collection of CoA nodes
+LedgerSMB::Company::Configuration::Collection - Role to manage a collection
 
 =head1 SYNOPSIS
 
-   use LedgerSMB::Database;
-   use LedgerSMB::Company;
 
-   my $dbh = LedgerSMB::Database->new( connect_data => { ... })
-       ->connect;
-   my $c   = LedgerSMB::Company->new(dbh => $dbh)->configuration->coa_nodes;
+   use Moose;
+   use namespace::autoclean;
+   with 'LedgerSMB::Company::Configuration::Collection';
 
-   # look up a heading or account
-   my $node   = $c->get(by => (accno => 'H-1500'));
+   # Implement required functions
 
-   # create a new node (account)
-   my $new    = $c->create(type        => 'account',
-                           accno       => '1501',
-                           description => 'Account 1501',
-                           heading_id  => $node->id);
+   sub _resultset {
+      return 'a_table_or_query';
+   }
+
+   sub _class {
+      return 'LedgerSMB::Company::Configuration::a_class';
+   }
+
+   ...;
+
+   1;
+
 
 =head1 DESCRIPTION
 
-Collection of Chart of Accounts nodes (accounts and headings) providing
-access to existing nodes as well as providing an API to create (instantiate)
-new ones.
+Implements the infrastructure required to manage a collection of objects
+in the company database (such as querying).
 
 =cut
 
@@ -40,20 +43,61 @@ use PGObject::Type::Registry;
 use Moose::Role;
 use namespace::autoclean;
 
+=head1 REQUIRED METHODS
+
+The following methods must be implemented by the using class:
+
+=head2 _resultset
+
+Returns the name of a table or a query that can be used in its place,
+e.g. 'gifi'. For a more complex example see the COANodes collection.
+
+=head2 _class
+
+Returns the name of the Perl class which mirrors the database object state,
+e.g. C<LedgerSMB::Company::Configuration::GIFI>.
+
+=cut
 
 requires '_resultset';
 requires '_class';
+
+=head1 INTERNAL METHODS
+
+=head2 _map_field($fieldname)
+
+In case a field in the Perl mirror class has a different name than the backing
+field in the database, the Perl code will use the name of the Perl mirror
+instead of the database.
+
+This function maps the name of the Perl mirror to the database when generating
+the C<get()> query.
+
+=cut
 
 sub _map_field {
     my ($self, $field) = @_;
     return $field;
 }
 
+=head2 _instantiate($row, @args)
+
+Is called for each returned row in the C<get()> query result to map the
+database object into their Perl mirrors, returning one instance per call.
+
+The default implementation uses C<@args> to instantiate an object of
+type C<$self->_class()> and ignores C<$row>. For more involved instantiation
+strategies see the COANodes collection for an example.
+
+=cut
+
 sub _instantiate {
     my ($self, $row, @args) = @_;
     my $class = $self->_class;
     return $class->new(@args);
 }
+
+=head1 METHODS
 
 =head2 get
 
