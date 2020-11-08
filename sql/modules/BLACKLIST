@@ -139,6 +139,12 @@ company__get_by_cc
 company__next_id
 company__save
 company_get_billing_info
+config_currency__delete
+config_currency__save
+config_gifi__delete
+config_gifi__save
+config_sic__delete
+config_sic__save
 contact__search
 contact_class__list
 cr_coa_to_account_save

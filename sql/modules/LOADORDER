@@ -47,6 +47,7 @@ Templates.sql
 Timecards.sql
 PriceMatrix.sql
 arap.sql
+Configuration.sql
 # Why weren't those loaded before
 Backup.sql
 #Business_Dates.sql

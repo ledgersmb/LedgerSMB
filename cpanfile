@@ -57,6 +57,7 @@ requires 'Locale::CLDR::Locales::Tr';
 requires 'Locale::CLDR::Locales::Uk';
 requires 'Locale::CLDR::Locales::Zh';
 requires 'Locale::Maketext::Lexicon', '0.62';
+requires 'Log::Any';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
 requires 'Log::Log4perl';
@@ -78,6 +79,7 @@ requires 'PGObject', '2.0.2';
 # PGObject::Simple 3.0.1 breaks our file uploads
 requires 'PGObject::Simple', '>=3.0.2';
 requires 'PGObject::Simple::Role', '2.0.2';
+requires 'PGObject::Type::Registry';
 requires 'PGObject::Type::BigFloat', '2.0.1';
 requires 'PGObject::Type::DateTime', '2.0.2';
 requires 'PGObject::Type::ByteString', '1.2.3';
@@ -153,7 +155,7 @@ feature 'xls', "Microsoft Excel" =>
 on 'develop' => sub {
     requires 'App::Prove', '3.41'; # parallel testing of pipe and socket sources
     requires 'Capture::Tiny';
-    requires 'DBD::Mock';
+    requires 'DBD::Mock', '1.58';
     requires 'File::Util';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
