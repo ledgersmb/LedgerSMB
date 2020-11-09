@@ -58,6 +58,7 @@ my @modules =
      'LedgerSMB::Admin::Command::create',
      'LedgerSMB::Admin::Command::rename',
      'LedgerSMB::Admin::Command::restore',
+     'LedgerSMB::Admin::Command::setup',
      'LedgerSMB::Admin::Command::template',
      'LedgerSMB::Admin::Configuration',
      'LedgerSMB::Company',
