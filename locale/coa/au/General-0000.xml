@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="2000" description="CURRENT LIABILITIES">
+      <account code="2100" description="Trade Creditors" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2160" description="Taxation - Payable" category="Liability"/>
+      <account code="2210" description="Workers Compensation - Payable" category="Liability"/>
+      <account code="2250" description="Superannuation - Payable" category="Liability"/>
+      <account code="2260" description="Insurance - Payable" category="Liability"/>
+      <account code="2290" description="GST / Payable" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="2300" description="GST Payments / Refunds" category="Liability"/>
+      <account code="2310" description="GST Adjustments" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-2" code="2600" description="LONG TERM LIABILITIES">
+      <account code="2620" description="Bank Loans" category="Liability"/>
+      <account code="2640" description="Hire Purchase" category="Liability">
+        <link code="AP_amount"/>
+      </account>
+      <account code="2650" description="Other Loans" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-3" code="4000" description="SALES REVENUE">
+      <account code="4020" description="Sales / Manufactured Products" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4030" description="Sales / General" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="5000" description="COST OF GOODS SOLD">
+      <account code="5020" description="COGS / Leather" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5030" description="COGS / PVC" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5040" description="COGS / Fabrics" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5050" description="COGS / Metal Hardware / Fasteners / Accessories" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5060" description="COGS / Paint / Glue / Dye" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5070" description="COGS / Threads / Tapes / Cords / Laces" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5080" description="COGS / Other Goods" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="5400" description="PAYROLL EXPENSES">
+      <account code="5470" description="Staff Amenities" category="Expense"/>
+      <account code="5410" description="Wages" category="Expense"/>
+      <account code="5430" description="Superannuation" category="Expense"/>
+      <account code="5440" description="Workers Compensation" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-6" code="5600" description="GENERAL &amp; ADMINISTRATIVE EXPENSES">
+      <account code="5605" description="External labour costs" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5610" description="Accountancy" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5611" description="Legal Fees" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5613" description="Postage / Printing / Stationery" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5614" description="Freight and Cartage" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5615" description="Advertising &amp; Promotions" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5620" description="Bad Debts" category="Expense"/>
+      <account code="5650" description="Capital Cost Allowance Expense" category="Expense"/>
+      <account code="5660" description="Interest Expenses" category="Expense"/>
+      <account code="5670" description="Depreciation Expenses" category="Expense"/>
+      <account code="5680" description="Taxation" category="Expense"/>
+      <account code="5685" description="Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5686" description="Security" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Bank Fees And Charges" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5695" description="Other Fees And Charges" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5700" description="Office Supplies" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Rent on Land &amp; Buildings" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Repairs &amp; Maintenance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5766" description="Fixtures &amp; Fittings" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5770" description="Replacements (tools, etc)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telephone" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5782" description="Computer Expenses" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5783" description="Research &amp; Development" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Travel, Accommodation &amp; Conference" category="Expense"/>
+      <account code="5790" description="Hire / Rent of Plant &amp; Equipment " category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5795" description="Registration &amp; Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licenses" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Foreign Exchange Loss" category="Expense"/>
+      <account code="5811" description="Electricity" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5812" description="Gas" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5813" description="Sundry Expenses" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5820" description="Goods &amp; Services for own Use" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5830" description="Discounts / Refunds / Rounding" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5840" description="Fines - NON DEDUCTIBLE EXPENSES" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-7" code="6000" description="CAR EXPENSES">
+      <account code="6010" description="M/V Commercial - Fuels / Oils / Parts" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6020" description="M/V Commercial - Repairs" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6040" description="M/V Commercial - Reg / Insurance" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6080" description="M/V Private Use - Interest Expenses" category="Expense"/>
+      <account code="6090" description="M/V Private Use - Other Expenses" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6070" description="M/V Private Use - Depreciation Expenses" category="Expense"/>
+      <account code="6050" description="M/V Commercial - Depreciation Expenses" category="Expense"/>
+      <account code="6060" description="M/V Commercial - Interest Expenses" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-8" code="4300" description="OTHER REVENUE">
+      <account code="4410" description="Shop Labour" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4420" description="Design / Patternmaking" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4430" description="Shipping &amp; Handling" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Interest Received" category="Income"/>
+      <account code="4450" description="Foreign Exchange Profit" category="Income"/>
+      <account code="4460" description="Mark-Up / Price Adjustment" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4470" description="Computer Consultancy / Training" category="Income">
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="1500" description="STOCK ON HAND">
+      <account code="1520" description="SOH / Leather" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1820" description="Plant &amp; Equipment - at Cost" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1825" description="Less: Accumulated Depreciation" category="Asset" contra="true"/>
+      <account code="1840" description="Motor Vehicles - at Cost" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1845" description="Less: Accumulated Depreciation" category="Asset" contra="true"/>
+      <account code="1530" description="SOH / PVC" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="SOH / Fabrics" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1550" description="SOH / Metal Hardware / Fasteners / Accessories" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1560" description="SOH / Paint / Glue / Dye" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1570" description="SOH / Threads / Tapes / Cords / Laces" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1580" description="SOH / Other Goods" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="3300" description="EQUITY">
+      <account code="3350" description="Issued &amp; Paid up Capital" category="Equity"/>
+      <account code="3370" description="Opening Account Balance" category="Equity"/>
+      <account code="3380" description="Credit Payments / Holding Account" category="Equity">
+        <link code="AR_paid"/>
+      </account>
+      <account code="3360" description="Payments for G &amp; S for own Use" category="Equity">
+        <link code="AP_paid"/>
+      </account>
+      <account code="3390" description="Retained Profits" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-11" code="1000" description="CURRENT ASSETS">
+      <account code="1060" description="Cheque Account" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1205" description="Less: Provision Doubtful Debts" category="Asset"/>
+      <account code="1210" description="Trade Debtors / Australia - with GST" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1220" description="Trade Debtors / Exports - GST free" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1230" description="GST / Refund" category="Asset">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="1065" description="Cash / Paid From Private Accounts" category="Equity">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="1800" description="CAPITAL ASSETS"/>
+  </coa>
+  <currencies default="AUD">
+    <currency code="AUD">
+      AUD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5020"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

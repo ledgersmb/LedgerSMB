@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="1000" description="Cash &amp; Deposits"/>
+    <gifi code="1001" description="Cash"/>
+    <gifi code="1002" description="Deposits In Canadian Banks And Institutions - Canadian Currency"/>
+    <gifi code="1003" description="Deposits In Canadian Banks And Institutions - Foreign Currency"/>
+    <gifi code="1004" description="Deposits In Foreign Banks - Canadian Currency"/>
+    <gifi code="1005" description="Deposits In Foreign Banks - Foreign Currency"/>
+    <gifi code="1006" description="Credit Union Central Deposits"/>
+    <gifi code="1007" description="Other Cash Like Instruments - Gold Bullion, Silver Bullion"/>
+    <gifi code="1060" description="Accounts Receivable"/>
+    <gifi code="1061" description="Allowance For Doubtfull Accounts Receivable"/>
+    <gifi code="1062" description="Trade Accounts Receivable"/>
+    <gifi code="1063" description="Allowance For Doubtfull Trade Accounts Receivable"/>
+    <gifi code="1064" description="Trade Accounts Receivable Related Parties"/>
+    <gifi code="1065" description="Allowance For Doubtfull Trade Accounts Receivable Related Parties"/>
+    <gifi code="1066" description="Taxes Receivable"/>
+    <gifi code="1067" description="Intrest Receivable"/>
+    <gifi code="1068" description="Holdbacks Receivable"/>
+    <gifi code="1069" description="Leases Receivable"/>
+    <gifi code="1070" description="Allowance For Doubtfull Leases Receivable"/>
+    <gifi code="1071" description="Accounts Receivable Employees"/>
+    <gifi code="1072" description="Allowance For Doubtfull Accounts Receivable Employees"/>
+    <gifi code="1073" description="Accounts Receivable From Members Of NPO"/>
+    <gifi code="1120" description="Inventories"/>
+    <gifi code="1121" description="Inventory Of Goods For Sale/Finished Goods"/>
+    <gifi code="1122" description="Inventory Of Parts And Supplies"/>
+    <gifi code="1123" description="Inventory Properties"/>
+    <gifi code="1124" description="Inventory of Aggregates"/>
+    <gifi code="1125" description="Work In Progress"/>
+    <gifi code="1126" description="Raw Materials"/>
+    <gifi code="1127" description="Inventory of Securities"/>
+    <gifi code="1180" description="Short Term Investments"/>
+    <gifi code="1181" description="Canadian Term Deposits"/>
+    <gifi code="1182" description="Canadian Shares"/>
+    <gifi code="1183" description="Canadian Bonds"/>
+    <gifi code="1184" description="Canadian Treasury Bills"/>
+    <gifi code="1185" description="Securities Purchased Under Resale Agreement"/>
+    <gifi code="1186" description="Other Short Term Canadian Investments"/>
+    <gifi code="1187" description="Short Term Foreign Investments"/>
+    <gifi code="1240" description="Loans &amp; Notes Receivable"/>
+    <gifi code="1241" description="Demand Loans Receivable"/>
+    <gifi code="1242" description="Other Loans Receivable"/>
+    <gifi code="1243" description="Notes Receivable"/>
+    <gifi code="1244" description="Mortgages Receivable"/>
+    <gifi code="1300" description="Due From Shareholder(s)/Director(s)"/>
+    <gifi code="1301" description="Due From Individual Shareholder(s)"/>
+    <gifi code="1302" description="Due From Corporate Shareholder(s)"/>
+    <gifi code="1303" description="Due From Director(s)"/>
+    <gifi code="1360" description="Investment In Joint Venture(s)/Partnership(s)"/>
+    <gifi code="1380" description="Due From Joint Venture(s)/Partnership(s)"/>
+    <gifi code="1400" description="Due From/Investment In Related Parties"/>
+    <gifi code="1401" description="Demand Notes From Related Parties"/>
+    <gifi code="1402" description="Interest Receivable From Related Parties"/>
+    <gifi code="1403" description="Loans/Advances Due From Related Parties"/>
+    <gifi code="1460" description="Customer's Liability under Acceptances"/>
+    <gifi code="1480" description="Other Current Assets"/>
+    <gifi code="1481" description="Deferred Income Taxes"/>
+    <gifi code="1482" description="Accrued Investment Income"/>
+    <gifi code="1483" description="Taxes Recoverable/Refundable"/>
+    <gifi code="1484" description="Prepaid Expenses"/>
+    <gifi code="1485" description="Drilling Advances"/>
+    <gifi code="1486" description="Security Deposits"/>
+    <gifi code="1599" description="Total Current Assets"/>
+    <gifi code="1600" description="Land"/>
+    <gifi code="1601" description="Land Improvement"/>
+    <gifi code="1602" description="Accumulated Amortization Of Land &amp; Land Improvement"/>
+    <gifi code="1620" description="Depletable Assets"/>
+    <gifi code="1621" description="Accumulated Amortization Of Depletable Assets"/>
+    <gifi code="1622" description="Petroleum &amp; Natural Gas Properties"/>
+    <gifi code="1623" description="Accumulated Amortization Of Petroleum &amp; Natural Gas Properties"/>
+    <gifi code="1624" description="Mining Properties"/>
+    <gifi code="1625" description="Accumulated Amortization Of Mining Properties"/>
+    <gifi code="1626" description="Deferred Exporation &amp; Development charges"/>
+    <gifi code="1627" description="Accumulated Amortization Of Petroleum &amp; Deferred Exporation &amp; Development charges"/>
+    <gifi code="1628" description="Quarries"/>
+    <gifi code="1629" description="Accumulated Amortization Of Quarries"/>
+    <gifi code="1630" description="Gravel Pits"/>
+    <gifi code="1631" description="Accumulated Amortization Of Gravel Pits"/>
+    <gifi code="1632" description="Timber Limits"/>
+    <gifi code="1633" description="Accumulated Amortization Of Timber Limits"/>
+    <gifi code="1680" description="Buildings"/>
+    <gifi code="1681" description="Accumulated Amortization Of Buildings"/>
+    <gifi code="1682" description="Manufacturing And Processing Plant"/>
+    <gifi code="1683" description="Accumulated Amortization Of Manufacturing and Processing Plant"/>
+    <gifi code="1684" description="Buildings Under Construction"/>
+    <gifi code="1740" description="Machinery, Equipment, furniture &amp; fixtures"/>
+    <gifi code="1741" description="Accumulated Amortization Of Machinery, Equipment, furniture &amp; fixtures"/>
+    <gifi code="1742" description="Motor Vehicles"/>
+    <gifi code="1743" description="Accumulated Amortization Of Motor Vehicles"/>
+    <gifi code="1744" description="Tools and Dies"/>
+    <gifi code="1745" description="Accumulated Amortization Of Tools and Dies"/>
+    <gifi code="1746" description="Construction &amp; Excavating Equipment"/>
+    <gifi code="1747" description="Accumulated Amortization Of Construction &amp; Excavating Equipment"/>
+    <gifi code="1748" description="Forestry &amp; Logging Equipment"/>
+    <gifi code="1749" description="Accumulated Amortization Of Forestry &amp; Logging Equipment"/>
+    <gifi code="1750" description="Fishing Gear &amp; Nets"/>
+    <gifi code="1751" description="Accumulated Amortization Of Fishing Gear &amp; Nets"/>
+    <gifi code="1752" description="Mining Equipment"/>
+    <gifi code="1753" description="Accumulated Amortization Of Mining Equipment"/>
+    <gifi code="1754" description="Oil &amp; Gas Systems"/>
+    <gifi code="1755" description="Accumulated Amortization Of Oil &amp; Gas Systems"/>
+    <gifi code="1756" description="Production Equipment for resource industries"/>
+    <gifi code="1757" description="Accumulated Amortization Of Production Equipment for resource industries"/>
+    <gifi code="1758" description="Production Equipment for other industries"/>
+    <gifi code="1759" description="Accumulated Amortization Of Production Equipment for other industries"/>
+    <gifi code="1760" description="Exploration Equipment"/>
+    <gifi code="1761" description="Accumulated Amortization Of Exploration Equipment"/>
+    <gifi code="1762" description="Shipping Equipment"/>
+    <gifi code="1763" description="Accumulated Amortization Of Shipping Equipment"/>
+    <gifi code="1764" description="Ships &amp; Boats"/>
+    <gifi code="1765" description="Accumulated Amortization Of Ships &amp; Boats"/>
+    <gifi code="1766" description="Aircraft"/>
+    <gifi code="1767" description="Accumulated Amortization Of Aircraft"/>
+    <gifi code="1768" description="Signs"/>
+    <gifi code="1769" description="Accumulated Amortization Of Signs"/>
+    <gifi code="1770" description="Small Tools"/>
+    <gifi code="1771" description="Accumulated Amortization Of Small Tools"/>
+    <gifi code="1772" description="Radio &amp; Communication Equipment"/>
+    <gifi code="1773" description="Accumulated Amortization Of Radio &amp; Communication Equipment"/>
+    <gifi code="1774" description="Computer Equipment/Software"/>
+    <gifi code="1775" description="Accumulated Amortization Of Computer Equipment/software"/>
+    <gifi code="1776" description="Musical Instruments"/>
+    <gifi code="1777" description="Accumulated Amortization Of Musical Instruments"/>
+    <gifi code="1778" description="Satellites"/>
+    <gifi code="1779" description="Accumulated Amortization Of Satellites"/>
+    <gifi code="1780" description="Earth Stations"/>
+    <gifi code="1781" description="Accumulated Amortization Of Earth Stations"/>
+    <gifi code="1782" description="Machinery &amp; Equipment Under Construction"/>
+    <gifi code="1783" description="Transportation Equipment"/>
+    <gifi code="1784" description="Accumulated Amortization Of Transportation Equipment"/>
+    <gifi code="1785" description="Other Machinery &amp; Equipment"/>
+    <gifi code="1786" description="Accumulated Amortization Of Other Machinery &amp; Equipment"/>
+    <gifi code="1787" description="Furniture &amp; Fixtures"/>
+    <gifi code="1788" description="Accumulated Amortization Of Furniture &amp; Fixtures"/>
+    <gifi code="1900" description="Other Tangible Capital Assets"/>
+    <gifi code="1901" description="Accumulated Amortization Of Other Tangible Capital Assets"/>
+    <gifi code="1902" description="Logging Roads"/>
+    <gifi code="1903" description="Accumulated Amortization Of Logging Roads"/>
+    <gifi code="1904" description="Asphalt &amp; Parking Areas"/>
+    <gifi code="1905" description="Accumulated Amortization Of Asphalt &amp; Parking Areas"/>
+    <gifi code="1906" description="Wharves, Docks &amp; Marinas"/>
+    <gifi code="1907" description="Accumulated Amortization Of Wharves, Docks &amp; Marinas"/>
+    <gifi code="1908" description="Fences"/>
+    <gifi code="1909" description="Accumulated Amortization Of Fences"/>
+    <gifi code="1910" description="Capital Leases - Buildings"/>
+    <gifi code="1911" description="Accumulated Amortization Of Capital Leases - Buildings"/>
+    <gifi code="1912" description="Capital Leases - Equipment"/>
+    <gifi code="1913" description="Accumulated Amortization Of Capital Leases - Equipment"/>
+    <gifi code="1914" description="Capital Leases - Vehicles"/>
+    <gifi code="1915" description="Accumulated Amortization Of Capital Leases - Vehicles"/>
+    <gifi code="1916" description="Capital Leases - Other"/>
+    <gifi code="1917" description="Accumulated Amortization Of Capital Leases - Other"/>
+    <gifi code="1918" description="Leasehold Improvements"/>
+    <gifi code="1919" description="Accumulated Amortization Of Leasehold Improvements"/>
+    <gifi code="1920" description="Other Capital Assets Under Construction"/>
+    <gifi code="1921" description="Campsites"/>
+    <gifi code="1922" description="Accumulated Amortization Of Campsites"/>
+    <gifi code="2008" description="Total Tangible Capital Assets"/>
+    <gifi code="2009" description="Total Accumulated Amortization Of Tangible Capital Assets"/>
+    <gifi code="2010" description="Intangible Assets"/>
+    <gifi code="2011" description="Accumulated Amortization Of Intangible Assets"/>
+    <gifi code="2012" description="Goodwill"/>
+    <gifi code="2013" description="Accumulated Amortization Of Goodwill"/>
+    <gifi code="2014" description="Quota"/>
+    <gifi code="2015" description="Accumulated Amortization Of Quota"/>
+    <gifi code="2016" description="Licences"/>
+    <gifi code="2017" description="Accumulated Amortization Of Licences"/>
+    <gifi code="2018" description="Incorporation Costs"/>
+    <gifi code="2019" description="Accumulated Amortization Of Incorporation Costs"/>
+    <gifi code="2020" description="Trademarks &amp; Patents"/>
+    <gifi code="2021" description="Accumulated Amortization Of Trademarks &amp; Patents"/>
+    <gifi code="2022" description="Customer Lists"/>
+    <gifi code="2023" description="Accumulated Amortization Of Customer Lists"/>
+    <gifi code="2024" description="Rights"/>
+    <gifi code="2025" description="Accumulated Amortization Of Rights"/>
+    <gifi code="2026" description="Research &amp; Development"/>
+    <gifi code="2027" description="Accumulated Amortization Of Research &amp; Development"/>
+    <gifi code="2070" description="Resource Rights"/>
+    <gifi code="2071" description="Accumulated Amortization Of Resource Rights"/>
+    <gifi code="2072" description="Timber Rights"/>
+    <gifi code="2073" description="Accumulated Amortization Of Timber Rights"/>
+    <gifi code="2074" description="Mining Rights"/>
+    <gifi code="2075" description="Accumulated Amortization Of Mining Rights"/>
+    <gifi code="2076" description="Oil &amp; Gas Rights"/>
+    <gifi code="2077" description="Accumulated Amortization Of Oil &amp; Gas Rights"/>
+    <gifi code="2178" description="Total Intangible Capital Assets"/>
+    <gifi code="2179" description="Total Accumulated Amortization Of Intangible Capital Assets"/>
+    <gifi code="2180" description="Due From Shareholder(s)/Director(s)"/>
+    <gifi code="2181" description="Due From Individual Shareholder(s)"/>
+    <gifi code="2182" description="Due From Corporate Shareholder(s)"/>
+    <gifi code="2183" description="Due From Director(s)"/>
+    <gifi code="2190" description="Due from Members"/>
+    <gifi code="2200" description="Investment In Joint Venture(s)/Partnership(s)"/>
+    <gifi code="2220" description="Due From Joint Venture(s)/Partnership(s)"/>
+    <gifi code="2240" description="Due From/Investment In Related Parties"/>
+    <gifi code="2241" description="Due From/Investment In Canadian Related Parties"/>
+    <gifi code="2242" description="Shares In Canadian Related Corporations"/>
+    <gifi code="2243" description="Loans/Advances To Canadian Related Corporations"/>
+    <gifi code="2244" description="Investment In Canadian Related Corporations At Cost"/>
+    <gifi code="2245" description="Investment In Canadian Related Corporations At Equity"/>
+    <gifi code="2246" description="Due From/Investment In Foreign Related Parties"/>
+    <gifi code="2247" description="Shares In Foreign Related Corporations"/>
+    <gifi code="2248" description="Loans/Advances To Foreign Related Corporations"/>
+    <gifi code="2249" description="Investment In Foreign Related Corporations At Cost"/>
+    <gifi code="2250" description="Investment In Foreign Related Corporations At Equity"/>
+    <gifi code="2280" description="Investment In Co-Tenancy"/>
+    <gifi code="2300" description="Long Term Investments"/>
+    <gifi code="2301" description="Foreign Shares"/>
+    <gifi code="2302" description="Other Type Of Foreign Investments"/>
+    <gifi code="2303" description="Canadian Shares"/>
+    <gifi code="2304" description="Government Of Canada Debt"/>
+    <gifi code="2305" description="Canadian Provinvial &amp; Municipal Government Debt"/>
+    <gifi code="2306" description="Canadian Corporate Bonds &amp; Debentures"/>
+    <gifi code="2307" description="Debt Securities"/>
+    <gifi code="2308" description="Equity Securities"/>
+    <gifi code="2309" description="Securities Purchased Under Resale Agreements"/>
+    <gifi code="2310" description="Central Credit Union Shares"/>
+    <gifi code="2311" description="Other Long Term Canadian Investments"/>
+    <gifi code="2360" description="Long Term Loans"/>
+    <gifi code="2361" description="Mortgages"/>
+    <gifi code="2362" description="Personal &amp; Credit Card Loans"/>
+    <gifi code="2363" description="Business &amp; Government Loans"/>
+    <gifi code="2364" description="Line Of Credit"/>
+    <gifi code="2420" description="Other Long Term Assets"/>
+    <gifi code="2421" description="Deferred Income Taxes / Tax Reserves"/>
+    <gifi code="2422" description="Deferred Pension Charges"/>
+    <gifi code="2423" description="Deferred Unrealized Exchange Losses"/>
+    <gifi code="2424" description="Other Deferred Items/Charges"/>
+    <gifi code="2425" description="Accumulated Amortization Of Deferred Charges"/>
+    <gifi code="2426" description="Reserve Fund"/>
+    <gifi code="2427" description="Cash Surrender Value Of Life Insurance"/>
+    <gifi code="2589" description="Total Long Term Assets"/>
+    <gifi code="2590" description="Assets Held In Trust"/>
+    <gifi code="2599" description="Total Assets"/>
+    <gifi code="2600" description="Bank Overdraft"/>
+    <gifi code="2620" description="Amounts Payable &amp; Accrued Liabilities"/>
+    <gifi code="2621" description="Accounts Payable Trade"/>
+    <gifi code="2622" description="Accounts Payable To Related Parties"/>
+    <gifi code="2623" description="Holdbacks Payable"/>
+    <gifi code="2624" description="Wages Payable"/>
+    <gifi code="2625" description="Management Fees Payable"/>
+    <gifi code="2626" description="Bonuses Payable"/>
+    <gifi code="2627" description="Employee Deductions Payable"/>
+    <gifi code="2628" description="Withholding Taxes Payable"/>
+    <gifi code="2629" description="Intrest Payable"/>
+    <gifi code="2680" description="Taxes Payable"/>
+    <gifi code="2700" description="Short Term Debt"/>
+    <gifi code="2701" description="Loans From Canadian Banks"/>
+    <gifi code="2702" description="Liability For Securities Sold Short"/>
+    <gifi code="2703" description="Liability For Securities Sold Under Repurchase Agreements"/>
+    <gifi code="2704" description="Gold &amp; Silver Certificates"/>
+    <gifi code="2705" description="Cheques &amp; Other Items In Transit"/>
+    <gifi code="2706" description="Lien Notes"/>
+    <gifi code="2770" description="Deferred Income"/>
+    <gifi code="2780" description="Due To Shareholder(s)/Director(s)"/>
+    <gifi code="2781" description="Due To Individual Shareholder(s)"/>
+    <gifi code="2782" description="Due To Corporate Shareholder(s)"/>
+    <gifi code="2783" description="Due To Director(s)"/>
+    <gifi code="2840" description="Due To Joint Venture(s)/Partnership(s)"/>
+    <gifi code="2860" description="Due To Related Parties"/>
+    <gifi code="2861" description="Demand Notes Due To Related Parties"/>
+    <gifi code="2862" description="Interest Payable To Related Parties"/>
+    <gifi code="2863" description="Advances Due To Related Parties"/>
+    <gifi code="2920" description="Current Portion Of Long Term Liability"/>
+    <gifi code="2960" description="Other Current Liabilities"/>
+    <gifi code="2961" description="Deposits Received"/>
+    <gifi code="2962" description="Dividends Payable"/>
+    <gifi code="2963" description="Deferred Income Taxes"/>
+    <gifi code="2964" description="Reserves For Guarantees, Warranties Or Indemnities"/>
+    <gifi code="2965" description="General Reserves / Provisions"/>
+    <gifi code="2966" description="Crew Shares"/>
+    <gifi code="3139" description="Total Current Liabilities"/>
+    <gifi code="3140" description="Long Term Debt"/>
+    <gifi code="3141" description="Mortgages"/>
+    <gifi code="3142" description="Farm Credit Corporation Loan"/>
+    <gifi code="3143" description="Chartered Bank Loan"/>
+    <gifi code="3144" description="Credit Union/Caisse Populaire Loan"/>
+    <gifi code="3145" description="Provincial Government Loan"/>
+    <gifi code="3146" description="Supply Company Loan"/>
+    <gifi code="3147" description="Private Loan"/>
+    <gifi code="3148" description="Central, Leagues And Federation Loans"/>
+    <gifi code="3149" description="Line Of Credit"/>
+    <gifi code="3150" description="Liability For Securities Sold Short"/>
+    <gifi code="3151" description="Liability For Securities Sold Under Repurchase Agreements"/>
+    <gifi code="3152" description="Lien Notes"/>
+    <gifi code="3210" description="Bonds And Debentures"/>
+    <gifi code="3220" description="Deferred Income"/>
+    <gifi code="3240" description="Deferred Income Taxes"/>
+    <gifi code="3260" description="Long Term Due To Shareholder(s)/Director(s)"/>
+    <gifi code="3261" description="Long Term Due To Individual Shareholder(s)"/>
+    <gifi code="3262" description="Long Term Due To Corporate Shareholder(s)"/>
+    <gifi code="3263" description="Long Term Due To Director(s)"/>
+    <gifi code="3280" description="Long Term Due To Joint Venture(s)/Partnership(s)"/>
+    <gifi code="3300" description="Long Term Due To Related Parties"/>
+    <gifi code="3301" description="Amounts Owing To Related Canadian Parties"/>
+    <gifi code="3302" description="Amounts Owing To Related Foreign Parties"/>
+    <gifi code="3320" description="Other Long Term Liabilities"/>
+    <gifi code="3321" description="Long Term Obligations/Commitments/Leases"/>
+    <gifi code="3322" description="Reserves For Guarantees, Warranties Or Indemnities"/>
+    <gifi code="3323" description="Provision For Site Restoration"/>
+    <gifi code="3324" description="Contributions To Qualifying Environmental Trust"/>
+    <gifi code="3325" description="General Provisions / Reserves"/>
+    <gifi code="3326" description="Preference Shares Restated"/>
+    <gifi code="3327" description="Member Allocations"/>
+    <gifi code="3328" description="Deferred Income From Incomplete Contracts"/>
+    <gifi code="3450" description="Total Long Term Liabilities"/>
+    <gifi code="3460" description="Subordinated Debt"/>
+    <gifi code="3470" description="Amounts Held In Trust"/>
+    <gifi code="3499" description="Total Liabilities"/>
+    <gifi code="3500" description="Common Shares"/>
+    <gifi code="3520" description="Preferred Shares"/>
+    <gifi code="3540" description="Contributed &amp; Other Surplus"/>
+    <gifi code="3541" description="Contributed Surplus"/>
+    <gifi code="3542" description="Appraisal Surplus"/>
+    <gifi code="3543" description="General Reserve"/>
+    <gifi code="3570" description="Head Office Account"/>
+    <gifi code="3600" description="Retained Earnings/Deficit"/>
+    <gifi code="3620" description="Total Shareholder Equity"/>
+    <gifi code="3640" description="Total Liabilities &amp; Shareholder Equity"/>
+    <gifi code="3660" description="Retained Earnings/Deficit Start"/>
+    <gifi code="3680" description="Net Income/Loss"/>
+    <gifi code="3700" description="Dividend Declared"/>
+    <gifi code="3701" description="Cash Dividend"/>
+    <gifi code="3702" description="Patronage Dividend"/>
+    <gifi code="3720" description="Prior Year Adjustments"/>
+    <gifi code="3740" description="Other Items Affecting Retained Earnings"/>
+    <gifi code="3741" description="Share Redemptions"/>
+    <gifi code="3742" description="Special Reserves"/>
+    <gifi code="3743" description="Currency Adjustments"/>
+    <gifi code="3744" description="Unusual Revenue Items"/>
+    <gifi code="3745" description="Interfund Transfers (NPO)"/>
+    <gifi code="3849" description="Retained Earnings/Deficit End"/>
+    <gifi code="8000" description="Trade Sales of Goods and Services"/>
+    <gifi code="8020" description="Sales To Related Parties"/>
+    <gifi code="8030" description="Interdivisional Sales"/>
+    <gifi code="8040" description="Sales From Resource Properties"/>
+    <gifi code="8041" description="Petroleum &amp; Natural Gas Sales"/>
+    <gifi code="8042" description="Petroleum &amp; Natural Gas Sales To Related Parties"/>
+    <gifi code="8043" description="Gas Marketing"/>
+    <gifi code="8044" description="Processing Revenue"/>
+    <gifi code="8045" description="Pipeline Revenue"/>
+    <gifi code="8046" description="Seismic Sales"/>
+    <gifi code="8047" description="Mining Revenue"/>
+    <gifi code="8048" description="Coal Revenue"/>
+    <gifi code="8049" description="Oil Sands Revenue"/>
+    <gifi code="8050" description="Royalty Income"/>
+    <gifi code="8051" description="Oil &amp; Gas Partnership/Joint Venture Income/Loss"/>
+    <gifi code="8052" description="Mining Partnership/Joint Venture Income/Loss"/>
+    <gifi code="8053" description="Other Production Revenue"/>
+    <gifi code="8089" description="Total Sales Of Goods And Services"/>
+    <gifi code="8090" description="Investment Revenue"/>
+    <gifi code="8091" description="Interest From Foreign Sources"/>
+    <gifi code="8092" description="Interest From Canadian Bonds And Debentures"/>
+    <gifi code="8093" description="Interest From Canadian Mortgage Loans"/>
+    <gifi code="8094" description="Interest From Other Canadian Sources"/>
+    <gifi code="8095" description="Dividend Income"/>
+    <gifi code="8096" description="Dividend From Canadian Sources"/>
+    <gifi code="8097" description="Interest From Foreign Sources"/>
+    <gifi code="8120" description="Commission Revenue"/>
+    <gifi code="8121" description="Commission Income On Real Estate Transactions"/>
+    <gifi code="8140" description="Rental Revenue"/>
+    <gifi code="8141" description="Real Estate Rental Revenue"/>
+    <gifi code="8150" description="Vehicle Leasing"/>
+    <gifi code="8160" description="Fishing Revenue"/>
+    <gifi code="8161" description="Fish Products"/>
+    <gifi code="8162" description="Other Marine Products"/>
+    <gifi code="8163" description="Fishing Grants, Credits &amp; Rebates"/>
+    <gifi code="8164" description="Fishing Subsidies"/>
+    <gifi code="8165" description="Compensation For Loss Of Fishing Income/Property"/>
+    <gifi code="8166" description="Sharesman Income"/>
+    <gifi code="8210" description="Realized Gains/Losses On Disposal Of Assets"/>
+    <gifi code="8211" description="Realized Gains/Losses On Sale Of Investments"/>
+    <gifi code="8212" description="Realized Gains/Losses On Sale Of Resource Properties"/>
+    <gifi code="8220" description="NPO Amounts Received"/>
+    <gifi code="8221" description="Membership Fees"/>
+    <gifi code="8222" description="Assessments"/>
+    <gifi code="8223" description="Gifts"/>
+    <gifi code="8224" description="Gross Sales And Revenues From Organizational Activities"/>
+    <gifi code="8230" description="Other Revenue"/>
+    <gifi code="8231" description="Foreign Exchange Gains/Losses"/>
+    <gifi code="8232" description="Income/Loss Of Subsidiaries/Affiliates"/>
+    <gifi code="8233" description="Income/Loss Of Other Divisions"/>
+    <gifi code="8234" description="Income/Loss Of Joint Ventures"/>
+    <gifi code="8235" description="Income/Loss Of Partnerships"/>
+    <gifi code="8236" description="RealizaTion Of Deferred Revenues"/>
+    <gifi code="8237" description="Royalty Income Other Than Resource"/>
+    <gifi code="8238" description="Alberta Royalty Tax Credits"/>
+    <gifi code="8239" description="Management &amp; Administration Fees"/>
+    <gifi code="8240" description="Telecommunications Revenues"/>
+    <gifi code="8241" description="Consulting Fees"/>
+    <gifi code="8242" description="Subsidies &amp; Grants"/>
+    <gifi code="8243" description="Sale Of By-Products"/>
+    <gifi code="8244" description="Deposit Services"/>
+    <gifi code="8245" description="Credit Services"/>
+    <gifi code="8246" description="Card Services"/>
+    <gifi code="8247" description="Patronage Dividends"/>
+    <gifi code="8248" description="Insurance Recoveries"/>
+    <gifi code="8249" description="Expense Recoveries"/>
+    <gifi code="8250" description="Bad Debt Recoveries"/>
+    <gifi code="8299" description="Total Revenue"/>
+    <gifi code="8300" description="Opening Inventory"/>
+    <gifi code="8301" description="Opening Inventory - finished goods"/>
+    <gifi code="8302" description="Opening Inventory - raw materials"/>
+    <gifi code="8303" description="Opening Inventory - goods in process"/>
+    <gifi code="8304" description="Opening Inventory - work in process"/>
+    <gifi code="8320" description="Purchases / Cost of Materials"/>
+    <gifi code="8321" description="Purchases Product A"/>
+    <gifi code="8322" description="Purchases Product B"/>
+    <gifi code="8331" description="Price Differences &amp; Discounts On Purchases"/>
+    <gifi code="8340" description="Direct Wages"/>
+    <gifi code="8350" description="Benefits On Direct Wages"/>
+    <gifi code="8360" description="Trades &amp; Sub-contracts"/>
+    <gifi code="8370" description="Production Costs Other Than Resource"/>
+    <gifi code="8400" description="Resource Production Costs"/>
+    <gifi code="8401" description="Pipeline Operations"/>
+    <gifi code="8402" description="Drilling"/>
+    <gifi code="8403" description="Site Restoration Costs"/>
+    <gifi code="8404" description="Gross Overriding Royalty"/>
+    <gifi code="8405" description="Freehold Royalties"/>
+    <gifi code="8406" description="Other Producing Properties Rental"/>
+    <gifi code="8407" description="Prospect &amp; Geological"/>
+    <gifi code="8408" description="Well Operating, Fuel &amp; Equipment"/>
+    <gifi code="8409" description="Well Abandonment &amp; Dry Holes"/>
+    <gifi code="8410" description="Other Lease Rentals"/>
+    <gifi code="8411" description="Exploration Expenses, Aerial Surveys"/>
+    <gifi code="8412" description="Development Expenses, stripping costs"/>
+    <gifi code="8435" description="Crown Charges"/>
+    <gifi code="8436" description="Crown royalties"/>
+    <gifi code="8437" description="Crown lease rentals"/>
+    <gifi code="8438" description="Freehold mineral tax"/>
+    <gifi code="8439" description="Mining taxes"/>
+    <gifi code="8440" description="Oil and Sand leases"/>
+    <gifi code="8441" description="Saskatchewan resource surcharge"/>
+    <gifi code="8450" description="Other Direct Costs"/>
+    <gifi code="8451" description="Equipment Hire &amp; Operation"/>
+    <gifi code="8452" description="Log Yard"/>
+    <gifi code="8453" description="Forestry costs"/>
+    <gifi code="8454" description="Logging Road costs"/>
+    <gifi code="8455" description="Stumpage costs"/>
+    <gifi code="8456" description="Royalty costs"/>
+    <gifi code="8457" description="Freight In &amp; Customs Duty"/>
+    <gifi code="8458" description="Inventory Write Down"/>
+    <gifi code="8459" description="Direct cost amortization of tangible assets"/>
+    <gifi code="8460" description="Direct cost amortization of natural resource assets"/>
+    <gifi code="8461" description="Overhead expenses allocated to cost of sales"/>
+    <gifi code="8500" description="Closing Inventory"/>
+    <gifi code="8501" description="Closing Inventory - Finished Goods"/>
+    <gifi code="8502" description="Closing Inventory - Raw Materials"/>
+    <gifi code="8503" description="Closing Inventory - Goods In Process"/>
+    <gifi code="8504" description="Closing Inventory - Work In Process"/>
+    <gifi code="8518" description="Cost Of Sales"/>
+    <gifi code="8519" description="Gross Profit/Loss"/>
+    <gifi code="8520" description="Advertising &amp; Promotion"/>
+    <gifi code="8521" description="Advertising"/>
+    <gifi code="8522" description="Donations"/>
+    <gifi code="8523" description="Meals &amp; Entertainment"/>
+    <gifi code="8524" description="Promotion"/>
+    <gifi code="8570" description="Amortization Of Intangible Assets"/>
+    <gifi code="8590" description="Bad Debt Expense"/>
+    <gifi code="8610" description="Loan Losses"/>
+    <gifi code="8611" description="Provision for Loan Losses"/>
+    <gifi code="8620" description="Employee Benefits"/>
+    <gifi code="8621" description="Group Insurance Benefits"/>
+    <gifi code="8622" description="Employers Portion Of Employee Benefits"/>
+    <gifi code="8623" description="Contributions To Deferred Income Plans"/>
+    <gifi code="8650" description="Amortization Of Natural Resource Assets"/>
+    <gifi code="8670" description="Amortization Of Tangible Assets"/>
+    <gifi code="8690" description="Insurance"/>
+    <gifi code="8691" description="Life Insurance On Executives"/>
+    <gifi code="8710" description="Interest &amp; Bank Charges"/>
+    <gifi code="8711" description="Interest On Short Term Debt"/>
+    <gifi code="8712" description="Interest On Bonds And Debentures"/>
+    <gifi code="8713" description="Interest On Mortgages"/>
+    <gifi code="8714" description="Interest On Long Term Debt"/>
+    <gifi code="8715" description="Bank Charges"/>
+    <gifi code="8716" description="Credit Card Charges"/>
+    <gifi code="8717" description="Collection &amp; Credit costs"/>
+    <gifi code="8760" description="Business Taxes, Licences &amp; Memberships"/>
+    <gifi code="8761" description="Memberships"/>
+    <gifi code="8762" description="Business Taxes"/>
+    <gifi code="8763" description="Franchise Fees"/>
+    <gifi code="8764" description="Government Fees"/>
+    <gifi code="8780" description="New Brunswick Tax On Large Corporations"/>
+    <gifi code="8790" description="Nova Scotia Tax On Large Corporations"/>
+    <gifi code="8810" description="Office Expenses"/>
+    <gifi code="8811" description="Office Stationary And Supplies"/>
+    <gifi code="8812" description="Office Utilities"/>
+    <gifi code="8813" description="Data Processing"/>
+    <gifi code="8860" description="Professional Fees"/>
+    <gifi code="8861" description="Legal Fees"/>
+    <gifi code="8862" description="Accounting Fees"/>
+    <gifi code="8863" description="Consulting Fees"/>
+    <gifi code="8864" description="Architect Fees"/>
+    <gifi code="8865" description="Appraisal Fees"/>
+    <gifi code="8866" description="Laboratory Fees"/>
+    <gifi code="8867" description="Medical Fees"/>
+    <gifi code="8868" description="Veterinary Fees"/>
+    <gifi code="8869" description="Brokerage Fees"/>
+    <gifi code="8870" description="Transfer Fees"/>
+    <gifi code="8871" description="Management &amp; Administration Fees"/>
+    <gifi code="8872" description="Refining &amp; Assay"/>
+    <gifi code="8873" description="Registrar &amp; Transfer Agent Fees"/>
+    <gifi code="8874" description="Restructuring Costs"/>
+    <gifi code="8875" description="Security &amp; Exchange Commission Fees"/>
+    <gifi code="8876" description="Training Expense"/>
+    <gifi code="8877" description="Studio &amp; Recording"/>
+    <gifi code="8910" description="Rental"/>
+    <gifi code="8911" description="Real Estate Rental"/>
+    <gifi code="8912" description="Occupancy Costs"/>
+    <gifi code="8913" description="Condominium Fees"/>
+    <gifi code="8914" description="Equipment Rental"/>
+    <gifi code="8915" description="Motor Vehicle Rental"/>
+    <gifi code="8916" description="Moorage (Boat)"/>
+    <gifi code="8917" description="Storage"/>
+    <gifi code="8918" description="Quota Rental"/>
+    <gifi code="8960" description="Repairs &amp; Maintenance - Aircraft"/>
+    <gifi code="8961" description="Repairs &amp; Maintenance - Buildings"/>
+    <gifi code="8962" description="Repairs &amp; Maintenance - Vehicles"/>
+    <gifi code="8963" description="Repairs &amp; Maintenance - Boats"/>
+    <gifi code="8964" description="Repairs &amp; Maintenance - Machinery &amp; Equipment"/>
+    <gifi code="9010" description="Other Repairs &amp; Maintenance - Janitor &amp; Yard"/>
+    <gifi code="9011" description="Machine Shop Expense"/>
+    <gifi code="9012" description="Road Costs"/>
+    <gifi code="9013" description="Security"/>
+    <gifi code="9014" description="Garbage Removal"/>
+    <gifi code="9060" description="Salaries &amp; Wages"/>
+    <gifi code="9061" description="Commissions"/>
+    <gifi code="9062" description="Crew Share"/>
+    <gifi code="9063" description="Bonuses"/>
+    <gifi code="9064" description="Director's Fees"/>
+    <gifi code="9065" description="Management Salaries"/>
+    <gifi code="9066" description="Employee Salaries"/>
+    <gifi code="9110" description="Sub-Contracts"/>
+    <gifi code="9130" description="Supplies"/>
+    <gifi code="9131" description="Small Tools"/>
+    <gifi code="9132" description="Shop Expense"/>
+    <gifi code="9133" description="Uniforms"/>
+    <gifi code="9134" description="Laundry"/>
+    <gifi code="9135" description="Food &amp; Catering"/>
+    <gifi code="9136" description="Fishing Gear"/>
+    <gifi code="9137" description="Nets &amp; Traps"/>
+    <gifi code="9138" description="Salt, Bait &amp; Ice"/>
+    <gifi code="9139" description="Camp Supplies"/>
+    <gifi code="9150" description="Computer Related Expenses"/>
+    <gifi code="9151" description="Upgrade"/>
+    <gifi code="9152" description="Internet"/>
+    <gifi code="9180" description="Property Taxes"/>
+    <gifi code="9200" description="Travel Expenses"/>
+    <gifi code="9201" description="Meetings &amp; Conventions"/>
+    <gifi code="9220" description="Utilities"/>
+    <gifi code="9221" description="Electricity"/>
+    <gifi code="9222" description="Water"/>
+    <gifi code="9223" description="Heat"/>
+    <gifi code="9224" description="Fuel Costs"/>
+    <gifi code="9225" description="Telephone &amp; Communications"/>
+    <gifi code="9270" description="Other Expenses"/>
+    <gifi code="9271" description="Cash Over/Short"/>
+    <gifi code="9272" description="Reimbursement Of Parent Company Expense"/>
+    <gifi code="9273" description="Selling Expenses"/>
+    <gifi code="9274" description="Shipping &amp; Warehouse Expenses"/>
+    <gifi code="9275" description="Delivery, Freight &amp; Express"/>
+    <gifi code="9276" description="Warranty Expenses"/>
+    <gifi code="9277" description="Royalty Expenses - Resident"/>
+    <gifi code="9278" description="Royalty Expenses - Non-Resident"/>
+    <gifi code="9279" description="Dumping Charges"/>
+    <gifi code="9280" description="Land Fill Fees"/>
+    <gifi code="9281" description="Vehicle Expenses"/>
+    <gifi code="9282" description="Research &amp; Development"/>
+    <gifi code="9283" description="Withholding Taxes"/>
+    <gifi code="9284" description="General &amp; Administrative Expenses"/>
+    <gifi code="9285" description="Interdivisional Expenses"/>
+    <gifi code="9286" description="Interfund Transfer (NPO)"/>
+    <gifi code="9367" description="Total Operating Expenses"/>
+    <gifi code="9368" description="Total Expenses"/>
+    <gifi code="9369" description="Net Non-Farming Income"/>
+    <gifi code="9370" description="Grains And Oilseeds"/>
+    <gifi code="9371" description="Wheat"/>
+    <gifi code="9372" description="Oats"/>
+    <gifi code="9373" description="Barley"/>
+    <gifi code="9374" description="Mixed Grains"/>
+    <gifi code="9375" description="Corn"/>
+    <gifi code="9376" description="Canola"/>
+    <gifi code="9377" description="Flaxseed"/>
+    <gifi code="9378" description="Soya Beans"/>
+    <gifi code="9379" description="Wheat Board Payments"/>
+    <gifi code="9420" description="Other Crop Revenues"/>
+    <gifi code="9321" description="Fruit"/>
+    <gifi code="9322" description="Potatoes"/>
+    <gifi code="9323" description="Vegetables"/>
+    <gifi code="9324" description="Tobacco"/>
+    <gifi code="9325" description="Greenhouse &amp; Nursery Products"/>
+    <gifi code="9326" description="Forage Crops"/>
+    <gifi code="9470" description="Livestock &amp; Animal Products Revenue"/>
+    <gifi code="9471" description="Cattle"/>
+    <gifi code="9472" description="Swine"/>
+    <gifi code="9473" description="Poultry"/>
+    <gifi code="9474" description="Sheep &amp; Lambs"/>
+    <gifi code="9475" description="Pregnant Mare Urine (PMU)"/>
+    <gifi code="9476" description="Milk &amp; Cream - Excluding Dairy Subsidies"/>
+    <gifi code="9477" description="Eggs For Consumption"/>
+    <gifi code="9478" description="Hatching Eggs"/>
+    <gifi code="9479" description="Aquaculture"/>
+    <gifi code="9480" description="Horses - Breeding &amp; Meat"/>
+    <gifi code="9520" description="Other Commodities"/>
+    <gifi code="9521" description="Maple Products"/>
+    <gifi code="9522" description="Artificial Insemination (AI)"/>
+    <gifi code="9523" description="Semen Production"/>
+    <gifi code="9524" description="Embryo Production"/>
+    <gifi code="9540" description="Program Payment Revenues"/>
+    <gifi code="9541" description="Dairy Subsidies"/>
+    <gifi code="9542" description="Crop Insurance"/>
+    <gifi code="9543" description="NISA Payments"/>
+    <gifi code="9544" description="Disaster Assistance Program Payments"/>
+    <gifi code="9570" description="Rebates"/>
+    <gifi code="9571" description="Rebates - Fuel"/>
+    <gifi code="9572" description="Rebates - Interest"/>
+    <gifi code="9573" description="Rebates - Property Taxes"/>
+    <gifi code="9574" description="Resales, Rebates, GST For NISA Eligible Expenses"/>
+    <gifi code="9575" description="Rebates, GST For NISA Non-Eligible Expenses"/>
+    <gifi code="9600" description="Other Farm Revenues/Losses"/>
+    <gifi code="9601" description="Custom Or Contract Work"/>
+    <gifi code="9602" description="Wood Sales"/>
+    <gifi code="9603" description="Horse Racing"/>
+    <gifi code="9604" description="Insurance Proceeds"/>
+    <gifi code="9605" description="Patronage Dividends"/>
+    <gifi code="9606" description="Rental Income"/>
+    <gifi code="9607" description="Interest Income"/>
+    <gifi code="9608" description="Dividend Income"/>
+    <gifi code="9609" description="Gains/Losses On Disposal Of Assets"/>
+    <gifi code="9610" description="Gravel"/>
+    <gifi code="9611" description="Trucking"/>
+    <gifi code="9612" description="Resale Of Commodities Purchased"/>
+    <gifi code="9613" description="Leases"/>
+    <gifi code="9614" description="Machine Rentals"/>
+    <gifi code="9615" description="Farming Partnership Income/Loss"/>
+    <gifi code="9616" description="Farming Joint Venture Income/Loss"/>
+    <gifi code="9650" description="Non-Farming Income"/>
+    <gifi code="9659" description="Total Farm Revenue"/>
+    <gifi code="9660" description="Crop Expenses"/>
+    <gifi code="9661" description="Containers, Twine And Baling Wire"/>
+    <gifi code="9662" description="Fertilizers And Lime"/>
+    <gifi code="9663" description="Pesticides"/>
+    <gifi code="9664" description="Seeds &amp; Plants"/>
+    <gifi code="9665" description="Insurance Premiums (Crop) NISA ACS"/>
+    <gifi code="9710" description="Livestock Expenses"/>
+    <gifi code="9711" description="Feed, Supplements, Straw &amp; Bedding"/>
+    <gifi code="9712" description="Livestock Purchases"/>
+    <gifi code="9713" description="Veterinary Fees, Medicine &amp; Breeding Fees"/>
+    <gifi code="9760" description="Machinery Expenses"/>
+    <gifi code="9761" description="Machinery Insurance"/>
+    <gifi code="9762" description="Machinery Licences"/>
+    <gifi code="9763" description="Machinery Repairs"/>
+    <gifi code="9764" description="Machinery Fuel"/>
+    <gifi code="9765" description="Machinery Lease"/>
+    <gifi code="9790" description="General Farm Expenses"/>
+    <gifi code="9791" description="Amortization Of Tangible Assets"/>
+    <gifi code="9792" description="Advertising, Marketing Costs &amp; Promotion"/>
+    <gifi code="9793" description="Bad Debt"/>
+    <gifi code="9794" description="Benefits Related To Employee Salaries"/>
+    <gifi code="9795" description="Building Repairs &amp; Maintenance"/>
+    <gifi code="9796" description="Clearing, Levelling &amp; Draining Land"/>
+    <gifi code="9797" description="Crop Insurance, GRIP and Stabilization Premiums"/>
+    <gifi code="9798" description="Custom Or Contract Work"/>
+    <gifi code="9799" description="Electricity"/>
+    <gifi code="9800" description="Fence Repairs &amp; Maintenance"/>
+    <gifi code="9801" description="Freight &amp; Trucking"/>
+    <gifi code="9802" description="Heating Fuel &amp; Curing Fuel"/>
+    <gifi code="9803" description="Insurance Program Overpayment Recapture"/>
+    <gifi code="9804" description="Other Insurance Premiums"/>
+    <gifi code="9805" description="Interest &amp; Bank Charges"/>
+    <gifi code="9806" description="Marketing Board Fees"/>
+    <gifi code="9807" description="Membership/Subscription Fees"/>
+    <gifi code="9808" description="Office Expenses"/>
+    <gifi code="9809" description="Professional Fees"/>
+    <gifi code="9810" description="Property Taxes"/>
+    <gifi code="9811" description="Rent - Land &amp; Buildings"/>
+    <gifi code="9812" description="Rent - Machinery"/>
+    <gifi code="9813" description="Other Rental Expenses"/>
+    <gifi code="9814" description="Salaries &amp; Wages"/>
+    <gifi code="9815" description="Salaries &amp; Wages Other Than Spouse Or Dependants"/>
+    <gifi code="9816" description="Salaries &amp; Wages Paid To Dependants"/>
+    <gifi code="9817" description="Selling Costs"/>
+    <gifi code="9818" description="Supplies"/>
+    <gifi code="9819" description="Motor Vehicle Expenses"/>
+    <gifi code="9820" description="Small Tools"/>
+    <gifi code="9821" description="Soil Testing"/>
+    <gifi code="9822" description="Storage/Drying"/>
+    <gifi code="9823" description="Licences/Permits"/>
+    <gifi code="9824" description="Telephone"/>
+    <gifi code="9825" description="Quota Rental"/>
+    <gifi code="9826" description="Gravel"/>
+    <gifi code="9827" description="Purchases Of Commodities Resold"/>
+    <gifi code="9828" description="Salaries &amp; Wages Paid To Spouse"/>
+    <gifi code="9829" description="Motor Vehicle Interest And Leasing Costs"/>
+    <gifi code="9830" description="Prepared Feed"/>
+    <gifi code="9831" description="Custom Feed"/>
+    <gifi code="9832" description="Amortization Of Intangible Assets"/>
+    <gifi code="9833" description="Amortization Of Milk Quota"/>
+    <gifi code="9834" description="Travel Expenses"/>
+    <gifi code="9835" description="Capital/Business Taxes"/>
+    <gifi code="9850" description="Non-Farming Expenses"/>
+    <gifi code="9870" description="Net Inventory Adjustment"/>
+    <gifi code="9898" description="Total Farm Expenses"/>
+    <gifi code="9899" description="Net Farm Income"/>
+    <gifi code="9970" description="Net Income/Loss Before Taxes And Extraordinary Items"/>
+    <gifi code="9975" description="Extraordinary Items"/>
+    <gifi code="9976" description="Legal Settlements"/>
+    <gifi code="9980" description="Unrealized Gains/Losses"/>
+    <gifi code="9985" description="Unusual Items"/>
+    <gifi code="9990" description="Current Income Taxes"/>
+    <gifi code="9995" description="Deferred Income Tax Provision"/>
+    <gifi code="9999" description="Net Income/Loss After Taxes And Extraordinary Items"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="1000" description="CURRENT ASSETS">
+      <account code="1060" description="Chequing Account" category="Asset" gifi="1002" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1065" description="Petty Cash" category="Asset" gifi="1001" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Accounts Receivables" category="Asset" gifi="1060">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Allowance for doubtful accounts" category="Asset" gifi="1063"/>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="INVENTORY ASSETS">
+      <account code="1520" description="Inventory / General" category="Asset" gifi="1122">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Inventory / Aftermarket Parts" category="Asset" gifi="1122">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="Inventory / Raw Materials" category="Asset" gifi="1122">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="CAPITAL ASSETS">
+      <account code="1820" description="Office Furniture &amp; Equipment" category="Asset" gifi="1787"/>
+      <account code="1825" description="Accum. Amort. -Furn. &amp; Equip." category="Asset" contra="true" gifi="1788"/>
+      <account code="1840" description="Vehicle" category="Asset" gifi="1742"/>
+      <account code="1845" description="Accum. Amort. -Vehicle" category="Asset" contra="true" gifi="1743"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="CURRENT LIABILITIES">
+      <account code="2100" description="Accounts Payable" category="Liability" gifi="2621">
+        <link code="AP"/>
+      </account>
+      <account code="2160" description="Federal Taxes Payable" category="Liability" gifi="2680"/>
+      <account code="2170" description="Provincial Taxes Payable" category="Liability" gifi="2680"/>
+      <account code="2310" description="GST" category="Liability" gifi="2680">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.05"/>
+        </tax>
+      </account>
+      <account code="2320" description="PST" category="Liability" gifi="2680">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.08"/>
+        </tax>
+      </account>
+      <account code="2380" description="Vacation Pay Payable" category="Liability" gifi="2624"/>
+      <account code="2390" description="WCB Payable" category="Liability" gifi="2627"/>
+    </account-heading>
+    <account-heading id="h-5" code="2400" description="PAYROLL DEDUCTIONS">
+      <account code="2410" description="EI Payable" category="Liability" gifi="2627"/>
+      <account code="2420" description="CPP Payable" category="Liability" gifi="2627"/>
+      <account code="2450" description="Income Tax Payable" category="Liability" gifi="2628"/>
+    </account-heading>
+    <account-heading id="h-6" code="2600" description="LONG TERM LIABILITIES">
+      <account code="2620" description="Bank Loans" category="Liability" gifi="2701"/>
+      <account code="2680" description="Loans from Shareholders" category="Liability" gifi="2780">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="3300" description="SHARE CAPITAL">
+      <account code="3350" description="Common Shares" category="Equity" gifi="3500"/>
+    </account-heading>
+    <account-heading id="h-8" code="4000" description="SALES REVENUE">
+      <account code="4020" description="General Sales" category="Income" gifi="8000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4030" description="Aftermarket Parts" category="Income" gifi="8000">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4400" description="OTHER REVENUE">
+      <account code="4430" description="Shipping &amp; Handling" category="Income" gifi="8457">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Interest" category="Income" gifi="8090">
+        <link code="IC_income"/>
+      </account>
+      <account code="4450" description="Foreign Exchange Gain / (Loss)" category="Income" gifi="8231"/>
+    </account-heading>
+    <account-heading id="h-10" code="5000" description="COST OF GOODS SOLD">
+      <account code="5010" description="Purchases" category="Expense" gifi="8320">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5050" description="Aftermarket Parts" category="Expense" gifi="8320">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="Freight" category="Expense" gifi="8457">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="5400" description="PAYROLL EXPENSES">
+      <account code="5410" description="Wages &amp; Salaries" category="Expense" gifi="9060"/>
+      <account code="5420" description="EI Expense" category="Expense" gifi="8622"/>
+      <account code="5430" description="CPP Expense" category="Expense" gifi="8622"/>
+      <account code="5440" description="WCB Expense" category="Expense" gifi="8622"/>
+    </account-heading>
+    <account-heading id="h-12" code="5600" description="GENERAL &amp; ADMINISTRATIVE EXPENSES">
+      <account code="5610" description="Accounting &amp; Legal" category="Expense" gifi="8862">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Advertising &amp; Promotions" category="Expense" gifi="8520">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5620" description="Bad Debts" category="Expense" gifi="8590"/>
+      <account code="5660" description="Amortization Expense" category="Expense" gifi="8670"/>
+      <account code="5680" description="Income Taxes" category="Expense" gifi="9990"/>
+      <account code="5685" description="Insurance" category="Expense" gifi="9804">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Interest &amp; Bank Charges" category="Expense" gifi="9805"/>
+      <account code="5700" description="Office Supplies" category="Expense" gifi="8811">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Rent" category="Expense" gifi="9811">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Repair &amp; Maintenance" category="Expense" gifi="8964">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Telephone" category="Expense" gifi="9225">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Travel &amp; Entertainment" category="Expense" gifi="8523"/>
+      <account code="5790" description="Utilities" category="Expense" gifi="8812">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="Licenses" category="Expense" gifi="8760">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+  </coa>
+  <currencies default="CAD">
+    <currency code="CAD">
+      CAD
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="4450"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

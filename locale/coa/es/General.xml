@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="110" description="missing; generated"/>
+    <gifi code="111" description="missing; generated"/>
+    <gifi code="115" description="missing; generated"/>
+    <gifi code="119" description="missing; generated"/>
+    <gifi code="127" description="missing; generated"/>
+    <gifi code="133" description="missing; generated"/>
+    <gifi code="138" description="missing; generated"/>
+    <gifi code="152" description="missing; generated"/>
+    <gifi code="159" description="missing; generated"/>
+    <gifi code="161" description="missing; generated"/>
+    <gifi code="168" description="missing; generated"/>
+    <gifi code="175" description="missing; generated"/>
+    <gifi code="176" description="missing; generated"/>
+    <gifi code="177" description="missing; generated"/>
+    <gifi code="188" description="missing; generated"/>
+    <gifi code="190" description="missing; generated"/>
+    <gifi code="191" description="missing; generated"/>
+    <gifi code="195" description="missing; generated"/>
+    <gifi code="198" description="missing; generated"/>
+    <gifi code="199" description="missing; generated"/>
+    <gifi code="200" description="missing; generated"/>
+    <gifi code="208" description="missing; generated"/>
+    <gifi code="209" description="missing; generated"/>
+    <gifi code="211" description="missing; generated"/>
+    <gifi code="218" description="missing; generated"/>
+    <gifi code="219" description="missing; generated"/>
+    <gifi code="222" description="missing; generated"/>
+    <gifi code="223" description="missing; generated"/>
+    <gifi code="225" description="missing; generated"/>
+    <gifi code="227" description="missing; generated"/>
+    <gifi code="233" description="missing; generated"/>
+    <gifi code="237" description="missing; generated"/>
+    <gifi code="238" description="missing; generated"/>
+    <gifi code="242" description="missing; generated"/>
+    <gifi code="249" description="missing; generated"/>
+    <gifi code="250" description="missing; generated"/>
+    <gifi code="255" description="missing; generated"/>
+    <gifi code="258" description="missing; generated"/>
+    <gifi code="260" description="missing; generated"/>
+    <gifi code="267" description="missing; generated"/>
+    <gifi code="268" description="missing; generated"/>
+    <gifi code="269" description="missing; generated"/>
+    <gifi code="271" description="missing; generated"/>
+    <gifi code="273" description="missing; generated"/>
+    <gifi code="274" description="missing; generated"/>
+    <gifi code="277" description="missing; generated"/>
+    <gifi code="279" description="missing; generated"/>
+    <gifi code="284" description="missing; generated"/>
+    <gifi code="289" description="missing; generated"/>
+    <gifi code="290" description="missing; generated"/>
+    <gifi code="292" description="missing; generated"/>
+    <gifi code="295" description="missing; generated"/>
+    <gifi code="300" description="missing; generated"/>
+    <gifi code="305" description="missing; generated"/>
+    <gifi code="307" description="missing; generated"/>
+    <gifi code="312" description="missing; generated"/>
+    <gifi code="326" description="missing; generated"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="099999999" description="Grupo 1: financiación básica">
+      <account code="100000000" description="Capital Social" category="Equity" gifi="188"/>
+      <account code="101000000" description="Fondo Social" category="Equity" gifi="188"/>
+      <account code="102000000" description="Capital" category="Equity" gifi="188"/>
+      <account code="110000000" description="Prima de emisión o asunción" category="Equity" gifi="190"/>
+      <account code="112000000" description="Reserva legal" category="Equity" gifi="191"/>
+      <account code="113000000" description="Reservas voluntarias" category="Equity" gifi="191"/>
+      <account code="114500000" description="Reservas especiales" category="Equity" gifi="191"/>
+      <account code="118000000" description="Aportaciones de socios o propietarios" category="Equity" gifi="198"/>
+      <account code="120000000" description="Remanente" category="Equity" gifi="195"/>
+      <account code="121000000" description="Resultados negativos de ejercios anterios" category="Equity" gifi="195"/>
+      <account code="129000000" description="Resultados del ejercicio" category="Equity" gifi="199"/>
+      <account code="130000000" description="Subvenciones oficiales de capital" category="Equity" gifi="209"/>
+      <account code="131000000" description="Donaciones y legados de capital" category="Equity" gifi="209"/>
+      <account code="132000000" description="Oros subvenciones, donaciones y legados" category="Equity" gifi="209"/>
+      <account code="137000000" description="Ingresos fiscales a distribuir en varios ejercicios" category="Equity" gifi="208"/>
+      <account code="141000000" description="Provisión para impuestos" category="Liability" gifi="211"/>
+      <account code="142000000" description="Provisión para otros responsibilidades" category="Liability" gifi="211"/>
+      <account code="145000000" description="Provisión para actuaciones medioambientes" category="Liability" gifi="211"/>
+      <account code="149000000" description="Provisión para reestructuraciones" category="Liability" gifi="211"/>
+      <account code="150000000" description="Acciones o participaciones a largo plaza contabilizados como pasivo" category="Liability" gifi="227"/>
+      <account code="160300000" description="Deudas a largo plazo con empresas del grupo" category="Liability" gifi="223"/>
+      <account code="160400000" description="Deudas a largo plaza empresas asociadas" category="Liability" gifi="223"/>
+      <account code="170000000" description="Deudas a largo plazo con entidades de crédito" category="Liability" gifi="218"/>
+      <account code="171000000" description="Deudas a largo plaza" category="Liability" gifi="222"/>
+      <account code="174000000" description="Acreedores de arrendamiento financiero a largo plaza" category="Liability" gifi="219"/>
+      <account code="180000000" description="Fianzas y depósitos recibidos a largo plazo" category="Liability" gifi="222"/>
+      <account code="181000000" description="Anticipos recibidos per ventas o prestaciones de servicios" category="Liability" gifi="225"/>
+      <account code="185000000" description="Depósitos recibidos a largo plazo" category="Liability" gifi="222"/>
+      <account code="190000000" description="Acciones o participaciones emitidas" category="Equity" gifi="237"/>
+      <account code="192000000" description="Suscriptores de acciones" category="Equity" gifi="237"/>
+      <account code="194000000" description="Capital emitido pendiente de inscripción" category="Equity" gifi="237"/>
+    </account-heading>
+    <account-heading id="h-2" code="199999999" description="Grupo 2: inmovilizado">
+      <account code="200000000" description="Inmovilizaciones intangibles" category="Asset" gifi="110">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="210000000" description="Terrenos y bienes naturales" category="Asset" gifi="111">
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="211000000" description="Construcciones" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="212000000" description="Instalaciones técnicas" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="213000000" description="Maquinaria" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="214000000" description="Utilaje" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="215000000" description="Otras instalaciones" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="216000000" description="Mobiliario" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="217000000" description="IT equipos para procecos de información" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="218000000" description="Elementos de transporte" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="219000000" description="Otro inmovilizado material" category="Asset" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="221000000" description="Inversiones en construcciones inmobiliarias" category="Asset" gifi="115">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="230000000" description="Inmovilizaciones materiales en curso" category="Asset" gifi="111"/>
+      <account code="239000000" description="Anticipos para Inmovilizaciones materiales" category="Asset" gifi="111"/>
+      <account code="240300000" description="Participaciones a largo plazo en empresas del grupo" category="Asset" gifi="119"/>
+      <account code="240400000" description="Participaciones a largo plazo en empresas asociadas" category="Asset" gifi="119"/>
+      <account code="240500000" description="Participaciones a largo plazo en partes vinculades" category="Asset" gifi="119"/>
+      <account code="242500000" description="Créditos a largo plazo a partes vinculades" category="Asset" gifi="133"/>
+      <account code="249300000" description="Desembolsos pendientes sobre participaciones a largo plazo" category="Asset" gifi="119"/>
+      <account code="250000000" description="Inversiones financieras a largo plazo en instrumentos de patrimonio" category="Asset" gifi="127"/>
+      <account code="252000000" description="Créditos a largo plazo" category="Asset" gifi="133"/>
+      <account code="253000000" description="Créditos a largo plazo por enajenación de inmovilizado" category="Asset" gifi="133"/>
+      <account code="258000000" description="Imposiciones a largo plazo" category="Asset" gifi="133"/>
+      <account code="259000000" description="Desembolsos pendientes sobre participaciones en el patrimonio neto a largo plazo" category="Asset" gifi="127"/>
+      <account code="260000000" description="Fianzas y depósitos constituidos a largo plazo" category="Asset" gifi="133"/>
+      <account code="280000000" description="Amortización acumulada del inmovilizado intangible" category="Asset" contra="true" gifi="110">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281100000" description="Amortización acumulada construcciones" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281200000" description="Amortización acumulada instalaciones tecnicas" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281300000" description="Amortización acumulada maquinaria" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281400000" description="Amortización acumulada utilaje" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281500000" description="Amortización acumulada otras instalaciones" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281600000" description="Amortización acumulada mobiliario" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281700000" description="Amortización acumulada IT procesos informatica" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281800000" description="Amortización acumulada elementos de transporte" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="281900000" description="Amortización acumulada otro inmovilizado material" category="Asset" contra="true" gifi="111">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="282000000" description="Amortización acumulada inversiones inmobiliario" category="Asset" contra="true" gifi="115">
+        <link code="Asset_Dep"/>
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="290000000" description="Deterioro y proviciones inmobilizado intangible" category="Asset" gifi="110"/>
+      <account code="292000000" description="Deterioro y proviciones inversiones inmobiliarias" category="Asset" gifi="115"/>
+      <account code="293300000" description="Deterioro y proviciones valor participaciones largo plaza" category="Asset" gifi="119"/>
+      <account code="298000000" description="Deterioro y proviciones valor créditos a largo plazo" category="Asset" gifi="133"/>
+    </account-heading>
+    <account-heading id="h-3" code="299999999" description="Grupo 3: existencias">
+      <account code="300000000" description="Mercaderias" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="310000000" description="Materias primas" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="320000000" description="Otros aprovisionamientos" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="330000000" description="Productos en curso" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="340000000" description="Productos semiterminados" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="350000000" description="Productos terminados" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="360000000" description="Subproductos, residuos y materiales recuperados" category="Asset" gifi="138">
+        <link code="IC"/>
+      </account>
+      <account code="390000000" description="Deterioro del valor de las existencias" category="Asset" gifi="138"/>
+    </account-heading>
+    <account-heading id="h-4" code="399999999" description="Grupo 4: acreedores y deudores por operaciones de tráfico">
+      <account code="400000000" description="Proveedores" category="Liability" gifi="242">
+        <link code="AP"/>
+      </account>
+      <account code="403000000" description="Proveedores empresas del grupo" category="Liability" gifi="242">
+        <link code="AP"/>
+      </account>
+      <account code="404000000" description="Proveedores empresas asociadas" category="Liability" gifi="242">
+        <link code="AP"/>
+      </account>
+      <account code="406000000" description="Envases y embalajes a devolver a proveedores" category="Liability" gifi="242">
+        <link code="AP"/>
+      </account>
+      <account code="407000000" description="Anticipos a proveedores" category="Liability" gifi="138">
+        <link code="AP"/>
+      </account>
+      <account code="410000000" description="Acreedores por prestaciones de servicios" category="Liability" gifi="249">
+        <link code="AP"/>
+      </account>
+      <account code="430000000" description="Clientes" category="Asset" gifi="152">
+        <link code="AR"/>
+      </account>
+      <account code="431000000" description="Clientes, efectos comerciales a cobrar" category="Asset" gifi="152">
+        <link code="AR"/>
+      </account>
+      <account code="433000000" description="Clientes empresa del grupo" category="Asset" gifi="152">
+        <link code="AR"/>
+      </account>
+      <account code="434000000" description="Clientes empresas asociadas" category="Asset" gifi="152">
+        <link code="AR"/>
+      </account>
+      <account code="436000000" description="Clientes de dudoso cobro" category="Asset" gifi="152">
+        <link code="AR"/>
+      </account>
+      <account code="438000000" description="Anticipios de clientes" category="Asset" gifi="249"/>
+      <account code="440000000" description="Deudores varios" category="Liability" gifi="159">
+        <link code="AR"/>
+      </account>
+      <account code="446000000" description="Deudores varios de dudoso cobros" category="Liability" gifi="159">
+        <link code="AR"/>
+      </account>
+      <account code="460000000" description="Personal anticipos de renumeraciones" category="Asset" gifi="159"/>
+      <account code="465000000" description="Personal remuneraciones pendientes de pago" category="Liability" gifi="249"/>
+      <account code="470000000" description="Hacienda Pública, deudora por IVA a compensar" category="Asset" gifi="159"/>
+      <account code="470100000" description="Hacienda Pública, deudora por IVA LP" category="Asset" gifi="159"/>
+      <account code="471000000" description="Organismos de la Seguridad Social deudores" category="Asset" gifi="159"/>
+      <account code="472000001" description="IVA soportado bajo" category="Liability" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="472000002" description="IVA soportado medio" category="Liability" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="472000003" description="IVA soportado alta" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="472000891" description="IVA soportado baja intracomm +" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="472000892" description="IVA soportado medio intracomm +" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="472000893" description="IVA soportado alta intracomm  +" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="472000991" description="IVA soportado baja intracomm -" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="472000992" description="IVA soportado medio intracomm -" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="472000993" description="IVA soportado alta intracomm  -" category="Asset" gifi="159">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="473000000" description="Hacienda Pública, retenciones y pagos a cuenta" category="Asset" gifi="159"/>
+      <account code="475000000" description="Hacienda Pública, acreedor por IVA" category="Liability" gifi="249"/>
+      <account code="475100000" description="Hacienda Pública, acreedor por retenciones practicadas" category="Liability" gifi="249"/>
+      <account code="475200000" description="Hacienda Pública, acreedor por impuestos sobre sociedades" category="Liability" gifi="249"/>
+      <account code="475400000" description="Hacienda Pública, acreedor por retenciones alquiler" category="Liability" gifi="249"/>
+      <account code="475800000" description="Hacienda Pública, acreedor por subvenciones a reintegrar" category="Liability" gifi="249"/>
+      <account code="476000000" description="Organismos de la Seguridad Social acreedores" category="Liability" gifi="249"/>
+      <account code="477000001" description="IVA repercutido bajo" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="477000002" description="IVA repercutido medio" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="477000003" description="IVA repercutido alto" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="477000891" description="IVA repercutido baja intracomm +" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="477000892" description="IVA repercutido medio intracomm +" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="477000893" description="IVA repercutido alta intracomm +" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="477000991" description="IVA repercutido baja intracomm -" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="477000992" description="IVA repercutido medio intracomm -" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="477000993" description="IVA repercutido alta intracomm -" category="Liability" gifi="249">
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="480000000" description="Gastos anticipados" category="Liability" gifi="176"/>
+      <account code="485000000" description="Ingresos anticipados" category="Liability" gifi="250"/>
+      <account code="490000000" description="Provisiones por operaciones comerciales" category="Liability" gifi="152"/>
+    </account-heading>
+    <account-heading id="h-5" code="499999999" description="Grupo 5: cuentas financieras">
+      <account code="500000000" description="Obligaciones y bonos a corto plazo" category="Liability" gifi="237"/>
+      <account code="510300000" description="Deudas a corto plazo con empresas del grupo y asociadas" category="Liability" gifi="238"/>
+      <account code="520000000" description="Prestamos a corto plazo de entidades de crédito" category="Liability" gifi="233"/>
+      <account code="521000000" description="Deudas a corto plazo" category="Liability" gifi="237"/>
+      <account code="526000000" description="Dividendos activo a pagar" category="Liability" gifi="237"/>
+      <account code="527000000" description="Intereses a corto plaza de deudas con entidades de crédito" category="Liability" gifi="233"/>
+      <account code="530000000" description="Participaciones a corto plazo en empresas del grupo y asociadas" category="Asset" gifi="161"/>
+      <account code="542000000" description="Créditos a corto plazo" category="Asset" gifi="175"/>
+      <account code="551000000" description="Cuentas corriente con socios administradores" category="Liability" gifi="237"/>
+      <account code="552300000" description="Cuentas corriente con empresas del grupo" category="Liability" gifi="238"/>
+      <account code="552400000" description="Cuentas corriente con empresas asociadas" category="Liability" gifi="238"/>
+      <account code="555000000" description="Partidas pendientes de aplicación" category="Liability" gifi="237"/>
+      <account code="555500000" description="Facturas pagadas con visa" category="Liability" gifi="237"/>
+      <account code="557000000" description="Dividende activo a cuenta" category="Liability" gifi="200"/>
+      <account code="560000000" description="Fianzas y depósitos recibidos y constituidos a corto plazo" category="Liability" gifi="237"/>
+      <account code="570000000" description="Caja, euros" category="Asset" gifi="177">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="571000000" description="Caja, moneda extranjera" category="Asset" gifi="177">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="572000000" description="Bancos e instituciones de crédito, c/c. vista, euros" category="Asset" gifi="177">
+        <link code="AR_amount"/>
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="573000000" description="Bancos e instituciones de crédito, c/c. vista, moneda extranjera" category="Asset" gifi="177">
+        <link code="AR_amount"/>
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="574000000" description="Bancos e instituciones de crédito, cuentas de ahorro, euros" category="Asset" gifi="177">
+        <link code="AR_amount"/>
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="575000000" description="Bancos e instituciones de crédito, cuentas de ahorro, moneda extranjera" category="Asset" gifi="177">
+        <link code="AR_amount"/>
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="598000000" description="Provisiones financieras" category="Liability" gifi="168"/>
+    </account-heading>
+    <account-heading id="h-6" code="599999999" description="Grupo 6: compras y gastos">
+      <account code="600000000" description="Compras de mercaderías" category="Expense" gifi="260">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="606000000" description="Descuentos sobre compras por pronto pago" category="Expense" gifi="260">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="607000000" description="Trabajos realizados por otra empresas" category="Expense" gifi="260">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="608000000" description="Devoluciones de compras y operaciones similares" category="Expense" gifi="260"/>
+      <account code="610000000" description="Variación de existencias mercaderias" category="Expense" gifi="260"/>
+      <account code="621000000" description="Arrendamientos y cánones" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="622000000" description="Reparaciones y conservación" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="623000000" description="Servicios profesionales de contabilidat o accountant o auditor" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="623100000" description="Servicios profesionales de notaria o abogado" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="623200000" description="Servicios profesionales de asesor fiscal o empresarial" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="623500000" description="Gastos de gestión" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="623600000" description="Servicios profesionales deregistro mercantil o propiedad" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="624000000" description="Gastos de coches" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="624400000" description="Gastos de viaje y estancia" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="624700000" description="Gastos de transportes" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="625000000" description="Primas de seguros" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="626000000" description="Servicios bancarios y similares" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="627000000" description="Publicidad, propaganda, y relaciones públicas" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="628000000" description="Gastos de gas" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="628100000" description="Gastos de teléfono fija" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="628200000" description="Gastos de teléfono movil" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="628300000" description="Gastos internet" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="628400000" description="Gastos luz" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="628500000" description="Gastos aqua" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629000000" description="Otros servicios" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629100000" description="Consumo de material de oficina" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629200000" description="Calidad de miembro" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629500000" description="Correos" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629600000" description="Gastos de limopieza" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629700000" description="Gastos de representación" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629800000" description="Gastos de IT y informática" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="629900000" description="Sanciones Tributarios" category="Expense" gifi="279">
+        <link code="IC_expense"/>
+      </account>
+      <account code="630000000" description="Impuesto sobre beneficios" category="Expense" gifi="326"/>
+      <account code="631000000" description="Otros tributos" category="Expense" gifi="279"/>
+      <account code="640000000" description="Sueldos y salarios" category="Expense" gifi="271"/>
+      <account code="641000000" description="Indemnizaciones" category="Expense" gifi="273"/>
+      <account code="642000000" description="Seguridad Social a cargo de la empresa" category="Expense" gifi="274"/>
+      <account code="642100000" description="Seguridad Social Autonomo pago de la empresa en nombre" category="Expense" gifi="274"/>
+      <account code="644200000" description="Otros costes de personal" category="Expense" gifi="271"/>
+      <account code="649000000" description="Otros gastos sociales" category="Expense" gifi="277"/>
+      <account code="650000000" description="Otros gastos variables" category="Expense" gifi="279"/>
+      <account code="660000000" description="Gastos financieros intereses y provisiones" category="Expense" gifi="305"/>
+      <account code="668000000" description="Diferencias negativas de cambio" category="Expense" gifi="305"/>
+      <account code="669000000" description="Otros gastos financieros" category="Expense" gifi="307"/>
+      <account code="678000000" description="Gastos excepcionales" category="Expense" gifi="295"/>
+      <account code="679000000" description="Gastos y perdidas de ejercicios anteriores" category="Expense" gifi="295"/>
+      <account code="681000000" description="Dotaciones para amortizaciones" category="Expense" gifi="284"/>
+      <account code="690000000" description="Dotaciones a las provisiones" category="Expense" gifi="289"/>
+    </account-heading>
+    <account-heading id="h-7" code="699999999" description="Grupo 7: ventas e ingresos">
+      <account code="700000000" description="Ventas de mercaderias" category="Income" gifi="255">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="701000000" description="Ventas de productos terminados" category="Income" gifi="255">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="704000000" description="Ventas de envases y embalajes" category="Income" gifi="255">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="705000000" description="Prestaciones de servicios" category="Income" gifi="255">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="706000000" description="Descuentos sobre ventas por pronto pago" category="Income" gifi="255">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="708000000" description="Devoluciones de ventas y operaciones similares" category="Income" gifi="255"/>
+      <account code="710000000" description="Variación de existencias" category="Income" gifi="258"/>
+      <account code="730000000" description="Trabajos realizados para la empresa" category="Income" gifi="258"/>
+      <account code="740000000" description="Subvenciones a la explotación" category="Income" gifi="269"/>
+      <account code="751000000" description="Otros ingresos de gestión" category="Income" gifi="268"/>
+      <account code="752000000" description="Ingresos por arrendamientos" category="Income" gifi="267"/>
+      <account code="754000000" description="Ingresos por comisiones" category="Income" gifi="268"/>
+      <account code="755000000" description="Ingresos por servicios al personal" category="Income" gifi="268"/>
+      <account code="759000000" description="Ingresos por servicios diversos" category="Income" gifi="268"/>
+      <account code="760300000" description="Ingresos financieros" category="Income" gifi="300"/>
+      <account code="768000000" description="Diferencias positivas de cambio" category="Income" gifi="312"/>
+      <account code="769000000" description="Otros ingresos financieros" category="Income" gifi="300"/>
+      <account code="770000000" description="Beneficios procedentes de inmovilizados e ingresos excepcionales" category="Income" gifi="292"/>
+      <account code="778000000" description="Ingresos excepcionales" category="Income" gifi="295"/>
+      <account code="778010000" description="Ingresos y ganancias de ejercicias anteriores" category="Income" gifi="295"/>
+      <account code="791000000" description="Reversion det. invers. material" category="Income" gifi="290"/>
+    </account-heading>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="separate_duties" value="1"/>
+    <setting name="check_prefix" value="CK"/>
+    <setting name="decimal_places" value="2"/>
+    <setting name="inventory_accno_id" accno="300000000"/>
+    <setting name="income_accno_id" accno="700000000"/>
+    <setting name="expense_accno_id" accno="621000000"/>
+    <setting name="fxgain_accno_id" accno="768000000"/>
+    <setting name="fxloss_accno_id" accno="668000000"/>
+  </settings>
+</configuration>

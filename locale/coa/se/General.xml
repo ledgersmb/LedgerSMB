@@ -1,0 +1,1420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="200" description="Kassa och bank "/>
+    <gifi code="202" description="Aktier och andelar "/>
+    <gifi code="203" description="Övriga kortfristiga placeringar"/>
+    <gifi code="204" description="Kundfordringar"/>
+    <gifi code="205" description="Förutbetalda kostnader och upplupna intäkter"/>
+    <gifi code="206" description="Övriga skattefordringar"/>
+    <gifi code="207" description="Momsfordran"/>
+    <gifi code="219" description="Varulager och pågående arbeten"/>
+    <gifi code="220" description="Övriga kortfristiga fordringar"/>
+    <gifi code="230" description="Aktier och andelar i svenska koncern- och intresseföretag "/>
+    <gifi code="231" description="Aktier och andelar i utländska koncern- och intresseföretag"/>
+    <gifi code="233" description="Finansiella anläggningstillgångar"/>
+    <gifi code="234" description="Immateriella anläggningstillgångar"/>
+    <gifi code="235" description="Mark och andra tillgångar som inte är avskrivningsbara (skattemässigt)"/>
+    <gifi code="236" description="Maskiner och inventarier"/>
+    <gifi code="237" description="Byggnader och övrig fast egendom"/>
+    <gifi code="241" description="Fordringar på koncern- och intresseföretag"/>
+    <gifi code="299" description="Summa tillgångar"/>
+    <gifi code="300" description="Leverantörsskulder"/>
+    <gifi code="301" description="Övriga skatteskulder"/>
+    <gifi code="302" description="Övriga avsättningar"/>
+    <gifi code="304" description="Avsättningar för garantier"/>
+    <gifi code="305" description="Upplupna kostnader och förutbetalda intäkter"/>
+    <gifi code="307" description="Momsskuld"/>
+    <gifi code="310" description="Förskott från kunder"/>
+    <gifi code="319" description="Övriga kortfristiga skulder"/>
+    <gifi code="320" description="Avsättningar för pensioner"/>
+    <gifi code="321" description="Lån från aktieägare (lång- och kortfristiga)"/>
+    <gifi code="329" description="Långfristiga skulder"/>
+    <gifi code="330" description="Ackumulerade överavskrivningar"/>
+    <gifi code="339" description="Övriga obeskattade reserver "/>
+    <gifi code="340" description="Periodiseringsfond vid 2000 års taxering"/>
+    <gifi code="341" description="Periodiseringsfond vid 2001 års taxering"/>
+    <gifi code="343" description="Periodiseringsfond vid 2003 års taxering"/>
+    <gifi code="344" description="Periodiseringsfond vid 2004 års taxering"/>
+    <gifi code="345" description="Periodiseringsfond vid 2005 års taxering"/>
+    <gifi code="342" description="Periodiseringsfond vid 2002 års taxering"/>
+    <gifi code="350" description="Aktiekapital/Insatskapital"/>
+    <gifi code="351" description="Övrigt bundet eget kapital"/>
+    <gifi code="354" description="Fritt eget kapital"/>
+    <gifi code="360" description="Ingående kapital (vid kapitalbrist anges minus)"/>
+    <gifi code="362" description="Delägarnas uttag"/>
+    <gifi code="363" description="Delägarnas tillskott"/>
+    <gifi code="364" description="Kontanta uttag"/>
+    <gifi code="365" description="Övriga uttag"/>
+    <gifi code="366" description="Kontanta tillskott"/>
+    <gifi code="367" description="Övriga tillskott"/>
+    <gifi code="368" description="Årets redovisade vinst"/>
+    <gifi code="369" description="Årets redovisade förlust"/>
+    <gifi code="370" description="Utgående kapital"/>
+    <gifi code="399" description="Summa eget kapital och skulder"/>
+    <gifi code="400" description="Rörelsens huvudintäkter (nettoomsättning)"/>
+    <gifi code="401" description="Övriga rörelseintäkter"/>
+    <gifi code="402" description="Aktiverat arbete för egen räkning"/>
+    <gifi code="500" description="Handelsvaror inkl. lagerförändring, råvaror, material m.m."/>
+    <gifi code="501" description="Legoarbeten och underentreprenörer"/>
+    <gifi code="509" description="Förändring av lager (inte handelsvaror) och pågående arbeten (ökning)"/>
+    <gifi code="510" description="Förändring av lager (inte handelsvaror) och pågående arbeten (minskning)"/>
+    <gifi code="511" description="AMF-avgifter "/>
+    <gifi code="512" description="Löner och andra ersättningar"/>
+    <gifi code="514" description="Kostnadsersättningar och kostnader för förmåner till anställda"/>
+    <gifi code="520" description="Övriga sociala avgifter"/>
+    <gifi code="524" description="Pensionskostnader (inklusive ITP-avgifter)"/>
+    <gifi code="526" description="Reparation och underhåll av fastighet"/>
+    <gifi code="527" description="Övriga personalkostnader"/>
+    <gifi code="528" description="Övriga lokal- och fastighetskostnader"/>
+    <gifi code="529" description="Hyra av anläggningstillgångar"/>
+    <gifi code="530" description="Övriga kostnader"/>
+    <gifi code="531" description="Förbrukningsinventarier"/>
+    <gifi code="536" description="Bilkostnader (inkl. billeasing)"/>
+    <gifi code="538" description="Övriga transportmedels- kostnader och rese- kostnader "/>
+    <gifi code="541" description="Reklam och PR"/>
+    <gifi code="550" description="Vinst vid avyttring av värdepapper "/>
+    <gifi code="551" description="Förlust vid avyttring av värdepapper"/>
+    <gifi code="552" description="Vinst vid avyttring av anläggningstillgångar (ej finansiella) "/>
+    <gifi code="553" description="Nedskrivning av anläggningstillgångar (ej finansiella)"/>
+    <gifi code="554" description="Återföring av nedskrivning av anläggningstillgångar (ej finansiella)"/>
+    <gifi code="556" description="Förlust vid avyttring av anläggningstillgångar (ej finansiella)"/>
+    <gifi code="559" description="Maskiner och inventarier"/>
+    <gifi code="560" description="Byggnader och övrig fast egendom"/>
+    <gifi code="561" description="Immateriella anläggningstillgångar"/>
+    <gifi code="564" description="Utdelning på aktier och andelar i koncern- och intresseföretag"/>
+    <gifi code="565" description="Utdelning på aktier och andelar i övriga företag"/>
+    <gifi code="566" description="Valutakursvinster"/>
+    <gifi code="567" description="Valutakursförluster"/>
+    <gifi code="568" description="Ränteintäkter m.m."/>
+    <gifi code="569" description="Räntekostnader m.m."/>
+    <gifi code="570" description="Nedskrivning av finansiella tillgångar"/>
+    <gifi code="571" description="Återföring av nedskrivning av finansiella tillgångar"/>
+    <gifi code="578" description="Bokförd avskrivning utöver plan "/>
+    <gifi code="586" description="Avsättning till periodiseringsfond "/>
+    <gifi code="589" description="Återföring från periodiseringsfond "/>
+    <gifi code="590" description="Upplösning av ackumulerade överavskrivningar"/>
+    <gifi code="593" description="Övriga tillkommande bokslutsdispositioner m.m. "/>
+    <gifi code="594" description="Övriga avgående bokslutsdispositioner m.m."/>
+    <gifi code="596" description="Redovisad förlust enligt bokföringen"/>
+    <gifi code="598" description="Skatter"/>
+    <gifi code="599" description="Redovisad vinst enligt bokföringen"/>
+    <gifi code="233/230" description="missing; generated"/>
+    <gifi code="241/233" description="missing; generated"/>
+    <gifi code="241/234" description="missing; generated"/>
+    <gifi code="241/235" description="missing; generated"/>
+    <gifi code="241/236" description="missing; generated"/>
+    <gifi code="329/302" description="missing; generated"/>
+    <gifi code="329/303" description="missing; generated"/>
+    <gifi code="329/304" description="missing; generated"/>
+    <gifi code="337" description="missing; generated"/>
+    <gifi code="352" description="missing; generated"/>
+    <gifi code="360/370" description="missing; generated"/>
+    <gifi code="362/364" description="missing; generated"/>
+    <gifi code="362/365" description="missing; generated"/>
+    <gifi code="363/366" description="missing; generated"/>
+    <gifi code="363/367" description="missing; generated"/>
+    <gifi code="363/369" description="missing; generated"/>
+    <gifi code="368/369" description="missing; generated"/>
+    <gifi code="509/509" description="missing; generated"/>
+    <gifi code="509/510" description="missing; generated"/>
+    <gifi code="520/511" description="missing; generated"/>
+    <gifi code="524/511" description="missing; generated"/>
+    <gifi code="550/551" description="missing; generated"/>
+    <gifi code="553/554" description="missing; generated"/>
+    <gifi code="553/570" description="missing; generated"/>
+    <gifi code="578/590" description="missing; generated"/>
+    <gifi code="586/589" description="missing; generated"/>
+    <gifi code="586/594" description="missing; generated"/>
+    <gifi code="589/593" description="missing; generated"/>
+    <gifi code="589/594" description="missing; generated"/>
+    <gifi code="589/595" description="missing; generated"/>
+    <gifi code="589/596" description="missing; generated"/>
+    <gifi code="589/597" description="missing; generated"/>
+    <gifi code="589/598" description="missing; generated"/>
+    <gifi code="589/599" description="missing; generated"/>
+    <gifi code="591" description="missing; generated"/>
+    <gifi code="593/594" description="missing; generated"/>
+    <gifi code="597" description="missing; generated"/>
+    <gifi code="599/596" description="missing; generated"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="1" description="Tillgångar "/>
+    <account-heading id="h-2" code="10" description="Immateriella anläggningstillgångar ">
+      <account code="1010" description="Balanserade utgifter " category="Asset" gifi="234"/>
+      <account code="1011" description="Balanserade utgifter för forskning och utveckling " category="Asset" gifi="234"/>
+      <account code="1012" description="Balanserade utgifter för dataprogram" category="Asset" gifi="234"/>
+      <account code="1019" description="Ackumulerade avskrivningar på balanserade utgifter" category="Asset" gifi="234"/>
+      <account code="1020" description="Koncessioner m m " category="Asset" gifi="234"/>
+      <account code="1029" description="Ackumulerade avskrivningar på koncessioner" category="Asset" gifi="234"/>
+      <account code="1030" description="Patent " category="Asset" gifi="234"/>
+      <account code="1039" description="Ackumulerade avskrivningar på patent " category="Asset" gifi="234"/>
+      <account code="1040" description="Licenser " category="Asset" gifi="234"/>
+      <account code="1049" description="Ackumulerade avskrivningar på licenser" category="Asset" gifi="234"/>
+      <account code="1050" description="Varumärken " category="Asset" gifi="234"/>
+      <account code="1059" description="Ackumulerade avskrivningar på varumärken" category="Asset" gifi="234"/>
+      <account code="1060" description="Hyresrätter " category="Asset" gifi="234"/>
+      <account code="1069" description="Ackumulerade avskrivningar på hyresrätter " category="Asset" gifi="234"/>
+      <account code="1070" description="Goodwill " category="Asset" gifi="234"/>
+      <account code="1079" description="Ackumulerade avskrivningar på goodwill" category="Asset" gifi="234"/>
+      <account code="1080" description="Pågående projekt och förskott för immateriella anläggningstillgångar" category="Asset" gifi="234"/>
+      <account code="1081" description="Pågående projekt och förskott för immateriella anläggningstillgångar " category="Asset" gifi="234"/>
+      <account code="1088" description="Förskott för immateriella anläggningstillgångar" category="Asset" gifi="234"/>
+      <account code="1090" description="Övriga immateriella anläggningstillgångar" category="Asset" gifi="234"/>
+      <account code="1099" description="Ackumulerade avskrivningar på övriga immateriella anläggningstillgångar" category="Asset" gifi="234"/>
+    </account-heading>
+    <account-heading id="h-3" code="11" description="Byggnader och mark">
+      <account code="1110" description="Byggnader" category="Asset" gifi="237"/>
+      <account code="1111" description="Byggnader på egen mark" category="Asset" gifi="237"/>
+      <account code="1112" description="Byggnader på ofri grund" category="Asset" gifi="237"/>
+      <account code="1119" description="Ackumulerade avskrivningar på byggnader" category="Asset" gifi="237"/>
+      <account code="1130" description="Mark" category="Asset" gifi="237"/>
+      <account code="1140" description="Tomter och obebyggda markområden" category="Asset" gifi="237"/>
+      <account code="1150" description="Markanläggning" category="Asset" gifi="237"/>
+      <account code="1159" description="Ackumulerade avskrivningar på markanläggning" category="Asset" gifi="237"/>
+      <account code="1180" description="Pågående nyanläggningar och förskott för byggnader och mark" category="Asset" gifi="237"/>
+      <account code="1181" description="Pågående nybyggnad" category="Asset" gifi="237"/>
+      <account code="1182" description="Pågående tillbyggnad" category="Asset" gifi="237"/>
+      <account code="1183" description="Pågående ombyggnad" category="Asset" gifi="237"/>
+      <account code="1188" description="Förskott för byggnader och mark" category="Asset" gifi="237"/>
+      <account code="1190" description="Övriga byggnader och mark" category="Asset" gifi="237"/>
+      <account code="1199" description="Ackumulerade avskrivningar på övriga byggnader" category="Asset" gifi="237"/>
+    </account-heading>
+    <account-heading id="h-4" code="12" description="Maskiner och inventarier ">
+      <account code="1200" description="Maskiner och inventarier (gruppkonto)" category="Asset" gifi="236"/>
+      <account code="1209" description="Ackumulerade avskrivningar på maskiner och inventarier" category="Asset" gifi="236"/>
+      <account code="1210" description="Maskiner och andra tekniska anläggningar" category="Asset" gifi="236"/>
+      <account code="1211" description="Maskiner" category="Asset" gifi="236"/>
+      <account code="1212" description="Byggnadsinventarier" category="Asset" gifi="236"/>
+      <account code="1213" description="Andra tekniska anläggningar" category="Asset" gifi="236"/>
+      <account code="1219" description="Ackumulerade avskrivningar på maskiner och andra tekniska anläggningar" category="Asset" gifi="236"/>
+      <account code="1220" description="Inventarier och verktyg" category="Asset" gifi="236"/>
+      <account code="1229" description="Ackumulerade avskrivningar på inventarier och verktyg" category="Asset" gifi="236"/>
+      <account code="1230" description="Installationer" category="Asset" gifi="236"/>
+      <account code="1231" description="Installationer på egen fastighet" category="Asset" gifi="236"/>
+      <account code="1232" description="Installationer på annans fastighet" category="Asset" gifi="236"/>
+      <account code="1233" description="Förbättringsutgifter på annans fastighet" category="Asset" gifi="236"/>
+      <account code="1239" description="Ackumulerade avskrivningar på installationer" category="Asset" gifi="236"/>
+      <account code="1240" description="Bilar och andra transportmedel" category="Asset" gifi="236"/>
+      <account code="1249" description="Ackumulerade avskrivningar på bilar och andra transportmedel" category="Asset" gifi="236"/>
+      <account code="1250" description="Datorer" category="Asset" gifi="236"/>
+      <account code="1251" description="Datorer - företaget" category="Asset" gifi="236"/>
+      <account code="1257" description="Datorer - personal" category="Asset" gifi="236"/>
+      <account code="1259" description="Ackumulerade avskrivningar på datorer" category="Asset" gifi="236"/>
+      <account code="1260" description="Leasingavtal" category="Asset" gifi="236"/>
+      <account code="1269" description="Ackumulerade avskrivningar på leasingavtal" category="Asset" gifi="236"/>
+      <account code="1280" description="Pågående nyanläggningar och förskott" category="Asset" gifi="236"/>
+      <account code="1281" description="Pågående nyanläggningar" category="Asset" gifi="236"/>
+      <account code="1288" description="Förskott för maskiner och inventarier" category="Asset" gifi="236"/>
+      <account code="1290" description="Övriga maskiner och inventarier" category="Asset" gifi="236"/>
+      <account code="1291" description="Konst och liknande tillgångar" category="Asset" gifi="236"/>
+      <account code="1292" description="Inventarier i annans fastighet" category="Asset" gifi="236"/>
+      <account code="1299" description="Ackumulerade avskrivningar på övriga maskiner och inventarier" category="Asset" gifi="236"/>
+    </account-heading>
+    <account-heading id="h-5" code="13" description="Finansiella anläggningstillgångar ">
+      <account code="1310" description="Aktier och andelar i koncernföretag" category="Asset" gifi="230"/>
+      <account code="1311" description="Aktier och andelar i svenska dotterföretag" category="Asset" gifi="230"/>
+      <account code="1312" description="Aktier och andelar i utländska dotterföretag" category="Asset" gifi="231"/>
+      <account code="1313" description="Aktier och andelar i andra svenska koncernföretag" category="Asset" gifi="230"/>
+      <account code="1314" description="Aktier och andelar i andra utländska koncernföretag" category="Asset" gifi="231"/>
+      <account code="1319" description="Värdereglering av aktier och andelar i koncernföretag" category="Asset" gifi="230"/>
+      <account code="1320" description="Långfristiga fordringar hos koncernföretag" category="Asset" gifi="241/233"/>
+      <account code="1321" description="Fordringar hos moderföretag" category="Asset" gifi="241/234"/>
+      <account code="1322" description="Fordringar hos dotterföretag" category="Asset" gifi="241/235"/>
+      <account code="1323" description="Fordringar hos andra koncernföretag" category="Asset" gifi="241/236"/>
+      <account code="1329" description="Värdereglering av långfristiga fordringar hos koncernföretag" category="Asset" gifi="241/233"/>
+      <account code="1330" description="Aktier och andelar i intresseföretag" category="Asset" gifi="230"/>
+      <account code="1339" description="Värdereglering av aktier och och andelar i intresseföretag" category="Asset" gifi="230"/>
+      <account code="1340" description="Långfristiga fordringar hos intresseföretag" category="Asset" gifi="241/233"/>
+      <account code="1349" description="Värdereglering av långfristiga fordringar hos intresseföretag" category="Asset" gifi="241/233"/>
+      <account code="1350" description="Aktier, andelar och värdepapper i andra företag" category="Asset" gifi="233/230"/>
+      <account code="1351" description="Aktier i börsnoterade bolag" category="Asset" gifi="233/230"/>
+      <account code="1352" description="Andra aktier och andelar" category="Asset" gifi="233/230"/>
+      <account code="1353" description="Andelar i bostadsrättsföreningar" category="Asset" gifi="233"/>
+      <account code="1354" description="Obligationer" category="Asset" gifi="233"/>
+      <account code="1359" description="Värdereglering av andra aktier, andelar och värdepapper" category="Asset" gifi="233/230"/>
+      <account code="1380" description="Andra långfristiga fordringar" category="Asset" gifi="233"/>
+      <account code="1381" description="Reversfordringar" category="Asset" gifi="233"/>
+      <account code="1382" description="Fordringar hos anställda" category="Asset" gifi="233"/>
+      <account code="1383" description="Lämnade depositioner" category="Asset" gifi="233"/>
+      <account code="1384" description="Lån till närstående personer" category="Asset" gifi="233"/>
+      <account code="1385" description="Värde av kapitalförsäkring" category="Asset" gifi="233"/>
+      <account code="1386" description="Förutbetalda leasingavgifter" category="Asset" gifi="233"/>
+      <account code="1387" description="Långfristiga kontraktsfordringar" category="Asset" gifi="233"/>
+      <account code="1388" description="Olika långfristiga fordringar" category="Asset" gifi="233"/>
+      <account code="1389" description="Värdereglering av andra långfristiga fordringar" category="Asset" gifi="233"/>
+      <account code="1390" description="Värdereglering av värdepapper och långfristiga fordringar (ofördelad)" category="Asset" gifi="233"/>
+    </account-heading>
+    <account-heading id="h-6" code="14" description="Lager och pågående arbeten">
+      <account code="1400" description="Lager (gruppkonto) " category="Asset" gifi="219">
+        <link code="IC"/>
+      </account>
+      <account code="1401" description="Inneliggande lager " category="Asset" gifi="219"/>
+      <account code="1402" description="Varor på väg " category="Asset" gifi="219"/>
+      <account code="1403" description="Konsignationslager " category="Asset" gifi="219"/>
+      <account code="1404" description="Lager av värdepapper " category="Asset" gifi="219"/>
+      <account code="1409" description="Förändring av lager " category="Asset" gifi="219"/>
+      <account code="1410" description="Lager av råvaror (förråd) " category="Asset" gifi="219"/>
+      <account code="1419" description="Förändring av lager av råvaror " category="Asset" gifi="219"/>
+      <account code="1420" description="Lager av tillsatsmaterial och förnödenheter " category="Asset" gifi="219"/>
+      <account code="1429" description="Förändring av lager av tillsatsmaterial och förnödenheter " category="Asset" gifi="219"/>
+      <account code="1430" description="Lager av halvfabrikat " category="Asset" gifi="219"/>
+      <account code="1431" description="Lager av köpta halvfabrikat " category="Asset" gifi="219"/>
+      <account code="1432" description="Lager av egentillverkde halvfabrikat " category="Asset" gifi="219"/>
+      <account code="1439" description="Förändring av lager av halvfabrikat " category="Asset" gifi="219"/>
+      <account code="1440" description="Produkter i arbete - (PIA) " category="Asset" gifi="219"/>
+      <account code="1449" description="Förändring av produkter i arbete " category="Asset" gifi="219"/>
+      <account code="1450" description="Lager av färdiga varor " category="Asset" gifi="219"/>
+      <account code="1459" description="Förändring av lager av färdiga varor " category="Asset" gifi="219"/>
+      <account code="1460" description="Lager av handelsvaror - Varulager " category="Asset" gifi="219">
+        <link code="IC"/>
+      </account>
+      <account code="1469" description="Förändring av lager av handelsvaror - Varulager " category="Asset" gifi="219"/>
+      <account code="1470" description="Pågående arbeten " category="Asset" gifi="219"/>
+      <account code="1471" description="Pågående arbeten, nedlagda kostnader " category="Asset" gifi="219"/>
+      <account code="1472" description="Omsättningsfastigheter " category="Asset" gifi="219"/>
+      <account code="1478" description="Pågående arbeten, fakturering " category="Asset" gifi="219"/>
+      <account code="1479" description="Förändring av pågående arbeten " category="Asset" gifi="219"/>
+      <account code="1480" description="Förskott av varor och tjänster " category="Asset" gifi="219"/>
+      <account code="1481" description="Remburs " category="Asset" gifi="219"/>
+      <account code="1489" description="Övriga förskott till leverantörer " category="Asset" gifi="219"/>
+      <account code="1490" description="Förändring av lager pågående arbeten (ofördelad) " category="Asset" gifi="219"/>
+    </account-heading>
+    <account-heading id="h-7" code="15" description="Kundfordringar">
+      <account code="1500" description="Kundfordringar (gruppkonto) " category="Asset" gifi="204"/>
+      <account code="1510" description="Kundfordringar " category="Asset" gifi="204">
+        <link code="AR"/>
+      </account>
+      <account code="1512" description="Belånade kundfordringar " category="Asset" gifi="204"/>
+      <account code="1515" description="Osäkra kundfordringar " category="Asset" gifi="204"/>
+      <account code="1516" description="Tvistiga kundfordringar " category="Asset" gifi="204"/>
+      <account code="1518" description="Ej reskontraförda kundfordringar " category="Asset" gifi="204"/>
+      <account code="1519" description="Värdereglering av kundfordringar " category="Asset" gifi="204"/>
+      <account code="1520" description="Växelfordringar " category="Asset" gifi="204"/>
+      <account code="1525" description="Osäkra växelfordringar " category="Asset" gifi="204"/>
+      <account code="1529" description="Värdereglering av osäkra växelfordringar " category="Asset" gifi="204"/>
+      <account code="1530" description="Kontraktsfordringar " category="Asset" gifi="204"/>
+      <account code="1540" description="Belånade kontraktsfordringar " category="Asset" gifi="204"/>
+      <account code="1541" description="Belånade kontraktsfordringar " category="Asset" gifi="204"/>
+      <account code="1545" description="Osäkra kontraktsfordringar " category="Asset" gifi="204"/>
+      <account code="1550" description="Konsignationsfordringar " category="Asset" gifi="204"/>
+      <account code="1560" description="Kundfordringar hos koncernföretag " category="Asset" gifi="204"/>
+      <account code="1561" description="Kundfordringar hos moderföretag " category="Asset" gifi="204"/>
+      <account code="1562" description="Kundfordringar hos dotternföretag " category="Asset" gifi="204"/>
+      <account code="1563" description="Kundfordringar hos andra koncernföretag " category="Asset" gifi="204"/>
+      <account code="1569" description="Värdereglering av kundfordringar hos koncernföretag " category="Asset" gifi="204"/>
+      <account code="1570" description="Kundfordringar hos intresseföretag " category="Asset" gifi="204"/>
+      <account code="1575" description="Osäkra kundfordringar hos intresseföretag " category="Asset" gifi="204"/>
+      <account code="1579" description="Värdereglering av kundfordringar " category="Asset" gifi="204"/>
+      <account code="1580" description="Kontokort och kuponger " category="Asset" gifi="204"/>
+      <account code="1590" description="Värdereglering av kundfordringar (ofördelad) " category="Asset" gifi="204"/>
+    </account-heading>
+    <account-heading id="h-8" code="16" description="Övriga kortfristiga fordringar">
+      <account code="1600" description="Övriga kortfristiga fordringar (gruppkonto) " category="Asset" gifi="220"/>
+      <account code="1610" description="Fordringar hos anställda " category="Asset" gifi="220"/>
+      <account code="1611" description="Reseförskott " category="Asset" gifi="220"/>
+      <account code="1612" description="Kassaföskott - (Fixkassa) " category="Asset" gifi="220"/>
+      <account code="1613" description="Övriga förskott " category="Asset" gifi="220"/>
+      <account code="1614" description="Tillfälliga lån till anställda " category="Asset" gifi="220"/>
+      <account code="1619" description="Övriga fordringar hos anställda " category="Asset" gifi="220"/>
+      <account code="1630" description="Avräkning för skatter och avgifter - (Skattekontot) " category="Asset" gifi="220"/>
+      <account code="1640" description="Skattefordringar " category="Asset" gifi="206"/>
+      <account code="1650" description="Momsfordringar " category="Asset" gifi="207"/>
+      <account code="1660" description="Fordringar hos koncernföretag " category="Asset" gifi="220"/>
+      <account code="1661" description="Fordringar hos moderföretag " category="Asset" gifi="220"/>
+      <account code="1662" description="Fordringar hos dotterföretag " category="Asset" gifi="220"/>
+      <account code="1663" description="Fordringar hos andra koncernföretag " category="Asset" gifi="220"/>
+      <account code="1670" description="Fordringar hos intresseföretag " category="Asset" gifi="220"/>
+      <account code="1680" description="Andra kortfristiga fordringar " category="Asset" gifi="220"/>
+      <account code="1681" description="Utlägg för kunder " category="Asset" gifi="220"/>
+      <account code="1682" description="Kortfristiga lånefordringar " category="Asset" gifi="220"/>
+      <account code="1683" description="Fordringar för tecknat men ej inbetalt aktiekapital " category="Asset" gifi="220"/>
+      <account code="1684" description="Fordringar hos leverantörer " category="Asset" gifi="220"/>
+      <account code="1685" description="Fordringar hos närstående personer " category="Asset" gifi="220"/>
+      <account code="1686" description="Upparbetad men ej fakturerad intäkt " category="Asset" gifi="220"/>
+      <account code="1687" description="Kortfristig del av långfristiga fordringar " category="Asset" gifi="220"/>
+      <account code="1689" description="Övriga kortfristiga fordringar " category="Asset" gifi="220"/>
+      <account code="1690" description="Värdereglering av kortfristiga fordringar (ofördelad) " category="Asset" gifi="220"/>
+    </account-heading>
+    <account-heading id="h-9" code="17" description="Förutbetalda kostnader och upplupna intäkter">
+      <account code="1700" description="Förutbetalda kostnader och upplupna intäkter (gruppkonto) " category="Asset" gifi="205"/>
+      <account code="1710" description="Förutbetalda hyresutgifter " category="Asset" gifi="205"/>
+      <account code="1711" description="Förutbetalda arrendeutgifter " category="Asset" gifi="205"/>
+      <account code="1720" description="Förutbetalda leasingavgifter " category="Asset" gifi="205"/>
+      <account code="1730" description="Förutbetalda försäkringspremier " category="Asset" gifi="205"/>
+      <account code="1740" description="Förutbetalda ränteutgifter " category="Asset" gifi="205"/>
+      <account code="1750" description="Upplupna hyresinkomster " category="Asset" gifi="205"/>
+      <account code="1760" description="Upplupna inkomsträntor " category="Asset" gifi="205"/>
+      <account code="1770" description="Tillgångar av kostnadsnatur " category="Asset" gifi="205"/>
+      <account code="1780" description="Upplupna avtalsinkomster " category="Asset" gifi="205"/>
+      <account code="1790" description="Övriga förutbetalda kostnader och upplupna intäkter " category="Asset" gifi="205"/>
+    </account-heading>
+    <account-heading id="h-10" code="18" description="Kortfristiga placeringar">
+      <account code="1800" description="Kortfristiga placeringar (gruppkonto) " category="Asset" gifi="202"/>
+      <account code="1810" description="Aktier i börsnoterade bolag " category="Asset" gifi="202"/>
+      <account code="1820" description="Obligationer " category="Asset" gifi="203"/>
+      <account code="1830" description="Konvertibla skuldebrev " category="Asset" gifi="203"/>
+      <account code="1880" description="Andra kortfristiga placeringar " category="Asset" gifi="202"/>
+      <account code="1882" description="Egna aktier " category="Asset" gifi="202"/>
+      <account code="1886" description="Aktier och andelar i koncernföretag " category="Asset" gifi="202"/>
+      <account code="1889" description="Aktier och andelar i övriga företag " category="Asset" gifi="202"/>
+      <account code="1890" description="Värdereglering av kortfristiga placeringar " category="Asset" gifi="203"/>
+    </account-heading>
+    <account-heading id="h-11" code="19" description="Kassa och Bank">
+      <account code="1900" description="Obsevationskonto " category="Asset" gifi="200"/>
+      <account code="1910" description="Kassa " category="Asset" gifi="200" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1911" description="Huvudkassa " category="Asset" gifi="200"/>
+      <account code="1920" description="Postgiro " category="Asset" gifi="200" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1930" description="Checkräkningskonto " category="Asset" gifi="200" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1940" description="Bank och Övriga bankkonton " category="Asset" gifi="200" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1950" description="Bankcertifikat " category="Asset" gifi="200"/>
+      <account code="1960" description="Koncernkonto moderbolag " category="Asset" gifi="200"/>
+      <account code="1970" description="Särskilda bankkonton " category="Asset" gifi="200"/>
+      <account code="1971" description="Allmänt investeringskonto " category="Asset" gifi="200"/>
+      <account code="1972" description="Upphovsmannakonto " category="Asset" gifi="200"/>
+      <account code="1973" description="Skogskonto " category="Asset" gifi="200"/>
+      <account code="1974" description="Spärrade bankmedel " category="Asset" gifi="200"/>
+      <account code="1979" description="Övriga särskilda bankkonton " category="Asset" gifi="200"/>
+    </account-heading>
+    <account-heading id="h-12" code="2" description="Eget kapital och skulder"/>
+    <account-heading id="h-13" code="20" description="Eget kapital ">
+      <account code="2010" description="Eget kapital - för enskild firma och delägare 1 i ett Handelsbolag " category="Equity" gifi="360/370"/>
+      <account code="2011" description="Egna varuuttag " category="Equity" gifi="362/364"/>
+      <account code="2012" description="Avräkning för skatter och avgifter - skattekontot " category="Equity" gifi="362/365"/>
+      <account code="2013" description="Övriga egna uttag " category="Equity" gifi="362/365"/>
+      <account code="2014" description="Upplupna egenavgifer och särskild löneskatt " category="Equity" gifi="362/365"/>
+      <account code="2017" description="Årets kapitaltillskott " category="Equity" gifi="363/366"/>
+      <account code="2018" description="Övriga egna insättningar " category="Equity" gifi="363/367"/>
+      <account code="2019" description="Årets resultat - för enskild firma och delägare 1 i ett Handelsbolag " category="Equity" gifi="368/369"/>
+      <account code="2020" description="Eget kapital - delägare 2 i ett Handelsbolag " category="Equity" gifi="360"/>
+      <account code="2021" description="Egna varuuttag " category="Equity" gifi="362"/>
+      <account code="2022" description="Avräkning för skatter och avgifter - skattekontot " category="Equity" gifi="362"/>
+      <account code="2023" description="Övriga egna uttag " category="Equity" gifi="362"/>
+      <account code="2024" description="Upplupna egenavgifter och särskild löneskatt " category="Equity" gifi="362"/>
+      <account code="2027" description="Årets kapitaltillskott " category="Equity" gifi="363"/>
+      <account code="2028" description="Övriga egna insättningar " category="Equity" gifi="363"/>
+      <account code="2029" description="Årets resultat - delägare 2 " category="Equity" gifi="368/369"/>
+      <account code="2030" description="Eget kapital - delägare 3 i ett Handelsbolag " category="Equity" gifi="360"/>
+      <account code="2031" description="Egna varuuttag " category="Equity" gifi="362"/>
+      <account code="2032" description="Avräkning för skatter och avgifter - skattekontot " category="Equity" gifi="362"/>
+      <account code="2033" description="Övriga egna uttag " category="Equity" gifi="362"/>
+      <account code="2034" description="Upplupna egenavgifer och särskild löneskatt " category="Equity" gifi="362"/>
+      <account code="2037" description="Årets kapitaltillskott " category="Equity" gifi="363"/>
+      <account code="2038" description="Övriga egna insättningar " category="Equity" gifi="363"/>
+      <account code="2039" description="Årets resultat - delägare 3 " category="Equity" gifi="363/369"/>
+      <account code="2050" description="Avsättning till expansionsmedel - för enskild firma och delägare 1 i ett Handelsbolag " category="Equity" gifi="368/369"/>
+      <account code="2080" description="Bundet eget kapital - aktiebolag, ek,för och stiftelse " category="Equity"/>
+      <account code="2081" description="Aktiekapital " category="Equity" gifi="350"/>
+      <account code="2082" description="Ej registrerat aktiekapital " category="Equity" gifi="350"/>
+      <account code="2083" description="Inbetalda insatser - stiftelsekapital i stiftelse " category="Equity" gifi="350"/>
+      <account code="2084" description="Överkursfond " category="Equity" gifi="351"/>
+      <account code="2085" description="Uppskrivningsfond " category="Equity" gifi="352"/>
+      <account code="2086" description="Reservfond - värdesäkringsfond i stiftelse " category="Equity" gifi="351"/>
+      <account code="2090" description="Fritt eget kapital " category="Equity" gifi="354"/>
+      <account code="2091" description="Balanserad vinst eller förlust " category="Equity" gifi="354"/>
+      <account code="2092" description="Erhållna/lämnade koncernbidrag " category="Equity" gifi="354"/>
+      <account code="2093" description="Erhållna aktieägartillskott " category="Equity" gifi="354"/>
+      <account code="2098" description="Vinst eller förlust från föregående år " category="Equity" gifi="354"/>
+      <account code="2099" description="Årets resultat " category="Equity" gifi="354"/>
+    </account-heading>
+    <account-heading id="h-14" code="21" description="Obeskattade reserver "/>
+    <account-heading id="h-15" code="2115" description="Periodiseringsfond vid 1995 års taxering "/>
+    <account-heading id="h-16" code="2116" description="Periodiseringsfond vid 1996 års taxering "/>
+    <account-heading id="h-17" code="2117" description="Periodiseringsfond vid 1997 års taxering "/>
+    <account-heading id="h-18" code="2118" description="Periodiseringsfond vid 1998 års taxering "/>
+    <account-heading id="h-19" code="2119" description="Periodiseringsfond vid 1999 års taxering ">
+      <account code="2150" description="Ackumulerade överavskrivningar " category="Liability" gifi="330"/>
+      <account code="2151" description="Ackumulerade överavskrivningar på immateriella anläggningtillgångar " category="Liability" gifi="330"/>
+      <account code="2152" description="Ackumulerade överavskrivningar på byggnader och markanläggningar " category="Liability" gifi="330"/>
+      <account code="2153" description="Ackumulerade överavskrivningar på maskiner och inventarier " category="Liability" gifi="330"/>
+      <account code="2160" description="Ersättningsfond " category="Liability" gifi="339"/>
+      <account code="2161" description="Ersättningsfond för inventarier " category="Liability" gifi="339"/>
+      <account code="2162" description="Ersättningsfond för byggnader och markanläggningar " category="Liability" gifi="339"/>
+      <account code="2163" description="Ersättningsfond för mark " category="Liability" gifi="339"/>
+      <account code="2164" description="Ersättningsfond för djurlager i jordbruk och renskötsel " category="Liability" gifi="339"/>
+      <account code="2170" description="Avsättningar till allmän investeringsreserv eller liknande " category="Liability" gifi="339"/>
+      <account code="2171" description="Allmän investeringsreserv " category="Liability" gifi="339"/>
+      <account code="2180" description="Obeskattade intäkter " category="Liability" gifi="339"/>
+      <account code="2181" description="Obeskattade upphovsmannaintäkter " category="Liability" gifi="339"/>
+      <account code="2185" description="Obeskattade skogsintäkter " category="Liability" gifi="339"/>
+      <account code="2190" description="Övriga obeskattade reserver " category="Liability" gifi="339"/>
+      <account code="2191" description="Skillnad mellan bokförd och faktisk pensionsskuld " category="Liability" gifi="339"/>
+      <account code="2195" description="Valutakursreserv " category="Liability" gifi="337"/>
+      <account code="2196" description="Lagerreserv " category="Liability" gifi="339"/>
+      <account code="2197" description="Skatteutjämningsreserv - SURV " category="Liability" gifi="339"/>
+      <account code="2199" description="Övriga obeskattade reserver " category="Liability" gifi="339"/>
+    </account-heading>
+    <account-heading id="h-20" code="22" description="Avsättningar">
+      <account code="2210" description="Avsättningar för pensioner " category="Liability" gifi="320"/>
+      <account code="2211" description="Avsättningar för PRI-pensioner " category="Liability" gifi="320"/>
+      <account code="2219" description="Avsättningar för övriga pensioner " category="Liability" gifi="320"/>
+      <account code="2220" description="Avsättningar för garantier " category="Liability" gifi="304"/>
+      <account code="2250" description="Avsättningar för skatter " category="Liability" gifi="329/302"/>
+      <account code="2251" description="Avsättningar för beräknad latent skatt " category="Liability" gifi="329/302"/>
+      <account code="2252" description="Avsättningar för tvistiga skatter " category="Liability" gifi="329/303"/>
+      <account code="2259" description="Avsättningar för övriga skatter " category="Liability" gifi="329/304"/>
+      <account code="2290" description="Övriga avsättningar " category="Liability" gifi="302"/>
+    </account-heading>
+    <account-heading id="h-21" code="23" description="Långfristiga skulder">
+      <account code="2310" description="Obligations- och förlagslån " category="Liability" gifi="329"/>
+      <account code="2320" description="Konvertibla lån " category="Liability" gifi="329"/>
+      <account code="2330" description="Checkräkningskredit " category="Liability" gifi="329"/>
+      <account code="2340" description="Byggnadskreditiv " category="Liability" gifi="329"/>
+      <account code="2350" description="Andra skulder till kreditinstitut " category="Liability" gifi="329"/>
+      <account code="2351" description="Fastighetslån " category="Liability" gifi="329"/>
+      <account code="2355" description="Lån i utländsk valuta från kreditinstitut " category="Liability" gifi="329"/>
+      <account code="2359" description="Övriga långfristiga lån från kreditinstitut " category="Liability" gifi="329"/>
+      <account code="2360" description="Skulder till koncernföretag " category="Liability" gifi="329"/>
+      <account code="2361" description="Skulder till Moderföretag " category="Liability" gifi="329"/>
+      <account code="2362" description="Skulder till dotterföretag " category="Liability" gifi="329"/>
+      <account code="2363" description="Skulder till andra koncernföretag " category="Liability" gifi="329"/>
+      <account code="2370" description="Skulder till intresseföretag " category="Liability" gifi="329"/>
+      <account code="2390" description="Övriga långfristiga skulder " category="Liability" gifi="329"/>
+      <account code="2391" description="Avbetalningskontrakt " category="Liability" gifi="329"/>
+      <account code="2392" description="Villkorliga skulder " category="Liability" gifi="329"/>
+      <account code="2393" description="Lån från närstående personer " category="Liability" gifi="321"/>
+      <account code="2394" description="Långfristiga leverantörskrediter " category="Liability" gifi="329"/>
+      <account code="2395" description="Andra lån i utländsk valuta " category="Liability" gifi="329"/>
+      <account code="2397" description="Mottagna depositioner " category="Liability" gifi="329"/>
+      <account code="2399" description="Övriga långfristiga skulder " category="Liability" gifi="329"/>
+    </account-heading>
+    <account-heading id="h-22" code="24" description="Kortfristiga skulder till kreditinstitut, kunder och leverantörer">
+      <account code="2410" description="Kortfristiga skulder till kreditinstitut " category="Liability" gifi="319"/>
+      <account code="2411" description="Kortfristiga lån från kreditinstitut " category="Liability" gifi="319"/>
+      <account code="2417" description="Kortfristig del av långfristiga skulder till kreditinstitut " category="Liability" gifi="319"/>
+      <account code="2418" description="Kortfristig del av checkräkningskredit " category="Liability" gifi="319"/>
+      <account code="2419" description="Övriga kortfristiga skulder till kreditinstitut " category="Liability" gifi="319"/>
+      <account code="2420" description="Förskott från kunder " category="Liability" gifi="310"/>
+      <account code="2421" description="Ej inlösta presentkort " category="Liability" gifi="310"/>
+      <account code="2429" description="Övriga förskott från kunder " category="Liability" gifi="310"/>
+      <account code="2430" description="Pågående arbeten " category="Liability" gifi="319"/>
+      <account code="2431" description="Pågående arbeten, fakturering " category="Liability" gifi="319"/>
+      <account code="2435" description="Fakturerad men ej upparbetad intäkt " category="Liability" gifi="319"/>
+      <account code="2438" description="Pågående arbeten, nedlagda kostnader " category="Liability" gifi="319"/>
+      <account code="3439" description="Förändring av pågående arbeten " category="Income" gifi="319"/>
+      <account code="2440" description="Leverantörsskulder " category="Liability" gifi="300">
+        <link code="AP"/>
+      </account>
+      <account code="2443" description="Konsignationsskulder " category="Liability" gifi="300"/>
+      <account code="2445" description="Tvistiga leverantörsskulder " category="Liability" gifi="300"/>
+      <account code="2448" description="Ej reskontraförda leverantörsskulder " category="Liability" gifi="300"/>
+      <account code="2460" description="Leverantörsskulder till koncernföretag " category="Liability" gifi="300"/>
+      <account code="2461" description="Leverantörsskulder till moderföretag " category="Liability" gifi="300"/>
+      <account code="2462" description="Leverantörsskulder till dotterföretag " category="Liability" gifi="300"/>
+      <account code="2463" description="Leverantörsskulder till andra koncernföretag " category="Liability" gifi="300"/>
+      <account code="2470" description="Leverantörsskulder till intresseföretag " category="Liability" gifi="300"/>
+      <account code="2490" description="Övriga kortfristiga skulder till kreditinstitut, kunder och leverantörer " category="Liability" gifi="319"/>
+      <account code="2491" description="Växelskulder " category="Liability" gifi="300"/>
+    </account-heading>
+    <account-heading id="h-23" code="25" description="Skatteskulder">
+      <account code="2510" description="Skatteskulder " category="Liability" gifi="301"/>
+      <account code="2511" description="Debiterad kvarstående skatt " category="Liability" gifi="301"/>
+      <account code="2512" description="Beräknad inkomstskatt " category="Liability" gifi="301"/>
+      <account code="2513" description="Beräknad fastighetssskatt " category="Liability" gifi="301"/>
+      <account code="2514" description="Beräknad särskild löneskatt på pensionskostnader " category="Liability" gifi="301"/>
+      <account code="2515" description="Beräknad avkastningsskatt " category="Liability" gifi="301"/>
+      <account code="2518" description="Betald preliminärskatt " category="Liability" gifi="301"/>
+    </account-heading>
+    <account-heading id="h-24" code="26" description="Moms och särskilda punktskatter">
+      <account code="2610" description="Utgående moms, 25% " category="Liability" gifi="307">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.25"/>
+        </tax>
+      </account>
+      <account code="2611" description="Utgående moms på försäljning inom Sverige, 25% " category="Liability" gifi="307"/>
+      <account code="2612" description="Utgående moms på egna uttag, 25% " category="Liability" gifi="307"/>
+      <account code="2613" description="Utgående moms - uthyrningsverksamhet, 25% " category="Liability" gifi="307"/>
+      <account code="2614" description="Beräknad utgående moms på tjänsteförvärv från utlandet, 25% " category="Liability" gifi="307"/>
+      <account code="2615" description="Beräknad utgående moms på varuförvärv från annat EU-land, 25% " category="Liability" gifi="307"/>
+      <account code="2618" description="Vilande utgående moms, 25% " category="Liability" gifi="307"/>
+      <account code="2620" description="Utgående moms, 12% " category="Liability" gifi="307">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.12"/>
+        </tax>
+      </account>
+      <account code="2621" description="Utgående moms på försäljning inom Sverige, 12% " category="Liability" gifi="307"/>
+      <account code="2622" description="Utgående moms på egna uttag, 12% " category="Liability" gifi="307"/>
+      <account code="2628" description="Vilande utgående moms, 12% " category="Liability" gifi="307"/>
+      <account code="2630" description="Utgående moms, 6% " category="Liability" gifi="307">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.06"/>
+        </tax>
+      </account>
+      <account code="2631" description="Utgående moms på försäljning inom Sverige, 6% " category="Liability" gifi="307"/>
+      <account code="2632" description="Utgående moms på egna uttag, 6% " category="Liability" gifi="307"/>
+      <account code="2638" description="Vilande utgående moms, 6% " category="Liability" gifi="307"/>
+      <account code="2640" description="Ingående moms " category="Liability" gifi="307">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0"/>
+        </tax>
+      </account>
+      <account code="2641" description="Debiterad ingående moms " category="Liability" gifi="307"/>
+      <account code="2642" description="Debiterad ingående moms i anslutning till frivillig skattskyldighet " category="Liability" gifi="307"/>
+      <account code="2645" description="Beräknad ingående moms på förvärv från utlandet " category="Liability" gifi="307"/>
+      <account code="2648" description="Vilande ingående moms " category="Liability" gifi="307"/>
+      <account code="2649" description="Ingående moms - blandad verksamhet " category="Liability" gifi="307"/>
+      <account code="2650" description="Redovisningskonto för moms - Momsredovisning " category="Liability" gifi="307"/>
+      <account code="2660" description="Särskilda punktskatter " category="Liability" gifi="301"/>
+      <account code="2661" description="Reklamskatt " category="Liability" gifi="301"/>
+      <account code="2669" description="Övriga punktskatter " category="Liability" gifi="301"/>
+    </account-heading>
+    <account-heading id="h-25" code="27" description="Personalens skatter, avgifter och löneavdrag">
+      <account code="2710" description="Personalens källskatt " category="Liability" gifi="301"/>
+      <account code="2711" description="Innehållen källskatt " category="Liability" gifi="301"/>
+      <account code="2718" description="Betald källskatt " category="Liability" gifi="301"/>
+      <account code="2730" description="Lagstadgade sociala avgifter och särskild löneskatt " category="Liability" gifi="301"/>
+      <account code="2731" description="Avräkning lagstadgade sociala avgifter " category="Liability" gifi="301"/>
+      <account code="2732" description="Avräkning särskild löneskatt " category="Liability" gifi="301"/>
+      <account code="2738" description="Betalda lagstadgade sociala avgifter och särskild löneskatt " category="Liability" gifi="301"/>
+      <account code="2740" description="Avtalade sociala avgifter " category="Liability" gifi="319"/>
+      <account code="2741" description="Avräkning avtalade sociala avgifter " category="Liability" gifi="319"/>
+      <account code="2748" description="Betalade avtalade sociala avgifter " category="Liability" gifi="319"/>
+      <account code="2750" description="Utmätning i lön " category="Liability" gifi="319"/>
+      <account code="2760" description="Semesterkassa " category="Liability" gifi="319"/>
+      <account code="2790" description="Övriga löneavdrag " category="Liability" gifi="319"/>
+      <account code="2791" description="Personalens intressekonto " category="Liability" gifi="319"/>
+      <account code="2792" description="Lönsparande " category="Liability" gifi="319"/>
+      <account code="2793" description="Gruppförsäkringspremier " category="Liability" gifi="319"/>
+      <account code="2794" description="Fackföreningsavgifter " category="Liability" gifi="319"/>
+      <account code="2795" description="Mätnings- och granskningsarvoden " category="Liability" gifi="319"/>
+    </account-heading>
+    <account-heading id="h-26" code="28" description="Övriga kortfristiga skulder">
+      <account code="2810" description="Avräkning factoring " category="Liability" gifi="319"/>
+      <account code="2820" description="Skulder till anställda " category="Liability" gifi="319"/>
+      <account code="2821" description="Löneskulder " category="Liability" gifi="319"/>
+      <account code="2822" description="Reseräkningar " category="Liability" gifi="319"/>
+      <account code="2823" description="Tantiem, gratifikationer " category="Liability" gifi="319"/>
+      <account code="2830" description="Avräkning för belånade kontraktsfordringar " category="Liability" gifi="319"/>
+      <account code="2840" description="Kortfristiga låneskulder " category="Liability" gifi="319"/>
+      <account code="2841" description="Kortfristig del av långfristiga skulder " category="Liability" gifi="319"/>
+      <account code="2849" description="Övriga kortfristiga låneskulder " category="Liability" gifi="319"/>
+      <account code="2860" description="Skulder till koncernföretag " category="Liability" gifi="319"/>
+      <account code="2861" description="Skulder till moderföretag " category="Liability" gifi="319"/>
+      <account code="2862" description="Skulder till dotterföretag " category="Liability" gifi="319"/>
+      <account code="2863" description="Skulder till andra koncernföretag " category="Liability" gifi="319"/>
+      <account code="2870" description="Skulder till intresseföretag " category="Liability" gifi="319"/>
+      <account code="2890" description="Övriga kortfristiga skulder " category="Liability" gifi="319"/>
+      <account code="2891" description="Skulder under indrivning " category="Liability" gifi="319"/>
+      <account code="2893" description="Skulder till närstående personer " category="Liability" gifi="319"/>
+      <account code="2897" description="Mottagna depositioner " category="Liability" gifi="319"/>
+      <account code="2898" description="Outtagen vinstutdelning " category="Liability" gifi="319"/>
+      <account code="2899" description="Övriga kortfristiga skulder " category="Liability" gifi="319"/>
+    </account-heading>
+    <account-heading id="h-27" code="29" description="Upplupna kostnader och förutbetalda intäkter">
+      <account code="2900" description="Upplupna kostnader och förutbetalda intäkter (gruppkonto) " category="Liability" gifi="305"/>
+      <account code="2910" description="Upplupna löner " category="Liability" gifi="305"/>
+      <account code="2911" description="Löneskulder " category="Liability" gifi="305"/>
+      <account code="2912" description="Ackordsöverskott " category="Liability" gifi="305"/>
+      <account code="2920" description="Upplupna semesterlöner " category="Liability" gifi="305"/>
+      <account code="2928" description="Betalda semesterlöner " category="Liability" gifi="305"/>
+      <account code="2930" description="Upplupna pensionskostnader " category="Liability" gifi="305"/>
+      <account code="2931" description="Upplupna pensionsutbetalningar " category="Liability" gifi="305"/>
+      <account code="2940" description="Upplupna lagstadgade sociala och andra avgifter " category="Liability" gifi="305"/>
+      <account code="2941" description="Beräknade upplupna lagstadgade sociala avgifter " category="Liability" gifi="305"/>
+      <account code="2942" description="Beräknad upplupen löneskatt för löner " category="Liability" gifi="305"/>
+      <account code="2943" description="Beräknad upplupen särskild löneskatt " category="Liability" gifi="305"/>
+      <account code="2944" description="Beräknad upplupen avkastningsskatt på pensionskostnader " category="Liability" gifi="305"/>
+      <account code="2950" description="Upplupna avtalade sociala avgifter " category="Liability" gifi="305"/>
+      <account code="2960" description="Upplupna utgiftsräntor " category="Liability" gifi="305"/>
+      <account code="2970" description="Förutbetalda hyresinkomster " category="Liability" gifi="305"/>
+      <account code="2971" description="Förutbetalda arrendeinkomster " category="Liability" gifi="305"/>
+      <account code="2972" description="Förutbetalda inkomsträntor " category="Liability" gifi="305"/>
+      <account code="2980" description="Upplupna avtalskostnader " category="Liability" gifi="305"/>
+      <account code="2990" description="Övriga upplupna kostnader och förutbetalda intäkter " category="Liability" gifi="305"/>
+      <account code="2991" description="Beräknat arvode för bokslut " category="Liability" gifi="305"/>
+      <account code="2992" description="Beräknat arvode för revision " category="Liability" gifi="305"/>
+    </account-heading>
+    <account-heading id="h-28" code="3" description="Rörelsens inkomster/intäkter "/>
+    <account-heading id="h-29" code="30" description="Huvudintäkter ">
+      <account code="3010" description="Försäljning eller arvoden/Utfört arbete " category="Income" gifi="400">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="3040" description="Försäljning av tjänster " category="Income" gifi="400"/>
+      <account code="3041" description="Försäljning av tjänster inom Sverige, moms 25% " category="Income" gifi="400"/>
+      <account code="3042" description="Försäljning av tjänster inom Sverige, moms 12% " category="Income" gifi="400"/>
+      <account code="3043" description="Försäljning av tjänster inom Sverige, moms 6% " category="Income" gifi="400"/>
+      <account code="3044" description="Försäljning av tjänster inom Sverige, momsfri " category="Income" gifi="400"/>
+      <account code="3045" description="Försäljning av tjänster till land utanför EU " category="Income" gifi="400"/>
+      <account code="3046" description="Försäljning av tjänster till annat EU-land, moms 25% (ej VAT-nummer) " category="Income" gifi="400"/>
+      <account code="3048" description="Försäljning av tjänster till annat EU-land, momsfri " category="Income" gifi="400"/>
+      <account code="3050" description="Försäljning av varor " category="Income" gifi="400">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="3051" description="Försäljning av varor inom Sverige, moms 25% " category="Income" gifi="400"/>
+      <account code="3052" description="Försäljning av varor inom Sverige, moms 12% " category="Income" gifi="400"/>
+      <account code="3053" description="Försäljning av varor inom Sverige, moms 6% " category="Income" gifi="400"/>
+      <account code="3054" description="Försäljning av varor inom Sverige, momsfri " category="Income" gifi="400"/>
+      <account code="3055" description="Försäljning av varor till land utanför EU " category="Income" gifi="400"/>
+      <account code="3056" description="Försäljning av varor till annat EU-land, moms 25% (ej VAT-nummer) " category="Income" gifi="400"/>
+      <account code="3057" description="Trepartsförsäljning av varor till annan EU-land, mellanman " category="Income" gifi="400"/>
+      <account code="3058" description="Försäljning av varor till annat EU-land, momsfritt " category="Income" gifi="400"/>
+      <account code="3060" description="Försäljning till närstående företag " category="Income" gifi="400"/>
+    </account-heading>
+    <account-heading id="h-30" code="31" description="Fri att använda till egna konton"/>
+    <account-heading id="h-31" code="32" description="Fri att använda till egna konton"/>
+    <account-heading id="h-32" code="33" description="Fri att använda till egna konton"/>
+    <account-heading id="h-33" code="34" description="Fri att använda till egna konton"/>
+    <account-heading id="h-34" code="35" description="Fakturerade kostnader ">
+      <account code="3510" description="Fakturerat emballage " category="Income" gifi="400"/>
+      <account code="3518" description="Returnerat emballage " category="Income" gifi="400"/>
+      <account code="3520" description="Fakturerade frakter " category="Income" gifi="400"/>
+      <account code="3530" description="Fakturerade tull- och speditionskostnader m m " category="Income" gifi="400"/>
+      <account code="3540" description="Faktureringsavgifter " category="Income" gifi="400"/>
+      <account code="3550" description="Fakturerade resekostnader " category="Income" gifi="400"/>
+      <account code="3560" description="Fakturerade kostnader till koncernföretag " category="Income" gifi="400"/>
+      <account code="3590" description="Övriga fakturerade kostnader " category="Income" gifi="400"/>
+    </account-heading>
+    <account-heading id="h-35" code="36" description="Rörelsens sidointäkter ">
+      <account code="3600" description="Rörelsens sidointäkter (gruppkonto) " category="Income" gifi="400"/>
+      <account code="3610" description="Försäljning av material " category="Income" gifi="400"/>
+      <account code="3611" description="Försäljning av råmaterial " category="Income" gifi="400"/>
+      <account code="3612" description="Försäljning av skrot " category="Income" gifi="400"/>
+      <account code="3613" description="Försäljning av förbrukningsmaterial " category="Income" gifi="400"/>
+      <account code="3619" description="Försäljning av övrigt material " category="Income" gifi="400"/>
+      <account code="3620" description="Tillfällig uthyrning av personal " category="Income" gifi="400"/>
+      <account code="3630" description="Tillfällig uthyrning av transportmedel " category="Income" gifi="400"/>
+      <account code="3680" description="Management fees " category="Income" gifi="400"/>
+      <account code="3690" description="Övriga sidointäkter " category="Income" gifi="400"/>
+    </account-heading>
+    <account-heading id="h-36" code="37" description="Intäktskorrigeringar ">
+      <account code="3700" description="Intäktskorrigeringar (gruppkonto) " category="Income" gifi="400"/>
+      <account code="3710" description="Ofördelade intäktsreduktioner " category="Income" gifi="400"/>
+      <account code="3730" description="Lämnade rabatter " category="Income" gifi="400"/>
+      <account code="3731" description="Lämnade kassarabatter " category="Income" gifi="400"/>
+      <account code="3732" description="Lämnade mängdrabatter - bonus " category="Income" gifi="400"/>
+      <account code="3740" description="Öresutjämning " category="Income" gifi="400"/>
+      <account code="3750" description="Fakturerade punktskatter " category="Income" gifi="400"/>
+      <account code="3751" description="Fakturerade punktskatter - kreditkonto " category="Income" gifi="400"/>
+      <account code="3752" description="Fakturerade punktskatter - debetkonto " category="Income" gifi="400"/>
+      <account code="3790" description="Övriga intäktskorrigeringar " category="Income" gifi="400"/>
+    </account-heading>
+    <account-heading id="h-37" code="38" description="Aktiverat arbete för egen räkning ">
+      <account code="3800" description="Aktiverat arbete för egen räkning (gruppkonto) " category="Income" gifi="402"/>
+      <account code="3840" description="Aktiverat arbete - material " category="Income" gifi="402"/>
+      <account code="3850" description="Aktiverat arbete - omkostnader " category="Income" gifi="402"/>
+      <account code="3870" description="Aktiverat arbete - löner " category="Income" gifi="402"/>
+    </account-heading>
+    <account-heading id="h-38" code="39" description="Övriga rörelseintäkter ">
+      <account code="3900" description="Övriga rörelseintäkter (gruppkonto) " category="Income" gifi="401"/>
+      <account code="3910" description="Hyres- och arrendeintäkter " category="Income" gifi="401"/>
+      <account code="3911" description="Hyresintäkter " category="Income" gifi="401"/>
+      <account code="3912" description="Arrendeintäkter " category="Income" gifi="401"/>
+      <account code="3920" description="Provisionsintäkter, licensintäkter och royalties " category="Income" gifi="401"/>
+      <account code="3921" description="Provisionsintäkter " category="Income" gifi="401"/>
+      <account code="3922" description="Licensintäkter och royalties " category="Income" gifi="401"/>
+      <account code="3925" description="Franchiseintäkter " category="Income" gifi="401"/>
+      <account code="3950" description="Återvunna, tidigare avskrivna kundfordringar " category="Income" gifi="401"/>
+      <account code="3960" description="Valutakursvinster på fordringar och skulder av rörelsekaraktär " category="Income" gifi="401"/>
+      <account code="3970" description="Vinst vid avyttring av immateriella och immateriella anläggningstillgångar " category="Income" gifi="552"/>
+      <account code="3971" description="Vinst vid avyttring av immateriella anläggningstillgångar " category="Income" gifi="552"/>
+      <account code="3972" description="Vinst vid avyttring av byggnader och mark " category="Income" gifi="552"/>
+      <account code="3973" description="Vinst vid avyttring av maskiner och inventarier " category="Income" gifi="552"/>
+      <account code="3980" description="Erhållna bidrag " category="Income" gifi="401"/>
+      <account code="3981" description="Erhållna EU-bidrag " category="Income" gifi="401"/>
+      <account code="3985" description="Erhållna statliga bidrag " category="Income" gifi="401"/>
+      <account code="3987" description="Erhållna kommunala bidrag " category="Income" gifi="401"/>
+      <account code="3989" description="Övriga erhållna bidrag " category="Income" gifi="401"/>
+      <account code="3990" description="Övriga ersättningar och intäkter " category="Income" gifi="401"/>
+      <account code="3991" description="Konfliktersättning " category="Income" gifi="401"/>
+      <account code="3992" description="Erhållna skadestånd " category="Income" gifi="401"/>
+      <account code="3993" description="Erhållna donationer och gåvor " category="Income" gifi="401"/>
+      <account code="3994" description="Ofördelad försäkringsersättning " category="Income" gifi="401"/>
+      <account code="3995" description="Ersättning lånedatorer - nettolöneavdrag " category="Income" gifi="401"/>
+      <account code="3998" description="Sjukpenning " category="Income" gifi="401"/>
+      <account code="3999" description="Övriga rörelseintäkter " category="Income" gifi="401"/>
+    </account-heading>
+    <account-heading id="h-39" code="4" description="Utgifter/kostnader för varor, material och vissa köpta tjänster "/>
+    <account-heading id="h-40" code="40" description="Inköp av varor och material">
+      <account code="4010" description="Inköp av varor och material inom Sverige " category="Expense" gifi="500">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="4050" description="Inköp av varor och material från utlandet " category="Expense" gifi="500"/>
+      <account code="4051" description="Inköp av varor och material utanför EU " category="Expense" gifi="500"/>
+      <account code="4055" description="Trepartsförvärv av varor från annat EU-land - mellanman " category="Expense" gifi="500"/>
+      <account code="4056" description="Trepartsförvärv av varor från annat EU-land - moms 25% " category="Expense" gifi="500"/>
+      <account code="4058" description="Trepartsförvärv av varor från annat EU-land - momsfri " category="Expense" gifi="500"/>
+      <account code="4060" description="Inköp från närstående företag " category="Expense" gifi="500"/>
+      <account code="41 till 45" description="Fri till egna konton " category="Expense"/>
+    </account-heading>
+    <account-heading id="h-41" code="46" description="Legoarbeten - underentreprenader ">
+      <account code="4600" description="Legoarbeten - underentreprenader (gruppkonto) " category="Expense" gifi="501"/>
+    </account-heading>
+    <account-heading id="h-42" code="47" description="Reduktion av inköpspriser ">
+      <account code="4730" description="Reduktion av inköpspriser (gruppkonto) " category="Expense" gifi="500"/>
+      <account code="4731" description="Erhållna kassarabatter " category="Expense" gifi="500"/>
+      <account code="4732" description="Erhållna mängdrabatter - bonus " category="Expense" gifi="500"/>
+      <account code="4790" description="Övriga reduktioner av inköpspriser " category="Expense" gifi="500"/>
+    </account-heading>
+    <account-heading id="h-43" code="48" description="Fri till egna konton "/>
+    <account-heading id="h-44" code="49" description="Lagerförändring, förändring av pågående arbeten samt garantiavsättningar ">
+      <account code="4900" description="Förändring av lager (gruppkonto) " category="Expense" gifi="509/510"/>
+      <account code="4910" description="Förändring av lager av råvaror " category="Expense" gifi="500"/>
+      <account code="4920" description="Förändring av lager av tillsatsmaterial och fönödenheter " category="Expense" gifi="500"/>
+      <account code="4930" description="Förändring av lager av halvfabrikat " category="Expense" gifi="509/510"/>
+      <account code="4931" description="Förändring av lager av köpta halvfabrikat " category="Expense" gifi="500"/>
+      <account code="4932" description="Förändring av lager av egentillverkade halvfabrikat " category="Expense" gifi="509/509"/>
+      <account code="4940" description="Förändring av lager av produkter i arbete - PIA " category="Expense" gifi="509/510"/>
+      <account code="4950" description="Förändring av lager av färdiga varor " category="Expense" gifi="509/510"/>
+      <account code="4960" description="Förändring av lager av handelsvaror " category="Expense" gifi="500"/>
+      <account code="4970" description="Förändring av pågående arbeten, nedlagda kostnader " category="Expense" gifi="509/510"/>
+      <account code="4974" description="Förändring av pågående arbeten, material och utlägg " category="Expense" gifi="509/510"/>
+      <account code="4975" description="Förändring av pågående arbeten, omkostnader " category="Expense" gifi="509/510"/>
+      <account code="4977" description="Förändring av pågående arbeten, personalkostnader " category="Expense" gifi="509/510"/>
+      <account code="4990" description="Förändring av lager och pågående arbeten (ofördelad) " category="Expense" gifi="509/510"/>
+    </account-heading>
+    <account-heading id="h-45" code="5" description="Övriga externa rörelseutgifter/kostnader "/>
+    <account-heading id="h-46" code="50" description="Lokalkostnader">
+      <account code="5000" description="Lokalkostnader (gruppkonto) " category="Expense" gifi="528"/>
+      <account code="5010" description="Lokalhyra " category="Expense" gifi="528">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5011" description="Hyra av kontorslokaler " category="Expense" gifi="528"/>
+      <account code="5012" description="Hyra för garage " category="Expense" gifi="528"/>
+      <account code="5013" description="Hyra för lagerlokaler " category="Expense" gifi="528"/>
+      <account code="5014" description="Hyra för P-plats " category="Expense" gifi="528"/>
+      <account code="5015" description="Avgifter för bostadsrättsförening " category="Expense" gifi="528"/>
+      <account code="5020" description="Elavgifter för belysning " category="Expense" gifi="528"/>
+      <account code="5030" description="Värme " category="Expense" gifi="528"/>
+      <account code="5040" description="Vatten och avlopp " category="Expense" gifi="528"/>
+      <account code="5050" description="Lokaltillbehör " category="Expense" gifi="528"/>
+      <account code="5060" description="Städning och renhållning " category="Expense" gifi="528"/>
+      <account code="5061" description="Städning " category="Expense" gifi="528"/>
+      <account code="5062" description="Sophämtning " category="Expense" gifi="528"/>
+      <account code="5063" description="Hyra för sopcontainer " category="Expense" gifi="528"/>
+      <account code="5064" description="Snöröjning " category="Expense" gifi="528"/>
+      <account code="5065" description="Trädgårdsskötsel " category="Expense" gifi="528"/>
+      <account code="5070" description="Reparation och underhåll av lokaler " category="Expense" gifi="528"/>
+      <account code="5090" description="Övriga lokalkostnader " category="Expense" gifi="528"/>
+    </account-heading>
+    <account-heading id="h-47" code="51" description="Fastighetskostnader">
+      <account code="5100" description="Fastighetskostnader (gruppkonto) " category="Expense" gifi="528"/>
+      <account code="5110" description="Tomträttsavgäld - arrende " category="Expense" gifi="528"/>
+      <account code="5120" description="Elavgifter belysning " category="Expense" gifi="528"/>
+      <account code="5130" description="Värme " category="Expense" gifi="528"/>
+      <account code="5131" description="Uppvärmning " category="Expense" gifi="528"/>
+      <account code="5132" description="Sotning " category="Expense" gifi="528"/>
+      <account code="5140" description="Vatten och avlopp " category="Expense" gifi="528"/>
+      <account code="5160" description="Städning och renhållning " category="Expense" gifi="528"/>
+      <account code="5161" description="Städning " category="Expense" gifi="528"/>
+      <account code="5162" description="Sophämtning " category="Expense" gifi="528"/>
+      <account code="5163" description="Hyra för sopcontainer " category="Expense" gifi="528"/>
+      <account code="5164" description="Snöröjning " category="Expense" gifi="528"/>
+      <account code="5165" description="Trädgårdsskötsel " category="Expense" gifi="528"/>
+      <account code="5170" description="Reparation och underhåll av fastighet " category="Expense" gifi="526"/>
+      <account code="5190" description="Övriga fastighetskostnader " category="Expense" gifi="528"/>
+      <account code="5191" description="Fastighetsskatt " category="Expense" gifi="528"/>
+      <account code="5192" description="Fastighetsförsäkringspremier " category="Expense" gifi="528"/>
+      <account code="5198" description="Övriga fatighetskostnader - ej avdragsgilla " category="Expense" gifi="528"/>
+      <account code="5199" description="Övriga fatighetskostnader - avdragsgilla " category="Expense" gifi="528"/>
+    </account-heading>
+    <account-heading id="h-48" code="52" description="Hyra av anläggningstillgångar ">
+      <account code="5200" description="Hyra av anläggningstillgångar (gruppkonto) " category="Expense" gifi="529"/>
+      <account code="5210" description="Hyra av maskiner och andra tekniska anläggningar " category="Expense" gifi="529"/>
+      <account code="5211" description="Korttidshyra av maskiner och tekniska anläggningar " category="Expense" gifi="529"/>
+      <account code="5212" description="Leasing av maskiner och tekniska anläggningar " category="Expense" gifi="529"/>
+      <account code="5220" description="Hyra av inventarier och verktyg " category="Expense" gifi="529"/>
+      <account code="5221" description="Korttidshyra av inventarier och verktyg " category="Expense" gifi="529"/>
+      <account code="5222" description="Leasing av inventarier och verktyg " category="Expense" gifi="529"/>
+      <account code="5250" description="Hyra av datorer " category="Expense" gifi="529"/>
+      <account code="5251" description="Korttidshyra av datorer " category="Expense" gifi="529"/>
+      <account code="5252" description="Leasing av datorer " category="Expense" gifi="529"/>
+      <account code="5290" description="Övriga hyreskostnader för anläggningstillgångar " category="Expense" gifi="529"/>
+    </account-heading>
+    <account-heading id="h-49" code="53" description="Energikostnader ">
+      <account code="5300" description="Energikostnader (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="5310" description="Elavgifter för drift " category="Expense" gifi="530"/>
+      <account code="5320" description="Gas " category="Expense" gifi="530"/>
+      <account code="5330" description="Eldningsolja " category="Expense" gifi="530"/>
+      <account code="5340" description="Stenkol och koks " category="Expense" gifi="530"/>
+      <account code="5350" description="Torv, träkol, ved och annat trädbränsle " category="Expense" gifi="530"/>
+      <account code="5360" description="Bensin, fotogen och motorbrännolja " category="Expense" gifi="530"/>
+      <account code="5370" description="Fjärrvärme, kyla och ånga " category="Expense" gifi="530"/>
+      <account code="5380" description="Vatten " category="Expense" gifi="530"/>
+      <account code="5390" description="Övriga energikostnader " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-50" code="54" description="Förbrukningsinventarier och förbrukningsmaterial ">
+      <account code="5400" description="Förbrukningsinventarier och förbrukningsmaterial (gruppkonto) " category="Expense" gifi="531"/>
+      <account code="5410" description="Förbrukningsinventarier " category="Expense" gifi="531">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5420" description="Dataprogram " category="Expense" gifi="531"/>
+      <account code="5430" description="Transportinventarier " category="Expense" gifi="531"/>
+      <account code="5440" description="Förbrukningsemballage " category="Expense" gifi="531"/>
+      <account code="5460" description="Förbrukningsmaterial " category="Expense" gifi="531">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5480" description="Arbetskläder och skyddsmaterial " category="Expense" gifi="531"/>
+      <account code="5490" description="Övriga förbrukningsinventarier och förbrukningsmaterial " category="Expense" gifi="531"/>
+    </account-heading>
+    <account-heading id="h-51" code="55" description="Reparation och underhåll ">
+      <account code="5500" description="Reparation och underhåll (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="5510" description="Reparation och underhåll av maskiner och tekniska anläggningar " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5520" description="Reparation och underhåll av inventarier, verktyg och datorer mm. " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5530" description="Reparation och underhåll av installationer " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5550" description="Reparation och underhåll av förbrukningsinventarier " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5580" description="Underhåll och tvätt av arbetskläder " category="Expense" gifi="530"/>
+      <account code="5590" description="Övriga kostnader för reparation och underhåll " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-52" code="56" description="Kostnader för transportmedel ">
+      <account code="5600" description="Kostnader för transportmedel (gruppkonto) " category="Expense" gifi="538"/>
+      <account code="5610" description="Personbilskostnad " category="Expense" gifi="536"/>
+      <account code="5611" description="Drivmedel för personbilar " category="Expense" gifi="536"/>
+      <account code="5612" description="Försäkring och skatt för personbilar " category="Expense" gifi="536"/>
+      <account code="5613" description="Reparation och underhåll - personbilar " category="Expense" gifi="536"/>
+      <account code="5615" description="Leasingavgifter för personbilar " category="Expense" gifi="536"/>
+      <account code="5619" description="Övriga personbilskostnader " category="Expense" gifi="536"/>
+      <account code="5620" description="Lastbilskostnad " category="Expense" gifi="538"/>
+      <account code="5621" description="Drivmedel för lastbilar " category="Expense" gifi="538"/>
+      <account code="5622" description="Försäkring och skatt för lastbilar " category="Expense" gifi="538"/>
+      <account code="5623" description="Reparation och underhåll - lastbilar " category="Expense" gifi="538"/>
+      <account code="5625" description="Leasingavgifter för lastbilar " category="Expense" gifi="538"/>
+      <account code="5629" description="Övriga lastbilskostnader " category="Expense" gifi="538"/>
+      <account code="5630" description="Truckkostnader " category="Expense" gifi="538"/>
+      <account code="5650" description="Traktorkostnader " category="Expense" gifi="538"/>
+      <account code="5660" description="Motorcykel-, moped- och skoterkostnader " category="Expense" gifi="538"/>
+      <account code="5670" description="Båtkostnader " category="Expense" gifi="538"/>
+      <account code="5680" description="Flygplans- och helikopterkostnader " category="Expense" gifi="538"/>
+      <account code="5690" description="Övriga kostnader för transportmedel " category="Expense" gifi="538"/>
+    </account-heading>
+    <account-heading id="h-53" code="57" description="Frakter och transporter ">
+      <account code="5700" description="Frakter och transporter (gruppkonto) " category="Expense" gifi="538"/>
+      <account code="5710" description="Frakter, transporter och försäkringar vid varudistribution " category="Expense" gifi="538">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5720" description="Tull- och speditionskostnader " category="Expense" gifi="538"/>
+      <account code="5730" description="Arbetstransporter " category="Expense" gifi="538"/>
+    </account-heading>
+    <account-heading id="h-54" code="58" description="Resekostnader ">
+      <account code="5800" description="Resekostnader (gruppkonto) " category="Expense" gifi="538"/>
+      <account code="5810" description="Biljetter " category="Expense" gifi="538"/>
+      <account code="5820" description="Hyrbilskostnader " category="Expense" gifi="538"/>
+      <account code="5831" description="Kost och logi i Sverige " category="Expense" gifi="538"/>
+      <account code="5832" description="Kost och logi i utlandet " category="Expense" gifi="538"/>
+      <account code="5890" description="Övriga resekostnader " category="Expense" gifi="538"/>
+    </account-heading>
+    <account-heading id="h-55" code="59" description="Reklam och PR ">
+      <account code="5900" description="Reklam och PR (gruppkonto) " category="Expense" gifi="541"/>
+      <account code="5910" description="Annonsering " category="Expense" gifi="541"/>
+      <account code="5920" description="Utomhus- och trafikreklam " category="Expense" gifi="541"/>
+      <account code="5930" description="Reklamtrycksaker och direktreklam " category="Expense" gifi="541"/>
+      <account code="5940" description="Utställningar och mässor " category="Expense" gifi="541"/>
+      <account code="5950" description="Butiksreklam och återförsäljarreklam " category="Expense" gifi="541"/>
+      <account code="5960" description="Varuprover, reklamgåvor, presentreklam och tävlingar " category="Expense" gifi="541"/>
+      <account code="5970" description="Film-, radio- och TV-reklam " category="Expense" gifi="541"/>
+      <account code="5980" description="PR, institutionell reklam och sponsring " category="Expense" gifi="541"/>
+      <account code="5985" description="Hemsidor och övrig datareklam " category="Expense" gifi="541"/>
+      <account code="5990" description="Övriga kostnader för reklam och PR " category="Expense" gifi="541"/>
+      <account code="5998" description="Erhållna reklambidrag " category="Expense" gifi="541"/>
+    </account-heading>
+    <account-heading id="h-56" code="6" description="Övriga externa rörelseutgifter/kostnader"/>
+    <account-heading id="h-57" code="60" description="Övriga försäljningskostnader ">
+      <account code="6000" description="Övriga försäljningskostnader (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6010" description="Kataloger och prislistor " category="Expense" gifi="530"/>
+      <account code="6020" description="Egna facktidskrifter " category="Expense" gifi="530"/>
+      <account code="6030" description="Speciella orderkostnader " category="Expense" gifi="530"/>
+      <account code="6040" description="Kontokortsavgifter " category="Expense" gifi="530"/>
+      <account code="6050" description="Försäljningsprovisioner " category="Expense" gifi="530"/>
+      <account code="6055" description="Franchiseavgifter o ch dyl. " category="Expense" gifi="530"/>
+      <account code="6060" description="Kreditförsäljningskostnader " category="Expense" gifi="530"/>
+      <account code="6061" description="Kreditupplysning " category="Expense" gifi="530"/>
+      <account code="6062" description="Inkasso " category="Expense" gifi="530"/>
+      <account code="6070" description="Representation " category="Expense" gifi="530"/>
+      <account code="6071" description="Representation - avdragsgill " category="Expense" gifi="530"/>
+      <account code="6072" description="Representation - ej avdragsgill " category="Expense" gifi="530"/>
+      <account code="6080" description="Bankgarantiavgifter " category="Expense" gifi="530"/>
+      <account code="6090" description="Övriga försäljningskostnader " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-58" code="61" description="Kontorsmaterial och trycksaker">
+      <account code="6100" description="Kontorsmaterial och trycksaker (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6110" description="Kontorsmaterial " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6150" description="Trycksaker " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-59" code="62" description="Tele och post ">
+      <account code="6200" description="Tele och post (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6210" description="Telekommunikation " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6211" description="Telefon " category="Expense" gifi="530"/>
+      <account code="6212" description="Mobiltelefon " category="Expense" gifi="530"/>
+      <account code="6213" description="Mobilsökning " category="Expense" gifi="530"/>
+      <account code="6214" description="Fax " category="Expense" gifi="530"/>
+      <account code="6215" description="Telex " category="Expense" gifi="530"/>
+      <account code="6217" description="Telefonkonsult " category="Expense" gifi="530"/>
+      <account code="6230" description="Datakommunikation " category="Expense" gifi="530"/>
+      <account code="6250" description="Postbefordran, d v s frimärken mm " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-60" code="63" description="Företagsförsäkringar och övriga riskkostnader ">
+      <account code="6300" description="Företagsförsäkringar och övriga riskkostnader (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6310" description="Företagsförsäkringar " category="Expense" gifi="530">
+        <link code="AP_amount"/>
+      </account>
+      <account code="6320" description="Självrisker " category="Expense" gifi="530"/>
+      <account code="6330" description="Förluster i pågående arbeten " category="Expense" gifi="530"/>
+      <account code="6350" description="Förluster på kundfordringar " category="Expense" gifi="530"/>
+      <account code="6351" description="Konstaterade förluster på kundfordringar " category="Expense" gifi="530"/>
+      <account code="6352" description="Befarade förluster på kundfordringar " category="Expense" gifi="530"/>
+      <account code="6360" description="Garantikostnader " category="Expense" gifi="530"/>
+      <account code="6361" description="Förändring av garantiavsättning " category="Expense" gifi="530"/>
+      <account code="6362" description="Faktiska garantikostnader " category="Expense" gifi="530"/>
+      <account code="6370" description="Kostnader för bevakning och larm " category="Expense" gifi="530"/>
+      <account code="6380" description="Förluster på övriga kortfristiga fordringar " category="Expense" gifi="530"/>
+      <account code="6390" description="Övriga riskkostnader " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-61" code="64" description="Förvaltningskostnader ">
+      <account code="6400" description="Förvaltningskostnader " category="Expense" gifi="530"/>
+      <account code="6410" description="Styrelsearvoden " category="Expense" gifi="530"/>
+      <account code="6420" description="Revisionsarvoden " category="Expense" gifi="530"/>
+      <account code="6430" description="Management fees " category="Expense" gifi="530"/>
+      <account code="6440" description="Årsredovisning och delårsrapporter " category="Expense" gifi="530"/>
+      <account code="6450" description="Bolagsstämma " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-62" code="65" description="Övriga externa tjänster ">
+      <account code="6500" description="Övriga externa tjänster (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6510" description="Mätningstjänster " category="Expense" gifi="530"/>
+      <account code="6520" description="Ritnings- och kopieringskostnader " category="Expense" gifi="530"/>
+      <account code="6530" description="Redovisningstjänster " category="Expense" gifi="530"/>
+      <account code="6540" description="IT-tjänster " category="Expense" gifi="530"/>
+      <account code="6550" description="Konsultarvoden " category="Expense" gifi="530"/>
+      <account code="6560" description="Serviceavgifter till branschorganisationer " category="Expense" gifi="530"/>
+      <account code="6570" description="Bankkostnader " category="Expense" gifi="530"/>
+      <account code="6580" description="Advokat- och rättegångskostnader " category="Expense" gifi="530"/>
+      <account code="6590" description="Övriga externa tjänster " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-63" code="66" description="Fri till egna konton"/>
+    <account-heading id="h-64" code="67" description="Fri till egna konton"/>
+    <account-heading id="h-65" code="68" description="Inhyrd personal ">
+      <account code="6800" description="Inhyrd personal (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6810" description="Inhyrs produktionspersonal " category="Expense" gifi="530"/>
+      <account code="6820" description="Inhyrd lagerpersonal " category="Expense" gifi="530"/>
+      <account code="6830" description="Inhyrd transportpersonal " category="Expense" gifi="530"/>
+      <account code="6840" description="Inhyrd kontors- och ekonomipersonal " category="Expense" gifi="530"/>
+      <account code="6850" description="Inhyrd IT-personal " category="Expense" gifi="530"/>
+      <account code="6860" description="Inhyrd marknads- och försäljningspersonal " category="Expense" gifi="530"/>
+      <account code="6870" description="Inhyrd restaurang- och butikspersonal " category="Expense" gifi="530"/>
+      <account code="6880" description="Inhyrd företagsledare " category="Expense" gifi="530"/>
+      <account code="6890" description="Övrig inhyrd personal " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-66" code="69" description="Övriga externa kostnader ">
+      <account code="6900" description="Övriga externa kostnader (gruppkonto) " category="Expense" gifi="530"/>
+      <account code="6910" description="Licensavgifter och royalties " category="Expense" gifi="530"/>
+      <account code="6911" description="Stim- och Samiavgifter " category="Expense" gifi="530"/>
+      <account code="6920" description="Patenkostnader för egna patent " category="Expense" gifi="530"/>
+      <account code="6921" description="Uppfinningskostnader " category="Expense" gifi="530"/>
+      <account code="6930" description="Kostnader för varumärken mm " category="Expense" gifi="530"/>
+      <account code="6940" description="Kontroll-, provnings- och stämpelavgifter " category="Expense" gifi="530"/>
+      <account code="6941" description="Certifieringskostnader " category="Expense" gifi="530"/>
+      <account code="6950" description="Tillsynsavgifter myndigheter " category="Expense" gifi="530"/>
+      <account code="6951" description="Miljöavgifter " category="Expense" gifi="530"/>
+      <account code="6952" description="Förpackningsavgifter " category="Expense" gifi="530"/>
+      <account code="6960" description="Franchiseavgifter och dyl. " category="Expense" gifi="530"/>
+      <account code="6970" description="Tidningar, tidskrifter och facklitteratur " category="Expense" gifi="530"/>
+      <account code="6971" description="Tidningar och tidskrifter " category="Expense" gifi="530"/>
+      <account code="6972" description="Facklitteratur " category="Expense" gifi="530"/>
+      <account code="6980" description="Föreningsavgifter " category="Expense" gifi="530"/>
+      <account code="6981" description="Föreningsavgifter - avdragsgilla " category="Expense" gifi="530"/>
+      <account code="6982" description="Föreningsavgifter - ej avdragsgilla " category="Expense" gifi="530"/>
+      <account code="6990" description="Övriga externa kostnader " category="Expense" gifi="530"/>
+      <account code="6991" description="Övriga externa kostnader - avdragsgilla " category="Expense" gifi="530"/>
+      <account code="6992" description="Övriga externa kostnader - ej avdragsgilla " category="Expense" gifi="530"/>
+      <account code="6993" description="Lämnade bidrag och gåvor " category="Expense" gifi="530"/>
+      <account code="6995" description="Kostnadsräntor för skatter och sociala avgifter " category="Expense" gifi="530"/>
+      <account code="6998" description="Ingående moms - återbetalning " category="Expense" gifi="530"/>
+      <account code="6999" description="Ingående moms - blandad verksamhet " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-67" code="7" description="Utgifter/kostnader för personal, avskrivningar m m "/>
+    <account-heading id="h-68" code="70" description="Löner till kollektivanställda">
+      <account code="7000" description="Löner till kollektivanställda (gruppkonto) " category="Expense" gifi="512"/>
+      <account code="7010" description="Löner till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7011" description="Löner till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7012" description="Vinstandelar till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7015" description="Löner till kollektivanställda - löneskatt " category="Expense" gifi="512"/>
+      <account code="7016" description="Vinstandelar till kollektivanställda - löneskatt " category="Expense" gifi="512"/>
+      <account code="7017" description="Avgångsvederlag till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7018" description="Bruttolöneavdrag - kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7019" description="Upplupna löner och vinstandelar till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7080" description="Löner till kollektivanställda för ej arbetad tid " category="Expense" gifi="512"/>
+      <account code="7081" description="Sjuklöner till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7082" description="Semesterlöner till kollektivanställda " category="Expense" gifi="512"/>
+      <account code="7090" description="Förändring av semesterlöneskuld " category="Expense" gifi="512"/>
+    </account-heading>
+    <account-heading id="h-69" code="71" description="Fri till egna konton"/>
+    <account-heading id="h-70" code="72" description="Löner till tjänstemän och företagsledare ">
+      <account code="7200" description="Löner till tjänstemän och företagsledare (gruppkonto) " category="Expense" gifi="512"/>
+      <account code="7211" description="Löner till tjänstemän " category="Expense" gifi="512"/>
+      <account code="7212" description="Vinstandelar till tjänstemän " category="Expense" gifi="512"/>
+      <account code="7215" description="Löner till tjänstemän (löneskatt) " category="Expense" gifi="512"/>
+      <account code="7216" description="Vinstandelar till tjänstemän (löneskatt) " category="Expense" gifi="512"/>
+      <account code="7217" description="Avgångsvederlag till tjänstemän " category="Expense" gifi="512"/>
+      <account code="7218" description="Bruttolöneavdrag - tjänstemän " category="Expense" gifi="512"/>
+      <account code="7219" description="Upplupna löner och vinstandelar till tjänstemän " category="Expense" gifi="512"/>
+      <account code="7220" description="Löner till företagsledare " category="Expense" gifi="512"/>
+      <account code="7221" description="Löner till företagsledare " category="Expense" gifi="512"/>
+      <account code="7222" description="Tantiem till företagsledare " category="Expense" gifi="512"/>
+      <account code="7223" description="Gratifikationer till företagsledare " category="Expense" gifi="512"/>
+      <account code="7227" description="Avgångsvederlag till företagsledare " category="Expense" gifi="512"/>
+      <account code="7228" description="Bruttolöneavdrag - företagsledare " category="Expense" gifi="512"/>
+      <account code="7229" description="Upplupna löner och vinstandelar till företagsledning " category="Expense" gifi="512"/>
+      <account code="7280" description="Löner till tjänstemän och företagsledare för ej arbetad tid " category="Expense" gifi="512"/>
+      <account code="7281" description="Sjuklöner till tjänstemän och företagsledare " category="Expense" gifi="512"/>
+      <account code="7282" description="Semesterlöner till tjänstemän och företagsledare " category="Expense" gifi="512"/>
+      <account code="7290" description="Förändring av semesterlöneskuld " category="Expense" gifi="512"/>
+    </account-heading>
+    <account-heading id="h-71" code="73" description="Kostnadsersättningar och förmåner ">
+      <account code="7300" description="Kostnadsersättningar och förmåner (gruppkonto) " category="Expense" gifi="514"/>
+      <account code="7310" description="Kontanta extraersättningar " category="Expense" gifi="514"/>
+      <account code="7311" description="Ersättningar för sammanträden m m " category="Expense" gifi="514"/>
+      <account code="7312" description="Ersättningar för förslagsverksamhet och uppfinningar " category="Expense" gifi="514"/>
+      <account code="7313" description="Ersättningar för/bidrag till bostadskostnader " category="Expense" gifi="514"/>
+      <account code="7314" description="Ersättningar för/bidrag till måltidskostnader " category="Expense" gifi="514"/>
+      <account code="7315" description="Ersättningar för/bidrag till resor till och från arbetsplatsen " category="Expense" gifi="514"/>
+      <account code="7316" description="Ersättningar för/bidrag till arbetskläder " category="Expense" gifi="514"/>
+      <account code="7317" description="Ersättningar för/bidrag till arbetsmaterial och arbetsverktyg " category="Expense" gifi="514"/>
+      <account code="7318" description="Felräkningspengar " category="Expense" gifi="514"/>
+      <account code="7319" description="Övriga kontanta extraersättningar " category="Expense" gifi="514"/>
+      <account code="7320" description="Traktamenten vid tjänsteresa " category="Expense" gifi="514"/>
+      <account code="7321" description="Skattefria traktamenten - Sverige " category="Expense" gifi="514"/>
+      <account code="7322" description="Skattepliktiga traktamenten - Sverige " category="Expense" gifi="514"/>
+      <account code="7323" description="Skattefria traktamenten - utlandet " category="Expense" gifi="514"/>
+      <account code="7324" description="Skattepliktiga traktamenten - utlandet " category="Expense" gifi="514"/>
+      <account code="7330" description="Bilersättningar " category="Expense" gifi="514"/>
+      <account code="7331" description="Bilersättningar - skattefria " category="Expense" gifi="514"/>
+      <account code="7332" description="Bilersättningar - skattepliktiga " category="Expense" gifi="514"/>
+      <account code="7350" description="Ersättningar för föreskrivna arbetskläder " category="Expense" gifi="514"/>
+      <account code="7370" description="Representationserättningar " category="Expense" gifi="514"/>
+      <account code="7380" description="Kostnader för förmåner till anställda " category="Expense" gifi="514"/>
+      <account code="7381" description="Kostnader för fri bostad " category="Expense" gifi="514"/>
+      <account code="7382" description="Kostnader för fria eller subventionerade måltider " category="Expense" gifi="514"/>
+      <account code="7383" description="Kostnader för fria resor till och från arbetsplatsen " category="Expense" gifi="514"/>
+      <account code="7384" description="Kostnader för fria eller subventionerade arbetskläder " category="Expense" gifi="514"/>
+      <account code="7385" description="Kostnader för fri bil " category="Expense" gifi="514"/>
+      <account code="7386" description="Subventionerad ränta " category="Expense" gifi="514"/>
+      <account code="7387" description="Personalrabatter " category="Expense" gifi="514"/>
+      <account code="7389" description="Övriga kostnader och förmåner " category="Expense" gifi="514"/>
+      <account code="7390" description="Övriga kostnadsersättningar och förmåner " category="Expense" gifi="514"/>
+      <account code="7398" description="Anställdas ersättning för förmåner - nettolöneavdrag " category="Expense" gifi="514"/>
+      <account code="7399" description="Övriga kostnadsersättningar och förmåner " category="Expense" gifi="514"/>
+    </account-heading>
+    <account-heading id="h-72" code="74" description="Pensionskostnader ">
+      <account code="7400" description="Pensionskostnader (gruppkonto) " category="Expense" gifi="524"/>
+      <account code="7410" description="Pensionsförsäkringspremier " category="Expense" gifi="524"/>
+      <account code="7411" description="Premier för kollektiva pensionsförsäkringar " category="Expense" gifi="524/511"/>
+      <account code="7412" description="Premier för individuella pensionsförsäkringar " category="Expense" gifi="524"/>
+      <account code="7420" description="Förändring av pensionsskuld " category="Expense" gifi="524"/>
+      <account code="7430" description="Avdrag för räntedel i pensionskostnad " category="Expense" gifi="524"/>
+      <account code="7440" description="Avsättning till pensionsstiftelse " category="Expense" gifi="524"/>
+      <account code="7450" description="Avdrag för gottgörelse från pensionsstiftelse " category="Expense" gifi="524"/>
+      <account code="7460" description="Pensionsutbetalningar " category="Expense" gifi="524"/>
+      <account code="7461" description="Pensionsutbetalningar till f d kollektivanställda " category="Expense" gifi="524"/>
+      <account code="7462" description="Pensionsutbetalningar till f d tjänstemän " category="Expense" gifi="524"/>
+      <account code="7463" description="Pensionsutbetalningar till f d företagsledare " category="Expense" gifi="524"/>
+      <account code="7470" description="Förvaltnings- och kreditförsäkringsavgifter " category="Expense" gifi="524"/>
+      <account code="7490" description="Övriga pensionskostnader " category="Expense" gifi="524"/>
+    </account-heading>
+    <account-heading id="h-73" code="75" description="Sociala och andra avgifter enligt lag och avtal">
+      <account code="7500" description="Sociala och andra avgifter enligt lag och avtal (gruppkonto) " category="Expense"/>
+      <account code="7510" description="Lagstadgade sociala avgifter " category="Expense" gifi="520"/>
+      <account code="7511" description="Sociala avgifter för löner och ersättningar " category="Expense" gifi="520"/>
+      <account code="7512" description="Sociala avgifter för förmånsvärden " category="Expense" gifi="520"/>
+      <account code="7515" description="Sociala avgifter för skattepliktiga kostnadsersättningar " category="Expense" gifi="520"/>
+      <account code="7516" description="Sociala avgifter på arvoden " category="Expense" gifi="520"/>
+      <account code="7518" description="Sociala avgifter för bruttolöneavdrag m m " category="Expense" gifi="520"/>
+      <account code="7519" description="Sociala avgifter för semester- och löneskuld " category="Expense" gifi="520"/>
+      <account code="7520" description="Egenavgifter m m " category="Expense" gifi="597"/>
+      <account code="7530" description="Löneskatt " category="Expense" gifi="520"/>
+      <account code="7531" description="Löneskatt för löner och ersättningar " category="Expense" gifi="520"/>
+      <account code="7532" description="Löneskatt för förmånsvärden " category="Expense" gifi="520"/>
+      <account code="7533" description="Särskild löneskatt för pensionskostnader " category="Expense" gifi="520"/>
+      <account code="7535" description="Löneskatt på skattepliktiga kostnadsersättningar " category="Expense" gifi="520"/>
+      <account code="7536" description="Löneskatt på arvoden " category="Expense" gifi="520"/>
+      <account code="7538" description="Löneskatt på bruttolöneavdrag " category="Expense" gifi="520"/>
+      <account code="7550" description="Avkastningsskatt på pensionsmedel " category="Expense" gifi="524"/>
+      <account code="7570" description="Premier för AMF-försäkring " category="Expense" gifi="511"/>
+      <account code="7580" description="Gruppförsäkringspremier " category="Expense" gifi="520/511"/>
+      <account code="7581" description="Grupplivförsäkringspremier " category="Expense" gifi="520/511"/>
+      <account code="7582" description="Gruppsjukförsäkringspremier " category="Expense" gifi="520"/>
+      <account code="7583" description="Gruppolycksfallsförsäkringspremier " category="Expense" gifi="520"/>
+      <account code="7590" description="Övriga sociala och andra avgifter enligt lag och avtal " category="Expense" gifi="520"/>
+    </account-heading>
+    <account-heading id="h-74" code="76" description="Övriga personalkostnader ">
+      <account code="7600" description="Övriga personalkostnader (gruppkonto) " category="Expense" gifi="527"/>
+      <account code="7610" description="Utbildning " category="Expense" gifi="527"/>
+      <account code="7620" description="Sjuk- och hälsovård " category="Expense" gifi="527"/>
+      <account code="7621" description="Sjuk- och hälsovård - avdragsgill " category="Expense" gifi="527"/>
+      <account code="7622" description="Sjuk- och hälsovård - ej avdragsgill " category="Expense" gifi="527"/>
+      <account code="7630" description="Personalrepresentation " category="Expense" gifi="527"/>
+      <account code="7631" description="Personalrepresentation - avdragsgill " category="Expense" gifi="527"/>
+      <account code="7632" description="Personalrepresentation - ej avdragsgill " category="Expense" gifi="527"/>
+      <account code="7650" description="Sjuklöneförsäkring " category="Expense" gifi="527"/>
+      <account code="7670" description="Avsättning till personalstiftelse " category="Expense" gifi="527"/>
+      <account code="7680" description="Gottgörelse från personalstiftelse " category="Expense" gifi="527"/>
+      <account code="7690" description="Övriga personalkostnader och erhållna bidrag " category="Expense" gifi="527"/>
+      <account code="7691" description="Personalrekrytering " category="Expense" gifi="527"/>
+      <account code="7692" description="Begravningshjälp " category="Expense" gifi="527"/>
+      <account code="7693" description="Fritidsverksamhet " category="Expense" gifi="527"/>
+      <account code="7698" description="Erhållna bidrag och ersättningar för personal " category="Expense" gifi="527"/>
+      <account code="7699" description="Övriga personalkostnader " category="Expense" gifi="527"/>
+    </account-heading>
+    <account-heading id="h-75" code="77" description="Nedskrivningar och återföring av nedskrivningar ">
+      <account code="7710" description="Nedskrivningar av immateriella anläggningstillgångar " category="Expense" gifi="553"/>
+      <account code="7720" description="Nedskrivningar av byggnader och mark " category="Expense" gifi="553"/>
+      <account code="7730" description="Nedskrivningar av maskiner och inventarier " category="Expense" gifi="553"/>
+      <account code="7740" description="Nedskrivningar av vissa omsättningstillgångar " category="Expense" gifi="553"/>
+      <account code="7760" description="Återföring av nedskrivningar av immateriella anläggningstillgångar " category="Expense" gifi="553"/>
+      <account code="7770" description="Återföring av nedskrivningar av byggnader och mark " category="Expense" gifi="553/554"/>
+      <account code="7780" description="Återföring av nedskrivningar av maskiner och inventarier " category="Expense" gifi="553/554"/>
+      <account code="7790" description="Återföring av nedskrivningar av vissa omsättningstillgångar " category="Expense" gifi="553/554"/>
+    </account-heading>
+    <account-heading id="h-76" code="78" description="Avskrivningar enligt plan ">
+      <account code="7810" description="Avskrivningar på immateriella anläggningstillgångar " category="Expense" gifi="561"/>
+      <account code="7811" description="Avskrivningar på balanserade utgifter " category="Expense" gifi="561"/>
+      <account code="7812" description="Avskrivningar på koncessioner m m " category="Expense" gifi="561"/>
+      <account code="7813" description="Avskrivningar på patent " category="Expense" gifi="561"/>
+      <account code="7814" description="Avskrivningar på licenser " category="Expense" gifi="561"/>
+      <account code="7815" description="Avskrivningar på varumärken " category="Expense" gifi="561"/>
+      <account code="7816" description="Avskrivningar på hyresrätter " category="Expense" gifi="561"/>
+      <account code="7817" description="Avskrivningar på goodwill " category="Expense" gifi="561"/>
+      <account code="7819" description="Avskrivningar på övriga immateriella anläggningstillgångar " category="Expense" gifi="561"/>
+      <account code="7820" description="Avskrivningar på byggnader och markanläggningar " category="Expense" gifi="560"/>
+      <account code="7821" description="Avskrivningar på byggnader " category="Expense" gifi="560"/>
+      <account code="7824" description="Avskrivningar på markanläggning " category="Expense" gifi="560"/>
+      <account code="7829" description="Avskrivningar på övriga byggnader " category="Expense" gifi="560"/>
+      <account code="7830" description="Avskrivningar på maskiner och inventarier " category="Expense" gifi="559"/>
+      <account code="7831" description="Avskrivningar på maskiner och andra tekniska anläggningar " category="Expense" gifi="559"/>
+      <account code="7832" description="Avskrivningar på inventarier och verktyg " category="Expense" gifi="559"/>
+      <account code="7833" description="Avskrivningar på installationer " category="Expense" gifi="559"/>
+      <account code="7834" description="Avskrivningar på bilar och andra transportmedel " category="Expense" gifi="559"/>
+      <account code="7835" description="Avskrivningar på datorer " category="Expense" gifi="559"/>
+      <account code="7836" description="Avskrivningar på leasingavtal " category="Expense" gifi="559"/>
+      <account code="7839" description="Avskrivningar på övriga maskiner och inventarier " category="Expense" gifi="559"/>
+    </account-heading>
+    <account-heading id="h-77" code="79" description="Poster av engångskaraktär och övriga rörelsekostnader ">
+      <account code="7910" description="Intäkter av engångskaraktär " category="Expense" gifi="401"/>
+      <account code="7920" description="Kostnader av engångskaraktär " category="Expense" gifi="530"/>
+      <account code="7960" description="Valutakursförluster på fordringar och skulder av rörelsekaraktär " category="Expense" gifi="530"/>
+      <account code="7970" description="Förlust vid avyttring av immateriella och materiella anläggningstillgångar " category="Expense" gifi="556"/>
+      <account code="7971" description="Förlust vid avyttring av immateriella anläggningstillgångar " category="Expense" gifi="556"/>
+      <account code="7972" description="Förlust vid avyttring av byggnader och mark " category="Expense" gifi="556"/>
+      <account code="7973" description="Förlust vid avyttring av maskiner och inventarier " category="Expense" gifi="556"/>
+      <account code="7990" description="Övriga rörelsekostnader " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-78" code="8" description="Finansiella och andra inkomster/intäkter och utgifter/kostnader "/>
+    <account-heading id="h-79" code="80" description="Resultat från aktier och andelar i koncernföretag">
+      <account code="8010" description="Utdelning på aktier och andelar i koncernföretag " category="Expense" gifi="564"/>
+      <account code="8012" description="Utdelning på aktier och andelar i dotterföretag " category="Expense" gifi="564"/>
+      <account code="8013" description="Utdelning på aktier och andelar i andra koncernföretag " category="Expense" gifi="564"/>
+      <account code="8020" description="Resultat vid försäljning av aktier och andelar i koncernföretag " category="Expense" gifi="550/551"/>
+      <account code="8022" description="Resultat vid försäljning av aktier och andelar i dotterföretag " category="Expense" gifi="550/551"/>
+      <account code="8023" description="Resultat vid försäljning av aktier och andelar i andra koncernföretag " category="Expense" gifi="550/551"/>
+      <account code="8070" description="Nedskrivning av andelar i och långfristiga fordringar hos koncernföretag " category="Expense" gifi="553/570"/>
+      <account code="8072" description="Nedskrivning av aktier och andelar i dotterföretag " category="Expense" gifi="570"/>
+      <account code="8073" description="Nedskrivning av aktier och andelar i andra koncernföretag " category="Expense" gifi="570"/>
+      <account code="8076" description="Nedskrivning av långfristiga fordringar hos moderföretag " category="Expense" gifi="570"/>
+      <account code="8077" description="Nedskrivning av långfristiga fordringar hos dotterföretag " category="Expense" gifi="570"/>
+      <account code="8078" description="Nedskrivning av långfristiga fordringar hos andra koncernföretag " category="Expense" gifi="570"/>
+      <account code="8080" description="Återföring av nedskrivning av andelar i och långfristiga fordringar hos koncernföretag " category="Expense" gifi="571"/>
+      <account code="8082" description="Återföring av nedskrivning av aktier och andelar i dotterföretag " category="Expense" gifi="571"/>
+      <account code="8083" description="Återföring av nedskrivning av aktier och andelar i andra koncernföretag " category="Expense" gifi="571"/>
+      <account code="8086" description="Återföring av nedskrivning av långfristiga fordringar hos moderföretag " category="Expense" gifi="571"/>
+      <account code="8087" description="Återföring av nedskrivning av långfristiga fordringar hos dotterföretag " category="Expense" gifi="571"/>
+      <account code="8088" description="Återföring av nedskrivning av långfristiga fordringar hos andra koncernföretag " category="Expense" gifi="571"/>
+    </account-heading>
+    <account-heading id="h-80" code="81" description="Resultat från aktier och andelar i intresseföretag ">
+      <account code="8110" description="Utdelning på aktier och andelar i intresseföretag " category="Income" gifi="564"/>
+      <account code="8120" description="Resultat vid försäljning av aktier och andelar i intresseföretag " category="Income" gifi="550/551"/>
+      <account code="8170" description="Nedskrivning av andelar i och långfristiga fordringar hos intresseföretag " category="Income" gifi="570"/>
+      <account code="8171" description="Nedskrivning av aktier och andelar i intresseföretag " category="Income" gifi="570"/>
+      <account code="8172" description="Nedskrivning av långfristiga fordringar hos intresseföretag " category="Income" gifi="570"/>
+      <account code="8180" description="Återföring av nedskrivning av andelar i och långfristiga fordringar hos intresseföretag " category="Income" gifi="570"/>
+      <account code="8181" description="Återföring av nedskrivning av aktier och andelar i intresseföretag " category="Income" gifi="570"/>
+      <account code="8182" description="Återföring av nedskrivning av långfristiga fordringar hos intresseföretag " category="Income" gifi="570"/>
+    </account-heading>
+    <account-heading id="h-81" code="82" description="Resultat från övriga värdepapper och långfristiga fordringar (anläggningstillgångar) ">
+      <account code="8200" description="Ränteintäkter från anläggningstillgångar (gruppkonto) " category="Income" gifi="568"/>
+      <account code="8210" description="Utdelning på aktier och andelar i andra företag " category="Income" gifi="565"/>
+      <account code="8220" description="Resultat vid försäljning av värdepapper i och långfristiga fordringar hos andra företag " category="Income" gifi="550/551"/>
+      <account code="8221" description="Resultat vid försäljning av aktier och andelar i andra företag " category="Income" gifi="550/551"/>
+      <account code="8222" description="Resultat vid försäljning av långfristiga fordringar hos andra företag " category="Income" gifi="550/551"/>
+      <account code="8223" description="Resultat vid försäljning av övriga värdepapper i andra företag " category="Income" gifi="550/551"/>
+      <account code="8230" description="Valutakursdifferenser på långfristiga fordringar " category="Income" gifi="566"/>
+      <account code="8231" description="Valutakursvinster på långfristiga fordringar " category="Income" gifi="566"/>
+      <account code="8236" description="Valutakursförluster på långfristiga fordringar " category="Income" gifi="567"/>
+      <account code="8250" description="Ränteintäkter från långfristiga fordringar hos och värdepapper i andra företag " category="Income" gifi="568"/>
+      <account code="8251" description="Ränteintäkter från långfristiga fordringar " category="Income" gifi="568"/>
+      <account code="8252" description="Ränteintäkter från övriga värdepapper " category="Income" gifi="568"/>
+      <account code="8260" description="Ränteintäkter från långfristiga fordringar hos koncernföretag " category="Income" gifi="568"/>
+      <account code="8261" description="Ränteintäkter från långfristiga fordringar hos moderföretag " category="Income" gifi="568"/>
+      <account code="8262" description="Ränteintäkter från långfristiga fordringar hos dotterföretag " category="Income" gifi="568"/>
+      <account code="8263" description="Ränteintäkter från långfristiga fordringar hos andra koncernföretag " category="Income" gifi="568"/>
+      <account code="8270" description="Nedskrivningar av innehav av andelar i och långfristiga fordringar hos andra företag " category="Income" gifi="570"/>
+      <account code="8271" description="Nedskrivning av aktier och andelar i andra företag " category="Income" gifi="570"/>
+      <account code="8272" description="Nedskrivning av långfristiga fordringar hos andra företag " category="Income" gifi="570"/>
+      <account code="8273" description="Nedskrivning av övriga värdepapper hos andra företag " category="Income" gifi="570"/>
+      <account code="8280" description="Återföring av nedskrivning av andelar i och långfristiga fordringar hos andra företag " category="Income" gifi="571"/>
+      <account code="8281" description="Återföring av nedskrivning av aktier och andelar i andra företag " category="Income" gifi="571"/>
+      <account code="8282" description="Återföring av nedskrivning av långfristiga fordringar hos andra företag " category="Income" gifi="571"/>
+      <account code="8283" description="Återföring av nedskrivning av övriga värdepapper i andra företag " category="Income" gifi="571"/>
+    </account-heading>
+    <account-heading id="h-82" code="83" description="Övriga ränteintäkter och liknande resultatposter ">
+      <account code="8300" description="Ränteintäkter från omsättningstillgångar (gruppkonto) " category="Income" gifi="568"/>
+      <account code="8310" description="Ränteintäkter från omsättningstillgångar " category="Income" gifi="568"/>
+      <account code="8311" description="Ränteintäkter från bank " category="Income" gifi="568"/>
+      <account code="8312" description="Ränteintäkter från kortsiktiga placeringar " category="Income" gifi="568"/>
+      <account code="8313" description="Ränteintäkter från kortsiktiga fordringar " category="Income" gifi="568"/>
+      <account code="8314" description="Skattefria ränteintäkter " category="Income" gifi="568"/>
+      <account code="8317" description="Ränteintäkter från dold räntekompensation " category="Income" gifi="568"/>
+      <account code="8319" description="Övriga ränteintäkter från omsättningstillgångar " category="Income" gifi="568"/>
+      <account code="8330" description="Valutakursvinster på kortfristiga fordringar och placeringar " category="Income" gifi="566"/>
+      <account code="8331" description="Valutakursvinster på kortfristiga fordringar och placeringar " category="Income" gifi="568"/>
+      <account code="8336" description="Valutakursförluster på kortfristiga fordringar och placeringar " category="Income" gifi="567"/>
+      <account code="8340" description="Utdelningar på kortfristiga placeringar " category="Income" gifi="568"/>
+      <account code="8350" description="Resultat vid försäljning av kortfristiga placeringar " category="Income" gifi="568"/>
+      <account code="8360" description="Övriga ränteintäkter från koncernföretag " category="Income" gifi="568"/>
+      <account code="8361" description="Övriga ränteintäkter från moderföretag " category="Income" gifi="568"/>
+      <account code="8362" description="Övriga ränteintäkter från dotterföretag " category="Income" gifi="568"/>
+      <account code="8363" description="Övriga ränteintäkter från andra koncernföretag " category="Income" gifi="568"/>
+      <account code="8370" description="Nedskrivning av kortfristiga placeringar " category="Income" gifi="569"/>
+      <account code="8380" description="Återföring av nedskrivning av kortfristiga placeringar " category="Income" gifi="568"/>
+      <account code="8390" description="Övriga finansiella intäkter " category="Income" gifi="568"/>
+    </account-heading>
+    <account-heading id="h-83" code="84" description="Räntekostnader och liknande resultatposter ">
+      <account code="8400" description="Räntekostnader (gruppkonto) " category="Expense" gifi="569"/>
+      <account code="8410" description="Räntekostnader för långfristiga skulder " category="Expense" gifi="569"/>
+      <account code="8411" description="Räntekostnader för obligations-, förlags- och konvertibla lån " category="Expense" gifi="569"/>
+      <account code="8412" description="Räntedel i årets pensionskostnad " category="Expense" gifi="569"/>
+      <account code="8413" description="Räntekostnader för checkräkningskredit " category="Expense" gifi="569"/>
+      <account code="8414" description="Räntekostnader för byggnadskreditiv " category="Expense" gifi="569"/>
+      <account code="8415" description="Räntekostnader för andra skulder till kreditinstitut " category="Expense" gifi="569"/>
+      <account code="8417" description="Räntekostnader för dold räntekompensation m m " category="Expense" gifi="569"/>
+      <account code="8418" description="Avdragspost för räntesubventioner " category="Expense" gifi="569"/>
+      <account code="8419" description="Övriga räntekostnader för långfristiga skulder " category="Expense" gifi="569"/>
+      <account code="8420" description="Räntekostnader för kortfristiga skulder " category="Expense" gifi="569"/>
+      <account code="8421" description="Räntekostnader till kreditinstitut " category="Expense" gifi="569"/>
+      <account code="8422" description="Dröjsmålsräntor för leverantörsskulder " category="Expense" gifi="569"/>
+      <account code="8423" description="Kostnadsräntor för skatter och avgifter - skattekonto " category="Expense" gifi="569"/>
+      <account code="8429" description="Övriga räntekostnader för kortfristiga skulder " category="Expense" gifi="569"/>
+      <account code="8430" description="Valutakursdifferenser på skulder " category="Expense" gifi="566"/>
+      <account code="8431" description="Valutakursvinster på skulder " category="Expense" gifi="566"/>
+      <account code="8436" description="Valutakursförluster på skulder " category="Expense" gifi="567"/>
+      <account code="8440" description="Erhållna räntebidrag " category="Expense" gifi="569"/>
+      <account code="8460" description="Räntekostnader till koncernföretag " category="Expense" gifi="569"/>
+      <account code="8461" description="Räntekostnader till moderföretag " category="Expense" gifi="569"/>
+      <account code="8462" description="Räntekostnader till dotterföretag " category="Expense" gifi="569"/>
+      <account code="8463" description="Räntekostnader till andra koncernföretag " category="Expense" gifi="569"/>
+      <account code="8480" description="Aktiverade räntekostnader " category="Expense" gifi="569"/>
+      <account code="8490" description="Övriga finansiella kostnader " category="Expense" gifi="569"/>
+    </account-heading>
+    <account-heading id="h-84" code="85" description="Fri till egna konton"/>
+    <account-heading id="h-85" code="86" description="Fri till egna konton "/>
+    <account-heading id="h-86" code="87" description="Extraordinära intäkter och kostnader ">
+      <account code="8710" description="Extraordinära intäkter " category="Income" gifi="401"/>
+      <account code="8750" description="Extraordinära kostnader " category="Expense" gifi="530"/>
+    </account-heading>
+    <account-heading id="h-87" code="88" description="Bokslutsdispositioner ">
+      <account code="8810" description="Förändring av periodiseringsfond - enskild näringsidkare och delägare 1 i HB" category="Expense" gifi="586/589"/>
+      <account code="8811" description="Avsättning till periodiseringsfond " category="Expense" gifi="586/594"/>
+      <account code="8819" description="Återföring från periodiseringsfond " category="Income" gifi="589/593"/>
+      <account code="8820" description="Förändring av periodiseringsfond - delägare 2 i HB" category="Expense" gifi="589/594"/>
+      <account code="8821" description="Avsättning till periodiseringsfond " category="Expense" gifi="589/595"/>
+      <account code="8829" description="Återföring från periodiseringsfond " category="Expense" gifi="589/596"/>
+      <account code="8830" description="Förändring av periodiseringsfond - delägare 3 i HB" category="Expense" gifi="589/597"/>
+      <account code="8831" description="Avsättning till periodiseringsfond " category="Expense" gifi="589/598"/>
+      <account code="8839" description="Återföring från periodiseringsfond " category="Expense" gifi="589/599"/>
+      <account code="8850" description="Skillnad mellan bokförda avskrivningar och avskrivningar enligt plan - överavskrivning " category="Expense" gifi="578/590"/>
+      <account code="8851" description="Förändring av skillnad mellan bokförd och planenlig avskrivning - immateriella anläggningstillgångar " category="Expense" gifi="578/590"/>
+      <account code="8852" description="Förändring av skillnad mellan bokförd och planenlig avskrivning - byggnader och markanläggningar " category="Expense" gifi="578/590"/>
+      <account code="8853" description="Förändring av skillnad mellan bokförd och planenlig avskrivning - maskiner, inventarier och transportmedel " category="Expense" gifi="578/590"/>
+      <account code="8860" description="Förändring av ersättningsfond " category="Expense" gifi="593/594"/>
+      <account code="8861" description="Avsättning till ersättningsfond för inventarier" category="Expense" gifi="594"/>
+      <account code="8862" description="Avsättning till ersättningsfond för byggnader och markanläggningar" category="Expense" gifi="594"/>
+      <account code="8863" description="Avsättning till ersättningsfond för mark " category="Expense" gifi="594"/>
+      <account code="8864" description="Avsättning till ersättningsfond för för djurlager i jordbruk och renskötsel " category="Expense" gifi="594"/>
+      <account code="8865" description="Ianspråktagande av ersättningsfond för avskrivningar" category="Expense" gifi="593"/>
+      <account code="8866" description="Ianspråktagande av ersättningsfond för annat än avskrivningar " category="Expense" gifi="593"/>
+      <account code="8869" description="Återföring från ersättningsfond " category="Expense" gifi="593"/>
+      <account code="8870" description="Förändring av allmän investeringsreserv eller liknande" category="Expense" gifi="593"/>
+      <account code="8871" description="Ianspråktagande av allmän investeringsreserv eller liknande för avskrivningar " category="Expense" gifi="593"/>
+      <account code="8872" description="Ianspråktagande av allmän investeringsreserv eller liknande för annat än avskrivningar " category="Expense" gifi="593"/>
+      <account code="8873" description="Avskrivning av anläggningstillgångar med medel som tagits i anspråk frånallmän investeringsreserv eller liknande " category="Expense" gifi="593"/>
+      <account code="8879" description="Återföring av allmän investeringsreserv eller liknande " category="Expense" gifi="593"/>
+      <account code="8880" description="Förändring av obeskattade intäkter " category="Expense" gifi="593/594"/>
+      <account code="8881" description="Avsättning till upphovsmannakonto" category="Expense" gifi="594"/>
+      <account code="8882" description="Återföring från upphovsmannakonto " category="Expense" gifi="593"/>
+      <account code="8885" description="Avsättning till skogskonto " category="Expense" gifi="594"/>
+      <account code="8886" description="Återföring till skogskonto" category="Expense" gifi="593"/>
+      <account code="8890" description="Övriga bokslutsdispositioner " category="Expense" gifi="593/594"/>
+      <account code="8891" description="Förändring av skillnad mellan bokförd och faktisk pensionsskuld " category="Expense" gifi="593/594"/>
+      <account code="8892" description="Nedskrivning av konsolideringskaraktär av anläggningstillgångar" category="Expense" gifi="594"/>
+      <account code="8895" description="Förändring av valutakursreserv " category="Expense" gifi="593/594"/>
+      <account code="8896" description="Förändring av lagerreserv " category="Expense" gifi="593"/>
+      <account code="8897" description="Återföring av skatteutjämningsreserv - SURV" category="Expense" gifi="591"/>
+      <account code="8899" description="Övriga bokslutsdispositioner " category="Expense" gifi="593"/>
+    </account-heading>
+    <account-heading id="h-88" code="89" description="Skatter och årets resultat ">
+      <account code="8910" description="Skatt på årets beskattningsbara resultat" category="Expense" gifi="598"/>
+      <account code="8920" description="Skatt på grund av ändrad taxering " category="Expense" gifi="598"/>
+      <account code="8930" description="Restituerad skatt " category="Expense" gifi="598"/>
+      <account code="8940" description="Latent skatt" category="Expense" gifi="598"/>
+      <account code="8980" description="Övriga skatter " category="Expense" gifi="598"/>
+      <account code="8990" description="Resultat " category="Expense" gifi="599/596"/>
+      <account code="8999" description="Årets resultat" category="Expense" gifi="599/596"/>
+    </account-heading>
+  </coa>
+  <currencies default="SEK">
+    <currency code="SEK">
+      SEK
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="income_accno_id" accno="3010"/>
+    <setting name="expense_accno_id" accno="4010"/>
+    <setting name="fxgain_accno_id" accno="3960"/>
+    <setting name="fxloss_accno_id" accno="7960"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

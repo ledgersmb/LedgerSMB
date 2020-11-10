@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1" description="Tillgångar"/>
+    <account-heading id="h-2" code="10" description="Immateriella anläggningstillgångar">
+      <account code="1010" description="Balanserade utgifter" category="Asset"/>
+      <account code="1019" description="Ack avskriningar balanserade utg" category="Asset" contra="true"/>
+      <account code="1060" description="Hyresrätt" category="Asset"/>
+      <account code="1069" description="Ack avskrivn hyresrätt" category="Asset" contra="true"/>
+    </account-heading>
+    <account-heading id="h-3" code="11" description="Byggnader och mark">
+      <account code="1110" description="Byggnader" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1119" description="Ack avskrivn byggnader" category="Asset" contra="true"/>
+      <account code="1130" description="Mark" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1140" description="Tomter, markomr obebyggda" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1150" description="Markanläggningar" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1159" description="Ack avskrivn markanläggn" category="Asset" contra="true"/>
+      <account code="1190" description="Övriga byggnader och mark" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="12" description="Maskiner och inventarier">
+      <account code="1230" description="Installationer" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1238" description="Ack nedskrivn installationer" category="Asset" contra="true"/>
+      <account code="1239" description="Ack avskrivn installationer" category="Asset" contra="true"/>
+      <account code="1250" description="Datorer" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1259" description="Ack avskrivn datorer" category="Asset">
+        <tax/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="13" description="Finansiella anläggningstillgångar">
+      <account code="1370" description="Uppskjuten skattefordran" category="Asset"/>
+      <account code="1380" description="Långfristiga fordringar" category="Asset"/>
+      <account code="1400" description="Fordran hos EFS Gafsele" category="Asset"/>
+      <account code="1405" description="Fordran hos EFS Hälla" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-6" code="15" description="Kundfordringar">
+      <account code="1500" description="Kundfordringar" category="Asset">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="16" description="Övriga kortfristiga fordringar">
+      <account code="1600" description="Övr kortfristiga fordr" category="Asset"/>
+      <account code="1710" description="Förutbetalda hyror" category="Asset"/>
+      <account code="1730" description="Förutbet försäkringspremier" category="Asset"/>
+      <account code="1740" description="Förutbet ränteutgifter" category="Asset"/>
+      <account code="1750" description="Upplupna hyresinkomster" category="Asset"/>
+      <account code="1760" description="Upplupna inkomsträntor" category="Asset"/>
+      <account code="1790" description="Övr interimsfordringar" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-8" code="19" description="Kassa och Bank">
+      <account code="1910" description="Kassa" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1920" description="Postgiro" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1930" description="Checkräkningskonto" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1940" description="Övriga bankkonto" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1941" description="Nordea värdepappersfond" category="Asset" recon="true"/>
+      <account code="1942" description="Nordea girokapitalkonto" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="2" description="Eget kapital och skulder"/>
+    <account-heading id="h-10" code="20" description="Eget kapital">
+      <account code="2000" description="Eget kapital EFS Åsele" category="Equity"/>
+      <account code="2005" description="Eget kapital EFS Gafsele" category="Equity"/>
+      <account code="2010" description="Eget kapital EFS Hälla" category="Equity"/>
+      <account code="2070" description="Ändamålsbestämda medel" category="Equity"/>
+      <account code="2091" description="Balanserad vinst/förlust" category="Equity"/>
+      <account code="2098" description="Vinst/förlust föreg år" category="Equity"/>
+      <account code="2099" description="Redovisat resultat" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-11" code="22" description="Avsättningar">
+      <account code="2250" description="Avsättning för skatter" category="Liability"/>
+      <account code="2290" description="Övriga avsättningar" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-12" code="23" description="Skulder">
+      <account code="2300" description="Skuld till EFS Gafsele" category="Liability"/>
+      <account code="2310" description="Skuld till EFS Hälla" category="Liability"/>
+      <account code="2320" description="Skuld till fam Norlin" category="Liability"/>
+      <account code="2330" description="Checkräkningskredit" category="Liability"/>
+      <account code="2399" description="Övr långfristiga skulder" category="Liability"/>
+      <account code="2440" description="Leverantörsskulder" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2499" description="Övr kortfristiga skulder" category="Liability"/>
+      <account code="2960" description="Upplupna utgiftsräntor" category="Liability"/>
+      <account code="2971" description="Förutbetalda hyresintäkter" category="Liability"/>
+      <account code="2972" description="Förutbetalda medlemsavgifter" category="Liability"/>
+      <account code="2979" description="Övriga förutbetalda intäkter" category="Liability"/>
+      <account code="2990" description="Övr interimsskulder" category="Liability"/>
+      <account code="2999" description="Övr uppl kostn/förutbet intäkter" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-13" code="3" description="Intäkter"/>
+    <account-heading id="h-14" code="30" description="Allmänna gåvor">
+      <account code="3000" description="Gåvor via konto" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3005" description="Minnesgåvor" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3010" description="Gudstjänstkollekter" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3015" description="Fika/kaffe/fester - gåvor" category="Income">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-15" code="31" description="Öronmärkta gåvor">
+      <account code="3100" description="Öronmärkta gåvor" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3101" description="Gåvor barnarbete" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3102" description="Gåvor körsång" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3103" description="Gåvor bönegrupper" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3104" description="Gåvor Alfa-grupper" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3105" description="Övrigt lokalt arbete" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3106" description="Gåvor till fastighet mm" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3109" description="Gåvor Åsele allkristna gemenskap" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3110" description="Gåvor EFS Västerbotten" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3111" description="Gåvor distriktskonferens" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3112" description="Gåvor Scoutverksamhet" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3120" description="Gåvor EFS riks" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3121" description="Gåvor EFS riks konferens" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3122" description="Gåvor EFS Inre mission" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3123" description="Gåvor EFS Yttre mission" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3130" description="Gåvor Barn i alla länder" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3131" description="Gåvor Johannelundsinsamling" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3132" description="Gåvor Påskinsamling" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3133" description="Gåvor Flodvågens offer" category="Income">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-16" code="33" description="Försäljningsintäkter">
+      <account code="3300" description="Försäljning bokbordet" category="Income">
+        <link code="IC_sale"/>
+      </account>
+      <account code="3350" description="Försäljning fika mm" category="Income">
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-17" code="34" description="Medlemsavgifter">
+      <account code="3400" description="Medlemsavgifter" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="3405" description="Medlemsavgifter Solglimten" category="Income">
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-18" code="345" description="Hyresintäkter">
+      <account code="3450" description="Hyresintäkter, hyreskontrakt" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="3460" description="Hyresintäkter, enstaka tillfälle" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="3470" description="Hyresint Ersättning telefonkostnad" category="Income">
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-19" code="35" description="Bidrag">
+      <account code="3510" description="Erhållna statliga bidrag" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3520" description="Erhållna kommunala bidrag" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3530" description="Bidrag Svenska kyrkan" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="3590" description="Övriga erhållna bidrag" category="Income">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-20" code="36" description="Övriga intäkter">
+      <account code="3690" description="Övriga sidointäker" category="Income"/>
+      <account code="3731" description="Kassarabatter" category="Income"/>
+      <account code="3740" description="Öresutjämning" category="Income"/>
+      <account code="3960" description="Valuta kursvinst" category="Income"/>
+      <account code="3972" description="Vinst avyttr fastigheter" category="Income"/>
+      <account code="3973" description="Vinst avyttr maskiner/inv" category="Income"/>
+      <account code="3990" description="Övr ersättn och intäker" category="Income"/>
+      <account code="3994" description="Försäkringsersättningar" category="Income"/>
+    </account-heading>
+    <account-heading id="h-21" code="4" description="Utgifter">
+      <account code="4000" description="Kostnad för predikant" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4050" description="Reskostnader för predikant" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-22" code="41" description="Utgifter öronmärkta gåvor">
+      <account code="4100" description="Kostnad öronmärkta gåvor" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4101" description="Kostnad barnarbete" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4102" description="Kostnad körer" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4103" description="Kostnad bönegrupper" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4104" description="Kostnad Alfa" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4105" description="Kostnad Övrigt lokalt arbete" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4106" description="Kostnad Fastighet (särskilt)" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4107" description="Kostnad scouting barnarbete" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4109" description="Åsele allkristna gemenskap" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4110" description="EFS Västerbotten" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4111" description="distriktskonferens" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4120" description="EFS riks" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4121" description="EFS riks konferensinsamling" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4122" description="EFS inre mission" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4123" description="EFS yttre mission" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4130" description="Barn i alla länder" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4131" description="Johannelundinsamling" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4132" description="Påskinsamling" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4133" description="Till Flodvågens offer" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-23" code="43" description="Inköpskostnader mm">
+      <account code="4300" description="Inköp bokbord" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="4350" description="Inköp matr fika mm" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="4400" description="Pren Vårt budskap (distr tidning)" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="4600" description="Inhyrda predikanter/föreläsare" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="4700" description="Tidningar, facklitteratur" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="4900" description="Föreningsavgifter" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-24" code="50" description="Lokalkostnader hyrd lokal">
+      <account code="5010" description="Lokalhyra" category="Expense"/>
+      <account code="5020" description="El" category="Expense"/>
+      <account code="5030" description="Värme hyrd lokal" category="Expense"/>
+      <account code="5050" description="Lokaltillbehör hyrd lokal" category="Expense"/>
+      <account code="5060" description="Städning, renhållning hyrd lokal" category="Expense"/>
+      <account code="5070" description="Reparationer hyrd lokal" category="Expense"/>
+      <account code="5090" description="Övr kostnader hyrd lokal" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-25" code="51" description="Lokalkostnader egen lokal">
+      <account code="5120" description="Belysning" category="Expense"/>
+      <account code="5130" description="Värme" category="Expense"/>
+      <account code="5132" description="Sotning" category="Expense"/>
+      <account code="5140" description="Vatten och avlopp" category="Expense"/>
+      <account code="5160" description="Renhålln och städning" category="Expense"/>
+      <account code="5170" description="Rep och underhåll fastighet" category="Expense"/>
+      <account code="5191" description="Fastighetsskatt" category="Expense"/>
+      <account code="5192" description="Försäkringsprem fastighet" category="Expense"/>
+      <account code="5193" description="Fastighetsskötsel och förvaltning" category="Expense"/>
+      <account code="5199" description="Övr fastighetskostnader" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-26" code="52" description="Övriga kostnader">
+      <account code="5210" description="Hyra arbetsmaskiner" category="Expense"/>
+      <account code="5220" description="Hyra inventarier" category="Expense"/>
+      <account code="5290" description="Övr hyreskostn anl tillg" category="Expense"/>
+      <account code="5390" description="Övriga bränslen" category="Expense"/>
+      <account code="5410" description="Förbrukningsinventarier" category="Expense"/>
+      <account code="5460" description="Förbrukningsmaterial" category="Expense"/>
+      <account code="5480" description="Arbetskläder o skyddsmtrl" category="Expense"/>
+      <account code="5500" description="Reparation och underhåll" category="Expense"/>
+      <account code="5710" description="Frakt och transport" category="Expense"/>
+      <account code="5800" description="Resekostnader" category="Expense"/>
+      <account code="5910" description="Annonsering" category="Expense"/>
+      <account code="5930" description="Reklamtrycksaker" category="Expense"/>
+      <account code="5990" description="Övrig reklam" category="Expense"/>
+      <account code="6110" description="Kontorsmaterial" category="Expense"/>
+      <account code="6150" description="Trycksaker" category="Expense"/>
+      <account code="6210" description="Telefon" category="Expense"/>
+      <account code="6250" description="Porto" category="Expense"/>
+      <account code="6310" description="Försäkringar" category="Expense"/>
+      <account code="6320" description="Självrisker" category="Expense"/>
+      <account code="6340" description="Lämnade skadestånd" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-27" code="64" description="Förvaltningskostnader">
+      <account code="6490" description="Övr förvaltningskostnader" category="Expense"/>
+      <account code="6530" description="Redovisningstjänster" category="Expense"/>
+      <account code="6540" description="IT-tjänster" category="Expense"/>
+      <account code="6550" description="Konsultarvoden" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-28" code="65" description="Bankkostnader">
+      <account code="6570" description="Bankkostnader, Nordea" category="Expense"/>
+      <account code="6571" description="Bankkostnader, Postgirot" category="Expense"/>
+      <account code="6572" description="Bankkostnader, Bankgiro" category="Expense"/>
+      <account code="6573" description="Bankkostnader, Föreningssparbank" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-29" code="658" description="Främmande tjänster">
+      <account code="6580" description="Advokatkostnader" category="Expense"/>
+      <account code="6590" description="Övr främmande tjänster" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-30" code="7" description="Avskrivningar och engångskostn">
+      <account code="7780" description="Avskrivningar enligt plan" category="Expense"/>
+      <account code="7811" description="Avskrivningar balanserade utgifter" category="Expense"/>
+      <account code="7820" description="Avskrivningar byggnader/mark" category="Expense"/>
+      <account code="7821" description="Avskrivn byggnader" category="Expense"/>
+      <account code="7822" description="Avskrivn byggnadsinv" category="Expense"/>
+      <account code="7824" description="Avskrivn markanläggn" category="Expense"/>
+      <account code="7829" description="Avskrivningar övr byggnader" category="Expense"/>
+      <account code="7832" description="Avskrivn inventarier" category="Expense"/>
+      <account code="7833" description="Avskrivningar installationer" category="Expense"/>
+      <account code="7835" description="Avskrivningar datorer" category="Expense"/>
+      <account code="7921" description="Kostn av engångskaraktär " category="Expense"/>
+      <account code="7960" description="Valutakursförlust" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-31" code="8" description="Financiella intäkter o kostnader"/>
+    <account-heading id="h-32" code="83" description="Ränteintäkter">
+      <account code="8300" description="Ränteintäkter " category="Income"/>
+      <account code="8390" description="Övr finansiella intäkter" category="Income"/>
+    </account-heading>
+    <account-heading id="h-33" code="84" description="Räntekostnader">
+      <account code="8400" description="Räntekostnader" category="Expense"/>
+      <account code="8490" description="Övr finansiella kostnader" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-34" code="891" description="Skatter">
+      <account code="8910" description="Årets skattekostnad" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-35" code="899" description="Redovisat resultat">
+      <account code="8999" description="Redovisat resultat" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="SEK">
+    <currency code="SEK">
+      SEK
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="income_accno_id" accno="3400"/>
+    <setting name="expense_accno_id" accno="4400"/>
+    <setting name="fxgain_accno_id" accno="3960"/>
+    <setting name="fxloss_accno_id" accno="7960"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

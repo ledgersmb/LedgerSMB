@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="10" description="Capital"/>
+    <gifi code="30" description="Approvisionnements - Matières premières"/>
+    <gifi code="11" description="Primes d'émission"/>
+    <gifi code="12" description="Plus-values de réévaluation"/>
+    <gifi code="13" description="Réserves"/>
+    <gifi code="14" description="Bénéfice reporté [ou Perte reportée (-)]"/>
+    <gifi code="15" description="Subsides en capital"/>
+    <gifi code="16" description="Provisions pour risques et charges et impôts différés"/>
+    <gifi code="17" description="Dettes à plus d'un an"/>
+    <gifi code="40" description="Créances commerciales"/>
+    <gifi code="20" description="Frais d'établissement"/>
+    <gifi code="21" description="Immobilisations incorporelles"/>
+    <gifi code="22" description="Terrains et constructions"/>
+    <gifi code="23" description="Installations, machines et outillage"/>
+    <gifi code="24" description="Mobilier et matériel roulant"/>
+    <gifi code="25" description="Immobilisations détenues en location-finac. et droits similaires"/>
+    <gifi code="31" description="Approvis. - Fournitures"/>
+    <gifi code="27" description="Autres immobilisations corporelles en cours et acompts versés"/>
+    <gifi code="26" description="Autres immobilisations corporelles"/>
+    <gifi code="28" description="Immobilisations financières"/>
+    <gifi code="29" description="Créances à plus d'un an"/>
+    <gifi code="4115" description="TVA DUE TOTAL"/>
+    <gifi code="33" description="Produits finis"/>
+    <gifi code="32" description="Encours fabrication"/>
+    <gifi code="34" description="Marchandises"/>
+    <gifi code="35" description="Immeubles déstinés à la vente"/>
+    <gifi code="36" description="Acomptes s/achats stocks"/>
+    <gifi code="37" description="Commandes en cours d'exécution"/>
+    <gifi code="41" description="Autres créances"/>
+    <gifi code="42" description="Dettes à plus d'un an échéant dans l'année"/>
+    <gifi code="43" description="Dettes financières"/>
+    <gifi code="44" description="Dettes commerciales"/>
+    <gifi code="45" description="Dettes fiscales, salariales et sociales"/>
+    <gifi code="46" description="Acomptes réçus s/commandes"/>
+    <gifi code="48" description="Dettes diverses"/>
+    <gifi code="47" description="Dettes découlants de l'affectation du résultat"/>
+    <gifi code="49" description="Comptes de régularisation et comptes d'attente"/>
+    <gifi code="50" description="Actions propres"/>
+    <gifi code="51" description="Actions et parts"/>
+    <gifi code="52" description="Titres à revenu fixe"/>
+    <gifi code="53" description="Dépôts à terme"/>
+    <gifi code="54" description="Valeurs échues à l'encaissement"/>
+    <gifi code="55" description="Etablissements de crédit"/>
+    <gifi code="56" description="Office des chèques postaux"/>
+    <gifi code="57" description="Caisses"/>
+    <gifi code="58" description="Virements internes"/>
+    <gifi code="60" description="Approvis. et marchandises"/>
+    <gifi code="61" description="Services et biens divers"/>
+    <gifi code="62" description="Rémunérations, charges sociales, pensions"/>
+    <gifi code="63" description="Amortissements, réductions valeur, provisions risques et charges"/>
+    <gifi code="64" description="Autres charges d'exploitation"/>
+    <gifi code="65" description="Charges financières"/>
+    <gifi code="66" description="Charges exceptionnelles"/>
+    <gifi code="67" description="Impôts sur le résultat"/>
+    <gifi code="68" description="Transferts aux réserves immunisées et aux impôts différés"/>
+    <gifi code="69" description="Affectations et prélèvements"/>
+    <gifi code="70" description="Chiffre d'affaires"/>
+    <gifi code="71" description="Variation de stock et des commandes en cours d'éxécution"/>
+    <gifi code="72" description="Production immobilisée"/>
+    <gifi code="74" description="Autres produits d'exploitation"/>
+    <gifi code="75" description="Produits financiers"/>
+    <gifi code="76" description="Produits exceptionnels"/>
+    <gifi code="77" description="Régularisations d'impôts et reprises provisions fiscales"/>
+    <gifi code="78" description="Prélèvements s/réserves immunisées et impôts différés"/>
+    <gifi code="79" description="Affectations et prélèvements"/>
+    <gifi code="411" description="missing; generated"/>
+    <gifi code="416" description="missing; generated"/>
+    <gifi code="451" description="missing; generated"/>
+    <gifi code="717" description="missing; generated"/>
+    <gifi code="760" description="missing; generated"/>
+    <gifi code="771" description="missing; generated"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="000" description="">
+      <account code="756000" description="Produits financiers divers" category="Income" gifi="75">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="555000" description="DEX02" category="Asset" gifi="55" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="499200" description="Compte de repartition NDC - Verdelingsrekening CN" category="Liability">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="460" description="Acomptes reçus sur commandes" category="Liability" gifi="46">
+        <link code="AR_paid"/>
+      </account>
+      <account code="4168" description="Rabais, ristournes, remises à obtenir et autres avoirs non encore reçus" category="Asset" gifi="416">
+        <link code="AP_paid"/>
+      </account>
+      <account code="2400" description="Mobilier - Meubilair" category="Asset" gifi="24"/>
+      <account code="240190" description="Matériel bureau amort. anterieurs - Afschr. op bureaumaterieel vorig boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="221900" description="Constructions amort. anterieurs - Afschr. op gebouwen vorig boekj." category="Asset" contra="true" gifi="22"/>
+      <account code="221910" description="Constructions amort. de l'exercice - Afschr. op gebouwen dit boekj." category="Asset" contra="true" gifi="22"/>
+      <account code="230900" description="Inst. techniques amort. anterieurs - Afschr. op installaties vorig boekj." category="Asset" contra="true" gifi="23"/>
+      <account code="240090" description="Mobilier amort. anter. - Afschr. op meubilair vorig boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="240091" description="Mobilier amort. exercice - Afschr. op meubilair dit boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="240191" description="Matériel bureau amort. exercice - Afschr. op bureaumaterieel dit boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="240290" description="Materiel Informatique amort. anter. - Afschr. op hardware vorig boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="240291" description="Mat. informat. amort. exercice - Afschr. op hardware dit boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="241900" description="Voiture amort. anter. - Afschr. op wagen vorig boekj." category="Asset" contra="true" gifi="24"/>
+      <account code="241910" description="Voiture amort. exercice - Afschr. op wagen dit boekj. " category="Asset" contra="true" gifi="24"/>
+      <account code="260900" description="Amen. loc. loués amort. anter. - Inrichtingskost. vorig boekj." category="Asset" contra="true" gifi="26"/>
+      <account code="230910" description="Inst. techniques amort. exercice - Afschr. op installaties dit boekj." category="Asset" contra="true" gifi="23"/>
+      <account code="231900" description="Mach. et gros mat. amort. anterieurs - Afschr. op machines vorig boekj." category="Asset" contra="true" gifi="23"/>
+      <account code="231910" description="Mach. et gros mat. amort. exercice - Afschr. op machines dit boekj." category="Asset" contra="true" gifi="23"/>
+      <account code="237900" description="Outillage amort. anterieurs - Afschr. op uitrusting vorig boekj." category="Asset" contra="true" gifi="23"/>
+      <account code="237910" description="Outillage amort. exercice - Afschr. op uitrusting dit boekj." category="Asset" contra="true" gifi="23"/>
+      <account code="260910" description="Amen. loc. loués amort. exercice - Inrichtingskost. dit boekj." category="Asset" contra="true" gifi="26"/>
+      <account code="404" description="Produits à recevoir - Te innen opbrengsten" category="Asset" gifi="40"/>
+      <account code="407" description="Créances douteuses - Dubieuze debiteuren" category="Asset" gifi="40">
+        <link code="AR_paid"/>
+      </account>
+      <account code="409" description="Réductions de valeur actées (-) - Geboekte waardevermindering" category="Asset" gifi="40"/>
+      <account code="230010" description="Inst. techniques acquis. exercice - Installaties m.b.t. dit boekj." category="Asset" gifi="23">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="120" description="Plus-values de réévaluation sur immo. incorp. - Herwaarderingsmeerwaarde" category="Liability" gifi="12"/>
+      <account code="121" description="Plus-values de réévaluation sur immo. corp. - Herwaarderingsmeerwaarde" category="Liability" gifi="12"/>
+      <account code="122" description="Plus-values de réévaluation sur immo. financiers - Herwaarderingsmeerwaarde" category="Liability" gifi="12"/>
+      <account code="123" description="Plus-values de réévaluation sur stocks - Herwaarderingsmeerwaarde" category="Liability" gifi="12"/>
+      <account code="124" description="Reprises de réduction de valeur sur placements trésorerie - Herwaarderingsmeerwaarde" category="Liability" gifi="12"/>
+      <account code="110" description="Primes d'émission - Uitgiftepremies" category="Liability" gifi="11"/>
+    </account-heading>
+    <account-heading id="h-2" code="43" description="Dettes financières - Financiële schulden">
+      <account code="451541" description="TVA DUE VENTES 21%" category="Liability" gifi="451">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="612200" description="Carburants voitures" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="630" description="Dotations amort., réduction valeur s/immo. - Afschr., waardeverm. op v. a., toevoeging" category="Expense" gifi="63"/>
+      <account code="613210" description="Honoraires avocats" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="712" description="Des encours de fabrication - In de vooraad goederen in bewerking" category="Income" gifi="71">
+        <link code="IC_sale"/>
+      </account>
+      <account code="600" description="Achats matières premières - Aankopen van grondstoffen" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="614400" description="Entrée aux foires" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="742" description="Plus-values créances com. - Meerwaarden realis. handelsvorderingen" category="Income" gifi="74"/>
+      <account code="613304" description="Traiteurs-réception clientèle" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="611150" description="Charges locatives voitures" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="500" description="Action propres - Eigen aandelen" category="Asset" gifi="50"/>
+      <account code="442001" description="Fournisseurs essence" category="Liability" gifi="44">
+        <link code="AP"/>
+      </account>
+      <account code="608" description="Remises ristournes rabais obtenus - Ontvangen kortingen ristorno's en rabatten (-)" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="612140" description="Internet" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="451560" description="TVA DUE CO-CONTRACTANT" category="Liability" gifi="451"/>
+      <account code="432" description="Etabli. crédit, crédits d'acceptation - Acceptkrediten" category="Liability" gifi="43"/>
+      <account code="433" description="Etabl. crédit, dettes cpt. courant - Schulden rekening courant" category="Liability" gifi="43"/>
+      <account code="430" description="Emprunts en compte à terme fixe - Leningen op rekeningen vaste termijn" category="Liability" gifi="43"/>
+      <account code="431" description="Etabli. crédit, promesses - Kreditinstellingen, promessen" category="Liability" gifi="43"/>
+    </account-heading>
+    <account-heading id="h-3" code="75" description="Produits financiers - Financiële opbrengsten">
+      <account code="750" description="Produits immo. financières - Opbrengsten financiële vaste activa" category="Income" gifi="75"/>
+      <account code="755000" description="Ecarts de convers. devises - Resultats omrekening vreemde valuta" category="Income" gifi="75">
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="754000" description="Différence de change - Wisselresultaten" category="Income" gifi="75">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="751" description="Produits actifs circulants - Opbrengsten uit vlottende activa" category="Income" gifi="75"/>
+      <account code="752" description="Plus-values réalis. d'actifs circulants - Meerwaar. realis. v. vlottende activa" category="Income" gifi="75"/>
+      <account code="753" description="Subsides en capital et intérêts - Kapitaal- en interestsubsidies" category="Income" gifi="75"/>
+    </account-heading>
+    <account-heading id="h-4" code="64" description="Autres charges exploitation - Andere bedrijfskosten">
+      <account code="743000" description="Ventes diverses - Diverse bedrijfsopbrengsten" category="Income" gifi="74"/>
+      <account code="655000" description="Ecarts de conversion de devises" category="Expense" gifi="65">
+        <link code="AR_paid"/>
+        <link code="IC_sale"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="640" description="Charges fiscales de l'exploitation - Bedrijfsbelastingen" category="Expense" gifi="64"/>
+      <account code="713" description="Des Produits finis - In de voorraad gereed product" category="Income" gifi="71">
+        <link code="IC_sale"/>
+      </account>
+      <account code="656500" description="Intérêts retards sociaux - Sociale achterst. interest" category="Expense" gifi="65">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="656100" description="Frais de banque" category="Expense" gifi="65">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="641" description="Moins-values s/réalis. cour. d'immo. corp. - Minderwa. courante realis. vaste activa" category="Expense" gifi="64"/>
+      <account code="642" description="Moins-values s/réalis. créances com. - Minderwa. realis. handelsvorderingen" category="Expense" gifi="64"/>
+      <account code="640700" description="TVA non-deductible" category="Expense" gifi="64">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="640000" description="Taxes circl. voitures - Belasting wagens" category="Expense" gifi="64"/>
+      <account code="640020" description="Précompte immoblier - Onroerende voorhoeffing" category="Expense" gifi="64"/>
+      <account code="640100" description="Timbres fiscaux" category="Expense" gifi="64"/>
+      <account code="640230" description="Raccordement aux egouts" category="Expense" gifi="64"/>
+      <account code="640310" description="Cotisation dépannage" category="Expense" gifi="64"/>
+    </account-heading>
+    <account-heading id="h-5" code="76" description="Produits exceptionnels - Uitzonderlijke opbrengsten">
+      <account code="760100" description="sur immobilisations corp. - op materiële vaste activa" category="Income" gifi="760"/>
+      <account code="771200" description="Reprises de provisions fiscales - Terugn. fiscale voorz." category="Income" gifi="771"/>
+      <account code="794" description="Intervention associé perte - Tussenkomst vennoten verlies" category="Income" gifi="79"/>
+      <account code="761" description="Reprises réduct. valeur immo. fin. - Terugneming waardeverm. fin. v. a." category="Income" gifi="76"/>
+      <account code="773" description="Impôts étrangers s/résultat - Buitenl. belasting op resultaat" category="Income" gifi="77"/>
+      <account code="762" description="Reprises provisions risq. charg. except. - Terugn. voorz. uitz. risico en kosten" category="Income" gifi="76"/>
+      <account code="763" description="Plus-values s/réalis. actifs immo. - Meerwaar. realis. vaste a." category="Income" gifi="76"/>
+      <account code="760" description="Reprises amort. et réduct. valeur - Terugneming afschr. en waardeverm." category="Expense" gifi="76"/>
+      <account code="760000" description="sur immobilisations incorp. - op immateriële vaste activa" category="Income" gifi="760"/>
+      <account code="763750" description="+Val.s/mat.informatique" category="Income" gifi="76"/>
+    </account-heading>
+    <account-heading id="h-6" code="41" description="Autres créances - Overige vorderingen">
+      <account code="411590" description="TVA ACHATS 6%" category="Asset" gifi="411">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.06"/>
+        </tax>
+      </account>
+      <account code="411591" description="TVA ACHATS 21%" category="Asset" gifi="411">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="411620" description="TVA à régulariser (case 62)" category="Asset" gifi="411"/>
+      <account code="410" description="Capital appelé, non versé - Opgevraagd, niet-gestort kapitaal" category="Asset" gifi="41"/>
+    </account-heading>
+    <account-heading id="h-7" code="50" description="Actions propres - Eigen aandelen"/>
+    <account-heading id="h-8" code="6" description="CLASSE 6 -- CHARGES - KOSTEN">
+      <account code="611350" description="Entr. &amp; Repar. Voitures &amp; Veh. Mixtes" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="609000" description="de matières premières - van grondstofen" category="Expense" gifi="60"/>
+      <account code="612300" description="Abonnements &amp; Documentations" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="601" description="Achat des fournitures - Aankoop van hulpstoffen" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="613220" description="Honoraires notaires" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613311" description="Deplacements étranger train, taxi, etc" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="611151" description="Charges locatives camions/camionnettes" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="609100" description="de fourniture - van hulpstoffen" category="Expense" gifi="60"/>
+      <account code="620000" description="Administrateurs ou gérants - Bestuurders of zaakvoerders" category="Expense" gifi="62"/>
+      <account code="618" description="Divers" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="620100" description="Personnel de direction - Directiepersoneel" category="Expense" gifi="62"/>
+      <account code="617" description="Personnel intérimaire - Uitzendkrachten" category="Expense" gifi="61"/>
+      <account code="620" description="Rémunerations et avant. sociaux directs - Bezolgingen en rechts. sociale voordelen" category="Expense" gifi="62"/>
+      <account code="602" description="Achats services, travaux, études - Aankopen diensten, werk, studies" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="612000" description="Eau" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="611351" description="Pneus Voitures &amp; Vehic. Mixtes" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612400" description="Imprimés &amp; fournitures de bureau" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613230" description="Honoraires huissiers de justice" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613313" description="Restaurants étranger" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="610" description="Loyers et charges locatives" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="614100" description="Catalogues et imprimées" category="Income" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613110" description="Assurance vol" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="609400" description="de marchandises - van handelsgoederen" category="Expense" gifi="60">
+        <link code="AP_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="613305" description="Collations" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612010" description="Chauffage" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612410" description="Fournitures informatiques" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613250" description="Honoraires sécretariat social" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="611362" description="Control technique voitures" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612530" description="Petit outillage &amp; petit matériel" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613400" description="Seminaires &amp; Recyclages" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612540" description="Petit matériel informatique" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="603" description="Sous-traitances générales - Algemene onderaanemingen" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="601000" description="Emballages perdus" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="611152" description="Locations machines et outils" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="609500" description="d'immeubles achétés destinés à vente - van gek. onroer. goederen best. v. verkoop" category="Expense" gifi="60"/>
+      <account code="612100" description="Telephone" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="411" description="TVA A RECUPERER - TERUG TE VORDEREN BTW">
+      <account code="411640" description="TVA à recupérer s/NDC émises (case 64)" category="Asset" gifi="411"/>
+      <account code="417" description="Créances douteuses - Dubieuze debiteuren" category="Asset" gifi="416"/>
+      <account code="414100" description="Indeminités s/sinistres à recevoir - Te ontvang. schadevergoed." category="Asset" gifi="41"/>
+      <account code="414200" description="Subsides en capital à recevoir - Te ontv. kapitaalsubsidies" category="Asset" gifi="41"/>
+      <account code="411000" description="Cpt. curr. TVA à récuperer - Terug te vord. BTW: saldo BTW r/c" category="Asset" gifi="411"/>
+      <account code="411593" description="TVA RECUP. 1ER TRIMESTRE TOTAL (case 59)" category="Asset" gifi="411"/>
+      <account code="412" description="Impôts, précomptes à récupérer - Terug te vorderen belast. en voorheffingen" category="Asset" gifi="41"/>
+      <account code="411594" description="TVA RECUP. 2E TRIMESTRE TOTAL" category="Asset" gifi="411"/>
+      <account code="411595" description="TVA RECUP. 3E TRIMESTRE TOTAL" category="Asset" gifi="411"/>
+      <account code="411596" description="TVA RECUP. 4E TRIMESTRE TOTAL" category="Asset" gifi="411"/>
+      <account code="414" description="Produits à recevoir - Te innen opbrengsten" category="Asset" gifi="41"/>
+    </account-heading>
+    <account-heading id="h-10" code="44" description="Dettes commerciales - Handelsschulden">
+      <account code="451540" description="TVA DUE VENTES 6%" category="Liability" gifi="451">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.06"/>
+        </tax>
+      </account>
+      <account code="442004" description="VISA - décompte mensuel" category="Liability" gifi="44">
+        <link code="AP_paid"/>
+      </account>
+      <account code="440" description="Fournisseurs - Leveranciers" category="Liability" gifi="44">
+        <link code="AP"/>
+      </account>
+      <account code="442005" description="AMERICAN EXPRESS - décompte mensuel" category="Liability" gifi="44">
+        <link code="AP_paid"/>
+      </account>
+      <account code="441" description="Effets à payer - Te betalen wissels" category="Liability" gifi="44"/>
+      <account code="444" description="Factures à recevoir - Te ontvangen facturen" category="Liability" gifi="44">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="77" description="Régularisation d'impôts, reprises provisions fiscales - Regul. belastingen en terugneming fiscale voorz.">
+      <account code="780" description="Prélèvements s/impôts différés - Onttrekking a. uitgesteld. belast." category="Income" gifi="78"/>
+      <account code="771" description="Impôts belges sur le résultat - Belgische belasting op het resultaat" category="Income" gifi="77"/>
+      <account code="771000" description="Régularisations impôts dus versés - Regularisiering versch. of betaal. belast." category="Income" gifi="771"/>
+      <account code="771100" description="Régul. d'impôts estimés - Regul. geraamde belasting" category="Income" gifi="771"/>
+    </account-heading>
+    <account-heading id="h-12" code="7" description="CLASSE 7 -- PRODUITS - OPBRENGSTEN">
+      <account code="705100" description="DNS REGISTRY" category="Income" gifi="70">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="715" description="Des immeubles constr. dest. à la vente - In de voorr. onroe. goederen best. v. verkoop" category="Income" gifi="71">
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-13" code="451" description="TVA A PAYER - TE BETALEN BTW">
+      <account code="499000" description="Compte d'attente - Wachtrekening" category="Liability"/>
+      <account code="455" description="Rémunerations - Bezoldigingen" category="Liability" gifi="45"/>
+      <account code="451500" description="TVA DUE ACHATS INCO" category="Liability" gifi="451"/>
+      <account code="451543" description="TVA due 2e trimestre" category="Liability" gifi="451"/>
+      <account code="451544" description="TVA due 3e trimestre" category="Liability" gifi="451"/>
+      <account code="451610" description="TVA à régulariser (case 61)" category="Liability" gifi="45"/>
+      <account code="451630" description="TVA sur NDC reçues (case 63)" category="Liability" gifi="45"/>
+      <account code="452" description="Impôts et taxes à payer" category="Liability" gifi="45"/>
+      <account code="451000" description="COMPTE COURANT TVA DUE" category="Liability" gifi="451"/>
+      <account code="451640" description="TVA à recupérer s/NDC émises" category="Liability" gifi="45"/>
+      <account code="452500" description="Précompte immobilier - Onroerende voorhoeffing" category="Liability" gifi="45"/>
+      <account code="451545" description="TVA due 4e trimestre" category="Liability" gifi="451"/>
+      <account code="451542" description="TVA due 1er trimestre (case 54)" category="Liability" gifi="451"/>
+      <account code="451570" description="TVA DUE SUR IMPORTATIONS" category="Liability" gifi="451"/>
+    </account-heading>
+    <account-heading id="h-14" code="49" description="Comptes de régularisation - Overlopende- en wachtrekeningen">
+      <account code="499100" description="Compte de repartition - Verdelingsrekening" category="Liability">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-15" code="42" description="Dettes à plus d'un an écheant dans l'année - Schulden op meer dan één jaar die binnen het jaar verfallen"/>
+    <account-heading id="h-16" code="65" description="Charges financières">
+      <account code="654" description="Différence de change" category="Expense" gifi="65">
+        <link code="AP_amount"/>
+      </account>
+      <account code="656600" description="Intérêts rétards com. - Com. achterst. interest" category="Expense" gifi="65">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="652000" description="Moins-value sur réalisation d'actifs circulants" category="Expense" gifi="65"/>
+      <account code="650000" description="Intérêts comm. &amp; frais s/decouvert" category="Expense" gifi="65">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="656300" description="Intérêts de retards fiscaux - Fiscale achterst. interest" category="Expense" gifi="65">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-17" code="52" description="Titres à revenu fixe - Vastrentende Effecten"/>
+    <account-heading id="h-18" code="4529" description="453 - 459 Dettes salariales et sociales - Bezoldigingen en sociale schulden">
+      <account code="482200" description="ASSOCIES - MEMBRES" category="Liability" gifi="48"/>
+      <account code="456" description="Pécules de vacances - Vakantiegeld" category="Liability" gifi="45"/>
+      <account code="453" description="Précompte retenus - Ingehouden voorheffingen" category="Liability" gifi="45"/>
+      <account code="459" description="Autres dettes sociales - Andere sociale schulden" category="Liability" gifi="45"/>
+      <account code="454" description="O.N.S.S. - R.S.Z." category="Liability" gifi="45"/>
+    </account-heading>
+    <account-heading id="h-19" code="66" description="Charges exceptionnelles">
+      <account code="665000" description="Pertes et charges diverses" category="Expense" gifi="66">
+        <link code="AR_paid"/>
+        <link code="AP_amount"/>
+      </account>
+      <account code="665200" description="Perte définitive créance douteuse" category="Expense" gifi="66">
+        <link code="AP_amount"/>
+      </account>
+      <account code="663750" description="-Val.s/materiel informatique" category="Expense" gifi="66"/>
+    </account-heading>
+    <account-heading id="h-20" code="74" description="Autres produits exploitation - Andere bedrijfsopbrengsten">
+      <account code="743200" description="COTISATION DE MEMBRE" category="Income" gifi="74">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="740" description="Subsides et montants compensat. - Subsidies en compens. bedragen" category="Income" gifi="74"/>
+      <account code="741" description="Plus-values réalis. cour. immo. corp. -  Meerwaar. cour. realis. materiële v.a." category="Income" gifi="74"/>
+    </account-heading>
+    <account-heading id="h-21" code="70" description="Chiffre d'affaires - Omzet">
+      <account code="705200" description="WEB HOSTING" category="Income" gifi="70">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="717" description="Des commandes en cours exécution - In de bestelling in uitvoering" category="Income" gifi="71">
+        <link code="IC_sale"/>
+      </account>
+      <account code="717000" description="Valeur d'acquisition - Aanschaffingswaarde" category="Income" gifi="717"/>
+      <account code="705000" description="Prestations de services - Verkopen en dienstprestaties" category="Income" gifi="70"/>
+      <account code="717100" description="Bénéfice pris en compte - Toegerekende winst" category="Income" gifi="717"/>
+      <account code="708" description="Remis. rabais ristourn. accordés (-) - Toegek. korting. ristorno's rabat. (-) " category="Income" gifi="70">
+        <link code="AR_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-22" code="78" description="Prélèvements réserves immunisées et impôts différés - Onttrek. belast.vrije reserves en de uitgestelde belastingen">
+      <account code="789" description="Prélèvements s/réserves immunisées - Onttrekking a. belast.vrije reserves" category="Income" gifi="78"/>
+    </account-heading>
+    <account-heading id="h-23" code="53" description="Dépôts à terme - Termijndeposito's">
+      <account code="570000" description="CAISSE ESPECES - CONTANTEN" category="Asset" gifi="57">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="552000" description="KBC56" category="Asset" gifi="55" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-24" code="56" description="Office des chèques postaux - Postchèque en girodienst"/>
+    <account-heading id="h-25" code="51" description="Actions et parts - Aandelen">
+      <account code="510010" description="Montants non-appelés (-) - Niet opgevraagde bedragen aan. (-)" category="Asset" gifi="51"/>
+      <account code="510000" description="Titres cotés - Aandelen op beurs" category="Asset" gifi="51"/>
+      <account code="510200" description="Titrés non-cotés - Aandelen niet op beurs" category="Asset" gifi="51"/>
+      <account code="510090" description="Réduct. valeur actées (-) - Geb. waardev. aandelen (-)" category="Asset" gifi="51"/>
+      <account code="510210" description="    Montants non-appelés (-) - Niet opgevraagde bedragen aan. (-)" category="Asset" gifi="51"/>
+      <account code="510290" description="Réduct. valeur actées (-) - Geb. waardev. aandelen (-) " category="Asset" gifi="51"/>
+    </account-heading>
+    <account-heading id="h-26" code="58" description="Virements interns - Interne overboekingen">
+      <account code="580000" description="TRANSFERTS INTERNES DES FONDS - TRANSFERTEN" category="Asset" gifi="58">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-27" code="416" description="Créances diverses - Diverse vorderingen ">
+      <account code="416200" description="Cpt. courant associés - Rekening-courant vennoten" category="Asset" gifi="416"/>
+      <account code="418" description="Cautionnements versés en numéraire - Borgtochten betaald in contanten" category="Asset" gifi="416"/>
+      <account code="419" description="Réductions de valeur actées (-) - Geboekte waardevermindering (-)" category="Asset" gifi="416"/>
+    </account-heading>
+    <account-heading id="h-28" code="67" description="Impôt sur le résultat"/>
+    <account-heading id="h-29" code="79" description="Affectations et prélèvements - Resultaatverwerking">
+      <account code="790" description="Bénéfice reporté exercice précéd. - Overgedragen winst vorige boekj." category="Income" gifi="79"/>
+      <account code="791" description="Prélèvement s/capital et primes émissions - Onttrek. kapitaal e. uitgiftepre." category="Income" gifi="79"/>
+      <account code="792" description="Prélèvements réserves - Onttrekking reserves" category="Income" gifi="79"/>
+      <account code="793" description="Perte à reporter - Over te dragen verlies" category="Income" gifi="79"/>
+    </account-heading>
+    <account-heading id="h-30" code="12" description="Plus-values de réévaluation - Herwaarderingsmeerwaarde">
+      <account code="130" description="Réserve légale - Wettelijke reserve" category="Liability" gifi="13"/>
+      <account code="131100" description="Autres réserves indisponibles - Andere onbeschikbare reserves" category="Liability" gifi="13"/>
+      <account code="132" description="Réserves immunisées - Belastingvrije reserves" category="Liability" gifi="13"/>
+      <account code="131000" description="Réserves pour actions propres - Reserve voor eigen aandelen" category="Liability" gifi="13"/>
+      <account code="133" description="Réserves disponibles - Beschikbare reserves" category="Liability" gifi="13"/>
+      <account code="131" description="Réserves indisponibles - Onbeschikbare reserves" category="Liability" gifi="13"/>
+    </account-heading>
+    <account-heading id="h-31" code="11" description="Primes d'émission - Uitgiftepremies"/>
+    <account-heading id="h-32" code="643" description="643-648 Charges d'exploitation diverses - Diverse berijfskosten">
+      <account code="649" description="Ch. exploit. portées actif c. frais de restruct. (-) - Als herstruct.kost. geactiv. bedrijfsk. (-)" category="Expense" gifi="64"/>
+    </account-heading>
+    <account-heading id="h-33" code="10" description="Capital - Kapitaal">
+      <account code="101" description="Capital non appelé (-) - Niet opgevraagd kapitaal (-)" category="Liability" gifi="10"/>
+      <account code="100" description="Capital souscrit - Geplaatst kapitaal" category="Liability" gifi="10"/>
+    </account-heading>
+    <account-heading id="h-34" code="1" description="CLASSE 1 -- CAPITAL PROPRE, ... - EIGEN VERMOGEN, ..."/>
+    <account-heading id="h-35" code="60" description="Approv. et marchandises">
+      <account code="601010" description="Emballages recuperables" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="612450" description="Photocopies-Photographies" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="604" description="Achats marchandises - Aankopen van handelsgoederen" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="613265" description="Honoraires d'autres" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="620800" description="Assurance revenus garantis" category="Expense" gifi="62">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="620200" description="Employés - Bedienden" category="Expense" gifi="62"/>
+      <account code="605" description="Achats d'immeubles destinés vente - Aankopen onroer. goederen bestemd v. verkoop" category="Expense" gifi="60">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="609" description="Variation de stock - Voorraadwijzigingen" category="Expense" gifi="60"/>
+    </account-heading>
+    <account-heading id="h-36" code="68" description="Transferts comptes immunisées et impôts différés"/>
+    <account-heading id="h-37" code="14" description="Bénéfice/perte reporté(e) - Overgedragen winst/verlies">
+      <account code="140" description="Bénéfice/perte reporté(e) - Overgedragen winst/verlies" category="Equity" gifi="14"/>
+    </account-heading>
+    <account-heading id="h-38" code="15" description="Subsides en capital - Kapitaalsubsidies">
+      <account code="150" description="Montants obtenus - Kapitaalsubsidies" category="Liability" gifi="15"/>
+    </account-heading>
+    <account-heading id="h-39" code="16" description="Provisions et impôts différés - Voorz. en uitgestelde belastingen">
+      <account code="160" description="Provisions pensions et obligations - Voorz. pensioenen en soortg. verplichtingen" category="Liability" gifi="16"/>
+      <account code="161" description="Provisions charges fiscales - Voorz. belastingen" category="Liability" gifi="16"/>
+      <account code="162" description="Provisions gros entretiens et réparations - Voorz. grote herstel/onderh." category="Liability" gifi="16"/>
+      <account code="163" description="Provisions autres risques-charges - Voorzieningen voor Lijfrente" category="Liability" gifi="16"/>
+      <account code="168200" description="Impôts diff. s/+value immo. corp. - Uitg. belast./meerwa./mat. v.a." category="Liability" gifi="16"/>
+      <account code="168000" description="Impôts diff. s/subsides en capital - Uitgest. belast./Kapitaalsubsidie" category="Liability" gifi="16"/>
+      <account code="168800" description="Impôts différés étrangers - Uitg. belast. buitenland" category="Liability" gifi="16"/>
+      <account code="168100" description="Impôts diff. s/+value immo. incorp. - Uitg. belast./meerwa./immat. v.a." category="Liability" gifi="16"/>
+      <account code="168700" description="Impôts diff. s/+value fonds publ. belges - Uitg. bel./meerwa./belg. effecten" category="Liability" gifi="16"/>
+    </account-heading>
+    <account-heading id="h-40" code="764" description="764-769 Autres produits execptionnels - Andere uitz. opbrengsten"/>
+    <account-heading id="h-41" code="17" description="Dettes à plus d'un an - Schulden op meer dan een jaar">
+      <account code="172000" description="Dettes location fin. et assimilées - Leasingschuld. van vaste activa" category="Liability" gifi="17"/>
+      <account code="231010" description="Mach. et gros mat. acquis. exercice - Machines m.b.t. dit boekj." category="Asset" gifi="23">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="176" description="Acomptes reçus sur commandes" category="Liability" gifi="17"/>
+      <account code="178" description="Cautionnements reçu en numéraire - Borgtocht. ontvang. in contanten" category="Liability" gifi="17"/>
+      <account code="179" description="Dettes diverses - Overige schulden" category="Liability" gifi="17"/>
+      <account code="174" description="Autres emprunts - Overige schulden" category="Liability" gifi="17"/>
+      <account code="173100" description="Promesses banque - Promessen bank" category="Liability" gifi="17"/>
+    </account-heading>
+    <account-heading id="h-42" code="47" description="Dettes affectation résultat - Schulden besteming resultaat"/>
+    <account-heading id="h-43" code="2" description="CLASSE 2 -- FRAIS D'ETABLISSEMENT, ACTIFS IMMOBILISES, ... - OPRICHTINGSKOSTEN, VASTE ACTIVA, ..."/>
+    <account-heading id="h-44" code="20" description="Frais d'établissement - Oprichtingskosten">
+      <account code="200" description="Frais de constitution - Kosten van oprichting" category="Asset" gifi="20"/>
+      <account code="200000" description="Fr. const. acquis. anterieurs - Kost. opricht./kapitaalverhoging" category="Asset" gifi="20"/>
+      <account code="200900" description="Fr. const. amort. anterieur - Afschr. kost. opricht./kap.verh. vorig" category="Asset" gifi="20"/>
+      <account code="200910" description="Fr. const. amort. de l'exercice - Afschr. kost. opricht./kap.verh. dit" category="Asset" gifi="20"/>
+      <account code="202" description="Autres frais d'établissement - Overige oprichtingskosten" category="Asset" gifi="20"/>
+      <account code="204" description="Frais de restructuration - Herstructureringskosten" category="Asset" gifi="20"/>
+      <account code="201" description="Frais d'émission d'emprunts - Kosten bij uitgifte van leningen" category="Asset" gifi="20"/>
+      <account code="200010" description="Fr. const. acquis. de l'exercice - Kost. opricht./kap.verh. dit boekjaar" category="Asset" gifi="20">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-45" code="61" description="Services et biens divers">
+      <account code="612020" description="Electricité" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="620300" description="Ouvriers - Arbeiders" category="Expense" gifi="62"/>
+      <account code="613100" description="Assurance incendie" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613275" description="Publications légales" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612120" description="GSM" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613130" description="Assurance crédit" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613300" description="Deplacements Belg. train, taxi, etc" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613150" description="Assurance tous risques matériel élec." category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613303" description="Restaurants" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="613180" description="Assurance RC professionnelle" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612150" description="Frais postaux" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="611340" description="Entretiens &amp; réparations locaux" category="Expense" gifi="61">
+        <link code="AR_amount"/>
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="612520" description="Emballages perdus" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="614700" description="Frais de bonne politique" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="615000" description="Sous-traitants" category="Expense" gifi="61">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-46" code="69" description="Affectations et prélèvements">
+      <account code="693000" description="Bénéfice à reporter" category="Expense" gifi="69"/>
+    </account-heading>
+    <account-heading id="h-47" code="21" description="Immobilisations incorporelles - Immateriele vaste activa">
+      <account code="211" description="Concessions, brevets, licences, ... - Consessies, octrooien, licenties, ..." category="Asset" gifi="21"/>
+      <account code="210" description="Frais de recherches et developpement - Kosten van onderzoek en ontwikkeling" category="Asset" gifi="21"/>
+      <account code="212" description="Goodwill" category="Asset" gifi="21"/>
+      <account code="213" description="Acomptes versés - Vooruitbetalingen" category="Asset" gifi="21"/>
+      <account code="214" description="Surprix afférents acquisition d'une participation" category="Asset" gifi="21"/>
+    </account-heading>
+    <account-heading id="h-48" code="22" description="Terrains et constructions - Terreinen en gebouwen">
+      <account code="221" description="Constructions - Gebouwen" category="Asset" gifi="22"/>
+      <account code="222" description="Terrains bâtis - Bebouwde terreinen" category="Asset" gifi="22"/>
+      <account code="223" description="Autres droits réels sur immeubles - Overige zakelijke rechten op onroe." category="Asset" gifi="22"/>
+      <account code="221000" description="Constructions acquis. anterieurs - Geb. aanschaffingsprijs vorig. boekj." category="Asset" gifi="22"/>
+      <account code="220" description="Terrains - Terreinen" category="Asset" gifi="22"/>
+      <account code="221010" description="Construction acquis. de l'exercice - Geb. aanschaffingsprijs dit boekj." category="Asset" gifi="22">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-49" code="743" description="743-749 Produits d'exploitation divers - Diverse bedrijfsopbrengsten">
+      <account code="743300" description="Intervention assurance salaires garant." category="Income" gifi="74"/>
+    </account-heading>
+    <account-heading id="h-50" code="756" description="756-759 Produits financiers divers - Diverse financiële opbrengsten"/>
+    <account-heading id="h-51" code="13" description="Réserves - Reserves"/>
+    <account-heading id="h-52" code="23" description="Installations, machines et outillage - Installaties, machines en uitrusting">
+      <account code="230" description="Installations - Installaties" category="Asset" gifi="23"/>
+      <account code="230000" description="Inst. techniques acquis. anterieurs - Installaties m.b.t. vorig boekj." category="Asset" gifi="23"/>
+      <account code="231" description="Machines" category="Asset" gifi="23"/>
+      <account code="237" description="Outillage - Uitrusting" category="Asset" gifi="23"/>
+      <account code="231000" description="Mach. et gros mat. acquis anterieurs - Machines m.b.t. vorig boekj." category="Asset" gifi="23"/>
+      <account code="237000" description="Outillage acquis. anterieurs - Uitrusting m.b.t. vorig boekj." category="Asset" gifi="23"/>
+      <account code="237010" description="Outillage acquisition exercice - Uitrusting m.b.t. dit boekj." category="Asset" gifi="23">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-53" code="24" description="Mobilier et matériel roulant - Meubilair en rollend materieel">
+      <account code="2401" description="Matériel de bureau - Bureaumaterieel" category="Asset" gifi="24"/>
+      <account code="2402" description="Matériel informatique - Hardware" category="Asset" gifi="24"/>
+      <account code="241" description="Voiture - Rollend materieel (wagen)" category="Asset" gifi="24"/>
+      <account code="242" description="Camions - Rollend materieel (vrachtwagen)" category="Asset" gifi="24"/>
+      <account code="240200" description="Mat. informatique acquis anterieurs - Hardware m.b.t. vorig boekj." category="Asset" gifi="24"/>
+      <account code="240210" description="Matériel informatique acquis. exercice - Hardware m.b.t. dit boekj." category="Asset" gifi="24">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="240000" description="Mobilier acquis. anterieurs - Meubilair m.b.t. vorig boekj." category="Asset" gifi="24"/>
+      <account code="240010" description="Mobilier acquis. exercice - Meubilair m.b.t. dit boekj." category="Asset" gifi="24">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="240110" description="Mat. bureau acquis. exercice - Bureaumaterieel m.b.t. dit boekj." category="Asset" gifi="24">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="240100" description="Mat. bureau acquis. anterieurs - Bureaumaterieel m.b.t. vorig boekj." category="Asset" gifi="24"/>
+      <account code="241000" description="Voiture acquis. anterieurs - Wagen m.b.t. vorig boekj." category="Asset" gifi="24"/>
+      <account code="241010" description="Voiture acquis. exercice - Wagen m.b.t. dit boekj. " category="Asset" gifi="24">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-54" code="62" description="Rémunérations, charges sociales et pensions">
+      <account code="620400" description="Autres membres du personnel - Andere personeelsleden" category="Expense" gifi="62"/>
+      <account code="621" description="Cotisation patronales d'assur. sociales - Werkgeversbijdragen soc. verzekeringen" category="Expense" gifi="62"/>
+      <account code="623600" description="Vêtements de travail employés" category="Expense" gifi="62">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-55" code="25" description="Immobilis. en loc-financement - Vaste activa in leasing of op grond">
+      <account code="250" description="Terreins loc-fin - Terreinen in leasing" category="Asset" gifi="25"/>
+      <account code="251" description="Install., machines loc-fin - Installaties, machines in leasing" category="Asset" gifi="25"/>
+      <account code="309" description="Réduction val. act. mat. premières (-) - Geboekte waardev. grondst. (-)" category="Asset" gifi="30"/>
+      <account code="253" description="Matériel en loc-fin - Uitrusting in leasing" category="Asset" gifi="25"/>
+      <account code="254" description="Mat. inform. en loc-fin- Hardware in leasing" category="Asset" gifi="25"/>
+      <account code="255" description="Mat. roulant en loc-fin - Rollend materieel leasing" category="Asset" gifi="25"/>
+      <account code="252" description="Mobilier en loc-fin - Meubilair in leasing" category="Asset" gifi="25"/>
+    </account-heading>
+    <account-heading id="h-56" code="26" description="Autres immobilisations corp. - Andere materiele vaste activa">
+      <account code="260" description="Amenagement locaux loués - Inrichtingskost. gehuurde gebouw" category="Asset" gifi="26"/>
+      <account code="300" description="Approv. matière première - Grondstoffen" category="Asset" gifi="30">
+        <link code="IC"/>
+      </account>
+      <account code="270" description="Immo. corp. en cours et acomptes versés - V. activa in aanbouw en vooruit" category="Asset" gifi="27"/>
+      <account code="260000" description="Amenagement locaux loués acquis anterieurs - Inrichtingskost. m.b.t. vorig boekj." category="Asset" gifi="26"/>
+    </account-heading>
+    <account-heading id="h-57" code="48" description="Dettes diverses - Diverse schulden"/>
+    <account-heading id="h-58" code="27" description="Immo. corp. en cours et acomptes versés - V. activa in aanbouw en vooruit "/>
+    <account-heading id="h-59" code="28" description="Immobilisations financiers - Financiele vaste activa">
+      <account code="280" description="Participations entreprises liées - Aanschaffingsw. deeln. verb. ond." category="Asset" gifi="28"/>
+      <account code="281" description="Créances s/entreprises liées - Vorderingen op rekening" category="Asset" gifi="28"/>
+      <account code="283" description="Créances s/entr. avec lien de part." category="Asset" gifi="28"/>
+      <account code="284" description="Autres actions et parts - Aanschaffingsw. and. aand." category="Asset" gifi="28"/>
+      <account code="285" description="Autres créances -  Overige vorderingen" category="Asset" gifi="28"/>
+      <account code="288" description="Cautions versés en numeraire - Borgtocht. betaald in contanten" category="Asset" gifi="28"/>
+      <account code="290" description="Créances commerciales - Commerciele vorderingen" category="Asset" gifi="29"/>
+    </account-heading>
+    <account-heading id="h-60" code="71" description="Variation stocks et commandes en cours - Wijzigingen vorraden en in de bestellingen in uitvoering"/>
+    <account-heading id="h-61" code="29" description="Créances à plus d'un an - Vorderingen op meer dan een jaar">
+      <account code="290000" description="Clients &gt; 1 an - Handelsdebiteuren &gt; 1 jaar" category="Asset" gifi="29"/>
+      <account code="290100" description="Effects à recevoir &gt;1 an - Te innen wissels &gt; 1 jaar" category="Asset" gifi="29"/>
+      <account code="290600" description="Acptes versés s/immo. financ. &gt; 1 an - Vooruitbetalingen &gt; 1 jaar" category="Asset" gifi="29"/>
+      <account code="290700" description="Créances douteuses - Dubieuze debiteuren &gt;1 jaar" category="Asset" gifi="29"/>
+      <account code="290900" description="Réduction valeur actée cr.dout. - Geboekte waardevermindering (-)" category="Asset" gifi="29"/>
+      <account code="291" description="Autres Créances &gt; 1 an - Over. vorderingen op rekening &gt; 1 j." category="Asset" gifi="29"/>
+    </account-heading>
+    <account-heading id="h-62" code="45" description="Dettes fiscales, salariales, sociales - Schulden m. betrekking tot belastingen, bezoldingen en sociale lasten">
+      <account code="450" description="Dettes fiscales estimées - Geramd bedrag der belastingschulden" category="Liability" gifi="45"/>
+    </account-heading>
+    <account-heading id="h-63" code="30" description="Approv. matières premières - Grondstoffen"/>
+    <account-heading id="h-64" code="3" description="CLASSE 3 -- STOCK ET COMMANDES EN COURS - GRONDSTOFFEN"/>
+    <account-heading id="h-65" code="31" description="Approv. et fournitures - Hulpstoffen">
+      <account code="400" description="Clients - Handelsdebiteuren" category="Asset" gifi="40">
+        <link code="AR"/>
+      </account>
+      <account code="319" description="Réduction valeur actées (-) - Geboekte waardev. hulpstoffen (-)" category="Asset" gifi="31"/>
+      <account code="310" description="Valeur d'acquisition - Aanschaffingswaarde hulpstoffen" category="Asset" gifi="31">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-66" code="32" description="Encours de fabrication - Goederen in bewerking">
+      <account code="329" description="Réduction valuer actée (-) - Geboekte waardeverminderingen (-) " category="Asset" gifi="32"/>
+      <account code="320" description="Valeur d'acquisition - Aanschaffingsw. goed. bewerking" category="Asset" gifi="32">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-67" code="33" description="Produits finis - Gereed Product">
+      <account code="339" description="Réductions de valeur actées (-) - Geboekte waardeverminderingen (-) " category="Asset" gifi="33"/>
+      <account code="330" description="Produits finis - Gereed product" category="Asset" gifi="33">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-68" code="72" description="Production immobilisée - Geproduceerde vaste activa"/>
+    <account-heading id="h-69" code="34" description="Marchandises - Handelsgoederen">
+      <account code="340" description="Marchandises - Handelsgoederen" category="Asset" gifi="34">
+        <link code="IC"/>
+      </account>
+      <account code="349" description="Réduct. valeur actées (-) - Geboekte waardeverminderingen (-) " category="Asset" gifi="34"/>
+    </account-heading>
+    <account-heading id="h-70" code="35" description="Immeubles destinés vente - Onroerende goederen bestemd. v. verk.">
+      <account code="359" description="Réductions valeur actées (-) - Geboekte waardeverminderingen (-) " category="Asset" gifi="35"/>
+      <account code="350" description="Immeubles - Aanschaffingsw. onr. goed. verkoop" category="Asset" gifi="35">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-71" code="4" description="CLASSE 4 -- CREANCES ET DETTES A UN AN AU PLUS - VORDERINGEN EN SCHULDEN OP TEN HOOGTE EEN JAAR"/>
+    <account-heading id="h-72" code="40" description="Créances commerciales - Handelsvorderingen">
+      <account code="401" description="Effets à recevoir - Te innen wissels" category="Asset" gifi="40"/>
+      <account code="406" description="Acomptes versés - Vooruitbetalingen" category="Asset" gifi="40">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-73" code="63" description="Amortissements, réd. val., provi. risques et charges - Afschrijvingen waardevermin. en voorzieningen v. risico's kost.">
+      <account code="630000" description="Amort.s/frais.constit.&amp;aug.capi - Afschr.o.opricht./kapitaalverhoging" category="Expense" gifi="63"/>
+      <account code="630210" description="Amort.s/constructions - Afschr. op gebouwen" category="Expense" gifi="63"/>
+      <account code="630200" description="Amort.s/installations - Afschr. op installaties" category="Expense" gifi="63"/>
+      <account code="630220" description="Amort.s/machines - Afschr. op machines" category="Expense" gifi="63"/>
+      <account code="630221" description="Amort.s/outillage - Afschr. op uitrusting" category="Expense" gifi="63"/>
+      <account code="630222" description="Amort.s/mobilier - Afschr. op meubilair" category="Expense" gifi="63"/>
+      <account code="630223" description="Amort.s/mat.bureau - Afschr. op bureaumaterieel" category="Expense" gifi="63"/>
+      <account code="630224" description="Amort.s/mat.informatique - Afschr. op hardware" category="Expense" gifi="63"/>
+      <account code="630230" description="Amort.s/voitures - Afschr. op wagens" category="Expense" gifi="63"/>
+      <account code="630225" description="Amort.s/amén. locaux - Afschr. op inrichtingskost" category="Expense" gifi="63"/>
+    </account-heading>
+    <account-heading id="h-74" code="5" description="CLASSE 5 - PLACEMENTS DE TRESORIERIE - LIQUIDE MIDDELEN / GELDBELEGGINGEN"/>
+    <account-heading id="h-75" code="54" description="Valeurs échues à encaissement - Te incasseren verfallen waarden">
+      <account code="540" description="Chèques à encaisser - Te incasseren chèques" category="Asset" gifi="54">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-76" code="55" description="Banque - Rekening-courant">
+      <account code="553000" description="KBC40" category="Asset" gifi="55" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="554000" description="KBC83" category="Asset" gifi="55" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-77" code="46" description="Acomptes reçus sur commandes"/>
+    <account-heading id="h-78" code="57" description="Caisses - Kassen"/>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="340"/>
+    <setting name="income_accno_id" accno="743200"/>
+    <setting name="expense_accno_id" accno="604"/>
+    <setting name="fxgain_accno_id" accno="755000"/>
+    <setting name="fxloss_accno_id" accno="655000"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="0000" description="-----">
+      <account code="1000" description="Dlouhodobý nehmotný majetek" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-2" code="3000" description="Dlouhodobý hmotný majetek neodpisovaný"/>
+    <account-heading id="h-3" code="2000" description="Dlouhodobý Hmotný majetek odpisovaný"/>
+    <account-heading id="h-4" code="10000" description="Zásoby">
+      <account code="1100" description="Zřizovací výdaje" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="11000" description="Materiál">
+      <account code="1200" description="Nehmotné výsledky výzkumu a vývoje" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="11100" description="Pořízení materiálu" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="11200" description="Materiál na skladě" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="11900" description="Materiál na cestě" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="12000" description="Zásoby vlastní výroby">
+      <account code="1300" description="Software" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="12200" description="Polotovary vlastní výroby" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="12300" description="Výrobky" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="12100" description="Nedokončená výroba" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="12400" description="Zvířata" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="31000" description="Pohledávky">
+      <account code="3200" description="Umělecká díla a sbírky" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="31300" description="Pohledávky za eskontované cenné papíry" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="31400" description="Poskytnuté provozní zálohy" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="31500" description="Ostatní pohledávky" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="31100" description="Odběratelé" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="31200" description="Směnky k inkasu" category="Asset">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-8" code="32000" description="Závazky">
+      <account code="32100" description="Dodavatelé" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="32500" description="Ostatní závazky" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="32200" description="Směnky k úhradě" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="32400" description="Přijaté zálohy" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="32600" description=" Závazky vůči klientům" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="32700" description=" Závazky vůči trhům" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="33000" description="Zúčtování se zaměstnanci a institucemi" category="Liability"/>
+      <account code="33100" description="Zaměstnanci" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="33300" description="Ostatní závazky vůči zaměstnancům" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="33500" description="Pohledávky za zaměstnanci" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="33600" description="Zůčtování s institucemi sociálního zabezpečení a zp" category="Liability">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="37000" description="Jiné pohledávky a závazky">
+      <account code="37300" description="Nakoupené opce" category="Asset"/>
+      <account code="37400" description="Prodané opce" category="Liability"/>
+      <account code="37800" description="Jiné pohledávky" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="37900" description="Jiné závazky" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="37100" description="Odložená daňová pohledávka a závazek" category="Liability"/>
+      <account code="37500" description="Pohledávky z emitovaných dluhopisů" category="Asset"/>
+      <account code="37700" description=" Zúčtování obchodů" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-10" code="45000" description="Rezervy">
+      <account code="45100" description="Rezervy zákonné" category="Equity"/>
+      <account code="45400" description="Rezerva na kursové ztráty" category="Equity"/>
+      <account code="45900" description="Ostatní rezervy" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-11" code="6000" description="Dlouhodobý finanční majetek">
+      <account code="6100" description="Podílové cenné papíry a vklady v podnicích s rozhodujícím" category="Asset"/>
+      <account code="6200" description="Podílové cenné papíry a vklady v podnicích s podstatným" category="Asset"/>
+      <account code="6300" description="Ostatní dlouhodobé cenné papíry a vklady" category="Asset"/>
+      <account code="62000" description="Aktivace" category="Income"/>
+      <account code="62400" description="Aktivace dlouhodobého hmotného majetku" category="Income"/>
+      <account code="64000" description="Jiné provozní výnosy." category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="64600" description="Výnosy z odepsaných pohledávek" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="64800" description="Jiné provozní výnosy" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="60000" description="Tržby za vlastní výkony a zboží" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="60100" description="Tržby za vlastní výrobky" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="60200" description="Tržby z prodeje služeb" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="60400" description="Tržby za zboží" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="61000" description="Změny stavu vnitropodnikových zásob" category="Income"/>
+      <account code="61100" description="Změna stavu nedokončené výroby" category="Income"/>
+      <account code="61200" description="Změna stavu polotovarů" category="Income"/>
+      <account code="61300" description="Změna stavu výrobků" category="Income"/>
+      <account code="61400" description="Změna stavu zvířat" category="Income"/>
+      <account code="62100" description="Aktivace materiálu a zboží" category="Income"/>
+      <account code="62200" description="Aktivace vnitropodnikových služeb" category="Income"/>
+      <account code="62300" description="Aktivace dlouhodobého nehmotného majetku" category="Income"/>
+      <account code="64100" description="Tržby z prodeje dlouhodobého nehmotného a hmotného majetku" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="64200" description="Tržby z prodeje materiálu" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="64400" description="Smluvní pokuty a úroky z prodlení" category="Income">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-12" code="47000" description="Dlouhodobé závazky">
+      <account code="5000" description="Poskytnuté zálohy na dlouhodobý nehmotný a hmotný majetek" category="Asset"/>
+      <account code="5100" description="Poskytnuté zálohy na dlouhodobý nehmotný majetek" category="Asset"/>
+      <account code="5200" description="Poskytnuté zálohy na dlouhodobý hmotný majetek" category="Asset"/>
+      <account code="47300" description="Emitované dluhopisy" category="Liability"/>
+      <account code="47400" description="Závazky z pronájmu" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="47900" description="Ostatní dlouhodobé závazky" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="49000" description="Individuální podnikatel" category="Equity"/>
+      <account code="51200" description="Cestovné" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="51300" description="Náklady na reprezentaci" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="52000" description="Osobní náklady" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52100" description="Mzdové náklady" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52600" description="Sociální náklady individuálního podnikatele" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52700" description="Zákonné sociální náklady" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52800" description="Ostatní sociální náklady" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="54000" description="Jiné provozní náklady" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="54200" description="Prodaný materiál" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+      <account code="54300" description="Dary" category="Expense"/>
+      <account code="54400" description="Smluvní pokuty a úroky z prodlení" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="54500" description="Ostatní pokuty a penále" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="54600" description="Odpis pohledávky" category="Expense"/>
+      <account code="54800" description="Ostatní provozní náklady" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="47100" description="Dlouhodobé závazky k podnikům ve skupině" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="47500" description="Dlouhodobé přijaté zálohy" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="47800" description="Dlouhodobé směnky k úhradě" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="49100" description="Účet individuálního podnikatele" category="Equity"/>
+      <account code="50000" description="Spotřebované nákupy" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="50100" description="Spotřeba materiálu" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="50200" description="Spotřeba energie" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="50300" description="Spotřeba ostatních neskladovatelných dodávek" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="50400" description="Prodané zboží" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="51000" description="Služby" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="51100" description="Opravy a udržování" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="51800" description="Ostatní služby" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="52200" description="Příjmy společníků a členů družstva ze závislé činnosti" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52300" description="Odměny členům orgánů společnosti a družstva" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52400" description="Zákonné sociální pojištění" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="52500" description="Ostatní sociální pojištění" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="53000" description="Daně a poplatky" category="Expense"/>
+      <account code="53100" description="Daň silniční" category="Expense"/>
+      <account code="53200" description="Daň z nemovitostí" category="Expense"/>
+      <account code="53800" description="Ostatní daně a poplatky" category="Expense"/>
+      <account code="54100" description="Zůstatková cena prodaného dlouhodobého nehmotného a hmotného" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-13" code="13000" description="Zboží">
+      <account code="1400" description="Ocenitelná práva" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1800" description="Drobný dlouhodobý nehmotný majetek" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1900" description="Ostatní dlouhodobý nehmotný majetek" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="19200" description="Opravná položka k nedokonèené výrobì" category="Asset"/>
+      <account code="13100" description="Pořízení zboží" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="13200" description="Zboží na skladě a v prodejnách" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="13900" description="Zboží na cestě" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="19000" description="Opravné položky k zásobám" category="Asset"/>
+      <account code="19100" description="Opravná položka k materiálu" category="Asset"/>
+      <account code="19300" description="Opravná položka k polotovarům vlastní výroby" category="Asset"/>
+      <account code="19400" description="Opravná položka k výrobkùm" category="Asset"/>
+      <account code="19500" description="Opravná položka ke zvířatům" category="Asset"/>
+      <account code="19600" description="Opravná položka ke zboží" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-14" code="20000" description="Finanční účty">
+      <account code="2100" description="Stavby" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="21000" description="Peníze" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="21100" description="Pokladna" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="21300" description="Ceniny" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="2200" description="Samostatné movité věci a soubory movitých věcí" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-15" code="22000" description="Účty v bankách">
+      <account code="22100" description="Bankovní účty" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="22200" description="Bankovní účty klientù" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-16" code="23000" description="Běžné bankovní úvěry">
+      <account code="24100" description="Emitované krátkodobé dluhopisy" category="Liability"/>
+      <account code="2500" description="Pěstitelské celky trvalých porostů" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="23100" description="Krátkodobé bankovní úvěry" category="Liability"/>
+      <account code="23200" description="Eskontní úvěry" category="Liability"/>
+      <account code="24000" description="Jiné krátkodobé finanční výpomoci" category="Liability"/>
+      <account code="24900" description="Ostatní krátkodobé finanční výpomoci" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-17" code="25000" description="Krátkodobý finanční majetek">
+      <account code="25100" description="Majetkové cenné papíry" category="Asset"/>
+      <account code="25200" description="Vlastní akcie a vlastní obchodní podíly" category="Asset"/>
+      <account code="25500" description="Vlastní dluhopisy" category="Asset"/>
+      <account code="25600" description="Ostatní cenné papíry" category="Asset"/>
+      <account code="2600" description="Základní stádo a tažná zvířata" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="25300" description="Dlužné cenné papíry" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-18" code="26000" description="Převody mezi finančními účty">
+      <account code="2800" description="Drobný dlouhodobý hmotný majetek" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="2900" description="Ostatní dlouhodobý hmotný majetek" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="26100" description="Peníze na cestě" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-19" code="29000" description="Opravné položky ke krátkodobému finančnímu majetku">
+      <account code="29100" description="Opravná položka k majetkovým cenným papírùm" category="Asset"/>
+      <account code="29300" description="Opravná položka k dlužným cenným papírům" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-20" code="30000" description="Zúčtovací vztahy">
+      <account code="3100" description="Pozemky" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-21" code="34000" description="Zůčtování daní a dotací">
+      <account code="34700" description="Ostatní dotace" category="Liability"/>
+      <account code="34311" description="DPH snížená vstup" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.05"/>
+        </tax>
+      </account>
+      <account code="34312" description="DPH základní vstup" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.19"/>
+        </tax>
+      </account>
+      <account code="34321" description="DPH snížená výstup" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.05"/>
+        </tax>
+      </account>
+      <account code="34322" description="DPH základní výstup" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.19"/>
+        </tax>
+      </account>
+      <account code="34100" description="Daň z příjmu" category="Liability"/>
+      <account code="34200" description="Ostatní přímé daně" category="Liability"/>
+      <account code="34300" description="Daň z přidané hodnoty - zúčtování" category="Liability"/>
+      <account code="34500" description="Ostatní daně a poplatky" category="Liability"/>
+      <account code="34600" description="Dotace ze státního rozpočtu" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-22" code="35000" description="Pohledávky ke společníkům a sdružení">
+      <account code="35300" description="Pohledávky za upsaný vlastní kapitál" category="Asset"/>
+      <account code="35100" description="Pohledávky k podnikům ve skupině" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="35400" description="Pohledávky za společníky při úhradě ztráty" category="Asset"/>
+      <account code="35500" description="Ostatní pohledávky za společníky" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="35800" description="Pohledávky k účastníkùm sdružení" category="Asset">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-23" code="36000" description="Závazky ke společníkům a sdružení">
+      <account code="36100" description="Závazky k podnikům ve skupině" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="36400" description="Závazky ke společníkům při rozdělování zisku" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="36500" description="Ostatní závazky ke společníkům" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="36600" description="Závazky ke společníkům a členům družstva ze závislé" category="Liability"/>
+      <account code="36700" description="Závazky z upsaných nesplacených cenných papírů a vkladů" category="Liability"/>
+      <account code="36800" description="Závazky k účastníkům sdružení" category="Liability">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-24" code="38000" description="Přechodné účty aktiv a pasiv">
+      <account code="4000" description="Pořízení dlouhodobého nehmotného a hmotného majetku" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="38600" description="Kursové rozdíly aktivní" category="Asset"/>
+      <account code="38700" description="Kursové rozdíly pasívní" category="Liability"/>
+      <account code="38100" description="Náklady příštích období" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="38200" description="Komplexní náklady příštích období" category="Asset">
+        <link code="AP"/>
+      </account>
+      <account code="38300" description="Výdaje příštích období" category="Liability"/>
+      <account code="38400" description="Výnosy příštích období" category="Liability">
+        <link code="AR"/>
+      </account>
+      <account code="38500" description="Příjmy příštích období" category="Asset"/>
+      <account code="38800" description="Dohadné účty aktivní" category="Asset"/>
+      <account code="38900" description="Dohadné účty pasívní" category="Liability"/>
+      <account code="39000" description="Opravná položka k zúčtovacím vztahům a vnitřní zúčtování" category="Asset"/>
+      <account code="39100" description="Opravná položka k pohledávkám" category="Asset"/>
+      <account code="39500" description="Vnitřní zúčtování" category="Asset"/>
+      <account code="39800" description="Spojovací účet při sdružení" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-25" code="40000" description="Kapitálové účty a dlouhodobé závazky">
+      <account code="4100" description="Pořízení dlouhodobého nehmotného majetku" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-26" code="41000" description="Základní kapitál a kapitálové fondy">
+      <account code="41100" description="Základní kapitál" category="Equity"/>
+      <account code="41300" description="Ostatní kapitálové fondy" category="Equity"/>
+      <account code="4200" description="Pořízení dlouhodobého hmotného majetku" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="41200" description="Emisní ážio" category="Equity"/>
+      <account code="41400" description="Oceňovací rozdíly z přecenění majetku a závazků" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-27" code="42000" description="Fondy ze zisku a převedené hospodářské výsledky">
+      <account code="42100" description="Zákonný rezervní fond" category="Equity"/>
+      <account code="42300" description="Statutární fondy" category="Equity"/>
+      <account code="42700" description="Ostatní fondy" category="Equity"/>
+      <account code="42200" description="Nedělitelný fond" category="Equity"/>
+      <account code="42800" description="Nerozdělený zisk minulých let" category="Equity"/>
+      <account code="42900" description="Neuhrazená ztráta minulých let" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-28" code="43000" description="Hospodářský výsledek">
+      <account code="43100" description="Hospodářský výsledek ve schvalovacím řízení" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-29" code="46000" description="Bankovní úvěry">
+      <account code="46100" description="Bankovní úvěry" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-30" code="55000" description="Odpisy, rezervy a opravné položky provozních nákladů">
+      <account code="55100" description="Odpisy dlouhodobého nehmotného a hmotného majetku" category="Expense"/>
+      <account code="55200" description="Tvorba zákonných rezerv" category="Expense"/>
+      <account code="55400" description="Tvorba ostatních rezerv" category="Expense"/>
+      <account code="56100" description="Prodané cenné papíry a vklady" category="Expense"/>
+      <account code="56200" description="Úroky" category="Expense"/>
+      <account code="56300" description="Kursové ztráty" category="Expense"/>
+      <account code="55500" description="Zúčtování komplexních nákladů příštích období" category="Expense"/>
+      <account code="55700" description="Zúčtování oprávky k opravné položce k nabytému majetku" category="Expense"/>
+      <account code="55800" description="Tvorba zákonných opravných položek" category="Expense"/>
+      <account code="55900" description="Tvorba opravných položek" category="Expense"/>
+      <account code="56000" description="Finanční náklady" category="Expense"/>
+      <account code="56800" description="Ostatní finanční náklady" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-31" code="57000" description="Rezervy a opravné položky finančních nákladù">
+      <account code="57400" description="Tvorba rezerv" category="Expense"/>
+      <account code="58400" description="Tvorba rezerv" category="Expense"/>
+      <account code="57900" description="Tvorba opravných položek" category="Expense"/>
+      <account code="58000" description="Mimořádné náklady" category="Expense"/>
+      <account code="58100" description="Náklady na změnu metody" category="Expense"/>
+      <account code="58200" description="Manka a škody" category="Expense"/>
+      <account code="58800" description="Ostatní mimořádné náklady" category="Expense"/>
+      <account code="58900" description="Tvorba opravných položek" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-32" code="59000" description="Daně z příjmù a převodové účty">
+      <account code="59100" description="Daň z příjmu z běžné činnosti - splatná" category="Expense"/>
+      <account code="59200" description="Daň z příjmu z běžné činnosti - odložená" category="Expense"/>
+      <account code="59300" description="Daň z příjmu z mimořádné činnosti - splatná" category="Expense"/>
+      <account code="59400" description="Daň z příjmu z mimořádné činnosti - odložená" category="Expense"/>
+      <account code="59500" description="Dodatečné odvody daně z příjmu" category="Expense"/>
+      <account code="59600" description="Převod podílu na hospodářském výsledku společníkùm" category="Expense"/>
+      <account code="59700" description="Převod provozních nákladů" category="Expense"/>
+      <account code="59800" description="Převod finančních nákladù" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-33" code="65000" description="Zúčtování rezerv a opravných položek provozních výnosů">
+      <account code="66200" description="Úroky" category="Income"/>
+      <account code="66300" description="Kursové zisky" category="Income"/>
+      <account code="6600" description="Pùjčky podnikùm ve skupinì" category="Asset"/>
+      <account code="6700" description="Ostatní pùjčky" category="Asset"/>
+      <account code="65200" description="Zúčtování zákonných rezerv" category="Income"/>
+      <account code="65400" description="Zúčtování ostatních rezerv" category="Income"/>
+      <account code="65500" description="Zúčtování komplexních nákladů příětích období" category="Income"/>
+      <account code="65700" description="Zúčtování oprávky k opravné položce k nabytému majetku" category="Income"/>
+      <account code="65800" description="Zúčtování zákonných opravných položek" category="Income"/>
+      <account code="65900" description="Zúčtování opravných položek" category="Income"/>
+      <account code="66000" description="Finanční výnosy" category="Income"/>
+      <account code="66100" description="Tržby z prodeje cenných papírů a vkladů" category="Income"/>
+      <account code="66500" description="Výnosy z dlouhodobého finančního majetku" category="Income"/>
+      <account code="66600" description="Výnosy z krátkodobého finančního majetku" category="Income"/>
+      <account code="66800" description="Ostatní finanční výnosy" category="Income"/>
+    </account-heading>
+    <account-heading id="h-34" code="67000" description="Zúčtování rezerv a opravných položek finančních výnosů">
+      <account code="6900" description="Ostatní dlouhodobý finanční majetek" category="Asset"/>
+      <account code="67400" description="Zúčtování rezerv" category="Income"/>
+      <account code="67900" description="Zúčtování opravných položek" category="Income"/>
+      <account code="68000" description="Mimořádné výnosy" category="Income"/>
+      <account code="68100" description="Výnosy ze změny metody" category="Income"/>
+      <account code="68400" description="Zúčtování rezerv" category="Income"/>
+      <account code="68800" description="Ostatní mimořádné výnosy" category="Income"/>
+      <account code="68900" description="Zúčtování opravných položek" category="Income"/>
+    </account-heading>
+    <account-heading id="h-35" code="69000" description="Převodové účty">
+      <account code="7000" description="Oprávky k dlouhodobému nehmotnému majetku" category="Asset"/>
+      <account code="69700" description="Převod provozních výnosů" category="Income"/>
+      <account code="69800" description="Převod finančních výnosů" category="Income"/>
+    </account-heading>
+    <account-heading id="h-36" code="70000" description="Účty rozvažné">
+      <account code="7300" description="Oprávky k softwaru" category="Asset"/>
+      <account code="7800" description="Oprávky k drobnému dlouhodobému nehmotnému majetku" category="Asset"/>
+      <account code="7900" description="Oprávky k ostatnímu dlouhodobému nehmotnému majetku" category="Asset"/>
+      <account code="8000" description="Oprávky k dlouhodobému hmotnému majetku" category="Asset"/>
+      <account code="8100" description="Oprávky ke stavbám" category="Asset"/>
+      <account code="8800" description="Oprávky k drobnému dlouhodobému hmotnému majetku" category="Asset"/>
+      <account code="8900" description="Oprávky k ostatnímu dlouhodobému hmotnému majetku" category="Asset"/>
+      <account code="7100" description="Oprávky ke zřizovacím výdajùm" category="Asset"/>
+      <account code="7200" description="Oprávky k nehmotným výsledkům výzkumu a vývoje" category="Asset"/>
+      <account code="7400" description="Oprávky k ocenitelným právům" category="Asset"/>
+      <account code="8200" description="Oprávky k samostatným movitým věcem a souborùm movitých věcí" category="Asset"/>
+      <account code="8500" description="Oprávky k pěstitelským celkům trvalých porostů" category="Asset"/>
+      <account code="8600" description="Oprávky k základnímu stádu a tažným zvířatům" category="Asset"/>
+      <account code="9000" description="Opravné položky k dlouhodobému majetku" category="Asset"/>
+      <account code="9100" description="Opravná položka k dlouhodobému nehmotnému majetku" category="Asset"/>
+      <account code="9200" description="Opravná položka k dlouhodobému hmotnému majetku" category="Asset"/>
+      <account code="9300" description="Opravná položka k dlouhodobému nedokončenému nehmotnému" category="Asset"/>
+      <account code="9400" description="Opravná položka k dlouhodobému nedokončenému hmotnému" category="Asset"/>
+      <account code="9500" description="Opravná položka k poskytnutým zálohám" category="Asset"/>
+      <account code="9600" description="Opravná položka k dlouhodobému finančnímu majetku" category="Asset"/>
+      <account code="9700" description="Opravná položka k nabytému majetku" category="Asset"/>
+      <account code="9800" description="Oprávky k opravné položce k nabytému majetku" category="Asset"/>
+      <account code="70100" description="Počáteční účet rozvažný" category="Asset"/>
+      <account code="70200" description="Konečný účet rozvažný" category="Asset"/>
+      <account code="71000" description="Účet zisků a ztrát" category="Asset"/>
+    </account-heading>
+  </coa>
+  <currencies default="CZK">
+    <currency code="CZK">
+      CZK
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="13200"/>
+    <setting name="income_accno_id" accno="60000"/>
+    <setting name="expense_accno_id" accno="50000"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

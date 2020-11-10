@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="0000" description="Vaste Activa &amp; Eigen Vermogen">
+      <account code="0010" description="Terreinen" category="Asset"/>
+      <account code="0015" description="Afschrijving Terreinen" category="Asset"/>
+      <account code="0200" description="Gebouwen" category="Asset"/>
+      <account code="0205" description="Afschrijving Gebouwen" category="Asset"/>
+      <account code="0230" description="Inventaris" category="Asset"/>
+      <account code="0235" description="Afschrijving Inventaris" category="Asset"/>
+      <account code="0240" description="Computers" category="Asset"/>
+      <account code="0245" description="Afschrijving Computers" category="Asset"/>
+      <account code="0250" description="Auto" category="Asset"/>
+      <account code="0255" description="Afschrijving Auto" category="Asset"/>
+      <account code="0260" description="Machines" category="Asset"/>
+      <account code="0265" description="Afschrijving Machines" category="Asset"/>
+      <account code="0290" description="Goodwill" category="Asset"/>
+      <account code="0295" description="Afschrijving Goodwill" category="Asset"/>
+      <account code="0370" description="Overige Leningen u/g" category="Asset"/>
+      <account code="0380" description="Aandelen &amp; Effecten" category="Asset"/>
+      <account code="0381" description="Beleggingen Spaarbeleg" category="Asset"/>
+      <account code="0390" description="Beleggingen Legiolease" category="Asset"/>
+      <account code="0400" description="Aandelenkapitaal" category="Equity"/>
+      <account code="0410" description="Aandelen in portefeuille" category="Equity"/>
+      <account code="0420" description="Aandelen uit te reiken" category="Equity"/>
+      <account code="0430" description="Agioreserve" category="Equity"/>
+      <account code="0440" description="Winstreserve" category="Equity"/>
+      <account code="0450" description="Herwaarderingsreserve" category="Equity"/>
+      <account code="0470" description="Oprichtingskosten" category="Equity"/>
+      <account code="0480" description="Winst na belasting lopend jaar" category="Equity"/>
+      <account code="0500" description="Eigen Vermogen" category="Equity"/>
+      <account code="0510" description="Prive" category="Equity"/>
+      <account code="0550" description="Onverdeeld Resultaat" category="Equity"/>
+      <account code="0600" description="Voorziening Onderhoud" category="Equity"/>
+      <account code="0610" description="Voorziening Garantie" category="Equity"/>
+      <account code="0620" description="Voorziening Assurantie" category="Equity"/>
+      <account code="0630" description="Voorziening Debiteuren" category="Equity"/>
+      <account code="0700" description="Obligatielening" category="Equity"/>
+      <account code="0710" description="Obligaties in portefeuille" category="Equity"/>
+      <account code="0720" description="Converteerbare Obligatielening" category="Equity"/>
+      <account code="0730" description="Agio op Obligaties" category="Equity"/>
+      <account code="0740" description="Disagio op Obligaties" category="Equity"/>
+      <account code="0800" description="Hypothecaire lening o/g" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-2" code="1000" description="Financiele Rekeningen">
+      <account code="1001" description="Kas" category="Asset"/>
+      <account code="1050" description="Contante Verkopen" category="Asset"/>
+      <account code="1100" description="Interbank" category="Asset" recon="true"/>
+      <account code="1110" description="ABN-AMRO" category="Asset" recon="true"/>
+      <account code="1119" description="Postbank Plus" category="Asset" recon="true"/>
+      <account code="1120" description="Postbank Giro" category="Asset" recon="true"/>
+      <account code="1121" description="Postbank Kapitaal" category="Asset" recon="true"/>
+      <account code="1122" description="Postbank Leeuw" category="Asset" recon="true"/>
+      <account code="1139" description="Postbank Effectenrekening" category="Asset" recon="true"/>
+      <account code="1140" description="Rabobank" category="Asset" recon="true"/>
+      <account code="1141" description="Rabobank Rendementrekening" category="Asset" recon="true"/>
+      <account code="1160" description="van Lanschotbank" category="Asset" recon="true"/>
+      <account code="1170" description="Finansbank" category="Asset" recon="true"/>
+      <account code="1180" description="VISA Creditcard" category="Asset" recon="true"/>
+      <account code="1190" description="Kruisposten" category="Asset"/>
+      <account code="1200" description="Debiteuren" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Dubieuze Debiteuren" category="Asset"/>
+      <account code="1321" description="Rekening Courant &lt; A" category="Asset"/>
+      <account code="1322" description="Rekening Courant &lt; B" category="Asset"/>
+      <account code="1340" description="Goederen ontvangen / GO" category="Asset"/>
+      <account code="1500" description="Te betalen loonheffing" category="Asset"/>
+      <account code="1520" description="Te betalen Sociale Lasten" category="Asset"/>
+      <account code="1530" description="Te betalen Pensioenpremies" category="Asset"/>
+      <account code="1600" description="Crediteuren" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="1605" description="Nog te Ontvangen Facturen / NOF" category="Asset"/>
+      <account code="1610" description="Te betalen tantiemes" category="Asset"/>
+      <account code="1615" description="Te betalen Vennootschapsbelasting" category="Asset"/>
+      <account code="1620" description="Interimdividend" category="Asset"/>
+      <account code="1630" description="Te betalen dividend" category="Asset"/>
+      <account code="1640" description="Te betalen dividendbelasting" category="Asset"/>
+      <account code="1650" description="Aandeelhouders nog te storten" category="Asset"/>
+      <account code="1700" description="Te betalen interest" category="Asset"/>
+      <account code="1710" description="Te betalen coupons" category="Asset"/>
+      <account code="1770" description="Uitgelote obligaties" category="Asset"/>
+      <account code="1800" description="Te vorderen BTW hoog" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.19"/>
+        </tax>
+      </account>
+      <account code="1801" description="Te vorderen BTW laag" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.06"/>
+        </tax>
+      </account>
+      <account code="1810" description="Te betalen BTW hoog" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.19"/>
+        </tax>
+      </account>
+      <account code="1811" description="Te betalen BTW laag" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.06"/>
+        </tax>
+      </account>
+      <account code="1850" description="Saldo BTW" category="Liability"/>
+      <account code="1941" description="Rekening Courant &gt; A" category="Asset"/>
+      <account code="1942" description="Rekening Courant &gt; B" category="Asset"/>
+      <account code="1960" description="Vooruitbetaalde bedragen" category="Asset"/>
+      <account code="1970" description="Vooruitontvangen bedragen" category="Asset"/>
+      <account code="1980" description="Nog te ontvangen bedragen" category="Asset"/>
+      <account code="1990" description="Nog te betalen bedragen" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-3" code="2000" description="Tussenrekeningen">
+      <account code="2100" description="Vraagposten" category="Asset"/>
+      <account code="2400" description="Onbekende betalingen" category="Asset"/>
+      <account code="2800" description="Tussenrekening Lonen" category="Asset"/>
+      <account code="2900" description="Tussenrekening Beginbalans" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-4" code="3000" description="Voorraad Grond- en Hulpstoffen">
+      <account code="3010" description="Voorraad Grondstof A" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="4000" description="Kostenrekeningen">
+      <account code="4001" description="Verbruik Grondstoffen" category="Expense"/>
+      <account code="4100" description="Directe Loonkosten" category="Expense"/>
+      <account code="4110" description="Indirecte Loonkosten" category="Expense"/>
+      <account code="4120" description="Sociale Lasten" category="Expense"/>
+      <account code="4130" description="Kosten Pensioenen" category="Expense"/>
+      <account code="4190" description="Overige Personeelskosten" category="Expense"/>
+      <account code="4200" description="Kosten externe medewerkers" category="Expense"/>
+      <account code="4210" description="Kosten Personeelsuitjes" category="Expense"/>
+      <account code="4220" description="Kantinekosten" category="Expense"/>
+      <account code="4240" description="Lief en Leedpot externe medewerkers" category="Expense"/>
+      <account code="4300" description="Afschrijvingskosten Gebouwen" category="Expense"/>
+      <account code="4330" description="Afschrijvingskosten Inventaris" category="Expense"/>
+      <account code="4340" description="Afschrijvingskosten Computers" category="Expense"/>
+      <account code="4350" description="Afschrijvingskosten Autos" category="Expense"/>
+      <account code="4360" description="Afschrijvingskosten Machines" category="Expense"/>
+      <account code="4390" description="Afschrijvingskosten Goodwill" category="Expense"/>
+      <account code="4400" description="Huurkosten" category="Expense"/>
+      <account code="4410" description="Asurantiekosten" category="Expense"/>
+      <account code="4520" description="Gas, Licht &amp; Water" category="Expense"/>
+      <account code="4530" description="Vaste Lasten" category="Expense"/>
+      <account code="4540" description="Reparatie- &amp; Onderhoudskosten" category="Expense"/>
+      <account code="4560" description="Verzekering en Beveiliging Pand" category="Expense"/>
+      <account code="4600" description="Directe Verkoopkosten" category="Expense"/>
+      <account code="4650" description="Indirecte Verkoopkosten" category="Expense"/>
+      <account code="4730" description="Relatiegeschenken" category="Expense"/>
+      <account code="4740" description="Reis en Verblijfkosten" category="Expense"/>
+      <account code="4800" description="Kasverschillen" category="Expense"/>
+      <account code="4810" description="Voorraadverschillen" category="Expense"/>
+      <account code="4900" description="Telefoon &amp; Faxkosten" category="Expense"/>
+      <account code="4910" description="Contributies &amp; Abonnementen" category="Expense"/>
+      <account code="4920" description="Verzekeringen Algemeen" category="Expense"/>
+      <account code="4930" description="Kantoorartikelen" category="Expense"/>
+      <account code="4931" description="Kantoorbenodigdheden" category="Expense"/>
+      <account code="4932" description="Vakliteratuur" category="Expense"/>
+      <account code="4940" description="Licenties &amp; Software" category="Expense"/>
+      <account code="4941" description="Administratie &amp; Acountantskosten" category="Expense"/>
+      <account code="4943" description="Notaris &amp; Advocaatkosten" category="Expense"/>
+      <account code="4950" description="Drukwerk &amp; Papier" category="Expense"/>
+      <account code="4970" description="Porti" category="Expense"/>
+      <account code="4980" description="Bankkosten" category="Expense"/>
+      <account code="4981" description="Bankprovisie Effectenhandel" category="Expense"/>
+      <account code="4990" description="Overige Algemene Kosten" category="Expense"/>
+      <account code="4991" description="Bijzondere baten en lasten" category="Expense"/>
+      <account code="4999" description="Overboekingsrekening Rubriek 4" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-6" code="5000" description="Verdeling Indirecte Kosten">
+      <account code="5400" description="Indirecte fabricagekosten" category="Expense"/>
+      <account code="5450" description="Opslag Indirecte fabricagekosten" category="Income"/>
+      <account code="5500" description="Indirecte verkoopkosten" category="Expense"/>
+      <account code="5550" description="Opslag Indirecte verkoopkosten" category="Income"/>
+      <account code="5999" description="Overboekingsrekening Rubriek 5" category="Income"/>
+    </account-heading>
+    <account-heading id="h-7" code="6000" description="Fabricagerekeningen">
+      <account code="6001" description="Verbruik Grondstoffen" category="Expense"/>
+      <account code="6010" description="Directe Lonen" category="Expense"/>
+      <account code="6020" description="Toeslag Indirecte fabricagekosten" category="Expense"/>
+      <account code="6101" description="Standaard Verbruik Grondstoffen" category="Income"/>
+      <account code="6110" description="Standaard Directe Lonen" category="Income"/>
+      <account code="6120" description="Standaard Toeslag Indirecte fabricagekosten" category="Income"/>
+      <account code="6999" description="Overboekingsrekening Rubriek 6" category="Income"/>
+    </account-heading>
+    <account-heading id="h-8" code="7000" description="Voorraden gereed product">
+      <account code="7001" description="Voorraad A" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="7002" description="Voorraad B" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="7003" description="Voorraad C" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="7010" description="Voorraad Incourante goederen" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="7015" description="Afschrijving Incourante goederen" category="Liability">
+        <link code="IC"/>
+      </account>
+      <account code="7200" description="Voorraad Goederen in bewerking" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="7300" description="Nog te Ontvangen Goederen / NOG" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="7350" description="Nog af te leveren goederen" category="Liability">
+        <link code="IC"/>
+      </account>
+      <account code="7400" description="Prijsverschillen bij inkoop" category="Income">
+        <link code="IC"/>
+      </account>
+      <account code="7999" description="Overboekingsrekening Rubriek 7" category="Income"/>
+    </account-heading>
+    <account-heading id="h-9" code="8000" description="Rekeningen tbv Verkoopresultaat">
+      <account code="8010" description="Inkoopkosten algemeen" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="8020" description="Kostprijs Verkopen A" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="8030" description="Kostprijs Verkopen B" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="8040" description="Kostprijs Verkopen C" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="8100" description="Directe Verkoopkosten" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="8150" description="Toeslag Indirecte Verkoopkosten" category="Expense"/>
+      <account code="8300" description="Kortingen bij Verkoop" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-10" code="8500" description="Opbrengsten">
+      <account code="8520" description="Opbrengst Verkopen A" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8530" description="Opbrengst Verkopen B" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8540" description="Opbrengst Verkopen C" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8999" description="Overboekingsrekening Rubriek 8" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-11" code="9000" description="Rekeningen tbv Resultatenrekening">
+      <account code="9010" description="Resultaat Indirecte Kosten" category="Expense"/>
+      <account code="9011" description="Resultaat Fabricage" category="Income"/>
+      <account code="9012" description="Resultaat Verkoop" category="Income"/>
+      <account code="9015" description="Resultaat Prijsverschillen" category="Income"/>
+      <account code="9030" description="Rente bate deposito" category="Income"/>
+      <account code="9040" description="Rente bate lening u/g" category="Income"/>
+      <account code="9050" description="Rente bate bank" category="Income"/>
+      <account code="9080" description="Rente bate Fiscus" category="Income"/>
+      <account code="9100" description="Rente last hypothecaire lening" category="Expense"/>
+      <account code="9110" description="Rente last lening bank" category="Expense"/>
+      <account code="9130" description="Rente last lening o/g" category="Expense"/>
+      <account code="9150" description="Rente last bank" category="Expense"/>
+      <account code="9180" description="Rente last Fiscus" category="Expense"/>
+      <account code="9190" description="Rente last overig" category="Expense"/>
+      <account code="9200" description="Ontvangen Dividend (bruto)" category="Income"/>
+      <account code="9205" description="Ingehouden Dividendbelasting" category="Expense"/>
+      <account code="9210" description="Koersresultaat Effecten)" category="Expense"/>
+      <account code="9220" description="Valutaresultaat" category="Expense"/>
+      <account code="9300" description="Huuropbrengsten" category="Income"/>
+      <account code="9400" description="Resultaat tgv inhaalafschrijvingen" category="Expense"/>
+      <account code="9500" description="Incidentele Resultaten" category="Expense"/>
+      <account code="9600" description="Giften en Donaties" category="Expense"/>
+      <account code="9700" description="Tantiemes" category="Expense"/>
+      <account code="9800" description="Belasting Lopend Jaar" category="Expense"/>
+      <account code="9810" description="Belasting Voorgaande Jaren" category="Expense"/>
+      <account code="9900" description="Vennootschapsbelasting" category="Expense"/>
+      <account code="9999" description="Overboekingsrekening" category="Income"/>
+    </account-heading>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="7001"/>
+    <setting name="income_accno_id" accno="8520"/>
+    <setting name="expense_accno_id" accno="8010"/>
+    <setting name="fxgain_accno_id" accno="9220"/>
+    <setting name="fxloss_accno_id" accno="9220"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

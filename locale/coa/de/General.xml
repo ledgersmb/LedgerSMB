@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="A0" description="Anlagevermögen"/>
+    <gifi code="A1-1" description="Warenbestand"/>
+    <gifi code="A1-2" description="Forderungen"/>
+    <gifi code="A1-3" description="Liquide Mittel"/>
+    <gifi code="A1-4" description="Aktive Rechnungsabgrenzung"/>
+    <gifi code="E" description="Erträge"/>
+    <gifi code="K0" description="Wareneinsatz"/>
+    <gifi code="K1" description="Personalkosten"/>
+    <gifi code="K2" description="Raumkosten"/>
+    <gifi code="K3" description="Sonstige Kosten"/>
+    <gifi code="NA" description="Neutrale Aufwendungen"/>
+    <gifi code="NE" description="Neutrale Erlöse"/>
+    <gifi code="P0" description="Eigenkapital"/>
+    <gifi code="P1" description="Rückstellungen"/>
+    <gifi code="P2" description="Fremdkapital Langfristig"/>
+    <gifi code="P3" description="Fremdkapital Kurzfristig"/>
+    <gifi code="P4" description="Passive Rechnungsabgrenzung"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="0000" description="ANLAGEVERMÖGEN">
+      <account code="0100" description="Konzessionen &amp; Lizenzen" category="Asset" gifi="A0"/>
+      <account code="0135" description="EDV-Programme" category="Asset" gifi="A0"/>
+      <account code="0440" description="Maschinen" category="Asset" gifi="A0"/>
+      <account code="0500" description="Betriebsausstattung" category="Asset" gifi="A0"/>
+      <account code="0520" description="PKW" category="Asset" gifi="A0"/>
+      <account code="0650" description="Büroeinrichtung" category="Asset" gifi="A0"/>
+      <account code="0670" description="GWG" category="Asset" gifi="A0"/>
+    </account-heading>
+    <account-heading id="h-2" code="1100" description="WARENBESTAND">
+      <account code="1140" description="Warenbestand" category="Asset" gifi="A1-1">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1200" description="FORDERUNGEN">
+      <account code="1201" description="Geleistete Anzahlungen" category="Asset" gifi="A1-2"/>
+      <account code="1210" description="Forderungen ohne Kontokorrent" category="Asset" gifi="A1-2">
+        <link code="AR"/>
+      </account>
+      <account code="1300" description="Sonstige Forderungen" category="Asset" gifi="A1-2"/>
+      <account code="1400" description="Anrechenbare Vorsteuer" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1401" description="Anrechenbare Vorsteuer 7%" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1402" description="Vorsteuer ig Erwerb" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1403" description="Vorsteuer ig Erwerb 16%" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1405" description="Anrechenbare Vorsteuer 16%" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1406" description="Anrechenbare Vorsteuer 15%" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1433" description="bezahlte Einfuhrumsatzsteuer" category="Asset" gifi="A1-2">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="1370" description="Ungeklärte Posten" category="Asset" gifi="A1-2"/>
+    </account-heading>
+    <account-heading id="h-4" code="1600" description="LIQUIDE MITTEL">
+      <account code="1601" description="Kasse" category="Asset" gifi="A1-3"/>
+      <account code="1700" description="Postgiro" category="Asset" gifi="A1-3" recon="true"/>
+      <account code="1800" description="Bank" category="Asset" gifi="A1-3" recon="true"/>
+      <account code="1810" description="Bank USD" category="Asset" gifi="A1-3" recon="true"/>
+      <account code="1820" description="Kreditkarten" category="Asset" gifi="A1-3" recon="true"/>
+      <account code="1890" description="Geldtransit" category="Asset" gifi="A1-3"/>
+      <account code="1900" description="Aktive Rechnungsabgrenzung" category="Asset" gifi="A1-4"/>
+    </account-heading>
+    <account-heading id="h-5" code="2000" description="EIGENKAPITAL">
+      <account code="2001" description="Eigenkapital" category="Equity" gifi="P0"/>
+      <account code="2100" description="Privatentnahmen" category="Equity" gifi="P0"/>
+      <account code="2150" description="Privatsteuern" category="Equity" gifi="P0"/>
+      <account code="2180" description="Privateinlagen" category="Equity" gifi="P0"/>
+      <account code="2200" description="Sonderausgaben beschr.abzugsf." category="Equity" gifi="P0"/>
+      <account code="2900" description="Gezeichnetes Kapital" category="Equity" gifi="P0"/>
+      <account code="2910" description="Ausstehende Einlagen" category="Equity" gifi="P0"/>
+      <account code="2970" description="Gewinnvortrag vor Verwendung" category="Equity" gifi="P0"/>
+      <account code="2978" description="Verlustvortrag vor Verwendung" category="Equity" gifi="P0"/>
+    </account-heading>
+    <account-heading id="h-6" code="3000" description="RÜCKSTELLUNGEN">
+      <account code="3030" description="Gewerbesteuerrückstellung" category="Liability" gifi="P1"/>
+      <account code="3070" description="Sonstige Rückstellungen" category="Liability" gifi="P1"/>
+      <account code="3095" description="Rückstellung für Abschlusskosten" category="Liability" gifi="P1"/>
+    </account-heading>
+    <account-heading id="h-7" code="3100" description="FREMDKAPITAL LANGFRISTIG">
+      <account code="3160" description="Bankdarlehen" category="Liability" gifi="P2"/>
+    </account-heading>
+    <account-heading id="h-8" code="3200" description="FREMDKAPITAL KURZFRISTIG">
+      <account code="3280" description="Erhaltene Anzahlungen" category="Liability" gifi="P3"/>
+      <account code="3310" description="Kreditoren ohne Kontokorrent" category="Liability" gifi="P3">
+        <link code="AP"/>
+      </account>
+      <account code="3500" description="Sonstige Verbindlichkeiten" category="Liability" gifi="P3"/>
+      <account code="3560" description="Darlehen" category="Liability" gifi="P3"/>
+      <account code="3700" description="Verbindl. Betr.steuern u.Abgaben" category="Liability" gifi="P3"/>
+      <account code="3720" description="Verbindlichkeiten Löhne und Gehälter" category="Liability" gifi="P3"/>
+      <account code="3730" description="Verbindlichkeiten Lohnsteuer" category="Liability" gifi="P3"/>
+      <account code="3740" description="Verbindlichkeiten Sozialversicherung" category="Liability" gifi="P3"/>
+      <account code="3800" description="Umsatzsteuer" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3801" description="Umsatzsteuer 7%" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.07"/>
+        </tax>
+      </account>
+      <account code="3802" description="Umsatzsteuer ig. Erwerb" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3803" description="Umsatzsteuer ig. Erwerb 16%" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3805" description="Umsatzsteuer 16%" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.16"/>
+        </tax>
+      </account>
+      <account code="3806" description="Umsatzsteuer 15%" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.15"/>
+        </tax>
+      </account>
+      <account code="3815" description="Umsatzsteuer nicht fällig 16%" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3816" description="Umsatzsteuer nicht fällig 15%" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3820" description="Umsatzsteuer-Vorauszahlungen" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3841" description="Umsatzsteuer Vorjahr" category="Liability" gifi="P3">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="3900" description="Aktive Rechnungsabgrenzung" category="Liability" gifi="P4"/>
+    </account-heading>
+    <account-heading id="h-9" code="5100" description="WARENEINGANG">
+      <account code="5200" description="Wareneingang ohne Vorsteuer" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5300" description="Wareneingang 7%" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5400" description="Wareneingang 15%" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5420" description="ig.Erwerb 7% VoSt. und 7% USt." category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5425" description="ig.Erwerb 15% VoSt. und 15% USt." category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5731" description="Erhaltene Skonti 7% Vorsteuer" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5736" description="Erhaltene Skonti 15% Vorsteuer" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5800" description="Anschaffungsnebenkosten" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5900" description="Fremdarbeiten" category="Expense" gifi="K0">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="6000" description="PERSONALKOSTEN"/>
+    <account-heading id="h-11" code="6001" description="Personalkosten">
+      <account code="6010" description="Löhne" category="Expense" gifi="K1"/>
+      <account code="6020" description="Gehälter" category="Expense" gifi="K1"/>
+      <account code="6030" description="Aushilfslöhne" category="Expense" gifi="K1"/>
+      <account code="6040" description="Lohnsteuer Aushilfen" category="Expense" gifi="K1"/>
+      <account code="6080" description="Vermögenswirksame Leistungen" category="Expense" gifi="K1"/>
+      <account code="6090" description="Fahrtkostenerst.Whg./Arbeitsstätte" category="Expense" gifi="K1"/>
+      <account code="6110" description="Sozialversicherung" category="Expense" gifi="K1"/>
+      <account code="6120" description="Berufsgenossenschaft" category="Expense" gifi="K1"/>
+      <account code="6130" description="Freiw. Soz. Aufw. LSt- u. Soz.Vers.frei" category="Expense" gifi="K1"/>
+    </account-heading>
+    <account-heading id="h-12" code="6300" description="RAUMKOSTEN">
+      <account code="6310" description="Miete" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6315" description="Pacht" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6320" description="Heizung" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6325" description="Gas Strom Wasser" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6330" description="Reinigung" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6335" description="Instandhaltung betriebliche Räume" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6345" description="Sonstige Raumkosten" category="Expense" gifi="K2">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-13" code="6400" description="SONSTIGE KOSTEN">
+      <account code="6402" description="Abschreibungen" category="Expense" gifi="K3"/>
+      <account code="6403" description="Kaufleasing" category="Expense" gifi="K3"/>
+      <account code="6404" description="Sofortabschreibung GWG" category="Expense" gifi="K3"/>
+      <account code="6405" description="Sonstige Kosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6410" description="Versicherung" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6420" description="Beiträge und Gebühren" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6430" description="Sonstige Abgaben" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6470" description="Rep. und Instandhaltung BGA" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6520" description="Kfz-Versicherung" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6530" description="Lfd. Kfz-Kosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6540" description="Kfz-Reparaturen" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6560" description="Fremdfahrzeuge" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6570" description="Sonstige Kfz-Kosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6600" description="Werbung" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6610" description="Kundengeschenke bis DM 75." category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6620" description="Kundengeschenke über DM 75.-" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6630" description="Repräsentationkosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6640" description="Bewirtungskosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6644" description="Nicht abzugsf.Bewirtungskosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6650" description="Reisekosten Arbeitnehmer" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6660" description="Reisekosten Arbeitnehmer 12.3%" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6665" description="Reisekosten Arbeitnehmer 9.8%" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6670" description="Reisekosten Unternehmer" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6680" description="Reisekosten Unternehmer 12.3%" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6685" description="Reisekosten Unternehmer 9.8%" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6688" description="Reisekosten Unternehmer 5.7%" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6690" description="Km-Geld-Erstattung 8.2%" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6710" description="Verpackungsmaterial" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6740" description="Ausgangsfrachten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6780" description="Fremdarbeiten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6800" description="Porto" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6805" description="Telefon" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6815" description="Bürobedarf" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6820" description="Zeitschriften &amp; Bücher" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6825" description="Rechts- und Beratungskosten" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6835" description="Mieten für Einrichtungen" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6840" description="Mietleasing" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6845" description="Werkzeuge und Kleingeräte" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6850" description="Betriebsbedarf" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6852" description="Gastättenbedarf" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6855" description="Nebenkosten des Geldverkehrs" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6880" description="Aufwendungen aus Kursdifferenzen" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="6885" description="Erlöse aus Anlageverk.(Buchverlust)" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="7610" description="Gewerbesteuer" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="7685" description="Kfz-Steuer" category="Expense" gifi="K3">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-14" code="8100" description="ERTRÄGE">
+      <account code="8120" description="Steuerfreie Umsätze 4 Nr. 1a UStG." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8125" description="Steuerfreie ig. Lieferungen 1b UStG." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8200" description="Erlöse ohne Umsatzsteuer" category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8300" description="Erlöse 7% Umsatzsteuer" category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8400" description="Erlöse 15% Umsatzsteuer" category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8500" description="Provisionserlöse" category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8630" description="Entnahme sonstg. Leistungen 7% USt." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8640" description="Entnahme sonstg. Leistungen 15% USt." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8731" description="Gew. Skonti 7% USt." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8736" description="Gew. Skonti 15% USt." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8840" description="Erträge aus Kursdifferenzen" category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8845" description="Erlöse aus Anlageverk. (Buchgewinn)" category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="8900" description="Erträge aus Abgang von Anlageverm." category="Income" gifi="E">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-15" code="9300" description="NEUTRALE AUFWENDUNGEN">
+      <account code="9310" description="Zinsen kurzfr. Verbindlichkeiten" category="Expense" gifi="NA"/>
+      <account code="9320" description="Zinsen langfr. Verbindlichkeiten" category="Expense" gifi="NA"/>
+      <account code="9500" description="Ausserordentl.Aufwendungen" category="Expense" gifi="NA"/>
+    </account-heading>
+    <account-heading id="h-16" code="9600" description="NEUTRALE ERTRÄGE"/>
+    <account-heading id="h-17" code="9610" description="Guthabenzinsen"/>
+    <account-heading id="h-18" code="9700" description="Ausserordentl.Erträge"/>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1140"/>
+    <setting name="income_accno_id" accno="8120"/>
+    <setting name="expense_accno_id" accno="5800"/>
+    <setting name="fxgain_accno_id" accno="8840"/>
+    <setting name="fxloss_accno_id" accno="6880"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="ACTIVO">
+      <account code="1050" description="Caja" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1100" description="Banesco APD" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1110" description="Provincial" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1120" description="Venezuela" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1130" description="Banesco JD" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="Cuentas por Cobrar" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1205" description="Provisión Cuentas Incobrables" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="1500" description="INVENTARIO">
+      <account code="1520" description="Mercancía en Almacén" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1530" description="Mercancía en Consignación" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1800" description="ACTIVOS CAPITALES">
+      <account code="1820" description="Mobiliario y Equipo" category="Asset"/>
+      <account code="1825" description="Amort. Acum. -Inv. y Equip." category="Asset"/>
+      <account code="1840" description="Vehículo" category="Asset"/>
+      <account code="1845" description="Amort. Acum. -Vehículo" category="Asset"/>
+      <account code="1850" description="Edificio" category="Asset"/>
+      <account code="1855" description="Amort. Acum. -Edificio" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-4" code="2000" description="PASIVO CORTO PLAZO">
+      <account code="2100" description="Cuentas por Pagar" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2150" description="IVA" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.16"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="2600" description="PASIVO LARGO PLAZO">
+      <account code="2620" description="Préstamos Bancarios" category="Liability"/>
+      <account code="2680" description="Préstamos de Accionistas" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="2700" description="APARTADOS">
+      <account code="2710" description="Apartados Indem. Laborales" category="Liability"/>
+    </account-heading>
+    <account-heading id="h-7" code="3300" description="CAPITAL ACCIONARIO">
+      <account code="3350" description="Acciones Comunes" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-8" code="3400" description="RESERVAS">
+      <account code="3410" description="Reserva Legal" category="Equity"/>
+      <account code="3420" description="Reserva Voluntaria" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-9" code="3500" description="UTILIDADES RETENIDAS">
+      <account code="3590" description="Utilidades Retenidas - años anteriores" category="Equity"/>
+      <account code="3600" description="Ganancia del Ejercicio" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-10" code="4000" description="INGRESOS PRINCIPALES">
+      <account code="4020" description="Ventas Autopartes" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="4400" description="OTROS INGRESOS">
+      <account code="4430" description="Shipping &amp; Handling" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4440" description="Intereses" category="Income"/>
+      <account code="4450" description="Ganancia en Paridad Cambiaria" category="Income"/>
+    </account-heading>
+    <account-heading id="h-12" code="5000" description="COSTO DE VENTA">
+      <account code="5010" description="Compras" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5020" description="COSTO DE VENTA: Autopartes" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5100" description="Flete" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-13" code="5400" description="GASTO DE PERSONAL">
+      <account code="5405" description="Sueldos Directivo y Administradores" category="Expense"/>
+      <account code="5410" description="Sueldos Empleados" category="Expense"/>
+      <account code="5415" description="Comisiones Vendedores" category="Expense"/>
+      <account code="5420" description="Vacaciones" category="Expense"/>
+      <account code="5425" description="Bono Vacacional" category="Expense"/>
+      <account code="5430" description="Utilidades" category="Expense"/>
+      <account code="5435" description="Indemnizaciones" category="Expense"/>
+      <account code="5440" description="Movilizaciones y Traslados" category="Expense"/>
+      <account code="5445" description="Gastos de Representación" category="Expense"/>
+      <account code="5450" description="Instrucción y Mejoramiento" category="Expense"/>
+      <account code="5510" description="ISRL" category="Expense"/>
+      <account code="5530" description="Derecho de Frente" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-14" code="5600" description="GASTOS GENERALES">
+      <account code="5610" description="Honorarios Profesionales" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5615" description="Propaganda" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5660" description="Gasto de Amortización" category="Expense"/>
+      <account code="5685" description="Seguros" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5690" description="Intereses y Gastos Bancarios" category="Expense"/>
+      <account code="5700" description="Artículos de Oficina" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5760" description="Alquileres" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5765" description="Reparación y Mantenimiento" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="Teléfono" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="Viajes y Entretenimiento" category="Expense"/>
+      <account code="5790" description="Servicios" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5795" description="Patentes" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Pérdidas Paridad Cambiaria" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="VEB">
+    <currency code="VEB">
+      VEB
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5020"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

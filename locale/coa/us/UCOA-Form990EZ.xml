@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="1&amp;(6a)" description="Line 1 &amp; (6a)"/>
+    <gifi code="1" description="Line 1"/>
+    <gifi code="10" description="Line 10"/>
+    <gifi code="11" description="Line 11"/>
+    <gifi code="12" description="Line 12"/>
+    <gifi code="13" description="Line 13"/>
+    <gifi code="14" description="Line 14"/>
+    <gifi code="15" description="Line 15"/>
+    <gifi code="16" description="Line 16"/>
+    <gifi code="2" description="Line 2"/>
+    <gifi code="21&amp;27" description="Line 21 &amp; 27"/>
+    <gifi code="22" description="Line 22"/>
+    <gifi code="23" description="Line 23"/>
+    <gifi code="24" description="Line 24"/>
+    <gifi code="26" description="Line 26"/>
+    <gifi code="3" description="Line 3"/>
+    <gifi code="4" description="Line 4"/>
+    <gifi code="5a" description="Line 5a"/>
+    <gifi code="5b" description="Line 5b"/>
+    <gifi code="6a" description="Line 6a"/>
+    <gifi code="8" description="Line 8"/>
+    <gifi code="capitalized" description="capitalized"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="1000" description="Cash">
+      <account code="1010" description="Cash in bank-operating" category="Asset" gifi="22" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1020" description="Cash in bank-payroll" category="Asset" gifi="22" recon="true">
+        <link code="AP_paid"/>
+      </account>
+      <account code="1040" description="Petty cash" category="Asset" gifi="22" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1070" description="Savings &amp; short-term investments" category="Asset" gifi="22" recon="true"/>
+    </account-heading>
+    <account-heading id="h-2" code="1100" description="Accounts receivable">
+      <account code="1110" description="Accounts receivable" category="Asset" gifi="24"/>
+      <account code="1115" description="Doubtful accounts allowance" category="Asset" contra="true" gifi="24">
+        <link code="AR_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="1200" description="Contributions receivable">
+      <account code="1210" description="Pledges receivable" category="Asset" gifi="24">
+        <link code="AR"/>
+      </account>
+      <account code="1215" description="Doubtful pledges allowance" category="Asset" contra="true" gifi="24">
+        <link code="AR_paid"/>
+      </account>
+      <account code="1225" description="Discounts - long-term pledges" category="Asset" contra="true" gifi="24">
+        <link code="AR_paid"/>
+      </account>
+      <account code="1240" description="Grants receivable" category="Asset" gifi="24">
+        <link code="AR"/>
+      </account>
+      <account code="1245" description="Discounts - long-term grants" category="Asset" contra="true" gifi="24">
+        <link code="AR_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="1300" description="Other receivables">
+      <account code="1310" description="Employee &amp; trustee receivables" category="Asset" gifi="24">
+        <link code="AR"/>
+      </account>
+      <account code="1320" description="Notes/loans receivable" category="Asset" gifi="24">
+        <link code="AR"/>
+      </account>
+      <account code="1325" description="Doubtful notes/loans allowance" category="Asset" contra="true" gifi="24">
+        <link code="AR_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="1400" description="Other assets">
+      <account code="1410" description="Inventories for sale" category="Asset" gifi="24">
+        <link code="IC"/>
+      </account>
+      <account code="1420" description="Inventories for use" category="Asset" gifi="24">
+        <link code="IC"/>
+      </account>
+      <account code="1450" description="Prepaid expenses" category="Asset" gifi="24"/>
+      <account code="1460" description="Accrued revenues" category="Asset" gifi="24"/>
+    </account-heading>
+    <account-heading id="h-6" code="1500" description="Investments">
+      <account code="1510" description="Marketable securities " category="Asset" gifi="22"/>
+      <account code="1530" description="Land held for investment" category="Asset" gifi="22"/>
+      <account code="1540" description="Buildings held for investment" category="Asset" gifi="22"/>
+      <account code="1545" description="Accum deprec - bldg investment" category="Asset" contra="true" gifi="22"/>
+      <account code="1580" description="Investments - other" category="Asset" gifi="22"/>
+    </account-heading>
+    <account-heading id="h-7" code="1600" description="Fixed operating assets">
+      <account code="1610" description="Land - operating" category="Asset" gifi="23"/>
+      <account code="1620" description="Buildings - operating" category="Asset" gifi="23"/>
+      <account code="1630" description="Leasehold improvements" category="Asset" gifi="24"/>
+      <account code="1640" description="Furniture, fixtures, &amp; equip" category="Asset" gifi="24"/>
+      <account code="1650" description="Vehicles" category="Asset" gifi="24"/>
+      <account code="1660" description="Construction in progress" category="Asset" gifi="24"/>
+    </account-heading>
+    <account-heading id="h-8" code="1700" description="Accum deprec - fixed operating assets">
+      <account code="1725" description="Accum deprec - building" category="Asset" contra="true" gifi="23"/>
+      <account code="1735" description="Accum amort - leasehold improvements" category="Asset" contra="true" gifi="24"/>
+      <account code="1745" description="Accum deprec - furn,fix,equip" category="Asset" contra="true" gifi="24"/>
+      <account code="1755" description="Accum deprec - vehicles" category="Asset" contra="true" gifi="24"/>
+      <account code="1810" description="Other long-term assets" category="Asset" gifi="24"/>
+      <account code="1850" description="Split-interest agreements" category="Asset" gifi="24"/>
+      <account code="1910" description="Collections - art, etc" category="Asset" gifi="24"/>
+      <account code="1950" description="Funds held in trust by others" category="Asset" gifi="24"/>
+    </account-heading>
+    <account-heading id="h-9" code="2000" description="Payables">
+      <account code="2010" description="Accounts payable" category="Liability" gifi="26">
+        <link code="AP"/>
+      </account>
+      <account code="2020" description="Grants &amp; allocations payable" category="Liability" gifi="26">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-10" code="2100" description="Accrued liabilities">
+      <account code="2110" description="Accrued  payroll" category="Liability" gifi="26"/>
+      <account code="2120" description="Accrued paid leave" category="Liability" gifi="26"/>
+      <account code="2130" description="Accrued payroll taxes" category="Liability" gifi="26"/>
+      <account code="2140" description="Accrued sales taxes" category="Liability" gifi="26"/>
+      <account code="2150" description="Accrued expenses - other" category="Liability" gifi="26"/>
+    </account-heading>
+    <account-heading id="h-11" code="2300" description="Unearned/deferred revenue">
+      <account code="2310" description="Deferred contract revenue" category="Liability" gifi="26"/>
+      <account code="2350" description="Unearned/deferred revenue - other" category="Liability" gifi="26"/>
+      <account code="2410" description="Refundable advances" category="Liability" gifi="26"/>
+    </account-heading>
+    <account-heading id="h-12" code="2500" description="Short-term notes &amp; loans payable">
+      <account code="2510" description="Trustee &amp; employee loans payable" category="Liability" gifi="26"/>
+      <account code="2550" description="Line of credit" category="Liability" gifi="26"/>
+      <account code="2560" description="Current portion - long-term loan" category="Liability" gifi="26"/>
+      <account code="2570" description="Short-term liabilities - other" category="Liability" gifi="26"/>
+      <account code="2610" description=" Split-interest liabilities" category="Liability" gifi="26"/>
+    </account-heading>
+    <account-heading id="h-13" code="2700" description="Long-term notes &amp; loans payable">
+      <account code="2710" description="Bonds payable" category="Liability" gifi="26"/>
+      <account code="2730" description="Mortgages payable" category="Liability" gifi="26"/>
+      <account code="2750" description="Capital leases" category="Liability" gifi="26"/>
+      <account code="2770" description="Long-term liabilities - other" category="Liability" gifi="26"/>
+      <account code="2810" description="Gov't-owned fixed assets liability" category="Liability" gifi="26"/>
+      <account code="2910" description="Custodial funds" category="Liability" gifi="26"/>
+    </account-heading>
+    <account-heading id="h-14" code="3000" description="Unrestricted net assets">
+      <account code="3010" description="Unrestricted net assets" category="Equity" gifi="21&amp;27"/>
+      <account code="3020" description="Board-designated net assets" category="Equity" gifi="21&amp;27"/>
+      <account code="3030" description="Board designated quasi-endowment" category="Equity" gifi="21&amp;27"/>
+      <account code="3040" description="Fixed operating net assets" category="Equity" gifi="21&amp;27"/>
+    </account-heading>
+    <account-heading id="h-15" code="3100" description="Temporarily restricted net assets">
+      <account code="3110" description="Use restricted net assets" category="Equity" gifi="21&amp;27"/>
+      <account code="3120" description="Time restricted net assets" category="Equity" gifi="21&amp;27"/>
+    </account-heading>
+    <account-heading id="h-16" code="3200" description="Permanently restricted net assets">
+      <account code="3210" description="Endowment net assets" category="Equity" gifi="21&amp;27"/>
+    </account-heading>
+    <account-heading id="h-17" code="4000" description="Revenue from direct contributions">
+      <account code="4010" description="Individual/small business contributions" category="Income" gifi="1">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4020" description="Corporate contributions" category="Income" gifi="1">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4070" description="Legacies &amp; bequests" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4075" description="Uncollectible pledges - estimated" category="Income" contra="true" gifi="1"/>
+      <account code="4085" description="Long-term pledges discount" category="Income" contra="true" gifi="1"/>
+    </account-heading>
+    <account-heading id="h-18" code="4100" description="Donated goods &amp; services revenue">
+      <account code="4110" description="Donated professional services-GAAP" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4120" description="Donated other services - non-GAAP" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4130" description="Donated use of facilities" category="Income">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4140" description="Gifts in kind - goods" category="Income" gifi="1">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4150" description="Donated art, etc" category="Income" gifi="1">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-19" code="4200" description="Revenue from non-government grants">
+      <account code="4210" description="Corporate/business grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4230" description="Foundation/trust grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4250" description="Nonprofit organization grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4255" description="Discounts - long-term grants" category="Income" contra="true" gifi="1"/>
+    </account-heading>
+    <account-heading id="h-20" code="4300" description="Revenue from split-interest agreements">
+      <account code="4310" description="Split-interest agreement contributions" category="Income" gifi="1"/>
+      <account code="4350" description="Gain (loss) split-interest agreements" category="Income" gifi="1"/>
+    </account-heading>
+    <account-heading id="h-21" code="4400" description="Revenue from indirect contributions">
+      <account code="4410" description="United Way or CFC contributions" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4420" description="Affiliated organizations revenue" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4430" description="Fundraising agencies revenue" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-22" code="4500" description="Revenue from government grants">
+      <account code="4510" description="Agency (government) grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4520" description="Federal grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4530" description="State grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+      <account code="4540" description="Local government grants" category="Income" gifi="1">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-23" code="5000" description="Revenue from government agencies">
+      <account code="5010" description="Agency (government) contracts/fees" category="Income" gifi="2">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5020" description="Federal contracts/fees" category="Income" gifi="2">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5030" description="State contracts/fees" category="Income" gifi="2">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5040" description="Local government contracts/fees" category="Income" gifi="2">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5080" description="Medicare/Medicaid payments" category="Income" gifi="2"/>
+    </account-heading>
+    <account-heading id="h-24" code="5100" description="Revenue from program-related sales &amp; fees">
+      <account code="5180" description="Program service fees" category="Income" gifi="2">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5185" description="Bad debts, est - program fees" category="Income" gifi="2"/>
+    </account-heading>
+    <account-heading id="h-25" code="5200" description="Revenue from dues">
+      <account code="5210" description="Membership dues-individuals" category="Income" gifi="3">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="5220" description="Assessments and dues-organizations" category="Income" gifi="3">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-26" code="5300" description="Revenue from investments">
+      <account code="5310" description="Interest-savings/short-term investments" category="Income" gifi="4">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5320" description="Dividends &amp; interest - securities" category="Income" gifi="4">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5330" description="Real estate rent - debt-financed" category="Income" gifi="8"/>
+      <account code="5335" description="Real estate rental cost - debt-financed" category="Income" gifi="8"/>
+      <account code="5340" description="Real estate rent - not debt-financed" category="Income" gifi="8"/>
+      <account code="5345" description="Real estate rental cost - not debt-financed" category="Income" gifi="8"/>
+      <account code="5350" description="Personal property rent" category="Income" gifi="8"/>
+      <account code="5355" description="Personal property rental cost" category="Income" contra="true" gifi="8"/>
+      <account code="5360" description="Other investment income" category="Income" gifi="4">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5370" description="Securities sales - gross" category="Income" gifi="5a"/>
+      <account code="5375" description="Securities sales cost " category="Income" contra="true" gifi="5b"/>
+    </account-heading>
+    <account-heading id="h-27" code="5400" description="Revenue from other sources">
+      <account code="5410" description="Non-inventory sales - gross" category="Income" gifi="5a">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="5415" description="Non-inventory sales cost " category="Income" contra="true" gifi="5b"/>
+      <account code="5440" description="Gross sales - inventory" category="Income" gifi="8">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="5445" description="Cost of inventory sold " category="Income" contra="true" gifi="8"/>
+      <account code="5450" description="Advertising revenue" category="Income" gifi="8">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5460" description="Affiliate revenues from other entities" category="Income" gifi="8">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5490" description="Misc revenue" category="Income" gifi="8">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-28" code="5800" description="Special events">
+      <account code="5810" description="Special events - non-gift revenue" category="Income" gifi="6a">
+        <link code="AR_amount"/>
+      </account>
+      <account code="5820" description="Special events - gift revenue" category="Income" gifi="1&amp;(6a)">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-29" code="6800" description="Unrealized gain (loss)">
+      <account code="6810" description="Unrealized gain (loss) - investments" category="Income"/>
+      <account code="6820" description="Unrealized gain (loss) - other assets" category="Income"/>
+    </account-heading>
+    <account-heading id="h-30" code="6900" description="Net assets released from restriction">
+      <account code="6910" description="Satisfaction of use restriction" category="Income"/>
+      <account code="6920" description="LB&amp;E acquisition satisfaction" category="Income"/>
+      <account code="6930" description="Time restriction satisfaction" category="Income"/>
+    </account-heading>
+    <account-heading id="h-31" code="7000" description="Grantscts, &amp; direct assistance">
+      <account code="7010" description="Contracts - program-related" category="Expense" gifi="10">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7020" description="Grants to other organizations" category="Expense" gifi="10">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7040" description="Awards &amp; grants - individuals" category="Expense" gifi="10">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7050" description="Specific assistance - individuals" category="Expense" gifi="10">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7060" description="Benefits paid to or for members" category="Expense" gifi="11">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-32" code="7200" description="Salaries &amp; related expenses">
+      <account code="7210" description="Officers &amp; directors salaries" category="Expense" gifi="12"/>
+      <account code="7220" description="Salaries &amp; wages - other" category="Expense" gifi="12"/>
+      <account code="7230" description="Pension plan contributions" category="Expense" gifi="12"/>
+      <account code="7240" description="Employee benefits - not pension" category="Expense" gifi="12"/>
+      <account code="7250" description="Payroll taxes, etc." category="Expense" gifi="12"/>
+    </account-heading>
+    <account-heading id="h-33" code="7500" description="Contract service expenses">
+      <account code="7510" description="Fundraising fees" category="Expense" gifi="13">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7520" description="Accounting fees" category="Expense" gifi="13">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7530" description="Legal fees" category="Expense" gifi="13">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7540" description="Professional fees - other" category="Expense" gifi="13">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7550" description="Temporary help - contract" category="Expense" gifi="13">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7580" description="Donated professional services - GAAP" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="7590" description="Donated other services - non-GAAP" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-34" code="8100" description="Nonpersonnel expenses">
+      <account code="8110" description="Supplies" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8120" description="Donated materials &amp; supplies" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8130" description="Telephone &amp; telecommunications" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8140" description="Postage &amp; shipping" category="Expense" gifi="15">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8150" description="Mailing services" category="Expense" gifi="15">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8170" description="Printing &amp; copying" category="Expense" gifi="15">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8180" description="Books, subscriptions, references" category="Expense" gifi="15">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8190" description="In-house publications" category="Expense" gifi="15">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-35" code="8200" description="Facility &amp; equipment expenses">
+      <account code="8210" description="Rent, parking, other occupancy" category="Expense" gifi="14">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8220" description="Utilities" category="Expense" gifi="14">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8230" description="Real estate taxes" category="Expense" gifi="14"/>
+      <account code="8240" description="Personal property taxes" category="Expense" gifi="14"/>
+      <account code="8250" description="Mortgage interest" category="Expense" gifi="14">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8260" description="Equipment rental &amp; maintenance" category="Expense" gifi="14">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8270" description="Deprec &amp; amort - allowable" category="Expense" gifi="16"/>
+      <account code="8280" description="Deprec &amp; amort - not allowable" category="Expense" gifi="16"/>
+      <account code="8290" description="Donated facilities " category="Expense"/>
+    </account-heading>
+    <account-heading id="h-36" code="8300" description="Travel &amp; meetings expenses">
+      <account code="8310" description="Travel" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8320" description="Conferences, conventions, meetings" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-37" code="8500" description="Other expenses">
+      <account code="8510" description="Interest-general" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8520" description="Insurance - non-employee related" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8530" description="Membership dues - organization" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8540" description="Staff development" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8550" description="List rental" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8560" description="Outside computer services" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8570" description="Advertising expenses" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8580" description="Contingency provisions" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+      </account>
+      <account code="8590" description="Other expenses" category="Expense" gifi="16">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-38" code="8600" description="Business expenses">
+      <account code="8610" description="Bad debt expense " category="Expense" gifi="16"/>
+      <account code="8620" description="Sales taxes" category="Expense" gifi="16">
+        <link code="AP_tax"/>
+        <tax>
+          <rate value="0"/>
+        </tax>
+      </account>
+      <account code="8630" description="UBITaxes " category="Expense" gifi="16">
+        <link code="AP_tax"/>
+        <tax>
+          <rate value="0"/>
+        </tax>
+      </account>
+      <account code="8650" description="Taxes - other" category="Expense" gifi="16">
+        <link code="AP_tax"/>
+        <tax>
+          <rate value="0"/>
+        </tax>
+      </account>
+      <account code="8660" description="Fines, penalties, judgments" category="Expense" gifi="16"/>
+      <account code="8670" description="Organizational (corp) expenses" category="Expense" gifi="16"/>
+    </account-heading>
+    <account-heading id="h-39" code="9800" description="Fixed asset purchases ">
+      <account code="9810" description="Capital purchases - land" category="Asset" gifi="capitalized"/>
+      <account code="9820" description="Capital purchases - building" category="Asset" gifi="capitalized"/>
+      <account code="9830" description="Capital purchases - equipment" category="Asset" gifi="capitalized"/>
+      <account code="9840" description="Capital purchases - vehicles" category="Asset" gifi="capitalized"/>
+    </account-heading>
+    <account-heading id="h-40" code="9900" description="Other Allocations">
+      <account code="9910" description="Payments to affiliates" category="Expense" gifi="16"/>
+      <account code="9920" description="Additions to reserves" category="Expense"/>
+      <account code="9930" description="Program administration allocations" category="Expense"/>
+    </account-heading>
+  </coa>
+  <currencies default="USD">
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1410"/>
+    <setting name="income_accno_id" accno="4010"/>
+    <setting name="expense_accno_id" accno="7510"/>
+    <setting name="fxgain_accno_id" accno="5490"/>
+    <setting name="fxloss_accno_id" accno="8590"/>
+    <setting name="weightunit" value="lbs"/>
+  </settings>
+</configuration>

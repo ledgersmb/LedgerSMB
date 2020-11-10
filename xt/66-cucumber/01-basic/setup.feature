@@ -18,7 +18,7 @@ Scenario: Create a company *with* CoA
   When I confirm database creation with these parameters:
       | parameter name    | value         |
       | Country           | United States |
-      | Chart of accounts | General.sql   |
+      | Chart of accounts | General.xml   |
       | Templates         | demo          |
   Then I should see the user creation page
   When I create a user with these values:
@@ -160,7 +160,7 @@ Scenario: Create database with ampersand in the name
   When I confirm database creation with these parameters:
       | parameter name    | value         |
       | Country           | United States |
-      | Chart of accounts | General.sql   |
+      | Chart of accounts | General.xml   |
       | Templates         | demo          |
   Then I should see the user creation page
   When I create a user with these values:

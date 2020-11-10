@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1" description="BEFEKTETETT ESZKÖZÖK">
+      <account code="1140" description="Irodai eszközök" category="Asset"/>
+      <account code="1199" description="Irodai eszközök ÉCS" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-2" code="2" description="KÉSZLETEK">
+      <account code="2610" description="Áruk " category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="3" description="KÖVETELÉSEK">
+      <account code="3110" description="Vevõk" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="3111" description="Külföldi vevõk" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="3810" description="Pénztár 1" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3811" description="Pénztár 2" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3840" description="Bank 1" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="3841" description="Bank 2" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="4" description="KÖTELEZETTSÉGEK">
+      <account code="4540" description="Belföldi Szállítók" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="4541" description="Külföldi szállítók" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="4660" description="Visszaigényelhetõ ÁFA adómentes" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="4661" description="Visszaigényelhetõ ÁFA 0%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="4662" description="Visszaigényelhetõ ÁFA 27%" category="Liability">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="4670" description="Fizetendõ ÁFA adómentes" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="4671" description="Fizetendõ ÁFA 0%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+      <account code="4672" description="Fizetendõ ÁFA 27%" category="Liability">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax/>
+      </account>
+    </account-heading>
+    <account-heading id="h-5" code="5" description="KÖLTSÉGEK">
+      <account code="5200" description="Bérleti díj" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5210" description="Telefon" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5990" description="Költségek" category="Expense">
+        <link code="IC_expense"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="8" description="RÁFORDÍTÁSOK">
+      <account code="8140" description="Eladott áruk beszerzési értéke" category="Expense">
+        <link code="IC_cogs"/>
+      </account>
+      <account code="8700" description="Árfolyamveszteség" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-7" code="9" description="BEVÉTELEK">
+      <account code="9110" description="Belföldi árbevétel" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="9111" description="Külföldi árbevétel" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="9700" description="Árfolyamnyereség" category="Income"/>
+    </account-heading>
+  </coa>
+  <currencies default="HUF">
+    <currency code="HUF">
+      HUF
+    </currency>
+    <currency code="EUR">
+      EUR
+    </currency>
+    <currency code="USD">
+      USD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="2610"/>
+    <setting name="income_accno_id" accno="9110"/>
+    <setting name="expense_accno_id" accno="8140"/>
+    <setting name="fxgain_accno_id" accno="9700"/>
+    <setting name="fxloss_accno_id" accno="8700"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

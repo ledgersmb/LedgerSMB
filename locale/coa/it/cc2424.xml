@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <gifi-list>
+    <gifi code="1" description="ATTIVO"/>
+    <gifi code="1.A" description="CREDITI VERSO I SOCI PER VERSAMENTI ANCORA DOVUTI"/>
+    <gifi code="1.B" description="IMMOBILIZZAZIONI"/>
+    <gifi code="1.B.I" description="Immobilizzazioni immateriali"/>
+    <gifi code="1.B.I.1" description="costi di impianto e di ampliamento"/>
+    <gifi code="1.B.I.2" description="costi di ricerca, di sviluppo e di pubblicita\'"/>
+    <gifi code="1.B.I.3" description="diritti di brevetto industriale e diritti di utilizzazione delle opere dell\'ingegno"/>
+    <gifi code="1.B.I.4" description="concessioni, licenze, marchi e diritti simili"/>
+    <gifi code="1.B.I.5" description="avviamento"/>
+    <gifi code="1.B.I.6" description="immobilizzazioni immateriali in corso e acconti"/>
+    <gifi code="1.B.I.7" description="altre immobilizzazioni immateriali"/>
+    <gifi code="1.B.II" description="Immobilizzazioni materiali"/>
+    <gifi code="1.B.II.1" description="terreni e fabbricati"/>
+    <gifi code="1.B.II.2" description="impianti e macchinario"/>
+    <gifi code="1.B.II.3" description="attrezzature industriali e commerciali"/>
+    <gifi code="1.B.II.4" description="altri beni materiali"/>
+    <gifi code="1.B.II.5" description="immobilizzazioni in corso e acconti"/>
+    <gifi code="1.B.III" description="Immobilizzazioni finanziarie"/>
+    <gifi code="1.B.III.1" description="partecipazioni"/>
+    <gifi code="1.B.III.1.a" description="partecipazioni in imprese controllate"/>
+    <gifi code="1.B.III.1.b" description="partecipazioni in imprese collegate"/>
+    <gifi code="1.B.III.1.c" description="partecipazioni in imprese controllanti"/>
+    <gifi code="1.B.III.1.d" description="partecipazioni in altre imprese"/>
+    <gifi code="1.B.III.2" description="crediti"/>
+    <gifi code="1.B.III.2.a" description="crediti verso imprese controllate"/>
+    <gifi code="1.B.III.2.b" description="crediti verso imprese collegate"/>
+    <gifi code="1.B.III.2.c" description="crediti verso controllanti"/>
+    <gifi code="1.B.III.2.d" description="crediti verso altri"/>
+    <gifi code="1.B.III.3" description="Altri titoli"/>
+    <gifi code="1.B.III.4" description="Azioni proprie immobilizzate"/>
+    <gifi code="1.C" description="ATTIVO CIRCOLANTE"/>
+    <gifi code="1.C.I" description="Rimanenze"/>
+    <gifi code="1.C.I.1" description="rimanenze: materie prime, sussidiarie e di consumo"/>
+    <gifi code="1.C.I.2" description="rimanenze: prodotti in corso di lavorazione e semilavorati"/>
+    <gifi code="1.C.I.3" description="rimanenze: lavori in corso su ordinazione"/>
+    <gifi code="1.C.I.4" description="rimanenze: prodotti finiti e merci"/>
+    <gifi code="1.C.I.5" description="rimanenze: acconti"/>
+    <gifi code="1.C.II" description="Crediti"/>
+    <gifi code="1.C.II.1" description="crediti verso i clienti"/>
+    <gifi code="1.C.II.2" description="crediti verso imprese controllate"/>
+    <gifi code="1.C.II.3" description="crediti verso imprese collegate"/>
+    <gifi code="1.C.II.4" description="crediti verso imprese controllanti"/>
+    <gifi code="1.C.II.5" description="crediti verso altri"/>
+    <gifi code="1.C.III" description="Attivita\' finanziarie che non costituiscono immobilizzazioni"/>
+    <gifi code="1.C.III.1" description="partecipazioni in imprese controllate"/>
+    <gifi code="1.C.III.2" description="partecipazioni in imprese collegate"/>
+    <gifi code="1.C.III.3" description="partecipazioni in imprese controllanti"/>
+    <gifi code="1.C.III.4" description="altre partecipazioni"/>
+    <gifi code="1.C.III.5" description="azioni proprie per investimento temporaneo"/>
+    <gifi code="1.C.III.6" description="altri titoli"/>
+    <gifi code="1.C.IV" description="Disponibilita\' liquide"/>
+    <gifi code="1.C.IV.1" description="depositi bancari e postali"/>
+    <gifi code="1.C.IV.2" description="assegni"/>
+    <gifi code="1.C.IV.3" description="denaro e valori in cassa"/>
+    <gifi code="1.D" description="RATEI E RISCONTI ATTIVI"/>
+    <gifi code="2" description="PASSIVO"/>
+    <gifi code="2.A" description="PATRIMONIO NETTO"/>
+    <gifi code="2.A.I" description="Capitale"/>
+    <gifi code="2.A.II" description="Riserva da sovrapprezzo delle azioni"/>
+    <gifi code="2.A.III" description="Riserva di rivalutazione"/>
+    <gifi code="2.A.IV" description="Riserva legale"/>
+    <gifi code="2.A.V" description="Riserva per azioni proprie in portafoglio"/>
+    <gifi code="2.A.VI" description="Riserve statutarie"/>
+    <gifi code="2.A.VII" description="Altre riserve"/>
+    <gifi code="2.A.VIII" description="Utili (perdite) portati a nuovo"/>
+    <gifi code="2.A.IX" description="Utile (perdita) dell\'esercizio"/>
+    <gifi code="2.B" description="FONDI PER RISCHI E ONERI"/>
+    <gifi code="2.B.1" description="fondo per trattamento di quiescenza e obblighi simili"/>
+    <gifi code="2.B.2" description="fondo per imposte"/>
+    <gifi code="2.B.3" description="altri fondi per rischi e oneri futuri"/>
+    <gifi code="2.C" description="TRATTAMENTO DI FINE RAPPORTO DI LAVORO SUBORDINATO"/>
+    <gifi code="2.D" description="DEBITI"/>
+    <gifi code="2.D.1" description="obbligazioni non convertibili"/>
+    <gifi code="2.D.2" description="obbligazioni convertibili"/>
+    <gifi code="2.D.3" description="debiti verso banche"/>
+    <gifi code="2.D.4" description="debiti verso altri finanziatori"/>
+    <gifi code="2.D.5" description="debiti: acconti"/>
+    <gifi code="2.D.6" description="debiti verso fornitori"/>
+    <gifi code="2.D.7" description="debiti rappresentati da titoli di credito"/>
+    <gifi code="2.D.8" description="debiti verso imprese controllate"/>
+    <gifi code="2.D.9" description="debiti verso imprese collegate"/>
+    <gifi code="2.D.10" description="debiti verso controllanti"/>
+    <gifi code="2.D.11" description="debiti tributari"/>
+    <gifi code="2.D.12" description="debiti verso istituti di previdenza e di sicurezza sociale"/>
+    <gifi code="2.D.13" description="altri debiti"/>
+    <gifi code="2.E" description="RATEI E RISCONTI PASSIVI"/>
+    <gifi code="3" description="CONTO ECONOMICO"/>
+    <gifi code="3.A" description="VALORE DELLA PRODUZIONE"/>
+    <gifi code="3.A.1" description="ricavi delle vendite e delle prestazioni"/>
+    <gifi code="3.A.2" description="variazione rimanenze prodotti in lavorazione, semilavorati e finiti"/>
+    <gifi code="3.A.3" description="variazione dei lavori in corso su ordinazione"/>
+    <gifi code="3.A.4" description="incrementi di immobilizzazioni per lavori interni"/>
+    <gifi code="3.A.5" description="altri ricavi e proventi"/>
+    <gifi code="3.B" description="COSTI DELLA PRODUZIONE"/>
+    <gifi code="3.B.6" description="acquisti materie prime, sussidiarie, di consumo e di merci"/>
+    <gifi code="3.B.7" description="spese per prestazione di servizi"/>
+    <gifi code="3.B.8" description="spese per godimento di beni di terzi"/>
+    <gifi code="3.B.9" description="costi del personale"/>
+    <gifi code="3.B.9.a" description="salari e stipendi"/>
+    <gifi code="3.B.9.b" description="oneri sociali"/>
+    <gifi code="3.B.9.c" description="accantonamento al TFRL"/>
+    <gifi code="3.B.9.d" description="accantonamento per trattamento di quiescenza e simili"/>
+    <gifi code="3.B.9.e" description="altri costi del personale"/>
+    <gifi code="3.B.10" description="ammortamenti e svalutazioni"/>
+    <gifi code="3.B.10.a" description="ammortamento delle immobilizzazioni immateriali"/>
+    <gifi code="3.B.10.b" description="ammortamento delle immobilizzazioni materiali"/>
+    <gifi code="3.B.10.c" description="altre svalutazioni delle immobilizzazioni"/>
+    <gifi code="3.B.10.d" description="svalutazioni dell\'attivo circolante e delle disponibilita\' liquide"/>
+    <gifi code="3.B.11" description="variazioni rimanenze materie prime, sussidiarie, di consumo e merci"/>
+    <gifi code="3.B.12" description="accantonamento per rischi"/>
+    <gifi code="3.B.13" description="altri accantonamenti"/>
+    <gifi code="3.B.14" description="oneri diversi di gestione"/>
+    <gifi code="3.C" description="PROVENTI E ONERI FINANZIARI"/>
+    <gifi code="3.C.15" description="proventi da partecipazioni"/>
+    <gifi code="3.C.16" description="altri proventi finanziari"/>
+    <gifi code="3.C.16.a" description="proventi da crediti iscritti nelle immobilizzazioni"/>
+    <gifi code="3.C.16.b" description="proventi da titoli iscritti nelle immobilizzazioni che non costituiscono partecipazioni"/>
+    <gifi code="3.C.16.c" description="proventi da titoli iscritti all\'attivo circolante che non costituiscono partecipazioni"/>
+    <gifi code="3.C.16.d" description="proventi diversi dai precedenti"/>
+    <gifi code="3.C.17" description="Interessi e altri oneri finanziari"/>
+    <gifi code="3.D" description="RETTIFICHE DI VALORE DI ATTIVITA\' FINANZIARIE"/>
+    <gifi code="3.D.18" description="rivalutazioni"/>
+    <gifi code="3.D.18.a" description="rettifiche di partecipazioni"/>
+    <gifi code="3.D.18.b" description="rettifiche di immobilizzazioni finanziarie che non costituiscono partecipazioni"/>
+    <gifi code="3.D.18.c" description="rettifiche da titoli iscritti all\'attivo circolante che non costituiscono partecipazioni"/>
+    <gifi code="3.D.19" description="svalutazioni"/>
+    <gifi code="3.D.19.a" description="svalutazioni di partecipazioni"/>
+    <gifi code="3.D.19.b" description="svalutazioni di immobilizzazioni finanziarie che non costituiscono partecipazioni"/>
+    <gifi code="3.D.19.c" description="svalutazioni di titoli iscritti all\'attivo circolante che non costituiscono partecipazioni"/>
+    <gifi code="3.E" description="PROVENTI E ONERI STRAORDINARI"/>
+    <gifi code="3.E.20" description="proventi straordinari"/>
+    <gifi code="3.E.21" description="oneri straordinari"/>
+    <gifi code="3.E.22" description="Imposte sul reddito dell\'esercizio"/>
+    <gifi code="3.E.23" description=""/>
+    <gifi code="3.E.26" description="Utile o perdita di esercizio"/>
+  </gifi-list>
+  <coa>
+    <account-heading id="h-1" code="100000" description="ATTIVO"/>
+    <account-heading id="h-2" code="101000" description="IMMOBILIZZAZIONI IMMATERIALI">
+      <account code="101001" description="Costi di impianto e ampliamento" category="Asset" gifi="1.B.I.1"/>
+      <account code="101002" description="Avviamento" category="Asset" gifi="1.B.I.5"/>
+      <account code="101008" description="Altre immobilizzazioni immateriali" category="Asset" gifi="1.B.I.7"/>
+    </account-heading>
+    <account-heading id="h-3" code="102000" description="IMMOBILIZZAZIONI MATERIALI">
+      <account code="102001" description="Terreni" category="Asset" gifi="1.B.II.1"/>
+      <account code="102002" description="Fabbricati non strumentali" category="Asset" gifi="1.B.II.1"/>
+      <account code="102003" description="Fabbricati" category="Asset" gifi="1.B.II.1"/>
+      <account code="102004" description="Impianti e macchinari" category="Asset" gifi="1.B.II.2"/>
+      <account code="102006" description="Attrezzature commerciali" category="Asset" gifi="1.B.II.3"/>
+      <account code="102007" description="Attrezzature d'ufficio" category="Asset" gifi="1.B.II.3"/>
+      <account code="102008" description="Arredamento" category="Asset" gifi="1.B.II.3"/>
+      <account code="102009" description="Automezzi" category="Asset" gifi="1.B.II.3"/>
+      <account code="102021" description="Fondo ammortamento fabbricati" category="Asset" gifi="1.B.II.1"/>
+      <account code="102022" description="Fondo ammortamento impianti e macchinari" category="Asset" gifi="1.B.II.3"/>
+      <account code="102023" description="Fondo ammortamento attrezzature commerciali" category="Asset" gifi="1.B.II.3"/>
+      <account code="102024" description="Fondo ammortamento attrezzature d'ufficio" category="Asset" gifi="1.B.II.3"/>
+      <account code="102025" description="Fondo ammortamento arredamento" category="Asset" gifi="1.B.II.3"/>
+      <account code="102026" description="Fondo ammortamento automezzi" category="Asset" gifi="1.B.II.3"/>
+    </account-heading>
+    <account-heading id="h-4" code="103000" description="IMMOBILIZZAZIONI FINANZIARIE">
+      <account code="103001" description="Prestiti a terzi" category="Asset" gifi="1.B.III.2.d"/>
+    </account-heading>
+    <account-heading id="h-5" code="105000" description="RIMANENZE">
+      <account code="105001" description="Rimanenze di merci" category="Asset" gifi="1.C.I.4"/>
+      <account code="105002" description="Rimanenze di imballaggi" category="Asset" gifi="1.C.I.4"/>
+      <account code="105003" description="Rimanenze di materiali di consumo" category="Asset" gifi="1.C.I.1"/>
+      <account code="105011" description="Fondo svalutazione magazzino" category="Asset" gifi="1.C.I.4"/>
+    </account-heading>
+    <account-heading id="h-6" code="106000" description="CLIENTI">
+      <account code="106001" description="Crediti verso clienti" category="Asset" gifi="1.C.II.1">
+        <link code="AR"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-7" code="111000" description="CREDITI COMMERCIALI">
+      <account code="111002" description="Cambiali attive" category="Asset" gifi="1.C.II.1">
+        <link code="AR_paid"/>
+      </account>
+      <account code="111003" description="Cambiali allo sconto" category="Asset" gifi="1.C.II.1"/>
+      <account code="111005" description="Cambiali all'incasso" category="Asset" gifi="1.C.II.1"/>
+      <account code="111006" description="Effetti insoluti e protestati" category="Asset" gifi="1.C.II.1"/>
+      <account code="111007" description="Crediti insoluti" category="Asset" gifi="1.C.II.1"/>
+      <account code="111011" description="Fatture da emettere" category="Asset" gifi="1.C.II.1"/>
+      <account code="111031" description="Fondo svalutazione crediti" category="Asset" gifi="1.C.II.1"/>
+      <account code="111032" description="Fondo rischi su crediti" category="Asset" gifi="1.C.II.1"/>
+    </account-heading>
+    <account-heading id="h-8" code="112000" description="CREDITI DIVERSI">
+      <account code="112001" description="IVA nostro credito  4%" category="Asset" gifi="1.C.II.5">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="112002" description="IVA nostro credito 10%" category="Asset" gifi="1.C.II.5">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="112004" description="IVA nostro credito 20%" category="Asset" gifi="1.C.II.5">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.2"/>
+        </tax>
+      </account>
+      <account code="112005" description="IVA nostro credito 21%" category="Asset" gifi="1.C.II.5">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="112006" description="IVA nostro credito 22%" category="Asset" gifi="1.C.II.5">
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.22"/>
+        </tax>
+      </account>
+      <account code="112062" description="Erario c/acconto IVA" category="Asset" gifi="1.C.II.5"/>
+      <account code="112063" description="Credito per IVA" category="Asset" gifi="1.C.II.5"/>
+      <account code="112071" description="Personale c/acconti" category="Asset" gifi="1.C.II.5"/>
+      <account code="112072" description="Crediti v/istituti previdenziali" category="Asset" gifi="1.C.II.5"/>
+      <account code="112073" description="Crediti per cauzioni" category="Asset" gifi="1.C.II.5"/>
+      <account code="112074" description="Crediti diversi" category="Asset" gifi="1.C.II.5"/>
+    </account-heading>
+    <account-heading id="h-9" code="113000" description="VALORI MOBILIARI">
+      <account code="113001" description="Titoli" category="Asset" gifi="1.C.III.6"/>
+    </account-heading>
+    <account-heading id="h-10" code="114000" description="DISPONIBILITA' LIQUIDE">
+      <account code="114001" description="Banca c/c" category="Asset" gifi="1.C.IV.1" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="114003" description="Poste c/c" category="Asset" gifi="1.C.IV.1" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="114004" description="Assegni" category="Asset" gifi="1.C.IV.2">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="114005" description="Denaro e valori in cassa" category="Asset" gifi="1.C.IV.3">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="115000" description="RATEI E RISCONTI ATTIVI">
+      <account code="115001" description="Ratei attivi" category="Asset" gifi="1.D"/>
+      <account code="115002" description="Risconti attivi" category="Asset" gifi="1.D"/>
+    </account-heading>
+    <account-heading id="h-12" code="200000" description="PASSIVO"/>
+    <account-heading id="h-13" code="216000" description="PATRIMONIO NETTO">
+      <account code="216001" description="Patrimonio netto" category="Equity" gifi="2.A.I"/>
+      <account code="216002" description="Utile d'esercizio" category="Equity" gifi="2.A.IX"/>
+      <account code="216003" description="Perdita d'esercizio" category="Equity" gifi="2.A.IX"/>
+    </account-heading>
+    <account-heading id="h-14" code="217000" description="FONDO ACCANTONAMENTO RISCHI E ONERI">
+      <account code="217002" description="Fondo per imposte" category="Liability" gifi="2.B.2"/>
+      <account code="217003" description="Fondo manutenzioni e riparazioni" category="Liability" gifi="2.B.3"/>
+      <account code="217006" description="Altri fondi" category="Liability" gifi="2.B.3"/>
+    </account-heading>
+    <account-heading id="h-15" code="218000" description="TFR LAVORO SUBORDINATO">
+      <account code="218001" description="Debito per TFRL" category="Liability" gifi="2.C"/>
+    </account-heading>
+    <account-heading id="h-16" code="219000" description="DEBITI DI FINAZIAMENTO">
+      <account code="219001" description="Mutui ipotecari" category="Liability" gifi="2.D.3"/>
+      <account code="219002" description="Finanziamenti bancari" category="Liability" gifi="2.D.3"/>
+      <account code="219003" description="Sovvenzioni bancarie" category="Liability" gifi="2.D.3"/>
+      <account code="219004" description="Banche c/c passivi" category="Liability" gifi="2.D.3"/>
+      <account code="219011" description="Finanziamenti non bancari" category="Liability" gifi="2.D.4"/>
+    </account-heading>
+    <account-heading id="h-17" code="220000" description="FORNITORI">
+      <account code="220001" description="Debiti verso fornitori" category="Liability" gifi="2.D.6">
+        <link code="AP"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-18" code="225000" description="DEBITI COMMERCIALI">
+      <account code="225002" description="Cambiali passive" category="Liability" gifi="2.D.6">
+        <link code="AP_paid"/>
+      </account>
+      <account code="225003" description="Fatture da ricevere" category="Liability" gifi="2.D.6"/>
+    </account-heading>
+    <account-heading id="h-19" code="226000" description="DEBITI TRIBUTARI">
+      <account code="226001" description="IVA nostro debito  4%" category="Liability" gifi="2.D.13">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.04"/>
+        </tax>
+      </account>
+      <account code="226002" description="IVA nostro debito 10%" category="Liability" gifi="2.D.13">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.1"/>
+        </tax>
+      </account>
+      <account code="226004" description="IVA nostro debito 20%" category="Liability" gifi="2.D.13">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.2"/>
+        </tax>
+      </account>
+      <account code="226005" description="IVA nostro debito 21%" category="Liability" gifi="2.D.13">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.21"/>
+        </tax>
+      </account>
+      <account code="226006" description="IVA nostro debito 22%" category="Liability" gifi="2.D.13">
+        <link code="AR_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.22"/>
+        </tax>
+      </account>
+      <account code="226062" description="Debito per IVA" category="Liability" gifi="2.D.13"/>
+      <account code="226065" description="Erario c/ritenute da versarare" category="Liability" gifi="2.D.13"/>
+      <account code="226066" description="Altri debiti verso l'erario" category="Liability" gifi="2.D.13"/>
+      <account code="226067" description="Debiti per imposte" category="Liability" gifi="2.D.13"/>
+    </account-heading>
+    <account-heading id="h-20" code="227000" description="DEBITI DIVERSI">
+      <account code="227001" description="Personale c/retribuzioni" category="Liability" gifi="2.D.13"/>
+      <account code="227002" description="Personale c/liquidazioni" category="Liability" gifi="2.D.13"/>
+      <account code="227003" description="Debiti v/istituti previdenziali" category="Liability" gifi="2.D.12"/>
+      <account code="227004" description="Debiti per cauzioni" category="Liability" gifi="2.D.13"/>
+      <account code="227005" description="Debiti diversi" category="Liability" gifi="2.D.13"/>
+    </account-heading>
+    <account-heading id="h-21" code="228000" description="RATEI E RISCONTI PASSIVI">
+      <account code="228001" description="Ratei passivi" category="Liability" gifi="2.E"/>
+      <account code="228002" description="Risconti passivi" category="Liability" gifi="2.E"/>
+    </account-heading>
+    <account-heading id="h-22" code="300000" description="ALTRI CONTI PATRIMONIALI"/>
+    <account-heading id="h-23" code="329000" description="CONTI TRANSITORI E FINALALI">
+      <account code="329006" description="Istituti previdenziali" category="Asset" gifi="2.D.12"/>
+      <account code="329011" description="Conto del patrimonio" category="Asset"/>
+      <account code="329012" description="Bilancio di apertura" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-24" code="400000" description="CONTI D'ORDINE"/>
+    <account-heading id="h-25" code="431000" description="IMPEGNI">
+      <account code="431001" description="Beni da ricevere" category="Asset"/>
+      <account code="431002" description="Fornitori per beni da ricevere" category="Asset"/>
+      <account code="431003" description="Beni da consegnare" category="Asset"/>
+      <account code="431004" description="Clienti per beni da consegnare" category="Asset"/>
+      <account code="431005" description="Beni in leasing" category="Liability"/>
+      <account code="431006" description="Creditori per beni in leasing" category="Asset"/>
+    </account-heading>
+    <account-heading id="h-26" code="432000" description="BENI DI TERZI"/>
+    <account-heading id="h-27" code="433000" description="BENI NOSTRI PRESSO TERZI"/>
+    <account-heading id="h-28" code="434000" description="RISCHI"/>
+    <account-heading id="h-29" code="500000" description="VALORE DELLA PRODUZIONE"/>
+    <account-heading id="h-30" code="541000" description="RICAVI VENDITE E PRESTAZIONI">
+      <account code="541001" description="Vendite di merci" category="Income" gifi="3.A.1">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="541002" description="Vendite di imballaggi" category="Income" gifi="3.A.1">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="541003" description="Ricavi per prestazione di servizi" category="Income" gifi="3.A.1">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="541006" description="Resi su vendite" category="Income" gifi="3.A.1"/>
+      <account code="541007" description="Ribassi e abbuoni passivi" category="Income" gifi="3.A.1"/>
+      <account code="541008" description="Premi a clienti" category="Income" gifi="3.B.9.e"/>
+      <account code="541010" description="Rimborso spese" category="Income" gifi="3.A.5">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-31" code="542000" description="ALTRI RICAVI E PROVENTI">
+      <account code="542001" description="Ricavi e proventi vari" category="Income" gifi="3.A.5">
+        <link code="AR_amount"/>
+      </account>
+      <account code="542002" description="Fitti attivi" category="Income" gifi="3.A.5">
+        <link code="AR_amount"/>
+      </account>
+      <account code="542003" description="Arrotondamenti positivi" category="Income" gifi="3.A.5">
+        <link code="AR_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-32" code="600000" description="COSTI DELLA PRODUZIONE"/>
+    <account-heading id="h-33" code="645000" description="COSTI ACQUISTO MERCI E MATERIALI DI CONSUMO">
+      <account code="645001" description="Acquisti di merci" category="Expense" gifi="3.B.6">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="645002" description="Acquisti di imballaggi" category="Expense" gifi="3.B.6">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="645003" description="Acquisti di materiali di consumo" category="Expense" gifi="3.B.6">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="645006" description="Resi su acquisti" category="Expense" gifi="3.B.6"/>
+      <account code="645007" description="Ribassi e abbuoni attivi" category="Expense" gifi="3.B.6"/>
+      <account code="645008" description="Premi da fornitori" category="Expense" gifi="3.A.5"/>
+    </account-heading>
+    <account-heading id="h-34" code="646000" description="COSTI PER PRESTAZIONI E SERVIZI">
+      <account code="646001" description="Costi di trasporto" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646002" description="Costi di energia" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646003" description="Costi di pubblicita'" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646004" description="Assicurazioni" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646005" description="Spese postali" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646006" description="Spese telefoniche" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646007" description="Spese legali e notarili" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646008" description="Spese di banca" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646009" description="Manutenzioni riparazioni" category="Expense" gifi="3.B.7">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="646010" description="Imponibile omaggi" category="Expense" gifi="3.B.9.e"/>
+      <account code="646011" description="IVA c/omaggi" category="Expense" gifi="3.B.9.e"/>
+      <account code="646021" description="Provvigioni passive" category="Expense" gifi="3.B.9.e"/>
+      <account code="646022" description="Competenze a terzi" category="Expense" gifi="3.B.9.e"/>
+    </account-heading>
+    <account-heading id="h-35" code="647000" description="COSTI PER GODIMENTO BENI DI TERZI">
+      <account code="647001" description="Fitti passivi" category="Expense" gifi="3.B.8"/>
+      <account code="647002" description="Canoni leasing" category="Expense" gifi="3.B.8"/>
+    </account-heading>
+    <account-heading id="h-36" code="648000" description="COSTI PER IL PERSONALE">
+      <account code="648001" description="Salari e stipendi" category="Expense" gifi="3.B.9.a"/>
+      <account code="648002" description="Oneri sociali" category="Expense" gifi="3.B.9.b"/>
+      <account code="648003" description="Trattamenti di fine rapporto di lavoro" category="Expense" gifi="3.B.9.c"/>
+      <account code="648004" description="Trattamenti di quiescenza e simili" category="Expense" gifi="3.B.9.d"/>
+      <account code="648005" description="Altri costi per il personale" category="Expense" gifi="3.B.9.e"/>
+    </account-heading>
+    <account-heading id="h-37" code="649000" description="AMMORTAMENTO IMMOBILIZZAZIONI IMMATERIALI">
+      <account code="649001" description="Ammortamento impianto e ampliamento" category="Expense" gifi="3.B.10.a"/>
+      <account code="649002" description="Ammortamento avviamento" category="Expense" gifi="3.B.10.a"/>
+      <account code="649008" description="Ammortamento di altre immobilizzazioni immateriali" category="Expense" gifi="3.B.10.a"/>
+    </account-heading>
+    <account-heading id="h-38" code="650000" description="AMMORTAMENTO IMMOBILIZZAZIONI MATERIALI">
+      <account code="650001" description="Ammortamento fabbricati" category="Expense" gifi="3.B.10.b"/>
+      <account code="650002" description="Ammortamento impianti e macchinari" category="Expense" gifi="3.B.10.b"/>
+      <account code="650003" description="Ammortamento attrezzature commerciali" category="Expense" gifi="3.B.10.b"/>
+      <account code="650005" description="Ammortamento attrezzature d'ufficio" category="Expense" gifi="3.B.10.b"/>
+      <account code="650006" description="Ammortamento arredamento" category="Expense" gifi="3.B.10.b"/>
+      <account code="650007" description="Ammortamento automezzi" category="Expense" gifi="3.B.10.b"/>
+    </account-heading>
+    <account-heading id="h-39" code="651000" description="SVALUTAZIONI">
+      <account code="651003" description="Svalutazione magazzino" category="Expense" gifi="3.B.11"/>
+      <account code="651004" description="Svalutazione crediti" category="Expense" gifi="3.B.12"/>
+    </account-heading>
+    <account-heading id="h-40" code="652000" description="ESISTENZA INIZIALE E RIMANENZE FINALI">
+      <account code="652001" description="Esistenza iniziale merci" category="Expense" gifi="3.A.2"/>
+      <account code="652002" description="Esistenza iniziale imballaggi" category="Expense" gifi="3.A.2"/>
+      <account code="652003" description="Esistenza iniziale materie di consumo" category="Expense" gifi="3.A.2"/>
+      <account code="652011" description="Rimanenze finali merci" category="Expense" gifi="3.A.2"/>
+      <account code="652012" description="Rimanenze finali imballaggi" category="Expense" gifi="3.A.2"/>
+      <account code="652013" description="Rimanenze finali materie di consumo" category="Expense" gifi="3.A.2"/>
+      <account code="652021" description="Variazioni merci" category="Expense" gifi="3.A.2"/>
+      <account code="652022" description="Variazioni imballaggi" category="Expense" gifi="3.A.2"/>
+      <account code="652023" description="Variazioni materie di consumo" category="Expense" gifi="3.A.2"/>
+    </account-heading>
+    <account-heading id="h-41" code="653000" description="ACCANTONAMENTI PER RISCHI">
+      <account code="653001" description="Accantonamenti per rischi su crediti" category="Expense" gifi="3.B.12"/>
+      <account code="653002" description="Accantonamenti su imposte" category="Expense" gifi="3.B.13"/>
+      <account code="653004" description="Altri accantonamenti rischi-oneri" category="Expense" gifi="3.B.12"/>
+    </account-heading>
+    <account-heading id="h-42" code="654000" description="ALTRI ACCANTONAMENTI">
+      <account code="654001" description="Accantonamenti per spese future" category="Expense" gifi="3.B.13"/>
+      <account code="654005" description="Accantonamenti per manutenzioni e riparazioni" category="Expense" gifi="3.B.13"/>
+      <account code="654006" description="Altri accantonamenti" category="Expense" gifi="3.B.13"/>
+    </account-heading>
+    <account-heading id="h-43" code="655000" description="ONERI DIVERSI">
+      <account code="655001" description="Imposta di bollo" category="Expense" gifi="3.B.14"/>
+      <account code="655002" description="Tassa di concessione governativa" category="Expense" gifi="3.B.14"/>
+      <account code="655003" description="Imposte comunali" category="Expense" gifi="3.B.14"/>
+      <account code="655005" description="Imposte di esercizio" category="Expense" gifi="3.B.14"/>
+      <account code="655006" description="Perdite su crediti" category="Expense" gifi="3.B.14"/>
+      <account code="655011" description="Oneri e perdite varie" category="Expense" gifi="3.B.14"/>
+      <account code="655012" description="Arrotondamenti negativi" category="Expense" gifi="3.B.14"/>
+    </account-heading>
+    <account-heading id="h-44" code="700000" description="PROVENTI E ONERI FINANZIARI">
+      <account code="756000" description="PROVENTI FINANZIARI" category="Income"/>
+      <account code="756001" description="Interessi attivi da banche" category="Income" gifi="3.C.16.d"/>
+      <account code="756002" description="Interessi attivi da clienti" category="Income" gifi="3.C.16.d"/>
+      <account code="756003" description="Interessi attivi vari" category="Income" gifi="3.C.16.d"/>
+      <account code="756004" description="Interessi su titoli" category="Income" gifi="3.C.16.d"/>
+      <account code="756011" description="Proventi finanziari vari" category="Income" gifi="3.C.16.d"/>
+      <account code="756012" description="Utile su titoli" category="Income" gifi="3.C.16.b"/>
+    </account-heading>
+    <account-heading id="h-45" code="757000" description="ONERI FINANZIARI">
+      <account code="757001" description="Interessi passivi a banche" category="Income" gifi="3.C.17"/>
+      <account code="757002" description="Interessi passivi a fornitori" category="Income" gifi="3.C.17"/>
+      <account code="757003" description="Interessi passivi su finanziamenti" category="Income" gifi="3.C.17"/>
+      <account code="757004" description="Interessi passivi su mutui" category="Income" gifi="3.C.17"/>
+      <account code="757005" description="Interessi passivi vari" category="Income" gifi="3.C.17"/>
+      <account code="757011" description="Oneri finanziari vari" category="Income" gifi="3.C.17"/>
+      <account code="757012" description="Perdite su titoli" category="Income" gifi="3.C.17"/>
+    </account-heading>
+    <account-heading id="h-46" code="800000" description="PROVENTI E ONERI STRAORDINARI"/>
+    <account-heading id="h-47" code="860000" description="PROVENTI STRAORDINARI">
+      <account code="860001" description="Plusvalenze" category="Income" gifi="3.E.20"/>
+      <account code="860002" description="Sopravvenienze e insussistenze attive" category="Income" gifi="3.E.20"/>
+    </account-heading>
+    <account-heading id="h-48" code="861000" description="ONERI STRAORDINARI">
+      <account code="861001" description="Minusvalenze" category="Income" gifi="3.E.21"/>
+      <account code="861002" description="Sopravvenienze e insussistenze passive" category="Income" gifi="3.E.21"/>
+    </account-heading>
+    <account-heading id="h-49" code="900000" description="CONTI DI RIEPILOGO ECONOMICI">
+      <account code="970001" description="Conto del risultato economico" category="Income" gifi="3.E.23"/>
+    </account-heading>
+  </coa>
+  <currencies default="EUR">
+    <currency code="EUR">
+      EUR
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="105001"/>
+    <setting name="income_accno_id" accno="541001"/>
+    <setting name="expense_accno_id" accno="645001"/>
+    <setting name="fxgain_accno_id" accno="756011"/>
+    <setting name="fxloss_accno_id" accno="655011"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

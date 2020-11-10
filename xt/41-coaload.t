@@ -8,6 +8,7 @@ use Test2::Tools::Spec;
 
 use Capture::Tiny qw(capture);
 
+use LedgerSMB::Company;
 use LedgerSMB::Database;
 
 use Log::Log4perl qw(:easy);
@@ -26,42 +27,46 @@ $rule->or($rule->new
                ->prune
                ->discard,
           $rule->new);
-my @files = sort $rule->name("*.sql")->file->in("sql/coa");
+my @files = sort $rule->name("*.xml")->file->in("locale/coa");
 
-for my $sqlfile (@files) {
-    tests $sqlfile => { async => 1 }, sub {
-        # Generate test database name based on sql file name
-        my ($db) = $sqlfile =~ m|^sql/(coa/.+)\.sql$|
-            or die "failed to extract test_name from filename $sqlfile";
-        $db =~ s|\W|_|g; # replace non-word characters with underscores
-        $db = "lsmb_test_$db";
+my $db = "lsmb_test_db_coa";
+(system('createdb', $db, '-T', $ENV{LSMB_NEW_DB}) >> 8 == 0)
+    or die "Failed to create database $db: $!";
+# sytem() returns 0 on success => 'and'
 
-        my ($stdout, $stderr, $rv) = capture {
-            system('dropdb', $db);
-            (system('createdb', $db, '-T', $ENV{LSMB_NEW_DB}) >> 8 == 0)
-                or die "Failed to create database $db: $!"; # sytem() returns 0 on success => 'and'
-        };
+my $lsmb_db = LedgerSMB::Database->new(
+    connect_data => {
+        dbname       => $db,
+        user         => $ENV{PGUSER},
+        password     => $ENV{PGPASSWORD},
+    });
+my $dbh = $lsmb_db->connect;
+die $DBI::errstr if $DBI::errstr;
+my $sth = $dbh->prepare(q{SELECT COUNT(*), 'TESTRESULT' from account})
+    or die $dbh->errstr;
 
-        ok((system('psql', $db, '-f', $sqlfile) >> 8) == 0, "psql run file succeeded ($!)");
 
-        my $lsmb_db = LedgerSMB::Database->new(
-            connect_data => {
-                dbname       => $db,
-                user         => $ENV{PGUSER},
-                password     => $ENV{PGPASSWORD},
-            });
-        my $dbh = $lsmb_db->connect;
-        my $sth = $dbh->prepare(q{SELECT COUNT(*), 'TESTRESULT' from account});
+for my $xmlfile (@files) {
+    subtest "$xmlfile" => sub {
+        my $company = LedgerSMB::Company->new(dbh => $dbh);
+        open my $fh, '<:encoding(utf-8)', $xmlfile
+            or die "Unable to open $xmlfile: $!";
+        ok lives { $company->configuration->from_xml($fh); };
+        close $fh or warn "Unable to close $xmlfile: $!";
+
         $sth->execute or die 'Failed to query test result: ' . $sth->errstr;
         my ($count) = $sth->fetchrow_array();
-        ok($count, "Got rows back for account, for $sqlfile");
-        $sth->finish;
-        $dbh->disconnect;
-
-        capture {
-            system('dropdb', $db);
-        };
+        ok($count, "Got rows back for account, for $xmlfile");
+        $dbh->rollback;
     };
 }
+
+$sth->finish;
+$dbh->rollback;
+$dbh->disconnect;
+
+capture {
+    system('dropdb', $db);
+};
 
 done_testing;

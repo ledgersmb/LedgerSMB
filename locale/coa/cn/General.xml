@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <coa>
+    <account-heading id="h-1" code="1000" description="流动资产">
+      <account code="1205" description="呆帐备抵" category="Asset"/>
+      <account code="1065" description="零用金" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+      <account code="1200" description="应收帐款" category="Asset">
+        <link code="AR"/>
+      </account>
+      <account code="1061" description="支票户头" category="Asset" recon="true">
+        <link code="AR_paid"/>
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-2" code="1800" description="资本资产">
+      <account code="1825" description="累计分期付款 - 装璜及设备." category="Asset" contra="true"/>
+      <account code="1845" description="累计分期付款 - 运输工具" category="Asset" contra="true"/>
+      <account code="1820" description="办公室装璜及设备" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+      <account code="1840" description="运输工具" category="Asset">
+        <link code="AP_amount"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-3" code="2600" description="长期负债">
+      <account code="2620" description="银行借款" category="Liability"/>
+      <account code="2680" description="股东贷款" category="Liability">
+        <link code="AP_paid"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-4" code="3300" description="股份资本">
+      <account code="3350" description="普通股份" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-5" code="2000" description="流动负债">
+      <account code="2190" description="应付所得税" category="Liability"/>
+      <account code="2160" description="应付公司税" category="Liability"/>
+      <account code="2311" description="地方税" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.08"/>
+        </tax>
+      </account>
+      <account code="2100" description="应付帐款" category="Liability">
+        <link code="AP"/>
+      </account>
+      <account code="2310" description="商品服务税" category="Liability">
+        <link code="AR_tax"/>
+        <link code="AP_tax"/>
+        <link code="IC_taxpart"/>
+        <link code="IC_taxservice"/>
+        <tax>
+          <rate value="0.07"/>
+        </tax>
+      </account>
+    </account-heading>
+    <account-heading id="h-6" code="3500" description="保留盈馀">
+      <account code="3600" description="流动盈馀" category="Equity"/>
+      <account code="3590" description="保留盈馀 - 去年度" category="Equity"/>
+    </account-heading>
+    <account-heading id="h-7" code="4000" description="销售盈馀">
+      <account code="4030" description="销售 / 软体" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4040" description="销售 / 二级市场零件" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+      <account code="4020" description="销售 / 硬体" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_sale"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-8" code="4300" description="谘询盈馀">
+      <account code="4330" description="程式设计" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+      <account code="4320" description="谘询" category="Income">
+        <link code="AR_amount"/>
+        <link code="IC_income"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-9" code="4400" description="其它盈馀">
+      <account code="4440" description="利息" category="Income"/>
+      <account code="4430" description="运销费" category="Income">
+        <link code="IC_income"/>
+      </account>
+      <account code="4450" description="Foreign Exchange Gain" category="Income"/>
+    </account-heading>
+    <account-heading id="h-10" code="5000" description="货销成本">
+      <account code="5100" description="运费" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5030" description="货销成本 / 软体" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5010" description="采购" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5040" description="货销成本 / 二级市场零件" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+      <account code="5020" description="货销成本 / 硬体" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_cogs"/>
+      </account>
+    </account-heading>
+    <account-heading id="h-11" code="5400" description="薪资支出">
+      <account code="5410" description="薪资" category="Expense"/>
+      <account code="5420" description="保险支出" category="Expense"/>
+      <account code="5430" description="退休金支出" category="Expense"/>
+      <account code="5440" description="补偿金支出" category="Expense"/>
+      <account code="5470" description="员工福利" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-12" code="5600" description="日常及管理支出">
+      <account code="5615" description="广告行销" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5790" description="工具" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5700" description="办公用品" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5800" description="权利金" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5610" description="会计法务" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5685" description="保险" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5660" description="分期支出" category="Expense"/>
+      <account code="5620" description="坏帐" category="Expense"/>
+      <account code="5680" description="所得税" category="Expense"/>
+      <account code="5690" description="利息及银行手续费" category="Expense"/>
+      <account code="5760" description="租金" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5785" description="旅费及娱乐" category="Expense"/>
+      <account code="5795" description="注册费" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5780" description="电信费" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5781" description="网路连线费" category="Expense">
+        <link code="AP_amount"/>
+        <link code="IC_expense"/>
+      </account>
+      <account code="5765" description="维修管理费" category="Expense">
+        <link code="AP_amount"/>
+      </account>
+      <account code="5810" description="Foreign Exchange Loss" category="Expense"/>
+    </account-heading>
+    <account-heading id="h-13" code="1500" description="存货资产">
+      <account code="1530" description="库存 / 软体" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1540" description="库存 / 二级市场零件" category="Asset">
+        <link code="IC"/>
+      </account>
+      <account code="1520" description="库存 / 硬体" category="Asset">
+        <link code="IC"/>
+      </account>
+    </account-heading>
+  </coa>
+  <currencies default="CAD">
+    <currency code="CAD">
+      CAD
+    </currency>
+  </currencies>
+  <settings>
+    <setting name="inventory_accno_id" accno="1520"/>
+    <setting name="income_accno_id" accno="4020"/>
+    <setting name="expense_accno_id" accno="5010"/>
+    <setting name="fxgain_accno_id" accno="4450"/>
+    <setting name="fxloss_accno_id" accno="5810"/>
+    <setting name="weightunit" value="kg"/>
+  </settings>
+</configuration>

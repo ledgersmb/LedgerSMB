@@ -1,4 +1,5 @@
 
+
 package LedgerSMB::Company::Configuration;
 
 =head1 NAME
@@ -62,6 +63,7 @@ upon instantiation by C<LedgerSMB::Company>.
 has '_dbh' => (
     is => 'ro',
     init_arg => 'dbh',
+    reader   => 'dbh',
     required => 1);
 
 =head2 coa_nodes
@@ -81,7 +83,7 @@ has coa_nodes => (
 sub _build_coa {
     my $self = shift;
     return LedgerSMB::Company::Configuration::COANodes->new(
-        dbh => $self->_dbh
+        dbh => $self->dbh
         );
 }
 
@@ -102,7 +104,7 @@ has currencies => (
 sub _build_currencies {
     my $self = shift;
     return LedgerSMB::Company::Configuration::Currencies->new(
-        dbh => $self->_dbh
+        dbh => $self->dbh
         );
 }
 
@@ -124,7 +126,7 @@ has gifi_codes => (
 sub _build_gifi_codes {
     my $self = shift;
     return LedgerSMB::Company::Configuration::GIFIs->new(
-        dbh => $self->_dbh
+        dbh => $self->dbh
         );
 }
 
@@ -145,7 +147,7 @@ has 'industry_codes' => (
 sub _build_industry_codes {
     my $self = shift;
     return LedgerSMB::Company::Configuration::SICs->new(
-        dbh => $self->_dbh
+        dbh => $self->dbh
         );
 }
 
@@ -287,7 +289,8 @@ sub _process_coa_account {
         unless $parent;
 
     my %args;
-    for my $arg (qw(description category contra tax obsolete is_temp gifi)) {
+    for my $arg (qw(description category contra tax recon
+                    obsolete is_temp gifi)) {
         my $value = $account_xml->getAttribute($arg);
         $args{$arg} = $value if defined $value;
     }
@@ -507,7 +510,7 @@ sub setting {
     my $oldvalue;
     if (defined $newvalue) {
         $log->infof('Updating setting %s to "%s"', $name, $newvalue);
-        $self->_dbh->do(
+        $self->dbh->do(
             q{INSERT INTO defaults (setting_key, value) VALUES ($1, $2)
             ON CONFLICT (setting_key) DO UPDATE SET value = $2}, {},
             $name, $newvalue);
