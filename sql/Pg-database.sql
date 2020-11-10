@@ -2398,7 +2398,7 @@ $$
 BEGIN
         IF tg_op = 'INSERT' THEN
                 INSERT INTO transactions (id, table_name, approved)
-                VALUES (new.id, TG_RELNAME, new.approved);
+                VALUES (new.id, TG_TABLE_NAME, new.approved);
         ELSEIF tg_op = 'UPDATE' THEN
                 IF new.id = old.id AND new.approved = old.approved THEN
                         return new;
@@ -2465,14 +2465,14 @@ ELSE
    t_row := OLD;
 END IF;
 
-IF TG_RELNAME IN ('ar', 'ap') THEN
+IF TG_TABLE_NAME IN ('ar', 'ap') THEN
     t_reference := t_row.invnumber;
 ELSE
     t_reference := t_row.reference;
 END IF;
 
 INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
-values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
+values (t_row.id,TG_TABLE_NAME,t_reference, TG_OP, person__get_my_entity_id());
 
 return null; -- AFTER TRIGGER ONLY, SAFE
 END;
