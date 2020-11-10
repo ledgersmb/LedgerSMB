@@ -796,7 +796,7 @@ Given qr/that standard payment terms apply for "(.+)"/, sub {
             q{SELECT 1 FROM account WHERE accno = 'DISC'})) {
         $dbh->do(q{
               SELECT account__save(NULL, 'DISC', 'Payment discounts',
-                 'E', NULL, (select id from account where accno='5600'),
+                 'E', NULL, (select id from account_heading where accno='5600'),
                  false, false, ARRAY['AR_discount','AP_discount']::text[],
                  false, false);
             })

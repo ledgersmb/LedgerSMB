@@ -53,8 +53,9 @@ BEGIN;
     insert into session (session_id, users_id, token, last_used)
     values (-200, -200, md5(random()::text), now());
 
-    SELECT account__save(null, accno, description, category, null, null, false,
-                        false, array[link], false, false)
+    SELECT account__save(null, accno, description, category, null,
+                         (select id from account_heading limit 1),
+                         false, false, array[link], false, false)
       FROM (VALUES ('00001', 'testing', 'L', 'AP'),
                    ('00001AP2', 'testing', 'L', 'AP'),
                    ('00002', 'testing2', 'E', 'AP_amount'),

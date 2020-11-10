@@ -410,7 +410,6 @@ in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
 in_link text[], in_obsolete bool, in_is_temp bool)
 RETURNS int AS $$
 DECLARE
-        t_heading_id int;
         t_link record;
         t_id int;
         t_tax bool;
@@ -427,13 +426,6 @@ BEGIN
                         RAISE EXCEPTION 'Invalid link settings:  Summary';
                 END IF;
         END LOOP;
-        -- heading settings
-        IF in_heading IS NULL THEN
-                SELECT id INTO t_heading_id FROM account_heading
-                WHERE accno < in_accno order by accno desc limit 1;
-        ELSE
-                t_heading_id := in_heading;
-        END IF;
 
         -- Remove all links. Later we'll (re-)insert the ones we want.
         DELETE FROM account_link
@@ -444,7 +436,7 @@ BEGIN
                 description = in_description,
                 category = in_category,
                 gifi_accno = in_gifi_accno,
-                heading = t_heading_id,
+                heading = in_heading,
                 contra = in_contra,
                 obsolete = coalesce(in_obsolete,'f'),
                 tax = t_tax,
@@ -459,7 +451,7 @@ BEGIN
                 INSERT INTO account (accno, description, category, gifi_accno,
                         heading, contra, tax, is_temp)
                 VALUES (in_accno, in_description, in_category, in_gifi_accno,
-                        t_heading_id, in_contra, in_tax, coalesce(in_is_temp, 'f'));
+                        in_heading, in_contra, in_tax, coalesce(in_is_temp, 'f'));
 
                 t_id := currval('account_id_seq');
         END IF;
