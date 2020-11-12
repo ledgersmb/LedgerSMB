@@ -134,3 +134,8 @@ mc/delete-migration-validation-data.sql
 1.8/add-gl-batch-import-menu.sql
 1.8/fix-reporting-units-pks.sql
 1.8/fix-issue-1672.sql
+1.8/re-add-ap-aging-menu.sql
+# 1.9 changes
+1.9/templates-last-modified-no-tz.sql
+1.9/drop-view-tx_report.sql
+1.9/company-strict-sic.sql
