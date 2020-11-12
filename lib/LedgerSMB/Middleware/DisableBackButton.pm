@@ -51,15 +51,30 @@ sub call {
 
         my $res = shift;
         my ($status, $headers, $body) = @$res;
-
-        push @$headers, (
-            'Cache-Control' => join(', ',
-                                    qw| no-store  no-cache  must-revalidate
+        local $@ = undef;
+        # LedgerSMB::old_code::dispatch() can cause the connection to be
+        # closed: it fork()s but doesn't close/reopen the connection around
+        # the fork() call. Upon exit() of the forked child, the database
+        # handle will be closed, affecting the parent's handle.
+        my $disable = eval {
+            LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})->get('disable_back');
+        };
+        if (not $disable or $@) {
+            # err on the safe side: disable the back button when we had an error
+            # retrieving whether we want it or not...
+            if ($@) {
+                $env->{'psgix.logger'}->(
+                    level => 'error',
+                    msg => 'Disabling back button: error retrieving configuration',
+                    );
+            }
+            push @$headers, (
+                'Cache-Control' => join(', ',
+                                        qw| no-store  no-cache  must-revalidate
                                         post-check=0 pre-check=0 false|),
-            'Pragma' => 'no-cache'
-        ) if LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})
-            ->get('disable_back');
-
+                'Pragma' => 'no-cache'
+                );
+        }
     });
 }
 
