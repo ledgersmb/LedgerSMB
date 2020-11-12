@@ -619,7 +619,7 @@ SELECT lsmb__grant_perms('ap_transaction_list', obj, 'SELECT')
   FROM unnest(array['ap'::text, 'acc_trans', 'invoice', 'warehouse_inventory',
                     'tax_extended', 'ac_tax_form', 'invoice_tax_form']) obj;
 SELECT lsmb__grant_menu('ap_transaction_list', node_id, 'allow')
-  FROM unnest(array[25,34]) node_id;
+  FROM unnest(array[25,29,34]) node_id;
 
 SELECT lsmb__create_role('ap_all_vouchers');
 SELECT lsmb__grant_role('ap_all_vouchers', 'ap_transaction_create_voucher');
