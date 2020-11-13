@@ -75,7 +75,7 @@ requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::ClassAttribute';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject', '2.0.2';
+requires 'PGObject', '2.2.0';
 # PGObject::Simple 3.0.1 breaks our file uploads
 requires 'PGObject::Simple', '>=3.0.2';
 requires 'PGObject::Simple::Role', '2.0.2';
