@@ -152,7 +152,7 @@ const CleanWebpackPluginOptions = {
 }; // delete all files in the js directory without deleting this folder
 
 const ESLintPluginOptions = {
-    files: "**/*.js",
+    files: "**/!(bootstrap|lsmb.profile).js",
     emitError: true,
     emitWarning: true,
     failOnError: false,
