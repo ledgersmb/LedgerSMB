@@ -10,7 +10,7 @@ const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
-const ESLintPlugin = require('eslint-webpack-plugin');
+//const ESLintPlugin = require('eslint-webpack-plugin');
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -151,13 +151,13 @@ const CleanWebpackPluginOptions = {
     verbose: false
 }; // delete all files in the js directory without deleting this folder
 
-const ESLintPluginOptions = {
-    files: "**/*.js",
-    emitError: true,
-    emitWarning: true,
-    failOnError: false,
-    failOnWarning: false
-};
+// const ESLintPluginOptions = {
+//     files: "**/*.js",
+//     emitError: true,
+//     emitWarning: true,
+//     failOnError: false,
+//     failOnWarning: false
+// };
 
 const StylelintPluginOptions = {
     files: "**/*.css"
@@ -254,7 +254,7 @@ var pluginsProd = [
 
     new VirtualModulePlugin(VirtualModulePluginOptions),
 
-    new ESLintPlugin(ESLintPluginOptions),
+    // new ESLintPlugin(ESLintPluginOptions),
     new StylelintPlugin(StylelintPluginOptions),
 
     new DojoWebpackPlugin(DojoWebpackPluginOptions),
