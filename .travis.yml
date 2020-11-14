@@ -101,6 +101,7 @@ before_cache:
 
 cache:
   directories:
+    - $HOME/.npm
     - $HOME/locallib
     - $HOME/dojo_archive
     - $TRAVIS_BUILD_DIR/node_modules
