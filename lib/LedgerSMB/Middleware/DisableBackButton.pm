@@ -63,10 +63,10 @@ sub call {
             # err on the safe side: disable the back button when we had an error
             # retrieving whether we want it or not...
             if ($@) {
-                $env->{'psgix.logger'}->(
+                $env->{'psgix.logger'}->({
                     level => 'error',
                     msg => 'Disabling back button: error retrieving configuration',
-                    );
+                    });
             }
             push @$headers, (
                 'Cache-Control' => join(', ',
