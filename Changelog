@@ -11,6 +11,7 @@ Added functionalities
 * Database used to query system characteristics now configurable (admin_db)
 * Add link to customer screen from invoice entry
 * Add option to search by customer/vendor name on payments search
+* Command line application for administrative tasks (bin/ledgersmb-admin)
 
 Changed functionalities
 * Faster HTML response generation (optimized HTML preprocessing)
@@ -19,6 +20,7 @@ Changed functionalities
 * Report filters and account settings hide GIFI when not configured
 * Invoice 'Save Info' now saves changes to 'Salesperson'
 * Add option to report opening or closing balance on balance sheet
+* Chart of Accounts examples converted structured XML (from free-format SQL)
 
 Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
@@ -39,6 +41,7 @@ Code cleanup
 * Reformat UI HTML templates & HTML5 upgrade (from 4.01 Transitional)
 * Simplify UI HTML template libraries elements.html & dynatable.html
 * Stop using LedgerSMB::Sysconfig global variables (use functions instead)
+* Initialize LedgerSMB::Sysconfig & ::Locale explicitly (no init-on-startup)
 * SQL data types aligned (pnl vs balance, fixed assets)
 * Code cleanup reducing the number of warnings in the server logs
 * Dead code removal from old/ code
