@@ -62,6 +62,12 @@ Dependency updates
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.7
+* Fix internal server error when creating AR/AP voucher (#5188)
+* Fix AP Aging inadvertedly having been dropped from the menu (#5193)
+* Fix 'Approved'/'Unapproved' filter in GL search (#5181)
+
+
 Changelog for 1.8.6
 * Fix asset depreciation not being posted (#5174)
 * Fix regression invoice conversion from order using order date (#5175)
