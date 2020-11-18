@@ -848,8 +848,8 @@ PERFORM * from (
   SELECT *
     FROM account_heading ah
     JOIN account_headings at ON ah.parent_id = at.id
-   WHERE at.path || '||||' ||  ah.accno NOT IN
-          (select path from account_headings)
+   WHERE NOT EXISTS (SELECT 1 FROM account_headings
+                  WHERE path = at.path || '||||' || ah.accno)
 ) x;
 
 IF found then
