@@ -173,6 +173,10 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.24
+* Fix 'Approved'/'Unapproved' filter in GL Search not working (#5181)
+
+
 Changelog for 1.7.23
 * Fix subtotals not showing on AR/AP outstanding report (#4732)
 * Apply default sorting to AR/AP outstanding and transactions reports (#5080)
