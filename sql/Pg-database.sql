@@ -2396,29 +2396,11 @@ Materials cards not implemented.$$;
 CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
 $$
 BEGIN
-        IF tg_op = 'INSERT' THEN
-                INSERT INTO transactions (id, table_name, approved)
-                VALUES (new.id, TG_TABLE_NAME, new.approved);
-        ELSEIF tg_op = 'UPDATE' THEN
-                IF new.id = old.id AND new.approved = old.approved THEN
-                        return new;
-                ELSE
-                        UPDATE transactions SET id = new.id,
-                                                approved = new.approved
-                         WHERE id = old.id;
-                END IF;
-        ELSE
-                DELETE FROM transactions WHERE id = old.id;
-        END IF;
-        RETURN new;
+  -- dummy; actual function defined in modules/triggers.sql
+  -- exists here in order to be able to create the triggers below
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION track_global_sequence() is
-$$ This trigger is used to track the id sequence entries across the
-transactions table, and with the ar, ap, and gl tables.  This is necessary
-because these have not been properly refactored yet.
-$$;
 
 CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
 FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
@@ -2451,49 +2433,13 @@ CREATE TABLE invoice_tax_form (
 COMMENT ON TABLE invoice_tax_form IS
 $$ Maping invoice to country_tax_form.$$;
 
-CREATE OR REPLACE FUNCTION gl_audit_trail_append()
-RETURNS TRIGGER AS
-$$
-DECLARE
-   t_reference text;
-   t_row RECORD;
-BEGIN
-
-IF TG_OP = 'INSERT' then
-   t_row := NEW;
-ELSE
-   t_row := OLD;
-END IF;
-
-IF TG_TABLE_NAME IN ('ar', 'ap') THEN
-    t_reference := t_row.invnumber;
-ELSE
-    t_reference := t_row.reference;
-END IF;
-
-INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
-values (t_row.id,TG_TABLE_NAME,t_reference, TG_OP, person__get_my_entity_id());
-
-return null; -- AFTER TRIGGER ONLY, SAFE
-END;
-$$ language plpgsql security definer;
-
-
-COMMENT ON FUNCTION gl_audit_trail_append() IS
-$$ This provides centralized support for insertions into audittrail.
-$$;
 
 CREATE FUNCTION prevent_closed_transactions() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-DECLARE t_end_date date;
 BEGIN
-SELECT max(end_date) into t_end_date FROM account_checkpoint;
-IF new.transdate <= t_end_date THEN
-    RAISE EXCEPTION 'Transaction entered into closed period.  Transdate: %',
-                   new.transdate;
-END IF;
-RETURN new;
+  -- dummy; actual function defined in modules/triggers.sql
+  -- exists here in order to be able to create the triggers below
 END;
 $$;
 
@@ -2507,6 +2453,14 @@ CREATE TRIGGER gl_prevent_closed BEFORE INSERT ON gl
 FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
 
 
+CREATE OR REPLACE FUNCTION gl_audit_trail_append()
+RETURNS TRIGGER AS
+$$
+BEGIN
+  -- dummy; actual function defined in modules/triggers.sql
+  -- exists here in order to be able to create the triggers below
+END;
+$$ language plpgsql security definer;
 
 CREATE TRIGGER gl_audit_trail AFTER INSERT OR UPDATE OR DELETE ON gl
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
@@ -2627,10 +2581,8 @@ CREATE OR REPLACE FUNCTION trigger_parts_short() RETURNS TRIGGER
 AS
 '
 BEGIN
-  IF NEW.onhand >= NEW.rop THEN
-    NOTIFY parts_short;
-  END IF;
-  RETURN NEW;
+  -- dummy; actual function defined in modules/triggers.sql
+  -- exists here in order to be able to create the triggers below
 END;
 ' LANGUAGE PLPGSQL;
 -- end function
