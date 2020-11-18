@@ -299,8 +299,12 @@ FOR retval IN
                    OR (transdate <= in_to_date AND in_from_date IS NULL)
                    OR (in_to_date IS NULL AND in_from_date IS NULL))
               AND (in_approved is null
-                   or (in_approved is not distinct from g.approved
-                       AND in_approved is not distinct from ac.approved))
+                   or (in_approved is true
+                       and g.approved is true
+                       AND ac.approved is true)
+                   or (in_approved is false
+                       and (g.approved is false
+                            or ac.approved is false)))
               AND (in_from_amount IS NULL
                    OR abs(ac.amount_bc) >= in_from_amount)
               AND (in_to_amount IS NULL
