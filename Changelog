@@ -47,16 +47,20 @@ Code cleanup
 
 Dependency updates
 * perl 5.24 (updated from 5.20)
+* Hash::Merge (new)
 * Locale::CLDR::* (new)
 * Locale::Country (dropped)
 * Locale::Language (dropped)
 * Log::Any (new)
 * Log::Any::Adapter::Log4perl (new)
 * MooseX::ClassAttribute (new)
+* PGObject 2.2.0 (updated from 2.0.2)
 * PGObject::Util::DBAdmin 1.4.0 (updated from 1.0.1)
-* Syntax::Keyword::Try (0.15)
-* URI::Escape (new)
+* Pod::Find (new)
+* Syntax::Keyword::Try 0.15 (new)
 * Try::Tiny (dropped)
+* URI::Escape (new)
+* YAML (new)
 
 
 Changelog for 1.8 Series
