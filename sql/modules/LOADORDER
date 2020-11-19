@@ -5,6 +5,7 @@
 #  they change the value of the setting_key 'module_load_ok'
 #  from 'no' to 'yes' on success.
 triggers.sql
+old.sql
 Settings.sql
 Util.sql
 App_Module.sql

@@ -84,6 +84,7 @@ asset_report__record_approve
 asset_report__save
 asset_report__search
 asset_report_partial_disposal_details
+avgcost
 batch__lock
 batch__lock_for_update
 batch__search
@@ -285,6 +286,7 @@ journal__save_recurring
 journal__save_recurring_print
 journal__search
 journal__validate_entry
+lastcost
 leap_days
 list_taxforms
 location__get

@@ -5,18 +5,22 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
-$$
+CREATE OR REPLACE FUNCTION track_global_sequence()
+  RETURNS trigger AS
+$BODY$
 BEGIN
         IF tg_op = 'INSERT' THEN
-                INSERT INTO transactions (id, table_name, approved)
-                VALUES (new.id, TG_TABLE_NAME, new.approved);
+                INSERT INTO transactions (id, table_name, transdate, approved)
+                VALUES (new.id, TG_RELNAME, new.transdate, new.approved);
         ELSEIF tg_op = 'UPDATE' THEN
-                IF new.id = old.id AND new.approved = old.approved THEN
+                IF new.id = old.id
+                   AND new.approved  = old.approved
+                   AND new.transdate = old.transdate THEN
                         return new;
                 ELSE
                         UPDATE transactions SET id = new.id,
-                                                approved = new.approved
+                                                approved = new.approved,
+                                                transdate = new.transdate
                          WHERE id = old.id;
                 END IF;
         ELSE
@@ -24,13 +28,15 @@ BEGIN
         END IF;
         RETURN new;
 END;
-$$ LANGUAGE PLPGSQL;
+$BODY$
+  LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION track_global_sequence() is
-$$ This trigger is used to track the id sequence entries across the
+COMMENT ON FUNCTION track_global_sequence() IS
+' This trigger is used to track the id sequence entries across the
 transactions table, and with the ar, ap, and gl tables.  This is necessary
 because these have not been properly refactored yet.
-$$;
+';
+
 
 CREATE OR REPLACE FUNCTION gl_audit_trail_append()
 RETURNS TRIGGER AS
