@@ -84,6 +84,7 @@ asset_report__record_approve
 asset_report__save
 asset_report__search
 asset_report_partial_disposal_details
+avgcost
 batch__lock
 batch__lock_for_update
 batch__search
@@ -252,6 +253,7 @@ get_fractional_month
 get_fractional_year
 get_link_descriptions
 gifi__list
+gl_audit_trail_append
 goods__history
 goods__search
 inventory__activity
@@ -284,6 +286,7 @@ journal__save_recurring
 journal__save_recurring_print
 journal__search
 journal__validate_entry
+lastcost
 leap_days
 list_taxforms
 location__get
@@ -370,6 +373,7 @@ pnl__income_statement_accrual
 pnl__income_statement_cash
 pnl__invoice
 pnl__product
+prevent_closed_transactions
 pricegroup__list
 pricegroup__search
 pricegroups__list
@@ -451,9 +455,11 @@ timecard__report
 timecard__save
 timecard_type__get
 timecard_type__list
+track_global_sequence
 trial_balance__generate
 trial_balance__heading_accounts
 trial_balance__list_headings
+trigger_parts_short
 unlock
 unlock_all
 user__change_password
