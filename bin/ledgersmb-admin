@@ -41,7 +41,23 @@ is created as a LedgerSMB company. These are the common commands:
 Additionally, the C<config*> command can be used to manage the content
 of the configuration file.
 
-* To be implemented
+* Command yet to be implemented
+
+=head1 ARGUMENTS
+
+Many commands take a C<db-uri> argument. This argument takes the following
+form:
+
+   dbname         # URL encoded database name ('my company' -> 'my%20company')
+   [user@]host[:port]/dbname
+
+The URI may be prefixed with the schema C<postgresql://>. Connection parameters
+such as TLS requirement, may be appended as query parameters:
+
+   dbname?ssl=true
+
+Missing parts of the URI are resolved against any defaults provided in the
+configuration files. (See the L</CONFIGURATION> section below.)
 
 =head1 OPTIONS
 

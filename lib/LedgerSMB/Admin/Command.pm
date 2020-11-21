@@ -10,6 +10,7 @@ LedgerSMB::Admin::Command - ledgersmb-admin abstract command class
 use strict;
 use warnings;
 
+use Getopt::Long qw(GetOptionsFromArray);
 use Log::Log4perl;
 use Pod::Find qw(pod_where);
 use Pod::Usage qw(pod2usage);
@@ -38,12 +39,53 @@ sub help {
               -input => pod_where({ -inc => 1 }, ref $self));
 }
 
+sub _option_spec {
+    return ();
+}
+
 sub _before_dispatch {
     my ($self) = shift;
     $self->db(LedgerSMB::Database->new(
                   connect_data => $self->config->get('connect_data'),
               ));
     return @_;
+}
+
+sub _decode {
+    local %+ = ();
+    # uri decode
+    return $_[0] =~ s/%([0-9a-fA-F]{2})/chr(hex($1))/egr;
+}
+
+sub connect_data_from_arg {
+    my ($self, $arg) = @_;
+    # patterns to process:
+    #  dbname[?connection_parameters]
+    #  [user@]host[:port]/dbname (host can be 'ipv6': "[::]")
+    $arg =~ m!^
+        (postgresql://)?
+        (((?<user>[^@]+)@)?
+         (?<host>\[[:0-9a-zA-Z]+\]|[\w.]+)
+         (:(?<port>\d+))?/)?
+        ((?<dbname>[a-z0-9A-Z_% -]+)
+         (\?(?<queryparameters>.+))?
+        )
+    $!x or die "'$arg' doesn't parse as a connection URI";
+    my %r = %+;
+    my $rv = {
+        map { $_ => _decode($r{$_}) }
+        grep { $_ ne 'queryparameters' }
+              keys %r
+    };
+    if ($r{queryparameters}) {
+        for my $kv (split /&/, $r{queryparameters}) {
+            # verify if there actually *is* an equals-sign?
+            my ($k,$v) = split /=/, $kv, -1;
+            $rv->{$k} = _decode($v // '');
+        }
+    }
+
+    return $rv;
 }
 
 sub dispatch {
@@ -59,8 +101,10 @@ sub dispatch {
     return $self->help($command, @args)
         if $command eq 'help';
 
-    @args = $self->_before_dispatch(@args);
-    return $self->$dispatch(@args);
+    my $options = {};
+    GetOptionsFromArray(\@args, $options,
+                        $self->_option_spec($command));
+    return $self->$dispatch($self->_before_dispatch($options, @args));
 }
 
 sub run {
@@ -97,19 +141,37 @@ __END__
 
 =head1 METHODS
 
+=head2 connect_data_from_arg($arg)
+
+Parses a connection URI of the form
+
+   dbname[?connection_parameter=value&...]
+   [[user@]host[:port]/]dbname
+   postgresql://...
+
+into a C<connect_data> hash for use with C<LedgerSMB::Database>'s
+C<connect> method.
+
 =head2 dispatch($subcommand, @args)
 
 Runs C<help> when C<$subcommand> equals C<'help'>. Otherwise, looks up the
 existence of a method in the module by the name of C<$subcommand> and
 invokes that with C<@args> as its method call arguments.
 
-Before actually invoking the C<$subcommand>, this module calls the
-C<_before_dispatch> method with its own arguments; this provides a hook into
+Before actually invoking the C<$subcommand>, this module parses any
+subcommand options using L<Getopt::Long>. The specification of options
+is retrieved by calling C<$self->_option_spec($subcommand)>. Then it calls the
+C<_before_dispatch> method with a hash of specified options as its first
+argument and its own arguments as the remainder; this provides a hook into
 argument processing. The method can be overridden by children of this class.
 The implementation in this class initializes the C<db> attribute based on
 database connection data provided in the C<config> attribute and simply
 returns the arguments passed to it. The call is expected to return
 the arguments to be passed to the actual C<$subcommand> method.
+
+Note: the default implementation of C<_option_spec> defines no options.
+C<_option_spec> is expected to return a list of option specifications that
+can be passed as part of the arguments in a call to C<GetOptions>.
 
 =head2 help
 
