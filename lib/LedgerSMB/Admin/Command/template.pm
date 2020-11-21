@@ -18,7 +18,7 @@ use namespace::autoclean;
 
 
 sub list {
-    my ($self, $dbh, @args) = @_;
+    my ($self, $dbh, $options, @args) = @_;
     my $templates = $dbh->selectall_arrayref(
         'SELECT template_name, format, language_code, last_modified
            FROM template',
@@ -56,8 +56,8 @@ Template name          Format Language  Last modified
 }
 
 sub dump {
-    my ($self, $dbh, @args) = @_;
-    my ($name, $format, $language) = @args;
+    my ($self, $dbh, $options, @args) = @_;
+    my ($db, $name, $format, $language) = @args;
     $language = undef if $language eq 'all';
     my $template = $dbh->selectall_arrayref(
         q{SELECT template FROM template
@@ -74,8 +74,8 @@ sub dump {
 }
 
 sub load {
-    my ($self, $dbh, @args) = @_;
-    my ($name, $format, $language) = @args;
+    my ($self, $dbh, $options, @args) = @_;
+    my ($db, $name, $format, $language) = @args;
     $language = undef if $language eq 'all';
 
     my $content;
