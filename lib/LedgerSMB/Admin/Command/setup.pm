@@ -12,6 +12,7 @@ use warnings;
 
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Company;
+use LedgerSMB::Database;
 
 use Moose;
 extends 'LedgerSMB::Admin::Command';
@@ -19,8 +20,8 @@ use namespace::autoclean;
 
 
 sub load {
-    my ($self, $company, @args) = @_;
-    my ($file) = @args;
+    my ($self, $company, $options, @args) = @_;
+    my ($db, $file) = @args;
     my $config = $company->configuration;
     my $fh;
 
@@ -46,10 +47,18 @@ sub load {
 }
 
 sub _before_dispatch {
-    my ($self, @args) = @_;
-    my @rv = $self->SUPER::_before_dispatch(@args);
+    my ($self, $options, @args) = @_;
+    my $db_uri = (@args) ? $args[0] : undef;
+    $self->db(
+        LedgerSMB::Database->new(
+            connect_data => {
+                $self->config->get('connect_data')->%*,
+                $self->connect_data_from_arg($db_uri)->%*,
+            },
+        ));
 
-    return (LedgerSMB::Company->new(dbh => $self->db->connect), @rv);
+    return (LedgerSMB::Company->new(dbh => $self->db->connect),
+            $options, @args);
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -61,7 +70,7 @@ __END__
 =head1 SYNOPSIS
 
    ledgersmb-admin setup help
-   ledgersmb-admin setup load <setup>
+   ledgersmb-admin setup load <db-uri> <setup>
 
 =head1 DESCRIPTION
 

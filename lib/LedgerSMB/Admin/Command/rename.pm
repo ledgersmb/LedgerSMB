@@ -19,9 +19,10 @@ use namespace::autoclean;
 
 sub run {
     my ($self, $dbname, $newname) = @_;
+    my $existing_db = $self->connect_data_from_arg($dbname);
     my $connect_data = {
         $self->config->get('connect_data')->%*,
-        dbname => $dbname
+        $existing_db->%*,
     };
     my $old_db = LedgerSMB::Database->new(
         connect_data => $connect_data,
@@ -30,13 +31,14 @@ sub run {
     $old_dbh->do(q{SELECT setting__set('role_prefix',
                              coalesce((setting_get('role_prefix')).value, ?))},
                  {},
-                 "lsmb_${dbname}__")
+                 "lsmb_$existing_db->{dbname}__")
         or die $old_dbh->errstr;
     $old_dbh->commit;
     $old_dbh->disconnect;
 
     my $connect_admin = {
         $self->config->get('connect_data')->%*,
+        $existing_db->%*,
         dbname => ($self->config->get('admindb') // 'postgres'),
     };
     $self->db(
@@ -44,7 +46,7 @@ sub run {
             connect_data => $connect_admin,
         ));
     my $dbh = $self->db->connect;
-    my $ident_dbname = $dbh->quote_identifier($dbname);
+    my $ident_dbname = $dbh->quote_identifier($existing_db->{dbname});
     my $ident_newname = $dbh->quote_identifier($newname);
     $dbh->do(qq{ALTER DATABASE $ident_dbname RENAME TO $ident_newname})
         or die $dbh->errstr;
@@ -62,7 +64,7 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin rename <database-name> <new-name>
+   ledgersmb-admin rename <db-uri> <new-name>
 
 =head1 DESCRIPTION
 

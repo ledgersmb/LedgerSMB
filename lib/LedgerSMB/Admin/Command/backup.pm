@@ -25,7 +25,7 @@ sub run {
     my $logger = $self->logger;
     my $connect_data = {
         $self->config->get('connect_data')->%*,
-        dbname => $dbname,
+        $self->connect_data_from_arg($dbname)->%*,
     };
     $self->db(LedgerSMB::Database->new(
                   connect_data => $connect_data,
@@ -53,7 +53,7 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin backup <database-name> [<filename>]
+   ledgersmb-admin backup <db-uri> [<filename>]
 
 =head1 DESCRIPTION
 

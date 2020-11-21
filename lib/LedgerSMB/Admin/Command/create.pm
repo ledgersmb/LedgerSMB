@@ -25,7 +25,7 @@ sub run {
     my $logger = $self->logger;
     my $connect_data = {
         $self->config->get('connect_data')->%*,
-        dbname => $dbname,
+        $self->connect_data_from_arg($dbname)->%*,
     };
     $self->db(LedgerSMB::Database->new(
                   connect_data => $connect_data,
@@ -64,11 +64,12 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin create <database-name>
+   ledgersmb-admin create <db-uri>
 
 =head1 DESCRIPTION
 
-This command creates a new database to hold a company set named <database-name>.
+This command creates a new database to hold a company set identified by
+C<db-uri>.
 
 The resulting database does not have any setup, settings or users. See the
 C<setup>, C<setting> and C<user> commands.

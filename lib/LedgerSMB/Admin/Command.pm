@@ -51,6 +51,43 @@ sub _before_dispatch {
     return @_;
 }
 
+sub _decode {
+    local %+ = ();
+    # uri decode
+    return $_[0] =~ s/%([0-9a-fA-F]{2})/chr(hex($1))/egr;
+}
+
+sub connect_data_from_arg {
+    my ($self, $arg) = @_;
+    # patterns to process:
+    #  dbname[?connection_parameters]
+    #  [user@]host[:port]/dbname (host can be 'ipv6': "[::]")
+    $arg =~ m!^
+        (postgresql://)?
+        (((?<user>[^@]+)@)?
+         (?<host>\[[:0-9a-zA-Z]+\]|[\w.]+)
+         (:(?<port>\d+))?/)?
+        ((?<dbname>[a-z0-9A-Z_% -]+)
+         (\?(?<queryparameters>.+))?
+        )
+    $!x or die "'$arg' doesn't parse as a connection URI";
+    my %r = %+;
+    my $rv = {
+        map { $_ => _decode($r{$_}) }
+        grep { $_ ne 'queryparameters' }
+              keys %r
+    };
+    if ($r{queryparameters}) {
+        for my $kv (split /&/, $r{queryparameters}) {
+            # verify if there actually *is* an equals-sign?
+            my ($k,$v) = split /=/, $kv, -1;
+            $rv->{$k} = _decode($v // '');
+        }
+    }
+
+    return $rv;
+}
+
 sub dispatch {
     my ($self, $command, @args) = @_;
 
@@ -103,6 +140,17 @@ __END__
 =head2 db
 
 =head1 METHODS
+
+=head2 connect_data_from_arg($arg)
+
+Parses a connection URI of the form
+
+   dbname[?connection_parameter=value&...]
+   [[user@]host[:port]/]dbname
+   postgresql://...
+
+into a C<connect_data> hash for use with C<LedgerSMB::Database>'s
+C<connect> method.
 
 =head2 dispatch($subcommand, @args)
 

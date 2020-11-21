@@ -22,8 +22,10 @@ use namespace::autoclean;
 sub run {
     my ($self, $dbname, $newname) = @_;
     my $logger = $self->logger;
+    my $existing_db = $self->connect_data_from_arg($dbname);
     my $connect_data = {
         $self->config->get('connect_data')->%*,
+        $existing_db->%*,
         dbname => $newname,
     };
     $self->db(
@@ -37,7 +39,7 @@ sub run {
     my $log = LedgerSMB::Database::loader_log_filename;
     my $errlog = LedgerSMB::Database::loader_log_filename;
     try {
-        $self->db->create(copy_of => $dbname);
+        $self->db->create(copy_of => $existing_db->{dbname});
     }
     catch ($e) {
         ###TODO error reporting?!
@@ -57,12 +59,12 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin copy <existing-database> <database-name>
+   ledgersmb-admin copy <db-uri> <new-database-name>
 
 =head1 DESCRIPTION
 
-This command creates a new database to hold a company set named <database-name>
-by copying the database named <existing-database>.
+This command creates a new database to hold a company set named
+C<new-database-name> by copying the database identified by C<db-uri>.
 
 
 =head1 SUBCOMMANDS
