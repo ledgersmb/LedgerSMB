@@ -8,7 +8,7 @@ logging  = 0
 cache_templates = 1
 
 # Set language for login and admin pages
-language = 
+# language = 
 
 log_level = OFF
 # log_config =
