@@ -115,7 +115,7 @@ sub charts_of_accounts {
     my $basedir = File::Spec->catfile('.', 'locale', 'coa');
     my $countries = _list_directory($basedir);
     my %regions = %{Locale::CLDR
-                    ->new(LedgerSMB::Sysconfig::language())
+                    ->new(LedgerSMB::Sysconfig::language() || 'en')
                     ->all_regions};
 
     return {

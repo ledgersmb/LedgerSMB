@@ -167,12 +167,18 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
-    requires 'Pherkin::Extension::Weasel', '0.14';
+    requires 'Pherkin::Extension::Weasel', '0.15';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.73';
-    requires 'Test::Dependencies', '0.25';
+    if ($ENV{CI}) {
+        # Required to suppress a variable re-definition
+        requires 'Test::Dependencies', '0.30';
+    }
+    else {
+        requires 'Test::Dependencies', '0.25';
+    }
     requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
