@@ -199,6 +199,9 @@ $mock->{mock_add_resultset} = {
              contra tax obsolete is_heading / ],
         [ 'A-15', '0410', 'Maschinen', 'A', undef, 'H-1', 0, 1, 0, 0 ],
         ],
+    execute_attributes => {
+        pg_type => [ qw/text text text text text int bool bool bool bool/ ],
+    },
 };
 
 ok lives {
