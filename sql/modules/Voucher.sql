@@ -487,6 +487,10 @@ BEGIN
                WHERE trans_id = voucher_row.trans_id);
 
         DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
+
+        -- deletion of the ar/ap/gl row causes removal of the `transactions`
+        -- row, which fails if the voucher isn't deleted...
+        DELETE FROM voucher WHERE id = voucher_row.id;
         DELETE FROM ar WHERE id = voucher_row.trans_id;
         DELETE FROM ap WHERE id = voucher_row.trans_id;
         DELETE FROM gl WHERE id = voucher_row.trans_id;
@@ -496,9 +500,9 @@ BEGIN
                  where voucher_id = voucher_row.id);
 
         DELETE FROM acc_trans where voucher_id = voucher_row.id;
+        DELETE FROM voucher WHERE id = voucher_row.id;
     END IF;
 
-    DELETE FROM voucher WHERE id = voucher_row.id;
     RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
