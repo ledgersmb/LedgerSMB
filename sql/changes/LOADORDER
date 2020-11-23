@@ -77,6 +77,7 @@
 1.6/missing-countries.sql
 1.6/constrain_default_password_duration.sql
 1.6/add-recon-index.sql
+1.6/track-deleted-transactions.sql
 #
 # mc changes
 mc/create-migration-validation-data.sql
