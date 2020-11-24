@@ -51,6 +51,8 @@ jobs:
         # You may pin to the exact commit or the version.
         # uses: perl-actions/install-with-cpm@7dead49a9920a1f07629c1902f1fe19c56b6ff12
         uses: perl-actions/install-with-cpm@v1.3
+        with:
+          args: --resolver=metacpan --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
