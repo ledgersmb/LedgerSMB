@@ -47,6 +47,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
   
+      - name: Install apt packages
+        run: apt-get install -y texlive-latex-recommended texlive-xetex
+        env:
+          DEBIAN_FRONTEND: noninteractive
+  
       - name: install with cpanm
         run: |
           cpanm --notest App::cpm
