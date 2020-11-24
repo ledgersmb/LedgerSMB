@@ -51,6 +51,12 @@ jobs:
           perl-version: 5.32 # optional, default is 5
           # The distribution of Perl binary.
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: 12.x
+
       - name: Checkout
         uses: actions/checkout@v2.3.4
   
@@ -63,6 +69,9 @@ jobs:
         run: |
           cpanm --notest App::cpm
           cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
+
+      - name: Build JS
+        run: make dojo
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
