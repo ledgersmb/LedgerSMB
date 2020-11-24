@@ -44,6 +44,9 @@ jobs:
           perl-version: 5.32 # optional, default is 5
           # The distribution of Perl binary.
 
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+  
       # Runs a single command using the runners shell
       - name: Run Perl tests
         run: prove
