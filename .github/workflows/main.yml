@@ -26,7 +26,7 @@ jobs:
         image: wernight/phantomjs:2.1.1
         options: --stop-signal KILL
         ports:
-          - 4422:4422
+          - 8910:8910
         env:
           LANG: en_US.UTF-8
       postgres:
