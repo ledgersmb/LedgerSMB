@@ -49,8 +49,8 @@ jobs:
   
       - name: install with cpanm
         run: |
-          cpanm --self-upgrade
-          cpanm --resolver=metacpan --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi .
+          cpanm --notest App::cpm
+          cpm --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi .
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
