@@ -4,8 +4,11 @@ name: CI
 
 # Controls when the action will run.
 on:
-  schedule:
-    - cron: "0 0 * * 0"
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,8 +24,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        perl: [ "5.32" ]
+        perl: [ "5.28", "5.30", "5.32" ]
     services:
+      # Label used to access the service container
+      selenium:
+        image: wernight/phantomjs:2.1.1
+        options: --stop-signal KILL
+        ports:
+          - 4422:8910
+        env:
+          LANG: en_US.UTF-8
       postgres:
         # Docker Hub image
         image: ledgersmb/ledgersmb-dev-postgres
@@ -105,9 +116,6 @@ jobs:
         run: |
           sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
           nginx -c /tmp/nginx.conf &
-
-      - name: Starting 'PhantomJS'
-        run: phantomjs --webdriver=4422 2>/dev/null >/dev/null &
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
