@@ -24,7 +24,7 @@ jobs:
       # Label used to access the service container
       selenium:
         image: wernight/phantomjs:2.1.1
-        options: --entrypoint "phantomjs --webdriver=4422" --stop-signal KILL
+        options: --stop-signal KILL
         ports:
           - 4422:4422
         env:
