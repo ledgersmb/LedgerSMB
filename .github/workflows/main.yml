@@ -55,7 +55,7 @@ jobs:
       - name: install with cpanm
         run: |
           cpanm --notest App::cpm
-          cpm install -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
+          cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
