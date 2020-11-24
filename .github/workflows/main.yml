@@ -45,8 +45,6 @@ jobs:
           # The distribution of Perl binary.
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-           perl -V
-           perl -E 'say "Hello, world!"'
+      - name: Run Perl tests
+        run: prove
 
