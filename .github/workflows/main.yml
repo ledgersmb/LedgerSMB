@@ -20,6 +20,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Service containers to run with `container-job`
+    strategy:
+      matrix:
+        perl: [ "5.24", "5.28", "5.32" ]
     services:
       # Label used to access the service container
       selenium:
@@ -48,7 +51,7 @@ jobs:
         uses: shogo82148/actions-setup-perl@v1.8.3
         with:
           # The Perl version to download (if necessary) and use. Example: 5.30.0
-          perl-version: 5.32 # optional, default is 5
+          perl-version: ${{ matrix.perl }} # optional, default is 5
           # The distribution of Perl binary.
 
       - name: Setup Node.js environment
