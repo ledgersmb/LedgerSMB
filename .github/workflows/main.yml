@@ -68,7 +68,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
   
-      - name: install with cpanm
+      - name: install with cpm
         run: |
           cpanm --notest App::cpm
           cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
@@ -78,5 +78,5 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
-        run: prove
+        run: prove --recurse t/ xt/
 
