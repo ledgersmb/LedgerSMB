@@ -78,5 +78,5 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
-        run: prove --recurse t/ xt/
+        run: prove --time --recurse t/ xt/
 
