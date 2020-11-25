@@ -85,3 +85,4 @@ jobs:
           PGUSER: postgres
           PGPASSWORD: test
           LSMB_NEW_DB: lsmbinstalltest
+          LSMB_TEST_DB: 1
