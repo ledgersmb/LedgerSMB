@@ -101,4 +101,5 @@ jobs:
           LSMB_TEST_DB: 1
           LSMB_BASE_URL: http://127.0.0.1:5000
           PSGI_BASE_URL: http://127.0.0.1:5762
+          REMOTE_SERVER_ADDR: 127.0.0.1
 
