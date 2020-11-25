@@ -40,7 +40,7 @@ jobs:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: test
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -79,4 +79,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run Perl tests
         run: prove --time --recurse t/ xt/
-
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: test
+          LSMB_NEW_DB: lsmbinstalltest
