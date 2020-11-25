@@ -77,11 +77,19 @@ jobs:
         run: make dojo
         
       - name: Other preparations
-        run: mkdir screens logs    
+        run: mkdir screens logs
+      
+      - name: Starting 'starman'
+        run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log > /tmp/plackup-stdout.log 2> /tmp/plackup-stderr.log &
+        
+      - name: Starting 'nginx'
+        run: |
+          sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
+          nginx -c /tmp/nginx.conf &
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
-        run: prove --time --recurse --pgtap-option dbname=lsmbinstalltest --pgtap-option username=postgres t/ xt/
+        run: prove --jobs 2 --time --recurse --pgtap-option dbname=lsmbinstalltest --pgtap-option username=postgres --feature-option tags=~@wip t/ xt/
         env:
           PGHOST: localhost
           PGPORT: 5432
