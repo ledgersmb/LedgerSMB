@@ -29,7 +29,7 @@ jobs:
         image: wernight/phantomjs:2.1.1
         options: --stop-signal KILL
         ports:
-          - 8910:8910
+          - 8910:4422
         env:
           LANG: en_US.UTF-8
       postgres:
@@ -75,6 +75,9 @@ jobs:
 
       - name: Build JS
         run: make dojo
+        
+      - name: Other preparations
+        run: mkdir screens logs    
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
@@ -86,3 +89,4 @@ jobs:
           PGPASSWORD: test
           LSMB_NEW_DB: lsmbinstalltest
           LSMB_TEST_DB: 1
+
