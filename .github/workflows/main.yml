@@ -82,7 +82,7 @@ jobs:
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
       
       - name: Starting 'starman'
-        run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi --access-log /tmp/plackup-access.log > /tmp/plackup-stdout.log 2> /tmp/plackup-stderr.log &
+        run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
         
       - name: Starting 'nginx'
         run: |
