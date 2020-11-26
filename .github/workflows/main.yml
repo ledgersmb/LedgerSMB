@@ -67,7 +67,7 @@ jobs:
           # A list of files, directories, and wildcard patterns to cache and restore
           path: $PERL5LIB
           # An explicit key for restoring and saving the cache
-          key: ${{ runner.os }}-cpan-${{ matrix.perl }}-${{ hashFiles('**/cpanfile') }}
+          key: ${{ runner.os }}-cpan-${{ matrix.perl }}-${{ hashFiles('**/{Makefile,Build}.PL') }}
           # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
           restore-keys: ${{ runner.os }}-cpan-${{ matrix.perl }}
 
