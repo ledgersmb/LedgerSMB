@@ -100,7 +100,7 @@ jobs:
           nginx -c /tmp/nginx.conf &
 
       - name: Starting 'PhantomJS'
-        run: phantomjs --webdriver=4422 > 2>/dev/null >/dev/null &
+        run: phantomjs --webdriver=4422 2>/dev/null >/dev/null &
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
