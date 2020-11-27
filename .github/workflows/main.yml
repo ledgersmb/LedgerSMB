@@ -92,14 +92,14 @@ jobs:
       - name: Other preparations
         run: |
           mkdir screens logs
-          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+          cp conf/ledgersmb.conf.default ledgersmb.conf
       
       - name: Starting 'starman'
         run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
         
       - name: Starting 'nginx'
         run: |
-          sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
+          sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
           nginx -c /tmp/nginx.conf &
 
       - name: Starting 'PhantomJS'
