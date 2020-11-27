@@ -73,6 +73,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2.3.4
+        with:
+          submodules: recursive
   
       - name: Install apt packages
         run: sudo apt-get update && sudo apt-get install -y texlive-latex-recommended texlive-xetex gettext nginx
