@@ -96,8 +96,8 @@ jobs:
           mkdir screens logs
           cp conf/ledgersmb.conf.default ledgersmb.conf
       
-      - name: Starting 'starman'
-        run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+      - name: Starting PSGI server
+        run:  plackup -Ilib --port 5001 --server HTTP::Server::PSGI bin/ledgersmb-server.psgi &
         
       - name: Starting 'nginx'
         run: |
@@ -118,6 +118,6 @@ jobs:
           LSMB_NEW_DB: lsmbinstalltest
           LSMB_TEST_DB: 1
           LSMB_BASE_URL: http://127.0.0.1:5000
-          PSGI_BASE_URL: http://127.0.0.1:5762
+          PSGI_BASE_URL: http://127.0.0.1:5001
           REMOTE_SERVER_ADDR: 127.0.0.1
 
