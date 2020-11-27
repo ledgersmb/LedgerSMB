@@ -17,6 +17,10 @@ use Test::More;
 use File::Find;
 use Capture::Tiny ':all';
 
+if ($ENV{COVERAGE} && $ENV{CI}) {
+    plan skip_all => q{CI && COVERAGE excludes source code translation string checks};
+}
+
 my @on_disk;
 sub collect {
     return if $File::Find::dir  =~ m(^blib|xt/lib/|xt/66-cucumber/|LaTex);

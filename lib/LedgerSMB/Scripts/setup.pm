@@ -297,7 +297,7 @@ Checks for common setup issues and errors if admin tasks cannot be completed/
 
 sub sanity_checks {
     my ($database) = @_;
-    `psql --help` || die LedgerSMB::App_State::Locale->text(
+    `PERL5OPT="" PERL5LIB="" psql --help` || die LedgerSMB::App_State::Locale->text(
                                  'psql not found.'
                               );
     return;
