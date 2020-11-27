@@ -87,7 +87,9 @@ jobs:
           cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
 
       - name: Build JS
-        run: make dojo
+        run: |
+          npm install uglify-js@">=2.0 <3.0"
+          make dojo
         
       - name: Other preparations
         run: |
