@@ -99,7 +99,7 @@ jobs:
         
       - name: Starting 'nginx'
         run: |
-          sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
+          sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
           nginx -c /tmp/nginx.conf &
 
       - name: Starting 'PhantomJS'
