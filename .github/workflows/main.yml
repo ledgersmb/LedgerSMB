@@ -116,4 +116,5 @@ jobs:
           LSMB_BASE_URL: http://127.0.0.1:5000
           PSGI_BASE_URL: http://127.0.0.1:5762
           REMOTE_SERVER_ADDR: 127.0.0.1
+          PERL5LIB: ${{ env.PERL5LIB }}:local/
 
