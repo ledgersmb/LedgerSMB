@@ -50,7 +50,7 @@ sub create_user {
     my $btn = $self->find('*button', text => "Create User");
     $btn->click;
 
-    $self->session->page->wait_for_body;
+    $self->session->page->wait_for_body(replaces => $btn);
     return $self->session->page->body;
 }
 
