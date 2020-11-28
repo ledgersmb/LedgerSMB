@@ -55,7 +55,7 @@ sub login {
     my $btn = $self->find('*button', text => "Login");
     $btn->click;
 
-    $self->session->page->wait_for_body;
+    $self->session->page->wait_for_body(replaces => $btn);
     return $self->session->page->body;
 }
 

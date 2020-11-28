@@ -44,7 +44,7 @@ sub edit_user {
     my $user_link = $self->find(".//a[text()='$user']");
     $user_link->click;
 
-    return $self->session->page->wait_for_body;
+    return $self->session->page->wait_for_body(replaces => $user_link);
 }
 
 
