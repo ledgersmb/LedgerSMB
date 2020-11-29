@@ -20,7 +20,7 @@ Changed functionalities
 * Report filters and account settings hide GIFI when not configured
 * Invoice 'Save Info' now saves changes to 'Salesperson'
 * Add option to report opening or closing balance on balance sheet
-* Chart of Accounts examples converted structured XML (from free-format SQL)
+* Chart of Accounts examples converted to XML (from SQL)
 
 Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
@@ -33,6 +33,7 @@ Bugs fixed
 * Value selection on non-required select can be undone with empty item
 * Update menu to conform to selected language after preferences save
 * SIC value is free entry instead of selection from configured SIC list
+* Non-required drop-downs can be 'unselected' application-wide
 
 Code cleanup
 * Align HTML templates between `demo` and `xedemo` document template sets
@@ -47,6 +48,7 @@ Code cleanup
 * Dead code removal from old/ code
 * Removal of licence-incompatible code in utils/lib/
 * Performance tuning of UI template handling code
+* Integrate JS code of main app page better by making it a Dojo widget
 
 Dependency updates
 * perl 5.24 (updated from 5.20)
