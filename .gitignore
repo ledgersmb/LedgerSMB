@@ -9,6 +9,9 @@ META.yml
 # LedgerSMB runtime files
 ledgersmb.conf
 
+# Transifex configuration:
+.transifexrc
+
 # /
 /META.yml
 /ledgersmb.conf
