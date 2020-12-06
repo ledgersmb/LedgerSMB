@@ -70,6 +70,11 @@ dojo:
 	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
 	$(DOCKER_CMD) ./node_modules/webpack/bin/webpack.js --mode=production
 
+devdojo:
+	$(DOCKER_CMD) rm -rf UI/js/*
+	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
+	$(DOCKER_CMD) ./node_modules/webpack/bin/webpack.js --mode=development
+
 # TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
 # TODO: Protect for concurrent invocations
