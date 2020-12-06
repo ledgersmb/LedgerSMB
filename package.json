@@ -122,6 +122,7 @@
     "webpack-log": "3.0.1"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "dijit": "1.16.3",
     "dojo": "1.16.3"
   },
