@@ -43,16 +43,16 @@ define([
             var mainDiv = registry.byId("maindiv");
             if (mainDiv != null) {
                 if (window.location.hash) {
-                    var h = hash();
-                    if (!h.startsWith("__")) {
-                        mainDiv.load_link(hash());
+                    let h = hash();
+                    if (h && !h.startsWith("__")) {
+                        mainDiv.load_link(h);
                     }
                 }
-                topic.subscribe("/dojo/hashchange", function (_hash) {
-                    if (_hash in self.history) {
-                        self.history[_hash]();
-                    } else if (!_hash.startsWith("__")) {
-                        mainDiv.load_link(_hash);
+                topic.subscribe("/dojo/hashchange", function (h) {
+                    if (h in self.history) {
+                        self.history[h]();
+                    } else if (!h.startsWith("__")) {
+                        mainDiv.load_link(h);
                     }
                 });
             }
