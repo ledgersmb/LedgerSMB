@@ -131,7 +131,7 @@
   "homepage": "http://ledgersmb.org/",
   "scripts": {
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
-    "build": "webpack --progress --mode=production --display-error-details",
+    "build": "webpack --progress --mode=production",
     "build:dev": "webpack --mode=development",
     "serve": "webpack-dev-server --env.dev",
     "lint:js": "eslint --ext .js ./",
