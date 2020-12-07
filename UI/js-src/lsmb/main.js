@@ -24,16 +24,36 @@ define([
     domStyle
 ) {
     return declare("lsmb/main", [_WidgetBase, _Container], {
+        history: {},
+        addHistory: function (fn) {
+            var h = "__";
+            var chars =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 25; i++) {
+                h += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            this.history[h] = fn;
+
+            return h;
+        },
         startup: function () {
+            var self = this;
             this.inherited(arguments);
 
             var mainDiv = registry.byId("maindiv");
             if (mainDiv != null) {
                 if (window.location.hash) {
-                    mainDiv.load_link(hash());
+                    let h = hash();
+                    if (h && !h.startsWith("__")) {
+                        mainDiv.load_link(h);
+                    }
                 }
-                topic.subscribe("/dojo/hashchange", function (_hash) {
-                    mainDiv.load_link(_hash);
+                topic.subscribe("/dojo/hashchange", function (h) {
+                    if (h in self.history) {
+                        self.history[h]();
+                    } else if (!h.startsWith("__")) {
+                        mainDiv.load_link(h);
+                    }
                 });
             }
 

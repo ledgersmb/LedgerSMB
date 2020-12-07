@@ -37,7 +37,6 @@ define([
     var c = 0;
 
     return declare("lsmb/MainContentPane", [ContentPane], {
-        last_page: null,
         startup: function () {
             this.inherited("startup", arguments);
             domClass.add(this.domNode, "done-parsing");
@@ -107,7 +106,7 @@ define([
                 }
             );
         },
-        load_form: function (url, options) {
+        _load_form: function (url, options) {
             var self = this;
             self.fade_main_div();
             return xhr(url, options).then(
@@ -120,6 +119,13 @@ define([
                     self.report_request_error(err);
                 }
             );
+        },
+        load_form: function (url, options) {
+            var self = this;
+            var h = registry.byId("main").addHistory(function () {
+                self._load_form(url, options);
+            });
+            hash(h);
         },
         /* eslint spaced-comment:0 */
         download_link: function (/*href*/) {
@@ -140,10 +146,6 @@ define([
             //     });
         },
         load_link: function (href) {
-            if (this.last_page === href) {
-                return undefined;
-            }
-            this.last_page = href;
             return this.load_form(href, { handlesAs: "text" });
         },
         fade_main_div: function () {
