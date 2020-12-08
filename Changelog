@@ -34,6 +34,7 @@ Bugs fixed
 * Update menu to conform to selected language after preferences save
 * SIC value is free entry instead of selection from configured SIC list
 * Non-required drop-downs can be 'unselected' application-wide
+* Back button steps back along the various form submissions intuitively now
 
 Code cleanup
 * Align HTML templates between `demo` and `xedemo` document template sets
