@@ -188,7 +188,9 @@ define([
                     "content",
                     newContent
                 ]).then(function () {
-                    query("a", self.domNode).forEach(self.interceptClick);
+                    query("a", self.domNode).forEach(function (node) {
+                        self.interceptClick(node);
+                    });
                     self.show_main_div();
                 });
             }
