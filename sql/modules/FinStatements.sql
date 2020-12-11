@@ -47,11 +47,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($5,
-                          (SELECT up.language
-                             FROM user_preference up
-                       INNER JOIN users ON up.id = users.id
-                            WHERE users.username = SESSION_USER))) at
+                        coalesce($5, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -76,11 +72,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($5,
-                         (SELECT up.language
-                            FROM user_preference up
-                      INNER JOIN users ON up.id = users.id
-                           WHERE users.username = SESSION_USER))) at
+                       coalesce($5, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -177,11 +169,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($5,
-                          (SELECT up.language
-                             FROM user_preference up
-                       INNER JOIN users ON up.id = users.id
-                            WHERE users.username = SESSION_USER))) at
+                        coalesce($5, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -206,11 +194,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($5,
-                         (SELECT up.language
-                            FROM user_preference up
-                      INNER JOIN users ON up.id = users.id
-                           WHERE users.username = SESSION_USER))) at
+                       coalesce($5, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -298,11 +282,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($5,
-                          (SELECT up.language
-                             FROM user_preference up
-                       INNER JOIN users ON up.id = users.id
-                            WHERE users.username = SESSION_USER))) at
+                        coalesce($5, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -327,11 +307,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($5,
-                         (SELECT up.language
-                            FROM user_preference up
-                      INNER JOIN users ON up.id = users.id
-                           WHERE users.username = SESSION_USER))) at
+                       coalesce($5, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -421,11 +397,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($2,
-                          (SELECT up.language
-                             FROM user_preference up
-                       INNER JOIN users ON up.id = users.id
-                            WHERE users.username = SESSION_USER))) at
+                        coalesce($2, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -450,11 +422,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($2,
-                         (SELECT up.language
-                            FROM user_preference up
-                      INNER JOIN users ON up.id = users.id
-                           WHERE users.username = SESSION_USER))) at
+                       coalesce($2, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -513,11 +481,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($4,
-                          (SELECT up.language
-                             FROM user_preference up
-                       INNER JOIN users ON up.id = users.id
-                            WHERE users.username = SESSION_USER))) at
+                        coalesce($4, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -542,11 +506,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($4,
-                         (SELECT up.language
-                            FROM user_preference up
-                      INNER JOIN users ON up.id = users.id
-                           WHERE users.username = SESSION_USER))) at
+                       coalesce($4, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -626,11 +586,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce(in_language,
-                         (SELECT up.language
-                            FROM user_preference up
-                      INNER JOIN users ON up.id = users.id
-                           WHERE users.username = SESSION_USER))) at
+                       coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
      WHERE array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)
@@ -648,11 +604,7 @@ acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce(in_language,
-                          (SELECT up.language
-                             FROM user_preference up
-                       INNER JOIN users ON up.id = users.id
-                            WHERE users.username = SESSION_USER))) at
+                        coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
      WHERE array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)

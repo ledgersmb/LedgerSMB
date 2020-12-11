@@ -1232,8 +1232,8 @@ sub db_init {
 
 sub _set_datestyle {
     my $dbh = shift;
-    my $datequery = 'select dateformat from user_preference join users using(id)
-                      where username = CURRENT_USER';
+    my $datequery = q{select "value" from user_preference join users using(id)
+                      where "name" = 'dateformat' and username = CURRENT_USER};
     my $date_sth = $dbh->prepare($datequery);
     $date_sth->execute;
     my ($datestyle) = $date_sth->fetchrow_array;

@@ -357,8 +357,6 @@ AS $$
                     in_username,
                     in_entity_id
                 );
-
-                insert into user_preference (id) values (v_user_id);
             END IF;
 
             IF NOT exists(SELECT * FROM entity_employee WHERE entity_id = in_entity_id) THEN
@@ -413,9 +411,7 @@ CREATE OR REPLACE FUNCTION admin__delete_user
                 stmt := ' drop user ' || quote_ident(a_user.username);
                 execute stmt;
             END IF;
-            -- also gets user_connection
-            delete from user_preference where id = (
-                   select id from users where entity_id = a_user.entity_id);
+            -- delete cascades into user_preference by schema definition
             delete from users where entity_id = a_user.entity_id;
             return 1;
         END IF;
@@ -494,14 +490,13 @@ create or replace function user__save_preferences(
 ) returns bool as
 $$
 BEGIN
-    UPDATE user_preference
-    SET dateformat = in_dateformat,
-        numberformat = in_numberformat,
-        language = in_language,
-        stylesheet = in_stylesheet,
-        printer = in_printer
-    WHERE id = (select id from users where username = SESSION_USER);
-    RETURN FOUND;
+    perform preference__set('dateformat', in_dateformat);
+    perform preference__set('numberformat', in_numberformat);
+    perform preference__set('language', in_language);
+    perform preference__set('stylesheet', in_stylesheet);
+    perform preference__set('printer', in_printer);
+
+    RETURN true;
 END;
 $$ language plpgsql;
 
@@ -515,20 +510,33 @@ COMMENT ON function user__save_preferences(
 $$ Saves user preferences.  Returns true if successful, false if no preferences
 were found to update.$$;
 
+
+DROP TYPE if exists user_preferences CASCADE;
+CREATE TYPE user_preferences AS (
+  dateformat text,
+  numberformat text,
+  language text,
+  stylesheet text,
+  printer text
+);
+
 DROP FUNCTION IF EXISTS user__get_preferences (in_user_id int);
-create or replace function user__get_preferences (in_user_id int) returns user_preference as $$
+create or replace function user__get_preferences (in_user_id int)
+returns user_preferences as $$
 
 declare
-    v_row user_preference;
+    v_row user_preferences;
 BEGIN
-    select * into v_row from user_preference where id = in_user_id;
+    --TODO This is a workaround waiting to be replaced with something more
+    -- appropriate for returning a flexible set of preference values
+    select preference__get('dateformat'),
+           preference__get('numberformat'),
+           preference__get('language'),
+           preference__get('stylesheet'),
+           preference__get('printer')
+       into v_row;
 
-    IF NOT FOUND THEN
-
-        RAISE EXCEPTION 'Could not find user preferences for id %', in_user_id;
-    ELSE
-        return v_row;
-    END IF;
+    return v_row;
 END;
 $$ language plpgsql;
 
