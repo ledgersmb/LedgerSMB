@@ -9,7 +9,7 @@ BEGIN;
 -- Functions used in IR.pm
 --
 
-CREATE FUNCTION avgcost(int) RETURNS FLOAT AS '
+CREATE OR REPLACE FUNCTION avgcost(int) RETURNS FLOAT AS '
 
 DECLARE
 
@@ -41,7 +41,9 @@ END;
 ' language 'plpgsql';
 -- end function
 --
-CREATE FUNCTION lastcost(int) RETURNS FLOAT AS '
+
+
+CREATE OR REPLACE FUNCTION lastcost(int) RETURNS FLOAT AS '
 
 DECLARE
 
