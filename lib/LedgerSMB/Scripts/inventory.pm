@@ -68,8 +68,8 @@ sub enter_adjust {
 =item adjustment_next
 
 This function is triggered on the next button on the adjustment entry screen.
-It retrieves inventory information, calculates adjustment values, and displays the
-screen.
+It retrieves inventory information, calculates adjustment values, and displays
+the screen.
 
 =cut
 
@@ -94,12 +94,13 @@ sub adjustment_next {
 
 =item adjustment_save
 
-This function saves the inventory adjustment report and then creates the required
-invoices.
+This function saves the inventory adjustment report and then creates the
+required invoices.
 
 =cut
 
 sub _lines_from_form {
+    # NOTE! A similar implementation is also in import_csv!
     my ($adjustment, $hashref) = @_;
     my @lines;
     for my $ln (1 .. $hashref->{rowcount}){
