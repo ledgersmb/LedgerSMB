@@ -30,6 +30,7 @@ is created as a LedgerSMB company. These are the common commands:
   destroy*   Delete a database
   rename     Rename a database, retaining access rights
   restore    Restore database from backup file
+  upgrade    Upgrade database schema and stored procedures
 
 =head2 Manage company setup
 
