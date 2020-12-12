@@ -45,6 +45,14 @@ Then qr/^I should see these Reconciliation Report headings:$/, sub {
 };
 
 
+When qr/I update the form/, sub {
+    my $page = S->{ext_wsl}->page->body->maindiv;
+    my $content = $page->content;
+
+    $page->find('*button', text => 'Update')->click;
+    $page->wait_for_content(replaces => $content);
+};
+
 When qr/I click on the Batch with Batch Number "(.*)"/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     my $batch_number = $1;
