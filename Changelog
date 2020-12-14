@@ -255,6 +255,12 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.25
+* Faster GL account tree consistency check
+* Maintain consistency between ar/ap/gl and transactions tables on delete
+* Fix CSV import of inventory adjustment
+
+
 Changelog for 1.7.24
 * Fix 'Approved'/'Unapproved' filter in GL Search not working (#5181)
 
