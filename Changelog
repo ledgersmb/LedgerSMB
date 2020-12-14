@@ -3,6 +3,13 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.8
+* Faster GL account tree consistency check
+* Maintain consistency between ar/ap/gl and transactions tables on delete
+* Fix CSV import of inventory adjustment
+* Fix failure to delete unapproved reconciliation reports
+
+
 Changelog for 1.8.7
 * Fix internal server error when creating AR/AP voucher (#5188)
 * Fix AP Aging inadvertedly having been dropped from the menu (#5193)
