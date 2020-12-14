@@ -430,6 +430,12 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.28
+* Faster GL account tree consistency check
+* Maintain consistency between ar/ap/gl and transactions tables on delete
+* Fix CSV import of inventory adjustment to use same logic as manual input
+
+
 Changelog for 1.6.27
 * Fix sales person failing to save on AR/AP Transactions (Aung ZW, 5115)
 * Fix 'Manager' drop down not populated in employee page (Erik H, #5125)
