@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.6.28-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2020-09-27 18:43+0000\n"
+"POT-Creation-Date: 2020-12-14 21:55+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2018\n"
 "Language-Team: Arabic (Egypt) (https://www.transifex.com/ledgersmb/"
 "teams/58325/ar_EG/)\n"
@@ -2126,9 +2126,8 @@ msgid "Customer History"
 msgstr "بيانات تاريخية للعميل"
 
 #: UI/Contact/divs/credit.html:369
-#, fuzzy
 msgid "Customer Invoice"
-msgstr " عميل غير موجود في الملف"
+msgstr ""
 
 #: UI/payments/payment1.html:40 UI/payments/payment2.html:28
 #: UI/Reports/filters/orders.html:8
