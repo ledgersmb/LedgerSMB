@@ -66,6 +66,12 @@ commands:
     description: "Prepare environment"
     steps:
       - checkout
+      - run:
+          # TODO: Update the CircleCI dev images instead
+          name: Update NodeJS to 15.x
+          command: |
+            curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+            sudo apt-get install -y nodejs
       - restore_cache:
           keys:
             # Find a cache corresponding to this specific package-lock.json checksum
