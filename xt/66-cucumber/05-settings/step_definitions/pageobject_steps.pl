@@ -44,4 +44,12 @@ When qr/^I enter "(.*)" as the description for a new currency/, sub {
 };
 
 
+When qr/I update the form/, sub {
+    my $page = S->{ext_wsl}->page->body->maindiv;
+    my $content = $page->content;
+
+    $page->find('*button', text => 'Add/Update')->click;
+    $page->wait_for_content(replaces => $content);
+};
+
 1;

@@ -94,7 +94,7 @@ Scenario: Payment within period of payment terms, posted afterwards
       | Due      |   100.00 |
       | To pay   |   100.00 |
   When I enter "2017-01-11" into "Date"
-   And I press "Update"
+   And I update the form
   Then I expect the open item for invoice INV100 to show:
       | Column   | Expected |
       | Total    |   100.00 |
@@ -107,7 +107,7 @@ Scenario: Payment within period of payment terms, posted afterwards
   # When I edit the open item for invoice INV100 with these values:
   #     | Column         | Value |
   #     | Apply Discount |       |
-  #  And I press "Update"
+  #  And I update the form
   # Then I expect the open item for invoice INV100 to show:
   #     | Column   | Expected |
   #     | Total    |   100.00 |
@@ -132,7 +132,7 @@ Scenario: Exclusion of an invoice from the payment list
       | Column | Value |
       | X      |       |
   When I enter "2017-02-02" into "Date"
-   And I press "Update"
+   And I update the form
   Then I expect the open items table to contain 1 row
    And I expect the open item for invoice INV101 to show:
       | Column   | Expected |
