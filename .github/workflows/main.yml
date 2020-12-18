@@ -37,6 +37,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - uses: mstachniuk/ci-skip@v1
+        with:
+          commit-filter: 'skip ci;ci skip'
+          commit-filter-separator: ';'
+          fail-fast: true
+      - name: Verification
+        run: |
+          echo "The previous step should exiting with 42 code and this code should not run"
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Setup Perl environment
         # You may pin to the exact commit or the version.
@@ -70,9 +80,6 @@ jobs:
           key: ${{ runner.os }}-cpan-${{ matrix.perl }}-${{ hashFiles('**/{Makefile,Build}.PL') }}
           # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
           restore-keys: ${{ runner.os }}-cpan-${{ matrix.perl }}
-
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
 
       - name: Install apt packages
         run: sudo apt-get update && sudo apt-get install -y texlive-latex-recommended texlive-xetex gettext nginx
