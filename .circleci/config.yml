@@ -7,15 +7,24 @@ _defaults: &defaults
     # Make sure that .profile is sourced to local::lib
     shell: /bin/bash --login -eo pipefail
 
-
 # Define aliases for simplification
 aliases:
   - &store_artifacts
     store_artifacts:
       path: /tmp/artifact/
 
+job_filters: &job_filters
+  branches:
+    ignore:
+      - /1\.2\..*/
+      - /1\.3\..*/
+      - /1\.4\..*/
+      - /1\.5\..*/
+      - /1\.6\..*/
+
 # Reuseable commands
 commands:
+
   prove:
     steps:
       - run:
@@ -24,12 +33,9 @@ commands:
              then
                export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
              fi
-             echo $PERL5OPT
-             echo $HARNESS_PERL_SWITCHES
-             echo $PWD
              # Coverage explicitly without parallellism to prevent resource contention
              # when Devel::Cover writes coverage database on process-exit
-             prove -j2 --recurse \
+             BROWSER=$BROWSER prove -j2 --recurse \
                    --pgtap-option dbname=lsmbinstalltest \
                    --pgtap-option username=postgres \
                    --pgtap-option psql=.circleci/psql-wrap \
@@ -59,6 +65,7 @@ commands:
               cover -report text > /tmp/artifact/coverage.txt
             fi
       - *store_artifacts
+
   prep_env:
     parameters:
       perl:
@@ -76,7 +83,7 @@ commands:
           keys:
             # Find a cache corresponding to this specific package-lock.json checksum
             # when this file is changed, this key will fail
-            - v1-npm-deps-{{ checksum "~/package-lock.json" }}
+            - v1-npm-deps-{{ checksum "./package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-npm-deps-
       - run:
@@ -84,14 +91,14 @@ commands:
           command: |
             make dojo
       - save_cache:
-          key: v1-npm-deps-{{ checksum "~/package-lock.json" }}
+          key: v1-npm-deps-{{ checksum "./package-lock.json" }}
           paths:
             - node_modules
       # Freshen up CPAN
       - restore_cache:
           keys:
             # Get latest cache for the current specs
-            - v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "~/project/cpanfile" }}
+            - v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "./cpanfile" }}
             # Fall back to the latest for the current branch
             - v2-cpm-<< parameters.perl >>-{{ .Branch }}-
             # Fall back to the latest for master
@@ -119,9 +126,9 @@ commands:
                   Devel::Cover::Report::Coveralls
             fi
       - save_cache:
-           key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "~/project/cpanfile" }}
+           key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "./cpanfile" }}
            paths:
-             - ~/perl5
+             - $HOME/perl5
       - run:
           name: Set up dirs and files
           command: |
@@ -138,18 +145,29 @@ commands:
                 -e "s/# \(backup_email_from = \).*\$/\1lsmb-backups@example.com/g" \
                 -e "s/#dojo_built = 1/dojo_built = 0/" \
               ledgersmb.conf
+      - run:
+          name: Set up host IP & BASE variables
+          command: |
+                echo "export LSMB_BASE_URL=http://$(hostname -I |awk '{print $1}'):5000" >> $BASH_ENV
+                echo "export PSGI_BASE_URL=http://$(hostname -I |awk '{print $1}'):5762" >> $BASH_ENV
+                source $BASH_ENV
+
+
   start_plackup:
     description: "Start plackup"
     steps:
       - run:
           command: |
             PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" \
+            LSMB_BASE_URL=http://$(hostname -I |awk '{print $1}'):5000 \
+            PSGI_BASE_URL=http://$(hostname -I |awk '{print $1}'):5762 \
                     plackup -I$HOME/project/lib -I$HOME/project/old/lib \
                     -s Gazelle --port 5762 --workers=2 --max-reqs-per-child=50000 \
                     $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
           background: true
+
   start_proxy:
     description: "Start the proxy"
     parameters:
@@ -168,23 +186,31 @@ executors:
     parameters:
       perl:
         type: string
+        default: latest
       postgres:
         type: string
+        default: latest
       browser:
         type: string
         default: chrome
       coverage:
         type: integer
         default: 1
+      selenium:
+        type: string
+        default: selenium/standalone-chrome
     docker:
       - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
       - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
-      - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
+      - image: << parameters.selenium >>
+        environment:
+          SE_OPTS: "-port 4422 "
+          GRID_DEBUG: "true"
     environment:
+      BROWSER: << parameters.browser >>
       COVERAGE: << parameters.coverage >>
-#      DEVEL_COVER_OPTIONS:
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres
@@ -197,13 +223,42 @@ executors:
 
 # Define jobs
 jobs:
-  test_nodojo:
+  test_webpack_chrome:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.30'
+      postgres: '11'
+      browser: chrome
+      selenium: selenium/standalone-chrome:3.141.59
+    steps:
+      - prep_env:
+          perl: '5.30'
+      - start_plackup
+      - start_proxy
+      - prove
+  test_webpack_firefox:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.30'
+      postgres: '11'
+      browser: firefox
+      selenium: selenium/standalone-firefox:3.141.59
+    steps:
+      - prep_env:
+          perl: '5.30'
+      - start_plackup
+      - start_proxy
+      - prove
+  test_webpack_phantomjs:
     <<: *defaults
     executor:
       name: test
       perl: '5.30'
       postgres: '11'
       browser: phantomjs
+      selenium: ylavoie/standalone-phantomjs:latest
     steps:
       - prep_env:
           perl: '5.30'
@@ -216,12 +271,11 @@ jobs:
 workflows:
   workflow:
     jobs:
-      - test_nodojo:
-          filters:
-             branches:
-                ignore:
-                  - /1\.2\..*/
-                  - /1\.3\..*/
-                  - /1\.4\..*/
-                  - /1\.5\..*/
-                  - /1\.6\..*/
+      - test_webpack_chrome:
+          filters: *job_filters
+
+      - test_webpack_firefox:
+          filters: *job_filters
+
+      - test_webpack_phantomjs:
+          filters: *job_filters

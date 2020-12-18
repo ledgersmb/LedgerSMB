@@ -21,6 +21,18 @@
         </a>
       </div>
       <div id="version_info">[% text("LedgerSMB [_1]", version) %]</div>
+      <script>
+      (function myFunction() {
+        var n = navigator,
+          dua = n.userAgent;
+        document.getElementById("version_info").innerHTML =
+        document.getElementById("version_info").innerHTML + ":" + (
+          dua.indexOf("Opera") >= 0 ? "Opera" :
+          dua.indexOf("Gecko") >= 0 ? "Firefox" :
+          parseFloat(dua.split("Chrome/")[1]) ? "Chrome" :
+          n);
+      })();
+      </script>
       <table id="header_info" class="header_table">
         <tr>
           <td id="login_info_header" class="header_left">

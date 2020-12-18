@@ -186,10 +186,10 @@ on 'develop' => sub {
     requires 'Test::Pod::Coverage';
     requires 'Test2::V0';
     requires 'Text::Diff';
-    requires 'Weasel', '0.21';
+    requires 'Weasel', '0.27';
     requires 'Weasel::Driver::Selenium2', '0.11';
     requires 'Weasel::Session', '0.11';
-    requires 'Weasel::Widgets::Dojo', '0.04';
+    requires 'Weasel::Widgets::Dojo', '0.07';
 
     feature 'debug', "Debug pane" =>
         sub {

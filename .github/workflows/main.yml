@@ -6,12 +6,12 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: '*'
+    branches: ['*']
   pull_request:
     branches: '*'
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  # workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,8 +24,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        perl: [ "5.24", "5.28", "5.32" ]
+        include:
+          - perl: "5.32"
+            BROWSER: "chrome"
+            SELENIUM: "selenium/standalone-chrome:3.141.59"
+          - perl: "5.28"
+            BROWSER: "firefox"
+            SELENIUM: "selenium/standalone-firefox:3.141.59"
+          - perl: "5.24"
+            BROWSER: "phantomjs"
+            SELENIUM: "ylavoie/standalone-phantomjs:latest"
     services:
+      # Label used to access the service container
       postgres:
         # Docker Hub image
         image: ledgersmb/ledgersmb-dev-postgres
@@ -58,7 +68,7 @@ jobs:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: 15.x
 
-      - name: Cache node modules
+      - name: Restore cached node modules
         uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -66,7 +76,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Cache cpan modules
+      - name: Restore cached cpan modules
         uses: actions/cache@v2.1.3
         with:
           # A list of files, directories, and wildcard patterns to cache and restore
@@ -80,9 +90,20 @@ jobs:
         uses: actions/checkout@v2.3.4
 
       - name: Install apt packages
-        run: sudo apt-get update && sudo apt-get install -y texlive-latex-recommended texlive-xetex gettext nginx
+        run: sudo apt-get update &&
+             sudo apt-get install -qqy texlive-latex-recommended texlive-xetex gettext nginx
         env:
           DEBIAN_FRONTEND: noninteractive
+
+      - name: Cache cpan modules
+        uses: actions/cache@v2.1.3
+        with:
+          # A list of files, directories, and wildcard patterns to cache and restore
+          path: $PERL5LIB
+          # An explicit key for restoring and saving the cache
+          key: ${{ runner.os }}-cpan-${{ hashFiles('**/cpanfile') }}
+          # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
+          restore-keys: ${{ runner.os }}-cpan-
 
       - name: install with cpm
         run: |
@@ -94,19 +115,28 @@ jobs:
 
       - name: Other preparations
         run: |
-          mkdir screens logs
+          mkdir -p screens logs
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
 
       - name: Starting 'starman'
         run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+        # Use plackup to add reloading capability & debug
+        #run: plackup -Ilib -Iold/lib --port 5762 --server Starman --Reload lib,old,xt/lib,t,xt,/opt/hostedtoolcache/perl/${{ matrix.perl }}/x64/lib/site_perl/${{ matrix.perl }},/usr/share/perl,/usr/share/perl5 bin/ledgersmb-server.psgi &
 
       - name: Starting 'nginx'
         run: |
           sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
           nginx -c /tmp/nginx.conf &
 
-      - name: Starting 'PhantomJS'
-        run: phantomjs --webdriver=4422 2>/dev/null >/dev/null &
+      - name: Starting ${{ matrix.BROWSER }}
+        run: |
+          echo "$(ip addr show docker0 | grep -Po 'inet \K[\d.]+') host.docker.internal" | sudo tee -a /etc/hosts
+          docker run -v /dev/shm:/dev/shm -p 4422:4444 -e GRID_DEBUG=true --add-host=host.docker.internal:$(ip addr show docker0 | grep -Po 'inet \K[\d.]+') ${{ matrix.SELENIUM }} &
+
+      # Uncomment to debug
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v3
+      #  if: ${{ matrix.BROWSER }} == "chrome"
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
@@ -118,6 +148,6 @@ jobs:
           PGPASSWORD: test
           LSMB_NEW_DB: lsmbinstalltest
           LSMB_TEST_DB: 1
-          LSMB_BASE_URL: http://127.0.0.1:5000
-          PSGI_BASE_URL: http://127.0.0.1:5762
-          REMOTE_SERVER_ADDR: 127.0.0.1
+          LSMB_BASE_URL: http://host.docker.internal:5000
+          PSGI_BASE_URL: http://host.docker.internal:5762
+          BROWSER: ${{ matrix.BROWSER }}
