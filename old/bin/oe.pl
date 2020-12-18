@@ -1411,6 +1411,9 @@ sub invoice {
     if ( $form->{type} =~ /_order$/ ) {
         $form->{exchangerate} = $exchangerate;
         &create_backorder;
+        $form->{transdate} = '';
+        $form->{duedate} = '';
+        $form->{crdate} = '';
     }
 
     if (   $form->{type} eq 'purchase_order'
