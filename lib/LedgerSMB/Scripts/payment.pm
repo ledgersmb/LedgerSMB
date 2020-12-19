@@ -54,6 +54,7 @@ use List::Util qw/any sum/;
 
 use LedgerSMB::Batch;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH  BRU_DEPARTMENT  EC_VENDOR );
 use LedgerSMB::Num2text;
@@ -160,7 +161,7 @@ is saved.  For receipts, this just redirects to bulk_post currently.
 
 my $bulk_post_map = input_map(
     [ qr/^(?<fld>id|source|memo|paid)_(?<cid>\d+)$/ => '@contacts<cid>:%<fld>' ],
-    [ qr/^contact_label_(?<cid>\d+)$/ => '@contacts<cid>:%pay_to>' ],
+    [ qr/^contact_label_(?<cid>\d+)$/ => '@contacts<cid>:%pay_to' ],
     [ qr/^(?<fld>invoice_date|invnumber|due|payment|invoice|net)_(?<cid>\d+)_(?<invrow>\d+)$/
       => '@contacts<cid>:@invoices<invrow>:%<fld>' ],
     [ qr/(?<fld>cash_accno|ar_ap_accno)$/ => '%<fld>' ],
@@ -199,11 +200,6 @@ sub pre_bulk_post_report {
             type => 'text',
         },
         {
-            col_id => 'memo',
-            name => $request->{_locale}->text('Memo'),
-            type => 'text',
-        },
-        {
             col_id => 'debits',
             name => $request->{_locale}->text('Debits'),
             type => 'text',
@@ -227,9 +223,15 @@ sub pre_bulk_post_report {
     # The user interface sets the 'id' field true-ish when the customer
     # is selected for inclusion in the bulk payment
     @{$data->{contacts}} = grep { $_->{id} } @{$data->{contacts}};
+    my %accounts =
+        map { $_->{accno} => $_ } LedgerSMB::DBObject::Account->new(
+            dbh => $request->{dbh}
+        )->list;
+
     for my $crow (@{$data->{contacts}}) {
         $crow->{accno} = $data->{ar_ap_accno};
-        $crow->{transdate} = $request->{payment_date};
+        $crow->{acc_description} = $accounts{$crow->{accno}}->{description};
+        $crow->{transdate} = $data->{payment_date};
         $crow->{amount} =
             sum map {
                 ($crow->{paid} eq 'some')
@@ -239,7 +241,7 @@ sub pre_bulk_post_report {
         $crow->{amount} *= -1
                     if ($request->{account_class} == EC_VENDOR);
         $crow->{debits} = ($crow->{amount} < 0) ? ($crow->{amount} * -1) : 0;
-        $crow->{credits} = ($crow->{amount} > 0) ? $crow->{amount} : 0;;
+        $crow->{credits} = ($crow->{amount} > 0) ? $crow->{amount} : 0;
     }
     my $rows = $data->{contacts};
 
@@ -249,10 +251,10 @@ sub pre_bulk_post_report {
 
     # Cash summary
     my $ref = {
-       accno     => $request->{cash_accno},
-       transdate => $request->{date_paid},
-       source    => $request->{_locale}->text('Total'),
-       amount    => $total,
+        accno           => $request->{cash_accno},
+        acc_description => $accounts{$request->{cash_accno}}->{description},
+        transdate       => $data->{payment_date},
+        amount          => $total,
     };
     $ref->{amount} *= -1;
 
@@ -282,13 +284,16 @@ sub pre_bulk_post_report {
     $request->{hiddens} = { %$request }; # prevent circular reference
     delete $request->{form_id};
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'Reports/display_report',
-                             {
-                                 request => $request,
-                                 columns => $cols,
-                                 rows    => $rows,
-                                 buttons => $buttons,
-                             });
+    return $template->render(
+        $request,
+        'Reports/display_report',
+        {
+            request => $request,
+            name    => $request->{_locale}->text('Payment batch'),
+            columns => $cols,
+            rows    => $rows,
+            buttons => $buttons,
+        });
 }
 
 
