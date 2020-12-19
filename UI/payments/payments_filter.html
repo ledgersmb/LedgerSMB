@@ -100,7 +100,7 @@
                 label = pay_label
         } %]
 
-[% IF payment.payment_types %]
+[% IF payment.payment_types && payment.payment_types.size > 0 %]
 
 <div id = "payments-filter-payment_types" class="inputpayment">
 
@@ -110,7 +110,7 @@
                 options = payment.payment_types
                 value_attr = "id"
                 text_attr = "label"
-                label = text('Payment Type') #'
+                label = text('Payment Type')
         } %]
 
 
