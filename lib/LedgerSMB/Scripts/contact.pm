@@ -312,6 +312,7 @@ sub _main_screen {
         $request->call_procedure(
             funcname => 'entity__list_classes'
         );
+    my @eca_classes = grep { $_->{id} < 3 } @entity_classes;
 
     my $roles;
     $roles = $user->list_roles if $user;
@@ -334,6 +335,7 @@ sub _main_screen {
               credit_list => \@credit_list,
               pricegroups => \@pricegroups,
            entity_classes => \@entity_classes,
+              eca_classes => \@eca_classes,
                 locations => \@locations,
                  contacts => \@contacts,
              bank_account => \@bank_account,
