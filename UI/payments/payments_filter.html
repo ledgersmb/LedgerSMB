@@ -100,7 +100,7 @@
                 label = pay_label
         } %]
 
-[% IF payment.payment_types %]
+[% IF payment.payment_types && payment.payment_types.size > 0 %]
 
 <div id = "payments-filter-payment_types" class="inputpayment">
 
