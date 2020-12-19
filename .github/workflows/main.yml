@@ -38,6 +38,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Setup Perl environment
         # You may pin to the exact commit or the version.
