@@ -60,16 +60,15 @@ PROCESS dynatable
         <tr class="eca_row">
         <td>
         [%
-
         PROCESS select element_data = {
                    id = 'eca-entity-class-id'
                  name = 'entity_class'
                  name = "entity_class"
-              options = entity_classes
+              options = eca_classes
        default_values = [ec]
             text_attr = 'class'
            value_attr = 'id'
-                title = text('Class')
+                label = text('Class')
         } %]</td>
 
 
