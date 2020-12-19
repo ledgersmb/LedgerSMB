@@ -121,12 +121,24 @@ $$
 declare
         t_table text;
 begin
-        DELETE FROM ac_tax_form
-        WHERE entry_id IN
-                (SELECT entry_id FROM acc_trans WHERE trans_id = in_id);
+        DELETE FROM ac_tax_form atf
+         WHERE EXISTS (SELECT 1 FROM acc_trans
+                        WHERE entry_id = atf.entry_id
+                              AND trans_id = in_id);
+
+        DELETE FROM payment_links pl
+         WHERE EXISTS (SELECT 1 FROM acc_trans
+                        WHERE entry_id = pl.entry_id
+                              AND trans_id = in_id)
+               AND (SELECT count(distinct ac.trans_id)
+                      FROM payment p
+                      JOIN payment_links pli ON p.id = pli.payment_id
+                      JOIN acc_trans ac ON pli.entry_id = ac.entry_id
+                     WHERE pl.payment_id = p.id) <= 1;
 
         DELETE FROM acc_trans WHERE trans_id = in_id;
-        SELECT lower(table_name) into t_table FROM transactions where id = in_id;
+        SELECT lower(table_name) into t_table
+          FROM transactions where id = in_id;
 
         IF t_table = 'ar' THEN
                 DELETE FROM ar WHERE id = in_id AND approved IS FALSE;
