@@ -41,6 +41,7 @@ Help on using this Makefile
     - dist         : Builds the release distribution archive
     - dojo         : Builds the minified dojo blob we serve to clients
     - pod          : Builds POD documentation
+    - pot          : Builds LedgerSMB.pot translation lexicon
     - test         : Runs tests (TESTS='t/')
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
@@ -104,6 +105,11 @@ pod:
 	mkdir UI/pod
 	chmod 777 UI/pod
 	$(DOCKER_CMD) utils/pod2projdocs.pl 2>&1 pod2projdocs.log
+
+pot:
+	chmod 666 locale/LedgerSMB.pot locale/po/*.po
+	chmod 777 locale/po
+	$(DOCKER_CMD) utils/devel/rebuild_pot.sh
 
 test: TESTS ?= t/
 test:
