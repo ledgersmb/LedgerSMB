@@ -35,9 +35,21 @@
     [% FOREACH s = include_stylesheet %]
     <link href="js/css/[% s %]" rel="stylesheet">
     [% END %]
-    [% IF warn_expire %]
+    [% IF warn_expire ;
+       IF pw_expires.years ;
+          ALERT = text("Warning: Your password will expire in [_1] years", pw_expires.years);
+       ELSIF pw_expires.months ;
+          ALERT = text("Warning: Your password will expire in [_1] months", pw_expires.months);
+       ELSIF pw_expires.weeks ;
+          ALERT = text("Warning: Your password will expire in [_1] weeks", pw_expires.weeks);
+       ELSIF pw_expires.days ;
+          ALERT = text("Warning: Your password will expire in [_1] days", pw_expires.days);
+       ELSE ;
+          ALERT = text("Warning: Your password will expire today");
+       END;
+    %]
     <script>
-        window.alert("[% text('Warning:  Your password will expire in [_1]', pw_expires)%]");
+        window.alert("[% ALERT %]");
     </script>
     [% END %]
     <script>

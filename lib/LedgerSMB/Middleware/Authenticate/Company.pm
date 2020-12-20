@@ -116,6 +116,7 @@ sub _connect {
         @{$session}{qw/ login username password company /} =
             ($login, $login, $password, $company);
     }
+    $dbh->do(q{SET intervalstyle = 'iso_8601'});
     return $dbh;
 }
 
