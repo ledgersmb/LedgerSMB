@@ -39,7 +39,7 @@ Displays a list of configured currencies.  No inputs required or used.
 
 sub list_currencies {
     my ($request) = @_;
-    my @currencies = LedgerSMB::Currency->list();
+    my @currencies = LedgerSMB::Currency->list(1); # check if currency is used
     my $default_curr =
         LedgerSMB::Setting->new(%$request)->get('curr');
     my $columns = [

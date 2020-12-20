@@ -78,16 +78,19 @@ CREATE TYPE currency_list AS (
 );
 
 DROP FUNCTION IF EXISTS currency__list();
-CREATE OR REPLACE FUNCTION currency__list()
+CREATE OR REPLACE FUNCTION currency__list(in_check_use boolean)
 RETURNS SETOF currency_list AS
 $$
-  select c.curr, c.description, currency__is_used(c.curr) from currency c
+  select c.curr, c.description,
+         case when in_check_use then currency__is_used(c.curr)
+              else null end as is_used
+    from currency c
     left join (select value as curr from defaults where setting_key = 'curr') d
          on c.curr = d.curr
    order by case when c.curr = d.curr then 1 else 2 end, c.curr;
 $$ language sql;
 
-COMMENT ON FUNCTION currency__list() IS
+COMMENT ON FUNCTION currency__list(boolean) IS
 $$Returns all currencies, default currency first.$$;
 
 

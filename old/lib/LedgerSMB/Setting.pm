@@ -182,7 +182,9 @@ sub get_currencies {
 
     $self->{currencies} = [
         map { $_->{curr} }
-        $self->call_procedure(funcname => 'currency__list') ];
+        $self->call_procedure(funcname => 'currency__list',
+                              args     => [ 0 ] # don't check use
+        )];
     return @{$self->{currencies}};
 }
 

@@ -82,16 +82,17 @@ sub save {
 }
 
 
-=item list(bool $active, string $mod_name)
+=item list(bool $check_in_use)
 
 Returns a list of all currencies.
 
 =cut
 
 sub list {
-    my ($self) = @_;
+    my ($self, $check_in_use) = @_;
     my @classes = $self->call_procedure(
-            funcname => 'currency__list');
+        funcname => 'currency__list',
+        args     => [ $check_in_use ]);
     for my $class (@classes){
         $class = $self->new(%$class);
     }
