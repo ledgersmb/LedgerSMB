@@ -191,7 +191,8 @@
       "dojo/",
       "dijit/",
       "node_modules/",
-      "js/"
+      "js/",
+      "**/*.po*"
     ],
     "rules": {
       "camelcase": "error",
@@ -276,6 +277,7 @@
       "**/*.js",
       "**/*.jsx",
       "**/*.html",
+      "**/*.po*",
       "UI/**/dojo/**/*.css",
       "UI/**/dijit/**/*.css",
       "UI/**/util/**/*.css",
