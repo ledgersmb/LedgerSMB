@@ -47,9 +47,22 @@
               </tr>
             [% END # if action %]
             <tr><th class="info">
+                [%
+                IF user.password_expires.years ;
+                ALERT = text("Warning: Your password will expire in [_1] years", user.password_expires.years);
+                ELSIF user.password_expires.months ;
+                ALERT = text("Warning: Your password will expire in [_1] months", user.password_expires.months);
+                ELSIF user.password_expires.weeks ;
+                ALERT = text("Warning: Your password will expire in [_1] weeks", user.password_expires.weeks);
+                ELSIF user.password_expires.days ;
+                ALERT = text("Warning: Your password will expire in [_1] days", user.password_expires.days);
+                ELSE ;
+                ALERT = text("Warning: Your password will expire today");
+                END;
+                %]
                 <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
                 <!-- tracked in issue #1699 -->
-                [% text('Your password will expire in [_1]',user.password_expires) %]
+                [% ALERT %]
               </th>
             </tr>
             <tr>

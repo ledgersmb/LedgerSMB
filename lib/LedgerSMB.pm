@@ -190,6 +190,7 @@ use strict;
 use warnings;
 
 use Carp;
+use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
 use HTTP::Status qw( HTTP_OK ) ;
@@ -210,7 +211,7 @@ use LedgerSMB::Template::UI;
 our $VERSION = '1.9.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
-
+my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
 
 sub new {
     my ($class, $request) = @_;
@@ -275,7 +276,8 @@ sub initialize_with_db {
         $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()')
             or die $self->{dbh}->errstr;
         $sth->execute or die $sth->errstr;
-        ($self->{pw_expires})  = $sth->fetchrow_array;
+        my ($pw_expires) = $sth->fetchrow_array;
+        $self->{pw_expires} = $expiration_parser->parse_duration($pw_expires);
     }
 
     $self->{_company_config} =

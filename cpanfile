@@ -12,6 +12,7 @@ requires 'DBD::Pg', '3.3.0';
 requires 'DBI', '1.635';
 requires 'Data::UUID';
 requires 'DateTime';
+requires 'DateTime::Format::Duration::ISO8601', '0.008';
 requires 'DateTime::Format::Strptime';
 requires 'Email::Sender::Simple';
 requires 'Email::Sender::Transport::SMTP';
