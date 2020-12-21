@@ -170,6 +170,7 @@ on 'develop' => sub {
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
     requires 'Pherkin::Extension::Weasel', '0.15';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
+    requires 'Pod::ProjectDocs';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.73';
