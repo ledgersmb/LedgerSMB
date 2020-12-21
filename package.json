@@ -191,7 +191,9 @@
       "dojo/",
       "dijit/",
       "node_modules/",
-      "js/"
+      "js/",
+      "**/*.po*",
+      "pod/**"
     ],
     "rules": {
       "camelcase": "error",
@@ -276,10 +278,12 @@
       "**/*.js",
       "**/*.jsx",
       "**/*.html",
+      "**/*.po*",
       "UI/**/dojo/**/*.css",
       "UI/**/dijit/**/*.css",
       "UI/**/util/**/*.css",
-      "UI/js/**"
+      "UI/js/**",
+      "UI/pod/**"
     ],
     "rules": {
       "indentation": 4,
