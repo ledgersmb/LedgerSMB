@@ -15,10 +15,6 @@
   input_keys.radio        = default_input_keys.merge(['checked'])
   input_keys.password     = default_input_keys
   input_keys.date         = default_input_keys
-  input_keys.text         = default_input_keys
-  input_keys.currency     = default_input_keys
-  input_keys.monetary     = default_input_keys
-  input_keys.exchangerate = default_input_keys
   input_keys.text         = default_input_keys.merge(['maxlength', 'readonly'])
 
 
@@ -58,29 +54,6 @@
   element_defaults.text = {
     size = '60',
     maxlength = '255',
-    "data-dojo-type" = "dijit/form/ValidationTextBox"
-  }
-
-  # default currency
-  # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
-  element_defaults.currency = element_defaults.text
-#  currency_defaults = {
-#    "data-dojo-type" = 'dijit/form/CurrencyTextBox',
-#    "data-dojo-props" = "currency:'$SETTINGS.default_currency'"
-#  }
-
-  # default monetary (currency without currency indicator)
-  # this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
-  element_defaults.monetary = element_defaults.text
-#  monetary_defaults = {
-#    "data-dojo-type" = 'dijit/form/NumberTextBox',
-#    "data-dojo-props" = "constraints:{pattern:'0.00'}"
-#  }
-
-  # default exchangerate
-  element_defaults.exchangerate = {
-    size = '5',
-    maxlength = '20',
     "data-dojo-type" = "dijit/form/ValidationTextBox"
   }
 
