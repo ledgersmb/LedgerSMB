@@ -1,0 +1,177 @@
+#!/usr/bin/env perl
+
+
+use v5.24;
+use strict;
+use warnings;
+
+use Data::Dumper;
+use DateTime;
+use DateTime::Format::ISO8601;
+use HTTP::Headers::Util qw(split_header_words);
+use Net::GitHub;
+use Versioning::Scheme::Semantic;
+use LWP::UserAgent;
+
+die 'Expecting environment variable GITHUB_TOKEN to be defined'
+    unless $ENV{GITHUB_TOKEN};
+
+my ($year, $remote) = @ARGV;
+$remote //= 'origin';
+my $d      = DateTime::Format::ISO8601->new;
+my $s      = DateTime->new(year => $year, month => 1, day => 1,
+                           hour => 0, minute => 0, second => 0,
+                           time_zone => 'UTC');
+
+
+my %tags =
+    map { $_ => Versioning::Scheme::Semantic->parse_version($_) }
+    grep { Versioning::Scheme::Semantic->parse_version($_) }
+    map { m/tag: (.*)\)/; $1; }
+    split(/\n/, `git log --tags --pretty="format:%ci %d" | grep 'tag:' | grep '^$year-' `);
+
+my %release_lines =
+    map { $tags{$_}->{major}.'.'.$tags{$_}->{minor}.'.' => []}
+    keys %tags;
+
+
+for my $k (keys %tags) {
+    push $release_lines{"$tags{$k}->{major}.$tags{$k}->{minor}."}->@*, $k;
+}
+for my $k (keys %release_lines) {
+    $release_lines{$k} =
+       [ sort { Versioning::Scheme::Semantic->cmp_version($a,$b) }
+         $release_lines{$k}->@* ];
+}
+
+print "Release summary:\n";
+for my $k (sort { Versioning::Scheme::Semantic->cmp_version(
+                      $release_lines{$a}->[0],$release_lines{$b}->[0]) }
+           keys %release_lines) {
+    my $p = $k;
+    chop $p;
+    my $c = scalar $release_lines{$k}->@*;
+    print "  $p ($c): $release_lines{$k}->@*\n";
+}
+print scalar(keys %tags) . " releases\n\n\n";
+
+print "Project commits on all branches (excluding merges):\n";
+print `git log --remotes=$remote/* --no-merges --since=$year-01-01 --format='%aN' | sort | uniq -c | sort -r -n`;
+
+print "\n";
+print "Of which on maintenance branches:\n";
+print `git log --remotes=$remote/* --not $remote/master --no-merges --since=$year-01-01 --format='%aN' | sort | uniq -c | sort -r -n`;
+
+
+my $github = Net::GitHub->new(
+    version      => 3,
+    access_token => $ENV{GITHUB_TOKEN}
+    );
+
+my $issue = $github->issue;
+my @issues = $issue->repos_issues('ledgersmb', 'LedgerSMB',
+                                  { state => 'all' });
+while ($issue->has_next_page) {
+    push @issues, $issue->next_page;
+}
+
+my @non_pulls = grep { not exists $_->{pull_request} } @issues;
+my @pulls = grep { exists $_->{pull_request} } @issues;
+
+my $closed_new = 0;
+my $closed_old = 0;
+my $new_remain = 0;
+my $old_remain = 0;
+my $closed_start = 0;
+my @non_pull_open;
+my @non_pull_closed;
+for my $i (@non_pulls) {
+    my $closed_at = $i->{closed_at} ? $d->parse_datetime($i->{closed_at}) : '';
+
+    if ($closed_at and DateTime->compare( $closed_at, $s ) < 0) {
+        $closed_start++;
+        next;
+    }
+    my $created_at = $d->parse_datetime($i->{created_at});
+
+    if (not $closed_at and ($created_at <=> $s) < 0) {
+        $old_remain++;
+        push @non_pull_open, $i;
+    }
+    elsif (not $closed_at) {
+        $new_remain++;
+        push @non_pull_open, $i;
+    }
+    elsif (($created_at <=> $s) >= 0) {
+        $closed_new++;
+        push @non_pull_closed, $i;
+    }
+    else {
+        $closed_old++;
+        push @non_pull_closed, $i;
+    }
+}
+
+
+my $start_count = $closed_old+$old_remain;
+my $closed = $closed_old+$closed_new;
+my $created = $closed_new+$new_remain;
+my $end_count = $start_count+$created-$closed;
+my $total_issues = scalar @non_pulls;
+
+print <<EOT;
+Issue statistics:
+  Total number of issues: $total_issues
+    of which closed before $year-01-01: $closed_start
+
+  Number of open issues at $year-01-01: $start_count
+    of which remain open today: $old_remain
+
+  Issues closed: $closed
+    of which created before $year-01-01: $closed_old
+
+  Issues created: $created
+    of which still open: $new_remain
+
+  Number of open issues today: $end_count
+
+EOT
+
+my %label_stats;
+for my $i (@non_pull_open) {
+    $label_stats{$_->{name}}++ for $i->{labels}->@*;
+}
+
+print "Distribution of open issues over labels (some have multiple labels):\n";
+for my $k (sort { lc($a) cmp lc($b)  } keys %label_stats) {
+    print "  $k: $label_stats{$k}\n";
+}
+print "\n";
+
+
+%label_stats = ();
+for my $i (@non_pull_closed) {
+    $label_stats{$_->{name}}++ for $i->{labels}->@*;
+}
+
+print "Distribution of closed issues over labels (some have multiple labels):\n";
+for my $k (sort { lc($a) cmp lc($b)  } keys %label_stats) {
+    print "  $k: $label_stats{$k}\n";
+}
+print "\n";
+
+
+
+
+
+my $pull_count = scalar @pulls;
+my $new_pull_count =
+    scalar grep { ($d->parse_datetime($_->{created_at}) <=> $s) > -1 } @pulls;
+
+print <<EOT;
+Pull request statistics:
+   Total number of pull requests: $pull_count
+     of which issued on/after $year-01-01: $new_pull_count
+
+EOT
+
