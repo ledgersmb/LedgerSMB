@@ -2069,10 +2069,9 @@ sub create_links {
     my $billing_email = 0;
 
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        $ctype = $ref->{class_id};
-        $ctype = $id_map{$ctype};
+        $ctype = $id_map{$ref->{class_id}};
         $billing_email = 1
-        if $ref->{class_id} == 15;
+            if $ref->{class_id} == 15;
 
         # If there's an explicit billing email, don't use
         # the standard email addresses; otherwise fall back to standard
