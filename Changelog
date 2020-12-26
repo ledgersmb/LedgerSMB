@@ -3,6 +3,15 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.9
+* Fix SQL error thrown when partially invoicing an order
+* Fix incorrect totals in single payment screen on FX payments (#5223)
+* Limit 'Class' drop-down on Accounts tab to supported types only (#5216)
+* Fix regression deleting draft invoices/transactions with payments (#5207)
+* Fix empty columns when posting a payment batch (#5192)
+* Hide 'Payment Type' selector when drop-down empty (#5191)
+
+
 Changelog for 1.8.8
 * Faster GL account tree consistency check
 * Maintain consistency between ar/ap/gl and transactions tables on delete
