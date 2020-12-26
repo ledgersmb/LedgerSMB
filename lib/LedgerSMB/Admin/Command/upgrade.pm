@@ -57,7 +57,7 @@ sub run {
         }
         return 1;
     }
-    $logger->info('Database successfully created');
+    $logger->info('Database successfully upgraded');
     return 0;
 }
 
