@@ -23,7 +23,7 @@ use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
 use Log::Any::Adapter;
-use Log::Log4perl;
+use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
 
