@@ -50,7 +50,6 @@ use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
-use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
@@ -361,7 +360,7 @@ sub create_links {
 }
 
 sub form_header {
-     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty} // 0;
+     my $min_lines = $form->get_setting('min_empty') // 0;
 
      $form->generate_selects(\%myconfig) unless $form->{"select$form->{ARAP}"};
     $title = $form->{title};

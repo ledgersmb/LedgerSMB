@@ -283,7 +283,6 @@ use strict;
 use warnings;
 use Carp;
 
-use LedgerSMB::Company_Config;
 use LedgerSMB::File;
 use LedgerSMB::Locale;
 use LedgerSMB::Magic qw( FC_INTERNAL );
@@ -515,9 +514,6 @@ sub _render {
     my $vars = shift;
     my $cvars = shift // {};
     $vars->{USER} = $self->{user};
-    $vars->{SETTINGS} = {
-        %$LedgerSMB::Company_Config::settings,
-    } if $vars->{DBNAME} && $LedgerSMB::Company_Config::settings;
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');

@@ -966,7 +966,7 @@ sub create_links {
                      WHERE entity_class = 1|;
         my ($count) = $dbh->selectrow_array($query);
 
-        if ( $count < $LedgerSMB::Company_Config::settings->{vclimit} ) {
+        if ( $count < $form->get_setting('vclimit') ) {
             $query = qq|SELECT v.id, e.name
                 FROM entity_credit_account v
                 join entity e on e.id = v.entity_id
@@ -988,7 +988,7 @@ sub create_links {
                 where entity_class = 2|;
     ($count) = $dbh->selectrow_array($query);
 
-    if ( $count < $LedgerSMB::Company_Config::settings->{vclimit} ) {
+    if ( $count < $form->get_setting('vclimit') ) {
         $query = qq|SELECT c.id, e.name
             FROM entity_credit_account c
             join entity e on e.id = c.entity_id

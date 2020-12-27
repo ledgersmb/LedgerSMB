@@ -50,7 +50,6 @@ use LedgerSMB::GL;
 use LedgerSMB::PE;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
@@ -155,8 +154,7 @@ sub add {
 
 sub display_form
 {
-    $form->{separate_duties}
-        = $LedgerSMB::Company_Config::settings->{separate_duties};
+    $form->{separate_duties} = $form->get_setting('separate_duties');
     #Add General Ledger Transaction
 
     # filter out '' transdates
@@ -535,7 +533,7 @@ sub gl_subtotal {
 
 sub update {
     &create_links;
-     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+     my $min_lines = $form->get_setting('min_empty');
      $form->open_form unless $form->check_form;
 
      $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
