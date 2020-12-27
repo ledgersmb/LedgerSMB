@@ -46,7 +46,6 @@ use LedgerSMB::Template::UI;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
-use LedgerSMB::Company_Config;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
@@ -90,7 +89,7 @@ if ( -f "old/bin/custom/io.pl" ) {
 
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
-    my $moneyplaces = $LedgerSMB::Company_Config::settings->{decimal_places};
+    my $moneyplaces = $form->get_setting('decimal_places');
     foreach my $i (1 .. $form->{rowcount}){
         local $decimalplaces = $form->{"precision_$i"};
 
@@ -142,7 +141,7 @@ sub approve {
 
 sub display_row {
     my $numrows = shift;
-    my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty} // 0;
+    my $min_lines = $form->get_setting('min_empty') // 0;
     my $lsmb_module;
     my $desc_disabled = "";
     $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
@@ -1032,9 +1031,7 @@ sub create_form {
 }
 
 sub e_mail {
-    LedgerSMB::Company_Config::initialize($form);
     my %hiddens;
-    my $cc = $LedgerSMB::Company_Config::settings;
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
@@ -1065,7 +1062,8 @@ sub e_mail {
         delete $form->{$_}; # reset to defaults
     }
 
-    $form->{bcc} .= ', ' . $cc->{default_bcc} if $cc->{default_bcc};
+    $form->{bcc} .= ', ' . $form->get_setting('default_bcc')
+        if $form->get_setting('default_bcc');
 
 
     $form->{subject} = $locale->text(
@@ -1074,7 +1072,8 @@ sub e_mail {
     );
     my @bcclist;
     push @bcclist, $form->{bcc} if $form->{bcc};
-    push @bcclist, $cc->{default_email_bcc} if $cc->{default_email_bcc};
+    push @bcclist, $form->get_setting('default_email_bcc')
+        if $form->get_setting('default_email_bcc');
     $form->{bcc} = join(', ', @bcclist);
 
 
@@ -1144,15 +1143,18 @@ sub print {
     &print_form;
 }
 
+my %copy_settings = (
+    company => 'company_name',
+    businessnumber => 'businessnumber',
+    address => 'company_address',
+    tel => 'company_phone',
+    fax => 'company_fax',
+    );
 sub print_form {
     my ($old_form) = @_;
-    my $csettings = $LedgerSMB::Company_Config::settings;
-    $form->{company} = $csettings->{company_name};
-    $form->{businessnumber} = $csettings->{businessnumber};
-    $form->{address} = $csettings->{company_address};
-    $form->{tel} = $csettings->{company_phone};
-    #$form->{myCompanyFax} = $csettings->{company_fax};#fax should be named myCompanyFax ?
-    $form->{fax} = $csettings->{company_fax};
+    while (my ($key, $setting) = each %copy_settings ) {
+        $form->{$key} = $form->get_setting($setting);
+    }
     my $inv = "inv";
     my $due = "due";
     my $numberfld = "sinumber";

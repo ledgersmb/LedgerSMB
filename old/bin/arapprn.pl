@@ -43,7 +43,6 @@ package lsmb_legacy;
 
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
-use LedgerSMB::Company_Config;
 
 require 'old/bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
 require 'old/bin/printer.pl';# centralizing print options display
@@ -54,7 +53,14 @@ if ( -f "old/bin/custom/arapprn.pl" ) {
 }
 
 # end of main
-
+my %copy_settings = (
+    email => 'company_email',
+    company => 'company_name',
+    businessnumber => 'businessnumber',
+    address => 'company_address',
+    tel => 'company_phone',
+    fax => 'company_fax',
+    );
 sub print {
 
     &create_links;
@@ -72,13 +78,9 @@ sub print {
 
     }
 
-    my $csettings = $LedgerSMB::Company_Config::settings;
-    $form->{company} = $csettings->{company_name};
-    $form->{businessnumber} = $csettings->{businessnumber};
-    $form->{email} = $csettings->{company_email};
-    $form->{address} = $csettings->{company_address};
-    $form->{tel} = $csettings->{company_phone};
-    $form->{fax} = $csettings->{company_fax};
+    while (my ($key, $setting) = each %copy_settings ) {
+        $form->{$key} = $form->get_setting($setting);
+    }
 
     if ( $form->{media} !~ /screen/ ) {
         $form->error( $locale->text('Select postscript or PDF!')  )

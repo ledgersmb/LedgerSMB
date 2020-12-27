@@ -95,7 +95,7 @@ email|print|screen|<printer name>
 =cut
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
-
+our $csettings;
 
 sub output_template {
     my $template = shift;
@@ -107,6 +107,11 @@ sub output_template {
     my $method = $args{method} // '';
 
     if ('email' eq lc $method) {
+        local $csettings = {
+            map { $_ => $form->get_setting($_)  }
+            map { "default_email_$_" }
+            qw/ from to cc bcc /
+        };
         _output_template_email($template);
     } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
         open my $fh, '>', $args{OUT}
@@ -190,20 +195,12 @@ sub _output_template_email {
     # User default for email from
     $args->{from} ||= $self->{user}->{email};
 
-    # Default addresses
-    my $csettings = $LedgerSMB::Company_Config::settings;
-    $args->{from} ||= $csettings->{default_email_from};
-    $args->{to} ||= $csettings->{default_email_to};
-    $args->{cc} ||= $csettings->{default_email_cc};
-    $args->{bcc} ||= $csettings->{default_email_bcc};
-
-
     # Mailer stuff
     my $mail = LedgerSMB::Mailer->new(
-        from => $args->{from},
-        to => $args->{to},
-        cc => $args->{cc},
-        bcc => $args->{bcc},
+        from => $args->{from} // $csettings->{default_email_from},
+        to => $args->{to} // $csettings->{default_email_to},
+        cc => $args->{cc} // $csettings->{default_email_cc},
+        bcc => $args->{bcc} // $csettings->{default_email_bcc},
         subject => $args->{subject},
         notify => $args->{notify},
         message => $args->{message},

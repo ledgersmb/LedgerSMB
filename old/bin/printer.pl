@@ -8,7 +8,6 @@ printer.pl - centralized printing logic used for printing in legacy sl code
 package lsmb_legacy;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
-use LedgerSMB::Company_Config;
 
 sub print_options {
 
