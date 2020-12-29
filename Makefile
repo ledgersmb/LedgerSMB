@@ -94,7 +94,7 @@ endif
 
 
 blacklist:
-	$(DOCKER_CMD) perl -Ilib utils/test/makeblacklist.pl --regenerate
+	$(DOCKER_CMD) perl -Ilib utils/devel/makeblacklist.pl --regenerate
 
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
@@ -104,7 +104,7 @@ pod:
 	rm -rf UI/pod
 	mkdir UI/pod
 	chmod 777 UI/pod
-	$(DOCKER_CMD) utils/pod2projdocs.pl 2>&1 pod2projdocs.log
+	$(DOCKER_CMD) utils/devel/pod2projdocs.pl 2>&1 pod2projdocs.log
 
 pot:
 	chmod 666 locale/LedgerSMB.pot locale/po/*.po
