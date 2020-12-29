@@ -1,16 +1,33 @@
 #!/usr/bin/perl
 
-# This is the SL-Short listener.  It listens for the "parts_short" signal and
-# when the signal comes in, prepares a list of short parts to be sent to
-# at least one person.
-#
+# Short Parts Notifier for LedgerSMB
 # By Chris Travers, Metatron Technology Consulting
-# chris@metatrontech.com
-#
-# Released under the GNU GPL v2.0 or later.  See included GPL.txt for more
+
+# To use this software, edit docs/conf/notify-short.conf.pl so that you can
+# connect to the database.  Then you can run listener.pl and it will
+# periodically check to see if new there are parts that have become short
+# through transactions.
+
+# At the moment, the report is triggered when an AR or AP invoice occurs and a
+# part affected by the transaction is lower than the ROP.  When this happens, a
+# Notify is sent from the database, and the application prepares the report on
+# its next cycle.  Note that although the creation of a new part will not cause
+# it to trigger the report, the new part will appear on the report on the next
+# run.
+
+# Any feedback, improvements, etc. are welcome.
+
+# Released under the GNU GPL v2.0 or later.  See included LICENSE for more
 # information.
 
-require "config.pl";
+my $config = shift @ARGV;
+
+unless ($config) {
+    while (<DATA>) { print };
+    exit 1;
+}
+
+require $config;
 
 use DBI;
 my $dsn = "dbi:Pg:dbname=$database";
@@ -38,8 +55,8 @@ while (1) {    # loop infinitely
 sub on_notify {
     open( MAIL, '|-', "$sendmail" );
     $sth = $dbh->prepare( "
-	SELECT partnumber, description, onhand, rop FROM parts
-	WHERE onhand <= rop
+        SELECT partnumber, description, onhand, rop FROM parts
+        WHERE onhand <= rop
   " );
     $sth->execute;
     print MAIL $template_top;
@@ -50,4 +67,17 @@ sub on_notify {
     print MAIL $template_foot;
     close MAIL;
 }
+
+__DATA__
+Usage: notify-short <config-file>
+
+This script connects a database and monitors onhand parts falling below
+the rop (re-order point) number required. It responds to this condition by
+sending e-mail to a configured mail address.
+
+The exact condition the script responds to is when an AR or AP invoice occurs
+and a part affected by the transaction is lower than the ROP.
+
+An example configuration file is provided in the LedgerSMB repository under
+doc/conf/notify-short.conf.pl.
 
