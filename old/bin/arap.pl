@@ -338,6 +338,10 @@ sub repost {
 
 sub schedule {
 
+    if ($form->{formname} =~ m/invoice/) {
+        prepare_invoice;
+        $form->generate_selects;
+    }
     (
         $form->{recurringreference}, $form->{recurringstartdate},
         $form->{recurringrepeat},    $form->{recurringunit},
