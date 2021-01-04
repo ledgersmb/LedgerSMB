@@ -1,3 +1,14 @@
+<?lsmb#   This is a comment block; it's ignored by the template engine.
+
+   Version:  1.0
+   Date:     2021-01-04
+   File:     ar_transaction.csv
+   Set:      xedemo
+
+Template version numbers are explicitly not aligned across templates or
+releases. No explicit versioning was applied before 2021-01-04.
+
+-?>
 account,description,amount,memo,project
 <?lsmb FOREACH amount ?><?lsmb lc = loop.count - 1 ?><?lsmb accno.${lc} ?>,<?lsmb account.${lc} ?>,<?lsmb amount.${lc} ?>,<?lsmb description.${lc} ?>,<?lsmb projectnumber.${lc} ?>
 <?lsmb END ?><?lsmb FOREACH t IN taxaccounts.split(' ') ?><?lsmb loop_count = loop.count - 1 -?>
