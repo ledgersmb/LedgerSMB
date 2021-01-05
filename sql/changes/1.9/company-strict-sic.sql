@@ -1,7 +1,7 @@
 
 
 insert into sic (code, description)
-select sic_code, sic_code from company
+select distinct sic_code, sic_code from company
  where not exists (select 1 from sic where sic.code = company.sic_code)
    and sic_code is not null;
 
