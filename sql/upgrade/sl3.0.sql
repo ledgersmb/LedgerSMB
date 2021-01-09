@@ -909,7 +909,7 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 --TODO: Handle amount_tc and netamount_tc
 insert into ar
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded,
+        id, invnumber, transdate, crdate, taxincluded,
         amount_bc, netamount_bc,
         amount_tc, netamount_tc,
 [% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
@@ -921,7 +921,7 @@ insert into ar
 SELECT
         customer.credit_id,
         (select entity_id from :slschema.employee WHERE id = ar.employee_id),
-        ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
+        ar.id, invnumber, transdate, transdate, ar.taxincluded, amount, netamount,
         CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
         CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
 [% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
@@ -940,7 +940,7 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
 insert into ap
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount_bc, netamount_bc,
+        id, invnumber, transdate, crdate, taxincluded, amount_bc, netamount_bc,
         amount_tc, netamount_tc,
 [% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
         paid, datepaid,
@@ -952,7 +952,7 @@ SELECT
         vendor.credit_id,
         (select entity_id from :slschema.employee
                 WHERE id = ap.employee_id),
-        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
+        ap.id, invnumber, transdate, transdate, ap.taxincluded, amount, netamount,
         CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
         CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
 [% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
