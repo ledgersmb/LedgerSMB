@@ -888,8 +888,6 @@ SELECT pg_temp.f_insert_account('fxloss_accno_id');
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
 SELECT id, parts_id, qty, bom, adj  FROM :slschema.assembly;
 
-ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
-
 INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, id, description
   FROM :slschema.department;
@@ -916,10 +914,6 @@ INSERT INTO gl(id, reference, description, transdate, person_id, notes)
  LEFT JOIN :slschema.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
 
-ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
-
-ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
-
 --TODO: Handle amount_tc and netamount_tc
 insert into ar
         (entity_credit_account, person_id,
@@ -942,10 +936,6 @@ SELECT
 FROM :slschema.ar
 JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
 
-ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
-
-ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
-
 insert into ap
 (entity_credit_account, person_id,
         id, invnumber, transdate, crdate, taxincluded, amount_bc, netamount_bc,
@@ -967,8 +957,6 @@ SELECT
         onhold, approved, case when amount < 0 then true else false end,
         ap.terms, description
 FROM :slschema.ap JOIN :slschema.vendor ON (ap.vendor_id = vendor.id) ;
-
-ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 -- ### TODO: there used to be projects here!
 -- ### Move those to business_units
@@ -1010,7 +998,7 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
    LEFT JOIN :slschema.invoice ON ac.id = invoice.id
                               AND ac.trans_id = invoice.trans_id
  LEFT JOIN :slschema.payment y ON (y.trans_id = ac.trans_id AND ac.id = y.id)
-  WHERE chart_id IS NOT NULL
+ WHERE chart_id IS NOT NULL
     AND ac.trans_id IN (SELECT id FROM transactions);
 
 --Payments
@@ -1426,4 +1414,4 @@ UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
 --TODO:  Translation migration.  Partsgroups?
--- TODO:  User/password Migration
+--TODO:  User/password Migration
