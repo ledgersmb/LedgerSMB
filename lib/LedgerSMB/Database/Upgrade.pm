@@ -91,11 +91,14 @@ sub applicable_tests {
         grep { _upgrade_test_is_applicable($dbinfo, $_) }
         LedgerSMB::Upgrade_Tests->get_tests
         );
-    my %consistency = map { $_->name => 1 } @tests;
+    my %consistency;
+    for (@tests) { $consistency{$_->name}++ };
 
     if (scalar @tests != scalar keys %consistency) {
-        die 'Inconsistent state fixing data: multiple applicable tests '
-            . 'with the same name';
+        my $error = 'Inconsistent state fixing data: multiple applicable tests '
+            . 'with the same name:';
+        for (keys %consistency) { $error .= ' ' . $_ if $consistency{$_} > 1 }
+        die $error;
     }
 
     return @tests;
