@@ -725,7 +725,7 @@ push @tests, __PACKAGE__->new(
 
 
 push @tests,__PACKAGE__->new(
-    test_query => q{select category
+    test_query => q{ select category, accno, description
                     from chart
                    where charttype = 'A'
                      and category not in ('A', 'L', 'Q', 'I', 'E')},
@@ -741,6 +741,7 @@ push @tests,__PACKAGE__->new(
     min_version => '2.7',
     max_version => '3.0'
     );
+
 
 push @tests,__PACKAGE__->new(
     test_query => q{select accno, description, link
@@ -882,70 +883,6 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     max_version => '3.0'
     );
 
-push @tests, __PACKAGE__->new(
-    test_query => 'SELECT id, name, business_id
-                     FROM vendor
-                    WHERE business_id NOT IN (SELECT id
-                     FROM business)
-                      AND business_id <> 0
-                 ORDER BY name',
-    display_name => marktext('Vendor not in a business'),
-    name => 'no_business_for_vendor',
-    display_cols => ['name', 'business_id'],
-    columns => ['business_id'],
- instructions => marktext(
-                   'LedgerSMB vendors must be assigned to a valid business.<br>
-Please review the selection or select the proper business from the list'),
-selectable_values => { business_id => q{SELECT concat(description,' -- ',discount) AS text, id as value
-                                        FROM business
-                                        ORDER BY id}},
-    table => 'vendor',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '3.0'
-    );
-
-push @tests, __PACKAGE__->new(
-    test_query => 'SELECT id, name, business_id
-                     FROM customer
-                    WHERE business_id NOT IN (SELECT id
-                                              FROM business)
-                      AND business_id <> 0
-                 ORDER BY name',
-    display_name => marktext('Customer not in a business'),
-    name => 'no_business_for_customer',
-    display_cols => ['name', 'business_id'],
-    columns => ['business_id'],
- instructions => marktext(
-                   'LedgerSMB customers must be assigned to a valid business.<br>
-Please review the selection or select the proper business from the list'),
-selectable_values => { business_id => q{SELECT concat(description,' -- ',discount) AS text, id as value
-                                        FROM business
-                                        ORDER BY id}},
-    table => 'customer',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '3.0'
-    );
-
-push @tests,__PACKAGE__->new(
-    test_query => q{ select category, accno, description
-                    from chart
-                   where charttype = 'A'
-                     and category not in ('A', 'L', 'Q', 'I', 'E')},
-    display_name => marktext('Unsupported account categories'),
-    name => 'unsupported_account_types',
-    display_cols => ['category', 'accno', 'description'],
- instructions => marktext(
-                   'Please make sure all accounts have a category of
-(A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense.'),
-   columns => ['category'],
-    table => 'chart',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '3.0'
-    );
-
 # push @tests,__PACKAGE__->new(
 #     test_query => "select accno, description, link
 #                     from chart
@@ -964,26 +901,6 @@ push @tests,__PACKAGE__->new(
 #     min_version => '2.7',
 #     max_version => '3.0'
 #     );
-
-push @tests,__PACKAGE__->new(
-    test_query => q{select accno, description, link
-                    from chart c
-                   where charttype = 'A'
-                     and 0 = (select count(*)
-                            from chart cn
-                           where cn.charttype = 'H'
-                             and cn.accno < c.accno)},
-    display_name => marktext('Accounts without heading'),
-    name => 'no_header_accounts',
-    display_cols => ['accno', 'description', 'link'],
- instructions => marktext(
-                   'Please go into the SQL-Ledger UI and create/rename a
-heading which sorts alphanumerically before the first account by accno'),
-    table => 'chart',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '3.0'
-    );
 
 push @tests,__PACKAGE__->new(
     test_query => 'select id, customernumber, name
