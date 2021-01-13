@@ -224,18 +224,6 @@ has tooltips => (is => 'ro',
     }
 );
 
-=item skipable
-
-Can this test be skipped
-
-=cut
-
-has skipable => (is =>'ro', isa => 'Maybe[Bool]', lazy => 1,
-                 default =>  sub {
-                    return grep(/^Skip$/, @{$_[0]->{buttons}}) == 1;
-                 }
-);
-
 =back
 
 =head1 Methods
