@@ -1397,8 +1397,6 @@ SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
 SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
 SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
 SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
-SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
-SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
 SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
 SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
 SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
