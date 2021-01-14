@@ -75,7 +75,7 @@ commands:
           keys:
             # Find a cache corresponding to this specific package-lock.json checksum
             # when this file is changed, this key will fail
-            - v1-npm-deps-{{ checksum "~/package-lock.json" }}
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-npm-deps-
       - run:
@@ -83,14 +83,14 @@ commands:
           command: |
             make dojo
       - save_cache:
-          key: v1-npm-deps-{{ checksum "~/package-lock.json" }}
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
       # Freshen up CPAN
       - restore_cache:
           keys:
             # Get latest cache for the current specs
-            - v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "~/project/cpanfile" }}
+            - v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "cpanfile" }}
             # Fall back to the latest for the current branch
             - v2-cpm-<< parameters.perl >>-{{ .Branch }}-
             # Fall back to the latest for master
@@ -118,9 +118,9 @@ commands:
                   Devel::Cover::Report::Coveralls
             fi
       - save_cache:
-           key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "~/project/cpanfile" }}
+           key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "cpanfile" }}
            paths:
-             - ~/perl5
+             - $HOME/perl5
       - run:
           name: Set up dirs and files
           command: |
@@ -142,10 +142,13 @@ commands:
     steps:
       - run:
           command: |
-            PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0" \
-                    plackup -I$HOME/project/lib -I$HOME/project/old/lib \
-                    -s Gazelle --port 5762 --workers=2 --max-reqs-per-child=50000 \
-                    $HOME/project/bin/ledgersmb-server.psgi
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
+            fi
+            plackup -I$HOME/project/lib -I$HOME/project/old/lib \
+              -s Gazelle --port 5762 --workers=2 --max-reqs-per-child=50000 \
+              $HOME/project/bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
           background: true
