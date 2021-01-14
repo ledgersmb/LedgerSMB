@@ -650,7 +650,7 @@ sub _process_and_run_upgrade_script {
     $upgrade->run_upgrade_script(
         {
             %{$request}{qw( default_country default_ap default_ar
-                            slschema lsmbschema )}
+                            slschema lsmbschema lsmbversion)}
         });
     $upgrade->run_post_upgrade_steps;
 
@@ -799,8 +799,10 @@ sub upgrade {
 
     for my $key (keys %$required_vars) {
         my $val = $required_vars->{$key};
-        $request->{$key} = (@$val > 1) ? [ {}, @$val ]
-            : ($val->[0] ? $val->[0]->{value} : 'null');
+        $request->{$key} = (ref($val) eq 'ARRAY')
+            ? ((@$val > 1) ? [ {}, @$val ]
+                          : ($val->[0] ? $val->[0]->{value} : 'null'))
+            : $val;
     }
     $request->{lsmbversion} = $CURRENT_MINOR_VERSION;
     return $template->render($request, 'setup/upgrade_info', $request);
