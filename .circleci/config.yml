@@ -7,7 +7,6 @@ _defaults: &defaults
     # Make sure that .profile is sourced to local::lib
     shell: /bin/bash --login -eo pipefail
 
-
 # Define aliases for simplification
 aliases:
   - &store_artifacts
@@ -175,7 +174,7 @@ executors:
         default: chrome
       coverage:
         type: integer
-        default: 1
+        default: 0
     docker:
       - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
       - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
@@ -197,7 +196,21 @@ executors:
 
 # Define jobs
 jobs:
-  test_nodojo:
+  test_perl32:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.32'
+      postgres: '11'
+      browser: phantomjs
+      coverage: 1
+    steps:
+      - prep_env:
+          perl: '5.32'
+      - start_plackup
+      - start_proxy
+      - prove
+  test_perl30:
     <<: *defaults
     executor:
       name: test
@@ -211,17 +224,37 @@ jobs:
       - start_proxy
       - prove
 
+  test_perl28:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.28'
+      postgres: '11'
+      browser: phantomjs
+    steps:
+      - prep_env:
+          perl: '5.28'
+      - start_plackup
+      - start_proxy
+      - prove
+
 # Workflows
 # Tests multiple browsers, coverage and dojo
+_filters: &_filters
+  branches:
+    ignore:
+      - /1\.2\..*/
+      - /1\.3\..*/
+      - /1\.4\..*/
+      - /1\.5\..*/
+      - /1\.6\..*/
+
 workflows:
   workflow:
     jobs:
-      - test_nodojo:
-          filters:
-             branches:
-                ignore:
-                  - /1\.2\..*/
-                  - /1\.3\..*/
-                  - /1\.4\..*/
-                  - /1\.5\..*/
-                  - /1\.6\..*/
+      - test_perl32:
+          filters: *_filters
+      - test_perl30:
+          filters: *_filters
+      - test_perl28:
+          filters: *_filters
