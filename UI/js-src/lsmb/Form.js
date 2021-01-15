@@ -31,7 +31,7 @@ define([
             // <button> tags get rewritten to <input type="submit" tags...
             query('input[type="submit"]', this.domNode).forEach(function (b) {
                 on(b, "click", function () {
-                    self.clickedAction = domattr.get(b, "value");
+                    self.clickedAction = b;
                 });
             });
         },
@@ -56,7 +56,12 @@ define([
                 }
                 c++;
                 var qobj = domform.toQuery(this.domNode);
-                qobj = "action=" + this.clickedAction + "&" + qobj;
+                qobj =
+                    domattr.get(this.clickedAction, "name") +
+                    "=" +
+                    domattr.get(this.clickedAction, "value") +
+                    "&" +
+                    qobj;
                 url = url + "?" + qobj + "#" + c.toString(16);
                 hash(url); // add GET forms to the back button history
             } else {
@@ -64,12 +69,16 @@ define([
                 if (this.domNode.enctype === "multipart/form-data") {
                     options.data = new FormData(this.domNode);
                     // FF doesn't add the clicked button
-                    options.data.append("action", this.clickedAction);
+                    options.data.append(
+                        domattr.get(this.clickedAction, "name"),
+                        domattr.get(this.clickedAction, "value")
+                    );
                 } else {
                     // old code (Form.pm) wants x-www-urlencoded
                     options.data =
-                        "action=" +
-                        this.clickedAction +
+                        domattr.get(this.clickedAction, "name") +
+                        "=" +
+                        domattr.get(this.clickedAction, "value") +
                         "&" +
                         domform.toQuery(this.domNode);
                 }
