@@ -228,7 +228,9 @@ my @modules =
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
-          'LedgerSMB::Magic',
+     'LedgerSMB::Magic',
+     'LedgerSMB::Workflow::Persister',
+     'LedgerSMB::Workflow::Persister::ExtraData',
     );
 
 %on_disk = map { $_ => 1 } @on_disk;
