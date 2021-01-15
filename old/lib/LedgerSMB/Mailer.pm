@@ -169,7 +169,6 @@ sub attach {
     }
 
     # handle both string and file types of input
-    my @data;
     if (defined $args{data}) {
         $self->{_message}->attach($args{data},
                                   content_type => $args{mimetype},
