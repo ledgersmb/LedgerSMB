@@ -139,3 +139,6 @@ mc/delete-migration-validation-data.sql
 1.9/templates-last-modified-no-tz.sql
 1.9/drop-view-tx_report.sql
 1.9/company-strict-sic.sql
+1.9/workflow-schema.sql
+1.9/workflow-email-table.sql
+
