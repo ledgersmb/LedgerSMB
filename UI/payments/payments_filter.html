@@ -5,10 +5,9 @@
         <!-- CT:  Strings for locales:
         [% text('Filtering Receipts') %]
         [% text('Filtering Payments') %] -->
-        [% IF payment.account_class == 1 %][% t = 'Payments'
-        %][% ELSE %][% t = 'Receipts'
+        [% IF payment.account_class == 1 %][% text('Filtering Payments')
+        %][% ELSE %][% text('Filtering Receipts')
         %][% END %]
-        [% text("Filtering $t") %]
 </div>
 <form data-dojo-type="lsmb/Form" name="search" method="post"
       [% # action set explicitly,

@@ -3,11 +3,17 @@
      data-dojo-type="dijit/layout/ContentPane"
      [% IF request.target_div == 'person_div' %]data-dojo-props="selected:true"[% END %]
      >
-[% SWITCH entity_class
-        %][% CASE 1 %][% entity_classname = "Vendor"
-        %][% CASE 2 %][% entity_classname = "Customer"
-        %][% END %]
-        <div class="listtop"><strong>[% text("$operation $entity_classname") %]</strong></div>
+<div class="listtop"><strong>[%
+    IF (entity_id && entity_class == 1) ;
+        text("Edit Vendor") ;
+    ELSIF (entity_class == 1) ;
+        text("Add Vendor") ;
+    ELSIF (entity_id && entity_class == 2) ;
+        text("Edit Customer") ;
+    ELSE
+        text("Add Customer") ;
+    END ;
+    %]</strong></div>
 <form data-dojo-type="lsmb/Form" name="customer" method="post" action="[% request.script %]">
 [% PROCESS input element_data = { # Only for generate_control_code
                   id = 'person-target-div'

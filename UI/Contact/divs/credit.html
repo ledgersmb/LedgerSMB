@@ -74,8 +74,8 @@ PROCESS dynatable
 
         <td>
         [% PROCESS input element_data = {
-                title = text("$entity_classname Number"), #fixme for i18n
-           label = text("$entity_classname Number"),
+                title = text("Number"),
+                label = text("Number"),
                 type= "text",
                 name = "meta_number",
                 value = credit_act.meta_number,
@@ -195,8 +195,8 @@ PROCESS dynatable
                         name = "ar_ap_account_id"
                         default_values = [credit_act.ar_ap_account_id]
                         options = ar_ap_acc_list
-                        title = text((ec == 1) ? 'AP' : 'AR')
-                        label = text((ec == 1) ? 'AP' : 'AR')
+                        title = (ec == 1) ? text('AP') : text('AR')
+                        label = (ec == 1) ? text('AP') : text('AR')
                         text_attr = "text"
                         value_attr = "id"
                 } %]

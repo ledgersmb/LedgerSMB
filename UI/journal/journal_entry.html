@@ -146,7 +146,8 @@
           [% END %]
           [% FOREACH cls IN form.bu_class %]
               [% IF form.b_units.${cls.id} %]
-          <th>[% text(cls.label) %]</th>
+          <th>[% maketext(cls.label)
+            %]</th>
                [% END %]
           [% END %]
         </tr>

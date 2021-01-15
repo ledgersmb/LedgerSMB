@@ -3,7 +3,13 @@
      data-dojo-type="dijit/layout/ContentPane"
      [% IF request.target_div == 'employee_div' %]data-dojo-props="selected:true"[% END %]
      >
-  <div class="listtop"><strong>[% text("$operation Employee") %]</strong></div>
+  <div class="listtop"><strong>[%
+      IF entity_id ;
+          text("Edit Employee") ;
+      ELSE ;
+          text("Add Employee") ;
+      END ;
+      %]</strong></div>
 <form data-dojo-type="lsmb/Form" name="hr" action="[% request.script %]" method="post">
 <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:3">
 [% PROCESS input element_data = {

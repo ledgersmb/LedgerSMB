@@ -289,7 +289,7 @@
                 # Retain historic override for Inventory
                 account_link.text = text('Inventory');
             ELSE;
-                account_link.text = text(account_link.description);
+                account_link.text = maketext(account_link.description);
             END;
 
             IF form.${account_link.description};
@@ -607,7 +607,7 @@
                id = 'heading-languagetranslation-' _ lang_index
                class = 'translation'
                value = form.translations.${language.code}.description
-               title = text(language.description)
+               title = maketext(language.description)
        } %]
       </td>
     </tr>
