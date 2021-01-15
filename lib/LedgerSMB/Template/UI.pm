@@ -158,7 +158,17 @@ sub render_string {
                     value => 'screen'
                 } )
           ],
+          # translation of constant-string arguments
           text => sub {
+              if ($locale) {
+                  return $locale->maketext(@_);
+              }
+              else {
+                  return shift;
+              }
+          },
+          # translation of dynamic string content
+          maketext => sub {
               if ($locale) {
                   return $locale->maketext(@_);
               }

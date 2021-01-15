@@ -19,7 +19,7 @@ while (<>) {
     my $line_no = 0;
     while (<SOURCE>) {
         ++$line_no;
-        if (m/text\s*\(\s*"((\\.|[^"])*)"/) {
+        if (m/(?<!make)text\s*\(\s*"((\\.|[^"])*)"/) {
             my $match = $1;
 
             if ($match !~ m/(?<!\\)\$/g) {
@@ -30,7 +30,7 @@ while (<>) {
                 warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax! ($match)";
             }
         }
-        elsif (m/text\s*\(\s*'((''|[^'])*)'/) {
+        elsif (m/(?<!make)text\s*\(\s*'((''|[^'])*)'/) {
             my $match = $1;
 
             # recode 'match' to double quoting
