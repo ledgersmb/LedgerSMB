@@ -14,6 +14,7 @@ requires 'Data::UUID';
 requires 'DateTime';
 requires 'DateTime::Format::Duration::ISO8601', '0.008';
 requires 'DateTime::Format::Strptime';
+requires 'Email::MessageID';
 requires 'Email::Sender::Simple';
 requires 'Email::Sender::Transport::SMTP';
 requires 'Email::Stuffer';

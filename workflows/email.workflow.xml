@@ -1,0 +1,33 @@
+<workflow>
+  <type>Email</type>
+  <persister>Email</persister>
+ <description>Handles lifecycle of e-mail</description>
+ <state name="INITIAL">
+<!--
+      Commented out in anticipation of attachment upload support
+
+   <action name="Attach" resulting_state="INITIAL"/>
+ -->
+   <action name="Update" resulting_state="INITIAL" />
+   <action name="Send"   resulting_state="SUCCESS" />
+   <action name="Cancel" resulting_state="CANCELLED"/>
+
+<!--
+      Commented out in anticipation of functionality to manage the queue
+
+   <action name="Queue"  resulting_state="QUEUED">
+     <condition name="Complete" />
+  </action>
+ -->
+ </state>
+<!--
+ <state name="QUEUED">
+   <action name="Send"   resulting_state="SENT">
+     <condition name="Complete" />
+  </action>
+   <action name="Cancel" resulting_state="CANCELLED"/>
+ </state>
+ -->
+ <state name="SUCCESS" />
+ <state name="CANCELLED" />
+</workflow>

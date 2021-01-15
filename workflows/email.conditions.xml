@@ -1,0 +1,15 @@
+<conditions>
+  <type>Email</type>
+  <condition name="hasTo"      test="$context->{to} ? 1 : 0"
+             class="Workflow::Condition::Evaluate"/>
+  <condition name="hasBody"    test="$context->{body} ? 1 : 0"
+             class="Workflow::Condition::Evaluate"/>
+  <condition name="hasSubject" test="$context->{subject} ? 1 : 0"
+             class="Workflow::Condition::Evaluate"/>
+  <condition name="Complete"
+             class="Workflow::Condition::LazyAND">
+    <param name="condition" value="hasTo" />
+    <param name="condition" value="hasBody" />
+    <param name="condition" value="hasSubject" />
+  </condition>
+</conditions>

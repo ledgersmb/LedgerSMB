@@ -1,0 +1,102 @@
+[%
+  PROCESS elements.html;
+%]
+<body class="lsmb [% dojo_theme %]">
+<div id="email">
+<div class="listtop">[% text('Compose e-mail') %]</div>
+<form data-dojo-type="lsmb/Form" name="email" method="post" action="email.pl">
+<div>
+  [%
+  PROCESS input element_data = {
+           name  = "from"
+           label = text("From")
+           readonly = "readonly"
+           type  = "text"
+           value = from };
+  %]
+</div>
+<div>
+  [%
+  PROCESS input element_data = {
+           name  = "to"
+           label = text("To")
+           type  = "text"
+           value = to };
+  %]
+</div>
+<div>
+  [%
+  PROCESS input element_data = {
+           name  = "subject"
+           label = text("Subject")
+           type  = "text"
+           value = subject };
+  %]
+</div>
+<div>
+  [%
+  PROCESS textarea element_data = {
+           label = text("Body")
+           name  = "body"
+           type  = "text"
+           value = body };
+  %]
+</div>
+<div style="margin-top:1em">
+[%
+
+FOR action IN actions ;
+PROCESS button element_data = {
+name = 'wf_action'
+text = maketext(action)
+value = action
+id = 'wf-action-' _ action
+};
+END
+
+%]
+</div>
+<div>
+  [%
+  PROCESS input element_data = {
+           name  = "notify"
+           label = text("Read receipt")
+           type  = "checkbox"
+           value = notify };
+  %]
+</div>
+
+[%
+IF actions.grep('^Attach$').size > 0 ;
+%]
+
+<div style="margin-top:2em">
+  <input type="file"
+         name="attachment_content"
+         id="attachment-content"
+         >
+</div>
+
+[%
+END ; # IF
+
+
+IF attachments.size > 0 ;
+'<table><tr><th>Filename</th><th>Description</th></tr>';
+FOR att IN attachments ;
+%]
+  <tr><td>[% att.file_name %]</td><td>[% att.description %]</td></tr>
+[%
+END ; # FOR
+'</table>';
+END ; # IF
+
+%]
+
+
+  <input type="hidden" name="callback" value="[% callback %]">
+  <input type="hidden" name="id" value="[% id %]">
+  <input type="hidden" name="action" value="render">
+</form>
+</div>
+</body>

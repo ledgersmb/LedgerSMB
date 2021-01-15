@@ -210,7 +210,9 @@ my @modules =
           'LedgerSMB::Scripts::trial_balance',
           'LedgerSMB::Scripts::account', 'LedgerSMB::Scripts::admin',
           'LedgerSMB::Scripts::asset', 'LedgerSMB::Scripts::budgets',
-          'LedgerSMB::Scripts::configuration', 'LedgerSMB::Scripts::erp',
+     'LedgerSMB::Scripts::configuration',
+     'LedgerSMB::Scripts::email',
+     'LedgerSMB::Scripts::erp',
           'LedgerSMB::Scripts::goods',
           'LedgerSMB::Scripts::invoice', 'LedgerSMB::Scripts::journal',
           'LedgerSMB::Scripts::login', 'LedgerSMB::Scripts::order',
@@ -229,7 +231,9 @@ my @modules =
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
      'LedgerSMB::Magic',
+     'LedgerSMB::Workflow::Action::Email',
      'LedgerSMB::Workflow::Persister',
+     'LedgerSMB::Workflow::Persister::Email',
      'LedgerSMB::Workflow::Persister::ExtraData',
     );
 

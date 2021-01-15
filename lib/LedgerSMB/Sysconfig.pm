@@ -583,21 +583,22 @@ sub initialize {
         FACTORY()->config_callback(\&_workflow_factory_config);
     }
     else {
-        my $rule   = File::Find::Rule->new;
+        my $r   = sub { File::Find::Rule->new };
         my $wf_dir = LedgerSMB::Sysconfig::workflows();
-        FACTORY()->add_config_from_file(
-            action    => [ $rule->name( '*.actions.xml' )->in($wf_dir) ],
-            condition => [ $rule->name( '*.conditions.xml' )->in($wf_dir) ],
-            persister => [ $rule->name( '*.persisters.xml' )->in($wf_dir) ],
-            validator => [ $rule->name( '*.validators.xml' )->in($wf_dir) ],
-            workflow  => [ $rule->name( '*.workflows.xml' )->in($wf_dir) ],
+        my %wf_config = (
+            action    => [ $r->()->name( '*.actions.xml' )->in($wf_dir) ],
+            condition => [ $r->()->name( '*.conditions.xml' )->in($wf_dir) ],
+            persister => [ $r->()->name( '*.persisters.xml' )->in($wf_dir) ],
+            validator => [ $r->()->name( '*.validators.xml' )->in($wf_dir) ],
+            workflow  => [ $r->()->name( '*.workflow.xml' )->in($wf_dir) ],
             );
+        FACTORY()->add_config_from_file(%wf_config);
     }
 }
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2006-2018 The LedgerSMB Core Team
+Copyright (C) 2006-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
