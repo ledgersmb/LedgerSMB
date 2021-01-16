@@ -23,18 +23,6 @@ define([
                 handleAs: "blob"
             }).then(
                 function (blob) {
-                    // IE doesn't allow using a blob object directly
-                    // as link href; instead it is necessary to use
-                    // msSaveOrOpenBlob
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(
-                            blob,
-                            "print-payment.html"
-                        );
-                        return;
-                    }
-
-                    // For other browsers:
                     // Create a link pointing to the ObjectURL
                     // containing the blob.
                     const _data = window.URL.createObjectURL(blob);
@@ -43,7 +31,7 @@ define([
                     link.download = "print-payment.html";
                     link.click();
                     setTimeout(function () {
-                        // For Firefox it is necessary to delay
+                        // For some Firefox versions it is necessary to delay
                         // revoking the ObjectURL
                         window.URL.revokeObjectURL(_data);
                     }, 100);
