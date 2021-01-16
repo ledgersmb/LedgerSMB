@@ -1,14 +1,23 @@
 /** @format */
+/* global dojo */
 
 define([
     "dojo/_base/declare",
     "dojo/_base/event",
     "dojo/dom-attr",
     "dijit/form/Button",
-    "lsmb/iframe",
-    "dojo/dom-form",
-    "dijit/registry"
-], function (declare, event, domattr, Button, iframe, domform, registry) {
+    "dijit/registry",
+    "content-disposition",
+    "dojo/dom-form"
+], function (
+    declare,
+    event,
+    domattr,
+    Button,
+    registry,
+    contentDisposition,
+    domform
+) {
     return declare("lsmb/PrintButton", [Button], {
         minimalGET: true,
         onClick: function (evt) {
@@ -34,19 +43,52 @@ define([
                     }
                 } else {
                     data = domform.toObject(f);
-                    data.action = this.get("value");
+                    data[this.get("name")] = this.get("value");
                 }
 
-                iframe(domattr.get(f, "action"), {
-                    data: data
-                }).then(
-                    function () {
-                        // success? do nothing
-                    },
-                    function (err) {
-                        registry.byId("maindiv").report_request_error(err);
+                var client = new XMLHttpRequest();
+                client.open("POST", domattr.get(f, "action"));
+                client.responseType = "blob";
+                client.onreadystatechange = function () {
+                    if (client.readyState === XMLHttpRequest.DONE) {
+                        var status = client.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            var disp = client.getResponseHeader(
+                                "Content-Disposition"
+                            );
+                            var cd = contentDisposition.parse(disp);
+                            if (cd.parameters.filename === undefined) {
+                                cd.parameters.filename = "unknown";
+                            }
+                            if (cd.type && cd.type === "attachment") {
+                                var a = document.createElement("a");
+                                var h = URL.createObjectURL(client.response);
+
+                                a.download = cd.parameters.filename;
+                                a.href = h;
+                                a.click();
+
+                                a.remove();
+                                URL.revokeObjectURL(h);
+                            } else {
+                                var d = registry.byId("errorDialog");
+                                d.set(
+                                    "content",
+                                    "Server sent unexpected response."
+                                );
+                                d.show();
+                            }
+                        } else {
+                            var err = {
+                                response: {
+                                    data: client.response
+                                }
+                            };
+                            registry.byId("maindiv").report_request_error(err);
+                        }
                     }
-                );
+                };
+                client.send(dojo.objectToQuery(data));
                 event.stop(evt);
                 return;
             }

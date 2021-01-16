@@ -128,7 +128,6 @@ my @modules =
           'LedgerSMB::Inventory::Adjust_Line',
           'LedgerSMB::Mailer::TransportSMTP',
           'LedgerSMB::Middleware::Authenticate::Company',
-          'LedgerSMB::Middleware::ClearDownloadCookie',
           'LedgerSMB::Middleware::DisableBackButton',
           'LedgerSMB::Middleware::DynamicLoadWorkflow',
           'LedgerSMB::Middleware::Log4perl',

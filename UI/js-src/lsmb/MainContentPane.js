@@ -127,24 +127,7 @@ define([
             });
             hash(h);
         },
-        /* eslint spaced-comment:0 */
-        download_link: function (/*href*/) {
-            // while it would have been nice for the code below
-            // to work, content downloaded into the iframe through
-            // dojo/request/iframe breaks all but the first request
-            // supposedly because the response never causes the
-            // 'onload' event to fire -- as the content isn't really
-            // loaded...
-            // var self = this;
-            // var deferred = iframe.get(href, { });
-            // iframe.doc();
-            // return deferred .then(
-            //     function() {
-            //         // we never reach success???
-            //     }, function(err) {
-            //         self.report_request_error(err);
-            //     });
-        },
+        download_link: function (/* href */) {},
         load_link: function (href) {
             return this.load_form(href, { handlesAs: "text" });
         },

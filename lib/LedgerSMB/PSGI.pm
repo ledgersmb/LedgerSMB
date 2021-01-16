@@ -218,7 +218,6 @@ sub setup_url_space {
             my $script = $_;
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain          => 'main',
                 cookie          => LedgerSMB::Sysconfig::cookie_name,
@@ -260,7 +259,6 @@ sub setup_url_space {
                 provide_connection => 'open',
                 require_version => $LedgerSMB::VERSION;
             enable '+LedgerSMB::Middleware::DisableBackButton';
-            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         }
         for  (grep { $_ !~ m/^(login|setup)[.]pl$/ } (SCRIPT_NEWSCRIPTS)->@*);
@@ -285,7 +283,6 @@ sub setup_url_space {
                 provide_connection => 'none',
                 require_version => $LedgerSMB::VERSION;
             enable '+LedgerSMB::Middleware::DisableBackButton';
-            enable '+LedgerSMB::Middleware::ClearDownloadCookie';
             $psgi_app;
         };
 
