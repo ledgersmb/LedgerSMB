@@ -16,7 +16,8 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK );
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
+use Workflow::Factory qw(FACTORY);
 
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Entity;
@@ -130,11 +131,36 @@ sub generate_statement {
         format => uc $request->{print_format},
         method => $request->{media},
     );
-    if ($request->{media} eq 'email'){
+    if ($request->{media} eq 'email') {
+        $template->render(
+            {
+                statements => \@statements,
+                DBNAME     => $request->{company},
+            });
 
-       #TODO -- mailer stuff
-       return;
+        my $wf  = FACTORY()->create_workflow('Email');
+        my $ctx = $wf->context;
+        $ctx->param( 'from' => $request->setting->get( 'default_email_from' ) );
 
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my $att = {
+            content   => $body,
+            mime_type => $template->{mimetype},
+            file_name => 'aging-report.' . lc($request->{print_format}),
+        };
+        $ctx->param( attachment => $att );
+        $wf->execute_action( 'Attach' );
+
+        return [ HTTP_SEE_OTHER,
+                 [ Location =>
+                   'email.pl?id=' . $wf->id
+                   . '&action=render&callback=reports.pl%3F'
+                   . 'report_name%3Daging'
+                   . '%26module_name%3Dgl'
+                   . '%26action%3Dstart_report'
+                   . '%26entity_class%3D' . $request->{entity_class} ],
+                 [ '' ] ];
     } elsif ($request->{media} eq 'screen'){
         $template->render(
             {
