@@ -52,6 +52,8 @@ use strict;
 use warnings;
 use parent qw( Workflow::Action );
 
+use Authen::SASL;
+
 use Email::MessageID;
 use Email::Sender::Simple;
 use Email::Stuffer;

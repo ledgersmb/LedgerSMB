@@ -41,7 +41,7 @@ with through the C<file.pm> script module.
 sub render {
     my ($request) = @_;
 
-    my $wf = FACTORY->fetch_workflow('Email', $request->{id});
+    my $wf = FACTORY()->fetch_workflow('Email', $request->{id});
 
     if ($request->{wf_action}) {
         $wf->context->param( $_ => $request->{$_} )
