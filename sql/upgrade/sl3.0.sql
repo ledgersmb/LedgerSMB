@@ -17,9 +17,6 @@
 
 BEGIN;
 
-ALTER TABLE :slschema.acc_trans DROP COLUMN IF EXISTS lsmb_entry_id;
-ALTER TABLE :slschema.acc_trans add column lsmb_entry_id SERIAL UNIQUE;
-
 -- Migration functions
 -- TODO: Can we do without?
 
@@ -968,8 +965,6 @@ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber
        FROM :slschema.invoice;
-
-ALTER TABLE :slschema.acc_trans ADD COLUMN lsmb_entry_id integer;
 
 update :slschema.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
