@@ -57,8 +57,10 @@ use Email::Sender::Simple;
 use Email::Stuffer;
 
 use Log::Any qw($log);
+use Workflow::Factory qw(FACTORY);
 
-
+use LedgerSMB::File::Email;
+use LedgerSMB::Magic qw(FC_EMAIL);
 use LedgerSMB::Mailer::TransportSMTP;
 use LedgerSMB::Sysconfig;
 
@@ -114,7 +116,21 @@ sub execute {
 
 =head2 attach($wf)
 
-@@TODO
+Attaches a file to the e-mail. Takes its data from the
+C<attachment> key in the context. It should be a hash with these
+keys:
+
+=over
+
+=item content
+
+=item description
+
+=item file_name
+
+=item mime_type
+
+=back
 
 @@TODO: attachment removal!
 
@@ -122,7 +138,21 @@ sub execute {
 
 sub attach {
     my ($self, $wf) = @_;
+    my $persister   = FACTORY()->get_persister( $wf->type );
+    my $file        = LedgerSMB::File::Email->new(dbh => $persister->handle);
+    my $att         = $wf->context->param( 'attachment' );
 
+    $file->ref_key($wf->id);
+    $file->file_class(FC_EMAIL);
+    $file->file_name($att->{file_name});
+    $file->description($att->{description});
+    $file->content($att->{content});
+    $file->mime_type_text($att->{mime_type});
+    $file->get_mime_type;
+
+    $file->attach;
+
+    FACTORY()->get_persister( $wf->type )->fetch_extra_workflow_data($wf);
     return;
 }
 

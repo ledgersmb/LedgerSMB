@@ -36,6 +36,7 @@ our @EXPORT_OK = qw(
     EDI_PATHNAME_MAX
     EDIT_BUDGET_ROWS
     FC_ECA
+    FC_EMAIL
     FC_ENTITY
     FC_INCOMING
     FC_INTERNAL
@@ -192,6 +193,7 @@ use constant EC_COLD_LEAD => 8;
     FC_ECA          5
     FC_INTERNAL     6
     FC_INCOMING     7
+    FC_EMAIL        8
 
 =cut
 
@@ -202,6 +204,7 @@ use constant FC_ENTITY      => 4;
 use constant FC_ECA         => 5;
 use constant FC_INTERNAL    => 6;
 use constant FC_INCOMING    => 7;
+use constant FC_EMAIL       => 8;
 
 
 =head3   LedgerSMB Accounting Journal code enumeration.

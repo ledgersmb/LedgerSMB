@@ -4,7 +4,11 @@
 <body class="lsmb [% dojo_theme %]">
 <div id="email">
 <div class="listtop">[% text('Compose e-mail') %]</div>
-<form data-dojo-type="lsmb/Form" name="email" method="post" action="email.pl">
+<form data-dojo-type="lsmb/Form"
+      name="email"
+      method="post"
+      enctype="multipart/form-data"
+      action="email.pl">
 <div>
   [%
   PROCESS input element_data = {

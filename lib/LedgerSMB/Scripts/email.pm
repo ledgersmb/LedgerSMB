@@ -47,6 +47,25 @@ sub render {
         $wf->context->param( $_ => $request->{$_} )
             for qw( from to cc bcc subject body );
 
+        my $upload = $request->{_uploads}->{attachment_content};
+        if ($upload) {
+            my $att = {
+                mime_type => $upload->content_type,
+                file_name => $upload->basename,
+            };
+
+            {
+                open my $fh, '<', $upload->path
+                    or die "Error opening uploaded file: $!";
+                binmode $fh;
+                local $/ = undef;
+                $att->{content} = <$fh>;
+                close $fh
+                    or warn "Error closing uploaded file: $!";
+            }
+
+            $wf->context->param( attachment => $att );
+        }
         # ignore the action if it's not allowed otherwise the BACK button
         #  doesn't work on completed workflows. Instead, just re-render
         #  the current (completed) state below.

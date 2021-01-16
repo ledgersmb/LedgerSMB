@@ -3,11 +3,7 @@
   <persister>Email</persister>
  <description>Handles lifecycle of e-mail</description>
  <state name="INITIAL">
-<!--
-      Commented out in anticipation of attachment upload support
-
    <action name="Attach" resulting_state="INITIAL"/>
- -->
    <action name="Update" resulting_state="INITIAL" />
    <action name="Send"   resulting_state="SUCCESS" />
    <action name="Cancel" resulting_state="CANCELLED"/>
