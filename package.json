@@ -122,6 +122,7 @@
     "yargs": "16.1.0"
   },
   "dependencies": {
+    "content-disposition": "^0.5.3",
     "core-js": "3.8.1",
     "dijit": "1.16.3",
     "dojo": "1.16.3",
