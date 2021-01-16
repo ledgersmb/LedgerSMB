@@ -638,3 +638,33 @@ h2 {
 #template {
     font-family: monospace;
 }
+
+#email caption {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+#email label {
+    display: inline-block;
+    font-weight: bold;
+    width: 15ex;
+}
+
+#email > form > div {
+    padding: 3px;
+}
+
+#email th {
+    font-weight: bold;
+}
+
+#email td {
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 15px;
+    padding-top: 3px;
+}
+
+#email #body {
+    min-height: 8em;
+}

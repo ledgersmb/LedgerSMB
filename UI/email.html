@@ -46,6 +46,15 @@
            value = body };
   %]
 </div>
+<div>
+  [%
+  PROCESS input element_data = {
+           name  = "notify"
+           label = text("Read receipt")
+           type  = "checkbox"
+           value = notify };
+  %]
+</div>
 <div style="margin-top:1em">
 [%
 
@@ -60,17 +69,21 @@ END
 
 %]
 </div>
-<div>
-  [%
-  PROCESS input element_data = {
-           name  = "notify"
-           label = text("Read receipt")
-           type  = "checkbox"
-           value = notify };
-  %]
-</div>
 
 [%
+
+IF attachments.size > 0 ;
+'<table style="margin-top:2em">
+<caption>Attachments</caption>
+<tr><th>Filename</th><th>Description</th></tr>';
+FOR att IN attachments ;
+%]
+  <tr><td>[% att.file_name %]</td><td>[% att.description %]</td></tr>
+[%
+END ; # FOR
+'</table>';
+END ; # IF
+
 IF actions.grep('^Attach$').size > 0 ;
 %]
 
@@ -82,17 +95,6 @@ IF actions.grep('^Attach$').size > 0 ;
 </div>
 
 [%
-END ; # IF
-
-
-IF attachments.size > 0 ;
-'<table><tr><th>Filename</th><th>Description</th></tr>';
-FOR att IN attachments ;
-%]
-  <tr><td>[% att.file_name %]</td><td>[% att.description %]</td></tr>
-[%
-END ; # FOR
-'</table>';
 END ; # IF
 
 %]
