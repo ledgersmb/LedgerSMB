@@ -132,15 +132,59 @@ sub generate_statement {
         method => $request->{media},
     );
     if ($request->{media} eq 'email') {
+        my $statement = $statements[0];
         $template->render(
             {
                 statements => \@statements,
                 DBNAME     => $request->{company},
             });
 
+        my (@to, @cc, @bcc);
+        # Select billing or regular addresses from the ECA
+        for my $class (15, 12) {
+            last if @to;
+            @to = grep {
+                $_->class_id == $class and $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (16, 13) {
+            last if @cc;
+            @cc = grep {
+                $_->class_id == $class and $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (17, 14) {
+            last if @bcc;
+            @bcc = grep {
+                $_->class_id == $class and $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        # Select billing or regular addresses from the entity
+        for my $class (15, 12) {
+            last if @to;
+            @to = grep {
+                $_->class_id == $class and not $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (16, 13) {
+            last if @cc;
+            @cc = grep {
+                $_->class_id == $class and not $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (17, 14) {
+            last if @bcc;
+            @bcc = grep {
+                $_->class_id == $class and not $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+
         my $wf  = FACTORY()->create_workflow('Email');
         my $ctx = $wf->context;
         $ctx->param( 'from' => $request->setting->get( 'default_email_from' ) );
+        $ctx->param( 'to'  => join(', ', map { $_->contact } @to) );
+        $ctx->param( 'cc'  => join(', ', map { $_->contact } @cc) );
+        $ctx->param( 'bcc' => join(', ', map { $_->contact } @bcc) );
 
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic

@@ -31,6 +31,24 @@
 <div>
   [%
   PROCESS input element_data = {
+           name  = "cc"
+           label = text("Cc")
+           type  = "text"
+           value = cc };
+  %]
+</div>
+<div>
+  [%
+  PROCESS input element_data = {
+           name  = "bcc"
+           label = text("Bcc")
+           type  = "text"
+           value = bcc };
+  %]
+</div>
+<div>
+  [%
+  PROCESS input element_data = {
            name  = "subject"
            label = text("Subject")
            type  = "text"
