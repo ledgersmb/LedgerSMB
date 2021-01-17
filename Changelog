@@ -27,6 +27,7 @@ Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
 
 Bugs fixed
+* Optimize listing of configured currencies (don't check in-use)
 * Fixed mailing of aging reports (regression since 1.3.42)
 * Optimize listing of configured currencies (don't check in-use)
 * Default CoA referential integrity and consistency
