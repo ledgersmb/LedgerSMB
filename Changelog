@@ -14,6 +14,7 @@ Added functionalities
 * Command line application for administrative tasks (bin/ledgersmb-admin)
 
 Changed functionalities
+* Improved error reporting on Print button with template evaluation failure
 * Faster HTML response generation (optimized HTML preprocessing)
 * `demo_with_images` document template set merged with standard `demo` set
 * JavaScript now built using WebPack (no longer using Dojo's build only)
@@ -26,17 +27,20 @@ Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
 
 Bugs fixed
+* Optimize listing of configured currencies (don't check in-use)
+* Fixed mailing of aging reports (regression since 1.3.42)
 * Default CoA referential integrity and consistency
 * Templates in setup.pl appearing in changing, random order
 * Fix type problems due to BigFloat being downgraded to BigInt
 * Parts search filter screen needs better layout
 * Value selection on non-required select can be undone with empty item
-* Update menu to conform to selected language after preferences save
+* Update menu to selected language after preferences save
 * SIC value is free entry instead of selection from configured SIC list
 * Non-required drop-downs can be 'unselected' application-wide
 * Back button steps back along the various form submissions intuitively now
 
 Code cleanup
+* Remove use of LedgerSMB::Company_Config global state (excepf from PGNumber)
 * Align HTML templates between `demo` and `xedemo` document template sets
 * Clean up and align XeLaTeX vs LaTeX(pdflatex) document template sets
 * Centralize database connection set-up
