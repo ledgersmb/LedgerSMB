@@ -36,7 +36,7 @@ use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA
-    FC_INTERNAL FC_INCOMING);
+    FC_INTERNAL FC_INCOMING FC_EMAIL);
 use LedgerSMB::Request::Helper::ParameterMap qw( input_map spec_for_dynatable );
 use LedgerSMB::Template::UI;
 
@@ -48,6 +48,7 @@ our $fileclassmap = {
    FC_ECA()           => 'LedgerSMB::File::ECA',
    FC_INTERNAL()      => 'LedgerSMB::File::Internal',
    FC_INCOMING()      => 'LedgerSMB::File::Incoming',
+   FC_EMAIL()         => 'LedgerSMB::File::Email',
 };
 
 sub get {
