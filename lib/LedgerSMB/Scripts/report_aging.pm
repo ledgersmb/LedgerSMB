@@ -26,6 +26,8 @@ use LedgerSMB::Entity::Contact;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Entity::Location;
 use LedgerSMB::Legacy_Util;
+use LedgerSMB::Magic qw(CC_EMAIL_TO CC_EMAIL_CC CC_EMAIL_BCC
+    CC_BILLING_EMAIL_TO CC_BILLING_EMAIL_CC CC_BILLING_EMAIL_BCC);
 use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Template;
@@ -141,38 +143,38 @@ sub generate_statement {
 
         my (@to, @cc, @bcc);
         # Select billing or regular addresses from the ECA
-        for my $class (15, 12) {
+        for my $class (CC_BILLING_EMAIL_TO, CC_EMAIL_TO) {
             last if @to;
             @to = grep {
                 $_->class_id == $class and $_->credit_id
             } $statement->{contacts}->@*;
         }
-        for my $class (16, 13) {
+        for my $class (CC_BILLING_EMAIL_CC, CC_EMAIL_CC) {
             last if @cc;
             @cc = grep {
                 $_->class_id == $class and $_->credit_id
             } $statement->{contacts}->@*;
         }
-        for my $class (17, 14) {
+        for my $class (CC_BILLING_EMAIL_BCC, CC_EMAIL_BCC) {
             last if @bcc;
             @bcc = grep {
                 $_->class_id == $class and $_->credit_id
             } $statement->{contacts}->@*;
         }
         # Select billing or regular addresses from the entity
-        for my $class (15, 12) {
+        for my $class (CC_BILLING_EMAIL_TO, CC_EMAIL_TO) {
             last if @to;
             @to = grep {
                 $_->class_id == $class and not $_->credit_id
             } $statement->{contacts}->@*;
         }
-        for my $class (16, 13) {
+        for my $class (CC_BILLING_EMAIL_CC, CC_EMAIL_CC) {
             last if @cc;
             @cc = grep {
                 $_->class_id == $class and not $_->credit_id
             } $statement->{contacts}->@*;
         }
-        for my $class (17, 14) {
+        for my $class (CC_BILLING_EMAIL_BCC, CC_EMAIL_BCC) {
             last if @bcc;
             @bcc = grep {
                 $_->class_id == $class and not $_->credit_id

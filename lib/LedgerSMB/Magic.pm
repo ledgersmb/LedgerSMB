@@ -25,6 +25,12 @@ our @EXPORT_OK = qw(
     CENTURY_START_YEAR
     DEFAULT_NUM_PREC
     DAYS_PER_WEEK
+    CC_EMAIL_TO
+    CC_EMAIL_CC
+    CC_EMAIL_BCC
+    CC_BILLING_EMAIL_TO
+    CC_BILLING_EMAIL_CC
+    CC_BILLING_EMAIL_BCC
     EC_COLD_LEAD
     EC_CONTACT
     EC_CUSTOMER
@@ -159,6 +165,24 @@ use constant BRU_FUND           => 4;
 use constant BRU_CUSTOMER       => 5;
 use constant BRU_VENDOR         => 6;
 use constant BRU_LOT            => 7;
+
+=head3  LedgerSMB entity contact class code enumeration.
+
+    CC_EMAIL_TO           12
+    CC_EMAIL_CC           13
+    CC_EMAIL_BCC          14
+    CC_BILLING_EMAIL_TO   15
+    CC_BILLING_EMAIL_CC   16
+    CC_BILLING_EMAIL_BCC  17
+
+=cut
+
+use constant CC_EMAIL_TO          => 12;
+use constant CC_EMAIL_CC          => 13;
+use constant CC_EMAIL_BCC         => 14;
+use constant CC_BILLING_EMAIL_TO  => 15;
+use constant CC_BILLING_EMAIL_CC  => 16;
+use constant CC_BILLING_EMAIL_BCC => 17;
 
 =head3  LedgerSMB entity class code enumeration.
 
