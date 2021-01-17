@@ -21,9 +21,10 @@ use warnings;
 use Config;
 use Config::IniFiles;
 use English;
+use File::Find::Rule;
 use String::Random;
 use Symbol;
-
+use Workflow::Factory qw(FACTORY);
 
 =head2 def $name, %args;
 
@@ -322,7 +323,7 @@ def 'cache_templates',
 def 'localepath',
     section => 'paths',
     default => 'locale/po',
-    doc => '';
+    doc => q{};
 
 
 # spool directory for batch printing
@@ -341,6 +342,13 @@ def 'templates_cache',
     section => 'paths',
     default => 'lsmb_templates',
     doc => q{this is a subdir of tempdir, unless it's an absolute path};
+
+def 'workflows',
+    section => 'paths',
+    default => 'workflows',
+    doc => q{directory where workflow files are stored;
+
+defaults to './workflows'};
 
 ### SECTION  ---   Template file formats
 
@@ -534,8 +542,23 @@ sub override_defaults {
 }
 
 
+sub _workflow_factory_config {
+    my ($wf_type) = @_;
+    my %config;
+    $wf_type = lc($wf_type // '');
+    $wf_type .= '.' if $wf_type;
+
+    my $wf_dir = LedgerSMB::Sysconfig::workflows();
+    for my $config_type (qw(action condition persister validator workflow)) {
+        $config{$config_type} = "$wf_dir/${wf_type}${config_type}s.xml"
+            if -f "$wf_dir/${wf_type}${config_type}s.xml";
+    }
+
+    return \%config;
+}
+
 sub initialize {
-    my ($module, $cfg_file) = @_;
+    my ($module, $cfg_file, %args) = @_;
 
     if ($cfg_file and -r $cfg_file) {
         $cfg = Config::IniFiles->new( -file => $cfg_file )
@@ -555,13 +578,29 @@ sub initialize {
             ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
     }
 
-
     override_defaults();
+
+    FACTORY()->add_config_from_file(_workflow_factory_config('')->%*);
+    if ($args{disable_workflow_preload}) {
+        FACTORY()->config_callback(\&_workflow_factory_config);
+    }
+    else {
+        my $r   = sub { File::Find::Rule->new };
+        my $wf_dir = LedgerSMB::Sysconfig::workflows();
+        my %wf_config = (
+            action    => [ $r->()->name( '*.actions.xml' )->in($wf_dir) ],
+            condition => [ $r->()->name( '*.conditions.xml' )->in($wf_dir) ],
+            persister => [ $r->()->name( '*.persisters.xml' )->in($wf_dir) ],
+            validator => [ $r->()->name( '*.validators.xml' )->in($wf_dir) ],
+            workflow  => [ $r->()->name( '*.workflow.xml' )->in($wf_dir) ],
+            );
+        FACTORY()->add_config_from_file(%wf_config);
+    }
 }
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2006-2018 The LedgerSMB Core Team
+Copyright (C) 2006-2020 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

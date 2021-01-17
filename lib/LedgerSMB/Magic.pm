@@ -25,6 +25,12 @@ our @EXPORT_OK = qw(
     CENTURY_START_YEAR
     DEFAULT_NUM_PREC
     DAYS_PER_WEEK
+    CC_EMAIL_TO
+    CC_EMAIL_CC
+    CC_EMAIL_BCC
+    CC_BILLING_EMAIL_TO
+    CC_BILLING_EMAIL_CC
+    CC_BILLING_EMAIL_BCC
     EC_COLD_LEAD
     EC_CONTACT
     EC_CUSTOMER
@@ -36,6 +42,7 @@ our @EXPORT_OK = qw(
     EDI_PATHNAME_MAX
     EDIT_BUDGET_ROWS
     FC_ECA
+    FC_EMAIL
     FC_ENTITY
     FC_INCOMING
     FC_INTERNAL
@@ -159,6 +166,24 @@ use constant BRU_CUSTOMER       => 5;
 use constant BRU_VENDOR         => 6;
 use constant BRU_LOT            => 7;
 
+=head3  LedgerSMB entity contact class code enumeration.
+
+    CC_EMAIL_TO           12
+    CC_EMAIL_CC           13
+    CC_EMAIL_BCC          14
+    CC_BILLING_EMAIL_TO   15
+    CC_BILLING_EMAIL_CC   16
+    CC_BILLING_EMAIL_BCC  17
+
+=cut
+
+use constant CC_EMAIL_TO          => 12;
+use constant CC_EMAIL_CC          => 13;
+use constant CC_EMAIL_BCC         => 14;
+use constant CC_BILLING_EMAIL_TO  => 15;
+use constant CC_BILLING_EMAIL_CC  => 16;
+use constant CC_BILLING_EMAIL_BCC => 17;
+
 =head3  LedgerSMB entity class code enumeration.
 
     EC_VENDOR      1
@@ -192,6 +217,7 @@ use constant EC_COLD_LEAD => 8;
     FC_ECA          5
     FC_INTERNAL     6
     FC_INCOMING     7
+    FC_EMAIL        8
 
 =cut
 
@@ -202,6 +228,7 @@ use constant FC_ENTITY      => 4;
 use constant FC_ECA         => 5;
 use constant FC_INTERNAL    => 6;
 use constant FC_INCOMING    => 7;
+use constant FC_EMAIL       => 8;
 
 
 =head3   LedgerSMB Accounting Journal code enumeration.
@@ -277,7 +304,7 @@ use constant SCRIPT_NEWSCRIPTS => [ qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
    configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl erp.pl
    file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
-   journal.pl login.pl lreports_co.pl order.pl payment.pl
+   journal.pl login.pl lreports_co.pl order.pl payment.pl email.pl
    payroll.pl pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl
    template.pl timecard.pl transtemplate.pl trial_balance.pl user.pl vouchers.pl
                                     ) ];

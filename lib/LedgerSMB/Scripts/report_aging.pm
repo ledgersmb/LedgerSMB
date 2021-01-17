@@ -16,7 +16,8 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK );
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
+use Workflow::Factory qw(FACTORY);
 
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Entity;
@@ -25,6 +26,8 @@ use LedgerSMB::Entity::Contact;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Entity::Location;
 use LedgerSMB::Legacy_Util;
+use LedgerSMB::Magic qw(CC_EMAIL_TO CC_EMAIL_CC CC_EMAIL_BCC
+    CC_BILLING_EMAIL_TO CC_BILLING_EMAIL_CC CC_BILLING_EMAIL_BCC);
 use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Template;
@@ -130,11 +133,80 @@ sub generate_statement {
         format => uc $request->{print_format},
         method => $request->{media},
     );
-    if ($request->{media} eq 'email'){
+    if ($request->{media} eq 'email') {
+        my $statement = $statements[0];
+        $template->render(
+            {
+                statements => \@statements,
+                DBNAME     => $request->{company},
+            });
 
-       #TODO -- mailer stuff
-       return;
+        my (@to, @cc, @bcc);
+        # Select billing or regular addresses from the ECA
+        for my $class (CC_BILLING_EMAIL_TO, CC_EMAIL_TO) {
+            last if @to;
+            @to = grep {
+                $_->class_id == $class and $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (CC_BILLING_EMAIL_CC, CC_EMAIL_CC) {
+            last if @cc;
+            @cc = grep {
+                $_->class_id == $class and $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (CC_BILLING_EMAIL_BCC, CC_EMAIL_BCC) {
+            last if @bcc;
+            @bcc = grep {
+                $_->class_id == $class and $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        # Select billing or regular addresses from the entity
+        for my $class (CC_BILLING_EMAIL_TO, CC_EMAIL_TO) {
+            last if @to;
+            @to = grep {
+                $_->class_id == $class and not $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (CC_BILLING_EMAIL_CC, CC_EMAIL_CC) {
+            last if @cc;
+            @cc = grep {
+                $_->class_id == $class and not $_->credit_id
+            } $statement->{contacts}->@*;
+        }
+        for my $class (CC_BILLING_EMAIL_BCC, CC_EMAIL_BCC) {
+            last if @bcc;
+            @bcc = grep {
+                $_->class_id == $class and not $_->credit_id
+            } $statement->{contacts}->@*;
+        }
 
+        my $wf  = FACTORY()->create_workflow('Email');
+        my $ctx = $wf->context;
+        $ctx->param( 'from' => $request->setting->get( 'default_email_from' ) );
+        $ctx->param( 'to'  => join(', ', map { $_->contact } @to) );
+        $ctx->param( 'cc'  => join(', ', map { $_->contact } @cc) );
+        $ctx->param( 'bcc' => join(', ', map { $_->contact } @bcc) );
+
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my $att = {
+            content   => $body,
+            mime_type => $template->{mimetype},
+            file_name => 'aging-report.' . lc($request->{print_format}),
+        };
+        $ctx->param( attachment => $att );
+        $wf->execute_action( 'Attach' );
+
+        return [ HTTP_SEE_OTHER,
+                 [ Location =>
+                   'email.pl?id=' . $wf->id
+                   . '&action=render&callback=reports.pl%3F'
+                   . 'report_name%3Daging'
+                   . '%26module_name%3Dgl'
+                   . '%26action%3Dstart_report'
+                   . '%26entity_class%3D' . $request->{entity_class} ],
+                 [ '' ] ];
     } elsif ($request->{media} eq 'screen'){
         $template->render(
             {

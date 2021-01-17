@@ -231,6 +231,7 @@ exchangerate_type__is_used
 exchangerate_type__list
 exchangerate_type__save
 file__attach_to_eca
+file__attach_to_email
 file__attach_to_entity
 file__attach_to_order
 file__attach_to_part
