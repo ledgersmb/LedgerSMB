@@ -78,6 +78,8 @@ sub content_test {
                 return 1 if $param->{tag} eq "div" && $param->{attr} eq "overflow";
                 return 1 if $param->{tag} eq 'span'
                     && $param->{attr} eq 'value';
+                return 1 if $param->{tag} eq 'a'
+                    && $param->{attr} eq 'download';
                 # The following should be removed and files fixed instead
                 return 1 if $param->{tag} =~ /div|tr/ && $param->{attr} =~ /height|width|name|cols/;
                 return 0;
