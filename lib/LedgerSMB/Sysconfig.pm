@@ -323,7 +323,7 @@ def 'cache_templates',
 def 'localepath',
     section => 'paths',
     default => 'locale/po',
-    doc => '';
+    doc => q{};
 
 
 # spool directory for batch printing
@@ -346,7 +346,9 @@ def 'templates_cache',
 def 'workflows',
     section => 'paths',
     default => 'workflows',
-    doc => q{};
+    doc => q{directory where workflow files are stored;
+
+defaults to './workflows'};
 
 ### SECTION  ---   Template file formats
 
