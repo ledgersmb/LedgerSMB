@@ -2398,6 +2398,7 @@ $$
 BEGIN
   -- dummy; actual function defined in modules/triggers.sql
   -- exists here in order to be able to create the triggers below
+  RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
 
