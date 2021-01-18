@@ -540,7 +540,7 @@ source database. Please either find professional help to migrate your
 database, or delete the offending rows through PgAdmin III or psql'),
       appname => 'ledgersmb',
   min_version => '1.2',
-  max_version => '1.4'
+  max_version => '1.3'
 );
 
 push @tests, __PACKAGE__->new(
@@ -548,8 +548,10 @@ push @tests, __PACKAGE__->new(
                      from entity_credit_account eca
                      join entity_class ec on eca.entity_class = ec.id
                      join entity e on eca.entity_id = e.id
-                   where meta_number in
-                       (select meta_number from entity_credit_account
+                   where exists
+                       (select meta_number from entity_credit_account eca2
+                         where eca.meta_number = eca2.meta_number
+                               and eca.entity_class = eca2.entity_class
                         group by meta_number having count(*) > 1)
                    order by meta_number',
  display_name => marktext('No duplicate meta_numbers'),
@@ -560,7 +562,7 @@ push @tests, __PACKAGE__->new(
  instructions => marktext('Make sure all meta numbers are unique.'),
       appname => 'ledgersmb',
   min_version => '1.3',
-  max_version => '1.4'
+  max_version => '1.3'
 );
 
 push @tests, __PACKAGE__->new(
@@ -655,16 +657,16 @@ push @tests, __PACKAGE__->new(
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
         table => 'account',
- instructions => marktext('Please use the 1.3/1.4 UI to add the GIFI accounts'),
+ instructions => marktext('Please use the 1.3 UI to add the GIFI accounts'),
       appname => 'ledgersmb',
   min_version => '1.3',
-  max_version => '1.4'
+  max_version => '1.3'
 );
 
 push @tests, __PACKAGE__->new(
    test_query => q{select chart_id, account
-                   from from cr_coa_to_account ccta
-                   where chart_id in (select crcoa.chart_id
+                     from cr_coa_to_account ccta
+                    where chart_id in (select crcoa.chart_id
                                         from cr_coa_to_account crcoa
                                        where ccta.chart_id = crcoa.chart_id
                                     group by crcoa.chart_id
@@ -676,13 +678,13 @@ push @tests, __PACKAGE__->new(
  instructions => marktext('Please use pgAdmin3 or psql to remove the duplicates'),
       appname => 'ledgersmb',
   min_version => '1.3',
-  max_version => '1.4'
+  max_version => '1.3'
 );
 
 push @tests, __PACKAGE__->new(
    test_query => q{select chart_id, account
-                   from from cr_coa_to_account ccta
-                   where not exists (select 1
+                     from cr_coa_to_account ccta
+                    where not exists (select 1
                                        from account
                                       where account.id = ccta.chart_id)},
  display_name => marktext('Accounts marked for recon exist'),
@@ -692,7 +694,7 @@ push @tests, __PACKAGE__->new(
  instructions => marktext(q(Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' table and change it to an existing value)),
       appname => 'ledgersmb',
   min_version => '1.3',
-  max_version => '1.4'
+  max_version => '1.3'
 );
 
 
