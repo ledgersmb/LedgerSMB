@@ -302,7 +302,8 @@ sub print_transaction {
         locale => $locale,
         output_options => \%output_options,
         format => uc $form->{format} );
-    LedgerSMB::Legacy_Util::render_template($template, $form, $form);
+    $template->render($form);
+    LedgerSMB::Legacy_Util::output_template($template, $form);
 
     if (%$old_form) {
         $old_form->{invnumber} = $form->{invnumber};

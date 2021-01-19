@@ -1513,8 +1513,9 @@ sub print_form {
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         );
-    LedgerSMB::Legacy_Util::render_template($template, $form, $form,
-                                            $form->{media});
+    $template->render($form);
+    LedgerSMB::Legacy_Util::output_template($template, $form,
+                                            method => $form->{media});
 
     # if we got back here restore the previous form
     if ( %$old_form ) {

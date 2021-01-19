@@ -25,39 +25,6 @@ use Log::Log4perl;
 
 =head1 FUNCTIONS
 
-=head2 render_template($template, $form, $variables, [$method])
-
-=over
-
-=item template
-
-A LedgerSMB::Template object.
-
-=item variables
-
-A hashref of variables which is passed to the template.
-
-=item method (optional)
-
-Determines where to send the output. Allowed values:
-
-email|print|screen|<printer name>
-
-=back
-
-=cut
-
-sub render_template {
-    my $template = shift;
-    my $form = shift;
-    my $vars = shift;
-    my $method = shift;
-
-    my $post = $template->_render($vars);
-
-    output_template($template, $form, (method => $method));
-}
-
 =head2 render_psgi($psgi_response)
 
 Renders a PSGI response from a C<LedgerSMB::Template::UI> as a CGI
@@ -74,7 +41,7 @@ sub render_psgi {
     print join('', @{$psgi->[2]});
 }
 
-=head2 output_template($template, %args)
+=head2 output_template($template, $form, %args)
 
 supported keys in C<%args>:
 
