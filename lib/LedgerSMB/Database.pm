@@ -488,6 +488,8 @@ sub load_base_schema {
     die 'Base schema failed to load'
         if ! $success;
 
+    $self->_load_module($dbh, 'triggers.sql');
+
     if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
@@ -510,7 +512,7 @@ Returns true when succesful, dies upon error.
 =cut
 
 sub _load_module {
-    my ($self, $dbh, $module, $args) = @_;
+    my ($self, $dbh, $module) = @_;
 
     $dbh->do(q{delete from defaults where setting_key = 'module_load_ok'})
         or die $dbh->errstr;
@@ -546,7 +548,7 @@ sub load_modules {
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
 
-        $self->_load_module($dbh, $mod, $args);
+        $self->_load_module($dbh, $mod);
     }
     close $fh or die "Cannot close $filename";
     return 1;
