@@ -509,6 +509,30 @@ Returns true when succesful, dies upon error.
 
 =cut
 
+sub _load_module {
+    my ($self, $dbh, $module, $args) = @_;
+
+    $dbh->do(q{delete from defaults where setting_key = 'module_load_ok'})
+        or die $dbh->errstr;
+    $dbh->do(q{insert into defaults (setting_key, value)
+             values ('module_load_ok', 'no') })
+        or die $dbh->errstr;
+
+    my ($success, $stdout, $stderr) = $self->run_file_with_logs(
+        file => "$self->{source_dir}/modules/$module",
+        );
+    $success or die $stderr;
+
+    my $sth = $dbh->prepare(q{select value from defaults
+                            where setting_key = 'module_load_ok'});
+    $sth->execute;
+    my ($value) = $sth->fetchrow_array();
+    $sth->finish;
+    die "Module $module failed to load"
+        if not $value or $value ne 'yes';
+}
+
+
 sub load_modules {
     my ($self, $loadorder, $args) = @_;
 
@@ -522,24 +546,7 @@ sub load_modules {
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
 
-        $dbh->do(q{delete from defaults where setting_key = 'module_load_ok'})
-            or die $dbh->errstr;
-        $dbh->do(q{insert into defaults (setting_key, value)
-                    values ('module_load_ok', 'no') })
-            or die $dbh->errstr;
-
-        my ($success, $stdout, $stderr) = $self->run_file_with_logs(
-            file => "$self->{source_dir}/modules/$mod",
-        );
-        $success or die $stderr;
-
-        my $sth = $dbh->prepare(q{select value from defaults
-                                   where setting_key = 'module_load_ok'});
-        $sth->execute;
-        my ($value) = $sth->fetchrow_array();
-        $sth->finish;
-        die "Module $mod failed to load"
-            if not $value or $value ne 'yes';
+        $self->_load_module($dbh, $mod, $args);
     }
     close $fh or die "Cannot close $filename";
     return 1;
