@@ -1263,6 +1263,7 @@ sub save {
         $form->{repost} = 1;
         my $template = LedgerSMB::Template::UI->new_UI;
         return LedgerSMB::Legacy_Util::render_psgi(
+            $form,
             $template->render($form, 'oe-save-warn',
                               {
                                   hiddens => $form,

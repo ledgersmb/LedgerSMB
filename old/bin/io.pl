@@ -1397,10 +1397,16 @@ sub print_form {
         $wf->context->param(from => $form->get_setting( 'default_email_from' ));
         $wf->execute_action( 'Attach' );
 
+        $wf->execute_action( 'Send' ) if $form->{immediate};
+
         my $id = $wf->id;
-        print "Location: email.pl?id=$id&action=render&callback=$form->{script}%3F"
-            . "id%3D$form->{id}%26action%3Dedit\n";
-        print "Status: 302 Found\n\n";
+
+        if (not $form->{header}) {
+            print "Location: email.pl?id=$id&action=render&callback=$form->{script}%3F"
+                . "id%3D$form->{id}%26action%3Dedit\n";
+            print "Status: 302 Found\n\n";
+            $form->{header} = 1;
+        }
 
         return;
     } elsif ( $form->{media} eq 'screen' ) {

@@ -32,11 +32,15 @@ response as required by legacy code.
 =cut
 
 sub render_psgi {
-    my $psgi = shift;
+    my ($form, $psgi) = @_;
 
     binmode STDOUT, 'utf8';
-    print "Status: 200 OK\n";
-    print "Content-Type: text/html; charset=UTF-8\n\n";
+
+    if (not $form->{header}) {
+        print "Status: 200 OK\n";
+        print "Content-Type: text/html; charset=UTF-8\n\n";
+        $form->{header} = 1;
+    }
     print join('', @{$psgi->[2]});
 }
 

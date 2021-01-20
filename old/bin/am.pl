@@ -111,6 +111,7 @@ sub add_gifi {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-gifi-form',
                           {
                               form => $form,
@@ -135,6 +136,7 @@ sub edit_gifi {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-gifi-form',
                           {
                               form => $form,
@@ -220,6 +222,7 @@ sub add_business {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-business-form',
                           {
                               form => $form,
@@ -243,6 +246,7 @@ sub edit_business {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-business-form',
                           {
                               form => $form,
@@ -297,6 +301,7 @@ sub add_sic {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-sic-form',
                           {
                               form => $form,
@@ -324,6 +329,7 @@ sub edit_sic {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-sic-form',
                           {
                               form => $form,
@@ -381,6 +387,7 @@ sub add_language {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-language-form',
                           {
                               form => $form,
@@ -408,6 +415,7 @@ sub edit_language {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-language-form',
                           {
                               form => $form,
@@ -457,6 +465,7 @@ sub delete_language {
         });
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'form-confirmation',
                           {
                               form => $form,
@@ -553,6 +562,7 @@ sub display_taxes {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-taxes',
                           {
                               form => $form,
@@ -657,6 +667,7 @@ sub add_warehouse {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-warehouse-form',
                           {
                               form => $form,
@@ -679,6 +690,7 @@ sub edit_warehouse {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-warehouse-form',
                           {
                               form => $form,
@@ -897,6 +909,7 @@ sub recurring_transactions {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'am-list-recurring',
                           {
                               form => $form,
@@ -1303,6 +1316,7 @@ sub process_transactions {
     }
 
     $form->{callback} = "am.pl?action=recurring_transactions&header=1";
+    $form->{header} = 1;
     $form->redirect;
 
 }
