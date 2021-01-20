@@ -1390,7 +1390,7 @@ sub email_recurring {
 
             $message = $form->escape( $pt->{message}, 1 );
 
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
+            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message&immediate=1&header=1";
             $ok = !( $form->_redirect() );
 
             if ($ok) {

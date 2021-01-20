@@ -15,7 +15,6 @@ specified output method.
 use strict;
 use warnings;
 
-use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
@@ -51,7 +50,7 @@ supported keys in C<%args>:
 
 Determines where to send the output. Allowed values:
 
-email|print|screen|<printer name>
+print|screen|<printer name>
 
 =item printmode + OUT
 
@@ -73,14 +72,7 @@ sub output_template {
 
     my $method = $args{method} // '';
 
-    if ('email' eq lc $method) {
-        local $csettings = {
-            map { $_ => $form->get_setting($_)  }
-            map { "default_email_$_" }
-            qw/ from to cc bcc /
-        };
-        _output_template_email($template);
-    } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
+    if (defined $args{OUT} and $args{printmode} eq '>'){ # To file
         open my $fh, '>', $args{OUT}
            or die "Can't write to file $args{OUT}";
         binmode $fh, ':raw';
@@ -146,42 +138,6 @@ sub _output_template_http {
     # change global resource back asap
     binmode STDOUT, 'encoding(:UTF-8)';
     $logger->trace('end print to STDOUT');
-    return;
-}
-
-sub _output_template_email {
-    my $self = shift;
-    my $args = $self->{output_options};
-    my @mailmime;
-
-    if (not $args->{attach}) {
-        $args->{message} .= $self->{output};
-        @mailmime = ('contenttype', $self->{mimetype});
-    }
-
-    # User default for email from
-    $args->{from} ||= $self->{user}->{email};
-
-    # Mailer stuff
-    my $mail = LedgerSMB::Mailer->new(
-        from => $args->{from} // $csettings->{default_email_from},
-        to => $args->{to} // $csettings->{default_email_to},
-        cc => $args->{cc} // $csettings->{default_email_cc},
-        bcc => $args->{bcc} // $csettings->{default_email_bcc},
-        subject => $args->{subject},
-        notify => $args->{notify},
-        message => $args->{message},
-        @mailmime,
-    );
-    if ($args->{attach} or $self->{mimetype} !~ m#^text/#) {
-        $mail->attach(
-            mimetype => $self->{mimetype},
-            filename => $args->{filename},
-            strip => $$,
-            data => $self->{output},
-        );
-    }
-    $mail->send;
     return;
 }
 
