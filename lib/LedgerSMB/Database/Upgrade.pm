@@ -42,6 +42,14 @@ my %migration_script = (
     'ledgersmb/1.3'  => '1.3-1.5',
     );
 
+my %migration_upto = (
+    'sql-ledger/2.8' => 'migration-target-sl',
+    'sql-ledger/3.0' => 'migration-target-sl',
+    'sql-ledger/3.2' => undef,
+    'ledgersmb/1.2'  => 'migration-target-lsmb',
+    'ledgersmb/1.3'  => 'migration-target-lsmb',
+    );
+
 
 =head1 ATTRIBUTES
 
@@ -220,6 +228,7 @@ sub run_upgrade_script {
     my ($self, $vars) = @_;
     my $src_schema = $migration_schema{$self->type};
     my $template   = $migration_script{$self->type};
+    my $upto       = $migration_upto{$self->type};
 
     my $dbh = $self->database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $self->database->loader_log_filename();
@@ -244,7 +253,7 @@ sub run_upgrade_script {
     $self->database->load_base_schema(
         log     => $temp . '_stdout',
         errlog  => $temp . '_stderr',
-        upto_tag=> 'migration-target'
+        upto_tag=> $upto
         );
 
     $dbh->do(q(
