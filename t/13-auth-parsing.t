@@ -4,6 +4,9 @@ use Test2::V0;
 use MIME::Base64;
 
 BEGIN {
+    use Log::Log4perl qw(:easy);
+    Log::Log4perl->easy_init($OFF);
+
     use LedgerSMB::Sysconfig;
     LedgerSMB::Sysconfig->initialize;
 }

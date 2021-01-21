@@ -5,6 +5,8 @@ use Test2::V0;
 use LedgerSMB::Locale;
 use LedgerSMB::Num2text;
 use LedgerSMB::PGNumber;
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB::Sysconfig;
 LedgerSMB::Sysconfig->initialize;

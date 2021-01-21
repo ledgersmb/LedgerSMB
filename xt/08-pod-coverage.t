@@ -18,6 +18,8 @@ use Test::Pod::Coverage;
 
 use File::Find;
 use File::Util;
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 if ($ENV{COVERAGE} && $ENV{CI}) {
     skip_all q{CI && COVERAGE excludes POD checks};

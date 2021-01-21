@@ -2,6 +2,8 @@
 
 use File::Spec;
 use Test::More;
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 
 use LedgerSMB::Database::Config;
