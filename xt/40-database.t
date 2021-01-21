@@ -34,6 +34,7 @@ my $admin_dbh = DBI->connect('dbi:Pg:dbname=postgres',
 #
 # missing schema file
 #
+$admin_dbh->do(q{set client_min_messages = 'warning'});
 $admin_dbh->do(q{DROP DATABASE IF EXISTS lsmbtest_database});
 $db = LedgerSMB::Database->new(
     connect_data => {
