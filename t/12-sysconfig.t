@@ -4,6 +4,9 @@ use Test2::V0;
 use Test2::Tools::Spec;
 no warnings 'once';
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS SCRIPT_OLDSCRIPTS );
 

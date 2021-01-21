@@ -6,6 +6,8 @@ use Test2::V0;
 use Test2::Plugin::BailOnFail;
 use Digest::SHA 'sha512_base64'; #already a dependency
 use FindBin;
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
 
 LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 

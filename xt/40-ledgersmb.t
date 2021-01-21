@@ -25,7 +25,7 @@ my @r;
 ok(defined $lsmb);
 isa_ok($lsmb, ['LedgerSMB']);
 
-my $pgdatabase = $ENV{PGDATABASE} // '';
+my $pgdatabase = $ENV{LSMB_NEW_DB} // $ENV{PGDATABASE} // '';
 my $pghost = "";
 $pghost = ";host=" . $ENV{PGHOST}
         if $ENV{PGHOST} && $ENV{PGHOST} ne 'localhost';

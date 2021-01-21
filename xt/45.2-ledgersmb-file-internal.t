@@ -34,6 +34,7 @@ my $dbh = DBI->connect(
 # We can't use a transation to make and rollback our changes as we
 # need to test whether timestamps are updated between procedures.
 # In a transaction, the timestamps will be identical.
+$dbh->do(q{set client_min_messages = 'warning'});
 $dbh->do("DROP DATABASE IF EXISTS $test_db");
 $dbh->do("CREATE DATABASE $test_db WITH TEMPLATE $ENV{LSMB_NEW_DB}")
     or die "Failed to create new database $test_db for tests" . DBI->errstr;

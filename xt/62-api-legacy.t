@@ -13,6 +13,9 @@ BEGIN {
     use Plack::Request;
 }
 
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
 LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 LedgerSMB::Locale->initialize();
 
