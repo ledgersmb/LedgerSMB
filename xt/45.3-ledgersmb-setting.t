@@ -21,7 +21,7 @@ my $dbh = DBI->connect(
     "dbi:Pg:dbname=$ENV{LSMB_NEW_DB}",
     undef,
     undef,
-    { AutoCommit => 0, PrintError => 0 }
+    { AutoCommit => 0, PrintError => 1, RaiseError => 1 }
 ) or die "Can't connect to template database: " . DBI->errstr;
 
 # Needed until LedgerSMB::Setting->get() is refactored to use its
@@ -37,6 +37,7 @@ my $heading_id = $dbh->last_insert_id(
     undef,
     'account_heading',
     undef,
+    { sequence => 'account_heading_id_seq' },
 );
 
 my $q = $dbh->prepare("
