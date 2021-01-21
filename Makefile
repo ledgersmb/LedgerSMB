@@ -118,7 +118,7 @@ test:
 devtest: TESTS ?= t/ xt/
 devtest:
 	$(DOCKER_CMD) prove --time --recurse \
-	                    --pgtap-option dbname=lsmbinstalltest \
+	                    --pgtap-option dbname=lsmbtestdb \
 	                    --pgtap-option username=postgres \
 	                    --feature-option tags=~@wip \
 	                    $(TESTS)
