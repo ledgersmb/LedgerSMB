@@ -1133,6 +1133,7 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 }
 
 sub update {
+    my $form_id = delete $form->{id}; # github issue #975
     $form->{ARAP} = 'AR';
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
@@ -1330,6 +1331,7 @@ sub update {
                     && ( $form->{"description_$i"} eq "" ) )
                 {
                     $form->{rowcount}--;
+                    $form->{id} = $form_id;
                     &display_form;
                 }
                 else {
@@ -1337,6 +1339,7 @@ sub update {
                     $form->{"id_$i"}   = 0;
                     $form->{"unit_$i"} = $locale->text('ea');
 
+                    $form->{id} = $form_id;
                     &new_item;
 
                 }
@@ -1352,6 +1355,7 @@ sub update {
     check_form();
 
     $form->{rowcount}--;
+    $form->{id} = $form_id;
     display_form();
 }
 

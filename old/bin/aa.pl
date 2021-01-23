@@ -1183,6 +1183,7 @@ sub approve {
 
 sub update {
     my $display = shift;
+    my $form_id = delete $form->{id};
     $form->open_form() unless $form->check_form();
     $is_update = 1;
         $form->{invtotal} = 0;
@@ -1282,6 +1283,7 @@ sub update {
 
     &create_links;
     $form->generate_selects(\%myconfig);
+    $form->{id} = $form_id;
     &display_form;
 
 }
