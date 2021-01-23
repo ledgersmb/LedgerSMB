@@ -960,7 +960,7 @@ sub form_footer {
             'print' =>
               { ndx => 3, key => 'P', value => $locale->text('Print'),
                 type => 'lsmb/PrintButton' },
-            'edit_and_save' => { ndx   => 4, key   => 'E', value => $locale->text('Save Draft') },
+            'edit_and_save' => { ndx   => 4, key   => 'E', value => $locale->text('Save') },
             'post' => { ndx => 5, key => 'O', value => $locale->text('Post') },
             'post_as_new' => { ndx => 6, key => 'O', value => $locale->text('Post') },
             'approve' => { ndx   => 7, key   => 'O', value => $locale->text('Post') },
@@ -1183,6 +1183,7 @@ sub approve {
 
 sub update {
     my $display = shift;
+    my $form_id = delete $form->{id};
     $form->open_form() unless $form->check_form();
     $is_update = 1;
         $form->{invtotal} = 0;
@@ -1282,6 +1283,7 @@ sub update {
 
     &create_links;
     $form->generate_selects(\%myconfig);
+    $form->{id} = $form_id;
     &display_form;
 
 }
