@@ -557,7 +557,7 @@ sub form_header {
                    $button{edit_and_save} = {
                        ndx   => 4,
                        key   => 'E',
-                       value => $locale->text('Save Draft') };
+                       value => $locale->text('Save') };
               }
                # Delete these for batches too
                delete $button{$_}
