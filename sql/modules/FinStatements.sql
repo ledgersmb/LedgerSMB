@@ -603,7 +603,18 @@ CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date,
                                                  in_timing text)
 RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
-WITH hdr_meta AS (
+WITH chkpoint_date AS (
+   SELECT coalesce(max(end_date),
+                   (select min(transdate)-'1 day'::interval
+                     from acc_trans)) AS end_date
+     FROM account_checkpoint
+    WHERE (in_to_date IS NULL
+           OR ((in_timing is null or in_timing='ultimo')
+               and (end_date <= in_to_date))
+           OR ((in_timing='primo')
+               and (end_date < in_to_date)))
+),
+hdr_meta AS (
    SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
           aht.path,
           ahc.derived_category as category, 'H'::char as account_type,
@@ -648,10 +659,18 @@ acc_meta AS (
                                       WHERE setting_key = 'earn_id')])
 ),
 acc_balance AS (
-   SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
+   SELECT bal.id, sum(bal.balance) as balance
+     FROM (
+   SELECT account_id as id, amount_bc as balance
+     FROM account_checkpoint
+    WHERE end_date = (select end_date from chkpoint_date)
+
+   UNION ALL
+   SELECT ac.chart_id as id, ac.amount_bc as balance
      FROM acc_trans ac
      JOIN transactions t ON t.approved AND t.id = ac.trans_id
     WHERE t.approved AND
+          ac.transdate > (select end_date from chkpoint_date) AND
           (in_to_date is null
            OR ((in_timing is null OR in_timing='ultimo')
                AND ac.transdate <= in_to_date
@@ -660,8 +679,9 @@ acc_balance AS (
                                                   WHERE transdate = in_to_date
                                                     AND NOT reversed))
            OR (in_timing='primo'  AND ac.transdate < in_to_date))
- GROUP BY ac.chart_id
-   HAVING sum(ac.amount_bc) <> 0.00
+    ) bal
+ GROUP BY bal.id
+   HAVING sum(bal.balance) <> 0.00
 ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
