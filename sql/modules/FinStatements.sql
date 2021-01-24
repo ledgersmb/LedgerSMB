@@ -609,10 +609,12 @@ WITH chkpoint_date AS (
                      from acc_trans)) AS end_date
      FROM account_checkpoint
     WHERE (in_to_date IS NULL
-           OR ((in_timing is null or in_timing='ultimo')
-               and (end_date <= in_to_date))
-           OR ((in_timing='primo')
-               and (end_date < in_to_date)))
+           OR (end_date < in_to_date)
+           OR ((end_date = in_to_date)
+               and (in_timing is null or in_timing='ultimo')
+               and not exists (select 1 from yearend
+                                where transdate = in_to_date
+                                      and not reversed)))
 ),
 hdr_meta AS (
    SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
