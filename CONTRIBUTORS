@@ -133,6 +133,8 @@ reports and at least one bug fix.
 Jigme Datse <jigme.datse @ datsemultimedia.com> has contributed some bug fixes,
 bug reports, and more.
 
+Richard Weeks <rtweeks21 @ gmail.com> contributed a bug fix for timecards.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
@@ -143,4 +145,3 @@ Thomas Bayen <bayen @ gmx.de>
 Antti Kaihola <akaihola @ siba.fi>
 Moritz Bunkus (tex)
 Jim Rawlings <jim @ your-dba.com> 
-

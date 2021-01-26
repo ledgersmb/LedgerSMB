@@ -117,7 +117,8 @@ sub timecard_screen {
 
          my @dates = ();
          for (SUNDAY .. SATURDAY){
-             push @dates, $startdate->add(days => 1)->clone;
+             push @dates, $startdate->clone;
+             $startdate->add_interval('day', 1);
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
