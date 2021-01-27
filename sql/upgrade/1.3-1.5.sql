@@ -89,6 +89,25 @@ SELECT id, name, entity_class, control_code, created, country_id
   FROM lsmb13.entity;
 
 INSERT INTO users SELECT * FROM lsmb13.users;
+
+UPDATE lsmb13.location
+   SET line_one = case
+        when line_one = '' then 'Null'
+        when line_one is null then 'Null'
+        else line_one
+    end,
+    city = case
+        when city !~ '[[:alnum:]_]' then 'Invalid'
+        when city is null then 'Null'
+        else city
+    end,
+    mail_code = case
+        when mail_code !~ '[[:alnum:]_]' then 'Invalid'
+        when mail_code is null then 'Null'
+        else mail_code
+    end;
+
+
 INSERT INTO location SELECT * FROM lsmb13.location;
 INSERT INTO company SELECT * FROM lsmb13.company;
 
@@ -128,7 +147,7 @@ SELECT e.id, pc.contact_class_id, pc.contact, pc.description
 INSERT INTO entity_bank_account (id, entity_id, bic, iban, remark)
 SELECT id, entity_id, coalesce(bic,''), iban, remark FROM lsmb13.entity_bank_account;
 INSERT INTO entity_credit_account SELECT * FROM lsmb13.entity_credit_account;
-UPDATE entity_credit_account SET curr = defaults_get_defaultcurrency()
+UPDATE entity_credit_account SET curr = lsmb13.defaults_get_defaultcurrency()
  WHERE curr IS NULL;
 INSERT INTO eca_to_contact SELECT * FROM lsmb13.eca_to_contact;
 INSERT INTO eca_to_location SELECT * FROM lsmb13.eca_to_location;
@@ -168,8 +187,15 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 
 
 INSERT INTO gifi SELECT * FROM lsmb13.gifi;
-SELECT setting__set(setting_key, value) FROM lsmb13.defaults
- where not setting_key = 'version';
+
+UPDATE defaults d
+   SET value = (select value from lsmb13.defaults od
+                where d.setting_key = od.setting_key)
+ WHERE setting_key <> 'version';
+INSERT INTO defaults (setting_key, value)
+SELECT setting_key, value FROM lsmb13.defaults
+ WHERE setting_key NOT IN (select setting_key from defaults);
+
 UPDATE lsmb13.batch SET locked_by = NULL;
 INSERT INTO batch SELECT * FROM lsmb13.batch;
 
@@ -345,7 +371,8 @@ INSERT INTO acc_trans (
    FROM lsmb13.acc_trans;
 ALTER TABLE acc_trans ENABLE TRIGGER acc_trans_prevent_closed;
 
-
+UPDATE lsmb13.invoice i SET parts_id = null
+ WHERE NOT EXISTS (select 1 from lsmb13.parts p where i.parts_id = p.id);
 INSERT INTO invoice (
  id,
  trans_id,
@@ -460,6 +487,9 @@ SELECT
  oe_class_id
   FROM lsmb13.oe;
 
+
+UPDATE lsmb13.orderitems o SET parts_id = null
+ WHERE NOT EXISTS (select 1 from lsmb13.parts p where o.parts_id = p.id);
 INSERT INTO orderitems(
  id,
  trans_id,
@@ -570,6 +600,10 @@ INSERT INTO recurring (id, reference, startdate, nextdate,
 INSERT INTO payment_type SELECT * FROM lsmb13.payment_type;
 INSERT INTO recurringemail SELECT * FROM lsmb13.recurringemail;
 INSERT INTO recurringprint SELECT * FROM lsmb13.recurringprint;
+
+
+UPDATE lsmb13.jcitems j SET parts_id = null
+ WHERE NOT EXISTS (select 1 from lsmb13.parts p where j.parts_id = p.id);
 INSERT INTO jcitems (
  id,
  business_unit_id,
@@ -610,8 +644,6 @@ SELECT
      FROM lsmb13.defaults WHERE setting_key = 'curr')
   FROM lsmb13.jcitems
  WHERE project_id IN (select id from lsmb13.project);
-INSERT INTO custom_table_catalog SELECT * FROM lsmb13.custom_table_catalog;
-INSERT INTO custom_field_catalog SELECT * FROM lsmb13.custom_field_catalog;
 INSERT INTO ac_tax_form SELECT * FROM lsmb13.ac_tax_form;
 INSERT INTO invoice_tax_form SELECT * FROM lsmb13.invoice_tax_form;
 INSERT INTO new_shipto SELECT * FROM lsmb13.new_shipto;
@@ -708,8 +740,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
  SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
  SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
- SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
- SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;

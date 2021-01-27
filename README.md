@@ -238,9 +238,9 @@ Mailing list archives: [`http://archive.ledgersmb.org`](http://archive.ledgersmb
 
 Mailing lists:
 
-* [Announcements](https://lists.ledgersmb.org/mailman/listinfo/announce)
-* [User Discussion](https://lists.ledgersmb.org/mailman/listinfo/users)
-* [Developer Discussion](https://lists.ledgersmb.org/mailman/listinfo/devel)
+* [Announcements](https://lists.ledgersmb.org/postorius/lists/announce.lists.ledgersmb.org/)
+* [User Discussion](https://lists.ledgersmb.org/postorius/lists/users.lists.ledgersmb.org/)
+* [Developer Discussion](https://lists.ledgersmb.org/postorius/lists/devel.lists.ledgersmb.org/)
 
 Repository: `https://github.com/ledgersmb/LedgerSMB`
 
