@@ -50,6 +50,44 @@ The import is sensitive to the order in which accounts are being imported: each
 account must reference a heading and the referenced heading must exist (i.e.
 be imported on an earlier import run or on a prior line).
 
+# General Ledger
+
+## Single transaction
+
+## Batch of transactions
+
+This functionality imports a batch of 2-line transaction. Each line in the csv has
+the following columns:
+
+ * debit_accno  
+   GL account code (accno) associated with the line representing the debit row in the transaction
+ * credit_accno  
+   GL account code (accno) associated with the line representing the debit row in the transaction
+ * amount  
+   The (functional currency) amount in the transaction; posted both on the credit and debit side
+   of the transaction -- uses the same number format as configured for the uploading user
+ * curr  
+   The currency code of the transaction; if the transaction is local (functional) currency only,
+   set this field to the default currency code (i.e. if the functional currency is USD and the
+   transaction is in USD, fill the field with USD)
+ * amount_fx  
+   The transaction currency amount; if the transaction is functional currency, use the same amount
+   as the "amount" column -- uses the same number format as configured for the uploading user
+ * reference  
+   The reference number to use for the transaction
+ * transdate  
+   The transaction date to be used, in the same date format as configured in the user-settings of
+   the user uploading the file
+ * description  
+   The description field of the transaction
+ * source_debit  
+   The value of the "Source" field to be used for the debit row of the transaction
+ * source_credit  
+   The value of the "Source" field to be used for the credit row of the transaction
+ * memo  
+   The value of the "Memo" field to be used on the credit and debit rows of the transaction
+
+Uploaded batches can be approved through "Transaction Approval > Batch".
 
 # Parts (Goods & Services)
 
