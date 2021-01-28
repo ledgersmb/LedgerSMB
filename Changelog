@@ -540,6 +540,15 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.29
+* Disable the broken-on-orders Schedule button on orders (Erik H, #5295)
+* Fix several LedgerSMB 1.3 migration issues (Erik H)
+* Fix dates on weekly-entry timecards (Richard W, #5336)
+
+Erik H is Erik Huelsmann
+Richard W is Richard T. Weeks
+
+
 Changelog for 1.6.28
 * Faster GL account tree consistency check
 * Maintain consistency between ar/ap/gl and transactions tables on delete
