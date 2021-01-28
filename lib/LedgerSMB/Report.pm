@@ -266,21 +266,32 @@ sub _render {
     $template ||= 'Reports/display_report';
 
     # Sorting and Subtotal logic
-    my $url = $request->get_relative_url();
-    $self->order_dir('asc') if defined $self->order_by;
-    if (defined $self->old_order_by and ($self->order_by eq $self->old_order_by)){
-        if (lc($self->order_dir) eq 'asc'){
+    if (defined $self->old_order_by
+        and ($self->order_by eq $self->old_order_by)) {
+        if (lc($self->order_dir) eq 'asc') {
             $self->order_dir('desc');
         } else {
             $self->order_dir('asc');
         }
     }
-    $url =~ s/&?order_by=[^\&]*//g if $url;
-    $url =~ s/&?order_dir=[^\&]*//g if $url;
-    $self->order_url($url);
-    $self->order_url(
-        "$url&old_order_by=".$self->order_by.'&order_dir='.$self->order_dir
-    ) if $self->order_by;
+    else {
+        $self->order_dir('asc');
+    }
+
+    my $url = $request->get_relative_url();
+    if ($url) {
+        $url =~ s/(^|&)(old_)?order_by=[^&]*//g;
+        $url =~ s/(^|&)order_dir=[^&]*//g;
+
+        if ($self->order_by) {
+            $self->order_url(
+                "$url&old_order_by=".$self->order_by.'&order_dir='.$self->order_dir
+                );
+        }
+        else {
+            $self->order_url($url);
+        }
+    }
 
     my $rows = $self->rows;
     @$rows = sort {
