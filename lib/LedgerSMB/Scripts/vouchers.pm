@@ -264,7 +264,7 @@ sub list_batches {
     my ($request) = @_;
     $request->open_form;
     return $request->render_report(
-        LedgerSMB::Report::Unapproved::Batch_Overview->new(%$request)
+        LedgerSMB::Report::Unapproved::Batch_Overview->new(approved => 0, %$request)
         );
 }
 
