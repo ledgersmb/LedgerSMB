@@ -6,6 +6,9 @@ Changelog for 1.7.26
 * Disable the broken-on-orders Schedule button on orders (#5295)
 * Fix several LedgerSMB 1.3 migration issues
 * Fix dates on weekly-entry timecards (#5336)
+* Fix descending sort order on reports can't be reversed (#5298)
+* Fix individual batch approval lists all batches, not unapproved ones (#4971)
+* Fix for #4854 (HTML misalignment, v1.7.19) adds more misalignment (#5298)
 
 
 Changelog for 1.7.25
