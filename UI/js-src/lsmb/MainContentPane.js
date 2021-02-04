@@ -34,8 +34,6 @@ define([
     domClass,
     topic
 ) {
-    var c = 0;
-
     return declare("lsmb/MainContentPane", [ContentPane], {
         startup: function () {
             this.inherited("startup", arguments);
@@ -48,12 +46,11 @@ define([
                 return;
             }
 
-            var href = dnode.href + "#s";
+            var href = dnode.href;
             on(dnode, "click", function (e) {
                 if (!e.ctrlKey && !e.shiftKey && mouse.isLeft(e)) {
                     event.stop(e);
-                    c++;
-                    hash(href + c.toString(16));
+                    self.load_link(href);
                     self.fade_main_div();
                 }
             });
