@@ -1,0 +1,7 @@
+<actions type="AR/AP">
+  <action name="Save" class="Workflow::Action::Null" />
+  <action name="Post" class="Workflow::Action::Null" />
+  <action name="E-mail"
+          class="LedgerSMB::Workflow::Action::SpawnWorkflow"
+          spawn_type="Email" />
+</actions>

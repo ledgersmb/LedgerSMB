@@ -1,0 +1,16 @@
+<workflow>
+  <type>AR/AP</type>
+  <persister>JournalEntry</persister>
+  <description>Manage the life cycle of an AR/AP document</description>
+  <state name="INITIAL">
+    <action name="Save" resulting_state="SAVED" />
+  </state>
+  <state name="SAVED">
+    <action name="Post" resulting_state="POSTED" />
+  </state>
+  <state name="POSTED">
+    <action name="E-mail" resulting_state="NOCHANGE">
+      <!-- condition name="configuredEmailFrom" / -->
+    </action>
+  </state>
+</workflow>

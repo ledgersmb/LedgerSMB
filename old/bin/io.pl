@@ -49,7 +49,10 @@ use LedgerSMB::Legacy_Util;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
+
+use Workflow::Context;
 use Workflow::Factory qw(FACTORY);
+
 
 require "old/bin/printer.pl";
 # any custom scripts for this one
@@ -1372,7 +1375,42 @@ sub print_form {
             );
         $template->render($form);
 
-        my $wf = FACTORY()->create_workflow( 'Email' );
+        my $wf_id;
+        my $ctx = Workflow::Context->new;
+        $ctx->param( trans_id  => $form->{id} );
+
+        my $wf;
+        if ($order) {
+            ($wf_id) =
+                $form->{dbh}->selectrow_array(
+                    q{select workflow_id from oe where id = ?},
+                    {}, $form->{id});
+
+            my $trans_wf = FACTORY()->fetch_workflow( 'Quote/Order', $wf_id )
+                // FACTORY()->create_workflow('Quote/Order',$ctx);
+            if (not grep { $_ eq 'E-mail' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'Save' );
+            }
+            $trans_wf->execute_action( 'E-mail' );
+            $wf = $trans_wf->context->param( 'spawned_workflow' );
+        }
+        else {
+            ($wf_id) =
+                $form->{dbh}->selectrow_array(
+                    q{select workflow_id from transactions where id = ?},
+                    {}, $form->{id});
+
+            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id )
+                // FACTORY()->create_workflow('AR/AP',$ctx);
+            if (grep { $_ eq 'Save' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'Save' );
+            }
+            if (grep { $_ eq 'Post' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'Post' );
+            }
+            $trans_wf->execute_action( 'E-mail' );
+            $wf = $trans_wf->context->param( 'spawned_workflow' );
+        }
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic
         my %map = (

@@ -30,6 +30,7 @@ define([
                         action: this.get("value"),
                         type: f.type.value,
                         id: f.id.value,
+                        workflow_id: f.workflow_id.value,
                         formname: f.formname.value,
                         language_code: f.language_code.value,
                         media: "screen",

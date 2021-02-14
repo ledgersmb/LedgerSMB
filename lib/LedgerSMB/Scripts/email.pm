@@ -71,13 +71,14 @@ sub render {
         #  the current (completed) state below.
         $wf->execute_action( $request->{wf_action} )
             if grep { $_ eq $request->{wf_action} } $wf->get_current_actions;
+
+        if ($wf->state eq 'SUCCESS') {
+            return [ HTTP_SEE_OTHER,
+                     [ Location => $request->{callback} ],
+                     [ '' ]];
+        }
     }
 
-    if ($wf->state eq 'SUCCESS') {
-        return [ HTTP_SEE_OTHER,
-                 [ Location => $request->{callback} ],
-                 [ '' ]];
-    }
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'email', {

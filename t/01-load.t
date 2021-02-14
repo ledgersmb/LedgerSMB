@@ -233,9 +233,11 @@ my @modules =
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
      'LedgerSMB::Magic',
      'LedgerSMB::Workflow::Action::Email',
+     'LedgerSMB::Workflow::Action::SpawnWorkflow',
      'LedgerSMB::Workflow::Persister',
      'LedgerSMB::Workflow::Persister::Email',
      'LedgerSMB::Workflow::Persister::ExtraData',
+     'LedgerSMB::Workflow::Persister::JournalEntry',
     );
 
 %on_disk = map { $_ => 1 } @on_disk;
