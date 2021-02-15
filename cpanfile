@@ -110,6 +110,7 @@ requires 'Text::Markdown';
 requires 'URI::Escape';
 requires 'Version::Compare';
 requires 'Workflow::Context', '1.52';
+requires 'Workflow::Exception', '1.52';
 requires 'Workflow::Factory', '1.52';
 requires 'Workflow::Persister::DBI', '1.52';
 requires 'Workflow::Persister::DBI::ExtraData', '1.52';

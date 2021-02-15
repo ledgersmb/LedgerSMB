@@ -238,6 +238,7 @@ my @modules =
      'LedgerSMB::Workflow::Persister::Email',
      'LedgerSMB::Workflow::Persister::ExtraData',
      'LedgerSMB::Workflow::Persister::JournalEntry',
+     'LedgerSMB::Workflow::Persister::Order',
     );
 
 %on_disk = map { $_ => 1 } @on_disk;

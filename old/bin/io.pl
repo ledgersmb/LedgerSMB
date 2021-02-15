@@ -1386,8 +1386,8 @@ sub print_form {
                     q{select workflow_id from oe where id = ?},
                     {}, $form->{id});
 
-            my $trans_wf = FACTORY()->fetch_workflow( 'Quote/Order', $wf_id )
-                // FACTORY()->create_workflow('Quote/Order',$ctx);
+            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id )
+                // FACTORY()->create_workflow('Order/Quote',$ctx);
             if (not grep { $_ eq 'E-mail' } $trans_wf->get_current_actions) {
                 $trans_wf->execute_action( 'Save' );
             }
