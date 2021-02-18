@@ -26,7 +26,7 @@ close $blist or diag("error closing $blacklist_file $!");
 
 ok($contents, "Got contents from original blacklist");
 
-my $contents2 = `perl -Ilib $FindBin::Bin/../utils/devel/makeblacklist.pl`;
+my $contents2 = `perl -Ilib -Iold/lib $FindBin::Bin/../utils/devel/makeblacklist.pl`;
 $? and fail 'makeblacklist.pl gave non-zero exit code';
 
 $contents2 =~ s/\n//g;
