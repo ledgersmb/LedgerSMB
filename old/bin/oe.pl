@@ -1644,14 +1644,22 @@ sub create_backorder {
 
 sub save_as_new {
 
-    for (qw(closed id printed emailed queued)) { delete $form->{$_} }
+    # orders don't have a quonumber
+    # quotes don't have an ordnumber
+    for (qw(closed id printed emailed queued ordnumber quonumber)) {
+        delete $form->{$_}
+    }
     &save;
 
 }
 
 sub print_and_save_as_new {
 
-    for (qw(closed id printed emailed queued)) { delete $form->{$_} }
+    # orders don't have a quonumber
+    # quotes don't have an ordnumber
+    for (qw(closed id printed emailed queued ordnumber quonumber)) {
+        delete $form->{$_}
+    }
     &print_and_save;
 
 }
