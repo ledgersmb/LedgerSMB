@@ -523,6 +523,8 @@ sub redirect {
     }
     else {
         $self->info($msg);
+        print '</body>';
+        $self->finalize_request;
     }
 }
 
