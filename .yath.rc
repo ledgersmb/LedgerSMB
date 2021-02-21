@@ -1,0 +1,33 @@
+--project LedgerSMB
+
+[start]
+--no-blib
+--lib
+--include old/lib
+
+--plugin pgTAP
+--plugin Feature
+
+[run]
+--no-extension
+--extension=t
+--extension=pg
+--extension=feature
+
+--plugin pgTAP
+--plugin Feature
+
+[test]
+--no-blib
+--lib
+--include old/lib
+
+--no-extension
+--extension=t
+--extension=pg
+--extension=feature
+
+--plugin pgTAP
+--plugin Feature
+
+--no-event-timeout
