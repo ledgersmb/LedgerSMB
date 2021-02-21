@@ -12,6 +12,7 @@ Added functionalities
 * Add link to customer screen from invoice entry
 * Add option to search by customer/vendor name on payments search
 * Command line application for administrative tasks (bin/ledgersmb-admin)
+* Emailed documents are added to the database as attachments
 
 Changed functionalities
 * Improved error reporting on Print button with template evaluation failure
@@ -22,12 +23,15 @@ Changed functionalities
 * Invoice 'Save Info' now saves changes to 'Salesperson'
 * Add option to report opening or closing balance on balance sheet
 * Chart of Accounts examples converted to XML (from SQL)
+* Emailed invoices use data from the database instead of the screen
 
 Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
 
 Bugs fixed
+* Clicking 'Update' no longer clobbers saved invoices and transactions
 * Optimize listing of configured currencies (don't check in-use)
+* Optimize balance sheet report (use balance snapshots from period closing)
 * Fixed mailing of aging reports (regression since 1.3.42)
 * Optimize listing of configured currencies (don't check in-use)
 * Default CoA referential integrity and consistency
@@ -39,6 +43,9 @@ Bugs fixed
 * SIC value is free entry instead of selection from configured SIC list
 * Non-required drop-downs can be 'unselected' application-wide
 * Back button steps back along the various form submissions intuitively now
+* Inconsistent approval status between unapproved transactions and its lines
+* Shipping screen 'Done' button no longer complains about the server response
+* Orders and Quotes 'Save as new' saves using a new order/quote number
 
 Code cleanup
 * Remove use of LedgerSMB::Company_Config global state (excepf from PGNumber)
