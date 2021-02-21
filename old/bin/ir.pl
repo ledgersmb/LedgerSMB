@@ -237,6 +237,7 @@ sub invoice_links {
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
     $form->{AP} = $form->{AP_1} unless $form->{id};
+    $form->{AP} //= $form->{AP_links}->{AP}->[0]->{accno} unless $form->{id};
 
     $form->{locked} =
       ( $form->{revtrans} )

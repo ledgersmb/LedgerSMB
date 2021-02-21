@@ -222,11 +222,12 @@ sub invoice_links {
 
     }
 
+    $form->{AR} //= $form->{AR_1} unless $form->{id};
+    $form->{AR} //= $form->{AR_links}->{AR}->[0]->{accno} unless $form->{id};
     for (qw(AR_links acc_trans)) { delete $form->{$_} }
 
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
-    $form->{AR} = $form->{AR_1} unless $form->{id};
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
