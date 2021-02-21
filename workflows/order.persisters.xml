@@ -1,0 +1,5 @@
+<persisters>
+  <persister name="Order"
+             class="LedgerSMB::Workflow::Persister::Order"
+             driver="Pg" />
+</persisters>

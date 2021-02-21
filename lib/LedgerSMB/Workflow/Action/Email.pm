@@ -15,12 +15,12 @@ LedgerSMB::Workflow::Action::Email - Workflow Actions for e-mail workflows
 
 =head1 DESCRIPTION
 
-This modul implements the actions for managing e-mail workflows: Attach, Save
+This module implements the actions for managing e-mail workflows: Attach, Save
 and Send. It uses the generic C<execute> entry point as per the protocol of
 C<Workflow::Actoin> and dispatches internally based on the C<action>
 configuration attribute.
 
-This workflow operates on the following keys in the workflow context:
+This set of actions operates on the following keys in the workflow context:
 
 =over
 

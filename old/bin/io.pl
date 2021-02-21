@@ -50,6 +50,10 @@ use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
+use Workflow::Context;
+use Workflow::Factory qw(FACTORY);
+
+
 require "old/bin/printer.pl";
 # any custom scripts for this one
 if ( -f "old/bin/custom/io.pl" ) {
@@ -1031,89 +1035,26 @@ sub create_form {
 }
 
 sub e_mail {
-    my %hiddens;
+    my $old_form = $form;
+    $form = Form->new;
+    $form->{$_} = $old_form->{$_} for (qw/ action type formname script
+                                       format language_code vc dbh id /);
 
-    if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
-        $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
+    if ($form->{type} eq 'invoice') {
+        &invoice_links;
+        &prepare_invoice;
     }
-    my $doctype;
-    my $docnum;
-    if ( defined $form->{invnumber} ){
-        $doctype = $locale->text('Invoice');
-        $docnum = $form->{invnumber};
-    } elsif ( defined $form->{ordnumber} ){
-        $doctype = $locale->text('Order');
-        $docnum = $form->{ordnumber};
-    }
-    $doctype = $locale->text('Invoice') if defined $form->{invnumber};
-    $doctype //= $locale->text('Order') if defined $form->{ordnumber};
-    $form->{oldlanguage_code} = $form->{language_code};
-
-    $form->{oldmedia} = $form->{media};
-    $form->{media}    = "email";
-    $form->{format}   = "pdf";
-
-    my $print_options = &print_options(\%hiddens);
-
-    for (
-        qw(subject message sendmode format language_code action nextsub)
-      )
-    {
-        delete $form->{$_}; # reset to defaults
+    else {
+        &order_links;
+        &prepare_order;
     }
 
-    $form->{bcc} .= ', ' . $form->get_setting('default_bcc')
-        if $form->get_setting('default_bcc');
-
-
-    $form->{subject} = $locale->text(
-           'Attached document for [_1] [_2]',
-           $doctype, $docnum
-    );
-    my @bcclist;
-    push @bcclist, $form->{bcc} if $form->{bcc};
-    push @bcclist, $form->get_setting('default_email_bcc')
-        if $form->get_setting('default_email_bcc');
-    $form->{bcc} = join(', ', @bcclist);
-
-
-    $hiddens{$_} = $form->{$_} for keys %$form;
-
-    delete $hiddens{$_}
-       for (qw(email cc bcc message subject message
-               format sendmode language_code read_receipt
-               groupprojectnumber grouppartsgroup
-               sortby));
-
-    $hiddens{nextsub} = 'send_email';
-
-    my @buttons = ({
-        name => 'action',
-        value => 'send_email',
-        text => $locale->text('Continue'),
-                   });
-    my $template = LedgerSMB::Template::UI->new_UI;
-    LedgerSMB::Legacy_Util::render_psgi(
-        $template->render($form, 'io-email',
-                          {
-                              form => $form,
-                              print => $print_options,
-                              hiddens => \%hiddens,
-                              buttons => \@buttons,
-                          }));
+    $form->{$_} = $old_form->{$_} for (qw/ action type formname script
+                                       format language_code vc dbh id /);
+    $form->{media} = 'email';
+    $form->{rowcount}++;
+    &print_form;
 }
-
-sub send_email {
-
-    $old_form = Form->new;
-
-    for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
-    $old_form->{media} = $old_form->{oldmedia};
-
-    &print_form($old_form);
-
-}
-
 
 sub print {
     my $saved_form = { %$form };
@@ -1273,9 +1214,6 @@ sub print_form {
 
     $form->{"${inv}date"} = $form->{transdate};
 
-    $form->isblank( "email", $locale->text('E-mail address missing!') )
-      if ( $form->{media} eq 'email' );
-
     # $locale->text('Invoice Date missing!')
     # $locale->text('Packing List Date missing!')
     # $locale->text('Order Date missing!')
@@ -1421,54 +1359,94 @@ sub print_form {
         $old_form->{printed} = $form->{printed} if %$old_form;
 
     } elsif ( $form->{media} eq 'email' ) {
-        $form->{subject} = qq|$form->{label} $form->{"${inv}number"}|
-          unless $form->{subject};
-
         $form->{plainpaper} = 1;
-
-        if ( $form->{emailed} !~ /$form->{formname}/ ) {
-            $form->{emailed} .= " $form->{formname}";
-            $form->{emailed} =~ s/^ //;
-
-            # save status
-            $form->update_status;
-        }
-
-        $now = scalar localtime;
-        $cc  = $locale->text( 'Cc: [_1]', $form->{cc} ) . qq|\n| if $form->{cc};
-        $bcc = $locale->text( 'Bcc: [_1]', $form->{bcc} ) . qq|\n|
-          if $form->{bcc};
-
-        $output_options{subject} = $form->{subject};
-        $output_options{to} = $form->{email};
-        $output_options{cc} = $form->{cc};
-        $output_options{bcc} = $form->{bcc};
-        $output_options{from} = $myconfig{email};
-        $output_options{notify} = 1 if $form->{read_receipt};
-        $output_options{message} = $form->{message};
         $output_options{filename} = $form->{formname} . '-'. $form->{"${inv}number"};
-        $output_options{filename} .= '.'. $form->{format}; # assuming pdf or html
-        $output_options{attach} = 1 if $form->{sendmode} eq 'attachment';
+        my $template =
+            LedgerSMB::Template->new( # printed document
+                user => \%myconfig,
+                locale => $locale,
+                template => $form->{'formname'},
+                dbh => $form->{dbh},
+                path => 'DB',
+                language => $form->{language_code},
+                format => uc $form->{format},
+                output_options => \%output_options,
+                filename => $form->{formname} . "-" . $form->{"${inv}number"},
+            );
+        $template->render($form);
 
-        if ( %$old_form ) {
-            $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n|
-              if $old_form->{intnotes};
-            $old_form->{intnotes} .=
-                qq|[email]\n|
-              . $locale->text( 'Date: [_1]', $now ) . qq|\n|
-              . $locale->text( 'To: [_1]',   $form->{email} )
-              . qq|\n${cc}${bcc}|
-              . $locale->text( 'Subject: [_1]', $form->{subject} ) . qq|\n|;
+        my $wf_id;
+        my $ctx = Workflow::Context->new;
+        $ctx->param( trans_id  => $form->{id} );
 
-            $old_form->{intnotes} .= qq|\n| . $locale->text('Message') . qq|: |;
-            $old_form->{intnotes} .=
-              ( $form->{message} ) ? $form->{message} : $locale->text('sent');
+        my $wf;
+        if ($order) {
+            ($wf_id) =
+                $form->{dbh}->selectrow_array(
+                    q{select workflow_id from oe where id = ?},
+                    {}, $form->{id});
 
-            $old_form->{message} = $form->{message};
-            $old_form->{emailed} = $form->{emailed};
-
-            $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
+            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id )
+                // FACTORY()->create_workflow('Order/Quote',$ctx);
+            if (not grep { $_ eq 'E-mail' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'Save' );
+            }
+            $trans_wf->execute_action( 'E-mail' );
+            $wf = $trans_wf->context->param( 'spawned_workflow' );
         }
+        else {
+            ($wf_id) =
+                $form->{dbh}->selectrow_array(
+                    q{select workflow_id from transactions where id = ?},
+                    {}, $form->{id});
+
+            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id )
+                // FACTORY()->create_workflow('AR/AP',$ctx);
+            if (grep { $_ eq 'Save' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'Save' );
+            }
+            if (grep { $_ eq 'Post' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'Post' );
+            }
+            $trans_wf->execute_action( 'E-mail' );
+            $wf = $trans_wf->context->param( 'spawned_workflow' );
+        }
+        my $body = $template->{output};
+        utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my %map = (
+            email   => 'to',
+            cc      => 'cc',
+            bcc     => 'bcc',
+            message => 'body',
+            );
+        $wf->context->param( $map{$_} => $form->{$_} )
+            for (qw/ email cc bcc message /);
+        $wf->context->param(
+            subject => ($form->{subject}
+                        // qq|$form->{label} $form->{"${inv}number"}|) );
+
+        $wf->context->param(
+            attachment => {
+                content => $body,
+                mime_type => $template->{mimetype},
+                file_name =>
+                    $form->{formname} . '-'. $form->{"${inv}number"} . '.' . lc($form->{format}),
+            });
+        $wf->context->param(from => $form->get_setting( 'default_email_from' ));
+        $wf->execute_action( 'Attach' );
+
+        $wf->execute_action( 'Send' ) if $form->{immediate};
+
+        my $id = $wf->id;
+
+        if (not $form->{header}) {
+            print "Location: email.pl?id=$id&action=render&callback=$form->{script}%3F"
+                . "id%3D$form->{id}%26action%3Dedit\n";
+            print "Status: 302 Found\n\n";
+            $form->{header} = 1;
+        }
+
+        return;
     } elsif ( $form->{media} eq 'screen' ) {
         $output_options{filename} =
             $form->{formname} . '-'. $form->{"${inv}number"} .
@@ -1513,8 +1491,9 @@ sub print_form {
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         );
-    LedgerSMB::Legacy_Util::render_template($template, $form, $form,
-                                            $form->{media});
+    $template->render($form);
+    LedgerSMB::Legacy_Util::output_template($template, $form,
+                                            method => $form->{media});
 
     # if we got back here restore the previous form
     if ( %$old_form ) {

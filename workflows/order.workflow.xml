@@ -1,0 +1,13 @@
+<workflow>
+  <type>Order/Quote</type>
+  <persister>Order</persister>
+  <description>Manage the life cycle of an AR/AP document</description>
+  <state name="INITIAL">
+    <action name="Save" resulting_state="SAVED" />
+  </state>
+  <state name="SAVED">
+    <action name="E-mail" resulting_state="NOCHANGE">
+      <!-- condition name="configuredEmailFrom" / -->
+    </action>
+  </state>
+</workflow>

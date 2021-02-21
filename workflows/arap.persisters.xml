@@ -1,0 +1,7 @@
+<persisters>
+  <persister name="JournalEntry"
+             class="LedgerSMB::Workflow::Persister::JournalEntry"
+             driver="Pg"
+             extra_table="transactions"
+             extra_data_field="id,table_name,transdate" />
+</persisters>

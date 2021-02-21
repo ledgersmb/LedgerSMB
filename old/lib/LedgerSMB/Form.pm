@@ -108,7 +108,6 @@ sub new {
         for ( keys %orig ) {
             $self->{unescape( "", $_) } = unescape( "", $orig{$_} );
         }
-        delete $self->{header};
 
         for my $p(keys %$self){
             utf8::decode($self->{$p});

@@ -305,6 +305,7 @@ sub display_form
 
     my $template = LedgerSMB::Template::UI->new_UI;
     LedgerSMB::Legacy_Util::render_psgi(
+        $form,
         $template->render($form, 'journal/journal_entry',
                           {
                               form => $form,

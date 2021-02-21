@@ -737,7 +737,7 @@ sub form_header {
         $form->print_button( \%button, $_ );
     }
     print "</td></tr>";
-    $form->hide_form(qw(defaultcurrency));
+    $form->hide_form(qw(defaultcurrency workflow_id));
 }
 
 sub form_footer {
@@ -837,6 +837,34 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
   </tr>
 <input type=hidden name=oldinvtotal value=$form->{oldinvtotal}>
 <input type=hidden name=oldtotalpaid value=$totalpaid>
+  <tr>
+    <td>
+      <table width=100%>
+         <caption>History</caption>
+|;
+    # insert history items
+    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    if ($wf) {
+        my @history = $wf->get_history;
+        for my $h (sort { $a->id <=> $b->{id} } @history) {
+            my ($desc, $addn) = split( /[|]/, $h->description, 2);
+            my $link = '';
+            if ($addn) {
+                my %items = split(/[|:]/, $addn);
+                $link = 'email.pl?action=render&id=' . $items{spawned_workflow};
+            }
+            if ($link) {
+                print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
+            }
+            else {
+                print qq|<tr><td>$desc</td></tr>|;
+            }
+        }
+    }
+    print qq|
+      </table>
+    </td>
+  </tr>
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
@@ -1263,6 +1291,7 @@ sub save {
         $form->{repost} = 1;
         my $template = LedgerSMB::Template::UI->new_UI;
         return LedgerSMB::Legacy_Util::render_psgi(
+            $form,
             $template->render($form, 'oe-save-warn',
                               {
                                   hiddens => $form,
@@ -1636,7 +1665,7 @@ sub save_as_new {
 
     # orders don't have a quonumber
     # quotes don't have an ordnumber
-    for (qw(closed id printed emailed queued ordnumber quonumber)) {
+    for (qw(closed id printed emailed queued ordnumber quonumber workflow_id)) {
         delete $form->{$_}
     }
     &save;
@@ -1647,7 +1676,7 @@ sub print_and_save_as_new {
 
     # orders don't have a quonumber
     # quotes don't have an ordnumber
-    for (qw(closed id printed emailed queued ordnumber quonumber)) {
+    for (qw(closed id printed emailed queued ordnumber quonumber workflow_id)) {
         delete $form->{$_}
     }
     &print_and_save;

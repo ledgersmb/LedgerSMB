@@ -15,7 +15,6 @@ specified output method.
 use strict;
 use warnings;
 
-use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
@@ -25,39 +24,6 @@ use Log::Log4perl;
 
 =head1 FUNCTIONS
 
-=head2 render_template($template, $form, $variables, [$method])
-
-=over
-
-=item template
-
-A LedgerSMB::Template object.
-
-=item variables
-
-A hashref of variables which is passed to the template.
-
-=item method (optional)
-
-Determines where to send the output. Allowed values:
-
-email|print|screen|<printer name>
-
-=back
-
-=cut
-
-sub render_template {
-    my $template = shift;
-    my $form = shift;
-    my $vars = shift;
-    my $method = shift;
-
-    my $post = $template->_render($vars);
-
-    output_template($template, $form, (method => $method));
-}
-
 =head2 render_psgi($psgi_response)
 
 Renders a PSGI response from a C<LedgerSMB::Template::UI> as a CGI
@@ -66,15 +32,19 @@ response as required by legacy code.
 =cut
 
 sub render_psgi {
-    my $psgi = shift;
+    my ($form, $psgi) = @_;
 
     binmode STDOUT, 'utf8';
-    print "Status: 200 OK\n";
-    print "Content-Type: text/html; charset=UTF-8\n\n";
+
+    if (not $form->{header}) {
+        print "Status: 200 OK\n";
+        print "Content-Type: text/html; charset=UTF-8\n\n";
+        $form->{header} = 1;
+    }
     print join('', @{$psgi->[2]});
 }
 
-=head2 output_template($template, %args)
+=head2 output_template($template, $form, %args)
 
 supported keys in C<%args>:
 
@@ -84,7 +54,7 @@ supported keys in C<%args>:
 
 Determines where to send the output. Allowed values:
 
-email|print|screen|<printer name>
+print|screen|<printer name>
 
 =item printmode + OUT
 
@@ -106,14 +76,7 @@ sub output_template {
 
     my $method = $args{method} // '';
 
-    if ('email' eq lc $method) {
-        local $csettings = {
-            map { $_ => $form->get_setting($_)  }
-            map { "default_email_$_" }
-            qw/ from to cc bcc /
-        };
-        _output_template_email($template);
-    } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
+    if (defined $args{OUT} and $args{printmode} eq '>'){ # To file
         open my $fh, '>', $args{OUT}
            or die "Can't write to file $args{OUT}";
         binmode $fh, ':raw';
@@ -179,42 +142,6 @@ sub _output_template_http {
     # change global resource back asap
     binmode STDOUT, 'encoding(:UTF-8)';
     $logger->trace('end print to STDOUT');
-    return;
-}
-
-sub _output_template_email {
-    my $self = shift;
-    my $args = $self->{output_options};
-    my @mailmime;
-
-    if (not $args->{attach}) {
-        $args->{message} .= $self->{output};
-        @mailmime = ('contenttype', $self->{mimetype});
-    }
-
-    # User default for email from
-    $args->{from} ||= $self->{user}->{email};
-
-    # Mailer stuff
-    my $mail = LedgerSMB::Mailer->new(
-        from => $args->{from} // $csettings->{default_email_from},
-        to => $args->{to} // $csettings->{default_email_to},
-        cc => $args->{cc} // $csettings->{default_email_cc},
-        bcc => $args->{bcc} // $csettings->{default_email_bcc},
-        subject => $args->{subject},
-        notify => $args->{notify},
-        message => $args->{message},
-        @mailmime,
-    );
-    if ($args->{attach} or $self->{mimetype} !~ m#^text/#) {
-        $mail->attach(
-            mimetype => $self->{mimetype},
-            filename => $args->{filename},
-            strip => $$,
-            data => $self->{output},
-        );
-    }
-    $mail->send;
     return;
 }
 

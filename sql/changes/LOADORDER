@@ -142,3 +142,4 @@ mc/delete-migration-validation-data.sql
 1.9/company-strict-sic.sql
 1.9/workflow-schema.sql
 1.9/workflow-email-table.sql
+1.9/workflow-extend-tables.sql

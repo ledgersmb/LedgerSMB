@@ -318,12 +318,12 @@ SKIP: {
         'template' => '04-template',
         'locale'   => $locale,
         'path'     => 't/data',
-    );
-    LedgerSMB::Legacy_Util::render_template(
+        );
+    $template->render({});
+    LedgerSMB::Legacy_Util::output_template(
         $template,
         {}, # $form
-        {},
-        'test',
+        method => 'test',
     );
 
     my $LPR_TEST;

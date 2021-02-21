@@ -770,32 +770,7 @@ sub reprint {
 
     &$pf();
 
-    if ( $form->{media} eq 'email' ) {
-
-        # add email message
-        $now = scalar localtime;
-        $cc  = $locale->text( 'Cc: [_1]', $form->{cc} ) . qq|\n| if $form->{cc};
-        $bcc = $locale->text( 'Bcc: [_1]', $form->{bcc} ) . qq|\n|
-          if $form->{bcc};
-
-        $form->{intnotes} .= qq|\n\n| if $form->{intnotes};
-        $form->{intnotes} .=
-            qq|[email]\n|
-          . $locale->text( 'Date: [_1]', $now ) . qq|\n|
-          . $locale->text( 'To: [_1]',   $form->{email} )
-          . qq|\n${cc}${bcc}|
-          . $locale->text( 'Subject: [_1]', $form->{subject} )
-          . qq|\n\n|
-          . $locale->text('Message: ');
-
-        $form->{intnotes} .=
-          ( $form->{message} ) ? $form->{message} : $locale->text('sent');
-
-        $form->save_intnotes( \%myconfig, $form->{module} );
-
-        0; #SC: Reversing the expected value to work with its caller
-    }
-
+    0;
 }
 
 

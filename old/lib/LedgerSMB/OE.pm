@@ -39,13 +39,15 @@ LedgerSMB::OE - Order Entry
 #======================================================================
 
 package OE;
-use LedgerSMB::Tax;
-use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Num2text;
-use Log::Log4perl;
 
 use LedgerSMB::Magic qw(OEC_QUOTATION OEC_RFQ);
+use LedgerSMB::Num2text;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Tax;
+
+use Log::Log4perl;
+use Workflow::Factory qw(FACTORY);
 
 my $logger = Log::Log4perl->get_logger('OE');
 
@@ -192,6 +194,10 @@ sub save {
     }
     my $did_insert = 0;
     if ( !$form->{id} ) {
+        if (! $form->{workflow_id}) {
+            my $wf = FACTORY()->create_workflow( 'Order/Quote' );
+            $form->{workflow_id} = $wf->id;
+        }
         $query = qq|SELECT nextval('oe_id_seq')|;
         $sth   = $dbh->prepare($query) || $form->dberror($query);
         $sth->execute || $form->dberror($query);
@@ -215,13 +221,13 @@ sub save {
                 reqdate, shippingpoint, shipvia,
                 notes, intnotes, curr, closed,
                 person_id, language_code, ponumber, terms,
-                quotation, oe_class_id, entity_credit_account)
+                quotation, oe_class_id, entity_credit_account, workflow_id)
             VALUES
                 (?, ?, ?,
                  ?, ?, ?,
                  ?, ?, ?, ?, ?,
                  ?, ?, ?, ?,
-                 ?, ?, ?)|;
+                 ?, ?, ?, ?)|;
         @queryargs = (
             $form->{id},
             $form->{ordnumber},     $form->{quonumber},
@@ -231,7 +237,8 @@ sub save {
             $form->{currency},      $form->{closed},
             $form->{person_id},
             $form->{language_code}, $form->{ponumber},
-            $form->{terms},         $quotation, $class_id, $form->{"$form->{vc}_id"}
+            $form->{terms},         $quotation, $class_id, $form->{"$form->{vc}_id"},
+            $form->{workflow_id}
         );
         $sth = $dbh->prepare($query);
         $sth->execute(@queryargs) || $form->dberror($query);
@@ -411,7 +418,7 @@ sub save {
             UPDATE oe SET
                 amount_tc = ?,
                 netamount_tc = ?,
-                taxincluded = ?
+                taxincluded = ?,
             WHERE id = ?|;
         @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} );
     }
@@ -586,7 +593,7 @@ sub retrieve {
 
         # retrieve order
         $query = qq|
-            SELECT o.ordnumber, o.transdate, o.reqdate, o.terms,
+            SELECT o.ordnumber, o.transdate, o.reqdate, o.terms, o.workflow_id,
                         o.taxincluded, o.shippingpoint, o.shipvia,
                 o.notes, o.intnotes, o.curr AS currency,
                 pe.first_name \|\| ' ' \|\| pe.last_name AS employee,

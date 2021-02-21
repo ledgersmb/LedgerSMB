@@ -224,8 +224,8 @@ sub generate_statement {
               ],
               [ $body ] ];
     } else {
-        LedgerSMB::Legacy_Util::render_template($template, $request, {
-             statements => \@statements });
+        $template->render({ statements => \@statements });
+        LedgerSMB::Legacy_Util::output_template($template, $request);
         $request->{module_name}='gl';
         $request->{report_name}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);

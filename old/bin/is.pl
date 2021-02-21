@@ -53,6 +53,8 @@ use LedgerSMB::Tax;
 use LedgerSMB::Setting;
 use LedgerSMB::DBObject::Draft;
 
+use Workflow::Factory qw(FACTORY);
+
 require "old/bin/arap.pl";
 require "old/bin/io.pl";
 
@@ -661,7 +663,7 @@ sub form_header {
             $form->print_button( \%button, $_ );
         }
 
-        $form->hide_form(qw(defaultcurrency));
+        $form->hide_form(qw(defaultcurrency workflow_id));
 
         print "</td></tr>";
     }
@@ -914,6 +916,38 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
         </table>
       </td>
     </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width=100%>
+         <caption>History</caption>
+|;
+    # insert history items
+    my ($wf_id) =
+        $form->{dbh}->selectrow_array(
+            q{select workflow_id from transactions where id = ?},
+            {}, $form->{id});
+    my $wf      = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+    if ($wf) {
+        my @history = $wf->get_history;
+        for my $h (sort { $a->id <=> $b->{id} } @history) {
+            my ($desc, $addn) = split( /[|]/, $h->description, 2);
+            my $link = '';
+            if ($addn) {
+                my %items = split(/[|:]/, $addn);
+                $link = 'email.pl?action=render&id=' . $items{spawned_workflow};
+            }
+            if ($link) {
+                print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
+            }
+            else {
+                print qq|<tr><td>$desc</td></tr>|;
+            }
+        }
+    }
+    print qq|
       </table>
     </td>
   </tr>
