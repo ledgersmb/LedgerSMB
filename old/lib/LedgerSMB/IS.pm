@@ -1,6 +1,5 @@
 =head1 NAME
 
-            ($form->{"$partnumber_$i"}) = split(/--/, $form->{"$partnumber_$i"});
 LedgerSMB::IS - Inventory Invoicing
 
 =cut
