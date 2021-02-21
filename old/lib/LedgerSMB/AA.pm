@@ -410,16 +410,16 @@ sub post_transaction {
             $query = qq|
                 INSERT INTO acc_trans
                         (trans_id, chart_id, amount_bc, curr, amount_tc,
-                        transdate, memo, cleared)
+                        transdate, approved, memo, cleared)
                 VALUES  (?, (SELECT id FROM account
                                   WHERE accno = ?),
-                         ?, ?, ?, ?, ?, ?)|;
+                         ?, ?, ?, ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id},            $ref->{accno},
                 $ref->{amount_bc} * $ml, $ref->{curr},
                 $ref->{amount_tc} * $ml,
-                $form->{transdate},
+                $form->{transdate}, $form->{approved},
                 $ref->{description},
                 $ref->{cleared}
             );
@@ -456,15 +456,15 @@ sub post_transaction {
             $query = qq|
                 INSERT INTO acc_trans
                         (trans_id, chart_id, amount_bc, curr, amount_tc,
-                            transdate)
+                            transdate, approved)
                      VALUES (?, (SELECT id FROM account
                               WHERE accno = ?),
-                        ?, ?, ?, ?)|;
+                        ?, ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id}, $ref->{accno}, $ref->{amount_bc} * $ml,
                 $form->{currency}, $ref->{amount_tc} * $ml,
-                $form->{transdate}
+                $form->{transdate}, $form->{approved}
             );
             $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
@@ -478,15 +478,16 @@ sub post_transaction {
         ($accno) = split /--/, $form->{$ARAP};
         $query = qq|
             INSERT INTO acc_trans
-                     (trans_id, chart_id, amount_bc, curr, amount_tc, transdate)
+                     (trans_id, chart_id, amount_bc, curr, amount_tc,
+                      transdate, approved)
               VALUES (?, (SELECT id FROM account
                               WHERE accno = ?),
-                           ?, ?, ?, ?)|;
+                           ?, ?, ?, ?, ?)|;
         @queryargs =
             ( $form->{id}, $accno,
               $invamount * -1 * $ml, $form->{currency},
               $invamount * -1 * $ml / $form->{exchangerate},
-            $form->{transdate} );
+            $form->{transdate}, $form->{approved} );
 
         $dbh->prepare($query)->execute(@queryargs)
           || $form->dberror($query);
