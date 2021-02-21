@@ -125,6 +125,11 @@ sub add {
 }
 
 sub edit {
+    if (not $form->{id} and $form->{workflow_id}) {
+        my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        $form->{id} = $wf->context->param( 'id' );
+        delete $form->{workflow_id};
+    }
 
     &invoice_links;
     &prepare_invoice;
@@ -816,6 +821,46 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
   </tr>
   <tr>
     <td>
+      <table width=100%>
+         <caption>History</caption>
+|;
+    # insert history items
+    my ($wf_id) =
+        $form->{dbh}->selectrow_array(
+            q{select workflow_id from transactions where id = ?},
+            {}, $form->{id});
+    my $wf      = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+    if ($wf) {
+        my @history = $wf->get_history;
+        for my $h (sort { $a->id <=> $b->{id} } @history) {
+            my ($desc, $addn) = split( /[|]/, $h->description, 2);
+            my $link = '';
+            if ($addn) {
+                my %items = split(/[|:]/, $addn);
+                my %links = (
+                    'AR/AP|customer' => 'is.pl?action=edit&amp;workflow_id=',
+                    'AR/AP|vendor'   => 'ir.pl?action=edit&amp;workflow_id=',
+                    'Order/Quote'    => 'oe.pl?action=edit&amp;workflow_id=',
+                    'E-mail'         => 'email.pl?action=render&amp;id=',
+                    );
+                my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
+                $link = ($links{$workflow}
+                         // $links{"$workflow|$form->{vc}"}) . $id;
+            }
+            if ($link) {
+                print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
+            }
+            else {
+                print qq|<tr><td>$desc</td></tr>|;
+            }
+        }
+    }
+    print qq|
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <table width=100% id="invoice-payments-table">
         <tr>
       <th colspan=7 class=listheading>| . $locale->text('Payments') . qq|</th>
@@ -1300,8 +1345,32 @@ sub post {
     ( $form->{AP_paid} ) = split /--/, $form->{AP_paid};
 
     IR->post_invoice( \%myconfig, \%$form );
-    edit();
 
+    my $id = $form->{old_workflow_id} // $form->{workflow_id};
+    my $wf = FACTORY()->fetch_workflow( 'AR/AP', $id );
+
+    # m/save_as/ matches both print_and_save_as_new as well as save_as_new
+    # note that "post" is modelled through the 'approve' entrypoint
+    # and that the 'post' entrypoint actually models the 'save' action
+    if ($form->{action} =~ m/post_as/) {
+        $wf->execute_action( 'save_as_new' );
+    }
+    else {
+        my $ctx = $wf->context;
+        $ctx->param( spawned_type => 'Order/Quote' );
+        $ctx->param( spawned_id   => $form->{workflow_id} );
+
+        if ($form->{action} eq 'void') {
+            $wf->execute_action( 'void' );
+        }
+        else {
+            $wf->execute_action( 'save' );
+        }
+    }
+
+    delete $form->{old_workflow_id};
+
+    edit();
 }
 
 sub on_hold {

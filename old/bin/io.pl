@@ -41,6 +41,7 @@
 package lsmb_legacy;
 
 use LedgerSMB::IIAA;
+use LedgerSMB::OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -51,7 +52,6 @@ use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
-use Workflow::Context;
 use Workflow::Factory qw(FACTORY);
 
 
@@ -141,6 +141,8 @@ sub approve {
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);
 
     $draft->approve();
+    my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( 'post' ) if $wf;
     edit();
 }
 
@@ -649,6 +651,7 @@ sub new_item {
 }
 
 sub display_form {
+    my ($want_return) = @_;
     $form->close_form();
      $form->generate_selects();
     $form->open_form();
@@ -701,7 +704,7 @@ sub display_form {
     $form->hide_form(qw|locationid|);
 
     &form_footer;
-    $form->finalize_request;
+    $form->finalize_request unless $want_return;
 
 }
 
@@ -949,6 +952,11 @@ sub validate_items {
 
 sub purchase_order {
 
+    my $wf = FACTORY()->fetch_workflow(
+        ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
+        $form->{workflow_id}
+        );
+
     $form->{title} = $locale->text('Add Purchase Order');
     $form->{vc}    = 'vendor';
     $form->{type}  = 'purchase_order';
@@ -956,9 +964,17 @@ sub purchase_order {
 
     &create_form;
 
+    $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
+    $wf->context->param( 'spawned_type' => 'Order/Quote' );
+    $wf->execute_action( 'purchase_order' );
 }
 
 sub sales_order {
+
+    my $wf = FACTORY()->fetch_workflow(
+        ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
+        $form->{workflow_id}
+        );
 
     $form->{title} = $locale->text('Add Sales Order');
     $form->{vc}    = 'customer';
@@ -967,9 +983,17 @@ sub sales_order {
 
     &create_form;
 
+    $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
+    $wf->context->param( 'spawned_type' => 'Order/Quote' );
+    $wf->execute_action( 'sales_order' );
 }
 
 sub rfq {
+
+    my $wf = FACTORY()->fetch_workflow(
+        ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
+        $form->{workflow_id}
+        );
 
     $form->{title} = $locale->text('Add Request for Quotation');
     $form->{vc}    = 'vendor';
@@ -978,9 +1002,17 @@ sub rfq {
 
     &create_form;
 
+    $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
+    $wf->context->param( 'spawned_type' => 'Order/Quote' );
+    $wf->execute_action( 'rfq' );
 }
 
 sub quotation {
+
+    my $wf = FACTORY()->fetch_workflow(
+        ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
+        $form->{workflow_id}
+        );
 
     $form->{title} = $locale->text('Add Quotation');
     $form->{vc}    = 'customer';
@@ -989,11 +1021,14 @@ sub quotation {
 
     &create_form;
 
+    $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
+    $wf->context->param( 'spawned_type' => 'Order/Quote' );
+    $wf->execute_action( 'quotation' );
 }
 
 sub create_form {
 
-    for (qw(id printed emailed queued)) { delete $form->{$_} }
+    for (qw(id printed emailed queued workflow_id)) { delete $form->{$_} }
 
     $form->{script} = 'oe.pl';
 
@@ -1030,8 +1065,9 @@ sub create_form {
     $form->{forex}        = "";
 
     &prepare_order;
+    OE->save( \%myconfig, $form );
 
-    &display_form;
+    &display_form(1);
 
 }
 
@@ -1377,9 +1413,6 @@ sub print_form {
         $template->render($form);
 
         my $wf_id;
-        my $ctx = Workflow::Context->new;
-        $ctx->param( trans_id  => $form->{id} );
-
         my $wf;
         if ($order) {
             ($wf_id) =
@@ -1387,12 +1420,8 @@ sub print_form {
                     q{select workflow_id from oe where id = ?},
                     {}, $form->{id});
 
-            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id )
-                // FACTORY()->create_workflow('Order/Quote',$ctx);
-            if (not grep { $_ eq 'E-mail' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'Save' );
-            }
-            $trans_wf->execute_action( 'E-mail' );
+            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
+            $trans_wf->execute_action( 'e_mail' );
             $wf = $trans_wf->context->param( 'spawned_workflow' );
         }
         else {
@@ -1401,13 +1430,12 @@ sub print_form {
                     q{select workflow_id from transactions where id = ?},
                     {}, $form->{id});
 
-            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id )
-                // FACTORY()->create_workflow('AR/AP',$ctx);
-            if (grep { $_ eq 'Save' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'Save' );
+            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+            if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'save' );
             }
-            if (grep { $_ eq 'Post' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'Post' );
+            if (grep { $_ eq 'post' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'post' );
             }
             $trans_wf->execute_action( 'E-mail' );
             $wf = $trans_wf->context->param( 'spawned_workflow' );

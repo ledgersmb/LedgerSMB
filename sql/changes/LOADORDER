@@ -143,3 +143,4 @@ mc/delete-migration-validation-data.sql
 1.9/workflow-schema.sql
 1.9/workflow-email-table.sql
 1.9/workflow-extend-tables.sql
+1.9/relaxed-transdate-nullity.sql

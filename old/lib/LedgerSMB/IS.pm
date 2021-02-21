@@ -46,6 +46,8 @@ use Log::Log4perl;
 
 use LedgerSMB::Magic qw(BC_SALES_INVOICE);
 
+use Workflow::Context;
+use Workflow::Factory qw(FACTORY);
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
 
@@ -813,8 +815,12 @@ sub post_invoice {
         $sth->execute || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array;
-        $sth->finish;
+        my $ctx = Workflow::Context->new;
+        $ctx->param( trans_id => $form->{id} );
+        my $wf = FACTORY()->create_workflow( 'AR/AP', $ctx );
+        $form->{workflow_id} = $wf->id;
 
+        $sth->finish;
     }
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
@@ -1309,8 +1315,10 @@ sub retrieve_invoice {
                       a.person_id as employee_id, e.name AS employee, a.till,
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
-                      a.on_hold, a.description, a.setting_sequence
+                      a.on_hold, a.description, a.setting_sequence,
+                      tran.workflow_id
                  FROM ar a
+                 JOIN transactions tran USING (id)
             LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
             LEFT JOIN entity e ON e.id = em.entity_id
                 WHERE a.id = ?|;

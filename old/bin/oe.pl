@@ -51,6 +51,8 @@ use LedgerSMB::Tax;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Legacy_Util;
 
+use Workflow::Factory qw(FACTORY);
+
 require "old/bin/arap.pl";
 require "old/bin/io.pl";
 
@@ -87,6 +89,12 @@ sub add {
 }
 
 sub edit {
+    if (not $form->{id} and $form->{workflow_id}) {
+        my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+        $form->{id} = $wf->context->param( '_extra' )->{id};
+        delete $form->{workflow_id};
+    }
+
     OE->get_type($form);
     if ( $form->{type} =~ /(purchase_order|bin_list)/ ) {
         $form->{title} = $locale->text('Edit Purchase Order');
@@ -855,7 +863,15 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
             my $link = '';
             if ($addn) {
                 my %items = split(/[|:]/, $addn);
-                $link = 'email.pl?action=render&id=' . $items{spawned_workflow};
+                my %links = (
+                    'AR/AP|customer' => 'is.pl?action=edit&amp;workflow_id=',
+                    'AR/AP|vendor'   => 'ir.pl?action=edit&amp;workflow_id=',
+                    'Order/Quote'    => 'oe.pl?action=edit&amp;workflow_id=',
+                    'E-mail'         => 'email.pl?action=render&amp;id=',
+                    );
+                my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
+                $link = ($links{$workflow}
+                         // $links{"$workflow|$form->{vc}"}) . $id;
             }
             if ($link) {
                 print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
@@ -1224,6 +1240,10 @@ sub update {
 }
 
 sub save {
+    &_save;
+}
+
+sub _save {
     delete $form->{display_form};
 
 
@@ -1310,6 +1330,20 @@ sub save {
     }
 
     if ( OE->save( \%myconfig, \%$form ) ) {
+       # the old workflow is being saved-as. the new workflow has its id
+       # set in workflow_id, because the form was saved already...
+       my $id  = $form->{old_workflow_id} // $form->{workflow_id};
+       my $wf  = FACTORY()->fetch_workflow( 'Order/Quote', $id );
+       my $ctx = $wf->context;
+       $ctx->param( spawned_type => 'Order/Quote' );
+       $ctx->param( spawned_id   => $form->{workflow_id} );
+
+       # m/save_as/ matches both print_and_save_as_new as well as save_as_new
+       $wf->execute_action( ($form->{action} =~ m/save_as/
+                             ? 'save_as_new' : 'save') );
+
+       delete $form->{old_workflow_id};
+
        edit();
     }
     else {
@@ -1320,6 +1354,13 @@ sub save {
 
 sub print_and_save {
 
+    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    $wf->execute_action( 'print_and_save' );
+
+    &_print_and_save;
+}
+
+sub _print_and_save {
     $form->error( $locale->text('Select postscript or PDF!') )
       if $form->{format} !~ /(postscript|pdf)/;
     $form->error( $locale->text('Select a Printer!') )
@@ -1330,12 +1371,17 @@ sub print_and_save {
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{rowcount}++;
 
+    my $wf =
+        FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    $wf->execute_action( 'print' );
     &print_form($old_form);
 
 }
 
 sub delete {
 
+    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    $wf->execute_action( 'delete' );
     $form->header;
 
     if ( $form->{type} =~ /_order$/ ) {
@@ -1434,6 +1480,8 @@ sub invoice {
     $form->{closed} = 1;
 
     OE->save( \%myconfig, \%$form );
+    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $action;
 
     $form->{transdate} = '';
     $form->{duedate} = '';
@@ -1449,6 +1497,7 @@ sub invoice {
         $form->{duedate} = '';
         $form->{crdate} = '';
     }
+    $form->{workflow_id} = '';
 
     if (   $form->{type} eq 'purchase_order'
         || $form->{type} eq 'request_quotation' )
@@ -1458,6 +1507,7 @@ sub invoice {
 
         $script  = "ir";
         $buysell = 'sell';
+        $action  = 'vendor_invoice';
     }
     if ( $form->{type} eq 'sales_order' || $form->{type} eq 'sales_quotation' )
     {
@@ -1465,7 +1515,9 @@ sub invoice {
         $form->{script} = 'is.pl';
         $script         = "is";
         $buysell        = 'buy';
+        $action         = 'sales_invoice';
     }
+    my $lib = uc($script);
 
     for (qw(id subject message printed emailed queued)) { delete $form->{$_} }
     $form->{ $form->{vc} } =~ s/--.*//g;
@@ -1511,6 +1563,18 @@ sub invoice {
     for (qw(id subject message printed emailed queued audittrail)) {
         delete $form->{$_};
     }
+
+    {
+        # force the invoice to be saved, not posted!
+        local $form->{separate_duties} = 1;
+        local $form->{approved} = undef;
+
+        # $lib contains either 'IS' or 'IR': the sales and purchase invoice libs
+        $lib->post_invoice(\%myconfig, $form);
+    }
+    $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
+    $wf->context->param( 'spawned_type' => 'AR/AP' );
+    $wf->execute_action( $action );
 
     &display_form;
 
@@ -1669,21 +1733,22 @@ sub save_as_new {
 
     # orders don't have a quonumber
     # quotes don't have an ordnumber
+    $form->{old_workflow_id} = $form->{workflow_id};
     for (qw(closed id printed emailed queued ordnumber quonumber workflow_id)) {
         delete $form->{$_}
     }
-    &save;
-
+    &_save;
 }
 
 sub print_and_save_as_new {
 
     # orders don't have a quonumber
     # quotes don't have an ordnumber
+    $form->{old_workflow_id} = $form->{workflow_id};
     for (qw(closed id printed emailed queued ordnumber quonumber workflow_id)) {
         delete $form->{$_}
     }
-    &print_and_save;
+    &_print_and_save;
 
 }
 

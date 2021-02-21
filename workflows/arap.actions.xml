@@ -1,7 +1,44 @@
 <actions type="AR/AP">
-  <action name="Save" class="Workflow::Action::Null" />
-  <action name="Post" class="Workflow::Action::Null" />
+  <!--
+
+Notes on actions for AR/AP:
+
+* 'post' really is 'save' because 'approve' models the 'Post' button
+* 'copy_to_new' does the same thing as 'save_as_new' now that updating
+  saved invoices no longer clobbers the updated data
+
+
+TODO! Check workflow when 'separate duties' is false!
+(Do we get the correct state transitions?)
+
+  -->
+  <action name="print"
+          description="Printed"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="save" class="Workflow::Action::Null" />
+  <action name="post" class="Workflow::Action::Null" />
+  <action name="ship_to"
+          description="Added shipping information"
+          class="LedgerSMB::Workflow::Action::Null" />
   <action name="E-mail"
           class="LedgerSMB::Workflow::Action::SpawnWorkflow"
           spawn_type="Email" />
+  <action name="print_and_save"
+          description="Printed and saved"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="print_and_save_as_new"
+          description="Printed and created new"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="save_as_new"
+          description="Created new"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="sales_order"
+          description="Created sales order"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="purchase_order"
+          description="Created purchase order"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="void"
+          description="Voided"
+          class="LedgerSMB::Workflow::Action::Null" />
 </actions>

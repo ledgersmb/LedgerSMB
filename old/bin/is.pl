@@ -118,6 +118,11 @@ sub add {
 }
 
 sub edit {
+    if (not $form->{id} and $form->{workflow_id}) {
+        my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        $form->{id} = $wf->context->param( 'id' );
+        delete $form->{workflow_id};
+    }
 
     &invoice_links;
     &prepare_invoice;
@@ -942,7 +947,15 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
             my $link = '';
             if ($addn) {
                 my %items = split(/[|:]/, $addn);
-                $link = 'email.pl?action=render&id=' . $items{spawned_workflow};
+                my %links = (
+                    'AR/AP|customer' => 'is.pl?action=edit&amp;workflow_id=',
+                    'AR/AP|vendor'   => 'ir.pl?action=edit&amp;workflow_id=',
+                    'Order/Quote'    => 'oe.pl?action=edit&amp;workflow_id=',
+                    'E-mail'         => 'email.pl?action=render&amp;id=',
+                    );
+                my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
+                $link = ($links{$workflow}
+                         // $links{"$workflow|$form->{vc}"}) . $id;
             }
             if ($link) {
                 print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
@@ -1462,8 +1475,32 @@ sub post {
     ( $form->{AR_paid} ) = split /--/, $form->{AR_paid};
 
     IS->post_invoice( \%myconfig, \%$form );
-    edit();
 
+    my $id = $form->{old_workflow_id} // $form->{workflow_id};
+    my $wf = FACTORY()->fetch_workflow( 'AR/AP', $id );
+
+    # m/save_as/ matches both print_and_save_as_new as well as save_as_new
+    # note that "post" is modelled through the 'approve' entrypoint
+    # and that the 'post' entrypoint actually models the 'save' action
+    if ($form->{action} =~ m/post_as/) {
+        $wf->execute_action( 'save_as_new' );
+    }
+    else {
+        my $ctx = $wf->context;
+        $ctx->param( spawned_type => 'Order/Quote' );
+        $ctx->param( spawned_id   => $form->{workflow_id} );
+
+        if ($form->{action} eq 'void') {
+            $wf->execute_action( 'void' );
+        }
+        else {
+            $wf->execute_action( 'save' );
+        }
+    }
+
+    delete $form->{old_workflow_id};
+
+    edit();
 }
 
 sub print_and_post {
@@ -1486,6 +1523,9 @@ sub print_and_post {
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{rowcount}++;
 
+    my $wf =
+        FACTORY()->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( 'print' );
     &print_form($old_form);
 
 }
