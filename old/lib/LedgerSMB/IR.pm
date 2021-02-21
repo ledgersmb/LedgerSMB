@@ -437,6 +437,10 @@ sub post_invoice {
           $form->round_amount( $form->{paid} * $form->{exchangerate}, 2 );
     }
 
+    my $approved = 1;
+    $approved = 0 if $form->{separate_duties};
+
+
     foreach my $ref ( sort { $b->{amount} <=> $a->{amount} }
         @{ $form->{acc_trans}{lineitems} } )
     {
@@ -445,13 +449,13 @@ sub post_invoice {
         $fxlinetotal = $ref->{fxlinetotal} + $diff/$form->{exchangerate};
         $query  = qq|
          INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
-                     transdate, invoice_id)
-                     VALUES (?, ?, ?, ?, ?, ?, ?)|;
+                     transdate, approved, invoice_id)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute(
             $form->{id},        $ref->{chart_id},  $amount * -1,
             $form->{currency},  $fxlinetotal * -1, $form->{transdate},
-            $ref->{invoice_id}
+            $approved, $ref->{invoice_id}
         ) || $form->dberror($query);
 
         $diff   = 0;
@@ -480,15 +484,15 @@ sub post_invoice {
 
         $query = qq|
           INSERT INTO acc_trans (trans_id, chart_id,
-                                amount_bc, curr, amount_tc, transdate)
+                                amount_bc, curr, amount_tc, transdate, approved)
                        VALUES (?, (SELECT id FROM account WHERE accno = ?),
-                              ?, ?, ?, ?)|;
+                              ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query)
             or $form->dberror($dbh->errstr);
          $sth->execute( $form->{id}, $accno,
                        $form->{payables}, $form->{currency},
                     $form->{payables}/$form->{exchangerate},
-                       $form->{transdate})
+                       $form->{transdate}, $approved)
           || $form->dberror($query);
     }
 
@@ -503,7 +507,7 @@ sub post_invoice {
                 $query = qq|
                     INSERT INTO acc_trans
                            (trans_id, chart_id, amount_bc, curr, amount_tc,
-                                transdate)
+                                transdate, approved)
                             VALUES (?, (SELECT id FROM account
                                 WHERE accno = ?),
                            ?, ?, ?, ?)|;
@@ -511,7 +515,7 @@ sub post_invoice {
                     || $form->dberror($dbh->errstr);
                 $sth->execute( $trans_id, $accno,
                                $amount, $form->{defaultcurrency}, $amount,
-                               $form->{transdate} )
+                               $form->{transdate}, $approved )
                   || $form->dberror($query);
             }
         }
@@ -529,9 +533,6 @@ sub post_invoice {
     # set values which could be empty
     $form->{taxincluded} //= 0;
     $form->{taxincluded} *= 1;
-
-    my $approved = 1;
-    $approved = 0 if $form->{separate_duties};
 
     # save AP record
     $query = qq|
