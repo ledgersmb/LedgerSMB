@@ -40,6 +40,7 @@
 
 package lsmb_legacy;
 
+use LedgerSMB::IIAA;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -1876,7 +1877,7 @@ sub createlocations
 
          &validatelocation;
 
-         $form->{locationid} = IS->createlocation($form);
+         $form->{locationid} = IIAA->createlocation($form);
 
 
     }
@@ -1884,7 +1885,7 @@ sub createlocations
     if($form->{shiptoradiocontact}==1)
     {
          &validatecontact;
-            IS->createcontact($form);
+         IIAA->createcontact($form);
         }
 
     &ship_to unless $continue;

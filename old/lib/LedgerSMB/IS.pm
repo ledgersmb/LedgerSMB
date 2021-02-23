@@ -1743,53 +1743,6 @@ sub construct_types
 }
 
 
-sub createlocation
-{
-
-
-  my ( $self,$form ) = @_;
-
-  my $dbh=$form->{dbh};
-
-  my $query="select * from eca__location_save(?,?,?,?,?,?,?,?,?,?, null);";
-
-  my $sth=$dbh->prepare("$query");
-
-   $sth->execute($form->{"customer_id"},
-         undef,
-         3,  ## no critic (ProhibitMagicNumbers) sniff
-         $form->{"shiptoaddress1_new"},
-         $form->{"shiptoaddress2_new"},
-         $form->{"shiptoaddress3_new"},
-         $form->{"shiptocity_new"},
-         $form->{"shiptostate_new"},
-         $form->{"shiptozipcode_new"},
-         $form->{"shiptocountry_new"}
-            ) || $form->dberror($query);
-  my ($l_id) = $sth->fetchrow_array;
-  $sth->finish();
-  return $l_id;
-}
-
-
-
-sub createcontact
-{
-
-  my ( $self,$form ) = @_;
-
-  my $dbh=$form->{dbh};
-
-  my $query="select * from eca__save_contact(?,?,?,?,?,?);";
-
-  my $sth=$dbh->prepare("$query");
-
-  $sth->execute($form->{"customer_id"},$form->{"shiptotype_new"},$form->{"shiptodescription_new"},$form->{"shiptocontact_new"},$form->{"shiptocontact_new"},$form->{"shiptotype_new"}) || $form->dberror($query);
-
-  $sth->finish();
-
-}
-
 
 
 
