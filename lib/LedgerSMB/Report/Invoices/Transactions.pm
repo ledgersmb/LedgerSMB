@@ -254,7 +254,7 @@ sub columns {
     return [
        { col_id => 'id',
            name => $self->Text('ID'),
-           type => 'text'},
+           type => 'href'},
        { col_id => 'transdate',
            name => $self->Text('Date'),
            type => 'text'},
@@ -355,6 +355,7 @@ sub run_report {
         $r->{entity_name_href_suffix} =
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+        $r->{id_href_suffix} = "$script?action=edit&id=$r->{id}";
     }
     return $self->rows(\@rows);
 }
