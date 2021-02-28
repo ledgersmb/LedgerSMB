@@ -555,3 +555,8 @@ span.indicator {
     display: inline-block;
     width: 60ex;
 }
+
+#invoice caption {
+    font-size: var(--listtop-font-size);
+    font-weight: bold;
+}
