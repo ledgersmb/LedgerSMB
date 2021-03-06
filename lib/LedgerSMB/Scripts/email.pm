@@ -72,7 +72,8 @@ sub render {
         $wf->execute_action( $request->{wf_action} )
             if grep { $_ eq $request->{wf_action} } $wf->get_current_actions;
 
-        if ($wf->state eq 'SUCCESS') {
+        if ($wf->state eq 'SUCCESS'
+            or $request->{wf_action} eq 'Cancel') {
             return [ HTTP_SEE_OTHER,
                      [ Location => $request->{callback} ],
                      [ '' ]];

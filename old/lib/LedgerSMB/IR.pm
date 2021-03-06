@@ -46,6 +46,9 @@ use LedgerSMB::IIAA;
 
 use LedgerSMB::Magic qw(BC_VENDOR_INVOICE);
 
+use Workflow::Context;
+use Workflow::Factory qw(FACTORY);
+
 =over
 
 =item get_files
@@ -151,8 +154,12 @@ sub post_invoice {
         $sth->execute || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array;
-        $sth->finish;
+        my $ctx = Workflow::Context->new;
+        $ctx->param( trans_id => $form->{id} );
+        my $wf = FACTORY()->create_workflow( 'AR/AP', $ctx );
+        $form->{workflow_id} = $wf->id;
 
+        $sth->finish;
     }
 
     my $amount;
@@ -496,7 +503,7 @@ sub post_invoice {
           || $form->dberror($query);
     }
 
-    # post taxes, if !$form->{manual} (see above)    
+    # post taxes, if !$form->{manual} (see above)
     foreach my $trans_id ( keys %{ $form->{acc_trans} } ) {
         foreach my $accno ( keys %{ $form->{acc_trans}{$trans_id} } ) {
             $amount =
@@ -715,9 +722,11 @@ sub retrieve_invoice {
             SELECT a.invnumber, a.transdate, a.duedate,
                    a.ordnumber, a.quonumber, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
-                   a.entity_credit_account as vendor_id, a.language_code, a.ponumber, a.crdate,
-                   a.on_hold, a.reverse, a.description
+                   a.entity_credit_account as vendor_id, a.language_code,
+                   a.ponumber, a.crdate, a.on_hold, a.reverse, a.description,
+                   tran.workflow_id
               FROM ap a
+              JOIN transactions tran USING (id)
              WHERE id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);

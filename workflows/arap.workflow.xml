@@ -1,16 +1,39 @@
 <workflow>
   <type>AR/AP</type>
+<!--
+
+TODO! Check workflow when 'separate duties' is false!
+(Do we get the correct state transitions?)
+
+-->
   <persister>JournalEntry</persister>
+  <initial_state>SAVED</initial_state>
   <description>Manage the life cycle of an AR/AP document</description>
-  <state name="INITIAL">
-    <action name="Save" resulting_state="SAVED" />
-  </state>
   <state name="SAVED">
-    <action name="Post" resulting_state="POSTED" />
+    <action name="save" resulting_state="NOCHANGE" />
+    <action name="save_as_new" resulting_state="NOCHANGE" />
+    <action name="post" resulting_state="POSTED" />
+    <action name="sales_order" resulting_state="NOCHANGE">
+      <condition name="is_sales" />
+    </action>
+    <action name="purchase_order" resulting_state="NOCHANGE">
+      <condition name="!is_sales" />
+    </action>
   </state>
   <state name="POSTED">
+    <action name="save_as_new" resulting_state="NOCHANGE" />
+    <action name="void" resulting_state="VOIDED" />
     <action name="E-mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
     </action>
+    <action name="sales_order" resulting_state="NOCHANGE">
+      <condition name="is_sales" />
+    </action>
+    <action name="purchase_order" resulting_state="NOCHANGE">
+      <condition name="!is_sales" />
+    </action>
+  </state>
+  <state name="VOIDED">
+    <action name="save_as_new" resulting_state="NOCHANGE" />
   </state>
 </workflow>

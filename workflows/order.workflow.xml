@@ -1,13 +1,42 @@
 <workflow>
   <type>Order/Quote</type>
+  <initial_state>SAVED</initial_state>
   <persister>Order</persister>
   <description>Manage the life cycle of an AR/AP document</description>
-  <state name="INITIAL">
-    <action name="Save" resulting_state="SAVED" />
-  </state>
   <state name="SAVED">
-    <action name="E-mail" resulting_state="NOCHANGE">
+    <action name="e_mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
     </action>
+    <action name="print" resulting_state="NOCHANGE" />
+    <action name="print_and_save" resulting_state="NOCHANGE" />
+    <action name="print_and_save_as_new" resulting_state="NOCHANGE" />
+    <action name="save" resulting_state="NOCHANGE" />
+    <action name="save_as_new" resulting_state="NOCHANGE" />
+    <!-- action name="ship_to" resulting_state="NOCHANGE" / -->
+    <action name="sales_invoice" resulting_state="NOCHANGE">
+      <condition name="is_sales" />
+    </action>
+    <action name="sales_order" resulting_state="NOCHANGE">
+      <condition name="is_sales" />
+      <condition name="!is_order" />
+    </action>
+    <action name="quotation" resulting_state="NOCHANGE">
+      <condition name="is_sales" />
+      <condition name="is_order" />
+    </action>
+    <action name="vendor_invoice" resulting_state="NOCHANGE">
+      <condition name="!is_sales" />
+    </action>
+    <action name="purchase_order" resulting_state="NOCHANGE">
+      <condition name="!is_sales" />
+      <condition name="!is_order" />
+    </action>
+    <action name="rfq" resulting_state="NOCHANGE">
+      <condition name="!is_sales" />
+      <condition name="is_order" />
+    </action>
+    <action name="delete" resulting_state="DELETED" />
+  </state>
+  <state name="DELETED">
   </state>
 </workflow>

@@ -1,0 +1,9 @@
+<conditions>
+  <type>Order/Quote</type>
+  <condition name="is_sales"
+             test="($context->{_extra}->{oe_class_id} &amp; 1) == 1"
+             class="Workflow::Condition::Evaluate"/>
+  <condition name="is_order"
+             test="$context->{_extra}->{oe_class_id} &lt;= 2"
+             class="Workflow::Condition::Evaluate"/>
+</conditions>

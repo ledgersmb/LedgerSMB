@@ -233,6 +233,8 @@ my @modules =
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
      'LedgerSMB::Magic',
      'LedgerSMB::Workflow::Action::Email',
+     'LedgerSMB::Workflow::Action::Null',
+     'LedgerSMB::Workflow::Action::RecordSpawnedWorkflow',
      'LedgerSMB::Workflow::Action::SpawnWorkflow',
      'LedgerSMB::Workflow::Persister',
      'LedgerSMB::Workflow::Persister::Email',

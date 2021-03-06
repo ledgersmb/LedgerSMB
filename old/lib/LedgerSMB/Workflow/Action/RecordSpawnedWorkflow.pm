@@ -1,41 +1,40 @@
-package LedgerSMB::Workflow::Action::SpawnWorkflow;
+package LedgerSMB::Workflow::Action::RecordSpawnedWorkflow;
 
 =head1 NAME
 
-LedgerSMB::Workflow::Action::SpawnWorkflow - Spawns a new workflow
+LedgerSMB::Workflow::Action::RecordSpawnedWorkflow - Spawns a new workflow
 
 =head1 SYNOPSIS
 
   # action configuration
   <actions>
     <action name="Send"
-            class="LedgerSMB::Workflow::Action::SpawnWorkflow"
+            class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow"
             description="Description for the item in the workflow history"
-            spawn_type="Email"
             />
   </actions>
 
 
 =head1 DESCRIPTION
 
-This modul implements a single action to spawn a new workflow from the
+This module implements a single action to record a spawned workflow from the
 active one.
 
-The action supports the following two
+The action supports the following construction parameter
 
 =over
-
-=item * spawn_type
 
 =item * description
 
 =back
 
-This action adds the following key to the workflow context:
+This action uses the following key from the workflow context:
 
 =over
 
-=item * spawned_workflow
+=item * spawned_id
+
+=item * spawned_type
 
 =back
 
@@ -52,7 +51,7 @@ use parent qw( Workflow::Action );
 use Log::Any qw($log);
 use Workflow::Factory qw(FACTORY);
 
-my @PROPS = qw( spawn_type description );
+my @PROPS = qw( description );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head2 init($wf, $params)
@@ -65,10 +64,8 @@ sub init {
     my ($self, $wf, $params) = @_;
     $self->SUPER::init($wf, $params);
 
-    $self->spawn_type( $params->{spawn_type} );
     $self->description( $params->{description}
-                        // ('Created new workflow of type: '
-                            . $params->{spawn_type}) );
+                        // 'Spawned new workflow' );
 }
 
 =head2 execute($wf)
@@ -82,15 +79,17 @@ Implements the C<Workflow::Action> protocol.
 sub execute {
     my ($self, $wf) = @_;
 
-    my $new_wf = FACTORY()->create_workflow( $self->spawn_type );
-    my $wf_id  = $new_wf->id;
-    $wf->context->param( spawned_workflow => $new_wf );
+    my $wf_id   = $wf->context->param( 'spawned_id' );
+    die q{Missing context parameter 'spawned_id'} unless $wf_id;
+
+    my $wf_type = $wf->context->param( 'spawned_type' );
+    die q{Missing context parameter 'spawned_type'} unless $wf_type;
+
     $wf->add_history(
         {
             action      => $self->name,
             description => ($self->description
-                            . "|spawned_workflow:$wf_id,"
-                            . $self->spawn_type )
+                            . "|spawned_workflow:$wf_id,$wf_type")
         });
 
     return;

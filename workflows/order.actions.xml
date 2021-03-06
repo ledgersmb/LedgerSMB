@@ -1,7 +1,44 @@
 <actions type="Order/Quote">
-  <action name="Save" class="Workflow::Action::Null" />
-  <action name="Post" class="Workflow::Action::Null" />
-  <action name="E-mail"
+  <action name="print"
+          description="Printed"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="save"
+          description="Saved (overwritten)"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="ship_to"
+          description="Added shipping information"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="e_mail"
           class="LedgerSMB::Workflow::Action::SpawnWorkflow"
           spawn_type="Email" />
+  <action name="print_and_save"
+          description="Printed and saved"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="print_and_save_as_new"
+          description="Printed and created new"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="save_as_new"
+          description="Created new"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="sales_invoice"
+          description="Created sales invoice"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="sales_order"
+          description="Created sales order"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="quotation"
+          description="Created quotation"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="vendor_invoice"
+          description="Created vendor invoice"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="purchase_order"
+          description="Created purchase order"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="rfq"
+          description="Created request-for-quote"
+          class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
+  <action name="delete"
+          description="Deleted"
+          class="LedgerSMB::Workflow::Action::Null" />
 </actions>
