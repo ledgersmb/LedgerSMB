@@ -43,7 +43,7 @@ including new customers, vendors, leads and so forth.
 #       And click continue
 #      Then I see a listing with a customer with a name like 'Test'
 #      When I click the 'Test
-#      Then I see the 
+#      Then I see the
 #
 # Scenario: Look Up Existing Company as Vendor
 #      When I click on the Contacts/Search menu
@@ -97,7 +97,7 @@ including new customers, vendors, leads and so forth.
 # Scenario: Look up person customer with all info filled out
 #
 # Scenario: Look up company vendor wit all info flled out
-# 
+#
 # Scenario: Add new Vendor ECA to Customer
 #
 # Scenario: Add new Customer ECA to Vendor
