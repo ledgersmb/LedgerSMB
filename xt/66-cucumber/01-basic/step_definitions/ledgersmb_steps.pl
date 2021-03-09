@@ -24,10 +24,12 @@ Given qr/these preferences for the (admin|user)(?: "([^"]+)")?:/, sub {
     my $data = C->data;
 
     my $dbh = S->{ext_lsmb}->admin_dbh;
-    my $query = 'UPDATE user_preference SET ' . join(' ', map { "$_->{setting} = ?" } $data->@*)
-        . ' WHERE id = (select id from users where username = ?)';
-    $dbh->do($query, {}, (map { $_->{value} } $data->@*), $user_name )
-        or die $dbh->errstr;
+    my $query = 'SELECT preference__set(?, ?)';
+    my $sth = $dbh->prepare($query);
+    for my $setting ($data->@*) {
+        $sth->execute($setting->{setting}, $setting->{value})
+            or die $sth->errstr;
+    }
 };
 
 

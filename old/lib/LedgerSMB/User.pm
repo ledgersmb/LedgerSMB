@@ -83,11 +83,26 @@ sub fetch_config {
 
     my $dbh = $lsmb->{dbh};
     my $query = q{
-        SELECT * FROM user_preference
-         WHERE id = (SELECT id FROM users WHERE username = SESSION_USER)};
-    my $sth = $dbh->prepare($query);
-    $sth->execute;
-    my $myconfig = $sth->fetchrow_hashref('NAME_lc');
+        select 'id' as "name",
+               (select id from users where username = session_user)::text as value
+        union all
+        SELECT "name", "value" FROM user_preference
+         WHERE user_id = (SELECT id FROM users WHERE username = SESSION_USER)
+        UNION ALL
+        SELECT "name", "value" FROM user_preference up
+         WHERE user_id IS NULL
+               AND NOT EXISTS (select 1 from user_preference
+                                where up."name" = user_preference."name"
+                                  and user_preference.user_id = (SELECT id FROM users WHERE username = SESSION_USER))
+        };
+    my $sth = $dbh->prepare($query)
+        or die $dbh->errstr;
+    $sth->execute
+        or die $dbh->errstr;
+    my $myconfig = {};
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        $myconfig->{$row->{name}} = $row->{value};
+    }
     bless $myconfig, __PACKAGE__;
     return $myconfig;
 }
