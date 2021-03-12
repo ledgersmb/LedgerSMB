@@ -98,7 +98,7 @@ blacklist:
 
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
-	find . | grep -vE '^.$$|^\./\.|^\./node_modules/(dojo(-webpack-plugin)?|dijit|util)/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
+	find . | grep -vE '^.$$|^\./\.|^\./node_modules/|\.(uncompressed|consoleStripped)\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
 pod:
 	rm -rf UI/pod
