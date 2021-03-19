@@ -179,7 +179,7 @@ on 'develop' => sub {
     requires 'Pod::ProjectDocs';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
-    requires 'Test::BDD::Cucumber', '0.73';
+    requires 'Test::BDD::Cucumber', '0.79';
     if ($ENV{CI}) {
         # Required to suppress a variable re-definition
         requires 'Test::Dependencies', '0.30';
