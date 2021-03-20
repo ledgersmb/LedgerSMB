@@ -29,8 +29,8 @@ commands:
              # Coverage explicitly without parallellism to prevent resource contention
              # when Devel::Cover writes coverage database on process-exit
              prove -j2 --recurse \
-                   --pgtap-option dbname=lsmbinstalltest \
-                   --pgtap-option username=postgres \
+                   --pgtap-option dbname=$PGDB \
+                   --pgtap-option username=$PGUSER \
                    --pgtap-option psql=.circleci/psql-wrap \
                    --feature-option tags=~@wip t/ xt/
       - run:
@@ -137,6 +137,14 @@ commands:
                 -e "s/# \(backup_email_from = \).*\$/\1lsmb-backups@example.com/g" \
                 -e "s/#dojo_built = 1/dojo_built = 0/" \
               ledgersmb.conf
+      - run:
+          name: Create test database
+          command: |
+            echo "connect_data:"            > $HOME/.ledgersmb-admin.conf
+            echo "  username: $PGUSER"     >> $HOME/.ledgersmb-admin.conf
+            echo "  password: $PGPASSWORD" >> $HOME/.ledgersmb-admin.conf
+            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
+              ./bin/ledgersmb-admin create $PGDB
   start_plackup:
     description: "Start plackup"
     steps:
@@ -191,6 +199,7 @@ executors:
       PGHOST: localhost
       PGUSER: postgres
       PGPASSWORD: test
+      PGDB: lsmbinstalltest
       LSMB_TEST_DB: 1
       LSMB_NEW_DB: lsmbinstalltest
       LSMB_BASE_URL: http://127.0.0.1:5000
