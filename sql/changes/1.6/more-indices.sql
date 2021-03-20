@@ -1,5 +1,5 @@
 
-create index acc_trans_trans_id_idx on acc_trans(trans_id);
+create index if not exists acc_trans_trans_id_idx on acc_trans(trans_id);
 create index acc_trans_invoice_id_idx on acc_trans(invoice_id);
 create index acc_trans_chart_id_idx on acc_trans(chart_id);
 
