@@ -185,7 +185,9 @@ executors:
           POSTGRES_PASSWORD: test
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
+      COA_TESTING: 1
       COVERAGE: << parameters.coverage >>
+      DB_TESTING: 1
 #      DEVEL_COVER_OPTIONS:
       RELEASE_TESTING: 1
       PGHOST: localhost
