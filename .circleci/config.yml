@@ -141,7 +141,7 @@ commands:
           name: Create test database
           command: |
             echo "connect_data:"            > $HOME/.ledgersmb-admin.conf
-            echo "  username: $PGUSER"     >> $HOME/.ledgersmb-admin.conf
+            echo "  user: $PGUSER"         >> $HOME/.ledgersmb-admin.conf
             echo "  password: $PGPASSWORD" >> $HOME/.ledgersmb-admin.conf
             PERL5LIB="lib:$HOME/perl5/lib/perl5" \
               ./bin/ledgersmb-admin create $PGDB
