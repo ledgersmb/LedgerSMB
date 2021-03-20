@@ -185,9 +185,7 @@ executors:
           POSTGRES_PASSWORD: test
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
-      COA_TESTING: 1
       COVERAGE: << parameters.coverage >>
-      DB_TESTING: 1
 #      DEVEL_COVER_OPTIONS:
       RELEASE_TESTING: 1
       PGHOST: localhost
@@ -228,6 +226,8 @@ jobs:
       - start_plackup
       - start_proxy
       - prove
+    environment:
+      COA_TESTING: 1
 
   test_perl28:
     <<: *defaults
@@ -242,6 +242,8 @@ jobs:
       - start_plackup
       - start_proxy
       - prove
+    environment:
+      DB_TESTING: 1
 
 # Workflows
 # Tests multiple browsers, coverage and dojo
