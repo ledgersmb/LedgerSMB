@@ -76,7 +76,7 @@ FOR t_inv IN
       JOIN (SELECT id, approved, transdate FROM ar
             UNION
             SELECT id, approved, transdate FROM gl) a ON a.id = i.trans_id
-     WHERE allocated + qty > 0 and a.approved and parts_id = in_parts_id
+     WHERE qty + allocated > 0 and a.approved and parts_id = in_parts_id
    ORDER BY a.transdate ASC, a.id ASC, i.id ASC
 LOOP
    t_reallocated := least(t_alloc - in_qty, t_inv.qty + t_inv.allocated);
