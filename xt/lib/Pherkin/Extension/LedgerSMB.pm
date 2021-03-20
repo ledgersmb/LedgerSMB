@@ -76,6 +76,7 @@ sub step_directories {
 
 
 my $startup_pid = $$;
+my $job_name = '';
 
 sub pre_execute {
     if (not Log::Log4perl->initialized()) {
@@ -86,7 +87,8 @@ sub pre_execute {
 sub post_execute {
     my ($self) = @_;
 
-    if ($$ != $startup_pid) {
+    my $t2_harness_job_name = $ENV{T2_HARNESS_JOB_NAME} // '';
+    if ($$ != $startup_pid || $job_name ne $t2_harness_job_name) {
         my $db = LedgerSMB::Database->new(
             dbname   => $self->db_name,
             username => $self->username,
@@ -110,10 +112,11 @@ sub post_execute {
 sub pre_feature {
     my ($self, $feature, $stash) = @_;
 
-    $self->template_db_name($self->template_db_name . "-$$")
-        if $$ != $startup_pid;
-    $self->admin_user_name($self->admin_user_name . "-$$")
-        if $$ != $startup_pid;
+    my $t2_harness_job_name = $ENV{T2_HARNESS_JOB_NAME} // '';
+    $self->template_db_name($self->template_db_name . "-$$" . "-" . $t2_harness_job_name)
+        if $$ != $startup_pid || $job_name ne $t2_harness_job_name;
+    $self->admin_user_name($self->admin_user_name . "-$$" . "-" . $t2_harness_job_name)
+        if $$ != $startup_pid || $job_name ne $t2_harness_job_name;
 
     my $db = LedgerSMB::Database->new(
         dbname   => $self->db_name,

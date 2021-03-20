@@ -19,20 +19,19 @@ commands:
     steps:
       - run:
           command: |
-             if [ "x$COVERAGE" == "x1" ]
-             then
-               export HARNESS_PERL_SWITCHES="$HARNESS_PERL_SWITCHES -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
-             fi
-             echo $PERL5OPT
-             echo $HARNESS_PERL_SWITCHES
-             echo $PWD
-             # Coverage explicitly without parallellism to prevent resource contention
-             # when Devel::Cover writes coverage database on process-exit
-             prove -j2 --recurse \
-                   --pgtap-option dbname=$PGDB \
-                   --pgtap-option username=$PGUSER \
-                   --pgtap-option psql=.circleci/psql-wrap \
-                   --feature-option tags=~@wip t/ xt/
+            JOB_COUNT=5
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
+              JOB_COUNT=2
+            fi
+            yath start --job-count $JOB_COUNT --event-timeout 1800 # Timeout after 30 min
+            yath --qvf --color --no-progress \
+              --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
+              --pgtap-psql=.circleci/psql-wrap \
+              --Feature-tags=~@wip \
+              t xt
+            yath stop
       - run:
           command: |
             while [ $(pidof plackup) ];
@@ -117,6 +116,7 @@ commands:
                   Devel::Cover \
                   Devel::Cover::Report::Coveralls
             fi
+            rm -rf $HOME/.perl-cpm
       - save_cache:
            key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "cpanfile" }}
            paths:
@@ -152,7 +152,7 @@ commands:
           command: |
             if [ "x$COVERAGE" == "x1" ]
             then
-              export PERL5OPT="$PERL5OPT -MDevel::Cover=-ignore,^/|^utils/|^x?t/|\.lttc$,-blib,0"
+              export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
             fi
             plackup -I$HOME/project/lib -I$HOME/project/old/lib \
               -s Gazelle --port 5762 --workers=2 --max-reqs-per-child=50000 \
@@ -194,7 +194,7 @@ executors:
       - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
-#      DEVEL_COVER_OPTIONS:
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t/,+ignore,^utils/,+ignore,\.lttc$,+ignore,^/usr/,+ignore,/home/circleci/perl5,+ignore,plackup$
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres
