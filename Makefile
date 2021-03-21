@@ -11,9 +11,9 @@ else
 endif
 
 ifeq ($(DIST_VER),travis)
-DIST_DEPS=cached_dojo
+DIST_DEPS=cached_dojo dbdocs
 else
-DIST_DEPS=dojo
+DIST_DEPS=dojo dbdocs
 endif
 
 ifneq ($(origin CONTAINER),undefined)
@@ -40,6 +40,8 @@ Help on using this Makefile
     - help         : This help text
     - dist         : Builds the release distribution archive
     - dojo         : Builds the minified dojo blob we serve to clients
+    - dbdocs       : Builds the PDF, SVG and PNG schema documentation
+                     (without rebuilding the inputs)
     - pod          : Builds POD documentation
     - pot          : Builds LedgerSMB.pot translation lexicon
     - test         : Runs tests (TESTS='t/')
@@ -65,6 +67,11 @@ SHA := $(shell find UI/js-src/lsmb node_modules/dojo node_modules/dojo-webpack-p
 ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
 TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
+
+dbdocs:
+	$(DOCKER_CMD) dot -Tsvg docs/database/ledgersmb.dot -o docs/database/ledgersmb.svg
+	$(DOCKER_CMD) dot -Tpdf docs/database/ledgersmb.dot -o docs/database/ledgersmb.pdf
+	$(DOCKER_CMD) dot -Tpng docs/database/ledgersmb.dot -o docs/database/ledgersmb.png
 
 dojo:
 	$(DOCKER_CMD) rm -rf UI/js/*
