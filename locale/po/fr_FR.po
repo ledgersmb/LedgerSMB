@@ -1,20 +1,16 @@
 #
-# Translators:
-# paul bolger <pbolger@gmail.com>, 2020
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2021-03-21 13:02+0000\n"
-"Last-Translator: paul bolger <pbolger@gmail.com>, 2020\n"
-"Language-Team: English (New Zealand) (https://www.transifex.com/ledgersmb/"
-"teams/58325/en_NZ/)\n"
-"Language: en_NZ\n"
+"Language-Team: French (France) (https://www.transifex.com/ledgersmb/"
+"teams/58325/fr_FR/)\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
@@ -81,9 +77,6 @@ msgid ""
 "Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
-"A return authorisation must be obtained from [_1] before goods are returned. "
-"Returns must be shipped prepaid and properly insured. [_1] will not be "
-"responsible for damages during transit."
 
 #: sql/Pg-database.sql:799
 msgid "AIM"
@@ -777,7 +770,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:85
 msgid "Amount Budgetted"
-msgstr "Amount Budgeted"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:249
 #: lib/LedgerSMB/Scripts/payment.pm:918 lib/LedgerSMB/Scripts/payment.pm:923
@@ -913,11 +906,11 @@ msgstr ""
 
 #: old/bin/oe.pl:1310
 msgid "Are you sure you want to delete Order Number"
-msgstr "Are you sure you want to delete Order Number?"
+msgstr ""
 
 #: old/bin/oe.pl:1315
 msgid "Are you sure you want to delete Quotation Number"
-msgstr "Are you sure you want to delete Quotation Number?"
+msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:92
 msgid "As per"
