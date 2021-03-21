@@ -1,15 +1,23 @@
+#
+# Translators:
+# O Kan <teravitk@gmail.com>, 2021
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.27-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2021-03-21 12:26+0000\n"
+"Last-Translator: O Kan <teravitk@gmail.com>, 2021\n"
+"Language-Team: Thai (https://www.transifex.com/ledgersmb/teams/58325/th/)\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
-msgstr ""
+msgstr "# ใบกำกับสินค้า"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
@@ -17,15 +25,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:99
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "ราคาซาก"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:107
 msgid "(-) Accum. Dep."
-msgstr ""
+msgstr "ค่าเสื่อมราคาสะสม"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:111
 msgid "(=) NBV"
-msgstr ""
+msgstr "(=) ราคาตามบัญชีสุทธิ"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:261 lib/LedgerSMB/Upgrade_Tests.pm:282
 #: lib/LedgerSMB/Upgrade_Tests.pm:479 lib/LedgerSMB/Upgrade_Tests.pm:500
@@ -68,24 +76,24 @@ msgstr ""
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
 #: sql/Pg-database.sql:2849
 msgid "AP"
-msgstr ""
+msgstr "เจ้าหนี้การค้า"
 
 #: sql/Pg-database.sql:2798
 msgid "AP Aging"
-msgstr ""
+msgstr "อายุเจ้าหนี้คงค้าง"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:113
 msgid "AP Invoice"
-msgstr ""
+msgstr "ใบกำกับสินค้าเจ้าหนี้"
 
 #: UI/Reports/filters/search_goods.html:165
 msgid "AP Invoices"
-msgstr ""
+msgstr "ใบกำกับสินค้าเจ้าหนี้"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:301 old/bin/aa.pl:1535
 #: UI/Reports/filters/invoice_outstanding.html:4
 msgid "AP Outstanding"
-msgstr ""
+msgstr "ยอดเจ้าหนี้ค้างชำระ"
 
 #: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
 #: templates/demo/ap_transaction.html:17 templates/demo/ap_transaction.tex:18
@@ -97,46 +105,46 @@ msgstr ""
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:348
 #: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
 msgid "AP Transaction"
-msgstr ""
+msgstr "รายการทางบัญชีเจ้าหนี้"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:131 old/bin/aa.pl:1491
 msgid "AP Transactions"
-msgstr ""
+msgstr "รายการทางบัญชีเจ้าหนี้"
 
 #: sql/Pg-database.sql:2912
 msgid "AP Voucher"
-msgstr ""
+msgstr "ใบสำคัญจ่าย"
 
 #: UI/import_csv/import_inventory_csv.html:17
 msgid "AP account"
-msgstr ""
+msgstr "บัญชีเจ้าหนี้"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:280 lib/LedgerSMB/Upgrade_Tests.pm:498
 msgid "AP account available when vendors defined"
-msgstr ""
+msgstr "บัญชีเจ้าหนี้จะมีได้เมื่อมีการกำหนดคู่ค้าก่อน"
 
 #: old/bin/am.pl:826 UI/Reports/filters/unapproved.html:7
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2848
 msgid "AR"
-msgstr ""
+msgstr "ลูกหนี้การค้า"
 
 #: sql/Pg-database.sql:2795
 msgid "AR Aging"
-msgstr ""
+msgstr "อายุลูกหนี้คงค้าง"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:109
 msgid "AR Invoice"
-msgstr ""
+msgstr "ใบกำกับสินค้าลูกหนี้"
 
 #: UI/Reports/filters/search_goods.html:142
 msgid "AR Invoices"
-msgstr ""
+msgstr "ใบกำกับสินค้าลูกหนี้"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:303 old/bin/aa.pl:1534
 #: UI/Reports/filters/invoice_outstanding.html:8
 msgid "AR Outstanding"
-msgstr ""
+msgstr "ยอดลูกหนี้ค้างชำระ"
 
 #: templates/demo/ar_transaction.html:4 templates/demo/ar_transaction.html:17
 #: templates/demo/ar_transaction.tex:33
@@ -148,32 +156,32 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:33 UI/Contact/divs/credit.html:365
 #: sql/Pg-database.sql:2946 sql/Pg-database.sql:2959
 msgid "AR Transaction"
-msgstr ""
+msgstr "รายการทางบัญชีลูกหนี้"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:133 old/bin/aa.pl:1490
 msgid "AR Transactions"
-msgstr ""
+msgstr "รายการทางบัญชีลูกหนี้"
 
 #: sql/Pg-database.sql:2911
 msgid "AR Voucher"
-msgstr ""
+msgstr "ใบสำคัญรับ"
 
 #: UI/import_csv/import_inventory_csv.html:8
 msgid "AR account"
-msgstr ""
+msgstr "บัญชีลูกหนี้"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:259 lib/LedgerSMB/Upgrade_Tests.pm:477
 msgid "AR account available when customers defined"
-msgstr ""
+msgstr "บัญชีลูกหนี้จะมีได้เมื่อมีการกำหนดลูกค้าก่อน"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:154
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:111
 msgid "AR/AP/GL Amount"
-msgstr ""
+msgstr "จำนวน ลูกหนี้/เจ้าหนี้/แยกประเภททั่วไป"
 
 #: sql/Pg-database.sql:3789
 msgid "Abandonment"
-msgstr ""
+msgstr "ละทิ้ง"
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:90
 msgid "Acc_trans Sum"
@@ -182,7 +190,7 @@ msgstr ""
 #: lib/LedgerSMB.pm:404 lib/LedgerSMB.pm:405
 #: lib/LedgerSMB/Scripts/configuration.pm:354
 msgid "Access Denied"
-msgstr ""
+msgstr "ปฏิเสธการเข้าถึง"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
@@ -209,21 +217,21 @@ msgstr ""
 #: UI/Reports/filters/orders.html:158
 #: UI/Reports/filters/reconciliation_search.html:49
 msgid "Account"
-msgstr ""
+msgstr "บัญชี"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:162
 #: UI/payments/use_overpayment2.html:122
 msgid "Account Description"
-msgstr ""
+msgstr "รายละเอียดบัญชี"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:80
 msgid "Account Label"
-msgstr ""
+msgstr "ป้ายชื่อบัญชี"
 
 #: lib/LedgerSMB/Report/GL.pm:153 UI/Reports/co/filter_bm.html:84
 #: UI/Reports/co/filter_cd.html:68 UI/Reports/filters/gl.html:279
 msgid "Account Name"
-msgstr ""
+msgstr "ชื่อบัญชี"
 
 #: lib/LedgerSMB/Report/GL.pm:148
 msgid "Account No."
@@ -247,28 +255,28 @@ msgstr ""
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
 msgid "Account Number"
-msgstr ""
+msgstr "รหัสบัญชี"
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:135
 msgid "Account Number End"
-msgstr ""
+msgstr "รหัสบัญชีสิ้นสุด"
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:133
 msgid "Account Number Start"
-msgstr ""
+msgstr "รหัสบัญชีเริ่มต้น"
 
 #: lib/LedgerSMB/Scripts/payment.pm:186
 msgid "Account Title"
-msgstr ""
+msgstr "หัวเรื่องบัญชี"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:83
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:205
 msgid "Account Type"
-msgstr ""
+msgstr "ชนิดบัญชี"
 
 #: old/lib/LedgerSMB/GL.pm:224
 msgid "Account [_1] not found"
-msgstr ""
+msgstr "ไม่พบบัญชี [_1]"
 
 #: old/bin/gl.pl:584
 msgid "Account [_1] not found."
@@ -277,32 +285,32 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:223
 #: UI/Reports/filters/income_statement.html:270
 msgid "Account category"
-msgstr ""
+msgstr "หมวดหมู่บัญชี"
 
 #: old/bin/am.pl:132
 msgid "Account does not exist!"
-msgstr ""
+msgstr "ไม่มีบัญชี"
 
 #: UI/Reports/filters/balance_sheet.html:176
 #: UI/Reports/filters/income_statement.html:223
 msgid "Account numbers"
-msgstr ""
+msgstr "รหัสบัญชี"
 
 #: UI/reconciliation/report.html:31
 msgid "Account:"
-msgstr ""
+msgstr "บัญชี"
 
 #: UI/lib/report_base.html:64
 msgid "Accounts"
-msgstr ""
+msgstr "บัญชี"
 
 #: UI/Reports/co/filter_cd.html:23
 msgid "Accounts From"
-msgstr ""
+msgstr "บัญชีเริ่มต้น"
 
 #: UI/Reports/co/filter_cd.html:28
 msgid "Accounts To"
-msgstr ""
+msgstr "บัญชีสิ้นสุด"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:558
 msgid "Accounts marked for recon -- once"
@@ -314,31 +322,31 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:659 lib/LedgerSMB/Upgrade_Tests.pm:862
 msgid "Accounts without heading"
-msgstr ""
+msgstr "บัญชีที่ไม่มี heading"
 
 #: UI/Reports/filters/income_statement.html:28
 msgid "Accrual"
-msgstr ""
+msgstr "ค้างรับค้างจ่าย"
 
 #: UI/taxform/add_taxform.html:73
 msgid "Accrual Basis:"
-msgstr ""
+msgstr "เกณฑ์ค้างรับค้างจ่าย"
 
 #: lib/LedgerSMB/Scripts/asset.pm:722
 msgid "Accum. Depreciation"
-msgstr ""
+msgstr "ค่าเสื่อมราคาสะสม"
 
 #: old/lib/LedgerSMB/Form.pm:577 UI/lib/elements.html:441
 msgid "Action: [_1], ID: [_2]"
-msgstr ""
+msgstr "แอคชั่น: [_1], ID: [_2]"
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
-msgstr ""
+msgstr "แอคชั่น"
 
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
-msgstr ""
+msgstr "แอคชั่น"
 
 #: old/bin/aa.pl:1701 UI/business_units/list_classes.html:10
 #: UI/Reports/filters/contact_search.html:114
@@ -346,115 +354,115 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:181
 #: UI/Reports/filters/search_goods.html:97
 msgid "Active"
-msgstr ""
+msgstr "แอคทีฟ"
 
 #: UI/business_units/filter.html:31
 msgid "Active On"
-msgstr ""
+msgstr "แอคทีฟอยู่"
 
 #: lib/LedgerSMB/Scripts/admin.pm:67
 msgid "Active Sessions"
-msgstr ""
+msgstr "เซสชั่นที่แอคทีฟ"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
 #: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/am.pl:1499
 #: old/bin/ic.pl:2099 UI/Configuration/currency.html:35
 #: UI/Configuration/rate.html:62 UI/Configuration/ratetype.html:28
 msgid "Add"
-msgstr ""
+msgstr "เพิ่ม"
 
 #: old/bin/aa.pl:382 old/bin/aa.pl:421
 msgid "Add AP Transaction"
-msgstr ""
+msgstr "เพิ่มรายการทางบัญชีเจ้าหนี้"
 
 #: old/bin/aa.pl:381
 msgid "Add AR Transaction"
-msgstr ""
+msgstr "เพิ่มรายการทางบัญชีลูกหนี้"
 
 #: sql/Pg-database.sql:2791
 msgid "Add Accounts"
-msgstr ""
+msgstr "เพิ่มบัญชี"
 
 #: old/bin/ic.pl:62 sql/Pg-database.sql:2866
 msgid "Add Assembly"
-msgstr ""
+msgstr "เพิ่มชิ้นส่วน"
 
 #: lib/LedgerSMB/Scripts/asset.pm:197
 msgid "Add Asset"
-msgstr ""
+msgstr "เพิ่มทรัพย์สิน"
 
 #: lib/LedgerSMB/Scripts/asset.pm:97
 msgid "Add Asset Class"
-msgstr ""
+msgstr "เพิ่มประเภททรัพย์สิน"
 
 #: sql/Pg-database.sql:2888
 msgid "Add Assets"
-msgstr ""
+msgstr "เพิ่มทรัพย์สิน"
 
 #: sql/Pg-database.sql:2913
 msgid "Add Budget"
-msgstr ""
+msgstr "เพิ่มงบประมาณ"
 
 #: old/bin/am.pl:274 sql/Pg-database.sql:2840
 msgid "Add Business"
-msgstr ""
+msgstr "เพิ่มบริษัท"
 
 #: sql/Pg-database.sql:2886
 msgid "Add Class"
-msgstr ""
+msgstr "เพิ่ม Class"
 
 #: sql/Pg-database.sql:2787
 msgid "Add Contact"
-msgstr ""
+msgstr "เพิ่มข้อมูลติดต่อ"
 
 #: old/bin/is.pl:98
 msgid "Add Credit Invoice"
-msgstr ""
+msgstr "เพิ่ม Credit Invoice"
 
 #: old/bin/aa.pl:419
 msgid "Add Credit Note"
-msgstr ""
+msgstr "เพิ่ม Credit Note"
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:25
 msgid "Add Customer"
-msgstr ""
+msgstr "เพิ่ม ลูกค้า"
 
 #: old/bin/is.pl:102
 msgid "Add Customer Return"
-msgstr ""
+msgstr "เพิ่ม Customer Return"
 
 #: old/bin/ir.pl:107 old/bin/ir.pl:137
 msgid "Add Debit Invoice"
-msgstr ""
+msgstr "เพิ่ม Debit Invoice"
 
 #: old/bin/aa.pl:417
 msgid "Add Debit Note"
-msgstr ""
+msgstr "เพิ่ม Debit Note"
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:29
 #: sql/Pg-database.sql:2808
 msgid "Add Employee"
-msgstr ""
+msgstr "เพิ่มพนักงาน"
 
 #: old/bin/oe.pl:1512
 msgid "Add Exchange Rate"
-msgstr ""
+msgstr "เพิ่มอัตราแลกเปลี่ยน"
 
 #: old/bin/am.pl:158 sql/Pg-database.sql:2907
 msgid "Add GIFI"
-msgstr ""
+msgstr "เพิ่ม GIFI"
 
 #: old/bin/pe.pl:103 sql/Pg-database.sql:2933
 msgid "Add Group"
-msgstr ""
+msgstr "เพิ่มกลุ่ม"
 
 #: old/bin/ic.pl:63
 msgid "Add Labor/Overhead"
-msgstr ""
+msgstr "เพิ่มแรงงาน/ค่าใช้จ่าย"
 
 #: old/bin/am.pl:456 sql/Pg-database.sql:2842
 msgid "Add Language"
-msgstr ""
+msgstr "เพิ่มภาษา"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:80
 msgid "Add New Tax Form"
@@ -462,120 +470,120 @@ msgstr ""
 
 #: UI/budgetting/budget_entry.html:169
 msgid "Add Note"
-msgstr ""
+msgstr "เพิ่มบันทึก"
 
 #: sql/Pg-database.sql:2932
 msgid "Add Overhead"
-msgstr ""
+msgstr "เพิ่มค่าใช้จ่าย"
 
 #: old/bin/ic.pl:60 sql/Pg-database.sql:2864
 msgid "Add Part"
-msgstr ""
+msgstr "เพิ่ม Part"
 
 #: old/bin/pe.pl:188 sql/Pg-database.sql:2934
 msgid "Add Pricegroup"
-msgstr ""
+msgstr "เพิ่ม Pricegroup"
 
 #: old/bin/io.pl:945 old/bin/oe.pl:62
 msgid "Add Purchase Order"
-msgstr ""
+msgstr "เพิ่มใบสั่งซื้อ"
 
 #: old/bin/io.pl:978 old/bin/oe.pl:74
 msgid "Add Quotation"
-msgstr ""
+msgstr "เพิ่มใบเสนอราคา"
 
 #: UI/business_units/edit.html:12
 msgid "Add Reporting Unit"
-msgstr ""
+msgstr "เพิ่มหน่วยการรายงาน"
 
 #: old/bin/io.pl:967 old/bin/oe.pl:70
 msgid "Add Request for Quotation"
-msgstr ""
+msgstr "เพิ่ม Request for Quotation"
 
 #: sql/Pg-database.sql:2976
 msgid "Add Return"
-msgstr ""
+msgstr "เพิ่ม Return"
 
 #: old/bin/am.pl:364 sql/Pg-database.sql:2844
 msgid "Add SIC"
-msgstr ""
+msgstr "เพิ่ม SIC"
 
 #: old/bin/is.pl:107 old/bin/oe.pl:1436
 msgid "Add Sales Invoice"
-msgstr ""
+msgstr "เพิ่มใบกำกับสินค้าขาย"
 
 #: old/bin/io.pl:956 old/bin/oe.pl:66
 msgid "Add Sales Order"
-msgstr ""
+msgstr "เพิ่มใบสั่งขาย"
 
 #: old/bin/ic.pl:61 sql/Pg-database.sql:2865
 msgid "Add Service"
-msgstr ""
+msgstr "เพิ่มบริการ"
 
 #: sql/Pg-database.sql:2872
 msgid "Add Tax Form"
-msgstr ""
+msgstr "เพิ่มแบบภาษี"
 
 #: sql/Pg-database.sql:2831
 msgid "Add Timecard"
-msgstr ""
+msgstr "เพิ่มบัตรลงเวลา"
 
 #: old/bin/io.pl:1802
 msgid "Add To List"
-msgstr ""
+msgstr "เพิ่มลงในรายการ"
 
 #: sql/Pg-database.sql:2794 sql/Pg-database.sql:2797
 msgid "Add Transaction"
-msgstr ""
+msgstr "เพิ่มรายการ"
 
 #: UI/business_units/list_classes.html:103
 msgid "Add Unit"
-msgstr ""
+msgstr "เพิ่มหน่วย"
 
 #: UI/Contact/divs/employee.html:220 UI/Contact/divs/user.html:127
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:96
 msgid "Add User"
-msgstr ""
+msgstr "เพิ่มผู้ใช้"
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:27
 msgid "Add Vendor"
-msgstr ""
+msgstr "เพิ่มคู่ค้า"
 
 #: old/bin/ir.pl:116 old/bin/oe.pl:1428
 msgid "Add Vendor Invoice"
-msgstr ""
+msgstr "เพิ่มใบกำกับสินค้าคู่ค้า"
 
 #: old/bin/ir.pl:111
 msgid "Add Vendor Return"
-msgstr ""
+msgstr "เพิ่มการคืนสินค้าจากคู่ค้า"
 
 #: old/bin/am.pl:743 sql/Pg-database.sql:2838
 msgid "Add Warehouse"
-msgstr ""
+msgstr "เพิ่มคลังสินค้า"
 
 #: old/bin/io.pl:1615
 msgid "Add line1"
-msgstr ""
+msgstr "เพิ่มบรรทัด 1"
 
 #: old/bin/io.pl:1618
 msgid "Add line2"
-msgstr ""
+msgstr "เพิ่มบรรทัด 2"
 
 #: old/bin/io.pl:1622
 msgid "Add line3 "
-msgstr ""
+msgstr "เพิ่มบรรทัด 3"
 
 #: UI/Contact/divs/wage.html:73
 msgid "Add/Change Deductions"
-msgstr ""
+msgstr "เพิ่ม/แก้ไข การหักเงิน"
 
 #: UI/Contact/divs/wage.html:44
 msgid "Add/Change Wage"
-msgstr ""
+msgstr "เพิ่ม/แก้ไข ค่าจ้าง"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:179
 msgid "Added id [_1]"
-msgstr ""
+msgstr "เพิ่มแล้ว id  [_1]"
 
 #: old/bin/aa.pl:615 old/bin/arap.pl:172 old/bin/ic.pl:1676 old/bin/ir.pl:446
 #: old/bin/is.pl:482 old/bin/oe.pl:444 old/bin/pe.pl:665
@@ -583,58 +591,58 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:89
 #: UI/Reports/filters/purchase_history.html:67
 msgid "Address"
-msgstr ""
+msgstr "ที่อยู่"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr ""
+msgstr "ที่อยู่1"
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr ""
+msgstr "ที่อยู่:"
 
 #: templates/demo/printPayment.html:21
 #: templates/demo_with_images/printPayment.html:21
 #: templates/xedemo/printPayment.html:21
 msgid "Address: [_1]"
-msgstr ""
+msgstr "ที่อยู่: [_1]"
 
 #: lib/LedgerSMB/Scripts/contact.pm:188 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:3
 msgid "Addresses"
-msgstr ""
+msgstr "ที่อยู่"
 
 #: old/bin/ic.pl:1273
 msgid "Adj"
-msgstr ""
+msgstr "ปรับ"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:140
 msgid "Adjusted"
-msgstr ""
+msgstr "ถูกปรับ"
 
 #: lib/LedgerSMB/Scripts/asset.pm:724
 msgid "Adjusted Basis"
-msgstr ""
+msgstr "เกณฑ์การปรับ"
 
 #: UI/inventory/adjustment_entry.html:28
 msgid "Adjustment"
-msgstr ""
+msgstr "การปรับปรุงรายการ"
 
 #: UI/inventory/adjustment_entry.html:9
 msgid "Adjustment Date"
-msgstr ""
+msgstr "วันที่ปรับปรุง"
 
 #: UI/inventory/adjustment_setup.html:13
 msgid "Adjustment Details"
-msgstr ""
+msgstr "รายละเอียดการปรับปรุง"
 
 #: UI/Reports/filters/aging.html:79
 msgid "Aged"
-msgstr ""
+msgstr "อายุ"
 
 #: lib/LedgerSMB/Report/Aging.pm:179 UI/Reports/filters/aging.html:6
 msgid "Aging Report"
-msgstr ""
+msgstr "รายงานอายุ"
 
 #: UI/payments/payments_detail.html:298 UI/Reports/filters/gl.html:127
 #: UI/Reports/filters/gl.html:186 UI/Reports/filters/invoice_outstanding.html:77
@@ -642,7 +650,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:235
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
-msgstr ""
+msgstr "ทั้งหมด"
 
 #: old/bin/aa.pl:1700
 msgid "All Invoices"
@@ -650,16 +658,16 @@ msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:36
 msgid "All accounts"
-msgstr ""
+msgstr "บัญชีทั้งหมด"
 
 #: UI/Reports/co/filter_cd.html:14
 msgid "All fields are required"
-msgstr ""
+msgstr "ต้องกรอกทุกข้อมูล"
 
 #: templates/demo/invoice.html:221 templates/demo_with_images/invoice.html:224
 #: templates/xedemo/invoice.html:223
 msgid "All prices in [_1]"
-msgstr ""
+msgstr "ราคาทั้งหมดใน [_1]"
 
 #: templates/demo/sales_order.html:206 templates/demo/sales_quotation.html:174
 #: templates/demo_with_images/sales_order.html:206
@@ -667,7 +675,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:206
 #: templates/xedemo/sales_quotation.html:174
 msgid "All prices in [_1] Funds"
-msgstr ""
+msgstr "ราคาทั้งหมดใน [_1] กองทุน"
 
 #: templates/demo/product_receipt.html:199
 #: templates/demo/purchase_order.html:197
@@ -676,7 +684,7 @@ msgstr ""
 #: templates/xedemo/product_receipt.html:201
 #: templates/xedemo/purchase_order.html:197
 msgid "All prices in [_1] funds"
-msgstr ""
+msgstr "ราคาทั้งหมดใน [_1] กองทุน"
 
 #: templates/demo/invoice.tex:194 templates/demo/product_receipt.tex:147
 #: templates/demo/purchase_order.tex:153 templates/demo/sales_order.tex:158
@@ -690,15 +698,15 @@ msgstr ""
 #: templates/xedemo/purchase_order.tex:153 templates/xedemo/sales_order.tex:158
 #: templates/xedemo/sales_quotation.tex:125
 msgid "All prices in [_1]."
-msgstr ""
+msgstr "ราคาทั้งหมดใน [_1]."
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:127 UI/timecards/timecard.html:132
 msgid "Allocated"
-msgstr ""
+msgstr "แบ่งส่วน"
 
 #: UI/Configuration/sequence.html:8
 msgid "Allow Input"
-msgstr ""
+msgstr "การป้อนเข้าระบบที่อนุญาต"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:85
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:229
@@ -747,11 +755,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:196
 #: UI/Reports/filters/invoice_search.html:310 UI/Reports/filters/orders.html:171
 msgid "Amount"
-msgstr ""
+msgstr "จำนวน"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:85
 msgid "Amount Budgetted"
-msgstr ""
+msgstr "จำนวนงบประมาณ"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:249
 #: lib/LedgerSMB/Scripts/payment.pm:878 lib/LedgerSMB/Scripts/payment.pm:883
@@ -761,7 +769,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:244
 #: UI/Reports/filters/invoice_search.html:356
 msgid "Amount Due"
-msgstr ""
+msgstr "จำนวนที่ตกลง"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:108
 #: UI/Reports/filters/reconciliation_search.html:30
@@ -871,12 +879,12 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:236 old/bin/aa.pl:89 old/bin/gl.pl:83
 #: old/bin/io.pl:84
 msgid "Apr"
-msgstr ""
+msgstr "เม.ย."
 
 #: old/bin/aa.pl:75 old/bin/gl.pl:69 old/bin/io.pl:70
 #: old/lib/LedgerSMB/DBObject/Date.pm:65
 msgid "April"
-msgstr ""
+msgstr "เมษายน"
 
 #: lib/LedgerSMB/Scripts/asset.pm:596 lib/LedgerSMB/Scripts/asset.pm:654
 #: lib/LedgerSMB/Scripts/asset.pm:720
@@ -910,34 +918,34 @@ msgstr ""
 #: UI/accounts/edit.html:209 UI/Reports/filters/gl.html:135
 #: sql/Pg-database.sql:3827
 msgid "Asset"
-msgstr ""
+msgstr "ทรัพย์สิน"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:81 UI/asset/edit_asset.html:154
 #: UI/asset/edit_class.html:37 UI/asset/search_asset.html:140
 #: UI/asset/search_class.html:44
 msgid "Asset Account"
-msgstr ""
+msgstr "บัญชีทรัพย์สิน"
 
 #: lib/LedgerSMB/Scripts/asset.pm:500 UI/asset/begin_approval.html:14
 #: UI/asset/begin_report.html:13
 msgid "Asset Class"
-msgstr ""
+msgstr "ประเภททรัพย์สิน"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:114
 msgid "Asset Class List"
-msgstr ""
+msgstr "รายการประเภททรัพย์สิน"
 
 #: UI/asset/edit_asset.html:49 UI/asset/search_asset.html:48
 msgid "Asset Class:"
-msgstr ""
+msgstr "ประเภททรัพย์สิน:"
 
 #: sql/Pg-database.sql:2884
 msgid "Asset Classes"
-msgstr ""
+msgstr "ประเภททรัพย์สิน"
 
 #: lib/LedgerSMB/Scripts/asset.pm:430
 msgid "Asset Depreciation Report"
-msgstr ""
+msgstr "รายงานค่าเสื่อมราคาสินทรัพย์"
 
 #: lib/LedgerSMB/Scripts/asset.pm:432
 msgid "Asset Disposal Report"
@@ -945,7 +953,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:144
 msgid "Asset Listing"
-msgstr ""
+msgstr "รายการทรัพย์สิน"
 
 #: lib/LedgerSMB/Scripts/asset.pm:437
 msgid "Asset Partial Disposal Report"
@@ -977,7 +985,7 @@ msgstr ""
 
 #: UI/file/attachment_screen.html:19
 msgid "Attach File"
-msgstr ""
+msgstr "ไฟล์แนบ"
 
 #: UI/Contact/divs/address.html:106 UI/Contact/divs/contact_info.html:81
 msgid "Attach To"
@@ -1085,29 +1093,29 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:242 old/bin/aa.pl:93 old/bin/gl.pl:87
 #: old/bin/io.pl:88
 msgid "Aug"
-msgstr ""
+msgstr "ส.ค."
 
 #: old/bin/aa.pl:79 old/bin/gl.pl:73 old/bin/io.pl:74
 #: old/lib/LedgerSMB/DBObject/Date.pm:69
 msgid "August"
-msgstr ""
+msgstr "สิงหาคม"
 
 #: UI/Contact/divs/notes.html:80
 msgid "Author: [_1]"
-msgstr ""
+msgstr "ผู้เขียน: [_1]"
 
 #: old/bin/ir.pl:613 old/bin/is.pl:419 old/bin/is.pl:717
 msgid "Automatic"
-msgstr ""
+msgstr "อัตโนมัติ"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:149
 #: UI/payments/use_overpayment2.html:123
 msgid "Available"
-msgstr ""
+msgstr "มีอยู่"
 
 #: UI/setup/list_databases.html:9
 msgid "Available Databases"
-msgstr ""
+msgstr "ฐานข้อมูลที่มีอยู่"
 
 #: UI/setup/list_users.html:8
 msgid "Available Users"
@@ -1123,7 +1131,7 @@ msgstr ""
 
 #: old/bin/ic.pl:444 UI/Reports/filters/search_goods.html:272
 msgid "Average Cost"
-msgstr ""
+msgstr "ต้นทุนเฉลี่ย"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:241
 msgid "Avg. Cost"
@@ -1148,7 +1156,7 @@ msgstr ""
 
 #: UI/setup/confirm_operation.html:83
 msgid "Backup"
-msgstr ""
+msgstr "สำรอง"
 
 #: UI/setup/confirm_operation.html:90
 msgid "Backup DB"
@@ -1164,16 +1172,16 @@ msgstr ""
 #: templates/demo_with_images/invoice.tex:177 templates/xedemo/invoice.html:199
 #: templates/xedemo/invoice.tex:172 UI/Reports/filters/gl.html:285
 msgid "Balance"
-msgstr ""
+msgstr "ยอดคงเหลือ"
 
 #: UI/Reports/balance_sheet.html:25 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:7 sql/Pg-database.sql:2835
 msgid "Balance Sheet"
-msgstr ""
+msgstr "งบดุล"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:291
 msgid "Balance sheet"
-msgstr ""
+msgstr "งบดุล"
 
 #: UI/Reports/filters/trial_balance.html:92
 msgid "Balances as"
@@ -1181,25 +1189,25 @@ msgstr ""
 
 #: UI/reconciliation/report.html:145
 msgid "Bank"
-msgstr ""
+msgstr "ธนาคาร"
 
 #: UI/Contact/divs/bank_act.html:63
 msgid "Bank Account"
-msgstr ""
+msgstr "บัญชีธนาคาร"
 
 #: t/data/04-complex_template.html:601
 msgid "Bank Account:"
-msgstr ""
+msgstr "บัญชีธนาคาร:"
 
 #: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:3
 #: UI/Contact/divs/bank_act.html:7
 msgid "Bank Accounts"
-msgstr ""
+msgstr "บัญชีธนาคาร"
 
 #: old/bin/ic.pl:976
 msgid "Bar Code"
-msgstr ""
+msgstr "บาร์โค้ด"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
 msgid "Base Currency"
@@ -1342,7 +1350,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2140
 msgid "Budget"
-msgstr ""
+msgstr "งบประมาณ"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:119
 msgid "Budget Number"
@@ -1358,7 +1366,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2915
 msgid "Budgets"
-msgstr ""
+msgstr "งบประมาณ"
 
 #: old/bin/is.pl:364 old/bin/oe.pl:375 UI/payments/payments_detail.html:171
 msgid "Business"
@@ -1431,24 +1439,24 @@ msgstr ""
 
 #: old/bin/is.pl:677
 msgid "Can't void a voided invoice!"
-msgstr ""
+msgstr "ไม่สามารถยกเลิก voided invoice"
 
 #: lib/LedgerSMB/Scripts/setup.pm:200 lib/LedgerSMB/Scripts/setup.pm:236
 #: old/bin/io.pl:1806
 msgid "Cancel"
-msgstr ""
+msgstr "ยกเลิก"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:217
 msgid "Cancel the <b>whole migration</b>"
-msgstr ""
+msgstr "ยกเลิก <b>การโอนย้ายทั้งหมด</b>"
 
 #: lib/LedgerSMB/Scripts/setup.pm:287
 msgid "Cancel?"
-msgstr ""
+msgstr "ยกเลิก?"
 
 #: old/bin/gl.pl:621
 msgid "Cannot Repost Transaction"
-msgstr ""
+msgstr "ไม่สามารถ Repost รายการ"
 
 #: old/bin/ic.pl:155
 msgid "Cannot create Labor; COGS account does not exist!"
