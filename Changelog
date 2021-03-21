@@ -3,6 +3,13 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.11
+* Fix Number not updated by 'Save as New' on order and quote (#5358)
+* Fix failure to save purchase shipping addresses and contacts (#5289)
+* Fix searching and opening saved invoices with gapless AR enabled (#5369)
+* Performance improvements through added database indexes
+
+
 Changelog for 1.8.10
 * Fix mail and print options under Schedule on invoices (#5297)
 * Disable the broken-on-orders Schedule button on orders (#5295)
