@@ -287,6 +287,12 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.27
+* Fix Number not updated by 'Save as New' on order and quote (#5382)
+* Performance improvements through added database indexes
+* Fix failure to save purchase shipping addresses and contacts (#5289)
+
+
 Changelog for 1.7.26
 * Disable the broken-on-orders Schedule button on orders (#5295)
 * Fix several LedgerSMB 1.3 migration issues
