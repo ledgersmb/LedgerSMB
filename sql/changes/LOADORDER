@@ -76,6 +76,7 @@
 1.6/constrain_default_password_duration.sql
 1.6/add-recon-index.sql
 1.6/track-deleted-transactions.sql
+1.6/more-indices.sql
 #
 # mc changes
 mc/create-migration-validation-data.sql
