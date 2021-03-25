@@ -436,8 +436,9 @@ sub _process_inventory_multi {
 sub _process_parts {
     my ($request, $entries, $columns, $acc_types) = @_;
     my %table_columns =
-        map { $_ => ($_ =~ s/_accno$/_accno_id/r) }
-        map { $_ eq 'partsgroup' ? 'partsgroup_id' : $_ }
+        #LZY map { $_ => ($_ =~ s/_accno$/_accno_id/r) }
+        #LZY map { $_ eq 'partsgroup' ? 'partsgroup_id' : $_ }
+        map { $_ => ($_ =~ s/(_accno|partsgroup)$/$1_id/r )}
         grep { $_ ne 'taxaccnos' }
         @{$columns};
     my %column_placeholders =
@@ -450,7 +451,8 @@ sub _process_parts {
                                               AND al.description = ? ))'
                   : ($_ eq 'partsgroup' ?
                      '(SELECT id FROM partsgroup WHERE partsgroup = ?)'
-                     : $_))}
+        #LZY             : $_))}
+                    : '?'))}
         keys %table_columns;
 
     my $stmt =
@@ -531,7 +533,8 @@ our $process = {
     timecard        => \&_process_timecard,
     inventory       => \&_process_inventory,
     inventory_multi => \&_process_inventory_multi,
-    goods           => \&_process_goods,
+    #LZY goods           => \&_process_goods,
+    parts           => \&_process_goods,
     services        => \&_process_services,
     overhead        => \&_process_overhead,
 };
