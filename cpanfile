@@ -133,7 +133,7 @@ on 'develop' => sub {
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
-    requires 'Test::BDD::Cucumber', '0.70';
+    requires 'Test::BDD::Cucumber', '0.79';
     requires 'Test::Dependencies', '0.28';
     requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
