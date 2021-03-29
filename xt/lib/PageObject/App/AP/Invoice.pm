@@ -41,6 +41,7 @@ sub select_vendor {
     $elem->send_keys($vendor);
 
     $self->update;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $elem);
 }
 
 
