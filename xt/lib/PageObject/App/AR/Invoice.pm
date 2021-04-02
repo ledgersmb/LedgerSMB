@@ -40,7 +40,7 @@ sub select_customer {
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->update($elem);
+    $self->update;
 }
 
 

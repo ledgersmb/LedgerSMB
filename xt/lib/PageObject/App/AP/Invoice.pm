@@ -40,7 +40,7 @@ sub select_vendor {
     $elem->clear;
     $elem->send_keys($vendor);
 
-    $self->update($elem);
+    $self->update;
 }
 
 
