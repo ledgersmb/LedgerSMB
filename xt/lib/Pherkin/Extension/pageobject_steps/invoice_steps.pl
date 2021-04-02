@@ -56,10 +56,10 @@ When qr/I open the AP transaction entry screen/, sub {
 };
 
 When qr/I select vendor "(.*)"/, sub {
-    my $customer = $1;
+    my $vendor = $1;
 
     my $page = S->{ext_wsl}->page->body->maindiv->content;
-    $page->select_vendor($customer);
+    $page->select_vendor($vendor);
 
 };
 
