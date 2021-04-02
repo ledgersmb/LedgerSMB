@@ -2,7 +2,7 @@
 
 =pod
 
-This script scans Perl files for translatable strings. The only exceptions 
+This script scans Perl files for translatable strings. The only exceptions
 are the localization extraction functionality test, which explicitly test
 for invalid cases and feature support files, which use a test function which
 isn't for localization.
@@ -22,7 +22,7 @@ if ($ENV{COVERAGE} && $ENV{CI}) {
 
 my @on_disk;
 sub collect {
-    return if $File::Find::dir  =~ m(^blib|xt/lib/|xt/66-cucumber/|LaTex);
+    return if $File::Find::dir  =~ m(^blib|xt/lib/|xt/66-cucumber/|LaTex|.local/);
 
     my $module = $File::Find::name;
     return if $module !~ m(\.(pl|pm|t)$);
