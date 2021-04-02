@@ -21,8 +21,6 @@ __PACKAGE__->self_register(
                   id => 'AR-invoice',
               });
 
-
-
 sub _verify {
     my ($self) = @_;
 
@@ -43,6 +41,7 @@ sub select_customer {
     $elem->send_keys($customer);
 
     $self->update;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $elem);
 }
 
 
