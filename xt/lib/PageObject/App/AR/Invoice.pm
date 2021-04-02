@@ -40,8 +40,7 @@ sub select_customer {
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->update;
-    $self->session->page->body->maindiv->wait_for_content(replaces => $elem);
+    $self->update($elem);
 }
 
 

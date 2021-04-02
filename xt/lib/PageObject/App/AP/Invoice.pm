@@ -40,8 +40,7 @@ sub select_vendor {
     $elem->clear;
     $elem->send_keys($vendor);
 
-    $self->update;
-    $self->session->page->body->maindiv->wait_for_content(replaces => $elem);
+    $self->update($elem);
 }
 
 

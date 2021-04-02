@@ -21,10 +21,10 @@ sub _verify {
 }
 
 sub update {
-    my ($self) = @_;
+    my ($self,$elem) = @_;
 
     $self->find("*button", text => "Update")->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $elem);
 }
 
 sub _post_btn {
