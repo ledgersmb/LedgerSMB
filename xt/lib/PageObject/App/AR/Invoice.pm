@@ -21,8 +21,6 @@ __PACKAGE__->self_register(
                   id => 'AR-invoice',
               });
 
-
-
 sub _verify {
     my ($self) = @_;
 

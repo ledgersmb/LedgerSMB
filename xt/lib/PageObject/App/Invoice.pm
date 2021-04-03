@@ -23,8 +23,9 @@ sub _verify {
 sub update {
     my ($self) = @_;
 
-    $self->find("*button", text => "Update")->click;
-    $self->session->page->body->maindiv->wait_for_content;
+    my $btn = $self->find("*button", text => "Update");
+    $btn->click;
+    $self->session->page->body->maindiv->wait_for_content(replaces => $btn);
 }
 
 sub _post_btn {
