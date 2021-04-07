@@ -2,6 +2,7 @@
 #
 # Note: This file assumes good dates, SL behaviour with bad dates is undefined
 #
+# HARNESS-DURATION-SHORT
 
 use strict;
 use warnings;

@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# HARNESS-DURATION-MEDIUM
 
 use strict;
 use warnings;

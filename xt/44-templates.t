@@ -1,4 +1,5 @@
 #!perl
+# HARNESS-DURATION-SHORT
 
 =head1 UNIT TESTS FOR
 

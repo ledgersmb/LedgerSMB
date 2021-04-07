@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: AP transaction document handling
   As a LedgerSMB user, I want to be able to create transactions,

@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: setup.pl database creation and migration functionalities
   In order to create company databases or migrate company databases

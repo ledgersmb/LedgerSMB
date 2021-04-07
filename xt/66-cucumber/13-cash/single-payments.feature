@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Single payment
   As a LedgerSMB user I want to be able to create a single payment to

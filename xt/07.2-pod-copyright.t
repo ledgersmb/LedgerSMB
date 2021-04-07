@@ -4,6 +4,7 @@
 #
 # Checks that every pod file has a LICENSE AND COPYRIGHT section
 # matching a template in `xt/data/07.2-license-and-copyright.template`.
+# HARNESS-DURATION-SHORT
 
 use Test2::V0;
 use Test2::Require::Module 'Test::Pod' => '1.00';

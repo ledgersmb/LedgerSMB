@@ -1,4 +1,5 @@
 #!perl
+# HARNESS-DURATION-SHORT
 
 use File::Spec;
 use Test::More;

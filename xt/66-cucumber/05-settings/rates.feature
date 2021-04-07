@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Exchange rates
   As a LedgerSMB user, I want to be able to view the default exchange

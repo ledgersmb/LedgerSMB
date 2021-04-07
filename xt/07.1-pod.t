@@ -4,6 +4,7 @@
 #
 # Checks POD syntax.
 #
+# HARNESS-DURATION-SHORT
 
 use strict;
 use warnings;

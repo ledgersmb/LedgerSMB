@@ -1,6 +1,7 @@
 # Using one db would be quicker but the menu language would persist from
 # previous pass and PageObject/App/Menu.pm would have to be able to handle
 # non-english menus
+# HARNESS-DURATION-LONG
 @one-db @weasel
 Feature: Check correct operation of Preferences screen
 

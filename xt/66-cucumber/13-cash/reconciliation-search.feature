@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Reconciliation Report Search
   As a LedgerSMB user I want to be able to search for reconciliation

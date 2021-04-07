@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Rate types
   As a LedgerSMB user, I want to be able to view the available exchange

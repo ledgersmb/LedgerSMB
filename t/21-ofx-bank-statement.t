@@ -1,6 +1,7 @@
 use Test2::V0;
 use warnings;
 use strict;
+# HARNESS-DURATION-SHORT
 
 use LedgerSMB::FileFormats::OFX::BankStatement;
 

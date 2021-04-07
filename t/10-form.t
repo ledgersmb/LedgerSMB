@@ -4,6 +4,7 @@
 #
 # Tests various functions in LedgerSMB::Form that aren't tested elsewhere.
 #
+# HARNESS-DURATION-SHORT
 
 # format_amount in 02-number-handling.t
 # parse_amount  in 02-number-handling.t

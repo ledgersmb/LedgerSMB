@@ -1,4 +1,5 @@
 #!perl
+# HARNESS-DURATION-SHORT
 
 # Database schema upgrade pre-checks
 

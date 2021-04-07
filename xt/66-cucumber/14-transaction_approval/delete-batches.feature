@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 @weasel
 Feature: Delete Batches
   As a LedgerSMB user I want to search for previously created

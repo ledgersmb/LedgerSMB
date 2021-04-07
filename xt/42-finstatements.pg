@@ -1,3 +1,4 @@
+-- HARNESS-DURATION-SHORT
 /* Designing tests here based on data in taxform.sql.  We may want to split
    this out into another data script. --CT
  */

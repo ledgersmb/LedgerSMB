@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @one-db @weasel
 Feature: Check correct operation of Change Password screen
 

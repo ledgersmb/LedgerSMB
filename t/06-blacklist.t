@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# HARNESS-DURATION-SHORT
 
 use LedgerSMB::Sysconfig;
 

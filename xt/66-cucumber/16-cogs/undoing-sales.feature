@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 Feature: COGS from performing corrections on sales
    In the event a sales invoice needs correction, COGS may need to
    be corrected as a consequence.

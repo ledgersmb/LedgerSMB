@@ -4,6 +4,7 @@
 #
 # Checks POD coverage.
 #
+# HARNESS-DURATION-SHORT
 
 use Test2::V0;
 use Test2::Tools::Spec;

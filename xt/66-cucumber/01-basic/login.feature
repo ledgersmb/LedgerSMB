@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 @weasel
 Feature: Correct operation of setup.pl and login.pl login pages
    In order to assess the further quality of the software,

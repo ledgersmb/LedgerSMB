@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# HARNESS-DURATION-SHORT
 
 =head1 UNIT TESTS FOR LedgerSMB::PGOld
 

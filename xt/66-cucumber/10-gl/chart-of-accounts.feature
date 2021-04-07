@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Chart of Accounts
   As a LedgerSMB user I want to be able to view the chart of accounts

@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Add and delete new account heading
   As a LedgerSMB user I want to be able to add a new account heading and see

@@ -1,4 +1,5 @@
 #!perl
+# HARNESS-DURATION-SHORT
 
 use Test2::V0;
 use warnings;

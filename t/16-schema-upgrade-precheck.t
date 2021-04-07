@@ -1,4 +1,5 @@
 # Database schema upgrade pre-checks
+# HARNESS-DURATION-SHORT
 
 
 use Test2::V0 qw(!check); # ChangeChecks imports 'check'

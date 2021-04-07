@@ -1,4 +1,5 @@
 #!perl
+# HARNESS-DURATION-SHORT
 
 # X12 tests for LedgerSMB 1.4
 #

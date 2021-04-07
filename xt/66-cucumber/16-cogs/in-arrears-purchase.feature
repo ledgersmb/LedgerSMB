@@ -1,3 +1,4 @@
+# HARNESS-DURATION-SHORT
 Feature: COGS posted on purchase when inventory sold short
   In case inventory is sold short - which can both happen when the true
   sequence is to sell before buy *or* when transactions are entered

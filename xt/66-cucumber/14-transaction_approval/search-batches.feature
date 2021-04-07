@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Search Batches
   As a LedgerSMB user I want to be able to search for previously created

@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 Feature: FIFO COGS posting on AR invoice
   As part of posting an AR invoice which includes goods, there
   should be posting of Cost Of Goods Sold (COGS). COGS are known

@@ -1,3 +1,4 @@
+# HARNESS-DURATION-SHORT
 =head1 UNIT TESTS FOR
 
 LedgerSMB::Database::Change

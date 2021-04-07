@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @one-db @weasel @weasel-one-session
 Feature: correct operation of the menu and immediate linked pages
   As an end-user, I want to be able to navigate the menu and open

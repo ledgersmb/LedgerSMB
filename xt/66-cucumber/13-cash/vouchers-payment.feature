@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Bulk payments
   As a LedgerSMB user I want to be able to create a new batch of payment

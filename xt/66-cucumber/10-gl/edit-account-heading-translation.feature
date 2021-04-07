@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Edit account translation
   As a LedgerSMB user I want to be able to specify account heading

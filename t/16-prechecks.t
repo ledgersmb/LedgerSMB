@@ -1,4 +1,5 @@
 #!perl
+# HARNESS-DURATION-SHORT
 
 
 =head1 Driver application for testing of schema change checks

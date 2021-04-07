@@ -1,3 +1,4 @@
+# HARNESS-DURATION-SHORT
 @weasel
 Feature: Test redirection
 

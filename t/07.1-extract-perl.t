@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# HARNESS-DURATION-SHORT
 
 use strict;
 use warnings;

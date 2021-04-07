@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 @weasel
 Feature: Customer History Report
   As a LedgerSMB user I want to be able to search the purchase history

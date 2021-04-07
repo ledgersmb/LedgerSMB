@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 @weasel
 Feature: AR transaction document handling
   As a LedgerSMB user, I want to be able to create transactions,

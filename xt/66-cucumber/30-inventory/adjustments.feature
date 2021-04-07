@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Adjusting stock levels
   As a trading or manufacturing company, I want to be able to

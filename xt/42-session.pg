@@ -1,3 +1,4 @@
+-- HARNESS-DURATION-SHORT
 BEGIN;
 
     -- Load the TAP functions.

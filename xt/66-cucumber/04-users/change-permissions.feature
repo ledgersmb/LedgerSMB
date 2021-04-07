@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @weasel
 Feature: Change user permissions
   As a LedgerSMB administrator I want to change the permissions of an

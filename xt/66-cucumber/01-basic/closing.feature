@@ -1,3 +1,4 @@
+# HARNESS-DURATION-LONG
 @one-db @weasel
 Feature: correct operation of period closing and year end posting
   As an accounting admin, I want to make sure users can't post new

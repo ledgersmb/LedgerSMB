@@ -1,3 +1,4 @@
+# HARNESS-DURATION-MEDIUM
 @weasel
 Feature: Edit account translation
   As a LedgerSMB user I want to be able to specify account descriptions
