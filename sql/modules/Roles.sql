@@ -10,13 +10,18 @@ DROP FUNCTION IF EXISTS lsmb__create_role(text);
 CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text) RETURNS bool
 LANGUAGE PLPGSQL AS
 $$
+DECLARE
+  t_in_role text;
 BEGIN
-  PERFORM * FROM pg_roles WHERE rolname = lsmb__role(in_role);
+  -- Make sure to evaluate the role once because the optimizer
+  -- uses it as a filter on every row otherwise
+  SELECT lsmb__role(in_role) INTO t_in_role;
+  PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
   IF FOUND THEN
      RETURN TRUE;
   END IF;
 
-  EXECUTE 'CREATE ROLE ' || quote_ident(lsmb__role(in_role))
+  EXECUTE 'CREATE ROLE ' || quote_ident(t_in_role)
   || ' WITH INHERIT NOLOGIN';
 
   RETURN TRUE;
@@ -95,8 +100,11 @@ CREATE OR REPLACE FUNCTION lsmb__grant_menu
 RETURNS BOOL
 LANGUAGE PLPGSQL SECURITY INVOKER AS
 $$
+DECLARE
+  t_in_role text;
 BEGIN
-   PERFORM * FROM pg_roles WHERE rolname = lsmb__role(in_role);
+   SELECT lsmb__role(in_role) INTO t_in_role;
+   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
    IF NOT FOUND THEN
       RAISE EXCEPTION 'Role not found';
    END IF;
@@ -109,12 +117,13 @@ BEGIN
       RAISE EXCEPTION 'Invalid perm type';
    END IF;
    PERFORM * FROM menu_acl
-     WHERE node_id = in_node_id AND role_name = lsmb__role(in_role)
-           AND acl_type = in_perm_type;
+     WHERE node_id = in_node_id
+       AND role_name = t_in_role
+       AND acl_type = in_perm_type;
    IF FOUND THEN RETURN TRUE;
    END IF;
    INSERT INTO menu_acl (node_id, role_name, acl_type)
-   VALUES (in_node_id, lsmb__role(in_role), in_perm_type);
+   VALUES (in_node_id, t_in_role, in_perm_type);
    RETURN TRUE;
 END;
 $$;
@@ -1280,10 +1289,11 @@ IF TG_OP = 'DELETE' THEN
 ELSE
    -- super user and database owner (group members)
    -- don't need access enforcement
-   IF pg_has_role((select rolname
-                     from pg_database db inner join pg_roles rol
-                       on db.datdba = rol.oid
-                    where db.datname = current_database()),
+   IF pg_has_role((SELECT rolname
+                     FROM pg_database db
+               INNER JOIN pg_roles rol
+                       ON db.datdba = rol.oid
+                    WHERE db.datname = current_database()),
                   'USAGE') IS TRUE THEN
       RETURN NEW;
    END IF;

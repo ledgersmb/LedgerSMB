@@ -26,11 +26,13 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
         a_role name;
         a_user name;
         t_userid int;
+        t_in_role TEXT;
     BEGIN
 
         -- Issue the grant
+        SELECT lsmb__role(in_role) INTO t_in_role;
         select rolname into a_role from pg_roles
-          where rolname = lsmb__role(in_role);
+          where rolname = t_in_role;
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
         END IF;
@@ -65,11 +67,13 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_rol
         stmt TEXT;
         a_role name;
         a_user name;
+        t_in_role TEXT;
     BEGIN
 
         -- Issue the grant
+        SELECT lsmb__role(in_role) INTO t_in_role;
         select rolname into a_role from pg_roles
-         where rolname = lsmb__role(in_role);
+         where rolname = t_in_role;
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
@@ -121,6 +125,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
     declare
         u_role record;
         a_user users;
+        t_role_prefix TEXT;
     begin
         select * into a_user from admin__get_user(in_user_id);
 
@@ -139,6 +144,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             END IF;
         END IF;
 
+        SELECT lsmb__role_prefix() INTO t_role_prefix;
         FOR u_role IN
         select r.rolname
         from
@@ -154,7 +160,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             ) as ar
          where
             r.oid = ar.roleid
-            and position(lsmb__role_prefix() in r.rolname) = 1
+            and position(t_role_prefix in r.rolname) = 1
          LOOP
 
             RETURN NEXT lsmb__global_role(u_role.rolname);
@@ -185,6 +191,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
     declare
         u_role record;
         a_user users;
+        t_role_prefix TEXT;
     begin
         select * into a_user from admin__get_user_by_entity(in_entity_id);
 
@@ -203,6 +210,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
             END IF;
         END IF;
 
+        SELECT lsmb__role_prefix() INTO t_role_prefix;
         FOR u_role IN
         select r.rolname
         from
@@ -218,7 +226,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
             ) as ar
          where
             r.oid = ar.roleid
-            and position(lsmb__role_prefix() in r.rolname) = 1
+            and position(t_role_prefix in r.rolname) = 1
          LOOP
 
             RETURN NEXT lsmb__global_role(u_role.rolname);
@@ -463,13 +471,15 @@ DROP FUNCTION IF EXISTS admin__get_roles();
 create or replace function admin__get_roles () returns setof pg_roles as $$
 DECLARE
    u_role pg_roles;
+   t_role_prefix TEXT;
 begin
+     SELECT lsmb__role_prefix() INTO t_role_prefix;
      FOR u_role IN
         SELECT *
         FROM
             pg_roles
         WHERE
-            rolname ~ ('^' || lsmb__role_prefix())
+            rolname ~ ('^' || t_role_prefix)
             AND NOT rolcanlogin
         ORDER BY lsmb__global_role(rolname) ASC
      LOOP
