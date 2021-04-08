@@ -10,7 +10,7 @@ then
   exit 1
 fi
 
-cmd="select rolname FROM pg_roles WHERE rolname LIKE 'lsmb_${1}__%';"
+cmd="SELECT rolname FROM pg_roles WHERE rolname LIKE 'lsmb_${1}__%';"
 company_roles=`su -c "psql -U postgres -t -c \"$cmd\"" postgres`
 
 su -c "dropdb -U postgres $1" postgres

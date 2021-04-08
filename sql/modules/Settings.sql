@@ -18,7 +18,7 @@ $$
            SELECT substr(value,1,3)
            FROM defaults
            WHERE setting_key = 'curr';
-$$ language sql;
+$$ language sql STABLE;
 
 COMMENT ON FUNCTION defaults_get_defaultcurrency() IS
 $$ This function return the default currency asigned by the program. $$;
@@ -105,7 +105,7 @@ ALTER TABLE entity ALTER control_code SET default setting_increment('entity_cont
 
 
 CREATE OR REPLACE FUNCTION lsmb__role_prefix() RETURNS text
-LANGUAGE SQL AS
+LANGUAGE SQL STABLE AS
 $$ select coalesce((setting_get('role_prefix')).value,
                    'lsmb_' || current_database() || '__'); $$;
 
@@ -114,7 +114,7 @@ $$ Returns the prefix text to be used for roles. E.g.  'lsmb__mycompany_' $$;
 
 
 CREATE OR REPLACE FUNCTION lsmb__role(global_role text) RETURNS text
-LANGUAGE SQL AS
+LANGUAGE SQL STABLE AS
 $$ select lsmb__role_prefix() || $1; $$;
 
 COMMENT ON FUNCTION lsmb__role(global_role text) IS
