@@ -103,6 +103,8 @@ $$
 DECLARE
   t_in_role text;
 BEGIN
+  -- Make sure to evaluate the role once because the optimizer
+  -- uses it as a filter on every row otherwise
    SELECT lsmb__role(in_role) INTO t_in_role;
    PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
    IF NOT FOUND THEN

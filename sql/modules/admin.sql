@@ -30,6 +30,8 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
     BEGIN
 
         -- Issue the grant
+        -- Make sure to evaluate the role once because the optimizer
+        -- uses it as a filter on every row otherwise
         SELECT lsmb__role(in_role) INTO t_in_role;
         select rolname into a_role from pg_roles
           where rolname = t_in_role;
@@ -71,6 +73,8 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_rol
     BEGIN
 
         -- Issue the grant
+        -- Make sure to evaluate the role once because the optimizer
+        -- uses it as a filter on every row otherwise
         SELECT lsmb__role(in_role) INTO t_in_role;
         select rolname into a_role from pg_roles
          where rolname = t_in_role;
@@ -144,6 +148,8 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             END IF;
         END IF;
 
+        -- Make sure to evaluate the role prefix once because the optimizer
+        -- uses it as a filter on every row otherwise
         SELECT lsmb__role_prefix() INTO t_role_prefix;
         FOR u_role IN
         select r.rolname
@@ -210,6 +216,8 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
             END IF;
         END IF;
 
+        -- Make sure to evaluate the role prefix once because the optimizer
+        -- uses it as a filter on every row otherwise
         SELECT lsmb__role_prefix() INTO t_role_prefix;
         FOR u_role IN
         select r.rolname
@@ -473,6 +481,8 @@ DECLARE
    u_role pg_roles;
    t_role_prefix TEXT;
 begin
+    -- Make sure to evaluate the role prefix once because the optimizer
+    -- uses it as a filter on every row otherwise
      SELECT lsmb__role_prefix() INTO t_role_prefix;
      FOR u_role IN
         SELECT *
