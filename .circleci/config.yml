@@ -26,7 +26,7 @@ commands:
               JOB_COUNT=2
             fi
             yath start --job-count $JOB_COUNT --event-timeout 1800 # Timeout after 30 min
-            yath --qvf --color --no-progress \
+            yath --qvf --color --no-progress --retry=2 \
               --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
               --pgtap-psql=.circleci/psql-wrap \
               --Feature-tags=~@wip \
