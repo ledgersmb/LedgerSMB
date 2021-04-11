@@ -88,7 +88,7 @@ sub post_execute {
     my ($self) = @_;
 
     my $t2_harness_job_name = $ENV{T2_HARNESS_JOB_NAME} // '';
-    if ($$ != $startup_pid || $job_name ne $t2_harness_job_name) {
+    if ($$ != $startup_pid || $job_name eq $t2_harness_job_name) {
         my $db = LedgerSMB::Database->new(
             dbname   => $self->db_name,
             username => $self->username,
@@ -113,11 +113,11 @@ sub pre_feature {
     my ($self, $feature, $stash) = @_;
 
     my $t2_harness_job_name = $ENV{T2_HARNESS_JOB_NAME} // '';
-    $self->template_db_name($self->template_db_name . "-$$" . "-" . $t2_harness_job_name)
-        if $$ != $startup_pid || $job_name ne $t2_harness_job_name;
-    $self->admin_user_name($self->admin_user_name . "-$$" . "-" . $t2_harness_job_name)
-        if $$ != $startup_pid || $job_name ne $t2_harness_job_name;
-
+    if ($$ != $startup_pid || $job_name ne $t2_harness_job_name) {
+        $job_name = $t2_harness_job_name;
+        $self->template_db_name($self->template_db_name . "-$$" . "-" . $job_name);
+        $self->admin_user_name($self->admin_user_name . "-$$" . "-" . $job_name);
+    }
     my $db = LedgerSMB::Database->new(
         dbname   => $self->db_name,
         username => $self->username,
