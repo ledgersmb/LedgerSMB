@@ -5,7 +5,7 @@
 Feature: Check correct operation of Preferences screen
 
 Background:
-  Given a standard test company
+  Given a fresh standard test company
     And these preferences for the admin:
       | setting  | value |
       | language | en    |
