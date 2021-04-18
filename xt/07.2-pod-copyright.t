@@ -28,28 +28,28 @@ my $template_text = read_file($template_file)
     or die "Couldn't read template text from $template_file";
 chomp $template_text;
 
+my $payment_template_file = 'xt/data/07.2-payment-license-and-copyright.template';
+my $payment_template_text = read_file($payment_template_file)
+    or die "Couldn't read template text from $payment_template_file";
+chomp $payment_template_text;
+
 foreach my $file(@files) {
-
     {
-        my $todo;
-        # Non-standard copyright section in this file
-        if($file eq 'lib/LedgerSMB/Scripts/payment.pm') {
-            $todo = todo "SKIPPING $file - non standard COPYRIGHT section";
-        }
-
         my $file_text = get_raw_pod_section_from_file(
             $file,
             'LICENSE AND COPYRIGHT'
         );
 
-        # Copyright years vary between files. We replace them
+        # Copyright years vary between files. We replace the first occurence
         # with a placeholder to allow comparison with the template.
         $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i;
 
         ok($file_text, "$file pod has LICENSE AND COPYRIGHT section");
         is(
             trim_raw_pod_section($file_text),
-            $template_text,
+            $file eq 'lib/LedgerSMB/Scripts/payment.pm'
+                ? $payment_template_text
+                : $template_text,
             "pod LICENSE AND COPYRIGHT section in $file matches template"
         );
     }
