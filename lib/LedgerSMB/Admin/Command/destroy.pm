@@ -35,7 +35,7 @@ sub run {
     my $role_prefix = _get_role_prefix($db);
 
     $db->drop
-        or die $db->errstr;
+        or die 'Cannot drop database';
     $logger->info('Database successfully destroyed');
 
     my $connect_admin = {
@@ -55,15 +55,8 @@ sub run {
     $sth->execute
         or die $dbh->errstr;
 
-    my @lsmb_databases;
-    while (my $database = $sth->fetchrow) {
-        push @lsmb_databases, $database;
-    }
-    $sth->finish;
-    $dbh->disconnect;
-
     my $role_prefix_usage = 0;
-    for my $database (@lsmb_databases) {
+    while (my $database = $sth->fetchrow) {
         try {
             my $connect_database = {
                 $self->config->get('connect_data')->%*,
@@ -80,9 +73,11 @@ sub run {
             }
         }
         catch ($e) {
-            $logger->error("ERROR: $e");
+            $logger->error($e);
         }
     }
+    $sth->finish;
+    $dbh->disconnect;
     # If role_prefix is not used by another database
     if ( !$role_prefix_usage ) {
         $self->db(
@@ -134,7 +129,7 @@ sub _get_role_prefix {
             $sth->finish;
         }
     } catch ($e) {
-        $logger->debug("ERROR: $e");
+        $logger->debug($e);
     }
     $dbh->disconnect;
 
