@@ -49,7 +49,8 @@ sub run {
     my $dbh = $db->connect;
 
     # Scan databases which could be using the same profile
-    my $sth = $dbh->prepare("SELECT datname FROM pg_database WHERE NOT datistemplate");
+    my $sth =
+        $dbh->prepare('SELECT datname FROM pg_database WHERE NOT datistemplate');
 
     $sth->execute
         or die $dbh->errstr;
