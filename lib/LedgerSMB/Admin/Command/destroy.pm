@@ -34,8 +34,7 @@ sub run {
         );
     my $role_prefix = _get_role_prefix($db);
 
-    $db->drop
-        or die 'Cannot drop database';
+    $db->drop;
     $logger->info('Database successfully destroyed');
 
     my $connect_admin = {
