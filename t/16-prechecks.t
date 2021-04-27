@@ -39,6 +39,18 @@ I<after> the initial state with the failing query. These could
 be neccessary/desirable for e.g. queries issued
 as part of the C<dropdown_sql> DSL keyword.
 
+In general, failure session statements are prepended to the submit session,
+because the failure procedure is being run on submit (with an empty failure
+row set) - to discover the grids and other controls that are used in the
+response.
+
+However, in case statements are driven by the failure data itself, these
+statements will only be in the true failure session and should not be
+copied to the submit session (because the failure rowset is empty).
+
+Marking statements C<< failure_data_based => 1 >> results in the statements
+being filtered out of the submit session data.
+
 =item submit_session
 
 A list of L<DBD::Mock::Session states|
@@ -59,6 +71,7 @@ message when the response is missing to help creation of one.
 
 use Test2::V0;
 
+use Data::Dumper;
 use DBI;
 use DBD::Mock::Session;
 use File::Find::Rule;
@@ -115,12 +128,13 @@ sub _create_dbh_for_failure_session {
     my $dbh = DBI->connect('dbi:Mock:', '', '', { PrintError => 0 });
     $test->{failure_session} //= [];
     my $session = DBD::Mock::Session->new(
-        'sess',
+        'initial/failure',
         {
             statement => $check->{query},
             results => $test->{failure_data},
         },
-        @{$test->{failure_session} // []},
+        map { my %c = %$_; delete $c{failure_data_based};
+              \%c } @{$test->{failure_session} // []},
         );
     $dbh->{mock_session} = $session;
 
@@ -131,19 +145,24 @@ sub _create_dbh_for_submit_session {
     my ($check, $test) = @_;
     my $dbh = DBI->connect('dbi:Mock:', '', '', { RaiseError => 1 });
     $test->{submit_session} //= [];
-    my $session = DBD::Mock::Session->new(
-        'sess',
+    my @set = (
         {
             statement => $check->{query},
             results => $test->{failure_data},
         },
-        @{$test->{failure_session}},
+        (grep { not $_->{failure_data_based} } @{$test->{failure_session}}),
         @{$test->{submit_session}},
         # Check returns no further failing rows:
         {
             statement => $check->{query},
             results => [],
         },
+        );
+
+    #print STDERR Dumper(\@set);
+    my $session = DBD::Mock::Session->new(
+        'submit',
+        @set,
         );
     $dbh->{mock_session} = $session;
 
@@ -170,30 +189,31 @@ sub _run_schemacheck_test {
     my ($check, $test) = @_;
     my $dir = File::Temp->newdir;
     my $out;
+    my $dbh;
     ok lives {
         # Most checks here aren't immediately visible:
         # the database session checks that the correct queries
         # and expected responses are being generated. When not,
         # an error is thrown, which we handle by using 'lives_ok'
-        my $dbh = _create_dbh_for_failure_session($check, $test);
+        $dbh = _create_dbh_for_failure_session($check, $test);
         $out = json_formatter_context {
             return ! run_checks($dbh, checks => [ $check ]);
         } $dir->dirname;
         ok(defined($out), 'JSON failure output was generated');
         ok(-f $out, 'JSON failure output exists');
         $dbh->disconnect;
-    };
+    } or diag $@ . Dumper($dbh->{mock_all_history});
 
     if ($test->{response}) {
         ok lives {
-            my $dbh = _create_dbh_for_submit_session($check, $test);
+            $dbh = _create_dbh_for_submit_session($check, $test);
             _save_JSON_response_file($check, $test->{response}, $dir);
             $out = json_formatter_context {
                 return ! run_checks($dbh, checks => [ $check ]);
             } $dir->dirname;
             $dbh->disconnect;
             ok(! defined($out), 'No new failures occurred');
-        };
+        } or diag $@ . Dumper($dbh->{mock_all_history});
     }
     elsif (ref $check->{on_submit}) {
         fail 'Response defined; use failure output below to define a response';
