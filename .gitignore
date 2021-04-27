@@ -43,3 +43,8 @@ ledgersmb.conf
 
 # local configurations
 *.local
+/.bash_history
+/.cache
+/.config
+/.npm
+
