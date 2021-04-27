@@ -8,7 +8,7 @@ check q|Found files associated with non-existing transactions|,
     query => q|
       select id from file_transaction ft
        where not exists (select 1 from ar
-                          where ft.file_transaction_ref_key = ar.id)
+                          where ft.ref_key = ar.id)
              and not exists (select 1 from ap
                               where ft.file_transaction_ref_key = ap.id)
              and not exists (select 1 from gl
@@ -28,8 +28,10 @@ Click 'Continue' once you verified the files have been correctly saved.
 
         describe;
 
+        my $dbname = $dbh->{pg_db};
+        $dbname =~ s/[^a-zA-Z0-9_-]//g; # clean the database name
         my $tmp_dir = File::Spec->rel2abs(
-            'deleted_transaction_files',
+            File::Spec->catdir('deleted_transaction_files', $dbname),
             File::Spec->tmpdir
             );
         unless (-e $tmp_dir) {
