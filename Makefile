@@ -124,6 +124,8 @@ test:
 
 devtest: TESTS ?= t/ xt/
 devtest:
+	$(DOCKER_CMD) dropdb lsmbtestdb || true
+	$(DOCKER_CMD) perl -Ilib bin/ledgersmb-admin create postgres@postgres/lsmbtestdb
 	$(DOCKER_CMD) prove --time --recurse \
 	                    --pgtap-option dbname=lsmbtestdb \
 	                    --pgtap-option username=postgres \
