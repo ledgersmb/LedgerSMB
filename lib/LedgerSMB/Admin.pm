@@ -54,7 +54,7 @@ sub _load_config {
         },
         @potential_configs
         );
-    return {} unless $cfg_path;
+    return { connect_data => {} } unless $cfg_path;
 
     my $cfg = LoadFile($cfg_path->{path});
     ###TODO: check type of $cfg... we really need it to be a hash!
@@ -126,11 +126,13 @@ sub run_command {
 
 
     Getopt::Long::Configure(qw(permute));
-    my $class = compose_module_name('LedgerSMB::Admin::Command', $cmd);
+    my $class  = compose_module_name('LedgerSMB::Admin::Command', $cmd);
+    my $config = LedgerSMB::Admin::Configuration->new(
+        config => _load_config(),
+        );
+
     return use_module($class)->new(
-        config => LedgerSMB::Admin::Configuration->new(
-            config => _load_config()
-        ),
+        config => $config
         )->run(@cmd_args);
 }
 
