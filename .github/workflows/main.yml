@@ -83,16 +83,20 @@ jobs:
 
       - name: install with cpm
         run: |
-          cpanm --notest App::cpm
           cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
 
       - name: Build JS
         run: make dojo
 
-      - name: Other preparations
+      - name: Create logging directories
         run: |
           mkdir screens logs
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+
+      - name: Create default test database
+        run: perl -Ilib bin/ledgersmb-admin create postgres@localhost:5432/lsmbinstalltest
+        env:
+          PGPASSWORD: test
 
       - name: Starting 'starman'
         run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &

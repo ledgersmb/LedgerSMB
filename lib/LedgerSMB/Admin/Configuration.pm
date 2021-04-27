@@ -26,7 +26,7 @@ use namespace::autoclean;
 =cut
 
 has config => (is => 'ro', required => 0,
-               default => sub { {} });
+               default => sub { { connect_data => {} } });
 
 =head1 METHODS
 
