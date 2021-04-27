@@ -1,0 +1,51 @@
+{
+    q|Found files associated with non-existing transactions| =>
+        [
+         {
+             failure_data => [
+                 [ 'id' ],
+                 [ 1 ],
+                 [ 2 ],
+                 ],
+             failure_session => [
+                  {
+                      statement => q{select * from file_transaction where id = ?},
+                      bound_params => [ 1 ],
+                      results => [
+                          [ qw(file_name content) ],
+                          [ 'abc_upload', 'abc content' ],
+                          ],
+                      failure_data_based => 1,
+                  },
+                  {
+                      statement => q{select * from file_transaction where id = ?},
+                      bound_params => [2],
+                      results => [
+                          [ qw(file_name content) ],
+                          [ 'def_upload', 'def' ],
+                          ],
+                      failure_data_based => 1,
+                  },
+                 ],
+             submit_session =>
+                 # all DBD::Mock::Session data *after* the initial failure
+                 # during the data-correction/ data-submission session
+                 [
+                  {
+                      statement => q{DELETE FROM file_transaction WHERE id = ?},
+                      bound_params => [ 1 ],
+                      results => [],
+                  },
+                  {
+                      statement => q{DELETE FROM file_transaction WHERE id = ?},
+                      bound_params => [ 2 ],
+                      results => [],
+                  },
+                 ],
+             response => {
+                 confirm => 'continue',
+             },
+         },
+
+        ],
+}
