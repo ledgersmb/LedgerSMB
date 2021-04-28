@@ -1,7 +1,5 @@
 version: 2.1
 
-#TODO: To enable matrix, Consider https://github.com/winksaville/circleci-matrix
-
 # Define defaults
 _defaults: &defaults
     # Make sure that .profile is sourced to local::lib
@@ -25,13 +23,13 @@ commands:
               export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
               JOB_COUNT=2
             fi
-            yath start --job-count $JOB_COUNT --event-timeout 1800 # Timeout after 30 min
-            yath --qvf --color --no-progress \
+            yath test --job-count $JOB_COUNT --event-timeout 1800 \
+              --color --no-progress --retry=2 \
               --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
               --pgtap-psql=.circleci/psql-wrap \
               --Feature-tags=~@wip \
               t xt
-            yath stop
+
       - run:
           command: |
             while [ $(pidof plackup) ];
@@ -41,6 +39,7 @@ commands:
               sleep 5
             done
             echo " done"
+
       - run:
           command: |
             mkdir -p /tmp/artifact/logs;
@@ -48,6 +47,7 @@ commands:
             cp logs/* /tmp/artifact/logs || true;
             cp screens/* /tmp/artifact/screens || true;
           when: always
+
       - run:
           name: Upload coverage data
           command: |
@@ -56,7 +56,9 @@ commands:
               cover -report coveralls
               cover -report text > /tmp/artifact/coverage.txt
             fi
+
       - *store_artifacts
+
   prep_env:
     parameters:
       perl:
@@ -64,12 +66,15 @@ commands:
     description: "Prepare environment"
     steps:
       - checkout
+
       - run:
           # TODO: Update the CircleCI dev images instead
           name: Update NodeJS to 15.x
           command: |
             curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
             sudo apt-get install -y nodejs
+
+      # Restore node_modules
       - restore_cache:
           keys:
             # Find a cache corresponding to this specific package-lock.json checksum
@@ -77,14 +82,34 @@ commands:
             - v1-npm-deps-{{ checksum "package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-npm-deps-
+
       - run:
           name: Make Dojo
           command: |
             make dojo
+
       - save_cache:
           key: v1-npm-deps-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
+
+      - run:
+          name: Set up dirs and files
+          command: |
+            mkdir -p logs screens
+            # these commands are in start.sh of the Perl container too:
+            cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+            sed -i \
+                -e "s/\(cache_templates = \).*\$/cache_templates = 1/g" \
+                -e "s/\(host = \).*\$/\1$POSTGRES_HOST/g" \
+                -e "s/\(port = \).*\$/\1$POSTGRES_PORT/g" \
+                -e "s/\(default_db = \).*\$/\1$DEFAULT_DB/g" \
+                -e "s%\(sendmail   = \).*%#\1/usr/sbin/ssmtp%g" \
+                -e "s/# \(smtphost = \).*\$/\1mailhog:1025/g" \
+                -e "s/# \(backup_email_from = \).*\$/\1lsmb-backups@example.com/g" \
+                -e "s/#dojo_built = 1/dojo_built = 0/" \
+              ledgersmb.conf
+
       # Freshen up CPAN
       - restore_cache:
           keys:
@@ -95,6 +120,7 @@ commands:
             # Fall back to the latest for master
             - v2-cpm-<< parameters.perl >>-master-
             # Don't fall back any further
+
       - run:
           name: Refresh modules from CPAN
           command: |
@@ -117,46 +143,44 @@ commands:
                   Devel::Cover::Report::Coveralls
             fi
             rm -rf $HOME/.perl-cpm
+
       - save_cache:
            key: v2-cpm-<< parameters.perl >>-{{ .Branch }}-{{ checksum "cpanfile" }}
            paths:
              - $HOME/perl5
-      - run:
-          name: Set up dirs and files
-          command: |
-            mkdir -p logs screens
-            # these commands are in start.sh of the Perl container too:
-            cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-            sed -i \
-                -e "s/\(cache_templates = \).*\$/cache_templates = 1/g" \
-                -e "s/\(host = \).*\$/\1$POSTGRES_HOST/g" \
-                -e "s/\(port = \).*\$/\1$POSTGRES_PORT/g" \
-                -e "s/\(default_db = \).*\$/\1$DEFAULT_DB/g" \
-                -e "s%\(sendmail   = \).*%#\1/usr/sbin/ssmtp%g" \
-                -e "s/# \(smtphost = \).*\$/\1mailhog:1025/g" \
-                -e "s/# \(backup_email_from = \).*\$/\1lsmb-backups@example.com/g" \
-                -e "s/#dojo_built = 1/dojo_built = 0/" \
-              ledgersmb.conf
+
       - run:
           name: Create test database
           command: |
             PERL5LIB="lib:$HOME/perl5/lib/perl5" \
               ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
+
+      - run:
+          name: Set up host IP & BASE variables
+          command: |
+            echo "HOST_IP=$(hostname -I |awk '{print $1}')" > $BASH_ENV
+            echo "export LSMB_BASE_URL=http://\$HOST_IP:5000" >> $BASH_ENV
+            echo "export PSGI_BASE_URL=http://\$HOST_IP:5762" >> $BASH_ENV
+
   start_plackup:
     description: "Start plackup"
     steps:
       - run:
           command: |
+            JOB_COUNT=5
+            source $BASH_ENV
             if [ "x$COVERAGE" == "x1" ]
             then
               export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
+              JOB_COUNT=2
             fi
-            plackup -I$HOME/project/lib -I$HOME/project/old/lib \
-              -s Gazelle --port 5762 --workers=2 --max-reqs-per-child=50000 \
-              $HOME/project/bin/ledgersmb-server.psgi
+            starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+                  --max-requests 5000 --error-log logs/starman-error.log \
+                  -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi
             echo "Plackup done!"
             touch plackup-done
           background: true
+
   start_proxy:
     description: "Start the proxy"
     parameters:
@@ -175,11 +199,19 @@ executors:
     parameters:
       perl:
         type: string
+        default: latest
       postgres:
         type: string
+        default: latest
       browser:
         type: string
         default: chrome
+      hub:
+        type: string
+        default: selenium/hub
+      selenium:
+        type: string
+        default: selenium/node-chrome
       coverage:
         type: integer
         default: 0
@@ -188,44 +220,60 @@ executors:
       - image: ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
-      - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
+      - image: << parameters.hub >>
+        name: selenium-hub
+        environment:
+          GRID_DEBUG: "true"
+          GRID_HUB_PORT: 4422
+          GRID_MAX_SESSION: 100
+      - image: << parameters.selenium >>
+        environment:
+          GRID_DEBUG: "true"
+          HUB_HOST: selenium-hub
+          HUB_PORT: 4422
+          NODE_MAX_SESSION: 5
+          NODE_MAX_INSTANCES: 5
     environment:
+      BROWSER: << parameters.browser >>
       COVERAGE: << parameters.coverage >>
       DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t/,+ignore,^utils/,+ignore,\.lttc$,+ignore,^/usr/,+ignore,/home/circleci/perl5,+ignore,plackup$
-      RELEASE_TESTING: 1
-      PGHOST: localhost
-      PGUSER: postgres
-      PGPASSWORD: test
-      PGDB: lsmbinstalltest
-      LSMB_TEST_DB: 1
-      LSMB_NEW_DB: lsmbinstalltest
-      LSMB_BASE_URL: http://127.0.0.1:5000
-      PSGI_BASE_URL: http://127.0.0.1:5762
       HARNESS_RULESFILE: t/testrules.yml
+      LSMB_BASE_URL: http://127.0.0.1:5000
+      LSMB_NEW_DB: lsmbinstalltest
+      LSMB_TEST_DB: 1
+      PGDB: lsmbinstalltest
+      PGHOST: localhost
+      PGPASSWORD: test
+      PGUSER: postgres
+      PSGI_BASE_URL: http://127.0.0.1:5762
+      RELEASE_TESTING: 1
+      REMOTE_SERVER_ADDR: selenium-hub
 
 # Define jobs
 jobs:
-  test_perl32:
+  test_webpack_chrome:
     <<: *defaults
     executor:
       name: test
       perl: '5.32'
       postgres: '11'
-      browser: phantomjs
-      coverage: 1
+      browser: chrome
+      selenium: selenium/node-chrome
     steps:
       - prep_env:
           perl: '5.32'
       - start_plackup
       - start_proxy
       - prove
-  test_perl30:
+
+  test_webpack_firefox:
     <<: *defaults
     executor:
       name: test
       perl: '5.30'
       postgres: '11'
-      browser: phantomjs
+      browser: firefox
+      selenium: selenium/node-firefox
     steps:
       - prep_env:
           perl: '5.30'
@@ -235,13 +283,14 @@ jobs:
     environment:
       COA_TESTING: 1
 
-  test_perl28:
+  test_webpack_opera:
     <<: *defaults
     executor:
       name: test
       perl: '5.28'
       postgres: '11'
-      browser: phantomjs
+      browser: operablink
+      selenium: selenium/node-opera
     steps:
       - prep_env:
           perl: '5.28'
@@ -250,6 +299,23 @@ jobs:
       - prove
     environment:
       DB_TESTING: 1
+
+  test_webpack_phantomjs:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.32'
+      postgres: '11'
+      browser: phantomjs
+      hub: ledgersmb/ledgersmb_circleci-phantomjs
+      selenium: rwgrim/docker-noop
+      coverage: 1
+    steps:
+      - prep_env:
+          perl: '5.28'
+      - start_plackup
+      - start_proxy
+      - prove
 
 # Workflows
 # Tests multiple browsers, coverage and dojo
@@ -265,9 +331,14 @@ _filters: &_filters
 workflows:
   workflow:
     jobs:
-      - test_perl32:
+      - test_webpack_chrome:
           filters: *_filters
-      - test_perl30:
+
+      - test_webpack_firefox:
           filters: *_filters
-      - test_perl28:
+
+      - test_webpack_opera:
+          filters: *_filters
+
+      - test_webpack_phantomjs:
           filters: *_filters
