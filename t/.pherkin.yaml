@@ -15,6 +15,7 @@ default:
            post-step: 1
            pre-scenario: 0
            post-scenario: 0
+         timestamps: 1
          sessions:
            selenium:
              base_url: ${LSMB_BASE_URL}
