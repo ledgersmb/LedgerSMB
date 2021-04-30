@@ -261,12 +261,6 @@ jobs:
                   utils/test/monitor.gnuplot
         if: always()
 
-      - name: Plot monitoring graph
-        run: |
-          gnuplot -e "filename='logs/${{ env.MONITOR_FILE }}.txt';outputfile='screens/${{ env.MONITOR_FILE }}.png'" \
-                  utils/test/monitor.gnuplot
-        if: always()
-
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
