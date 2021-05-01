@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(157);
+    SELECT plan(175);
 
     -- Add data
 
@@ -17,13 +17,132 @@ BEGIN;
 
     -- Validate required functions
 
+    -- Can create role
     SELECT has_function('lsmb__create_role',ARRAY['text']);
+
+    -- Check Valid Role creation
+    PREPARE test AS SELECT
+                 lsmb__create_role('42_working_role');
+    SELECT results_eq('test',ARRAY[true],'can create normal role');
+    DEALLOCATE test;
+
+    -- Check with an invalid role name of 86 characters total
+    PREPARE test AS SELECT
+                 lsmb__create_role('42_failing_with_a_much_too_long_role_that_will_have_more_then_63_bytes');
+    SELECT throws_ok('test','42622'); -- 42622 is name_too_long
+    DEALLOCATE test;
+
+    -- Can grant function execution
     SELECT has_function('lsmb__grant_exec',ARRAY['text','text']);
+
+    -- Check valid case
+    PREPARE test AS SELECT
+                 lsmb__grant_exec('42_working_role', 'budget__save_info(integer,date,date,text,text,integer[])');
+    SELECT results_eq('test',ARRAY[true],'can grant exec to a defined role');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS SELECT
+                 lsmb__grant_exec('42_working_role_not_defined', 'budget__save_info(integer,date,date,text,text,integer[])');
+    SELECT throws_ok('test','0P000');
+    DEALLOCATE test;
+
+    -- Validate invalid function
+    PREPARE test AS SELECT
+                 lsmb__grant_exec('42_working_role', 'budget__save_info_not_defined(integer,date,date,text,text,integer[])');
+    SELECT throws_ok('test','42883');
+    DEALLOCATE test;
+
+    -- Can grant submenu access
     SELECT has_function('lsmb__grant_menu',ARRAY['text','integer','text']);
+
+    -- Check valid case
+    PREPARE test AS SELECT lsmb__grant_menu('42_working_role', 252, 'allow');
+    SELECT results_eq('test',ARRAY[true],'can grant submenu to a defined role');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS SELECT lsmb__grant_menu('42_working_role_not_defined', 252, 'allow');
+    SELECT throws_ok('test','0P000');
+    DEALLOCATE test;
+
+    -- Validate undefined submenu
+    PREPARE test AS SELECT lsmb__grant_menu('42_working_role', -1, 'allow');
+    SELECT throws_ok('test','23503');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS SELECT lsmb__grant_menu('42_working_role', 252, 'allow_special');
+    SELECT throws_ok('test','0L000');
+    DEALLOCATE test;
+
+    -- Can grant permission with 4 arguments
     SELECT has_function('lsmb__grant_perms',ARRAY['text','text','text','text[]']);
+
+    -- Not used?
+
+    -- Can grant permission
     SELECT has_function('lsmb__grant_perms',ARRAY['text','text','text']);
+
+    -- Valid case
+    PREPARE test AS SELECT lsmb__grant_perms('42_working_role', 'budget_info', 'SELECT');
+    SELECT results_eq('test',ARRAY[true],'can grant permission to a defined role');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS SELECT
+                 lsmb__grant_perms('42_working_role_not_defined', 'budget_info', 'SELECT');
+    SELECT throws_ok('test','0P000');
+    DEALLOCATE test;
+
+    -- Validate undefined permission
+    PREPARE test AS SELECT
+                 lsmb__grant_perms('42_working_role', 'budget_info_not_defined', 'SELECT');
+    SELECT throws_ok('test','42P01');
+    DEALLOCATE test;
+
+    -- Validate invalid type
+    PREPARE test AS SELECT
+                 lsmb__grant_perms('42_working_role', 'budget_info', 'SELECT_SPECIAL');
+    SELECT throws_ok('test','0L000');
+    DEALLOCATE test;
+
+    -- Can grant role
     SELECT has_function('lsmb__grant_role',ARRAY['text','text']);
+
+    -- Check valid case
+    PREPARE test AS
+                 SELECT lsmb__grant_role('42_working_role', 'budget_view');
+    SELECT results_eq('test',ARRAY[true],'can grant defined role to a defined role');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS
+                 SELECT lsmb__grant_role('42_working_role_not_defined', 'budget_view');
+    SELECT throws_ok('test','0P000');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS
+                 SELECT lsmb__grant_role('42_working_role', 'budget_view_not_defined');
+    SELECT throws_ok('test','0P000');
+    DEALLOCATE test;
+
+    -- Can check role allowed
     SELECT has_function('lsmb__is_allowed_role',ARRAY['text[]']);
+
+    -- Check valid case
+    PREPARE test AS
+                 SELECT lsmb__is_allowed_role(ARRAY['42_working_role']);
+    SELECT results_eq('test',ARRAY[true],'can check allowed role');
+    DEALLOCATE test;
+
+    -- Validate undefined role
+    PREPARE test AS
+                 SELECT lsmb__is_allowed_role(ARRAY['42_working_role_not_defined']);
+    SELECT throws_ok('test','42704');
+    DEALLOCATE test;
+
     SELECT has_function('quote_ident_array',ARRAY['text[]']);
     SELECT has_function('tg_enforce_perms_eclass','{}'::text[]);
 

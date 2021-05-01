@@ -239,9 +239,9 @@ executors:
       DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t/,+ignore,^utils/,+ignore,\.lttc$,+ignore,^/usr/,+ignore,/home/circleci/perl5,+ignore,plackup$
       HARNESS_RULESFILE: t/testrules.yml
       LSMB_BASE_URL: http://127.0.0.1:5000
-      LSMB_NEW_DB: lsmbinstalltest
+      LSMB_NEW_DB: lsmb_test
       LSMB_TEST_DB: 1
-      PGDB: lsmbinstalltest
+      PGDB: lsmb_test
       PGHOST: localhost
       PGPASSWORD: test
       PGUSER: postgres
