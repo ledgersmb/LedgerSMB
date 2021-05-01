@@ -183,15 +183,14 @@ jobs:
           echo "JOB_COUNT=2" >> $GITHUB_ENV
         if: ${{ matrix.COVERAGE }}
 
-      # This will start a hub and JOB_COUNT matrix.BROWSER but it will download
-      # the others also. Find a way to not have them pulled.
+      # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
         run: |
-          docker-compose --file=utils/selenium/docker-compose.yml up \
+          docker-compose \
+              --file=utils/selenium/docker-compose.yml \
+              --file=utils/selenium/docker-compose-${{ matrix.BROWSER }}.yml \
+              up \
               --detach \
-              --scale chrome=0 \
-              --scale firefox=0 \
-              --scale operablink=0 \
               --scale ${{ matrix.BROWSER }}=$JOB_COUNT \
         if: ${{ matrix.BROWSER != 'phantomjs'}}
 
