@@ -147,7 +147,7 @@ SELECT e.id, pc.contact_class_id, pc.contact, pc.description
 INSERT INTO entity_bank_account (id, entity_id, bic, iban, remark)
 SELECT id, entity_id, coalesce(bic,''), iban, remark FROM lsmb13.entity_bank_account;
 INSERT INTO entity_credit_account SELECT * FROM lsmb13.entity_credit_account;
-UPDATE entity_credit_account SET curr = lsmb13.defaults_get_defaultcurrency()
+UPDATE entity_credit_account SET curr = (select curr from lsmb13.defaults_get_defaultcurrency() as c(curr) limit 1)
  WHERE curr IS NULL;
 INSERT INTO eca_to_contact SELECT * FROM lsmb13.eca_to_contact;
 INSERT INTO eca_to_location SELECT * FROM lsmb13.eca_to_location;
