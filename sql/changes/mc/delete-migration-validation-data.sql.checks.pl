@@ -195,16 +195,21 @@ $$ language plpgsql;
 
 
 CREATE TEMPORARY TABLE verify_mc_trial_balances AS
- SELECT (select max(transdate) from acc_trans)::date as balance_date, *
+ SELECT (select max(transdate) from acc_trans)::date as balance_date,
+        (select min(transdate) from acc_trans)::date as balance_start_date,
+        *
   FROM pg_temp.trial_balance__generate(null, null, null, null,
                                'none', null, null, 't'::boolean,
                                't'::boolean);
 
 alter table verify_mc_trial_balances
-   add primary key (balance_date, account_id);
+   add primary key (balance_date, balance_start_date, account_id);
 
 INSERT INTO verify_mc_trial_balances
-SELECT cp.end_date, tb.*
+SELECT cp.end_date,
+       coalesce((select max(end_date) from account_checkpoint c where c.end_date < cp.end_date)::date,
+                (select min(transdate) from acc_trans)),
+       tb.*
   FROM (select distinct end_date from account_checkpoint) cp,
        pg_temp.trial_balance__generate((select max(end_date) from account_checkpoint c
                                  where c.end_date < cp.end_date),
