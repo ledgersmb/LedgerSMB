@@ -16,6 +16,10 @@ BEGIN
   -- Make sure to evaluate the role once because the optimizer
   -- uses it as a filter on every row otherwise
   SELECT lsmb__role(in_role) INTO t_in_role;
+  IF LENGTH(t_in_role) > 63 THEN
+    RAISE 'Role % has more than 63 bytes. Truncation of % bytes will happen',
+      t_in_role,LENGTH(t_in_role)-63;
+  END IF;
   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
   IF FOUND THEN
      RETURN TRUE;
@@ -32,7 +36,19 @@ DROP FUNCTION IF EXISTS lsmb__grant_role(text, text);
 CREATE OR REPLACE FUNCTION lsmb__grant_role(in_child text, in_parent text)
 RETURNS BOOL LANGUAGE PLPGSQL SECURITY INVOKER AS
 $$
+DECLARE
+  t_in_role text;
 BEGIN
+   SELECT lsmb__role(in_parent) INTO t_in_role;
+   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
+   IF NOT FOUND THEN
+      RAISE EXCEPTION 'Role % not found', t_in_role;
+   END IF;
+   SELECT lsmb__role(in_child) INTO t_in_role;
+   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
+   IF NOT FOUND THEN
+      RAISE EXCEPTION 'Role % not found', t_in_role;
+   END IF;
    EXECUTE 'GRANT ' || quote_ident(lsmb__role(in_parent)) || ' TO '
    || quote_ident(lsmb__role(in_child));
    RETURN TRUE;
@@ -42,7 +58,14 @@ $$;
 CREATE OR REPLACE FUNCTION lsmb__grant_exec(in_role text, in_func text)
 RETURNS BOOL LANGUAGE PLPGSQL SECURITY INVOKER AS
 $$
+DECLARE
+  t_in_role text;
 BEGIN
+   SELECT lsmb__role(in_role) INTO t_in_role;
+   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
+   IF NOT FOUND THEN
+      RAISE EXCEPTION 'Role % not found', t_in_role;
+   END IF;
    EXECUTE 'GRANT EXECUTE ON FUNCTION ' || in_func || ' TO '
    || quote_ident(lsmb__role(in_role));
    RETURN TRUE;
@@ -61,7 +84,14 @@ CREATE OR REPLACE FUNCTION lsmb__grant_perms
 SECURITY INVOKER
 LANGUAGE PLPGSQL AS
 $$
+DECLARE
+  t_in_role text;
 BEGIN
+   SELECT lsmb__role(in_role) INTO t_in_role;
+   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
+   IF NOT FOUND THEN
+      RAISE EXCEPTION 'Role % not found', t_in_role;
+   END IF;
    IF upper(in_perms) NOT IN ('ALL', 'INSERT', 'UPDATE', 'SELECT', 'DELETE') THEN
       RAISE EXCEPTION 'Invalid permission';
    END IF;
@@ -83,7 +113,14 @@ CREATE OR REPLACE FUNCTION lsmb__grant_perms
 SECURITY INVOKER
 LANGUAGE PLPGSQL AS
 $$
+DECLARE
+  t_in_role text;
 BEGIN
+   SELECT lsmb__role(in_role) INTO t_in_role;
+   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
+   IF NOT FOUND THEN
+      RAISE EXCEPTION 'Role % not found', t_in_role;
+   END IF;
    IF upper(in_perms) NOT IN ('ALL', 'INSERT', 'UPDATE', 'SELECT', 'DELETE') THEN
       RAISE EXCEPTION 'Invalid permission';
    END IF;
@@ -108,7 +145,7 @@ BEGIN
    SELECT lsmb__role(in_role) INTO t_in_role;
    PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
    IF NOT FOUND THEN
-      RAISE EXCEPTION 'Role not found';
+      RAISE EXCEPTION 'Role % not found', t_in_role;
    END IF;
    PERFORM * FROM menu_node
      WHERE menu AND id = in_node_id;

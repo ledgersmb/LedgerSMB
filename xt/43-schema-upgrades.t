@@ -46,7 +46,6 @@ $dbh->disconnect;
 LedgerSMB::Database->new(dbname => "$ENV{LSMB_NEW_DB}_43_upgrades")
     ->create_and_load;
 
-
 $dbh = DBI->connect(qq{dbi:Pg:dbname=$ENV{LSMB_NEW_DB}_43_upgrades},
               undef, undef, { AutoCommit => 0, PrintError => 0 })
     or die "Can't connect to test database";
@@ -221,7 +220,7 @@ run_with_formatters {
        'Checks failed');
 
     # and then issue the same request (presumably with 'response content')
-    # to apply the 
+    # to apply the
     ok(run_checks($dbh, checks => \@checks),
        'Checks succeeded');
 } {
