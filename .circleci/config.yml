@@ -28,6 +28,7 @@ commands:
               --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
               --pgtap-psql=.circleci/psql-wrap \
               --Feature-tags=~@wip \
+              --show-times \
               t xt
 
       - run:
@@ -41,7 +42,10 @@ commands:
             echo " done"
 
       - run:
+          name: Plot monitoring graph
           command: |
+            gnuplot -e "filename='/tmp/artifact/memory-usage-actual.txt';outputfile='/tmp/artifact/memory-usage-actual.png'" \
+                    utils/test/monitor.gnuplot || true
             mkdir -p /tmp/artifact/logs;
             mkdir -p /tmp/artifact/screens;
             cp logs/* /tmp/artifact/logs || true;
@@ -65,6 +69,33 @@ commands:
         type: string
     description: "Prepare environment"
     steps:
+
+      - run:
+          name: "Monitor CPU & MEMORY"
+          command: |
+            mkdir -p /tmp/artifact/;
+            FILE=/tmp/artifact/memory-usage-actual.txt;
+            echo '"Time","CPU","Memory"' > $FILE;
+            #read -rst5 j memory_limit < <(grep hierarchical_memory_limit /sys/fs/cgroup/memory/memory.stat);
+            #CircleCI free plan gives 2 processors & 4GB of RAM
+            memory_limit=4294967296
+            n_procs=2
+            read -rst5 cpu_usage0     </sys/fs/cgroup/cpu/cpuacct.usage;
+            read -rst5 cstart         < <(date +"%s%N");
+            while true; do
+              sleep 1;
+              read -rst5 memory_usage </sys/fs/cgroup/memory/memory.usage_in_bytes;
+              read -rst5 cpu_usage    </sys/fs/cgroup/cpu/cpuacct.usage;
+              read -rst5 cstop        < <(date +"%s%N")
+              read -rst5 Date         < <(date +"%FT%T.%3N")
+              Cpu_usage=$(bc -l \<<< "scale=2;100*($cpu_usage-$cpu_usage0)/($cstop-$cstart)/$n_procs");
+              Memory_usage=$(bc -l \<<< "scale=2;100*$memory_usage/$memory_limit");
+              echo "$Date,$Cpu_usage,$Memory_usage";
+              cpu_usage0=$cpu_usage;
+              cstart=$cstop;
+            done >> $FILE;
+          background: true
+
       - checkout
 
       - run:

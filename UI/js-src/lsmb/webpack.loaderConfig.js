@@ -18,16 +18,17 @@
 
 // eslint-disable-next-line no-unused-vars
 function getConfig(env) {
-    // env is set by the 'buildEnvironment' and/or 'environment' plugin options (see webpack.config.js),
+    // env is set by the 'buildEnvironment' and/or 'environment' plugin options
+    // (see webpack.config.js),
     // or by the code at the end of this file if using without webpack
-    var dojoConfig = {
+    return {
         packages: [
             // An array of objects which provide the package name and location
             "dojo",
             "dijit",
             {
                 name: "lsmb", // the name of the package
-                location: "js-src/lsmb" // the path to the directory where the package resides
+                location: "js-src/lsmb" // the directory path where it resides
             }
         ],
 
@@ -70,10 +71,9 @@ function getConfig(env) {
 */
         }
     };
-    return dojoConfig;
 }
-// For Webpack, export the config.  This is needed both at build time and on the client at runtime
-// for the packed application.
+// For Webpack, export the config.
+// This is needed both at build time and on the client at runtime
 if (typeof module !== "undefined") {
     module.exports = getConfig;
 } else {

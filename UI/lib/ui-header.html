@@ -16,26 +16,25 @@
 <head>
     <title>[% title %]</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    [%+# HTML Snippet, for import only %]
-    [%+#
+    [%-#
         # source comment only!
         #
         # don't specify a title on the stylesheets: we want them to be
         # *persistent*
         # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
-    %]
+    -%]
     <%= htmlWebpackPlugin.tags.headTags %>
     <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/[% dojo_theme %].css" rel="stylesheet">
-    [% IF form.stylesheet %]
+    [%- IF form.stylesheet %]
     <link href="js/css/[% form.stylesheet %]" rel="stylesheet">
-    [% ELSIF stylesheet %]
+    [%- ELSIF stylesheet %]
     <link href="js/css/[% stylesheet %]" rel="stylesheet">
-    [% END %]
-    [% FOREACH s = include_stylesheet %]
+    [%- END %]
+    [%- FOREACH s = include_stylesheet %]
     <link href="js/css/[% s %]" rel="stylesheet">
-    [% END %]
-    [% IF warn_expire ;
+    [%- END %]
+    [%- IF warn_expire;
        IF pw_expires.years ;
           ALERT = text("Warning: Your password will expire in [_1] years", pw_expires.years);
        ELSIF pw_expires.months ;

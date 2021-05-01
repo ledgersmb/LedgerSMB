@@ -1,0 +1,54 @@
+version: '2.1'
+
+services:
+
+  hub:
+    image: selenium/hub
+    container_name: hub
+    hostname: hub
+    privileged: true
+    ports:
+      - 4422:4444
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - GRID_MAX_SESSION=50
+      - GRID_TIMEOUT=1800
+      - GRID_DEBUG=true
+
+  chrome:
+    image: selenium/node-chrome
+    depends_on:
+      - hub
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - HUB_HOST=hub
+      - NODE_MAX_SESSION=5
+      - NODE_MAX_INSTANCES=5
+      - GRID_DEBUG=true
+
+  firefox:
+    image: selenium/node-firefox
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+      - NODE_MAX_SESSION=5
+      - NODE_MAX_INSTANCES=5
+      - GRID_DEBUG=true
+
+# Not compatible with hub 3.14
+  operablink:
+    image: selenium/node-opera
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+      - NODE_MAX_SESSION=5
+      - NODE_MAX_INSTANCES=5
+      - GRID_DEBUG=true

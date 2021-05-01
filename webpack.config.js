@@ -10,14 +10,14 @@ const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
-const ESLintPlugin = require('eslint-webpack-plugin');
+const ESLintPlugin = require("eslint-webpack-plugin");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
-const VirtualModulePlugin = require('virtual-module-webpack-plugin');
+const VirtualModulePlugin = require("virtual-module-webpack-plugin");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
@@ -59,32 +59,39 @@ function findDataDojoTypes(fileName) {
     var content = "" + fs.readFileSync(fileName);
     // Return unique data-dojo-type refereces
     return (
-        content.match(
-            /(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi
-        ) || []
+        content.match(/(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi) ||
+        []
     ).filter((x, i, a) => a.indexOf(x) === i);
 }
 
 // Compute used data-dojo-type
 glob.sync("**/*.html", {
-    ignore: ["lib/ui-header.html", "js/**", "js-src/dojo/**",
-             "js-src/dijit/**", "js-src/util/**"],
+    ignore: [
+        "lib/ui-header.html",
+        "js/**",
+        "js-src/dojo/**",
+        "js-src/dijit/**",
+        "js-src/util/**"
+    ],
     cwd: "UI"
 }).map(function (filename) {
     const requires = findDataDojoTypes("UI/" + filename);
-    includedRequires.push(...requires);
+    return includedRequires.push(...requires);
 });
 
 // Pull UI/js-src/lsmb
 includedRequires = includedRequires
-.concat(
-   glob.sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
-            cwd: "UI/js-src/"
-    }).map(function(file) {
-           return file.replace(/\.js$/,'')
-    }))
-.filter((x, i, a) => a.indexOf(x) === i)
-.sort();
+    .concat(
+        glob
+            .sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
+                cwd: "UI/js-src/"
+            })
+            .map(function (file) {
+                return file.replace(/\.js$/, "");
+            })
+    )
+    .filter((x, i, a) => a.indexOf(x) === i)
+    .sort();
 
 /* LOADERS */
 
@@ -235,10 +242,10 @@ const lsmbCSS = {
 const VirtualModulePluginOptions = {
     moduleName: "js-src/lsmb/bootstrap.js",
     contents:
-       `/* eslint-disable */
-        define(["dojo/parser","dojo/ready","`
-        + includedRequires.join('","')
-        + `"], function(parser, ready) {
+        `/* eslint-disable */
+        define(["dojo/parser","dojo/ready","` +
+        includedRequires.join('","') +
+        `"], function(parser, ready) {
             ready(function() {
             });
             return {};
@@ -287,7 +294,7 @@ var pluginsProd = [
         inject: false, // Tags are injected manually in the content below
         minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
         filename: "ui-header.html",
-        mode: (prodMode ? "production" : "development"),
+        mode: prodMode ? "production" : "development",
         excludeChunks: [...Object.keys(lsmbCSS)],
         template: "lib/ui-header.html"
     })
@@ -381,7 +388,7 @@ const webpackConfigs = {
 
     entry: {
         polyfill: "js-src/polyfills.js",
-        bootstrap: "js-src/lsmb/bootstrap.js",  // Virtual file
+        bootstrap: "js-src/lsmb/bootstrap.js", // Virtual file
         ...lsmbCSS
     },
 
