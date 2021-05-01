@@ -1246,7 +1246,6 @@ sub _post_migration_schema_upgrade {
                  FROM users WHERE username IN (select rolname from pg_roles)});
 
     $dbh->commit;
-    $dbh->disconnect;
 
     return;
 }
