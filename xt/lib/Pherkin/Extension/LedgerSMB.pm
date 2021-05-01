@@ -34,7 +34,7 @@ has db_name => (is => 'rw', default => $ENV{PGDATABASE});
 has username => (is => 'rw', default => $ENV{PGUSER});
 has password => (is => 'rw', default => $ENV{PGPASSWORD});
 has host => (is => 'rw', default => $ENV{PGHOST} // 'localhost');
-has template_db_name => (is => 'rw', default => 'standard-template');
+has template_db_name => (is => 'rw', default => 'std-template');
 has admin_user_name => (is => 'rw', default => 'test-user-admin');
 has admin_user_password => (is => 'rw', default => 'password');
 
