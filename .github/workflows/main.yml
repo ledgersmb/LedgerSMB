@@ -202,6 +202,34 @@ jobs:
             --feature=xls \
             --feature=edi
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: 15.x
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: ./node-modules
+          key: modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Cache Dojo
+        id: cache-dojo
+        uses: actions/cache@v2
+        with:
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/{js-src,css}/**') }}
+
+      - name: Install Node modules Dependencies
+        run: npm ci
+        if: steps.node-cache.outputs.cache-hit != 'true'
+
+      - name: Build Dojo
+        run: npm run build
+        if: steps.cache-node-modules.outputs.cache-hit != 'true' || steps.cache-dojo.outputs.cache-hit != 'true'
+
       - name: Starting 'nginx'
         run: |
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
@@ -270,9 +298,9 @@ jobs:
         run: |
           yath start --job-count $JOB_COUNT --event-timeout 300
           yath run --color --no-progress --retry=2 \
-            --pgtap-dbname=$LSMB_NEW_DB --pgtap-username=$PGUSER \
-            --pgtap-psql=.circleci/psql-wrap \
-            --Feature-tags=~@wip \
+                --pgtap-dbname=$LSMB_NEW_DB --pgtap-username=$PGUSER \
+                --pgtap-psql=.circleci/psql-wrap \
+                --Feature-tags=~@wip \
             t xt
           yath stop
         env:
