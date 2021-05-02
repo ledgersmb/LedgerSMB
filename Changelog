@@ -274,6 +274,12 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.31
+* Improve upgrades in light of files attached to transactions (Erik H, #5405)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.30
 * Fix Number not updated by 'Save as New' on order and quote (Erik H, #5356)
 * Performance improvements through added database indexes (Erik H)
