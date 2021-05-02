@@ -4,7 +4,7 @@
 DIST_VER=$(shell git rev-parse --short HEAD)
 DIST_DIR=/tmp
 
-ifeq ($(or ${CIRCLECI},${TRAVIS}),true)
+ifeq ($(CI),true)
 	NPM_COMMAND=ci
 else
 	NPM_COMMAND=install
