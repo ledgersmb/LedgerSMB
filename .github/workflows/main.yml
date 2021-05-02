@@ -242,7 +242,7 @@ jobs:
           cover -report text > /tmp/artifact/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ matrix.COVERAGE }}
+        if: ${{ matrix.COVERAGE && github.repository != 'ledgersmb/LedgerSMB'}}
 
       - name: Collect docker logs
         uses: jwalton/gh-docker-logs@v1
