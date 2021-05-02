@@ -2,6 +2,12 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.28
+* Improve upgrades in light of files attached to transactions
+* Fix 1.3 upgrade breaking on default currency function type
+* Fix duplicate key error in upgrade data validation
+
+
 Changelog for 1.7.27
 * Fix Number not updated by 'Save as New' on order and quote (#5382)
 * Performance improvements through added database indexes
