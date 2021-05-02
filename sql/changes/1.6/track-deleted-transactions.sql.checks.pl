@@ -10,9 +10,9 @@ check q|Found files associated with non-existing transactions|,
        where not exists (select 1 from ar
                           where ft.ref_key = ar.id)
              and not exists (select 1 from ap
-                              where ft.file_transaction_ref_key = ap.id)
+                              where ft.ref_key = ap.id)
              and not exists (select 1 from gl
-                              where ft.file_transaction_ref_key = gl.id)
+                              where ft.ref_key = gl.id)
                    |,
     description => q|
 The migration checks found rows in your "file_transaction" table holding
