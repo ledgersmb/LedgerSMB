@@ -196,7 +196,9 @@ $$ language plpgsql;
 
 CREATE TEMPORARY TABLE verify_mc_trial_balances AS
  SELECT (select max(transdate) from acc_trans)::date as balance_date,
-        (select min(transdate) from acc_trans)::date as balance_start_date,
+        -- subtract one day in order to prevent overlap with the query below, which
+        -- would otherwise result in a duplicate key error
+        (select min(transdate)-'1 day'::interval from acc_trans)::date as balance_start_date,
         *
   FROM pg_temp.trial_balance__generate(null, null, null, null,
                                'none', null, null, 't'::boolean,
