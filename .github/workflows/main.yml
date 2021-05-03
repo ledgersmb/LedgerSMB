@@ -18,11 +18,65 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
+  webpack:
+
+    runs-on: ubuntu-latest
+
+    if: "!contains(github.event.head_commit.message,'[ci skip]') && !contains(github.event.head_commit.message,'[skip ci]')"
+
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: 15.x
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./node-modules
+          key: |
+            modules-${{ hashFiles('**/package-lock.json') }}
+            modules-
+
+      - name: Cache Dojo
+        id: cache-dojo
+        uses: actions/cache@v2
+        with:
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/{js-src,css}/**') }}
+
+      - name: Install Node modules Dependencies
+        run: npm ci
+
+      - name: Build Dojo
+        run: npm run build
+        if: steps.cache-dojo.outputs.cache-hit != 'true'
+
+      - name: 'Tar files'
+        run: tar -cf ~/webpacked_js.tar UI/js
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: webpacked_js
+          path: ~/webpacked_js.tar
+
   # This workflow contains a single job called "build"
   build:
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    needs: webpack
 
     if: "!contains(github.event.head_commit.message,'[ci skip]') && !contains(github.event.head_commit.message,'[skip ci]')"
 
@@ -60,6 +114,8 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: test
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     env:
       BROWSER: ${{ matrix.BROWSER }}
@@ -87,12 +143,16 @@ jobs:
 
       - name: Install apt packages
         run: |
-          sudo apt-get update && \
-          sudo apt-get install -y \
-              texlive-latex-recommended texlive-xetex \
-              gettext nginx gnuplot
+          echo "#!/bin/bash -x" > /tmp/apt-get-install.sh
+          echo "touch /tmp/apt-get-install.txt" >> /tmp/apt-get-install.sh
+          echo "apt-get update" >> /tmp/apt-get-install.sh
+          echo "apt-get install -y texlive-latex-recommended texlive-xetex gettext nginx gnuplot" >> /tmp/apt-get-install.sh
+          echo "rm /tmp/apt-get-install.txt" >> /tmp/apt-get-install.sh
+          chmod +x /tmp/apt-get-install.sh
+          sudo /tmp/apt-get-install.sh &
         env:
           DEBIAN_FRONTEND: noninteractive
+          APT_PACKAGES: texlive-latex-recommended texlive-xetex gettext nginx gnuplot
 
       - name: Set host alias (why doesn't Github do it itself)
         run: |
@@ -126,46 +186,28 @@ jobs:
         with:
           # A list of files, directories, and wildcard patterns to cache and restore
           path: /opt/hostedtoolcache/perl
-          # An explicit key for restoring and saving the cache
-          key: cpan-${{ matrix.perl }}-${{ hashFiles('cpanfile') }}
+          # Keys for restoring and saving the cache
+          key: |
+            cpan-${{ matrix.perl }}-${{ hashFiles('cpanfile') }}
+            cpan-${{ matrix.perl }}-
+            cpan-
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: webpacked_js
+
+      - name: 'Untar files'
+        run: tar -xf webpacked_js.tar
+
+      # Update packages restored from the above cache
       - name: Install required features
         run: |
           cpm install -g -v --resolver=metacpan --notest \
             --with-develop \
             --feature=starman \
-            --feature=latex-pdf-ps \
             --feature=openoffice \
             --feature=xls \
             --feature=edi
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.2
-        with:
-          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
-          node-version: 15.x
-
-      - name: Cache node modules
-        id: cache-node-modules
-        uses: actions/cache@v2
-        with:
-          path: ./node-modules
-          key: modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Cache Dojo
-        id: cache-dojo
-        uses: actions/cache@v2
-        with:
-          path: UI/js
-          key: dojo-${{ hashFiles('UI/{js-src,css}/**') }}
-
-      - name: Install Node modules Dependencies
-        run: npm ci
-        if: steps.node-cache.outputs.cache-hit != 'true'
-
-      - name: Build Dojo
-        run: npm run build
-        if: steps.cache-node-modules.outputs.cache-hit != 'true' || steps.cache-dojo.outputs.cache-hit != 'true'
 
       - name: Starting 'nginx'
         run: |
@@ -214,29 +256,29 @@ jobs:
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
 
+      # Wait if apt is still installing texlive
+      - name: Wait for Texlive
+        run: |
+          while [ -f /tmp/apt-get-install.txt ] ;
+          do
+            sleep 2
+          done
+
       # Fix the condition to debug
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          sudo: true
-      #    limit-access-to-actor: true
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
         if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       - name: Run Perl tests
         run: |
           yath start --job-count $JOB_COUNT --event-timeout 300
           yath run --color --no-progress --retry=2 \
-                --pgtap-dbname=$LSMB_NEW_DB --pgtap-username=$PGUSER \
-                --pgtap-psql=.circleci/psql-wrap \
-                --Feature-tags=~@wip \
+            --pgtap-dbname=$LSMB_NEW_DB --pgtap-username=$PGUSER \
+            --pgtap-psql=.circleci/psql-wrap \
+            --Feature-tags=~@wip \
             t xt
           yath stop
         env:
-          PGHOST: localhost
-          PGPORT: 5432
-          PGUSER: postgres
-          PGPASSWORD: test
-          LSMB_NEW_DB: lsmbinstalltest
           LSMB_TEST_DB: 1
 
       - name: Upload coverage data
