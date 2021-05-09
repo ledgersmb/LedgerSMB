@@ -4,34 +4,79 @@ name: CI
 
 # Controls when the action will run.
 on:
-  schedule:
-    - cron: "0 0 * * 0"
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches-ignore:
+      - 'master'
+  pull_request:
+    branches:
+      - 'master'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
   # This workflow contains a single job called "build"
   build:
+
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
     if: "!contains(github.event.head_commit.message,'[ci skip]') && !contains(github.event.head_commit.message,'[skip ci]')"
-    # Service containers to run with `container-job`
+
+    # Don't let it run for more than an hour
+    timeout-minutes: 60
+
+    # Service containers to run
     strategy:
       fail-fast: false
       matrix:
-        perl: [ "5.32" ]
+        include:
+          - perl: "5.32"
+            BROWSER: "chrome"
+
+          - perl: "5.30"
+            BROWSER: "firefox"
+            COA_TESTING: 1
+
+          - perl: "5.28"
+            BROWSER: "operablink"
+            DB_TESTING: 1
+
+          - perl: "5.32"
+            BROWSER: "phantomjs"
+            COVERAGE: 1
+
     services:
+      # Label used to access the service container
       postgres:
-        # Docker Hub image
+        # Docker database image
         image: ledgersmb/ledgersmb-dev-postgres
-        # Provide the password for postgres
+        # Maps tcp port 5432 on service container to the host
         ports:
-          # Maps tcp port 5432 on service container to the host
           - 5432:5432
+        # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: test
+
+    env:
+      BROWSER: ${{ matrix.BROWSER }}
+      COA_TESTING: ${{ matrix.COA_TESTING }}
+      DB_TESTING: ${{ matrix.DB_TESTING }}
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t/,+ignore,^utils/,+ignore,\.lttc$,+ignore,^/usr/,+ignore,/home/circleci/perl5,+ignore,plackup$
+      JOB_COUNT: 5
+      LSMB_BASE_URL: http://lsmb:5000
+      LSMB_NEW_DB: lsmb_test
+      MONITOR_FILE: cpu-memory-usage
+      PGDB: lsmb_test
+      PGHOST: localhost
+      PGPASSWORD: test
+      PGPORT: 5432
+      PGUSER: postgres
+      PSGI_BASE_URL: http://lsmb:5762
+      RELEASE_TESTING: 1
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,7 +84,33 @@ jobs:
         uses: styfle/cancel-workflow-action@0.6.0
         with:
           access_token: ${{ github.token }}
+
+      - name: Install apt packages
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install -y \
+              texlive-latex-recommended texlive-xetex \
+              gettext nginx gnuplot
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+      - name: Set host alias (why doesn't Github do it itself)
+        run: |
+          hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Create logging directories
+        run: |
+          mkdir screens logs
+          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+
+      - name: "Monitor CPU & MEMORY"
+        run: |
+          ./utils/test/monitor_rss.sh logs/${{ env.MONITOR_FILE }}.txt &
+
       - name: Setup Perl environment
         # You may pin to the exact commit or the version.
         # uses: shogo82148/actions-setup-perl@341aa635c06050493b41d71134eea58bfc5f4018
@@ -49,6 +120,25 @@ jobs:
           perl-version: ${{ matrix.perl }} # optional, default is 5
           # The distribution of Perl binary.
 
+      - name: Cache cpan modules
+        id: cache-cpan-modules
+        uses: actions/cache@v2
+        with:
+          # A list of files, directories, and wildcard patterns to cache and restore
+          path: /opt/hostedtoolcache/perl
+          # An explicit key for restoring and saving the cache
+          key: cpan-${{ matrix.perl }}-${{ hashFiles('cpanfile') }}
+
+      - name: Install required features
+        run: |
+          cpm install -g -v --resolver=metacpan --notest \
+            --with-develop \
+            --feature=starman \
+            --feature=latex-pdf-ps \
+            --feature=openoffice \
+            --feature=xls \
+            --feature=edi
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
         with:
@@ -56,69 +146,122 @@ jobs:
           node-version: 15.x
 
       - name: Cache node modules
+        id: cache-node-modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          path: ./node-modules
+          key: modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Cache cpan modules
-        uses: actions/cache@v2.1.3
+      - name: Cache Dojo
+        id: cache-dojo
+        uses: actions/cache@v2
         with:
-          # A list of files, directories, and wildcard patterns to cache and restore
-          path: $PERL5LIB
-          # An explicit key for restoring and saving the cache
-          key: ${{ runner.os }}-cpan-${{ matrix.perl }}-${{ hashFiles('**/{Makefile,Build}.PL') }}
-          # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
-          restore-keys: ${{ runner.os }}-cpan-${{ matrix.perl }}
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/{js-src,css}/**') }}
 
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
+      - name: Install Node modules Dependencies
+        run: npm ci
+        if: steps.node-cache.outputs.cache-hit != 'true'
 
-      - name: Install apt packages
-        run: sudo apt-get update && sudo apt-get install -y texlive-latex-recommended texlive-xetex gettext nginx
-        env:
-          DEBIAN_FRONTEND: noninteractive
-
-      - name: install with cpm
-        run: |
-          cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
-
-      - name: Build JS
-        run: make dojo
-
-      - name: Create logging directories
-        run: |
-          mkdir screens logs
-          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-
-      - name: Create default test database
-        run: perl -Ilib bin/ledgersmb-admin create postgres@localhost:5432/lsmbinstalltest
-        env:
-          PGPASSWORD: test
-
-      - name: Starting 'starman'
-        run: starman --preload-app --pid starman.pid --workers 2 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+      - name: Build Dojo
+        run: npm run build
+        if: steps.cache-node-modules.outputs.cache-hit != 'true' || steps.cache-dojo.outputs.cache-hit != 'true'
 
       - name: Starting 'nginx'
         run: |
-          sed -e "s#{ROOT}#$PWD#" doc/conf/webserver/nginx-travis.conf >/tmp/nginx.conf
-          nginx -c /tmp/nginx.conf &
+          nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
+                -p $GITHUB_WORKSPACE &
 
-      - name: Starting 'PhantomJS'
-        run: phantomjs --webdriver=4422 2>/dev/null >/dev/null &
+      - name: Setup coverage
+        run: |
+          cpm install -g -v --resolver=metacpan --notest \
+              Devel::Cover Devel::Cover::Report::Coveralls
+          echo "PERL5OPT=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
+          echo "JOB_COUNT=2" >> $GITHUB_ENV
+        if: ${{ matrix.COVERAGE }}
 
-      # Runs a single command using the runners shell
-      - name: Run Perl tests
-        run: prove --failures --jobs 2 --time --recurse --pgtap-option dbname=lsmbinstalltest --pgtap-option username=postgres --feature-option tags=~@wip t/ xt/
+      # This will start a hub and JOB_COUNT matrix.
+      - name: Starting hub with ${{ matrix.BROWSER }}
+        run: |
+          docker-compose \
+              --file=utils/selenium/docker-compose.yml \
+              --file=utils/selenium/docker-compose-${{ matrix.BROWSER }}.yml \
+              up \
+              --detach \
+              --scale ${{ matrix.BROWSER }}=$JOB_COUNT \
+        if: ${{ matrix.BROWSER != 'phantomjs'}}
+
+      # phantomjs is not compatible with the latest selenium hub
+      - name: Starting phantomjs alone
+        run: |
+          docker run --detach \
+                      --publish 4422:8910 \
+                      --name hub \
+                      --add-host lsmb:`hostname -i` \
+                      madhavajay/selenium-node-phantomjs
         env:
-          PGHOST: localhost
-          PGPORT: 5432
-          PGUSER: postgres
-          PGPASSWORD: test
-          LSMB_NEW_DB: lsmbinstalltest
+          LANG: en_US.UTF-8
+        if: ${{ matrix.BROWSER == 'phantomjs' }}
+
+      - name: Create default test database
+        run: |
+            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
+              ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
+
+      - name: Starting 'starman'
+        run: |
+          starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+                  --max-requests 5000 --error-log logs/starman-error.log \
+                  -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+
+      # Fix the condition to debug
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          sudo: true
+      #    limit-access-to-actor: true
+        if: ${{ matrix.BROWSER == 'chrome' && 0 }}
+
+      - name: Run Perl tests
+        run: |
+          yath start --job-count $JOB_COUNT --event-timeout 300
+          yath run --color --no-progress --retry=2 \
+                --pgtap-dbname=$LSMB_NEW_DB --pgtap-username=$PGUSER \
+                --pgtap-psql=.circleci/psql-wrap \
+                --Feature-tags=~@wip \
+            t xt
+          yath stop
+        env:
           LSMB_TEST_DB: 1
-          LSMB_BASE_URL: http://127.0.0.1:5000
-          PSGI_BASE_URL: http://127.0.0.1:5762
-          REMOTE_SERVER_ADDR: 127.0.0.1
+
+      - name: Upload coverage data
+        run: |
+          unset PERL5OPT
+          cover -report coveralls
+          cover -report text > /tmp/artifact/coverage.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ matrix.COVERAGE && github.repository != 'ledgersmb/LedgerSMB'}}
+
+      - name: Collect docker logs
+        uses: jwalton/gh-docker-logs@v1
+        with:
+          dest: 'logs/docker-logs'
+        if: always()
+
+      - name: Plot monitoring graph
+        run: |
+          gnuplot -e "filename='logs/${{ env.MONITOR_FILE }}.txt';outputfile='screens/${{ env.MONITOR_FILE }}.png'" \
+                  utils/test/monitor.gnuplot
+        if: always()
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs-and-screens ${{ matrix.perl }} ${{ matrix.BROWSER }}
+          path: |
+            logs/**
+            screens/**
+            /tmp/artifact/memory-usage-actual.*
+            /tmp/nginx*.log
+        if: always()

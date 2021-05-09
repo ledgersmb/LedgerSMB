@@ -23,13 +23,13 @@ commands:
               export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
               JOB_COUNT=2
             fi
-            yath test --job-count $JOB_COUNT --event-timeout 1800 \
-              --color --no-progress --retry=2 \
+            yath start --job-count $JOB_COUNT --event-timeout 1800 # Timeout after 30 min
+            yath --color --no-progress --retry=2 \
               --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
               --pgtap-psql=.circleci/psql-wrap \
               --Feature-tags=~@wip \
               t xt
-
+            yath stop
       - run:
           command: |
             while [ $(pidof plackup) ];
@@ -41,7 +41,10 @@ commands:
             echo " done"
 
       - run:
+          name: Plot monitoring graph & save artefacts
           command: |
+            gnuplot -e "filename='logs/${MONITOR_FILE}.txt';outputfile='screens/${MONITOR_FILE}.png'" \
+                    utils/test/monitor.gnuplot || true
             mkdir -p /tmp/artifact/logs;
             mkdir -p /tmp/artifact/screens;
             cp logs/* /tmp/artifact/logs || true;
@@ -65,6 +68,13 @@ commands:
         type: string
     description: "Prepare environment"
     steps:
+
+      - run:
+          name: "Monitor CPU & MEMORY"
+          command: |
+            ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
+          background: true
+
       - checkout
 
       - run:
@@ -241,6 +251,7 @@ executors:
       LSMB_BASE_URL: http://127.0.0.1:5000
       LSMB_NEW_DB: lsmb_test
       LSMB_TEST_DB: 1
+      MONITOR_FILE: cpu-memory-usage
       PGDB: lsmb_test
       PGHOST: localhost
       PGPASSWORD: test
