@@ -226,12 +226,13 @@ jobs:
 
       - name: Run Perl tests
         run: |
-          yath test --job-count $JOB_COUNT --event-timeout 300 \
-                --color --no-progress \
+          yath start --job-count $JOB_COUNT --event-timeout 300
+          yath run --color --no-progress --retry=2 \
                 --pgtap-dbname=$LSMB_NEW_DB --pgtap-username=$PGUSER \
                 --pgtap-psql=.circleci/psql-wrap \
                 --Feature-tags=~@wip \
             t xt
+          yath stop
         env:
           LSMB_TEST_DB: 1
 

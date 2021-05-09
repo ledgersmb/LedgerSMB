@@ -23,12 +23,13 @@ commands:
               export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
               JOB_COUNT=2
             fi
-            yath test --job-count $JOB_COUNT --event-timeout 1800 \
-              --color --no-progress --retry=2 \
+            yath start --job-count $JOB_COUNT --event-timeout 1800 # Timeout after 30 min
+            yath --color --no-progress --retry=2 \
               --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
               --pgtap-psql=.circleci/psql-wrap \
               --Feature-tags=~@wip \
               t xt
+            yath stop
       - run:
           command: |
             while [ $(pidof plackup) ];
