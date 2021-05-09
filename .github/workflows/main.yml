@@ -70,6 +70,7 @@ jobs:
       LSMB_BASE_URL: http://lsmb:5000
       LSMB_NEW_DB: lsmb_test
       MONITOR_FILE: cpu-memory-usage
+      PGDB: lsmb_test
       PGHOST: localhost
       PGPASSWORD: test
       PGPORT: 5432
@@ -204,11 +205,8 @@ jobs:
 
       - name: Create default test database
         run: |
-          echo "connect_data:"            > $HOME/.ledgersmb-admin.conf
-          echo "  user: $PGUSER"         >> $HOME/.ledgersmb-admin.conf
-          echo "  password: $PGPASSWORD" >> $HOME/.ledgersmb-admin.conf
-          PERL5LIB="lib:$PERL5LIB" \
-            ./bin/ledgersmb-admin create $LSMB_NEW_DB
+            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
+              ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
 
       - name: Starting 'starman'
         run: |
