@@ -50,10 +50,10 @@
     "maintained node versions"
   ],
   "devDependencies": {
+    "@babel/eslint-parser": "^7.13.14",
     "@babel/plugin-proposal-object-rest-spread": "7.12.1",
     "@babel/preset-env": "7.12.7",
     "autoprefixer": "9.8.6",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "8.2.2",
     "bundlesize": "^0.18.0",
     "clean-webpack-plugin": "3.0.0",
@@ -129,8 +129,8 @@
   "homepage": "http://ledgersmb.org/",
   "scripts": {
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
-    "build": "webpack --progress --mode=production",
-    "build:dev": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --progress --mode=development",
     "serve": "webpack-dev-server --env.dev",
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules ."
@@ -150,13 +150,14 @@
       "sort-dojo-dependency",
       "prettier"
     ],
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
       "ecmaVersion": 6,
       "sourceType": "module",
       "ecmaFeatures": {
         "jsx": true
       },
+      "requireConfigFile": false,
       "templateSettings": {
         "evaluate": [
           "[%",
@@ -284,6 +285,7 @@
       "UI/pod/**"
     ],
     "rules": {
+      "declaration-block-no-duplicate-custom-properties": null,
       "indentation": 4,
       "order/order": [
         "custom-properties",
