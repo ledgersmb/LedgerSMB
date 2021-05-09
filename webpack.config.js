@@ -243,9 +243,7 @@ const VirtualModulePluginOptions = {
     moduleName: "js-src/lsmb/bootstrap.js",
     contents:
         `/* eslint-disable */
-        define(["dojo/parser","dojo/ready","` +
-        includedRequires.join('","') +
-        `"], function(parser, ready) {
+        define(["dojo/parser","dojo/ready","${includedRequires.join('","')}"], function(parser, ready) {
             ready(function() {
             });
             return {};
