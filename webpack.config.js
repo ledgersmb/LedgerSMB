@@ -367,7 +367,6 @@ const optimizationList = {
             sourceMap: !prodMode
         }),
         new OptimizeCSSAssetsPlugin({
-            cssProcessor: require("cssnano"),
             cssProcessorOptions: {
                 discardComments: { removeAll: true },
                 zindex: {
