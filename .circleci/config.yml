@@ -69,13 +69,13 @@ commands:
     description: "Prepare environment"
     steps:
 
+      - checkout
+
       - run:
           name: "Monitor CPU & MEMORY"
           command: |
             ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
           background: true
-
-      - checkout
 
       - run:
           # TODO: Update the CircleCI dev images instead
