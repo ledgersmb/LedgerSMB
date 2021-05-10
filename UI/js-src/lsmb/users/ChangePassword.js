@@ -50,9 +50,8 @@ define([
                     }
                     this.lstrings[str] = this._lstrings[str];
                 }
-                document.getElementById(
-                    "pwtitle"
-                ).innerHTML = this.lstrings.title;
+                document.getElementById("pwtitle").innerHTML =
+                    this.lstrings.title;
                 var I = this;
                 on(this.oldpw, "keypress", function () {
                     I.setFeedback(0, "");
