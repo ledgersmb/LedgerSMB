@@ -74,6 +74,7 @@ commands:
       - run:
           name: "Monitor CPU & MEMORY"
           command: |
+            mkdir -p logs screens
             ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
           background: true
 
