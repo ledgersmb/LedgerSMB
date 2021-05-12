@@ -170,19 +170,19 @@ jobs:
         with:
           # The Perl version to download (if necessary) and use. Example: 5.30.0
           perl-version: ${{ matrix.perl }} # optional, default is 5
-          # The distribution of Perl binary.
-
-      - name: Cache cpan modules
-        id: cache-cpan-modules
-        uses: actions/cache@v2
-        with:
-          # A list of files, directories, and wildcard patterns to cache and restore
-          path: /opt/hostedtoolcache/perl
-          # Keys for restoring and saving the cache
-          key: |
-            cpan-${{ matrix.perl }}-${{ hashFiles('cpanfile') }}
-            cpan-${{ matrix.perl }}-
-            cpan-
+          install-modules-with: cpm
+#          install-modules:
+#            Devel::Cover
+#            Devel::Cover::Report::Coveralls
+#            Devel::NYTProf
+          # Features and Devel modules
+          install-modules-args: >
+            --with-develop
+            --feature=starman
+            --feature=latex-pdf-ps
+            --feature=openoffice
+            --feature=xls
+            --feature=edi
 
       - uses: actions/download-artifact@v2
         with:
@@ -190,17 +190,6 @@ jobs:
 
       - name: 'Untar Webpacked files'
         run: tar -xf webpacked_js.tar
-
-      # Update packages restored from the above cache
-      - name: Install required features
-        run: |
-          cpm install -g -v --resolver=metacpan --notest \
-            --with-develop \
-            --feature=starman \
-            --feature=latex-pdf-ps \
-            --feature=openoffice \
-            --feature=xls \
-            --feature=edi
 
       - name: Starting 'nginx'
         run: |
