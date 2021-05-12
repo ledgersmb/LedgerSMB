@@ -81,17 +81,17 @@ glob.sync("**/*.html", {
 
 // Pull UI/js-src/lsmb
 includedRequires = includedRequires
-    .concat(
+.concat(
         glob
             .sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
-                cwd: "UI/js-src/"
+            cwd: "UI/js-src/"
             })
             .map(function (file) {
                 return file.replace(/\.js$/, "");
             })
     )
-    .filter((x, i, a) => a.indexOf(x) === i)
-    .sort();
+.filter((x, i, a) => a.indexOf(x) === i)
+.sort();
 
 /* LOADERS */
 
@@ -242,7 +242,7 @@ const lsmbCSS = {
 const VirtualModulePluginOptions = {
     moduleName: "js-src/lsmb/bootstrap.js",
     contents:
-        `/* eslint-disable */
+       `/* eslint-disable */
         define(["dojo/parser","dojo/ready","${includedRequires.join('","')}"], function(parser, ready) {
             ready(function() {
             });
@@ -385,7 +385,7 @@ const webpackConfigs = {
 
     entry: {
         polyfill: "js-src/polyfills.js",
-        bootstrap: "js-src/lsmb/bootstrap.js", // Virtual file
+        bootstrap: "js-src/lsmb/bootstrap.js",  // Virtual file
         ...lsmbCSS
     },
 
