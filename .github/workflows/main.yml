@@ -170,23 +170,12 @@ jobs:
       - name: Setup Perl environment
         # You may pin to the exact commit or the version.
         # uses: shogo82148/actions-setup-perl@341aa635c06050493b41d71134eea58bfc5f4018
-        uses: shogo82148/actions-setup-perl@v1.8.3
+        uses: shogo82148/actions-setup-perl@v1.12.0-rc1
         with:
           # The Perl version to download (if necessary) and use. Example: 5.30.0
           perl-version: ${{ matrix.perl }} # optional, default is 5
-          # The distribution of Perl binary.
-
-      - name: Cache cpan modules
-        id: cache-cpan-modules
-        uses: actions/cache@v2
-        with:
-          # A list of files, directories, and wildcard patterns to cache and restore
-          path: /opt/hostedtoolcache/perl
-          # Keys for restoring and saving the cache
-          key: |
-            cpan-${{ matrix.perl }}-${{ hashFiles('cpanfile') }}
-            cpan-${{ matrix.perl }}-
-            cpan-
+          install-modules-with: cpm
+          install-modules-args: --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
 
       - uses: actions/download-artifact@v2
         with:
@@ -194,17 +183,6 @@ jobs:
 
       - name: 'Untar files'
         run: tar -xf webpacked_js.tar
-
-      # Update packages restored from the above cache
-      - name: Install required features
-        run: |
-          cpm install -g -v --resolver=metacpan --notest \
-            --with-develop \
-            --feature=starman \
-            --feature=latex-pdf-ps \
-            --feature=openoffice \
-            --feature=xls \
-            --feature=edi
 
       - name: Starting 'nginx'
         run: |
@@ -244,7 +222,7 @@ jobs:
 
       - name: Create default test database
         run: |
-            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
+            PERL5LIB="lib:$PERL5LIB" \
               ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
 
       - name: Starting 'starman'
