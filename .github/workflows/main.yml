@@ -266,6 +266,9 @@ jobs:
           yath stop
         env:
           LSMB_TEST_DB: 1
+          COA_TESTING: ${{ matrix.COA_TESTING }}
+          COVERAGE: ${{ matrix.COVERAGE }}
+          DB_TESTING: ${{ matrix.DB_TESTING }}
 
       - name: Upload coverage data
         run: |
