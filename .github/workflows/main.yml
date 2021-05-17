@@ -95,7 +95,7 @@ jobs:
             BROWSER: "operablink"
             DB_TESTING: 1
 
-          - perl: "5.32"
+          - perl: "5.32.1"
             BROWSER: "phantomjs"
             COVERAGE: 1
 
@@ -166,7 +166,7 @@ jobs:
       - name: Setup Perl environment
         # You may pin to the exact commit or the version.
         # uses: shogo82148/actions-setup-perl@341aa635c06050493b41d71134eea58bfc5f4018
-        uses: shogo82148/actions-setup-perl@v1.8.3
+        uses: shogo82148/actions-setup-perl@v1
         with:
           # The Perl version to download (if necessary) and use. Example: 5.30.0
           perl-version: ${{ matrix.perl }} # optional, default is 5
@@ -188,7 +188,7 @@ jobs:
         with:
           name: webpacked_js
 
-      - name: 'Untar files'
+      - name: 'Untar Webpacked files'
         run: tar -xf webpacked_js.tar
 
       # Update packages restored from the above cache
@@ -213,6 +213,9 @@ jobs:
               Devel::Cover Devel::Cover::Report::Coveralls
           echo "PERL5OPT=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
           echo "JOB_COUNT=2" >> $GITHUB_ENV
+          # Ugly patch to yath to quiet B::Deparse noise.
+          sudo cp -v utils/patch/Test2/Harness/Collector/JobDir.pm \
+            `find /opt/hostedtoolcache/perl/${{ matrix.perl }} -name JobDir.pm`
         if: ${{ matrix.COVERAGE }}
 
       # This will start a hub and JOB_COUNT matrix.
@@ -240,8 +243,17 @@ jobs:
 
       - name: Create default test database
         run: |
-            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
+            PERL5LIB="lib:$PERL5LIB" \
               ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
+
+      - name: Setup coverage
+        run: |
+          cpm install Devel::Cover \
+            Devel::Cover::Report::Coveralls \
+            Devel::NYTProf
+          echo "PERL5OPT=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
+          echo "JOB_COUNT=2" >> $GITHUB_ENV
+        if: ${{ matrix.COVERAGE }}
 
       - name: Starting 'starman'
         run: |
