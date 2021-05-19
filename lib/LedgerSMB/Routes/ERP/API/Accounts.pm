@@ -6,7 +6,7 @@ LedgerSMB::Routes::ERP::API::Accounts - Webservice routes for GL accounts
 
 =head1 DESCRIPTION
 
-Webservice routes for goods & services
+Webservice routes for General Ledger accounts
 
 =head1 SYNOPSIS
 
