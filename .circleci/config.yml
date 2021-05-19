@@ -49,13 +49,13 @@ commands:
                 t xt
             else
               yath start $YATH_DEVEL_COVER_OPTIONS \
-                --job-count $JOB_COUNT --event-timeout 1800
-              yath run --color --no-progress --retry=2 \
-                --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
-                --pgtap-psql=.circleci/psql-wrap \
-                --Feature-tags=~@wip \
-                t xt
-              yath stop
+                       --job-count $JOB_COUNT --event-timeout 1800
+            yath run --color --no-progress --retry=2 \
+                     --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
+                     --pgtap-psql=.circleci/psql-wrap \
+                     --Feature-tags=~@wip \
+              t xt
+            yath stop
             fi
       - run:
           command: |
@@ -205,9 +205,9 @@ commands:
               JOB_COUNT=2
             fi
             PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS" \
-              starman --preload-app --pid starman.pid --workers $JOB_COUNT \
-                --max-requests 5000 --error-log logs/starman-error.log \
-                -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi
+            starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+                  --max-requests 5000 --error-log logs/starman-error.log \
+                  -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi
             echo "starman done!"
             touch starman-done
           background: true
