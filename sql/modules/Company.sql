@@ -562,6 +562,7 @@ $$
                 FROM entity e
                 JOIN entity_credit_account ec ON (e.id = ec.entity_id)
                 WHERE e.id = in_entity_id
+                       AND ec.entity_class = in_entity_class;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
