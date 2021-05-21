@@ -16,27 +16,52 @@ commands:
   prove:
     steps:
       - run:
+          name: Set up coverage
           command: |
-            JOB_COUNT=5
             if [ "x$COVERAGE" == "x1" ]
             then
-              export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
-              JOB_COUNT=2
+              echo "JOB_COUNT=2" >> $BASH_ENV
               sudo cp utils/patch/Test2/Harness/Collector/JobDir.pm \
                       $HOME/perl5/lib/perl5/Test2/Harness/Collector/JobDir.pm
+              echo "STARMAN_DEVEL_COVER_OPTIONS='-MDevel::Cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
+              echo "YATH_DEVEL_COVER_OPTIONS='--cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
             fi
-            yath start --job-count $JOB_COUNT --event-timeout 1800 # Timeout after 30 min
-            yath --color --no-progress --retry=2 \
-              --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
-              --pgtap-psql=.circleci/psql-wrap \
-              --Feature-tags=~@wip \
-              t xt
-            yath stop
+
+      - run:
+          name: Create test database
+          command: |
+            source $BASH_ENV
+            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
+            PERL5OPT="$PERL5OPT $STARMAN_DEVEL_COVER_OPTIONS" \
+              ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
+
       - run:
           command: |
-            while [ $(pidof plackup) ];
+            source $BASH_ENV
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              yath test $YATH_DEVEL_COVER_OPTIONS \
+                --job-count $JOB_COUNT --event-timeout 1800 \
+                --color --no-progress --retry=2 \
+                --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
+                --pgtap-psql=.circleci/psql-wrap \
+                --Feature-tags=~@wip \
+                t xt
+            else
+              yath start $YATH_DEVEL_COVER_OPTIONS \
+                       --job-count $JOB_COUNT --event-timeout 1800
+            yath run --color --no-progress --retry=2 \
+                     --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
+                     --pgtap-psql=.circleci/psql-wrap \
+                     --Feature-tags=~@wip \
+              t xt
+            yath stop
+            fi
+      - run:
+          command: |
+            while [ $(pidof starman) ];
             do
-              kill -SIGTERM `pidof plackup`
+              kill -SIGTERM `pidof starman`
               echo -n "."
               sleep 5
             done
@@ -49,14 +74,14 @@ commands:
                     utils/test/monitor.gnuplot || true
             mkdir -p /tmp/artifact/logs;
             mkdir -p /tmp/artifact/screens;
-            cp logs/* /tmp/artifact/logs || true;
+            cp -r logs/* /tmp/artifact/logs || true;
             cp screens/* /tmp/artifact/screens || true;
           when: always
 
       - run:
           name: Upload coverage data
           command: |
-            if [ "x$COVERAGE" == "x1" ];
+            if [ "x$COVERAGE" == "x1" ]
             then
               cover -report coveralls
               cover -report text > /tmp/artifact/coverage.txt
@@ -163,35 +188,28 @@ commands:
              - $HOME/perl5
 
       - run:
-          name: Create test database
-          command: |
-            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
-              ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
-
-      - run:
           name: Set up host IP & BASE variables
           command: |
-            echo "HOST_IP=$(hostname -I |awk '{print $1}')" > $BASH_ENV
+            echo "HOST_IP=$(hostname -I |awk '{print $1}')" >> $BASH_ENV
             echo "export LSMB_BASE_URL=http://\$HOST_IP:5000" >> $BASH_ENV
             echo "export PSGI_BASE_URL=http://\$HOST_IP:5762" >> $BASH_ENV
 
-  start_plackup:
-    description: "Start plackup"
+  start_starman:
+    description: "Start starman"
     steps:
       - run:
           command: |
-            JOB_COUNT=5
             source $BASH_ENV
             if [ "x$COVERAGE" == "x1" ]
             then
-              export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
               JOB_COUNT=2
             fi
+            PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS" \
             starman --preload-app --pid starman.pid --workers $JOB_COUNT \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi
-            echo "Plackup done!"
-            touch plackup-done
+            echo "starman done!"
+            touch starman-done
           background: true
 
   start_proxy:
@@ -249,8 +267,9 @@ executors:
     environment:
       BROWSER: << parameters.browser >>
       COVERAGE: << parameters.coverage >>
-      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t/,+ignore,^utils/,+ignore,\.lttc$,+ignore,^/usr/,+ignore,/home/circleci/perl5,+ignore,plackup$
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,(^x?t/|^utils/|\.lttc$|^/usr/|/home/circleci/perl5|starman$)
       HARNESS_RULESFILE: t/testrules.yml
+      JOB_COUNT: 2
       LSMB_BASE_URL: http://127.0.0.1:5000
       LSMB_NEW_DB: lsmb_test
       LSMB_TEST_DB: 1
@@ -262,6 +281,8 @@ executors:
       PSGI_BASE_URL: http://127.0.0.1:5762
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: selenium-hub
+      STARMAN_DEVEL_COVER_OPTIONS: ''
+      YATH_DEVEL_COVER_OPTIONS: ''
 
 # Define jobs
 jobs:
@@ -276,7 +297,7 @@ jobs:
     steps:
       - prep_env:
           perl: '5.32'
-      - start_plackup
+      - start_starman
       - start_proxy
       - prove
 
@@ -291,7 +312,7 @@ jobs:
     steps:
       - prep_env:
           perl: '5.30'
-      - start_plackup
+      - start_starman
       - start_proxy
       - prove
     environment:
@@ -308,7 +329,7 @@ jobs:
     steps:
       - prep_env:
           perl: '5.28'
-      - start_plackup
+      - start_starman
       - start_proxy
       - prove
     environment:
@@ -327,7 +348,7 @@ jobs:
     steps:
       - prep_env:
           perl: '5.28'
-      - start_plackup
+      - start_starman
       - start_proxy
       - prove
 
