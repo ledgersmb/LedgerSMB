@@ -122,7 +122,8 @@
     "build:dev": "webpack --progress --mode=development",
     "serve": "webpack-dev-server --env.dev",
     "lint:js": "eslint --ext .js ./",
-    "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules ."
+    "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
+    "test": "npm run lint:js;npm run lint:markdown"
   },
   "eslintConfig": {
     "settings": {
