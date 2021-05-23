@@ -8,9 +8,13 @@ on:
   push:
     branches-ignore:
       - 'master'
+    paths-ignore:
+      - '.circleci'
   pull_request:
     branches:
       - 'master'
+    paths-ignore:
+      - '.circleci'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
