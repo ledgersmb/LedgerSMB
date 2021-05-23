@@ -9,3 +9,9 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "npm"
+    # Files stored in `/` directory
+    directory: "/"
+    schedule:
+      interval: "daily"
