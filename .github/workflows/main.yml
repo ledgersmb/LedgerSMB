@@ -279,7 +279,7 @@ jobs:
         if: ${{ matrix.COVERAGE && github.repository != 'ledgersmb/LedgerSMB'}}
 
       - name: Collect docker logs
-        uses: jwalton/gh-docker-logs@v1
+        uses: jwalton/gh-docker-logs@v2
         with:
           dest: 'logs/docker-logs'
         if: always()
