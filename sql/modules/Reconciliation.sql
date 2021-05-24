@@ -505,12 +505,18 @@ $$
                        where la.entry_id = ac.entry_id
                              and rl.report_id = in_report_id)
             where la.report_line_id is null
-           returning report_line_id
+           returning report_line_id, entry_id
         )
         update cr_report_line rl
            set our_balance = (select sum(case when t_recon_fx then ac.amount_tc
                                               else ac.amount_bc end)
-                                from cr_report_line_links rll
+                                from (
+                                     select report_line_id, entry_id
+                                       from cr_report_line_links
+                                     union all
+                                     select report_line_id, entry_id
+                                       from matched_entries
+                                ) rll
                                 join acc_trans ac on rll.entry_id = ac.entry_id
                                 where rl.id = rll.report_line_id)
          where rl.id in (select report_line_id from matched_entries);
