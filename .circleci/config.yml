@@ -13,6 +13,14 @@ aliases:
 
 # Reuseable commands
 commands:
+
+  check-changed-files-or-halt:
+    parameters:
+      pattern:
+        type: string
+    steps:
+      - run: git show -m HEAD --name-only --pretty="" | egrep -q -v '<< parameters.pattern >>' || circleci step halt
+
   prove:
     steps:
       - run:
@@ -97,6 +105,9 @@ commands:
     steps:
 
       - checkout
+
+      - check-changed-files-or-halt:
+          pattern: ^.github/*$
 
       - run:
           name: "Monitor CPU & MEMORY"
