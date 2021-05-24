@@ -47,7 +47,7 @@ below.
 
 ## Client
 
-A [Dojo 1.15 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
+A [Dojo 1.15 compatible web browser](https://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
 is all that's required on the client (except IE8 and 9); it includes all
 current versions of Chrome and FireFox as of 3.6, as well as MS Internet
 Explorer as of version 10 and a wide range of mobile browsers.
@@ -69,7 +69,7 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 
 # Quick start (from source)
 
-The instructions below are for getting started quickly; the [project's site](http://ledgersmb.org)
+The instructions below are for getting started quickly; the [project's site](https://ledgersmb.org)
  provides [in-depth installation instructions](https://ledgersmb.org/content/installing-ledgersmb-16)
 for **production** installs.
 
@@ -141,7 +141,7 @@ purpose of the quick start.
 When not installing as root or through `sudo`, `cpanm` will install unfulfilled
 library dependencies into a location which can be used with `local::lib`.
 
-The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-16)
+The [in-depth installation instructions](https://ledgersmb.org/topic/installing-ledgersmb-16)
 contain a list of distribution provided packages to reduce the
 number of dependencies installed from CPAN.
 
@@ -251,19 +251,18 @@ The system is installed and should be available for evaluation through
 - http://localhost:5762/login.pl    # Normal login for the application
 
 The system is ready for [preparation for first
-use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
+use](https://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
 
 # Project information
 
-Web site: [http://ledgersmb.org/](http://ledgersmb.org)
+Web site: [https://ledgersmb.org/](https://ledgersmb.org)
 
 Live chat:
- * IRC: [irc://irc.freenode.net/#ledgersmb](irc://irc.freenode.net/#ledgersmb)
- * Matrix: [https://vector.im/#/room/#ledgersmb:matrix.org](https://vector.im/#/room/#ledgersmb:matrix.org) (bridged IRC channel)
+ * Matrix: [https://app.element.io/#/room/#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matrix.org) (bridged IRC channel)
 
-Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
+Forums: [https://forums.ledgersmb.org/](https://forums.ledgersmb.org/)
 
-Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
+Mailing list archives: [https://archive.ledgersmb.org](https://archive.ledgersmb.org)
 
 Mailing lists:
  * [https://lists.ledgersmb.org/mailman/listinfo/announce](https://lists.ledgersmb.org/mailman/listinfo/announce)
@@ -290,4 +289,4 @@ Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 
 # License
 
-[GPLv2](http://open-source.org/licenses/GPL-2.0)
+[GPLv2](https://opensource.org/licenses/GPL-2.0)
