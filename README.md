@@ -260,8 +260,6 @@ Web site: [https://ledgersmb.org/](https://ledgersmb.org)
 Live chat:
  * Matrix: [https://app.element.io/#/room/#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matrix.org) (bridged IRC channel)
 
-Forums: [https://forums.ledgersmb.org/](https://forums.ledgersmb.org/)
-
 Mailing list archives: [https://archive.ledgersmb.org](https://archive.ledgersmb.org)
 
 Mailing lists:
