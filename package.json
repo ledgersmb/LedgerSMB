@@ -74,7 +74,7 @@
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-jsdoc": "^35.0.0",
     "eslint-plugin-json": "3.0.0",
-    "eslint-plugin-markdown": "^2.1.0",
+    "eslint-plugin-markdown": "^2.2.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^4.2.1",
