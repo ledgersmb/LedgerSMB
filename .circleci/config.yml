@@ -107,7 +107,7 @@ commands:
       - checkout
 
       - check-changed-files-or-halt:
-          pattern: ^.github/*$
+          pattern: ^.github/
 
       - run:
           name: "Monitor CPU & MEMORY"
