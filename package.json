@@ -70,6 +70,7 @@
     "eslint-config-standard": "16.0.3",
     "eslint-friendly-formatter": "4.0.1",
     "eslint-plugin-amd": "^1.1.0",
+    "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-jsdoc": "^35.0.0",
@@ -89,9 +90,11 @@
     "markdownlint": "^0.23.1",
     "markdownlint-cli": "^0.27.1",
     "npm-run-all": "4.1.5",
+    "obsolete-webpack-plugin": "0.5.6",
     "optimize-css-assets-webpack-plugin": "6.0.0",
     "prettier": "^2.3.0",
     "stylelint": "^13.13.1",
+    "script-ext-html-webpack-plugin": "^2.1.5",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.1",
     "stylelint-order": "4.1.0",
@@ -121,9 +124,17 @@
     "build": "webpack --mode=production",
     "build:dev": "webpack --progress --mode=development",
     "serve": "webpack-dev-server --env.dev",
+    "lint:css": "stylelint UI/css/*.css",
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
-    "test": "npm run lint:js;npm run lint:markdown"
+    "test": "npm run lint:css;npm run lint:js;npm run lint:markdown"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env"
+      ]
+    ]
   },
   "eslintConfig": {
     "settings": {
@@ -137,6 +148,8 @@
     },
     "plugins": [
       "amd",
+      "compat",
+      "markdown",
       "sort-dojo-dependency",
       "prettier"
     ],
@@ -174,7 +187,8 @@
       "prettier",
       "eslint:recommended",
       "plugin:import/errors",
-      "plugin:import/warnings"
+      "plugin:import/warnings",
+      "plugin:markdown/recommended"
     ],
     "ignorePatterns": [
       "dojo/",
@@ -186,6 +200,7 @@
     ],
     "rules": {
       "camelcase": "error",
+      "compat/compat": "warn",
       "consistent-return": "error",
       "curly": [
         "error",
@@ -258,6 +273,7 @@
     }
   },
   "stylelint": {
+    "defaultSeverity": "warning",
     "extends": "stylelint-config-standard",
     "plugins": [
       "stylelint-no-unsupported-browser-features",

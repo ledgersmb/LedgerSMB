@@ -13,7 +13,9 @@ const { DuplicatesPlugin } = require("inspectpack/plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -81,17 +83,17 @@ glob.sync("**/*.html", {
 
 // Pull UI/js-src/lsmb
 includedRequires = includedRequires
-.concat(
+    .concat(
         glob
             .sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
-            cwd: "UI/js-src/"
+                cwd: "UI/js-src/"
             })
             .map(function (file) {
                 return file.replace(/\.js$/, "");
             })
     )
-.filter((x, i, a) => a.indexOf(x) === i)
-.sort();
+    .filter((x, i, a) => a.indexOf(x) === i)
+    .sort();
 
 /* LOADERS */
 
@@ -241,9 +243,10 @@ const lsmbCSS = {
 // Compile bootstrap module as a virtual one
 const VirtualModulePluginOptions = {
     moduleName: "js-src/lsmb/bootstrap.js",
-    contents:
-       `/* eslint-disable */
-        define(["dojo/parser","dojo/ready","${includedRequires.join('","')}"], function(parser, ready) {
+    contents: `/* eslint-disable */
+        define(["dojo/parser","dojo/ready","${includedRequires.join(
+            '","'
+        )}"], function(parser, ready) {
             ready(function() {
             });
             return {};
@@ -295,6 +298,14 @@ var pluginsProd = [
         mode: prodMode ? "production" : "development",
         excludeChunks: [...Object.keys(lsmbCSS)],
         template: "lib/ui-header.html"
+    }),
+
+    new ObsoleteWebpackPlugin({
+        name: "obsolete"
+    }),
+
+    new ScriptExtHtmlWebpackPlugin({
+        async: "obsolete"
     })
 ];
 
@@ -385,7 +396,7 @@ const webpackConfigs = {
 
     entry: {
         polyfill: "js-src/polyfills.js",
-        bootstrap: "js-src/lsmb/bootstrap.js",  // Virtual file
+        bootstrap: "js-src/lsmb/bootstrap.js", // Virtual file
         ...lsmbCSS
     },
 
