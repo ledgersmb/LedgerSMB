@@ -40,12 +40,7 @@
     }
   ],
   "browserslist": [
-    "defaults",
-    "last 2 versions",
-    "not dead",
-    "not IE 11",
-    "not IE_Mob 11",
-    "not op_mini all",
+	  "supports es6-module and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius",
     "phantomjs 2.1",
     "maintained node versions"
   ],
