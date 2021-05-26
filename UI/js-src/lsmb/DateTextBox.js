@@ -5,8 +5,11 @@ define([
     "dijit/form/DateTextBox",
     "dojo/date/locale",
     "dojo/i18n",
-    "dojo/_base/declare"
-], function (DateTextBox, locale, i18n, declare) {
+    "dojo/on",
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/dom-attr"
+], function (DateTextBox, locale, i18n, on, declare, lang, domAttr) {
     var isoDate = /^\d\d\d\d-\d\d-\d\d$/;
     return declare("lsmb/DateTextBox", [DateTextBox], {
         _formattedValue: null,
@@ -78,6 +81,25 @@ define([
             ) {
                 this.value = new Date();
             }
+        },
+        startup: function () {
+            this.inherited(arguments);
+
+            /* eslint no-cond-assign: 0 */
+            /* Live insertion of date separators based on user selected format */
+            on(this.domNode, "keyup", lang.hitch(this, function (e) {
+                var value = domAttr.get(e.target, "value");
+
+                // Extract the location of the separators
+                const re = /[^a-z]/gi;
+                let position;
+                while ((position = re.exec(lsmbConfig.dateformat)) !== null) {
+                    if (value !== null && position.index === (value.length)) {
+                        domAttr.set(e.target, "value", (value += position[0]));
+                    }
+                }
+            }));
+            // End of code block related to date separation 
         },
         parse: function (value) {
             if (!isoDate.test(value)) {
