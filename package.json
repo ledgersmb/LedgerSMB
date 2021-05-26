@@ -109,7 +109,7 @@
   },
   "dependencies": {
     "content-disposition": "^0.5.3",
-    "core-js": "3.12.1",
+    "core-js": "3.13.0",
     "dijit": "1.16.4",
     "dojo": "1.16.4",
     "regenerator-runtime": "0.13.7"
