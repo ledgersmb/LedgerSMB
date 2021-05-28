@@ -6,6 +6,7 @@ const fs = require("fs");
 const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
+const { merge } = require("webpack-merge");
 
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
@@ -430,7 +431,10 @@ const webpackConfigs = {
     performance: { hints: prodMode ? false : "warning" }
 };
 
+/* Include Markdown compiling for README.md */
+const WebpackCompileMarkdown = require("./UI/js-src/webpack-compile-markdown.js");
+
 /* eslint-disable-next-line no-unused-vars */
 module.exports = (env) => {
-    return webpackConfigs;
+    return merge(webpackConfigs, WebpackCompileMarkdown);
 };

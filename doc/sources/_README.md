@@ -33,7 +33,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.9.0-dev, the current
+Note that these are the system requirements for LedgerSMB <<LSMB_VERSION>>, the current
 development version. Please check the system requirements for [the 1.7 old stable
 version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system-requirements)
 and [the 1.8 version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-requirements).
@@ -59,30 +59,7 @@ explicitly doesn't make any attempts to support Internet Explorer.
 The tables below show the browsers currently supported, their earliest date
 and a range of versions.
 
-
-### Desktop
-
-| Browser Name        | Earliest | Versions                                    |
-| ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-93                                |
-| Edge                | 2017-10  | 16-18, 79-81, 83-90                         |
-| Firefox             | 2018-05  | 60-90                                       |
-| Opera               | 2017-09  | 48-58, 60, 62-75                            |
-| Safari              | 2012-07  | 6, 10.1, 11, 11.1, 12, 12.1, 13, 13.1, 14,  |
-|                     |          | 14.1, TP                                    |
-
-### Mobile
-
-| Browser Name        | Earliest | Versions                                    |
-| ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2021-04  | 90                                          |
-| Firefox for Android | 2021-03  | 87                                          |
-| Android Browser     | 2021-04  | 90                                          |
-| Safari on iOS       | 2017-03  | 10.3, 11.0-11.4, 12.0-12.4, 13.0-13.7,      |
-|                     |          | 14.0-14.5                                   |
-| Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
-|                     |          | 14.0                                        |
-
+<<browsers_list>>
 **Note: Earliest dates and versions come from http://caniuse.com. Only the most
 recent data is available for Mobile browsers other than Safari, because they
 are pushed out to the devices as soon as they are releases, so the amount of
