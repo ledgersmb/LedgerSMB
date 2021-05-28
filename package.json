@@ -40,8 +40,7 @@
     }
   ],
   "browserslist": [
-    "supports es6-module and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius",
-    "phantomjs 2.1"
+    "supports es6-module and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius"
   ],
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.3",

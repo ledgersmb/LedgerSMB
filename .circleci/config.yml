@@ -305,6 +305,7 @@ jobs:
       postgres: '11'
       browser: chrome
       selenium: selenium/node-chrome
+      coverage: 1
     steps:
       - prep_env:
           perl: '5.32'
@@ -346,23 +347,6 @@ jobs:
     environment:
       DB_TESTING: 1
 
-  test_webpack_phantomjs:
-    <<: *defaults
-    executor:
-      name: test
-      perl: '5.32'
-      postgres: '11'
-      browser: phantomjs
-      hub: ledgersmb/ledgersmb_circleci-phantomjs
-      selenium: rwgrim/docker-noop
-      coverage: 1
-    steps:
-      - prep_env:
-          perl: '5.28'
-      - start_starman
-      - start_proxy
-      - prove
-
 # Workflows
 # Tests multiple browsers, coverage and dojo
 _filters: &_filters
@@ -384,7 +368,4 @@ workflows:
           filters: *_filters
 
       - test_webpack_opera:
-          filters: *_filters
-
-      - test_webpack_phantomjs:
           filters: *_filters
