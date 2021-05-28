@@ -393,9 +393,8 @@ FOREACH link IN form.file_links;
 </tr>
 [% END # FOREACH %]
 </table>
-[% callback = "gl.pl?action=edit&amp;id=" _ form.id -%]
 <a href="file.pl?action=show_attachment_screen&amp;ref_key=[% form.id
-   %]&amp;file_class=1&amp;callback=[% callback | uri %]">[[% text('Attach') %]]</a>
+   %]&amp;file_class=1&amp;callback=[% ('gl.pl?action=edit&id=' _ form.id) | uri %]">[[% text('Attach') %]]</a>
 [% END # IF for[% INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved %]
 </form>
 [% INCLUDE CLOSE_STATUS_DIV %]
