@@ -184,10 +184,6 @@ sub display_form
         $form->{title} = $locale->text("[_1] General Ledger Transaction", $title);
     }
 
-    for (qw(reference description notes)) {
-        $form->{$_} = $form->quote( $form->{$_} );
-    }
-
     if ( ( $rows = $form->numtextrows( $form->{description}, 50 ) ) > 1 ) {
          $form->{rowsdesc}=$rows; $form->{colsdesc}=50;
          $form->{colrowdesc}=1;
