@@ -231,7 +231,8 @@ INSERT INTO ar (
  approved,
  entity_credit_account,
  force_closed,
- description
+ description,
+ crdate
 )
 SELECT
  id,
@@ -262,7 +263,8 @@ SELECT
  approved,
  entity_credit_account,
  force_closed,
- description
+ description,
+ crdate
   FROM lsmb13.ar;
 ALTER TABLE ar ENABLE TRIGGER ar_track_global_sequence;
 ALTER TABLE ar ENABLE TRIGGER ar_prevent_closed;
@@ -300,7 +302,8 @@ INSERT INTO ap (
  terms,
  description,
  force_closed,
- entity_credit_account
+ entity_credit_account,
+ crdate
 )
 SELECT
  id,
@@ -331,7 +334,8 @@ SELECT
  terms,
  description,
  force_closed,
- entity_credit_account
+ entity_credit_account,
+ crdate
   FROM lsmb13.ap;
 ALTER TABLE ap ENABLE TRIGGER ap_track_global_sequence;
 ALTER TABLE ap ENABLE TRIGGER ap_prevent_closed;
