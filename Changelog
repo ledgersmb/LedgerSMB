@@ -578,6 +578,16 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.32
+* Update welcome.html and README, removing FreeNode and updating Element (Erik H)
+* Fix double-quoting values in GL transaction 'notes' and 'description' (Erik H)
+* Fix GL transaction after file attachment showing up empty (Erik H)
+* Retain AR/AP account across 'Update' on invoices and transactions (Erik H)
+* Don't drop creation date on AR/AP transactions and invoices from 1.3 (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.31
 * Improve upgrades in light of files attached to transactions (Erik H, #5405)
 
