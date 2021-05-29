@@ -150,7 +150,7 @@ sub handle {
              && "lsmb_legacy"->can($form->{action}) ) {
             $logger->trace("action $form->{action}");
 
-            &{ $form->{action} };
+            &{ $form->{action} }();
             $form->{dbh}->commit;
         }
         else {
@@ -177,6 +177,7 @@ sub handle {
     $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
     $form->{dbh}->disconnect() if defined $form->{dbh};
+    return 1; # PSGI.pm expects a 'true' response
 }
 
 
