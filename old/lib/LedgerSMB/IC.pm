@@ -961,12 +961,13 @@ sub create_links {
     }
     $sth->finish;
 
+    my $vclimit = $form->get_setting('vclimit');
     if ( $form->{item} ne 'assembly' ) {
         $query = qq|SELECT count(*) FROM entity_credit_account
                      WHERE entity_class = 1|;
         my ($count) = $dbh->selectrow_array($query);
 
-        if ( $count < $form->get_setting('vclimit') ) {
+        if ( defined $vclimit and $count < $vclimit ) {
             $query = qq|SELECT v.id, e.name
                 FROM entity_credit_account v
                 join entity e on e.id = v.entity_id
@@ -988,7 +989,7 @@ sub create_links {
                 where entity_class = 2|;
     ($count) = $dbh->selectrow_array($query);
 
-    if ( $count < $form->get_setting('vclimit') ) {
+    if ( defined $vclimit and $count < $vclimit ) {
         $query = qq|SELECT c.id, e.name
             FROM entity_credit_account c
             join entity e on e.id = c.entity_id
