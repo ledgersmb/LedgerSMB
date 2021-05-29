@@ -354,6 +354,8 @@ sub create_links {
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
     #$form->generate_selects(\%myconfig);
+    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}};
+
 }
 
 sub form_header {
@@ -766,6 +768,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts" );
 
+     $form->{"select$form->{ARAP}"} =~ s/(\Qoption value="$form->{$form->{ARAP}}"\E)/$1 selected="selected"/;
     print qq|
         <tr>
       <th align=left>$form->{invtotal}</th>

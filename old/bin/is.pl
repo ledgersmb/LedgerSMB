@@ -310,6 +310,8 @@ sub form_header {
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
+    $form->{selectAR} =~ s/(\Qoption value="$form->{AR}"\E)/$1 selected="selected"/;
+
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
         <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
