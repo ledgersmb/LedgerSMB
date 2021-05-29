@@ -13,6 +13,8 @@ Added functionalities
 * Add option to search by customer/vendor name on payments search
 * Command line application for administrative tasks (bin/ledgersmb-admin)
 * Emailed documents are added to the database as attachments
+* Orders and invoices show change history
+* Login pages show a warning when using an unsupported/obsolete browser
 
 Changed functionalities
 * Improved error reporting on Print button with template evaluation failure
@@ -24,6 +26,10 @@ Changed functionalities
 * Add option to report opening or closing balance on balance sheet
 * Chart of Accounts examples converted to XML (from SQL)
 * Emailed invoices use data from the database instead of the screen
+* No longer show "Print and Save (as new)" buttons when no printers configured
+* Migrated to new test driver Yath (Test2::Harness), from `prove`
+* Script `bin/drop-roles` replaced by `bin/ledgersmb-admin destroy` command
+* Add `samesite` policy to the authentication cookie for modern browser support
 
 Removed functionalities
 * Configuration setting 'Only Timeout Locks' removed
@@ -62,6 +68,9 @@ Code cleanup
 * Removal of licence-incompatible code in utils/lib/
 * Performance tuning of UI template handling code
 * Integrate JS code of main app page better by making it a Dojo widget
+* User preferences are now stored using a row-based structure instead of columns
+* Lots of changes to make CI testing work on GitHub Actions
+* Enable `dependabot` to keep JavaScript dependencies up-to-date
 
 Dependency updates
 * perl 5.24 (updated from 5.20)
