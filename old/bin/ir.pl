@@ -323,6 +323,7 @@ sub form_header {
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
+    $form->{selectAP} =~ s/(\Qoption value="$form->{AP}"\E)/$1 selected="selected"/;
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
@@ -1274,6 +1275,9 @@ sub update {
              billing => 1,
              job => 1 );
      $form->generate_selects();
+
+    # wow... check_form() in io.pl also *displays* the form!!
+    # at least... in some cases
     check_form();
 
     $form->{rowcount}--;
