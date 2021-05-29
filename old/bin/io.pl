@@ -1380,7 +1380,7 @@ sub print_form {
         $form->{OUT}       = $form->{zipdir};
         $form->{printmode} = '>';
     } elsif ( $form->{media} !~ /(screen|zip|email)/ ) { # printing
-        $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
+        $form->{OUT}       = LedgerSMB::Sysconfig::printer()->{ $form->{media} };
         $form->{printmode} = '|-';
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
         $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;

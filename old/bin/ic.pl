@@ -117,7 +117,7 @@ sub link_part {
     # readonly
     if ( $form->{item} eq 'part' or $form->{item} eq 'assembly') {
         $form->{readonly} = 1
-          if $myconfig{acs} =~ /Goods \& Services--Add Part/;
+            if $myconfig{acs} and $myconfig{acs} =~ /Goods \& Services--Add Part/;
         $form->error(
             $locale->text(
                 'Cannot create Part; Inventory account does not exist!')
@@ -217,7 +217,7 @@ sub link_part {
           $form->quote( $form->{partsgroup} ) . "--$form->{partsgroup_id}";
     }
 
-    if ( @{ $form->{all_partsgroup} } ) {
+    if ( $form->{all_partsgroups} and @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = qq|<option></option>\n|;
 
         for ( @{ $form->{all_partsgroup} } ) {
@@ -261,7 +261,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
     delete $form->{makemodels};
 
     # setup vendors
-    if ( @{ $form->{all_vendor} } ) {
+    if ( $form->{all_vendor} and @{ $form->{all_vendor} } ) {
         $form->{selectvendor} = "<option></option>\n";
         for ( @{ $form->{all_vendor} } ) {
             $form->{selectvendor} .=
@@ -286,7 +286,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
     delete $form->{vendormatrix};
 
     # setup customers and groups
-    if ( @{ $form->{all_customer} } ) {
+    if ( $form->{all_customer} and @{ $form->{all_customer} } ) {
         $form->{selectcustomer} = "<option></option>\n";
         for ( @{ $form->{all_customer} } ) {
             $form->{selectcustomer} .=
@@ -295,7 +295,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         delete $form->{all_customer};
     }
 
-    if ( @{ $form->{all_pricegroup} } ) {
+    if ( $form->{all_pricegroup} and @{ $form->{all_pricegroup} } ) {
         $form->{selectpricegroup} = "<option>\n";
         for ( @{ $form->{all_pricegroup} } ) {
             $form->{selectpricegroup} .=
