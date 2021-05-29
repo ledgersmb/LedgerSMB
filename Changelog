@@ -2,6 +2,14 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.29
+* Update welcome.html and README, removing FreeNode and updating Element
+* Fix double-quoting values in GL transaction 'notes' and 'description' (#5415)
+* Fix GL transaction after file attachment showing up empty (#5416)
+* Retain AR/AP account across 'Update' on invoices and transactions (#5453)
+* Don't drop creation date on AR/AP transactions and invoices from 1.3 (#5417)
+
+
 Changelog for 1.7.28
 * Improve upgrades in light of files attached to transactions
 * Fix 1.3 upgrade breaking on default currency function type
