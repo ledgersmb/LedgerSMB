@@ -90,6 +90,7 @@ jobs:
         include:
           - perl: "5.32"
             BROWSER: "chrome"
+            COVERAGE: 1
 
           - perl: "5.30"
             BROWSER: "firefox"
@@ -98,10 +99,6 @@ jobs:
           - perl: "5.28"
             BROWSER: "operablink"
             DB_TESTING: 1
-
-          - perl: "5.32.1"
-            BROWSER: "phantomjs"
-            COVERAGE: 1
 
     services:
       # Label used to access the service container
@@ -200,19 +197,6 @@ jobs:
               up \
               --detach \
               --scale ${{ matrix.BROWSER }}=$JOB_COUNT \
-        if: ${{ matrix.BROWSER != 'phantomjs'}}
-
-      # phantomjs is not compatible with the latest selenium hub
-      - name: Starting phantomjs alone
-        run: |
-          docker run --detach \
-                      --publish 4422:8910 \
-                      --name hub \
-                      --add-host lsmb:`hostname -i` \
-                      madhavajay/selenium-node-phantomjs
-        env:
-          LANG: en_US.UTF-8
-        if: ${{ matrix.BROWSER == 'phantomjs' }}
 
       - name: Setup coverage
         run: |
@@ -240,7 +224,7 @@ jobs:
       # Fix the condition to debug
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
-        if: ${{ matrix.BROWSER == 'phantomjs' && 0 }}
+        if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       - name: Run Perl tests
         run: |
