@@ -37,9 +37,6 @@ is no previous report from which to get an opening balance.
    And I expect the Cleared Transactions totals to be:
        | Books Debits | Books Credits |
        |         0.00 |          0.00 |
-   And I expect the Mismatched Transactions totals to be:
-       | Our Debits | Our Credits | Their Debits | Their Credits |
-       |       0.00 |        0.00 |         0.00 |          0.00 |
    And I expect the Outstanding Transactions totals to be:
        | Our Debits | Our Credits |
        |    1000.00 |      200.00 |
@@ -56,12 +53,7 @@ is no previous report from which to get an opening balance.
    And I expect the Cleared Transactions totals to be:
        | Books Debits | Books Credits |
        |      1000.00 |        200.00 |
-   And I expect the Mismatched Transactions totals to be:
-       | Our Debits | Our Credits | Their Debits | Their Credits |
-       |       0.00 |        0.00 |         0.00 |          0.00 |
-   And I expect the Outstanding Transactions totals to be:
-       | Our Debits | Our Credits |
-       |       0.00 |        0.00 |
+   And I expect the Outstanding Transactions section to be absent
   When I change the "Ending Statement Balance" to "800.00"
    And I update the page
   Then I should see these Reconciliation Report headings:

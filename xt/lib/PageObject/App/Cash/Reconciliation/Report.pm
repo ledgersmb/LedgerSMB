@@ -100,7 +100,20 @@ sub find_reconciliation_totals {
     return $rv;
 }
 
+sub has_reconciliation_section {
+    my $self = shift;
+    my $args = shift;
 
+    if ($args->{section} =~ m/^Outstanding/i) {
+        return $self->find_all(q{//*[@id="outstanding-table"]});
+    }
+    elsif ($args->{section} =~ m/^Mismatched/i) {
+        return $self->find_all(q{//*[@id="error-table"]});
+    }
+    else {
+        die "unknown reconciliation report section: $args->{section}";
+    }
+}
 
 sub _verify {
     my ($self) = @_;
