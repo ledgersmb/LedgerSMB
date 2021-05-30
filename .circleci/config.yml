@@ -266,13 +266,13 @@ executors:
         name: selenium-hub
         environment:
           GRID_DEBUG: "true"
-          GRID_HUB_PORT: 4422
+          GRID_HUB_PORT: 4444
           GRID_MAX_SESSION: 100
       - image: << parameters.selenium >>
         environment:
           GRID_DEBUG: "true"
           HUB_HOST: selenium-hub
-          HUB_PORT: 4422
+          HUB_PORT: 4444
           NODE_MAX_SESSION: 5
           NODE_MAX_INSTANCES: 5
     environment:
