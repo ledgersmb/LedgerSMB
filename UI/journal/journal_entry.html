@@ -1,4 +1,7 @@
-[% PROCESS elements.html %]
+[%
+   PROCESS elements.html;
+   PROCESS attachments.html;
+%]
 
 <body class="lsmb [% dojo_theme %]">
 <div id="journal-entry">
@@ -355,58 +358,18 @@
            } %]
 
 [% END %]
-[% IF form.id %]
-<table width="100%">
-<tr class="listtop">
-<th colspan="4">[% text('Attached and Linked Files') %]</th>
-</tr>
-<tr class="listheading">
-<th>[% text('File name') %]</th>
-<th>[% text('File type') %]</th>
-<th>[% text('Attached at') %]</th>
-<th>[% text('Attached by') %]</th>
-</tr>
-[% FOREACH file IN form.files %]
-<tr>
-<td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=[% form.id
-            %]&amp;id=[% file.id %]" target="_download"
-            >[% file.file_name %]</a></td>
-<td>[% file.mime_type %]</td>
-<td>[% file.uploaded_at %]</td>
-<td>[% file.uploaded_by_name %]</td>
-</tr>
-[% END %]
-</table>
-<table width="100%">
-<tr class="listheading">
-<th>[% text('File name') %]</th>
-<th>[% text('File type') %]</th>
-<th>[% text('Attached To Type') %]</th>
-<th>[% text('Attached To') %]</th>
-<th>[% text('Attached at') %]</th>
-<th>[% text('Attached by') %]</th>
-</tr>
-[%
-FOREACH link IN form.file_links;
-        aclass="&nbsp;";
-        IF link.src_class() == 1;
-            aclass="Transaction";
-        ELSIF link.src_class() == 2;
-            aclass="Order";
-        END; %]
-<tr>
-<td>[% file.file_name %]</td>
-<td>[% file.mime_type %]</td>
-<td>[% aclass %]</td>
-<td>[% file.reference() %]</td>
-<td>[% file.attached_at() %]</td>
-<td>[% file.attached_by() %]</td>
-</tr>
-[% END # FOREACH %]
-</table>
-<a href="file.pl?action=show_attachment_screen&amp;ref_key=[% form.id
-   %]&amp;file_class=1&amp;callback=[% ('gl.pl?action=edit&id=' _ form.id) | uri %]">[[% text('Attach') %]]</a>
-[% END # IF for[% INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved %]
+[% IF form.id;
+
+  PROCESS attachments attachments = {
+      ref_key = form.id
+      file_class = 1
+      files = form.files
+      file_links = form.file_links
+      callback = 'gl.pl?action=edit&id=' _ form.id
+  };
+
+END # IF
+%]
 </form>
 </div>
 </div>

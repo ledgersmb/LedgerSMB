@@ -17,9 +17,11 @@ interfacing with the Core Logic and database layers.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_BAD_REQUEST);
+use HTTP::Status qw( HTTP_BAD_REQUEST );
 
 use LedgerSMB::DBObject::Reconciliation;
+use LedgerSMB::File;
+use LedgerSMB::Magic qw( FC_RECONCILIATION );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Reconciliation::Summary;
 use LedgerSMB::Template::UI;
@@ -47,7 +49,6 @@ sub display_report {
     };
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
-
     return _display_report($recon, $request);
 }
 
@@ -214,6 +215,14 @@ sub _display_report {
 
     $request->close_form;
     $request->open_form;
+
+    my $file               = LedgerSMB::File->new();
+    $recon->{files}      =
+        [ $file->list({ ref_key    => $request->{report_id},
+                        file_class => FC_RECONCILIATION }) ];
+    $recon->{file_links} = [ $file->list_links(
+        { ref_key    => $request->{report_id},
+          file_class => FC_RECONCILIATION }) ];
 
     $recon->{form_id} = $request->{form_id};
     $recon->{can_approve} = $request->is_allowed_role(

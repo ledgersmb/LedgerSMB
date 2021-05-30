@@ -752,6 +752,9 @@ SELECT lsmb__grant_perms('reconciliation_enter', obj, 'SELECT')
   FROM unnest(array['cr_coa_to_account'::text, 'acc_trans', 'account_checkpoint'
              ]) obj;
 
+SELECT lsmb__grant_perms('reconciliation_enter', 'file_reconciliation', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT']) ptype;
+
 SELECT lsmb__grant_perms('reconciliation_enter', obj, 'ALL')
   FROM unnest(array['cr_report_line'::text, 'cr_report_line_links',
                     'cr_report_line_id_seq', 'cr_report_id_seq']) obj;
@@ -764,6 +767,8 @@ SELECT lsmb__grant_perms('reconciliation_approve', obj, 'DELETE')
 SELECT lsmb__grant_perms('reconciliation_approve', 'cr_report', 'UPDATE');
 SELECT lsmb__grant_perms('reconciliation_approve', obj, 'SELECT')
   FROM unnest(array['recon_payee'::text, 'acc_trans', 'account_checkpoint']) obj;
+SELECT lsmb__grant_perms('reconciliation_approve', 'file_reconciliation', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT', 'DELETE']) ptype;
 
 SELECT lsmb__grant_menu('reconciliation_approve', 44, 'allow');
 SELECT lsmb__grant_menu('reconciliation_approve', 211, 'allow');

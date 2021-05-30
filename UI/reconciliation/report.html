@@ -1,4 +1,7 @@
-[% PROCESS 'elements.html' %]
+[%
+  PROCESS 'elements.html';
+  PROCESS 'attachments.html';
+-%]
 <body class="lsmb [% dojo_theme %]">
 <div id="reconciliation">
 [% IF check.unapproved_transactions
@@ -414,5 +417,14 @@ INCLUDE button element_data = {
 } %]
 [% END %]
 </form>
+[%
+   PROCESS attachments attachments={
+     ref_key=report_id
+     file_class=9
+     files=files
+     file_links=file_links
+     callback='recon.pl?action=display_report&report_id=' _ report_id
+};
+-%]
 </div>
 </body>

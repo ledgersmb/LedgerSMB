@@ -1,0 +1,57 @@
+[% BLOCK attachments %]
+<table width="100%">
+  <tr class="listtop">
+    <th colspan="4">[% text('Attached and Linked Files') %]</th>
+  </tr>
+[% IF attachments.files && attachments.files.size > 0 -%]
+  <tr class="listheading">
+    <th>[% text('File name') %]</th>
+    <th>[% text('File type') %]</th>
+    <th>[% text('Attached at') %]</th>
+    <th>[% text('Attached by') %]</th>
+  </tr>
+[% FOREACH file IN attachments.files %]
+  <tr>
+    <td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=[%
+                 attachments.ref_key
+                 %]&amp;id=[% file.id %]" target="_download"
+            >[% file.file_name %]</a></td>
+    <td>[% file.mime_type %]</td>
+    <td>[% file.uploaded_at %]</td>
+    <td>[% file.uploaded_by_name %]</td>
+  </tr>
+[% END # FOREACH %]
+[% END # IF attachments.files.size > 0 %]
+</table>
+[% IF attachments.file_links && attachments.file_links.size > 0 -%]
+<table width="100%">
+  <tr class="listheading">
+    <th>[% text('File name') %]</th>
+    <th>[% text('File type') %]</th>
+    <th>[% text('Attached To Type') %]</th>
+    <th>[% text('Attached To') %]</th>
+    <th>[% text('Attached at') %]</th>
+    <th>[% text('Attached by') %]</th>
+  </tr>
+[%
+FOREACH link IN attachments.file_links;
+        aclass="&nbsp;";
+        IF link.src_class() == 1;
+            aclass="Transaction";
+        ELSIF link.src_class() == 2;
+            aclass="Order";
+        END; %]
+  <tr>
+    <td>[% file.file_name %]</td>
+    <td>[% file.mime_type %]</td>
+    <td>[% aclass %]</td>
+    <td>[% file.reference() %]</td>
+    <td>[% file.attached_at() %]</td>
+    <td>[% file.attached_by() %]</td>
+  </tr>
+[% END # FOREACH %]
+</table>
+[% END # IF attachments.file_links.size > 0 -%]
+<a href="file.pl?action=show_attachment_screen&amp;ref_key=[% attachments.ref_key
+   %]&amp;file_class=[% attachments.file_class %]&amp;callback=[% attachments.callback | uri %]">[[% text('Attach') %]]</a>
+[% END; # block attachments %]
