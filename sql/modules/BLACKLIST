@@ -235,6 +235,7 @@ file__attach_to_email
 file__attach_to_entity
 file__attach_to_order
 file__attach_to_part
+file__attach_to_reconciliation
 file__attach_to_tx
 file__delete
 file__get

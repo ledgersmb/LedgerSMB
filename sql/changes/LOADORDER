@@ -146,3 +146,4 @@ mc/delete-migration-validation-data.sql
 1.9/workflow-extend-tables.sql
 1.9/relaxed-transdate-nullity.sql
 1.9/transpose_user_prefs.sql
+1.9/file-reconciliation.sql

@@ -48,6 +48,7 @@ our @EXPORT_OK = qw(
     FC_INTERNAL
     FC_ORDER
     FC_PART
+    FC_RECONCILIATION
     FC_TRANSACTION
     FUTURE_YEARS_LIMIT
     HTTP_454
@@ -210,26 +211,27 @@ use constant EC_COLD_LEAD => 8;
 
 =head3  LedgerSMB attached file class code enumeration.
 
-    FC_TRANSACTION  1
-    FC_ORDER        2
-    FC_PART         3
-    FC_ENTITY       4
-    FC_ECA          5
-    FC_INTERNAL     6
-    FC_INCOMING     7
-    FC_EMAIL        8
+    FC_TRANSACTION    1
+    FC_ORDER          2
+    FC_PART           3
+    FC_ENTITY         4
+    FC_ECA            5
+    FC_INTERNAL       6
+    FC_INCOMING       7
+    FC_EMAIL          8
+    FC_RECONCILIATION 9
 
 =cut
 
-use constant FC_TRANSACTION => 1;
-use constant FC_ORDER       => 2;
-use constant FC_PART        => 3;
-use constant FC_ENTITY      => 4;
-use constant FC_ECA         => 5;
-use constant FC_INTERNAL    => 6;
-use constant FC_INCOMING    => 7;
-use constant FC_EMAIL       => 8;
-
+use constant FC_TRANSACTION    => 1;
+use constant FC_ORDER          => 2;
+use constant FC_PART           => 3;
+use constant FC_ENTITY         => 4;
+use constant FC_ECA            => 5;
+use constant FC_INTERNAL       => 6;
+use constant FC_INCOMING       => 7;
+use constant FC_EMAIL          => 8;
+use constant FC_RECONCILIATION => 9;
 
 =head3   LedgerSMB Accounting Journal code enumeration.
 

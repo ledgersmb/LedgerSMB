@@ -125,6 +125,7 @@ my @modules =
      'LedgerSMB::File::Entity',
           'LedgerSMB::File::Incoming', 'LedgerSMB::File::Internal',
           'LedgerSMB::File::Order', 'LedgerSMB::File::Part',
+     'LedgerSMB::File::Reconciliation',
           'LedgerSMB::File::Transaction',
           'LedgerSMB::Inventory::Adjust',
           'LedgerSMB::Inventory::Adjust_Line',
