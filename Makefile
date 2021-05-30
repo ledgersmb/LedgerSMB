@@ -101,7 +101,7 @@ endif
 
 
 blacklist:
-	$(DOCKER_CMD) perl -Ilib utils/devel/makeblacklist.pl --regenerate
+	$(DOCKER_CMD) perl -Ilib -Iold/lib utils/devel/makeblacklist.pl --regenerate
 
 dist: $(DIST_DEPS)
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
