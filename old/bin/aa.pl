@@ -723,7 +723,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
               ? $form->format_amount(\%myconfig, $form->parse_amount( \%myconfig, $form->{"amount_$i"} )
                                                   * $form->parse_amount( \%myconfig, $form->{exchangerate} ),2)
               : '')  . qq|</td>
-     <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
+     <td><select data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="queryExpr:'*\${0}*'" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i"><option></option>$form->{"select$form->{ARAP}_amount_$i"}</select></td>
       $description
           $taxformcheck
       $project|;
@@ -894,7 +894,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" size=10 val
         $column_data{paid} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
         $column_data{ARAP_paid} =
-qq|<td align=center><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
+qq|<td align=center><select data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="queryExpr:'*\${0}*'" name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
         $column_data{paidfx} = qq|<td align=center>$form->{"paidfx_$i"}</td>|;
         $column_data{datepaid} =
