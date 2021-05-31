@@ -119,7 +119,7 @@
   "homepage": "http://ledgersmb.org/",
   "scripts": {
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
-    "build": "webpack --mode=production",
+    "build": "webpack --mode=production --stats errors-warnings",
     "build:dev": "webpack --progress --mode=development",
     "serve": "webpack-dev-server --env.dev",
     "lint:css": "stylelint UI/css/*.css",
