@@ -380,10 +380,6 @@ h2.error {
     display: none;
 }
 
-tr.active {
-    background-color: var(--tr-active-bg-clr);
-}
-
 tr.record {
     background-color: var(--tr-record-bg-clr);
 }
@@ -392,6 +388,12 @@ tr.suspect {
     background-color: var(--tr-suspect-bg-clr);
     color: var(--tr-suspect-clr);
     font-weight: bold;
+}
+
+tr.active,
+tr.record:hover,
+tr.suspect:hover {
+    background-color: var(--tr-active-bg-clr);
 }
 
 tr.warning,
