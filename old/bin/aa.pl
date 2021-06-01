@@ -469,7 +469,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
     $name =
       ( $form->{"select$form->{vc}"} )
-      ? qq|<select data-dojo-type="dijit/form/Select" id="$form->{vc}" name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
+      ? qq|<select data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="queryExpr:'*\${0}*'" id="$form->{vc}" name="$form->{vc}"><option></option>$form->{"select$form->{vc}"}</select>|
       : qq|<input data-dojo-type="dijit/form/TextBox" id="$form->{vc}" name="$form->{vc}" value="$form->{$form->{vc}}" size=35>
                  <a href="erp.pl?action=root#contact.pl?action=add&entity_class=$eclass"
                     id="new-contact" target="_blank">[|

@@ -1373,6 +1373,7 @@ check_prefix|CK
 decimal_places|2
 disable_back|0
 dojo_theme|claro
+vclimit|9999
 \.
 
 -- Sequence handling
