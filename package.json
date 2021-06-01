@@ -112,8 +112,7 @@
     "content-disposition": "^0.5.3",
     "core-js": "3.13.1",
     "dijit": "1.16.4",
-    "dojo": "1.16.4",
-    "regenerator-runtime": "0.13.7"
+    "dojo": "1.16.4"
   },
   "main": "UI/js/bootstrap.js",
   "homepage": "http://ledgersmb.org/",

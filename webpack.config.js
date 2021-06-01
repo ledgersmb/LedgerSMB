@@ -428,7 +428,9 @@ const webpackConfigs = {
 
     optimization: optimizationList,
 
-    performance: { hints: prodMode ? false : "warning" }
+    performance: { hints: prodMode ? false : "warning" },
+
+    devtool: prodMode ? undefined : "source-map"
 };
 
 /* Include Markdown compiling for README.md */
