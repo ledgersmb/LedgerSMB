@@ -163,10 +163,8 @@ const CleanWebpackPluginOptions = {
 
 const ESLintPluginOptions = {
     files: "**/!(bootstrap|lsmb.profile).js",
-    emitError: true,
-    emitWarning: true,
-    failOnError: false,
-    failOnWarning: false
+    emitError: prodMode,
+    emitWarning: !prodMode,
 };
 
 const StylelintPluginOptions = {
