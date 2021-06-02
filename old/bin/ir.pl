@@ -346,7 +346,7 @@ sub form_header {
 |;
 
     if ( $form->{selectvendor} ) {
-        $vendor = qq|<select data-dojo-type="dijit/form/Select" id=vendor name=vendor>$form->{selectvendor}</select>|;
+        $vendor = qq|<select data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="queryExpr:'*\${0}*'" id=vendor name=vendor><option></option>$form->{selectvendor}</select>|;
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor id=vendor value="$form->{vendor}" size=35>
