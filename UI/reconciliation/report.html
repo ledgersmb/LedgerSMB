@@ -77,10 +77,10 @@ END %]
   <td>[% entered_username %]</td>
 </tr>
 </table>
-<br />
+
 [% IF ! approved and !submitted%]
     <div id="csv-file">
-        <label for="file_upload">[% text('CSV File:') %]</label>
+        <label for="file_upload">[% text('Bank (CSV) transaction file:') %]</label>
         [% PROCESS input element_data = {
                     type="file"
                     name="csv_file"
@@ -219,13 +219,25 @@ END %]
         <td class="money" id="total_cleared_debits">[% total_cleared_debits %]</td>
         <td class="money" id="total_cleared_credits">[% total_cleared_credits %]</td>
     </tr>
-    </table>
+</table>
+
+[%
+
+have_mismatches = 0;
+FOREACH row = report_lines ;
+   IF row.err == 'mismatch' ;
+      have_mismatches = 1;
+      LAST;
+   END;
+END;
+
+IF have_mismatches ; -%]
 <table border=0 id="error-table">
     <tr class="listtop">
         <th colspan="10">[% INCLUDE input element_data = {
         type = "toggle"
         name = "b_mismatch_table"
-        label = text('Mismatched Transactions (From Upload)')
+        label = text('Mismatched Transactions (from upload)')
         checked = b_mismatch_table
         "data-dojo-type" = "lsmb/PublishToggleButton"
         "data-dojo-props" = "topic:'ui/reconciliation/report/b_mismatch_table'"
@@ -282,7 +294,20 @@ END %]
         <td class="money" id="total_mismatch_their_credits">[% mismatch_their_credits %]</td>
     </tr>
     </table>
-    <table id="outstanding-table">
+[% END; # have_mismatches
+
+have_outstanding = 0;
+FOREACH row = report_lines ;
+    IF row.cleared != 'checked' and row.err != 'mismatch';
+      have_outstanding = 1;
+      LAST;
+    END;
+END;
+
+
+IF have_outstanding ;
+-%]
+<table id="outstanding-table">
     <tr class="listtop">
         <th colspan="6">[% INCLUDE input element_data = {
         type = "toggle"
@@ -341,6 +366,7 @@ END %]
         <td class="money" id="total_outstanding_credits">[% total_uncleared_credits %]</td>
     </tr>
 </table>
+[% END; # have_outstanding %]
 [% INCLUDE input element_data = {
     name = "end_date",
     type = "hidden",

@@ -194,6 +194,16 @@ Then qr/^I expect the (.+) Transactions totals to be/, sub {
     }
 };
 
+Then qr/^I expect the (.+) Transactions section to be absent/, sub {
+
+    my $section  = $1;
+    my $page     = S->{ext_wsl}->page->body->maindiv->content;
+    my @sections = $page->has_reconciliation_section({
+        section => $section,
+    });
+    ok(scalar(@sections)==0, "$section absent");
+};
+
 Then qr/^I expect the open items table to contain (\d+) rows?/, sub {
 
     my $count = $1;

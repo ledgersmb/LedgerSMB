@@ -562,3 +562,12 @@ span.indicator {
     font-size: var(--listtop-font-size);
     font-weight: bold;
 }
+
+#reconciliation #report_headings,
+#reconciliation #csv-file,
+#reconciliation #cleared-table,
+#reconciliation #error-table,
+#reconciliation #outstanding-table {
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
