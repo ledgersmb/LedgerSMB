@@ -29,8 +29,16 @@ Click 'Continue' once you verified the files have been correctly saved.
         describe;
 
         my $dbname = $dbh->{pg_db};
-        $dbname =~ s/[^a-zA-Z0-9_-]//g; # clean the database name
         my $tmp_dir = File::Spec->rel2abs(
+            File::Spec->catdir('deleted_transaction_files'),
+            File::Spec->tmpdir
+            );
+        unless (-e $tmp_dir) {
+            mkdir $tmp_dir
+                or die "Can't create directory $tmp_dir: $!";
+        }
+        $dbname =~ s/[^a-zA-Z0-9_-]//g; # clean the database name
+        $tmp_dir = File::Spec->rel2abs(
             File::Spec->catdir('deleted_transaction_files', $dbname),
             File::Spec->tmpdir
             );
