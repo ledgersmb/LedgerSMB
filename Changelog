@@ -227,6 +227,10 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.30
+* Follow-up (fix) to upgrades blocked by files attached to transactions
+
+
 Changelog for 1.7.29
 * Update welcome.html and README, removing FreeNode and updating Element
 * Fix double-quoting values in GL transaction 'notes' and 'description' (#5415)
