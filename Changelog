@@ -513,6 +513,12 @@ Chris T is Chris Travers
 Changelog for 1.6 Series
 Released 2018-06-10
 
+Changelog for 1.6.33
+* Follow-up (fix) to upgrades blocked by files attached to transactions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.6.32
 * Update welcome.html and README, removing FreeNode and updating Element (Erik H)
 * Fix double-quoting values in GL transaction 'notes' and 'description' (Erik H)
