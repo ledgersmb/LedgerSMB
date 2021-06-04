@@ -27,7 +27,7 @@ requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'HTTP::AcceptLanguage';
 requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
-requires 'HTTP::Negotiate';
+requires 'HTTP::Negotiate', '6.01';
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';

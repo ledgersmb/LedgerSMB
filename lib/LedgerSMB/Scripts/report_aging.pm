@@ -296,9 +296,10 @@ sub generate_statement {
         my ($meta_number, $entity_id) = split /:/, $eca;
         my $company = LedgerSMB::Entity::get($entity_id);
         my $credit_act =
-              LedgerSMB::Entity::Credit_Account->get_by_meta_number(
-                 $meta_number, $request->{entity_class}
-        );
+            LedgerSMB::Entity::Credit_Account->new(
+                dbh => $request->{dbh},
+                entity_class => $request->{entity_class})
+            ->get_by_meta_number($meta_number);
         my ($location) = LedgerSMB::Entity::Location->get_active(
              $request, {entity_id => $entity_id,
                         credit_id => $credit_act->{id},

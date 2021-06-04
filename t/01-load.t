@@ -216,6 +216,7 @@ my @modules =
           'LedgerSMB::Routes::ERP::API::Contacts',
           'LedgerSMB::Routes::ERP::API::GeneralLedger',
           'LedgerSMB::Routes::ERP::API::Goods',
+          'LedgerSMB::Routes::ERP::API::Invoices',
           'LedgerSMB::Routes::ERP::API::Languages',
           'LedgerSMB::Routes::ERP::API::MenuNodes',
           'LedgerSMB::Routes::ERP::API::Products',
