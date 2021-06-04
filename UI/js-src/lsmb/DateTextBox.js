@@ -88,30 +88,39 @@ define([
             /* Live insertion of date separators based on the lsmbConfig.Dateformat.
              * The linter rule is disabled to allow assignment within the while() */
             /* eslint no-cond-assign: 0 */
-            on(this.domNode, "keypress", lang.hitch(this, function (e) {
-                let value = domAttr.get(e.target, "value");
+            on(
+                this.domNode,
+                "keypress",
+                lang.hitch(this, function (e) {
+                    let value = domAttr.get(e.target, "value");
 
-
-                /* Extract the separator and location into an array and if
-                 * needed add the separator. */
-                const re = /[^a-z]/gi;
-                let position;
-                while ((position = re.exec(lsmbConfig.dateformat)) !== null) {
-
-                    if (value !== "" && position.index === value.length) {
-                        domAttr.set(e.target, "value", (value += position[0]));
+                    /* Extract the separator and location into an array and if
+                     * needed add the separator. */
+                    const re = /[^a-z]/gi;
+                    let position;
+                    while (
+                        (position = re.exec(lsmbConfig.dateformat)) !== null
+                    ) {
+                        if (value !== "" && position.index === value.length) {
+                            domAttr.set(
+                                e.target,
+                                "value",
+                                (value += position[0])
+                            );
+                        }
+                        // Adjust for finger memory by removing duplicate separators
+                        if (
+                            value !== "" &&
+                            value.endsWith(position[0]) &&
+                            value.endsWith(position[0], value.length - 1)
+                        ) {
+                            domAttr.set(e.target, "value", value.slice(0, -1));
+                            break;
+                        }
                     }
-                    // Adjust for finger memory by removing duplicate separators
-                    if (value !== "" && value.endsWith(position[0]) &&
-                        value.endsWith(position[0], (value.length - 1))) {
-                        domAttr.set(e.target, "value", value.slice(0, -1));
-                        break;
-                    }
-
-                }
-            }));
+                })
+            );
             // End of code block related to date separation
-
         },
         parse: function (value) {
             if (!isoDate.test(value)) {
