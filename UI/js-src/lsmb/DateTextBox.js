@@ -5,8 +5,11 @@ define([
     "dijit/form/DateTextBox",
     "dojo/date/locale",
     "dojo/i18n",
-    "dojo/_base/declare"
-], function (DateTextBox, locale, i18n, declare) {
+    "dojo/on",
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/dom-attr"
+], function (DateTextBox, locale, i18n, on, declare, lang, domAttr) {
     var isoDate = /^\d\d\d\d-\d\d-\d\d$/;
     return declare("lsmb/DateTextBox", [DateTextBox], {
         _formattedValue: null,
@@ -30,8 +33,8 @@ define([
             }
             // end of 'old code' support block
 
-            // retrieve format to add it as the placeholder
-            // (unless there's a placeholder already)
+            /* retrieve format to add it as the placeholder
+             * (unless there's a placeholder already) */
             if (!params.placeholder) {
                 var l = i18n.normalizeLocale(params.locale);
                 var formatLength = params.formatLength || "short";
@@ -78,6 +81,46 @@ define([
             ) {
                 this.value = new Date();
             }
+        },
+        startup: function () {
+            this.inherited(arguments);
+
+            /* Live insertion of date separators based on the lsmbConfig.Dateformat.
+             * The linter rule is disabled to allow assignment within the while() */
+            /* eslint no-cond-assign: 0 */
+            on(
+                this.domNode,
+                "keypress",
+                lang.hitch(this, function (e) {
+                    let value = domAttr.get(e.target, "value");
+
+                    /* Extract the separator and location into an array and if
+                     * needed add the separator. */
+                    const re = /[^a-z]/gi;
+                    let position;
+                    while (
+                        (position = re.exec(lsmbConfig.dateformat)) !== null
+                    ) {
+                        if (value !== "" && position.index === value.length) {
+                            domAttr.set(
+                                e.target,
+                                "value",
+                                (value += position[0])
+                            );
+                        }
+                        // Adjust for finger memory by removing duplicate separators
+                        if (
+                            value !== "" &&
+                            value.endsWith(position[0]) &&
+                            value.endsWith(position[0], value.length - 1)
+                        ) {
+                            domAttr.set(e.target, "value", value.slice(0, -1));
+                            break;
+                        }
+                    }
+                })
+            );
+            // End of code block related to date separation
         },
         parse: function (value) {
             if (!isoDate.test(value)) {
