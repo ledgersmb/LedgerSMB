@@ -1,7 +1,5 @@
 /** @format */
 
-/* eslint no-template-curly-in-string: 0 */
-
 define([
     "lsmb/FilteringSelect",
     "dojo/_base/declare",
@@ -12,13 +10,11 @@ define([
         [filteringSelect],
         {
             store: accountRestStore,
-            queryExpr: "*${0}*",
             style: "width: 300px",
             //          query: {"charttype": "A"},
             highlightMatch: "all",
             searchAttr: "label",
             labelAttr: "label",
-            autoComplete: false,
             initialValue: null,
             constructor: function () {
                 this.inherited(arguments);

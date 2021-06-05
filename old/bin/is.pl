@@ -345,7 +345,7 @@ sub form_header {
 |;
 
     if ( $form->{selectcustomer} ) {
-        $customer = qq|<select data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="queryExpr:'*\${0}*'" id="customer" name="customer"><option></option>$form->{selectcustomer}</select>|;
+        $customer = qq|<select data-dojo-type="lsmb/FilteringSelect" id="customer" name="customer"><option></option>$form->{selectcustomer}</select>|;
     }
     else {
         $customer = qq|<input data-dojo-type="dijit/form/TextBox" id="customer" name="customer" value="$form->{customer}" size="35">

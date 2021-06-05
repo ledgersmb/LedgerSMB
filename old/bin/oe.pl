@@ -506,7 +506,7 @@ sub form_header {
 <input type=hidden name=oldtransdate value=$form->{oldtransdate}>|;
 
     if ( $form->{"select$form->{vc}"} ) {
-        $vc = qq|<select data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="queryExpr:'*\${0}*'" name="$form->{vc}" id="$form->{vc}"><option></option>$form->{"select$form->{vc}"}</select>|;
+        $vc = qq|<select data-dojo-type="lsmb/FilteringSelect" name="$form->{vc}" id="$form->{vc}"><option></option>$form->{"select$form->{vc}"}</select>|;
     }
     else {
         if ($form->{vc} eq 'vendor'){
