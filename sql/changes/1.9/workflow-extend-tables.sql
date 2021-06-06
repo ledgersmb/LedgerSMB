@@ -1,9 +1,9 @@
 
 ALTER TABLE transactions
-   ADD COLUMN workflow_id int UNIQUE REFERENCES workflow (workflow_id);
+   ADD COLUMN workflow_id int;
 
 ALTER TABLE oe
-   ADD COLUMN workflow_id int REFERENCES workflow (workflow_id);
+   ADD COLUMN workflow_id int;
 
 -- create transaction workflows
 
@@ -56,3 +56,9 @@ SELECT nextval('workflow_history_seq') as workflow_hist_id,
        '<upgrade>' as workflow_user,
        last_update as history_date
   FROM new_workflow;
+
+ALTER TABLE transactions ADD CONSTRAINT transactions_workflow_id_fkey
+        FOREIGN KEY (workflow_id) REFERENCES workflow (workflow_id);
+
+ALTER TABLE oe ADD CONSTRAINT oe_workflow_id_fkey
+        FOREIGN KEY (workflow_id) REFERENCES workflow (workflow_id);
