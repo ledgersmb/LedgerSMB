@@ -89,7 +89,7 @@
     "npm-run-all": "4.1.5",
     "obsolete-webpack-plugin": "0.5.6",
     "optimize-css-assets-webpack-plugin": "6.0.0",
-    "prettier": "^2.3.0",
+    "prettier": "^2.3.1",
     "script-ext-html-webpack-plugin": "^2.1.5",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
