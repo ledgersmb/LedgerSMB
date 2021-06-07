@@ -145,8 +145,8 @@ sub _normalized_sha {
     my $normalized =
         join "\n",
         grep { /\S/ }
-        map { my $string = $_; $string =~ s/--.*//; $string }
-        split /\n/, $content;
+        map { s/--.*//r }
+        split /\n/, ($content =~ s{/\*.*?\*/}{}gsr);
 
     return Digest::SHA::sha512_base64($normalized);
 }
@@ -327,6 +327,7 @@ sub _split_statements {
         if ! $self->{properties}->{no_transactions};
 
     my $content = $self->content;
+    $content =~ s{/\*.*?\*/}{}gs;
     $content =~ s/\s*--.*//g;
     my @statements = ();
 
