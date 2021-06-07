@@ -198,6 +198,7 @@ for my $change (@changes) {
     my $joined_content = join('', $test1->_split_statements);
     $joined_content =~ s/[\s\n\t]+//g;
     $content =~ s/--.*//g;
+    $content =~ s{/\*.*?\*/}{}gs;
     $content =~ s/[\s\n\t]+//g;
     is($joined_content,$content,"Complete recognition of $change");
 }

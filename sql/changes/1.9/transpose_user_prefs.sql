@@ -32,7 +32,7 @@ It compensates for the fact that we cannot require `user_id` to be not-null
 because global settings will be stored with a NULL `user_id`. It exists to
 allow interactive software (e.g. PgAdmin4) to edit rows in the table.$$;
 
-insert into user_preference (id, "name", "value")
+insert into user_preference (user_id, "name", "value")
 select id, 'language', language
 from old_user_preference where language is not null
 union all
@@ -49,7 +49,7 @@ select id, 'numberformat', numberformat
 from old_user_preference where numberformat is not null;
 
 
-drop table old_user_preference;
+drop table old_user_preference cascade;
 
 -- insert global defaults as they used to be set
 -- on the columns of the user preference table
