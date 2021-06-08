@@ -16,7 +16,6 @@ const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -301,10 +300,6 @@ var pluginsProd = [
 
     new ObsoleteWebpackPlugin({
         name: "obsolete"
-    }),
-
-    new ScriptExtHtmlWebpackPlugin({
-        async: "obsolete"
     })
 ];
 
