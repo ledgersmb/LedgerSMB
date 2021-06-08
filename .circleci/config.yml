@@ -250,10 +250,10 @@ executors:
         default: chrome
       hub:
         type: string
-        default: selenium/hub
+        default: selenium/hub:3
       selenium:
         type: string
-        default: selenium/node-chrome
+        default: selenium/node-chrome:3
       coverage:
         type: integer
         default: 0
@@ -304,7 +304,7 @@ jobs:
       perl: '5.32'
       postgres: '11'
       browser: chrome
-      selenium: selenium/node-chrome
+      selenium: selenium/node-chrome:3
       coverage: 1
     steps:
       - prep_env:
@@ -320,7 +320,7 @@ jobs:
       perl: '5.30'
       postgres: '11'
       browser: firefox
-      selenium: selenium/node-firefox
+      selenium: selenium/node-firefox:3
     steps:
       - prep_env:
           perl: '5.30'
@@ -337,7 +337,7 @@ jobs:
       perl: '5.28'
       postgres: '11'
       browser: operablink
-      selenium: selenium/node-opera
+      selenium: selenium/node-opera:3
     steps:
       - prep_env:
           perl: '5.28'
