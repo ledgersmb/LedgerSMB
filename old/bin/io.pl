@@ -230,7 +230,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $column_data{partnumber} =
       qq|<th class="listheading partnumber" nowrap>| . $locale->text('Number') . qq|</th>|;
     $column_data{description} =
-        qq|<th class="listheading description" nowrap class="description">|
+        qq|<th class="listheading description" nowrap>|
       . $locale->text('Description')
       . qq|</th>|;
     $column_data{qty} =
@@ -334,20 +334,20 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
 
         $form->{"description_$i"} = $form->quote( $form->{"description_$i"} );
         if ($desc_disabled){
-            $column_data{description} = qq|<td>$form->{"description_$i"} |
+            $column_data{description} = qq|<td class="description">$form->{"description_$i"} |
              . qq|<input type="hidden" name="description_$i"
                         value="$form->{"description_$i"}" /></td>|
         } elsif ($form->{"partnumber_$i"}) {
             $form->{"description_$i"} //= '';
             $column_data{description} =
-                qq|<td><div data-dojo-type="dijit/form/Textarea"
+                qq|<td class="description"><div data-dojo-type="dijit/form/Textarea"
                             id="description_$i" name="description_$i"
                             size=48 style="width: 100%;font:inherit !important"
                             >$form->{"description_$i"}</div></td>|;
         } else {
             $form->{"description_$i"} //= '';
             $column_data{description} =
-                qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
+                qq|<td class="description"><div data-dojo-type="lsmb/parts/PartDescription"
                             id="description_$i" name="description_$i"
                             $desc_disabled size=48
                             data-dojo-props="channel:'/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}"
