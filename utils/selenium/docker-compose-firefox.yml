@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   firefox:
-    image: selenium/node-firefox
+    image: selenium/node-firefox:3
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
