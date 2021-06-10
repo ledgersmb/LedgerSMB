@@ -169,9 +169,8 @@ BEGIN
         group by account_id) cp ON cp.account_id = a.id
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation at
-              INNER JOIN user_preference up ON up.language = at.language_code
-              INNER JOIN users ON up.id = users.id
-                WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+               WHERE language_code = preference__get('language')) at
+           ON a.id = at.trans_id
         WHERE (in_accounts IS NULL OR in_accounts = '{}'
                OR a.id = ANY(in_accounts))
               AND (in_heading IS NULL OR in_heading = a.heading)
