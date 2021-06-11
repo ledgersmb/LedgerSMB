@@ -273,7 +273,7 @@ def 'max_post_size',
 
 def 'cookie_name',
     section => 'main',
-    default => 'LedgerSMB-1.3',
+    default => 'LedgerSMB-1.10',
     doc => q{};
 
 def 'cookie_secret',

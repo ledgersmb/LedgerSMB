@@ -19,7 +19,7 @@ max_post_size = 4194304
 # Spelling of cookie name for this instance of LedgerSMB.
 # Used to keep multiple instances and/or different versions
 # logged in at the same time
-cookie_name = LedgerSMB-1.5
+cookie_name = LedgerSMB-1.10
 
 [environment]
 # If the server can't find applications, append to the path
