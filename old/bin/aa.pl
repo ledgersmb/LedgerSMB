@@ -104,7 +104,7 @@ sub copy_to_new{
 }
 
 sub new_screen {
-    my @reqprops = qw(ARAP vc dbh stylesheet batch_id script);
+    my @reqprops = qw(ARAP vc dbh stylesheet batch_id script _locale);
     $oldform = $form;
     $form = {};
     bless $form, 'Form';
