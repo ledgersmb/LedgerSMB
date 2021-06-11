@@ -81,7 +81,7 @@ sub edit_and_save {
 }
 
 sub new_screen {
-    my @reqprops = qw(ARAP vc dbh stylesheet type);
+    my @reqprops = qw(ARAP vc dbh stylesheet type _locale);
     $oldform = $form;
     $form = {};
     bless $form, 'Form';
