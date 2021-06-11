@@ -2141,7 +2141,9 @@ sub create_links {
                 case when a.amount_tc = 0 then 0 else (a.amount_bc/a.amount_tc)::numeric end as exchangerate,
                 a.memo,a.entry_id, a.transdate, a.cleared,
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
-                                AS bu_lines
+                                AS bu_lines,
+               (exists (select 1 from payment_links pl
+                         where a.entry_id = pl.entry_id)) AS payment_line
             FROM acc_trans a
             JOIN account c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
