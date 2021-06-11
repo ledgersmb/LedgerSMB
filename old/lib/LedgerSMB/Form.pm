@@ -1544,7 +1544,8 @@ sub all_vc {
         push (@queryargs2, $transdate, $transdate);
     }
     else {
-        $where = " true";
+        $where = " ec.entity_class = ?";
+        push @queryargs, $self->{vc_class};
     }
 
     $sth = $dbh->prepare($query);
