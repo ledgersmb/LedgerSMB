@@ -1159,6 +1159,7 @@ sub edit_and_save {
     $draft->delete();
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
+    $form->{rowcount} = 0;
     edit();
 }
 
