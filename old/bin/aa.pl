@@ -314,7 +314,8 @@ sub create_links {
                            }
                         }
                     }
-                    else {
+                    elsif (not $form->{acc_trans}{$key}->[$i-1]
+                           ->{payment_line}) {
                         $form->{invtotal} =
                           $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
                     }
