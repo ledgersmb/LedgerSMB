@@ -137,6 +137,9 @@ begin
                      WHERE pl.payment_id = p.id) <= 1;
 
         DELETE FROM acc_trans WHERE trans_id = in_id;
+        DELETE FROM invoice_tax_form itf
+           WHERE EXISTS (select 1 from invoice i
+                          where i.trans_id = in_id and itf.invoice_id = i.id);
         DELETE FROM invoice WHERE trans_id = in_id;
         SELECT lower(table_name) into t_table
           FROM transactions where id = in_id;
