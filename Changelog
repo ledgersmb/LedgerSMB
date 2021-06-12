@@ -39,15 +39,13 @@ Bugs fixed
 * Optimize listing of configured currencies (don't check in-use)
 * Optimize balance sheet report (use balance snapshots from period closing)
 * Fixed mailing of aging reports (regression since 1.3.42)
-* Optimize listing of configured currencies (don't check in-use)
 * Default CoA referential integrity and consistency
 * Templates in setup.pl appearing in changing, random order
 * Fix type problems due to BigFloat being downgraded to BigInt
 * Parts search filter screen needs better layout
-* Value selection on non-required select can be undone with empty item
+* Value selection on non-required select can be undone by selecting empty item
 * Update menu to selected language after preferences save
 * SIC value is free entry instead of selection from configured SIC list
-* Non-required drop-downs can be 'unselected' application-wide
 * Back button steps back along the various form submissions intuitively now
 * Inconsistent approval status between unapproved transactions and its lines
 * Shipping screen 'Done' button no longer complains about the server response
@@ -72,7 +70,7 @@ Code cleanup
 * Lots of changes to make CI testing work on GitHub Actions
 * Enable `dependabot` to keep JavaScript dependencies up-to-date
 
-Dependency updates
+Dependency updates (Perl)
 * perl 5.24 (updated from 5.20)
 * Hash::Merge (new)
 * Locale::CLDR::* (new)
