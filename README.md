@@ -87,12 +87,13 @@ and a range of versions.
 recent data is available for Mobile browsers other than Safari, because they
 are pushed out to the devices as soon as they are releases, so the amount of
 old browsers is negligible. **
+
 # Quick start (`Docker compose`)
 
 The quickest way to get the `Docker` image up and running is by using the
 docker-compose file available through the `GitHub` repository at:
 
-https://github.com/ledgersmb/ledgersmb-docker/blob/1.8/docker-compose.yml
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.9/docker-compose.yml
 
 which sets up both the LedgerSMB image and a supporting database image for
 production purposes (i.e. with persistent (database) data, with the
