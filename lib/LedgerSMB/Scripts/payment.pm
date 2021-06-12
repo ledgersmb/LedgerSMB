@@ -1090,6 +1090,7 @@ sub payment2 {
             optional          =>  $request->{"optional_pay_$invoice_id"},
             selected_account  =>  $request->{"account_$invoice_id"},
             selected_source   =>  $request->{"source_$invoice_id"},
+            description       =>  $invoice->{description},
             memo              =>  {
                 name  => "memo_invoice_$invoice_id",
                 value => $request->{"memo_invoice_$invoice_id"}
