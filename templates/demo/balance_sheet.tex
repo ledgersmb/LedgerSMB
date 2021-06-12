@@ -9,7 +9,8 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 -?>
-<?lsmb FILTER latex ?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" };
+       INCLUDE "preamble-pdflatex.tex"; -?>
 
 <?lsmb
   IF hierarchy == 'flat-hierarchy';
