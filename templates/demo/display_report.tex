@@ -22,7 +22,7 @@ FOREACH COL IN columns;
             COLNUMBER = COLNUMBER + 1;
     END;
 END;
- FILTER latex;
+FILTER latex { format="$FORMAT(pdflatex)" };
 -?>
 \documentclass[<?lsmb papersize ?>]{article}
 \usepackage{longtable}
