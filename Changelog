@@ -15,6 +15,7 @@ Added functionalities
 * Emailed documents are added to the database as attachments
 * Orders and invoices show change history
 * Login pages show a warning when using an unsupported/obsolete browser
+* On the payment/receipt screen, show invoice descriptions when available
 
 Changed functionalities
 * Improved error reporting on Print button with template evaluation failure
