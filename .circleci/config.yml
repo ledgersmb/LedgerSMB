@@ -364,8 +364,8 @@ workflows:
       - test_webpack_chrome:
           filters: *_filters
 
-      - test_webpack_firefox:
-          filters: *_filters
+#      - test_webpack_firefox:
+#          filters: *_filters
 
-      - test_webpack_opera:
-          filters: *_filters
+#      - test_webpack_opera:
+#          filters: *_filters
