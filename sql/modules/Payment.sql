@@ -165,7 +165,8 @@ CREATE TYPE payment_invoice AS (
         discount_tc numeric,
         due numeric,
         due_fx numeric,
-        exchangerate numeric
+        exchangerate numeric,
+        description text
 );
 
 
@@ -208,20 +209,21 @@ $$
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                          END) AS due_fx,
-                        null::numeric AS exchangerate
+                        null::numeric AS exchangerate,
+                        a.description
                  --TODO HV prepare drop entity_id from ap,ar
                  --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
                  FROM  (SELECT id, invnumber, invoice, transdate, amount_bc,
                        amount_tc,
                                1 as invoice_class, curr,
-                               entity_credit_account, approved
+                               entity_credit_account, approved, description
                           FROM ap
                          UNION
                          --SELECT id, invnumber, transdate, amount, entity_id,
                          SELECT id, invnumber, invoice, transdate, amount_bc,
                       amount_tc,
                                2 AS invoice_class, curr,
-                               entity_credit_account, approved
+                               entity_credit_account, approved, description
                          FROM ar
                          ) a
                 JOIN (SELECT trans_id, chart_id,
@@ -255,7 +257,7 @@ $$
                         AND a.approved = true
                         GROUP BY a.invnumber, a.transdate, a.amount_bc, amount_tc,
               discount, discount_tc, ac.due, ac.due_fx, a.id, c.discount_terms,
-              a.curr, a.invoice;
+              a.curr, a.invoice, a.description;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3),

@@ -154,7 +154,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         [% j=1; FOREACH column IN column_headers;  # Loop through columns
                    IF j < column_count ; THEN -%]
                        <th class="listheading">[% column.text %]</th>
-        [%     ELSE -%]
+        [%         ELSE -%]
                        <th class="listheading">
                          <button type="button"
                                  style="margin-left:auto;margin-right:auto"
@@ -172,11 +172,29 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                    j = j + 1; %]
         [% END %]
       </tr>
+[% want_descriptions = '';
+   FOREACH row IN rows;
+     IF row.description;
+       want_descriptions = 1;
+       LAST;
+     END; # IF
+   END; # FOREACH
+
+   IF want_descriptions;
+-%]
+      <tr class="listheading">
+        <th class="listheading">&nbsp;</th>
+        <th class="listheading" colspan="[% column_headers.size %]">
+          [% text("Description") %]
+        </th>
+      </tr>
+[% END -%]
       [% # We have to clear i for later usage :)  %]
       [% i = '0';  -%]
       [% FOREACH row IN rows %]
-      [% i = i + 1; j = i % 2; alterning_style = "listrow$j" %]
-      <tr class="[% alterning_style %] open-item-row">
+      [% i = i + 1; j = i % 2; alternating_style = "listrow$j" %]
+      <tbody>
+      <tr class="[% alternating_style %] open-item-row">
         <td class="invoice-number"
             ><a href="erp.pl?action=root#[% row.invoice.href %]"
                 target="_blank">[% row.invoice.number %]</a>
@@ -298,6 +316,17 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                  msg => text("Uncheck to remove entry from payment") }; %]
         </td>
       </tr>
+      [% IF want_descriptions; -%]
+      <tr class="[% alternating_style %] open-item-row">
+        <td>&nbsp;</td>
+        <td colspan="[% column_headers.size %]">
+          [% row.description %] &nbsp;
+          [%# the &nbsp; ensures the row is not suppressed when there is
+              no description -%]
+        </td>
+      </tr>
+      [% END; -%]
+      </tbody>
       [% END %]
       [%  colspan = column_count - 2 # We will use this later on totals -%]
       <tr class="listsubtotal">
