@@ -227,7 +227,6 @@ my @modules =
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Setting::Sequence',
           'LedgerSMB::Setup::SchemaChecks',
-          'LedgerSMB::Taxes::Simple',
           'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
