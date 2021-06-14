@@ -12,7 +12,7 @@ on:
       - '.circleci'
   pull_request:
     branches:
-      - 'master'
+      - '*'
     paths-ignore:
       - '.circleci'
 
