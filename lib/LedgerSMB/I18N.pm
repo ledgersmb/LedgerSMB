@@ -152,6 +152,7 @@ sub location_list_country_localized {
     my %regions = %{Locale::CLDR->new($language)->all_regions};
     foreach (@country_list) {
       $_->{name} = $regions{$_->{short_name}}
+        if defined $regions{$_->{short_name}};
     }
     return @country_list;
 }
