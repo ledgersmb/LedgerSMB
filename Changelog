@@ -2,6 +2,13 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.31
+* Stop doubling of the number of lines in an AR/AP transaction on Save (#5529)
+* Fix vendors appearing in the AR customer drop-down and vice  versa (#5534)
+* Fix second and consecutive Save actions on invoices throwing an error (#5532)
+* Only limit Customer/Vendor History by country with explicit filter (#4361)
+
+
 Changelog for 1.7.30
 * Follow-up (fix) to upgrades blocked by files attached to transactions
 
