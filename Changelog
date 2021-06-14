@@ -3,6 +3,16 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.15
+* Improve reconciliation of data entered before migration to 1.8
+* Fix AR/AP transaction+invoice 'New' button throwing an error (#5539)
+* Fix transaction total in AR/AP transactions with applied payments (#5528)
+* Stop doubling of the number of lines in an AR/AP transaction on Save (#5529)
+* Fix vendors appearing in the AR customer drop-down and vice  versa (#5534)
+* Fix second and consecutive Save actions on invoices throwing an error (#5532)
+* Only limit Customer/Vendor History by country with explicit filter (#4361)
+
+
 Changelog for 1.8.14
 * Follow-up (fix) to upgrades blocked by files attached to transactions
 
