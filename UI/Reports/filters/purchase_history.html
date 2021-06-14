@@ -97,13 +97,15 @@
               </tr>
               <tr>
                 <th align=right nowrap>[% text('Country') %]</th>
-                <td>[% country_list.unshift({});
-                     INCLUDE select_country element_data = {
+                <td>[%
+                     INCLUDE select element_data = {
                          name = "country_id",
                          text_attr = 'name',
                          value_attr = 'id',
                          options = country_list,
-                    } %]</td>
+                         default_blank = 1
+                  } %]
+                </td>
               </tr>
               <tr>
                 <th align=right nowrap>[% text('Startdate') %]</th>
