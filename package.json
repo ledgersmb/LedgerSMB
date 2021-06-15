@@ -57,7 +57,7 @@
     "cssnano": "^5.0.6",
     "depcheck": "1.4.1",
     "dojo-util": "1.16.4",
-    "dojo-webpack-plugin": "2.8.19",
+    "dojo-webpack-plugin": "2.8.20",
     "ejs-loader": "0.5.0",
     "eslint": "7.28.0",
     "eslint-config-airbnb-base": "14.2.1",
