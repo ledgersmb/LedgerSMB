@@ -96,7 +96,7 @@
     "stylelint-no-unsupported-browser-features": "5.0.1",
     "stylelint-order": "4.1.0",
     "stylelint-order-config-standard": "0.1.3",
-    "stylelint-webpack-plugin": "2.1.1",
+    "stylelint-webpack-plugin": "2.2.0",
     "terser-webpack-plugin": "4.2.3",
     "unix-timestamp": "^0.2.0",
     "unused-webpack-plugin": "2.4.0",
