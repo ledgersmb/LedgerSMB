@@ -101,7 +101,7 @@ requires 'Pod::Find';
 requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
-requires 'Syntax::Keyword::Try', '0.15';
+requires 'Syntax::Keyword::Try', '0.15, != 0.25';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
