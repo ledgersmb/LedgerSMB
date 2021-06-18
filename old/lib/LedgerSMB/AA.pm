@@ -618,6 +618,7 @@ sub get_name {
               entity.control_code AS entity_control_code,
                           co.tax_id AS tax_id,
               c.meta_number, ctf.default_reportable,
+              aa.accno || '--' || aa.description as arap_accno,
                           c.cash_account_id, ca.accno as cash_accno,
                           c.id as eca_id,
                           coalesce(ecl.address, el.address) as address,
@@ -625,6 +626,7 @@ sub get_name {
              FROM entity_credit_account c
              JOIN entity ON (entity.id = c.entity_id)
                 LEFT JOIN account ca ON c.cash_account_id = ca.id
+                LEFT JOIN account aa ON c.ar_ap_account_id = aa.id
         LEFT JOIN business b ON (b.id = c.business_id)
                 LEFT JOIN country_tax_form ctf ON ctf.id = c.taxform_id
                 LEFT JOIN company co ON co.entity_id = c.entity_id
@@ -646,9 +648,10 @@ sub get_name {
 
     @queryargs = ( $form->{"$form->{vc}_id"} );
     my $sth = $dbh->prepare($query);
-
     $sth->execute(@queryargs) || $form->dberror($query);
     $ref = $sth->fetchrow_hashref(NAME_lc);
+    $form->{$form->{ARAP}} = $ref->{arap_accno};
+    delete $ref->{arap_accno};
     $form->db_parse_numeric(sth => $sth, hashref => $ref);
     if ( $form->{id} ) {
         for (qw(currency employee employee_id intnotes)) {
