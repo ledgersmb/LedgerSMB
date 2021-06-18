@@ -68,7 +68,7 @@ response as required by legacy code.
 sub render_psgi {
     my $psgi = shift;
 
-    binmode STDOUT, 'utf8';
+    binmode STDOUT, ':bytes';
     print "Status: 200 OK\n";
     print "Content-Type: text/html; charset=UTF-8\n\n";
     print join('', @{$psgi->[2]});
