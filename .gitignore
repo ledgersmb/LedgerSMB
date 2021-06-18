@@ -30,6 +30,9 @@ ledgersmb.conf
 /doc/manual/*.log
 /doc/manual/*.out
 
+* README.md is now produced from a template
+./README.md
+
 # Custom extensions to Tests and Validations
 *_Tests_Custom.pm
 *_Validations_Custom.pm
