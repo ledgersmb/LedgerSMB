@@ -216,7 +216,7 @@ sub create_links {
 
     my $vc = $form->{vc};
     AA->get_name( \%myconfig, \%$form )
-            unless ($from->{"old$vc"} and $form->{$vc} and $form->{"old$vc"} eq $form->{$vc})
+            unless ($form->{"old$vc"} and $form->{$vc} and $form->{"old$vc"} eq $form->{$vc})
                     or ($form->{"old$vc"} and $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/);
 
     $form->{currency} =~ s/ //g if $form->{currency};
