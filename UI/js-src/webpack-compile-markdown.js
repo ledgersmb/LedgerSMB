@@ -47,25 +47,27 @@ MarkdownInclude.registerPlugin({
                 }
                 let time = lite.agents[browser].release_date[version];
 
-                if (
-                    earliest[category][browser].time === null ||
-                    earliest[category][browser].time > time
-                ) {
-                    earliest[category][browser].version = version;
+                if (time !== null) {
+                    // Unreleased versions have time === null; exclude them
+                    if (earliest[category][browser].time === null ||
+                        earliest[category][browser].time > time
+                       ) {
+                        earliest[category][browser].version = version;
 
-                    if (time) {
-                        let ts = timestamp.toDate(time);
-                        let month = "00" + (ts.getMonth() + 1);
-                        let year =
-                            1900 +
-                            ts.getYear() +
-                            "-" +
-                            month.substr(month.length - 2);
-                        earliest[category][browser].year = year;
-                        earliest[category][browser].time = time;
+                        if (time) {
+                            let ts = timestamp.toDate(time);
+                            let month = "00" + (ts.getMonth() + 1);
+                            let year =
+                                1900 +
+                                ts.getYear() +
+                                "-" +
+                                month.substr(month.length - 2);
+                            earliest[category][browser].year = year;
+                            earliest[category][browser].time = time;
+                        }
                     }
+                    earliest[category][browser].versions.push(version);
                 }
-                earliest[category][browser].versions.push(version);
             });
         let markdown = "";
         /* eslint guard-for-in:0 */
