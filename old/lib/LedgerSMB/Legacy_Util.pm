@@ -34,7 +34,7 @@ response as required by legacy code.
 sub render_psgi {
     my ($form, $psgi) = @_;
 
-    binmode STDOUT, 'utf8';
+    binmode STDOUT, ':bytes';
 
     if (not $form->{header}) {
         print "Status: 200 OK\n";
