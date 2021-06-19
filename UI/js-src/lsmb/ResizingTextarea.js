@@ -7,7 +7,6 @@ define([
     "dojo/keys"
 ], function (TextBox, declare, resizingTextarea, keys) {
     return declare("lsmb/ResizingTextarea", [TextBox], {
-        innerStyle: "",
         templateString: resizingTextarea,
         autoSizing: true,
         startup: function () {

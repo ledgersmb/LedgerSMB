@@ -33,7 +33,6 @@ define([
             /* eslint no-template-curly-in-string:0 */
             queryExpr: "*${0}*",
             autoComplete: false,
-            innerStyle: "",
             highlightMatch: "all",
             searchAttr: "description",
             labelAttr: "label",
