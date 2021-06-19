@@ -109,6 +109,10 @@ begin
                 approved_at = now()
         WHERE id = in_id;
 
+        UPDATE acc_trans
+        SET approved = 't'::boolean
+        WHERE trans_id = in_id;
+
         RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
