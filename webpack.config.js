@@ -85,7 +85,7 @@ glob.sync("**/*.html", {
 includedRequires = includedRequires
     .concat(
         glob
-            .sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
+            .sync("lsmb/**/!(bootstrap|webpack.loaderConfig).js", {
                 cwd: "UI/js-src/"
             })
             .map(function (file) {
