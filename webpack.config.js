@@ -8,6 +8,7 @@ const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
@@ -299,6 +300,15 @@ var pluginsProd = [
 
     new ObsoleteWebpackPlugin({
         name: "obsolete"
+    }),
+
+    new BundleAnalyzerPlugin({
+        analyzerHost: "0.0.0.0",
+        analyzerMode: "json",
+        openAnalyzer: false,
+        generateStatsFile: true,
+        statsFilename: "../../logs/stats.json",
+        reportFilename: "../../logs/report.json"
     })
 ];
 
