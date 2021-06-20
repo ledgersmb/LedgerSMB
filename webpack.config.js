@@ -394,7 +394,6 @@ const webpackConfigs = {
     context: path.join(__dirname, "UI"),
 
     entry: {
-        polyfill: "js-src/polyfills.js",
         bootstrap: "js-src/lsmb/bootstrap.js", // Virtual file
         ...lsmbCSS
     },
