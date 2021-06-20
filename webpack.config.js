@@ -9,6 +9,7 @@ const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
@@ -300,6 +301,14 @@ var pluginsProd = [
 
     new ObsoleteWebpackPlugin({
         name: "obsolete"
+    }),
+
+    new CompressionPlugin({
+        filename: "[path][base].gz",
+        algorithm: "gzip",
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8,
     }),
 
     new BundleAnalyzerPlugin({
