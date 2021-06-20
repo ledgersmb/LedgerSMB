@@ -121,7 +121,7 @@
   "scripts": {
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
     "build": "webpack --mode=production --stats errors-warnings",
-    "build:dev": "webpack --progress --mode=development",
+    "build:dev": "webpack --progress --mode=development --stats errors-warnings",
     "serve": "webpack-dev-server --env.dev",
     "lint:css": "stylelint UI/css/*.css",
     "lint:js": "eslint --ext .js ./",
