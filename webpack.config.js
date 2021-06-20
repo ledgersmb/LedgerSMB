@@ -35,7 +35,6 @@ process.env.NODE_ENV = prodMode ? "production" : "development";
 /* FUNCTIONS */
 
 var includedRequires = [
-    "dojo/has!webpack?dojo-webpack-plugin/amd/dojoES6Promise",
     "dijit/Dialog",
     "dijit/form/Button",
     "dijit/form/CheckBox",
