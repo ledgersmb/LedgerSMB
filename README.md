@@ -64,22 +64,22 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-93                                |
-| Edge                | 2017-10  | 16-18, 79-81, 83-90                         |
-| Firefox             | 2018-05  | 60-90                                       |
-| Opera               | 2017-09  | 48-58, 60, 62-75                            |
+| Chrome              | 2017-09  | 61-81, 83-91                                |
+| Edge                | 2017-10  | 16-18, 79-81, 83-91                         |
+| Firefox             | 2018-05  | 60-89                                       |
+| Opera               | 2017-09  | 48-58, 60, 62-76                            |
 | Safari              | 2017-03  | 10.1, 11, 11.1, 12, 12.1, 13, 13.1, 14,     |
-|                     |          | 14.1, TP                                    |
+|                     |          | 14.1                                        |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2021-04  | 90                                          |
-| Firefox for Android | 2021-03  | 87                                          |
-| Android Browser     | 2021-04  | 90                                          |
+| Chrome for Android  | 2021-05  | 91                                          |
+| Firefox for Android | 2021-06  | 89                                          |
+| Android Browser     | 2021-05  | 91                                          |
 | Safari on iOS       | 2017-03  | 10.3, 11.0-11.4, 12.0-12.4, 13.0-13.7,      |
-|                     |          | 14.0-14.5                                   |
+|                     |          | 14.0-14.6                                   |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
 |                     |          | 14.0                                        |
 
@@ -87,13 +87,12 @@ and a range of versions.
 recent data is available for Mobile browsers other than Safari, because they
 are pushed out to the devices as soon as they are releases, so the amount of
 old browsers is negligible. **
-
 # Quick start (`Docker compose`)
 
 The quickest way to get the `Docker` image up and running is by using the
 docker-compose file available through the `GitHub` repository at:
 
-https://github.com/ledgersmb/ledgersmb-docker/blob/1.9/docker-compose.yml
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.8/docker-compose.yml
 
 which sets up both the LedgerSMB image and a supporting database image for
 production purposes (i.e. with persistent (database) data, with the
