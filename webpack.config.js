@@ -303,6 +303,13 @@ var pluginsProd = [
         name: "obsolete"
     }),
 
+    new DuplicatesPlugin({
+        // Emit compilation warning or error? (Default: `false`)
+        emitErrors: false,
+        // Display full duplicates information? (Default: `false`)
+        verbose: true
+    }),
+
     new CompressionPlugin({
         filename: "[path][base].gz",
         algorithm: "gzip",
@@ -325,13 +332,6 @@ var pluginsDev = [
     ...pluginsProd,
 
     new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
-
-    new DuplicatesPlugin({
-        // Emit compilation warning or error? (Default: `false`)
-        emitErrors: false,
-        // Display full duplicates information? (Default: `false`)
-        verbose: false
-    })
 ];
 
 var pluginsList = prodMode ? pluginsProd : pluginsDev;
