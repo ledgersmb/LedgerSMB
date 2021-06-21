@@ -90,7 +90,6 @@
     "obsolete-webpack-plugin": "0.5.6",
     "optimize-css-assets-webpack-plugin": "6.0.0",
     "prettier": "^2.3.1",
-    "script-ext-html-webpack-plugin": "^2.1.5",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.1",
@@ -103,7 +102,7 @@
     "url-loader": "4.1.1",
     "virtual-module-webpack-plugin": "0.4.1",
     "webpack": "^4.46.0",
-    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-bundle-analyzer": "4.4.2",
     "webpack-cli": "^4.7.2",
     "webpack-log": "^3.0.2",
     "webpack-merge": "^5.8.0",
@@ -112,7 +111,6 @@
   },
   "dependencies": {
     "content-disposition": "^0.5.3",
-    "core-js": "3.14.0",
     "dijit": "1.16.4",
     "dojo": "1.16.4"
   },
@@ -121,8 +119,10 @@
   "scripts": {
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
     "build": "webpack --mode=production --stats errors-warnings",
-    "build:dev": "webpack --progress --mode=development",
+    "build:dev": "webpack --progress --mode=development --stats errors-warnings",
     "serve": "webpack-dev-server --env.dev",
+    "profile": "webpack --progress=profile --json > logs/stats.json",
+    "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
     "lint:css": "stylelint UI/css/*.css",
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",

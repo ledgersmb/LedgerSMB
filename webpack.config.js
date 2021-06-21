@@ -8,6 +8,7 @@ const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
@@ -16,7 +17,6 @@ const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -36,7 +36,6 @@ process.env.NODE_ENV = prodMode ? "production" : "development";
 /* FUNCTIONS */
 
 var includedRequires = [
-    "dojo/has!webpack?dojo-webpack-plugin/amd/dojoES6Promise",
     "dijit/Dialog",
     "dijit/form/Button",
     "dijit/form/CheckBox",
@@ -86,7 +85,7 @@ glob.sync("**/*.html", {
 includedRequires = includedRequires
     .concat(
         glob
-            .sync("lsmb/**/!(bootstrap|lsmb.profile|webpack.loaderConfig).js", {
+            .sync("lsmb/**/!(bootstrap|webpack.loaderConfig).js", {
                 cwd: "UI/js-src/"
             })
             .map(function (file) {
@@ -303,8 +302,13 @@ var pluginsProd = [
         name: "obsolete"
     }),
 
-    new ScriptExtHtmlWebpackPlugin({
-        async: "obsolete"
+    new BundleAnalyzerPlugin({
+        analyzerHost: "0.0.0.0",
+        analyzerMode: "json",
+        openAnalyzer: false,
+        generateStatsFile: true,
+        statsFilename: "../../logs/stats.json",
+        reportFilename: "../../logs/report.json"
     })
 ];
 
@@ -394,7 +398,6 @@ const webpackConfigs = {
     context: path.join(__dirname, "UI"),
 
     entry: {
-        polyfill: "js-src/polyfills.js",
         bootstrap: "js-src/lsmb/bootstrap.js", // Virtual file
         ...lsmbCSS
     },
