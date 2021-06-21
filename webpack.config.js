@@ -8,20 +8,19 @@ const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const DojoWebpackPlugin = require("dojo-webpack-plugin");
 const { DuplicatesPlugin } = require("inspectpack/plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
-const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+//const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
-const VirtualModulePlugin = require("virtual-module-webpack-plugin");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
@@ -33,6 +32,7 @@ const prodMode =
 
 // Make sure all modules follow desired mode
 process.env.NODE_ENV = prodMode ? "production" : "development";
+const parallelJobs = process.env.CI || process.env.TRAVIS ? 2 : true;
 
 /* FUNCTIONS */
 
@@ -69,13 +69,7 @@ function findDataDojoTypes(fileName) {
 
 // Compute used data-dojo-type
 glob.sync("**/*.html", {
-    ignore: [
-        "lib/ui-header.html",
-        "js/**",
-        "js-src/dojo/**",
-        "js-src/dijit/**",
-        "js-src/util/**"
-    ],
+    ignore: ["lib/ui-header.html", "js/**"],
     cwd: "UI"
 }).map(function (filename) {
     const requires = findDataDojoTypes("UI/" + filename);
@@ -86,7 +80,7 @@ glob.sync("**/*.html", {
 includedRequires = includedRequires
     .concat(
         glob
-            .sync("lsmb/**/!(bootstrap|webpack.loaderConfig).js", {
+            .sync("lsmb/**/!(webpack.loaderConfig|main).js", {
                 cwd: "UI/js-src/"
             })
             .map(function (file) {
@@ -114,27 +108,12 @@ const javascript = {
 
 const css = {
     test: /\.css$/i,
-    use: [
-        {
-            loader: ExtractCssChunks.loader,
-            options: {
-                hmr: !prodMode
-            }
-        },
-        "css-loader"
-    ]
+    use: [MiniCssExtractPlugin.loader, "css-loader"]
 };
 
 const images = {
     test: /\.(png|jpe?g|gif)$/i,
-    use: [
-        {
-            loader: "url-loader",
-            options: {
-                limit: 8192
-            }
-        }
-    ]
+    type: 'asset'
 };
 
 const html = {
@@ -151,7 +130,7 @@ const html = {
 
 const svg = {
     test: /\.svg$/,
-    loader: "file-loader"
+    type: 'asset/resource'
 };
 
 /* PLUGINS */
@@ -164,7 +143,7 @@ const CleanWebpackPluginOptions = {
 const ESLintPluginOptions = {
     files: "**/!(bootstrap|lsmb.profile).js",
     emitError: prodMode,
-    emitWarning: !prodMode,
+    emitWarning: !prodMode
 };
 
 const StylelintPluginOptions = {
@@ -239,57 +218,44 @@ const lsmbCSS = {
     )
 };
 
-// Compile bootstrap module as a virtual one
-const VirtualModulePluginOptions = {
-    moduleName: "js-src/lsmb/bootstrap.js",
-    contents: `/* eslint-disable */
-        define(["dojo/parser","dojo/ready","${includedRequires.join(
-            '","'
-        )}"], function(parser, ready) {
-            ready(function() {
-            });
-            return {};
-        });`
-};
-
-// console.log(VirtualModulePluginOptions.contents);
-
 var pluginsProd = [
+    // Clean UI/js before building
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
-    new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
-
-    new VirtualModulePlugin(VirtualModulePluginOptions),
-
+    // Lint the sources
     new ESLintPlugin(ESLintPluginOptions),
     new StylelintPlugin(StylelintPluginOptions),
 
+    // Add Dojo
     new DojoWebpackPlugin(DojoWebpackPluginOptions),
+
+    // dojo-webpack-plugin doesn't support domReady!
+    new webpack.NormalModuleReplacementPlugin(
+        /^dojo\/domReady!/,
+        NormalModuleReplacementPluginOptionsDomReady
+    ),
 
     new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function (data) {
         /* eslint-disable-next-line no-param-reassign */
         data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
     }),
 
+    // Copy a few Dojo ressources
     new CopyWebpackPlugin(CopyWebpackPluginOptions),
 
-    new webpack.NormalModuleReplacementPlugin(
-        /^dojo\/domReady!/,
-        NormalModuleReplacementPluginOptionsDomReady
-    ),
-
+    // Handle SVG
     new webpack.NormalModuleReplacementPlugin(
         /^svg!/,
         NormalModuleReplacementPluginOptionsSVG
     ),
 
-    new ExtractCssChunks({
-        filename: prodMode ? "css/[name].[contenthash].css" : "css/[name].css",
-        chunkFilename: "css/[id].css",
-        moduleFilename: ({ name }) => `${name.replace("js/", "js/css/")}.css`
-        // publicPath: "js"
+    // Handle CSS
+    new MiniCssExtractPlugin({
+        filename: "css/[name].css",
+        chunkFilename: "css/[id].css"
     }),
 
+    // Handle HTML
     new HtmlWebpackPlugin({
         inject: false, // Tags are injected manually in the content below
         minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
@@ -299,25 +265,14 @@ var pluginsProd = [
         template: "lib/ui-header.html"
     }),
 
+    // Add obsoleted browser warning on application start
+    // Not yet webpack5 ready
+/*
     new ObsoleteWebpackPlugin({
         name: "obsolete"
     }),
-
-    new DuplicatesPlugin({
-        // Emit compilation warning or error? (Default: `false`)
-        emitErrors: false,
-        // Display full duplicates information? (Default: `false`)
-        verbose: true
-    }),
-
-    new CompressionPlugin({
-        filename: "[path][base].gz",
-        algorithm: "gzip",
-        test: /\.js$|\.css$|\.html$/,
-        threshold: 10240,
-        minRatio: 0.8,
-    }),
-
+*/
+    // Analyze the generated JS code. Use `npm run analyzer` to view
     new BundleAnalyzerPlugin({
         analyzerHost: "0.0.0.0",
         analyzerMode: "json",
@@ -325,80 +280,74 @@ var pluginsProd = [
         generateStatsFile: true,
         statsFilename: "../../logs/stats.json",
         reportFilename: "../../logs/report.json"
+    }),
+
+    // Warn on duplication of code
+    new DuplicatesPlugin({
+        // Emit compilation warning or error? (Default: `false`)
+        emitErrors: false,
+        // Display full duplicates information? (Default: `false`)
+        verbose: true
+    }),
+
+    // Generate GZ versions of compiled code to sppedup download
+    new CompressionPlugin({
+        filename: "[path][base].gz",
+        algorithm: "gzip",
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
     })
 ];
 
 var pluginsDev = [
     ...pluginsProd,
 
-    new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
+    new UnusedWebpackPlugin(UnusedWebpackPluginOptions)
 ];
 
 var pluginsList = prodMode ? pluginsProd : pluginsDev;
 
 /* OPTIMIZATIONS */
 
-const groupsOptions = {
-    chunks: "all",
-    reuseExistingChunk: true,
-    enforce: true
-};
-
 const optimizationList = {
-    moduleIds: "hashed",
-    runtimeChunk: {
-        name: "manifest" // runtimeChunk: "multiple", // Fails
-    },
-    namedChunks: true, // Keep names to load only 1 theme
-    noEmitOnErrors: true,
-    splitChunks: !prodMode
-        ? false
-        : {
-              chunks(chunk) {
-                  // exclude dijit themes
-                  return !chunk.name.match(/(claro|nihilo|soria|tundra)/);
-              },
-              maxInitialRequests: Infinity,
-              cacheGroups: {
-                  node_modules: {
-                      test(module, chunks) {
-                          // `module.resource` contains the absolute path of the file on disk.
-                          // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
-                          return (
-                              module.resource &&
-                              !module.resource.endsWith(".css") &&
-                              module.resource.includes(
-                                  `${path.sep}node_modules${path.sep}`
-                              )
-                          );
-                      },
-                      name(module) {
-                          const packageName = module.context.match(
-                              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                          )[1];
-                          return `npm.${packageName.replace("@", "")}`;
-                      },
-                      priority: 2,
-                      ...groupsOptions
-                  }
-              }
-          },
+    chunkIds: "named", // Keep names to load only 1 theme
+    emitOnErrors: false,
     minimize: prodMode,
     minimizer: [
         new TerserPlugin({
-            parallel: process.env.CIRCLECI || process.env.TRAVIS ? 2 : true,
-            sourceMap: !prodMode
+            parallel: parallelJobs
         }),
-        new OptimizeCSSAssetsPlugin({
-            cssProcessorOptions: {
-                discardComments: { removeAll: true },
-                zindex: {
-                    disabled: true // Don't touch zindex
-                }
-            },
-            canPrint: true
+        new CssMinimizerPlugin({
+            parallel: parallelJobs
         })
-    ]
+    ],
+    moduleIds: 'deterministic',
+    runtimeChunk: "multiple",
+    splitChunks: {
+        cacheGroups: {
+            node_modules: {
+                test(module) {
+                    // `module.resource` contains the absolute path of the file on disk.
+                    // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
+                    return (
+                        module.resource &&
+                        !module.resource.endsWith(".css") &&
+                        module.resource.includes(
+                            `${path.sep}node_modules${path.sep}`
+                        )
+                    );
+                },
+                name(module) {
+                    const packageName = module.context.match(
+                        /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                    )[1];
+                    return `npm.${packageName.replace("@", "")}`;
+                },
+                chunks: "all",
+            }
+        }
+    }
 };
 
 /* WEBPACK CONFIG */
@@ -407,12 +356,17 @@ const webpackConfigs = {
     context: path.join(__dirname, "UI"),
 
     entry: {
-        bootstrap: "js-src/lsmb/bootstrap.js", // Virtual file
+        main: {
+            filename: "lsmb/main.js",
+            import: "lsmb/main",
+            dependOn: 'shared'
+        },
+        shared: [ ...includedRequires ],
         ...lsmbCSS
     },
 
     output: {
-        path: path.resolve("UI/js"), // js path
+        path: path.join(__dirname, "UI/js"), // js path
         publicPath: "js/", // images path
         pathinfo: !prodMode, // keep source references?
         filename: "_scripts/[name].[contenthash].js",
@@ -426,8 +380,10 @@ const webpackConfigs = {
     plugins: pluginsList,
 
     resolve: {
-        extensions: [".js"],
-        modules: ["node_modules"]
+        fallback: {
+            buffer: require.resolve("buffer/"),
+            path: require.resolve("path-browserify")
+        }
     },
 
     resolveLoader: {
@@ -440,7 +396,7 @@ const webpackConfigs = {
 
     performance: { hints: prodMode ? false : "warning" },
 
-    devtool: prodMode ? undefined : "source-map"
+    devtool: prodMode ? "hidden-source-map" : "source-map"
 };
 
 /* Include Markdown compiling for README.md */

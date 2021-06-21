@@ -15,6 +15,7 @@
  *
  * @format
  */
+const path = require("path");
 
 // eslint-disable-next-line no-unused-vars
 function getConfig(env) {
@@ -24,8 +25,14 @@ function getConfig(env) {
     return {
         packages: [
             // An array of objects which provide the package name and location
-            "dojo",
-            "dijit",
+            {
+                name: "dojo",
+                location: path.resolve(__dirname,"../../../node_modules/dojo")
+            },
+            {
+                name: "dijit",
+                location: path.resolve(__dirname,"../../../node_modules/dijit")
+            },
             {
                 name: "lsmb", // the name of the package
                 location: "js-src/lsmb" // the directory path where it resides
