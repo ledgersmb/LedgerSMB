@@ -76,7 +76,7 @@ and a range of versions.
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
 | Chrome for Android  | 2021-05  | 91                                          |
-| Firefox for Android | 2021-06  | 89                                          |
+| Firefox for Android | 2021-05  | 89                                          |
 | Android Browser     | 2021-05  | 91                                          |
 | Safari on iOS       | 2017-03  | 10.3, 11.0-11.4, 12.0-12.4, 13.0-13.7,      |
 |                     |          | 14.0-14.6                                   |
