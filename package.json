@@ -115,16 +115,15 @@
   "main": "UI/js/bootstrap.js",
   "homepage": "http://ledgersmb.org/",
   "scripts": {
+    "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
     "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
     "build": "webpack --mode=production --stats errors-warnings",
     "build:dev": "webpack --progress --mode=development --stats errors-warnings",
-    "serve": "webpack-dev-server --env.dev",
-    "profile": "webpack --progress=profile --json > logs/stats.json",
-    "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
+    "lint": "npm run lint:css;npm run lint:js;npm run lint:markdown",
     "lint:css": "stylelint UI/css/*.css",
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
-    "test": "npm run lint:css;npm run lint:js;npm run lint:markdown"
+    "profile": "webpack --progress=profile --json > logs/stats.json"
   },
   "babel": {
     "presets": [
