@@ -50,15 +50,16 @@ jobs:
           key: |
             modules-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-node_modules != 'true'
+        run: npm ci --ignore-scripts
+
       - name: Cache Dojo
         id: cache-dojo
         uses: actions/cache@v2
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/{js-src,css}/**') }}
-
-      - name: Install Node modules Dependencies
-        run: npm ci
+          key: dojo-${{ hashFiles('UI/{js-src,css}/**') }}-${{ hashFiles('UI/**/*.html') }}
 
       - name: Build Dojo
         run: npm run build
