@@ -1095,7 +1095,7 @@ sub payment2 {
                 name  => "memo_invoice_$invoice_id",
                 value => $request->{"memo_invoice_$invoice_id"}
             },#END HASH
-            orig_topay_fx     => ($request->{"topay_fx_$invoice->{invoice_id}"} // LedgerSMB::PGNumber->new($due_fx)->to_output(money => 1)),
+            orig_topay_fx     => LedgerSMB::PGNumber->new($due_fx)->to_output(money => 1),
             topay_fx          =>  {
                 name  => "topay_fx_$invoice_id",
                 value => ($request->{"topay_fx_$invoice_id"}
