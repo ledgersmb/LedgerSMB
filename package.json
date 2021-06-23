@@ -112,7 +112,6 @@
     "dijit": "1.16.4",
     "dojo": "1.16.4"
   },
-  "main": "UI/js/bootstrap.js",
   "homepage": "http://ledgersmb.org/",
   "scripts": {
     "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
