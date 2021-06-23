@@ -76,12 +76,12 @@ dbdocs:
 dojo:
 	$(DOCKER_CMD) rm -rf UI/js/*
 	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
-	$(DOCKER_CMD) ./node_modules/webpack/bin/webpack.js --mode=production
+	$(DOCKER_CMD) npm run build
 
 devdojo:
 	$(DOCKER_CMD) rm -rf UI/js/*
 	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
-	$(DOCKER_CMD) ./node_modules/webpack/bin/webpack.js --mode=development
+	$(DOCKER_CMD) npm run build:dev
 
 # TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
