@@ -43,12 +43,12 @@ jobs:
           node-version: 15.x
 
       - name: Cache node modules
+        id: cache-node_modules
         uses: actions/cache@v2
         with:
           path: ./node-modules
           key: |
             modules-${{ hashFiles('**/package-lock.json') }}
-            modules-
 
       - name: Cache Dojo
         id: cache-dojo
@@ -62,7 +62,8 @@ jobs:
 
       - name: Build Dojo
         run: npm run build
-        if: steps.cache-dojo.outputs.cache-hit != 'true'
+        if: steps.cache-dojo.outputs.cache-hit != 'true' ||
+            steps.cache-node_modules.outputs.cache-hit != 'true'
 
       - name: 'Tar files'
         run: tar -cf ~/webpacked_js.tar UI/js
