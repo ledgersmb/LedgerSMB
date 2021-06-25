@@ -68,13 +68,18 @@ CREATE OR REPLACE FUNCTION payment_get_entity_account_payment_info
 (in_entity_credit_id int)
 RETURNS payment_vc_info
 AS $$
- SELECT ec.id, coalesce(ec.pay_to_name, cp.legal_name ||
-        coalesce(':' || ec.description,'')) as name,
+ SELECT ec.id, coalesce(ec.pay_to_name, cp.name  || coalesce(':' || ec.description, ''), '') as name,
         e.entity_class, ec.discount_account_id, ec.meta_number
  FROM entity_credit_account ec
  JOIN entity e ON (ec.entity_id = e.id)
- JOIN company cp ON (cp.entity_id = e.id)
- WHERE ec.id = $1;
+ JOIN (
+   select entity_id, legal_name as name
+   from company
+   union all
+   select entity_id, first_name || coalesce(' ' || middle_name || ' ', '') || last_name
+   from person
+ ) cp ON (cp.entity_id = e.id)
+ WHERE ec.id = in_entity_credit_id;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION payment_get_entity_account_payment_info
