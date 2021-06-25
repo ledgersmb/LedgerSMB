@@ -56,7 +56,7 @@
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^5.2.6",
     "cssnano": "^5.0.6",
-    "depcheck": "1.4.1",
+    "depcheck": "1.4.2",
     "dojo-util": "1.16.4",
     "dojo-webpack-plugin": "2.8.20",
     "ejs-loader": "0.5.0",
