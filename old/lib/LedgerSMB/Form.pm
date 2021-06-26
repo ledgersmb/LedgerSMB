@@ -1244,7 +1244,8 @@ sub _set_datestyle {
         'dd-mm-yyyy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
         'dd.mm.yyyy' => 'set DateStyle to \'GERMAN\''
     );
-    $dbh->do( $date_query{ $datestyle } ) if $date_query{ $datestyle };
+    $dbh->do( $date_query{ $datestyle } )
+        if $datestyle and $date_query{ $datestyle };
     return;
 }
 
