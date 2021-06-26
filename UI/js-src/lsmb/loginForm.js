@@ -82,6 +82,7 @@ define([
             indeterminate: true
         }).placeAt("login-indicator", "only");
         indicator.startup();
+        domStyle.set(dom.byId("login-indicator"), "display", "none");
     }
 
     return declare("lsmb/loginForm", [Form], {
