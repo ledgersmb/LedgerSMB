@@ -114,13 +114,6 @@ commands:
             ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
           background: true
 
-      - run:
-          # TODO: Update the CircleCI dev images instead
-          name: Update NodeJS to 15.x
-          command: |
-            curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-
       # Restore node_modules
       - restore_cache:
           keys:
