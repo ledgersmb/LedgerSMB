@@ -1,0 +1,20 @@
+*** /usr/local/share/perl/5.28.1/Test2/Harness/Collector/JobDir.pm	2021-06-15 18:38:18.000000000 -0400
+--- utils/patch/Test2/Harness/Collector/JobDir.pm	2021-06-24 00:48:42.199262556 -0400
+***************
+*** 283,288 ****
+--- 283,298 ----
+
+          chomp($line);
+
++ # Filter out B::Deparse useless warnings when using Devel::Cover
++ #( STDERR )  job  1    unexpected OP_CUSTOM (catch) at /usr/share/perl/5.30.0/B/Deparse.pm line 1633.
++ #( STDERR )  job  1    Deep recursion on subroutine "B::Deparse::_pessimise_walk" at /usr/share/perl/5.30.0/B/Deparse.pm line 338.
++         if (    $line =~ /^unexpected OP_CUSTOM \([a-z]+\).+B\/Deparse/
++              || $line =~ /Use of uninitialized value \$expr in concatenation .*B\/Deparse.pm/
++              || $line =~ /^Deep recursion on subroutine "B::Deparse::_pessimise_walk"/ ) {
++             shift @$buff;
++             next;
++         }
++
+          my $esync = $self->_poll_stream_process_harness_line($line, $params);
+          return 1 if $esync;

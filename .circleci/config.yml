@@ -29,10 +29,12 @@ commands:
             if [ "x$COVERAGE" == "x1" ]
             then
               echo "JOB_COUNT=2" >> $BASH_ENV
-              sudo cp utils/patch/Test2/Harness/Collector/JobDir.pm \
-                      $HOME/perl5/lib/perl5/Test2/Harness/Collector/JobDir.pm
               echo "STARMAN_DEVEL_COVER_OPTIONS='-MDevel::Cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
               echo "YATH_DEVEL_COVER_OPTIONS='--cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
+              # Ugly patch to yath to quiet B::Deparse noise.
+              sudo patch \
+                $HOME/perl5/lib/perl5/Test2/Harness/Collector/JobDir.pm \
+                utils/patch/Test2/Harness/Collector/JobDir.patch
             fi
 
       - run:

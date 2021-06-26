@@ -287,7 +287,7 @@ sub _poll_stream {
 #( STDERR )  job  1    unexpected OP_CUSTOM (catch) at /usr/share/perl/5.30.0/B/Deparse.pm line 1633.
 #( STDERR )  job  1    Deep recursion on subroutine "B::Deparse::_pessimise_walk" at /usr/share/perl/5.30.0/B/Deparse.pm line 338.
         if (    $line =~ /^unexpected OP_CUSTOM \([a-z]+\).+B\/Deparse/
-             || $line =~ /Use of uninitialized value \$expr in concatenation .*B\/Deparse.pm/
+             || $line =~ /^Use of uninitialized value \$expr in concatenation .*B\/Deparse.pm/
              || $line =~ /^Deep recursion on subroutine "B::Deparse::_pessimise_walk"/ ) {
             shift @$buff;
             next;

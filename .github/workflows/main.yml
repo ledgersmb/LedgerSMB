@@ -206,8 +206,9 @@ jobs:
           echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
           echo "JOB_COUNT=2" >> $GITHUB_ENV
           # Ugly patch to yath to quiet B::Deparse noise.
-          sudo cp -v utils/patch/Test2/Harness/Collector/JobDir.pm \
-                  local/lib/perl5/Test2/Harness/Collector/JobDir.pm
+          sudo patch \
+            local/lib/perl5/Test2/Harness/Collector/JobDir.pm \
+            utils/patch/Test2/Harness/Collector/JobDir.patch
         if: ${{ matrix.COVERAGE }}
 
       - name: Create default test database
