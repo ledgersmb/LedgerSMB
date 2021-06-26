@@ -4,7 +4,7 @@ use warnings;
 
 use XML::LibXML;
 use XML::LibXML::XPathContext;
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 =head1 NAME
 
@@ -44,7 +44,7 @@ sub new {
         );
         $ns = $dom->documentElement->namespaceURI;
     }
-    catch { }
+    catch ($e) { }
 
     return unless $dom
         and $ns

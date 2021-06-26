@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use PageObject;
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 use Moose;
 use namespace::autoclean;
@@ -41,7 +41,7 @@ sub content {
         # we're still here?
         $gone = 0 if defined $tagname;
     }
-    catch { }
+    catch ($e) { }
 
     $self->clear_content if $gone; # force builder
 

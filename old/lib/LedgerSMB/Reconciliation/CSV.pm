@@ -22,7 +22,7 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::PGOld);
 
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 sub ___init {
 # Import installation-specific parsing functions
@@ -42,7 +42,7 @@ try {
         }
     }
 }
-catch {}
+catch ($e) {}
 }
 
 ___init();

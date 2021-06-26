@@ -24,7 +24,7 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::PGOld);
 
-use Syntax::Keyword::Try qw|try :experimental(typed)|;
+use Feature::Compat::Try;
 
 sub _get_translations {
     my ($self) = @_;

@@ -58,7 +58,7 @@ use LedgerSMB::Sysconfig;
 use Cookie::Baker;
 use Digest::MD5;
 use Log::Log4perl;
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 our $logger;
 

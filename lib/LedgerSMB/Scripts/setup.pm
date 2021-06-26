@@ -32,7 +32,7 @@ use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
-use Syntax::Keyword::Try qw|try :experimental(typed)|;
+use Feature::Compat::Try;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
