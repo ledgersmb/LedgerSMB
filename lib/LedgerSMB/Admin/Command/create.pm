@@ -10,7 +10,7 @@ LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
 use strict;
 use warnings;
 
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;

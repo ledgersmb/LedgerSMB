@@ -11,7 +11,7 @@ use strict;
 use warnings;
 
 use Getopt::Long qw(GetOptionsFromArray);
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;

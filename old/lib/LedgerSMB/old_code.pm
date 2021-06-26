@@ -32,7 +32,7 @@ use LedgerSMB::Form;
 use Log::Log4perl;
 use POSIX 'SEEK_SET';
 use Symbol;
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 use base qw(Exporter);
 our @EXPORT_OK = qw(dispatch);
@@ -115,7 +115,7 @@ sub dispatch {
                 &{*{$ref}}($lsmb_legacy::form, $lsmb_legacy::locale);
             }
         }
-        catch {
+        catch ($e) {
             warn "Error dispatching call to old code: $_\n";
         };
         exit;
