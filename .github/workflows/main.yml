@@ -280,3 +280,23 @@ jobs:
             screens/**
             /tmp/nginx*.log
         if: always()
+
+  build-dev:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    if: ${{ github.event.pull_request.merged }}
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Repository Dispatch to the Development image
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.LEDGERSMB_DEV_TOKEN }}
+          repository: ${{ github.repository_owner }}/ledgersmb-dev-docker
+          event-type: master-updated
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
