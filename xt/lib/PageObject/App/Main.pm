@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 use PageObject;
-use Feature::Compat::Try;
 
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
+use Feature::Compat::Try;
 
 
 __PACKAGE__->self_register(
