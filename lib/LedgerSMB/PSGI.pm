@@ -105,8 +105,8 @@ sub old_app {
                     }
                 }
                 catch ($e) {
-                    exit;
                 }
+                exit;
             }
             return;
         });
