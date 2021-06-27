@@ -40,7 +40,7 @@ use HTTP::Status qw( HTTP_FOUND );
 use List::Util qw{  none };
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 # To build the URL space
 use Plack;
@@ -104,9 +104,9 @@ sub old_app {
                         }
                     }
                 }
-                finally {
-                    exit;
+                catch ($e) {
                 }
+                exit;
             }
             return;
         });

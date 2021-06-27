@@ -29,8 +29,6 @@ commands:
             if [ "x$COVERAGE" == "x1" ]
             then
               echo "JOB_COUNT=2" >> $BASH_ENV
-              sudo cp utils/patch/Test2/Harness/Collector/JobDir.pm \
-                      $HOME/perl5/lib/perl5/Test2/Harness/Collector/JobDir.pm
               echo "STARMAN_DEVEL_COVER_OPTIONS='-MDevel::Cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
               echo "YATH_DEVEL_COVER_OPTIONS='--cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
             fi
@@ -115,13 +113,6 @@ commands:
             mkdir -p logs screens
             ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
           background: true
-
-      - run:
-          # TODO: Update the CircleCI dev images instead
-          name: Update NodeJS to 15.x
-          command: |
-            curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
-            sudo apt-get install -y nodejs
 
       # Restore node_modules
       - restore_cache:
@@ -301,14 +292,14 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.32'
+      perl: '5.34'
       postgres: '11'
       browser: chrome
       selenium: selenium/node-chrome:3
       coverage: 1
     steps:
       - prep_env:
-          perl: '5.32'
+          perl: '5.34'
       - start_starman
       - start_proxy
       - prove
@@ -317,13 +308,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.30'
+      perl: '5.32'
       postgres: '11'
       browser: firefox
       selenium: selenium/node-firefox:3
     steps:
       - prep_env:
-          perl: '5.30'
+          perl: '5.32'
       - start_starman
       - start_proxy
       - prove
@@ -334,13 +325,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.28'
+      perl: '5.30'
       postgres: '11'
       browser: operablink
       selenium: selenium/node-opera:3
     steps:
       - prep_env:
-          perl: '5.28'
+          perl: '5.30'
       - start_starman
       - start_proxy
       - prove

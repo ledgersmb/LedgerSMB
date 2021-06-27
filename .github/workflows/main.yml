@@ -90,15 +90,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - perl: "5.32"
+          - perl: "5.34"
             BROWSER: "chrome"
             COVERAGE: 1
 
-          - perl: "5.30"
+          - perl: "5.32"
             BROWSER: "firefox"
             COA_TESTING: 1
 
-          - perl: "5.28"
+          - perl: "5.30"
             BROWSER: "operablink"
             DB_TESTING: 1
 
@@ -165,18 +165,18 @@ jobs:
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl }}
-          install-modules-with: cpm
+          install-modules-with: cpanm
           install-modules: |
             Devel::Cover
             Devel::Cover::Report::Coveralls
           # Features and Devel modules
           install-modules-args: >
             --with-develop
-            --feature=starman
-            --feature=latex-pdf-ps
-            --feature=openoffice
-            --feature=xls
-            --feature=edi
+            --with-feature=starman
+            --with-feature=latex-pdf-ps
+            --with-feature=openoffice
+            --with-feature=xls
+            --with-feature=edi
 
       - uses: actions/download-artifact@v2
         with:
@@ -205,9 +205,6 @@ jobs:
           echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
           echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
           echo "JOB_COUNT=2" >> $GITHUB_ENV
-          # Ugly patch to yath to quiet B::Deparse noise.
-          sudo cp -v utils/patch/Test2/Harness/Collector/JobDir.pm \
-                  local/lib/perl5/Test2/Harness/Collector/JobDir.pm
         if: ${{ matrix.COVERAGE }}
 
       - name: Create default test database

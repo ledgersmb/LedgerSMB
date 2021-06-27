@@ -18,6 +18,7 @@ requires 'Email::MessageID';
 requires 'Email::Sender::Simple';
 requires 'Email::Sender::Transport::SMTP';
 requires 'Email::Stuffer';
+requires 'Feature::Compat::Try';
 requires 'File::Find::Rule';
 requires 'Hash::Merge';
 requires 'HTML::Entities';
@@ -101,7 +102,6 @@ requires 'Pod::Find';
 requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
-requires 'Syntax::Keyword::Try', '0.15, != 0.25';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
@@ -190,7 +190,7 @@ on 'develop' => sub {
     requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
-    requires 'Test2::Harness', '<=1.000054';
+    requires 'Test2::Harness';
     requires 'Test2::V0';
     requires 'Test2::Plugin::Feature';
     requires 'Test2::Plugin::pgTAP';
