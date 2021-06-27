@@ -137,10 +137,11 @@ sub save {
     try {
         ($id_ref) = $self->call_dbmethod(funcname => $func);
     }
-    catch ($var =~ m/Invalid link settings:\s*Summary/) {
+    catch ($var) {
         die $self->{_locale}->text(
             'Error: Cannot include summary account in other dropdown menus'
-            );
+            )
+        if $var =~ m/Invalid link settings:\s*Summary/;
     }
 
     $self->{id} = $id_ref->{$func};
