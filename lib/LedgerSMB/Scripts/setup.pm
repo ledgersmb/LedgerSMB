@@ -1181,15 +1181,17 @@ sub _save_user {
     try {
         $user->create($request->{password});
     }
-    catch ($var =~ /duplicate user/i) {
-        $request->{dbh}->rollback;
-        $request->{notice} = $request->{_locale}->text(
-            'User already exists. Import?'
-            );
-        $request->{pls_import} = 1;
+    catch ($var) {
+        if ($var =~ /duplicate user/i){
+            $request->{dbh}->rollback;
+            $request->{notice} = $request->{_locale}->text(
+                'User already exists. Import?'
+                );
+            $request->{pls_import} = 1;
 
-        # return from the 'catch' block
-        return _render_user($request, $entrypoint);
+            # return from the 'catch' block
+            return _render_user($request, $entrypoint);
+        }
     };
 
     if ($request->{perms} == 1){
