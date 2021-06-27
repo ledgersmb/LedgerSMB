@@ -10,14 +10,14 @@ LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
 use strict;
 use warnings;
 
-use Feature::Compat::Try;
-
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
 
 use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
+
+use Feature::Compat::Try;
 
 
 sub run {
