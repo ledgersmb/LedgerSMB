@@ -150,7 +150,7 @@ executors:
       - image: ledgersmbdev/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
-      - image: ledgersmb/ledgersmb_circleci-<< parameters.browser >>
+      - image: ledgersmbdev/ledgersmb_circleci-browsers:<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
 #      DEVEL_COVER_OPTIONS: 
