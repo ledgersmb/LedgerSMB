@@ -296,7 +296,8 @@ jobs:
       - name: Repository Dispatch to the Development image
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.LEDGERSMB_DEV_TOKEN }}
+          token: ${{ secrets.DOCKER_TOKEN }}
           repository: ${{ github.repository_owner }}/ledgersmb-dev-docker
           event-type: master-updated
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+        if: $( git show -m HEAD --name-only --pretty="" | egrep 'cpanfile' )
