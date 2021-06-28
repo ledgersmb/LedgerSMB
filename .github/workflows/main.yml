@@ -300,4 +300,4 @@ jobs:
           repository: ${{ github.repository_owner }}/ledgersmb-dev-docker
           event-type: master-updated
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-        if: $( git show -m HEAD --name-only --pretty="" | egrep 'cpanfile' )
+        if: $( git show -m HEAD --name-only --pretty='' | egrep 'cpanfile' )
