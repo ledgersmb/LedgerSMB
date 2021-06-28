@@ -1257,6 +1257,11 @@ sub post_payment {
     @array_options = $Payment->get_entity_credit_account();
     my $discount_account_id = $array_options[0]->{discount};
     @array_options = $Payment->get_open_invoices();
+
+    die q|Applicable discounts can't be posted due missing discount account in credit account|
+        if ((not defined $discount_account_id)
+            and (any { $_->{discount_tc} != 0 } @array_options));
+
     for my $ref (0 .. $#array_options) {
         if ($request->{"checkbox_$array_options[$ref]->{invoice_id}"}
             && ($request->{"topay_fx_$array_options[$ref]->{invoice_id}"})) {
