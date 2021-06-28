@@ -1199,7 +1199,7 @@ sub payment2 {
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
         topay_subtotal => LedgerSMB::PGNumber->new(
-             (sum map {LedgerSMB::PGNumber->from_input($_->{orig_topay_fx} // 0)} @invoice_data) // 0
+             (sum map {LedgerSMB::PGNumber->from_input($_->{topay_fx}->{value} // 0)} @invoice_data) // 0
         )->to_output(money => 1),
         topay_state   => \@topay_state,
         vendorcustomer => {
@@ -1232,7 +1232,7 @@ sub payment2 {
         )->to_output(money => 1),
         payment_total => LedgerSMB::PGNumber->new(
               (sum map {LedgerSMB::PGNumber->from_input($_->{amount} // 0)} @overpayment)
-            + (sum map {LedgerSMB::PGNumber->from_input($_->{orig_topay_fx}  // 0)} @invoice_data)
+            + (sum map {LedgerSMB::PGNumber->from_input($_->{topay_fx}->{value}  // 0)} @invoice_data)
             + LedgerSMB::PGNumber->from_input(0) # never end up with undef
         )->to_output(money => 1),
     };
