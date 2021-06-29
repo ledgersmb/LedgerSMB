@@ -1360,6 +1360,7 @@ sub post_payment {
                 push @amount, $temporary_discount;
                 push @cash_account_id, $discount_account_id;
                 push @source, $locale->text('Applied discount');
+                push @memo, "";
                 push @transaction_id, $array_options[$ref]->{invoice_id};
             }
 
