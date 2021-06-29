@@ -1192,6 +1192,9 @@ sub _save_user {
             # return from the 'catch' block
             return _render_user($request, $entrypoint);
         }
+        else {
+            die $var;
+        }
     };
 
     if ($request->{perms} == 1){
