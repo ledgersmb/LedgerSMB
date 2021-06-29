@@ -293,6 +293,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
+      - name: Check if merge must trigger
+        id: pr_trigger
+        shell: bash
+        run: |
+          URL="https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}"
+          FILES=$(curl -s -X GET -G $URL | jq -r '.files[].filename')
+          if echo $FILES | grep -q "cpanfile"; then
+            echo ::set-output name=MUST_TRIGGER::1
+          fi
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+
       - name: Repository Dispatch to the Development image
         uses: peter-evans/repository-dispatch@v1
         with:
@@ -300,4 +313,4 @@ jobs:
           repository: ${{ github.repository_owner }}/ledgersmb-dev-docker
           event-type: master-updated
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-        if: $( git show -m HEAD --name-only --pretty='' | egrep 'cpanfile' )
+        if: steps.pr_trigger.outputs.MUST_TRIGGER
