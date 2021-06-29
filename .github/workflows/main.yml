@@ -27,7 +27,7 @@ jobs:
     services:
       postgres:
         # Docker Hub image
-        image: ledgersmb/ledgersmb-dev-postgres
+        image: ledgersmbdev/ledgersmb-dev-postgres
         # Provide the password for postgres
         ports:
           # Maps tcp port 5432 on service container to the host
