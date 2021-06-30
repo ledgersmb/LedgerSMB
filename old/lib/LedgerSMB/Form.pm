@@ -701,7 +701,7 @@ sub format_amount {
     $self = "" unless defined $self;
     $myconfig = {} unless defined $myconfig;
     $amount = "" unless defined $amount;
-    $places = "0" unless defined $places;
+    $places = LedgerSMB::Setting->new(dbh => $self->{dbh})->get('decimal_places') unless defined $places;
     $dash = "" unless defined $dash;
     $amount = $self->parse_amount($myconfig, $amount);
     if ($self->{money_precision}){

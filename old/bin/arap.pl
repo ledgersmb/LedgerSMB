@@ -741,11 +741,11 @@ sub reprint {
             $form->{rowcount}--;
             for ( 1 .. $form->{rowcount} ) {
                 $form->{"amount_$_"} =
-                  $form->format_amount( \%myconfig, $form->{"amount_$_"}, 2 );
+                  $form->format_amount( \%myconfig, $form->{"amount_$_"} );
             }
             for ( split / /, $form->{taxaccounts} ) {
                 $form->{"tax_$_"} =
-                  $form->format_amount( \%myconfig, $form->{"tax_$_"}, 2 );
+                  $form->format_amount( \%myconfig, $form->{"tax_$_"} );
             }
             $pf = "print_transaction";
         }
@@ -765,7 +765,7 @@ sub reprint {
 
     for ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$_"} =
-          $form->format_amount( \%myconfig, $form->{"paid_$_"}, 2 );
+          $form->format_amount( \%myconfig, $form->{"paid_$_"} );
     }
 
     $form->{copies} = 1;

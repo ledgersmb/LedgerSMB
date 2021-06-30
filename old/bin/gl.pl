@@ -228,7 +228,7 @@ sub display_form
 
   for (qw(totaldebit totalcredit)) {
       $form->{$_} =
-    $form->format_amount( \%myconfig, $form->{$_}, 2, "0" );
+    $form->format_amount( \%myconfig, $form->{$_}, undef, "0" );
   }
 
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
@@ -384,7 +384,7 @@ sub display_row {
 
             for (qw(debit debit_fx credit credit_fx)) {
                 $form->{"${_}_$i"} = ($form->{"${_}_$i"})
-                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"} )
                     : "";
                 $temphash1->{$_} = $form->{"${_}_$i"};
             }
@@ -485,9 +485,9 @@ sub gl_subtotal_tt {
 
     my %column_data;
     $subtotaldebit =
-      $form->format_amount( \%myconfig, $subtotaldebit, 2, " " );
+      $form->format_amount( \%myconfig, $subtotaldebit, undef, " " );
     $subtotalcredit =
-      $form->format_amount( \%myconfig, $subtotalcredit, 2, " " );
+      $form->format_amount( \%myconfig, $subtotalcredit, undef, " " );
 
     for (@column_index) { $column_data{$_} = " " }
     $column_data{class} = 'subtotal';
@@ -505,9 +505,9 @@ sub gl_subtotal_tt {
 
 sub gl_subtotal {
     $subtotaldebit =
-      $form->format_amount( \%myconfig, $subtotaldebit, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $subtotaldebit, undef, "&nbsp;" );
     $subtotalcredit =
-      $form->format_amount( \%myconfig, $subtotalcredit, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $subtotalcredit, undef, "&nbsp;" );
 
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
 
