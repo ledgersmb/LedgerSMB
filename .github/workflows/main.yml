@@ -303,9 +303,6 @@ jobs:
             echo ::set-output name=MUST_TRIGGER::1
           fi
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
-
       - name: Repository Dispatch to the Development image
         uses: peter-evans/repository-dispatch@v1
         with:
