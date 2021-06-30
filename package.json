@@ -51,7 +51,7 @@
     "babel-loader": "8.2.2",
     "browserslist": "^4.16.6",
     "buffer": "^6.0.3",
-    "caniuse-lite": "^1.0.30001239",
+    "caniuse-lite": "^1.0.30001241",
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^8.0.0",
     "copy-webpack-plugin": "^9.0.0",
