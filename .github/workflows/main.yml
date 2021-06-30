@@ -98,7 +98,7 @@ jobs:
             BROWSER: "firefox"
             COA_TESTING: 1
 
-          - perl: "5.30"
+          - perl: "5.32"
             BROWSER: "operablink"
             DB_TESTING: 1
 

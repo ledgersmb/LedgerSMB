@@ -325,13 +325,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.30'
+      perl: '5.32'
       postgres: '11'
       browser: operablink
       selenium: selenium/node-opera:3
     steps:
       - prep_env:
-          perl: '5.30'
+          perl: '5.32'
       - start_starman
       - start_proxy
       - prove
