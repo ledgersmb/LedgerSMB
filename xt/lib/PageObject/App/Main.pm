@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 use PageObject;
-use Syntax::Keyword::Try;
 
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
+use Feature::Compat::Try;
 
 
 __PACKAGE__->self_register(
@@ -41,7 +41,7 @@ sub content {
         # we're still here?
         $gone = 0 if defined $tagname;
     }
-    catch { }
+    catch ($e) { }
 
     $self->clear_content if $gone; # force builder
 

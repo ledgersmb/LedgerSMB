@@ -18,7 +18,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 use strict;
 use warnings;
 
-use Syntax::Keyword::Try;
+use Feature::Compat::Try;
 
 use LedgerSMB;
 use LedgerSMB::DBObject::Pricelist;

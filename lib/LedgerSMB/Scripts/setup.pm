@@ -32,7 +32,7 @@ use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Log::Log4perl;
 use MIME::Base64;
 use Scope::Guard;
-use Syntax::Keyword::Try qw|try :experimental(typed)|;
+use Feature::Compat::Try;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
@@ -1176,15 +1176,20 @@ sub _save_user {
     try {
         $user->create($request->{password});
     }
-    catch ($var =~ /duplicate user/i) {
-        $request->{dbh}->rollback;
-        $request->{notice} = $request->{_locale}->text(
-            'User already exists. Import?'
-            );
-        $request->{pls_import} = 1;
+    catch ($var) {
+        if ($var =~ /duplicate user/i){
+            $request->{dbh}->rollback;
+            $request->{notice} = $request->{_locale}->text(
+                'User already exists. Import?'
+                );
+            $request->{pls_import} = 1;
 
-        # return from the 'catch' block
-        return _render_user($request, $entrypoint);
+            # return from the 'catch' block
+            return _render_user($request, $entrypoint);
+        }
+        else {
+            die $var;
+        }
     };
 
     if ($request->{perms} == 1){
