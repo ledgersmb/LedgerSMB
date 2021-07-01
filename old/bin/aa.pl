@@ -559,7 +559,7 @@ $form->open_status_div($status_div_id) . qq|
               <td>$form->{creditlimit}</td>
               <th align=left nowrap>| . $locale->text('Remaining') . qq|</th>
               <td class="plus$n">|
-      . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
+      . $form->format_amount( \%myconfig, $form->{creditremaining}, undef, "0" )
       . qq|</td>|;
     } else {
        print qq|<td>&nbsp;</td>|;

@@ -998,7 +998,7 @@ sub project_jcitems_list {
         }
         for (qw(amount sellprice)) {
             $form->{"${_}_$i"} =
-              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 );
+              $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
         }
     }
 

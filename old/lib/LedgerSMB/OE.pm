@@ -1093,7 +1093,7 @@ sub order_details {
             $subtotal += $linetotal;
 
             $form->{"linetotal_$i"} =
-              $form->format_amount( $myconfig, $linetotal, 2 );
+              $form->format_amount( $myconfig, $linetotal );
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
 
             @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} , $form->{taxaccounts} );#limit to vendor/customer taxes, else invalid totals!!
@@ -1199,7 +1199,7 @@ sub order_details {
                         if ( $form->{groupsubtotaldescription} ne "" ) {
                             push(
                                 @{ $form->{linetotal} },
-                                $form->format_amount( $myconfig, $subtotal, 2 )
+                                $form->format_amount( $myconfig, $subtotal )
                             );
                         }
                         else {
@@ -1248,7 +1248,7 @@ sub order_details {
 
                         push(
                             @{ $form->{linetotal} },
-                            $form->format_amount( $myconfig, $subtotal, 2 )
+                            $form->format_amount( $myconfig, $subtotal )
                         );
                         push(
                             @{ $form->{lineitems} },
@@ -1277,16 +1277,16 @@ sub order_details {
             push(
                 @{ $form->{taxbase} },
                 $form->{"${item}_taxbase"} =
-                  $form->format_amount( $myconfig, $taxbase{$item}, 2 )
+                  $form->format_amount( $myconfig, $taxbase{$item} )
             );
             push(
                 @{ $form->{tax} },
                 $form->{"${item}_tax"} =
-                  $form->format_amount( $myconfig, $taxamount, 2 )
+                  $form->format_amount( $myconfig, $taxamount )
             );
             push(
                 @{ $form->{taxsummary} },
-                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
+                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount )
             );
 
             push( @{ $form->{taxdescription} },
@@ -1320,17 +1320,17 @@ sub order_details {
     for ( @{ $form->{lineitems} } ) {
         push(
             @{ $form->{linetax} },
-            $form->format_amount( $myconfig, $_->{tax}, 2, "" )
+            $form->format_amount( $myconfig, $_->{tax}, undef, "" )
         );
     }
 
     for (qw(totalparts totalservices)) {
-        $form->{$_} = $form->format_amount( $myconfig, $form->{$_}, 2 );
+        $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
     for (qw(totalqty totalship totalweight)) {
         $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
-    $form->{subtotal} = $form->format_amount( $myconfig, $form->{ordtotal}, 2 );
+    $form->{subtotal} = $form->format_amount( $myconfig, $form->{ordtotal} );
     $form->{ordtotal} =
       ( $form->{taxincluded} )
       ? $form->{ordtotal}
@@ -1353,7 +1353,7 @@ sub order_details {
 
     # format amounts
     $form->{quototal} = $form->{ordtotal} =
-      $form->format_amount( $myconfig, $form->{ordtotal}, 2 );
+      $form->format_amount( $myconfig, $form->{ordtotal} );
 
     $form->format_string(qw(text_amount text_decimal));
 

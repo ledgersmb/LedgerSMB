@@ -389,7 +389,7 @@ sub invoice_details {
             $subtotal += $linetotal;
 
             $form->{"linetotal_$i"} =
-              $form->format_amount( $myconfig, $linetotal, 2 );
+              $form->format_amount( $myconfig, $linetotal );
             $form->{"linetotal_$i"} = '0.00' unless $form->{"linetotal_$i"};
 
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
@@ -501,7 +501,7 @@ sub invoice_details {
 
                             push(
                                 @{ $form->{linetotal} },
-                                $form->format_amount( $myconfig, $subtotal, 2 )
+                                $form->format_amount( $myconfig, $subtotal )
                             );
                         }
                         else {
@@ -552,7 +552,7 @@ sub invoice_details {
 
                         push(
                             @{ $form->{linetotal} },
-                            $form->format_amount( $myconfig, $subtotal, 2 )
+                            $form->format_amount( $myconfig, $subtotal )
                         );
                         push(
                             @{ $form->{lineitems} },
@@ -575,23 +575,23 @@ sub invoice_details {
             push(
                 @{ $form->{taxbaseinclusive} },
                 $form->{"${item}_taxbaseinclusive"} =
-                  $form->format_amount( $myconfig, $taxbase{$item} + $tax, 2 )
+                  $form->format_amount( $myconfig, $taxbase{$item} + $tax )
             );
 
             push(
                 @{ $form->{taxbase} },
                 $form->{"${item}_taxbase"} =
-                  $form->format_amount( $myconfig, $taxbase{$item}, 2 )
+                  $form->format_amount( $myconfig, $taxbase{$item} )
             );
             push(
                 @{ $form->{taxsummary} },
-                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
+                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount )
             );
 
             push(
                 @{ $form->{tax} },
                 $form->{"${item}_tax"} =
-                  $form->format_amount( $myconfig, $taxamount, 2 )
+                  $form->format_amount( $myconfig, $taxamount )
             );
 
             push( @{ $form->{taxdescription} },
@@ -623,7 +623,7 @@ sub invoice_details {
     for ( @{ $form->{lineitems} } ) {
         push(
             @{ $form->{linetax} },
-            $form->format_amount( $myconfig, $_->{tax}, 2, "" )
+            $form->format_amount( $myconfig, $_->{tax}, undef, "" )
         );
     }
 
@@ -643,12 +643,12 @@ sub invoice_details {
     }
 
     for (qw(totalparts totalservices)) {
-        $form->{$_} = $form->format_amount( $myconfig, $form->{$_}, 2 );
+        $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
     for (qw(totalqty totalship totalweight)) {
         $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
-    $form->{subtotal} = $form->format_amount( $myconfig, $form->{total}, 2 );
+    $form->{subtotal} = $form->format_amount( $myconfig, $form->{total} );
     $form->{subtotal} = '0.00' unless $form->{subtotal};
     $form->{invtotal} =
       ( $form->{taxincluded} ) ? $form->{total} : $form->{total} + $tax;
@@ -670,11 +670,11 @@ sub invoice_details {
     $form->{invtotal} ||= 0;
     $form->{paid} ||= 0;
     $form->{total} =
-      $form->format_amount( $myconfig, $form->{invtotal} - $form->{paid}, 2 );
+      $form->format_amount( $myconfig, $form->{invtotal} - $form->{paid} );
 
-    $form->{invtotal} = $form->format_amount( $myconfig, $form->{invtotal}, 2 );
+    $form->{invtotal} = $form->format_amount( $myconfig, $form->{invtotal} );
 
-    $form->{paid} = $form->format_amount( $myconfig, $form->{paid}, 2 );
+    $form->{paid} = $form->format_amount( $myconfig, $form->{paid} );
 }
 
 sub project_description {
