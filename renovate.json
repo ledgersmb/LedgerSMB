@@ -1,0 +1,30 @@
+{
+    "extends": [
+      "config:base"
+    ],
+    "packageRules": [
+        {
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "groupName": "all non-major dependencies",
+            "groupSlug": "all-minor-patch",
+            "automerge": false
+        },
+        {
+            "packagePatterns": ["^selenium/"],
+            "allowedVersions": "<4"
+          }
+
+    ],
+    "timezone": "Etc/Greenwich",
+    "schedule": [
+        "after 11pm every weekday",
+        "before 7am every weekday",
+        "every weekend"
+    ]
+}
