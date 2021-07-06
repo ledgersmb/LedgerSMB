@@ -530,11 +530,8 @@ Then qr/^I expect "(.*)" to be selected for "(.*)"$/, sub {
     );
     ok($element, "found element labeled '$label_text'");
 
-    my $option = $element->find(
-        qq{//span[\@role="option" and \@aria-selected="true" and .="$option_text"]}
-    );
-
-    ok($option, "Found option '$option_text' of dropdown '$label_text'");
+    ok($element->get_text eq $option_text,
+        "Found option '$option_text' of dropdown '$label_text'");
 };
 
 Given qr/a customer named "(.*)"/, sub {

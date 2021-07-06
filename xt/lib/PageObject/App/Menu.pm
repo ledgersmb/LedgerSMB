@@ -170,8 +170,11 @@ sub click_menu {
             my $text = $submenu->get_text;
 
             ok($submenu && $text,"Submenu found '" . $text . "'");
-            my $expanded =  $submenu->get_attribute('aria-expanded') // 'false';
-            $submenu->click unless $expanded eq 'true';
+            my $expanded = $item->find(
+                ".//*[contains(\@class,'dijitTreeContent')" .
+                "     and ./*[\@id='$label']]");
+            $expanded =  $expanded->get_attribute('class') =~ m/\bdijitTreeContentExpanded\b/;
+            $submenu->click unless $expanded;
             $role = 'group';
         }
     };
@@ -183,8 +186,9 @@ sub click_menu {
 sub close_menus {
     my ($self) = @_;
 
-    my @nodes = $self->find_all('.//*[@aria-expanded="true"'
-                                . '   and @role="treeitem"]');
+    my @nodes = $self->find_all(
+        './/*[contains(@class,"dijitTreeContentExpanded")]' .
+        '/*[@role="treeitem"]');
     $_->click for reverse @nodes;
 }
 
