@@ -780,7 +780,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         );
     }
 
-    $form->{invtotal} =
+    my $formatted_invtotal =
       $form->format_amount( \%myconfig, $form->{invtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
     $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts" );
@@ -789,11 +789,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      $selectARAP =~ s/(\Qoption value="$form->{$form->{ARAP}}"\E)/$1 selected="selected"/;
     print qq|
         <tr class="transaction-line $form->{ARAP} total" id="line-total">
-      <th align=left>$form->{invtotal}</th>
+      <th align=left>$formatted_invtotal</th>
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
-              ? $form->format_amount(\%myconfig,
-                                     $form->parse_amount( \%myconfig, $form->{invtotal} )
-                                     * $form->{exchangerate}, LedgerSMB::Setting->new(%$form)->get('decimal_places')) : '') . qq|</td>
+              ? $form->format_amount(
+                  \%myconfig,
+                  $form->{invtotal} * $form->{exchangerate},
+                  LedgerSMB::Setting->new(%$form)->get('decimal_places')) : '') . qq|</td>
      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $selectARAP
               </select></td>
