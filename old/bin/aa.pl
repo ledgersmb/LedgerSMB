@@ -422,7 +422,7 @@ sub form_header {
       $form->unescape( $form->{selectprojectnumber} );
 
     # format amounts
-    $form->{exchangerate} =
+    my $formatted_exchangerate =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
     $exchangerate = qq|<tr>|;
@@ -435,7 +435,7 @@ sub form_header {
     {
             $exchangerate .= qq|
         <th align=right><label for="exchangerate">| . $locale->text('Exchange Rate') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate id=exchangerate size=10 value=$form->{exchangerate}></td>
+        <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate id=exchangerate size=10 value=$formatted_exchangerate></td>
 |;
     }
      else {
@@ -722,7 +722,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
               ? $form->format_amount(\%myconfig, $form->parse_amount( \%myconfig, $form->{"amount_$i"} )
-                                                  * $form->parse_amount( \%myconfig, $form->{exchangerate} ), LedgerSMB::Setting->new(%$form)->get('decimal_places'))
+                                                  * $form->{exchangerate}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
               : '')  . qq|</td>
      <td><select data-dojo-type="lsmb/FilteringSelect" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i"><option></option>$form->{"select$form->{ARAP}_amount_$i"}</select></td>
       $description
@@ -793,7 +793,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
               ? $form->format_amount(\%myconfig,
                                      $form->parse_amount( \%myconfig, $form->{invtotal} )
-                                     * $form->parse_amount( \%myconfig, $form->{exchangerate} ), LedgerSMB::Setting->new(%$form)->get('decimal_places')) : '') . qq|</td>
+                                     * $form->{exchangerate}, LedgerSMB::Setting->new(%$form)->get('decimal_places')) : '') . qq|</td>
      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $selectARAP
               </select></td>
