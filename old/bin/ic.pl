@@ -1064,7 +1064,7 @@ sub vendor_row {
       $vendor
       <td><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=20 value="$form->{"partnumber_$i"}"></td>
       <td><input data-dojo-type="dijit/form/TextBox" name="lastcost_$i" size=10 value=|
-          . $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, 2 )
+          . $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') )
           . qq|></td>
       $currency
       <td nowrap><input data-dojo-type="dijit/form/TextBox" name="leadtime_$i" size=5 value=|
@@ -1176,7 +1176,7 @@ sub customer_row {
           . $form->format_amount( \%myconfig, $form->{"pricebreak_$i"} )
           . qq|></td>
       <td><input data-dojo-type="dijit/form/TextBox" name="customerprice_$i" size=10 value=|
-          . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
+          . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') )
           . qq|></td>
       $currency
       <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
@@ -1303,11 +1303,11 @@ sub assembly_row {
           $form->format_amount( \%myconfig, $form->{"qty_$i"} );
 
         $linetotalsellprice =
-          $form->format_amount( \%myconfig, $linetotalsellprice, 2 );
+          $form->format_amount( \%myconfig, $linetotalsellprice, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         $linetotallistprice =
-          $form->format_amount( \%myconfig, $linetotallistprice, 2 );
+          $form->format_amount( \%myconfig, $linetotallistprice, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         $linetotallastcost =
-          $form->format_amount( \%myconfig, $linetotallastcost, 2 );
+          $form->format_amount( \%myconfig, $linetotallastcost, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
         if ( $i == $numrows && !$form->{project_id} ) {
 
@@ -1378,13 +1378,13 @@ qq|<td><input type=hidden name="description_$i" value="$form->{"description_$i"}
 
     $column_data{sellprice} =
       "<th align=right>"
-      . $form->format_amount( \%myconfig, $form->{sellprice}, 2 ) . "</th>";
+      . $form->format_amount( \%myconfig, $form->{sellprice}, LedgerSMB::Setting->new(%$form)->get('decimal_places') ) . "</th>";
     $column_data{listprice} =
       "<th align=right>"
-      . $form->format_amount( \%myconfig, $form->{listprice}, 2 ) . "</th>";
+      . $form->format_amount( \%myconfig, $form->{listprice}, LedgerSMB::Setting->new(%$form)->get('decimal_places') ) . "</th>";
     $column_data{lastcost} =
       "<th align=right>"
-      . $form->format_amount( \%myconfig, $form->{lastcost}, 2 ) . "</th>";
+      . $form->format_amount( \%myconfig, $form->{lastcost}, LedgerSMB::Setting->new(%$form)->get('decimal_places') ) . "</th>";
 
     print qq|
         <tr>|;
