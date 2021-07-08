@@ -425,7 +425,7 @@ sub form_header {
       $form->unescape( $form->{selectprojectnumber} );
 
     # format amounts
-    $form->{exchangerate} =
+    my $formatted_exchangerate =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
     $exchangerate = qq|<tr>|;
@@ -438,7 +438,7 @@ sub form_header {
     {
             $exchangerate .= qq|
         <th align=right><label for="exchangerate">| . $locale->text('Exchange Rate') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate id=exchangerate size=10 value=$form->{exchangerate}></td>
+        <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate id=exchangerate size=10 value=$formatted_exchangerate></td>
 |;
     }
      else {
@@ -690,7 +690,7 @@ $form->open_status_div($status_div_id) . qq|
 
         # format amounts
         $form->{"amount_$i"} =
-          $form->format_amount( \%myconfig,$form->{"amount_$i"}, 2 );
+          $form->format_amount( \%myconfig,$form->{"amount_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
         $project = qq|
       <td align=right><select data-dojo-type="dijit/form/Select" id="projectnumber_$i" name="projectnumber_$i">$form->{"selectprojectnumber_$i"}</select></td>
@@ -722,7 +722,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
               ? $form->format_amount(\%myconfig, $form->parse_amount( \%myconfig, $form->{"amount_$i"} )
-                                                  * $form->parse_amount( \%myconfig, $form->{exchangerate} ),2)
+                                                  * $form->{exchangerate}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
               : '')  . qq|</td>
      <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
       $description
@@ -759,7 +759,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
-          $form->format_amount( \%myconfig, $form->{"tax_$item"}, 2 );
+          $form->format_amount( \%myconfig, $form->{"tax_$item"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         print qq|
         <tr class="transaction-row $form->{ARAP} tax" id="taxrow_$item">
       <td><input data-dojo-type="dijit/form/TextBox" name="tax_$item" id="tax_$item"
@@ -780,8 +780,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         );
     }
 
-    $form->{invtotal} =
-      $form->format_amount( \%myconfig, $form->{invtotal}, 2 );
+    my $formatted_invtotal =
+      $form->format_amount( \%myconfig, $form->{invtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
     $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts" );
 
@@ -789,11 +789,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      $selectARAP =~ s/(\Qoption value="$form->{$form->{ARAP}}"\E)/$1 selected="selected"/;
     print qq|
         <tr class="transaction-line $form->{ARAP} total" id="line-total">
-      <th align=left>$form->{invtotal}</th>
+      <th align=left>$formatted_invtotal</th>
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
-              ? $form->format_amount(\%myconfig,
-                                     $form->{invtotal}
-                                     * $form->{exchangerate}, 2) : '') . qq|</td>
+              ? $form->format_amount(
+                  \%myconfig,
+                  $form->{invtotal} * $form->{exchangerate},
+                  LedgerSMB::Setting->new(%$form)->get('decimal_places')) : '') . qq|</td>
      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $selectARAP
               </select></td>
@@ -869,9 +870,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         # format amounts
         $form->{"paidfx_$i"} = $form->format_amount(
             \%myconfig,
-            ($form->{"paid_$i"} // 0) * ($form->{"exchangerate_$i"} // 1) , 2 );
+            ($form->{"paid_$i"} // 0) * ($form->{"exchangerate_$i"} // 1) , LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         $form->{"paid_$i"} =
-          $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
+          $form->format_amount( \%myconfig, $form->{"paid_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         $form->{"exchangerate_$i"} =
           $form->format_amount( \%myconfig, $form->{"exchangerate_$i"} );
 
