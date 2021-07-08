@@ -342,6 +342,16 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.32
+* Fix multiple updates in payment screen resetting user input (#5614)
+* Improve error message when missing cash discount configuraition (#5632)
+* Fix payment information for credit accounts which are Persons (#5632)
+* Fix memos sometimes being associated with incorrect payment rows (#5646)
+* Fix wrong fx value due to formatted exchangerate used in calculation (#5656)
+* Fix decimal places setting not applied for AR/AP transactions (#5657)
+* Fix duplicated income statement figures due to reversed year end (#5682)
+
+
 Changelog for 1.7.31
 * Stop doubling of the number of lines in an AR/AP transaction on Save (#5529)
 * Fix vendors appearing in the AR customer drop-down and vice  versa (#5534)
