@@ -219,7 +219,7 @@ sub print_transaction {
     $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
     foreach my $field (qw(invtotal subtotal paid total)) {
-        $form->{$field} = $form->format_amount( \%myconfig, $form->{$field}, 2 );
+        $form->{$field} = $form->format_amount( \%myconfig, $form->{$field}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
     }
 
     ( $form->{employee} ) = split /--/, $form->{employee};

@@ -791,7 +791,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, 2)
+                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
                         .qq|" size="10"/></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
@@ -799,7 +799,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
                         .qq|" size="4"/></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}, 2)
+                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
                         .qq|" size="10"/></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
@@ -812,7 +812,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
            $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
                 $form->{"${taccno}_total"} =
                       $form->format_amount( \%myconfig,
-                           $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
+                           $form->round_amount( $form->{taxes}{$item}, 2 ), LedgerSMB::Setting->new(%$form)->get('decimal_places') );
                 next if !$form->{"${taccno}_total"};
                 $tax .= qq|
                 <tr class="invoice-auto-tax">
@@ -824,7 +824,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
             $tax .= q|<tr><td>&nbsp;</td></tr>|;
         }
         $form->{invsubtotal} =
-          $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
+          $form->format_amount( \%myconfig, $form->{invsubtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), 0 );
 
         $subtotal = qq|
           <tr class="invoice-subtotal">
@@ -842,11 +842,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
 
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
-    $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    $form->format_amount( \%myconfig, $form->{invtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), 0 );
     my $invtotal_bc;
     $invtotal_bc =
         $form->format_amount( \%myconfig,
-                              $form->{invtotal} * $form->{exchangerate}, 2)
+                              $form->{invtotal} * $form->{exchangerate}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
         if $form->{currency} ne $form->{defaultcurrency};
 
 
@@ -968,9 +968,9 @@ s/option value="\Q$form->{"AR_paid_$i"}\E"/option value="$form->{"AR_paid_$i"}" 
         $form->{"paidfx_$i"} =
             $form->format_amount(
                 \%myconfig,
-                $form->{"paid_$i"} * ($form->{"exchangerate_$i"} // 1), 2 );
+                $form->{"paid_$i"} * ($form->{"exchangerate_$i"} // 1), LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         $form->{"paid_$i"} =
-          $form->format_amount( \%myconfig, $form->{"paid_$i"}, 2 );
+          $form->format_amount( \%myconfig, $form->{"paid_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
         $form->{"exchangerate_$i"} =
           $form->format_amount( \%myconfig, $form->{"exchangerate_$i"} );
 

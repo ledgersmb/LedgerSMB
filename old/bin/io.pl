@@ -445,7 +445,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
           . qq|"></td>|;
         $column_data{linetotal} =
             qq|<td align=right class="linetotal">|
-          . $form->format_amount( \%myconfig, $linetotal, 2 )
+          . $form->format_amount( \%myconfig, $linetotal, LedgerSMB::Setting->new(%$form)->get('decimal_places') )
           . qq|</td>|;
         $form->{"bin_$i"} //= '';
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;

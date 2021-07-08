@@ -518,7 +518,7 @@ sub display_taxes {
         ( $null, $i ) = split /_/, $_;
 
         $form->{"taxrate_$i"} =
-          $form->format_amount( \%myconfig, $form->{"taxrate_$i"},3,'0');
+          $form->format_amount( \%myconfig, $form->{"taxrate_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places'),'0');
 
         $hiddens{"taxdescription_$i"} = $form->{"taxdescription_$i"};
         $hiddens{"old_validto_$i"} = $form->{"old_validto_$i"};
@@ -854,7 +854,7 @@ sub recurring_transactions {
             $column_data{howmany} =
                 $form->format_amount( \%myconfig, $ref->{howmany} );
             $column_data{amount} =
-                $form->format_amount( \%myconfig, $ref->{amount}, 2 );
+                $form->format_amount( \%myconfig, $ref->{amount}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
             my @temp_split;
             my @f = split /:/, $ref->{recurringemail};
@@ -1051,12 +1051,12 @@ sub process_transactions {
                         for ( 1 .. $form->{rowcount} - 1 ) {
                             $form->{"amount_$_"} =
                               $form->format_amount( \%myconfig,
-                                $form->{"amount_$_"}, 2 );
+                                $form->{"amount_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
                         }
                         for ( 1 .. $form->{paidaccounts} ) {
                             $form->{"paid_$_"} =
                               $form->format_amount( \%myconfig,
-                                $form->{"paid_$_"}, 2 );
+                                $form->{"paid_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
                         }
 
                     }
