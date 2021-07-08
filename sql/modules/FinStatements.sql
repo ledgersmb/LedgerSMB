@@ -233,9 +233,11 @@ acc_balance AS (
            AND ($3 = 'none'
                OR ($3 = 'all'
                    AND NOT EXISTS (SELECT * FROM yearend
-                                    WHERE trans_id = gl.id))
+                                    WHERE NOT reversed
+                                          AND trans_id = gl.id))
                OR ($3 = 'last'
                    AND NOT EXISTS (SELECT 1 FROM yearend
+                                    WHERE NOT reversed
                                    HAVING max(trans_id) = gl.id))
               )
    GROUP BY ac.chart_id
@@ -349,10 +351,13 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
               OR $4 is null or in_tree($4, bu_ids))
           AND ($3 = 'none'
                OR ($3 = 'all'
-                   AND NOT EXISTS (SELECT * FROM yearend WHERE trans_id = gl.id
+                   AND NOT EXISTS (SELECT 1 FROM yearend
+                                    WHERE NOT reversed
+                                          AND trans_id = gl.id
                    ))
                OR ($3 = 'last'
                    AND NOT EXISTS (SELECT 1 FROM yearend
+                                    WHERE NOT reversed
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY ac.chart_id
