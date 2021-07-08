@@ -153,7 +153,7 @@ executors:
       - image: ledgersmbdev/ledgersmb_circleci-browsers:<< parameters.browser >>
     environment:
       COVERAGE: << parameters.coverage >>
-#      DEVEL_COVER_OPTIONS: 
+#      DEVEL_COVER_OPTIONS:
       RELEASE_TESTING: 1
       PGHOST: localhost
       PGUSER: postgres
@@ -170,7 +170,7 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.28'
+      perl: '5.30'
       postgres: '11'
       browser: phantomjs
     steps:
