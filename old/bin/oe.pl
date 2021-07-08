@@ -779,7 +779,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
             $form->{"${taccno}_total"} = $form->format_amount(
                 \%myconfig,
                 $form->round_amount( $form->{taxes}{$item}, 2 ),
-                2
+                LedgerSMB::Setting->new(%$form)->get('decimal_places')
             );
             next if !$form->{"${taccno}_total"};
             $tax .= qq|
@@ -790,7 +790,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         }
 
         $form->{invsubtotal} =
-          $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
+          $form->format_amount( \%myconfig, $form->{invsubtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), 0 );
 
         $subtotal = qq|
           <tr>
@@ -802,7 +802,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
     }
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
-      $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+      $form->format_amount( \%myconfig, $form->{invtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), 0 );
 
     print qq|
   <tr>
@@ -2322,7 +2322,7 @@ sub generate_purchase_orders {
 
         $form->{"lastcost_$i"} =
           $form->format_amount( \%myconfig,
-            $form->{orderitems}{$parts_id}{lastcost}, 2 );
+            $form->{orderitems}{$parts_id}{lastcost}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
         $form->{"qty_$i"} = $required;
 
@@ -2356,7 +2356,7 @@ sub generate_purchase_orders {
                     \%myconfig,
                     $form->{orderitems}{$parts_id}{"parts$form->{vc}"}{$id}
                       {lastcost},
-                    2
+                    LedgerSMB::Setting->new(%$form)->get('decimal_places')
                 );
                 $form->{"leadtime_$i"} = $form->format_amount( \%myconfig,
                     $form->{orderitems}{$parts_id}{"parts$form->{vc}"}{$id}
@@ -2368,7 +2368,7 @@ sub generate_purchase_orders {
                         $form->{orderitems}{$parts_id}{"parts$form->{vc}"}{$id}
                           {curr}
                       },
-                    2
+                    LedgerSMB::Setting->new(%$form)->get('decimal_places')
                 );
 
                 $form->{"id_$i"} = $parts_id;
