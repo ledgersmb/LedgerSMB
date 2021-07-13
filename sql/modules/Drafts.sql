@@ -16,7 +16,10 @@ CREATE TYPE draft_search_result AS (
         amount numeric
 );
 
-CREATE OR REPLACE FUNCTION draft__search(in_type text, in_with_accno text,
+DROP FUNCTION IF EXISTS draft__search(in_type text, in_with_accno text,
+in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric);
+
+CREATE OR REPLACE FUNCTION draft__search(in_type text, in_reference text,
 in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)
 returns setof draft_search_result AS
 $$
@@ -58,16 +61,7 @@ $$
           AND (in_to_date IS NULL or trans.transdate <= in_to_date)
           AND (in_amount_gt IS NULL or amount >= in_amount_gt)
           AND (in_amount_lt IS NULL or amount <= in_amount_lt)
-          AND (in_with_accno IS NULL
-               OR id IN (SELECT line.trans_id
-                           FROM acc_trans line
-                           JOIN account acc ON (line.chart_id = acc.id)
-                          WHERE acc.accno = in_with_accno
-                            AND NOT approved
-                            AND (in_from_date IS NULL
-                                 OR line.transdate >= in_from_date)
-                            AND (in_to_date IS NULL
-                                 OR line.transdate <= in_to_date)))
+          AND (in_reference IS NULL or trans.reference = in_reference)
         ORDER BY trans.reference;
 $$ language sql;
 
