@@ -13,12 +13,21 @@
             ],
             "groupName": "all non-major dependencies",
             "groupSlug": "all-minor-patch",
-            "automerge": false
+            "automerge": true
         },
         {
             "packagePatterns": ["^selenium/"],
             "allowedVersions": "<4"
-          }
+        },
+        {
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "automerge": false
+        }
 
     ],
     "timezone": "Etc/Greenwich",
