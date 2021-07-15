@@ -55,7 +55,7 @@
     "clean-webpack-plugin": "3.0.0",
     "compression-webpack-plugin": "8.0.1",
     "copy-webpack-plugin": "9.0.1",
-    "css-loader": "5.2.7",
+    "css-loader": "6.0.0",
     "css-minimizer-webpack-plugin": "3.0.2",
     "cssnano": "5.0.6",
     "depcheck": "1.4.2",
