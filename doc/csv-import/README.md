@@ -54,6 +54,33 @@ be imported on an earlier import run or on a prior line).
 
 ## Single transaction
 
+This functionality imports a single transaction with as many lines as required. Each
+line has the following columns:
+
+* accno  
+  GL acount code (accno) for the debit or credit to be posted
+* debit  
+  The debit amount to be posted on the line, in the functional (or "native") currency;
+  note that a single line can be *either* debit *or* credit
+* credit  
+  The credit amount to be posted on the line
+* curr  
+  The currency to be used for the transaction; if the transaction does not concern
+  foreign currencies, fill out the default currency of the company
+* debit_fx  
+  The foreign currency (transaction currency) debit amount in case of a foreign currency
+  transaction; in case the default currency applies, fill with the same amount as the
+  `debit` field
+* credit_fx  
+  The foreign currency (transaction currency) credit amount in case of a foreign currency
+  transaction; in case the default currency applies, fill with the same amount as the
+  `credit` field
+* source
+  The identifier of the transaction(line) in an external system; used for e.g. bank
+  reconciliation
+* memo  
+  A note field for the specific transaction line
+
 ## Batch of transactions
 
 This functionality imports a batch of 2-line transaction. Each line in the csv has
