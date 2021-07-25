@@ -248,7 +248,7 @@ is($queries[0]->{bound_params}, [ 1, 'en', 'MACHINES' ],
 @queries = grep { $_->{statement} =~ m/account__save(?!_)/ } $history->@*;
 is(scalar(@queries), 1, 'Test 2: account__save');
 is($queries[0]->{bound_params},
-   [ undef, '0410', 'Maschinen', 'A', undef, 1, 0, 0, [ 'AP_paid' ], 0 ],
+   [ undef, '0410', 'Maschinen', 'A', undef, 1, 0, 1, [ 'AP_paid' ], 0 ],
    'Test 2: account__save() arguments');
 
 
