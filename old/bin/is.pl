@@ -651,8 +651,7 @@ sub form_header {
         else {
             if ( $transdate > $closedto ) {
                 # Added on_hold, by Aurynn.
-                for ( "update", "ship_to", "post",
-                    "schedule")
+                for ( "update", "ship_to", "post", "schedule")
                 {
                     $allowed{$_} = 1;
                 }
@@ -1406,10 +1405,9 @@ sub update {
 #             billing => 1,
 #             job => 1 );
 #    $form->generate_selects(\%myconfig);
-    check_form();
-
-    $form->{rowcount}--;
     $form->{id} = $form_id;
+    check_form();
+    $form->{rowcount}--;
     display_form();
 }
 

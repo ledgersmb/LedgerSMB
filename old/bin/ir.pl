@@ -1278,10 +1278,10 @@ sub update {
 
     # wow... check_form() in io.pl also *displays* the form!!
     # at least... in some cases
+    $form->{id} = $form_id;
     check_form();
 
     $form->{rowcount}--;
-    $form->{id} = $form_id;
     display_form();
 }
 
