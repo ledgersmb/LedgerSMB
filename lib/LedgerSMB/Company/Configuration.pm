@@ -289,7 +289,7 @@ sub _process_coa_account {
         unless $parent;
 
     my %args;
-    for my $arg (qw(description category contra tax recon
+    for my $arg (qw(description category contra recon
                     obsolete is_temp gifi)) {
         my $value = $account_xml->getAttribute($arg);
         $args{$arg} = $value if defined $value;
@@ -311,6 +311,7 @@ sub _process_coa_account {
         heading_id  => $parent->id,
         gifi_id     => $args{gifi},
         link        => \@links,
+        tax         => (scalar @taxes > 0 ? 1 : 0),
         %args,
         );
     $account->save;
