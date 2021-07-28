@@ -93,6 +93,12 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.17
+* Align filters between UI and the database on draft transaction search (#5692)
+* Correctly present manual tax and invoice total on reversing invoice (#5721)
+* Repeatedly saving a draft invoice pops up an SQL error (#5679)
+
+
 Changelog for 1.8.16
 * Fix incorrectly encoded UTF-8 characters on journal entry (#5583)
 * Fix multiple updates in payment screen resetting user input (#5614)
