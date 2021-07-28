@@ -73,6 +73,7 @@ sub copy_to_new{
 }
 
 sub edit_and_save {
+    $form->{ARAP} = 'AR';
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->delete();
     delete $form->{id};
@@ -118,6 +119,7 @@ sub add {
 }
 
 sub edit {
+    $form->{ARAP} = 'AR';
     if (not $form->{id} and $form->{workflow_id}) {
         my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
         $form->{id} = $wf->context->param( 'id' );
