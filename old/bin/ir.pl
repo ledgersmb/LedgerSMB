@@ -63,6 +63,7 @@ sub copy_to_new{
 }
 
 sub edit_and_save {
+    $form->{ARAP} = 'AP';
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);
     $draft->delete();
     delete $form->{id};
@@ -125,6 +126,7 @@ sub add {
 }
 
 sub edit {
+    $form->{ARAP} = 'AP';
 
     &invoice_links;
     &prepare_invoice;
