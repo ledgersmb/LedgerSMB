@@ -1333,12 +1333,13 @@ sub retrieve_invoice {
                         JOIN account c ON c.id = ac.chart_id
                        WHERE ac.trans_id = ?|);
         $tax_sth->execute($form->{id});
+        my $reverse = $form->{reverse} ? -1 : 1;
         while (my $taxref = $tax_sth->fetchrow_hashref('NAME_lc')){
               $form->{manual_tax} = 1;
               my $taccno = $taxref->{accno};
-              $form->{"mt_amount_$taccno"} = $taxref->{amount};
+              $form->{"mt_amount_$taccno"} = $taxref->{amount} * $reverse;
               $form->{"mt_rate_$taccno"}  = $taxref->{rate};
-              $form->{"mt_basis_$taccno"} = $taxref->{tax_basis};
+              $form->{"mt_basis_$taccno"} = $taxref->{tax_basis} * $reverse;
               $form->{"mt_memo_$taccno"}  = $taxref->{memo};
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }
