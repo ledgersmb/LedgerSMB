@@ -295,7 +295,7 @@ jobs:
       perl: '5.34'
       postgres: '11'
       browser: chrome
-      selenium: selenium/node-chrome:3
+      selenium: selenium/node-chrome:3.141.59-20210607
       coverage: 1
     steps:
       - prep_env:
