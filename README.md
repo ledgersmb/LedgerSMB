@@ -126,20 +126,21 @@ adding a webserver to the installation.
 
 # Project information
 
-Web site: [`https://ledgersmb.org/`](https://ledgersmb.org)
+Web site: [https://ledgersmb.org/](https://ledgersmb.org)
 
 Live chat:
 
-* Matrix: [`#ledgersmb:matrix.org`](https://app.element.io/#/room/#ledgersmb:matrix.org)
+* Matrix: [#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matrix.org)
   (bridged IRC channel)
 
-Mailing list archives: [`https://archive.ledgersmb.org`](https://archive.ledgersmb.org)
 
 Mailing lists:
 
 * [Announcements](https://lists.ledgersmb.org/postorius/lists/announce.lists.ledgersmb.org/)
 * [User Discussion](https://lists.ledgersmb.org/postorius/lists/users.lists.ledgersmb.org/)
 * [Developer Discussion](https://lists.ledgersmb.org/postorius/lists/devel.lists.ledgersmb.org/)
+
+Mailing list archives: [https://archive.ledgersmb.org](https://archive.ledgersmb.org)
 
 Repository: `https://github.com/ledgersmb/LedgerSMB`
 

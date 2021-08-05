@@ -102,14 +102,16 @@ adding a webserver to the installation.
 
 # Project information
 
-Web site: [`https://ledgersmb.org/`](https://ledgersmb.org)
+Web site: [https://ledgersmb.org/](https://ledgersmb.org)
+
+Repository: [https://github.com/ledgersmb/LedgerSMB](https://github.com/ledgersmb/LedgerSMB)
+
+Security vulnerability reports: [https://ledgersmb.org/contact/security_report](https://ledgersmb.org/contact/security_report)
 
 Live chat:
 
-* Matrix: [`#ledgersmb:matrix.org`](https://app.element.io/#/room/#ledgersmb:matrix.org)
-  (bridged IRC channel)
+* Matrix: [#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matrix.org)
 
-Mailing list archives: [`https://archive.ledgersmb.org`](https://archive.ledgersmb.org)
 
 Mailing lists:
 
@@ -117,7 +119,8 @@ Mailing lists:
 * [User Discussion](https://lists.ledgersmb.org/postorius/lists/users.lists.ledgersmb.org/)
 * [Developer Discussion](https://lists.ledgersmb.org/postorius/lists/devel.lists.ledgersmb.org/)
 
-Repository: `https://github.com/ledgersmb/LedgerSMB`
+Mailing list archives: [https://archive.ledgersmb.org](https://archive.ledgersmb.org)
+
 
 ## Project contributors
 
@@ -131,7 +134,7 @@ as well as in the `Transifex` project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2020 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2021 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
