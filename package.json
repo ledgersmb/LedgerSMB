@@ -44,9 +44,9 @@
     "supports es6-module and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius"
   ],
   "devDependencies": {
-    "@babel/eslint-parser": "7.14.9",
+    "@babel/eslint-parser": "7.15.0",
     "@babel/plugin-proposal-object-rest-spread": "7.14.7",
-    "@babel/preset-env": "7.14.9",
+    "@babel/preset-env": "7.15.0",
     "autoprefixer": "10.3.1",
     "babel-loader": "8.2.2",
     "browserslist": "4.16.7",
@@ -87,7 +87,7 @@
     "markdown-spellcheck": "1.3.1",
     "markdownlint": "0.23.1",
     "markdownlint-cli": "0.28.1",
-    "mini-css-extract-plugin": "2.1.0",
+    "mini-css-extract-plugin": "2.2.0",
     "npm-run-all": "4.1.5",
     "path-browserify": "1.0.1",
     "prettier": "2.3.2",
@@ -105,7 +105,7 @@
     "webpack-log": "3.0.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.0",
-    "yargs": "17.0.1"
+    "yargs": "17.1.0"
   },
   "dependencies": {
     "content-disposition": "0.5.3",
