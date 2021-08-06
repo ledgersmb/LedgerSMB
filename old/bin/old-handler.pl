@@ -187,14 +187,16 @@ $form->{dbh}->disconnect() if defined $form->{dbh};
 sub _error {
     my ($form, $msg, $status) = @_;
     $msg = "? _error" if !defined $msg;
+    my $html_msg = escape_html($msg);
+    my $html_dbversion = escape_html($form->{dbversion});
+    my $html_company   = escape_html($form->{company});
     $status = 500 if ! defined $status;
 
     print qq|Status: $status ISE
 Content-Type: text/html; charset=utf-8
-
 <html>
-<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
-<p>dbversion: $form->{dbversion}, company: $form->{company}</p>
+<body><h2 class="error">Error!</h2> <p><b>$html_msg</b></p>
+<p>dbversion: $html_dbversion, company: $html_company</p>
 </body>
 </html>
 |;
