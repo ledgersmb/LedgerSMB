@@ -126,13 +126,20 @@ test:
 
 devtest: TESTS ?= t/ xt/
 devtest:
-	$(DOCKER_CMD) dropdb lsmbtestdb || true
-	$(DOCKER_CMD) perl -Ilib bin/ledgersmb-admin create postgres@postgres/lsmbtestdb
-	$(DOCKER_CMD) prove --time --recurse \
-	                    --pgtap-option dbname=lsmbtestdb \
-	                    --pgtap-option username=postgres \
-	                    --feature-option tags=~@wip \
-	                    $(TESTS)
+ifneq ($(origin DOCKER_CMD),undefined)
+#       if there's a docker container, jump into it and run from there
+	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
+else
+#        the 'dropdb' command may fail, hence the prefix minus-sign
+	-dropdb lsmb_test
+	perl -Ilib bin/ledgersmb-admin create \
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}
+	yath test --no-color --retry=2 \
+            --pgtap-dbname=lsmb_test --pgtap-username=postgres \
+            --pgtap-psql=.circleci/psql-wrap \
+            --Feature-tags=~@wip \
+            $(TESTS)
+endif
 
 pherkin: TESTS ?= xt/
 pherkin:

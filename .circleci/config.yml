@@ -34,34 +34,13 @@ commands:
             fi
 
       - run:
-          name: Create test database
-          command: |
-            source $BASH_ENV
-            PERL5LIB="lib:$HOME/perl5/lib/perl5" \
-            PERL5OPT="$PERL5OPT $STARMAN_DEVEL_COVER_OPTIONS" \
-              ./bin/ledgersmb-admin create $PGUSER@$PGHOST/$PGDB
-
-      - run:
           command: |
             source $BASH_ENV
             if [ "x$COVERAGE" == "x1" ]
             then
-              yath test $YATH_DEVEL_COVER_OPTIONS \
-                --job-count $JOB_COUNT --event-timeout 1800 \
-                --color --no-progress --retry=2 \
-                --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
-                --pgtap-psql=.circleci/psql-wrap \
-                --Feature-tags=~@wip \
-                t xt
+              make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" t/ xt/"
             else
-              yath start $YATH_DEVEL_COVER_OPTIONS \
-                       --job-count $JOB_COUNT --event-timeout 1800
-            yath run --color --no-progress --retry=2 \
-                     --pgtap-dbname=$PGDB --pgtap-username=$PGUSER \
-                     --pgtap-psql=.circleci/psql-wrap \
-                     --Feature-tags=~@wip \
-              t xt
-            yath stop
+               make devtest TESTS='--no-progress t/ xt/'
             fi
       - run:
           command: |
@@ -269,7 +248,7 @@ executors:
     environment:
       BROWSER: << parameters.browser >>
       COVERAGE: << parameters.coverage >>
-      DEVEL_COVER_OPTIONS: -silent,1,+ignore,(^x?t/|^utils/|\.lttc$|^/usr/|/home/circleci/perl5|starman$)
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,(^x?t/|^utils/|\.lttc$|^/usr/|/home/circleci/perl5|starman$$)
       HARNESS_RULESFILE: t/testrules.yml
       JOB_COUNT: 2
       LSMB_BASE_URL: http://127.0.0.1:5000
