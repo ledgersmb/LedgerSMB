@@ -40,7 +40,7 @@ commands:
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" t/ xt/"
             else
-               make devtest TESTS='--no-progress t/ xt/'
+               make devtest TESTS='--no-progress --job-count 2 t/ xt/'
             fi
       - run:
           command: |

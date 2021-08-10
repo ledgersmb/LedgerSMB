@@ -221,7 +221,7 @@ jobs:
 
       - name: Run Perl tests
         run: |
-          make devtest TESTS='--no-progress t xt'
+          make devtest TESTS='--no-progress --job-count 2 t xt'
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
