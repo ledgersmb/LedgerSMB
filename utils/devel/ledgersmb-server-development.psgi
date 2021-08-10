@@ -122,7 +122,8 @@ builder {
                                    'Plack::Middleware::Debug::TraceENV');
         enable 'Debug::Profiler::NYTProf',
             exclude => [ LedgerSMB::Sysconfig::NYTProf_exclude() ],
-            minimal  => LedgerSMB::Sysconfig::NYTProf_minimal()
+            minimal => LedgerSMB::Sysconfig::NYTProf_minimal(),
+            root    => 'logs/NYTProf'
             if check_config_option('NYTProf',
                                    'Plack::Middleware::Debug::Profiler::NYTProf');
     }
