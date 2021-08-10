@@ -29,11 +29,7 @@ commands:
              echo $PWD
              # Coverage explicitly without parallellism to prevent resource contention
              # when Devel::Cover writes coverage database on process-exit
-             prove -j2 --recurse \
-                   --pgtap-option dbname=lsmbinstalltest \
-                   --pgtap-option username=postgres \
-                   --pgtap-option psql=.circleci/psql-wrap \
-                   --feature-option tags=~@wip t/ xt/
+             make devtest TESTS="--pgtap-option psql=.circleci/psql-wrap t/ xt/"
       - run:
           command: |
             kill -QUIT $(cat starman.pid)

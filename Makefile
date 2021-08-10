@@ -111,9 +111,13 @@ test:
 
 devtest: TESTS ?= t/ xt/
 devtest:
-	$(DOCKER_CMD) prove --time --recurse \
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
+else
+	dropdb lsmbinstalltest || true
+	prove --time --recurse \
 	                    --pgtap-option dbname=lsmbinstalltest \
 	                    --pgtap-option username=postgres \
 	                    --feature-option tags=~@wip \
 	                    $(TESTS)
-
+endif
