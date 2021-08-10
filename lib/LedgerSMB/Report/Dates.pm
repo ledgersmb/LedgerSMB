@@ -47,7 +47,7 @@ Either 'none', 'month', 'quarter', or 'year'
 
 =cut
 
-has interval => (is => 'ro', isa => 'Str', required => 0);
+has interval => (is => 'ro', isa => 'Str', required => 0, default => 'None');
 
 =item from_month int
 
