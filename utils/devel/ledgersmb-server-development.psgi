@@ -126,7 +126,6 @@ builder {
             if check_config_option('NYTProf',
                                    'Plack::Middleware::Debug::Profiler::NYTProf');
     }
-#   qw/Dancer::Settings Dancer::Logger Dancer::Version/
 
     LedgerSMB::PSGI::setup_url_space(
             development => ($ENV{PLACK_ENV} eq 'development'),
