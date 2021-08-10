@@ -478,41 +478,13 @@ test:
 
 devtest: TESTS ?= t/ xt/
 devtest:
-	$(DOCKER_CMD) prove --time --recurse \
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
+else
+	dropdb lsmbinstalltest || true
+	prove --time --recurse \
 	                    --pgtap-option dbname=lsmbinstalltest \
 	                    --pgtap-option username=postgres \
 	                    --feature-option tags=~@wip \
 	                    $(TESTS)
-
-########
-# todo list
-########
-# The next targets to add are likely
-########
-# - postgres_user
-# - postgres_access
-# - postgres_verify
-# - postgres (depends on postgres_*)
-#
-# - starman (adds system user and systemd script)
-#
-# - letsencrypt
-#
-# - nginx
-#
-# - apache
-# - httpd (defaults to nginx)
-# Oh, and the first to add would be
-# - configure (asks a couple of questions and generates ledgersmb.conf)
-
-########
-# I think the list of things to test would be something like....
-########
-# These tests should be run for each distro in a clean VM either on demand or as part of "release testing"
-# - run DB tests
-# - create an invoice
-# - Run a test that verifies Dojo has loaded and is able to modify the DOM
-# - generate PDF of invoice
-# - generate XLS Doc of invoice
-# - generate OpenOffice Doc of invoice
-# - Use Mountebank to send an email of the invoice
+endif
