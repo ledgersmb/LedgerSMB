@@ -106,7 +106,7 @@ builder {
         }
         enable 'Debug::W3CValidate',
             validator_uri => LedgerSMB::Sysconfig::W3CValidate_uri()
-            if check_config_option('Log4perl',
+            if check_config_option('W3CValidate',
                                    'Plack::Middleware::Debug::W3CValidate');
         enable 'Debug::DBIProfile',
             profile => LedgerSMB::Sysconfig::DBIProfile_profile()
