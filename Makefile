@@ -16,8 +16,10 @@ else
 DIST_DEPS=dojo dbdocs
 endif
 
+ifeq ("$(wildcard /.dockerenv)","")
 ifneq ($(origin CONTAINER),undefined)
 DOCKER_CMD=docker exec -ti $(CONTAINER)
+endif
 endif
 
 PHERKIN_OPTS ?= --tags ~@wip $(PHERKIN_EXTRA_OPTS)
