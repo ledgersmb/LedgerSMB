@@ -1,5 +1,5 @@
 /** @format */
-/* eslint no-param-reassign:0 */
+/* eslint no-param-reassign:0, guard-for-in:0 */
 
 define([
     "dijit/layout/ContentPane",
@@ -10,8 +10,8 @@ define([
     "dojo/dom-style",
     "dojo/on",
     "dojo/promise/Promise",
+    "dojo/Deferred",
     "dojo/promise/all",
-    "dojo/request/xhr",
     "dojo/hash",
     "dojo/query",
     "dojo/mouse",
@@ -26,14 +26,23 @@ define([
     domStyle,
     on,
     Promise,
+    Deferred,
     all,
-    xhr,
     hash,
     query,
     mouse,
     domClass,
     topic
 ) {
+    var docURL = new URL(document.location);
+    var domReject = function (request) {
+        return (
+            request.getResponseHeader("X-LedgerSMB-App-Content") !== "yes" ||
+            (request.getResponseHeader("Content-Disposition") || "").startsWith(
+                "attachment"
+            )
+        );
+    };
     return declare("lsmb/MainContentPane", [ContentPane], {
         startup: function () {
             this.inherited("startup", arguments);
@@ -104,16 +113,60 @@ define([
             );
         },
         _load_form: function (url, options) {
+            var tgt = new URL(url, docURL);
+            if (tgt.origin !== docURL.origin) {
+                return new Deferred().resolve();
+            }
+
             var self = this;
             self.fade_main_div();
-            return xhr(url, options).then(
-                function (doc) {
+            var req = new XMLHttpRequest();
+            var dfd = new Deferred(function () {
+                req.abort();
+            });
+            try {
+                req.open(options.method || "GET", tgt);
+                var headers = options.headers || {};
+                for (var hdr in headers) {
+                    req.setRequestHeader(hdr, headers[hdr]);
+                }
+                if (
+                    options.data &&
+                    !(options.data instanceof FormData) &&
+                    !headers["Content-Type"]
+                ) {
+                    req.setRequestHeader(
+                        "Content-Type",
+                        "application/x-www-form-urlencoded"
+                    );
+                }
+                req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                req.addEventListener("load", function () {
+                    dfd.resolve(req);
+                });
+                req.addEventListener("error", function () {
+                    dfd.reject(req);
+                });
+                req.send(options.data || "");
+            } catch (e) {
+                dfd.reject(e);
+            }
+            return dfd.then(
+                function (request) {
+                    if (domReject(request)) {
+                        return self.show_main_div();
+                    }
+
                     self.hide_main_div();
-                    self.set_main_div(doc);
+                    return self.set_main_div(request.response);
                 },
-                function (err) {
+                function (request) {
+                    if (domReject(request)) {
+                        return self.show_main_div();
+                    }
+
                     self.show_main_div();
-                    self.report_request_error(err);
+                    return self.report_request_error({ err: request });
                 }
             );
         },
