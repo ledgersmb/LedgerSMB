@@ -10,8 +10,10 @@ else
 DIST_DEPS=dojo
 endif
 
+ifeq ("$(wildcard /.dockerenv)","")
 ifneq ($(origin CONTAINER),undefined)
 DOCKER_CMD=docker exec -ti $(CONTAINER)
+endif
 endif
 
 .DEFAULT_GOAL := help
