@@ -7,8 +7,8 @@ define([
    "dojo/dom-style",
    "dojo/_base/lang",
    "dojo/promise/Promise",
+   "dojo/Deferred",
    "dojo/promise/all",
-   "dojo/request/xhr",
    "dojo/query",
    //   "dojo/request/iframe",
    "dojo/dom-class"
@@ -19,12 +19,21 @@ define([
    domStyle,
    lang,
    Promise,
+   Deferred,
    all,
-   xhr,
    query,
    //   iframe,
    domClass
 ) {
+   var docURL = new URL(document.location);
+   var domReject = function (request) {
+       return (
+           request.getResponseHeader("X-LedgerSMB-App-Content") !== "yes" ||
+           (request.getResponseHeader("Content-Disposition") || "").startsWith(
+              "attachment"
+           )
+       );
+   };
    return declare("lsmb/MainContentPane", [ContentPane], {
       last_page: null,
       interceptClick: null,
@@ -74,17 +83,62 @@ define([
          );
       },
       load_form: function (url, options) {
+         var tgt = new URL(url, docURL);
+         if (tgt.origin !== docURL.origin) {
+            return new Deferred().resolve();
+         }
+
          var self = this;
          self.fade_main_div();
-         return xhr(url, options).then(
-            function (doc) {
-               self.hide_main_div();
-               self.set_main_div(doc);
-            },
-            function (err) {
-               self.show_main_div();
-               self.report_request_error(err);
-            }
+         var req = new XMLHttpRequest();
+         var dfd = new Deferred(function () {
+            req.abort();
+         });
+         try {
+             req.open(options.method || "GET", tgt);
+             var headers = options.headers;
+             for (var hdr in headers || {}) {
+                 req.setRequestHeader(hdr, headers[hdr]);
+             }
+             if (
+                 options.data &&
+                     !(options.data instanceof FormData) &&
+                     !headers["Content-Type"]
+             ) {
+                 req.setRequestHeader(
+                     "Content-Type",
+                     "application/x-www-form-urlencoded"
+                 );
+             }
+             req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+             req.addEventListener("load", function () {
+                 dfd.resolve(req);
+             });
+             req.addEventListener("error", function () {
+                 dfd.reject(req);
+             });
+             req.send(options.data || "");
+         } catch (e) {
+             dfd.reject(e);
+         }
+
+         return dfd.then(
+             function (request) {
+                 if (domReject(request)) {
+                     return self.show_main_div();
+                 }
+
+                 self.hide_main_div();
+                 return self.set_main_div(request.response);
+             },
+             function (request) {
+                 if (domReject(request)) {
+                     return self.show_main_div();
+                 }
+
+                 self.show_main_div();
+                 return self.report_request_error({ err: request });
+             }
          );
       },
       download_link: function (/*href*/) {

@@ -119,7 +119,15 @@ sub old_app {
         my $env = shift;
         local $psgi_env = $env;
 
-        return $handler->($env);
+        return Plack::Util::response_cb(
+            $handler->($env),
+            sub {
+                if (not Plack::Util::header_exists($_[0]->[1],
+                                                   'X-LedgerSMB-App-Content')) {
+                    Plack::Util::header_push($_[0]->[1],
+                                             'X-LedgerSMB-App-Content', 'yes');
+                }
+            });
     }
 }
 
