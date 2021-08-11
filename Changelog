@@ -2,6 +2,14 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.33
+* Check whether HTML comes from a valid source; CVE-2021-3693
+* Apply HTML escaping on error messages; CVE-2021-3694 (#5766)
+* Align filters between UI and the database on draft transaction search (#5693)
+* Correctly present manual tax and invoice total on reversing invoice (#5721)
+* Repeatedly saving a draft invoice pops up an SQL error (#5679)
+
+
 Changelog for 1.7.32
 * Fix multiple updates in payment screen resetting user input (#5614)
 * Improve error message when missing cash discount configuraition (#5632)
