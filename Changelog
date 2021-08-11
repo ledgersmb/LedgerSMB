@@ -93,6 +93,12 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.18
+* Check whether HTML comes from a valid source; CVE-2021-3693
+* Apply HTML escaping on error messages; CVE-2021-3694 (#5754)
+* Fix several issues in `bin/prepare-company-database` (#5769)
+
+
 Changelog for 1.8.17
 * Align filters between UI and the database on draft transaction search (#5692)
 * Correctly present manual tax and invoice total on reversing invoice (#5721)
