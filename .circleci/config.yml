@@ -29,11 +29,7 @@ commands:
              echo $PWD
              # Coverage explicitly without parallellism to prevent resource contention
              # when Devel::Cover writes coverage database on process-exit
-             prove -j2 --recurse \
-                   --pgtap-option dbname=lsmbinstalltest \
-                   --pgtap-option username=postgres \
-                   --pgtap-option psql=.circleci/psql-wrap \
-                   --feature-option tags=~@wip t/ xt/
+             make devtest TESTS="--pgtap-option psql=.circleci/psql-wrap t/ xt/"
       - run:
           command: |
             kill -QUIT $(cat starman.pid)
@@ -159,7 +155,7 @@ executors:
       PGUSER: postgres
       PGPASSWORD: test
       LSMB_TEST_DB: 1
-      LSMB_NEW_DB: lsmbinstalltest
+      LSMB_NEW_DB: lsmb_test
       LSMB_BASE_URL: http://127.0.0.1:5000
       PSGI_BASE_URL: http://127.0.0.1:5762
       HARNESS_RULESFILE: t/testrules.yml

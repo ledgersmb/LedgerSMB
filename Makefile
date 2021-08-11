@@ -60,12 +60,14 @@ TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dojo:
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make dojo
+else
 	rm -rf UI/js/;
 	cd UI/js-src/lsmb/ \
 		&& ../util/buildscripts/build.sh --profile lsmb.profile.js \
-		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
-	cd ../../..
-
+		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)'
+endif
 
 dojo_archive: dojo
 	#TODO: Protect for concurrent invocations
@@ -111,9 +113,13 @@ test:
 
 devtest: TESTS ?= t/ xt/
 devtest:
-	$(DOCKER_CMD) prove --time --recurse \
-	                    --pgtap-option dbname=lsmbinstalltest \
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
+else
+	dropdb lsmb_test || true
+	PGDATABASE=$${LSMB_NEW_DB} prove --time --recurse \
+	                    --pgtap-option dbname=lsmb_test \
 	                    --pgtap-option username=postgres \
 	                    --feature-option tags=~@wip \
 	                    $(TESTS)
-
+endif
