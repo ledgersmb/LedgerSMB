@@ -109,13 +109,14 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run Perl tests
-        run: prove --jobs 2 --time --recurse --pgtap-option dbname=lsmbinstalltest --pgtap-option username=postgres --feature-option tags=~@wip t/ xt/
+        run: |
+          make devtest TESTS="--jobs 2 t/ xt/"
         env:
           PGHOST: localhost
           PGPORT: 5432
           PGUSER: postgres
           PGPASSWORD: test
-          LSMB_NEW_DB: lsmbinstalltest
+          LSMB_NEW_DB: lsmb_test
           LSMB_TEST_DB: 1
           LSMB_BASE_URL: http://127.0.0.1:5000
           PSGI_BASE_URL: http://127.0.0.1:5001
