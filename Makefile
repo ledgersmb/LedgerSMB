@@ -452,6 +452,6 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
 else
 	dropdb lsmb_test || true
-	prove -Ilib --time --recurse $(TESTS)
+	prove -Ilib --time $(TESTS)
 endif
 
