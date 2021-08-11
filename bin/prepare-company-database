@@ -35,13 +35,17 @@ use Cwd;
 
 # Needed for creating a user
 
-use LedgerSMB;
+use LedgerSMB::App_State;
 use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
 use DBI;
 
 # always use strict!
 use strict;
+
+use Log::Log4perl qw(:easy);
+Log::Log4perl->easy_init($OFF);
+
 
 # DEFAULTS TO BE EDITED
 
@@ -132,18 +136,18 @@ GetOptions(
 # and is a LedgerSMB-ism.
 #
 $ENV{PGUSER} = $owner if $owner;
-$ENV{PGPASS} = $pass if $pass;
+$ENV{PGPASSWORD} = $pass if $pass;
 $ENV{PGDATABASE} = $company if $company;
 $ENV{PGHOST} = $host if $host;
 $ENV{PGPORT} = $port if $port;
 
 my $database = LedgerSMB::Database->new(
-        {dbname => $company, 
+         dbname => $company, 
     countrycode => $cc, 
      chart_name => $coa, 
    company_name => $company, 
        username => $owner, 
-       password => $pass}
+       password => $pass,
 );
 
 $database->create_and_load();
@@ -155,13 +159,13 @@ $database->create_and_load();
 # connection.  In the future we may want to have such a database connection 
 # returned by LedgerSMB::Database, but that is not done yet.
 
-my $lsmb = LedgerSMB->new() || die 'could not create new LedgerSMB object';
-$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
-                                       undef, undef, { AutoCommit => 0 });
+my $dbh = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
+                       undef, undef, { AutoCommit => 0 });
+$LedgerSMB::App_State::DBH = $dbh;
 
 # We also have to retrieve the country ID which requires a database query
 
-my $sth = $lsmb->{dbh}->prepare(
+my $sth = $dbh->prepare(
             'SELECT id FROM country WHERE short_name ILIKE ?'
 );
 
@@ -173,7 +177,9 @@ my ($country_id) = $sth->fetchrow_array;
 # archetype.  This leads to more direct, readable code, but there may still be
 # some bugs to work out --CT
 
-my $employee = LedgerSMB::Entity::Employee->new(
+my $employee = LedgerSMB::Entity::Person::Employee->new(
+     control_code => 'EMP-01',
+     employeenumber => '1',
      first_name  => $ADMIN_FIRSTNAME,
      last_name   => $ADMIN_LASTNAME,
      middle_name => $ADMIN_MIDDLENAME,
@@ -182,18 +188,15 @@ my $employee = LedgerSMB::Entity::Employee->new(
 
 $employee->save;
 
+exit 0 unless $ADMIN_USERNAME;
+
 my $user = LedgerSMB::Entity::User->new(
      username    => $ADMIN_USERNAME,
-     password    => $ADMIN_PASSWORD,
      import      => 't',
      entity_id   => $employee->entity_id,
 );
 
-$user->save;
-
-my $user = LedgerSMB::DBObject::Admin->new(%$lsmb);
-
-$user->save_user;
+$user->create($ADMIN_PASSWORD);
 
 # SUBS
 #
