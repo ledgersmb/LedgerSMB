@@ -481,9 +481,9 @@ devtest:
 ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
 else
-	dropdb lsmbinstalltest || true
+	dropdb lsmb_test || true
 	prove --time --recurse \
-	                    --pgtap-option dbname=lsmbinstalltest \
+	                    --pgtap-option dbname=lsmb_test \
 	                    --pgtap-option username=postgres \
 	                    --feature-option tags=~@wip \
 	                    $(TESTS)
