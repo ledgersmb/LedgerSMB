@@ -106,7 +106,7 @@ builder {
         }
         enable 'Debug::W3CValidate',
             validator_uri => LedgerSMB::Sysconfig::W3CValidate_uri()
-            if check_config_option('Log4perl',
+            if check_config_option('W3CValidate',
                                    'Plack::Middleware::Debug::W3CValidate');
         enable 'Debug::DBIProfile',
             profile => LedgerSMB::Sysconfig::DBIProfile_profile()
@@ -122,11 +122,11 @@ builder {
                                    'Plack::Middleware::Debug::TraceENV');
         enable 'Debug::Profiler::NYTProf',
             exclude => [ LedgerSMB::Sysconfig::NYTProf_exclude() ],
-            minimal  => LedgerSMB::Sysconfig::NYTProf_minimal()
+            minimal => LedgerSMB::Sysconfig::NYTProf_minimal(),
+            root    => 'logs/NYTProf'
             if check_config_option('NYTProf',
                                    'Plack::Middleware::Debug::Profiler::NYTProf');
     }
-#   qw/Dancer::Settings Dancer::Logger Dancer::Version/
 
     LedgerSMB::PSGI::setup_url_space(
             development => ($ENV{PLACK_ENV} eq 'development'),

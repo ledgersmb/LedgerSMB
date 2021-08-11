@@ -245,7 +245,7 @@ def 'W3CValidate',
 
 def 'W3CValidate_uri',
     section => 'debug',
-    default => 'http://validator.w3.org/check',
+    default => 'https://validator.w3.org/check',
     doc => q{};
 
 ### SECTION  ---   main
