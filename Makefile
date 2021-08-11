@@ -1,10 +1,19 @@
 
+-include Makefile.local
+
+
 DIST_VER=$(shell utils/release/build-id)
 DIST_DIR=/tmp
 ifeq ($(DIST_VER),travis)
 DIST_DEPS=cached_dojo
 else
 DIST_DEPS=dojo
+endif
+
+ifeq ("$(wildcard /.dockerenv)","")
+ifneq ($(origin CONTAINER),undefined)
+DOCKER_CMD=docker exec -ti $(CONTAINER)
+endif
 endif
 
 .DEFAULT_GOAL := help
@@ -439,7 +448,7 @@ devtest:
 ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
 else
-	dropdb lsmbinstalltest || true
+	dropdb lsmb_test || true
 	prove -Ilib --time --recurse $(TESTS)
 endif
 
