@@ -12,8 +12,9 @@ use Test::More;
     my $base_url = $ENV{LSMB_BASE_URL} // 'http://localhost:5000';
 
     my $driver = new Selenium::Remote::Driver(
-        port => 4422,
-        remote_server_addr => $ENV{REMOTE_SERVER_ADDR} // 'localhost'
+        port => $ENV{REMOTE_SERVER_PORT} // 4422,
+        remote_server_addr => $ENV{REMOTE_SERVER_ADDR} // 'localhost',
+        browser_name => $ENV{BROWSER} // 'phantomjs'
                           )
     || die "Unable to connect to PhantomJS";
     $driver->set_implicit_wait_timeout(30000); # 30s

@@ -1,10 +1,19 @@
 
+-include Makefile.local
+
+
 DIST_VER=$(shell utils/release/build-id)
 DIST_DIR=/tmp
 ifeq ($(DIST_VER),travis)
 DIST_DEPS=cached_dojo
 else
 DIST_DEPS=dojo
+endif
+
+ifeq ("$(wildcard /.dockerenv)","")
+ifneq ($(origin CONTAINER),undefined)
+DOCKER_CMD=docker exec -ti $(CONTAINER)
+endif
 endif
 
 .DEFAULT_GOAL := help
@@ -253,12 +262,14 @@ TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dojo:
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make dojo
+else
 	rm -rf UI/js/;
 	cd UI/js-src/lsmb/ \
 		&& ../util/buildscripts/build.sh --profile lsmb.profile.js \
-		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
-	cd ../../..
-
+		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)'
+endif
 
 dojo_archive: dojo
     #TODO: Protect for concurrent invocations
@@ -435,38 +446,12 @@ postgres_user:
 test:
 	prove -Ilib t/*.t
 
+devtest: TESTS ?= t/ xt/
 devtest:
-	prove -Ilib t/*.t
-	prove -Ilib xt/*.t
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
+else
+	dropdb lsmb_test || true
+	prove -Ilib --time $(TESTS)
+endif
 
-########
-# todo list
-########
-# The next targets to add are likely
-########
-# - postgres_user
-# - postgres_access
-# - postgres_verify
-# - postgres (depends on postgres_*)
-# 
-# - starman (adds system user and systemd script)
-# 
-# - letsencrypt
-# 
-# - nginx
-# 
-# - apache
-# - httpd (defaults to nginx)
-# Oh, and the first to add would be
-# - configure (asks a couple of questions and generates ledgersmb.conf)
-
-########
-# I think the list of things to test would be something like....
-########
-# These tests should be run for each distro in a clean VM either on demand or as part of "release testing"
-# - run DB tests
-# - create an invoice
-# - Run a test that verifies Dojo has loaded and is able to modify the DOM
-# - generate PDF of invoice
-# - generate OpenOffice Doc of invoice
-# - Use Mountebank to send an email of the invoice
