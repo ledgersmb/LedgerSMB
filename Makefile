@@ -446,6 +446,7 @@ postgres_user:
 test:
 	prove -Ilib t/*.t
 
+devtest: TESTS ?= t/ xt/
 devtest:
 ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
