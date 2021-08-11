@@ -28,6 +28,7 @@ use parent qw ( Plack::Middleware );
 use List::Util qw{ none any };
 use Module::Runtime qw/ use_module /;
 use Plack::Request;
+use Plack::Util;
 
 use LedgerSMB::PSGI::Util;
 
@@ -95,7 +96,15 @@ sub call {
     $env->{'lsmb.script_name'} = $script_name;
     $env->{'lsmb.action'} = $action;
     $env->{'lsmb.action_name'} = $action_name;
-    return $self->app->($env);
+    return Plack::Util::response_cb(
+        $self->app->($env),
+        sub {
+            if (not Plack::Util::header_exists($_[0]->[1],
+                                               'X-LedgerSMB-App-Content')) {
+                Plack::Util::header_push($_[0]->[1],
+                                         'X-LedgerSMB-App-Content', 'yes');
+            }
+        });
 }
 
 

@@ -78,7 +78,7 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 =cut
 
 sub old_app {
-    return CGI::Emulate::PSGI->handler(
+    my $handler = CGI::Emulate::PSGI->handler(
         sub {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
@@ -86,6 +86,18 @@ sub old_app {
 
             _run_old();
         });
+
+    return sub {
+        return Plack::Util::response_cb(
+            $handler->(@_),
+            sub {
+                if (not Plack::Util::header_exists($_[0]->[1],
+                                                   'X-LedgerSMB-App-Content')) {
+                    Plack::Util::header_push($_[0]->[1],
+                                             'X-LedgerSMB-App-Content', 'yes');
+                }
+            });
+    }
 }
 
 
