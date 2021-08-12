@@ -33,11 +33,13 @@ releases. No explicit versioning was applied before 2021-01-04.
   For information on the avaliable options for the 'includegraphics'
   command, see https://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
 
-  Example:
-
-    \includegraphics[scale=0.3]{<?lsmb dbfile_path('logo.png') ?>}
+  Example (remove the 3 %-signs):
 
     ?>
+
+% \includegraphics[scale=0.3]{<%?lsmb dbfile_path('logo.png') ?%>}
+
+
     }\hfill
   \begin{tabular}[b]{rr@{}}
   <?lsmb text('Tel:') ?> & <?lsmb tel ?>\\
