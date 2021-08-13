@@ -273,6 +273,11 @@ ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
 TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
+dbdocs:
+	$(DOCKER_CMD) dot -Tsvg doc/database/ledgersmb.dot -o doc/database/ledgersmb.svg
+	$(DOCKER_CMD) dot -Tpdf doc/database/ledgersmb.dot -o doc/database/ledgersmb.pdf
+	$(DOCKER_CMD) dot -Tpng doc/database/ledgersmb.dot -o doc/database/ledgersmb.png
+
 dojo:
 ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make dojo
