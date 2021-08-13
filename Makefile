@@ -71,9 +71,9 @@ TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dbdocs:
-	$(DOCKER_CMD) dot -Tsvg docs/database/ledgersmb.dot -o docs/database/ledgersmb.svg
-	$(DOCKER_CMD) dot -Tpdf docs/database/ledgersmb.dot -o docs/database/ledgersmb.pdf
-	$(DOCKER_CMD) dot -Tpng docs/database/ledgersmb.dot -o docs/database/ledgersmb.png
+	$(DOCKER_CMD) dot -Tsvg doc/database/ledgersmb.dot -o doc/database/ledgersmb.svg
+	$(DOCKER_CMD) dot -Tpdf doc/database/ledgersmb.dot -o doc/database/ledgersmb.pdf
+	$(DOCKER_CMD) dot -Tpng doc/database/ledgersmb.dot -o doc/database/ledgersmb.png
 
 dojo:
 	$(DOCKER_CMD) rm -rf UI/js/*
