@@ -275,9 +275,9 @@ var pluginsProd = [
     // Analyze the generated JS code. Use `npm run analyzer` to view
     new BundleAnalyzerPlugin({
         analyzerHost: "0.0.0.0",
-        analyzerMode: "json",
+        analyzerMode: prodMode ? "disabled" : "json",
         openAnalyzer: false,
-        generateStatsFile: true,
+        generateStatsFile: !prodMode,
         statsFilename: "../../logs/stats.json",
         reportFilename: "../../logs/report.json"
     }),
