@@ -2,6 +2,7 @@
     "extends": [
       "config:base"
     ],
+    "baseBranches": [ "master", "1.9" ],
     "packageRules": [
         {
             "matchPackagePatterns": [
