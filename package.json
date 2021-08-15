@@ -101,7 +101,7 @@
     "unused-webpack-plugin": "2.4.0",
     "webpack": "5.50.0",
     "webpack-bundle-analyzer": "4.4.2",
-    "webpack-cli": "4.7.2",
+    "webpack-cli": "4.8.0",
     "webpack-log": "3.0.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.0",
