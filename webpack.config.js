@@ -69,7 +69,7 @@ function findDataDojoTypes(fileName) {
 
 // Compute used data-dojo-type
 glob.sync("**/*.html", {
-    ignore: ["lib/ui-header.html", "js/**"],
+    ignore: ["lib/ui-header.html", "js/**", "js-src/{dojo,dijit,util}/**"],
     cwd: "UI"
 }).map(function (filename) {
     const requires = findDataDojoTypes("UI/" + filename);
