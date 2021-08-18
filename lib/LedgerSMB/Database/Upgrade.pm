@@ -187,7 +187,8 @@ sub _linked_accounts {
     my @accounts;
 
     my $sth = $dbh->prepare("select id, accno, description
-                               from chart where link = '$link'")
+                               from chart where link = '$link'
+                                and charttype = 'A'")
         or die $dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
