@@ -122,6 +122,9 @@ sub old_app {
         return Plack::Util::response_cb(
             $handler->($env),
             sub {
+                Plack::Util::header_set($_[0]->[1],
+                                        'Content-Security-Policy',
+                                        q{frame-ancestors 'self'});
                 if (not Plack::Util::header_exists($_[0]->[1],
                                                    'X-LedgerSMB-App-Content')) {
                     Plack::Util::header_push($_[0]->[1],
@@ -179,6 +182,9 @@ sub psgi_app {
         }
     };
 
+    Plack::Util::header_set($res->[1],
+                            'Content-Security-Policy',
+                            q{frame-ancestors 'self'});
     return $res;
 }
 
