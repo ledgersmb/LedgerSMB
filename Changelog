@@ -5,6 +5,7 @@ Changelog for 1.7 Series
 Changelog for 1.7.33
 * Check whether HTML comes from a valid source; CVE-2021-3693
 * Apply HTML escaping on error messages; CVE-2021-3694 (#5766)
+* Prevent the application being wrapped in a frame; CVE-2021-3731
 * Align filters between UI and the database on draft transaction search (#5693)
 * Correctly present manual tax and invoice total on reversing invoice (#5721)
 * Repeatedly saving a draft invoice pops up an SQL error (#5679)
