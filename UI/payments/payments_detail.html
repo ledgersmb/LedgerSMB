@@ -502,6 +502,7 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                 [% INCLUDE select element_data = {
                         name    = "format"
                         class   = "select"
+                        default_blank = 1
                         options = payment.format_options
                         value   = payment.format
                 } %]
