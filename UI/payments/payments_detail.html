@@ -501,6 +501,7 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                 } ?>
                 <?lsmb INCLUDE select element_data = {
                         name    = "format"
+                        default_blank = 1
                         class   = "select"
                         options = payment.format_options
                         value   = payment.format
