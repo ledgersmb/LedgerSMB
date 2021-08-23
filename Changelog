@@ -93,6 +93,10 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.19
+* Follow-up for the fix to CVE-2021-3693; fix bulk-posting payments
+
+
 Changelog for 1.8.18
 * Check whether HTML comes from a valid source; CVE-2021-3693
 * Apply HTML escaping on error messages; CVE-2021-3694 (#5754)
