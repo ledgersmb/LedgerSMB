@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.18-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-07-28 21:09+0000\n"
+"POT-Creation-Date: 2021-08-23 11:49+0000\n"
 "Last-Translator: Håvard Sørli <havard@sorli.no>, 2021\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -9379,7 +9379,7 @@ msgstr "[_1]: Leverandør ikke i registret"
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr "[_1]:[_2]:[_3]: Kan ikke videresende"
 
-#: old/lib/LedgerSMB/oldHandler.pm:158
+#: old/lib/LedgerSMB/oldHandler.pm:159
 msgid "action not defined!"
 msgstr "Handling ikke definert"
 

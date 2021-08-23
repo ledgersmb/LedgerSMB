@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.18-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-07-28 21:09+0000\n"
+"POT-Creation-Date: 2021-08-23 11:49+0000\n"
 "Last-Translator: Ann Madz <annamadzigon@gmail.com>, 2020\n"
 "Language-Team: Russian (https://www.transifex.com/ledgersmb/teams/58325/ru/)\n"
 "Language: ru\n"
@@ -9320,7 +9320,7 @@ msgstr ""
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr ""
 
-#: old/lib/LedgerSMB/oldHandler.pm:158
+#: old/lib/LedgerSMB/oldHandler.pm:159
 msgid "action not defined!"
 msgstr ""
 
