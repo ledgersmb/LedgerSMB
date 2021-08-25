@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.34-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-08-23 11:27+0000\n"
+"POT-Creation-Date: 2021-08-25 20:49+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
 "Language-Team: Icelandic (https://www.transifex.com/ledgersmb/teams/58325/"
 "is/)\n"
@@ -6093,7 +6093,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:937
 #: old/bin/aa.pl:964 old/bin/am.pl:822 old/bin/arap.pl:468 old/bin/ir.pl:523
 #: old/bin/is.pl:1056 old/bin/is.pl:589 old/bin/oe.pl:1953 old/bin/oe.pl:636
-#: old/bin/oe.pl:862 UI/payments/payments_detail.html:509
+#: old/bin/oe.pl:862 UI/payments/payments_detail.html:510
 #: UI/timecards/timecard.html:160
 msgid "Print"
 msgstr "Prenta"
