@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.19-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-08-23 11:49+0000\n"
+"POT-Creation-Date: 2021-08-25 21:11+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2020\n"
 "Language-Team: French (Belgium) (https://www.transifex.com/ledgersmb/"
 "teams/58325/fr_BE/)\n"
@@ -587,7 +587,7 @@ msgstr ""
 msgid "Add/Change Wage"
 msgstr ""
 
-#: UI/Configuration/rate.html:56
+#: UI/Configuration/rate.html:57
 msgid "Add/Update"
 msgstr ""
 
@@ -3676,7 +3676,7 @@ msgstr ""
 msgid "From Date"
 msgstr ""
 
-#: UI/Configuration/rate.html:80 UI/asset/import_asset.html:20
+#: UI/Configuration/rate.html:81 UI/asset/import_asset.html:20
 #: UI/import_csv/import_csv.html:58 UI/import_csv/import_inventory_csv.html:70
 msgid "From File"
 msgstr ""
@@ -6127,7 +6127,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:937
 #: old/bin/aa.pl:964 old/bin/am.pl:774 old/bin/arap.pl:469 old/bin/ir.pl:522
 #: old/bin/is.pl:1053 old/bin/is.pl:585 old/bin/oe.pl:1944 old/bin/oe.pl:636
-#: old/bin/oe.pl:862 UI/payments/payments_detail.html:509
+#: old/bin/oe.pl:862 UI/payments/payments_detail.html:510
 #: UI/timecards/timecard.html:160
 msgid "Print"
 msgstr "Imprimer"
@@ -8862,7 +8862,7 @@ msgstr ""
 msgid "Upgrade Info"
 msgstr ""
 
-#: UI/Configuration/rate.html:85 UI/file/attachment_screen.html:45
+#: UI/Configuration/rate.html:86 UI/file/attachment_screen.html:45
 #: UI/file/internal-file-list.html:74 UI/templates/widget.html:130
 msgid "Upload"
 msgstr ""
