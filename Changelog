@@ -8,6 +8,7 @@ Changelog for 1.7.34
 
 Changelog for 1.7.34
 * Follow-up to fix for CVE-2021-3693 to fix display of search results
+* Follow-up for the fix to CVE-2021-3693; fix bulk-posting payments
 
 
 Changelog for 1.7.33
