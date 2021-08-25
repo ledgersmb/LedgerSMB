@@ -95,6 +95,7 @@ Released 2020-09-04
 
 Changelog for 1.8.19
 * Follow-up for the fix to CVE-2021-3693; fix bulk-posting payments
+* Follow-up for the fix to CVE-2021-3693; fix incorrectly backported change
 
 
 Changelog for 1.8.18
