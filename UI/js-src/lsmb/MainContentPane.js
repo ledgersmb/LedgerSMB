@@ -96,8 +96,8 @@ define([
          });
          try {
              req.open(options.method || "GET", tgt);
-             var headers = options.headers;
-             for (var hdr in headers || {}) {
+             var headers = options.headers || {};
+             for (var hdr in headers) {
                  req.setRequestHeader(hdr, headers[hdr]);
              }
              if (
