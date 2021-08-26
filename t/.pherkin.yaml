@@ -28,7 +28,7 @@ default:
                 wait_timeout: 3000
                 window_size:  1024x1280
                 caps:
-                  port: 4422
+                  port: 4444
                   remote_server_addr: ${REMOTE_SERVER_ADDR}
                   browser_name: ${BROWSER}
       Pherkin::Extension::PageObject:
