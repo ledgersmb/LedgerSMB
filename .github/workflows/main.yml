@@ -24,6 +24,8 @@ jobs:
       fail-fast: false
       matrix:
         perl: [ "5.24", "5.28", "5.32" ]
+        BROWSER: [ "chrome" ]
+
     services:
       postgres:
         # Docker Hub image
@@ -37,6 +39,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Set host alias (why doesn't Github do it itself)
+        run: |
+          hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Setup Perl environment
         # You may pin to the exact commit or the version.
@@ -76,6 +82,15 @@ jobs:
         with:
           submodules: recursive
   
+      - name: Starting hub with ${{ matrix.BROWSER }}
+        run: |
+          docker-compose \
+              --file=utils/selenium/docker-compose.yml \
+              --file=utils/selenium/docker-compose-${{ matrix.BROWSER }}.yml \
+              up \
+              --detach \
+              --scale ${{ matrix.BROWSER }}=3 \
+
       - name: Install apt packages
         run: sudo apt-get update && sudo apt-get install -y texlive-latex-recommended texlive-xetex gettext nginx
         env:
@@ -104,9 +119,6 @@ jobs:
           sed -e "s#{ROOT}#$PWD#" doc/conf/nginx-travis.conf >/tmp/nginx.conf
           nginx -c /tmp/nginx.conf &
 
-      - name: Starting 'PhantomJS'
-        run: phantomjs --webdriver=4422 2>/dev/null >/dev/null &
-
       # Runs a single command using the runners shell
       - name: Run Perl tests
         run: |
@@ -118,6 +130,8 @@ jobs:
           PGPASSWORD: test
           LSMB_NEW_DB: lsmb_test
           LSMB_TEST_DB: 1
-          LSMB_BASE_URL: http://127.0.0.1:5000
-          PSGI_BASE_URL: http://127.0.0.1:5762
           REMOTE_SERVER_ADDR: 127.0.0.1
+          LSMB_BASE_URL: http://lsmb:5000
+          PSGI_BASE_URL: http://lsmb:5762
+          BROWSER: ${{ matrix.BROWSER }}
+
