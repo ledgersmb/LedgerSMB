@@ -143,7 +143,19 @@ executors:
       - image: ledgersmbdev/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
-      - image: ledgersmbdev/ledgersmb_circleci-browsers:<< parameters.browser >>
+      - image: selenium/hub:3
+        name: selenium-hub
+        environment:
+          GRID_DEBUG: "true"
+          GRID_HUB_PORT: 4444
+          GRID_MAX_SESSION: 100
+      - image: selenium/node-chrome:3
+        environment:
+          GRID_DEBUG: "true"
+          HUB_HOST: selenium-hub
+          HUB_PORT: 4444
+          NODE_MAX_SESSION: 5
+          NODE_MAX_INSTANCES: 5
     environment:
       COVERAGE: << parameters.coverage >>
 #      DEVEL_COVER_OPTIONS: 
@@ -156,6 +168,8 @@ executors:
       LSMB_BASE_URL: http://127.0.0.1:5000
       PSGI_BASE_URL: http://127.0.0.1:5762
       HARNESS_RULESFILE: t/testrules.yml
+      REMOTE_SERVER_ADDR: selenium-hub
+      BROWSER: chrome
 
 # Define jobs
 jobs:
