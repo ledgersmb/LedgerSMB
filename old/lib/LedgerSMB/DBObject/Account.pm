@@ -130,6 +130,7 @@ sub save {
 
     my $func = 'account__save';
     if ($self->{charttype} and $self->{charttype} eq 'H') {
+        $self->{parent} = $self->{heading} unless ($self->{parent});
         $func = 'account_heading_save';
     }
 
