@@ -844,7 +844,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                     'AR/AP|customer' => 'is.pl?action=edit&amp;workflow_id=',
                     'AR/AP|vendor'   => 'ir.pl?action=edit&amp;workflow_id=',
                     'Order/Quote'    => 'oe.pl?action=edit&amp;workflow_id=',
-                    'E-mail'         => 'email.pl?action=render&amp;id=',
+                    'Email'          => 'email.pl?action=render&amp;id=',
                     );
                 my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
                 $link = ($links{$workflow}
