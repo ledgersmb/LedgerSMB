@@ -5,22 +5,11 @@ define([
     "dojo/_base/declare",
     "dojo/_base/event",
     "dojo/on",
-    "dojo/hash",
     "dojo/dom-attr",
     "dojo/dom-form",
     "dojo/query",
     "dijit/registry"
-], function (
-    Form,
-    declare,
-    event,
-    on,
-    hash,
-    domattr,
-    domform,
-    query,
-    registry
-) {
+], function (Form, declare, event, on, domattr, domform, query, registry) {
     var c = 0;
     return declare("lsmb/Form", [Form], {
         clickedAction: null,
@@ -63,7 +52,7 @@ define([
                     "&" +
                     qobj;
                 url = url + "?" + qobj + "#" + c.toString(16);
-                hash(url); // add GET forms to the back button history
+                registry.byId("maindiv").load_link(url); // add GET forms to the back button history
             } else {
                 options.method = method;
                 if (this.domNode.enctype === "multipart/form-data") {

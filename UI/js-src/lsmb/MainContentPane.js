@@ -12,7 +12,6 @@ define([
     "dojo/promise/Promise",
     "dojo/Deferred",
     "dojo/promise/all",
-    "dojo/hash",
     "dojo/query",
     "dojo/mouse",
     "dojo/dom-class",
@@ -28,7 +27,6 @@ define([
     Promise,
     Deferred,
     all,
-    hash,
     query,
     mouse,
     domClass,
@@ -171,11 +169,7 @@ define([
             );
         },
         load_form: function (url, options) {
-            var self = this;
-            var h = registry.byId("main").addHistory(function () {
-                self._load_form(url, options);
-            });
-            hash(h);
+            registry.byId("main").navigateTo(url, options);
         },
         download_link: function (/* href */) {},
         load_link: function (href) {
