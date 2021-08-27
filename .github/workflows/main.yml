@@ -132,6 +132,7 @@ jobs:
       PGUSER: postgres
       PSGI_BASE_URL: http://lsmb:5762
       RELEASE_TESTING: 1
+      REMOTE_SERVER_ADDR: 127.0.0.1
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
