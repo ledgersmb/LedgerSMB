@@ -64,6 +64,9 @@ define([
                     );
                 } else {
                     // old code (Form.pm) wants x-www-urlencoded
+                    options.headers = {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    };
                     options.data =
                         domattr.get(this.clickedAction, "name") +
                         "=" +
