@@ -89,6 +89,10 @@ define([
                         }
                     }
                 };
+                client.setRequestHeader(
+                    "Content-Type",
+                    "application/x-www-form-urlencoded"
+                );
                 client.send(dojo.objectToQuery(data));
                 event.stop(evt);
                 return;
