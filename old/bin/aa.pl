@@ -851,7 +851,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     if (defined $form->{cash_accno}) {
-        $form->{"select$form->{ARAP}_paid"} =~ /($form->{cash_accno}--[^<]*)/;
+        $form->{"select$form->{ARAP}_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
         $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
     }
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
