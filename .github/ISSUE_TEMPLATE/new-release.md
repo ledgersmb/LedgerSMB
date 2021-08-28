@@ -84,6 +84,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 
 # Post release steps:
 
+* [ ] Change ledgersmb-docker default branch to the new stable release branch
 * [ ] Update the version number of the 'master' branch:
   * [ ] Update README.md reference to 'prepare for first use'
 * [ ] Update the screenshots
