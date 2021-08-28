@@ -44,7 +44,10 @@ When working toward a non-patch release, it's practical to use an issue to track
   * [ ] (others??)
 * [ ] Create one or more RC releases
 * [ ] Fix blocking findings
-* [ ] Update README.md
+* [ ] Update maintenance branch README.md
+  * [ ] Point coverage badge to maintenance branch
+  * [ ] Point CI badge to maintenance branch
+  * [ ] Remove pointer to "current stable" branches
 * [ ] Update Docker image README.md
   * [ ] Docker README listing available tags (on all branches!)
 * [ ] Update the [system requirements listing](https://ledgersmb.org/content/system-requirements)
