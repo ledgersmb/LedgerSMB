@@ -952,7 +952,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
         </tr>
 ";
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
-    $form->{"selectAR_paid"} =~ /($form->{cash_accno}--[^<]*)/;
+    $form->{"selectAR_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
     $form->{"AR_paid_$form->{paidaccounts}"} = $1;
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
