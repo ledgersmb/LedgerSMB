@@ -846,7 +846,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 |;
 
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
-    $form->{"selectAP_paid"} =~ /($form->{cash_accno}--[^<]*)/;
+    $form->{"selectAP_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
     $form->{"AP_paid_$form->{paidaccounts}"} = $1;
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
