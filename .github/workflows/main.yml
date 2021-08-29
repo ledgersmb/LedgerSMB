@@ -8,8 +8,9 @@ on:
   push:
     paths-ignore:
       - '.circleci'
-    branches:
-      - '!renovate' # Run only renovate PR
+    branches-ignore:
+      # Run only renovate PR
+      - 'renovate/*'
   pull_request:
     branches:
       - '*'
