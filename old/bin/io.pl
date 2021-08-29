@@ -1028,7 +1028,7 @@ sub quotation {
 
 sub create_form {
 
-    for (qw(id printed emailed queued workflow_id)) { delete $form->{$_} }
+    for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
 
     $form->{script} = 'oe.pl';
 
@@ -1480,30 +1480,6 @@ sub print_form {
         $output_options{filename} =
             $form->{formname} . '-'. $form->{"${inv}number"} .
             '.'. $form->{format}; # assuming pdf or htm
-    } elsif ( $form->{media} eq 'queue' ) {
-        %queued = split / /, $form->{queued};
-
-        if ( $filename = $queued{ $form->{formname} } ) {
-            $form->{queued} =~ s/$form->{formname} $filename//;
-            unlink( LedgerSMB::Sysconfig::spool() . "/$filename");
-            $filename =~ s/\..*$//g;
-        }
-        else {
-            $filename = time;
-            $filename .= $$;
-        }
-
-        $filename .= ( $form->{format} eq 'postscript' ) ? '.ps' : '.pdf';
-        $form->{OUT}       = LedgerSMB::Sysconfig::spool() . "/$filename";
-        $form->{printmode} = '>';
-
-        $form->{queued} .= " $form->{formname} $filename";
-        $form->{queued} =~ s/^ //;
-
-        # save status
-        $form->update_status;
-
-        $old_form->{queued} = $form->{queued};
     }
 
     $form->{fileid} = $form->{"${inv}number"};

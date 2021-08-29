@@ -1877,7 +1877,7 @@ use $form->lastname_used to populate the details.  If $form->{id} is set,
 populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
 taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
 oldinvtotal, employee_id, employee, language_code, ponumber,
-reverse, printed, emailed, queued, recurring, exchangerate, and acc_trans
+reverse, printed, emailed, recurring, exchangerate, and acc_trans
 attributes of $form with details about the transaction $form->{id}.  All of
 these attributes, save for acc_trans, are scalar; $form->{acc_trans} refers to
 a hash keyed by link elements whose values are lists of references to hashes
@@ -2026,7 +2026,7 @@ sub create_links {
 
         # get printed, emailed
         $query = qq|
-            SELECT s.printed, s.emailed, s.spoolfile, s.formname
+            SELECT s.printed, s.emailed, s.formname
             FROM status s WHERE s.trans_id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
@@ -2035,12 +2035,10 @@ sub create_links {
               if $ref->{printed};
             $self->{emailed} .= "$ref->{formname} "
               if $ref->{emailed};
-            $self->{queued} .= "$ref->{formname} " . "$ref->{spoolfile} "
-              if $ref->{spoolfile};
         }
         $sth->finish;
 
-        for (qw(printed emailed queued)) {
+        for (qw(printed emailed)) {
             $self->{$_} =~ s/ +$//g if $self->{$_}
         }
 
@@ -2479,9 +2477,7 @@ sub get_partsgroup {
 DELETEs all status rows which have a formname of $form->{formname} and a
 trans_id of $form->{id}.  INSERTs a new row into status where trans_id is
 $form->{id}, formname is $form->{formname}, printed and emailed are true if
-their respective $form attributes match /$form->{formname}/, and spoolfile is
-the file extracted from the string $form->{queued} or NULL if there is no entry
-for $form->{formname}.
+their respective $form attributes match /$form->{formname}/.
 
 =cut
 
@@ -2493,12 +2489,6 @@ sub update_status {
     return unless $self->{id};
 
     my $dbh = $self->{dbh};
-
-    my %queued = split / +/, $self->{queued};
-    my $spoolfile =
-      ( $queued{ $self->{formname} } )
-      ? $queued{ $self->{formname} }
-      : undef;
 
     my $query = qq|DELETE FROM status
                     WHERE formname = ?
@@ -2512,22 +2502,21 @@ sub update_status {
 
     $sth->finish;
 
-    return unless $self->{printed} || $self->{emailed} || $spoolfile;
+    return unless $self->{printed} || $self->{emailed};
 
     my $printed = ( $self->{printed} =~ /$self->{formname}/ ) ? "1" : "0";
     my $emailed = ( $self->{emailed} =~ /$self->{formname}/ ) ? "1" : "0";
 
     $query = qq|
         INSERT INTO status
-            (trans_id, printed, emailed, spoolfile, formname)
-        VALUES (?, ?, ?, ?, ?)|;
+            (trans_id, printed, emailed, formname)
+        VALUES (?, ?, ?, ?)|;
 
     $sth = $dbh->prepare($query);
     $sth->execute(
         $self->{id},
         $printed,
         $emailed,
-        $spoolfile,
         $self->{formname}
     ) || $self->dberror($query);
 
@@ -2537,8 +2526,8 @@ sub update_status {
 =item $form->save_status();
 
 Clears out any old status entries for $form->{id} and saves new status entries.
-Queued form names are extracted from $form->{queued}.  Printed and emailed form
-names are extracted from $form->{printed} and $form->{emailed}.  The queued,
+Printed and emailed form
+names are extracted from $form->{printed} and $form->{emailed}.  The
 printed, and emailed fields are space separated lists.
 
 =cut
@@ -2560,42 +2549,9 @@ sub save_status {
     ) || $self->dberror($query);
     $sth->finish;
 
-    my %queued;
     my $formname;
     my $printed;
     my $emailed;
-
-    if ( $self->{queued} ) {
-
-        %queued = split / +/, $self->{queued};
-
-        foreach my $formname (keys %queued) {
-
-            $printed = ( $self->{printed} =~ /$formname/ ) ? "1" : "0";
-            $emailed = ( $self->{emailed} =~ /$formname/ ) ? "1" : "0";
-
-            if ( $queued{$formname} ) {
-                $query = qq|
-                    INSERT INTO status
-                        (trans_id, printed, emailed,
-                        spoolfile, formname)
-                    VALUES (?, ?, ?, ?, ?)|;
-
-                $sth = $dbh->prepare($query);
-                $sth->execute(
-                    $self->{id},
-                    $printed,
-                    $emailed,
-                    $queued{$formname},
-                    $formname
-                ) || $self->dberror($query);
-                $sth->finish;
-            }
-
-            $formnames  =~ s/$formname//;
-            $emailforms =~ s/$formname//;
-        }
-    }
 
     # save printed, emailed info
     $formnames  =~ s/^ +//g;

@@ -1113,7 +1113,7 @@ sub process_transactions {
                         $form->{paidaccounts} = -1;
                     }
 
-                    for (qw(id recurring intnotes printed emailed queued)) {
+                    for (qw(id recurring intnotes printed emailed)) {
                         delete $form->{$_};
                     }
 
@@ -1225,7 +1225,7 @@ sub process_transactions {
                         $pt->{req}, "days" )
                       if $form->{reqdate};
 
-                    for (qw(id recurring intnotes printed emailed queued)) {
+                    for (qw(id recurring intnotes printed emailed)) {
                         delete $form->{$_};
                     }
                     for ( 1 .. $form->{rowcount} ) {

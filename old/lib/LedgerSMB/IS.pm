@@ -1281,7 +1281,7 @@ sub post_invoice {
     $form->{name} =~ s/--$form->{customer_id}//;
     $form->add_shipto($form->{id});
 
-    # save printed, emailed and queued
+    # save printed, emailed
     $form->save_status($dbh);
 
     if (!$form->{separate_duties}){

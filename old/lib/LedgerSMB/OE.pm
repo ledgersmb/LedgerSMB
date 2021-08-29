@@ -475,8 +475,7 @@ sub save {
 
     $form->add_shipto($form->{id}, 1);
 
-    # save printed, emailed, queued
-
+    # save printed, emailed
     $form->save_status($dbh);
 
     if ( $form->{type} =~ /_order$/ ) {
@@ -501,22 +500,6 @@ sub delete {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
-
-    # delete spool files
-    my $query = qq|
-        SELECT spoolfile FROM status
-        WHERE trans_id = ?
-        AND spoolfile IS NOT NULL|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    my $spoolfile;
-    my @spoolfiles = ();
-
-    while ( ($spoolfile) = $sth->fetchrow_array ) {
-        push @spoolfiles, $spoolfile;
-    }
-    $sth->finish;
 
     $query = qq|
         SELECT o.parts_id, o.ship, p.inventory_accno_id, p.assembly
@@ -557,9 +540,6 @@ sub delete {
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
 
-    foreach my $spoolfile (@spoolfiles) {
-        unlink(LedgerSMB::Sysconfig::spool() . "/$spoolfile") if $spoolfile;
-    }
     return 1;
 }
 
@@ -632,9 +612,9 @@ sub retrieve {
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless ( $_ eq "id") }
         $sth->finish;
 
-        # get printed, emailed and queued
+        # get printed, emailed
         $query = qq|
-            SELECT s.printed, s.emailed, s.spoolfile, s.formname
+            SELECT s.printed, s.emailed, s.formname
             FROM status s
             WHERE s.trans_id = ?|;
         $sth = $dbh->prepare($query);
@@ -645,11 +625,9 @@ sub retrieve {
               if $ref->{printed};
             $form->{emailed} .= "$ref->{formname} "
               if $ref->{emailed};
-            $form->{queued} .= "$ref->{formname} $ref->{spoolfile} "
-              if $ref->{spoolfile};
         }
         $sth->finish;
-        for (qw(printed emailed queued)) { $form->{$_} =~ s/ +$//g }
+        for (qw(printed emailed)) { $form->{$_} =~ s/ +$//g }
 
         # retrieve individual items
         $query = qq|

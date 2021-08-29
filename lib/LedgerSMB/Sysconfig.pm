@@ -326,12 +326,6 @@ def 'localepath',
     doc => q{};
 
 
-# spool directory for batch printing
-def 'spool',
-    section => 'paths',
-    default => 'spool',
-    doc => q{};
-
 # templates base directory
 def 'templates',
     section => 'paths',

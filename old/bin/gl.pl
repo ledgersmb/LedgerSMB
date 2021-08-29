@@ -675,7 +675,7 @@ sub check_balanced {
 }
 
 sub save_as_new {
-    for (qw(id printed emailed queued)) { delete $form->{$_} }
+    for (qw(id printed emailed)) { delete $form->{$_} }
     $form->{approved} = 0;
     &post;
 }

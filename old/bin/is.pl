@@ -406,7 +406,7 @@ sub form_header {
 |;
 
     $form->hide_form(
-        qw(form_id id type printed emailed queued title vc terms discount
+        qw(form_id id type printed emailed title vc terms discount
            creditlimit creditremaining tradediscount business closedto locked
            shipped oldtransdate recurring reverse batch_id subtype tax_id
            meta_number separate_duties lock_description nextsub
