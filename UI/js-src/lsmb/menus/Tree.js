@@ -4,6 +4,7 @@
 define([
     "dojo/_base/declare",
     "dojo/on",
+    "dojo/hash",
     "dojo/_base/lang",
     "dojo/_base/event",
     "dojo/mouse",
@@ -12,11 +13,11 @@ define([
     "dojo/store/Memory",
     "dijit/Tree",
     "dijit/tree/ObjectStoreModel",
-    "dijit/registry",
     "dojo/topic"
 ], function (
     declare,
     on,
+    hash,
     lang,
     event,
     mouse,
@@ -25,7 +26,6 @@ define([
     Memory,
     Tree,
     ObjectStoreModel,
-    registry,
     topic
 ) {
     // set up the store to get the tree data, plus define the method
@@ -148,8 +148,7 @@ define([
                 // function).
                 url += "#" + Date.now();
 
-                var mainDiv = registry.byId("maindiv");
-                mainDiv.load_link(url);
+                hash(url);
             }
         },
         __onClick: function (e) {

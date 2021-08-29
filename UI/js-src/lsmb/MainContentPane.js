@@ -9,6 +9,7 @@ define([
     "dijit/registry",
     "dojo/dom-style",
     "dojo/on",
+    "dojo/hash",
     "dojo/promise/Promise",
     "dojo/Deferred",
     "dojo/promise/all",
@@ -24,6 +25,7 @@ define([
     registry,
     domStyle,
     on,
+    hash,
     Promise,
     Deferred,
     all,
@@ -57,7 +59,7 @@ define([
             on(dnode, "click", function (e) {
                 if (!e.ctrlKey && !e.shiftKey && mouse.isLeft(e)) {
                     event.stop(e);
-                    self.load_link(href);
+                    hash(href + "#" + Date.now());
                     self.fade_main_div();
                 }
             });
@@ -156,7 +158,10 @@ define([
                     }
 
                     self.hide_main_div();
-                    return self.set_main_div(request.response);
+
+                    let p = new Deferred().resolve(request);
+                    self.set_main_div(request.response);
+                    return p;
                 },
                 function (request) {
                     if (domReject(request)) {
@@ -218,7 +223,7 @@ define([
                     query("a", self.domNode).forEach(function (node) {
                         self.interceptClick(node);
                     });
-                    self.show_main_div();
+                    return self.show_main_div();
                 });
             }
 

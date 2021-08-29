@@ -1,4 +1,5 @@
 /** @format */
+/* eslint no-console:0 */
 
 define([
     "dojo/_base/declare",
@@ -32,8 +33,20 @@ define([
             for (var i = 0; i < 25; i++) {
                 h += chars.charAt(Math.floor(Math.random() * chars.length));
             }
-            if (options.data && options.data instanceof FormData) {
-                registry.byId("maindiv")._load_form(url, options);
+            if (options && options.data && options.data instanceof FormData) {
+                registry
+                    .byId("maindiv")
+                    ._load_form(url, options)
+                    .then(function (request) {
+                        let l = request.getResponseHeader("Location");
+                        if (l) {
+                            console.log("request Location: " + l);
+                        } else {
+                            console.log(
+                                "request not redirected for back button"
+                            );
+                        }
+                    });
             } else {
                 var q = { url: url, options: options };
                 this.history[h] = q;
@@ -61,11 +74,23 @@ define([
                     }
                 }
                 topic.subscribe("/dojo/hashchange", function (h) {
+                    let hist;
                     if (h in self.history) {
-                        var hist = self.history[h];
-                        mainDiv._load_form(hist.url, hist.options);
+                        hist = self.history[h];
+                    } else if (h in sessionStorage) {
+                        hist = JSON.parse(sessionStorage[h]);
+                    }
+                    if (hist) {
+                        mainDiv
+                            ._load_form(hist.url, hist.options)
+                            .then(function (request) {
+                                let l = request.getResponseHeader("Location");
+                                if (l) {
+                                    console.log("request Location: " + l);
+                                }
+                            });
                     } else if (!h.startsWith("__") && h !== "") {
-                        mainDiv.load_link(h);
+                        mainDiv._load_form(h, {});
                     }
                 });
             }
