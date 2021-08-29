@@ -321,7 +321,7 @@ sub add_transaction {
 sub post_as_new {
 
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(id printed emailed queued workflow_id)) { delete $form->{$_} }
+    for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
     &post;
 
 }
@@ -329,7 +329,7 @@ sub post_as_new {
 sub print_and_post_as_new {
 
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(id printed emailed queued workflow_id)) { delete $form->{$_} }
+    for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
     &print_and_post;
 
 }

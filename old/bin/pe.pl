@@ -1300,8 +1300,7 @@ sub generate_sales_orders {
 
         if ( OE->save( \%myconfig, \%$order ) ) {
             if ( !PE->allocate_projectitems( \%myconfig, \%$order ) ) {
-                OE->delete( \%myconfig, \%$order,
-                            LedgerSMB::Sysconfig::spool() );
+                OE->delete( \%myconfig, \%$order );
             }
         }
         else {

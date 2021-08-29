@@ -101,25 +101,6 @@ sub print {
         }
     }
 
-    if ( $filename = $queued{ $form->{formname} } ) {
-        $form->{queued} =~ s/$form->{formname} $filename//;
-        unlink( LedgerSMB::Sysconfig::spool() . "/$filename");
-        $filename =~ s/\..*$//g;
-    }
-    else {
-        $filename = time;
-        $filename .= $$;
-    }
-
-    $filename .= ( $form->{format} eq 'postscript' ) ? '.ps' : '.pdf';
-
-    if ( $form->{media} ne 'screen' ) {
-        $form->{OUT} = LedgerSMB::Sysconfig::spool() . "/$filename";
-        $form{printmode} = '>';
-    }
-
-    $form->{queued} .= " $form->{formname} $filename";
-    $form->{queued} =~ s/^ //;
     $printform = Form->new;
     for ( keys %$form ) {
         $printform->{$_} = $form->{$_};
@@ -131,6 +112,7 @@ sub print {
         &post;
     }
     else {
+        # the only supported formname for transactions is 'transaction'...
         &{"print_$form->{formname}"}( $old_form, 1 );
     }
 
@@ -243,31 +225,6 @@ sub print_transaction {
     }
     if ( $form->{format} =~ /(postscript|pdf)/ ) {
         $form->{IN} =~ s/html$/tex/;
-    }
-    if ( $form->{media} eq 'queue' ) {
-        %queued = split / /, $form->{queued};
-
-        if ( $filename = $queued{ $form->{formname} } ) {
-            $form->{queued} =~ s/$form->{formname} $filename//;
-            unlink LedgerSMB::Sysconfig::spool() . "/$filename";
-            $filename =~ s/\..*$//g;
-        }
-        else {
-            $filename = time;
-            $filename .= $$;
-        }
-
-        $filename .= ( $form->{format} eq 'postscript' ) ? '.ps' : '.pdf';
-        $form->{OUT}       = LedgerSMB::Sysconfig::spool() . "/$filename";
-        $form->{printmode} = '>';
-
-        $form->{queued} .= " $form->{formname} $filename";
-        $form->{queued} =~ s/^ //;
-
-        # save status
-        $form->update_status;
-
-        $old_form->{queued} = $form->{queued};
     }
 
     if ( lc($form->{media}) eq 'zip'){

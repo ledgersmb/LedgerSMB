@@ -129,6 +129,7 @@ sub print_options {
                 text => $locale->text('Screen'),
                 value => 'screen'}
                 ]};
+
         if (   LedgerSMB::Sysconfig::printer()->%*
             && LedgerSMB::Sysconfig::latex() )
         {
