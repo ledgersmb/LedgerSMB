@@ -142,7 +142,11 @@ define([
                 }
                 req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
                 req.addEventListener("load", function () {
-                    dfd.resolve(req);
+                    if (req.status >= 400) {
+                        dfd.reject(req);
+                    } else {
+                        dfd.resolve(req);
+                    }
                 });
                 req.addEventListener("error", function () {
                     dfd.reject(req);
@@ -154,6 +158,7 @@ define([
             return dfd.then(
                 function (request) {
                     if (domReject(request)) {
+                        self.report_error("Server returned insecure response");
                         return self.show_main_div();
                     }
 
@@ -163,13 +168,24 @@ define([
                     self.set_main_div(request.response);
                     return p;
                 },
-                function (request) {
-                    if (domReject(request)) {
-                        return self.show_main_div();
+                function (errOrReq) {
+                    let errstr;
+                    if (errOrReq instanceof Error) {
+                        errstr = "JavaScript error: " + errOrReq.toString();
+                    } else if (errOrReq instanceof XMLHttpRequest) {
+                        if (errOrReq.status === 0) {
+                            errstr = "Could not connect to server";
+                        } else if (domReject(errOrReq)) {
+                            errstr = "Server returned insecure response";
+                        } else {
+                            errstr = errOrReq.response;
+                        }
+                    } else {
+                        errstr = "Unknown (JavaScript) error";
                     }
 
                     self.show_main_div();
-                    return self.report_request_error({ err: request });
+                    return self.report_error(errstr);
                 }
             );
         },
