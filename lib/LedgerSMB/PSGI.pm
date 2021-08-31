@@ -167,10 +167,13 @@ sub psgi_app {
         }
     };
 
-    Plack::Util::header_set($res->[1],
-                            'Content-Security-Policy',
-                            q{frame-ancestors 'self'});
-    return $res;
+    return Plack::Util::response_cb($res,
+                                    sub {
+                                        my $res = shift;
+                                        Plack::Util::header_set($res->[1],
+                                                                'Content-Security-Policy',
+                                                                q{frame-ancestors 'self'});
+                                    });
 }
 
 sub _run_old {
