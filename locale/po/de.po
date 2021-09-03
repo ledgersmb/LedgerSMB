@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.35-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-08-25 20:49+0000\n"
+"POT-Creation-Date: 2021-09-03 18:08+0000\n"
 "Last-Translator: E, 2021\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -3326,7 +3326,7 @@ msgstr "Fehler bei erstellen von Posten.  Bitte versuchen Sie es erneut."
 msgid "Error from Function:"
 msgstr "Fehler aus Funktion:"
 
-#: old/lib/LedgerSMB/DBObject/Account.pm:140
+#: old/lib/LedgerSMB/DBObject/Account.pm:141
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 "Fehler: Saldenzusammenfassung konnte nicht ins Aufklappmenü eingefügt werden"
@@ -4070,7 +4070,7 @@ msgstr ""
 msgid "Internal Database Error"
 msgstr "Interner Datenbankenfehler"
 
-#: old/lib/LedgerSMB/DBObject/Account.pm:144
+#: old/lib/LedgerSMB/DBObject/Account.pm:145
 msgid "Internal Database Error."
 msgstr "interner Datenbanken Fehler."
 

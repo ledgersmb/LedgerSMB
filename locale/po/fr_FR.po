@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.35-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-08-25 20:49+0000\n"
+"POT-Creation-Date: 2021-09-03 18:08+0000\n"
 "Language-Team: French (France) (https://www.transifex.com/ledgersmb/"
 "teams/58325/fr_FR/)\n"
 "Language: fr_FR\n"
@@ -3304,7 +3304,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Account.pm:140
+#: old/lib/LedgerSMB/DBObject/Account.pm:141
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 
@@ -4044,7 +4044,7 @@ msgstr ""
 msgid "Internal Database Error"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Account.pm:144
+#: old/lib/LedgerSMB/DBObject/Account.pm:145
 msgid "Internal Database Error."
 msgstr ""
 
