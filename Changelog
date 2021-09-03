@@ -360,6 +360,13 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.35
+* Fix for chart of accounts headings import from CSV (#5987)
+* Correctly set the payment account in invoices and transactions (#5801)
+* Fix regression in CVE-2021-3693 failing to show errors as popups (#5921)
+* Fix regression in CVE-2021-3693 with broken downloads of backups (#5931)
+
+
 Changelog for 1.7.34
 * Follow-up to fix for CVE-2021-3693 to fix display of search results
 * Follow-up for the fix to CVE-2021-3693; fix bulk-posting payments
