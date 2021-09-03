@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-08-25 21:11+0000\n"
+"POT-Creation-Date: 2021-09-03 18:17+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2020\n"
 "Language-Team: Portuguese (https://www.transifex.com/ledgersmb/teams/58325/"
 "pt/)\n"
@@ -3327,7 +3327,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Account.pm:140
+#: old/lib/LedgerSMB/DBObject/Account.pm:141
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 
