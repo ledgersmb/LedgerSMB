@@ -3,6 +3,13 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.20
+* Fix for chart of accounts headings import from CSV (#5987)
+* Correctly set the payment account in invoices and transactions (#5801)
+* Fix regression in CVE-2021-3693 failing to show errors as popups (#5921)
+* Fix regression in CVE-2021-3693 with broken downloads of backups (#5931)
+
+
 Changelog for 1.8.19
 * Follow-up for the fix to CVE-2021-3693; fix bulk-posting payments
 * Follow-up for the fix to CVE-2021-3693; fix incorrectly backported change
