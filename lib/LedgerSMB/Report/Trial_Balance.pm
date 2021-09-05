@@ -71,15 +71,6 @@ Only used for saved criteria sets, is a human-readable description.
 
 has description => (is => 'rw', isa => 'Str', required => 0);
 
-=item ignore_yearend
-
-This value holds information related to yearend handling.  It can be either
-'all', 'none', or 'last' each of which describes which yearends to ignore.
-
-=cut
-
-has ignore_yearend => (is => 'rw', isa => 'Str');
-
 =item balance_sign
 
 Either 1, 0, or -1.  1 for credit, -1 for debit, 0 for normal balances (i.e

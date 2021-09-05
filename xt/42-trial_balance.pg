@@ -17,7 +17,7 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('trial_balance__generate',ARRAY['date','date','integer','integer[]','text','integer[]','integer','boolean','boolean']);
+    SELECT has_function('trial_balance__generate',ARRAY['date','date','integer','integer[]','integer[]','integer','boolean','boolean']);
     SELECT has_function('trial_balance__heading_accounts',ARRAY['integer[]']);
     SELECT has_function('trial_balance__list_headings','{}'::text[]);
 

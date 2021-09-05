@@ -64,31 +64,6 @@ TRIAL_BALANCE_TYPES = [
           <tr>
             <td>
               <table>
-                <tr>
-                  <th align="right">[% text('Ignore Year-ends'); %]</th>
-                  <td>[% PROCESS select element_data = {
-                             options = [
-                                 {
-                                     label="All",
-                                     id="all",
-                                 },
-                                 {
-                                     label="Last Only",
-                                     id="last"
-                                 },
-                                 {
-                                     label="None",
-                                     id="none",
-                                 }
-                             ],
-                             default_values = [report.ignore_yearend],
-                             name = 'ignore_yearend',
-                             id = 'ignore_yearend',
-                             text_attr = 'label',
-                             value_attr = 'id',
-                             } %]
-                    </td>
-                </tr>
                 <tr><th>[% text('Balances as') %]</th>
                     <td>[% PROCESS select element_data = {
                                name = 'balance_sign'
