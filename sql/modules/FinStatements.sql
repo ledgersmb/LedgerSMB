@@ -150,8 +150,9 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-DROP FUNCTION IF EXISTS  pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
-CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text)
+DROP FUNCTION IF EXISTS pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
+DROP FUNCTION IF EXISTS pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text);
+CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_business_units integer[], in_language text)
   RETURNS SETOF financial_statement_line AS
 $BODY$
 WITH acc_meta AS (
@@ -228,18 +229,14 @@ acc_balance AS (
     WHERE ac.approved
           AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
           AND (in_to_date IS NULL OR ac.transdate <= in_to_date)
-          AND (in_business_units = '{}'
-              OR in_business_units is null or in_tree(in_business_units, bu_ids))
-           AND (in_ignore_yearend = 'none'
-               OR (in_ignore_yearend = 'all'
-                   AND NOT EXISTS (SELECT * FROM yearend
-                                    WHERE NOT reversed
-                                          AND trans_id = gl.id))
-               OR (in_ignore_yearend = 'last'
-                   AND NOT EXISTS (SELECT 1 FROM yearend
-                                    WHERE NOT reversed
-                                   HAVING max(trans_id) = gl.id))
-              )
+          AND (in_business_units IS NULL OR in_business_units = '{}'
+               OR in_tree(in_business_units, bu_ids))
+          AND (in_to_date is null
+               OR (ac.transdate <= in_to_date
+                   AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
+                                                       FROM yearend
+                                                      WHERE transdate = in_to_date
+                                                        AND NOT reversed)))
    GROUP BY ac.chart_id
      HAVING sum(ac.amount_bc) <> 0.00
  ),
@@ -266,7 +263,8 @@ $BODY$
 
 
 DROP FUNCTION IF EXISTS pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
-CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text)
+DROP FUNCTION IF EXISTS pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text);
+CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_business_units integer[], in_language text)
   RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
@@ -349,17 +347,12 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
     WHERE ac.approved
           AND (in_business_units = '{}'
               OR in_business_units is null or in_tree(in_business_units, bu_ids))
-          AND (in_ignore_yearend = 'none'
-               OR (in_ignore_yearend = 'all'
-                   AND NOT EXISTS (SELECT 1 FROM yearend
-                                    WHERE NOT reversed
-                                          AND trans_id = gl.id
-                   ))
-               OR (in_ignore_yearend = 'last'
-                   AND NOT EXISTS (SELECT 1 FROM yearend
-                                    WHERE NOT reversed
-                                   HAVING max(trans_id) = gl.id))
-              )
+          AND (in_to_date is null
+               OR (ac.transdate <= in_to_date
+                   AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
+                                                       FROM yearend
+                                                      WHERE transdate = in_to_date
+                                                        AND NOT reversed)))
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc * ca.portion) <> 0.00
  ),
