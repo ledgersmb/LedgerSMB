@@ -47,7 +47,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($5, preference__get('language'))) at
+                        coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -72,7 +72,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($5, preference__get('language'))) at
+                       coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -89,7 +89,7 @@ hdr_meta AS (
 acc_balance AS (
    WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
-       WHERE id = any($4)
+       WHERE id = any(in_business_units)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
@@ -104,12 +104,12 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
-    WHERE i.parts_id = $3
-          AND (ac.transdate >= $1 OR $1 IS NULL)
-          AND (ac.transdate <= $2 OR $2 IS NULL)
+    WHERE i.parts_id = in_parts_id
+          AND (ac.transdate >= in_from_date OR in_from_date IS NULL)
+          AND (ac.transdate <= in_to_date OR in_to_date IS NULL)
           AND ar.approved
           AND l.description = 'IC_expense'
-          AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
+          AND (in_business_units is null or in_business_units = '{}' OR in_tree(in_business_units, bu_ids))
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc) <> 0.00
     UNION
@@ -122,11 +122,11 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
-    WHERE i.parts_id = $3
-          AND (ac.transdate >= $1 OR $1 IS NULL)
-          AND (ac.transdate <= $2 OR $2 IS NULL)
+    WHERE i.parts_id = in_parts_id
+          AND (ac.transdate >= in_from_date OR in_from_date IS NULL)
+          AND (ac.transdate <= in_to_date OR in_to_date IS NULL)
           AND ar.approved
-          AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
+          AND (in_business_units is null or in_business_units = '{}' OR in_tree(in_business_units, bu_ids))
  GROUP BY ac.chart_id
    HAVING sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))) <> 0.00
  ),
@@ -169,7 +169,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($5, preference__get('language'))) at
+                        coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -194,7 +194,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($5, preference__get('language'))) at
+                       coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -211,7 +211,7 @@ hdr_meta AS (
 acc_balance AS (
    WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
-       WHERE id = any($4)
+       WHERE id = any(in_business_units)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
@@ -226,16 +226,16 @@ acc_balance AS (
                  GROUP BY buac.entry_id) bu
           ON (ac.entry_id = bu.entry_id)
     WHERE ac.approved
-          AND ($1 IS NULL OR ac.transdate >= $1)
-          AND ($2 IS NULL OR ac.transdate <= $2)
-          AND ($4 = '{}'
-              OR $4 is null or in_tree($4, bu_ids))
-           AND ($3 = 'none'
-               OR ($3 = 'all'
+          AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
+          AND (in_to_date IS NULL OR ac.transdate <= in_to_date)
+          AND (in_business_units = '{}'
+              OR in_business_units is null or in_tree(in_business_units, bu_ids))
+           AND (in_ignore_yearend = 'none'
+               OR (in_ignore_yearend = 'all'
                    AND NOT EXISTS (SELECT * FROM yearend
                                     WHERE NOT reversed
                                           AND trans_id = gl.id))
-               OR ($3 = 'last'
+               OR (in_ignore_yearend = 'last'
                    AND NOT EXISTS (SELECT 1 FROM yearend
                                     WHERE NOT reversed
                                    HAVING max(trans_id) = gl.id))
@@ -284,7 +284,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($5, preference__get('language'))) at
+                        coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -309,7 +309,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($5, preference__get('language'))) at
+                       coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -326,7 +326,7 @@ hdr_meta AS (
 acc_balance AS (
 WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
-       WHERE id = any($4)
+       WHERE id = any(in_business_units)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
@@ -337,8 +337,8 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
      JOIN (SELECT id, sum(portion) as portion
              FROM cash_impact ca
-            WHERE ($1 IS NULL OR ca.transdate >= $1)
-                  AND ($2 IS NULL OR ca.transdate <= $2)
+            WHERE (in_from_date IS NULL OR ca.transdate >= in_from_date)
+                  AND (in_to_date IS NULL OR ca.transdate <= in_to_date)
            GROUP BY id
           ) ca ON gl.id = ca.id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
@@ -347,15 +347,15 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
          GROUP BY entry_id) bu
           ON (ac.entry_id = bu.entry_id)
     WHERE ac.approved
-          AND ($4 = '{}'
-              OR $4 is null or in_tree($4, bu_ids))
-          AND ($3 = 'none'
-               OR ($3 = 'all'
+          AND (in_business_units = '{}'
+              OR in_business_units is null or in_tree(in_business_units, bu_ids))
+          AND (in_ignore_yearend = 'none'
+               OR (in_ignore_yearend = 'all'
                    AND NOT EXISTS (SELECT 1 FROM yearend
                                     WHERE NOT reversed
                                           AND trans_id = gl.id
                    ))
-               OR ($3 = 'last'
+               OR (in_ignore_yearend = 'last'
                    AND NOT EXISTS (SELECT 1 FROM yearend
                                     WHERE NOT reversed
                                    HAVING max(trans_id) = gl.id))
@@ -402,7 +402,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($2, preference__get('language'))) at
+                        coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -427,7 +427,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($2, preference__get('language'))) at
+                       coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -444,7 +444,7 @@ hdr_meta AS (
 acc_balance AS (
 SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac
- WHERE ac.approved AND ac.trans_id = $1
+ WHERE ac.approved AND ac.trans_id = in_id
  GROUP BY ac.chart_id
  ),
 hdr_balance AS (
@@ -486,7 +486,7 @@ WITH acc_meta AS (
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
-                        coalesce($4, preference__get('language'))) at
+                        coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
@@ -511,7 +511,7 @@ hdr_meta AS (
     LEFT JOIN (SELECT trans_id, description
                  FROM account_translation
                 WHERE language_code =
-                       coalesce($4, preference__get('language'))) at
+                       coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
@@ -527,16 +527,16 @@ hdr_meta AS (
 ),
 acc_balance AS (
 WITH gl (id) AS
- ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = $1
+ ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = in_id
 UNION ALL
-   SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
+   SELECT id FROM ar WHERE approved is true AND entity_credit_account = in_id
 )
 SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac
   JOIN gl ON ac.trans_id = gl.id
  WHERE ac.approved is true
-          AND ($2 IS NULL OR ac.transdate >= $2)
-          AND ($3 IS NULL OR ac.transdate <= $3)
+          AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
+          AND (in_to_date IS NULL OR ac.transdate <= in_to_date)
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc) <> 0.00
  ),
