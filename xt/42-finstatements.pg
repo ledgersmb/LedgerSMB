@@ -31,8 +31,8 @@ BEGIN;
 
     SELECT has_function('report__balance_sheet',ARRAY['date','text', 'text']);
     SELECT has_function('pnl__customer',ARRAY['integer','date','date','text']);
-    SELECT has_function('pnl__income_statement_accrual',ARRAY['date','date','text','integer[]','text']);
-    SELECT has_function('pnl__income_statement_cash',ARRAY['date','date','text','integer[]','text']);
+    SELECT has_function('pnl__income_statement_accrual',ARRAY['date','date','integer[]','text']);
+    SELECT has_function('pnl__income_statement_cash',ARRAY['date','date','integer[]','text']);
     SELECT has_function('pnl__invoice',ARRAY['integer','text']);
     SELECT has_function('pnl__product',ARRAY['date','date','integer','integer[]','text']);
 
@@ -275,45 +275,45 @@ BEGIN;
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*) = 1
-                      FROM pnl__income_statement_accrual(date1(), date2() - 1, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_accrual(date1(), date2() - 1, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 shows up in accrual income statement');
     DEALLOCATE test;
 
     PREPARE test AS SELECT amount = -4040
-                      FROM pnl__income_statement_accrual(date1(), date2() - 1, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_accrual(date1(), date2() - 1, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 accrual total -4040');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*) = 0
-                      FROM pnl__income_statement_accrual(date2(), date2() + 365, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_accrual(date2(), date2() + 365, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 does not show up in future accrual pnl');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*) = 1
-                      FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 shows up in cash income statement');
     DEALLOCATE test;
 
     PREPARE test AS SELECT amount = -3030
-                      FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 cash total -3030');
     DEALLOCATE test;
 
-    SELECT * FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[], null);
+    SELECT * FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[], null);
 
     PREPARE test AS SELECT count(*) = 1
-                      FROM pnl__income_statement_cash(date2() - 5, date2() + 20, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_cash(date2() - 5, date2() + 20, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 shows up in future cash pnl');
     DEALLOCATE test;
 
     PREPARE test AS SELECT sum(amount) = -505
-                      FROM pnl__income_statement_cash(date2() - 5, date2() + 20, 'none', ARRAY[]::int[], null)
+                      FROM pnl__income_statement_cash(date2() - 5, date2() + 20, ARRAY[]::int[], null)
                      WHERE account_id = -1001;
     SELECT results_eq('test',ARRAY[true],'Account -1001 future cash total -505');
     DEALLOCATE test;
