@@ -146,36 +146,6 @@
         <div class="input_row" id="date_period_id">
           [% PROCESS date_period_div; %]
         </div>
-        <div class="input_row">
-          <div class="label">
-            [% text('Ignore year-closing') %]
-          </div>
-
-          <div class="input_group">
-            [%
-               PROCESS select element_data = {
-               options = [
-               {
-               label="All",
-               id="all",
-               },
-               {
-               label="Last",
-               id="last"
-               },
-               {
-               label="None",
-               id="none",
-               }
-               ],
-               default_values = [report.ignore_yearend],
-               name = 'ignore_yearend',
-               text_attr = 'label',
-               value_attr = 'id',
-               }
-               %]
-          </div>
-        </div>
       </fieldset>
 
 
