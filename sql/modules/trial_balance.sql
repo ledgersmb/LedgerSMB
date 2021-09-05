@@ -31,9 +31,14 @@ DROP FUNCTION IF EXISTS trial_balance__generate
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
  in_all_accounts boolean);
 
-CREATE OR REPLACE FUNCTION trial_balance__generate
+DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_all_accounts boolean, in_approved boolean);
+
+CREATE OR REPLACE FUNCTION trial_balance__generate
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
+ in_business_units int[], in_balance_sign int,
  in_all_accounts boolean, in_approved boolean)
 returns setof tb_row AS
 $$
@@ -54,22 +59,13 @@ BEGIN
        RAISE EXCEPTION 'Invalid Balance Type';
     END IF;
 
-    IF in_from_date IS NULL AND in_ignore_yearend = 'none' THEN
-       SELECT max(end_date) INTO t_roll_forward
-         FROM account_checkpoint;
-    ELSIF in_from_date IS NULL AND in_ignore_yearend = 'last' THEN
+     IF in_from_date IS NULL THEN
        SELECT max(end_date) INTO t_roll_forward
          FROM account_checkpoint
         WHERE end_date < (select max(gl.transdate)
                             FROM gl JOIN yearend y ON y.trans_id = gl.id
                            WHERE y.transdate < coalesce(in_to_date, gl.transdate)
                          );
-    ELSIF in_from_date IS NULL THEN
-       SELECT min(transdate) - 1 INTO t_roll_forward
-         FROM (select min(transdate) as transdate from transactions
-                union all
-               select min(transdate) from acc_trans) gl;
-
     ELSE
       SELECT max(end_date) INTO t_roll_forward
          FROM account_checkpoint
@@ -84,14 +80,8 @@ BEGIN
          FROM acc_trans;
     END IF;
 
-    IF in_ignore_yearend = 'last' THEN
-       SELECT ARRAY[trans_id] INTO ignore_trans FROM yearend
+    SELECT ARRAY[trans_id] INTO ignore_trans FROM yearend
      ORDER BY transdate DESC LIMIT 1;
-    ELSIF in_ignore_yearend = 'all' THEN
-       SELECT array_agg(trans_id) INTO ignore_trans FROM yearend;
-    ELSE
-       ignore_trans := '{}';
-    END IF;
 
     IF in_to_date IS NULL THEN
         SELECT max(transdate) INTO t_end_date FROM acc_trans;
@@ -185,7 +175,7 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_business_units int[], in_balance_sign int,
  in_all_accounts boolean, in_approved boolean) IS
 $$Returns a row for each account which has transactions or a starting or
 ending balance over the indicated period, except when in_all_accounts
