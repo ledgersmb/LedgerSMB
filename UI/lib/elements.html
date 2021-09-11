@@ -204,7 +204,7 @@
      # -- no attribute key, so it is handled here by looking for the option value in the default_values list.
      option_selected = "";
      FOREACH test_val IN element_data.default_values;
-        IF test_val and option_data.$value_attr == test_val;
+        IF test_val.defined and option_data.$value_attr == test_val;
             option_selected = 'selected';
         END;
      END;
