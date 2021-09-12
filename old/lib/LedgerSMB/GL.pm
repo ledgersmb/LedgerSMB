@@ -261,23 +261,8 @@ sub transaction {
 
     if ( $form->{id} ) {
 
-        $query = "SELECT setting_key, value
-               FROM defaults
-               WHERE setting_key IN
-                  ('closedto',
-                  'revtrans',
-                  'separate_duties')";
-
-        $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror($query);
-
-        my $results = $sth->fetchall_hashref('setting_key');
-        $form->{closedto} = $results->{'closedto'}->{'value'};
-        $form->{revtrans} = $results->{'revtrans'}->{'value'};
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
-        #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
-        $sth->finish;
 
         $query = qq|SELECT g.*
                  FROM gl g
@@ -319,29 +304,9 @@ sub transaction {
 
     }
     else {
-
-        $query = "SELECT current_date AS transdate, setting_key, value
-               FROM defaults
-               WHERE setting_key IN
-                  ('closedto',
-                  'separate_duties',
-                  'revtrans')";
-
-        $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror($query);
-
-        my $results = $sth->fetchall_hashref('setting_key');
-        $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
-        $form->{closedto}  = $results->{'closedto'}->{'value'};
-        $form->{revtrans}  = $results->{'revtrans'}->{'value'};
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
-        if (!$form->{transdate}){
-            $form->{transdate} = $results->{'revtrans'}->{'transdate'};
-        }
     }
-
-    $sth->finish;
 
     # get chart of accounts
     $query = qq|SELECT id,accno,description

@@ -1348,11 +1348,8 @@ COPY defaults FROM stdin WITH DELIMITER '|';
 timeout|90 minutes
 sinumber|1
 sonumber|1
-yearend|1
 businessnumber|1
 version|1.10.0-dev
-closedto|\N
-revtrans|1
 ponumber|1
 sqnumber|1
 rfqnumber|1

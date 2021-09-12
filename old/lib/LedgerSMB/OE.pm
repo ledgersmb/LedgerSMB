@@ -562,11 +562,7 @@ sub retrieve {
     @{$form->{currencies}} =
         (LedgerSMB::Setting->new(%$form))->get_currencies;
     $form->{defaultcurrency} = $form->{currencies}->[0];
-
-    $query = qq|
-        SELECT value FROM defaults
-         WHERE setting_key = 'lock_description'|;
-    ( $form->{lock_description}) = $dbh->selectrow_array($query);
+    $form->{lock_description} = $form->get_setting( 'lock_description' );
 
 
     if ( $form->{id} ) {
@@ -1334,13 +1330,7 @@ sub order_details {
       $form->format_amount( $myconfig, $form->{ordtotal}, 2 );
 
     $form->format_string(qw(text_amount text_decimal));
-
-    $query = qq|
-        SELECT value FROM defaults
-         WHERE setting_key = 'weightunit'|;
-    ( $form->{weightunit} ) = $dbh->selectrow_array($query);
-
-
+    $form->{weightunit} = $form->get_setting( 'weightunit' );
 }
 
 sub assembly_details {
