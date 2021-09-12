@@ -265,14 +265,12 @@ sub transaction {
                FROM defaults
                WHERE setting_key IN
                   (
-                  'revtrans',
                   'separate_duties')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
         my $results = $sth->fetchall_hashref('setting_key');
-        $form->{revtrans} = $results->{'revtrans'}->{'value'};
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
         #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
@@ -322,20 +320,16 @@ sub transaction {
         $query = "SELECT current_date AS transdate, setting_key, value
                FROM defaults
                WHERE setting_key IN
-                  ('separate_duties',
-                  'revtrans')";
+                  ('separate_duties'
+                  )";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
-        $form->{revtrans}  = $results->{'revtrans'}->{'value'};
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
-        if (!$form->{transdate}){
-            $form->{transdate} = $results->{'revtrans'}->{'transdate'};
-        }
     }
 
     $sth->finish;

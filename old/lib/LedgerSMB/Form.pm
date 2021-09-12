@@ -1885,7 +1885,7 @@ describing acc_trans table entries corresponding to the transaction $form->{id}.
 The elements in the acc_trans entry hashes are accno, description, source,
 amount, memo, transdate, cleared, project_id, projectnumber, and exchangerate.
 
-The separate_duties, revtrans, and currencies $form attributes are filled with values
+The separate_duties and currencies $form attributes are filled with values
 from the defaults table, while $form->{current_date} is populated with the
 current date.  If $form->{id} is not set, then $form->{transdate} also takes on
 the current date.
@@ -2136,7 +2136,7 @@ sub create_links {
         }
     }
 
-    for (qw(separate_duties curr revtrans lock_description)) {
+    for (qw(separate_duties curr lock_description)) {
         if ($_ eq 'current_date') {
             $query = qq| select $_|;
         }

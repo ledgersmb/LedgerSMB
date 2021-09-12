@@ -246,10 +246,7 @@ sub invoice_links {
     $form->{AP} = $form->{AP_1} unless $form->{id};
     $form->{AP} //= $form->{AP_links}->{AP}->[0]->{accno} unless $form->{id};
 
-    $form->{locked} =
-      ( $form->{revtrans} )
-      ? '1'
-      : ( $form->is_closed( $form->{transdate} ) );
+    $form->{locked} = '1';
 
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} && $myconfig{acs} =~ /AP--Vendor Invoice/;

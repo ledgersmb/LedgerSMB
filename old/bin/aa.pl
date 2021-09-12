@@ -344,10 +344,7 @@ sub create_links {
     $form->{rowcount}++ if ( $form->{id} || !$form->{rowcount} );
     $form->{rowcount} = 1 unless $form->{"$form->{ARAP}_amount_1"};
 
-    $form->{locked} =
-      ( $form->{revtrans} )
-      ? '1'
-      : ( $form->is_closed( $form->{transdate} ) );
+    $form->{locked} = '1';
 
     # readonly
     if ( !$form->{readonly} ) {

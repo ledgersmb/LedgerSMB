@@ -235,10 +235,7 @@ sub invoice_links {
 
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
-    $form->{locked} =
-      ( $form->{revtrans} )
-      ? '1'
-      : ( $form->is_closed( $form->{transdate} ) );
+    $form->{locked} = '1';
 
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} =~ /AR--Sales Invoice/;

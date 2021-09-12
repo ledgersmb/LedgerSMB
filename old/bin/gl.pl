@@ -422,10 +422,8 @@ sub edit {
 
     $form->all_business_units($form->{transdate}, undef, 'GL');
 
-    $form->{locked} =
-      ( $form->{revtrans} )
-      ? '1'
-      : ( $form->is_closed( $form->{transdate} ) );
+    $form->{locked} = '1';
+
     # readonly
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1
