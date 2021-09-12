@@ -44,13 +44,26 @@ my @company_settings = qw(templates businessnumber weightunit curr
 
 our $VERSION = 1.0;
 
-# Used in old/bin/*.pl
+# Used in LedgerSMB::PGNumber (for 'decimal_places')
 our $settings = {};
 
 sub initialize{
     my ($request) = @_;
-    my $s = LedgerSMB::Setting->new(dbh => $request->{dbh});
-    $settings = { map {$_ => $s->get($_) } @company_settings };
+
+    my $sth = $request->{dbh}->prepare(
+        q{SELECT s.*
+        FROM unnest(?::text[]) n(setting_key), setting_get(setting_key) s})
+        or die $request->{dbh}->errstr;
+    $sth->execute(\@company_settings)
+        or die $sth->errstr;
+
+    my $results = $sth->fetchall_arrayref({});
+    die $sth->errstr if $sth->err != 0;
+
+    $settings = {
+        map { $_->{setting_key} => $_->{value} }
+        @$results
+    };
     $settings->{curr} = [ split (/:/, $settings->{curr}) ];
     $settings->{default_currency} = $settings->{curr}->[0];
 
