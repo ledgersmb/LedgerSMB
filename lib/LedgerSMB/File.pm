@@ -25,7 +25,7 @@ use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 use File::Temp;
-use Log::Log4perl;
+use Log::Any;
 use MIME::Types;
 use PGObject::Type::ByteString;
 use LedgerSMB::Magic qw( FC_PART );
@@ -187,7 +187,7 @@ has _tempdir => (
 
 =cut
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::File');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::File');
 
 =head1 METHODS
 

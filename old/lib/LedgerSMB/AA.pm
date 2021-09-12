@@ -27,12 +27,12 @@ replacement is available.
 
 
 package AA;
-use Log::Log4perl;
+use Log::Any;
 use LedgerSMB::File;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
 
-my $logger = Log::Log4perl->get_logger("AA");
+my $logger = Log::Any->get_logger(category => "AA");
 
 =pod
 

@@ -22,7 +22,7 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::Template::UI;
 
 
-use Log::Log4perl;
+use Log::Any;
 
 # I don't really like the code in this module.  The callbacks are per form which
 # means there is no semantic difference between different buttons that can be
@@ -30,7 +30,7 @@ use Log::Log4perl;
 # both difficult to read and maintain.  In the future, this should be revisited
 # and rewritten.  It makes the module too closely tied to the HTML.  --CT
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::admin');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::admin');
 
 
 =item list_sessions

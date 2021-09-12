@@ -54,10 +54,10 @@ This module provides some administrative functions
 
 package AM;
 use LedgerSMB::Tax;
-use Log::Log4perl;
+use Log::Any;
 use LedgerSMB::Magic qw( DAYS_PER_WEEK );
 
-my $logger = Log::Log4perl->get_logger('AM');
+my $logger = Log::Any->get_logger(category => 'AM');
 
 =item AM->get_gifi($myconfig, $form);
 

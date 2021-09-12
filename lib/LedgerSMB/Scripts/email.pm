@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw(HTTP_SEE_OTHER);
-use Log::Log4perl;
+use Log::Any;
 use Workflow::Factory qw(FACTORY);
 
 

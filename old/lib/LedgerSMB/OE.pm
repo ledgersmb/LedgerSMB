@@ -46,10 +46,10 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Tax;
 
-use Log::Log4perl;
+use Log::Any;
 use Workflow::Factory qw(FACTORY);
 
-my $logger = Log::Log4perl->get_logger('OE');
+my $logger = Log::Any->get_logger(category => 'OE');
 
 =over
 

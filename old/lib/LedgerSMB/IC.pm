@@ -39,11 +39,11 @@ LedgerSMB::IC - Inventory Control backend
 
 package IC;
 
-use Log::Log4perl;
+use Log::Any;
 use LedgerSMB::File;
 use LedgerSMB::Setting;
 
-my $logger = Log::Log4perl->get_logger('IC');
+my $logger = Log::Any->get_logger(category => 'IC');
 
 =over
 

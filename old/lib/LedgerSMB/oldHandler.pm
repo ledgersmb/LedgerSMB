@@ -58,7 +58,7 @@ use LedgerSMB::Sysconfig;
 use Cookie::Baker;
 use Digest::MD5;
 use HTML::Escape;
-use Log::Log4perl;
+use Log::Any;
 use Feature::Compat::Try;
 
 our $logger;
@@ -97,7 +97,7 @@ sub handle {
         @{$session}{qw/ session_id company /};
 
     #make logger available to other old programs
-    $logger = Log::Log4perl->get_logger("lsmb.$script_module.$form->{action}");
+    $logger = Log::Any->get_logger(category => "lsmb.$script_module.$form->{action}");
 
     local $SIG{__WARN__} = sub {
         my $msg = shift;

@@ -194,7 +194,7 @@ use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
 use HTTP::Status qw( HTTP_OK ) ;
-use Log::Log4perl;
+use Log::Any;
 use PGObject;
 use Plack;
 use URI::Escape;
@@ -210,7 +210,7 @@ use LedgerSMB::Template::UI;
 
 our $VERSION = '1.10.0-dev';
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB');
 my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
 
 sub new {

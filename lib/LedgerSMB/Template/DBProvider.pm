@@ -19,7 +19,7 @@ LedgerSMB::Template::Provider - Implements template loading from database
 use strict;
 use warnings;
 
-use Log::Log4perl;
+use Log::Any;
 use PGObject::Type::DateTime;
 use Template::Provider;
 
@@ -29,7 +29,7 @@ use MooseX::NonMoose;
 extends 'Template::Provider';
 with 'LedgerSMB::PGObject';
 
-my $logger = Log::Log4perl->get_logger(__PACKAGE__);
+my $logger = Log::Any->get_logger(category => __PACKAGE__);
 
 
 =head1 DESCRIPTION

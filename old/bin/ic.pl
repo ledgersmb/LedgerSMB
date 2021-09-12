@@ -1947,7 +1947,7 @@ sub save {
     }
 
     if ($rc) {
-        my $logger = Log::Log4perl->get_logger("LedgerSMB");
+        my $logger = Log::Any->get_logger(category => "LedgerSMB");
         $logger->debug($parts_id);
         $form->{id} = $parts_id;
         edit();

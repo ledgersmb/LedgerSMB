@@ -2,7 +2,7 @@ package LedgerSMB::DBObject::TransTemplate;
 use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
-use Log::Log4perl;
+use Log::Any;
 
 use LedgerSMB::Magic qw(JRNL_GJ JRNL_AR JRNL_AP EC_CUSTOMER EC_VENDOR);
 
@@ -34,7 +34,7 @@ Saves the given input as a template transaction.
 
 sub save {
    my $self = shift @_;
-   my $logger = Log::Log4perl->get_logger("LedgerSMB");
+   my $logger = Log::Any->get_logger(category => "LedgerSMB");
 
    $self->{is_template} = '1';
    $self->{approved} = 0;

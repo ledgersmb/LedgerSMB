@@ -290,7 +290,7 @@ use LedgerSMB::Template::DBProvider;
 
 use File::Spec;
 use File::Temp;
-use Log::Log4perl;
+use Log::Any;
 use MIME::Base64;
 use Module::Runtime qw(use_module);
 use Template;
@@ -301,7 +301,7 @@ use Scalar::Util qw(blessed reftype);
 use parent qw( Exporter );
 our @EXPORT_OK = qw( preprocess );
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Template');
 
 sub new {
     my $class = shift;

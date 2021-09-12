@@ -61,10 +61,10 @@ use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use Log::Log4perl;
+use Log::Any;
 use Carp;
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::User');
 
 
 =item LedgerSMB::User->fetch_config($login);

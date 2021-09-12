@@ -25,10 +25,10 @@ use LedgerSMB::Exchangerate_Type;
 use LedgerSMB::Setting;
 use LedgerSMB::Template::UI;
 
-use Log::Log4perl;
+use Log::Any;
 use Text::CSV;
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::currency');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::currency');
 
 
 =item list_currencies

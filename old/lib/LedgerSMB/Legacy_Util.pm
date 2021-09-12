@@ -18,7 +18,7 @@ use warnings;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 
-use Log::Log4perl;
+use Log::Any;
 
 
 
@@ -64,7 +64,7 @@ print|screen|<printer name>
 
 =cut
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Template');
 our $csettings;
 
 sub output_template {

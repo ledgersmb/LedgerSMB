@@ -29,7 +29,7 @@ use warnings;
 use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
-use Log::Log4perl;
+use Log::Any;
 use POSIX 'SEEK_SET';
 use Symbol;
 use Feature::Compat::Try;
@@ -81,7 +81,7 @@ sub dispatch {
             $script_module =~ s/\.pl//;
             $lsmb_legacy::form = Form->new();
             $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
-            $lsmb_legacy::logger = Log::Log4perl->get_logger("lsmb.$script_module.$lsmb_legacy::form->{action}");
+            $lsmb_legacy::logger = Log::Any->get_logger(category => "lsmb.$script_module.$lsmb_legacy::form->{action}");
             %lsmb_legacy::myconfig = %$user;
             $lsmb_legacy::form->{_locale} =
                 $lsmb_legacy::locale =
