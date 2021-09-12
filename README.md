@@ -36,7 +36,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 ## Server
 
 * `Perl 5.24+`
-* `PostgreSQL 9.6+`
+* `PostgreSQL 10+`
 * Web server (e.g. `nginx`, `Apache`, `lighttpd`, `Varnish`)
 
 The web external server is only required for production installs;
@@ -102,7 +102,7 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 
 The instructions below are for getting started quickly; the [project's site](https://ledgersmb.org)
 provides [in-depth installation
-instructions](https://ledgersmb.org/content/installing-ledgersmb-18)
+instructions](https://ledgersmb.org/content/installing-ledgersmb-19)
 for **production** installs.
 
 ## System (library) dependencies
@@ -249,7 +249,7 @@ The system is installed and should be available for evaluation through
 * `http://localhost:5762/login.pl`    # Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/topic/preparing/preparing-ledgersmb-18-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-19-first-use).
 
 # Project information
 
