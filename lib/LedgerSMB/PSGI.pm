@@ -38,6 +38,7 @@ use LedgerSMB::Sysconfig;
 use CGI::Emulate::PSGI;
 use HTTP::Status qw( HTTP_FOUND );
 use List::Util qw{  none };
+use Log::Any;
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
 use Feature::Compat::Try;
@@ -198,7 +199,7 @@ appropriate PSGI handlers/apps.
 sub _hook_psgi_logger {
     my ($env, $settings, $router) = @_;
     my $logger_name = $settings->{logger} ? ".$settings->{logger}" : '';
-    my $logger = Log::Log4perl->get_logger("LedgerSMB$logger_name");
+    my $logger = Log::Any->get_logger(category => "LedgerSMB$logger_name");
 
     $env->{'psgix.logger'} = sub {
         my ($level, $msg) = @{$_[0]}{qw/ level message /};

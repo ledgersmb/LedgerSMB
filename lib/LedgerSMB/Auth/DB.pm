@@ -21,12 +21,12 @@ use warnings;
 use Carp;
 
 use MIME::Base64;
-use Log::Log4perl;
+use Log::Any;
 use LedgerSMB::Sysconfig;
 use Moose;
 use namespace::autoclean;
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Auth');
 
 
 has 'env' => (is => 'ro', required => 1, isa => 'HashRef');

@@ -22,7 +22,7 @@ maintainable.
 use strict;
 use warnings;
 
-use Log::Log4perl;
+use Log::Any;
 
 use LedgerSMB;
 use LedgerSMB::DBObject::Account;

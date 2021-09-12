@@ -187,8 +187,8 @@ Generates a balance sheet
 
 =cut
 
-use Log::Log4perl;
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::reports');
+use Log::Any;
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::reports');
 
 sub generate_balance_sheet {
     my ($request) = @_;

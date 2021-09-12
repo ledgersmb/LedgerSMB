@@ -31,11 +31,11 @@ use base qw(LedgerSMB::PGOld);
 
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
-use Log::Log4perl;
+use Log::Any;
 use strict;
 use warnings;
 
-my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
+my $logger = Log::Any->get_logger(category => "LedgerSMB::DBObject::Admin");
 
 =item list_sessions
 

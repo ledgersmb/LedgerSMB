@@ -42,14 +42,14 @@ use LedgerSMB::PriceMatrix;
 use LedgerSMB::Setting;
 use LedgerSMB::Num2text;
 use LedgerSMB::IIAA;
-use Log::Log4perl;
+use Log::Any;
 
 use LedgerSMB::Magic qw(BC_SALES_INVOICE);
 
 use Workflow::Context;
 use Workflow::Factory qw(FACTORY);
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::IS');
 
 
 sub add_cogs {

@@ -11,7 +11,7 @@ use strict;
 use warnings;
 
 use Getopt::Long qw(GetOptionsFromArray);
-use Log::Log4perl;
+use Log::Any;
 use Pod::Find qw(pod_where);
 use Pod::Usage qw(pod2usage);
 
@@ -27,7 +27,7 @@ has db => (is => 'rw');
 has logger => (is => 'ro', lazy => 1, builder => '_build_logger');
 
 sub _build_logger {
-    return Log::Log4perl->get_logger(ref $_[0]);
+    return Log::Any->get_logger(category => ref $_[0]);
 }
 
 

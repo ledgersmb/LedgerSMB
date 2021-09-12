@@ -13,7 +13,7 @@ use base qw(LedgerSMB::PGOld);
 
 use Locale::CLDR;
 
-use Log::Log4perl;
+use Log::Any;
 
 =head2 NOTES
 

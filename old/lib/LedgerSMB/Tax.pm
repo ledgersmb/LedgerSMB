@@ -19,13 +19,13 @@ calculate_taxes - calculates taxes
 =cut
 
 use LedgerSMB::PGNumber;
-use Log::Log4perl;
+use Log::Any;
 
 use strict;
 use warnings;
 
 
-my $logger = Log::Log4perl->get_logger('Tax');
+my $logger = Log::Any->get_logger(category => 'Tax');
 
 =head1 METHODS
 

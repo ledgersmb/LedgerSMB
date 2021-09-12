@@ -74,14 +74,14 @@ use LedgerSMB::Setting;
 
 use Carp;
 use List::Util qw(first);
-use Log::Log4perl;
+use Log::Any;
 use LWP::Simple;
 use Symbol;
 use Time::Local;
 
 
 
-our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
+our $logger = Log::Any->get_logger(category => 'LedgerSMB::Form');
 
 
 =item new Form([$argstr])

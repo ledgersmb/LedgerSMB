@@ -24,7 +24,7 @@ use warnings;
 use strict;
 use charnames ':full';
 
-use Log::Log4perl;
+use Log::Any;
 use Template::Latex;
 use Template::Plugin::Latex;
 use TeX::Encode::charmap;
@@ -34,7 +34,7 @@ use TeX::Encode;
 my $binmode = ':raw';
 my $extension = 'tex';
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Template::LaTeX');
 
 =item escape($string)
 

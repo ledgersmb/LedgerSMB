@@ -29,7 +29,7 @@ use Digest::MD5 qw(md5_hex);
 use Encode;
 use File::Spec;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
-use Log::Log4perl;
+use Log::Any;
 use MIME::Base64;
 use Scope::Guard;
 use Feature::Compat::Try;
@@ -56,7 +56,7 @@ use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
 
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
+my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
 if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
     $CURRENT_MINOR_VERSION = $1;
