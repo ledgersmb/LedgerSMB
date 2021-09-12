@@ -246,8 +246,6 @@ sub invoice_links {
     $form->{AP} = $form->{AP_1} unless $form->{id};
     $form->{AP} //= $form->{AP_links}->{AP}->[0]->{accno} unless $form->{id};
 
-    $form->{locked} = '1';
-
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} && $myconfig{acs} =~ /AP--Vendor Invoice/;
     }
@@ -383,7 +381,7 @@ sub form_header {
     $form->{vc} = "vendor";
     $form->{nextsub} = 'update';
     $form->hide_form(
-        qw(id title vc type terms creditlimit creditremaining locked
+        qw(id title vc type terms creditlimit creditremaining
            shipped oldtransdate recurring reverse batch_id subtype form_id
            separate_duties nextsub default_reportable address city is_return
            cash_accno)

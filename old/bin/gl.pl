@@ -207,7 +207,6 @@ sub display_form
         'batch_id' => $form->{batch_id},
         'id' => $form->{id},
         'transfer' => $form->{transfer},
-        'locked' => $form->{locked},
         'oldtransdate' => $form->{oldtransdate},
         'recurring' => $form->{recurring},
         'title' => $title,
@@ -421,8 +420,6 @@ sub edit {
     &create_links;
 
     $form->all_business_units($form->{transdate}, undef, 'GL');
-
-    $form->{locked} = '1';
 
     # readonly
     if ( !$form->{readonly} ) {

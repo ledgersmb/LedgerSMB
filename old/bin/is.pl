@@ -235,8 +235,6 @@ sub invoice_links {
 
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
-    $form->{locked} = '1';
-
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} =~ /AR--Sales Invoice/;
     }
@@ -402,7 +400,7 @@ sub form_header {
 
     $form->hide_form(
         qw(form_id id type printed emailed title vc terms discount
-           creditlimit creditremaining tradediscount business locked
+           creditlimit creditremaining tradediscount business
            shipped oldtransdate recurring reverse batch_id subtype tax_id
            meta_number separate_duties lock_description nextsub
            default_reportable address city is_return cash_accno)

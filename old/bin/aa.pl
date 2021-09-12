@@ -344,8 +344,6 @@ sub create_links {
     $form->{rowcount}++ if ( $form->{id} || !$form->{rowcount} );
     $form->{rowcount} = 1 unless $form->{"$form->{ARAP}_amount_1"};
 
-    $form->{locked} = '1';
-
     # readonly
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1
@@ -508,7 +506,7 @@ $form->open_status_div($status_div_id) . qq|
         $form->{approved} = 1;
     }
     $form->hide_form(
-        qw(batch_id approved id printed emailed sort locked
+        qw(batch_id approved id printed emailed sort
            oldtransdate audittrail recurring checktax reverse batch_id subtype
            entity_control_code tax_id meta_number default_reportable address city)
     );
