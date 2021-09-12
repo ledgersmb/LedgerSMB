@@ -347,8 +347,7 @@ sub create_links {
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
-      : ( $form->datetonum( \%myconfig, $form->{transdate} ) <=
-          $form->datetonum( \%myconfig, $form->{closedto} ) );
+      : ( $form->is_closed( $form->{transdate} ) );
 
     # readonly
     if ( !$form->{readonly} ) {
@@ -512,7 +511,7 @@ $form->open_status_div($status_div_id) . qq|
         $form->{approved} = 1;
     }
     $form->hide_form(
-        qw(batch_id approved id printed emailed sort closedto locked
+        qw(batch_id approved id printed emailed sort locked
            oldtransdate audittrail recurring checktax reverse batch_id subtype
            entity_control_code tax_id meta_number default_reportable address city)
     );
@@ -931,7 +930,6 @@ sub form_footer {
     $form->hide_form(qw(callback path login sessionid form_id));
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
     # type=submit $locale->text('Update')
     # type=submit $locale->text('Print')
@@ -1011,7 +1009,7 @@ sub form_footer {
                 delete $button{$_};
             }
 
-            if ( $closedto && $transdate && ($transdate <= $closedto) ) {
+            if ( $transdate && $form->is_closed( $transdate ) ) {
                 for ( "post","save_info") {
                     delete $button{$_};
                 }
@@ -1319,12 +1317,11 @@ sub post {
 
     $form->isblank( $form->{vc}, $label );
 
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
 
     $form->error(
         $locale->text('Cannot post transaction for a closed period!') )
-      if ( $transdate <= $closedto );
+        if ( $form->is_closed( $transdate ) );
 
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
@@ -1338,7 +1335,7 @@ sub post {
 
             $form->error(
                 $locale->text('Cannot post payment for a closed period!') )
-              if ( $datepaid <= $closedto );
+                if ( $form->is_closed( $datepaid ) );
 
             if ( $form->{currency} ne $form->{defaultcurrency} ) {
                 $form->{"exchangerate_$i"} = $form->{exchangerate}

@@ -249,8 +249,7 @@ sub invoice_links {
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
-      : ( $form->datetonum( \%myconfig, $form->{transdate} ) <=
-          $form->datetonum( \%myconfig, $form->{closedto} ) );
+      : ( $form->is_closed( $form->{transdate} ) );
 
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} && $myconfig{acs} =~ /AP--Vendor Invoice/;
@@ -320,7 +319,6 @@ sub form_header {
     $status_div_id .= '-reverse' if $form->{reverse};
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
@@ -388,7 +386,7 @@ sub form_header {
     $form->{vc} = "vendor";
     $form->{nextsub} = 'update';
     $form->hide_form(
-        qw(id title vc type terms creditlimit creditremaining closedto locked
+        qw(id title vc type terms creditlimit creditremaining locked
            shipped oldtransdate recurring reverse batch_id subtype form_id
            separate_duties nextsub default_reportable address city is_return
            cash_accno)
@@ -576,11 +574,11 @@ sub form_header {
         }
         else {
 
-            if ( $transdate > $closedto ) {
+            if ( not $form->is_closed( $transdate ) ) {
                 for ( 'update', 'post', 'schedule' ) { $allowed{$_} = 1 }
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
-            elsif ($closedto) {
+            elsif ( $transdate ) {
                 %buttons = %button{qw(update)};
             }
             else {
@@ -985,7 +983,6 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 |;
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
     # type=submit $locale->text('Update')
     # type=submit $locale->text('Post')
@@ -1310,11 +1307,10 @@ sub post {
     }
     check_form(1);
 
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
 
     $form->error( $locale->text('Cannot post invoice for a closed period!') )
-      if ( $transdate <= $closedto );
+        if ( $form->is_closed( $transdate ) );
 
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
@@ -1328,8 +1324,9 @@ sub post {
                 $locale->text('Payment date missing!') );
 
             $form->error(
-                $locale->text('Cannot post payment for a closed period!') )
-              if ( $datepaid <= $closedto );
+                $locale->text('Cannot post payment for a closed period!')
+                )
+                if ( $form->is_closed( $datepaid ) );
 
             if ( $form->{currency} ne $form->{defaultcurrency} ) {
                 $form->{"exchangerate_$i"} = $form->{exchangerate}

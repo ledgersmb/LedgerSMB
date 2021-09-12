@@ -264,7 +264,7 @@ sub transaction {
         $query = "SELECT setting_key, value
                FROM defaults
                WHERE setting_key IN
-                  ('closedto',
+                  (
                   'revtrans',
                   'separate_duties')";
 
@@ -272,7 +272,6 @@ sub transaction {
         $sth->execute || $form->dberror($query);
 
         my $results = $sth->fetchall_hashref('setting_key');
-        $form->{closedto} = $results->{'closedto'}->{'value'};
         $form->{revtrans} = $results->{'revtrans'}->{'value'};
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
@@ -323,8 +322,7 @@ sub transaction {
         $query = "SELECT current_date AS transdate, setting_key, value
                FROM defaults
                WHERE setting_key IN
-                  ('closedto',
-                  'separate_duties',
+                  ('separate_duties',
                   'revtrans')";
 
         $sth = $dbh->prepare($query);
@@ -332,7 +330,6 @@ sub transaction {
 
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
-        $form->{closedto}  = $results->{'closedto'}->{'value'};
         $form->{revtrans}  = $results->{'revtrans'}->{'value'};
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;

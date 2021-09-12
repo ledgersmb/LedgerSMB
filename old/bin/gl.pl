@@ -207,7 +207,6 @@ sub display_form
         'batch_id' => $form->{batch_id},
         'id' => $form->{id},
         'transfer' => $form->{transfer},
-        'closedto' => $form->{closedto},
         'locked' => $form->{locked},
         'oldtransdate' => $form->{oldtransdate},
         'recurring' => $form->{recurring},
@@ -232,7 +231,6 @@ sub display_form
   }
 
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
-  $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
   my @buttons;
   if ( !$form->{readonly} ) {
       my $i;
@@ -274,7 +272,7 @@ sub display_form
           }
       } else {
           $a{'update'} = 1;
-          if ( ! $closedto or ($transdate > $closedto ) ) {
+          if ( not $form->is_closed( $transdate ) ) {
               for ( 'post', 'schedule' ) { $a{$_} = 1 }
           }
       }
@@ -427,8 +425,7 @@ sub edit {
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
-      : ( $form->datetonum( \%myconfig, $form->{transdate} ) <=
-          $form->datetonum( \%myconfig, $form->{closedto} ) );
+      : ( $form->is_closed( $form->{transdate} ) );
     # readonly
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1
@@ -619,11 +616,10 @@ sub post {
     $form->isblank( "transdate", $locale->text('Transaction Date missing!') );
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
     $form->error(
         $locale->text('Cannot post transaction for a closed period!') )
-      if ( $closedto and $transdate and $transdate <= $closedto );
+        if ( $transdate and $form->is_closed( $transdate ) );
 
     check_balanced($form);
     if ( !$form->{repost} ) {

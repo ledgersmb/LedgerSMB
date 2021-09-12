@@ -1885,7 +1885,7 @@ describing acc_trans table entries corresponding to the transaction $form->{id}.
 The elements in the acc_trans entry hashes are accno, description, source,
 amount, memo, transdate, cleared, project_id, projectnumber, and exchangerate.
 
-The closedto, separate_duties, revtrans, and currencies $form attributes are filled with values
+The separate_duties, revtrans, and currencies $form attributes are filled with values
 from the defaults table, while $form->{current_date} is populated with the
 current date.  If $form->{id} is not set, then $form->{transdate} also takes on
 the current date.
@@ -2136,13 +2136,8 @@ sub create_links {
         }
     }
 
-    for (qw(separate_duties curr closedto revtrans lock_description)) {
-        if ($_ eq 'closedto'){
-            $query = qq|
-                SELECT value::date FROM defaults
-                 WHERE setting_key = '$_'|;
-        }
-        elsif ($_ eq 'current_date') {
+    for (qw(separate_duties curr revtrans lock_description)) {
+        if ($_ eq 'current_date') {
             $query = qq| select $_|;
         }
         else {
@@ -2211,6 +2206,29 @@ sub get_setting {
     $sth->execute($setting) or $self->dberror($query);
     my $ref = $sth->fetchrow_hashref('NAME_lc') or $self->dberror($query);
     return $ref->{value};
+}
+
+=item $form->is_closed( $transdate )
+
+Returns true when $transdate is in a closed period.
+
+=cut
+
+
+sub is_closed {
+    my ($self, $transdate) = @_;
+
+    return '' if not $transdate;
+
+    my $query = 'select ? <= max(end_date) from account_checkpoint';
+    my $sth = $self->{dbh}->prepare($query)
+        or $self->dberror($query);
+    $transdate = $transdate->to_db() if ref $transdate;
+    $sth->execute($transdate) or $self->dberror($query);
+    my ($is_closed) = $sth->fetchrow_array;
+    die $self->dberror($query) if $sth->err != 0;
+
+    return $is_closed;
 }
 
 =item $form->lastname_used($vc);
