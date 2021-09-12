@@ -642,80 +642,12 @@ sub retrieve_invoice {
               $form->{"mt_memo_$taccno"}  = $taxref->{memo};
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }
-
-        # get default accounts and last invoice number
-        $query = qq|
-            SELECT (select c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'inventory_accno_id'))
-                   AS inventory_accno,
-
-                   (SELECT c.accno FROM account c
-                 WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'income_accno_id'))
-                   AS income_accno,
-
-                   (SELECT c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'expense_accno_id'))
-                   AS expense_accno,
-
-                   (SELECT c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'fxgain_accno_id'))
-                   AS fxgain_accno,
-
-                   (SELECT c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'fxloss_accno_id'))
-                AS fxloss_accno|;
     }
-    else {
-        $query = qq|
-            SELECT (select c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'inventory_accno_id'))
-                   AS inventory_accno,
 
-                   (SELECT c.accno FROM account c
-                 WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'income_accno_id'))
-                   AS income_accno,
-
-                   (SELECT c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'expense_accno_id'))
-                   AS expense_accno,
-
-                   (SELECT c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'fxgain_accno_id'))
-                   AS fxgain_accno,
-
-                   (SELECT c.accno FROM account c
-                     WHERE c.id = (SELECT value::int FROM defaults
-                                    WHERE setting_key =
-                                          'fxloss_accno_id'))
-                   AS fxloss_accno
-|;
-    }
-    my $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
-    for ( keys %$ref ) {
-        $form->{$_} = $ref->{$_};
-    }
-    $sth->finish;
+    my $setting = LedgerSMB::Setting->new(%$form);
+    $form->{$_} = $setting->get($_)
+        for (qw/ inventory_accno_id income_accno_id
+                 fxgain_accno_id fxloss_accno_id /);
     @{$form->{currencies}} =
         (LedgerSMB::Setting->new(%$form))->get_currencies;
 

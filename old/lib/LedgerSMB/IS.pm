@@ -93,16 +93,15 @@ sub invoice_details {
 
     my $query = qq|
         SELECT ?::date - ?::date
-                       AS terms, value
-          FROM defaults
-         WHERE setting_key = 'weightunit'|;
+                       AS terms|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{duedate}, $form->{transdate} )
       || $form->dberror($query);
 
-    ( $form->{terms}, $form->{weightunit} ) = $sth->fetchrow_array;
+    ( $form->{terms} ) = $sth->fetchrow_array;
     $sth->finish;
 
+    $form->{weightunit} = $form->get_setting( 'weightunit' );
     # this is for the template
     $form->{invdate} = $form->{transdate};
 
@@ -778,14 +777,9 @@ sub post_invoice {
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
     $form->{department_id} *= 1;
 
-    $query = qq|
-        SELECT (SELECT value FROM defaults
-                 WHERE setting_key = 'fxgain_accno_id')
-               AS fxgain_accno_id,
-               (SELECT value FROM defaults
-                 WHERE setting_key = 'fxloss_accno_id')
-               AS fxloss_accno_id|;
-    my ( $fxgain_accno_id, $fxloss_accno_id ) = $dbh->selectrow_array($query);
+    my $setting = LedgerSMB::Setting->new( %$form );
+    my $fxgain_accno_id = $setting->get('fxgain_accno_id');
+    my $fxloss_accno_id = $setting->get('fxloss_accno_id');
 
     $query = qq|
         SELECT p.assembly, p.inventory_accno_id,

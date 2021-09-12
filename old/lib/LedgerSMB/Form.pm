@@ -1200,13 +1200,7 @@ Returns true if images should get be retrieved for embedding in templates
 
 sub test_should_get_images {
     my ($self)  = @_;
-    my $dbh = $self->{dbh};
-    my $sth = $dbh->prepare(
-        "SELECT value FROM defaults WHERE setting_key = 'template_images'"
-    );
-    $sth->execute;
-    my ($retval) = $sth->fetchrow_array();
-    return $retval;
+    return $self->get_setting( 'template_images' );
 }
 
 

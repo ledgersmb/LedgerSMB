@@ -1015,10 +1015,7 @@ sub create_links {
     $sth->finish;
 
     if ( $form->{id} ) {
-        $query = qq|
-            SELECT value FROM defaults
-             WHERE setting_key = 'weightunit'|;
-        ( $form->{weightunit} ) = $dbh->selectrow_array($query);
+        $form->{weightunit} = $form->get_setting( 'weightunit' );
     }
 }
 

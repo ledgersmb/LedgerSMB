@@ -266,13 +266,9 @@ sub post_transaction {
       ? $invamount
       : $form->round_amount( $paid * $form->{exchangerate}, 2 );
 
-    $query = q|
-        SELECT (SELECT value FROM defaults
-                 WHERE setting_key = 'fxgain_accno_id'),
-               (SELECT value FROM defaults
-                 WHERE setting_key = 'fxloss_accno_id')|;
-
-    my ( $fxgain_accno_id, $fxloss_accno_id ) = $dbh->selectrow_array($query);
+    my $setting = LedgerSMB::Setting->new(%$form);
+    $form->{$_} = $setting->get($_)
+        for (qw/ fxgain_accno_id fxloss_accno_id /);
 
     #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name or '',so person_id not found,thus reports with join on person_id not working,quick fix,use employee_name
     #( $null, $form->{employee_id} ) = split /--/, $form->{employee};

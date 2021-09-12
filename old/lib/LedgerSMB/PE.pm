@@ -813,11 +813,7 @@ sub get_jcitems {
     }
 
     $sth->finish;
-
-    $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
-    ( $form->{currency} ) = $dbh->selectrow_array($query);
-    $form->{currency} =~ s/:.*//;
-    $form->{defaultcurrency} = $form->{currency};
+    $form->currencies;
 
     $query = qq|
         SELECT c.accno, t.rate

@@ -618,11 +618,7 @@ sub recurring_transactions {
 
     my $dbh = $form->{dbh};
 
-    my $query = qq|SELECT value FROM defaults where setting_key = 'curr'|;
-
-    my ($defaultcurrency) = $dbh->selectrow_array($query);
-    $defaultcurrency = $dbh->quote( $defaultcurrency =~ s/:.*//g );
-
+    $form->currencies;
     $form->{sort} ||= "nextdate";
     my @a         = ( $form->{sort} );
     my $sortorder = $form->sort_order( \@a );
