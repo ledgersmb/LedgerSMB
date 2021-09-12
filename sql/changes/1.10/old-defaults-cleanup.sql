@@ -1,3 +1,3 @@
 
 delete from defaults
- where setting_key in ('closedto', 'revtrans');
+ where setting_key in ('closedto', 'revtrans', 'yearend');
