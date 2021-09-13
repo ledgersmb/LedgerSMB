@@ -32,12 +32,22 @@ use warnings;
 
 # Preloads
 use LedgerSMB;
-use LedgerSMB::Form;
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Template::UI;
+use LedgerSMB::AA;
+use LedgerSMB::GL;
+use LedgerSMB::IIAA;
+use LedgerSMB::IR;
+use LedgerSMB::IS;
+use LedgerSMB::PE;
 use LedgerSMB::File;
-use LedgerSMB::Scripts::login;
+use LedgerSMB::Form;
+use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGObject;
+use LedgerSMB::Scripts::login;
+use LedgerSMB::Setting;
+use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Tax;
+use LedgerSMB::Template::UI;
 
 
 =head1 LICENSE AND COPYRIGHT
